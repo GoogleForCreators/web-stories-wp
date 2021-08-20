@@ -81,9 +81,6 @@ const sharedConfig = {
           fullySpecified: false,
         },
         use: [
-          // Currently does not work with source-map-loader (which runs for dev builds).
-          // See https://github.com/webpack/webpack/issues/1554
-          isProduction && 'thread-loader',
           {
             loader: 'babel-loader',
             options: {
@@ -93,7 +90,7 @@ const sharedConfig = {
               cacheDirectory: process.env.BABEL_CACHE_DIRECTORY || true,
             },
           },
-        ].filter(Boolean),
+        ],
       },
       // These should be sync'd with the config in `.storybook/main.cjs`.
       {
