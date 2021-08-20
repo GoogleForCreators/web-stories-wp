@@ -52,9 +52,10 @@ describe('Right Click Menu integration', () => {
   async function closeRightClickMenu() {
     const framesLayer = fixture.screen.getByTestId('FramesLayer');
     // close browser default (only shows in puppeteer tests)
-    await fixture.events.click(framesLayer);
+    const rect = framesLayer.getBoundingClientRect();
+    await fixture.events.mouse.click(rect.left + 1, rect.top + 1);
     // close right click menu
-    await fixture.events.click(framesLayer);
+    await fixture.events.mouse.click(rect.left + 1, rect.top + 1);
   }
 
   /**
