@@ -23,25 +23,6 @@ export class RightClickMenu extends Container {
     super(node, path);
   }
 
-  // default actions
-  get copy() {
-    return this.queryByRole('button', {
-      name: /^Copy/i,
-    });
-  }
-
-  get paste() {
-    return this.queryByRole('button', {
-      name: /^Paste/i,
-    });
-  }
-
-  get delete() {
-    return this.queryByRole('button', {
-      name: /^Delete$/i,
-    });
-  }
-
   // foreground media actions
   get sendBackward() {
     return this.getByRole('button', {
@@ -118,12 +99,6 @@ export class RightClickMenu extends Container {
   get detachImageFromBackground() {
     return this.getByRole('button', {
       name: /^Detach Image From Background/i,
-    });
-  }
-
-  get replaceBackgroundImage() {
-    return this.getByRole('button', {
-      name: /^Replace Background Image/i,
     });
   }
 
