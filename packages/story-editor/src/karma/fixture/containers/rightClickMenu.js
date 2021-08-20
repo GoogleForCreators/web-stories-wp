@@ -23,25 +23,6 @@ export class RightClickMenu extends Container {
     super(node, path);
   }
 
-  // default actions
-  get copy() {
-    return this.queryByRole('button', {
-      name: /^Copy/i,
-    });
-  }
-
-  get paste() {
-    return this.queryByRole('button', {
-      name: /^Paste/i,
-    });
-  }
-
-  get delete() {
-    return this.queryByRole('button', {
-      name: /^Delete$/i,
-    });
-  }
-
   // foreground media actions
   get sendBackward() {
     return this.getByRole('button', {
@@ -121,12 +102,6 @@ export class RightClickMenu extends Container {
     });
   }
 
-  get replaceBackgroundImage() {
-    return this.getByRole('button', {
-      name: /^Replace Background Image/i,
-    });
-  }
-
   get addNewPageBefore() {
     return this.getByRole('button', {
       name: /^Add New Page Before/i,
@@ -153,13 +128,13 @@ export class RightClickMenu extends Container {
 
   get addToSavedStyles() {
     return this.getByRole('button', {
-      name: /^Add style to/i,
+      name: /^Add Style to/i,
     });
   }
 
   get addToSavedColors() {
     return this.getByRole('button', {
-      name: /^Add color to/i,
+      name: /^Add Color to/i,
     });
   }
 }

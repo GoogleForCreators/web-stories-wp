@@ -44,6 +44,7 @@ services:
 
   mysql:
     image: mysql:5.7
+    command: --max-allowed-packet=16777216
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: wordpress_test

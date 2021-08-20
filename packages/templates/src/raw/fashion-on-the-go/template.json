@@ -43,7 +43,6 @@
             "height": 297,
             "posterId": 0,
             "id": 0,
-            "title": "page1_hero",
             "alt": "page1_hero",
             "local": false,
             "sizes": []
@@ -377,7 +376,6 @@
             "height": 261,
             "posterId": 0,
             "id": 0,
-            "title": "page3_bg",
             "alt": "page3_bg",
             "local": false,
             "sizes": []
@@ -2066,7 +2064,6 @@
             "height": 274,
             "posterId": 0,
             "id": 0,
-            "title": "page7_hero",
             "alt": "page7_hero",
             "local": false,
             "sizes": []
@@ -2299,7 +2296,6 @@
             "height": 291,
             "posterId": 0,
             "id": 0,
-            "title": "page8_bg",
             "alt": "page8_bg",
             "local": false,
             "sizes": []
@@ -2920,7 +2916,6 @@
             "height": 331,
             "posterId": 0,
             "id": 0,
-            "title": "page9_item2",
             "alt": "page9_item2",
             "local": false,
             "sizes": []
@@ -2951,7 +2946,6 @@
             "height": 157,
             "posterId": 0,
             "id": 0,
-            "title": "page9_item3",
             "alt": "page9_item3",
             "local": false,
             "sizes": []
@@ -2979,7 +2973,6 @@
             "height": 494,
             "posterId": 0,
             "id": 0,
-            "title": "page9_item4",
             "alt": "page9_item4",
             "local": false,
             "sizes": []

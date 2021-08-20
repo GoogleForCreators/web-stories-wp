@@ -382,6 +382,7 @@
         "packages/commander/**/*.js",
         "packages/fonts/src/cli.js",
         "packages/migration/src/cli.js",
+        "packages/templates/src/cli.js",
         "packages/text-sets/src/cli.js"
       ],
       "rules": {
@@ -409,6 +410,7 @@
         "packages/migration/src/**/*.js",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
+        "packages/templates/src/cli.js",
         "packages/text-sets/src/cli.js"
       ],
       "extends": [
@@ -482,6 +484,34 @@
               {
                 "name": "@wordpress/i18n",
                 "message": "Use @web-stories-wp/i18n instead."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "packages/activation-notice/**/*.js",
+        "packages/stories-block/**/*.js",
+        "packages/tinymce-button/**/*.js"
+      ],
+      "rules":{
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@web-stories-wp/i18n",
+                "message": "Use @wordpress/i18n instead."
+              },
+              {
+                "name": "react",
+                "message": "Please use React API through `@wordpress/element` instead."
+              },
+              {
+                "name": "react-dom",
+                "message": "Please use React API through `@wordpress/element` instead."
               }
             ]
           }

@@ -20,13 +20,14 @@
 import {
   createBlob,
   getTypeFromMime,
-  formatDuration,
   getResourceSize,
   getFirstFrameOfVideo,
   createResource,
   getFileName,
   getImageDimensions,
   createFileReader,
+  getVideoLength,
+  hasVideoGotAudio,
 } from '@web-stories-wp/media';
 
 /**
@@ -46,7 +47,7 @@ const createLocalResource = (properties) => {
  * @return {Promise<import('@web-stories-wp/media').Resource>} Local image resource object.
  */
 const getImageResource = async (file) => {
-  const fileName = getFileName(file);
+  const alt = getFileName(file);
   const mimeType = file.type;
 
   const reader = await createFileReader(file);
@@ -59,8 +60,7 @@ const getImageResource = async (file) => {
     mimeType,
     src,
     ...getResourceSize({ width, height }),
-    alt: fileName,
-    title: fileName,
+    alt,
   });
 };
 
@@ -71,7 +71,7 @@ const getImageResource = async (file) => {
  * @return {Promise<import('@web-stories-wp/media').Resource>} Local video resource object.
  */
 const getVideoResource = async (file) => {
-  const fileName = getFileName(file);
+  const alt = getFileName(file);
   const mimeType = file.type;
 
   let length = 0;
@@ -85,21 +85,12 @@ const getVideoResource = async (file) => {
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
   if (canPlayVideo) {
     videoEl.src = src;
-    videoEl.addEventListener('loadedmetadata', () => {
-      length = Math.round(videoEl.duration);
-      const seconds = formatDuration(length % 60);
-      let minutes = Math.floor(length / 60);
-      const hours = Math.floor(minutes / 60);
-
-      if (hours) {
-        minutes = formatDuration(minutes % 60);
-        lengthFormatted = `${hours}:${minutes}:${seconds}`;
-      } else {
-        lengthFormatted = `${minutes}:${seconds}`;
-      }
-    });
+    const videoLength = await getVideoLength(src);
+    length = videoLength.length;
+    lengthFormatted = videoLength.lengthFormatted;
   }
   const posterFile = await getFirstFrameOfVideo(src);
+  const hasAudio = await hasVideoGotAudio(src);
   const poster = createBlob(posterFile);
   const { width, height } = await getImageDimensions(poster);
 
@@ -109,10 +100,10 @@ const getVideoResource = async (file) => {
     src: canPlayVideo ? src : '',
     ...getResourceSize({ width, height }),
     poster,
+    isMuted: !hasAudio,
     length,
     lengthFormatted,
-    alt: fileName,
-    title: fileName,
+    alt,
   });
 
   return { resource, posterFile };
@@ -123,7 +114,7 @@ const createPlaceholderResource = (properties) => {
 };
 
 const getPlaceholderResource = (file) => {
-  const fileName = getFileName(file);
+  const alt = getFileName(file);
   const type = getTypeFromMime(file.type);
   const mimeType = type === 'image' ? 'image/png' : 'video/mp4';
 
@@ -133,8 +124,7 @@ const getPlaceholderResource = (file) => {
     mimeType: mimeType,
     src: '',
     ...getResourceSize({}),
-    alt: fileName,
-    title: fileName,
+    alt,
   });
 };
 

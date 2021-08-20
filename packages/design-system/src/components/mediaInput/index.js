@@ -175,8 +175,7 @@ export const MediaInput = forwardRef(function Media(
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
-  const defaultRef = useRef(null);
-  const buttonRef = ref ?? defaultRef;
+  const internalRef = useRef(null);
 
   const StyledMedia = MediaOptions[variant];
   // Media input only allows simplified dropdown with one group.
@@ -201,7 +200,15 @@ export const MediaInput = forwardRef(function Media(
       </ImageWrapper>
       <Tooltip title={hasMenu ? null : __('Open media picker', 'web-stories')}>
         <Button
-          ref={buttonRef}
+          ref={(node) => {
+            // `ref` can either be a callback ref or a normal ref.
+            if (typeof ref == 'function') {
+              ref(node);
+            } else if (ref) {
+              ref.current = node;
+            }
+            internalRef.current = node;
+          }}
           id={buttonId}
           variant={BUTTON_VARIANTS.SQUARE}
           type={BUTTON_TYPES.TERTIARY}
@@ -218,7 +225,7 @@ export const MediaInput = forwardRef(function Media(
       </Tooltip>
       <Popup
         placement={PLACEMENT.BOTTOM_END}
-        anchor={buttonRef}
+        anchor={internalRef}
         isOpen={isMenuOpen}
       >
         <Menu

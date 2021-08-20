@@ -207,4 +207,16 @@ describe('raw template files', () => {
       }
     }
   );
+
+  // @see https://github.com/google/web-stories-wp/pull/8692
+  it.each(templates)(
+    '%s template should contain a slug for screenshot referencing',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      expect(templateData.slug).toBeString();
+    }
+  );
 });

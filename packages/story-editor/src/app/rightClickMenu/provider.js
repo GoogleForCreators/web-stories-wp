@@ -17,10 +17,11 @@
  * External dependencies
  */
 import {
-  useSnackbar,
   useGlobalKeyDownEffect,
+  useSnackbar,
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import {
@@ -45,7 +46,6 @@ import useApplyStyle from '../../components/panels/design/preset/stylePreset/use
 import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import { useCanvas } from '../canvas';
 import { ELEMENT_TYPES } from '../story';
-import { states, useHighlights } from '../highlights';
 import { getTextPresets } from '../../components/panels/design/preset/utils';
 import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import { useHistory } from '../history';
@@ -93,9 +93,6 @@ function RightClickMenuProvider({ children }) {
   const { setEditingElement } = useCanvas(({ actions }) => ({
     setEditingElement: actions.setEditingElement,
   }));
-  const { setHighlights } = useHighlights(({ setHighlights }) => ({
-    setHighlights,
-  }));
   const { undo } = useHistory(({ actions: { undo } }) => ({
     undo,
   }));
@@ -110,7 +107,6 @@ function RightClickMenuProvider({ children }) {
     currentPageIndex,
     deleteCurrentPage,
     pages,
-    replaceCurrentPage,
     setBackgroundElement,
     selectedElements,
     selectedElementAnimations,
@@ -131,7 +127,6 @@ function RightClickMenuProvider({ children }) {
         arrangeElement,
         clearBackgroundElement,
         deleteCurrentPage,
-        replaceCurrentPage,
         setBackgroundElement,
         updateElementsById,
       },
@@ -145,7 +140,6 @@ function RightClickMenuProvider({ children }) {
       currentPageIndex,
       deleteCurrentPage,
       pages,
-      replaceCurrentPage,
       selectedElementAnimations,
       selectedElements,
       setBackgroundElement,
@@ -160,10 +154,13 @@ function RightClickMenuProvider({ children }) {
   const undoRef = useRef(undo);
   undoRef.current = undo;
 
-  const [{ copiedElement, copiedPage, isMenuOpen, menuPosition }, dispatch] =
-    useReducer(rightClickMenuReducer, DEFAULT_RIGHT_CLICK_MENU_STATE);
+  const [{ copiedElement, isMenuOpen, menuPosition }, dispatch] = useReducer(
+    rightClickMenuReducer,
+    DEFAULT_RIGHT_CLICK_MENU_STATE
+  );
 
   const selectedElement = selectedElements?.[0];
+  const selectedElementType = selectedElement?.type;
   const currentPosition = currentPage?.elements.findIndex(
     (element) => element.id === selectedElement?.id
   );
@@ -173,6 +170,8 @@ function RightClickMenuProvider({ children }) {
 
   /**
    * Open the menu at the position from the click event.
+   *
+   * @param {Event} evt The triggering event
    */
   const handleOpenMenu = useCallback((evt) => {
     evt.preventDefault();
@@ -184,6 +183,10 @@ function RightClickMenuProvider({ children }) {
         x: evt?.offsetX,
         y: evt?.offsetY,
       },
+    });
+
+    trackEvent('context_menu_action', {
+      name: 'context_menu_opened',
     });
   }, []);
 
@@ -198,27 +201,12 @@ function RightClickMenuProvider({ children }) {
 
   /**
    * Prevent right click menu from removing focus from the canvas.
+   *
+   * @param {Event} evt The triggering event
    */
   const handleMouseDown = useCallback((evt) => {
     evt.stopPropagation();
   }, []);
-
-  /**
-   * Copy the page to state.
-   */
-  const handleCopyPage = useCallback(() => {
-    dispatch({ type: ACTION_TYPES.COPY_PAGE, payload: currentPage });
-  }, [currentPage]);
-
-  /**
-   * Paste the copied page from state if one exists.
-   */
-  const handlePastePage = useCallback(() => {
-    if (copiedPage) {
-      replaceCurrentPage({ page: copiedPage });
-      dispatch({ type: ACTION_TYPES.RESET });
-    }
-  }, [replaceCurrentPage, copiedPage]);
 
   /**
    * Duplicate the current page.
@@ -239,8 +227,19 @@ function RightClickMenuProvider({ children }) {
       const position = Boolean(index) || index === 0 ? index : pages.length - 1;
 
       addPageAt({ page: createPage(), position });
+
+      trackEvent('context_menu_action', {
+        name: 'page_added',
+        element: selectedElementType,
+        isBackground: selectedElement?.isBackground,
+      });
     },
-    [addPageAt, pages?.length]
+    [
+      addPageAt,
+      pages?.length,
+      selectedElement?.isBackground,
+      selectedElementType,
+    ]
   );
 
   /**
@@ -248,7 +247,13 @@ function RightClickMenuProvider({ children }) {
    */
   const handleDeletePage = useCallback(() => {
     deleteCurrentPage();
-  }, [deleteCurrentPage]);
+
+    trackEvent('context_menu_action', {
+      name: 'page_deleted',
+      element: selectedElementType,
+      isBackground: selectedElement?.isBackground,
+    });
+  }, [deleteCurrentPage, selectedElement?.isBackground, selectedElementType]);
 
   /**
    * Send element one layer backwards, if possible.
@@ -261,7 +266,19 @@ function RightClickMenuProvider({ children }) {
       elementId: selectedElement.id,
       position: newPosition,
     });
-  }, [arrangeElement, currentPosition, selectedElement?.id]);
+
+    trackEvent('context_menu_action', {
+      name: 'send_backward',
+      element: selectedElementType,
+      isBackground: selectedElement?.isBackground,
+    });
+  }, [
+    arrangeElement,
+    currentPosition,
+    selectedElement?.id,
+    selectedElement?.isBackground,
+    selectedElementType,
+  ]);
 
   /**
    * Send element all the way back, if possible.
@@ -271,7 +288,12 @@ function RightClickMenuProvider({ children }) {
       elementId: selectedElement.id,
       position: 1,
     });
-  }, [arrangeElement, selectedElement?.id]);
+
+    trackEvent('context_menu_action', {
+      name: 'send_to_back',
+      element: selectedElementType,
+    });
+  }, [arrangeElement, selectedElement?.id, selectedElementType]);
 
   /**
    * Bring element one layer forwards, if possible.
@@ -286,7 +308,18 @@ function RightClickMenuProvider({ children }) {
       elementId: selectedElement.id,
       position: newPosition,
     });
-  }, [arrangeElement, currentPage, currentPosition, selectedElement?.id]);
+
+    trackEvent('context_menu_action', {
+      name: 'bring_forward',
+      element: selectedElementType,
+    });
+  }, [
+    arrangeElement,
+    currentPage,
+    currentPosition,
+    selectedElement?.id,
+    selectedElementType,
+  ]);
 
   /**
    * Send element all the way to the front, if possible.
@@ -296,16 +329,34 @@ function RightClickMenuProvider({ children }) {
       elementId: selectedElement.id,
       position: currentPage.elements.length - 1,
     });
-  }, [arrangeElement, currentPage, selectedElement?.id]);
+
+    trackEvent('context_menu_action', {
+      name: 'bring_to_front',
+      element: selectedElementType,
+    });
+  }, [arrangeElement, currentPage, selectedElement?.id, selectedElementType]);
 
   /**
    * Set element as the element being 'edited'.
+   *
+   * @param {Event} evt The triggering event
    */
   const handleOpenScaleAndCrop = useCallback(
     (evt) => {
       setEditingElement(selectedElement?.id, evt);
+
+      trackEvent('context_menu_action', {
+        name: 'open_scale_and_crop',
+        element: selectedElementType,
+        isBackground: selectedElement?.isBackground,
+      });
     },
-    [selectedElement?.id, setEditingElement]
+    [
+      selectedElement?.id,
+      selectedElement?.isBackground,
+      selectedElementType,
+      setEditingElement,
+    ]
   );
 
   /**
@@ -319,7 +370,7 @@ function RightClickMenuProvider({ children }) {
       payload: {
         animations: selectedElementAnimations,
         styles: getElementStyles(selectedElement),
-        type: selectedElement?.type,
+        type: selectedElementType,
       },
     });
 
@@ -327,13 +378,32 @@ function RightClickMenuProvider({ children }) {
       actionLabel: __('Undo', 'web-stories'),
       dismissable: false,
       message: __('Copied style.', 'web-stories'),
-      onAction: () =>
+      onAction: () => {
         dispatch({
           type: ACTION_TYPES.COPY_ELEMENT_STYLES,
           payload: oldStyles,
-        }),
+        });
+
+        trackEvent('context_menu_action', {
+          name: 'undo_copy_styles',
+          element: selectedElementType,
+          isBackground: selectedElement?.isBackground,
+        });
+      },
     });
-  }, [copiedElement, selectedElement, selectedElementAnimations, showSnackbar]);
+
+    trackEvent('context_menu_action', {
+      name: 'copy_styles',
+      element: selectedElementType,
+      isBackground: selectedElement?.isBackground,
+    });
+  }, [
+    copiedElement,
+    selectedElement,
+    selectedElementAnimations,
+    selectedElementType,
+    showSnackbar,
+  ]);
 
   const selectedElementId = selectedElement?.id;
   const pushUpdate = useCallback(
@@ -437,7 +507,21 @@ function RightClickMenuProvider({ children }) {
       message: __('Pasted style.', 'web-stories'),
       // don't pass a stale reference for undo
       // need history updates to run so `undo` works correctly.
-      onAction: () => undoRef.current(),
+      onAction: () => {
+        undoRef.current();
+
+        trackEvent('context_menu_action', {
+          name: 'undo_paste_styles',
+          element: selectedElementType,
+          isBackground: selectedElement?.isBackground,
+        });
+      },
+    });
+
+    trackEvent('context_menu_action', {
+      name: 'paste_styles',
+      element: selectedElementType,
+      isBackground: selectedElement?.isBackground,
     });
   }, [
     addAnimations,
@@ -445,6 +529,7 @@ function RightClickMenuProvider({ children }) {
     handleApplyStyle,
     selectedElement,
     selectedElementAnimations,
+    selectedElementType,
     showSnackbar,
     updateElementsById,
   ]);
@@ -478,17 +563,36 @@ function RightClickMenuProvider({ children }) {
         message: __('Cleared style.', 'web-stories'),
         // don't pass a stale reference for undo
         // need history updates to run so `undo` works correctly.
-        onAction: () => undoRef.current(),
+        onAction: () => {
+          undoRef.current();
+
+          trackEvent('context_menu_action', {
+            name: 'undo_clear_styles',
+            element: selectedElementType,
+            isBackground: selectedElement?.isBackground,
+          });
+        },
+      });
+
+      trackEvent('context_menu_action', {
+        name: 'clear_styles',
+        element: selectedElementType,
+        isBackground: selectedElement?.isBackground,
       });
     }
-  }, [selectedElement, showSnackbar, updateElementsById]);
+  }, [selectedElement, selectedElementType, showSnackbar, updateElementsById]);
 
   /**
    * Set currently selected element as the page's background.
    */
   const handleSetPageBackground = useCallback(() => {
     setBackgroundElement({ elementId: selectedElement.id });
-  }, [setBackgroundElement, selectedElement?.id]);
+
+    trackEvent('context_menu_action', {
+      name: 'set_as_page_background',
+      element: selectedElementType,
+    });
+  }, [setBackgroundElement, selectedElement?.id, selectedElementType]);
 
   /**
    * Remove media from background and clear opacity and overlay.
@@ -507,28 +611,26 @@ function RightClickMenuProvider({ children }) {
           /* commitValues */ true
         ),
     });
+
     clearBackgroundElement();
-  }, [clearBackgroundElement, selectedElement?.id, updateElementsById]);
 
-  /**
-   * Focus the media or the media3p panel.
-   */
-  const handleFocusMediaPanel = useCallback(() => {
-    const idOrigin = selectedElement?.resource?.id?.toString().split(':')?.[0];
-    const is3PGif =
-      (!idOrigin || idOrigin?.toLowerCase() === 'media/tenor') &&
-      selectedElement?.resource?.type?.toLowerCase() === 'gif';
-    const is3PVideo = idOrigin?.toLowerCase() === 'media/coverr';
-    const is3PImage = idOrigin?.toLowerCase() === 'media/unsplash';
-
-    const panelToFocus =
-      is3PImage || is3PVideo || is3PGif ? states.MEDIA3P : states.MEDIA;
-
-    setHighlights({ highlight: panelToFocus });
-  }, [selectedElement, setHighlights]);
+    trackEvent('context_menu_action', {
+      name: 'remove_media_from_background',
+      element: selectedElementType,
+      isBackground: selectedElement?.isBackground,
+    });
+  }, [
+    clearBackgroundElement,
+    selectedElement?.id,
+    selectedElement?.isBackground,
+    selectedElementType,
+    updateElementsById,
+  ]);
 
   /**
    * Add text styles to global presets.
+   *
+   * @param {Event} evt The triggering event
    */
   const handleAddTextPreset = useCallback(
     (evt) => {
@@ -538,14 +640,33 @@ function RightClickMenuProvider({ children }) {
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
         message: __('Saved style to "Saved Styles".', 'web-stories'),
-        onAction: () => deleteGlobalTextPreset(preset),
+        onAction: () => {
+          deleteGlobalTextPreset(preset);
+
+          trackEvent('context_menu_action', {
+            name: 'remove_text_preset',
+            element: selectedElementType,
+          });
+        },
+      });
+
+      trackEvent('context_menu_action', {
+        name: 'add_text_preset',
+        element: selectedElementType,
       });
     },
-    [addGlobalTextPreset, deleteGlobalTextPreset, showSnackbar]
+    [
+      addGlobalTextPreset,
+      deleteGlobalTextPreset,
+      selectedElementType,
+      showSnackbar,
+    ]
   );
 
   /**
    * Add color to global presets.
+   *
+   * @param {Event} evt The triggering event
    */
   const handleAddColorPreset = useCallback(
     (evt) => {
@@ -555,10 +676,27 @@ function RightClickMenuProvider({ children }) {
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
         message: __('Added color to "Saved Colors".', 'web-stories'),
-        onAction: () => deleteGlobalColorPreset(preset),
+        onAction: () => {
+          deleteGlobalColorPreset(preset);
+
+          trackEvent('context_menu_action', {
+            name: 'remove_color_preset',
+            element: selectedElementType,
+          });
+        },
+      });
+
+      trackEvent('context_menu_action', {
+        name: 'add_color_preset',
+        element: selectedElementType,
       });
     },
-    [addGlobalColorPreset, deleteGlobalColorPreset, showSnackbar]
+    [
+      addGlobalColorPreset,
+      deleteGlobalColorPreset,
+      selectedElementType,
+      showSnackbar,
+    ]
   );
 
   const menuItemProps = useMemo(
@@ -568,37 +706,10 @@ function RightClickMenuProvider({ children }) {
     [handleMouseDown]
   );
 
-  const defaultItems = useMemo(
-    () => [
-      {
-        label: RIGHT_CLICK_MENU_LABELS.COPY,
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY,
-        },
-        onClick: handleCopyPage,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.PASTE,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE },
-        onClick: handlePastePage,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DELETE,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.DELETE },
-        onClick: handleDeletePage,
-        ...menuItemProps,
-      },
-    ],
-    [handleCopyPage, menuItemProps, handleDeletePage, handlePastePage]
-  );
-
   const layerItems = useMemo(
     () => [
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
-        separator: 'top',
         shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD },
         disabled: !canElementMoveBackwards,
         onClick: handleSendBackward,
@@ -641,7 +752,6 @@ function RightClickMenuProvider({ children }) {
     () => [
       {
         label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
-        separator: 'top',
         onClick: () => handleAddPageAtPosition(currentPageIndex + 1),
         ...menuItemProps,
       },
@@ -672,52 +782,48 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
-  const backgroundMediaItems = useMemo(
-    () => [
-      ...defaultItems,
+  const pageItems = useMemo(() => {
+    const disableBackgroundMediaActions = selectedElement?.isDefaultBackground;
+
+    return [
       {
         label: RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
-        separator: 'top',
         onClick: handleRemoveMediaFromBackground,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
-        onClick: handleFocusMediaPanel,
+        disabled: disableBackgroundMediaActions,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
         onClick: handleOpenScaleAndCrop,
+        disabled: disableBackgroundMediaActions,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         onClick: handleClearElementStyles,
+        disabled: disableBackgroundMediaActions,
+        separator: 'bottom',
         ...menuItemProps,
       },
       ...pageManipulationItems,
-    ],
-    [
-      defaultItems,
-      handleClearElementStyles,
-      handleOpenScaleAndCrop,
-      handleRemoveMediaFromBackground,
-      handleFocusMediaPanel,
-      menuItemProps,
-      pageManipulationItems,
-    ]
-  );
+    ];
+  }, [
+    handleClearElementStyles,
+    handleOpenScaleAndCrop,
+    handleRemoveMediaFromBackground,
+    menuItemProps,
+    pageManipulationItems,
+    selectedElement?.isDefaultBackground,
+  ]);
 
   const textItems = useMemo(
     () => [
-      ...defaultItems,
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
         separator: 'top',
         shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_IMAGE_STYLES,
+          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
         },
         onClick: handleCopyStyles,
         ...menuItemProps,
@@ -725,7 +831,7 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_STYLES,
         shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_IMAGE_STYLES,
+          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         },
         onClick: handlePasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
@@ -743,7 +849,6 @@ function RightClickMenuProvider({ children }) {
       },
     ],
     [
-      defaultItems,
       layerItems,
       handleAddTextPreset,
       menuItemProps,
@@ -757,7 +862,6 @@ function RightClickMenuProvider({ children }) {
 
   const foregroundMediaItems = useMemo(
     () => [
-      ...defaultItems,
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
@@ -796,7 +900,6 @@ function RightClickMenuProvider({ children }) {
     ],
     [
       copiedElement,
-      defaultItems,
       handleClearElementStyles,
       handleCopyStyles,
       handleOpenScaleAndCrop,
@@ -810,7 +913,6 @@ function RightClickMenuProvider({ children }) {
 
   const shapeItems = useMemo(
     () => [
-      ...defaultItems,
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
@@ -843,7 +945,6 @@ function RightClickMenuProvider({ children }) {
     ],
     [
       copiedElement?.type,
-      defaultItems,
       handleAddColorPreset,
       handleClearElementStyles,
       handleCopyStyles,
@@ -852,11 +953,6 @@ function RightClickMenuProvider({ children }) {
       menuItemProps,
       selectedElement?.type,
     ]
-  );
-
-  const pageItems = useMemo(
-    () => [...defaultItems, ...pageManipulationItems],
-    [defaultItems, pageManipulationItems]
   );
 
   const menuItems = useMemo(() => {
@@ -868,9 +964,7 @@ function RightClickMenuProvider({ children }) {
       case ELEMENT_TYPES.IMAGE:
       case ELEMENT_TYPES.VIDEO:
       case ELEMENT_TYPES.GIF:
-        return selectedElement?.isBackground
-          ? backgroundMediaItems
-          : foregroundMediaItems;
+        return selectedElement?.isBackground ? pageItems : foregroundMediaItems;
       case ELEMENT_TYPES.SHAPE:
         return shapeItems;
       case ELEMENT_TYPES.TEXT:
@@ -878,14 +972,7 @@ function RightClickMenuProvider({ children }) {
       default:
         return pageItems;
     }
-  }, [
-    backgroundMediaItems,
-    foregroundMediaItems,
-    pageItems,
-    selectedElement,
-    shapeItems,
-    textItems,
-  ]);
+  }, [foregroundMediaItems, pageItems, selectedElement, shapeItems, textItems]);
 
   // Override the browser's context menu if the
   // rightClickAreaRef is set
