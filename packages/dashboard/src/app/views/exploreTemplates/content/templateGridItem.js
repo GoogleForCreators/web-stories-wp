@@ -31,13 +31,12 @@ import PropTypes from 'prop-types';
  */
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
 import { CardGridItem } from '../../../../components';
+import { Container, Gradient, Scrim } from '../../shared/grid/components';
 import {
-  Container,
-  Poster,
-  Gradient,
-  Scrim,
-} from '../../shared/grid/components';
-import { TemplateDisplayContent, CardWrapper } from './components';
+  TemplateDisplayContent,
+  CardWrapper,
+  PicturePoster,
+} from './components';
 
 export const FOCUS_TEMPLATE_CLASS = 'focus_template';
 
@@ -58,6 +57,11 @@ const TemplateGridItem = forwardRef(
     ref
   ) => {
     const tabIndex = isActive ? 0 : -1;
+    const posterAltText = sprintf(
+      /* translators: %s: Template title. */
+      __('First page of %s template', 'web-stories'),
+      title
+    );
     return (
       <CardGridItem
         ref={ref}
@@ -69,15 +73,11 @@ const TemplateGridItem = forwardRef(
       >
         <Container>
           <CardWrapper $isSelected={isActive}>
-            <Poster
-              alt={sprintf(
-                /* translators: %s: Template title. */
-                __('First page of %s template', 'web-stories'),
-                title
-              )}
-              as="img"
-              src={posterSrc}
-            />
+            <PicturePoster>
+              <source srcSet={posterSrc.webp} type="image/webp" />
+              <source srcSet={posterSrc.png} type="image/png" />
+              <img src={posterSrc.png} alt={posterAltText} />
+            </PicturePoster>
             <Gradient />
             <Scrim
               data-testid="card-action-container"
@@ -133,7 +133,10 @@ TemplateGridItem.propTypes = {
   height: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
   isActive: PropTypes.bool,
-  posterSrc: PropTypes.string.isRequired,
+  posterSrc: PropTypes.shape({
+    webp: PropTypes.string.isRequired,
+    png: PropTypes.string.isRequired,
+  }).isRequired,
   slug: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

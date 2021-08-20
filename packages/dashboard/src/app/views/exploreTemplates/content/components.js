@@ -21,7 +21,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Gradient, Scrim } from '../../shared/grid/components';
+import { Gradient, Scrim, Poster } from '../../shared/grid/components';
 
 // Allows grid item contents to overlay in a set space
 export const CardWrapper = styled.div`
@@ -53,5 +53,15 @@ export const TemplateDisplayContent = styled.div`
   a,
   button {
     margin: auto auto 0;
+  }
+`;
+
+export const PicturePoster = styled(Poster).attrs({ as: 'picture' })`
+  background: transparent;
+  & > img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    border-radius: ${({ theme }) => theme.borders.radius.medium};
   }
 `;
