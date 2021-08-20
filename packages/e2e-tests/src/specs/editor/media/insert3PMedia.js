@@ -86,15 +86,13 @@ describe('Inserting 3P Media', () => {
     });
   });
 
-  // Skipped for https://github.com/google/web-stories-wp/issues/7481
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert an tenor gif', async () => {
-
   describe('Tenor', () => {
     // Firefox has issues playing media (MP4 videos).
     skipSuiteOnFirefox();
 
-    it('should insert a Tenor GIF', async () => {
+    // Skipped for https://github.com/google/web-stories-wp/issues/7481
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should insert a Tenor GIF', async () => {
       await createNewStory();
 
       await expect(page).toClick(media3pSelector);
@@ -112,6 +110,7 @@ describe('Inserting 3P Media', () => {
 
       await page.waitForSelector('[data-testid="imageElement"]');
       await expect(page).toMatchElement('[data-testid="imageElement"]');
+    });
   });
 
   describe('Disabled', () => {

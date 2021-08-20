@@ -24,7 +24,6 @@ import { createNewStory, withPlugin } from '@web-stories-wp/e2e-test-utils';
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap';
 
-
 // TODO: Use request interception instead of WP plugins once supported in Firefox.
 // See https://bugzilla.mozilla.org/show_bug.cgi?id=1587857
 describe('Status Check', () => {
@@ -34,7 +33,6 @@ describe('Status Check', () => {
     removeErrorMessage = addAllowedErrorMessage(
       'the server responded with a status of'
     );
-
   });
 
   afterAll(() => {
@@ -51,6 +49,8 @@ describe('Status Check', () => {
 
   describe('Invalid JSON response', () => {
     withPlugin('web-stories-test-plugin-status-check-200-invalid');
+
+    it('should display error dialog', async () => {
       await createNewStory();
       await expect(page).toMatch('Unable to save your story');
     });
@@ -58,6 +58,8 @@ describe('Status Check', () => {
 
   describe('403 Forbidden (WAF)', () => {
     withPlugin('web-stories-test-plugin-status-check-403');
+
+    it('should display error dialog', async () => {
       await createNewStory();
       await expect(page).toMatch('Unable to save your story');
     });
@@ -65,6 +67,8 @@ describe('Status Check', () => {
 
   describe('500 Internal Server Error', () => {
     withPlugin('web-stories-test-plugin-status-check-500');
+
+    it('should display error dialog', async () => {
       await createNewStory();
       await expect(page).toMatch('Unable to save your story');
     });
