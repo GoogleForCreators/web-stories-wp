@@ -13,16 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const SHARED_DEFAULT_CLEARABLE_ATTRIBUTES = {
-  opacity: 100,
-  flip: {
-    vertical: false,
-    horizontal: false,
-  },
-  rotationAngle: 0,
+
+/**
+ * Internal dependencies
+ */
+import preloadVideoMetadata from './preloadVideoMetadata';
+
+/**
+ * Get video dimensions from a video.
+ *
+ * @param {string} src Video source.
+ * @return {Promise} Video dimensions object.
+ */
+const getVideoDimensions = async (src) => {
+  const video = await preloadVideoMetadata(src);
+  return {
+    width: video.videoWidth,
+    height: video.videoHeight,
+  };
 };
 
-export const SHARED_DEFAULT_ATTRIBUTES = {
-  ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-  lockAspectRatio: true,
-};
+export default getVideoDimensions;

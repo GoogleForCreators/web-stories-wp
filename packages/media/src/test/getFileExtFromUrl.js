@@ -13,16 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const SHARED_DEFAULT_CLEARABLE_ATTRIBUTES = {
-  opacity: 100,
-  flip: {
-    vertical: false,
-    horizontal: false,
-  },
-  rotationAngle: 0,
-};
 
-export const SHARED_DEFAULT_ATTRIBUTES = {
-  ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-  lockAspectRatio: true,
-};
+/**
+ * Internal dependencies
+ */
+import getFileExtFromUrl from '../getFileExtFromUrl';
+
+describe('getFileExtFromUrl', () => {
+  it('should get extension correctly', () => {
+    expect(getFileExtFromUrl('https://example.jpg?foo=bar')).toStrictEqual(
+      'jpg'
+    );
+    expect(getFileExtFromUrl('https://video.mp4')).toStrictEqual('mp4');
+    expect(getFileExtFromUrl('https://example.test/image.png')).toStrictEqual(
+      'png'
+    );
+    expect(getFileExtFromUrl(null)).toStrictEqual('');
+    expect(getFileExtFromUrl(12345)).toStrictEqual('');
+  });
+});

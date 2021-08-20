@@ -13,16 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const SHARED_DEFAULT_CLEARABLE_ATTRIBUTES = {
-  opacity: 100,
-  flip: {
-    vertical: false,
-    horizontal: false,
-  },
-  rotationAngle: 0,
-};
+function getFileExtFromUrl(value) {
+  if (!value || typeof value !== 'string') {
+    return '';
+  }
+  return value.split(/[#?]/)[0].split('.').pop().trim();
+}
 
-export const SHARED_DEFAULT_ATTRIBUTES = {
-  ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-  lockAspectRatio: true,
-};
+export default getFileExtFromUrl;
