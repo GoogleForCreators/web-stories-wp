@@ -71,7 +71,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	protected $injector;
 
 	/**
-	 * ServiceC ontainer.
+	 * ServiceContainer.
 	 *
 	 * @var ServiceContainer
 	 */
