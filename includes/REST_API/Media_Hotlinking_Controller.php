@@ -29,7 +29,6 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Types;
-use phpDocumentor\Reflection\Types\Integer;
 use WP_Error;
 use WP_Http;
 use WP_REST_Request;
