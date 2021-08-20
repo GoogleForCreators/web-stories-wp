@@ -56,20 +56,24 @@ class Status_Check_Controller extends Test_REST_TestCase {
 				'user_email' => 'editor@example.com',
 			]
 		);
-	}
-
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$subscriber );
-		self::delete_user( self::$editor );
-	}
-
-	public function setUp() {
-		parent::setUp();
 
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
+	}
+
+	public static function wpTearDownAfterClass() {
+		self::delete_user( self::$subscriber );
+		self::delete_user( self::$editor );
+
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
+	}
+
+	public function setUp() {
+		parent::setUp();
 
 		$this->request_count = 0;
 
@@ -77,10 +81,6 @@ class Status_Check_Controller extends Test_REST_TestCase {
 	}
 
 	public function tearDown() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
 		$this->remove_caps_from_roles();
 
 		parent::tearDown();

@@ -52,29 +52,29 @@ class Lock_Controller extends Test_REST_TestCase {
 				'user_email' => 'editor@example.com',
 			]
 		);
-	}
-
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$author_id );
-		self::delete_user( self::$subscriber );
-	}
-
-	public function setUp() {
-		parent::setUp();
 
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
+	}
+
+	public static function wpTearDownAfterClass() {
+		self::delete_user( self::$author_id );
+		self::delete_user( self::$subscriber );
+
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
+	}
+
+	public function setUp() {
+		parent::setUp();
 
 		$this->add_caps_to_roles();
 	}
 
 	public function tearDown() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
 		$this->remove_caps_from_roles();
 
 		parent::tearDown();

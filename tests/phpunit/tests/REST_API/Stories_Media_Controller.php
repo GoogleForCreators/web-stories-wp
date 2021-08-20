@@ -71,28 +71,29 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 				'display_name' => 'Andrea Adams',
 			]
 		);
-	}
-
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
-	}
-
-	public function setUp() {
-		parent::setUp();
 
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
 
+	}
+
+	public static function wpTearDownAfterClass() {
+		self::delete_user( self::$user_id );
+
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
+	}
+
+	public function setUp() {
+		parent::setUp();
+
 		$this->add_caps_to_roles();
 	}
 
 	public function tearDown() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
 		$this->remove_caps_from_roles();
 
 		parent::tearDown();

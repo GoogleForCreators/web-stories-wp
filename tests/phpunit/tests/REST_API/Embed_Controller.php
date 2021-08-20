@@ -83,21 +83,25 @@ class Embed_Controller extends Test_REST_TestCase {
 
 		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = new Spy_REST_Server();
+		do_action( 'rest_api_init', $wp_rest_server );
 	}
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$subscriber );
 		self::delete_user( self::$editor );
 		self::delete_user( self::$admin );
+
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
 	}
 
 	public function setUp() {
 		parent::setUp();
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
 
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
@@ -106,10 +110,6 @@ class Embed_Controller extends Test_REST_TestCase {
 	}
 
 	public function tearDown() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 
 		$this->remove_caps_from_roles();

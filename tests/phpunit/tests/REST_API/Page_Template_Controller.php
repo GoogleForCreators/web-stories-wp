@@ -116,6 +116,11 @@ class Page_Template_Controller extends Test_REST_TestCase {
 				'post_type'   => $post_type,
 			]
 		);
+
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = new Spy_REST_Server();
+		do_action( 'rest_api_init', $wp_rest_server );
 	}
 
 	public static function wpTearDownAfterClass() {
@@ -123,15 +128,14 @@ class Page_Template_Controller extends Test_REST_TestCase {
 		self::delete_user( self::$user2_id );
 		self::delete_user( self::$user3_id );
 		self::delete_user( self::$author_id );
+
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
 	}
 
 	public function setUp() {
 		parent::setUp();
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
 
 		$this->add_caps_to_roles();
 
@@ -139,10 +143,6 @@ class Page_Template_Controller extends Test_REST_TestCase {
 	}
 
 	public function tearDown() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
 		$this->remove_caps_from_roles();
 
 		$this->set_permalink_structure( '' );
