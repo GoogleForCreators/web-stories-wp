@@ -13,16 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const SHARED_DEFAULT_CLEARABLE_ATTRIBUTES = {
-  opacity: 100,
-  flip: {
-    vertical: false,
-    horizontal: false,
-  },
-  rotationAngle: 0,
+
+/**
+ * Preload video using a promise.
+ *
+ * @param {string} src Video source.
+ * @return {Promise} Video object.
+ */
+const preloadVideoMetadata = (src) => {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video');
+    video.onloadedmetadata = () => resolve(video);
+    video.onerror = reject;
+    video.crossOrigin = 'anonymous';
+    video.src = src;
+    video.muted = true;
+  });
 };
 
-export const SHARED_DEFAULT_ATTRIBUTES = {
-  ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-  lockAspectRatio: true,
-};
+export default preloadVideoMetadata;
