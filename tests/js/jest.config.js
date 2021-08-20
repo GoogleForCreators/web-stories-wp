@@ -45,6 +45,7 @@ export default {
     WEB_STORIES_DISABLE_PREVENT: true,
     WEB_STORIES_DISABLE_ERROR_BOUNDARIES: true,
     WEB_STORIES_DISABLE_QUICK_TIPS: true,
+    WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: true,
   },
   setupFilesAfterEnv: ['<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
