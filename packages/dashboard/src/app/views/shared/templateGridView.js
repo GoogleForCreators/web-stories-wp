@@ -107,6 +107,8 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
             <CardGridItem
               key={template.id}
               role="listitem"
+              id={`template-grid-item-${template.id}`}
+              className="templateGridItem"
               data-testid={`template-grid-item-${template.id}`}
               ref={(el) => {
                 itemRefs.current[template.id] = el;
@@ -133,6 +135,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                 tabIndex={tabIndex}
                 pageSize={pageSize}
                 story={template}
+                slug={template.slug}
                 centerAction={{
                   targetAction: template.centerTargetAction,
                   label:

@@ -15,60 +15,38 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import preloadVideo from './preloadVideo';
+
+function getImageFromVideo(video) {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext('2d');
+    try {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    } catch (err) {
+      // Browser probably doesn't support the video codec.
+      reject(err);
+    }
+
+    canvas.toBlob(resolve, 'image/jpeg');
+  });
+}
+
+/**
  * Returns an image of the first frame of a given video.
  *
  * @see https://github.com/ampproject/amp-wp/blob/c5fba13dd17d4f713c9889d26898aec6091e421b/assets/src/stories-editor/helpers/uploadVideoFrame.js#L10-L39
  * @param {string} src Video src URL.
  * @return {Promise<string>} The extracted image in base64-encoded format.
  */
-function getFirstFrameOfVideo(src) {
-  const video = document.createElement('video');
-  video.muted = true;
-  video.crossOrigin = 'anonymous';
-  // Since  we want to get the actual frames, we need to make sure to preload the whole video
-  // and not just metadata.
-  // See https://github.com/google/web-stories-wp/issues/2922.
-  video.preload = 'auto';
-
-  return new Promise((resolve, reject) => {
-    video.addEventListener('error', reject);
-
-    video.addEventListener(
-      'canplay',
-      () => {
-        // Need to seek forward to ensure we get a proper frame.
-        // Doing it inside the event listener to prevent the event
-        // from being fired twice.
-        // See https://github.com/google/web-stories-wp/issues/2923
-        // Translates to real-world 0.28
-        // See "Reduced time precision" https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/currentTime
-        video.currentTime = 0.99;
-      },
-      { once: true } // Important because 'canplay' can be fired hundreds of times.
-    );
-
-    video.addEventListener(
-      'seeked',
-      () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-
-        const ctx = canvas.getContext('2d');
-        try {
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        } catch (err) {
-          // Browser probably doesn't support the video codec.
-          reject(err);
-        }
-
-        canvas.toBlob(resolve, 'image/jpeg');
-      },
-      { once: true }
-    );
-
-    video.src = src;
-  });
+async function getFirstFrameOfVideo(src) {
+  const video = await preloadVideo(src);
+  return getImageFromVideo(video);
 }
 
 export default getFirstFrameOfVideo;

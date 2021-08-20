@@ -524,6 +524,10 @@ class Stories_Controller extends Stories_Base_Controller {
 			'default'     => false,
 		];
 
+		if ( ! empty( $query_params['orderby'] ) ) {
+			$query_params['orderby']['enum'][] = 'story_author';
+		}
+
 		return $query_params;
 	}
 }

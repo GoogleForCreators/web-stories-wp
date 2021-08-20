@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'weekly-entertainment',
   title: _x('Weekly Entertainment', 'template name', 'web-stories'),
   tags: [
     _x('Funny', 'template keyword', 'web-stories'),
