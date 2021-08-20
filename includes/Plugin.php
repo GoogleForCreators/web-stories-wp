@@ -117,7 +117,7 @@ class Plugin extends ServiceBasedPlugin {
 		'user.capabilities'            => User\Capabilities::class,
 		'rest.embed_controller'        => REST_API\Embed_Controller::class,
 		'rest.link_controller'         => REST_API\Link_Controller::class,
-		'rest.url_controller'          => REST_API\Media_Hotlinking_Controller::class,
+		'rest.media_hotlinking_controller' => REST_API\Media_Hotlinking_Controller::class,
 		'rest.status_check_controller' => REST_API\Status_Check_Controller::class,
 		'rest.stories_autosave'        => REST_API\Stories_Autosaves_Controller::class,
 		'rest.stories_lock'            => REST_API\Stories_Lock_Controller::class,
