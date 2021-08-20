@@ -20,7 +20,7 @@
 import { __, _x } from '@web-stories-wp/i18n';
 
 export default {
-  slug: 'vintage-chair-buying-guide',
+  slug: 'vintage-chairs-buying-guide',
   creationDate: '2021-08-09T00:00:00.000Z',
   title: _x('Vintage Chair Buying Guide', 'template name', 'web-stories'),
   tags: [

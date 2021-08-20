@@ -20,7 +20,7 @@
 import { __, _x } from '@web-stories-wp/i18n';
 
 export default {
-  slug: 'celebrity-q-a',
+  slug: 'celebrity-q-and-a',
   creationDate: '2021-08-03T00:00:00.000Z',
   title: _x('Celebrity Q & A', 'template name', 'web-stories'),
   tags: [

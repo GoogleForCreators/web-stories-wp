@@ -20,7 +20,7 @@
 import { __, _x } from '@web-stories-wp/i18n';
 
 export default {
-  slug: 'food-stuff',
+  slug: 'food-and-stuff',
   creationDate: '2021-05-29T00:00:00.000Z',
   title: _x('Food & Stuff', 'template name', 'web-stories'),
   tags: [

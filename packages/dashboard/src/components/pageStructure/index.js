@@ -74,13 +74,13 @@ const NEW_TEMPLATE_THRESHOLD_IN_DAYS = 60;
 function getNewSlugs(metaDataEntries, days) {
   const currentDate = toDate(new Date(), getOptions());
   return metaDataEntries
-    .map(([slug, metaData]) => [
-      slug,
-      toDate(metaData.creationDate, getOptions()),
-    ])
-    .map(([slug, creationDate]) => [
-      slug,
-      differenceInDays(currentDate, creationDate),
+    .map((metaData) => ({
+      ...metaData,
+      creationDate: toDate(metaData.creationDate, getOptions()),
+    }))
+    .map((metaData) => [
+      metaData.slug,
+      differenceInDays(currentDate, metaData.creationDate),
     ])
     .filter(([, deltaDays]) => deltaDays < days)
     .map(([slug]) => slug);
