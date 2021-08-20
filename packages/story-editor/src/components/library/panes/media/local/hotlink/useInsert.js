@@ -70,7 +70,7 @@ function useInsert({
       return;
     }
     const insertionError = __(
-      'Media failed to load. Please ensure the link is valid and the site allows linking from external sites',
+      'Media failed to load. Please ensure the link is valid and the site allows linking from external sites.',
       'web-stories'
     );
     if (!isValidUrl(link)) {
