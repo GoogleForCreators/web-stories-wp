@@ -286,6 +286,8 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 
 		$this->assertNotEmpty( $data );
 
+		$this->assertArrayHasKey( 'schema', $data );
+		$this->assertArrayHasKey( 'properties', $data['schema'] );
 		$properties = $data['schema']['properties'];
 		$this->assertArrayNotHasKey( 'permalink_template', $properties );
 		$this->assertArrayNotHasKey( 'generated_slug', $properties );

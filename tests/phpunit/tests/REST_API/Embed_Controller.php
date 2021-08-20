@@ -162,6 +162,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( '/web-stories/v1/embed', $routes );
 
 		$route = $routes['/web-stories/v1/embed'];
+
 		$this->assertCount( 1, $route );
 		$this->assertArrayHasKey( 'callback', $route[0] );
 		$this->assertArrayHasKey( 'permission_callback', $route[0] );

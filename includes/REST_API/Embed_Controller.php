@@ -44,6 +44,7 @@ use WP_REST_Server;
  */
 class Embed_Controller extends REST_Controller {
 	use Document_Parser, Post_Type;
+
 	/**
 	 * Constructor.
 	 */

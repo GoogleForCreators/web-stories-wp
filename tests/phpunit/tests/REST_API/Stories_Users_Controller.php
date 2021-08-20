@@ -109,7 +109,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 			[
 				self::$user_id,
 				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-			] 
+			]
 		);
 		$this->assertEquals( 3, $result1 );
 
@@ -126,7 +126,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 			[
 				self::$user_id,
 				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-			] 
+			]
 		);
 
 		$this->assertEquals( 4, $result2 );
@@ -139,7 +139,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 			[
 				self::$user_id,
 				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-			] 
+			]
 		);
 
 		$this->assertEquals( 3, $result3 );
@@ -159,7 +159,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 			[
 				-1,
 				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-			] 
+			]
 		);
 		$this->assertEquals( 0, $result1 );
 
@@ -169,7 +169,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 			[
 				self::$user_id,
 				'invalid',
-			] 
+			]
 		);
 		$this->assertEquals( 0, $result1 );
 	}
