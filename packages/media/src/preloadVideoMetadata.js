@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,20 @@
  */
 
 /**
- * External dependencies
+ * Preload video using a promise.
+ *
+ * @param {string} src Video source.
+ * @return {Promise} Video object.
  */
-import { useContext } from '@web-stories-wp/react';
+const preloadVideoMetadata = (src) => {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video');
+    video.onloadedmetadata = () => resolve(video);
+    video.onerror = reject;
+    video.crossOrigin = 'anonymous';
+    video.src = src;
+    video.muted = true;
+  });
+};
 
-/**
- * Internal dependencies
- */
-import HeaderContext from './context';
-
-function useHeader() {
-  return useContext(HeaderContext);
-}
-
-// TODO: No remaining callers; remove.
-export default useHeader;
+export default preloadVideoMetadata;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,20 @@
  */
 
 /**
- * External dependencies
- */
-import { useContext } from '@web-stories-wp/react';
-
-/**
  * Internal dependencies
  */
-import HeaderContext from './context';
+import getFileExtFromUrl from '../getFileExtFromUrl';
 
-function useHeader() {
-  return useContext(HeaderContext);
-}
-
-// TODO: No remaining callers; remove.
-export default useHeader;
+describe('getFileExtFromUrl', () => {
+  it('should get extension correctly', () => {
+    expect(getFileExtFromUrl('https://example.jpg?foo=bar')).toStrictEqual(
+      'jpg'
+    );
+    expect(getFileExtFromUrl('https://video.mp4')).toStrictEqual('mp4');
+    expect(getFileExtFromUrl('https://example.test/image.png')).toStrictEqual(
+      'png'
+    );
+    expect(getFileExtFromUrl(null)).toStrictEqual('');
+    expect(getFileExtFromUrl(12345)).toStrictEqual('');
+  });
+});
