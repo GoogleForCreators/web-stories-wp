@@ -21,13 +21,13 @@ import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
+import { SHARED_DEFAULT_CLEARABLE_ATTRIBUTES } from '../shared/constants';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import PanelTypes from '../../components/panels/design/types';
 
 export const defaultAttributes = {
-  ...SHARED_DEFAULT_ATTRIBUTES,
+  ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
   backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
   font: TEXT_ELEMENT_DEFAULT_FONT,
   fontSize: 36,
