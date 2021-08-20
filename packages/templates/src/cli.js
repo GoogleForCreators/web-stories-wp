@@ -80,9 +80,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
     console.log(`Getting screenshots for ${templateName}`);
 
     // Use the template, this will open up the editor
-    await page.click(
-      `div#template-grid-item-${currentTemplate} button[aria-label="Use this template"]`
-    );
+    await page.click(`div#template-grid-item-${currentTemplate} button`);
 
     // Load the template in the editor to get story id to render preview
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
