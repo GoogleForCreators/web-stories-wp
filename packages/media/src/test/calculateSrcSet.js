@@ -117,7 +117,7 @@ describe('calculateSrcSet', () => {
     expect(srcSet).toBe('large-url 400w');
   });
 
-  it('should sizes with spaces', () => {
+  it('should encode URLs with spaces', () => {
     const resource = {
       src: 'default-url',
       width: 500,
@@ -133,7 +133,7 @@ describe('calculateSrcSet', () => {
     expect(srcSet).toBe('large%20url 300w,medium%20url 200w,small%20url 100w');
   });
 
-  it('should sizes with encoded spaces', () => {
+  it('should encode already encoded URLs', () => {
     const resource = {
       src: 'default-url',
       width: 500,
@@ -151,7 +151,7 @@ describe('calculateSrcSet', () => {
     );
   });
 
-  it('should sizes with multiple spaces', () => {
+  it('should encode URLs with multiple spaces', () => {
     const resource = {
       src: 'default-url',
       width: 500,
@@ -169,7 +169,7 @@ describe('calculateSrcSet', () => {
     );
   });
 
-  it('should sizes with empty source_url', () => {
+  it('should ignore sizes with empty URLs', () => {
     const resource = {
       src: 'default-url',
       width: 500,
