@@ -57,7 +57,7 @@ export const TemplateDisplayContent = styled.div`
 `;
 
 export const PicturePoster = styled(Poster).attrs({ as: 'picture' })`
-  background: transparent;
+  display: block;
   & > img {
     height: 100%;
     width: 100%;
