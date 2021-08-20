@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,26 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { useContext } from '@web-stories-wp/react';
-
-/**
- * Internal dependencies
- */
-import HeaderContext from './context';
-
-function useHeader() {
-  return useContext(HeaderContext);
+function removeTitleFromResources({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
 }
 
-// TODO: No remaining callers; remove.
-export default useHeader;
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement(element) {
+  if (element.resource?.title) {
+    delete element.resource?.title;
+  }
+
+  return element;
+}
+
+export default removeTitleFromResources;

@@ -63,7 +63,6 @@ import { PROVIDERS } from '../media3p/providerConfiguration';
  * @property {string} provider The provider.
  * @property {string} type The type of media, currently 'IMAGE' or 'VIDEO'.
  * @property {Author} author The metadata about the author of the media object.
- * @property {?string} title The displayable title of the media item.
  * @property {?string} description A description of the media item.
  * @property {string} createTime The creation time of the media element.
  * @property {string} updateTime The last update time of the media element.
@@ -271,7 +270,6 @@ function getImageResourceFromMedia3p(m) {
     src: imageUrls.full.source_url,
     width: imageUrls.full.width,
     height: imageUrls.full.height,
-    title: m.description,
     alt: m.name,
     local: false,
     isPlaceholder: false,
@@ -296,7 +294,6 @@ function getVideoResourceFromMedia3p(m) {
     poster: m.imageUrls[0].url,
     length,
     lengthFormatted: formatVideoLength(length),
-    title: m.description,
     alt: m.name,
     local: false,
     isPlaceholder: false,
@@ -320,7 +317,6 @@ function getGifResourceFromMedia3p(m) {
     width: imageUrls.full.width,
     height: imageUrls.full.height,
     poster: previewUrl,
-    title: m.description,
     alt: m.name,
     local: false,
     isPlaceholder: false,

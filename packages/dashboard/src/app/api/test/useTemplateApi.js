@@ -25,6 +25,7 @@ import { reshapeTemplateObject } from '../useTemplateApi';
 describe('reshapeTemplateObject', () => {
   const templateData = {
     id: 1,
+    slug: 'beauty',
     title: 'Beauty',
     createdBy: 'Google',
     modified: '2020-04-21T07:00:00.000Z',

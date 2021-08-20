@@ -56,6 +56,15 @@ const StickerInner = styled.div`
   justify-content: center;
 `;
 
+const StickerClone = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+`;
+
 function StickerPreview({ stickerType, index }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
@@ -78,15 +87,6 @@ function StickerPreview({ stickerType, index }) {
     }),
     [aspectRatio, stickerType]
   );
-
-  const StickerClone = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    width: ${({ width }) => `${width}px`};
-    height: ${({ height }) => `${height}px`};
-  `;
 
   const Svg = sticker.svg;
   return (

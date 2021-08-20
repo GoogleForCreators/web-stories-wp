@@ -40,7 +40,6 @@ function GifOutput({ element, box }) {
         noaudio="noaudio"
         poster={poster || ''}
         layout="fill"
-        title={element.title ?? resource.title}
         alt={element.alt ?? resource.alt}
       >
         <source type={resource.output.mimeType} src={src} />

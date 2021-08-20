@@ -172,6 +172,7 @@ function TabView({
   getTabId = (id) => id,
   getAriaControlsId,
   onTabChange = noop,
+  onTabRefUpdated = noop,
   tabs = [],
   label = '',
   shortcut = '',
@@ -259,12 +260,13 @@ function TabView({
       {tabs.map(({ id, title, icon: Icon, ...tabRest }) => (
         <Tab
           key={id}
-          ref={(tabRef) => {
+          ref={(node) => {
             if (tabRefs) {
-              tabRefs[id].current = tabRef;
+              tabRefs[id].current = node;
             } else {
-              internalTabRefs.current[id] = tabRef;
+              internalTabRefs.current[id] = node;
             }
+            onTabRefUpdated(node, id);
           }}
           id={getTabId(id)}
           isActive={tab === id}
@@ -288,6 +290,7 @@ TabView.propTypes = {
   getTabId: PropTypes.func,
   getAriaControlsId: PropTypes.func,
   onTabChange: PropTypes.func,
+  onTabRefUpdated: PropTypes.func,
   tabs: PropTypes.array.isRequired,
   tab: PropTypes.string.isRequired,
   tabRefs: PropTypes.objectOf(

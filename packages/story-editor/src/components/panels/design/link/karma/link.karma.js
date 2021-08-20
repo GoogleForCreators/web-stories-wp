@@ -40,13 +40,13 @@ describe('Link Panel', () => {
     fixture.restore();
   });
 
-  const moveElementToBottom = async (frame) => {
+  const moveElementToBottom = async (frame, frameY = 0) => {
     const safezoneHeight = safezone.getBoundingClientRect().height;
     const frameHeight = frame.getBoundingClientRect().height;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame, 10, 10),
       down(),
-      moveBy(0, safezoneHeight - frameHeight - 5, { steps: 10 }),
+      moveBy(0, safezoneHeight - frameHeight - frameY - 50, { steps: 10 }),
       up(),
     ]);
   };
@@ -69,6 +69,11 @@ describe('Link Panel', () => {
     if (key) {
       await fixture.events.keyboard.up(key);
     }
+  }
+
+  async function closePanel(name) {
+    const btn = fixture.screen.getByRole('button', { name });
+    await fixture.events.click(btn);
   }
 
   describe('CUJ: Creator Can Add A Link: Apply a link to any element', () => {
@@ -115,7 +120,9 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    it('should display the link tooltip correctly', async () => {
+    // TODO(#8738): Fix flaky test.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       // make sure address input exists
       await waitFor(() => linkPanel.address);
@@ -142,6 +149,7 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       await fixture.events.mouse.moveRel(frame, 10, 10);
 
+      // TODO(#8738): This line appears to be flaky.
       expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is visible'
@@ -215,14 +223,18 @@ describe('Link Panel', () => {
         insertElement('shape', {
           backgroundColor: createSolidFromString('#ff00ff'),
           mask: { type: 'rectangle' },
-          x: 10,
-          y: 10,
+          x: 100,
+          y: 100,
           width: 50,
           height: 50,
         })
       );
       const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
-      await moveElementToBottom(frame);
+      await moveElementToBottom(frame, 100);
+
+      await closePanel('Size & Position');
+      await closePanel('Saved Colors');
+      await closePanel('Layer');
 
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
@@ -242,7 +254,7 @@ describe('Link Panel', () => {
           font: TEXT_ELEMENT_DEFAULT_FONT,
           content: 'Hello World!',
           x: 40,
-          y: 100,
+          y: 140,
           width: 250,
         })
       );

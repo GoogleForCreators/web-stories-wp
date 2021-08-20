@@ -85,7 +85,6 @@ $preload_paths = [
 						'id',
 						'date_gmt',
 						'media_details',
-						'title',
 						'mime_type',
 						'featured_media',
 						'featured_media_src',
