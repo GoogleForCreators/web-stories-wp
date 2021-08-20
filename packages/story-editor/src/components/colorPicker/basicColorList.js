@@ -26,6 +26,12 @@ import {
   hasGradient,
 } from '@web-stories-wp/patterns';
 import { Swatch, themeHelpers } from '@web-stories-wp/design-system';
+import { useRef } from '@web-stories-wp/react';
+
+/**
+ * Internal dependencies
+ */
+import useRovingTabIndex from '../../utils/useRovingTabIndex';
 
 const focusStyle = css`
   ${({ theme }) =>
@@ -68,10 +74,13 @@ function BasicColorList({
   allowsGradient,
 }) {
   const colorAsBackground = getPatternAsString(color);
+  const listRef = useRef(null);
+
+  useRovingTabIndex({ ref: listRef });
 
   return (
-    <SwatchList>
-      {colors.map((pattern) => {
+    <SwatchList ref={listRef}>
+      {colors.map((pattern, i) => {
         const isTransparentAndInvalid = !allowsOpacity && hasOpacity(pattern);
         const isGradientAndInvalid = !allowsGradient && hasGradient(pattern);
         const isDisabled = isTransparentAndInvalid || isGradientAndInvalid;
@@ -85,6 +94,7 @@ function BasicColorList({
             pattern={pattern}
             isSelected={isSelected}
             isDisabled={isDisabled}
+            tabIndex={0 === i ? 0 : -1}
           />
         );
       })}
