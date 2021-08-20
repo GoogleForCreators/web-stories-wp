@@ -94,18 +94,15 @@ const DropDown = forwardRef(function DropDown(
   if (!hasSearch) {
     primaryOptions = options;
   }
-  const localRef = useRef();
-  const dropdownRef = ref || localRef;
+  const internalRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
 
   const closeDropDown = useCallback(() => {
     setIsOpen(false);
     // Restore focus
-    if (dropdownRef.current) {
-      dropdownRef.current.focus();
-    }
-  }, [dropdownRef]);
+    internalRef.current?.focus();
+  }, [internalRef]);
 
   const toggleDropDown = useCallback(() => setIsOpen((val) => !val), []);
   // Must be debounced to account for clicking the select box again
@@ -116,9 +113,9 @@ const DropDown = forwardRef(function DropDown(
     (option) => {
       onChange(option);
       setIsOpen(false);
-      dropdownRef.current.focus();
+      internalRef.current?.focus();
     },
-    [onChange, dropdownRef]
+    [onChange, internalRef]
   );
 
   const list = (
@@ -164,7 +161,15 @@ const DropDown = forwardRef(function DropDown(
         aria-pressed={isOpen}
         aria-haspopup
         aria-expanded={isOpen}
-        ref={dropdownRef}
+        ref={(node) => {
+          // `ref` can either be a callback ref or a normal ref.
+          if (typeof ref == 'function') {
+            ref(node);
+          } else if (ref) {
+            ref.current = node;
+          }
+          internalRef.current = node;
+        }}
         activeItemLabel={selectedOption?.name}
         dropDownLabel={dropDownLabel}
         onSelectClick={toggleDropDown}
@@ -173,7 +178,7 @@ const DropDown = forwardRef(function DropDown(
       />
       {isOpen && !disabled && isInline && list}
       {!disabled && !isInline && (
-        <Popup anchor={dropdownRef} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
+        <Popup anchor={internalRef} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
           {list}
         </Popup>
       )}

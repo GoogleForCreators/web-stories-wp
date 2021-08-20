@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'diy-home-office',
   title: _x('DIY Home Office', 'template name', 'web-stories'),
   tags: [
     _x('Arts & Craft', 'template keyword', 'web-stories'),

@@ -18,12 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  forwardRef,
-  useMemo,
-  useRef,
-  useInputEventHandlers,
-} from '@web-stories-wp/react';
+import { forwardRef, useMemo, useState } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -148,16 +143,11 @@ export const TextArea = forwardRef(
     ref
   ) => {
     const textAreaId = useMemo(() => id || uuidv4(), [id]);
-    const textAreaRef = useRef(null);
 
     const hasCounter = showCount && maxLength > 0;
 
-    const { handleBlur, handleFocus, isFocused } = useInputEventHandlers({
-      forwardedRef: ref,
-      inputRef: textAreaRef,
-      onBlur,
-      onFocus,
-    });
+    const [isFocused, setIsFocused] = useState(false);
+    const [hasBeenSelected, setHasBeenSelected] = useState(false);
 
     let displayedValue = value;
     if (isIndeterminate) {
@@ -180,11 +170,29 @@ export const TextArea = forwardRef(
           <StyledTextArea
             id={textAreaId}
             disabled={disabled}
-            ref={ref || textAreaRef}
-            onFocus={handleFocus}
+            ref={(input) => {
+              // `ref` can either be a callback ref or a normal ref.
+              if (typeof ref == 'function') {
+                ref(input);
+              } else if (ref) {
+                ref.current = input;
+              }
+              if (input && isFocused && !hasBeenSelected) {
+                input.select();
+                setHasBeenSelected(true);
+              }
+            }}
+            onFocus={(e) => {
+              onFocus?.(e);
+              setIsFocused(true);
+              setHasBeenSelected(false);
+            }}
+            onBlur={(e) => {
+              onBlur?.(e);
+              setIsFocused(false);
+            }}
             value={displayedValue}
             maxLength={maxLength}
-            onBlur={handleBlur}
             {...props}
           />
           {hasCounter && (

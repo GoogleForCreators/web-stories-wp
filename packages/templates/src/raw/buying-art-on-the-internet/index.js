@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'buying-art-on-the-internet',
   title: _x('Buying Art on the Internet', 'template name', 'web-stories'),
   tags: [
     _x('Arts & Craft', 'template keyword', 'web-stories'),
