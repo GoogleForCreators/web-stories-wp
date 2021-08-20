@@ -17,15 +17,15 @@
 /**
  * External dependencies
  */
-import { useRef } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { Icons, useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
-import { useFocusOut } from '@web-stories-wp/react';
+import { useEffect, useFocusOut, useRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
+import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import Popup from '../secondaryPopup';
 import { ToggleButton } from '../toggleButton';
 import { Z_INDEX } from '../canvas/layout';
@@ -48,6 +48,7 @@ const MainIcon = styled(Icons.Keyboard)`
   display: block;
 `;
 function KeyboardShortcutsMenu() {
+  const anchorRef = useRef();
   const wrapperRef = useRef();
   const { close, toggle, isOpen } = useKeyboardShortcutsMenu(
     ({ actions: { close, toggle }, state: { isOpen } }) => ({
@@ -56,6 +57,13 @@ function KeyboardShortcutsMenu() {
       isOpen,
     })
   );
+
+  useEffect(() => {
+    if (isKeyboardUser() && !isOpen) {
+      // When menu closes, return focus to toggle menu button
+      anchorRef?.current?.focus?.();
+    }
+  }, [isOpen]);
 
   useGlobalKeyDownEffect(TOGGLE_SHORTCUTS_MENU, toggle, [toggle]);
   useFocusOut(wrapperRef, close, [close]);
@@ -72,6 +80,7 @@ function KeyboardShortcutsMenu() {
         </Popup>
 
         <ToggleButton
+          ref={anchorRef}
           isOpen={isOpen}
           aria-owns="keyboard_shortcut_menu"
           onClick={toggle}

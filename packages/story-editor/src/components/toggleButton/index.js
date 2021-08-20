@@ -27,6 +27,7 @@ import {
   TOOLTIP_PLACEMENT,
   Tooltip,
 } from '@web-stories-wp/design-system';
+import { forwardRef } from '@web-stories-wp/react';
 
 const Button = styled(dsButton)`
   height: 36px;
@@ -58,43 +59,44 @@ const NotificationCount = styled(Text).attrs({ as: 'span' })`
   color: ${({ theme }) => theme.colors.violet[20]};
 `;
 
-export const ToggleButton = ({
-  isOpen = false,
-  notificationCount,
-  MainIcon,
-  label,
-  shortcut,
-  ...rest
-}) => {
-  const hasNotifications = notificationCount > 0;
-  return (
-    <Tooltip
-      hasTail
-      title={label}
-      placement={TOOLTIP_PLACEMENT.TOP}
-      shortcut={shortcut}
-    >
-      <Button
-        aria-haspopup
-        aria-pressed={isOpen}
-        aria-expanded={isOpen}
-        isOpen={isOpen}
-        isSquare={!hasNotifications}
-        type={BUTTON_TYPES.TERTIARY}
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        size={BUTTON_SIZES.MEDIUM}
-        {...rest}
+export const ToggleButton = forwardRef(
+  (
+    { isOpen = false, notificationCount, MainIcon, label, shortcut, ...rest },
+    ref
+  ) => {
+    const hasNotifications = notificationCount > 0;
+    return (
+      <Tooltip
+        hasTail
+        title={label}
+        placement={TOOLTIP_PLACEMENT.TOP}
+        shortcut={shortcut}
       >
-        <Wrapper>
-          <MainIcon />
-          {hasNotifications && (
-            <NotificationCount>{notificationCount}</NotificationCount>
-          )}
-        </Wrapper>
-      </Button>
-    </Tooltip>
-  );
-};
+        <Button
+          ref={ref}
+          aria-haspopup
+          aria-pressed={isOpen}
+          aria-expanded={isOpen}
+          isOpen={isOpen}
+          isSquare={!hasNotifications}
+          type={BUTTON_TYPES.TERTIARY}
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          size={BUTTON_SIZES.MEDIUM}
+          {...rest}
+        >
+          <Wrapper>
+            <MainIcon />
+            {hasNotifications && (
+              <NotificationCount>{notificationCount}</NotificationCount>
+            )}
+          </Wrapper>
+        </Button>
+      </Tooltip>
+    );
+  }
+);
+
+ToggleButton.displayName = 'ToggleButton';
 
 ToggleButton.propTypes = {
   isOpen: PropTypes.bool,
