@@ -26,7 +26,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import TabView from '../tabview';
-import { states, useFocusHighlight } from '../../app/highlights';
+import { states, useHighlights } from '../../app/highlights';
 import LibraryPanes from './libraryPanes';
 import useLibrary from './useLibrary';
 import { getTabId, getPaneId } from './panes/shared';
@@ -64,9 +64,14 @@ function LibraryLayout() {
     tabs: state.data.tabs,
   }));
 
-  useFocusHighlight(states.MEDIA, tabRefs[MEDIA.id]);
-  useFocusHighlight(states.MEDIA3P, tabRefs[MEDIA3P.id]);
-  useFocusHighlight(states.TEXT_SET, tabRefs[TEXT.id]);
+  const { highlight } = useHighlights((state) => ({
+    highlight: {
+      // Note that the distinct key sets e.g. MEDIA.id !== states.MEDIA.
+      [MEDIA.id]: state[states.MEDIA],
+      [MEDIA3P.id]: state[states.MEDIA3P],
+      [TEXT.id]: state[states.TEXT_SET],
+    },
+  }));
 
   const onTabChange = useCallback(
     (id) => {
@@ -87,6 +92,12 @@ function LibraryLayout() {
           tabRefs={tabRefs}
           tab={tab}
           onTabChange={onTabChange}
+          onTabRefUpdated={(node, tabId) => {
+            const h = highlight[tabId];
+            if (node && h?.focus && h?.showEffect) {
+              node.focus();
+            }
+          }}
           getTabId={getTabId}
           getAriaControlsId={getPaneId}
           shortcut="mod+option+1"

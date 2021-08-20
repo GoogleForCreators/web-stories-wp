@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'experience-thailand',
   title: _x('Experience Thailand', 'template name', 'web-stories'),
   tags: [
     _x('Explore', 'template keyword', 'web-stories'),

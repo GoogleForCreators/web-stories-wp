@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'doers-get-more-done',
   title: _x('Doers Get More Done', 'template name', 'web-stories'),
   tags: [
     _x('Doers', 'template keyword', 'web-stories'),

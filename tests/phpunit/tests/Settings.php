@@ -28,16 +28,6 @@ class Settings extends Test_Case {
 		$settings = new \Google\Web_Stories\Settings();
 		$settings->register();
 
-		$this->assertSame( 10, has_action( 'init', [ $settings, 'register_settings' ] ) );
-	}
-
-	/**
-	 * @covers ::register_settings
-	 */
-	public function test_register_settings() {
-		$settings = new \Google\Web_Stories\Settings();
-		$settings->register_settings();
-
 		$options = get_registered_settings();
 		$this->assertArrayHasKey( $settings::SETTING_NAME_TRACKING_ID, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_AD_NETWORK, $options );
