@@ -52,8 +52,8 @@ function BackgroundAudioPanel() {
   );
 
   const updateBackgroundAudio = useCallback(
-    (media) => {
-      updateStory({ properties: { backgroundAudio: media?.url } });
+    (audioResource) => {
+      updateStory({ properties: { backgroundAudio: audioResource } });
     },
     [updateStory]
   );

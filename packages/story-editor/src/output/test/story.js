@@ -159,7 +159,11 @@ describe('Story output', () => {
         password: '123',
         link: 'https://example.com/story',
         autoAdvance: false,
-        backgroundAudio: 'https://example.com/audio.mp3',
+        backgroundAudio: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
       },
       pages: [
         {
@@ -435,7 +439,11 @@ describe('Story output', () => {
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
-          backgroundAudio: 'https://example.com/audio.mp3',
+          backgroundAudio: {
+            src: 'https://example.com/audio.mp3',
+            id: 123,
+            mimeType: 'audio/mpeg',
+          },
         },
         pages: [
           {

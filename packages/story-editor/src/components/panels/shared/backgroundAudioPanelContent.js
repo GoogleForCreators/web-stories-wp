@@ -32,6 +32,7 @@ import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { useCallback } from '@web-stories-wp/react';
 import { Row } from '../../form';
 import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';
@@ -66,8 +67,19 @@ function BackgroundAudioPanelContent({
     translateToExclusiveList(allowedAudioFileTypes)
   );
 
+  const onSelect = useCallback(
+    (media) => {
+      updateBackgroundAudio({
+        src: media.url,
+        id: media.id,
+        mimeType: media.mime,
+      });
+    },
+    [updateBackgroundAudio]
+  );
+
   const uploadAudioTrack = useMediaPicker({
-    onSelect: updateBackgroundAudio,
+    onSelect,
     onSelectErrorMessage,
     type: allowedAudioMimeTypes,
     title: __('Upload an audio file', 'web-stories'),
@@ -76,7 +88,7 @@ function BackgroundAudioPanelContent({
 
   return (
     <>
-      {!backgroundAudio && hasUploadMediaAction && (
+      {!backgroundAudio?.src && hasUploadMediaAction && (
         <Row expand>
           <UploadButton
             onClick={uploadAudioTrack}
@@ -88,13 +100,12 @@ function BackgroundAudioPanelContent({
           </UploadButton>
         </Row>
       )}
-      {backgroundAudio && (
+      {backgroundAudio?.src && (
         <Row>
           <AudioPlayer
-            title={backgroundAudio.substring(
-              backgroundAudio.lastIndexOf('/') + 1
-            )}
-            src={backgroundAudio}
+            title={backgroundAudio?.src.substring(backgroundAudio?.src.lastIndexOf('/') + 1)}
+            src={backgroundAudio?.src}
+            mimeType={backgroundAudio?.mimeType}
           />
           <Tooltip hasTail title={__('Remove file', 'web-stories')}>
             <StyledButton

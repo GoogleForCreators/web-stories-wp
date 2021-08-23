@@ -1110,7 +1110,11 @@ describe('Page output', () => {
       const props = {
         id: '123',
         page: {
-          backgroundAudio: 'https://example.com/audio.mp3',
+          backgroundAudio: {
+            src: 'https://example.com/audio.mp3',
+            id: 123,
+            mimeType: 'audio/mpeg',
+          },
           id: '123',
           elements: [],
         },
@@ -1255,7 +1259,11 @@ describe('Page output', () => {
         backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
-          backgroundAudio: 'https://example.com/audio.mp3',
+          backgroundAudio: {
+            src: 'https://example.com/audio.mp3',
+            id: 123,
+            mimeType: 'audio/mpeg',
+          },
           animations: [],
           elements: [],
         },

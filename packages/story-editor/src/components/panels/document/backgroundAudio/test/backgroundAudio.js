@@ -92,7 +92,13 @@ describe('BackgroundAudioPanel', () => {
   });
 
   it('should render button to play and delete audio', () => {
-    arrange({ backgroundAudio: 'https://example.com/audio.mp3' });
+    arrange({
+      backgroundAudio: {
+        src: 'https://example.com/audio.mp3',
+        id: 123,
+        mimeType: 'audio/mpeg',
+      },
+    });
     expect(
       screen.getByRole('button', {
         name: 'Remove file',

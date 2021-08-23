@@ -49,9 +49,9 @@ function BackgroundAudioPanel() {
   );
 
   const updateBackgroundAudio = useCallback(
-    (media) => {
+    (audioResource) => {
       updateCurrentPageProperties({
-        properties: { backgroundAudio: media?.url },
+        properties: { backgroundAudio: audioResource },
       });
     },
     [updateCurrentPageProperties]

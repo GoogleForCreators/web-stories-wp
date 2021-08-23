@@ -80,7 +80,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
     <amp-story-page
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
-      background-audio={backgroundAudio ?? undefined}
+      background-audio={backgroundAudio?.src ?? undefined}
     >
       <StoryAnimation.Provider animations={animations} elements={elements}>
         <StoryAnimation.AMPAnimations />

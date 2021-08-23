@@ -78,7 +78,7 @@ function OutputStory({
           publisher-logo-src={publisher.logo}
           title={title}
           poster-portrait-src={featuredMediaUrl}
-          background-audio={backgroundAudio ?? undefined}
+          background-audio={backgroundAudio?.src ?? undefined}
         >
           {pages.map((page) => (
             <OutputPage
