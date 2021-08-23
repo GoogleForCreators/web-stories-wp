@@ -170,15 +170,16 @@ class Hotlinking_Controller extends REST_Controller {
 
 		$error = new WP_Error();
 		foreach ( $schema['properties'] as $field => $args ) {
-			if ( rest_is_field_included( $field, $fields ) ) {
-				$check = rest_validate_value_from_schema( $link[ $field ], $args, $field );
-				if ( is_wp_error( $check ) ) {
-					$error->add( 'rest_invalid_' . $field, $check->get_error_message(), [ 'status' => 400 ] );
-					continue;
-				}
-
-				$data[ $field ] = rest_sanitize_value_from_schema( $link[ $field ], $args, $field );
+			if ( ! rest_is_field_included( $field, $fields ) || ! isset( $link[ $field ] ) ) {
+				continue;
 			}
+			$check = rest_validate_value_from_schema( $link[ $field ], $args, $field );
+			if ( is_wp_error( $check ) ) {
+				$error->add( 'rest_invalid_' . $field, $check->get_error_message(), [ 'status' => 400 ] );
+				continue;
+			}
+
+			$data[ $field ] = rest_sanitize_value_from_schema( $link[ $field ], $args, $field );
 		}
 
 		if ( $error->get_error_codes() ) {
