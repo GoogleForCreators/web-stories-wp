@@ -40,7 +40,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	const URL_DOMAIN = 'http://www.google.com';
 	const URL_PATH   = '/test.jpg';
 
-	const REST_URL = '/web-stories/v1/url';
+	const REST_URL = '/web-stories/v1/hotlink';
 	/**
 	 * Count of the number of requests attempted.
 	 *
