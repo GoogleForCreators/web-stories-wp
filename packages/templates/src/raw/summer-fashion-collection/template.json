@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -464,7 +464,6 @@
             "width": 720,
             "height": 921,
             "id": 0,
-            "title": "Woman in yellow crew-neck t-shirt and blue denim bottoms",
             "alt": "Woman in yellow crew-neck t-shirt and blue denim bottoms",
             "sizes": [],
             "local": false,
@@ -503,7 +502,6 @@
             "width": 722,
             "height": 908,
             "id": 0,
-            "title": "Woman in black off-shoulder shirt sitting on brown wooden stairs",
             "alt": "Woman in black off-shoulder shirt sitting on brown wooden stairs",
             "sizes": [],
             "local": false,
@@ -1284,7 +1282,6 @@
             "width": 480,
             "height": 640,
             "id": 0,
-            "title": "Woman in black crew neck t-shirt wearing brown framed sunglasses standing on beach during daytime",
             "alt": "Woman in black crew neck t-shirt wearing brown framed sunglasses standing on beach during daytime",
             "sizes": [],
             "local": false,
@@ -2057,7 +2054,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Woman wearing orange v-neck overall dress sitting on chair",
             "alt": "Woman wearing orange v-neck overall dress sitting on chair",
             "sizes": [],
             "local": false,
@@ -2330,7 +2326,6 @@
             "width": 480,
             "height": 640,
             "id": 0,
-            "title": "Woman in white crew neck t-shirt wearing red and white floral headdress standing beside blue",
             "alt": "Woman in white crew neck t-shirt wearing red and white floral headdress standing beside blue",
             "sizes": [],
             "local": false,
@@ -2769,7 +2764,6 @@
             "width": 720,
             "height": 1066,
             "id": 0,
-            "title": "Walking woman wearing red and white floral half-sleeved dress near the building during daytime",
             "alt": "Walking woman wearing red and white floral half-sleeved dress near the building during daytime",
             "sizes": [],
             "local": false,

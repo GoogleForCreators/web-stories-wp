@@ -1,8 +1,7 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -288,6 +287,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "9745b3e3-b734-4fa5-ac50-eb11775ff7bb",
@@ -328,7 +328,6 @@
       "pageTemplateType": "cover"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -603,6 +602,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 47, "g": 47, "b": 55 } },
       "type": "page",
@@ -610,7 +610,6 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -919,6 +918,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 47, "g": 47, "b": 55 } },
       "type": "page",
@@ -926,7 +926,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1201,6 +1200,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 47, "g": 47, "b": 55 } },
       "type": "page",
@@ -1208,7 +1208,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1252,6 +1251,7 @@
           "loop": true
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -1275,7 +1275,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1550,6 +1549,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 47, "g": 47, "b": 55 } },
       "type": "page",
@@ -1557,7 +1557,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1868,6 +1867,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "6eafd6cb-12d8-469d-ad65-dcaa259eee31",
@@ -1892,7 +1892,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2053,6 +2052,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "38595816-6064-4b86-8929-6022dbe47d8c",
@@ -2077,7 +2077,6 @@
       "pageTemplateType": "quote"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2111,7 +2110,6 @@
             "width": 1080,
             "height": 719,
             "id": 0,
-            "title": "Brown wooden 9-piece office table and chairs",
             "alt": "Brown wooden 9-piece office table and chairs",
             "sizes": [],
             "local": false,
@@ -2354,6 +2352,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 47, "g": 47, "b": 55 } },
       "type": "page",
@@ -2361,7 +2360,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2671,6 +2669,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 47, "g": 47, "b": 55 } },
       "type": "page",
@@ -2678,7 +2677,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3324,6 +3322,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "576dc23c-e74e-43b7-ad29-e6437039e07b",

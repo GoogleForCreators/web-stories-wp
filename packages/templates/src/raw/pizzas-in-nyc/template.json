@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -227,7 +227,6 @@
             "id": 0,
             "length": 18,
             "lengthFormatted": "0:18",
-            "title": "Friends filming / doing a video chat on barbecue party at beach house",
             "alt": "Friends filming / doing a video chat on barbecue party at beach house",
             "sizes": [],
             "local": false,
