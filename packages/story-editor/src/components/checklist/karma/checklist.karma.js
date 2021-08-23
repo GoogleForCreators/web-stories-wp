@@ -612,12 +612,6 @@ describe('Checklist integration - Card visibility', () => {
         checkIfCardDoesNotExist
       );
 
-      // add poster image to see new problems
-      await addPosterImageWithIssues();
-      posterIssuesRequiringMediaUploadPermissions.forEach(
-        checkIfCardDoesNotExist
-      );
-
       // open design tab
       await fixture.events.click(fixture.editor.checklist.designTab);
 
