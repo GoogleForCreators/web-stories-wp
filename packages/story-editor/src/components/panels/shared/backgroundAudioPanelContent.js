@@ -28,11 +28,11 @@ import {
   themeHelpers,
 } from '@web-stories-wp/design-system';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { useCallback } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
 import { Row } from '../../form';
 import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';
