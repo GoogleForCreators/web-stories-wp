@@ -9,7 +9,7 @@ packages/fonts/src/fonts.json
 /assets/css
 /assets/js
 /assets/images
-/karma/karma-puppeteer-client/client.js
+packages/karma-puppeteer-client/src/client.js
 .browserslistrc
 .distignore
 .editorconfig
