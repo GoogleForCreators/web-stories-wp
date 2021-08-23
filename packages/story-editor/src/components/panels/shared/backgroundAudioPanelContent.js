@@ -38,6 +38,7 @@ import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';
 import { useMediaPicker } from '../../mediaPicker';
 import { useConfig } from '../../../app';
+import { BackgroundAudioPropType } from '../../../types';
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>
@@ -127,7 +128,7 @@ function BackgroundAudioPanelContent({
 }
 
 BackgroundAudioPanelContent.propTypes = {
-  backgroundAudio: PropTypes.string,
+  backgroundAudio: BackgroundAudioPropType,
   updateBackgroundAudio: PropTypes.func.isRequired,
 };
 
