@@ -34,7 +34,7 @@ import apiFetch from '@wordpress/api-fetch';
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
-import { flatternFormData, removeImagesFromPageTemplates } from './utils';
+import { flattenFormData, removeImagesFromPageTemplates } from './utils';
 
 // Important: Keep in sync with REST API preloading definition.
 const STORY_FIELDS = [
@@ -289,7 +289,7 @@ function APIProvider({ children }) {
       const data = new window.FormData();
       data.append('file', file, file.name || file.type.replace('/', '.'));
       Object.entries(additionalData).forEach(([key, value]) =>
-        flatternFormData(data, key, value)
+        flattenFormData(data, key, value)
       );
 
       // TODO: Intercept window.fetch here to support progressive upload indicator when uploading
@@ -398,7 +398,7 @@ function APIProvider({ children }) {
       ].filter(Boolean);
 
       Object.entries(additionalData).forEach(([key, value]) =>
-        flatternFormData(formData, key, value)
+        flattenFormData(formData, key, value)
       );
 
       return apiFetch({
