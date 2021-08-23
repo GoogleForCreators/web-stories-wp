@@ -113,7 +113,7 @@ module.exports = {
             },
           },
         ],
-      },
+      }
     );
 
     // only the first matching rule is used when there is a match.
