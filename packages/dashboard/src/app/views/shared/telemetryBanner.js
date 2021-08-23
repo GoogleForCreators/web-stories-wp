@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -32,11 +33,12 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
+import bannerBg from '../../../images/analytics-banner-bg.png';
 import { useLayoutContext } from '../../../components';
-import { useConfig } from '../../config';
 import { APP_ROUTES } from '../../../constants';
 import { resolveRoute } from '../../router';
 import useTelemetryOptIn from './useTelemetryOptIn';
@@ -72,7 +74,6 @@ export const TelemetryOptInBanner = forwardRef(
     },
     ref
   ) => {
-    const { assetsURL } = useConfig();
     const checkboxRef = useRef();
     const focusOnCheckbox = useRef(false);
     const title = checked
@@ -90,7 +91,7 @@ export const TelemetryOptInBanner = forwardRef(
 
     return visible ? (
       <Banner
-        backgroundUrl={`${assetsURL}images/dashboard/analytics-banner-bg.png`}
+        backgroundUrl={bannerBg}
         closeButtonLabel={__('Dismiss telemetry banner', 'web-stories')}
         onClose={onClose}
         title={title}

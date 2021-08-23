@@ -102,7 +102,18 @@ module.exports = {
           'url-loader',
         ],
         include: [/images\/.*\.svg$/],
-      }
+      },
+      {
+        test: /\.(png|jpe?g|gif|webp)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'images',
+            },
+          },
+        ],
+      },
     );
 
     // only the first matching rule is used when there is a match.

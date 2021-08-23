@@ -303,7 +303,6 @@ class Editor extends Service_Base {
 				'dashboardLink'                => $dashboard_url,
 				'dashboardSettingsLink'        => $dashboard_settings_url,
 				'generalSettingsLink'          => $general_settings_url,
-				'assetsURL'                    => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                       => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'                    => $max_upload_size,
 				'isDemo'                       => $is_demo,

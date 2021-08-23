@@ -150,6 +150,17 @@ const sharedConfig = {
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
         sideEffects: true,
       },
+      {
+        test: /\.(png|jpe?g|gif|webp)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'images',
+            },
+          },
+        ],
+      },
     ].filter(Boolean),
   },
   plugins: [
