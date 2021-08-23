@@ -156,7 +156,7 @@ const sharedConfig = {
           {
             loader: 'file-loader',
             options: {
-              outputPath: 'images',
+              outputPath: '../images',
             },
           },
         ],
