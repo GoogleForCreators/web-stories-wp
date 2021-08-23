@@ -29,7 +29,7 @@ describe('Document Title', () => {
       '[aria-label="Main dashboard navigation"]'
     );
 
-    await expect(page).toMatch('Dashboard');
+    await expect(page).toMatchElement('h2', { text: 'Dashboard' });
     await expect(await page.title()).toStartWith('Dashboard');
 
     await expect(dashboardNavigation).toClick('a', {

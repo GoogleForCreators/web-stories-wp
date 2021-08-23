@@ -58,7 +58,7 @@ describe('Admin Menu', () => {
     });
     await page.waitForNavigation();
 
-    await expect(page).toMatch('Dashboard');
+    await expect(page).toMatchElement('h2', { text: 'Dashboard' });
   });
 
   it('should link to "Explore Templates"', async () => {
