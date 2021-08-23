@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -2213,7 +2213,6 @@
             "width": 330,
             "height": 288,
             "id": 0,
-            "title": "man in black crew-neck top using smartphone",
             "alt": "man in black crew-neck top using smartphone",
             "sizes": [],
             "local": false,
