@@ -126,21 +126,6 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
       onKeyUp={handleKeyboardPageClick}
       {...rest}
     >
-      {/* TODO: remove before merging */}
-      {!elements.some((element) => element.content?.includes('color:')) && (
-        <div
-          title="Smart colors are in-effect"
-          style={{
-            background: '#3fb950',
-            width: 10,
-            height: 10,
-            borderRadius: '50%',
-            position: 'absolute',
-            left: 8,
-            top: 8,
-          }}
-        />
-      )}
       {renderImages ? (
         <TextSetImg
           src={`${cdnURL}images/text-sets/${id}.png`}
