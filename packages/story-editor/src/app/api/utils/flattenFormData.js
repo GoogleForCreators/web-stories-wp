@@ -15,17 +15,17 @@
  */
 
 /**
- * Flattern data passed to form data, so multi level object can be passed.
+ * Flatten data passed to form data, to allow using multi-level objects.
  *
  * @param {FormData} formData Form data object.
- * @param {string} key Key to ammended to to form data object
- * @param {string|Object} data Data to be ammended to form, data, this could be either string or object.
+ * @param {string} key Key to amend to to form data object
+ * @param {string|Object} data Data to be amended to form data.
  */
-const flatternFormData = (formData, key, data) => {
+const flattenFormData = (formData, key, data) => {
   if (typeof data === 'object') {
     for (const name in data) {
       if (Object.prototype.hasOwnProperty.call(data, name)) {
-        flatternFormData(formData, `${key}[${name}]`, data[name]);
+        flattenFormData(formData, `${key}[${name}]`, data[name]);
       }
     }
   } else {
@@ -33,4 +33,4 @@ const flatternFormData = (formData, key, data) => {
   }
 };
 
-export default flatternFormData;
+export default flattenFormData;
