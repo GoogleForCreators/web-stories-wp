@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -73,7 +73,6 @@
             "width": 1280,
             "height": 1920,
             "id": 0,
-            "title": "Woman in White Crew Neck T-shirt Holding Teal Ceramic Bowl",
             "alt": "Woman in White Crew Neck T-shirt Holding Teal Ceramic Bowl",
             "sizes": [],
             "local": false,
@@ -1672,7 +1671,6 @@
             "width": 1280,
             "height": 1919,
             "id": 0,
-            "title": "Woman in White Crew Neck T-shirt Sitting on Brown Wooden Chair",
             "alt": "Woman in White Crew Neck T-shirt Sitting on Brown Wooden Chair",
             "sizes": [],
             "local": false,

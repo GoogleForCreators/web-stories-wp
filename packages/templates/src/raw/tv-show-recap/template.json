@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -36,7 +36,6 @@
             "height": 631,
             "posterId": 0,
             "id": 0,
-            "title": "Woman wearing off-shoulder dress",
             "alt": "Woman wearing off-shoulder dress",
             "sizes": [],
             "local": false,
@@ -492,7 +491,6 @@
             "height": 1920,
             "posterId": 0,
             "id": 0,
-            "title": "Woman in yellow off-shoulder dress sitting on bench",
             "alt": "Woman in yellow off-shoulder dress sitting on bench",
             "sizes": [],
             "local": false,

@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -3300,7 +3300,6 @@
             "height": 479,
             "posterId": 0,
             "id": 0,
-            "title": "Heart shape with 'Love it.' text around it",
             "alt": "Heart shape with 'Love it.' text around it",
             "sizes": [],
             "local": false,
