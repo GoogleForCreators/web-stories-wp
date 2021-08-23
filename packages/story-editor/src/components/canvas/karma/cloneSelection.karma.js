@@ -20,18 +20,16 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-describe('Clone element integration', () => {
+fdescribe('Clone element integration', () => {
   let fixture;
-  let bg, img1, img2;
+  let bg, img1, img2, bgRect;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
 
     bg = await getElementByIndex(1);
-    const bgRect = (
-      await getCanvasElementWrapperById(bg.id)
-    ).getBoundingClientRect();
+    bgRect = (await getCanvasElementWrapperById(bg.id)).getBoundingClientRect();
 
     // Add first image to page
     await fixture.events.click(getMediaElement(/blue-marble/));
@@ -44,21 +42,6 @@ describe('Clone element integration', () => {
       move(rect1.left + 10, rect1.top + 10),
       down(),
       move(bgRect.left + 50, bgRect.top + 50, { steps: 2 }),
-      up(),
-    ]);
-
-    // Add second image to page
-    await fixture.events.click(getMediaElement(/saturn/));
-    img2 = await getElementByIndex(3);
-
-    // Drag it to (100,100)
-    const rect2 = (
-      await getCanvasElementWrapperById(img2.id)
-    ).getBoundingClientRect();
-    await fixture.events.mouse.seq(({ move, down, up }) => [
-      move(rect2.left + 10, rect2.top + 10),
-      down(),
-      move(bgRect.left + 100, bgRect.top + 100, { steps: 2 }),
       up(),
     ]);
 
@@ -79,7 +62,7 @@ describe('Clone element integration', () => {
     await fixture.events.keyboard.shortcut('mod+d');
 
     // Expect nothing to have changed
-    expect(await getNumElements()).toBe(3);
+    expect(await getNumElements()).toBe(2);
   });
 
   it('should correctly do nothing if background is selected', async () => {
@@ -90,34 +73,48 @@ describe('Clone element integration', () => {
     await fixture.events.keyboard.shortcut('mod+d');
 
     // Expect nothing to have changed
-    expect(await getNumElements()).toBe(3);
+    expect(await getNumElements()).toBe(2);
   });
 
   // Disable reason: Flaky test, to be fixed in #8677
-  fit('should correctly clone 1 element', async () => {
-    // Select img2
-    await clickElement(img2.id);
+  it('should correctly clone 1 element', async () => {
     await fixture.snapshot('image is selected');
     // Press clone shortcut
     await fixture.events.keyboard.shortcut('mod+d');
     // Expect a new image to have been added
-    /*expect(await getNumElements()).toBe(4);
+    expect(await getNumElements()).toBe(3);
 
     // Verify new element is in fact a clone and in correct position
-    const clonedImg = await getElementByIndex(4);
+    const clonedImg = await getElementByIndex(3);
     expect(clonedImg).toEqual(
       jasmine.objectContaining({
         resource: jasmine.objectContaining({
-          src: img2.resource.src,
+          src: img1.resource.src,
         }),
-        x: img2.x + 30,
-        y: img2.y + 30,
+        x: img1.x + 30,
+        y: img1.y + 30,
       })
-    );*/
+    );
   });
 
   it('should correctly clone 2 elements', async () => {
-    // Select img1 and img2
+    // Add second image to page
+    await fixture.events.click(getMediaElement(/saturn/));
+    img2 = await getElementByIndex(3);
+
+    // Drag it to (100,100)
+    const rect2 = (
+      await getCanvasElementWrapperById(img2.id)
+    ).getBoundingClientRect();
+    await fixture.events.mouse.seq(({ move, down, up }) => [
+      move(rect2.left + 10, rect2.top + 10),
+      down(),
+      move(bgRect.left + 100, bgRect.top + 100, { steps: 2 }),
+      up(),
+    ]);
+    img2 = await getElementByIndex(3);
+
+    // Select img1 and img2.
     await clickElement(img1.id);
     await clickElement(img2.id, /* isMultiSelect */ true);
 
@@ -174,7 +171,7 @@ describe('Clone element integration', () => {
       // hold shift
       await fixture.events.keyboard.down('shift');
     }
-    await fixture.events.mouse.click(rect.left + 1, rect.top + 1);
+    await fixture.events.mouse.click(rect.left + 10, rect.top + 10);
     if (isMultiSelect) {
       // release shift
       await fixture.events.keyboard.up('shift');
