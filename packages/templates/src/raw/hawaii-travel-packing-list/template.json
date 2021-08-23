@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -3880,7 +3880,6 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Black Ray-Ban Wayfarer sunglasses on beach sand",
             "alt": "Black Ray-Ban Wayfarer sunglasses on beach sand",
             "sizes": [],
             "local": false,
@@ -4894,7 +4893,6 @@
             "height": 1920,
             "posterId": 0,
             "id": 0,
-            "title": "Black Ray-Ban Wayfarer sunglasses on beach sand",
             "alt": "Black Ray-Ban Wayfarer sunglasses on beach sand",
             "sizes": [],
             "local": false,

@@ -1,8 +1,7 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -36,7 +35,6 @@
             "width": 1620,
             "height": 1080,
             "id": 0,
-            "title": "Selective focus portrait photo of smiling woman with a towel on head looking in the mirror",
             "alt": "Selective focus portrait photo of smiling woman with a towel on head looking in the mirror",
             "sizes": [],
             "local": false,
@@ -199,6 +197,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 243, "g": 204, "b": 229 } },
       "type": "page",
@@ -206,7 +205,6 @@
       "pageTemplateType": "cover"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -240,7 +238,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Woman lying on brown textile",
             "alt": "Woman lying on brown textile",
             "sizes": [],
             "local": false,
@@ -403,6 +400,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "5fae2da4-8382-4178-b97f-8a3562f34234",
@@ -419,7 +417,6 @@
       "pageTemplateType": "section"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -453,7 +450,6 @@
             "width": 1080,
             "height": 1440,
             "id": 0,
-            "title": "Foundation bottle beside pink rose petals",
             "alt": "Foundation bottle beside pink rose petals",
             "sizes": [],
             "local": false,
@@ -901,6 +897,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "5f034ea4-1341-4363-a47e-a41c94e22221",
@@ -959,7 +956,6 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -993,7 +989,6 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "white and brown plastic tube bottle on white textile photo",
             "alt": "white and brown plastic tube bottle on white textile photo",
             "sizes": [],
             "local": false,
@@ -1441,6 +1436,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "8e888b71-236c-4d66-add4-a75733c089fb",
@@ -1499,7 +1495,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1533,7 +1528,6 @@
             "width": 754,
             "height": 1080,
             "id": 0,
-            "title": "Woman with pink lipstick",
             "alt": "Woman with pink lipstick",
             "sizes": [],
             "local": false,
@@ -1696,6 +1690,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "f182bae7-7f64-411b-8c01-a5d38bf0147c",
@@ -1712,7 +1707,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1746,7 +1740,6 @@
             "width": 1080,
             "height": 810,
             "id": 0,
-            "title": "Person holding pink rose flowers and perfume bottle",
             "alt": "Person holding pink rose flowers and perfume bottle",
             "sizes": [],
             "local": false,
@@ -2197,6 +2190,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "targets": ["8e615ea4-3113-4abe-a1bc-46ecd1c51c2a"],
@@ -2255,7 +2249,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2289,7 +2282,6 @@
             "width": 1080,
             "height": 720,
             "id": 0,
-            "title": "Bottle of beauty oil and big green leaf",
             "alt": "Bottle of beauty oil and big green leaf",
             "sizes": [],
             "local": false,
@@ -2740,6 +2732,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "targets": ["b3700257-de62-4a6c-9628-c0a710d09194"],
@@ -2798,7 +2791,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2832,7 +2824,6 @@
             "width": 721,
             "height": 1080,
             "id": 0,
-            "title": "Woman's face",
             "alt": "Woman's face",
             "sizes": [],
             "local": false,
@@ -2995,6 +2986,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "5566de09-d1b5-4f5f-9947-bde98a4b0d0b",
@@ -3011,7 +3003,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3045,7 +3036,6 @@
             "width": 1080,
             "height": 720,
             "id": 0,
-            "title": "Cosmetic bottle placed near fresh green leaves",
             "alt": "Cosmetic bottle placed near fresh green leaves",
             "sizes": [],
             "local": false,
@@ -3496,6 +3486,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "targets": ["0b58a842-52f4-4dbe-bfc0-4b4fe3739ed9"],
@@ -3554,7 +3545,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3588,7 +3578,6 @@
             "width": 734,
             "height": 1080,
             "id": 0,
-            "title": "Venus all mat bottle",
             "alt": "Venus all mat bottle",
             "sizes": [],
             "local": false,
@@ -4039,6 +4028,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "targets": ["1b074b86-3434-431e-ba1d-061d16340eb5"],
@@ -4097,7 +4087,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -4131,7 +4120,6 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Woman wearing white and red floral top across body of water photo",
             "alt": "Woman wearing white and red floral top across body of water photo",
             "sizes": [],
             "local": false,
@@ -4294,6 +4282,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "e158e7ca-6bf1-4d3d-9f36-b5829fbcd391",
