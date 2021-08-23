@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -605,7 +605,6 @@
             "width": 1920,
             "height": 1905,
             "id": 0,
-            "title": "Illustration, Digital, Woman, Water, Sol, Landscape",
             "alt": "Illustration, Digital, Woman, Water, Sol, Landscape",
             "sizes": [],
             "local": false,
@@ -2885,7 +2884,6 @@
             "height": 1440,
             "posterId": 0,
             "id": 0,
-            "title": "Close-Up Of Laptop Against White Background",
             "alt": "Close-Up Of Laptop Against White Background",
             "sizes": [],
             "local": false,
@@ -3251,7 +3249,6 @@
             "width": 1920,
             "height": 1329,
             "id": 0,
-            "title": "Macbook Pro 16\" mockup",
             "alt": "Macbook Pro 16\" mockup",
             "sizes": [],
             "local": false,
@@ -6625,7 +6622,6 @@
             "width": 1920,
             "height": 1422,
             "id": 0,
-            "title": "Person holding turned-on black iPad",
             "alt": "Person holding turned-on black iPad",
             "sizes": [],
             "local": false,
