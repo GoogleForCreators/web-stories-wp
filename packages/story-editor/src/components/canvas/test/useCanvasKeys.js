@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { render, fireEvent } from '@testing-library/react';
-import React, { useRef } from 'react';
+import { useRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
