@@ -47,7 +47,6 @@ fdescribe('Clone element integration', () => {
 
     // Save final objects
     img1 = await getElementByIndex(2);
-    img2 = await getElementByIndex(3);
   });
 
   afterEach(() => {
@@ -76,7 +75,6 @@ fdescribe('Clone element integration', () => {
     expect(await getNumElements()).toBe(2);
   });
 
-  // Disable reason: Flaky test, to be fixed in #8677
   it('should correctly clone 1 element', async () => {
     await fixture.snapshot('image is selected');
     // Press clone shortcut
