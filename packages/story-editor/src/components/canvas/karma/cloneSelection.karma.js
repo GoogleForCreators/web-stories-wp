@@ -94,13 +94,12 @@ describe('Clone element integration', () => {
   });
 
   // Disable reason: Flaky test, to be fixed in #8677
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly clone 1 element', async () => {
+  fit('should correctly clone 1 element', async () => {
     // Select img2
     await clickElement(img2.id);
-
+    await fixture.snapshot('image is selected');
     // Press clone shortcut
-    await fixture.events.keyboard.shortcut('mod+d');
+    /*await fixture.events.keyboard.shortcut('mod+d');
     // Expect a new image to have been added
     expect(await getNumElements()).toBe(4);
 
@@ -114,7 +113,7 @@ describe('Clone element integration', () => {
         x: img2.x + 30,
         y: img2.y + 30,
       })
-    );
+    );*/
   });
 
   it('should correctly clone 2 elements', async () => {
