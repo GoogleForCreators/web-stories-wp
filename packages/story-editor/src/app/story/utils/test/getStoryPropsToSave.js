@@ -37,7 +37,11 @@ describe('getStoryPropsToSave', () => {
       globalStoryStyles: '',
       autoAdvance: 'manual',
       defaultPageDuration: 7,
-      backgroundAudio: 'https://example.com/audio.mp3',
+      backgroundAudio: {
+        src: 'https://example.com/audio.mp3',
+        id: 123,
+        mimeType: 'audio/mpeg',
+      },
     };
     const extraProps = {
       storyId: 1,
