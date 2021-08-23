@@ -66,7 +66,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[0].node);
     });
 
-    it('should add text presets below each other if added consecutively', async () => {
+    // TODO(#8740): Fix flaky test.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should add text presets below each other if added consecutively', async () => {
       await fixture.events.mouse.moveRel(
         fixture.editor.library.text.preset('Title 1'),
         10,
@@ -79,6 +81,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       );
 
       await addPreset('Title 1');
+      // TODO(#8740): Seems like this line is flaky.
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       await addPreset('Title 3');
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
@@ -88,7 +91,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.snapshot('consecutively added different text presets');
     });
 
-    it('should ensure staggered presets fit on the page', async () => {
+    // TODO(#8740): Fix flaky test.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should ensure staggered presets fit on the page', async () => {
       const POSITION_MARGIN = dataFontEm(1);
       const PARAGRAPH_TEXT =
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
@@ -100,6 +105,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       let nodeIndex = 1;
 
       const verifyDefaultPosition = async (name, content) => {
+        // TODO(#8740): Seems like this line is flaky.
         await waitFor(
           () => fixture.editor.canvas.framesLayer.frames[nodeIndex].node
         );

@@ -46,6 +46,7 @@ export const clearableAttributes = {
   content: '',
   border: null,
   borderRadius: null,
+  lockAspectRatio: undefined,
 };
 
 export const hasEditMode = true;

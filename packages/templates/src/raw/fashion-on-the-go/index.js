@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'fashion-on-the-go',
   title: _x('Fashion On The Go', 'template name', 'web-stories'),
   tags: [
     _x('Clothing', 'template keyword', 'web-stories'),

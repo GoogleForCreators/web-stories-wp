@@ -32,7 +32,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   ADD_NEW_PAGE_AFTER: __('Add New Page After', 'web-stories'),
   ADD_NEW_PAGE_BEFORE: __('Add New Page Before', 'web-stories'),
   ADD_TO_COLOR_PRESETS: __('Add Color to “Saved Colors”', 'web-stories'),
-  ADD_TO_TEXT_PRESETS: __('Add style to “Saved Styles”', 'web-stories'),
+  ADD_TO_TEXT_PRESETS: __('Add Style to “Saved Styles”', 'web-stories'),
   BRING_FORWARD: __('Bring Forward', 'web-stories'),
   BRING_TO_FRONT: __('Bring to Front', 'web-stories'),
   CLEAR_IMAGE_STYLES: __('Clear Image Styles', 'web-stories'),
@@ -41,9 +41,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   COPY_IMAGE_STYLES: __('Copy Image Styles', 'web-stories'),
   COPY_SHAPE_STYLES: __('Copy Shape Styles', 'web-stories'),
   COPY_STYLES: __('Copy Style', 'web-stories'),
-  COPY: __('Copy', 'web-stories'),
   DELETE_PAGE: __('Delete Page', 'web-stories'),
-  DELETE: __('Delete', 'web-stories'),
   DETACH_IMAGE_FROM_BACKGROUND: __(
     'Detach Image From Background',
     'web-stories'
@@ -52,8 +50,6 @@ export const RIGHT_CLICK_MENU_LABELS = {
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE_SHAPE_STYLES: __('Paste Shape Styles', 'web-stories'),
   PASTE_STYLES: __('Paste Style', 'web-stories'),
-  PASTE: __('Paste', 'web-stories'),
-  REPLACE_BACKGROUND_IMAGE: __('Replace Background Image', 'web-stories'),
   SCALE_AND_CROP_BACKGROUND: __('Scale & Crop Background Image', 'web-stories'),
   SCALE_AND_CROP_IMAGE: __('Scale & Crop Image', 'web-stories'),
   SEND_BACKWARD: __('Send Backward', 'web-stories'),
@@ -69,18 +65,6 @@ const StyledKbd = styled(Text).attrs({
 `;
 
 export const RIGHT_CLICK_MENU_SHORTCUTS = {
-  COPY: (
-    <>
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd>{'C'}</StyledKbd>
-    </>
-  ),
-  PASTE: (
-    <>
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd>{'V'}</StyledKbd>
-    </>
-  ),
   SEND_BACKWARD: (
     <>
       <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}

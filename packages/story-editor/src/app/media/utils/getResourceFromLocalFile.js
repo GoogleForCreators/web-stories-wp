@@ -20,13 +20,14 @@
 import {
   createBlob,
   getTypeFromMime,
-  formatDuration,
   getResourceSize,
   getFirstFrameOfVideo,
   createResource,
   getFileName,
   getImageDimensions,
   createFileReader,
+  getVideoLength,
+  hasVideoGotAudio,
 } from '@web-stories-wp/media';
 
 /**
@@ -84,21 +85,12 @@ const getVideoResource = async (file) => {
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
   if (canPlayVideo) {
     videoEl.src = src;
-    videoEl.addEventListener('loadedmetadata', () => {
-      length = Math.round(videoEl.duration);
-      const seconds = formatDuration(length % 60);
-      let minutes = Math.floor(length / 60);
-      const hours = Math.floor(minutes / 60);
-
-      if (hours) {
-        minutes = formatDuration(minutes % 60);
-        lengthFormatted = `${hours}:${minutes}:${seconds}`;
-      } else {
-        lengthFormatted = `${minutes}:${seconds}`;
-      }
-    });
+    const videoLength = await getVideoLength(src);
+    length = videoLength.length;
+    lengthFormatted = videoLength.lengthFormatted;
   }
   const posterFile = await getFirstFrameOfVideo(src);
+  const hasAudio = await hasVideoGotAudio(src);
   const poster = createBlob(posterFile);
   const { width, height } = await getImageDimensions(poster);
 
@@ -108,6 +100,7 @@ const getVideoResource = async (file) => {
     src: canPlayVideo ? src : '',
     ...getResourceSize({ width, height }),
     poster,
+    isMuted: !hasAudio,
     length,
     lengthFormatted,
     alt,

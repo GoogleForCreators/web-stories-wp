@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
@@ -31,7 +31,7 @@ import {
  */
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
-import { useFocusHighlight, states, styles } from '../../../../app/highlights';
+import { useHighlights, states, styles } from '../../../../app/highlights';
 import { Row, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
@@ -87,13 +87,13 @@ function PublishPanel() {
     state: { users },
   } = useInspector();
 
-  const posterButtonRef = useRef();
-  const publisherLogoRef = useRef();
-
-  const highlightPoster = useFocusHighlight(states.POSTER, posterButtonRef);
-  const highlightLogo = useFocusHighlight(
-    states.PUBLISHER_LOGO,
-    publisherLogoRef
+  const { highlightPoster, highlightLogo, resetHighlight } = useHighlights(
+    (state) => ({
+      highlightPoster: state[states.POSTER],
+      highlightLogo: state[states.PUBLISHER_LOGO],
+      resetHighlight: state.onFocusOut,
+      cancelHighlight: state.cancelEffect,
+    })
   );
 
   const { featuredMedia, publisherLogoUrl, updateStory, capabilities } =
@@ -189,11 +189,20 @@ function PublishPanel() {
           isHighlighted={
             highlightPoster?.showEffect || highlightLogo?.showEffect
           }
+          onAnimationEnd={() => resetHighlight()}
         >
           <MediaInputWrapper>
             <MediaWrapper>
               <StyledMedia
-                ref={posterButtonRef}
+                ref={(node) => {
+                  if (
+                    node &&
+                    highlightPoster?.focus &&
+                    highlightPoster?.showEffect
+                  ) {
+                    node.focus();
+                  }
+                }}
                 width={72}
                 height={96}
                 cropParams={{
@@ -224,7 +233,15 @@ function PublishPanel() {
                   width: 96,
                   height: 96,
                 }}
-                ref={publisherLogoRef}
+                ref={(node) => {
+                  if (
+                    node &&
+                    highlightLogo?.focus &&
+                    highlightLogo?.showEffect
+                  ) {
+                    node.focus();
+                  }
+                }}
                 value={publisherLogoUrl}
                 onChange={handleChangePublisherLogo}
                 onChangeErrorText={publisherLogoErrorMessage}

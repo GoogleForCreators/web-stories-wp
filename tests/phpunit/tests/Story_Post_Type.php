@@ -87,7 +87,6 @@ class Story_Post_Type extends Test_Case {
 		$story_post_type = $this->get_story_object();
 		$story_post_type->register();
 
-		$this->assertSame( 10, has_filter( 'pre_handle_404', [ $story_post_type, 'redirect_post_type_archive_urls' ] ) );
 		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
 		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $story_post_type, 'change_default_title' ] ) );
 		$this->assertSame( 10, has_filter( 'bulk_post_updated_messages', [ $story_post_type, 'bulk_post_updated_messages' ] ) );
@@ -101,121 +100,6 @@ class Story_Post_Type extends Test_Case {
 		$valid           = $this->call_private_method( $story_post_type, 'get_post_type_icon' );
 		$this->assertContains( 'data:image/svg+xml;base64', $valid );
 	}
-
-	/**
-	 * @covers ::redirect_post_type_archive_urls
-	 */
-	public function test_redirect_post_type_archive_urls_true() {
-		$story_post_type = $this->get_story_object();
-		$query           = new \WP_Query();
-		$result          = $story_post_type->redirect_post_type_archive_urls( true, $query );
-		$this->assertTrue( $result );
-	}
-
-	/**
-	 * @covers ::redirect_post_type_archive_urls
-	 */
-	public function test_redirect_post_type_archive_urls_no_permalink() {
-		$story_post_type = $this->get_story_object();
-		$query           = new \WP_Query();
-		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
-		$this->assertFalse( $result );
-	}
-
-	/**
-	 * @covers ::redirect_post_type_archive_urls
-	 */
-	public function test_redirect_post_type_archive_urls_permalinks() {
-		$this->set_permalink_structure( '/%postname%/' );
-
-		$story_post_type = $this->get_story_object();
-		$query           = new \WP_Query();
-		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
-		$this->assertFalse( $result );
-	}
-
-	/**
-	 * @covers ::redirect_post_type_archive_urls
-	 */
-	public function test_redirect_post_type_archive_urls_page() {
-		$this->set_permalink_structure( '/%postname%/' );
-
-		$story_post_type = $this->get_story_object();
-
-		$query                    = new \WP_Query();
-		$query->query['pagename'] = 'stories';
-		$query->set( 'name', 'stories' );
-		$query->set( 'page', self::$story_id );
-
-		add_filter( 'post_type_link', '__return_false' );
-		add_filter( 'post_type_archive_link', '__return_false' );
-		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
-		remove_filter( 'post_type_link', '__return_false' );
-		remove_filter( 'post_type_archive_link', '__return_false' );
-
-		$this->assertFalse( $result );
-	}
-
-	/**
-	 * @covers ::redirect_post_type_archive_urls
-	 */
-	public function test_redirect_post_type_archive_urls_pagename_set() {
-		$this->set_permalink_structure( '/%postname%/' );
-
-		$story_post_type = $this->get_story_object();
-
-		$query                    = new \WP_Query();
-		$query->query['pagename'] = 'stories';
-		$query->set( 'pagename', 'stories' );
-
-		add_filter( 'post_type_archive_link', '__return_false' );
-		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
-		remove_filter( 'post_type_archive_link', '__return_false' );
-
-		$this->assertFalse( $result );
-	}
-
-	/**
-	 * @covers ::redirect_post_type_archive_urls
-	 */
-	public function test_redirect_post_type_archive_urls_pagename_child_set() {
-		$this->set_permalink_structure( '/%postname%/' );
-
-		$story_post_type = $this->get_story_object();
-
-		$query                    = new \WP_Query();
-		$query->query['pagename'] = 'client/stories';
-		$query->set( 'pagename', 'stories' );
-
-		add_filter( 'post_type_archive_link', '__return_false' );
-		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
-		remove_filter( 'post_type_archive_link', '__return_false' );
-
-		$this->assertFalse( $result );
-	}
-
-	/**
-	 * @covers ::redirect_post_type_archive_urls
-	 */
-	public function test_redirect_post_type_archive_urls_pagename_feed() {
-		$this->set_permalink_structure( '/%postname%/' );
-
-		$story_post_type = $this->get_story_object();
-		$story_post_type->register();
-
-		$query                    = new \WP_Query();
-		$query->query['pagename'] = 'stories';
-		$query->set( 'pagename', 'stories' );
-		$query->set( 'feed', 'feed' );
-
-		add_filter( 'post_type_archive_feed_link', '__return_false' );
-		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
-		remove_filter( 'post_type_archive_feed_link', '__return_false' );
-
-		$this->assertFalse( $result );
-	}
-
-
 
 	/**
 	 * @covers ::change_default_title

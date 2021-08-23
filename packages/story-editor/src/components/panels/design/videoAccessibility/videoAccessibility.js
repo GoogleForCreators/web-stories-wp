@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import { useCallback, useRef, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo } from '@web-stories-wp/react';
 import styled from 'styled-components';
 
 /**
@@ -30,7 +30,7 @@ import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { useConfig } from '../../../../app/config';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
-import { styles, states, useFocusHighlight } from '../../../../app/highlights';
+import { styles, states, useHighlights } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = {
   alt: null,
@@ -93,14 +93,17 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     return message;
   }, [allowedImageFileTypes]);
 
-  // Used for focusing and highlighting the panel from the pre-publish checkist.
-  const inputRef = useRef();
-  const mediaRef = useRef();
-  const highlightInput = useFocusHighlight(states.ASSISTIVE_TEXT, inputRef);
-  const highlightMediaPicker = useFocusHighlight(
-    states.VIDEO_A11Y_POSTER,
-    mediaRef
-  );
+  const {
+    highlightInput,
+    highlightMediaPicker,
+    resetHighlight,
+    cancelHighlight,
+  } = useHighlights((state) => ({
+    highlightInput: state[states.ASSISTIVE_TEXT],
+    highlightMediaPicker: state[states.VIDEO_A11Y_POSTER],
+    resetHighlight: state.onFocusOut,
+    cancelHighlight: state.cancelEffect,
+  }));
 
   let cropParams = null;
   if (
@@ -118,13 +121,22 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   return (
     <SimplePanel
       css={(highlightInput || highlightMediaPicker) && styles.FLASH}
+      onAnimationEnd={() => resetHighlight()}
       name="videoAccessibility"
       title={__('Accessibility', 'web-stories')}
       isPersistable={!highlightInput && !highlightMediaPicker}
     >
       <Row>
         <StyledMedia
-          ref={mediaRef}
+          ref={(node) => {
+            if (
+              node &&
+              highlightMediaPicker?.focus &&
+              highlightMediaPicker?.showEffect
+            ) {
+              node.focus();
+            }
+          }}
           value={poster}
           cropParams={cropParams}
           onChange={handleChangePoster}
@@ -139,7 +151,14 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
         />
         <InputsWrapper>
           <TextArea
-            ref={inputRef}
+            ref={(node) => {
+              if (node && highlightInput?.focus && highlightInput?.showEffect) {
+                node.addEventListener('keydown', cancelHighlight, {
+                  once: true,
+                });
+                node.focus();
+              }
+            }}
             placeholder={
               alt === MULTIPLE_VALUE
                 ? MULTIPLE_DISPLAY_VALUE

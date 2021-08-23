@@ -120,7 +120,9 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    it('should display the link tooltip correctly', async () => {
+    // TODO(#8738): Fix flaky test.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       // make sure address input exists
       await waitFor(() => linkPanel.address);
@@ -147,6 +149,7 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       await fixture.events.mouse.moveRel(frame, 10, 10);
 
+      // TODO(#8738): This line appears to be flaky.
       expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is visible'
