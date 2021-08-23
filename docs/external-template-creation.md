@@ -67,7 +67,6 @@ Create a new `index.js` file under your `<template_name>` directory and add your
 
 ```js
 //...
-/* eslint-disable-next-line import/no-unresolved */
 import { default as mySticker } from './mySticker';
 export default {
   //...
@@ -79,7 +78,6 @@ The last step of this process is navigating to `packages/stickers/src/index.js` 
 
 ```js
 //...
-/* eslint-disable-next-line import/no-unresolved */
 import * as myStickers from './<template_name>';
 export default {
   //...
@@ -176,9 +174,7 @@ Once you have the story JSON, several code changes are needed to add it to the l
       /**
        * Internal dependencies
        */
-      /* eslint-disable-next-line import/no-unresolved */
       import { default as template } from './template';
-      /* eslint-disable-next-line import/no-unresolved */
       import { default as metaData } from './metaData';
 
       export default {

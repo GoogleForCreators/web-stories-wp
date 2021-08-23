@@ -71,19 +71,13 @@ import {
 
 const NEW_TEMPLATE_THRESHOLD_IN_DAYS = 60;
 
-function getNewSlugs(metaDataEntries, days) {
+function getNewTemplatesMetaData(metaDataEntries, days) {
   const currentDate = toDate(new Date(), getOptions());
-  return metaDataEntries
-    .map((metaData) => ({
-      ...metaData,
-      creationDate: toDate(metaData.creationDate, getOptions()),
-    }))
-    .map((metaData) => [
-      metaData.slug,
-      differenceInDays(currentDate, metaData.creationDate),
-    ])
-    .filter(([, deltaDays]) => deltaDays < days)
-    .map(([slug]) => slug);
+  return metaDataEntries.filer((metaData) => {
+    const creationDate = toDate(metaData.creationDate, getOptions());
+    const deltaDays = differenceInDays(currentDate, creationDate);
+    return deltaDays < days;
+  });
 }
 
 export const AppFrame = styled.div`
@@ -215,8 +209,11 @@ export function LeftRail() {
     (async () => {
       const metaData = await getTemplateMetaData();
       if (mounted) {
-        const slugs = getNewSlugs(metaData, NEW_TEMPLATE_THRESHOLD_IN_DAYS);
-        setNumNewTemplates(slugs.length);
+        const newTemplates = getNewTemplatesMetaData(
+          metaData,
+          NEW_TEMPLATE_THRESHOLD_IN_DAYS
+        );
+        setNumNewTemplates(newTemplates.length);
       }
     })();
     return () => {
