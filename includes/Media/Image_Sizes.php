@@ -136,7 +136,9 @@ class Image_Sizes extends Service_Base {
 	 * @return array|mixed $response;
 	 */
 	public function wp_prepare_attachment_for_js( $response, $attachment ) {
-		$response = (array) $response;
+		if ( ! is_array( $response ) ) {
+			return $response;
+		}
 		// See https://github.com/WordPress/wordpress-develop/blob/d28766f8f2ecf2be02c2520cdf0cc3b51deb9e1b/src/wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php#L753-L791 .
 		$response['media_details'] = wp_get_attachment_metadata( $attachment->ID );
 

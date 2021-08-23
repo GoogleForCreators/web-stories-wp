@@ -143,8 +143,10 @@ class Muting extends Service_Base {
 	 * @return array|mixed $response;
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
+		if ( ! is_array( $response ) ) {
+			return $response;
+		}
 		if ( 'video' === $response['type'] ) {
-			$response                       = (array) $response;
 			$response[ self::IS_MUTED_KEY ] = $this->get_callback_is_muted( $response );
 		}
 

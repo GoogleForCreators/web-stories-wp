@@ -72,7 +72,9 @@ class PluginRowMeta extends Service_Base {
 		if ( plugin_basename( WEBSTORIES_PLUGIN_FILE ) !== $plugin_file ) {
 			return $meta;
 		}
-		$meta            = (array) $meta;
+		if ( ! is_array( $meta ) ) {
+			return $meta;
+		}
 		$additional_meta = [
 			'<a href="https://wordpress.org/support/plugin/web-stories/" target="_blank" rel="noreferrer noopener">' . esc_html__( 'Contact support', 'web-stories' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/web-stories/reviews/#new-post" target="_blank" rel="noreferrer noopener">' . esc_html__( 'Leave review', 'web-stories' ) . '</a>',

@@ -100,8 +100,10 @@ class AMP extends Service_Base {
 	 * @return array|mixed Filtered options.
 	 */
 	public function filter_amp_options( $options ) {
+		if ( ! is_array( $options ) ) {
+			return $options;
+		}
 		if ( $this->get_request_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
-			$options                           = (array) $options;
 			$options['theme_support']          = 'standard';
 			$options['supported_post_types'][] = Story_Post_Type::POST_TYPE_SLUG;
 			$options['supported_templates'][]  = 'is_singular';
@@ -122,7 +124,9 @@ class AMP extends Service_Base {
 	 * @return array Supportable post types.
 	 */
 	public function filter_supportable_post_types( $post_types ) {
-		$post_types = (array) $post_types;
+		if ( ! is_array( $post_types ) ) {
+			return $post_types;
+		}
 		if ( $this->get_request_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
 			$post_types = array_merge( $post_types, [ Story_Post_Type::POST_TYPE_SLUG ] );
 		} else {
@@ -150,11 +154,14 @@ class AMP extends Service_Base {
 			return $sanitizers;
 		}
 
+		if ( ! is_array( $sanitizers ) ) {
+			return $sanitizers;
+		}
+
 		$video_cache_enabled = $this->experiments->is_experiment_enabled( 'videoCache' ) && (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
 
 		$story = new Story();
 		$story->load_from_post( $post );
-		$sanitizers                               = (array) $sanitizers;
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
 			'publisher_logo'             => $this->get_publisher_logo(),
 			'publisher'                  => $this->get_publisher_name(),

@@ -166,13 +166,16 @@ class Poster extends Service_Base {
 	 * @return array|mixed $response;
 	 */
 	public function wp_prepare_attachment_for_js( $response, $attachment ) {
+		if ( ! is_array( $response ) ) {
+			return $response;
+		}
 		if ( 'video' === $response['type'] ) {
 			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
 			$image        = '';
 			if ( 0 !== $thumbnail_id ) {
 				$image = $this->get_thumbnail_data( $thumbnail_id );
 			}
-			$response                       = (array) $response;
+			
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
 		}

@@ -160,8 +160,10 @@ class Story_Post_Type extends Service_Base {
 	 * @return array Array of allowed fields.
 	 */
 	public function filter_revision_fields( $fields, $story ) {
+		if ( ! is_array( $fields ) ) {
+			return $fields;
+		}
 		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
-			$fields                          = (array) $fields;
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
 		return $fields;
@@ -179,7 +181,9 @@ class Story_Post_Type extends Service_Base {
 	 * @return array|mixed Bulk counts.
 	 */
 	public function bulk_post_updated_messages( $bulk_messages, $bulk_counts ) {
-		$bulk_messages                         = (array) $bulk_messages;
+		if ( ! is_array( $bulk_messages ) ) {
+			return $bulk_messages;
+		}
 		$bulk_messages[ self::POST_TYPE_SLUG ] = [
 			/* translators: %s: Number of stories. */
 			'updated'   => _n( '%s story updated.', '%s stories updated.', $bulk_counts['updated'], 'web-stories' ),
@@ -204,10 +208,12 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @param array|mixed $data Array of data to save.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
 	public function change_default_title( $data ) {
-		$data = (array) $data;
+		if ( ! is_array( $data ) ) {
+			return $data;
+		}
 		if ( self::POST_TYPE_SLUG === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
 			$data['post_title'] = '';
 		}
