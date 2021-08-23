@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Media_Hotlinking_Controller
+ * Class Hotlinking_Controller
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -38,16 +38,16 @@ use WP_REST_Server;
 /**
  * API endpoint to allow pinging url media assets.
  *
- * Class Media_Hotlinking_Controller
+ * Class Hotlinking_Controller
  */
-class Media_Hotlinking_Controller extends REST_Controller {
+class Hotlinking_Controller extends REST_Controller {
 	use Post_Type, Types;
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
 		$this->namespace = 'web-stories/v1';
-		$this->rest_base = 'url';
+		$this->rest_base = 'hotlink';
 	}
 
 	/**

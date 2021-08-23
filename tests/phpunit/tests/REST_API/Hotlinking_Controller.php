@@ -23,13 +23,13 @@ use Spy_REST_Server;
 use Google\Web_Stories\Tests\Test_REST_TestCase;
 
 /**
- * Class Media_Hotlinking_Controller
+ * Class Hotlinking_Controller
  *
  * @package Google\Web_Stories\Tests\REST_API
  *
- * @coversDefaultClass \Google\Web_Stories\REST_API\Media_Hotlinking_Controller
+ * @coversDefaultClass \Google\Web_Stories\REST_API\Hotlinking_Controller
  */
-class Media_Hotlinking_Controller extends Test_REST_TestCase {
+class Hotlinking_Controller extends Test_REST_TestCase {
 	protected static $subscriber;
 	protected static $editor;
 
@@ -174,7 +174,7 @@ class Media_Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url() {
-		$controller = new \Google\Web_Stories\REST_API\Media_Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
 		$result     = $controller->validate_url( self::URL_VALID );
 		$this->assertTrue( $result );
 	}
@@ -183,7 +183,7 @@ class Media_Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_empty() {
-		$controller = new \Google\Web_Stories\REST_API\Media_Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
 		$result     = $controller->validate_url( '' );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
@@ -192,7 +192,7 @@ class Media_Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_domain() {
-		$controller = new \Google\Web_Stories\REST_API\Media_Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
 		$result     = $controller->validate_url( self::URL_DOMAIN );
 		$this->assertErrorResponse( 'rest_invalid_url_path', $result, 400 );
 	}
@@ -201,7 +201,7 @@ class Media_Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_path() {
-		$controller = new \Google\Web_Stories\REST_API\Media_Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
 		$result     = $controller->validate_url( self::URL_PATH );
 		$this->assertErrorResponse( 'rest_invalid_url_host', $result, 400 );
 	}
@@ -210,7 +210,7 @@ class Media_Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_invalid() {
-		$controller = new \Google\Web_Stories\REST_API\Media_Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
 		$result     = $controller->validate_url( '-1' );
 		$this->assertErrorResponse( 'rest_invalid_url_host', $result, 400 );
 	}
@@ -219,7 +219,7 @@ class Media_Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_invalid2() {
-		$controller = new \Google\Web_Stories\REST_API\Media_Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
 		$result     = $controller->validate_url( 'wibble' );
 		$this->assertErrorResponse( 'rest_invalid_url_host', $result, 400 );
 	}
@@ -228,7 +228,7 @@ class Media_Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::get_item_schema
 	 */
 	public function test_get_item_schema() {
-		$controller = new \Google\Web_Stories\REST_API\Media_Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
 		$data       = $controller->get_item_schema();
 
 		$properties = $data['properties'];
