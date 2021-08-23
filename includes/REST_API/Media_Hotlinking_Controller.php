@@ -231,7 +231,7 @@ class Media_Hotlinking_Controller extends REST_Controller {
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'mime_type' => [
-					'description' => __( 'Mime Type', 'web-stories' ),
+					'description' => __( 'Mime type', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'enum'        => $allowed_mime_types,
