@@ -73,7 +73,7 @@ const NEW_TEMPLATE_THRESHOLD_IN_DAYS = 60;
 
 function getNewTemplatesMetaData(metaDataEntries, days) {
   const currentDate = toDate(new Date(), getOptions());
-  return metaDataEntries.filer((metaData) => {
+  return metaDataEntries.filter((metaData) => {
     const creationDate = toDate(metaData.creationDate, getOptions());
     const deltaDays = differenceInDays(currentDate, creationDate);
     return deltaDays < days;
