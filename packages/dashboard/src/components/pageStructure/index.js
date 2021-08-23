@@ -267,6 +267,7 @@ export function LeftRail() {
                     href={resolveRoute(path.value)}
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                     isBold
+                    isIconLink={Boolean(Icon)}
                     aria-label={appendNewBadgeToLable(
                       path.value === state.currentPath
                         ? sprintf(
