@@ -99,9 +99,9 @@ describe('Clone element integration', () => {
     await clickElement(img2.id);
     await fixture.snapshot('image is selected');
     // Press clone shortcut
-    /*await fixture.events.keyboard.shortcut('mod+d');
+    await fixture.events.keyboard.shortcut('mod+d');
     // Expect a new image to have been added
-    expect(await getNumElements()).toBe(4);
+    /*expect(await getNumElements()).toBe(4);
 
     // Verify new element is in fact a clone and in correct position
     const clonedImg = await getElementByIndex(4);
