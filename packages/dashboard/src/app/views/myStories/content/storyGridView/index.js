@@ -34,7 +34,7 @@ import { useGridViewKeys } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { CardGrid, CONTEXT_MENU_BUTTON_CLASS } from '../../../../../components';
+import { CardGrid } from '../../../../../components';
 import {
   StoriesPropType,
   StoryMenuPropType,
@@ -54,7 +54,6 @@ const StoryGrid = styled(CardGrid)`
 
 const StoryGridView = ({
   stories,
-  bottomActionLabel,
   pageSize,
   storyMenu,
   renameStory,
@@ -90,9 +89,11 @@ const StoryGridView = ({
       const newFocusId = returnStoryFocusId?.value;
       setActiveGridItemId(newFocusId);
       // grab the menu button and refocus
-      itemRefs.current?.[newFocusId]
-        ?.querySelector(`.${CONTEXT_MENU_BUTTON_CLASS}`)
-        ?.focus();
+      const firstFocusableElement = itemRefs.current?.[
+        newFocusId
+      ]?.querySelectorAll(['button', 'a'])?.[0];
+
+      firstFocusableElement?.focus();
     }
   }, [activeGridItemId, returnStoryFocusId]);
 
@@ -144,12 +145,11 @@ const StoryGridView = ({
       stories.map((story) => {
         return (
           <StoryGridItem
-            bottomActionLabel={bottomActionLabel}
-            handleFocus={() => {
-              setActiveGridItemId(story.id);
-            }}
+            handleFocus={() => setActiveGridItemId(story.id)}
             isActive={activeGridItemId === story.id}
-            itemRefs={itemRefs}
+            ref={(el) => {
+              itemRefs.current[story.id] = el;
+            }}
             key={story.id}
             pageSize={pageSize}
             renameStory={renameStory}
@@ -158,14 +158,7 @@ const StoryGridView = ({
           />
         );
       }),
-    [
-      activeGridItemId,
-      bottomActionLabel,
-      modifiedStoryMenu,
-      pageSize,
-      renameStory,
-      stories,
-    ]
+    [activeGridItemId, modifiedStoryMenu, pageSize, renameStory, stories]
   );
 
   return (
@@ -183,11 +176,8 @@ const StoryGridView = ({
   );
 };
 
-const ActionLabel = PropTypes.oneOfType([PropTypes.string, PropTypes.node]);
-
 StoryGridView.propTypes = {
   stories: StoriesPropType,
-  bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,

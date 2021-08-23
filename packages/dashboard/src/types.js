@@ -41,6 +41,10 @@ export const StoryPropType = PropTypes.shape({
   pages: PropTypes.arrayOf(StoryPropTypes.page),
   modified: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   author: PropTypes.string,
+  capabilities: PropTypes.shape({
+    hasDeleteAction: PropTypes.bool,
+    hasEditAction: PropTypes.bool,
+  }),
 });
 
 export const TemplatePropType = PropTypes.shape({

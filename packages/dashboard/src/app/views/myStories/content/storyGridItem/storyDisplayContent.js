@@ -34,7 +34,6 @@ import {
   CardDetailsColumn,
   Row,
   Title,
-  TitleLink,
   DetailCopy,
   LockAvatar,
   LockedRow,
@@ -53,9 +52,7 @@ const StoryDisplayContent = ({
   onEditComplete,
   onEditCancel,
   status,
-  tabIndex,
   title,
-  titleLink,
 }) => {
   const displayDateText = useMemo(() => {
     if (!displayDate) {
@@ -127,21 +124,7 @@ const StoryDisplayContent = ({
       ) : (
         <Row>
           {isLocked && <LockIcon />}
-          {titleLink ? (
-            <TitleLink
-              href={titleLink}
-              tabIndex={tabIndex}
-              aria-label={sprintf(
-                /* translators: %s: title*/
-                __('Open %s in editor', 'web-stories'),
-                title
-              )}
-            >
-              {formattedTitle}
-            </TitleLink>
-          ) : (
-            <Title>{formattedTitle}</Title>
-          )}
+          <Title>{formattedTitle}</Title>
         </Row>
       )}
       <CardDetailsGrid>
@@ -171,9 +154,7 @@ StoryDisplayContent.propTypes = {
   lockUser: PropTypes.object,
   onEditComplete: PropTypes.func,
   onEditCancel: PropTypes.func,
-  tabIndex: PropTypes.number,
   title: PropTypes.string.isRequired,
-  titleLink: PropTypes.string,
   status: DashboardStatusesPropType,
 };
 
