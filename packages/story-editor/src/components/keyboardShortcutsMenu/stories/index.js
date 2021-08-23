@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -24,6 +27,16 @@ export default {
   component: ShortcutMenu,
 };
 
+// Make the menu a little easier to see in isolation on storyBook.
+const Container = styled.div`
+  width: 800px;
+  height: 100vh;
+  margin: -50px 10px 0;
+`;
 export const _default = () => {
-  return <ShortcutMenu />;
+  return (
+    <Container>
+      <ShortcutMenu />
+    </Container>
+  );
 };
