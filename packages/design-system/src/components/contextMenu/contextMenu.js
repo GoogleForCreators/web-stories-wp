@@ -33,7 +33,7 @@ const ContextMenu = ({ animate, isAlwaysVisible, items, ...props }) => {
   );
 
   return (
-    <div style={{ zIndex: 2 }}>
+    <>
       <Wrapper
         role={isAlwaysVisible ? '' : 'dialog'}
         isOpen={isAlwaysVisible || props.isOpen}
@@ -42,7 +42,7 @@ const ContextMenu = ({ animate, isAlwaysVisible, items, ...props }) => {
         <Shadow />
       </Wrapper>
       {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
-    </div>
+    </>
   );
 };
 ContextMenu.propTypes = {
