@@ -57,6 +57,8 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
     return message;
   }, [allowedImageFileTypes]);
 
+  const options = hasUploadMediaAction ? ['edit', 'remove'] : ['remove'];
+
   return (
     <StyledMedia
       value={icon || ''}
@@ -72,8 +74,8 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
       type={allowedImageMimeTypes}
       isLoading={isLoading}
       variant={MEDIA_VARIANTS.CIRCLE}
-      canUpload={hasUploadMediaAction}
-      menuOptions={icon ? ['edit', 'remove'] : []}
+      canUpload={(icon && !hasUploadMediaAction) || hasUploadMediaAction}
+      menuOptions={icon ? options : []}
       {...rest}
     />
   );
