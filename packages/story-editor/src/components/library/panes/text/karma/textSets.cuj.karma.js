@@ -33,6 +33,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
+    fixture.setFlags({ enableSmartTextSetsColor: true });
     await fixture.render();
     await fixture.editor.library.textTab.click();
   });
@@ -154,5 +155,34 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     textSets = fixture.editor.library.text.textSets;
     await fixture.events.click(textSets[0]);
     await fixture.snapshot('Steps text set positioning');
+  });
+
+  describe('Easier/smarter text set color', () => {
+    it('should add text color based on background', async () => {
+      const getSelection = async () => {
+        const storyContext = await fixture.renderHook(() => useStory());
+        return storyContext.state.selectedElements;
+      };
+
+      await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
+      );
+      await fixture.events.keyboard.type('000');
+      await fixture.events.keyboard.press('Tab');
+
+      await waitFor(
+        () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+        { timeout: 2000 }
+      );
+      const textSets = fixture.editor.library.text.textSets;
+      await fixture.events.click(textSets[1]);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      const selection = await getSelection();
+      // Text color should be changed to white, since it's placed on a dark background.
+      expect(selection[1].content).toEqual(
+        '<span style="font-weight: 600; color: #fff; letter-spacing: 0.05em; text-transform: uppercase">Category</span>'
+      );
+    });
   });
 });
