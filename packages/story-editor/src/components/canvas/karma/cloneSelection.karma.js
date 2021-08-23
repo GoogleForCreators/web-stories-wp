@@ -76,7 +76,6 @@ fdescribe('Clone element integration', () => {
   });
 
   it('should correctly clone 1 element', async () => {
-    await fixture.snapshot('image is selected');
     // Press clone shortcut
     await fixture.events.keyboard.shortcut('mod+d');
     // Expect a new image to have been added
