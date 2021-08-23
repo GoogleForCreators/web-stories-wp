@@ -3,13 +3,13 @@
  * Class Media_Hotlinking_Controller
  *
  * @package   Google\Web_Stories
- * @copyright 2020 Google LLC
+ * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/google/web-stories-wp
  */
 
 /**
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ class Media_Hotlinking_Controller extends REST_Controller {
 	}
 
 	/**
-	 * Registers routes for links.
+	 * Registers routes for urls.
 	 *
 	 * @since 1.11.0
 	 *
@@ -113,24 +113,35 @@ class Media_Hotlinking_Controller extends REST_Controller {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
-		$headers = wp_remote_retrieve_headers( $response );
-
+		$headers   = wp_remote_retrieve_headers( $response );
 		$mime_type = $headers['content-type'];
+		$file_size = (int) $headers['content-length'];
 
-		$path = wp_parse_url( $url, PHP_URL_PATH );
+		$path      = wp_parse_url( $url, PHP_URL_PATH );
+		$file_name = basename( $path );
+
 		$exts = $this->get_file_type_exts( [ $mime_type ] );
 		$ext  = '';
 		if ( $exts ) {
 			$ext = end( $exts );
 		}
-		$file_size = (int) $headers['content-length'];
 
-		$file_name = basename( $path );
-		$data      = [
+		$allowed_mime_types = $this->get_allowed_mime_types();
+		$type               = '';
+		foreach ( $allowed_mime_types as $key => $mime_types ) {
+			if ( in_array( $mime_type, $mime_types, true ) ) {
+				$type = $key;
+				break;
+			}
+		}
+
+
+		$data = [
 			'ext'       => $ext,
 			'file_name' => $file_name,
 			'file_size' => $file_size,
 			'mime_type' => $mime_type,
+			'type'      => $type,
 		];
 
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
@@ -163,6 +174,7 @@ class Media_Hotlinking_Controller extends REST_Controller {
 				$check = rest_validate_value_from_schema( $link[ $field ], $args, $field );
 				if ( is_wp_error( $check ) ) {
 					$error->add( 'rest_invalid_' . $field, $check->get_error_message(), [ 'status' => 400 ] );
+					continue;
 				}
 
 				$data[ $field ] = rest_sanitize_value_from_schema( $link[ $field ], $args, $field );
@@ -177,10 +189,7 @@ class Media_Hotlinking_Controller extends REST_Controller {
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
 
-		// Wrap the data in a response object.
-		$response = rest_ensure_response( $data );
-
-		return $response;
+		return rest_ensure_response( $data );
 	}
 
 	/**
@@ -196,6 +205,7 @@ class Media_Hotlinking_Controller extends REST_Controller {
 		}
 
 		$allowed_mime_types = $this->get_allowed_mime_types();
+		$types              = array_keys( $allowed_mime_types );
 		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
 		$exts               = $this->get_file_type_exts( $allowed_mime_types );
 
@@ -226,6 +236,12 @@ class Media_Hotlinking_Controller extends REST_Controller {
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'enum'        => $allowed_mime_types,
 				],
+				'type'      => [
+					'description' => __( 'Type', 'web-stories' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'enum'        => $types,
+				],
 			],
 		];
 
@@ -235,7 +251,7 @@ class Media_Hotlinking_Controller extends REST_Controller {
 	}
 
 	/**
-	 * Checks if current user can process links.
+	 * Checks if current user can process urls.
 	 *
 	 * @since 1.11.0
 	 *
@@ -285,9 +301,9 @@ class Media_Hotlinking_Controller extends REST_Controller {
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params() {
+	public function get_collection_params(): array {
 		return [
-			'context' => $this->get_context_param(),
+			'context' => $this->get_context_param( [ 'default' => 'view' ] ),
 			'url'     => [
 				'description'       => __( 'The URL to process.', 'web-stories' ),
 				'required'          => true,
