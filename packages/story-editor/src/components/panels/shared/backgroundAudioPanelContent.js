@@ -103,7 +103,9 @@ function BackgroundAudioPanelContent({
       {backgroundAudio?.src && (
         <Row>
           <AudioPlayer
-            title={backgroundAudio?.src.substring(backgroundAudio?.src.lastIndexOf('/') + 1)}
+            title={backgroundAudio?.src.substring(
+              backgroundAudio?.src.lastIndexOf('/') + 1
+            )}
             src={backgroundAudio?.src}
             mimeType={backgroundAudio?.mimeType}
           />
