@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -3514,7 +3514,6 @@
             "height": 720,
             "posterId": 0,
             "id": 0,
-            "title": "Man in Blue Crew Neck T-shirt Wearing Headphones",
             "alt": "Man in Blue Crew Neck T-shirt Wearing Headphones",
             "sizes": [],
             "local": false,

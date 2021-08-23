@@ -1,8 +1,7 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -182,7 +181,6 @@
             "width": 1527,
             "height": 1080,
             "id": 0,
-            "title": "Network services and network security",
             "alt": "Network services and network security",
             "sizes": [],
             "local": false,
@@ -201,6 +199,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "55dd9528-0f50-43bc-bffd-981a5857ceda",
@@ -217,7 +216,6 @@
       "pageTemplateType": "cover"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -251,7 +249,6 @@
             "width": 1527,
             "height": 1080,
             "id": 0,
-            "title": "Smart device and web data cloud savings and analysis",
             "alt": "Smart device and web data cloud savings and analysis",
             "sizes": [],
             "local": false,
@@ -343,6 +340,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "a85d59db-d3ee-4953-a200-1a9004be2eaa",
@@ -618,7 +616,6 @@
             "width": 824,
             "height": 976,
             "id": 0,
-            "title": "Screenshot of chrome browser settings with a pointer on Passwords menu",
             "alt": "Screenshot of chrome browser settings with a pointer on Passwords menu",
             "sizes": [],
             "local": false,
@@ -985,7 +982,6 @@
             "width": 824,
             "height": 976,
             "id": 0,
-            "title": "Screenshot of a browser extension with information on blocked URLs",
             "alt": "Screenshot of a browser extension with information on blocked URLs",
             "sizes": [],
             "local": false,
@@ -1023,7 +1019,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1057,7 +1052,6 @@
             "width": 1527,
             "height": 1080,
             "id": 0,
-            "title": "Businessman standing on magnifying glass analyzing data",
             "alt": "Businessman standing on magnifying glass analyzing data",
             "sizes": [],
             "local": false,
@@ -1149,6 +1143,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 0, "g": 145, "b": 202 } },
       "type": "page",
@@ -1415,7 +1410,6 @@
             "width": 824,
             "height": 1098,
             "id": 0,
-            "title": "More tools menu in Chrome browser",
             "alt": "More tools menu in Chrome browser",
             "sizes": [],
             "local": false,
@@ -1712,7 +1706,6 @@
             "width": 824,
             "height": 952,
             "id": 0,
-            "title": "Browser extension details modal with buttons to see more details and to remove the extension",
             "alt": "Browser extension details modal with buttons to see more details and to remove the extension",
             "sizes": [],
             "local": false,
@@ -1752,7 +1745,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1992,7 +1984,6 @@
             "width": 720,
             "height": 540,
             "id": 0,
-            "title": "Illustration of workspace with video call on desktop computer",
             "alt": "Illustration of workspace with video call on desktop computer",
             "sizes": [],
             "local": false,
@@ -2033,7 +2024,6 @@
             "width": 720,
             "height": 540,
             "id": 0,
-            "title": "Illustration of a diverse group of friends or colleagues in a video conference on laptop computer screen",
             "alt": "Illustration of a diverse group of friends or colleagues in a video conference on laptop computer screen",
             "sizes": [],
             "local": false,
@@ -2060,6 +2050,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
