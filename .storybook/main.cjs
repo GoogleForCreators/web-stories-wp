@@ -102,6 +102,17 @@ module.exports = {
           'url-loader',
         ],
         include: [/images\/.*\.svg$/],
+      },
+      {
+        test: /\.(png|jpe?g|gif|webp)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'images',
+            },
+          },
+        ],
       }
     );
 
