@@ -64,7 +64,7 @@ fdescribe('Clone element integration', () => {
     expect(await getNumElements()).toBe(2);
   });
 
-  fit('should correctly clone 1 element', async () => {
+  it('should correctly clone 1 element', async () => {
     // Switch to shapes tab and add a triangle
     await fixture.events.click(fixture.editor.library.shapesTab);
     await fixture.events.click(
