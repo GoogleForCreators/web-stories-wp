@@ -15,33 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'fashion-on-the-go',
-  title: _x('Fashion On The Go', 'template name', 'web-stories'),
-  tags: [
-    _x('Clothing', 'template keyword', 'web-stories'),
-    _x('Sparkle', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Cream', 'color', 'web-stories'), color: '#ffece3' },
-    { label: _x('Orange', 'color', 'web-stories'), color: '#ff3000' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#212121' },
-    { label: _x('Gray', 'color', 'web-stories'), color: '#858280' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-  ],
-  description: __(
-    'The elegant serif Fashion template works well for New York Fashion Week highlights, high fashion shopping guides and accessory trends.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Fashion', 'template vertical', 'web-stories'),
 };

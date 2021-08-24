@@ -42,7 +42,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
   async function navigateToFirstTemplate() {
     const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: /^Explore Templates$/,
+      name: /^Explore Templates/,
     });
 
     await fixture.events.click(exploreTemplatesMenuItem);

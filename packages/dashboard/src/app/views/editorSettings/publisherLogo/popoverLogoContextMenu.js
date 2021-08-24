@@ -20,10 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import {
-  AnimatedContextMenu,
-  MenuItemProps,
-} from '@web-stories-wp/design-system';
+import { ContextMenu, MenuItemProps } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -75,7 +72,8 @@ function PopoverLogoContextMenu({
       >
         <EditPencilIcon aria-hidden="true" />
       </LogoMenuButton>
-      <AnimatedContextMenu
+      <ContextMenu
+        animate
         isOpen={isPopoverMenuOpen}
         data-testid={`publisher-logo-context-menu-${idx}`}
         items={items}
