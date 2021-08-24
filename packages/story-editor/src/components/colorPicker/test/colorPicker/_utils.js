@@ -66,6 +66,16 @@ function arrange(customProps = {}) {
   const getGradientReverse = () =>
     screen.queryByLabelText(/reverse gradient stops/i);
   const getGradientRotate = () => screen.queryByLabelText(/rotate gradient/i);
+  const getSwatchList = (name) => screen.getByRole('listbox', { name });
+  const getSwatchByString = (list, name) =>
+    screen.getByRole('option', { name, container: getSwatchList(list) });
+  const getSelectedSwatch = (list) =>
+    screen.queryByRole('option', {
+      selected: true,
+      container: getSwatchList(list),
+    });
+  const getCustomButton = () => screen.getByRole('button', { name: 'Custom' });
+  const getBackButton = () => screen.getByRole('button', { name: 'Go back' });
   const wrapperRerender = (moreCustomProps) =>
     rerender(
       <ThemeProvider theme={theme}>
@@ -87,6 +97,11 @@ function arrange(customProps = {}) {
     getTempGradientStop,
     getGradientReverse,
     getGradientRotate,
+    getSwatchList,
+    getSwatchByString,
+    getSelectedSwatch,
+    getCustomButton,
+    getBackButton,
     onChange,
     onClose,
     rerender: wrapperRerender,

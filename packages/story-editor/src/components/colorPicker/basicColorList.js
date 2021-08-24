@@ -35,14 +35,19 @@ const focusStyle = css`
     )};
 `;
 
-const SwatchList = styled.div`
+const SwatchList = styled.div.attrs({
+  role: 'listbox',
+})`
   display: flex;
   max-width: 100%;
   flex-wrap: wrap;
   gap: 6px;
 `;
 
-const StyledSwatch = styled(Swatch)`
+const StyledSwatch = styled(Swatch).attrs(({ isSelected }) => ({
+  role: 'option',
+  'aria-selected': isSelected,
+}))`
   ${focusStyle};
 
   ${({ isSelected, theme }) =>
@@ -66,11 +71,12 @@ function BasicColorList({
   handleColorChange,
   allowsOpacity,
   allowsGradient,
+  ...rest
 }) {
   const colorAsBackground = getPatternAsString(color);
 
   return (
-    <SwatchList>
+    <SwatchList {...rest}>
       {colors.map((pattern) => {
         const isTransparentAndInvalid = !allowsOpacity && hasOpacity(pattern);
         const isGradientAndInvalid = !allowsGradient && hasGradient(pattern);
@@ -85,6 +91,7 @@ function BasicColorList({
             pattern={pattern}
             isSelected={isSelected}
             isDisabled={isDisabled}
+            title={patternAsBackground}
           />
         );
       })}
