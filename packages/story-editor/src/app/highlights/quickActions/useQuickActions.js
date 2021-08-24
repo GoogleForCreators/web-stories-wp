@@ -592,6 +592,7 @@ const useQuickActions = () => {
   // switch quick actions based on non-background element type
   switch (selectedElements?.[0]?.type) {
     case ELEMENT_TYPES.IMAGE:
+    case ELEMENT_TYPES.GIF:
       return foregroundImageActions;
     case ELEMENT_TYPES.SHAPE:
       return shapeActions;
