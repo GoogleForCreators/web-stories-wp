@@ -49,28 +49,60 @@ const isDevelopment = process.env.NODE_ENV === 'development';
  */
 const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
+const FFMPEG_CONFIG = {
+  CODEC: [
+    // Use H.264 video codec.
+    '-vcodec',
+    'libx264',
+  ],
+  SCALE: [
+    // Scale down to 720p as recommended by Storytime.
+    // See https://trac.ffmpeg.org/wiki/Scaling
+    // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
+    '-vf',
+    `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
+  ],
+  FPS: [
+    // Reduce to 24fps as recommended by Storytime.
+    // See https://trac.ffmpeg.org/wiki/ChangingFrameRate
+    '-r',
+    '24',
+  ],
+  FASTSTART: [
+    // move some information to the beginning of your file.
+    '-movflags',
+    '+faststart',
+  ],
+  COLOR_PROFILE: [
+    // Simpler color profile
+    '-pix_fmt',
+    'yuv420p',
+  ],
+  PRESET: [
+    // As the name says...
+    '-preset',
+    'fast', // 'veryfast' seems to cause crashes.
+  ],
+  SEEK_TO_START: [
+    // Desired position.
+    // Using as an input option (before -i) saves us some time by seeking to position.
+    '-ss',
+    '00:00:01.000',
+  ],
+  SINGLE_FRAME: [
+    // Stop writing to the stream after 1 frame.
+    '-frames:v',
+    '1',
+  ],
+};
+
 const FFMPEG_SHARED_CONFIG = [
-  // Use H.264 video codec.
-  '-vcodec',
-  'libx264',
-  // Scale down to 720p as recommended by Storytime.
-  // See https://trac.ffmpeg.org/wiki/Scaling
-  // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
-  '-vf',
-  `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
-  // Reduce to 24fps as recommended by Storytime.
-  // See https://trac.ffmpeg.org/wiki/ChangingFrameRate
-  '-r',
-  '24',
-  // move some information to the beginning of your file.
-  '-movflags',
-  '+faststart',
-  // Simpler color profile
-  '-pix_fmt',
-  'yuv420p',
-  // As the name says...
-  '-preset',
-  'fast', // 'veryfast' seems to cause crashes.
+  ...FFMPEG_CONFIG.CODEC,
+  ...FFMPEG_CONFIG.SCALE,
+  ...FFMPEG_CONFIG.FPS,
+  ...FFMPEG_CONFIG.FASTSTART,
+  ...FFMPEG_CONFIG.COLOR_PROFILE,
+  ...FFMPEG_CONFIG.PRESET,
 ];
 
 /**
@@ -148,27 +180,14 @@ function useFFmpeg() {
         const outputFileName = getPosterName(originalFileName);
 
         await ffmpeg.run(
-          // Desired position.
-          // Using as an input option (before -i) saves us some time by seeking to position.
-          '-ss',
-          '00:00:01.000',
+          ...FFMPEG_CONFIG.SEEK_TO_START,
           // Input filename.
           '-i',
           file.name,
-          // Stop writing to the stream after 1 frame.
-          '-frames:v',
-          '1',
-          // Scale down to 720p as recommended by Storytime.
-          // See https://trac.ffmpeg.org/wiki/Scaling
-          // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
-          '-vf',
-          `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
-          // Simpler color profile
-          '-pix_fmt',
-          'yuv420p',
-          // As the name says...
-          '-preset',
-          'fast', // 'veryfast' seems to cause crashes.
+          ...FFMPEG_CONFIG.SINGLE_FRAME,
+          ...FFMPEG_CONFIG.SCALE,
+          ...FFMPEG_CONFIG.COLOR_PROFILE,
+          ...FFMPEG_CONFIG.PRESET,
           // Output filename. MUST be different from input filename.
           tempFileName
         );
