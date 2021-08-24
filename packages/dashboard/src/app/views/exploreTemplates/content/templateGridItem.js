@@ -44,8 +44,8 @@ const TemplateGridItem = forwardRef(
   (
     {
       detailLink,
-      handleCreateStory,
-      handleFocus,
+      onCreateStory,
+      onFocus,
       height,
       id,
       isActive,
@@ -69,7 +69,7 @@ const TemplateGridItem = forwardRef(
         className="templateGridItem"
         data-testid={`template-grid-item-${id}`}
         $posterHeight={height}
-        onFocus={handleFocus}
+        onFocus={onFocus}
       >
         <Container>
           <CardWrapper $isSelected={isActive}>
@@ -104,8 +104,8 @@ const TemplateGridItem = forwardRef(
                 <Button
                   size={BUTTON_SIZES.SMALL}
                   type={BUTTON_TYPES.PRIMARY}
-                  onClick={handleCreateStory}
-                  disabled={!handleCreateStory}
+                  onClick={onCreateStory}
+                  disabled={!onCreateStory}
                   tabIndex={tabIndex}
                   ariaLabel={sprintf(
                     /* translators: %s: template title.*/
@@ -128,8 +128,8 @@ TemplateGridItem.displayName = 'TemplateGridItem';
 
 TemplateGridItem.propTypes = {
   detailLink: PropTypes.string,
-  handleCreateStory: PropTypes.func,
-  handleFocus: PropTypes.func.isRequired,
+  onCreateStory: PropTypes.func,
+  onFocus: PropTypes.func.isRequired,
   height: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
   isActive: PropTypes.bool,

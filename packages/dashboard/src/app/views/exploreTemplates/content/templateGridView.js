@@ -95,8 +95,8 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
         return (
           <TemplateGridItem
             detailLink={resolveRoute(centerTargetAction)}
-            handleCreateStory={() => handleUseStory({ id, title })}
-            handleFocus={() => {
+            onCreateStory={() => handleUseStory({ id, title })}
+            onFocus={() => {
               setActiveGridItemId(id);
             }}
             height={pageSize.height}
