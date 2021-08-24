@@ -89,6 +89,13 @@ function ExploreTemplates() {
     [createStoryFromTemplate, templates]
   );
 
+  const templateActions = useMemo(
+    () => ({
+      createStoryFromTemplate: handleCreateStoryFromTemplate,
+    }),
+    [handleCreateStoryFromTemplate]
+  );
+
   return (
     <Layout.Provider>
       <Header
@@ -108,9 +115,7 @@ function ExploreTemplates() {
         totalTemplates={totalTemplates}
         search={search}
         view={view}
-        templateActions={{
-          createStoryFromTemplate: handleCreateStoryFromTemplate,
-        }}
+        templateActions={templateActions}
       />
       <Layout.Fixed>
         <ScrollToTop />
