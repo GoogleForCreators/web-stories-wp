@@ -145,12 +145,12 @@ class Editor extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool    $replace Bool if to replace editor or not.
-	 * @param WP_Post $post    Current post object.
+	 * @param bool|mixed $replace Bool if to replace editor or not.
+	 * @param WP_Post    $post    Current post object.
 	 *
-	 * @return bool Whether the editor has been replaced.
+	 * @return bool|mixed Whether the editor has been replaced.
 	 */
-	public function replace_editor( $replace, $post ): bool {
+	public function replace_editor( $replace, $post ) {
 		if ( Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
 
 			// Since the 'replace_editor' filter can be run multiple times, only load the
@@ -174,12 +174,12 @@ class Editor extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
-	 * @param string $post_type         The post type being checked.
+	 * @param bool|mixed $use_block_editor  Whether the post type can be edited or not. Default true.
+	 * @param string     $post_type         The post type being checked.
 	 *
-	 * @return bool Whether to use the block editor.
+	 * @return false|mixed Whether to use the block editor.
 	 */
-	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ): bool {
+	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
 		if ( Story_Post_Type::POST_TYPE_SLUG === $post_type ) {
 			return false;
 		}
@@ -303,7 +303,6 @@ class Editor extends Service_Base {
 				'dashboardLink'                => $dashboard_url,
 				'dashboardSettingsLink'        => $dashboard_settings_url,
 				'generalSettingsLink'          => $general_settings_url,
-				'assetsURL'                    => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                       => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'                    => $max_upload_size,
 				'isDemo'                       => $is_demo,
@@ -317,6 +316,7 @@ class Editor extends Service_Base {
 					'stories'       => sprintf( '/web-stories/v1/%s/', $rest_base ),
 					'pageTemplates' => sprintf( '/web-stories/v1/%s/', $page_templates_rest_base ),
 					'media'         => '/web-stories/v1/media/',
+					'hotlink'       => '/web-stories/v1/hotlink/',
 					'link'          => '/web-stories/v1/link/',
 					'statusCheck'   => '/web-stories/v1/status-check/',
 					'metaBoxes'     => $this->meta_boxes->get_meta_box_url( (int) $story_id ),

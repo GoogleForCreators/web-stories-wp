@@ -1,8 +1,7 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -226,6 +225,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "7a40ace1-1e05-43aa-a6ca-861d030984f7",
@@ -257,7 +257,6 @@
       "pageTemplateType": "cover"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -368,6 +367,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "af9baedc-0d75-4340-ad6c-ade749699558",
@@ -401,7 +401,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -631,6 +630,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "e7579782-eeb3-41b0-9737-8b6d57f6bc3b",
@@ -648,7 +648,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -692,6 +691,7 @@
           "loop": true
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -716,7 +716,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -896,6 +895,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "c3fd3bad-e53d-4177-be24-b6ed7a2f9919",
@@ -913,7 +913,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1124,7 +1123,6 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Woman's Face",
             "alt": "Woman's Face",
             "sizes": [],
             "local": false,
@@ -1144,6 +1142,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "3bfd391f-c305-44d6-adf8-41efd93c182c",
@@ -1174,7 +1173,6 @@
       "pageTemplateType": "quote"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1481,6 +1479,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "31a49106-2f25-45e6-ab5e-baa112fcac8d",
@@ -1601,7 +1600,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1781,6 +1779,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "7208af67-7511-4d09-a42e-f3bab2c5dd0a",
@@ -1798,7 +1797,6 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2028,6 +2026,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "5cb72c19-8b4d-4334-8266-4fcadf162a06",
@@ -2058,7 +2057,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2102,6 +2100,7 @@
           "loop": true
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -2130,7 +2129,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2314,7 +2312,6 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Woman in Black Double Breasted Long-sleeved Dress",
             "alt": "Woman in Black Double Breasted Long-sleeved Dress",
             "sizes": [],
             "local": false,
@@ -2500,6 +2497,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "a30ff780-af50-41bb-8a2a-586d586a8150",

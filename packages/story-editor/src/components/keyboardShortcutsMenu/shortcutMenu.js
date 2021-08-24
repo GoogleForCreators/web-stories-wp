@@ -18,35 +18,33 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 import {
-  useCallback,
   useEffect,
   useRef,
   useLayoutEffect,
   useState,
 } from '@web-stories-wp/react';
-import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-import { v4 as uuidv4 } from 'uuid';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
+  themeHelpers,
   useKeyDownEffect,
 } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
-import useFocusTrapping from '../../utils/useFocusTrapping';
 import { ADMIN_TOOLBAR_HEIGHT, HEADER_HEIGHT } from '../../constants';
 import HeaderShortcut from './headerShortcut';
 import LandmarkShortcuts from './landmarkShortcuts';
 import RegularShortcuts from './regularShortcuts';
 import { TOGGLE_SHORTCUTS_MENU, TOP_MARGIN } from './constants';
+import { useKeyboardShortcutsMenu } from './keyboardShortcutsMenuContext';
 
 const BORDER_WIDTH = 1;
 const Container = styled.div`
@@ -71,7 +69,7 @@ const FlexContent = styled.div`
   );
 `;
 
-const CloseContainer = styled.aside`
+const CloseContainer = styled.div`
   position: absolute;
   right: 4px;
   top: 4px;
@@ -80,13 +78,23 @@ const CloseContainer = styled.aside`
 const ScrollableContent = styled.div`
   overflow: auto;
   flex-shrink: 1;
+
+  ${themeHelpers.focusableOutlineCSS};
 `;
 
 const HEADER_ID = `kb-header-${uuidv4()}`;
 
-function ShortcutMenu({ toggleMenu }) {
+function ShortcutMenu() {
+  const anchorRef = useRef();
   const containerRef = useRef();
-  const closeRef = useRef();
+
+  const { close, toggleMenu, isOpen } = useKeyboardShortcutsMenu(
+    ({ actions, state }) => ({
+      toggleMenu: actions.toggleMenu,
+      close: actions.close,
+      isOpen: state.isOpen,
+    })
+  );
 
   const [bottomOffset, setBottomOffset] = useState(0);
   useLayoutEffect(() => {
@@ -112,51 +120,38 @@ function ShortcutMenu({ toggleMenu }) {
     return () => window.removeEventListener('resize', calc);
   }, []);
 
-  const handleCloseClick = useCallback(
-    (e) => toggleMenu(e, false),
-    [toggleMenu]
-  );
-
   useEffect(() => {
-    // When the popup opens, move focus inside it
-    // However, only move it to the close button if the user actually uses the keyboard
-    // otherwise the close button hover state will be triggered for a mouse user.
-    const targetRef = isKeyboardUser() ? closeRef : containerRef;
-    targetRef.current?.focus?.();
-  }, []);
+    if (isOpen && anchorRef.current) {
+      anchorRef.current.focus();
+    }
+  }, [isOpen]);
 
   useKeyDownEffect(containerRef, TOGGLE_SHORTCUTS_MENU, toggleMenu, [
     toggleMenu,
   ]);
 
-  useKeyDownEffect(containerRef, 'esc', toggleMenu);
-  useFocusTrapping({ ref: containerRef });
-
-  const closeLabel = __('Close Menu', 'web-stories');
+  useKeyDownEffect(containerRef, 'esc', close);
 
   return (
-    <Container
-      ref={containerRef}
-      tabIndex="-1"
-      role="list"
-      aria-labelledby={HEADER_ID}
-    >
+    <Container ref={containerRef}>
       <CloseContainer>
         <Button
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.TERTIARY}
+          ref={anchorRef}
+          type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
-          ref={closeRef}
-          onClick={handleCloseClick}
-          title={closeLabel}
-          aria-label={closeLabel}
+          variant={BUTTON_VARIANTS.CIRCLE}
+          onClick={close}
+          aria-label={__('Close Menu', 'web-stories')}
         >
-          <Icons.CrossSmall />
+          <Icons.Cross />
         </Button>
       </CloseContainer>
+
       <FlexContent bottomOffset={bottomOffset}>
         <HeaderShortcut id={HEADER_ID} />
-        <ScrollableContent>
+        {/* disable reason: scrollable content must be scrollable with keyboard */}
+        {/*eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex */}
+        <ScrollableContent role="presentation" tabIndex={0}>
           <LandmarkShortcuts />
           <RegularShortcuts />
         </ScrollableContent>
@@ -164,9 +159,5 @@ function ShortcutMenu({ toggleMenu }) {
     </Container>
   );
 }
-
-ShortcutMenu.propTypes = {
-  toggleMenu: PropTypes.func.isRequired,
-};
 
 export default ShortcutMenu;

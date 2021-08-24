@@ -36,18 +36,16 @@ describe('Web Stories Widget Block', () => {
     await deleteWidgets();
   });
 
-  // Disable reason: https://github.com/google/web-stories-wp/issues/8402
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert a new web stories block', async () => {
+  it('should insert a new web stories block', async () => {
     await visitBlockWidgetScreen();
     await expect(page).toClick('button[aria-label="Add block"]');
     await page.type('.block-editor-inserter__search-input', 'Web Stories');
     await expect(page).toClick('button span', { text: 'Web Stories' });
 
     await page.waitForSelector('.web-stories-block-configuration-panel');
-    await expect(page).toMatchElement('.web-stories-block-configuration-panel');
+    await expect(page).toClick('.web-stories-block-configuration-panel');
 
-    await expect(page).toClick('button', { text: 'Story URL' });
+    await expect(page).toClick('button[aria-label="Embed a visual story."]');
 
     await expect(page).toMatchElement('input[aria-label="Story URL"]');
 

@@ -63,11 +63,14 @@ class PluginActionLinks extends Service_Base {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param  array $links Plugin action links.
+	 * @param  array|mixed $links Plugin action links.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
-	public function action_links( $links ): array {
+	public function action_links( $links ) {
+		if ( ! is_array( $links ) ) {
+			return $links;
+		}
 		$slug    = sprintf( 'edit.php?post_type=%s&page=stories-dashboard#/editor-settings', Story_Post_Type::POST_TYPE_SLUG );
 		$url     = get_admin_url( null, $slug );
 		$links[] = sprintf(

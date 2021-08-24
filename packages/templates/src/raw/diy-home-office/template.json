@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -65,7 +65,6 @@
             "width": 133,
             "height": 132,
             "id": 0,
-            "title": "House Symbol in circle.",
             "alt": "House Symbol in circle.",
             "sizes": [],
             "local": false,

@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -987,7 +987,6 @@
             "height": 720,
             "posterId": 0,
             "id": 0,
-            "title": "Hollywood, California",
             "alt": "Hollywood, California",
             "sizes": [],
             "local": false,
@@ -1970,7 +1969,6 @@
             "height": 960,
             "posterId": 0,
             "id": 0,
-            "title": "Turned-on filament bulb lights at bar counter",
             "alt": "Turned-on filament bulb lights at bar counter",
             "sizes": [],
             "local": false,
@@ -3126,7 +3124,6 @@
             "id": 0,
             "length": 13,
             "lengthFormatted": "0:13",
-            "title": "AERIAL Downtown Los Angeles with Dodger Stadium in the front - stock video",
             "alt": "AERIAL Downtown Los Angeles with Dodger Stadium in the front - stock video",
             "sizes": [],
             "local": false,

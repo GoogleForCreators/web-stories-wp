@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -24,7 +24,6 @@
             "width": 206,
             "height": 366,
             "id": 0,
-            "title": "page1_bg-alt",
             "alt": "page1_bg-alt",
             "local": false,
             "sizes": []
@@ -96,7 +95,6 @@
             "width": 32,
             "height": 10,
             "id": 0,
-            "title": "page1_logo-generic",
             "alt": "page1_logo-generic",
             "local": false,
             "sizes": []
