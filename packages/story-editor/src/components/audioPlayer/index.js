@@ -66,6 +66,10 @@ const Wrapper = styled.div(
   `
 );
 
+const Audio = styled.audio`
+  display: none;
+`;
+
 function AudioPlayer({ title, src, mimeType }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -91,10 +95,10 @@ function AudioPlayer({ title, src, mimeType }) {
 
   return (
     <Wrapper>
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <audio crossOrigin="anonymous" loop ref={playerRef}>
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption */ }
+      <Audio crossOrigin="anonymous" loop ref={playerRef}>
         <source src={src} type={mimeType} />
-      </audio>
+      </Audio>
       <div>{title}</div>
       <div>
         {isPlaying ? (
