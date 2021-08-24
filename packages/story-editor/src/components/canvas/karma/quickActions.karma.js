@@ -502,7 +502,7 @@ describe('Quick Actions integration', () => {
       // The "Replace background media" quick action also triggers a help center tip which steals focus.
       // Open the tip now to avoid the focus stealing after the quick menu button is clicked.
       const { actions } = await fixture.renderHook(() => useHelpCenter());
-      actions.openToUnreadTip.text(KEYS.ADD_BACKGROUND_MEDIA);
+      actions.openToUnreadTip(KEYS.ADD_BACKGROUND_MEDIA);
 
       // change tab to make sure tab isn't selected before quick action
       // hide 3p modal before we click the quick action
