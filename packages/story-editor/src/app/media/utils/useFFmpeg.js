@@ -172,8 +172,10 @@ function useFFmpeg() {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_video_poster_ffmpeg');
 
+      let ffmpeg;
+
       try {
-        const ffmpeg = await getFFmpegInstance(file);
+        ffmpeg = await getFFmpegInstance(file);
 
         const tempFileName = uuidv4() + '.' + MEDIA_POSTER_IMAGE_FILE_TYPE;
         const originalFileName = getFileName(file);
@@ -193,6 +195,7 @@ function useFFmpeg() {
         );
 
         const data = ffmpeg.FS('readFile', tempFileName);
+
         return new File(
           [new Blob([data.buffer], { type: MEDIA_POSTER_IMAGE_MIME_TYPE })],
           outputFileName,
@@ -201,9 +204,18 @@ function useFFmpeg() {
           }
         );
       } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+
         trackError('video_poster_generation_ffmpeg', err.message);
+
         throw err;
       } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+
         trackTiming();
       }
     },
@@ -221,8 +233,10 @@ function useFFmpeg() {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_video_transcoding');
 
+      let ffmpeg;
+
       try {
-        const ffmpeg = await getFFmpegInstance(file);
+        ffmpeg = await getFFmpegInstance(file);
 
         const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
         const outputFileName =
@@ -238,6 +252,7 @@ function useFFmpeg() {
         );
 
         const data = ffmpeg.FS('readFile', tempFileName);
+
         return new File(
           [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
           outputFileName,
@@ -246,9 +261,18 @@ function useFFmpeg() {
           }
         );
       } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+
         trackError('video_transcoding', err.message);
+
         throw err;
       } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+
         trackTiming();
       }
     },
@@ -266,8 +290,10 @@ function useFFmpeg() {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_mute_video_transcoding');
 
+      let ffmpeg;
+
       try {
-        const ffmpeg = await getFFmpegInstance(file);
+        ffmpeg = await getFFmpegInstance(file);
 
         const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
         const outputFileName =
@@ -286,6 +312,7 @@ function useFFmpeg() {
         );
 
         const data = ffmpeg.FS('readFile', tempFileName);
+
         return new File(
           [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
           outputFileName,
@@ -294,9 +321,18 @@ function useFFmpeg() {
           }
         );
       } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(err);
+
         trackError('mute_video_transcoding', err.message);
+
         throw err;
       } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+
         trackTiming();
       }
     },
@@ -314,8 +350,10 @@ function useFFmpeg() {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_gif_conversion');
 
+      let ffmpeg;
+
       try {
-        const ffmpeg = await getFFmpegInstance(file);
+        ffmpeg = await getFFmpegInstance(file);
 
         const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
         const outputFileName =
@@ -331,6 +369,7 @@ function useFFmpeg() {
         );
 
         const data = ffmpeg.FS('readFile', tempFileName);
+
         return new File(
           [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
           outputFileName,
@@ -339,9 +378,18 @@ function useFFmpeg() {
           }
         );
       } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+
         trackError('gif_conversion', err.message);
+
         throw err;
       } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+
         trackTiming();
       }
     },
