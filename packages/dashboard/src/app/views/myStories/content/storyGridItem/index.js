@@ -117,7 +117,7 @@ const StoryGridItem = forwardRef(
       [
         isLocked,
         formattedTitle,
-        story?.lockUser.name,
+        story?.lockUser?.name,
         story.id,
         isActive,
         tabIndex,
@@ -158,6 +158,7 @@ const StoryGridItem = forwardRef(
               {story?.capabilities?.hasEditAction && (
                 <ScrimAnchor
                   className="grid-item-anchor"
+                  data-testid="edit-story-grid-link"
                   tabIndex={tabIndex}
                   href={story.editStoryLink}
                 >
