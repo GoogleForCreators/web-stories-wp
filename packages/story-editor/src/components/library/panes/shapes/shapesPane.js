@@ -54,7 +54,7 @@ const SectionContent = styled.div`
 const STICKER_TYPES = Object.keys(STICKERS);
 
 function ShapesPane(props) {
-  const { showTextAndShapesSearchInput, enableStickers } = useFeatures();
+  const { showTextAndShapesSearchInput } = useFeatures();
 
   const ref = useRef();
   useRovingTabIndex({ ref });
@@ -62,7 +62,7 @@ function ShapesPane(props) {
   const stickersRef = useRef(null);
   useRovingTabIndex({ ref: stickersRef });
   return (
-    <Pane id={paneId} {...props} isOverflowScrollable={enableStickers}>
+    <Pane id={paneId} {...props} isOverflowScrollable>
       {showTextAndShapesSearchInput && (
         <SearchInput
           initialValue={''}
@@ -81,22 +81,20 @@ function ShapesPane(props) {
           ))}
         </SectionContent>
       </Section>
-      {enableStickers && (
-        <Section
-          data-testid="stickers-library-pane"
-          title={__('Stickers', 'web-stories')}
-        >
-          <SectionContent ref={stickersRef}>
-            {STICKER_TYPES.map((stickerType, i) => (
-              <StickerPreview
-                key={stickerType}
-                index={i}
-                stickerType={stickerType}
-              />
-            ))}
-          </SectionContent>
-        </Section>
-      )}
+      <Section
+        data-testid="stickers-library-pane"
+        title={__('Stickers', 'web-stories')}
+      >
+        <SectionContent ref={stickersRef}>
+          {STICKER_TYPES.map((stickerType, i) => (
+            <StickerPreview
+              key={stickerType}
+              index={i}
+              stickerType={stickerType}
+            />
+          ))}
+        </SectionContent>
+      </Section>
     </Pane>
   );
 }

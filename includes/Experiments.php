@@ -232,18 +232,6 @@ class Experiments extends Service_Base {
 			],
 			/**
 			 * Author: @littlemilkstudio
-			 * Issue: 6708
-			 * Creation date: 2021-03-23
-			 */
-			[
-				'name'        => 'enableStickers',
-				'label'       => __( 'Stickers', 'web-stories' ),
-				'description' => __( 'Append sticker buttons to the bottom of the shapes panel in library', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @littlemilkstudio
 			 * Issue: 6379
 			 * Creation date: 2021-03-09
 			 */

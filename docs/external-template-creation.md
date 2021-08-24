@@ -12,7 +12,7 @@ To add a new template to the editor:
 
 1. [Engineer] Commit all SVGs used in the template to the codebase as stickers ([details](#adding-svgs-to-the-codebase-as-stickers)).
 2. [Designer] Create a new story in your shared WP environment and replicate the template design.
-    - SVGs should already be available in the Stickers panel from step (1) &mdash; click on a sticker to insert it into the story. If you can't find the Stickers Panel, make sure the `enableStickers` experiment is turned on.
+    - SVGs should already be available in the Stickers panel from step (1) &mdash; click on a sticker to insert it into the story.
     - Upload (drag & drop) images and videos into the story to add them.
 3. [Engineer] Commit all images & videos used in the template to the codebase.
     - Filenames should follow the existing convention e.g. `travel_page9_bg.jpg`.
@@ -87,7 +87,7 @@ export default {
 };
 ```
 
-Once you've completed this step, your new sticker should now appear with the other stickers appended to the bottom of the shapes panel if the `enableStickers` feature flag is enabled.
+Once you've completed this step, your new sticker should now appear with the other stickers appended to the bottom of the shapes panel.
 
 ### Inserting stickers (SVGs) into a story
 
