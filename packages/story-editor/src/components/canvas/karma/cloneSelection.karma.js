@@ -77,7 +77,7 @@ fdescribe('Clone element integration', () => {
     // Select the added shape.
     const shape = await getElementByIndex(2);
     await clickElement(shape.id);
-
+    await fixture.snapshot('shape selected');
     // Press clone shortcut
     await fixture.events.keyboard.shortcut('mod+d');
     // Expect a new image to have been added
