@@ -29,8 +29,6 @@ import styled, { css } from 'styled-components';
  */
 import { BEZIER } from '../../theme/constants';
 import { CORNER_DIRECTIONS, DIRECTIONS } from '../../utils/directions';
-import Mask from './mask';
-import Menu, { MenuPropTypes } from './menu';
 import { Popover, Shadow } from './styled';
 
 const PERCENTAGE_OFFSET = {
@@ -299,18 +297,4 @@ AnimationContainer.propTypes = {
   children: PropTypes.node,
 };
 
-const AnimatedContextMenu = ({ isAlwaysVisible, items, ...props }) => (
-  <>
-    {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
-    <AnimationContainer isOpen={isAlwaysVisible || props.isOpen}>
-      <Menu aria-expanded={props.isOpen} items={items} {...props} />
-    </AnimationContainer>
-  </>
-);
-AnimatedContextMenu.propTypes = {
-  ...MenuPropTypes,
-  isAlwaysVisible: PropTypes.bool,
-  isOpen: PropTypes.bool,
-};
-
-export default AnimatedContextMenu;
+export default AnimationContainer;
