@@ -47,7 +47,7 @@ import { CardWrapper, CustomCardGridItem, ScrimAnchor } from './components';
 import StoryDisplayContent from './storyDisplayContent';
 
 const StoryGridItem = forwardRef(
-  ({ handleFocus, isActive, pageSize, renameStory, story, storyMenu }, ref) => {
+  ({ onFocus, isActive, pageSize, renameStory, story, storyMenu }, ref) => {
     const { enablePostLocking } = useFeatures();
     const { userId } = useConfig();
     const tabIndex = isActive ? 0 : -1;
@@ -117,19 +117,19 @@ const StoryGridItem = forwardRef(
       [
         isLocked,
         formattedTitle,
-        isActive,
-        storyMenu,
+        story?.lockUser.name,
         story.id,
-        story?.lockUser,
-        generatedMenuItems,
+        isActive,
         tabIndex,
+        storyMenu,
+        generatedMenuItems,
       ]
     );
 
     return (
       <CustomCardGridItem
         data-testid={`story-grid-item-${story.id}`}
-        onFocus={handleFocus}
+        onFocus={onFocus}
         $posterHeight={pageSize.posterHeight}
         ref={ref}
         aria-label={sprintf(
@@ -193,7 +193,7 @@ const StoryGridItem = forwardRef(
 StoryGridItem.displayName = 'StoryGridItem';
 
 StoryGridItem.propTypes = {
-  handleFocus: PropTypes.func,
+  onFocus: PropTypes.func,
   isActive: PropTypes.bool,
   pageSize: PageSizePropType,
   renameStory: RenameStoryPropType,

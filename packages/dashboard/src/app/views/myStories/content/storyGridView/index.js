@@ -65,6 +65,7 @@ const StoryGridView = ({
   const itemRefs = useRef({});
   const [activeGridItemId, setActiveGridItemId] = useState();
   const activeGridItemIdRef = useRef();
+  const gridItemIds = useMemo(() => stories.map(({ id }) => id), [stories]);
 
   useGridViewKeys({
     containerRef,
@@ -97,12 +98,32 @@ const StoryGridView = ({
     }
   }, [activeGridItemId, returnStoryFocusId]);
 
-  // when keyboard focus changes through FocusableGridItem immediately focus the edit preview layer on top of preview
+  // when keyboard focus changes through FocusableGridItem
+  // immediately focus the edit preview layer on top of preview
   useEffect(() => {
     if (activeGridItemId) {
       activeGridItemIdRef.current = activeGridItemId;
     }
   }, [activeGridItemId]);
+
+  // Additional functionality needed when closing context menus to maintain grid item focus
+  const handleMenuToggle = useCallback(
+    (evt, id) => {
+      storyMenu.handleMenuToggle(id);
+      // Conditionally return the focus to the grid when menu is closed
+      if (id < 0 && evt?.keyCode === 9) {
+        // Menu is closing.
+        const isNext = !evt?.shiftKey;
+        const idToFocus = isNext
+          ? gridItemIds[gridItemIds.indexOf(activeGridItemId) + 1]
+          : activeGridItemId;
+        returnStoryFocusId.set(idToFocus);
+        activeGridItemIdRef.current = null;
+        setActiveGridItemId(null);
+      }
+    },
+    [activeGridItemId, gridItemIds, returnStoryFocusId, storyMenu]
+  );
 
   // if keyboard is used instead of mouse the useFocusOut doesn't get triggered
   // that is where we are setting active grid item ID to null
@@ -118,6 +139,7 @@ const StoryGridView = ({
   const modifiedStoryMenu = useMemo(() => {
     return {
       ...storyMenu,
+      handleMenuToggle,
       menuItemActions: {
         ...storyMenu.menuItemActions,
         [STORY_CONTEXT_MENU_ACTIONS.DELETE]: (story) => {
@@ -138,14 +160,14 @@ const StoryGridView = ({
         },
       },
     };
-  }, [manuallySetFocusOut, storyMenu]);
+  }, [handleMenuToggle, manuallySetFocusOut, storyMenu]);
 
   const memoizedStoryGrid = useMemo(
     () =>
       stories.map((story) => {
         return (
           <StoryGridItem
-            handleFocus={() => setActiveGridItemId(story.id)}
+            onFocus={() => setActiveGridItemId(story.id)}
             isActive={activeGridItemId === story.id}
             ref={(el) => {
               itemRefs.current[story.id] = el;
