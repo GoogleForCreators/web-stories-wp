@@ -87,7 +87,9 @@ export const ScrimAnchor = styled.a`
   box-sizing: border-box;
   border-radius: ${({ theme }) => theme.borders.radius.medium};
 
-  &:hover {
+  &:hover,
+  &:focus {
+    box-shadow: none;
     border: ${({ theme }) => `4px solid ${theme.colors.interactiveBg.active}`};
   }
 `;
