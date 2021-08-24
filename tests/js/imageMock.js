@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-/**
- * Internal dependencies
- */
-import ShortcutMenu from '../shortcutMenu';
 
-export default {
-  title: 'Stories Editor/Components/Keyboard Shortcuts Menu',
-  component: ShortcutMenu,
-};
-
-// Make the menu a little easier to see in isolation on storyBook.
-const Container = styled.div`
-  width: 800px;
-  height: 100vh;
-  margin: -50px 10px 0;
-`;
-export const _default = () => {
-  return (
-    <Container>
-      <ShortcutMenu />
-    </Container>
-  );
-};
+export default 'https://example.com/path/to/image.png';

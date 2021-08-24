@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -245,7 +245,6 @@
             "height": 586,
             "posterId": 0,
             "id": 0,
-            "title": "Three Women in Assorted-Color Tops",
             "alt": "Three Women in Assorted-Color Tops",
             "sizes": [],
             "local": false,
@@ -1846,7 +1845,6 @@
             "height": 1920,
             "posterId": 0,
             "id": 0,
-            "title": "Man in Brown T-shirt Standing Beside Woman in Brown Brassiere",
             "alt": "Man in Brown T-shirt Standing Beside Woman in Brown Brassiere",
             "sizes": [],
             "local": false,
@@ -2332,7 +2330,6 @@
             "width": 824,
             "height": 1464,
             "id": 0,
-            "title": "Girl in pinstriped shirt kissing the woman's forehead",
             "alt": "Girl in pinstriped shirt kissing the woman's forehead",
             "sizes": [],
             "local": false,

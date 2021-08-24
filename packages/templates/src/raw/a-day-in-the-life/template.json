@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -32,7 +32,6 @@
             "id": 0,
             "length": 15,
             "lengthFormatted": "0:15",
-            "title": "A person wearing hat and olive green jacket",
             "alt": "A person wearing hat and olive green jacket",
             "sizes": [],
             "local": false,
@@ -262,7 +261,6 @@
             "id": 0,
             "length": 9,
             "lengthFormatted": "0:09",
-            "title": "Hand Washing",
             "alt": "Hand Washing",
             "sizes": [],
             "local": false,
@@ -463,7 +461,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -490,7 +487,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "White soft-tube and brown brush in blue container beside pump bottle",
             "alt": "White soft-tube and brown brush in blue container beside pump bottle",
             "sizes": [],
             "local": false,
@@ -845,6 +841,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "d2002a3e-49c9-4326-83e8-9abb5b63b11c",
@@ -901,7 +898,6 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -932,7 +928,6 @@
             "id": 0,
             "length": 15,
             "lengthFormatted": "0:15",
-            "title": "A man using a jump rope to warm up",
             "alt": "A man using a jump rope to warm up",
             "sizes": [],
             "local": false,
@@ -1095,6 +1090,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "fe33f1e3-c73e-47a2-95f6-281dd743e19c",
@@ -1133,7 +1129,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1171,7 +1166,6 @@
             "id": 0,
             "length": 15,
             "lengthFormatted": "0:15",
-            "title": "Two men doing cardio exercises",
             "alt": "Two men doing cardio exercises",
             "sizes": [],
             "local": false,
@@ -1785,6 +1779,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "3a8d54c6-f283-45c9-9614-c503e14a2900",
@@ -1856,7 +1851,6 @@
       "pageTemplateType": "table"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1887,7 +1881,6 @@
             "id": 0,
             "length": 15,
             "lengthFormatted": "0:15",
-            "title": "Man having conversation with a woman at an outdoor restaurant",
             "alt": "Man having conversation with a woman at an outdoor restaurant",
             "sizes": [],
             "local": false,
@@ -2050,6 +2043,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "ed1b12fc-ea34-448d-9f99-5e764e45db49",
@@ -2088,7 +2082,6 @@
       "pageTemplateType": "section"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2126,7 +2119,6 @@
             "id": 0,
             "length": 15,
             "lengthFormatted": "0:15",
-            "title": "Plating presentation for a serving of mixed sushi",
             "alt": "Plating presentation for a serving of mixed sushi",
             "sizes": [],
             "local": false,
@@ -2891,6 +2883,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "1f7a1fca-7347-4fc4-a96b-2047f020bfd1",
@@ -2976,7 +2969,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3007,7 +2999,6 @@
             "id": 0,
             "length": 13,
             "lengthFormatted": "0:13",
-            "title": "A woman walking at an airpot",
             "alt": "A woman walking at an airpot",
             "sizes": [],
             "local": false,
@@ -3170,6 +3161,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "b0146edd-d9e6-44b1-a578-a413f9d888b8",
@@ -3208,7 +3200,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3239,7 +3230,6 @@
             "id": 0,
             "length": 15,
             "lengthFormatted": "0:15",
-            "title": "Selective focus on a persons hand using a smartphone",
             "alt": "Selective focus on a persons hand using a smartphone",
             "sizes": [],
             "local": false,
@@ -3253,6 +3243,7 @@
           "loop": true
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -3276,7 +3267,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3307,7 +3297,6 @@
             "id": 0,
             "length": 15,
             "lengthFormatted": "0:15",
-            "title": "A person cutting a grilled steak into thin slices",
             "alt": "A person cutting a grilled steak into thin slices",
             "sizes": [],
             "local": false,
@@ -3470,6 +3459,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "2df2ff65-3c18-4abb-8fcf-b84e06b3a8f1",
@@ -3508,7 +3498,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3535,7 +3524,6 @@
             "width": 1620,
             "height": 1080,
             "id": 0,
-            "title": "Grilled meat dish served on white plate",
             "alt": "Grilled meat dish served on white plate",
             "sizes": [],
             "local": false,
@@ -3721,6 +3709,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "0a6ac25f-20f0-4b70-9500-3f44e47c0626",
@@ -3759,7 +3748,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3790,7 +3778,6 @@
             "id": 0,
             "length": 15,
             "lengthFormatted": "0:15",
-            "title": "A man sleeping on his bed",
             "alt": "A man sleeping on his bed",
             "sizes": [],
             "local": false,
@@ -3953,6 +3940,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "5cc9b890-6eae-4f1a-b8c6-3511c543c97a",
@@ -3991,7 +3979,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -4100,7 +4087,6 @@
             "width": 720,
             "height": 1121,
             "id": 0,
-            "title": "Woman in green, red, and floral plunging-neckline top",
             "alt": "Woman in green, red, and floral plunging-neckline top",
             "sizes": [],
             "local": false,
@@ -4134,7 +4120,6 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Man wearing black crew-neck shirt",
             "alt": "Man wearing black crew-neck shirt",
             "sizes": [],
             "local": false,
@@ -4304,6 +4289,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "404b77d4-2792-41fd-a381-ee0ad4081673",
