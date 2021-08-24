@@ -58,10 +58,11 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     const textSets = fixture.editor.library.text.textSets;
     await fixture.events.click(textSets[1]);
 
-    const storyContext = await fixture.renderHook(() => useStory());
-    const selection = storyContext.state.selectedElements;
+    // Wait for text set to be inserted
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+
     // Text sets contain at least 2 elements.
-    expect(selection.length).toBeGreaterThan(1);
+    expect((await getSelection()).length).toBeGreaterThan(1);
   });
 
   it('should allow inserting text set by keyboard', async () => {
@@ -81,10 +82,11 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     expect(activeTextSetId).toBe(documentTestId);
     await fixture.events.keyboard.press('Enter');
 
-    const storyContext = await fixture.renderHook(() => useStory());
-    const selection = storyContext.state.selectedElements;
+    // Wait for text set to be inserted
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+
     // Text sets contain at least 2 elements.
-    expect(selection.length).toBeGreaterThan(1);
+    expect((await getSelection()).length).toBeGreaterThan(1);
   });
 
   // Disable reason: flakey tests.
@@ -110,9 +112,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
 
     // After text set has been added, there should some text elements
     await fixture.snapshot('Text set added');
-
-    const storyContext = await fixture.renderHook(() => useStory());
-    expect(storyContext.state.selectedElements.length).toBeGreaterThan(1);
+    expect((await getSelection()).length).toBeGreaterThan(1);
   });
 
   it('should allow filtering text sets by category', async () => {
@@ -159,11 +159,6 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
 
   describe('Easier/smarter text set color', () => {
     it('should add text color based on background', async () => {
-      const getSelection = async () => {
-        const storyContext = await fixture.renderHook(() => useStory());
-        return storyContext.state.selectedElements;
-      };
-
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
@@ -185,4 +180,9 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       );
     });
   });
+
+  async function getSelection() {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.selectedElements;
+  }
 });
