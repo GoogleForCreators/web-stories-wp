@@ -64,11 +64,20 @@ fdescribe('Clone element integration', () => {
     expect(await getNumElements()).toBe(2);
   });
 
-  it('should correctly clone 1 element', async () => {
+  fit('should correctly clone 1 element', async () => {
     // Switch to shapes tab and add a triangle
     await fixture.events.click(fixture.editor.library.shapesTab);
-    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
+    await fixture.events.click(
+      fixture.editor.library.shapes.shape('Rectangle')
+    );
+
+    // Select background to clear element selection.
+    await clickElement(bg.id);
+
+    // Select the added shape.
     const shape = await getElementByIndex(2);
+    await clickElement(shape.id);
+
     // Press clone shortcut
     await fixture.events.keyboard.shortcut('mod+d');
     // Expect a new image to have been added
@@ -79,7 +88,7 @@ fdescribe('Clone element integration', () => {
     expect(clonedShape).toEqual(
       jasmine.objectContaining({
         mask: {
-          type: 'triangle',
+          type: 'rectangle',
         },
         x: shape.x + 30,
         y: shape.y + 30,
