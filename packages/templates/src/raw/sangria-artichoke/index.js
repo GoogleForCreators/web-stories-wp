@@ -15,37 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'sangria-artichoke',
-  title: _x('Trendy Winter Veggie', 'template name', 'web-stories'),
-  tags: [
-    _x('Food', 'template keyword', 'web-stories'),
-    _x('Healthy', 'template keyword', 'web-stories'),
-    _x('Recipe', 'template keyword', 'web-stories'),
-    _x('How-To', 'template keyword', 'web-stories'),
-    _x('Earthy', 'template keyword', 'web-stories'),
-    _x('Vegan', 'template keyword', 'web-stories'),
-    _x('Green', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Jewel Green', 'color', 'web-stories'), color: '#0e662a' },
-    { label: _x('Tabasco Red', 'color', 'web-stories'), color: '#9f240f' },
-    { label: _x('Yukon Sky Gray', 'color', 'web-stories'), color: '#dfe3e4' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-  ],
-  description: __(
-    'From veggies, with love. This template’s natural green color palette and lively typography will inspire your audience to cook a healthy meal today.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Cooking', 'template vertical', 'web-stories'),
 };

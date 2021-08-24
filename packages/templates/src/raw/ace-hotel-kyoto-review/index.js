@@ -15,37 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'ace-hotel-kyoto-review',
-  title: _x('Ace Hotel Kyoto Review', 'template name', 'web-stories'),
-  tags: [
-    _x('Travel', 'template keyword', 'web-stories'),
-    _x('Reviews', 'template keyword', 'web-stories'),
-    _x('Hotel', 'template keyword', 'web-stories'),
-    _x('Minimal', 'template keyword', 'web-stories'),
-    _x('Green', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Plankton Green', 'color', 'web-stories'), color: '#19584d' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('Rhino Gray-Blue', 'color', 'web-stories'), color: '#374456' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Dawn Gray', 'color', 'web-stories'), color: '#b7bfc9' },
-    { label: _x('Blueberry Gray', 'color', 'web-stories'), color: '#6f7f94' },
-  ],
-  description: __(
-    'With its plain font and boxy design, this template has an industrial and authoritative look. Use photos and videos to create compelling hotel reviews that inspire trust and confidence.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Travel', 'template vertical', 'web-stories'),
 };

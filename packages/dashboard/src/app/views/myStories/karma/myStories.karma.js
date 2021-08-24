@@ -117,7 +117,7 @@ describe('Grid view', () => {
 
   it('should navigate to Explore Templates', async () => {
     const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: new RegExp('^' + PRIMARY_PATHS[2].label + '$'),
+      name: new RegExp('^' + PRIMARY_PATHS[2].label),
     });
 
     await fixture.events.click(exploreTemplatesMenuItem);

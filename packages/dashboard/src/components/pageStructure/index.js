@@ -24,6 +24,8 @@ import {
   useMemo,
   useRef,
   useFocusOut,
+  useEffect,
+  useState,
 } from '@web-stories-wp/react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -36,14 +38,22 @@ import {
   LogoWithTypeCircleColor,
   Text,
   THEME_CONSTANTS,
+  NotificationBubble,
 } from '@web-stories-wp/design-system';
+import { getTemplateMetaData } from '@web-stories-wp/templates';
+import { toDate, differenceInDays, getOptions } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
-import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
+import {
+  PRIMARY_PATHS,
+  SECONDARY_PATHS,
+  Z_INDEX,
+  APP_ROUTES,
+} from '../../constants';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
   MIN_DASHBOARD_WIDTH,
@@ -58,6 +68,17 @@ import {
   NavListItem,
   PathName,
 } from './navigationComponents';
+
+const NEW_TEMPLATE_THRESHOLD_IN_DAYS = 60;
+
+function getNewTemplatesMetaData(metaDataEntries, days) {
+  const currentDate = toDate(new Date(), getOptions());
+  return metaDataEntries.filter((metaData) => {
+    const creationDate = toDate(metaData.creationDate, getOptions());
+    const deltaDays = differenceInDays(currentDate, creationDate);
+    return deltaDays < days;
+  });
+}
 
 export const AppFrame = styled.div`
   width: 100%;
@@ -78,6 +99,23 @@ export const PageContent = styled.div`
     left: 0;
     width: 100%;
   }
+`;
+
+const StyledNotificationBubble = styled(NotificationBubble)`
+  position: absolute;
+  top: 0;
+  left: 11px;
+  transform: translateY(-50%);
+
+  /* prevent active color from applying to bubble inner text */
+  && > span,
+  &&:hover > span {
+    color: ${({ theme }) => theme.colors.bg.primary};
+  }
+`;
+
+const IconWrap = styled.div`
+  position: relative;
 `;
 
 export const LeftRailContainer = styled.nav.attrs({
@@ -110,6 +148,7 @@ export const LoadingContainer = styled.div`
 `;
 
 export function LeftRail() {
+  const [numNewTemplates, setNumNewTemplates] = useState(0);
   const { state } = useRouteHistory();
   const { newStoryURL, version } = useConfig();
   const leftRailRef = useRef(null);
@@ -164,6 +203,24 @@ export function LeftRail() {
     trackClick(evt, path.trackingEvent);
   }, []);
 
+  // See how many templates are new based on the current date
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const metaData = await getTemplateMetaData();
+      if (mounted) {
+        const newTemplates = getNewTemplatesMetaData(
+          metaData,
+          NEW_TEMPLATE_THRESHOLD_IN_DAYS
+        );
+        setNumNewTemplates(newTemplates.length);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <LeftRailContainer
       onClickCapture={onContainerClickCapture}
@@ -190,35 +247,58 @@ export function LeftRail() {
         </Content>
         <Content>
           <NavList>
-            {enabledPrimaryPaths.map(({ Icon, ...path }) => (
-              <NavListItem key={path.value}>
-                <NavLink
-                  active={path.value === state.currentPath}
-                  href={resolveRoute(path.value)}
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  isBold
-                  aria-label={
-                    path.value === state.currentPath
-                      ? sprintf(
-                          /* translators: %s: the current page, for example "My Stories". */
-                          __('%s (active view)', 'web-stories'),
-                          path.label
-                        )
-                      : path.label
-                  }
-                  {...(path.isExternal && {
-                    rel: 'noreferrer',
-                    target: '_blank',
-                    onClick: (evt) => onExternalLinkClick(evt, path),
-                  })}
-                >
-                  {Icon && <Icon width="22px" />}
-                  <PathName as="span" isBold>
-                    {path.label}
-                  </PathName>
-                </NavLink>
-              </NavListItem>
-            ))}
+            {enabledPrimaryPaths.map(({ Icon, ...path }) => {
+              const isNotificationBubbleEnabled =
+                path.value === APP_ROUTES.TEMPLATES_GALLERY &&
+                state.currentPath !== APP_ROUTES.TEMPLATES_GALLERY;
+              const appendNewBadgeToLable = (label) =>
+                isNotificationBubbleEnabled
+                  ? sprintf(
+                      /* translators: 1: current page. 2: number of new templates. */
+                      __('%1$s (%2$s new)', 'web-stories'),
+                      label,
+                      numNewTemplates
+                    )
+                  : label;
+              return (
+                <NavListItem key={path.value}>
+                  <NavLink
+                    active={path.value === state.currentPath}
+                    href={resolveRoute(path.value)}
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    isBold
+                    aria-label={appendNewBadgeToLable(
+                      path.value === state.currentPath
+                        ? sprintf(
+                            /* translators: %s: the current page, for example "My Stories". */
+                            __('%s (active view)', 'web-stories'),
+                            path.label
+                          )
+                        : path.label
+                    )}
+                    {...(path.isExternal && {
+                      rel: 'noreferrer',
+                      target: '_blank',
+                      onClick: (evt) => onExternalLinkClick(evt, path),
+                    })}
+                  >
+                    <IconWrap>
+                      {Icon && <Icon width="22px" />}
+                      {isNotificationBubbleEnabled && numNewTemplates > 0 && (
+                        <StyledNotificationBubble
+                          notificationCount={numNewTemplates}
+                          isSmall
+                        />
+                      )}
+                    </IconWrap>
+
+                    <PathName as="span" isBold>
+                      {path.label}
+                    </PathName>
+                  </NavLink>
+                </NavListItem>
+              );
+            })}
           </NavList>
         </Content>
       </div>
