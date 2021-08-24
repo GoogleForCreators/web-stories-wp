@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import {
   useCallback,
   useEffect,
@@ -33,7 +32,6 @@ import { useGridViewKeys } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { PAGE_WRAPPER } from '../../../../constants';
 import { CardGrid } from '../../../../components';
 import {
   PageSizePropType,
@@ -43,10 +41,6 @@ import {
 import { useConfig } from '../../../config';
 import { resolveRoute } from '../../../router';
 import TemplateGridItem, { FOCUS_TEMPLATE_CLASS } from './templateGridItem';
-
-const GridContainer = styled(CardGrid)`
-  width: calc(100% - ${PAGE_WRAPPER.GUTTER}px);
-`;
 
 function TemplateGridView({ pageSize, templates, templateActions }) {
   const { isRTL, cdnURL } = useConfig();
@@ -123,7 +117,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
   );
   return (
     <div ref={containerRef}>
-      <GridContainer
+      <CardGrid
         pageSize={pageSize}
         isPosterHeight
         role="list"
@@ -131,7 +125,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
         ariaLabel={__('Viewing available templates', 'web-stories')}
       >
         {memoizedTemplateItems}
-      </GridContainer>
+      </CardGrid>
     </div>
   );
 }
