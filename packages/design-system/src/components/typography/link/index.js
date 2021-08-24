@@ -74,7 +74,7 @@ export function Link({ children, ...props }) {
     <StyledAnchor {...props}>
       <ConditionalSpanWrapper isWrapped={isExternalLink}>
         {children}
-        {props.target === '_blank' && <StyledLaunch />}
+        {isExternalLink && <StyledLaunch />}
       </ConditionalSpanWrapper>
     </StyledAnchor>
   );
