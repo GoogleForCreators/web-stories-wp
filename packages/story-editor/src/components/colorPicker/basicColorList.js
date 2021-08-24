@@ -42,14 +42,18 @@ const focusStyle = css`
     )};
 `;
 
-const SwatchList = styled.div`
+const SwatchList = styled.div.attrs({
+  role: 'listbox',
+})`
   display: flex;
   max-width: 100%;
   flex-wrap: wrap;
   gap: 6px;
 `;
 
-const StyledSwatch = styled(Swatch)`
+const StyledSwatch = styled(Swatch).attrs({
+  role: 'option',
+})`
   ${focusStyle};
 
   ${({ isSelected, theme }) =>
