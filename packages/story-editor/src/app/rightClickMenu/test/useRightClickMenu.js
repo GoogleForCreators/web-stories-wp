@@ -52,8 +52,8 @@ jest.mock('@web-stories-wp/tracking');
 const mockEvent = {
   preventDefault: jest.fn(),
   stopPropagation: jest.fn(),
-  offsetX: 500,
-  offsetY: -1230,
+  x: 500,
+  y: -1230,
 };
 
 const defaultCanvasContext = {

@@ -71,7 +71,6 @@ function APIProvider({ children }) {
     },
     encodeMarkup,
     cdnURL,
-    assetsURL,
   } = useConfig();
 
   const pageTemplates = useRef({
@@ -433,15 +432,14 @@ function APIProvider({ children }) {
       // check if pageTemplates have been loaded yet
       if (pageTemplates.current.base.length === 0) {
         pageTemplates.current.base = await getAllTemplates({ cdnURL });
-        pageTemplates.current.withoutImages = removeImagesFromPageTemplates({
-          templates: pageTemplates.current.base,
-          assetsURL,
-        });
+        pageTemplates.current.withoutImages = removeImagesFromPageTemplates(
+          pageTemplates.current.base
+        );
       }
 
       return pageTemplates.current[showImages ? 'base' : 'withoutImages'];
     },
-    [cdnURL, assetsURL]
+    [cdnURL]
   );
 
   const getCustomPageTemplates = useCallback(

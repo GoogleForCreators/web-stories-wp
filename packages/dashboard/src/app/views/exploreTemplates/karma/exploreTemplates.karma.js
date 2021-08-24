@@ -42,7 +42,7 @@ describe('Grid view', () => {
 
   function navigateToExploreTemplates() {
     const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: /^Explore Templates$/,
+      name: /^Explore Templates/,
     });
 
     return fixture.events.click(exploreTemplatesMenuItem);
