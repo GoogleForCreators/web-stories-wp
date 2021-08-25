@@ -518,7 +518,7 @@ class KSES extends Service_Base {
 				'href'  => true,
 				'theme' => true,
 			],
-			'amp-story-page-outline'    => [
+			'amp-story-page-outlink'    => [
 				'cta-image'          => true,
 				'theme'              => true,
 				'cta-accent-color'   => true,
