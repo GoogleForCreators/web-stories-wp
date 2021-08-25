@@ -79,7 +79,6 @@ const defaultConfig = {
   newStoryURL:
     'http://localhost:8899/wp-admin/post-new.php?post_type=web-story',
   wpListURL: 'http://localhost:8899/wp-admin/edit.php?post_type=web-story',
-  assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories/assets',
   cdnURL: 'https://cdn.example.com/',
   version: '1.0.0-alpha.9',
   api: {

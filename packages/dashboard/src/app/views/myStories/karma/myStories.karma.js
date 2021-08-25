@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
 
 /**
@@ -25,7 +25,6 @@ import { getRelativeDisplayDate } from '@web-stories-wp/date';
  */
 import Fixture from '../../../../karma/fixture';
 import {
-  PRIMARY_PATHS,
   STORY_STATUS,
   STORY_STATUSES,
   STORY_VIEWING_LABELS,
@@ -117,13 +116,13 @@ describe('Grid view', () => {
 
   it('should navigate to Explore Templates', async () => {
     const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: new RegExp('^' + PRIMARY_PATHS[2].label + '$'),
+      name: /^Explore Templates/,
     });
+    expect(exploreTemplatesMenuItem).toBeTruthy();
 
     await fixture.events.click(exploreTemplatesMenuItem);
-
-    const templatesGridEl = fixture.screen.getByLabelText(
-      'Available templates'
+    const templatesGridEl = await waitFor(() =>
+      fixture.screen.queryByText('Viewing all templates')
     );
 
     expect(templatesGridEl).toBeTruthy();
@@ -322,10 +321,11 @@ describe('Grid view', () => {
       await fixture.events.keyboard.type(firstStoryTitle);
 
       // Wait for the debounce
-      await fixture.events.sleep(300);
+      await fixture.events.sleep(500);
 
-      const storyElements =
-        fixture.screen.getAllByTestId(/^story-context-menu-/);
+      const storyElements = await waitFor(() =>
+        fixture.screen.getAllByTestId(/^story-context-menu-/)
+      );
 
       expect(storyElements.length).toEqual(
         Object.values(stories).filter(({ title }) =>
@@ -371,6 +371,7 @@ describe('Grid view', () => {
         // eslint-disable-next-line no-await-in-loop
         await fixture.events.keyboard.press('down');
       }
+      await fixture.events.sleep(300);
       expect(activeListItems[activeListItems.length - 1]).toBe(
         document.activeElement
       );

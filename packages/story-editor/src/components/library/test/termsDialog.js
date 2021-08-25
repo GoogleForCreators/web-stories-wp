@@ -55,7 +55,9 @@ jest.mock('@web-stories-wp/design-system', () => ({
 describe('TermsDialog', () => {
   it('should render', () => {
     renderWithTheme(<TermsDialog />);
-    const link = screen.queryByText(/^Learn more/);
+    const link = screen.queryByLabelText(
+      /^Learn more by visiting Web Stories for WordPress/
+    );
     expect(link).toMatchSnapshot();
     expect(localStore.getItemByKey).toHaveBeenCalledWith(
       LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P

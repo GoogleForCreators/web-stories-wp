@@ -13,12 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const SHARED_DEFAULT_ATTRIBUTES = {
+export const SHARED_DEFAULT_CLEARABLE_ATTRIBUTES = {
   opacity: 100,
   flip: {
     vertical: false,
     horizontal: false,
   },
   rotationAngle: 0,
+};
+
+export const SHARED_DEFAULT_ATTRIBUTES = {
+  ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
   lockAspectRatio: true,
 };
