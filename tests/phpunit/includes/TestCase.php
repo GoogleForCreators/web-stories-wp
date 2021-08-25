@@ -34,7 +34,9 @@ abstract class TestCase extends PolyfilledTestCase {
 		unset( $GLOBALS['current_screen'] );
 
 		// WordPress core fails to do this.
-		unset( $GLOBALS['show_admin_bar'], $GLOBALS['wp_meta_boxes'], $GLOBALS['hook_suffix'], $_SERVER['HTTPS'], $_SERVER['REQUEST_URI'], $_GET );
+		unset( $GLOBALS['show_admin_bar'], $GLOBALS['wp_meta_boxes'], $GLOBALS['hook_suffix'], $_SERVER['HTTPS'], $_GET );
+
+		$_SERVER['REQUEST_URI'] = '';
 
 		parent::tearDown();
 	}
