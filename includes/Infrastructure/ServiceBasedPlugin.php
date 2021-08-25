@@ -20,7 +20,6 @@ namespace Google\Web_Stories\Infrastructure;
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\ServiceContainer\LazilyInstantiatedService;
 use WP_Site;
-use function Google\Web_Stories\rewrite_flush;
 
 
 /**

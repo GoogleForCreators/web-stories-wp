@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories\Migrations;
 
-use function Google\Web_Stories\rewrite_flush;
-
 /**
  * Class Rewrite_Flush
  *
