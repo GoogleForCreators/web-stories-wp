@@ -27,7 +27,11 @@
 		<exclude-pattern>tests/*</exclude-pattern>
 	</rule>
 
-	<rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
+	<rule ref="WordPress.Security.NonceVerification">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+
+  <rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
 		<exclude-pattern>tests/*</exclude-pattern>
 	</rule>
 
