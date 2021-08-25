@@ -92,7 +92,7 @@ class Capabilities extends TestCase {
 	 * @group ms-required
 	 */
 	public function test_add_caps_to_roles_multisite() {
-		$blog_id = $this->factory->blog->create();
+		$blog_id = self::factory()->blog->create();
 		switch_to_blog( $blog_id );
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );

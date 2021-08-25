@@ -451,7 +451,7 @@ class Customizer extends TestCase {
 
 		update_option( 'web_stories_customizer_settings', $options );
 
-		$this->factory->post->create(
+		self::factory()->post->create(
 			[
 				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 			]
