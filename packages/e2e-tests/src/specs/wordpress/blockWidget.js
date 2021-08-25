@@ -29,7 +29,7 @@ import {
 
 describe('Web Stories Widget Block', () => {
   minWPVersionRequired('5.8');
-  beforeEach(async () => {
+  beforeAll(async () => {
     await deleteWidgets();
   });
   afterEach(async () => {
