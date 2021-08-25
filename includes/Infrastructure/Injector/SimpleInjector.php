@@ -85,9 +85,7 @@ final class SimpleInjector implements Injector {
 	 * @param Instantiator|null $instantiator Optional. Instantiator to use.
 	 */
 	public function __construct( Instantiator $instantiator = null ) {
-		$this->instantiator = null !== $instantiator
-			? $instantiator
-			: new FallbackInstantiator();
+		$this->instantiator = $instantiator ?? new FallbackInstantiator();
 	}
 
 	/**

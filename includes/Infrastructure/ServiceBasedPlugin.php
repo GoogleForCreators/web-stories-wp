@@ -19,6 +19,7 @@ namespace Google\Web_Stories\Infrastructure;
 
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\ServiceContainer\LazilyInstantiatedService;
+use WP_Site;
 use function Google\Web_Stories\rewrite_flush;
 
 
@@ -128,7 +129,9 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		rewrite_flush();
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+		}
 	}
 
 	/**
@@ -148,7 +151,59 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		rewrite_flush();
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+		}
+	}
+
+	/**
+	 * Hook into site creation on Multisite.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being initialized.
+	 * @return void
+	 */
+	public function initialize_site( $site ) {
+		$this->register_services();
+
+		$site_id = (int) $site->blog_id;
+
+		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
+		switch_to_blog( $site_id );
+
+		foreach ( $this->service_container as $service ) {
+			if ( $service instanceof Site_Initializable ) {
+				$service->initialize_site( $site );
+			}
+		}
+
+		restore_current_blog();
+	}
+
+	/**
+	 * Hook into site removal on Multisite.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being removed.
+	 * @return void
+	 */
+	public function remove_site( $site ) {
+		$this->register_services();
+
+		$site_id = (int) $site->blog_id;
+
+		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
+		switch_to_blog( $site_id );
+
+		foreach ( $this->service_container as $service ) {
+			if ( $service instanceof Site_Removable ) {
+				$service->remove_site( $site );
+			}
+		}
+
+		restore_current_blog();
 	}
 
 	/**
@@ -338,7 +393,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @return ServiceContainer Service container of the plugin.
 	 */
-	public function get_container() {
+	public function get_container(): ServiceContainer {
 		return $this->service_container;
 	}
 

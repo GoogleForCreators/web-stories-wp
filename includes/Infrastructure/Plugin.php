@@ -44,5 +44,5 @@ interface Plugin extends Activateable, Deactivateable, Registerable {
 	 *
 	 * @return ServiceContainer Service container of the plugin.
 	 */
-	public function get_container();
+	public function get_container(): ServiceContainer;
 }

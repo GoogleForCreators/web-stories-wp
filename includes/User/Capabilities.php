@@ -26,15 +26,57 @@
 
 namespace Google\Web_Stories\User;
 
+use Google\Web_Stories\Infrastructure\Activateable;
+use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Infrastructure\Site_Initializable;
+use Google\Web_Stories\Infrastructure\Site_Removable;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Role;
+use WP_Site;
+use function Google\Web_Stories\setup_new_site;
 
 /**
  * Class Capabilities
  *
  * @package Google\Web_Stories\User
  */
-class Capabilities {
+class Capabilities implements Service, Activateable, Site_Initializable, Site_Removable {
+	/**
+	 * Activate the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 * @return void
+	 */
+	public function activate( $network_wide ) {
+		$this->add_caps_to_roles();
+	}
+
+	/**
+	 * Initialize the service on the new site.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being initialized.
+	 * @return void
+	 */
+	public function initialize_site( $site ) {
+		$this->add_caps_to_roles();
+	}
+
+	/**
+	 * Remove the service on the removed site.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being removed.
+	 * @return void
+	 */
+	public function remove_site( WP_Site $site ) {
+		$this->remove_caps_from_roles();
+	}
+
 	/**
 	 * Adds story capabilities to default user roles.
 	 *
@@ -113,7 +155,7 @@ class Capabilities {
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 		$all_capabilities = array_filter(
 			$all_capabilities,
-			function ( $value ) {
+			static function ( $value ) {
 				return 'read' !== $value;
 			}
 		);

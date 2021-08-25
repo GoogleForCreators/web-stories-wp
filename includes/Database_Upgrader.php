@@ -26,15 +26,19 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Activateable;
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Infrastructure\Conditional;
+use Google\Web_Stories\Infrastructure\Site_Initializable;
+use WP_Site;
 
 /**
  * Class Database_Upgrader
  *
  * @package Google\Web_Stories
  */
-class Database_Upgrader extends Service_Base {
+class Database_Upgrader extends Service_Base implements Activateable, Conditional, Site_Initializable {
 
 	/**
 	 * The slug of database option.
@@ -84,6 +88,15 @@ class Database_Upgrader extends Service_Base {
 	private $injector;
 
 	/**
+	 * Database_Upgrader constructor.
+	 *
+	 * @param Injector $injector Injector instance.
+	 */
+	public function __construct( Injector $injector ) {
+		$this->injector = $injector;
+	}
+
+	/**
 	 * Hooked into admin_init and walks through an array of upgrade methods.
 	 *
 	 * @since 1.0.0
@@ -91,28 +104,7 @@ class Database_Upgrader extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		$version = get_option( self::OPTION, '0.0.0' );
-
-		if ( version_compare( WEBSTORIES_DB_VERSION, $version, '=' ) ) {
-			return;
-		}
-
-		$this->injector = Services::get_injector();
-
-		$routines = self::ROUTINES;
-		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
-		$this->finish_up( $version );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action(): string {
-		return 'admin_init';
+		$this->run_upgrades();
 	}
 
 	/**
@@ -124,6 +116,60 @@ class Database_Upgrader extends Service_Base {
 	 */
 	public static function get_registration_action_priority(): int {
 		return 5;
+	}
+
+	/**
+	 * Activate the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 * @return void
+	 */
+	public function activate( $network_wide ) {
+		$this->run_upgrades();
+	}
+
+	/**
+	 * Initialize the service on the new site.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being initialized.
+	 * @return void
+	 */
+	public function initialize_site( $site ) {
+		$this->run_upgrades();
+	}
+
+	/**
+	 * Check whether the conditional object is currently needed.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return bool Whether the conditional object is needed.
+	 */
+	public static function is_needed(): bool {
+		return is_admin();
+	}
+
+	/**
+	 * Run all upgrade routines in order.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @return void
+	 */
+	protected function run_upgrades() {
+		$version = get_option( self::OPTION, '0.0.0' );
+
+		if ( version_compare( WEBSTORIES_DB_VERSION, $version, '=' ) ) {
+			return;
+		}
+
+		$routines = self::ROUTINES;
+		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
+		$this->finish_up( $version );
 	}
 
 	/**
