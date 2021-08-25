@@ -153,17 +153,21 @@ class TinyMCE extends Service_Base {
 	}
 
 	/**
-	 * High jack the tinymce to render an empty script tag for tinymce.
+	 * Hijack the button's script to render an empty script tag.
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param string|mixed $tag The `<script>` tag for the enqueued script.
-	 * @param string       $handle    The script's registered handle.
-	 * @param string       $src       The script's source URL.
+	 * @param string|mixed $tag    The `<script>` tag for the enqueued script.
+	 * @param string       $handle The script's registered handle.
+	 * @param string       $src    The script's source URL.
 	 *
-	 * @return string $tag The `<script>` tag for the enqueued script.
+	 * @return string|mixed The filtered script tag.
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
+		if ( ! is_string( $tag ) ) {
+			return $tag;
+		}
+
 		if ( self::SCRIPT_HANDLE === $handle ) {
 			$tag = str_replace( $src, '', $tag );
 			// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- False positive.

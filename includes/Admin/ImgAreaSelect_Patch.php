@@ -97,7 +97,7 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	 * @param string       $handle The script's registered handle.
 	 * @param string       $src    The script's source URL.
 	 *
-	 * @return string|mixed
+	 * @return string|mixed The filtered script tag.
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
 		if ( self::SCRIPT_HANDLE !== $handle || ! $this->is_edit_screen() ) {

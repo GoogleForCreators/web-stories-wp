@@ -91,7 +91,7 @@ function activate( $network_wide = false ) {
 	setup_new_site();
 
 	// Runs all activateable services.
-	get_plugin_instance()->activate( $network_wide );
+	PluginFactory::create()->activate( $network_wide );
 
 	do_action( 'web_stories_activation', $network_wide );
 }
@@ -184,7 +184,7 @@ function deactivate( $network_wide = false ) {
 	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
 
 	// This will also flush rewrite rules.
-	get_plugin_instance()->deactivate( $network_wide );
+	PluginFactory::create()->deactivate( $network_wide );
 
 	do_action( 'web_stories_deactivation', $network_wide );
 }
@@ -300,6 +300,8 @@ function rest_preload_api_request( $memo, $path ): array {
  * Bootstrap the plugin.
  *
  * @since 1.11.0
+ *
+ * @return void
  */
 function bootstrap_plugin() {
 	PluginFactory::create()->register();
