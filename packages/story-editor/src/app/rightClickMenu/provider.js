@@ -180,8 +180,8 @@ function RightClickMenuProvider({ children }) {
     dispatch({
       type: ACTION_TYPES.OPEN_MENU,
       payload: {
-        x: evt?.offsetX,
-        y: evt?.offsetY,
+        x: evt?.x,
+        y: evt?.y,
       },
     });
 
@@ -1016,14 +1016,7 @@ function RightClickMenuProvider({ children }) {
       onOpenMenu: handleOpenMenu,
       rightClickAreaRef,
     }),
-    [
-      handleCloseMenu,
-      handleOpenMenu,
-      isMenuOpen,
-      menuItems,
-      menuPosition,
-      rightClickAreaRef,
-    ]
+    [handleCloseMenu, handleOpenMenu, isMenuOpen, menuItems, menuPosition]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
