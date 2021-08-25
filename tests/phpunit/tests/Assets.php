@@ -20,10 +20,16 @@ namespace Google\Web_Stories\Tests;
 /**
  * Class Assets
  *
- *
  * @coversDefaultClass \Google\Web_Stories\Assets
  */
 class Assets extends TestCase {
+	public function tearDown() {
+		wp_deregister_script( 'test_script' );
+		wp_deregister_style( 'test_style' );
+
+		parent::tearDown();
+	}
+
 	/**
 	 * @covers ::register_style
 	 */
