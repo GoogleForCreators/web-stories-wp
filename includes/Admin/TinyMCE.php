@@ -157,13 +157,13 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param string $tag    The `<script>` tag for the enqueued script.
-	 * @param string $handle The script's registered handle.
-	 * @param string $src    The script's source URL.
+	 * @param string|mixed $tag The `<script>` tag for the enqueued script.
+	 * @param string       $handle    The script's registered handle.
+	 * @param string       $src       The script's source URL.
 	 *
 	 * @return string $tag The `<script>` tag for the enqueued script.
 	 */
-	public function script_loader_tag( $tag, $handle, $src ): string {
+	public function script_loader_tag( $tag, $handle, $src ) {
 		if ( self::SCRIPT_HANDLE === $handle ) {
 			$tag = str_replace( $src, '', $tag );
 			// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- False positive.

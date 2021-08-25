@@ -29,6 +29,12 @@ use Google\Web_Stories\Tests\TestCase;
  * @coversDefaultClass \Google\Web_Stories\Admin\ImgAreaSelect_Patch
  */
 class ImgAreaSelect_Patch extends TestCase {
+	public function tearDown() {
+		unset( $GLOBALS['current_screen'] );
+
+		parent::tearDown();
+	}
+
 	/**
 	 * @covers ::register
 	 */

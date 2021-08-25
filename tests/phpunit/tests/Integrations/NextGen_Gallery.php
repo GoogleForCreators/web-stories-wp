@@ -24,6 +24,11 @@ use Google\Web_Stories\Tests\TestCase;
  * @coversDefaultClass \Google\Web_Stories\Integrations\NextGen_Gallery
  */
 class NextGen_Gallery extends TestCase {
+	public function tearDown() {
+		unset( $_SERVER['REQUEST_URI'], $_GET[ Story_Post_Type::POST_TYPE_SLUG ] );
+
+		parent::tearDown();
+	}
 	/**
 	 * @covers ::register
 	 */

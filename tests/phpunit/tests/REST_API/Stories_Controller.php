@@ -310,6 +310,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$post               = get_post( $story );
 		list ( $permalink ) = get_sample_permalink( $post->ID, $post->post_title, '' );
+		$permalink          = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
 
 		$data = $response->get_data();
 		$this->assertArrayHasKey( 'preview_link', $data );
