@@ -24,7 +24,7 @@ use Google\Web_Stories\Tests\TestCase;
 use WP_Block_Type_Registry;
 
 /**
- * @coversDefaultClass Block
+ * @coversDefaultClass \Google\Web_Stories\Block\Web_Stories_Block
  */
 class Web_Stories_Block extends TestCase {
 	/** @var Block */

@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 use Google\Web_Stories\AMP_Story_Player_Assets as Assets;
 
 /**
- * @coversDefaultClass Assets
+ * @coversDefaultClass \Google\Web_Stories\AMP_Story_Player_Assets
  */
 class AMP_Story_Player_Assets extends TestCase {
 
