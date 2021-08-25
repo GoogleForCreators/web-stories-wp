@@ -16,17 +16,13 @@
 /**
  * External dependencies
  */
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import {
+  prettifyShortcut,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-/**
- * Internal dependencies
- */
-import { SPECIAL_KEYS } from '../../components/keyboardShortcutsMenu/constants';
-import {
-  cmdOrCtrl,
-  optionOrAlt,
-} from '../../components/keyboardShortcutsMenu/keyboardShortcutList';
 
 export const RIGHT_CLICK_MENU_LABELS = {
   ADD_NEW_PAGE_AFTER: __('Add New Page After', 'web-stories'),
@@ -65,60 +61,20 @@ const StyledKbd = styled(Text).attrs({
 `;
 
 export const RIGHT_CLICK_MENU_SHORTCUTS = {
-  SEND_BACKWARD: (
-    <>
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.DOWN.title}>
-        {SPECIAL_KEYS.DOWN.symbol}
-      </StyledKbd>
-    </>
-  ),
-  SEND_TO_BACK: (
-    <>
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.SHIFT.title}>
-        {SPECIAL_KEYS.SHIFT.symbol}
-      </StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.DOWN.title}>
-        {SPECIAL_KEYS.DOWN.symbol}
-      </StyledKbd>
-    </>
-  ),
-  BRING_FORWARD: (
-    <>
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.UP.title}>
-        {SPECIAL_KEYS.UP.symbol}
-      </StyledKbd>
-    </>
-  ),
-  BRING_TO_FRONT: (
-    <>
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.SHIFT.title}>
-        {SPECIAL_KEYS.SHIFT.symbol}
-      </StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.UP.title}>
-        {SPECIAL_KEYS.UP.symbol}
-      </StyledKbd>
-    </>
-  ),
-  DELETE: (
-    <StyledKbd aria-label={SPECIAL_KEYS.DELETE.title}>
-      {SPECIAL_KEYS.DELETE.symbol}
-    </StyledKbd>
-  ),
+  SEND_BACKWARD: <StyledKbd>{prettifyShortcut('cmd down')}</StyledKbd>,
+  SEND_TO_BACK: <StyledKbd>{prettifyShortcut('cmd shift down')}</StyledKbd>,
+  BRING_FORWARD: <StyledKbd>{prettifyShortcut('cmd up')}</StyledKbd>,
+  BRING_TO_FRONT: <StyledKbd>{prettifyShortcut('cmd shift up')}</StyledKbd>,
+  DELETE: <StyledKbd>{prettifyShortcut('delete')}</StyledKbd>,
   COPY_STYLES: (
     <>
-      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{prettifyShortcut('alt cmd')}</StyledKbd>{' '}
       <StyledKbd>{'O'}</StyledKbd>
     </>
   ),
   PASTE_STYLES: (
     <>
-      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{prettifyShortcut('alt cmd')}</StyledKbd>{' '}
       <StyledKbd>{'P'}</StyledKbd>
     </>
   ),

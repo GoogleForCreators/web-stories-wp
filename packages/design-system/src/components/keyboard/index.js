@@ -25,6 +25,7 @@ import {
   useContext,
   useBatchingCallback,
 } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -413,3 +414,17 @@ export function prettifyShortcut(shortcut) {
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
     .join(delimiter);
 }
+
+/**
+ * Returns a prettified shortcut wrapped with a <kbd> element.
+ *
+ * @param {Object} props props
+ * @param {string} props.shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
+ * @return {Node} Prettified keyboard shortcut.
+ */
+export function Shortcut({ shortcut }) {
+  return shortcut ? <kbd>{prettifyShortcut(shortcut)}</kbd> : null;
+}
+Shortcut.propTypes = {
+  shortcut: PropTypes.string,
+};
