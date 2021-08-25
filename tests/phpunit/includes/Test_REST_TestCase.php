@@ -33,7 +33,7 @@ namespace Google\Web_Stories\Tests;
  *
  * @package Google\Web_Stories\Tests
  */
-abstract class Test_REST_TestCase extends Test_Case {
+abstract class Test_REST_TestCase extends TestCase {
 	use Capabilities_Setup, Kses_Setup;
 
 	/**
