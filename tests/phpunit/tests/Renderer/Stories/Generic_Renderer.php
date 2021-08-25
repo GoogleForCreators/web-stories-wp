@@ -21,12 +21,12 @@ use Google\Web_Stories\Assets;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Story_Query;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Generic_Renderer
  */
-class Generic_Renderer extends Test_Case {
+class Generic_Renderer extends TestCase {
 
 	/**
 	 * Stories mock object.

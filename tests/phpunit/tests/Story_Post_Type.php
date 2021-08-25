@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
  */
-class Story_Post_Type extends Test_Case {
+class Story_Post_Type extends TestCase {
 	use Capabilities_Setup;
 
 	/**

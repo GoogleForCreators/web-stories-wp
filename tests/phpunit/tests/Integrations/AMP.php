@@ -20,12 +20,12 @@ namespace Google\Web_Stories\Tests\Integrations;
 use DOMDocument;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\AMP
  */
-class AMP extends Test_Case {
+class AMP extends TestCase {
 	/**
 	 * @covers ::register
 	 */

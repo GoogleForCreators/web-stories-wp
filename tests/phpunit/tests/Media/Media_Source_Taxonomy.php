@@ -17,14 +17,14 @@
 
 namespace Google\Web_Stories\Tests\Media;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use WP_Query;
 use WP_REST_Request;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Media\Media_Source_Taxonomy
  */
-class Media_Source_Taxonomy extends Test_Case {
+class Media_Source_Taxonomy extends TestCase {
 
 	/**
 	 * @covers ::register

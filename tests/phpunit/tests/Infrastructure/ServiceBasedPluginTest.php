@@ -8,9 +8,9 @@ use Google\Web_Stories\Infrastructure\ServiceContainer;
 use Google\Web_Stories\Infrastructure\ServiceContainer\SimpleServiceContainer;
 use Google\Web_Stories\Tests\Fixture\DummyService;
 use Google\Web_Stories\Tests\Fixture\DummyServiceBasedPlugin;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
-final class ServiceBasedPluginTest extends Test_Case {
+final class ServiceBasedPluginTest extends TestCase {
 
 	public function test_it_can_be_instantiated() {
 		$plugin = $this->createMock( ServiceBasedPlugin::class );

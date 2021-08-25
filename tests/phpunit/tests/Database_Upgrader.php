@@ -24,7 +24,7 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\Database_Upgrader
  *
  */
-class Database_Upgrader extends Test_Case {
+class Database_Upgrader extends TestCase {
 
 	public function setUp() {
 		parent::setUp();

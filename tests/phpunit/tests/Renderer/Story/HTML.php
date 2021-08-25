@@ -21,13 +21,13 @@ use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use WP_Post;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Renderer\Story\HTML
  */
-class HTML extends Test_Case {
+class HTML extends TestCase {
 
 	public function setUp() {
 		parent::setUp();

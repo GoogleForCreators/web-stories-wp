@@ -23,7 +23,7 @@ namespace Google\Web_Stories\Tests;
  *
  * @coversDefaultClass \Google\Web_Stories\Assets
  */
-class Assets extends Test_Case {
+class Assets extends TestCase {
 	/**
 	 * @covers ::register_style
 	 */

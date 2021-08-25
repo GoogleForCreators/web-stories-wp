@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Embed_Base
  */
-class Embed_Base extends Test_Case {
+class Embed_Base extends TestCase {
 
 	/**
 	 * @covers ::filter_kses_allowed_html

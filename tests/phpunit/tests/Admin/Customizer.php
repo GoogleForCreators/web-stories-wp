@@ -20,14 +20,14 @@ namespace Google\Web_Stories\Tests\Admin;
 
 use Google\Web_Stories\Admin\Customizer as TheCustomizer;
 use Google\Web_Stories\Traits\Theme_Support;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use WP_Customize_Manager;
 use WP_Error;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Customizer
  */
-class Customizer extends Test_Case {
+class Customizer extends TestCase {
 	use Theme_Support;
 
 	/**

@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Activation_Notice
  */
-class Activation_Notice extends Test_Case {
+class Activation_Notice extends TestCase {
 
 	protected $activation_flag;
 	protected $google_fonts;

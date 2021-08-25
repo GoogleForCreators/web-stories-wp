@@ -18,12 +18,12 @@
 namespace Google\Web_Stories\Tests\Integrations;
 
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Site_Kit
  */
-class Site_Kit extends Test_Case {
+class Site_Kit extends TestCase {
 	/**
 	 * Story id.
 	 *

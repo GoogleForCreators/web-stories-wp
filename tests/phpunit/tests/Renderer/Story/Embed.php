@@ -2,12 +2,12 @@
 
 namespace Google\Web_Stories\Tests\Renderer\Story;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Renderer\Story\Embed
  */
-class Embed extends Test_Case {
+class Embed extends TestCase {
 
 	/**
 	 * @covers ::render

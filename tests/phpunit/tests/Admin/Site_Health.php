@@ -18,12 +18,12 @@
 namespace Google\Web_Stories\Tests\Admin;
 
 use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Site_Health
  */
-class Site_Health extends Test_Case {
+class Site_Health extends TestCase {
 	/**
 	 * @covers ::register
 	 */

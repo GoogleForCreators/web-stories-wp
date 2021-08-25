@@ -21,7 +21,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Discovery
  */
-class Discovery extends Test_Case {
+class Discovery extends TestCase {
 
 	/**
 	 * User ID.

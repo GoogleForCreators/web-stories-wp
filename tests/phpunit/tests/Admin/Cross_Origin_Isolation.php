@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Cross_Origin_Isolation
  */
-class Cross_Origin_Isolation extends Test_Case {
+class Cross_Origin_Isolation extends TestCase {
 	/**
 	 * Admin user for test.
 	 *

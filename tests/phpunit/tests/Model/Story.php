@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Model;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Model\Story
  */
-class Story extends Test_Case {
+class Story extends TestCase {
 	/**
 	 * @covers ::__construct
 	 */

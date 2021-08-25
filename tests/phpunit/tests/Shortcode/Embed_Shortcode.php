@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Shortcode;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Shortcode\Embed_Shortcode
  */
-class Embed_Shortcode extends Test_Case {
+class Embed_Shortcode extends TestCase {
 	public function tearDown() {
 		remove_shortcode( \Google\Web_Stories\Shortcode\Embed_Shortcode::SHORTCODE_NAME );
 

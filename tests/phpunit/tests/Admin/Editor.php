@@ -18,12 +18,12 @@
 namespace Google\Web_Stories\Tests\Admin;
 
 use Google\Web_Stories\Tests\Capabilities_Setup;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Editor
  */
-class Editor extends Test_Case {
+class Editor extends TestCase {
 	use Capabilities_Setup;
 
 	/**

@@ -17,13 +17,13 @@
 
 namespace Google\Web_Stories\Tests\User;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use Google\Web_Stories\Tests\Capabilities_Setup;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\User\Capabilities
  */
-class Capabilities extends Test_Case {
+class Capabilities extends TestCase {
 	use Capabilities_Setup;
 
 	public function setUp() {

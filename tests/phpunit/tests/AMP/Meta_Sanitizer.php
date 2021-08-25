@@ -22,12 +22,12 @@ use AMP_Allowed_Tags_Generated;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Tests\MarkupComparison;
 use Google\Web_Stories\Tests\ScriptHash;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Meta_Sanitizer
  */
-class Meta_Sanitizer extends Test_Case {
+class Meta_Sanitizer extends TestCase {
 	use MarkupComparison;
 	use ScriptHash;
 

@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Experiments
  */
-class Experiments extends Test_Case {
+class Experiments extends TestCase {
 
 	/**
 	 * @var int

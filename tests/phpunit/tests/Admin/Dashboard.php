@@ -18,12 +18,12 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Dashboard
  */
-class Dashboard extends Test_Case {
+class Dashboard extends TestCase {
 	protected static $user_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {

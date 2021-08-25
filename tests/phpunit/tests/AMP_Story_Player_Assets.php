@@ -22,7 +22,7 @@ use Google\Web_Stories\Assets;
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP_Story_Player_Assets
  */
-class AMP_Story_Player_Assets extends Test_Case {
+class AMP_Story_Player_Assets extends TestCase {
 
 	/**
 	 * @covers ::register

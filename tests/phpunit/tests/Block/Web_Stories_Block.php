@@ -19,12 +19,12 @@ namespace Google\Web_Stories\Tests\Block;
 
 use Google\Web_Stories\AMP_Story_Player_Assets;
 use WP_Block_Type_Registry;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Block\Web_Stories_Block
  */
-class Web_Stories_Block extends Test_Case {
+class Web_Stories_Block extends TestCase {
 	public function tearDown() {
 		unregister_block_type( 'web-stories/embed' );
 

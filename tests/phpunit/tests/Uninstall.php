@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 
 require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 
-class Uninstall extends Test_Case {
+class Uninstall extends TestCase {
 	protected static $attachment_ids;
 
 	protected static $user_id;
