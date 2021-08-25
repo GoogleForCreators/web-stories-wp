@@ -668,6 +668,10 @@ describe('Checklist integration - Card visibility', () => {
         checkIfCardDoesNotExist
       );
 
+      posterIssuesRequiringMediaUploadPermissions.forEach(
+        checkIfCardDoesNotExist
+      );
+
       // open design tab
       await fixture.events.click(fixture.editor.checklist.designTab);
 
