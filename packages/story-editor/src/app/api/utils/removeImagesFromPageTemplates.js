@@ -20,11 +20,16 @@
 import { __ } from '@web-stories-wp/i18n';
 import { PAGE_WIDTH } from '@web-stories-wp/units';
 
+/**
+ * Internal dependencies
+ */
+import gridPlaceholder from '../../../images/grid-placeholder.png';
+
 const PLACEHOLDER_WIDTH = 1680;
 const PLACEHOLDER_HEIGHT = 2938;
 const PLACEHOLDER_RATIO = PLACEHOLDER_WIDTH / PAGE_WIDTH;
 
-const replacePageImagesWithPlaceholders = (page, { assetsURL }) => {
+const replacePageImagesWithPlaceholders = (page) => {
   return {
     ...page,
     elements: page.elements.map((element) => {
@@ -47,12 +52,11 @@ const replacePageImagesWithPlaceholders = (page, { assetsURL }) => {
         resource: {
           type: 'image',
           mimeType: 'image/png',
-          src: `${assetsURL}images/editor/grid-placeholder.png`,
+          src: gridPlaceholder,
           width: PLACEHOLDER_WIDTH,
           height: PLACEHOLDER_HEIGHT,
           posterId: 0,
           id: 0,
-          title: alt,
           alt,
           local: false,
           sizes: [],
@@ -62,14 +66,11 @@ const replacePageImagesWithPlaceholders = (page, { assetsURL }) => {
   };
 };
 
-export default function removeImagesFromPageTemplates({
-  templates = [],
-  assetsURL,
-}) {
+export default function removeImagesFromPageTemplates(templates = []) {
   return templates.map((template) => ({
     ...template,
     pages: template.pages.map((page) =>
-      replacePageImagesWithPlaceholders(page, { assetsURL })
+      replacePageImagesWithPlaceholders(page)
     ),
   }));
 }

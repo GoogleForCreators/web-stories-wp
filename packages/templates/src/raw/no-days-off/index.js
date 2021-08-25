@@ -15,33 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  title: _x('No Days Off', 'template name', 'web-stories'),
-  tags: [
-    _x('Exercise', 'template keyword', 'web-stories'),
-    _x('Fitness', 'template keyword', 'web-stories'),
-    _x('Health', 'template keyword', 'web-stories'),
-    _x('Workout', 'template keyword', 'web-stories'),
-    _x('Bold', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Black', 'color', 'web-stories'), color: '#1a1a1a' },
-    { label: _x('Red', 'color', 'web-stories'), color: '#cf1323' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-  ],
-  description: __(
-    'This modern, bold theme lends itself well for workout routines, fitness gear shopping lists, but also tech, internet and gadget news, reviews, recommendations and coverage, due to its timeless, simple look.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Fitness', 'template vertical', 'web-stories'),
 };

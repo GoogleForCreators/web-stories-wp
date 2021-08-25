@@ -15,34 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  title: _x('Modernist Travel Guide', 'template name', 'web-stories'),
-  tags: [
-    _x('Travel', 'template keyword', 'web-stories'),
-    _x('Tips', 'template keyword', 'web-stories'),
-    _x('Rounded', 'template keyword', 'web-stories'),
-    _x('Minimal', 'template keyword', 'web-stories'),
-    _x('White', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Tomato Sauce Red', 'color', 'web-stories'), color: '#B51006' },
-    { label: _x('White Smoke', 'color', 'web-stories'), color: '#f1f1f1' },
-    { label: _x('Graphite Gray', 'color', 'web-stories'), color: '#2e2e2e' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-  ],
-  description: __(
-    'Inspired by the clean and minimalistic look of modern architecture, this template is great for creating stories about urban and city tourism. Create sightseeing guides, give out information about local buildings and attractions and more.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Travel', 'template vertical', 'web-stories'),
 };

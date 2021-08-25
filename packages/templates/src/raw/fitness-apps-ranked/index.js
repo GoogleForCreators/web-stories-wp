@@ -15,37 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  title: _x('Fitness Apps Ranked', 'template name', 'web-stories'),
-  tags: [
-    _x('Technology', 'template keyword', 'web-stories'),
-    _x('Fitness', 'template keyword', 'web-stories'),
-    _x('App', 'template keyword', 'web-stories'),
-    _x('Reviews', 'template keyword', 'web-stories'),
-    _x('Yellow', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Space Blue', 'color', 'web-stories'), color: '#222b49' },
-    {
-      label: _x('Watermelon Yellow', 'color', 'web-stories'),
-      color: '#f1ff51',
-    },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Pastel Blue', 'color', 'web-stories'), color: '#e0edf8' },
-  ],
-  description: __(
-    'With its bright neon colors and modern design, this template is perfect for talking about what’s hot. Create vivid and energetic tech reviews, DIY tutorials, fitness guides and more.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Technology', 'template vertical', 'web-stories'),
 };

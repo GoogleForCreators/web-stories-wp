@@ -18,7 +18,12 @@
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
-import { toUTCDate } from '@web-stories-wp/date';
+import {
+  toUTCDate,
+  toDate,
+  getSettings,
+  compareDesc,
+} from '@web-stories-wp/date';
 import { addQueryArgs } from '@web-stories-wp/design-system';
 import getAllTemplates from '@web-stories-wp/templates';
 import { base64Encode } from '@web-stories-wp/story-editor';
@@ -35,6 +40,7 @@ import { ERRORS } from '../textContent';
 export function reshapeTemplateObject(isLocal) {
   return ({
     id,
+    slug,
     title,
     modified,
     tags,
@@ -43,12 +49,14 @@ export function reshapeTemplateObject(isLocal) {
     description,
     pages,
     version,
+    creationDate,
   }) => ({
     isLocal,
     id,
     title,
     createdBy,
     description,
+    slug,
     status: 'template',
     modified: toUTCDate(modified),
     tags,
@@ -56,6 +64,7 @@ export function reshapeTemplateObject(isLocal) {
     pages,
     version,
     centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
+    creationDate: toDate(creationDate, getSettings()),
   });
 }
 
@@ -200,9 +209,9 @@ const useTemplateApi = (dataAdapter, config) => {
         payload: true,
       });
 
-      const reshapedTemplates = (await getAllTemplates({ cdnURL })).map(
-        reshapeTemplateObject(false)
-      );
+      const reshapedTemplates = (await getAllTemplates({ cdnURL }))
+        .map(reshapeTemplateObject(false))
+        .sort((a, b) => compareDesc(a.creationDate, b.creationDate));
       dispatch({
         type: TEMPLATE_ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
         payload: {

@@ -28,4 +28,5 @@ function useHeader() {
   return useContext(HeaderContext);
 }
 
+// TODO: No remaining callers; remove.
 export default useHeader;

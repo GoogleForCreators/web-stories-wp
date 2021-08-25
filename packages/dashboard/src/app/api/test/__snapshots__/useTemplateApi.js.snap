@@ -18,6 +18,7 @@ Object {
     },
   ],
   "createdBy": "Google",
+  "creationDate": 2020-03-01T07:00:00.000Z,
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   "id": 1,
   "isLocal": true,
@@ -28,6 +29,7 @@ Object {
       "id": 0,
     },
   ],
+  "slug": "beauty",
   "status": "template",
   "tags": Array [
     "Health",

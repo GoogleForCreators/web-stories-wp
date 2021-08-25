@@ -132,9 +132,6 @@ class Story_Post_Type extends Service_Base {
 			]
 		);
 
-		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
-
-		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
@@ -153,28 +150,6 @@ class Story_Post_Type extends Service_Base {
 	}
 
 	/**
-	 * Add story_author as allowed orderby value for REST API.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array        $query_params Array of allowed query params.
-	 * @param WP_Post_Type $post_type Post type.
-	 *
-	 * @return array Array of query params.
-	 */
-	public function filter_rest_collection_params( $query_params, $post_type ): array {
-		if ( self::POST_TYPE_SLUG !== $post_type->name ) {
-			return $query_params;
-		}
-
-		if ( empty( $query_params['orderby'] ) ) {
-			return $query_params;
-		}
-		$query_params['orderby']['enum'][] = 'story_author';
-		return $query_params;
-	}
-
-	/**
 	 * Filters the revision fields to ensure that JSON representation gets saved to Story revisions.
 	 *
 	 * @since 1.0.0
@@ -184,61 +159,14 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @return array Array of allowed fields.
 	 */
-	public function filter_revision_fields( $fields, $story ): array {
+	public function filter_revision_fields( $fields, $story ) {
+		if ( ! is_array( $fields ) ) {
+			return $fields;
+		}
 		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
 		return $fields;
-	}
-
-
-
-	/**
-	 * Handles redirects to the post type archive.
-	 *
-	 * Redirects requests to `/stories` (old) to `/web-stories` (new).
-	 * Redirects requests to `/stories/1234` (old) to `/web-stories/1234` (new).
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param bool     $bypass Pass-through of the pre_handle_404 filter value.
-	 * @param WP_Query $query The WP_Query object.
-	 * @return bool Whether to pass-through or not.
-	 */
-	public function redirect_post_type_archive_urls( $bypass, $query ): bool {
-		global $wp_rewrite;
-
-		// If a plugin has already utilized the pre_handle_404 function, return without action to avoid conflicts.
-		if ( $bypass ) {
-			return $bypass;
-		}
-
-		if ( ! $wp_rewrite instanceof WP_Rewrite || ! $wp_rewrite->using_permalinks() ) {
-			return $bypass;
-		}
-		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
-		if ( isset( $query->query['pagename'] ) && 'stories' === $query->query['pagename'] && ( 'stories' === $query->get( 'pagename' ) || 'stories' === $query->get( 'name' ) ) ) {
-			$redirect_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
-			if (
-				$query->get( 'page' ) &&
-				is_numeric( $query->get( 'page' ) ) &&
-				self::POST_TYPE_SLUG === get_post_type( absint( $query->get( 'page' ) ) )
-			) {
-				$redirect_url = get_permalink( absint( $query->get( 'page' ) ) );
-			} elseif ( $query->get( 'feed' ) ) {
-				$feed         = ( 'feed ' === $query->get( 'feed' ) ) ? $query->get( 'feed' ) : '';
-				$redirect_url = get_post_type_archive_feed_link( self::POST_TYPE_SLUG, $feed );
-			}
-
-			if ( ! $redirect_url ) {
-				return $bypass;
-			}
-
-			wp_safe_redirect( $redirect_url, 301 );
-			exit;
-		}
-
-		return $bypass;
 	}
 
 	/**
@@ -246,13 +174,16 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array[] $bulk_messages Arrays of messages, each keyed by the corresponding post type. Messages are
+	 * @param array[]|mixed $bulk_messages Arrays of messages, each keyed by the corresponding post type. Messages are
 	 *                               keyed with 'updated', 'locked', 'deleted', 'trashed', and 'untrashed'.
-	 * @param int[]   $bulk_counts   Array of item counts for each message, used to build internationalized strings.
+	 * @param int[]         $bulk_counts   Array of item counts for each message, used to build internationalized strings.
 	 *
-	 * @return array Bulk counts.
+	 * @return array|mixed Bulk counts.
 	 */
-	public function bulk_post_updated_messages( array $bulk_messages, $bulk_counts ): array {
+	public function bulk_post_updated_messages( $bulk_messages, $bulk_counts ) {
+		if ( ! is_array( $bulk_messages ) ) {
+			return $bulk_messages;
+		}
 		$bulk_messages[ self::POST_TYPE_SLUG ] = [
 			/* translators: %s: Number of stories. */
 			'updated'   => _n( '%s story updated.', '%s stories updated.', $bulk_counts['updated'], 'web-stories' ),
@@ -275,11 +206,14 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $data Array of data to save.
+	 * @param array|mixed $data Array of data to save.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
-	public function change_default_title( $data ): array {
+	public function change_default_title( $data ) {
+		if ( ! is_array( $data ) ) {
+			return $data;
+		}
 		if ( self::POST_TYPE_SLUG === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
 			$data['post_title'] = '';
 		}

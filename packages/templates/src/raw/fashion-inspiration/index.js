@@ -13,39 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
 /**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  title: _x('Fashion Inspiration', 'template name', 'web-stories'),
-  tags: [
-    _x('Fashion', 'template keyword', 'web-stories'),
-    _x('Inspiration', 'template keyword', 'web-stories'),
-    _x('Clothes', 'template keyword', 'web-stories'),
-    _x('Classy', 'template keyword', 'web-stories'),
-    _x('White', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('Faded Rose Red', 'color', 'web-stories'), color: '#c16351' },
-    {
-      label: _x('Winter Mist White', 'color', 'web-stories'),
-      color: '#f2f2f2',
-    },
-    { label: _x('Prairie Gold', 'color', 'web-stories'), color: '#b18c54' },
-  ],
-  description: __(
-    'With its clean, classy look and full-screen photos, this template will let you effectively present fashion and outfit ideas. You can use large-scale close up shots to showcase products, along with individual purchase pages and a short description.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Fashion & Beauty', 'template vertical', 'web-stories'),
 };

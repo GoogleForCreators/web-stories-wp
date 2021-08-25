@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { toUTCDate } from '@web-stories-wp/date';
+import { toUTCDate, toDate, getOptions } from '@web-stories-wp/date';
 /**
  * Internal dependencies
  */
@@ -25,8 +25,10 @@ import { reshapeTemplateObject } from '../useTemplateApi';
 describe('reshapeTemplateObject', () => {
   const templateData = {
     id: 1,
+    slug: 'beauty',
     title: 'Beauty',
     createdBy: 'Google',
+    creationDate: '2020-03-01T07:00:00.000Z',
     modified: '2020-04-21T07:00:00.000Z',
     tags: ['Health', 'Bold', 'Joy'],
     colors: [
@@ -48,6 +50,10 @@ describe('reshapeTemplateObject', () => {
     const reshapedObject = reshapeTemplateObject(true)(templateData);
     expect(reshapedObject.modified).toMatchObject(
       toUTCDate('2020-04-21T07:00:00.000Z')
+    );
+
+    expect(reshapedObject.creationDate).toMatchObject(
+      toDate('2020-03-01T07:00:00.000Z', getOptions())
     );
   });
 

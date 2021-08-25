@@ -20,6 +20,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import stickers from '@web-stories-wp/stickers';
+import { isValid } from '@web-stories-wp/date';
 
 describe('raw template files', () => {
   const templates = readdirSync(
@@ -205,6 +206,32 @@ describe('raw template files', () => {
           );
         }
       }
+    }
+  );
+
+  // @see https://github.com/google/web-stories-wp/pull/8692
+  it.each(templates)(
+    '%s template should contain a slug for screenshot referencing',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+      expect(templateData.slug).toBeString();
+    }
+  );
+
+  it.each(templates)(
+    '%s template should contain a valid createdDate',
+    async (template) => {
+      const { default: metaData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]-metaData" */ `../raw/${template}/metaData`
+      );
+      expect(isValid(new Date(metaData.creationDate))).toBe(true);
+
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+      expect(isValid(new Date(templateData.creationDate))).toBe(true);
     }
   );
 });

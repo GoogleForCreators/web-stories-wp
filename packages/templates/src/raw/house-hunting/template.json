@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -42,7 +42,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Brown wooden bench near green plants",
             "alt": "Brown wooden bench near green plants",
             "sizes": [],
             "local": false,
@@ -276,7 +275,6 @@
             "width": 1080,
             "height": 1080,
             "id": 0,
-            "title": "Brown and gray 3-story building",
             "alt": "Brown and gray 3-story building",
             "sizes": [],
             "local": false,
@@ -405,7 +403,6 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -551,7 +548,6 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Photo of a living room",
             "alt": "Photo of a living room",
             "sizes": [],
             "local": false,
@@ -708,6 +704,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "e99570e7-9ba8-46d6-9b2a-8135860e3ecb",
@@ -738,7 +735,6 @@
       "pageTemplateType": "section"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -755,7 +751,6 @@
             "width": 756,
             "height": 756,
             "id": 0,
-            "title": "Square pattern image",
             "alt": "Square pattern image",
             "sizes": [],
             "local": false,
@@ -788,7 +783,6 @@
             "width": 1080,
             "height": 1080,
             "id": 0,
-            "title": "Black round plate on brown wooden table",
             "alt": "Black round plate on brown wooden table",
             "sizes": [],
             "local": false,
@@ -1031,6 +1025,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -1054,7 +1049,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1073,7 +1067,6 @@
             "height": 756,
             "posterId": 0,
             "id": 0,
-            "title": "Square pattern image",
             "alt": "Square pattern image",
             "sizes": [],
             "local": false,
@@ -1106,7 +1099,6 @@
             "width": 1620,
             "height": 1080,
             "id": 0,
-            "title": "White concrete building",
             "alt": "White concrete building",
             "sizes": [],
             "local": false,
@@ -1349,6 +1341,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -1372,7 +1365,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1391,7 +1383,6 @@
             "height": 756,
             "posterId": 0,
             "id": 0,
-            "title": "Square pattern image",
             "alt": "Square pattern image",
             "sizes": [],
             "local": false,
@@ -1424,7 +1415,6 @@
             "width": 1080,
             "height": 1919,
             "id": 0,
-            "title": "Brown stairs",
             "alt": "Brown stairs",
             "sizes": [],
             "local": false,
@@ -1667,6 +1657,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -1690,7 +1681,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1836,7 +1826,6 @@
             "width": 1620,
             "height": 1080,
             "id": 0,
-            "title": "Brown fabric sofa set",
             "alt": "Brown fabric sofa set",
             "sizes": [],
             "local": false,
@@ -1993,6 +1982,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "a1d628b1-0ba6-4eb6-ab51-c44d7aaf407b",
@@ -2023,7 +2013,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2042,7 +2031,6 @@
             "height": 756,
             "posterId": 0,
             "id": 0,
-            "title": "Square pattern image",
             "alt": "Square pattern image",
             "sizes": [],
             "local": false,
@@ -2075,7 +2063,6 @@
             "width": 1620,
             "height": 1080,
             "id": 0,
-            "title": "White sofa set near window",
             "alt": "White sofa set near window",
             "sizes": [],
             "local": false,
@@ -2318,6 +2305,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -2341,7 +2329,6 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2360,7 +2347,6 @@
             "height": 756,
             "posterId": 0,
             "id": 0,
-            "title": "Square pattern image",
             "alt": "Square pattern image",
             "sizes": [],
             "local": false,
@@ -2393,7 +2379,6 @@
             "width": 1630,
             "height": 1080,
             "id": 0,
-            "title": "Brown wooden armchair",
             "alt": "Brown wooden armchair",
             "sizes": [],
             "local": false,
@@ -2636,6 +2621,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -2659,7 +2645,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2678,7 +2663,6 @@
             "height": 756,
             "posterId": 0,
             "id": 0,
-            "title": "Square pattern image",
             "alt": "Square pattern image",
             "sizes": [],
             "local": false,
@@ -2711,7 +2695,6 @@
             "width": 1620,
             "height": 1080,
             "id": 0,
-            "title": "Brown-and-black wooden 5-piece dining set",
             "alt": "Brown-and-black wooden 5-piece dining set",
             "sizes": [],
             "local": false,
@@ -2954,6 +2937,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -2977,7 +2961,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3067,7 +3050,6 @@
             "width": 1059,
             "height": 720,
             "id": 0,
-            "title": "Gray sedan parked near multicolored building during daytime",
             "alt": "Gray sedan parked near multicolored building during daytime",
             "sizes": [],
             "local": false,
@@ -3157,7 +3139,6 @@
             "width": 1079,
             "height": 720,
             "id": 0,
-            "title": "Trees beside white house",
             "alt": "Trees beside white house",
             "sizes": [],
             "local": false,
@@ -3233,6 +3214,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "0a5bbac6-5d92-4f20-af19-91238026a264",

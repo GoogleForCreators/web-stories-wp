@@ -15,33 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  title: _x('A Day in the Life', 'template name', 'web-stories'),
-  tags: [
-    _x('Entertainment', 'template keyword', 'web-stories'),
-    _x('Routine', 'template keyword', 'web-stories'),
-    _x('Video', 'template keyword', 'web-stories'),
-    _x('Minimal', 'template keyword', 'web-stories'),
-    _x('Blue', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Waterworld Blue', 'color', 'web-stories'), color: '#061b38' },
-    { label: _x('Arctic White', 'color', 'web-stories'), color: '#fcfcfc' },
-    { label: _x('Honey Pot Yellow', 'color', 'web-stories'), color: '#ffc864' },
-  ],
-  description: __(
-    'This simple and minimalist template will let you create long format video stories that are highly engaging. Create day-in-the-life videos, workout routines, makeup tutorials and much more.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Entertainment', 'template vertical', 'web-stories'),
 };

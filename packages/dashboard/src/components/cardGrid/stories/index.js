@@ -23,9 +23,8 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { STORY_STATUS } from '../../../constants';
 import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
-import { CardGridItem, CardPreviewContainer, CardTitle } from '../..';
+import { CardGridItem } from '../..';
 import CardGrid from '..';
 
 export default {
@@ -35,7 +34,7 @@ export default {
 
 const Card = styled.div`
   display: flex;
-  height: 100%;
+  height: 200px;
   justify-content: center;
   padding: 20px;
   background-color: orange;
@@ -43,30 +42,7 @@ const Card = styled.div`
 
 const StorybookGridItem = (
   <CardGridItem>
-    <CardPreviewContainer
-      ariaLabel="Preview aria label"
-      bottomAction={{
-        targetAction: 'https://www.google.com',
-        label: 'Open in Editor',
-      }}
-      centerAction={{
-        targetAction: '',
-        label: 'Preview',
-      }}
-      pageSize={STORYBOOK_PAGE_SIZE}
-    >
-      <Card>{text('Sample Story Content', 'Sample Story')}</Card>
-    </CardPreviewContainer>
-    <CardTitle
-      title="Story Title"
-      author={'Ron Weasley'}
-      status={STORY_STATUS.DRAFT}
-      displayDate="2020-01-30"
-      onEditCancel={() => {}}
-      onEditComplete={() => {}}
-      tabIndex={0}
-      id="id_1"
-    />
+    <Card>{text('Sample Story Content', 'Sample Story')}</Card>
   </CardGridItem>
 );
 

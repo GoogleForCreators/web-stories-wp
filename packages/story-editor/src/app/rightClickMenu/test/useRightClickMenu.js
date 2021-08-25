@@ -47,11 +47,13 @@ jest.mock('@web-stories-wp/design-system', () => ({
   useSnackbar: jest.fn(),
 }));
 
+jest.mock('@web-stories-wp/tracking');
+
 const mockEvent = {
   preventDefault: jest.fn(),
   stopPropagation: jest.fn(),
-  offsetX: 500,
-  offsetY: -1230,
+  x: 500,
+  y: -1230,
 };
 
 const defaultCanvasContext = {
@@ -73,12 +75,6 @@ const defaultStoryContext = {
   selectedElementAnimations: [],
   updateElementsById: jest.fn(),
 };
-
-const expectedDefaultActions = [
-  RIGHT_CLICK_MENU_LABELS.COPY,
-  RIGHT_CLICK_MENU_LABELS.PASTE,
-  RIGHT_CLICK_MENU_LABELS.DELETE,
-];
 
 const expectedLayerActions = [
   RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
@@ -139,6 +135,19 @@ describe('useRightClickMenu', () => {
   });
 
   describe('Page right clicked', () => {
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '1',
+            type: 'text',
+            isDefaultBackground: true,
+          },
+        ],
+      });
+    });
+
     it('should return the correct menu items', () => {
       const { result } = renderHook(() => useRightClickMenu(), {
         wrapper: RightClickMenuProvider,
@@ -146,12 +155,25 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
-        ...expectedDefaultActions,
+        RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
+        RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
+        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
         RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
       ]);
+    });
+
+    it('background media actions should be disabled', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const backgroundImageItems = result.current.menuItems.slice(0, 3);
+      backgroundImageItems.map((item) => {
+        expect(item.disabled).toBeTrue();
+      });
     });
 
     it('"delete page" button should be enabled if there is more than one page', () => {
@@ -195,7 +217,6 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
-        ...expectedDefaultActions,
         RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
         RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
         RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
@@ -229,9 +250,7 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
-        ...expectedDefaultActions,
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
-        RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
@@ -239,18 +258,6 @@ describe('useRightClickMenu', () => {
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
         RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
       ]);
-    });
-
-    it('"Delete Page" should be disabled if there is only one page', () => {
-      const { result } = renderHook(() => useRightClickMenu(), {
-        wrapper: RightClickMenuProvider,
-      });
-
-      const deletePageMenuItem = result.current.menuItems.find(
-        (item) => item.label === RIGHT_CLICK_MENU_LABELS.DELETE_PAGE
-      );
-
-      expect(deletePageMenuItem.disabled).toBeTrue();
     });
   });
 
@@ -275,7 +282,6 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
-        ...expectedDefaultActions,
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
@@ -356,7 +362,6 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
-        ...expectedDefaultActions,
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
         RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,

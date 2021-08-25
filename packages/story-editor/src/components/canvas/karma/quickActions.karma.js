@@ -20,10 +20,11 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
+import { useHelpCenter, useStory } from '../../../app';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
-import { ACTION_TEXT } from '../../../app/highlights';
+import { ACTIONS } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
+import { KEYS } from '../../helpCenter/constants';
 import useInsertElement from '../useInsertElement';
 
 describe('Quick Actions integration', () => {
@@ -65,7 +66,7 @@ describe('Quick Actions integration', () => {
   });
 
   describe('no element selected', () => {
-    it(`clicking the \`${ACTION_TEXT.CHANGE_BACKGROUND_COLOR}\` button should select the background and open the design panel`, async () => {
+    it(`clicking the \`${ACTIONS.CHANGE_BACKGROUND_COLOR.text}\` button should select the background and open the design panel`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
@@ -79,7 +80,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`clicking the \`${ACTION_TEXT.INSERT_BACKGROUND_MEDIA}\` button should select the background and open the media tab in the library`, async () => {
+    it(`clicking the \`${ACTIONS.INSERT_BACKGROUND_MEDIA.text}\` button should select the background and open the media tab in the library`, async () => {
       // change the library pane so media isn't visible
       await fixture.events.click(fixture.editor.library.shapesTab);
 
@@ -92,7 +93,7 @@ describe('Quick Actions integration', () => {
       expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
     });
 
-    it(`clicking the \`${ACTION_TEXT.INSERT_TEXT}\` button should select the background and open the text tab in the library`, async () => {
+    it(`clicking the \`${ACTIONS.INSERT_TEXT.text}\` button should select the background and open the text tab in the library`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.insertTextButton
@@ -145,7 +146,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`clicking the \`${ACTION_TEXT.REPLACE_MEDIA}\` button should select select the media tab and focus the media tab`, async () => {
+    it(`clicking the \`${ACTIONS.REPLACE_MEDIA.text}\` button should select select the media tab and focus the media tab`, async () => {
       // hide 3p modal before we click the quick action
       await fixture.events.click(fixture.editor.library.media3pTab);
       // tab to dismiss button and press enter
@@ -163,7 +164,7 @@ describe('Quick Actions integration', () => {
       expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
     });
 
-    it(`clicking the \`${ACTION_TEXT.ADD_ANIMATION}\` button should select the animation panel and focus the dropdown`, async () => {
+    it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addAnimationButton
@@ -176,7 +177,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`clicking the \`${ACTION_TEXT.ADD_LINK}\` button should select the link panel and focus the input`, async () => {
+    it(`clicking the \`${ACTIONS.ADD_LINK.text}\` button should select the link panel and focus the input`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addLinkButton
@@ -189,7 +190,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should add animations and filters to the foreground image, click the \`${ACTION_TEXT.RESET_ELEMENT}\` button, clear the animations and filters, then click Undo and reapply the animations and filters.`, async () => {
+    it(`should add animations and filters to the foreground image, click the \`${ACTIONS.RESET_ELEMENT.text}\` button, clear the animations and filters, then click Undo and reapply the animations and filters.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
         fixture.editor.canvas.quickActionMenu.resetElementButton
@@ -328,7 +329,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should select the \`${ACTION_TEXT.CHANGE_COLOR}\` button and select the shape style panel and focus the input`, async () => {
+    it(`should select the \`${ACTIONS.CHANGE_COLOR.text}\` button and select the shape style panel and focus the input`, async () => {
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.changeColorButton
       );
@@ -341,7 +342,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should select the \`${ACTION_TEXT.ADD_ANIMATION}\` button and select the animation panel and focus the dropdown`, async () => {
+    it(`should select the \`${ACTIONS.ADD_ANIMATION.text}\` button and select the animation panel and focus the dropdown`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addAnimationButton
@@ -354,7 +355,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should click the \`${ACTION_TEXT.ADD_LINK}\` button and select the link panel and focus the input`, async () => {
+    it(`should click the \`${ACTIONS.ADD_LINK.text}\` button and select the link panel and focus the input`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addLinkButton
@@ -367,7 +368,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should add animations and filters to the shape, click the \`${ACTION_TEXT.RESET_ELEMENT}\` button, clear the animations and filters, then click Undo and reapply the animations and filters.`, async () => {
+    it(`should add animations and filters to the shape, click the \`${ACTIONS.RESET_ELEMENT.text}\` button, clear the animations and filters, then click Undo and reapply the animations and filters.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
         fixture.editor.canvas.quickActionMenu.resetElementButton
@@ -497,7 +498,12 @@ describe('Quick Actions integration', () => {
       await fixture.events.click(canvasElementWrapperId);
     });
 
-    it(`clicking the \`${ACTION_TEXT.REPLACE_BACKGROUND_MEDIA}\` button should select select the media tab and focus the media tab`, async () => {
+    it(`clicking the \`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` button should select select the media tab and focus the media tab`, async () => {
+      // The "Replace background media" quick action also triggers a help center tip which steals focus.
+      // Open the tip now to avoid the focus stealing after the quick menu button is clicked.
+      const { actions } = await fixture.renderHook(() => useHelpCenter());
+      actions.openToUnreadTip(KEYS.ADD_BACKGROUND_MEDIA);
+
       // change tab to make sure tab isn't selected before quick action
       // hide 3p modal before we click the quick action
       await fixture.events.click(fixture.editor.library.mediaTab);
@@ -518,7 +524,7 @@ describe('Quick Actions integration', () => {
       expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
     });
 
-    it(`clicking the \`${ACTION_TEXT.ADD_ANIMATION}\` button should select the animation panel and focus the dropdown`, async () => {
+    it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addAnimationButton
@@ -531,7 +537,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should add animations and filters to the background image, click the \`${ACTION_TEXT.RESET_ELEMENT}\` button, clear the animations and filters, then click Undo and reapply the animations and filters.`, async () => {
+    it(`should add animations and filters to the background image, click the \`${ACTIONS.RESET_ELEMENT.text}\` button, clear the animations and filters, then click Undo and reapply the animations and filters.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
         fixture.editor.canvas.quickActionMenu.resetElementButton
@@ -666,7 +672,7 @@ describe('Quick Actions integration', () => {
       await fixture.editor.canvas.framesLayer.waitFocusedWithin();
     });
 
-    it(`clicking the \`${ACTION_TEXT.CHANGE_TEXT_COLOR}\` button should select the font styles on the design panel and focus the color input`, async () => {
+    it(`clicking the \`${ACTIONS.CHANGE_TEXT_COLOR.text}\` button should select the font styles on the design panel and focus the color input`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.textColorButton
@@ -681,7 +687,7 @@ describe('Quick Actions integration', () => {
       expect(document.activeElement).toEqual(textStyleColorInput);
     });
 
-    it(`clicking the \`${ACTION_TEXT.CHANGE_FONT}\` button should select the font styles on the design panel and focus the font dropdown`, async () => {
+    it(`clicking the \`${ACTIONS.CHANGE_FONT.text}\` button should select the font styles on the design panel and focus the font dropdown`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.fontButton
@@ -696,7 +702,7 @@ describe('Quick Actions integration', () => {
       expect(document.activeElement).toEqual(fontDropdown);
     });
 
-    it(`clicking the \`${ACTION_TEXT.ADD_ANIMATION}\` button should select the animation panel and focus the dropdown`, async () => {
+    it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addAnimationButton
@@ -709,7 +715,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`clicking the \`${ACTION_TEXT.ADD_LINK}\` button should select the link panel and focus the input`, async () => {
+    it(`clicking the \`${ACTIONS.ADD_LINK.text}\` button should select the link panel and focus the input`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addLinkButton
@@ -722,7 +728,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should add animations to the text, click the \`${ACTION_TEXT.RESET_ELEMENT}\` button, clear the animations, then click Undo and reapply the animations and filters.`, async () => {
+    it(`should add animations to the text, click the \`${ACTIONS.RESET_ELEMENT.text}\` button, clear the animations, then click Undo and reapply the animations and filters.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
         fixture.editor.canvas.quickActionMenu.resetElementButton
@@ -827,7 +833,6 @@ describe('Quick Actions integration', () => {
           id: 10,
           length: 6,
           lengthFormatted: '0:06',
-          title: 'small-video',
           alt: 'small-video',
           sizes: {},
           local: false,
@@ -855,7 +860,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should click the \`${ACTION_TEXT.REPLACE_MEDIA}\` button and open the media panel`, async () => {
+    it(`should click the \`${ACTIONS.REPLACE_MEDIA.text}\` button and open the media panel`, async () => {
       // hide 3p modal before we click the quick action
       await fixture.events.click(fixture.editor.library.media3pTab);
       // tab to dismiss button and press enter
@@ -873,7 +878,7 @@ describe('Quick Actions integration', () => {
       expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
     });
 
-    it(`should click the \`${ACTION_TEXT.ADD_ANIMATION}\` button and open the animation panel and focus the animation dropdown`, async () => {
+    it(`should click the \`${ACTIONS.ADD_ANIMATION.text}\` button and open the animation panel and focus the animation dropdown`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addAnimationButton
@@ -886,7 +891,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should click the \`${ACTION_TEXT.ADD_LINK}\` button and select the link panel and focus the input`, async () => {
+    it(`should click the \`${ACTIONS.ADD_LINK.text}\` button and select the link panel and focus the input`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addLinkButton
@@ -899,7 +904,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should click the \`${ACTION_TEXT.ADD_CAPTIONS}\` button and open the captions panel and focus the add captions input`, async () => {
+    it(`should click the \`${ACTIONS.ADD_CAPTIONS.text}\` button and open the captions panel and focus the add captions input`, async () => {
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addCaptionsButton
       );
@@ -908,7 +913,7 @@ describe('Quick Actions integration', () => {
       ).not.toBeNull();
     });
 
-    it(`should add animations and filters to the video, click the \`${ACTION_TEXT.RESET_ELEMENT}\` button, clear the animations and filters, then click Undo and reapply the animations and filters.`, async () => {
+    it(`should add animations and filters to the video, click the \`${ACTIONS.RESET_ELEMENT.text}\` button, clear the animations and filters, then click Undo and reapply the animations and filters.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
         fixture.editor.canvas.quickActionMenu.resetElementButton

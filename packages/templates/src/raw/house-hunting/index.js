@@ -15,40 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  title: _x('House Hunting', 'template name', 'web-stories'),
-  tags: [
-    _x('Home', 'template keyword', 'web-stories'),
-    _x('Tips', 'template keyword', 'web-stories'),
-    _x('Decor', 'template keyword', 'web-stories'),
-    _x('Budget', 'template keyword', 'web-stories'),
-    _x('White', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    {
-      label: _x('Pastel Toffee Pink', 'color', 'web-stories'),
-      color: '#eec2bc',
-    },
-    { label: _x('Black Violet', 'color', 'web-stories'), color: '#2d2a35' },
-    {
-      label: _x('Marshmallow Yellow', 'color', 'web-stories'),
-      color: '#fff0d8',
-    },
-    { label: _x('Grape Purple', 'color', 'web-stories'), color: '#464152' },
-  ],
-  description: __(
-    'With its earthly colors and charming typography, this template will let you create guides and tutorials with a pinch of old-fashioned elegence. Present fresh new ideas for topics like home renovation, interior, architecture, gardening and more.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Home & Garden', 'template vertical', 'web-stories'),
 };

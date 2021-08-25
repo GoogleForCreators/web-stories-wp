@@ -15,32 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  title: _x('Los Angeles City Guide', 'template name', 'web-stories'),
-  tags: [
-    _x('Travel', 'template keyword', 'web-stories'),
-    _x('City', 'template keyword', 'web-stories'),
-    _x('Visit', 'template keyword', 'web-stories'),
-    _x('Dark', 'template keyword', 'web-stories'),
-    _x('Black', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Dusk Black', 'color', 'web-stories'), color: '#212426' },
-    { label: _x('Alpine Green', 'color', 'web-stories'), color: '#c2cda3' },
-  ],
-  description: __(
-    'With its serene black-and-green color palette, this template will let you create city guides, travelogues and other travel stories that are moody and atmospheric.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Travel', 'template vertical', 'web-stories'),
 };

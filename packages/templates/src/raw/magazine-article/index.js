@@ -15,37 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  title: _x('Magazine Article', 'template name', 'web-stories'),
-  tags: [
-    _x('Technology', 'template keyword', 'web-stories'),
-    _x('Future', 'template keyword', 'web-stories'),
-    _x('Presentation', 'template keyword', 'web-stories'),
-    _x('Magazine', 'template keyword', 'web-stories'),
-    _x('Grey', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    {
-      label: _x('School Bus Yellow', 'color', 'web-stories'),
-      color: '#ffdb00',
-    },
-    { label: _x('Gentle Gray', 'color', 'web-stories'), color: '#c4c4c4' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-  ],
-  description: __(
-    'With its rounded font, boxy images and yellow accents, this template is just like your good old tech magazine, but in a visual story format. Share the latest news, write opinionated pieces, explainers, product reviews and much more.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Technology', 'template vertical', 'web-stories'),
 };

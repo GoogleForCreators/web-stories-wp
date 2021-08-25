@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback } from '@web-stories-wp/react';
 import {
-  AnimatedContextMenu,
+  ContextMenu,
   MenuItemProps,
   themeHelpers,
 } from '@web-stories-wp/design-system';
@@ -116,7 +116,8 @@ export default function StoryMenu({
       >
         <MoreVerticalSvg />
       </MoreVerticalButton>
-      <AnimatedContextMenu
+      <ContextMenu
+        animate
         isOpen={isPopoverMenuOpen}
         items={menuItems}
         onDismiss={handleDismiss}

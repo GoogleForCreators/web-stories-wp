@@ -71,7 +71,6 @@ const VIDEO_RESOURCE = {
   id: 91,
   length: 6,
   lengthFormatted: '0:06',
-  title: 'small-video',
   alt: 'small-video',
   sizes: {},
   local: false,

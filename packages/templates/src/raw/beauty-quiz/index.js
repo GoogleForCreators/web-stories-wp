@@ -15,33 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  title: _x('Beauty Quiz', 'template name', 'web-stories'),
-  tags: [
-    _x('Fashion & Beauty', 'template keyword', 'web-stories'),
-    _x('Skin Care', 'template keyword', 'web-stories'),
-    _x('Personal Care', 'template keyword', 'web-stories'),
-    _x('Shapes', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Courtyard Green', 'color', 'web-stories'), color: '#397165' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Pink Wash', 'color', 'web-stories'), color: '#f8dfdc' },
-    { label: _x('Aquatic Green', 'color', 'web-stories'), color: '#aec2bf' },
-  ],
-  description: __(
-    'With its soft pink shade, lightweight typography and rounded shapes, this template is just right for creating stories in the beauty and personal care niche. Create questonnaires, skincare routines, product promotions and more that look pretty and feel pleasant.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Fashion & Beauty', 'template vertical', 'web-stories'),
 };
