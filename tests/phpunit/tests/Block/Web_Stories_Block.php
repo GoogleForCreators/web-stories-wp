@@ -34,7 +34,7 @@ class Web_Stories_Block extends TestCase {
 		parent::setUp();
 
 		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) ) {
-//			unregister_block_type( 'web-stories/embed' );
+			unregister_block_type( 'web-stories/embed' );
 		}
 	}
 
