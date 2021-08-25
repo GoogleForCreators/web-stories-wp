@@ -83,6 +83,17 @@ function BasicColorList({
 
   useRovingTabIndex({ ref: listRef });
 
+  const selectedSwatch = colors
+    .map((pattern, i) => {
+      const patternAsBackground = getPatternAsString(pattern);
+      const isSelected = colorAsBackground === patternAsBackground;
+      if (isSelected) {
+        return i;
+      }
+      return false;
+    })
+    .filter((c) => c !== false);
+
   return (
     <SwatchList ref={listRef}>
       {colors.map((pattern, i) => {
@@ -92,6 +103,11 @@ function BasicColorList({
 
         const patternAsBackground = getPatternAsString(pattern);
         const isSelected = colorAsBackground === patternAsBackground;
+        // By default, the first swatch can be tabbed into, unless there's a selected one.
+        let tabIndex = i === 0 ? 0 : -1;
+        if (selectedSwatch.length) {
+          tabIndex = isSelected ? 0 : -1;
+        }
         return (
           <StyledSwatch
             key={patternAsBackground}
@@ -99,7 +115,7 @@ function BasicColorList({
             pattern={pattern}
             isSelected={isSelected}
             isDisabled={isDisabled}
-            tabIndex={0 === i ? 0 : -1}
+            tabIndex={tabIndex}
             aria-label={__('Apply color', 'web-stories')}
           />
         );
