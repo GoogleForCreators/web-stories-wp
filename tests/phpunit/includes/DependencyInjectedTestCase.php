@@ -44,7 +44,7 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		// We're intentionally avoiding the AmpWpPluginFactory here as it uses a
+		// We're intentionally avoiding the PluginFactory here as it uses a
 		// static instance, because its whole point is to allow reuse across consumers.
 		$this->plugin = new Plugin();
 		$this->plugin->register();
