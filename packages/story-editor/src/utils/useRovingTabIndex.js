@@ -82,7 +82,12 @@ export function getSiblingDirection(isRTL, key) {
  * @return {Element} The sibling.
  */
 function getNextSibling(e, siblingDirection) {
-  return e[siblingDirection];
+  const sibling = e[siblingDirection];
+  if (!sibling || !sibling.disabled) {
+    return sibling;
+  }
+
+  return getNextSibling(sibling, siblingDirection);
 }
 
 /**
