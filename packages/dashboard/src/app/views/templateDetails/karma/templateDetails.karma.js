@@ -155,11 +155,10 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
       ]);
       expect(page4).toEqual(document.activeElement);
 
-      await fixture.events.keyboard.press('right');
       await fixture.events.keyboard.press('Enter');
 
       const activePreviewPage = fixture.screen.getByLabelText(
-        'Active Page Preview - Page 5'
+        'Active Page Preview - Page 4'
       );
 
       expect(activePreviewPage).toBeTruthy();
