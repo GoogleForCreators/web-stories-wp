@@ -109,6 +109,13 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.10.1 =
+
+**Release Date:** August 25, 2021.
+
+* Fixes an issue with potential fatal errors on the frontend.
+* Fixes an issue with page attachments being removed on the frontend.
+
 = 1.10.0 =
 
 **Release Date:** August 10, 2021.
@@ -132,14 +139,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Minimum requirements are now PHP 7.0+ and WordPress 5.5+.
 * Compatibility with WordPress 5.8.
 
-= 1.8.1 =
-
-**Release Date:** June 30, 2021.
-
-* New feature: 5 beautifully designed templates for creators to choose from.
-* Fixes an issue with elements disappearing when using certain animations.
-
 == Upgrade Notice ==
+
+= 1.10.1 =
+
+Two bug fixes to address potential fatal errors on the frontend and missing page attachments.
 
 = 1.10.0 =
 
