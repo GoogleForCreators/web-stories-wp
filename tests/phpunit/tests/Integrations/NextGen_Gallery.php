@@ -24,11 +24,6 @@ use Google\Web_Stories\Tests\TestCase;
  * @coversDefaultClass \Google\Web_Stories\Integrations\NextGen_Gallery
  */
 class NextGen_Gallery extends TestCase {
-	public function tearDown() {
-		unset( $_SERVER['REQUEST_URI'], $_GET );
-
-		parent::tearDown();
-	}
 	/**
 	 * @covers ::register
 	 */
@@ -66,8 +61,6 @@ class NextGen_Gallery extends TestCase {
 		$_SERVER['REQUEST_URI'] = '/' . Story_Post_Type::REWRITE_SLUG . '/foo-bar/';
 
 		$after = $nextgen_gallery->filter_run_ngg_resource_manager( true );
-
-		unset( $_SERVER['REQUEST_URI'] );
 
 		$this->assertTrue( $before );
 		$this->assertFalse( $after );

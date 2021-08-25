@@ -75,8 +75,6 @@ class AMP extends TestCase {
 		$amp    = new \Google\Web_Stories\Integrations\AMP( new Experiments() );
 		$actual = $amp->filter_amp_options( $before );
 
-		unset( $GLOBALS['current_screen'] );
-
 		$this->assertEqualSets( $expected, $actual );
 	}
 
@@ -96,8 +94,6 @@ class AMP extends TestCase {
 
 		$amp    = new \Google\Web_Stories\Integrations\AMP( new Experiments() );
 		$actual = $amp->filter_supportable_post_types( [] );
-
-		unset( $GLOBALS['current_screen'] );
 
 		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $actual );
 	}

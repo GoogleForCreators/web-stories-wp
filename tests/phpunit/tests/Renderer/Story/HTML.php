@@ -120,7 +120,6 @@ class HTML extends TestCase {
 	 * @covers ::replace_url_scheme
 	 */
 	public function test_replace_url_scheme() {
-		unset( $_SERVER['HTTPS'] );
 		$_SERVER['HTTPS'] = 'on';
 
 		$link = get_home_url( null, 'web-storires/test' );
@@ -133,7 +132,6 @@ class HTML extends TestCase {
 
 		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
 		$this->assertEquals( $result, $link_https );
-		unset( $_SERVER['HTTPS'] );
 	}
 
 
@@ -141,7 +139,6 @@ class HTML extends TestCase {
 	 * @covers ::replace_url_scheme
 	 */
 	public function test_replace_url_scheme_different_host() {
-		unset( $_SERVER['HTTPS'] );
 		$_SERVER['HTTPS'] = 'on';
 		$link             = 'https://www.google.com';
 
@@ -150,7 +147,6 @@ class HTML extends TestCase {
 
 		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
 		$this->assertEquals( $result, $link );
-		unset( $_SERVER['HTTPS'] );
 	}
 
 	/**

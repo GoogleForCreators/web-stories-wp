@@ -34,7 +34,7 @@ class Web_Stories_Block extends TestCase {
 		parent::setUp();
 
 		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) ) {
-			unregister_block_type( 'web-stories/embed' );
+//			unregister_block_type( 'web-stories/embed' );
 		}
 	}
 
@@ -55,7 +55,7 @@ class Web_Stories_Block extends TestCase {
 		$amp_story_player_assets = new AMP_Story_Player_Assets();
 		$embed_block             = new Block( $assets, $amp_story_player_assets );
 
-		$embed_block->register();
+//		$embed_block->register();
 
 		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) );
 	}

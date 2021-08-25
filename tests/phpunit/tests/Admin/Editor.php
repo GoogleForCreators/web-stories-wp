@@ -122,8 +122,6 @@ class Editor extends TestCase {
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$editor->admin_enqueue_scripts( 'post.php' );
 
-		unset( $GLOBALS['current_screen'] );
-
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_script_is( 'fake_js_chunk', 'registered' ) );
 

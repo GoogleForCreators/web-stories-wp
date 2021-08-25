@@ -59,12 +59,6 @@ class Cross_Origin_Isolation extends TestCase {
 		$user_preferences->register();
 	}
 
-	public function tearDown() {
-		unset( $GLOBALS['current_screen'] );
-
-		parent::tearDown();
-	}
-
 	/**
 	 * @covers ::register
 	 */

@@ -63,14 +63,10 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	 * Clean up again after each test run.
 	 */
 	public function tearDown() {
-		parent::tearDown();
-
 		$this->set_private_property( Services::class, 'plugin', null );
 		$this->set_private_property( Services::class, 'container', null );
 		$this->set_private_property( Services::class, 'injector', null );
 
-		// WordPress core fails to do this.
-		$GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
-		unset( $GLOBALS['current_screen'] );
+		parent::tearDown();
 	}
 }

@@ -36,8 +36,6 @@ class Sanitization extends TestCase {
 		remove_all_filters( 'web_stories_amp_dev_mode_element_xpaths' );
 		remove_all_filters( 'show_admin_bar' );
 
-		unset( $GLOBALS['show_admin_bar'] );
-
 		parent::tearDown();
 	}
 

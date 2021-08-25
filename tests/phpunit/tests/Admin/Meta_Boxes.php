@@ -108,7 +108,6 @@ class Meta_Boxes extends TestCase {
 			}
 		}
 
-		unset( $wp_meta_boxes, $current_screen );
 		remove_all_filters( 'add_meta_boxes' );
 
 		$this->assertEqualSets(
@@ -125,9 +124,7 @@ class Meta_Boxes extends TestCase {
 	public function test_get_meta_boxes_per_location() {
 		require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
 
-		global $wp_meta_boxes, $current_screen;
-
-		$current_screen = convert_to_screen( Story_Post_Type::POST_TYPE_SLUG );
+		$GLOBALS['current_screen'] = convert_to_screen( Story_Post_Type::POST_TYPE_SLUG );
 
 		add_action( 'add_meta_boxes', [ $this, 'register_test_meta_boxes' ] );
 
@@ -137,7 +134,6 @@ class Meta_Boxes extends TestCase {
 		$meta_boxes = new \Google\Web_Stories\Admin\Meta_Boxes();
 		$actual     = $meta_boxes->get_meta_boxes_per_location();
 
-		unset( $wp_meta_boxes, $current_screen );
 		remove_all_filters( 'add_meta_boxes' );
 
 		$this->assertArrayHasKey( 'normal', $actual );
