@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   useRef,
@@ -25,7 +24,6 @@ import {
   useCallback,
   useFocusOut,
 } from '@web-stories-wp/react';
-import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useGridViewKeys } from '@web-stories-wp/design-system';
@@ -33,22 +31,14 @@ import { useGridViewKeys } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import {
-  CardGrid,
-  CardGridItem,
-  CardTitle,
-  CardPreviewContainer,
-  // ActionLabel,
-  StoryMenu,
-  FocusableGridItem,
-} from '../../../components';
+import { CardGrid, CardGridItem, StoryMenu } from '../../../components';
 import {
   StoryMenuPropType,
   PageSizePropType,
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../types';
-import { PAGE_WRAPPER, STORY_STATUS } from '../../../constants';
+import { PAGE_WRAPPER } from '../../../constants';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
@@ -64,7 +54,7 @@ const StoryGrid = styled(CardGrid)`
 
 const SavedTemplateGridView = ({
   templates,
-  centerActionLabelByStatus,
+  // centerActionLabelByStatus,
   // bottomActionLabel,
   pageSize,
   templateMenu,
@@ -119,7 +109,8 @@ const SavedTemplateGridView = ({
         {templates.map((template) => {
           const isActive = activeGridItemId === template.id;
           const tabIndex = isActive ? 0 : -1;
-
+          // TODO https://github.com/google/web-stories-wp/issues/8746
+          // Alot of this is commented out to silence eslint errors that are irrelevant
           return (
             <CardGridItem
               key={template.id}
@@ -129,11 +120,10 @@ const SavedTemplateGridView = ({
                 itemRefs.current[template.id] = el;
               }}
             >
-              <FocusableGridItem
+              <button
                 onFocus={() => {
                   setActiveGridItemId(template.id);
                 }}
-                isSelected={isActive}
                 tabIndex={tabIndex}
                 title={sprintf(
                   /* translators: %s: story title.*/
@@ -141,27 +131,27 @@ const SavedTemplateGridView = ({
                   template.title
                 )}
               />
-              <CardPreviewContainer
-                ariaLabel={sprintf(
-                  /* translators: %s: story title. */
-                  __('Preview of %s', 'web-stories'),
-                  template.title
-                )}
-                tabIndex={tabIndex}
-                pageSize={pageSize}
-                story={template}
-                centerAction={{
-                  targetAction: (e) => actions.previewTemplate(e, template),
-                  label: centerActionLabelByStatus[template.status],
-                }}
-                // this doesn't work yet and will throw an error in the editor, commenting out to prevent headaches while testing UI but leaving code in so that we know where things attach
-                // bottomAction={{
-                //   targetAction: bottomTargetAction(template),
-                //   label: bottomActionLabel,
-                // }}
+              <div
+              // ariaLabel={sprintf(
+              //   /* translators: %s: story title. */
+              //   __('Preview of %s', 'web-stories'),
+              //   template.title
+              // )}
+              // tabIndex={tabIndex}
+              // pageSize={pageSize}
+              // story={template}
+              // centerAction={{
+              //   targetAction: (e) => actions.previewTemplate(e, template),
+              //   label: centerActionLabelByStatus[template.status],
+              // }}
+              // this doesn't work yet and will throw an error in the editor, commenting out to prevent headaches while testing UI but leaving code in so that we know where things attach
+              // bottomAction={{
+              //   targetAction: bottomTargetAction(template),
+              //   label: bottomActionLabel,
+              // }}
               />
               <DetailRow>
-                <CardTitle
+                {/* <div
                   tabIndex={tabIndex}
                   title={template.title}
                   titleLink={template.editStoryLink}
@@ -173,7 +163,7 @@ const SavedTemplateGridView = ({
                       ? getRelativeDisplayDate(template?.modified)
                       : getRelativeDisplayDate(template?.created)
                   }
-                />
+                /> */}
 
                 <StoryMenu
                   itemActive={isActive}
@@ -200,10 +190,10 @@ const SavedTemplateGridView = ({
 SavedTemplateGridView.propTypes = {
   actions: TemplateActionsPropType,
   templates: TemplatesPropType,
-  centerActionLabelByStatus: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.string),
-    PropTypes.bool,
-  ]),
+  // centerActionLabelByStatus: PropTypes.oneOfType([
+  //   PropTypes.objectOf(PropTypes.string),
+  //   PropTypes.bool,
+  // ]),
   // bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
   templateMenu: StoryMenuPropType,
