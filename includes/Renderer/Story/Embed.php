@@ -63,25 +63,16 @@ class Embed {
 	private $assets;
 
 	/**
-	 * AMP_Story_Player_Assets instance.
-	 *
-	 * @var AMP_Story_Player_Assets AMP_Story_Player_Assets instance.
-	 */
-	protected $amp_story_player_assets;
-
-	/**
 	 * Embed constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story                   $story             Story Object.
-	 * @param Assets                  $assets            Assets instance.
-	 * @param AMP_Story_Player_Assets $amp_story_player_assets AMP_Story_Player_Assets instance.
+	 * @param Story  $story             Story Object.
+	 * @param Assets $assets            Assets instance.
 	 */
-	public function __construct( Story $story, Assets $assets, AMP_Story_Player_Assets $amp_story_player_assets ) {
-		$this->assets                  = $assets;
-		$this->story                   = $story;
-		$this->amp_story_player_assets = $amp_story_player_assets;
+	public function __construct( Story $story, Assets $assets ) {
+		$this->assets = $assets;
+		$this->story  = $story;
 	}
 
 	/**

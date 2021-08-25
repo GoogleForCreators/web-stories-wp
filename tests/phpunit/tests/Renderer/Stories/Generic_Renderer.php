@@ -92,6 +92,7 @@ class Generic_Renderer extends TestCase {
 	 * @covers ::load_assets
 	 */
 	public function test_load_assets() {
+
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'class'      => '',
@@ -103,9 +104,8 @@ class Generic_Renderer extends TestCase {
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
-		// These are registered by init(), but only enqueued when rendering.
-		$this->assertTrue( wp_script_is( AMP_Story_Player_Assets::SCRIPT_HANDLE, 'registered' ) );
-		$this->assertTrue( wp_style_is( AMP_Story_Player_Assets::SCRIPT_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_script_is( \Google\Web_Stories\Renderer\Stories\Renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_style_is( \Google\Web_Stories\Renderer\Stories\Renderer::STYLE_HANDLE, 'registered' ) );
 	}
 
 	/**
@@ -139,7 +139,6 @@ class Generic_Renderer extends TestCase {
 		$this->assertContains( 'web-stories-list__story', $output );
 		$this->assertContains( 'web-stories-list__story-poster', $output );
 
-		$this->assertTrue( wp_script_is( AMP_Story_Player_Assets::SCRIPT_HANDLE ) );
-		$this->assertTrue( wp_style_is( AMP_Story_Player_Assets::SCRIPT_HANDLE ) );
+		$this->assertTrue( wp_script_is( \Google\Web_Stories\Renderer\Stories\Renderer::LIGHTBOX_SCRIPT_HANDLE ) );
 	}
 }

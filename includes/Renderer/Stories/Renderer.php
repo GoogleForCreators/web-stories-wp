@@ -55,13 +55,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected $assets;
 
 	/**
-	 * AMP_Story_Player_Assets instance.
-	 *
-	 * @var AMP_Story_Player_Assets AMP_Story_Player_Assets instance.
-	 */
-	protected $amp_story_player_assets;
-
-	/**
 	 * Web Stories stylesheet handle.
 	 *
 	 * @var string
@@ -161,13 +154,14 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$this->query           = $query;
 		$this->attributes      = $this->query->get_story_attributes();
 		$this->content_overlay = $this->attributes['show_title'] || $this->attributes['show_date'] || $this->attributes['show_author'] || $this->attributes['show_excerpt'];
+
 		// TODO, find a way to inject this a cleaner way.
 		$injector = Services::get_injector();
 		if ( ! method_exists( $injector, 'make' ) ) {
 			return;
 		}
-		$this->assets                  = $injector->make( Assets::class );
-		$this->amp_story_player_assets = $injector->make( AMP_Story_Player_Assets::class );
+
+		$this->assets = $injector->make( Assets::class );
 	}
 
 	/**

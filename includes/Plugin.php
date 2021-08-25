@@ -169,7 +169,6 @@ class Plugin extends ServiceBasedPlugin {
 			Integrations\Site_Kit::class,
 			Analytics::class,
 			Decoder::class,
-			AMP_Story_Player_Assets::class,
 			Admin\Google_Fonts::class,
 		];
 	}

@@ -28,10 +28,13 @@ class AMP_Story_Player_Assets extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$amp_story_player_assets = new Assets();
-		$amp_story_player_assets->register();
+		$instance = new Assets();
+		$instance->register();
 
-		$this->assertTrue( wp_style_is( Assets::SCRIPT_HANDLE, 'registered' ) );
-		$this->assertTrue( wp_script_is( Assets::SCRIPT_HANDLE, 'registered' ) );
+		has_action( 'wp_default_styles', [ $instance, 'register_style' ] );
+		has_action( 'wp_default_scripts', [ $instance, 'register_script' ] );
+
+		$this->assertSame( 10, has_action( 'wp_default_styles', [ $instance, 'register_style' ] ) );
+		$this->assertSame( 10, has_action( 'wp_default_scripts', [ $instance, 'register_script' ] ) );
 	}
 }
