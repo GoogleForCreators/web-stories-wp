@@ -32,7 +32,7 @@ class Embed_Shortcode extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_registers_block_type() {
+	public function test_registers_shortcode() {
 		$this->assertTrue( shortcode_exists( \Google\Web_Stories\Shortcode\Embed_Shortcode::SHORTCODE_NAME ) );
 	}
 
