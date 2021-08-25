@@ -17,10 +17,10 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\Assets;
+use Google\Web_Stories\AMP_Story_Player_Assets as Assets;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\AMP_Story_Player_Assets
+ * @coversDefaultClass Assets
  */
 class AMP_Story_Player_Assets extends TestCase {
 
@@ -28,10 +28,10 @@ class AMP_Story_Player_Assets extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$amp_story_player_assets = new Assets();
 		$amp_story_player_assets->register();
 
-		$this->assertTrue( wp_style_is( $amp_story_player_assets->get_handle(), 'registered' ) );
-		$this->assertTrue( wp_script_is( $amp_story_player_assets->get_handle(), 'registered' ) );
+		$this->assertTrue( wp_style_is( Assets::SCRIPT_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_script_is( Assets::SCRIPT_HANDLE, 'registered' ) );
 	}
 }

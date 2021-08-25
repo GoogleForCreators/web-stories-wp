@@ -37,17 +37,7 @@ use WP_Scripts;
  * @package Google\Web_Stories
  */
 class AMP_Story_Player_Assets implements Service, Registerable {
-
-	/**
-	 * Script / style handle.
-	 *
-	 * @since 1.8.0
-	 *
-	 * @return string
-	 */
-	public function get_handle(): string {
-		return 'standalone-amp-story-player';
-	}
+	const SCRIPT_HANDLE = 'standalone-amp-story-player';
 
 	/**
 	 * Runs on instantiation.
@@ -72,7 +62,7 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 */
 	public function register_style( WP_Styles $wp_styles ) {
 		$wp_styles->add(
-			$this->get_handle(),
+			self::SCRIPT_HANDLE,
 			'https://cdn.ampproject.org/amp-story-player-v0.css',
 			[],
 			'v0'
@@ -90,7 +80,7 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 */
 	public function register_scripts( WP_Scripts $wp_scripts ) {
 		$wp_scripts->add(
-			$this->get_handle(),
+			self::SCRIPT_HANDLE,
 			'https://cdn.ampproject.org/amp-story-player-v0.js',
 			[],
 			'v0',

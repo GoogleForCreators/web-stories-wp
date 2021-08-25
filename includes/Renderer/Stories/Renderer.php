@@ -271,9 +271,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// Web Stories styles for AMP and non-AMP pages.
 		$this->assets->register_style_asset( self::STYLE_HANDLE );
 
-		$player_handle = $this->amp_story_player_assets->get_handle();
 		// Web Stories lightbox script.
-		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ $player_handle ] );
+		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE ] );
 	}
 
 	/**
@@ -511,9 +510,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			</div>
 			<?php
 		} else {
-			$player_handle = $this->amp_story_player_assets->get_handle();
-			$this->assets->enqueue_style( $player_handle );
-			$this->assets->enqueue_script( $player_handle );
+			$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+			$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
 			<div class="<?php echo esc_attr( $single_story_classes ); ?>" data-story-url="<?php echo esc_url( $story->get_url() ); ?>">
