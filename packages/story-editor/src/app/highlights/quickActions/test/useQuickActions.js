@@ -28,7 +28,7 @@ import { states } from '../..';
 import useHighlights from '../../useHighlights';
 import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
 import { useStory, useStoryTriggersDispatch } from '../../../story';
-import { ACTION_TEXT } from '../constants';
+import { ACTIONS } from '../constants';
 
 const {
   Bucket,
@@ -73,6 +73,8 @@ jest.mock('@web-stories-wp/design-system', () => ({
   ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: () => ({ showSnackbar: jest.fn() }),
 }));
+
+jest.mock('@web-stories-wp/tracking');
 
 const mockClickEvent = {
   preventDefault: jest.fn(),
@@ -133,24 +135,24 @@ const VIDEO_ELEMENT = {
 };
 
 const resetElementAction = expect.objectContaining({
-  label: ACTION_TEXT.RESET_ELEMENT,
+  label: ACTIONS.RESET_ELEMENT.text,
   onClick: expect.any(Function),
   Icon: Eraser,
 });
 
 const defaultQuickActions = [
   expect.objectContaining({
-    label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
+    label: ACTIONS.CHANGE_BACKGROUND_COLOR.text,
     onClick: expect.any(Function),
     Icon: Bucket,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
+    label: ACTIONS.INSERT_BACKGROUND_MEDIA.text,
     onClick: expect.any(Function),
     Icon: Media,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.INSERT_TEXT,
+    label: ACTIONS.INSERT_TEXT.text,
     onClick: expect.any(Function),
     Icon: LetterTPlus,
   }),
@@ -158,17 +160,17 @@ const defaultQuickActions = [
 
 const foregroundImageQuickActions = [
   expect.objectContaining({
-    label: ACTION_TEXT.REPLACE_MEDIA,
+    label: ACTIONS.REPLACE_MEDIA.text,
     onClick: expect.any(Function),
     Icon: PictureSwap,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_ANIMATION,
+    label: ACTIONS.ADD_ANIMATION.text,
     onClick: expect.any(Function),
     Icon: CircleSpeed,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_LINK,
+    label: ACTIONS.ADD_LINK.text,
     onClick: expect.any(Function),
     Icon: Link,
   }),
@@ -181,17 +183,17 @@ const foregroundImageQuickActionsWithClear = [
 
 const shapeQuickActions = [
   expect.objectContaining({
-    label: ACTION_TEXT.CHANGE_COLOR,
+    label: ACTIONS.CHANGE_COLOR.text,
     onClick: expect.any(Function),
     Icon: Bucket,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_ANIMATION,
+    label: ACTIONS.ADD_ANIMATION.text,
     onClick: expect.any(Function),
     Icon: CircleSpeed,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_LINK,
+    label: ACTIONS.ADD_LINK.text,
     onClick: expect.any(Function),
     Icon: Link,
   }),
@@ -201,22 +203,22 @@ const shapeQuickActionsWithClear = [...shapeQuickActions, resetElementAction];
 
 const textQuickActions = [
   expect.objectContaining({
-    label: ACTION_TEXT.CHANGE_TEXT_COLOR,
+    label: ACTIONS.CHANGE_TEXT_COLOR.text,
     onClick: expect.any(Function),
     Icon: Bucket,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.CHANGE_FONT,
+    label: ACTIONS.CHANGE_FONT.text,
     onClick: expect.any(Function),
     Icon: LetterTLargeLetterTSmall,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_ANIMATION,
+    label: ACTIONS.ADD_ANIMATION.text,
     onClick: expect.any(Function),
     Icon: CircleSpeed,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_LINK,
+    label: ACTIONS.ADD_LINK.text,
     onClick: expect.any(Function),
     Icon: Link,
   }),
@@ -225,12 +227,12 @@ const textQuickActionsWithClear = [...textQuickActions, resetElementAction];
 
 const backgroundMediaQuickActions = [
   expect.objectContaining({
-    label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
+    label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
     onClick: expect.any(Function),
     Icon: PictureSwap,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_ANIMATION,
+    label: ACTIONS.ADD_ANIMATION.text,
     onClick: expect.any(Function),
     Icon: CircleSpeed,
   }),
@@ -243,7 +245,7 @@ const backgroundMediaQuickActionsWithClear = [
 const videoQuickActions = [
   ...foregroundImageQuickActions,
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_CAPTIONS,
+    label: ACTIONS.ADD_CAPTIONS.text,
     onClick: expect.any(Function),
     Icon: Captions,
   }),
@@ -369,13 +371,13 @@ describe('useQuickActions', () => {
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        elementId: undefined,
+        elementId: BACKGROUND_ELEMENT.id,
         highlight: states.MEDIA,
       });
 
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        elementId: undefined,
+        elementId: BACKGROUND_ELEMENT.id,
         highlight: states.TEXT_SET,
       });
     });
@@ -558,7 +560,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`\`${ACTION_TEXT.RESET_ELEMENT}\` action should not be present if element has no animations`, () => {
+    it(`\`${ACTIONS.RESET_ELEMENT.text}\` action should not be present if element has no animations`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, IMAGE_ELEMENT],
@@ -637,7 +639,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`\`${ACTION_TEXT.CLEAR_ANIMATIONS}\` action should not be present if element has no animations`, () => {
+    it(`\`${ACTIONS.RESET_ELEMENT.text}\` action should not be present if element has no animations`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, SHAPE_ELEMENT],
@@ -707,7 +709,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`\`${ACTION_TEXT.RESET_ELEMENT}\` action should not be present if element has no animations`, () => {
+    it(`\`${ACTIONS.RESET_ELEMENT.text}\` action should not be present if element has no animations`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, TEXT_ELEMENT],
@@ -796,7 +798,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`should not show \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` action if element has no animations`, () => {
+    it(`should not show \`${ACTIONS.RESET_ELEMENT.text}\` action if element has no animations`, () => {
       mockUseStory.mockReturnValueOnce({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, VIDEO_ELEMENT],
@@ -811,7 +813,7 @@ describe('useQuickActions', () => {
       expect(result.current[4]).toBeUndefined();
     });
 
-    it(`should click \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS} and update the element`, () => {
+    it(`should click \`${ACTIONS.RESET_ELEMENT.text} and update the element`, () => {
       const { result } = renderHook(() => useQuickActions());
 
       result.current[4].onClick(mockClickEvent);

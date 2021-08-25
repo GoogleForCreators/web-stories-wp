@@ -17,9 +17,10 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -35,7 +36,7 @@ import {
   ELEMENT_TYPES,
 } from '../../story';
 import { getResetProperties } from './utils';
-import { ACTION_TEXT, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
+import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
 const {
   Bucket,
@@ -86,6 +87,14 @@ const useQuickActions = () => {
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
+
+  const undoRef = useRef(undo);
+  undoRef.current = undo;
+
+  const backgroundElement = currentPage?.elements.find(
+    (element) => element.isBackground
+  );
+  const selectedElement = selectedElements?.[0];
 
   /**
    * Prevent quick actions menu from removing focus from the canvas.
@@ -157,18 +166,43 @@ const useQuickActions = () => {
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
         message: __('Element properties have been reset', 'web-stories'),
-        onAction: undo,
+        // Don't pass a stale version of `undo`
+        onAction: () => {
+          undoRef.current();
+
+          trackEvent('quick_action', {
+            name: `undo_${ACTIONS.RESET_ELEMENT.trackingEventName}`,
+            element: elementType,
+            isBackground: true,
+          });
+        },
       });
     },
-    [handleResetProperties, showSnackbar, undo]
+    [handleResetProperties, showSnackbar]
   );
 
+  /**
+   * Highlights a panel in the editor. Triggers a tracking event
+   * using the selected element's type.
+   *
+   * The selected element and selected element type may be overridden
+   * using the `elementParams` arguments.
+   *
+   * @param {string} highlight The panel to highlight
+   * @param {Object} elementParams
+   * @param {string} elementParams.elementId The element id that is or will be selected in the canvas.
+   * @param {string} elementParams.elementType The type of the element that is or will be selected in the canvas.
+   * @param {Event} ev The triggering event.
+   */
   const handleFocusPanel = useCallback(
     (highlight) => (elementId) => (ev) => {
       ev.preventDefault();
-      setHighlights({ elementId, highlight });
+      setHighlights({
+        elementId: elementId || selectedElement?.id,
+        highlight,
+      });
     },
-    [setHighlights]
+    [setHighlights, selectedElement]
   );
 
   const handleFocusMediaPanel = useMemo(() => {
@@ -210,11 +244,6 @@ const useQuickActions = () => {
     [handleFocusPanel]
   );
 
-  const backgroundElement = currentPage?.elements.find(
-    (element) => element.isBackground
-  );
-  const selectedElement = selectedElements?.[0];
-
   const actionMenuProps = useMemo(
     () => ({
       tooltipPlacement: isRTL ? PLACEMENT.LEFT : PLACEMENT.RIGHT,
@@ -223,31 +252,52 @@ const useQuickActions = () => {
     [handleMouseDown, isRTL]
   );
 
-  const defaultActions = useMemo(() => {
+  const noElementSelectedActions = useMemo(() => {
     return [
       {
         Icon: Bucket,
-        label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
-        onClick: handleFocusPageBackground(backgroundElement?.id),
+        label: ACTIONS.CHANGE_BACKGROUND_COLOR.text,
+        onClick: (evt) => {
+          handleFocusPageBackground(backgroundElement?.id)(evt);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.CHANGE_BACKGROUND_COLOR.trackingEventName,
+            element: 'none',
+          });
+        },
         ...actionMenuProps,
       },
       {
         Icon: Media,
-        label: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
-        onClick: handleFocusMediaPanel(),
+        label: ACTIONS.INSERT_BACKGROUND_MEDIA.text,
+        onClick: (evt) => {
+          handleFocusMediaPanel()(evt);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.INSERT_BACKGROUND_MEDIA.trackingEventName,
+            element: 'none',
+          });
+        },
         separator: 'top',
         ...actionMenuProps,
       },
       {
         Icon: LetterTPlus,
-        label: ACTION_TEXT.INSERT_TEXT,
-        onClick: handleFocusTextSetsPanel(),
+        label: ACTIONS.INSERT_TEXT.text,
+        onClick: (evt) => {
+          handleFocusTextSetsPanel()(evt);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.INSERT_TEXT.trackingEventName,
+            element: 'none',
+          });
+        },
         onMouseDown: handleMouseDown,
       },
     ];
   }, [
     actionMenuProps,
-    backgroundElement?.id,
+    backgroundElement,
     handleFocusMediaPanel,
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
@@ -264,27 +314,47 @@ const useQuickActions = () => {
     const baseActions = [
       {
         Icon: CircleSpeed,
-        label: ACTION_TEXT.ADD_ANIMATION,
-        onClick: handleFocusAnimationPanel(selectedElement?.id),
+        label: ACTIONS.ADD_ANIMATION.text,
+        onClick: (evt) => {
+          handleFocusAnimationPanel()(evt);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.ADD_ANIMATION.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
         ...actionMenuProps,
       },
       {
         Icon: Link,
-        label: ACTION_TEXT.ADD_LINK,
-        onClick: handleFocusLinkPanel(selectedElement?.id),
+        label: ACTIONS.ADD_LINK.text,
+        onClick: (evt) => {
+          handleFocusLinkPanel()(evt);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.ADD_LINK.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
         ...actionMenuProps,
       },
     ];
 
     const clearAction = {
       Icon: Eraser,
-      label: ACTION_TEXT.RESET_ELEMENT,
-      onClick: () =>
+      label: ACTIONS.RESET_ELEMENT.text,
+      onClick: () => {
         handleElementReset({
           elementId: selectedElement?.id,
           resetProperties,
           elementType: selectedElement?.type,
-        }),
+        });
+
+        trackEvent('quick_action', {
+          name: ACTIONS.RESET_ELEMENT.trackingEventName,
+          element: selectedElement?.type,
+        });
+      },
       separator: 'top',
       ...actionMenuProps,
     };
@@ -305,10 +375,15 @@ const useQuickActions = () => {
     () => [
       {
         Icon: PictureSwap,
-        label: ACTION_TEXT.REPLACE_MEDIA,
+        label: ACTIONS.REPLACE_MEDIA.text,
         onClick: (ev) => {
           dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
-          handleFocusMediaPanel(selectedElement?.id)(ev);
+          handleFocusMediaPanel()(ev);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.REPLACE_MEDIA.trackingEventName,
+            element: selectedElement?.type,
+          });
         },
         ...actionMenuProps,
       },
@@ -318,8 +393,8 @@ const useQuickActions = () => {
       actionMenuProps,
       handleFocusMediaPanel,
       foregroundCommonActions,
-      selectedElement?.id,
       dispatchStoryEvent,
+      selectedElement?.type,
     ]
   );
 
@@ -327,17 +402,24 @@ const useQuickActions = () => {
     () => [
       {
         Icon: Bucket,
-        label: ACTION_TEXT.CHANGE_COLOR,
-        onClick: handleFocusStylePanel(selectedElement?.id),
+        label: ACTIONS.CHANGE_COLOR.text,
+        onClick: (evt) => {
+          handleFocusStylePanel()(evt);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.CHANGE_COLOR.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
         ...actionMenuProps,
       },
       ...foregroundCommonActions,
     ],
     [
-      handleFocusStylePanel,
-      foregroundCommonActions,
       actionMenuProps,
-      selectedElement?.id,
+      foregroundCommonActions,
+      handleFocusStylePanel,
+      selectedElement?.type,
     ]
   );
 
@@ -345,14 +427,28 @@ const useQuickActions = () => {
     () => [
       {
         Icon: Bucket,
-        label: ACTION_TEXT.CHANGE_COLOR,
-        onClick: handleFocusTextColor(selectedElement?.id),
+        label: ACTIONS.CHANGE_COLOR.text,
+        onClick: (evt) => {
+          handleFocusTextColor()(evt);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.CHANGE_COLOR.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
         ...actionMenuProps,
       },
       {
         Icon: LetterTLargeLetterTSmall,
-        label: ACTION_TEXT.CHANGE_FONT,
-        onClick: handleFocusFontPicker(selectedElement?.id),
+        label: ACTIONS.CHANGE_FONT.text,
+        onClick: (evt) => {
+          handleFocusFontPicker()(evt);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.CHANGE_FONT.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
         ...actionMenuProps,
       },
       ...foregroundCommonActions,
@@ -360,9 +456,9 @@ const useQuickActions = () => {
     [
       foregroundCommonActions,
       actionMenuProps,
-      selectedElement?.id,
       handleFocusTextColor,
       handleFocusFontPicker,
+      selectedElement?.type,
     ]
   );
 
@@ -378,48 +474,76 @@ const useQuickActions = () => {
       ...baseActions,
       {
         Icon: Captions,
-        label: ACTION_TEXT.ADD_CAPTIONS,
-        onClick: handleFocusCaptionsPanel(selectedElement?.id),
+        label: ACTIONS.ADD_CAPTIONS.text,
+        onClick: (evt) => {
+          handleFocusCaptionsPanel()(evt);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.ADD_CAPTIONS.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
         ...actionMenuProps,
       },
       ...clearActions,
     ];
   }, [
-    showClearAction,
+    actionMenuProps,
     foregroundImageActions,
     handleFocusCaptionsPanel,
-    selectedElement?.id,
-    actionMenuProps,
+    selectedElement?.type,
+    showClearAction,
   ]);
 
   const backgroundElementMediaActions = useMemo(() => {
     const baseActions = [
       {
         Icon: PictureSwap,
-        label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
+        label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
         onClick: (ev) => {
           dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
-          handleFocusMediaPanel(selectedElement?.id)(ev);
+          handleFocusMediaPanel()(ev);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
+            element: selectedElement?.type,
+            isBackground: true,
+          });
         },
         ...actionMenuProps,
       },
       {
         Icon: CircleSpeed,
-        label: ACTION_TEXT.ADD_ANIMATION,
-        onClick: handleFocusAnimationPanel(selectedElement?.id),
+        label: ACTIONS.ADD_ANIMATION.text,
+        onClick: (evt) => {
+          handleFocusAnimationPanel()(evt);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.ADD_ANIMATION.trackingEventName,
+            element: selectedElement?.type,
+            isBackground: true,
+          });
+        },
         ...actionMenuProps,
       },
     ];
 
     const clearAction = {
       Icon: Eraser,
-      label: ACTION_TEXT.RESET_ELEMENT,
-      onClick: () =>
+      label: ACTIONS.RESET_ELEMENT.text,
+      onClick: () => {
         handleElementReset({
           elementId: selectedElement?.id,
           resetProperties,
           elementType: ELEMENT_TYPES.IMAGE,
-        }),
+        });
+
+        trackEvent('quick_action', {
+          name: ACTIONS.RESET_ELEMENT.trackingEventName,
+          element: selectedElement?.type,
+          isBackground: true,
+        });
+      },
       separator: 'top',
       ...actionMenuProps,
     };
@@ -427,13 +551,13 @@ const useQuickActions = () => {
     return showClearAction ? [...baseActions, clearAction] : baseActions;
   }, [
     actionMenuProps,
-    handleFocusAnimationPanel,
-    selectedElement?.id,
-    showClearAction,
-    handleElementReset,
     dispatchStoryEvent,
+    handleElementReset,
+    handleFocusAnimationPanel,
     handleFocusMediaPanel,
     resetProperties,
+    selectedElement,
+    showClearAction,
   ]);
 
   // Hide menu if there are multiple elements selected
@@ -455,7 +579,7 @@ const useQuickActions = () => {
     noElementsSelected ||
     (isBackgroundSelected && !isBackgroundElementMedia)
   ) {
-    return defaultActions;
+    return noElementSelectedActions;
   }
 
   // return background media actions if:
@@ -468,6 +592,7 @@ const useQuickActions = () => {
   // switch quick actions based on non-background element type
   switch (selectedElements?.[0]?.type) {
     case ELEMENT_TYPES.IMAGE:
+    case ELEMENT_TYPES.GIF:
       return foregroundImageActions;
     case ELEMENT_TYPES.SHAPE:
       return shapeActions;

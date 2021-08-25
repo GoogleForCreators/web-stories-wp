@@ -34,11 +34,7 @@ import { useGridViewKeys } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import {
-  CardGrid,
-  ActionLabel,
-  CONTEXT_MENU_BUTTON_CLASS,
-} from '../../../../../components';
+import { CardGrid, CONTEXT_MENU_BUTTON_CLASS } from '../../../../../components';
 import {
   StoriesPropType,
   StoryMenuPropType,
@@ -186,6 +182,8 @@ const StoryGridView = ({
     </div>
   );
 };
+
+const ActionLabel = PropTypes.oneOfType([PropTypes.string, PropTypes.node]);
 
 StoryGridView.propTypes = {
   stories: StoriesPropType,
