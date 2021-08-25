@@ -297,19 +297,12 @@ function rest_preload_api_request( $memo, $path ): array {
 }
 
 /**
- * Web stories Plugin Instance
+ * Bootstrap the plugin.
  *
- * @return Plugin
+ * @since 1.11.0
  */
-function get_plugin_instance() {
-	global $web_stories;
-
-	if ( null === $web_stories ) {
-		$web_stories = new Plugin();
-	}
-
-	return $web_stories;
+function bootstrap_plugin() {
+	PluginFactory::create()->register();
 }
 
-// Initialize plugin by registering all services.
-get_plugin_instance()->register();
+add_action( 'plugins_loaded', __NAMESPACE__ . '\bootstrap_plugin' );
