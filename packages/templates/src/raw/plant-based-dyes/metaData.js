@@ -20,7 +20,7 @@
 import { __, _x } from '@web-stories-wp/i18n';
 
 export default {
-  slug: 'plant-based-dyes-diy',
+  slug: 'plant-based-dyes',
   creationDate: '2021-07-12T00:00:00.000Z',
   title: _x('Plant Based Dyes DIY', 'template name', 'web-stories'),
   tags: [
