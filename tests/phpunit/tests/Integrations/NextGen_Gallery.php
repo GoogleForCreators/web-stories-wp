@@ -25,7 +25,7 @@ use Google\Web_Stories\Tests\TestCase;
  */
 class NextGen_Gallery extends TestCase {
 	public function tearDown() {
-		unset( $_SERVER['REQUEST_URI'], $_GET[ Story_Post_Type::POST_TYPE_SLUG ] );
+		unset( $_SERVER['REQUEST_URI'], $_GET );
 
 		parent::tearDown();
 	}
