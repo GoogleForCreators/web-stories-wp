@@ -116,8 +116,9 @@ describe('Grid view', () => {
 
   it('should navigate to Explore Templates', async () => {
     const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: /^Explore Templates$/,
+      name: /^Explore Templates/,
     });
+    expect(exploreTemplatesMenuItem).toBeTruthy();
 
     await fixture.events.click(exploreTemplatesMenuItem);
     const templatesGridEl = await waitFor(() =>
