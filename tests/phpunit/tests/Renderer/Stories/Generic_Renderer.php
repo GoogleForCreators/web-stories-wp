@@ -78,6 +78,16 @@ class Generic_Renderer extends TestCase {
 		$this->story_query->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
 	}
 
+	public function tearDown() {
+		wp_dequeue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+		wp_deregister_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+
+		wp_dequeue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+		wp_deregister_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+
+		parent::tearDown();
+	}
+
 	/**
 	 * @covers ::load_assets
 	 */
@@ -93,9 +103,9 @@ class Generic_Renderer extends TestCase {
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
-		// These are only enqueued when rendering.
-		$this->assertFalse( wp_script_is( AMP_Story_Player_Assets::SCRIPT_HANDLE ) );
-		$this->assertFalse( wp_style_is( AMP_Story_Player_Assets::SCRIPT_HANDLE ) );
+		// These are registered by init(), but only enqueued when rendering.
+		$this->assertTrue( wp_script_is( AMP_Story_Player_Assets::SCRIPT_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_style_is( AMP_Story_Player_Assets::SCRIPT_HANDLE, 'registered' ) );
 	}
 
 	/**
@@ -132,5 +142,4 @@ class Generic_Renderer extends TestCase {
 		$this->assertTrue( wp_script_is( AMP_Story_Player_Assets::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_style_is( AMP_Story_Player_Assets::SCRIPT_HANDLE ) );
 	}
-
 }

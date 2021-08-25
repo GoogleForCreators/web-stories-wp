@@ -495,7 +495,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$single_story_classes = $this->get_single_story_classes();
 		$lightbox_state       = 'lightbox' . $story->get_id() . $this->instance_id;
 		// No need to load these styles on admin as editor styles are being loaded by the block.
-		if ( ! is_admin() || defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
+		if ( ! is_admin() || ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) ) {
 			// Web Stories Styles for AMP and non-AMP pages.
 			$this->assets->enqueue_style_asset( self::STYLE_HANDLE );
 		}

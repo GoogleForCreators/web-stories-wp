@@ -25,7 +25,9 @@ namespace Google\Web_Stories\Tests;
 class Assets extends TestCase {
 	public function tearDown() {
 		wp_deregister_script( 'test_script' );
+		wp_deregister_script( 'fake_js_chunk' );
 		wp_deregister_style( 'test_style' );
+		wp_deregister_style( 'fake_css_chunk' );
 
 		parent::tearDown();
 	}
@@ -91,7 +93,7 @@ class Assets extends TestCase {
 			);
 		$assets->register_script_asset( 'test_script' );
 		$this->assertTrue( wp_script_is( 'test_script', 'registered' ) );
-		$this->assertTrue( wp_script_is( 'fake_js_chunk' ) );
+		$this->assertTrue( wp_script_is( 'fake_js_chunk', 'registered' ) );
 	}
 
 	/**
@@ -110,7 +112,7 @@ class Assets extends TestCase {
 			);
 		$assets->register_style_asset( 'test_style' );
 		$this->assertTrue( wp_style_is( 'test_style', 'registered' ) );
-		$this->assertTrue( wp_style_is( 'fake_css_chunk' ) );
+		$this->assertTrue( wp_style_is( 'fake_css_chunk', 'registered' ) );
 	}
 
 	/**
