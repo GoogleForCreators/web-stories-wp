@@ -327,8 +327,7 @@ class Dashboard extends Service_Base {
 
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 
-		$font_handle = $this->google_fonts->get_handle();
-		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $font_handle ] );
+		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $this->google_fonts::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,

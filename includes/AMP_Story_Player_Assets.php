@@ -37,6 +37,11 @@ use WP_Scripts;
  * @package Google\Web_Stories
  */
 class AMP_Story_Player_Assets implements Service, Registerable {
+	/**
+	 * Script handle.
+	 *
+	 * @var string
+	 */
 	const SCRIPT_HANDLE = 'standalone-amp-story-player';
 
 	/**
