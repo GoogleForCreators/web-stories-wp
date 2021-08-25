@@ -87,10 +87,14 @@ function rewrite_flush() {
  */
 function activate( $network_wide = false ) {
 	$network_wide = (bool) $network_wide;
+
+	// Bootstrap the plugin upon activation.
+	PluginFactory::create()->register();
+
 	// Ensures capabilities are properly set up as that class is not a service.
 	setup_new_site();
 
-	// Runs all activateable services.
+	// Runs all activatable services.
 	PluginFactory::create()->activate( $network_wide );
 
 	do_action( 'web_stories_activation', $network_wide );
@@ -253,7 +257,7 @@ function rest_preload_api_request( $memo, $path ): array {
 	$method = 'GET';
 	if ( is_array( $path ) && 2 === count( $path ) ) {
 		$method = end( $path );
-		$path   = reset( $path );
+		$path   = (string) reset( $path );
 
 		if ( ! in_array( $method, [ 'GET', 'OPTIONS' ], true ) ) {
 			$method = 'GET';
