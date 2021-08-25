@@ -138,6 +138,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     );
     let textSets = fixture.editor.library.text.textSets;
     await fixture.events.click(textSets[0]);
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('Editorial text set positioning');
 
     await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
@@ -146,6 +147,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     );
     textSets = fixture.editor.library.text.textSets;
     await fixture.events.click(textSets[0]);
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('List text set positioning');
 
     await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
@@ -154,6 +156,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     );
     textSets = fixture.editor.library.text.textSets;
     await fixture.events.click(textSets[0]);
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('Steps text set positioning');
   });
 
