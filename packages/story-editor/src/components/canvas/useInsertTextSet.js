@@ -23,16 +23,23 @@ import {
   FULLBLEED_HEIGHT,
   PAGE_WIDTH,
 } from '@web-stories-wp/units';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import objectWithout from '../../utils/objectWithout';
-import { useStory } from '../../app/story';
+import { useStory, ELEMENT_TYPES } from '../../app/story';
+import { getHTMLFormatters } from '../richText/htmlManipulation';
+import usePageAsCanvas from '../../utils/usePageAsCanvas';
 import useInsertElement from './useInsertElement';
+
+const SCRIM_PADDING = 24;
 
 function useInsertTextSet() {
   const insertElement = useInsertElement();
+  const { calculateAccessibleTextColors } = usePageAsCanvas();
+  const enableSmartTextSetsColor = useFeature('enableSmartTextSetsColor');
 
   const { setSelectedElementsById } = useStory(
     ({ actions: { setSelectedElementsById } }) => {
@@ -43,9 +50,99 @@ function useInsertTextSet() {
   );
 
   const insertTextSet = useBatchingCallback(
-    (toAdd) => {
+    async (toAdd) => {
+      const htmlFormatters = getHTMLFormatters();
+      const { setColor } = htmlFormatters;
       const addedElements = [];
-      toAdd.forEach((element) => {
+
+      const hasPredefinedColor = toAdd.some((element) =>
+        element.content?.includes('color:')
+      );
+
+      let textElementsContrasts = [];
+      let firstValidColor = null;
+
+      const white = {
+        r: 255,
+        g: 255,
+        b: 255,
+      };
+      const black = {
+        r: 0,
+        g: 0,
+        b: 0,
+      };
+      const whiteScrim = {
+        ...white,
+        a: 0.3,
+      };
+      const blackScrim = {
+        ...black,
+        a: 0.3,
+      };
+      let preferredScrimColor, scrimsCount, useScrim;
+
+      // Insert scrim as a first element if needed.
+      if (enableSmartTextSetsColor && !hasPredefinedColor) {
+        textElementsContrasts = await Promise.all(
+          toAdd.map((element) =>
+            element.type === 'text'
+              ? calculateAccessibleTextColors(element)
+              : null
+          )
+        );
+        firstValidColor = textElementsContrasts.find((c) => c);
+        const allColorsEqual = textElementsContrasts.every(
+          (contrast) =>
+            contrast === null ||
+            (contrast.color.r === firstValidColor.color.r &&
+              contrast.color.g === firstValidColor.color.g &&
+              contrast.color.b === firstValidColor.color.b &&
+              contrast.color.a === firstValidColor.color.a)
+        );
+        scrimsCount = textElementsContrasts.reduce(
+          (acc, contrast) => (contrast?.backgroundColor ? acc + 1 : acc),
+          0
+        );
+        const blackScrims = textElementsContrasts.reduce(
+          (acc, contrast) =>
+            contrast?.backgroundColor?.r === 0 &&
+            contrast?.backgroundColor?.g === 0 &&
+            contrast?.backgroundColor?.b === 0
+              ? acc + 1
+              : acc,
+          0
+        );
+        preferredScrimColor =
+          scrimsCount - blackScrims > 0 ? blackScrim : whiteScrim;
+
+        useScrim = scrimsCount > 0 || allColorsEqual === false;
+
+        if (useScrim) {
+          const { textSetHeight, textSetWidth } = toAdd[0];
+          const getMinDim = (dim) =>
+            Math.min.apply(
+              null,
+              toAdd.map((e) => e[dim])
+            );
+          const x = getMinDim('x');
+          const y = getMinDim('y');
+          const scrim = {
+            x: x - SCRIM_PADDING,
+            y: y - SCRIM_PADDING,
+            width: textSetWidth + SCRIM_PADDING * 2,
+            height: textSetHeight + SCRIM_PADDING * 2,
+            backgroundColor: {
+              color: preferredScrimColor,
+            },
+            backdropBlur: 4,
+            type: 'shape',
+          };
+          addedElements.push(insertElement(ELEMENT_TYPES.SHAPE, scrim));
+        }
+      }
+
+      toAdd.forEach((element, index) => {
         const toInsert = objectWithout(element, [
           'id',
           'normalizedOffsetX',
@@ -53,6 +150,26 @@ function useInsertTextSet() {
           'textSetWidth',
           'textSetHeight',
         ]);
+        if (enableSmartTextSetsColor && !hasPredefinedColor) {
+          // If scrim is used - adjust the colors, otherwise use defaults.
+          const scrimContrastingTextColor =
+            preferredScrimColor.r === 0 ? white : black;
+          const autoColor = useScrim
+            ? { color: scrimContrastingTextColor }
+            : textElementsContrasts[index];
+
+          if (element.type === 'text') {
+            toInsert.content = setColor(toInsert.content, autoColor);
+          }
+          if (element.type === 'shape') {
+            // So far we only use borders (no fill) or shapes with fill (no borders).
+            if (element.border) {
+              toInsert.border.color = firstValidColor;
+            } else {
+              toInsert.backgroundColor = firstValidColor;
+            }
+          }
+        }
         addedElements.push(insertElement(element.type, toInsert));
       });
       // Select all added elements.
@@ -60,7 +177,12 @@ function useInsertTextSet() {
         elementIds: addedElements.map(({ id }) => id),
       });
     },
-    [insertElement, setSelectedElementsById]
+    [
+      calculateAccessibleTextColors,
+      enableSmartTextSetsColor,
+      insertElement,
+      setSelectedElementsById,
+    ]
   );
 
   const insertTextSetByOffset = useCallback(
