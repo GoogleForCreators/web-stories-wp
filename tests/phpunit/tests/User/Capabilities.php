@@ -70,7 +70,7 @@ class Capabilities extends TestCase {
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 		$all_capabilities = array_filter(
 			$all_capabilities,
-			function ( $value ) {
+			static function ( $value ) {
 				return 'read' !== $value;
 			}
 		);
