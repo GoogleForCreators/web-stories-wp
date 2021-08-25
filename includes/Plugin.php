@@ -194,33 +194,4 @@ class Plugin extends ServiceBasedPlugin {
 			},
 		];
 	}
-
-	/**
-	 * Backward compatibility, old style class stored all classes instances as class properties.
-	 * Use a magic getting to populate these class properties.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @param string $name property name.
-	 *
-	 * @return mixed
-	 */
-	public function __get( $name ) {
-		$services = $this->get_service_classes();
-		if ( isset( $services[ $name ] ) ) {
-			return $this->instantiate_service( $services[ $name ] );
-		}
-
-		if ( 'integrations' === $name ) {
-			return [
-				'webstories_core_themes_support' => $this->instantiate_service( $services['integrations.themes_support'] ),
-				'site-kit'                       => $this->instantiate_service( $services['integrations.sitekit'] ),
-				'nextgen_gallery'                => $this->instantiate_service( $services['integrations.nextgen_gallery'] ),
-				'jetpack'                        => $this->instantiate_service( $services['integrations.jetpack'] ),
-				'amp'                            => $this->instantiate_service( $services['integrations.amp'] ),
-			];
-		}
-
-		return $this->$name;
-	}
 }
