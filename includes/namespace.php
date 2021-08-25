@@ -255,7 +255,11 @@ function rest_preload_api_request( $memo, $path ): array {
 	}
 
 	$method = 'GET';
-	if ( is_array( $path ) && 2 === count( $path ) ) {
+	if ( is_array( $path ) ) {
+		if ( 2 !== count( $path ) ) {
+			return $memo;
+		}
+
 		$method = end( $path );
 		$path   = (string) reset( $path );
 
@@ -264,7 +268,7 @@ function rest_preload_api_request( $memo, $path ): array {
 		}
 	}
 
-	$path_parts = wp_parse_url( $path );
+	$path_parts = wp_parse_url( (string) $path );
 	if ( false === $path_parts ) {
 		return $memo;
 	}
