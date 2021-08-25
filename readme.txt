@@ -115,6 +115,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 * Fixes an issue with potential fatal errors on the frontend.
 * Fixes an issue with page attachments being removed on the frontend.
+* Fixes an issue with memory not being freed up after optimizing videos.
 
 = 1.10.0 =
 
@@ -143,7 +144,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.10.1 =
 
-Two bug fixes to address potential fatal errors on the frontend and missing page attachments.
+Several bug fixes to address potential fatal errors and missing page attachments, as well as high memory consumption.
 
 = 1.10.0 =
 
