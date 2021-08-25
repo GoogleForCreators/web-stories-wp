@@ -38,6 +38,13 @@ class Dashboard extends TestCase {
 		self::delete_user( self::$user_id );
 	}
 
+	public function tearDown() {
+		wp_dequeue_script( \Google\Web_Stories\Admin\Dashboard::SCRIPT_HANDLE );
+		wp_dequeue_style( \Google\Web_Stories\Admin\Dashboard::SCRIPT_HANDLE );
+
+		parent::tearDown();
+	}
+
 	/**
 	 * @covers ::get_hook_suffix
 	 */
