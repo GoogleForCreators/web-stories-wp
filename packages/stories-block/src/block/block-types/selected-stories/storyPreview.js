@@ -80,8 +80,13 @@ function StoryPreview({
           addSelectedStory={addSelectedStory}
           removeSelectedStory={removeSelectedStory}
         />
-        {story.featured_media_url && (
-          <img src={story.featured_media_url} alt="" width={640} height={853} />
+        {story._embedded?.['wp:featuredmedia']?.[0]?.source_url && (
+          <img
+            src={story._embedded?.['wp:featuredmedia']?.[0]?.source_url}
+            alt=""
+            width={640}
+            height={853}
+          />
         )}
       </div>
       <div className="web-stories-story-preview-card__label">

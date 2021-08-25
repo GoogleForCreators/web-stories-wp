@@ -187,11 +187,11 @@ function APIProvider({ children }) {
           'status',
           'slug',
           'link',
-          'featured_media_url',
           'preview_link',
           'edit_link',
           'embed_post_link',
         ].join(','),
+        _embed: 'wp:featuredmedia',
       });
 
       return apiFetch({

@@ -262,7 +262,6 @@ class Dashboard extends Service_Base {
 								'modified',
 								'modified_gmt',
 								'link',
-								'featured_media_url',
 								'preview_link',
 								'edit_link',
 								// _web_stories_envelope will add these fields, we need them too.
