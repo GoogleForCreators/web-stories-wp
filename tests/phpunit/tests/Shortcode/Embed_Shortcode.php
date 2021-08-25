@@ -33,6 +33,11 @@ class Embed_Shortcode extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_registers_shortcode() {
+		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$assets                  = new \Google\Web_Stories\Assets();
+		$embed_shortcode         = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $amp_story_player_assets );
+
+		$embed_shortcode->register();
 		$this->assertTrue( shortcode_exists( \Google\Web_Stories\Shortcode\Embed_Shortcode::SHORTCODE_NAME ) );
 	}
 
