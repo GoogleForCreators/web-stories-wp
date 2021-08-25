@@ -184,7 +184,10 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @return array Array of allowed fields.
 	 */
-	public function filter_revision_fields( $fields, $story ): array {
+	public function filter_revision_fields( $fields, $story ) {
+		if ( ! is_array( $fields ) ) {
+			return $fields;
+		}
 		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
@@ -246,13 +249,16 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array[] $bulk_messages Arrays of messages, each keyed by the corresponding post type. Messages are
+	 * @param array[]|mixed $bulk_messages Arrays of messages, each keyed by the corresponding post type. Messages are
 	 *                               keyed with 'updated', 'locked', 'deleted', 'trashed', and 'untrashed'.
-	 * @param int[]   $bulk_counts   Array of item counts for each message, used to build internationalized strings.
+	 * @param int[]         $bulk_counts   Array of item counts for each message, used to build internationalized strings.
 	 *
-	 * @return array Bulk counts.
+	 * @return array|mixed Bulk counts.
 	 */
-	public function bulk_post_updated_messages( array $bulk_messages, $bulk_counts ): array {
+	public function bulk_post_updated_messages( $bulk_messages, $bulk_counts ) {
+		if ( ! is_array( $bulk_messages ) ) {
+			return $bulk_messages;
+		}
 		$bulk_messages[ self::POST_TYPE_SLUG ] = [
 			/* translators: %s: Number of stories. */
 			'updated'   => _n( '%s story updated.', '%s stories updated.', $bulk_counts['updated'], 'web-stories' ),
@@ -275,11 +281,14 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $data Array of data to save.
+	 * @param array|mixed $data Array of data to save.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
-	public function change_default_title( $data ): array {
+	public function change_default_title( $data ) {
+		if ( ! is_array( $data ) ) {
+			return $data;
+		}
 		if ( self::POST_TYPE_SLUG === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
 			$data['post_title'] = '';
 		}

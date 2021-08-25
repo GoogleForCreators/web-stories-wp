@@ -79,13 +79,13 @@ class KSES extends Service_Base {
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param array $data                An array of slashed, sanitized, and processed post data.
-	 * @param array $postarr             An array of sanitized (and slashed) but otherwise unmodified post data.
-	 * @param array $unsanitized_postarr An array of slashed yet *unsanitized* and unprocessed post data as
-	 *                                   originally passed to wp_insert_post().
-	 * @return array Filtered post data.
+	 * @param array|mixed $data                An array of slashed, sanitized, and processed post data.
+	 * @param array       $postarr             An array of sanitized (and slashed) but otherwise unmodified post data.
+	 * @param array       $unsanitized_postarr An array of slashed yet *unsanitized* and unprocessed post data as
+	 *                                         originally passed to wp_insert_post().
+	 * @return array|mixed Filtered post data.
 	 */
-	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ): array {
+	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
 		if (
 			( Story_Post_Type::POST_TYPE_SLUG !== $data['post_type'] ) && !
 			(
@@ -518,7 +518,7 @@ class KSES extends Service_Base {
 				'href'  => true,
 				'theme' => true,
 			],
-			'amp-story-page-outline'    => [
+			'amp-story-page-outlink'    => [
 				'cta-image'          => true,
 				'theme'              => true,
 				'cta-accent-color'   => true,
