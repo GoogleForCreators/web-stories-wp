@@ -242,7 +242,7 @@ class Dashboard extends Service_Base {
 			'/web-stories/v1/users/me/',
 			"/web-stories/v1/$rest_base/?" . build_query(
 				[
-					'_embed'                => rawurlencode( 'wp:lock,wp:lockuser,author' ),
+					'_embed'                => rawurlencode( 'wp:lock,wp:lockuser,author,wp:featuredmedia' ),
 					'context'               => 'edit',
 					'order'                 => 'desc',
 					'orderby'               => 'modified',
