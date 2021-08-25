@@ -32,9 +32,6 @@ class Capabilities extends TestCase {
 	}
 
 	public function tearDown() {
-		$this->set_permalink_structure( '' );
-		$_SERVER['REQUEST_URI'] = '';
-
 		$this->remove_caps_from_roles();
 
 		parent::tearDown();
@@ -47,7 +44,7 @@ class Capabilities extends TestCase {
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 
-		$capability = $this->get_capability_object();
+		$capability = new \Google\Web_Stories\User\Capabilities();
 		$capability->add_caps_to_roles();
 
 		$administrator = get_role( 'administrator' );
@@ -63,7 +60,7 @@ class Capabilities extends TestCase {
 	 * @covers ::remove_caps_from_roles
 	 */
 	public function test_remove_caps_from_roles() {
-		$capability = $this->get_capability_object();
+		$capability = new \Google\Web_Stories\User\Capabilities();
 		$capability->remove_caps_from_roles();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );

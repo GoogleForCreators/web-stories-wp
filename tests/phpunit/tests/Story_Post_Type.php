@@ -72,9 +72,6 @@ class Story_Post_Type extends TestCase {
 	}
 
 	public function tearDown() {
-		$this->set_permalink_structure( '' );
-		$_SERVER['REQUEST_URI'] = '';
-
 		$this->remove_caps_from_roles();
 
 		parent::tearDown();

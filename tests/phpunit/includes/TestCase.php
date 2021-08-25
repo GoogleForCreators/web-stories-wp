@@ -36,6 +36,8 @@ abstract class TestCase extends PolyfilledTestCase {
 		// WordPress core fails to do this.
 		unset( $GLOBALS['show_admin_bar'], $GLOBALS['wp_meta_boxes'], $GLOBALS['hook_suffix'], $_SERVER['HTTPS'], $_GET );
 
+		$this->set_permalink_structure( '' );
+
 		$_SERVER['REQUEST_URI'] = '';
 
 		parent::tearDown();

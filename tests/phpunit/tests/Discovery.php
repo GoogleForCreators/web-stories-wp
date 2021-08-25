@@ -90,14 +90,6 @@ class Discovery extends TestCase {
 		$this->go_to( get_permalink( self::$story_id ) );
 	}
 
-	public function tearDown() {
-		$this->set_permalink_structure( '' );
-		// Set by go_to();
-		$_SERVER['REQUEST_URI'] = '';
-
-		parent::tearDown();
-	}
-
 	/**
 	 * @covers ::register
 	 */

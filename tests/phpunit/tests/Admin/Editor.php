@@ -86,7 +86,6 @@ class Editor extends TestCase {
 
 	public function tearDown() {
 		$this->set_permalink_structure( '' );
-		$_SERVER['REQUEST_URI'] = '';
 
 		delete_post_meta( self::$story_id, '_edit_lock' );
 
