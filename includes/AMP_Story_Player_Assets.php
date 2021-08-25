@@ -53,7 +53,7 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 */
 	public function register() {
 		add_action( 'wp_default_styles', [ $this, 'register_style' ] );
-		add_action( 'wp_default_scripts', [ $this, 'register_scripts' ] );
+		add_action( 'wp_default_scripts', [ $this, 'register_script' ] );
 	}
 
 	/**
@@ -83,7 +83,7 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 *
 	 * @return void
 	 */
-	public function register_scripts( WP_Scripts $wp_scripts ) {
+	public function register_script( WP_Scripts $wp_scripts ) {
 		$wp_scripts->add(
 			self::SCRIPT_HANDLE,
 			'https://cdn.ampproject.org/amp-story-player-v0.js',
