@@ -18,6 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useEffect, useRef } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
@@ -36,6 +37,22 @@ const ScreenMask = styled.div`
 `;
 
 export default function Mask({ onDismiss }) {
+  const maskRef = useRef();
+
+  // Right clicking the mask should also close it
+  useEffect(() => {
+    const node = maskRef.current;
+    if (!node) {
+      return undefined;
+    }
+
+    node.addEventListener('contextmenu', onDismiss);
+
+    return () => {
+      node.removeEventListener('contextmenu', onDismiss);
+    };
+  }, [onDismiss]);
+
   return (
     <>
       {/*
@@ -43,6 +60,7 @@ export default function Mask({ onDismiss }) {
         */}
       {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
       <ScreenMask
+        ref={maskRef}
         data-testid="context-menu-mask"
         hasOnDismiss={Boolean(onDismiss)}
         onClick={onDismiss || noop}

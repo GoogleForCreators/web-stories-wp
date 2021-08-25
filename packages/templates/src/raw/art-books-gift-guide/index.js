@@ -15,35 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'art-books-gift-guide',
-  title: _x('Art Books Gift Guide', 'template name', 'web-stories'),
-  tags: [
-    _x('Art', 'template keyword', 'web-stories'),
-    _x('Gift', 'template keyword', 'web-stories'),
-    _x('Recommendation', 'template keyword', 'web-stories'),
-    _x('Books', 'template keyword', 'web-stories'),
-    _x('Pink', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Petal Pink', 'color', 'web-stories'), color: '#da9bb2' },
-    { label: _x('Milano Red', 'color', 'web-stories'), color: '#c01e00' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Voodoo Purple', 'color', 'web-stories'), color: '#412c47' },
-  ],
-  description: __(
-    'With its serene, comforting colors and beautiful illustrations, this template is great for creating stories about books and literature. Review books, talk about the newest releases in fiction, create reading lists and more.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Arts & Crafts', 'template vertical', 'web-stories'),
 };

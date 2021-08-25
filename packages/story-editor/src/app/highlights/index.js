@@ -22,7 +22,7 @@ export { default as useHighlights } from './useHighlights';
 export { default as useFocusHighlight } from './useFocusHighlight';
 export { default as HighlightsProvider } from './provider';
 export { default as states } from './states';
-export { ACTION_TEXT } from './quickActions/constants';
+export { ACTIONS } from './quickActions/constants';
 export { useQuickActions } from './quickActions';
 
 export const styles = {

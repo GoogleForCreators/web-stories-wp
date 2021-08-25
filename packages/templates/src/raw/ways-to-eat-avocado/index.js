@@ -15,37 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'ways-to-eat-avocado',
-  title: _x('Ways to Eat Avocado', 'template name', 'web-stories'),
-  tags: [
-    _x('Nutrition', 'template keyword', 'web-stories'),
-    _x('Health', 'template keyword', 'web-stories'),
-    _x('Fitness', 'template keyword', 'web-stories'),
-    _x('Organic', 'template keyword', 'web-stories'),
-    _x('Diet', 'template keyword', 'web-stories'),
-    _x('Green', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Swamp Green', 'color', 'web-stories'), color: '#a7b27e' },
-    { label: _x('Saffron Yellow', 'color', 'web-stories'), color: '#f5b435' },
-    { label: _x('Dark Moss Green', 'color', 'web-stories'), color: '#51611c' },
-    { label: _x('Rose Bud Pink', 'color', 'web-stories'), color: '#ffa797' },
-    { label: _x('Dark Coral', 'color', 'web-stories'), color: '#a35445' },
-  ],
-  description: __(
-    'This template is on a diet. With its to-the-point structure and neutral typography, it will let you keep things simple and focus on getting your recipe to your followers.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Health & Wellness', 'template vertical', 'web-stories'),
 };

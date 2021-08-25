@@ -25,8 +25,17 @@ import styled, { css } from 'styled-components';
  */
 import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
 import { defaultTypographyStyle } from '../styles';
+import { Launch } from '../../../icons';
 
-export const Link = styled.a`
+const StyledLaunch = styled(Launch)`
+  width: 12px;
+  margin-left: 0.5ch;
+  margin-bottom: 2px;
+  stroke-width: 0;
+  vertical-align: text-bottom;
+`;
+
+export const StyledAnchor = styled.a`
   ${({ size, theme }) => css`
     ${defaultTypographyStyle};
     ${themeHelpers.expandPresetStyles({
@@ -37,6 +46,7 @@ export const Link = styled.a`
     color: ${theme.colors.fg.linkNormal};
     text-decoration: none;
     cursor: pointer;
+    vertical-align: baseline;
 
     :hover {
       color: ${theme.colors.fg.linkHover};
@@ -50,7 +60,28 @@ export const Link = styled.a`
   `};
 `;
 
+function ConditionalSpanWrapper({ isWrapped, children }) {
+  return isWrapped ? <span>{children}</span> : children;
+}
+ConditionalSpanWrapper.propTypes = {
+  children: PropTypes.node,
+  isWrapped: PropTypes.bool,
+};
+
+export function Link({ children, ...props }) {
+  const isExternalLink = props.target === '_blank';
+  return (
+    <StyledAnchor {...props}>
+      <ConditionalSpanWrapper isWrapped={isExternalLink}>
+        {children}
+        {isExternalLink && <StyledLaunch />}
+      </ConditionalSpanWrapper>
+    </StyledAnchor>
+  );
+}
 Link.propTypes = {
+  children: PropTypes.node,
+  target: PropTypes.string,
   size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES),
 };
 Link.defaultProps = {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * External dependencies
+ * Internal dependencies
  */
-import PropTypes from 'prop-types';
+import { TEMPLATE_NAMES } from './constants';
 
-export const ActionLabel = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.node,
-]);
+export function getTemplateMetaData() {
+  return Promise.all(
+    TEMPLATE_NAMES.map((title) =>
+      import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]-metaData" */ `./raw/${title}/metaData`
+      ).then((data) => data.default)
+    )
+  );
+}

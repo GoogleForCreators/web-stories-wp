@@ -15,34 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'fresh-bright',
-  title: _x('Fresh & Bright', 'template name', 'web-stories'),
-  tags: [
-    _x('Health', 'template keyword', 'web-stories'),
-    _x('Bold', 'template keyword', 'web-stories'),
-    _x('Joy', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Pink', 'color', 'web-stories'), color: '#f3d9e1' },
-    { label: _x('Green', 'color', 'web-stories'), color: '#d8ddcc' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#28292b' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Brown', 'color', 'web-stories'), color: '#eadfd6' },
-  ],
-  description: __(
-    'The modern and bright Beauty template lends itself well as a foundation for stories covering makeup, beauty products, shopping guides, instructions & tutorials and more.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Beauty', 'template vertical', 'web-stories'),
 };

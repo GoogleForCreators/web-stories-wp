@@ -50,14 +50,6 @@ const MenuItems = styled.div`
   margin: 0 16px 16px;
 `;
 
-const Box = styled.div`
-  width: 32px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const Space = styled.span`
   width: 8px;
 `;
@@ -181,9 +173,7 @@ function SecondaryMenu() {
           <Checklist />
         </ChecklistCountProvider>
         <Space />
-        <Box>
-          <KeyboardShortcutsMenu />
-        </Box>
+        <KeyboardShortcutsMenu />
       </MenuItems>
     </Wrapper>
   );
