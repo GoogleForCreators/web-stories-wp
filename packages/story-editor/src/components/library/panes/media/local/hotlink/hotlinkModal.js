@@ -18,15 +18,9 @@
  */
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import { Input } from '@web-stories-wp/design-system';
-import {
-  useState,
-  useCallback,
-  useRef,
-  useLayoutEffect,
-} from '@web-stories-wp/react';
+import { useState, useRef, useLayoutEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { getFileExtFromUrl } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -66,38 +60,13 @@ function HotlinkModal({ isOpen, onClose }) {
       translateToExclusiveList(allowedFileTypes)
     );
   }
-  const error = sprintf(
-    /* translators: %s is the description with allowed file extensions. */
-    __('Invalid link. %s', 'web-stories'),
-    description
-  );
   const [link, setLink] = useState('');
-
-  const getFileInfo = useCallback(
-    (value = link) => {
-      // @todo Remove this util and get the type from server-side validation instead.
-      const ext = getFileExtFromUrl(value);
-      let type = null;
-      if (!allowedFileTypes.includes(ext)) {
-        setErrorMsg(error);
-      } else {
-        setErrorMsg(null);
-        type = ['m4v', 'mp4', 'webm'].includes(ext) ? 'video' : 'image';
-      }
-      return {
-        ext,
-        type,
-      };
-    },
-    [link, allowedFileTypes, error]
-  );
 
   const onInsert = useInsert({
     link,
     setLink,
     errorMsg,
     setErrorMsg,
-    getFileInfo,
     onClose,
   });
 
@@ -117,10 +86,7 @@ function HotlinkModal({ isOpen, onClose }) {
       <InputWrapper>
         <Input
           ref={inputRef}
-          onChange={({ target: { value } }) => {
-            setLink(value);
-            getFileInfo(value);
-          }}
+          onChange={({ target: { value } }) => setLink(value)}
           value={link}
           hint={errorMsg?.length ? errorMsg : description}
           hasError={Boolean(errorMsg?.length)}

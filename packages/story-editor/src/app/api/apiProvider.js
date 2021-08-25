@@ -61,6 +61,7 @@ function APIProvider({ children }) {
     api: {
       stories,
       media,
+      hotlink,
       link,
       users,
       statusCheck,
@@ -339,6 +340,16 @@ function APIProvider({ children }) {
     [media]
   );
 
+  const getHotlinkInfo = useCallback(
+    (url) => {
+      const path = addQueryArgs(hotlink, { url });
+      return apiFetch({
+        path,
+      });
+    },
+    [hotlink]
+  );
+
   /**
    * Gets metadata (title, favicon, etc.) from
    * a provided URL.
@@ -504,6 +515,7 @@ function APIProvider({ children }) {
       setStoryLockById,
       deleteStoryLockById,
       getMedia,
+      getHotlinkInfo,
       getLinkMetadata,
       saveStoryById,
       getAuthors,

@@ -17,10 +17,9 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
-  getFileExtFromUrl,
   getFileNameFromUrl,
   getFirstFrameOfVideo,
 } from '@web-stories-wp/media';
@@ -36,83 +35,111 @@ import {
   useUploadVideoFrame,
 } from '../../../../../../app/media/utils';
 import { useConfig } from '../../../../../../app/config';
+import { useAPI } from '../../../../../../app/api';
 
-// @todo Get the mime type from server-side validation instead.
-const EXT_MIME_TYPES = {
-  jpg: 'image/jpeg',
-  gif: 'image/gif',
-  jpe: 'image/jpe',
-  jpeg: 'image/jpg',
-  m4v: 'video/mp4',
-  mp4: 'video/mp4',
-  png: 'image/png',
-  webm: 'video/webm',
-  webp: 'image/webp',
-};
+function getErrorMessage(code, description) {
+  switch (code) {
+    case 'rest_invalid_url':
+      return __('Invalid link.', 'web-stories');
+    case 'rest_invalid_ext':
+      return sprintf(
+        /* translators: %s is the description with allowed file extensions. */
+        __('Invalid link. %s', 'web-stories'),
+        description
+      );
+    default:
+      return __(
+        'Media failed to load. Please ensure the link is valid and the site allows linking from external sites.',
+        'web-stories'
+      );
+  }
+}
 
-function useInsert({
-  link,
-  setLink,
-  errorMsg,
-  setErrorMsg,
-  getFileInfo,
-  onClose,
-}) {
+function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
   const {
     capabilities: { hasUploadMediaAction },
+    allowedFileTypes,
   } = useConfig();
+  const {
+    actions: { getHotlinkInfo },
+  } = useAPI();
+
   const { uploadVideoPoster } = useUploadVideoFrame({});
-  const onInsert = useCallback(async () => {
-    if (errorMsg?.length) {
-      return;
+
+  const [hotlinkData, setHotlinkData] = useState(null);
+
+  const insertMedia = useCallback(async () => {
+    const { type, mime_type: mimeType } = hotlinkData;
+    const resource = await getResourceFromUrl(link, type);
+    resource.mimeType = mimeType;
+
+    if ('video' === type && hasUploadMediaAction) {
+      const originalFileName = getFileNameFromUrl(link);
+      const fileName = getPosterName(originalFileName);
+      const posterFile = await getFirstFrameOfVideo(link);
+      const posterData = await uploadVideoPoster(0, fileName, posterFile);
+      resource.poster = posterData.poster;
+      resource.posterId = posterData.posterId;
     }
+    insertElement(type, {
+      resource,
+    });
+    setErrorMsg(null);
+    setLink('');
+    setHotlinkData(null);
+    onClose();
+  }, [
+    hasUploadMediaAction,
+    hotlinkData,
+    insertElement,
+    link,
+    onClose,
+    setErrorMsg,
+    setLink,
+    uploadVideoPoster,
+  ]);
+
+  useEffect(() => {
+    if (hotlinkData) {
+      insertMedia();
+    }
+  }, [hotlinkData, insertMedia]);
+
+  const onInsert = useCallback(() => {
     const insertionError = __(
       'Media failed to load. Please ensure the link is valid and the site allows linking from external sites.',
       'web-stories'
     );
+
     if (!isValidUrl(link)) {
       setErrorMsg(insertionError);
       return;
     }
-    try {
-      const { type } = getFileInfo();
-      const resource = await getResourceFromUrl(link, type);
 
-      // @todo Get the mime type from server-side validation instead.
-      const ext = getFileExtFromUrl(link);
-      resource.mimeType = EXT_MIME_TYPES[ext];
-
-      if ('video' === type && hasUploadMediaAction) {
-        const originalFileName = getFileNameFromUrl(link);
-        const fileName = getPosterName(originalFileName);
-        const posterFile = await getFirstFrameOfVideo(link);
-        const posterData = await uploadVideoPoster(0, fileName, posterFile);
-        resource.poster = posterData.poster;
-        resource.posterId = posterData.posterId;
-      }
-      insertElement(type, {
-        resource,
+    getHotlinkInfo(link)
+      .then((hotlinkInfo) => {
+        setHotlinkData(hotlinkInfo);
+      })
+      .catch(({ code }) => {
+        let description = __(
+          'No file types are currently supported.',
+          'web-stories'
+        );
+        if (allowedFileTypes.length) {
+          description = sprintf(
+            /* translators: %s is a list of allowed file extensions. */
+            __('You can insert %s.', 'web-stories'),
+            translateToExclusiveList(allowedFileTypes)
+          );
+        }
+        setErrorMsg(getErrorMessage(code, description));
+        setHotlinkData(null);
       });
-      setErrorMsg(null);
-      setLink('');
-      onClose();
-    } catch (e) {
-      setErrorMsg(insertionError);
-    }
-  }, [
-    insertElement,
-    link,
-    errorMsg,
-    getFileInfo,
-    onClose,
-    setErrorMsg,
-    setLink,
-    hasUploadMediaAction,
-    uploadVideoPoster,
-  ]);
+  }, [allowedFileTypes, link, getHotlinkInfo, setErrorMsg]);
+
   return onInsert;
 }
 
