@@ -39,6 +39,7 @@ import { useAPI } from '../../../../../../app/api';
 
 function getErrorMessage(code, description) {
   switch (code) {
+    case 'rest_invalid_param':
     case 'rest_invalid_url':
       return __('Invalid link.', 'web-stories');
     case 'rest_invalid_ext':
@@ -109,16 +110,10 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   }, [hotlinkData, insertMedia]);
 
   const onInsert = useCallback(() => {
-    const insertionError = __(
-      'Media failed to load. Please ensure the link is valid and the site allows linking from external sites.',
-      'web-stories'
-    );
-
     if (!isValidUrl(link)) {
-      setErrorMsg(insertionError);
+      setErrorMsg(__('Invalid link.', 'web-stories'));
       return;
     }
-
     getHotlinkInfo(link)
       .then((hotlinkInfo) => {
         setHotlinkData(hotlinkInfo);
