@@ -70,3 +70,6 @@ parameters:
 
     # False positive for wp_unslash()
     - '#^Cannot cast array\|string to string.$#'
+
+    # Core issue - https://core.trac.wordpress.org/ticket/54015
+    - '#^Parameter \#2 \$embed of method WP_REST_Server::envelope_response\(\) expects bool, array<string>\|bool given.$#'
