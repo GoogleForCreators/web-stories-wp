@@ -80,8 +80,6 @@ class Capabilities extends TestCase {
 			}
 			$this->assertTrue( $role->has_cap( 'read' ) );
 		}
-		// Add back roles after test.
-		$capability->add_caps_to_roles();
 	}
 
 	/**
@@ -92,17 +90,20 @@ class Capabilities extends TestCase {
 		$blog_id = self::factory()->blog->create();
 		switch_to_blog( $blog_id );
 
+		$capability = new \Google\Web_Stories\User\Capabilities();
+		$capability->add_caps_to_roles();
+
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 
 		$administrator = get_role( 'administrator' );
 		$editor        = get_role( 'editor' );
 
+		restore_current_blog();
+
 		foreach ( $all_capabilities as $cap ) {
 			$this->assertTrue( $administrator->has_cap( $cap ) );
 			$this->assertTrue( $editor->has_cap( $cap ) );
 		}
-
-		restore_current_blog();
 	}
 }
