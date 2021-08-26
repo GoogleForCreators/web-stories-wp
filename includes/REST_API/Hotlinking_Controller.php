@@ -96,10 +96,6 @@ class Hotlinking_Controller extends REST_Controller {
 	public function parse_url( $request ) {
 		$url = untrailingslashit( $request['url'] );
 
-		if ( empty( $url ) || ! wp_http_validate_url( $url ) ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
-		}
-
 		/**
 		 * Filters the link data TTL value.
 		 *
