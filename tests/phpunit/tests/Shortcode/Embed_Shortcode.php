@@ -33,9 +33,8 @@ class Embed_Shortcode extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_registers_shortcode() {
-		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
-		$assets                  = new \Google\Web_Stories\Assets();
-		$embed_shortcode         = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $amp_story_player_assets );
+		$assets          = new \Google\Web_Stories\Assets();
+		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
 
 		$embed_shortcode->register();
 		$this->assertTrue( shortcode_exists( \Google\Web_Stories\Shortcode\Embed_Shortcode::SHORTCODE_NAME ) );
@@ -48,9 +47,8 @@ class Embed_Shortcode extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_shortcode() {
-		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
-		$assets                  = new \Google\Web_Stories\Assets();
-		$embed_shortcode         = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $amp_story_player_assets );
+		$assets          = new \Google\Web_Stories\Assets();
+		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
 
 		$actual = $embed_shortcode->render_shortcode(
 			[
@@ -73,9 +71,8 @@ class Embed_Shortcode extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_shortcode_missing_url() {
-		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
-		$assets                  = new \Google\Web_Stories\Assets();
-		$embed_shortcode         = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $amp_story_player_assets );
+		$assets          = new \Google\Web_Stories\Assets();
+		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
 
 		$actual = $embed_shortcode->render_shortcode(
 			[
@@ -98,9 +95,8 @@ class Embed_Shortcode extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_shortcode_missing_title() {
-		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
-		$assets                  = new \Google\Web_Stories\Assets();
-		$embed_shortcode         = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $amp_story_player_assets );
+		$assets          = new \Google\Web_Stories\Assets();
+		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
 
 		$actual = $embed_shortcode->render_shortcode(
 			[
@@ -123,9 +119,8 @@ class Embed_Shortcode extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_shortcode_feed_no_poster() {
-		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
-		$assets                  = new \Google\Web_Stories\Assets();
-		$embed_shortcode         = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $amp_story_player_assets );
+		$assets          = new \Google\Web_Stories\Assets();
+		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
 
 		$this->go_to( '/?feed=rss2' );
 
@@ -148,9 +143,8 @@ class Embed_Shortcode extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_shortcode_with_poster() {
-		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
-		$assets                  = new \Google\Web_Stories\Assets();
-		$embed_shortcode         = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $amp_story_player_assets );
+		$assets          = new \Google\Web_Stories\Assets();
+		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
 		$embed_shortcode->register();
 
 		$this->go_to( '/?feed=rss2' );

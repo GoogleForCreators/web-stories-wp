@@ -33,7 +33,6 @@ use Google\Web_Stories\Infrastructure\HasSiteTeardown;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Role;
 use WP_Site;
-use function Google\Web_Stories\setup_new_site;
 
 /**
  * Class Capabilities

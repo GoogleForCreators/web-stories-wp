@@ -26,9 +26,7 @@
 
 namespace Google\Web_Stories\Tests\Renderer\Stories;
 
-use Google\Web_Stories\Assets;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Tests\TestCase;
 use Google\Web_Stories\Tests\Test_Renderer;
 use Google\Web_Stories\Story_Query;
