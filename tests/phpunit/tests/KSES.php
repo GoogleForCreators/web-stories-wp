@@ -93,7 +93,7 @@ class KSES extends TestCase {
 	 *     }
 	 * }
 	 */
-	public function data_test_safecss_filter_attr() {
+	public function data_test_safecss_filter_attr(): array {
 		return [
 			// Empty input, empty output.
 			[
@@ -272,7 +272,7 @@ class KSES extends TestCase {
 	 *     }
 	 * }
 	 */
-	public function data_test_safecss_filter_attr_extended() {
+	public function data_test_safecss_filter_attr_extended(): array {
 		return [
 			// Keyword values.
 			[
@@ -371,7 +371,7 @@ class KSES extends TestCase {
 		$this->assertArrayHasKey( 'width', $result['testing'] );
 	}
 
-	public function data_test_filter_kses_allowed_html() {
+	public function data_test_filter_kses_allowed_html(): array {
 		return [
 			'Video Element'                    => [
 				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',

@@ -98,7 +98,7 @@ class AMP extends TestCase {
 		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $actual );
 	}
 
-	public function data_test_filter_amp_to_amp_linking_element_excluded() {
+	public function data_test_filter_amp_to_amp_linking_element_excluded(): array {
 		$doc = new DOMDocument( '1.0', 'utf-8' );
 
 		$anchor        = $doc->createElement( 'a' );
