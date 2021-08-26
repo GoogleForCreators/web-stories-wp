@@ -59,9 +59,12 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
     const sectionHeader = screen.getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
 
-    const helperLink = screen.getByText('Learn more', {
-      selector: 'a',
-    });
+    const helperLink = screen.getByText(
+      (_, node) => node.textContent === 'Learn more',
+      {
+        selector: 'a',
+      }
+    );
     expect(helperLink).toBeInTheDocument();
 
     const networkDropdown = screen.getByRole('button');
@@ -83,9 +86,12 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
     const sectionHeader = screen.getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
 
-    const helperLink = screen.getByText('how to monetize your Web Stories', {
-      selector: 'a',
-    });
+    const helperLink = screen.getByText(
+      (_, node) => node.textContent === 'how to monetize your Web Stories',
+      {
+        selector: 'a',
+      }
+    );
     expect(helperLink).toBeInTheDocument();
   });
 
@@ -105,7 +111,8 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
     expect(sectionHeader).toBeInTheDocument();
 
     const helperLink = screen.getByText(
-      'enable programmatic demand in Web Stories',
+      (_, node) =>
+        node.textContent === 'enable programmatic demand in Web Stories',
       {
         selector: 'a',
       }

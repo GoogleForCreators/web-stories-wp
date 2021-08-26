@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,31 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import { useState } from '@web-stories-wp/react';
-
 /**
  * Internal dependencies
  */
-import HeaderContext from './context';
+import { TEMPLATE_NAMES } from './constants';
 
-function HeaderProvider({ children }) {
-  const [titleInput, setTitleInput] = useState();
-  const value = {
-    titleInput,
-    setTitleInput,
-  };
-  return (
-    <HeaderContext.Provider value={value}>{children}</HeaderContext.Provider>
+export function getTemplateMetaData() {
+  return Promise.all(
+    TEMPLATE_NAMES.map((title) =>
+      import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]-metaData" */ `./raw/${title}/metaData`
+      ).then((data) => data.default)
+    )
   );
 }
-
-HeaderProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-export default HeaderProvider;

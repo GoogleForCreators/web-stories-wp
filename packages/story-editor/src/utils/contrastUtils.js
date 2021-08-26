@@ -38,7 +38,7 @@ export function calculateLuminanceFromRGB(rgb) {
 }
 
 /**
- * Calculate luminance from RGB Object
+ * Calculate luminance from style color string
  *
  * @param  {string} styleColor Color from html element style.color. Example: "rgb(000, 000, 000)"
  * @return {number} Luminance

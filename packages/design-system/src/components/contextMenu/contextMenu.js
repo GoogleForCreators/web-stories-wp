@@ -17,29 +17,37 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useMemo } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
 import { Popover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
+import AnimationContainer from './animationContainer';
 import Mask from './mask';
 
-const ContextMenu = ({ isAlwaysVisible, items, ...props }) => {
+const ContextMenu = ({ animate, isAlwaysVisible, items, ...props }) => {
+  const Wrapper = useMemo(
+    () => (animate ? AnimationContainer : Popover),
+    [animate]
+  );
+
   return (
     <>
-      {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
-      <Popover
+      <Wrapper
         role={isAlwaysVisible ? '' : 'dialog'}
         isOpen={isAlwaysVisible || props.isOpen}
       >
-        <Menu items={items} {...props} />
+        <Menu aria-expanded={props.isOpen} items={items} {...props} />
         <Shadow />
-      </Popover>
+      </Wrapper>
+      {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
     </>
   );
 };
 ContextMenu.propTypes = {
   ...MenuPropTypes,
+  animate: PropTypes.bool,
   isOpen: PropTypes.bool,
   isAlwaysVisible: PropTypes.bool,
 };

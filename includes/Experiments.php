@@ -343,12 +343,23 @@ class Experiments extends Service_Base {
 			/**
 			 * Author: @miina
 			 * Issue #7986
-			 * Creation date: 2021-08-08
+			 * Creation date: 2021-07-08
 			 */
 			[
 				'name'        => 'enableSmartTextColor',
 				'label'       => __( 'Smart text color', 'web-stories' ),
 				'description' => __( 'Enable text insertion with smart color ensuring good contrast with the background', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @merapi
+			 * Issue #7995
+			 * Creation date: 2021-08-13
+			 */
+			[
+				'name'        => 'enableSmartTextSetsColor',
+				'label'       => __( 'Smart text sets color', 'web-stories' ),
+				'description' => __( 'Enable text sets insertion with smart color ensuring good contrast with the background', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
