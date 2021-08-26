@@ -69,7 +69,9 @@ describe('Plugin Activation', () => {
     await expect(page).toClick('a', { text: 'Go to Stories Dashboard' });
     await page.waitForNavigation();
 
-    await expect(page).toMatchElement('h2', { text: 'Dashboard' });
+    // Can be Explore Templates or My Stories depending on if user has 0
+    // stories, so just check that we get navigated to the dashboard
+    await expect(page).toMatchElement('#web-stories-dashboard');
   });
 
   it('should lead to the dashboard in step 2', async () => {
@@ -79,7 +81,9 @@ describe('Plugin Activation', () => {
     await expect(dashboardStep).toClick('a', { text: 'Dashboard' });
     await page.waitForNavigation();
 
-    await expect(page).toMatchElement('h2', { text: 'Dashboard' });
+    // Can be Explore Templates or My Stories depending on if user has 0
+    // stories, so just check that we get navigated to the dashboard
+    await expect(page).toMatchElement('#web-stories-dashboard');
   });
 
   // Disable reason: Step 3 is not visible on the screen size used in E2E tests.
