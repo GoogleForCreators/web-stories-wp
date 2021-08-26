@@ -24,6 +24,7 @@ import {
   theme as externalDesignSystemTheme,
   lightMode,
   SnackbarProvider,
+  setAppElement,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -56,7 +57,10 @@ export const renderWithProviders = (
   const mergedProviderValues = { ...defaultProviderValues, ...providerValues };
 
   const ProvidedWrapper = wrapper;
+  const root = document.querySelector('test-root');
 
+  // see http://reactcommunity.org/react-modal/accessibility/
+  setAppElement(root);
   // eslint-disable-next-line react/prop-types
   const Wrapper = ({ children }) => (
     <ProvidedWrapper>
