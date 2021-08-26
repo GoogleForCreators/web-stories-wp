@@ -82,24 +82,7 @@ const pageSize = {
   posterHeight: 300,
 };
 
-jest.mock('@web-stories-wp/story-editor', () => ({
-  __esModule: true,
-  ...jest.requireActual('@web-stories-wp/story-editor'),
-  PreviewPage: ({ page }) => <div data-testid={page.name} />, // eslint-disable-line react/prop-types,react/display-name
-}));
-
-jest.mock(
-  '../../../../../app/font/fontProvider.js',
-  () =>
-    ({ children }) =>
-      children
-);
-
-describe('Dashboard <Content />', function () {
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
-
+describe('My Stories <Content />', function () {
   it('should render the content grid with the correct story count.', function () {
     renderWithProviders(
       <SnackbarProvider>

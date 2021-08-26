@@ -88,10 +88,12 @@ export const ThumbnailButton = styled(Button).attrs({
       &:after {
         content: '';
         position: absolute;
+        box-sizing: border-box;
         width: 100%;
         height: 100%;
         display: block;
         top: 0;
+        right: 0;
         border-radius: ${theme.borders.radius.medium};
         border: 4px solid ${theme.colors.interactiveBg.active};
       }
