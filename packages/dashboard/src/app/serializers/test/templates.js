@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { toDate } from '@web-stories-wp/date';
+import { getOptions, toDate, toUTCDate } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
@@ -25,6 +25,24 @@ import { APP_ROUTES } from '../../../constants';
 import reshapeTemplateObject from '../templates';
 
 describe('reshapeTemplateObject', () => {
+  const templateData = {
+    id: 1,
+    slug: 'beauty',
+    title: 'Beauty',
+    createdBy: 'Google',
+    creationDate: '2020-03-01T07:00:00.000Z',
+    modified: '2020-04-21T07:00:00.000Z',
+    tags: ['Health', 'Bold', 'Joy'],
+    colors: [
+      { label: 'Pink', color: '#f3d9e1' },
+      { label: 'Green', color: '#d8ddcc' },
+      { label: 'Black', color: '#28292b' },
+    ],
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    pages: [{ id: 0, elements: [] }],
+    version: 17,
+  };
+
   it('should return object', () => {
     const responseObj = {
       id: 1,
@@ -54,7 +72,7 @@ describe('reshapeTemplateObject', () => {
         },
       },
       centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=1&isLocal=false`,
-      creationDate: toDate('2020-03-27T03:57:24.000Z'),
+      creationDate: toDate('2020-03-26T20:57:24.000Z'),
       status: 'template',
       modified: toDate('2020-03-26T20:57:24.000Z'),
     });
@@ -70,5 +88,47 @@ describe('reshapeTemplateObject', () => {
     );
 
     expect(reshapedObj).toBeNull();
+  });
+
+  it('should reshape object to match snapshot', () => {
+    const reshapedObject = reshapeTemplateObject(templateData, 'example.com/');
+    expect(reshapedObject).toMatchSnapshot();
+  });
+
+  it('should reshape template object with a date object', () => {
+    const reshapedObject = reshapeTemplateObject(templateData, 'example.com/');
+    expect(reshapedObject.modified).toMatchObject(
+      toUTCDate('2020-04-21T07:00:00.000Z')
+    );
+
+    expect(reshapedObject.creationDate).toMatchObject(
+      toDate('2020-03-01T07:00:00.000Z', getOptions())
+    );
+  });
+
+  it('should pass through tags and colors into reshaped object', () => {
+    const reshapedObject = reshapeTemplateObject(templateData, 'example.com/');
+
+    expect(reshapedObject.tags).toMatchObject(['Health', 'Bold', 'Joy']);
+    expect(reshapedObject.colors).toMatchObject([
+      { label: 'Pink', color: '#f3d9e1' },
+      { label: 'Green', color: '#d8ddcc' },
+      { label: 'Black', color: '#28292b' },
+    ]);
+  });
+
+  it('should apply isLocal to the reshaped object', () => {
+    const localReshapedObject = reshapeTemplateObject(
+      templateData,
+      'example.com/',
+      true
+    );
+    expect(localReshapedObject.isLocal).toBe(true);
+
+    const notlocalReshapedObject = reshapeTemplateObject(
+      templateData,
+      'example.com/'
+    );
+    expect(notlocalReshapedObject.isLocal).toBe(false);
   });
 });

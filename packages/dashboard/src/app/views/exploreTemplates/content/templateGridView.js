@@ -88,7 +88,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
       templates.map(
         ({ id, centerTargetAction, slug, status, title, postersByPage }) => {
           const isActive = activeGridItemId === id;
-          const posterSrc = postersByPage[0];
+          const posterSrc = postersByPage?.[0];
           return (
             <TemplateGridItem
               detailLink={resolveRoute(centerTargetAction)}
