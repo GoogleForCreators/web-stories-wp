@@ -28,8 +28,8 @@ namespace Google\Web_Stories\User;
 
 use Google\Web_Stories\Infrastructure\Activateable;
 use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Infrastructure\Site_Initializable;
-use Google\Web_Stories\Infrastructure\Site_Removable;
+use Google\Web_Stories\Infrastructure\HasSiteSetup;
+use Google\Web_Stories\Infrastructure\HasSiteTeardown;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Role;
 use WP_Site;
@@ -40,7 +40,7 @@ use function Google\Web_Stories\setup_new_site;
  *
  * @package Google\Web_Stories\User
  */
-class Capabilities implements Service, Activateable, Site_Initializable, Site_Removable {
+class Capabilities implements Service, Activateable, HasSiteSetup, HasSiteTeardown {
 	/**
 	 * Activate the service.
 	 *

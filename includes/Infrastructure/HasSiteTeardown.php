@@ -1,6 +1,6 @@
 <?php
 /**
- * Interface Site_Removable.
+ * Interface HasSiteTeardown.
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -21,7 +21,7 @@ use WP_Site;
  * @since 1.11.0
  * @internal
  */
-interface Site_Removable {
+interface HasSiteTeardown {
 
 	/**
 	 * Remove the service on the removed site.

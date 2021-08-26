@@ -30,7 +30,7 @@ use Google\Web_Stories\Infrastructure\Activateable;
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\Conditional;
-use Google\Web_Stories\Infrastructure\Site_Initializable;
+use Google\Web_Stories\Infrastructure\HasSiteSetup;
 use WP_Site;
 
 /**
@@ -38,7 +38,7 @@ use WP_Site;
  *
  * @package Google\Web_Stories
  */
-class Database_Upgrader extends Service_Base implements Activateable, Conditional, Site_Initializable {
+class Database_Upgrader extends Service_Base implements Activateable, Conditional, HasSiteSetup {
 
 	/**
 	 * The slug of database option.

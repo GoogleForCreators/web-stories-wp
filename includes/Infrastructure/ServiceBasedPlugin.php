@@ -172,7 +172,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		switch_to_blog( $site_id );
 
 		foreach ( $this->service_container as $service ) {
-			if ( $service instanceof Site_Initializable ) {
+			if ( $service instanceof HasSiteSetup ) {
 				$service->initialize_site( $site );
 			}
 		}
@@ -197,7 +197,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		switch_to_blog( $site_id );
 
 		foreach ( $this->service_container as $service ) {
-			if ( $service instanceof Site_Removable ) {
+			if ( $service instanceof HasSiteTeardown ) {
 				$service->remove_site( $site );
 			}
 		}
