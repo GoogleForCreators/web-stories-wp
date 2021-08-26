@@ -15,15 +15,20 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Tests;
 
-require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
-
+/**
+ * @runInSeparateProcess
+ * @preserveGlobalState disabled
+ */
 class Uninstall extends TestCase {
 	protected static $attachment_ids;
 
 	protected static $user_id;
+
+	public static function wpSetUpBeforeClass() {
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
+	}
 
 	public function setUp() {
 		parent::setUp();
