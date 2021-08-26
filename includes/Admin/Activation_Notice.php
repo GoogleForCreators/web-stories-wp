@@ -52,16 +52,9 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	protected $activation_flag;
 
 	/**
-	 * Google_Fonts instance.
-	 *
-	 * @var Google_Fonts Google_Fonts instance.
-	 */
-	protected $google_fonts;
-
-	/**
 	 * Assets instance.
 	 *
-	 * @var \Google\Web_Stories\Assets Assets instance.
+	 * @var Assets Assets instance.
 	 */
 	private $assets;
 
@@ -71,12 +64,10 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 * @since 1.0.0
 	 *
 	 * @param Activation_Flag $activation_flag Activation flag instance.
-	 * @param Google_Fonts    $google_fonts   Google_Fonts instance.
 	 * @param Assets          $assets          Assets instance.
 	 */
-	public function __construct( Activation_Flag $activation_flag, Google_Fonts $google_fonts, Assets $assets ) {
+	public function __construct( Activation_Flag $activation_flag, Assets $assets ) {
 		$this->activation_flag = $activation_flag;
-		$this->google_fonts    = $google_fonts;
 		$this->assets          = $assets;
 	}
 
@@ -114,7 +105,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 		 */
 		unset( $_GET['activate'] ); // phpcs:ignore WordPress.Security.NonceVerification, WordPress.VIP.SuperGlobalInputUsage
 
-		$this->assets->enqueue_style( $this->google_fonts::SCRIPT_HANDLE );
+		$this->assets->enqueue_style( Google_Fonts::SCRIPT_HANDLE );
 
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 
