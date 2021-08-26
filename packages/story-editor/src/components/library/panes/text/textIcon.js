@@ -122,10 +122,10 @@ function TextIcon(props) {
     }
   }, [autoColor, insertElement, setColor]);
 
-  const handleAddText = (evt) => {
+  const handleAddText = async (evt) => {
     evt.stopPropagation();
     if (enableSmartTextColor) {
-      calculateAccessibleTextColors(DEFAULT_PRESET, setAutoColor);
+      setAutoColor(await calculateAccessibleTextColors(DEFAULT_PRESET));
     } else {
       insertElement('text', DEFAULT_PRESET);
     }

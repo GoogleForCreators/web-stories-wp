@@ -417,6 +417,10 @@ class KSES extends TestCase {
 				'<amp-img layout="fill" src="https://example.com/image.jpg" alt="example" srcset="https://example.com/image.jpg 900w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-640x853.jpg 640w,https://example.com/image-225x300.jpg 225w,https://example.com/image-150x200.jpg 150w" sizes="(min-width: 1024px) 14vh, 32vw" disable-inline-width="true"></amp-img>',
 				'<amp-img layout="fill" src="https://example.com/image.jpg" alt="example" srcset="https://example.com/image.jpg 900w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-640x853.jpg 640w,https://example.com/image-225x300.jpg 225w,https://example.com/image-150x200.jpg 150w" sizes="(min-width: 1024px) 14vh, 32vw" disable-inline-width="true"></amp-img>',
 			],
+			'Page Outlink'                     => [
+				'<amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#0047FF" cta-image="https://example.com/32x32icon.jpg" cta-accent-element="background"><a href="https://www.google.com">Read More</a></amp-story-page-outlink>',
+				'<amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#0047FF" cta-image="https://example.com/32x32icon.jpg" cta-accent-element="background"><a href="https://www.google.com">Read More</a></amp-story-page-outlink>',
+			],
 		];
 	}
 }
