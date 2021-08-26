@@ -19,10 +19,7 @@
  */
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import {
-  getFileNameFromUrl,
-  getFirstFrameOfVideo,
-} from '@web-stories-wp/media';
+import { getFirstFrameOfVideo } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -73,25 +70,34 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const [hotlinkData, setHotlinkData] = useState(null);
 
   const insertMedia = useCallback(async () => {
-    const { type, mime_type: mimeType } = hotlinkData;
-    const resource = await getResourceFromUrl(link, type);
-    resource.mimeType = mimeType;
+    const {
+      ext,
+      type,
+      mime_type: mimeType,
+      file_name: originalFileName,
+    } = hotlinkData;
 
-    if ('video' === type && hasUploadMediaAction) {
-      const originalFileName = getFileNameFromUrl(link);
-      const fileName = getPosterName(originalFileName);
-      const posterFile = await getFirstFrameOfVideo(link);
-      const posterData = await uploadVideoPoster(0, fileName, posterFile);
-      resource.poster = posterData.poster;
-      resource.posterId = posterData.posterId;
+    try {
+      const resource = await getResourceFromUrl(link, type);
+      resource.mimeType = mimeType;
+      if ('video' === type && hasUploadMediaAction) {
+        // Remove the extension from the filename for poster.
+        const fileName = getPosterName(originalFileName.replace(`.${ext}`, ''));
+        const posterFile = await getFirstFrameOfVideo(link);
+        const posterData = await uploadVideoPoster(0, fileName, posterFile);
+        resource.poster = posterData.poster;
+        resource.posterId = posterData.posterId;
+      }
+      insertElement(type, {
+        resource,
+      });
+      setErrorMsg(null);
+      setLink('');
+      setHotlinkData(null);
+      onClose();
+    } catch (e) {
+      setErrorMsg(getErrorMessage());
     }
-    insertElement(type, {
-      resource,
-    });
-    setErrorMsg(null);
-    setLink('');
-    setHotlinkData(null);
-    onClose();
   }, [
     hasUploadMediaAction,
     hotlinkData,
