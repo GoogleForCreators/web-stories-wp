@@ -48,7 +48,7 @@ describe('ContextMenu', () => {
     expect(screen.getByLabelText('this is a link')).toBeInTheDocument();
   });
 
-  it('clicking away from context menu should call onDismiss', () => {
+  it('clicking the context menu mask should call onDismiss', () => {
     const onDismiss = jest.fn();
     renderWithProviders(
       <ContextMenu items={items} isOpen onDismiss={onDismiss} />
@@ -57,6 +57,20 @@ describe('ContextMenu', () => {
     const mask = screen.getByTestId('context-menu-mask');
     act(() => {
       fireEvent.click(mask);
+    });
+
+    expect(onDismiss).toHaveBeenCalledTimes(1);
+  });
+
+  it('right clicking the context menu mask should call onDismiss', () => {
+    const onDismiss = jest.fn();
+    renderWithProviders(
+      <ContextMenu items={items} isOpen onDismiss={onDismiss} />
+    );
+
+    const mask = screen.getByTestId('context-menu-mask');
+    act(() => {
+      fireEvent.click(mask, { button: 'right' });
     });
 
     expect(onDismiss).toHaveBeenCalledTimes(1);

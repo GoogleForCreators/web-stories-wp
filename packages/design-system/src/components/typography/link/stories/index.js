@@ -41,3 +41,9 @@ export const _default = () => (
     ))}
   </>
 );
+
+export const ExternalLink = () => (
+  <Link href="https://example.com" target="_blank" rel="noreferrer">
+    {`Support`}
+  </Link>
+);

@@ -20,7 +20,7 @@
 import { __, _x } from '@web-stories-wp/i18n';
 
 export default {
-  slug: 'indoor-garden-oasis-diy',
+  slug: 'indoor-garden-oasis',
   creationDate: '2021-07-12T00:00:00.000Z',
   title: _x('Indoor Garden Oasis DIY', 'template name', 'web-stories'),
   tags: [
