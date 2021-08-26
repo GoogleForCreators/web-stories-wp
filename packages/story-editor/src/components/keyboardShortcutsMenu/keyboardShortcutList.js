@@ -18,9 +18,19 @@
  * External dependencies
  */
 import { __, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
-import { prettifyShortcut, Shortcut } from '@web-stories-wp/design-system';
+import {
+  isPlatformMacOS,
+  prettifyShortcut,
+  Shortcut,
+} from '@web-stories-wp/design-system';
+
+const isMacOS = isPlatformMacOS();
 
 const LargeKey = (props) => <kbd className="large-key" {...props} />;
+
+const ShiftKeyWrapper = (props) => {
+  return isMacOS ? <kbd {...props} /> : <LargeKey {...props} />;
+};
 
 const shortcuts = {
   header: {
@@ -82,7 +92,7 @@ const shortcuts = {
           shortcut: (
             <kbd>
               <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
-              <kbd>{prettifyShortcut('shift')}</kbd>
+              <ShiftKeyWrapper>{prettifyShortcut('shift')}</ShiftKeyWrapper>
               <kbd>{'Z'}</kbd>
             </kbd>
           ),
@@ -224,13 +234,13 @@ const shortcuts = {
             <kbd>
               <TranslateWithMarkup
                 mapping={{
-                  kbd: <kbd />,
+                  lkbd: <LargeKey />,
                   shortcut: <Shortcut shortcut="shift" />,
                 }}
               >
                 {sprintf(
                   /* translators: 1: Shift key. */
-                  __('<kbd>%s</kbd> <span>+ click</span>', 'web-stories'),
+                  __('<lkbd>%s</lkbd> <span>+ click</span>', 'web-stories'),
                   prettifyShortcut('shift')
                 )}
               </TranslateWithMarkup>
@@ -274,7 +284,7 @@ const shortcuts = {
                 {sprintf(
                   /* translators: 1: Cmd/Ctrl key. 2: Shift key. 3: Up key. 4: Down key. */
                   __(
-                    '<lkbd>%1$s</lkbd> <kbd>%2$s</kbd> <kbd>%3$s</kbd> <span>or</span> <kbd>%4$s</kbd>',
+                    '<lkbd>%1$s</lkbd> <lkbd>%2$s</lkbd> <kbd>%3$s</kbd> <span>or</span> <kbd>%4$s</kbd>',
                     'web-stories'
                   ),
                   prettifyShortcut('mod'),

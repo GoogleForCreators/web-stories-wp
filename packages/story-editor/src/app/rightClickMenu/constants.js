@@ -61,20 +61,20 @@ const StyledKbd = styled(Text).attrs({
 `;
 
 export const RIGHT_CLICK_MENU_SHORTCUTS = {
-  SEND_BACKWARD: <StyledKbd>{prettifyShortcut('cmd down')}</StyledKbd>,
-  SEND_TO_BACK: <StyledKbd>{prettifyShortcut('cmd shift down')}</StyledKbd>,
-  BRING_FORWARD: <StyledKbd>{prettifyShortcut('cmd up')}</StyledKbd>,
-  BRING_TO_FRONT: <StyledKbd>{prettifyShortcut('cmd shift up')}</StyledKbd>,
+  SEND_BACKWARD: <StyledKbd>{prettifyShortcut('mod down')}</StyledKbd>,
+  SEND_TO_BACK: <StyledKbd>{prettifyShortcut('mod shift down')}</StyledKbd>,
+  BRING_FORWARD: <StyledKbd>{prettifyShortcut('mod up')}</StyledKbd>,
+  BRING_TO_FRONT: <StyledKbd>{prettifyShortcut('mod shift up')}</StyledKbd>,
   DELETE: <StyledKbd>{prettifyShortcut('delete')}</StyledKbd>,
   COPY_STYLES: (
     <>
-      <StyledKbd>{prettifyShortcut('alt cmd')}</StyledKbd>{' '}
+      <StyledKbd>{prettifyShortcut('alt mod')}</StyledKbd>{' '}
       <StyledKbd>{'O'}</StyledKbd>
     </>
   ),
   PASTE_STYLES: (
     <>
-      <StyledKbd>{prettifyShortcut('alt cmd')}</StyledKbd>{' '}
+      <StyledKbd>{prettifyShortcut('alt mod')}</StyledKbd>{' '}
       <StyledKbd>{'P'}</StyledKbd>
     </>
   ),
