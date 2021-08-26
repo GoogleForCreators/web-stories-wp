@@ -1,6 +1,6 @@
 <?php
 /**
- * Interface HasSiteSetup.
+ * Interface SiteInitializationAware.
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -21,15 +21,15 @@ use WP_Site;
  * @since 1.11.0
  * @internal
  */
-interface HasSiteSetup {
+interface SiteInitializationAware {
 
 	/**
-	 * Initialize the service on the new site.
+	 * Act on site initialization.
 	 *
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function setup_site( $site );
+	public function on_site_initialization( $site );
 }

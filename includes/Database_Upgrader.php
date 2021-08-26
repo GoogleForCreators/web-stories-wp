@@ -26,11 +26,11 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Activateable;
+use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\Conditional;
-use Google\Web_Stories\Infrastructure\HasSiteSetup;
+use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use WP_Site;
 
 /**
@@ -38,7 +38,7 @@ use WP_Site;
  *
  * @package Google\Web_Stories
  */
-class Database_Upgrader extends Service_Base implements Activateable, HasSiteSetup {
+class Database_Upgrader extends Service_Base implements PluginActivationAware, SiteInitializationAware {
 
 	/**
 	 * The slug of database option.
@@ -121,26 +121,26 @@ class Database_Upgrader extends Service_Base implements Activateable, HasSiteSet
 	}
 
 	/**
-	 * Activate the service.
+	 * Act on plugin activation.
 	 *
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function activate( $network_wide ) {
+	public function on_plugin_activation( $network_wide ) {
 		$this->run_upgrades();
 	}
 
 	/**
-	 * Initialize the service on the new site.
+	 * Act on site initialization.
 	 *
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function setup_site( $site ) {
+	public function on_site_initialization( $site ) {
 		$this->run_upgrades();
 	}
 

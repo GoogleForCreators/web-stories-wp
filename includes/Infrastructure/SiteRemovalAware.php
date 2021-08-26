@@ -1,6 +1,6 @@
 <?php
 /**
- * Interface HasSiteTeardown.
+ * Interface SiteRemovalAware.
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -21,15 +21,15 @@ use WP_Site;
  * @since 1.11.0
  * @internal
  */
-interface HasSiteTeardown {
+interface SiteRemovalAware {
 
 	/**
-	 * Remove the service on the removed site.
+	 * Act on site removal.
 	 *
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being removed.
 	 * @return void
 	 */
-	public function tear_down_site( WP_Site $site );
+	public function on_site_removal( WP_Site $site );
 }

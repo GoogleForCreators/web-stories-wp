@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Deactivateable;
-use Google\Web_Stories\Infrastructure\HasSiteSetup;
+use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
+use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post;
 use WP_Site;
@@ -35,7 +35,7 @@ use WP_Site;
 /**
  * Class Story_Post_Type.
  */
-class Story_Post_Type extends Service_Base implements Deactivateable, HasSiteSetup {
+class Story_Post_Type extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
 
 	/**
 	 * The slug of the stories post type.
@@ -139,26 +139,26 @@ class Story_Post_Type extends Service_Base implements Deactivateable, HasSiteSet
 	}
 
 	/**
-	 * Initialize the service on the new site.
+	 * Act on site initialization.
 	 *
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function setup_site( $site ) {
+	public function on_site_initialization( $site ) {
 		$this->register();
 	}
 
 	/**
-	 * Deactivate the service.
+	 * Act on plugin deactivation.
 	 *
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
 	 */
-	public function deactivate( $network_wide ) {
+	public function on_plugin_deactivation( $network_wide ) {
 		unregister_post_type( self::POST_TYPE_SLUG );
 	}
 

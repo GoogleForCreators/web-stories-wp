@@ -112,19 +112,19 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
-	 * Activate the plugin.
+	 * Act on plugin activation.
 	 *
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function activate( $network_wide ) {
+	public function on_plugin_activation( $network_wide ) {
 		$this->register_services();
 
 		foreach ( $this->service_container as $service ) {
-			if ( $service instanceof Activateable ) {
-				$service->activate( $network_wide );
+			if ( $service instanceof PluginActivationAware ) {
+				$service->on_plugin_activation( $network_wide );
 			}
 		}
 
@@ -134,19 +134,19 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
-	 * Deactivate the plugin.
+	 * Act on plugin deactivation.
 	 *
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
 	 */
-	public function deactivate( $network_wide ) {
+	public function on_plugin_deactivation( $network_wide ) {
 		$this->register_services();
 
 		foreach ( $this->service_container as $service ) {
-			if ( $service instanceof Deactivateable ) {
-				$service->deactivate( $network_wide );
+			if ( $service instanceof PluginDeactivationAware ) {
+				$service->on_plugin_deactivation( $network_wide );
 			}
 		}
 
@@ -156,14 +156,14 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
-	 * Hook into site creation on Multisite.
+	 * Act on site initialization on Multisite.
 	 *
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function setup_site( $site ) {
+	public function on_site_initialization( $site ) {
 		$this->register_services();
 
 		$site_id = (int) $site->blog_id;
@@ -172,8 +172,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 		switch_to_blog( $site_id );
 
 		foreach ( $this->service_container as $service ) {
-			if ( $service instanceof HasSiteSetup ) {
-				$service->setup_site( $site );
+			if ( $service instanceof SiteInitializationAware ) {
+				$service->on_site_initialization( $site );
 			}
 		}
 
@@ -181,14 +181,14 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
-	 * Hook into site removal on Multisite.
+	 * Act on site removal on Multisite.
 	 *
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being removed.
 	 * @return void
 	 */
-	public function tear_down_site( $site ) {
+	public function on_site_removal( $site ) {
 		$this->register_services();
 
 		$site_id = (int) $site->blog_id;
@@ -197,8 +197,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 		switch_to_blog( $site_id );
 
 		foreach ( $this->service_container as $service ) {
-			if ( $service instanceof HasSiteTeardown ) {
-				$service->tear_down_site( $site );
+			if ( $service instanceof SiteRemovalAware ) {
+				$service->on_site_removal( $site );
 			}
 		}
 

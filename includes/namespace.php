@@ -46,8 +46,9 @@ use WP_Site;
 function activate( $network_wide = false ) {
 	$network_wide = (bool) $network_wide;
 
-	// Runs all activatable services.
-	PluginFactory::create()->activate( $network_wide );
+	// Runs all PluginActivationAware services.
+	// This will also flush rewrite rules.
+	PluginFactory::create()->on_plugin_activation( $network_wide );
 
 	/**
 	 * Fires after plugin activation.
@@ -79,7 +80,7 @@ function new_site( $site ) {
 		return;
 	}
 
-	PluginFactory::create()->setup_site( $site );
+	PluginFactory::create()->on_site_initialization( $site );
 }
 
 add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
@@ -94,7 +95,7 @@ add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
  *
  * @return void
  */
-function tear_down_site( $error, $site ) {
+function remove_site( $error, $site ) {
 	if ( ! is_multisite() ) {
 		return;
 	}
@@ -105,10 +106,10 @@ function tear_down_site( $error, $site ) {
 		return;
 	}
 
-	PluginFactory::create()->tear_down_site( $site );
+	PluginFactory::create()->on_site_removal( $site );
 }
 
-add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\tear_down_site', PHP_INT_MAX, 2 );
+add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT_MAX, 2 );
 
 /**
  * Handles plugin deactivation.
@@ -124,8 +125,9 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\tear_down_site', PHP_
 function deactivate( $network_wide = false ) {
 	$network_wide = (bool) $network_wide;
 
+	// Runs all PluginDeactivationAware services.
 	// This will also flush rewrite rules.
-	PluginFactory::create()->deactivate( $network_wide );
+	PluginFactory::create()->on_plugin_deactivation( $network_wide );
 
 	/**
 	 * Fires after plugin deactivation.
