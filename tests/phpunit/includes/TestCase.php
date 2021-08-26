@@ -30,11 +30,23 @@ abstract class TestCase extends PolyfilledTestCase {
 		// WordPress core fails to do this.
 		$GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
 
-		// Only added in 5.9+, see https://core.trac.wordpress.org/ticket/53431.
-		unset( $GLOBALS['current_screen'] );
-
 		// WordPress core fails to do this.
-		unset( $GLOBALS['show_admin_bar'], $GLOBALS['wp_meta_boxes'], $GLOBALS['hook_suffix'], $_SERVER['HTTPS'], $_GET );
+		// current_screen reset was only added in 5.9+, see https://core.trac.wordpress.org/ticket/53431.
+		unset(
+			$GLOBALS['current_screen'],
+			$GLOBALS['show_admin_bar'],
+			$GLOBALS['wp_meta_boxes'],
+			$GLOBALS['hook_suffix'],
+			$GLOBALS['menu'],
+			$GLOBALS['submenu'],
+			$GLOBALS['_wp_real_parent_file'],
+			$GLOBALS['_wp_submenu_nopriv'],
+			$GLOBALS['_registered_pages'],
+			$GLOBALS['_parent_pages'],
+			$_SERVER['HTTPS']
+		);
+
+		$this->clean_up_global_scope();
 
 		$this->set_permalink_structure( '' );
 
