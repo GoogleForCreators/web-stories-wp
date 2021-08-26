@@ -237,7 +237,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
         />
       )}
       {isVideo && (
-        //eslint-disable-next-line styled-components-a11y/media-has-caption -- Faded video doesn't need captions.
+        //eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- Faded video doesn't need captions.
         <FadedVideo {...fadedMediaProps}>
           {resource.src && (
             <source src={resource.src} type={resource.mimeType} />
