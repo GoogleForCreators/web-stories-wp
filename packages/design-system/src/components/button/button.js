@@ -69,7 +69,8 @@ const Base = styled.button(
       }
     `}
 
-    &:disabled {
+    &:disabled,
+    &[aria-disabled="true"] {
       pointer-events: none;
       background-color: ${theme.colors.interactiveBg.disable};
       color: ${theme.colors.fg.disable};
@@ -120,7 +121,8 @@ const tertiaryColors = ({ theme }) => css`
     background-color: ${theme.colors.interactiveBg.tertiaryHover};
   }
 
-  &:disabled {
+  &:disabled,
+  &[aria-disabled="true"] {
     background-color: ${theme.colors.interactiveBg.tertiaryNormal};
     &:hover,
     &:focus {
@@ -155,7 +157,8 @@ const quaternaryColors = ({ theme }) => css`
       border-color: ${theme.colors.border.defaultPress};
     `}
 
-  &:disabled {
+  &:disabled,
+  &[aria-disabled="true"] {
     border-color: ${theme.colors.border.disable};
     background-color: ${theme.colors.interactiveBg.quaternaryNormal};
   }
@@ -225,7 +228,8 @@ const ButtonLink = styled(Base)`
       color: ${theme.colors.fg.linkHover};
     }
     &:active,
-    &:disabled {
+    &:disabled,
+    &[aria-disabled="true"] {
       background-color: ${theme.colors.opacity.footprint};
     }
   `}
