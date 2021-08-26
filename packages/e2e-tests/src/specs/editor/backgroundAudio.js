@@ -41,6 +41,8 @@ describe('Background Audio', () => {
       await createNewStory();
 
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
+
+      // Toggle the panel which is collapsed by default.
       await expect(page).toClick('[aria-label="Background Audio"]');
 
       await expect(page).toClick('button', { text: 'Upload an audio file' });
@@ -65,10 +67,8 @@ describe('Background Audio', () => {
     it('should allow adding background audio', async () => {
       await createNewStory();
 
-      // Select the current page by clicking on it in the carousel.
-      await expect(page).toClick('[aria-label="Page 1 (current page)"]');
-
-      await expect(page).toClick('[aria-label="Background Audio"]');
+      // Select the current page by clicking on the canvas / safezone.
+      await expect(page).toClick('[data-testid="safezone"]');
 
       await expect(page).toClick('button', { text: 'Upload an audio file' });
 

@@ -135,6 +135,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       name="pageBackground"
       title={__('Page Background', 'web-stories')}
       isPersistable={!highlight}
+      collapsedByDefault={false}
     >
       {isDefaultBackground && (
         <Row>

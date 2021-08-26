@@ -65,6 +65,7 @@ function BackgroundAudioPanel() {
     <SimplePanel
       name="backgroundAudio"
       title={__('Background Audio', 'web-stories')}
+      collapsedByDefault={false}
     >
       <Row>
         <HelperText>
