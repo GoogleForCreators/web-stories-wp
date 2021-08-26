@@ -38,7 +38,7 @@ use WP_Site;
  *
  * @package Google\Web_Stories
  */
-class Database_Upgrader extends Service_Base implements Activateable, Conditional, HasSiteSetup {
+class Database_Upgrader extends Service_Base implements Activateable, HasSiteSetup {
 
 	/**
 	 * The slug of database option.
@@ -104,7 +104,9 @@ class Database_Upgrader extends Service_Base implements Activateable, Conditiona
 	 * @return void
 	 */
 	public function register() {
-		$this->run_upgrades();
+		if ( is_admin() ) {
+			$this->run_upgrades();
+		}
 	}
 
 	/**
@@ -140,17 +142,6 @@ class Database_Upgrader extends Service_Base implements Activateable, Conditiona
 	 */
 	public function initialize_site( $site ) {
 		$this->run_upgrades();
-	}
-
-	/**
-	 * Check whether the conditional object is currently needed.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return bool Whether the conditional object is needed.
-	 */
-	public static function is_needed(): bool {
-		return is_admin();
 	}
 
 	/**
