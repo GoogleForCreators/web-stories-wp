@@ -22,6 +22,13 @@ import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { UnitsProvider } from '@web-stories-wp/units';
+import {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+} from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
@@ -78,23 +85,56 @@ const PreviewWrapper = styled.div`
   ${({ background }) => generatePatternStyles(background)}
 `;
 
-function PagePreview({ page, ...props }) {
+const Image = styled.img`
+  width: 100%;
+`;
+
+function PagePreview({ page, label, ...props }) {
   const { backgroundColor } = page;
-  const { width, height } = props;
+  const { width, height, isActive } = props;
+
+  const [imageBlob, setImageBlob] = useState();
+  const [pageNode, setPageNode] = useState();
+  const setPageRef = useCallback((node) => node && setPageNode(node), []);
+  const hasImage = !isActive && imageBlob;
+  const pageAtGenerationTime = useRef();
+
+  useEffect(() => {
+    // If this is not the active page, there is a page node and we haven't
+    // snapshotted the current page
+    if (!isActive && pageNode && pageAtGenerationTime.current !== page) {
+      // Schedule an idle callback to actually generate the image
+      requestIdleCallback(
+        () => {
+          import(
+            /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
+          ).then((htmlToImage) => {
+            htmlToImage.toJpeg(pageNode, { quality: 1 }).then(setImageBlob);
+            pageAtGenerationTime.current = page;
+          });
+        },
+        { timeout: 5000 }
+      );
+    }
+  }, [isActive, pageNode, page]);
 
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page {...props}>
+        <Page ref={setPageRef} aria-label={label} {...props}>
           <PreviewWrapper background={backgroundColor}>
-            {page.elements.map(({ id, ...rest }) => (
-              <DisplayElement
-                key={id}
-                previewMode
-                element={{ id, ...rest }}
-                page={page}
-              />
-            ))}
+            {hasImage ? (
+              <Image src={imageBlob} alt={label} />
+            ) : (
+              page.elements.map(({ id, ...rest }) => (
+                <DisplayElement
+                  key={id}
+                  previewMode
+                  element={{ id, ...rest }}
+                  page={page}
+                />
+              ))
+            )}
           </PreviewWrapper>
         </Page>
       </TransformProvider>
@@ -104,6 +144,8 @@ function PagePreview({ page, ...props }) {
 
 PagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
+  label: PropTypes.string.isRequired,
+  pageImageData: PropTypes.string,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   isInteractive: PropTypes.bool,
