@@ -95,7 +95,7 @@ function AudioPlayer({ title, src, mimeType }) {
 
   return (
     <Wrapper>
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption */ }
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption */}
       <Audio crossOrigin="anonymous" loop ref={playerRef}>
         <source src={src} type={mimeType} />
       </Audio>
