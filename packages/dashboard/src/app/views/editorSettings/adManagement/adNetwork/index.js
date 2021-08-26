@@ -24,7 +24,7 @@ import {
   useMemo,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { __, _x, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 import { THEME_CONSTANTS, DropDown } from '@web-stories-wp/design-system';
 
@@ -61,7 +61,7 @@ export const TEXT = {
 
 const OPTIONS = [
   {
-    label: __('None', 'web-stories'),
+    label: _x('None', 'ad network', 'web-stories'),
     value: AD_NETWORK_TYPE.NONE,
   },
   {
