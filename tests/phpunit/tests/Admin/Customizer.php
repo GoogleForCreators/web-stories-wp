@@ -26,6 +26,8 @@ use WP_Error;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Customizer
+ * @runInSeparateProcess
+ * @preserveGlobalState disabled
  */
 class Customizer extends TestCase {
 	use Theme_Support;

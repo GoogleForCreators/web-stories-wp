@@ -267,6 +267,8 @@ class Cross_Origin_Isolation extends TestCase {
 
 	/**
 	 * @covers ::custom_print_media_templates
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
 	 */
 	public function test_custom_print_media_templates() {
 		require_once ABSPATH . WPINC . '/media-template.php';
