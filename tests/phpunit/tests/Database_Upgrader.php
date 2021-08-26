@@ -27,9 +27,9 @@ use Google\Web_Stories\Infrastructure\Injector\SimpleInjector;
  *
  */
 class Database_Upgrader extends TestCase {
-
 	public function setUp() {
 		parent::setUp();
+
 		delete_option( \Google\Web_Stories\Database_Upgrader::OPTION );
 		delete_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION );
 	}
@@ -37,7 +37,19 @@ class Database_Upgrader extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register_sets_missing_options() {
+	public function test_register_does_not_set_missing_options_on_frontend() {
+		$object = new \Google\Web_Stories\Database_Upgrader( new SimpleInjector() );
+		$object->register();
+		$this->assertFalse( get_option( $object::OPTION ) );
+		$this->assertFalse( get_option( $object::PREVIOUS_OPTION ) );
+	}
+
+	/**
+	 * @covers ::register
+	 */
+	public function test_register_sets_missing_options_in_admin() {
+		$GLOBALS['current_screen'] = convert_to_screen( 'post' );
+
 		$object = new \Google\Web_Stories\Database_Upgrader( new SimpleInjector() );
 		$object->register();
 		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
@@ -48,6 +60,8 @@ class Database_Upgrader extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register_does_not_override_previous_version_if_there_was_no_update() {
+		$GLOBALS['current_screen'] = convert_to_screen( 'post' );
+
 		add_option( \Google\Web_Stories\Database_Upgrader::OPTION, WEBSTORIES_DB_VERSION );
 		add_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.2.3' );
 
@@ -59,8 +73,9 @@ class Database_Upgrader extends TestCase {
 
 	/**
 	 * @group ms-required
+	 * @covers ::initialize_site
 	 */
-	public function test_register_sets_missing_options_multisite() {
+	public function test_sets_missing_options_on_site_creation() {
 		$blog_id = (int) self::factory()->blog->create();
 
 		switch_to_blog( $blog_id );
