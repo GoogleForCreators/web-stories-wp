@@ -97,14 +97,14 @@ class Hotlinking_Controller extends REST_Controller {
 		$url = untrailingslashit( $request['url'] );
 
 		/**
-		 * Filters the link data TTL value.
+		 * Filters the hotlinking data TTL value.
 		 *
 		 * @since 1.11.0
 		 *
 		 * @param int $time Time to live (in seconds). Default is 1 day.
 		 * @param string $url The attempted URL.
 		 */
-		$cache_ttl = apply_filters( 'web_stories_url_data_cache_ttl', DAY_IN_SECONDS, $url );
+		$cache_ttl = apply_filters( 'web_stories_hotlinking_url_data_cache_ttl', DAY_IN_SECONDS, $url );
 		$cache_key = 'web_stories_url_data_' . md5( $url );
 
 		$data = get_transient( $cache_key );
