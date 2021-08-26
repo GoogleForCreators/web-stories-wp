@@ -26,14 +26,6 @@ use WP_Block_Type_Registry;
  * @coversDefaultClass \Google\Web_Stories\Block\Web_Stories_Block
  */
 class Web_Stories_Block extends TestCase {
-	public function tearDown() {
-		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) ) {
-			unregister_block_type( 'web-stories/embed' );
-		}
-
-		parent::tearDown();
-	}
-
 	/**
 	 * @covers ::register
 	 * @covers ::register_block_type
@@ -147,8 +139,6 @@ class Web_Stories_Block extends TestCase {
 	public function test_render_block_with_poster() {
 		$assets      = new Assets();
 		$embed_block = new Block( $assets );
-
-		$embed_block->register();
 
 		$this->go_to( '/?feed=rss2' );
 
