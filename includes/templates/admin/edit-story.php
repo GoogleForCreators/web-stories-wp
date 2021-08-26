@@ -78,6 +78,7 @@ $preload_paths = [
 			'per_page'              => 100,
 			'page'                  => 1,
 			'_web_stories_envelope' => 'true',
+			'_embed'                => rawurlencode( 'wp:featuredmedia' ),
 			'_fields'               => rawurlencode(
 				implode(
 					',',

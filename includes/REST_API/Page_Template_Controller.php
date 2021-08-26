@@ -51,8 +51,8 @@ class Page_Template_Controller extends Stories_Base_Controller {
 		}
 
 		if ( $request['_web_stories_envelope'] ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$response = rest_get_server()->envelope_response( $response, isset( $request['_embed'] ) ? $request['_embed'] : false );
+			$embed    = isset( $request['_embed'] ) ? explode( ',', $request['_embed'] ) : false;
+			$response = rest_get_server()->envelope_response( $response, $embed );
 		}
 		return $response;
 	}

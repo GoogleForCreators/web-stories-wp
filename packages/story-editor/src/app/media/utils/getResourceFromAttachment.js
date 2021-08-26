@@ -76,18 +76,29 @@ function getVideoResourceFromAttachment(attachment) {
     date_gmt,
     media_details: { width, height, length, length_formatted: lengthFormatted },
     mime_type: mimeType,
-    featured_media: posterId,
-    featured_media_src: {
-      src: poster,
-      width: posterWidth,
-      height: posterHeight,
-      generated: posterGenerated,
-    },
     is_muted: isMuted,
     alt_text: alt,
     source_url: src,
     media_source: mediaSource,
+    _embedded: embedded = {},
   } = attachment;
+
+  let posterGenerated = false;
+  let posterId = 0;
+  let posterWidth = 0;
+  let posterHeight = 0;
+  let poster;
+
+  if ('wp:featuredmedia' in embedded) {
+    const posterImage = embedded['wp:featuredmedia'][0];
+    posterId = posterImage.id;
+    posterHeight = posterImage.media_details?.height;
+    posterWidth = posterImage.media_details?.width;
+    poster = posterImage.source_url;
+    posterGenerated = 'poster-generation' === posterImage.media_source;
+  }
+
+  const isOptimized = 'video-optimization' === mediaSource;
 
   return createResource({
     mimeType,
@@ -107,7 +118,7 @@ function getVideoResourceFromAttachment(attachment) {
     lengthFormatted,
     alt,
     local: false,
-    isOptimized: 'video-optimization' === mediaSource,
+    isOptimized,
     isMuted,
   });
 }
@@ -118,16 +129,25 @@ function getGifResourceFromAttachment(attachment) {
     date_gmt,
     media_details: { width, height },
     mime_type: mimeType,
-    featured_media: posterId,
-    featured_media_src: {
-      src: poster,
-      width: posterWidth,
-      height: posterHeight,
-      generated: posterGenerated,
-    },
     alt_text: alt,
     source_url: src,
+    _embedded: embedded = {},
   } = attachment;
+
+  let posterGenerated = false;
+  let posterId = 0;
+  let posterWidth = 0;
+  let posterHeight = 0;
+  let poster;
+
+  if ('wp:featuredmedia' in embedded) {
+    const posterImage = embedded['wp:featuredmedia'][0];
+    posterId = posterImage.id;
+    posterHeight = posterImage.media_details?.height;
+    posterWidth = posterImage.media_details?.width;
+    poster = posterImage.source_url;
+    posterGenerated = 'poster-generation' === posterImage.media_source;
+  }
 
   return createResource({
     type: 'gif',

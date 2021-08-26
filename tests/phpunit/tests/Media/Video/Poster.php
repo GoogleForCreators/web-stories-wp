@@ -77,7 +77,6 @@ class Poster extends Test_Case {
 
 		$this->assertArrayHasKey( 'featured_media', $data );
 		$this->assertEquals( $poster_attachment_id, $data['featured_media'] );
-		$this->assertEquals( wp_get_attachment_url( $poster_attachment_id ), $data['featured_media_src']['src'] );
 	}
 
 	/**
@@ -123,52 +122,7 @@ class Poster extends Test_Case {
 		);
 
 		$this->assertArrayHasKey( 'featured_media', $video );
-		$this->assertArrayHasKey( 'featured_media_src', $video );
 		$this->assertArrayNotHasKey( 'featured_media', $image );
-		$this->assertArrayNotHasKey( 'featured_media_src', $image );
-	}
-
-	/**
-	 * @covers ::get_thumbnail_data
-	 */
-	public function test_get_thumbnail_data() {
-		$attachment_id = self::factory()->attachment->create_object(
-			[
-				'file'           => DIR_TESTDATA . '/images/canola.jpg',
-				'post_parent'    => 0,
-				'post_mime_type' => 'image/jpeg',
-				'post_title'     => 'Test Image',
-			]
-		);
-
-		$media  = new \Google\Web_Stories\Media\Video\Poster();
-		$result = $media->get_thumbnail_data( $attachment_id );
-		$this->assertCount( 4, $result );
-		$this->assertArrayHasKey( 'src', $result );
-		$this->assertArrayHasKey( 'width', $result );
-		$this->assertArrayHasKey( 'height', $result );
-		$this->assertArrayHasKey( 'generated', $result );
-		$this->assertFalse( $result['generated'] );
-	}
-
-	/**
-	 * @covers ::get_thumbnail_data
-	 */
-	public function test_get_thumbnail_data_generated() {
-		$poster_attachment_id = self::factory()->attachment->create_object(
-			[
-				'file'           => DIR_TESTDATA . '/images/canola.jpg',
-				'post_parent'    => 0,
-				'post_mime_type' => 'image/jpeg',
-				'post_title'     => 'Test Image',
-			]
-		);
-
-		wp_set_object_terms( $poster_attachment_id, 'poster-generation', \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
-
-		$media  = new \Google\Web_Stories\Media\Video\Poster();
-		$result = $media->get_thumbnail_data( $poster_attachment_id );
-		$this->assertTrue( $result['generated'] );
 	}
 
 	/**

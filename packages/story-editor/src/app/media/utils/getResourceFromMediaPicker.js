@@ -34,7 +34,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     date,
     id,
     featured_media: posterId,
-    featured_media_src: {
+    image: {
       src: poster,
       width: posterWidth,
       height: posterHeight,

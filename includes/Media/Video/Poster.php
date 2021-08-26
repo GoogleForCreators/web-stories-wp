@@ -106,54 +106,8 @@ class Poster extends Service_Base {
 				],
 			]
 		);
-
-		register_rest_field(
-			'attachment',
-			'featured_media_src',
-			[
-				'get_callback' => [ $this, 'get_callback_featured_media_src' ],
-				'schema'       => [
-					'description' => __( 'URL, width and height.', 'web-stories' ),
-					'type'        => 'object',
-					'properties'  => [
-						'src'       => [
-							'type'   => 'string',
-							'format' => 'uri',
-						],
-						'width'     => [
-							'type' => 'integer',
-						],
-						'height'    => [
-							'type' => 'integer',
-						],
-						'generated' => [
-							'type' => 'boolean',
-						],
-					],
-					'context'     => [ 'view', 'edit', 'embed' ],
-				],
-			]
-		);
 	}
 
-	/**
-	 * Get attachment source for featured media.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $prepared Prepared data before response.
-	 *
-	 * @return array
-	 */
-	public function get_callback_featured_media_src( $prepared ): array {
-		$id    = $prepared['featured_media'] ?? null;
-		$image = [];
-		if ( $id ) {
-			$image = $this->get_thumbnail_data( $id );
-		}
-
-		return $image;
-	}
 
 	/**
 	 * Filters the attachment data prepared for JavaScript.
@@ -170,33 +124,14 @@ class Poster extends Service_Base {
 			return $response;
 		}
 		if ( 'video' === $response['type'] ) {
-			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
-			$image        = '';
+			$thumbnail_id               = (int) get_post_thumbnail_id( $attachment );
+			$response['featured_media'] = $thumbnail_id;
 			if ( 0 !== $thumbnail_id ) {
-				$image = $this->get_thumbnail_data( $thumbnail_id );
+				$response['image']['generated'] = $this->is_poster( $thumbnail_id );
 			}
-			
-			$response['featured_media']     = $thumbnail_id;
-			$response['featured_media_src'] = $image;
 		}
 
 		return $response;
-	}
-
-	/**
-	 * Get poster image data.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param int $thumbnail_id Attachment ID.
-	 *
-	 * @return array
-	 */
-	public function get_thumbnail_data( int $thumbnail_id ): array {
-		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
-		list ( $src, $width, $height ) = $img_src;
-		$generated                     = $this->is_poster( $thumbnail_id );
-		return compact( 'src', 'width', 'height', 'generated' );
 	}
 
 	/**
