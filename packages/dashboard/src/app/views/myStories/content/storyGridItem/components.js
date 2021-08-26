@@ -46,39 +46,6 @@ export const CardWrapper = styled.div`
   width: 100%;
 `;
 
-// Displays story poster if available for story grid item as background of card area
-export const Poster = styled.div`
-  height: 100%;
-  width: 100%;
-  object-fit: fill;
-  border-radius: ${({ theme }) => theme.borders.radius.medium};
-  background: ${({ theme }) => theme.colors.gradient.placeholder};
-`;
-
-// Gradient overlays the story poster
-export const Gradient = styled.div`
-  position: absolute;
-  bottom: 0;
-  height: 67%;
-  width: 100%;
-  border-radius: ${({ theme }) => theme.borders.radius.medium};
-  background: ${({ theme }) => theme.colors.gradient.posterOverlay};
-`;
-
-// Holds story content
-export const Scrim = styled.div`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  border-radius: ${({ theme }) => theme.borders.radius.medium};
-  background: ${({ theme }) => theme.colors.opacity.black3};
-`;
-
 export const ScrimAnchor = styled.a`
   position: absolute;
   top: 0;
