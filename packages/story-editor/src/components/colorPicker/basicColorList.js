@@ -83,17 +83,11 @@ function BasicColorList({
 
   useRovingTabIndex({ ref: listRef });
 
-  const selectedSwatchList = colors
-    .map((pattern, i) => {
-      const patternAsBackground = getPatternAsString(pattern);
-      const isSelected = colorAsBackground === patternAsBackground;
-      if (isSelected) {
-        return i;
-      }
-      return false;
-    })
-    .filter((c) => c !== false);
+  const selectedSwatchIndex = colors
+    .map(getPatternAsString)
+    .findIndex((c) => colorAsBackground === c);
 
+  let firstIndex = 0;
   return (
     <SwatchList ref={listRef}>
       {colors.map((pattern, i) => {
@@ -104,9 +98,12 @@ function BasicColorList({
         const patternAsBackground = getPatternAsString(pattern);
         const isSelected = colorAsBackground === patternAsBackground;
         // By default, the first swatch can be tabbed into, unless there's a selected one.
-        let tabIndex = i === 0 ? 0 : -1;
-        if (selectedSwatchList.length) {
+        let tabIndex = i === firstIndex ? 0 : -1;
+        if (selectedSwatchIndex >= 0) {
           tabIndex = isSelected ? 0 : -1;
+        } else if (isDisabled && i === firstIndex) {
+          firstIndex++;
+          tabIndex = -1;
         }
         return (
           <StyledSwatch
