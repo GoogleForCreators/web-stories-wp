@@ -34,6 +34,12 @@ import ShortcutMenu from './shortcutMenu';
 import { TOGGLE_SHORTCUTS_MENU } from './constants';
 import { useKeyboardShortcutsMenu } from './keyboardShortcutsMenuContext';
 
+const StyledToggleButton = styled(ToggleButton)`
+  padding-left: 3px;
+  padding-right: 3px;
+  width: auto;
+`;
+
 const Wrapper = styled.div`
   /**
     * sibling inherits parent z-index of Z_INDEX.EDIT
@@ -79,7 +85,7 @@ function KeyboardShortcutsMenu() {
           <ShortcutMenu toggleMenu={toggle} />
         </Popup>
 
-        <ToggleButton
+        <StyledToggleButton
           ref={anchorRef}
           isOpen={isOpen}
           aria-owns="keyboard_shortcut_menu"

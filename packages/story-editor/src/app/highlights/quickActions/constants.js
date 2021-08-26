@@ -19,19 +19,55 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 
-export const ACTION_TEXT = {
-  ADD_ANIMATION: __('Add animation', 'web-stories'),
-  ADD_LINK: __('Add link', 'web-stories'),
-  ADD_CAPTIONS: __('Add captions', 'web-stories'),
-  CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
-  CHANGE_TEXT_COLOR: __('Change color', 'web-stories'),
-  CHANGE_COLOR: __('Change color', 'web-stories'),
-  RESET_ELEMENT: __('Reset element', 'web-stories'),
-  CHANGE_FONT: __('Edit text', 'web-stories'),
-  INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
-  INSERT_TEXT: __('Insert text', 'web-stories'),
-  REPLACE_BACKGROUND_MEDIA: __('Replace background', 'web-stories'),
-  REPLACE_MEDIA: __('Replace media', 'web-stories'),
+export const ACTIONS = {
+  ADD_ANIMATION: {
+    trackingEventName: 'add_animation',
+    text: __('Add animation', 'web-stories'),
+  },
+  ADD_LINK: {
+    trackingEventName: 'add_link',
+    text: __('Add link', 'web-stories'),
+  },
+  ADD_CAPTIONS: {
+    trackingEventName: 'add_captions',
+    text: __('Add captions', 'web-stories'),
+  },
+  CHANGE_BACKGROUND_COLOR: {
+    trackingEventName: 'change_background_color',
+    text: __('Change background color', 'web-stories'),
+  },
+  CHANGE_TEXT_COLOR: {
+    trackingEventName: 'change_text_color',
+    text: __('Change color', 'web-stories'),
+  },
+  CHANGE_COLOR: {
+    trackingEventName: 'change_color',
+    text: __('Change color', 'web-stories'),
+  },
+  RESET_ELEMENT: {
+    trackingEventName: 'reset_element',
+    text: __('Reset element', 'web-stories'),
+  },
+  CHANGE_FONT: {
+    trackingEventName: 'change_font',
+    text: __('Edit text', 'web-stories'),
+  },
+  INSERT_BACKGROUND_MEDIA: {
+    trackingEventName: 'insert_background_media',
+    text: __('Insert background media', 'web-stories'),
+  },
+  INSERT_TEXT: {
+    trackingEventName: 'insert_text',
+    text: __('Insert text', 'web-stories'),
+  },
+  REPLACE_BACKGROUND_MEDIA: {
+    trackingEventName: 'replace_background_media',
+    text: __('Replace background', 'web-stories'),
+  },
+  REPLACE_MEDIA: {
+    trackingEventName: 'replace_media',
+    text: __('Replace media', 'web-stories'),
+  },
 };
 
 export const RESET_PROPERTIES = {

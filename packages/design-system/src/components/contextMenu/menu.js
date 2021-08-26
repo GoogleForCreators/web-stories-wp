@@ -96,6 +96,7 @@ const MenuList = styled.ul`
       align-items: center;
       padding: 2px 16px;
       border: 0;
+      color: ${({ theme }) => theme.colors.fg.primary};
       transition: background-color ${BUTTON_TRANSITION_TIMING};
     }
     ${({ isIconMenu }) =>

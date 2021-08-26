@@ -76,6 +76,9 @@ describe('Story Editor', () => {
     await expect(previewPage).toMatch(/Debug/i);
     await expect(previewPage).toMatch(/Add device/i);
 
+    await previewPage.waitForSelector('amp-story-player');
+    await expect(previewPage).toMatchElement('amp-story-player');
+
     await percySnapshot(previewPage, 'Preview with development mode');
 
     await editorPage.bringToFront();
