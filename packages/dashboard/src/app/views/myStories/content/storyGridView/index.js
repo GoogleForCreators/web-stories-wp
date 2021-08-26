@@ -110,7 +110,7 @@ const StoryGridView = ({
   const handleMenuToggle = useCallback(
     (evt, id) => {
       storyMenu.handleMenuToggle(id);
-      // Conditionally return the focus to the grid when menu is closed
+      // Conditionally return the focus to the grid when menu is closed using `tab`
       if (id < 0 && evt?.keyCode === 9) {
         // Menu is closing.
         const isNext = !evt?.shiftKey;
