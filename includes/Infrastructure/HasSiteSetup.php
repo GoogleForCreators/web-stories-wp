@@ -31,5 +31,5 @@ interface HasSiteSetup {
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function initialize_site( $site );
+	public function setup_site( $site );
 }

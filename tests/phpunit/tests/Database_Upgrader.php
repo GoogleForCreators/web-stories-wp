@@ -73,7 +73,7 @@ class Database_Upgrader extends TestCase {
 
 	/**
 	 * @group ms-required
-	 * @covers ::initialize_site
+	 * @covers ::setup_site
 	 */
 	public function test_sets_missing_options_on_site_creation() {
 		$blog_id = (int) self::factory()->blog->create();

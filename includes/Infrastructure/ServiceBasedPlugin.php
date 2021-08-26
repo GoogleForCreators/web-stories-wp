@@ -163,7 +163,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function initialize_site( $site ) {
+	public function setup_site( $site ) {
 		$this->register_services();
 
 		$site_id = (int) $site->blog_id;
@@ -173,7 +173,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 		foreach ( $this->service_container as $service ) {
 			if ( $service instanceof HasSiteSetup ) {
-				$service->initialize_site( $site );
+				$service->setup_site( $site );
 			}
 		}
 
@@ -188,7 +188,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param WP_Site $site The site being removed.
 	 * @return void
 	 */
-	public function remove_site( $site ) {
+	public function tear_down_site( $site ) {
 		$this->register_services();
 
 		$site_id = (int) $site->blog_id;
@@ -198,7 +198,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 		foreach ( $this->service_container as $service ) {
 			if ( $service instanceof HasSiteTeardown ) {
-				$service->remove_site( $site );
+				$service->tear_down_site( $site );
 			}
 		}
 

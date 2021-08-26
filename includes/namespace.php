@@ -79,7 +79,7 @@ function new_site( $site ) {
 		return;
 	}
 
-	PluginFactory::create()->initialize_site( $site );
+	PluginFactory::create()->setup_site( $site );
 }
 
 add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
@@ -94,7 +94,7 @@ add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
  *
  * @return void
  */
-function remove_site( $error, $site ) {
+function tear_down_site( $error, $site ) {
 	if ( ! is_multisite() ) {
 		return;
 	}
@@ -105,10 +105,10 @@ function remove_site( $error, $site ) {
 		return;
 	}
 
-	PluginFactory::create()->remove_site( $site );
+	PluginFactory::create()->tear_down_site( $site );
 }
 
-add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT_MAX, 2 );
+add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\tear_down_site', PHP_INT_MAX, 2 );
 
 /**
  * Handles plugin deactivation.

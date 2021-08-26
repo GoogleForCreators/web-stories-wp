@@ -60,7 +60,7 @@ class Capabilities implements Service, Activateable, HasSiteSetup, HasSiteTeardo
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function initialize_site( $site ) {
+	public function setup_site( $site ) {
 		$this->add_caps_to_roles();
 	}
 
@@ -72,7 +72,7 @@ class Capabilities implements Service, Activateable, HasSiteSetup, HasSiteTeardo
 	 * @param WP_Site $site The site being removed.
 	 * @return void
 	 */
-	public function remove_site( WP_Site $site ) {
+	public function tear_down_site( WP_Site $site ) {
 		$this->remove_caps_from_roles();
 	}
 

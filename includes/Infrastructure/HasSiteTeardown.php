@@ -31,5 +31,5 @@ interface HasSiteTeardown {
 	 * @param WP_Site $site The site being removed.
 	 * @return void
 	 */
-	public function remove_site( WP_Site $site );
+	public function tear_down_site( WP_Site $site );
 }

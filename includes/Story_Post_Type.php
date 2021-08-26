@@ -146,7 +146,7 @@ class Story_Post_Type extends Service_Base implements Deactivateable, HasSiteSet
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function initialize_site( $site ) {
+	public function setup_site( $site ) {
 		$this->register();
 	}
 
