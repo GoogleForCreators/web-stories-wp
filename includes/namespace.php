@@ -248,6 +248,18 @@ function rest_preload_api_request( $memo, $path ): array {
 }
 
 /**
+ * Returns the Web stories plugin instance.
+ *
+ * Can be used by other plugins to integrate with the plugin
+ * or to simply detect whether the plugin is active.
+ *
+ * @return Plugin
+ */
+function get_plugin_instance() {
+	return PluginFactory::create();
+}
+
+/**
  * Bootstrap the plugin.
  *
  * @since 1.11.0
