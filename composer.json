@@ -86,7 +86,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes",
+      "Google\\Web_Stories\\Tests\\Integration\\": "tests/phpunit/integration/includes",
       "PHPStan\\WordPress\\": "tests/phpstan/src"
     }
   },
