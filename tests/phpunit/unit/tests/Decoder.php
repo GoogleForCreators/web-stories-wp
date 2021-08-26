@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration;
+namespace Google\Web_Stories\Tests\Unit;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Decoder
  */
 class Decoder extends TestCase {
-
 	/**
 	 * @dataProvider get_encoded_data
 	 *
@@ -45,7 +44,7 @@ class Decoder extends TestCase {
 		$this->assertTrue( $decoder->supports_decoding() );
 	}
 
-	public function get_encoded_data() {
+	public function get_encoded_data(): array {
 		return [
 			'converts UTF 16'             => [
 				'__WEB_STORIES_ENCODED__SGVsbG8lMjB3b3JsZCUyMC0lMjAlQzMlOTglQzMlOTklQzMlOUYlQzMlQTYlQzQlODQlQzUlOTIlQzYlOTUlQzYlOUMlQzclODQlQzclODYlQzklQjc=',
