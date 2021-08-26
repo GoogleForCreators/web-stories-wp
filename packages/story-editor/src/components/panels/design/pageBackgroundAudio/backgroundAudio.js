@@ -36,7 +36,7 @@ const HelperText = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-function BackgroundAudioPanel() {
+function PageBackgroundAudioPanel() {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -63,8 +63,8 @@ function BackgroundAudioPanel() {
 
   return (
     <SimplePanel
-      name="backgroundAudio"
-      title={__('Background Audio', 'web-stories')}
+      name="pageBackgroundAudio"
+      title={__('Page Background Audio', 'web-stories')}
       collapsedByDefault={false}
     >
       <Row>
@@ -83,4 +83,4 @@ function BackgroundAudioPanel() {
   );
 }
 
-export default BackgroundAudioPanel;
+export default PageBackgroundAudioPanel;

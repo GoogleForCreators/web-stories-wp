@@ -38,7 +38,7 @@ import {
   VideoOptionsPanel,
   StylePresetPanel,
   ColorPresetPanel,
-  BackgroundAudioPanel,
+  PageBackgroundAudioPanel,
 } from '../../panels/design';
 import PanelTypes from '../../panels/design/types';
 
@@ -103,7 +103,7 @@ function getDesignPanelsForSelection(elements) {
 
     panels.push({
       type: PanelTypes.PAGE_BACKGROUND_AUDIO,
-      Panel: BackgroundAudioPanel,
+      Panel: PageBackgroundAudioPanel,
     });
 
     return panels;
