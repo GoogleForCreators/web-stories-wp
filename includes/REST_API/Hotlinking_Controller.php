@@ -68,7 +68,15 @@ class Hotlinking_Controller extends REST_Controller {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'parse_url' ],
 					'permission_callback' => [ $this, 'parse_url_permissions_check' ],
-					'args'                => $this->get_collection_params(),
+					'args'                => [
+						'url' => [
+							'description'       => __( 'The URL to process.', 'web-stories' ),
+							'required'          => true,
+							'type'              => 'string',
+							'format'            => 'uri',
+							'validate_callback' => [ $this, 'validate_url' ],
+						],
+					],
 				],
 			]
 		);
@@ -76,6 +84,8 @@ class Hotlinking_Controller extends REST_Controller {
 
 	/**
 	 * Parses a URL to return some metadata for inserting external media.
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.11.0
 	 *
@@ -85,6 +95,10 @@ class Hotlinking_Controller extends REST_Controller {
 	 */
 	public function parse_url( $request ) {
 		$url = untrailingslashit( $request['url'] );
+
+		if ( empty( $url ) || ! wp_http_validate_url( $url ) ) {
+			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+		}
 
 		/**
 		 * Filters the link data TTL value.
@@ -134,7 +148,6 @@ class Hotlinking_Controller extends REST_Controller {
 				break;
 			}
 		}
-
 
 		$data = [
 			'ext'       => $ext,
@@ -278,7 +291,7 @@ class Hotlinking_Controller extends REST_Controller {
 	public function validate_url( $value ) {
 		$url = untrailingslashit( $value );
 
-		if ( empty( $url ) ) {
+		if ( empty( $url ) || ! wp_http_validate_url( $url ) ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
@@ -293,25 +306,5 @@ class Hotlinking_Controller extends REST_Controller {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Retrieves the query params for the posts collection.
-	 *
-	 * @since 1.11.0
-	 *
-	 * @return array Collection parameters.
-	 */
-	public function get_collection_params(): array {
-		return [
-			'context' => $this->get_context_param( [ 'default' => 'view' ] ),
-			'url'     => [
-				'description'       => __( 'The URL to process.', 'web-stories' ),
-				'required'          => true,
-				'type'              => 'string',
-				'format'            => 'uri',
-				'validate_callback' => [ $this, 'validate_url' ],
-			],
-		];
 	}
 }

@@ -28,6 +28,9 @@
 
 namespace Google\Web_Stories\Tests;
 
+use WP_Error;
+use WP_REST_Response;
+
 /**
  * Class Test_REST_TestCase
  *
@@ -49,7 +52,7 @@ abstract class Test_REST_TestCase extends TestCase {
 	 */
 	protected function assertErrorResponse( $code, $response, $status = null ) {
 
-		if ( is_a( $response, 'WP_REST_Response' ) ) {
+		if ( $response instanceof WP_REST_Response ) {
 			$response = $response->as_error();
 		}
 
