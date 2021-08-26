@@ -122,7 +122,7 @@ const tertiaryColors = ({ theme }) => css`
   }
 
   &:disabled,
-  &[aria-disabled="true"] {
+  &[aria-disabled='true'] {
     background-color: ${theme.colors.interactiveBg.tertiaryNormal};
     &:hover,
     &:focus {
@@ -158,7 +158,7 @@ const quaternaryColors = ({ theme }) => css`
     `}
 
   &:disabled,
-  &[aria-disabled="true"] {
+  &[aria-disabled='true'] {
     border-color: ${theme.colors.border.disable};
     background-color: ${theme.colors.interactiveBg.quaternaryNormal};
   }
@@ -229,7 +229,7 @@ const ButtonLink = styled(Base)`
     }
     &:active,
     &:disabled,
-    &[aria-disabled="true"] {
+    &[aria-disabled='true'] {
       background-color: ${theme.colors.opacity.footprint};
     }
   `}
