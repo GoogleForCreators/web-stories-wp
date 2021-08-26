@@ -78,7 +78,7 @@ class Stories_Shortcode extends TestCase {
 			]
 		);
 
-		$this->assertTrue( false !== strpos( $actual, 'is-view-type-carousel' ) );
+		$this->assertNotSame( false, strpos( $actual, 'is-view-type-carousel' ) );
 	}
 
 	/**
@@ -94,7 +94,7 @@ class Stories_Shortcode extends TestCase {
 			]
 		);
 
-		$this->assertTrue( false !== strpos( $actual, 'is-view-type-circles' ) );
+		$this->assertNotSame( false, strpos( $actual, 'is-view-type-circles' ) );
 	}
 
 	/**
