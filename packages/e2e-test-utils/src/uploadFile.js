@@ -53,14 +53,17 @@ async function uploadFile(file, checkUpload = true) {
     '.media-modal-content .attachment-details .filename'
   );
   const newFileName = await fileNameEl.evaluate((el) => el.textContent);
-  const attachmentTitleEl = await page.waitForSelector(
-    '#attachment-details-title'
-  );
-  const attachmentTitle = await attachmentTitleEl.evaluate((el) => el.value);
 
   if (checkUpload) {
+    const attachmentTitleEl = await page.waitForSelector(
+      '#attachment-details-title'
+    );
+    const attachmentTitle = await attachmentTitleEl.evaluate((el) => el.value);
     await page.waitForSelector(
-      `.attachments-browser .attachments .attachment[aria-label="${attachmentTitle}"]`
+      `.attachments-browser .attachments .attachment[aria-label="${attachmentTitle.replace(
+        /"/g,
+        '\\"'
+      )}"]`
     );
   }
   await page.setDefaultTimeout(3000);
