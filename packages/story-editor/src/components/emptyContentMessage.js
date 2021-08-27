@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { DesertColor } from '@web-stories-wp/design-system';
+import { DesertBw } from '@web-stories-wp/design-system';
 
 const Message = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ const Message = styled.div`
   }
 `;
 
-const EmptyImage = styled(DesertColor)`
+const EmptyImage = styled(DesertBw)`
   margin-bottom: 48px;
 `;
 
