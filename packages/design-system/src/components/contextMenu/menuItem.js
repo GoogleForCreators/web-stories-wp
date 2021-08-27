@@ -31,6 +31,7 @@ import { THEME_CONSTANTS } from '../../theme';
 import { noop } from '../../utils';
 import { Tooltip, TOOLTIP_PLACEMENT } from '../tooltip';
 import { PLACEMENT } from '../popup';
+import { VisuallyHidden } from '../visuallyHidden';
 
 const ItemText = styled(Text)`
   width: 200px;
@@ -104,13 +105,19 @@ export const MenuItem = ({
           {label}
         </ItemText>
         {shortcut?.display && (
-          <Shortcut
-            disabled={disabled}
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-            forwardedAs="kbd"
-          >
-            {shortcut.display}
-          </Shortcut>
+          <>
+            <Shortcut
+              disabled={disabled}
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+              forwardedAs="kbd"
+              aria-hidden
+            >
+              {shortcut.display}
+            </Shortcut>
+            <VisuallyHidden>
+              {shortcut?.title || shortcut.display}
+            </VisuallyHidden>
+          </>
         )}
       </>
     );

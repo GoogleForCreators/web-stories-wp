@@ -378,12 +378,12 @@ export function isPlatformMacOS() {
 }
 
 /**
- * Prettifies keyboard shortcuts in a platform-agnostic way.
+ * Get the key specific to operating system
  *
- * @param {string} shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
- * @return {string} Prettified keyboard shortcut.
+ * @param {string} key The key to replace. Options: [alt, ctrl, mod, cmd, shift].
+ * @return {string} the mapped key. Returns the argument if key is not in options.
  */
-export function prettifyShortcut(shortcut) {
+export function getKeyForOS(key) {
   const isMacOS = isPlatformMacOS();
 
   const replacementKeyMap = {
@@ -394,15 +394,27 @@ export function prettifyShortcut(shortcut) {
     shift: isMacOS ? '⇧' : 'Shift',
   };
 
+  return replacementKeyMap[key] || key;
+}
+
+/**
+ * Prettifies keyboard shortcuts in a platform-agnostic way.
+ *
+ * @param {string} shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
+ * @return {string} Prettified keyboard shortcut.
+ */
+export function prettifyShortcut(shortcut) {
+  const isMacOS = isPlatformMacOS();
+
   const delimiter = isMacOS ? '' : '+';
 
   return shortcut
     .toLowerCase()
-    .replace('alt', replacementKeyMap.alt)
-    .replace('ctrl', replacementKeyMap.ctrl)
-    .replace('mod', replacementKeyMap.mod)
-    .replace('cmd', replacementKeyMap.cmd)
-    .replace('shift', replacementKeyMap.shift)
+    .replace('alt', getKeyForOS('alt'))
+    .replace('ctrl', getKeyForOS('ctrl'))
+    .replace('mod', getKeyForOS('mod'))
+    .replace('cmd', getKeyForOS('cmd'))
+    .replace('shift', getKeyForOS('shift'))
     .replace('left', '←')
     .replace('up', '↑')
     .replace('right', '→')

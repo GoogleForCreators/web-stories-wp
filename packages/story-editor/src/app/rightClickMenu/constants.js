@@ -16,17 +16,14 @@
 /**
  * External dependencies
  */
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
-import styled from 'styled-components';
-/**
- * Internal dependencies
- */
-import { SPECIAL_KEYS } from '../../components/keyboardShortcutsMenu/constants';
 import {
-  cmdOrCtrl,
-  optionOrAlt,
-} from '../../components/keyboardShortcutsMenu/keyboardShortcutList';
+  getKeyForOS,
+  prettifyShortcut,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
+import { sprintf, _x, __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 export const RIGHT_CLICK_MENU_LABELS = {
   ADD_NEW_PAGE_AFTER: __('Add New Page After', 'web-stories'),
@@ -65,63 +62,94 @@ const StyledKbd = styled(Text).attrs({
 `;
 
 export const RIGHT_CLICK_MENU_SHORTCUTS = {
-  SEND_BACKWARD: (
-    <>
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.DOWN.title}>
-        {SPECIAL_KEYS.DOWN.symbol}
-      </StyledKbd>
-    </>
-  ),
-  SEND_TO_BACK: (
-    <>
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.SHIFT.title}>
-        {SPECIAL_KEYS.SHIFT.symbol}
-      </StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.DOWN.title}>
-        {SPECIAL_KEYS.DOWN.symbol}
-      </StyledKbd>
-    </>
-  ),
-  BRING_FORWARD: (
-    <>
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.UP.title}>
-        {SPECIAL_KEYS.UP.symbol}
-      </StyledKbd>
-    </>
-  ),
-  BRING_TO_FRONT: (
-    <>
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.SHIFT.title}>
-        {SPECIAL_KEYS.SHIFT.symbol}
-      </StyledKbd>{' '}
-      <StyledKbd aria-label={SPECIAL_KEYS.UP.title}>
-        {SPECIAL_KEYS.UP.symbol}
-      </StyledKbd>
-    </>
-  ),
-  DELETE: (
-    <StyledKbd aria-label={SPECIAL_KEYS.DELETE.title}>
-      {SPECIAL_KEYS.DELETE.symbol}
-    </StyledKbd>
-  ),
-  COPY_STYLES: (
-    <>
-      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd>{'O'}</StyledKbd>
-    </>
-  ),
-  PASTE_STYLES: (
-    <>
-      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
-      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd>{'P'}</StyledKbd>
-    </>
-  ),
+  SEND_BACKWARD: {
+    display: <StyledKbd>{prettifyShortcut('mod down')}</StyledKbd>,
+    title: sprintf(
+      /* Translators: 1: Command/Carat keyboard key.*/
+      _x(
+        '%s down',
+        'The keyboard keys "Command" or "Carat" and "down"',
+        'web-stories'
+      ),
+      getKeyForOS('mod')
+    ),
+  },
+  SEND_TO_BACK: {
+    display: <StyledKbd>{prettifyShortcut('mod shift down')}</StyledKbd>,
+    title: sprintf(
+      /* Translators: 1: Command/Carat keyboard key.*/
+      _x(
+        '%s Shift down',
+        'The keyboard keys "Command" or "Carat", "Shift", and "down"',
+        'web-stories'
+      ),
+      getKeyForOS('mod')
+    ),
+  },
+  BRING_FORWARD: {
+    display: <StyledKbd>{prettifyShortcut('mod up')}</StyledKbd>,
+    title: sprintf(
+      /* Translators: 1: Command/Carat keyboard key.*/
+      _x(
+        '%s up',
+        'The keyboard keys "Command" or "Carat" and "up"',
+        'web-stories'
+      ),
+      getKeyForOS('mod')
+    ),
+  },
+  BRING_TO_FRONT: {
+    display: <StyledKbd>{prettifyShortcut('mod shift up')}</StyledKbd>,
+    title: sprintf(
+      /* Translators: 1: Command/Carat keyboard key.*/
+      _x(
+        '%s Shift up',
+        'The keyboard keys "Command" or "Carat", "Shift", and "up"',
+        'web-stories'
+      ),
+      getKeyForOS('mod')
+    ),
+  },
+  DELETE: {
+    display: <StyledKbd>{prettifyShortcut('delete')}</StyledKbd>,
+    title: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
+  },
+  COPY_STYLES: {
+    display: (
+      <>
+        <StyledKbd>{prettifyShortcut('alt mod')}</StyledKbd>{' '}
+        <StyledKbd>{'O'}</StyledKbd>
+      </>
+    ),
+    title: sprintf(
+      /* Translators: 1: Alt keyboard key. 2: Command/Carat keyboard key */
+      _x(
+        '%1$s %2$s O',
+        'The keyboard keys "Alt", "Command" or "Carat", and "O"',
+        'web-stories'
+      ),
+      getKeyForOS('alt'),
+      getKeyForOS('mod')
+    ),
+  },
+  PASTE_STYLES: {
+    display: (
+      <>
+        <StyledKbd>{prettifyShortcut('alt mod')}</StyledKbd>{' '}
+        <StyledKbd>{'P'}</StyledKbd>
+      </>
+    ),
+    title: sprintf(
+      /* Translators: 1: Alt keyboard key. 2: Command/Carat keyboard key */
+      _x(
+        '%1$s %2$s P',
+        'The keyboard keys "Alt", "Command" or "Carat", and "P"',
+        'web-stories'
+      ),
+      getKeyForOS('alt'),
+      getKeyForOS('mod')
+    ),
+  },
 };
 
 export const RIGHT_CLICK_SNACKBAR_TEXT = {
