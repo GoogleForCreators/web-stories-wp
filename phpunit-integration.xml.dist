@@ -14,7 +14,7 @@
 	</php>
 
 	<testsuites>
-		<testsuite name="Web Stories Test Suite">
+		<testsuite name="Web Stories Integration Test Suite">
 			<directory suffix=".php">./tests/phpunit/integration/tests</directory>
 		</testsuite>
 	</testsuites>
