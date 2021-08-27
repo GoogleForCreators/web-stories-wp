@@ -57,6 +57,7 @@ import {
 } from '../../../../../utils/getInUseFonts';
 import { Container as SectionContainer } from '../../../common/section';
 import { virtualPaneContainer } from '../../shared/virtualizedPanelGrid';
+import EmptyContentMessage from '../../../../emptyContentMessage';
 import TextSets from './textSets';
 import { CATEGORIES, PANE_TEXT } from './constants';
 
@@ -222,7 +223,13 @@ function TextSetsPane({ paneRef }) {
         />
       </FullWidthWrapper>
       <TextSetsWrapper>
-        <TextSets paneRef={paneRef} filteredTextSets={filteredTextSets} />
+        {filteredTextSets?.length ? (
+          <TextSets paneRef={paneRef} filteredTextSets={filteredTextSets} />
+        ) : (
+          <EmptyContentMessage>
+            {__('No text sets available.', 'web-stories')}
+          </EmptyContentMessage>
+        )}
       </TextSetsWrapper>
     </SectionContainer>
   );
