@@ -183,11 +183,6 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
 
-		if ( rest_is_field_included( 'featured_media_url', $fields ) ) {
-			$image                      = get_the_post_thumbnail_url( $post, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
-			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
-		}
-
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->filter_response_by_context( $data, $context );
 		$links   = $response->get_links();
