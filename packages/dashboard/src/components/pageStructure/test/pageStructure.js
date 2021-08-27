@@ -17,26 +17,41 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
 import { fireEvent, screen } from '@testing-library/react';
-import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils';
 import { LeftRail } from '..';
-import NavProvider, { NavContext } from '../../navProvider';
+import { NavContext } from '../../navProvider';
 import { PRIMARY_PATHS } from '../../../constants';
 
 describe('<LeftRail />', () => {
+  const toggleSideBarFn = jest.fn();
+
+  // eslint-disable-next-line react/prop-types
+  const MockedNavProvider = ({ children }) => {
+    return (
+      <NavContext.Provider
+        value={{
+          actions: {
+            toggleSideBar: toggleSideBarFn,
+            updateNumNewTemplates: () => {},
+          },
+          state: { sideBarVisible: false, numNewTemplates: 0 },
+        }}
+      >
+        {children}
+      </NavContext.Provider>
+    );
+  };
+
   it('should be visible by default in a regular viewport.', () => {
     renderWithProviders(
-      <FlagsProvider features={{ enableInProgressViews: false }}>
-        <NavProvider>
-          <LeftRail />
-        </NavProvider>
-      </FlagsProvider>
+      <MockedNavProvider>
+        <LeftRail />
+      </MockedNavProvider>
     );
 
     const leftRail = screen.getByTestId('dashboard-left-rail');
@@ -46,28 +61,10 @@ describe('<LeftRail />', () => {
   });
 
   it('should call the toggle sidebar function when a link is clicked to close the menu.', () => {
-    const toggleSideBarFn = jest.fn();
-
-    // eslint-disable-next-line react/prop-types
-    const MockedNavProvider = ({ children, toggleSideBar }) => {
-      const [sideBarVisible] = useState(false);
-      return (
-        <NavContext.Provider
-          value={{
-            actions: { toggleSideBar },
-            state: { sideBarVisible },
-          }}
-        >
-          {children}
-        </NavContext.Provider>
-      );
-    };
     renderWithProviders(
-      <FlagsProvider features={{ enableInProgressViews: false }}>
-        <MockedNavProvider toggleSideBar={toggleSideBarFn}>
-          <LeftRail />
-        </MockedNavProvider>
-      </FlagsProvider>
+      <MockedNavProvider>
+        <LeftRail />
+      </MockedNavProvider>
     );
 
     expect(toggleSideBarFn).not.toHaveBeenCalled();
