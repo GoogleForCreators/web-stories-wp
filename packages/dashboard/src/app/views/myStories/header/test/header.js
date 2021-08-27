@@ -62,7 +62,7 @@ const fakeStories = [
   },
 ];
 
-describe('My Stories <Header />', function () {
+describe('Dashboard <Header />', function () {
   it('should have results label that says "Viewing all stories" on initial page view', function () {
     renderWithProviders(
       <LayoutProvider>

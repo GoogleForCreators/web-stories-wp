@@ -730,7 +730,6 @@ class APIProviderFixture {
               pages: this._pages,
             },
             featured_media: 0,
-            featured_media_url: '',
             publisher_logo_url:
               'http://stories.local/wp-content/plugins/web-stories/assets/images/logo.png',
             permalink_template: 'http://stories3.local/stories/%pagename%/',
@@ -774,7 +773,6 @@ class APIProviderFixture {
               pages: this._pages,
             },
             featured_media: 0,
-            featured_media_url: '',
             publisher_logo_url:
               'http://stories .local/wp-content/plugins/web-stories/assets/images/logo.png',
             permalink_template: 'http://stories3.local/stories/%pagename%/',
