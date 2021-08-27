@@ -59,7 +59,6 @@ describe('Background Audio', () => {
 
       await expect(page).toMatch('audio.mp3');
       await expect(page).toMatchElement('button[aria-label="Play"]');
-      await expect(page).toMatchElement('button[aria-label="Remove file"]');
 
       await percySnapshot(page, 'Story Background Audio');
     });
@@ -86,7 +85,6 @@ describe('Background Audio', () => {
 
       await expect(page).toMatch('audio.mp3');
       await expect(page).toMatchElement('button[aria-label="Play"]');
-      await expect(page).toMatchElement('button[aria-label="Remove file"]');
     });
   });
 });
