@@ -77,7 +77,7 @@ export const RIGHT_CLICK_MENU_SHORTCUTS = {
   SEND_TO_BACK: {
     display: <StyledKbd>{prettifyShortcut('mod shift down')}</StyledKbd>,
     title: sprintf(
-      /* Translators: 1: Command/Carat keyboard key.*/
+      /* Translators: 1: Command/Caret keyboard key.*/
       _x(
         '%s Shift down',
         'The keyboard keys "Command" or "Caret", "Shift", and "down"',
@@ -89,10 +89,10 @@ export const RIGHT_CLICK_MENU_SHORTCUTS = {
   BRING_FORWARD: {
     display: <StyledKbd>{prettifyShortcut('mod up')}</StyledKbd>,
     title: sprintf(
-      /* Translators: 1: Command/Carat keyboard key.*/
+      /* Translators: 1: Command/Caret keyboard key.*/
       _x(
         '%s up',
-        'The keyboard keys "Command" or "Carat" and "up"',
+        'The keyboard keys "Command" or "Caret" and "up"',
         'web-stories'
       ),
       getKeyForOS('mod')
@@ -101,10 +101,10 @@ export const RIGHT_CLICK_MENU_SHORTCUTS = {
   BRING_TO_FRONT: {
     display: <StyledKbd>{prettifyShortcut('mod shift up')}</StyledKbd>,
     title: sprintf(
-      /* Translators: 1: Command/Carat keyboard key.*/
+      /* Translators: 1: Command/Caret keyboard key.*/
       _x(
         '%s Shift up',
-        'The keyboard keys "Command" or "Carat", "Shift", and "up"',
+        'The keyboard keys "Command" or "Caret", "Shift", and "up"',
         'web-stories'
       ),
       getKeyForOS('mod')
@@ -122,10 +122,10 @@ export const RIGHT_CLICK_MENU_SHORTCUTS = {
       </>
     ),
     title: sprintf(
-      /* Translators: 1: Alt keyboard key. 2: Command/Carat keyboard key */
+      /* Translators: 1: Alt keyboard key. 2: Command/Caret keyboard key */
       _x(
         '%1$s %2$s O',
-        'The keyboard keys "Alt", "Command" or "Carat", and "O"',
+        'The keyboard keys "Alt", "Command" or "Caret", and "O"',
         'web-stories'
       ),
       getKeyForOS('alt'),
@@ -140,10 +140,10 @@ export const RIGHT_CLICK_MENU_SHORTCUTS = {
       </>
     ),
     title: sprintf(
-      /* Translators: 1: Alt keyboard key. 2: Command/Carat keyboard key */
+      /* Translators: 1: Alt keyboard key. 2: Command/Caret keyboard key */
       _x(
         '%1$s %2$s P',
-        'The keyboard keys "Alt", "Command" or "Carat", and "P"',
+        'The keyboard keys "Alt", "Command" or "Caret", and "P"',
         'web-stories'
       ),
       getKeyForOS('alt'),
