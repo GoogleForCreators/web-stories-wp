@@ -230,7 +230,7 @@ function TextSetsPane({ paneRef }) {
       <TextSetsWrapper>
         {!filteredTextSets?.length && !areTextSetsLoading ? (
           <EmptyContentMessage>
-            {__('No text sets available.', 'web-stories')}
+            {__('No Text Sets available.', 'web-stories')}
           </EmptyContentMessage>
         ) : (
           <TextSets paneRef={paneRef} filteredTextSets={filteredTextSets} />
