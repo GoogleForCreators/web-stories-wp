@@ -39,6 +39,7 @@ const renderMediaElement = (resource, providerType, canEditMedia = true) => {
       pageContainer: document.body,
       nodesById: [],
     },
+    actions: {},
   };
   const storyContext = {
     state: {

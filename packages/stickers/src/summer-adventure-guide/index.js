@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { useContext } from '@web-stories-wp/react';
-
 /**
  * Internal dependencies
  */
-import HeaderContext from './context';
+import { default as SummerAdventurePlus } from './plus';
+import { default as SummerAdventureDashedTrail } from './dashedTrail';
+import { default as SummerAdventureTerrainMap } from './terrainMap';
+import { default as SummerAdventureShare } from './share';
 
-function useHeader() {
-  return useContext(HeaderContext);
-}
-
-// TODO: No remaining callers; remove.
-export default useHeader;
+export {
+  SummerAdventurePlus,
+  SummerAdventureDashedTrail,
+  SummerAdventureTerrainMap,
+  SummerAdventureShare,
+};

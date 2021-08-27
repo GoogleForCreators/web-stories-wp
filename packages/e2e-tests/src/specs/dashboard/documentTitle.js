@@ -29,8 +29,8 @@ describe('Document Title', () => {
       '[aria-label="Main dashboard navigation"]'
     );
 
-    await expect(page).toMatch('My Stories');
-    await expect(await page.title()).toStartWith('My Stories');
+    await expect(page).toMatchElement('h2', { text: 'Dashboard' });
+    await expect(await page.title()).toStartWith('Dashboard');
 
     await expect(dashboardNavigation).toClick('a', {
       text: 'Explore Templates',
