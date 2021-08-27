@@ -21,13 +21,16 @@ import { forwardRef, useCallback } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { themeHelpers } from '@web-stories-wp/design-system';
+import {
+  themeHelpers,
+  Icons,
+  Button,
+  BUTTON_VARIANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as CloseIcon } from '../../../icons/close.svg';
-import { ReactComponent as SearchIcon } from '../../../icons/search.svg';
 import { noop } from '../../../utils/noop';
 
 const SearchContainer = styled.div`
@@ -41,7 +44,6 @@ const inputIconStyles = css`
   justify-content: center;
   align-items: center;
   top: 50%;
-  height: 14px;
   width: 30px;
   padding: 0;
   margin: 0;
@@ -60,18 +62,14 @@ const inputIconStyles = css`
 const SearchIconContainer = styled.div`
   ${inputIconStyles}
   left: 0;
+  height: 28px;
 `;
 
-const ClearButton = styled.button`
-  ${inputIconStyles}
+const ClearButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
+  ${inputIconStyles};
   right: 0;
-  height: 100%;
+  height: 23px;
   opacity: 0.4;
-  cursor: pointer;
-
-  > svg {
-    height: 10px;
-  }
 `;
 
 const Input = styled.input.attrs({
@@ -143,11 +141,11 @@ const SearchInput = forwardRef(function SearchInput(
         {...rest}
       />
       <SearchIconContainer>
-        <SearchIcon />
+        <Icons.Magnifier />
       </SearchIconContainer>
       {value.trim().length > 0 && (
         <ClearButton onClick={() => onChange({ target: { value: '' } })}>
-          <CloseIcon />
+          <Icons.Cross />
         </ClearButton>
       )}
     </SearchContainer>
