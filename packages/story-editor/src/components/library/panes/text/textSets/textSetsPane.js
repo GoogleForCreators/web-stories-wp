@@ -82,7 +82,12 @@ const TextSetsWrapper = styled.div`
 `;
 
 function TextSetsPane({ paneRef }) {
-  const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
+  const { areTextSetsLoading, textSets } = useLibrary(
+    ({ state: { areTextSetsLoading, textSets } }) => ({
+      areTextSetsLoading,
+      textSets,
+    })
+  );
   const [showInUse, setShowInUse] = useState(false);
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
@@ -223,12 +228,12 @@ function TextSetsPane({ paneRef }) {
         />
       </FullWidthWrapper>
       <TextSetsWrapper>
-        {filteredTextSets?.length ? (
-          <TextSets paneRef={paneRef} filteredTextSets={filteredTextSets} />
-        ) : (
+        {!filteredTextSets?.length && !areTextSetsLoading ? (
           <EmptyContentMessage>
             {__('No text sets available.', 'web-stories')}
           </EmptyContentMessage>
+        ) : (
+          <TextSets paneRef={paneRef} filteredTextSets={filteredTextSets} />
         )}
       </TextSetsWrapper>
     </SectionContainer>

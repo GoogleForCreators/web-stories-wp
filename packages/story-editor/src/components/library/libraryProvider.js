@@ -46,6 +46,7 @@ const LIBRARY_TAB_IDS = new Set(
 function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA.id);
   const [textSets, setTextSets] = useState({});
+  const [areTextSetsLoading, setAreTextSetsLoading] = useState({});
   const [savedTemplates, setSavedTemplates] = useState(null);
   // The first page of templates to fetch is 1.
   const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(1);
@@ -105,6 +106,7 @@ function LibraryProvider({ children }) {
   const state = useMemo(
     () => ({
       state: {
+        areTextSetsLoading,
         tab,
         tabRefs,
         textSets,
@@ -124,6 +126,7 @@ function LibraryProvider({ children }) {
       },
     }),
     [
+      areTextSetsLoading,
       tab,
       tabRefs,
       textSets,
@@ -139,8 +142,10 @@ function LibraryProvider({ children }) {
   useEffect(() => {
     async function getTextSets() {
       const trackTiming = getTimeTracker('load_text_sets');
+      setAreTextSetsLoading(true);
       setTextSets(await loadTextSets());
       trackTiming();
+      setAreTextSetsLoading(false);
     }
     // if text sets have not been loaded but are needed fetch dynamically imported text sets
     if (tab === TEXT.id && !Object.keys(textSets).length) {
