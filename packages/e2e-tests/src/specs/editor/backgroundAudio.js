@@ -51,11 +51,13 @@ describe('Background Audio', () => {
         visible: true,
       });
 
-      const fileName = await uploadFile('audio.mp3', false);
+      const fileName = await uploadFile('audio.mp3');
       const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
       uploadedFiles.push(fileNameNoExt);
 
       await expect(page).toClick('button', { text: 'Select audio file' });
+
+      await expect(page).toMatch('audio.mp3');
       await expect(page).toMatchElement('button[aria-label="Play"]');
       await expect(page).toMatchElement('button[aria-label="Remove file"]');
 
@@ -76,11 +78,13 @@ describe('Background Audio', () => {
         visible: true,
       });
 
-      const fileName = await uploadFile('audio.mp3', false);
+      const fileName = await uploadFile('audio.mp3');
       const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
       uploadedFiles.push(fileNameNoExt);
 
       await expect(page).toClick('button', { text: 'Select audio file' });
+
+      await expect(page).toMatch('audio.mp3');
       await expect(page).toMatchElement('button[aria-label="Play"]');
       await expect(page).toMatchElement('button[aria-label="Remove file"]');
     });

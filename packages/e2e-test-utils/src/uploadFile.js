@@ -22,11 +22,6 @@ import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
 
 /**
- * Internal dependencies
- */
-import getFileName from './getFileName';
-
-/**
  * Uploads a file to the Media Library, and awaits its upload.
  *
  * The file should reside in packages/e2e-tests/src/assets/.
@@ -45,7 +40,6 @@ async function uploadFile(file, checkUpload = true) {
 
   // Prefixing makes it easier to identify files from tests later on.
   const newFileName = `e2e-${file}`;
-  const newBaseName = getFileName(newFileName);
   const tmpFileName = join(tmpdir(), newFileName);
   copyFileSync(testMediaPath, tmpFileName);
 
@@ -56,7 +50,9 @@ async function uploadFile(file, checkUpload = true) {
 
   // Upload successful!
   if (checkUpload) {
-    await page.waitForSelector(`.media-modal li[aria-label="${newBaseName}"]`);
+    await page.waitForXPath(
+      `//div[ contains( @class, "filename" ) and contains( text(), "${newFileName}" ) ]`
+    );
   }
   await page.setDefaultTimeout(3000);
 
