@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { toUTCDate, toDate, getOptions } from '@web-stories-wp/date';
+import { toUTCDate, toDate, getSettings } from '@web-stories-wp/date';
 /**
  * Internal dependencies
  */
@@ -50,7 +50,7 @@ export default function reshapeTemplateObject(
     slug,
     postersByPage,
     centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
-    creationDate: toDate(creationDate, getOptions()),
+    creationDate: toDate(creationDate, getSettings()),
     status: 'template',
     modified: toUTCDate(modified),
     isLocal,

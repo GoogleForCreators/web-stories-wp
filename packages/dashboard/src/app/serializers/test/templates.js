@@ -72,7 +72,7 @@ describe('reshapeTemplateObject', () => {
         },
       },
       centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=1&isLocal=false`,
-      creationDate: toDate('2020-03-26T20:57:24.000Z'),
+      creationDate: toDate('2020-03-27T03:57:24.000Z'),
       status: 'template',
       modified: toDate('2020-03-26T20:57:24.000Z'),
     });
