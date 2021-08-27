@@ -41,6 +41,7 @@ const defaultProviderValues = {
   config: {
     userId: 8675301,
     allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
+    cdnUrl: 'examplecdn.com',
   },
   api: {},
 };
