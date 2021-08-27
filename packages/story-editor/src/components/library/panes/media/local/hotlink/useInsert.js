@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import { useCallback } from '@web-stories-wp/react';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import { getFirstFrameOfVideo } from '@web-stories-wp/media';
 
@@ -67,53 +67,48 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
 
   const { uploadVideoPoster } = useUploadVideoFrame({});
 
-  const [hotlinkData, setHotlinkData] = useState(null);
+  const insertMedia = useCallback(
+    async (hotlinkData) => {
+      const {
+        ext,
+        type,
+        mime_type: mimeType,
+        file_name: originalFileName,
+      } = hotlinkData;
 
-  const insertMedia = useCallback(async () => {
-    const {
-      ext,
-      type,
-      mime_type: mimeType,
-      file_name: originalFileName,
-    } = hotlinkData;
-
-    try {
-      const resource = await getResourceFromUrl(link, type);
-      resource.mimeType = mimeType;
-      if ('video' === type && hasUploadMediaAction) {
-        // Remove the extension from the filename for poster.
-        const fileName = getPosterName(originalFileName.replace(`.${ext}`, ''));
-        const posterFile = await getFirstFrameOfVideo(link);
-        const posterData = await uploadVideoPoster(0, fileName, posterFile);
-        resource.poster = posterData.poster;
-        resource.posterId = posterData.posterId;
+      try {
+        const resource = await getResourceFromUrl(link, type);
+        resource.mimeType = mimeType;
+        if ('video' === type && hasUploadMediaAction) {
+          // Remove the extension from the filename for poster.
+          const fileName = getPosterName(
+            originalFileName.replace(`.${ext}`, '')
+          );
+          const posterFile = await getFirstFrameOfVideo(link);
+          const posterData = await uploadVideoPoster(0, fileName, posterFile);
+          resource.poster = posterData.poster;
+          resource.posterId = posterData.posterId;
+        }
+        insertElement(type, {
+          resource,
+        });
+        setErrorMsg(null);
+        setLink('');
+        onClose();
+      } catch (e) {
+        setErrorMsg(getErrorMessage());
       }
-      insertElement(type, {
-        resource,
-      });
-      setErrorMsg(null);
-      setLink('');
-      setHotlinkData(null);
-      onClose();
-    } catch (e) {
-      setErrorMsg(getErrorMessage());
-    }
-  }, [
-    hasUploadMediaAction,
-    hotlinkData,
-    insertElement,
-    link,
-    onClose,
-    setErrorMsg,
-    setLink,
-    uploadVideoPoster,
-  ]);
-
-  useEffect(() => {
-    if (hotlinkData) {
-      insertMedia();
-    }
-  }, [hotlinkData, insertMedia]);
+    },
+    [
+      hasUploadMediaAction,
+      insertElement,
+      link,
+      onClose,
+      setErrorMsg,
+      setLink,
+      uploadVideoPoster,
+    ]
+  );
 
   const onInsert = useCallback(() => {
     if (!isValidUrl(link)) {
@@ -122,7 +117,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     }
     getHotlinkInfo(link)
       .then((hotlinkInfo) => {
-        setHotlinkData(hotlinkInfo);
+        insertMedia(hotlinkInfo);
       })
       .catch(({ code }) => {
         let description = __(
@@ -137,9 +132,8 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
           );
         }
         setErrorMsg(getErrorMessage(code, description));
-        setHotlinkData(null);
       });
-  }, [allowedFileTypes, link, getHotlinkInfo, setErrorMsg]);
+  }, [allowedFileTypes, link, getHotlinkInfo, setErrorMsg, insertMedia]);
 
   return onInsert;
 }
