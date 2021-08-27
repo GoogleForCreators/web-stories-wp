@@ -25,7 +25,7 @@ import { APP_ROUTES } from '../../../constants';
 import reshapeTemplateObject from '../templates';
 
 describe('reshapeTemplateObject', () => {
-  it('should return object', () => {
+  it('should return the template object', () => {
     const responseObj = {
       id: 1,
       slug: 'template-1-slug',
@@ -60,7 +60,7 @@ describe('reshapeTemplateObject', () => {
     });
   });
 
-  it('should not return an object', () => {
+  it('should not return the template object', () => {
     const reshapedObj = reshapeTemplateObject(
       {
         pages: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
