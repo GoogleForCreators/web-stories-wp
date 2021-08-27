@@ -24,7 +24,6 @@ import {
   useMemo,
   useRef,
   useState,
-  useDebouncedCallback,
 } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { useGridViewKeys } from '@web-stories-wp/design-system';
@@ -38,10 +37,6 @@ import {
   Thumbnails,
   DisplayPage,
 } from './components';
-
-function getIsThreeRows() {
-  return window.innerWidth < 1600;
-}
 
 function getPosterAltCopy(pageNumber) {
   return sprintf(
@@ -57,8 +52,6 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
   const containerRef = useRef();
   const gridRef = useRef();
   const posterRefs = useRef({});
-
-  const [isThreeRows, setIsThreeRows] = useState(getIsThreeRows());
 
   const handleMiniCardClick = useCallback((index) => {
     setSelectedGridItemIndex(index);
@@ -85,16 +78,6 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
     currentItemId: focusedGridItemIndex,
     items: galleryPosters,
   });
-
-  const debouncedSetIsThreeRows = useDebouncedCallback(() => {
-    setIsThreeRows(getIsThreeRows());
-  }, 100);
-  useEffect(() => {
-    window.addEventListener('resize', debouncedSetIsThreeRows);
-    return () => {
-      window.removeEventListener('resize', debouncedSetIsThreeRows);
-    };
-  }, [debouncedSetIsThreeRows]);
 
   const GalleryItems = useMemo(() => {
     return galleryPosters.map((poster, index) => {
@@ -163,7 +146,6 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
           __('Active Page Preview - Page %s', 'web-stories'),
           selectedGridItemIndex + 1
         )}
-        $isThreeRows={isThreeRows}
       >
         {galleryPosters[selectedGridItemIndex] && (
           <picture>

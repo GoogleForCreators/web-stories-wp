@@ -42,15 +42,19 @@ export const GalleryContainer = styled.div`
   align-items: start;
 `;
 
-export const DisplayPage = styled.div(
-  ({ $isThreeRows }) => css`
-    overflow: hidden;
-    width: ${$isThreeRows ? '45.2%' : '38.6%'};
-    margin-left: ${$isThreeRows ? '2.4%' : '2.1%'};
+export const DisplayPage = styled.div`
+  overflow: hidden;
+  width: 38.6%;
+  margin-left: 2.1%;
 
-    ${pictureCss}
-  `
-);
+  ${pictureCss}
+
+  @media screen and (min-width: 1600px) {
+    width: 45.2%;
+    margin-left: 2.4%;
+  }
+`;
+
 DisplayPage.propTypes = {
   $isThreeRows: PropTypes.bool,
 };
@@ -66,7 +70,7 @@ export const Thumbnails = styled.div`
 
   @media screen and (min-width: 1600px) {
     width: 59.3%;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 `;
 
