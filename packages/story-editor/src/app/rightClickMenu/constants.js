@@ -68,7 +68,7 @@ export const RIGHT_CLICK_MENU_SHORTCUTS = {
       /* Translators: 1: Command/Caret keyboard key.*/
       _x(
         '%s down',
-        'The keyboard keys "Command" or "Carat" and "down"',
+        'The keyboard keys "Command" or "Caret" and "down"',
         'web-stories'
       ),
       getKeyForOS('mod')
