@@ -1,11 +1,7 @@
 {
-  "version": 31,
-  "current": null,
-  "selection": [],
-  "story": {},
+  "version": 33,
   "pages": [
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -32,7 +28,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Grayscale photography of woman's face",
             "alt": "Grayscale photography of woman's face",
             "sizes": [],
             "local": false,
@@ -58,7 +53,6 @@
             "width": 1509,
             "height": 1443,
             "id": 0,
-            "title": "Green star on transparent background",
             "alt": "Green star on transparent background",
             "sizes": [],
             "local": false,
@@ -330,6 +324,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "0e3c06a7-cb32-40e0-a08f-961bdc5ea790",
@@ -376,7 +371,6 @@
       "pageTemplateType": "cover"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -403,7 +397,6 @@
             "width": 1080,
             "height": 1631,
             "id": 0,
-            "title": "woman in black and white scarf and black and white scarf photo",
             "alt": "woman in black and white scarf and black and white scarf photo",
             "sizes": [],
             "local": false,
@@ -483,6 +476,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "265063ed-47cf-421e-a6fe-7bf2d1d42c84",
@@ -515,7 +509,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -542,7 +535,6 @@
             "width": 1080,
             "height": 755,
             "id": 0,
-            "title": "Woman performing on stage with closed eyes and holding a microphone photo",
             "alt": "Woman performing on stage with closed eyes and holding a microphone photo",
             "sizes": [],
             "local": false,
@@ -568,7 +560,6 @@
             "width": 1509,
             "height": 1443,
             "id": 0,
-            "title": "Green star on transparent background",
             "alt": "Green star on transparent background",
             "sizes": [],
             "local": false,
@@ -778,6 +769,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -801,7 +793,6 @@
       "pageTemplateType": "section"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -828,7 +819,6 @@
             "width": 1080,
             "height": 720,
             "id": 0,
-            "title": "Woman in White Short-sleeved Top",
             "alt": "Woman in White Short-sleeved Top",
             "sizes": [],
             "local": false,
@@ -1009,6 +999,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "e5c3058b-a8af-4f8d-a1cd-11531e96f816",
@@ -1057,7 +1048,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1084,7 +1074,6 @@
             "width": 1080,
             "height": 1619,
             "id": 0,
-            "title": "Woman holding microphone on stage",
             "alt": "Woman holding microphone on stage",
             "sizes": [],
             "local": false,
@@ -1267,6 +1256,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "0b871b36-af1d-41f9-bcc7-453df792f9d6",
@@ -1307,7 +1297,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1334,7 +1323,6 @@
             "width": 1080,
             "height": 1619,
             "id": 0,
-            "title": "Woman wearing orange button collared top near red and yellow flowers",
             "alt": "Woman wearing orange button collared top near red and yellow flowers",
             "sizes": [],
             "local": false,
@@ -1517,6 +1505,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "0cc9717b-96c2-4357-82d6-0c85cdd86950",
@@ -1557,7 +1546,6 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1584,7 +1572,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Grayscale photo of a woman wearing white off-shoulder shirt photo",
             "alt": "Grayscale photo of a woman wearing white off-shoulder shirt photo",
             "sizes": [],
             "local": false,
@@ -1767,6 +1754,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "c80b1ee5-dc45-4085-b827-7dda48c48fb9",
@@ -1807,7 +1795,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1834,7 +1821,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Woman singing on focus photo",
             "alt": "Woman singing on focus photo",
             "sizes": [],
             "local": false,
@@ -1860,7 +1846,6 @@
             "width": 1509,
             "height": 1443,
             "id": 0,
-            "title": "Green star on transparent background",
             "alt": "Green star on transparent background",
             "sizes": [],
             "local": false,
@@ -2070,6 +2055,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -2093,7 +2079,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2120,7 +2105,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Close-Up Photo of Person Wearing Brown Bonnet",
             "alt": "Close-Up Photo of Person Wearing Brown Bonnet",
             "sizes": [],
             "local": false,
@@ -2303,6 +2287,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "ca056e5c-64e7-4f27-b8f6-b544c2fb4f34",
@@ -2351,7 +2336,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2378,7 +2362,6 @@
             "width": 1080,
             "height": 1617,
             "id": 0,
-            "title": "Woman Posing While A Person Is Operating a Camera",
             "alt": "Woman Posing While A Person Is Operating a Camera",
             "sizes": [],
             "local": false,
@@ -2561,6 +2544,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "8c1f7398-5897-4b68-9899-1433d778446d",
@@ -2601,7 +2585,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2628,7 +2611,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Monochrome Photo of Woman Sitting in Vehicle",
             "alt": "Monochrome Photo of Woman Sitting in Vehicle",
             "sizes": [],
             "local": false,
@@ -2811,6 +2793,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "176f6589-4159-4a2c-a566-35ba087918c2",
@@ -2851,7 +2834,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2878,7 +2860,6 @@
             "width": 1080,
             "height": 1815,
             "id": 0,
-            "title": "Two Women Sitting on Ottoman",
             "alt": "Two Women Sitting on Ottoman",
             "sizes": [],
             "local": false,
@@ -3061,6 +3042,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "f35a7e0b-ce9b-45c2-8511-f5c297b36b0d",
@@ -3101,7 +3083,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3128,7 +3109,6 @@
             "width": 1080,
             "height": 720,
             "id": 0,
-            "title": "Man Holding Camera and Woman Playing Violin",
             "alt": "Man Holding Camera and Woman Playing Violin",
             "sizes": [],
             "local": false,
@@ -3311,6 +3291,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "4e44704e-2689-4f21-9194-56ca5e111d17",
@@ -3351,7 +3332,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3385,7 +3365,6 @@
             "width": 1509,
             "height": 1443,
             "id": 0,
-            "title": "Black star shape",
             "alt": "Black star shape",
             "sizes": [],
             "local": false,
@@ -3647,7 +3626,6 @@
             "width": 480,
             "height": 720,
             "id": 0,
-            "title": "Man Playing Jazz Guitar",
             "alt": "Man Playing Jazz Guitar",
             "sizes": [],
             "local": false,
@@ -3845,7 +3823,6 @@
             "width": 480,
             "height": 320,
             "id": 0,
-            "title": "Two Women Laying On Bed",
             "alt": "Two Women Laying On Bed",
             "sizes": [],
             "local": false,
@@ -3864,6 +3841,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "cb189374-11b0-4356-9c4c-a4a99c972f18",
@@ -3953,5 +3931,8 @@
       "id": "88e3ec73-3672-4e03-9e49-3c94ce60ee5a",
       "pageTemplateType": "list"
     }
-  ]
+  ],
+  "current": null,
+  "selection": [],
+  "story": {}
 }

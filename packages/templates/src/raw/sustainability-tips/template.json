@@ -1,8 +1,5 @@
 {
-  "version": 31,
-  "current": null,
-  "selection": [],
-  "story": {},
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -38,7 +35,6 @@
             "width": 1260,
             "height": 720,
             "id": 0,
-            "title": "Vector Illustration Of Save The Planet Concept",
             "alt": "Vector Illustration Of Save The Planet Concept",
             "sizes": [],
             "local": false,
@@ -355,7 +351,6 @@
             "width": 967,
             "height": 720,
             "id": 0,
-            "title": "Woman Cycling High-Res Vector Graphic",
             "alt": "Woman Cycling High-Res Vector Graphic",
             "sizes": [],
             "local": false,
@@ -577,7 +572,6 @@
             "width": 1080,
             "height": 2220,
             "id": 0,
-            "title": "Train During Golden Hour",
             "alt": "Train During Golden Hour",
             "sizes": [],
             "local": false,
@@ -743,7 +737,6 @@
             "width": 562,
             "height": 720,
             "id": 0,
-            "title": "People Traveling Set High-Res Vector Graphic",
             "alt": "People Traveling Set High-Res Vector Graphic",
             "sizes": [],
             "local": false,
@@ -965,7 +958,6 @@
             "width": 1080,
             "height": 2220,
             "id": 0,
-            "title": "Man standing holding luggage during daytime",
             "alt": "Man standing holding luggage during daytime",
             "sizes": [],
             "local": false,
@@ -1132,7 +1124,6 @@
             "width": 612,
             "height": 720,
             "id": 0,
-            "title": "Vector Illustration Of Recycling Concept Flat Modern Design",
             "alt": "Vector Illustration Of Recycling Concept Flat Modern Design",
             "sizes": [],
             "local": false,
@@ -1356,7 +1347,6 @@
             "width": 1080,
             "height": 2220,
             "id": 0,
-            "title": "Person holding white plastic bag",
             "alt": "Person holding white plastic bag",
             "sizes": [],
             "local": false,
@@ -1523,7 +1513,6 @@
             "width": 610,
             "height": 720,
             "id": 0,
-            "title": "Paper Bag Full Of Grocery High-Res Vector Graphic",
             "alt": "Paper Bag Full Of Grocery High-Res Vector Graphic",
             "sizes": [],
             "local": false,
@@ -1745,7 +1734,6 @@
             "width": 1080,
             "height": 2220,
             "id": 0,
-            "title": "Person Holding Almonds",
             "alt": "Person Holding Almonds",
             "sizes": [],
             "local": false,
@@ -1912,7 +1900,6 @@
             "width": 648,
             "height": 721,
             "id": 0,
-            "title": "Fast Food Flat Icons Set High-Res Vector Graphic",
             "alt": "Fast Food Flat Icons Set High-Res Vector Graphic",
             "sizes": [],
             "local": false,
@@ -2126,7 +2113,6 @@
             "width": 1080,
             "height": 2220,
             "id": 0,
-            "title": "Person holding yellow and green gardening shovel",
             "alt": "Person holding yellow and green gardening shovel",
             "sizes": [],
             "local": false,
@@ -2518,7 +2504,6 @@
             "width": 690,
             "height": 720,
             "id": 0,
-            "title": "Illustration of Windmills",
             "alt": "Illustration of Windmills",
             "sizes": [],
             "local": false,
@@ -2556,5 +2541,8 @@
       ],
       "pageTemplateType": ""
     }
-  ]
+  ],
+  "current": null,
+  "selection": [],
+  "story": {}
 }

@@ -1,11 +1,7 @@
 {
-  "version": 31,
-  "current": null,
-  "selection": [],
-  "story": {},
+  "version": 33,
   "pages": [
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -32,7 +28,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Two Men Playing Basketball",
             "alt": "Two Men Playing Basketball",
             "sizes": [],
             "local": false,
@@ -262,6 +257,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "d737e6c0-c774-4fcc-90c0-8a8f7ec0c9c9",
@@ -318,7 +314,6 @@
       "pageTemplateType": "Cover"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -345,7 +340,6 @@
             "width": 1080,
             "height": 1106,
             "id": 0,
-            "title": "People watching live NBA game at Bankers life Fieldhouse",
             "alt": "People watching live NBA game at Bankers life Fieldhouse",
             "sizes": [],
             "local": false,
@@ -560,6 +554,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "f2cd944f-9dc0-4576-b2c7-4d2c359ee41d",
@@ -592,7 +587,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -619,7 +613,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Man in Gray Sleeveless Shirt Carrying White and Brown Spalding Basketball",
             "alt": "Man in Gray Sleeveless Shirt Carrying White and Brown Spalding Basketball",
             "sizes": [],
             "local": false,
@@ -702,6 +695,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -725,7 +719,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -752,7 +745,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Men's Green and White Basketball Jersey Shirt",
             "alt": "Men's Green and White Basketball Jersey Shirt",
             "sizes": [],
             "local": false,
@@ -1169,6 +1161,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "104a548b-4b45-434a-ab40-b93b39ed6f9f",
@@ -1217,7 +1210,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1244,7 +1236,6 @@
             "width": 1080,
             "height": 869,
             "id": 0,
-            "title": "North Texas Agricultural College basketball team;",
             "alt": "North Texas Agricultural College basketball team;",
             "sizes": [],
             "local": false,
@@ -1403,7 +1394,6 @@
             "width": 1080,
             "height": 869,
             "id": 0,
-            "title": "North Texas Agricultural College basketball team;",
             "alt": "North Texas Agricultural College basketball team;",
             "sizes": [],
             "local": false,
@@ -1423,6 +1413,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "81380f20-5ab9-4fa6-9c00-dea13762f561",
@@ -1454,7 +1445,6 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1481,7 +1471,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Basketball court arena photo",
             "alt": "Basketball court arena photo",
             "sizes": [],
             "local": false,
@@ -1899,6 +1888,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "6265ccfc-37a4-4b53-9d61-580a15833cef",
@@ -1947,7 +1937,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1965,7 +1954,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Basketball court arena photo",
             "alt": "Basketball court arena photo",
             "sizes": [],
             "local": false,
@@ -2689,6 +2677,7 @@
           "y": 542
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "a2a5bc9f-ae08-4064-ac41-805d001541f9",
@@ -2776,7 +2765,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2803,7 +2791,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Man Playing Basketball",
             "alt": "Man Playing Basketball",
             "sizes": [],
             "local": false,
@@ -2961,7 +2948,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Man Playing Basketball",
             "alt": "Man Playing Basketball",
             "sizes": [],
             "local": false,
@@ -2981,6 +2967,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "7fc3b17c-b342-4fcc-9b16-0aa25d4b6066",
@@ -3012,7 +2999,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3039,7 +3025,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Photo Of Man Doing A Dunk",
             "alt": "Photo Of Man Doing A Dunk",
             "sizes": [],
             "local": false,
@@ -3457,6 +3442,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "568e08b0-0e16-4cac-bb87-e9d81dc6eb40",
@@ -3505,7 +3491,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3532,7 +3517,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Photo Of Man Doing Dunk",
             "alt": "Photo Of Man Doing Dunk",
             "sizes": [],
             "local": false,
@@ -3691,7 +3675,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Photo Of Man Doing Dunk",
             "alt": "Photo Of Man Doing Dunk",
             "sizes": [],
             "local": false,
@@ -3711,6 +3694,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "112b6147-a6f1-430a-bbd0-e190d53a5f14",
@@ -3742,7 +3726,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3776,7 +3759,6 @@
             "width": 480,
             "height": 320,
             "id": 0,
-            "title": "Black Haired Man Wearing Black Sleeveless Shirt and Black Shorts",
             "alt": "Black Haired Man Wearing Black Sleeveless Shirt and Black Shorts",
             "sizes": [],
             "local": false,
@@ -3810,7 +3792,6 @@
             "width": 480,
             "height": 320,
             "id": 0,
-            "title": "Basketball court photo",
             "alt": "Basketball court photo",
             "sizes": [],
             "local": false,
@@ -3845,7 +3826,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Man in Gray Sleeveless Shirt Carrying White and Brown Spalding Basketball",
             "alt": "Man in Gray Sleeveless Shirt Carrying White and Brown Spalding Basketball",
             "sizes": [],
             "local": false,
@@ -4197,6 +4177,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "fc54b07b-fa3f-4e04-abf0-e75ab6901658",
@@ -4237,7 +4218,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -4403,7 +4383,6 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Football Player Holding Football",
             "alt": "Football Player Holding Football",
             "sizes": [],
             "local": false,
@@ -4503,6 +4482,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "7ed8d243-0bbd-4097-a174-357a5a54cd7f",
@@ -4533,5 +4513,8 @@
       "id": "136cca74-5131-4053-a4e2-003b582a3306",
       "pageTemplateType": ""
     }
-  ]
+  ],
+  "current": null,
+  "selection": [],
+  "story": {}
 }

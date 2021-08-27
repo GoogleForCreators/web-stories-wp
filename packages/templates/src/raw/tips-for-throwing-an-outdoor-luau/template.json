@@ -1,8 +1,5 @@
 {
-  "version": 31,
-  "current": null,
-  "selection": [],
-  "story": {},
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -31,7 +28,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Woman in gray tank top sitting on chair",
             "alt": "Woman in gray tank top sitting on chair",
             "sizes": [],
             "local": false,
@@ -413,7 +409,6 @@
             "id": 0,
             "length": 16,
             "lengthFormatted": "0:16",
-            "title": "Smiling man reporting by the sea",
             "alt": "Smiling man reporting by the sea",
             "local": false,
             "isPlaceholder": false,
@@ -673,7 +668,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Group of people setting up campfire photo",
             "alt": "Group of people setting up campfire photo",
             "sizes": [],
             "local": false,
@@ -898,7 +892,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Group of women in forest drinking",
             "alt": "Group of women in forest drinking",
             "sizes": [],
             "local": false,
@@ -1086,7 +1079,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Brown wooden fork, spoon, and knife on textile",
             "alt": "Brown wooden fork, spoon, and knife on textile",
             "sizes": [],
             "local": false,
@@ -1326,7 +1318,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Brown wooden cross with rope",
             "alt": "Brown wooden cross with rope",
             "sizes": [],
             "local": false,
@@ -1577,7 +1568,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Orange and green food in clear plastic container",
             "alt": "Orange and green food in clear plastic container",
             "sizes": [],
             "local": false,
@@ -1828,7 +1818,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Clear Glass Jar on Block",
             "alt": "Clear Glass Jar on Block",
             "sizes": [],
             "local": false,
@@ -2074,7 +2063,6 @@
             "id": 0,
             "length": 16,
             "lengthFormatted": "0:16",
-            "title": "Smiling man reporting by the sea",
             "alt": "Smiling man reporting by the sea",
             "local": false,
             "isPlaceholder": false,
@@ -2187,7 +2175,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Woman Soaking on the Swimming Pool",
             "alt": "Woman Soaking on the Swimming Pool",
             "sizes": [],
             "local": false,
@@ -2611,7 +2598,6 @@
             "width": 480,
             "height": 598,
             "id": 0,
-            "title": "Cozy light room with children party or game decoration",
             "alt": "Cozy light room with children party or game decoration",
             "sizes": [],
             "local": false,
@@ -2644,7 +2630,6 @@
             "width": 480,
             "height": 598,
             "id": 0,
-            "title": "Laughing Women",
             "alt": "Laughing Women",
             "sizes": [],
             "local": false,
@@ -2790,5 +2775,8 @@
       "id": "47246645-2015-49a3-96ff-e8f35420e654",
       "pageTemplateType": "list"
     }
-  ]
+  ],
+  "current": null,
+  "selection": [],
+  "story": {}
 }

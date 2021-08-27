@@ -1,11 +1,7 @@
 {
-  "version": 31,
-  "current": null,
-  "selection": [],
-  "story": {},
+  "version": 33,
   "pages": [
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -291,7 +287,6 @@
             "width": 720,
             "height": 480,
             "id": 0,
-            "title": "Woman Wearing Gray Notch Lapel Suit Jacket",
             "alt": "Woman Wearing Gray Notch Lapel Suit Jacket",
             "sizes": [],
             "local": false,
@@ -335,7 +330,6 @@
             "width": 720,
             "height": 494,
             "id": 0,
-            "title": "Photo Of Man Wearing Black Eyeglasses",
             "alt": "Photo Of Man Wearing Black Eyeglasses",
             "sizes": [],
             "local": false,
@@ -370,7 +364,6 @@
             "width": 720,
             "height": 480,
             "id": 0,
-            "title": "Man Standing Near Building White Black Turtleneck Shirt",
             "alt": "Man Standing Near Building White Black Turtleneck Shirt",
             "sizes": [],
             "local": false,
@@ -381,6 +374,7 @@
           }
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "6573a341-ffc9-4ecd-b3de-eafd0df1b58f",
@@ -438,7 +432,6 @@
       "pageTemplateType": "cover"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -572,7 +565,6 @@
             "width": 720,
             "height": 480,
             "id": 0,
-            "title": "Selective Focus Photography of Child's Hand",
             "alt": "Selective Focus Photography of Child's Hand",
             "sizes": [],
             "local": false,
@@ -592,6 +584,7 @@
           "id": "a60dfcfc-8cbf-4d6f-92e7-5f9711eeca87"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "1a95960f-2b5e-4b3b-a264-6acbc3ef29dc",
@@ -608,7 +601,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -635,7 +627,6 @@
             "width": 1080,
             "height": 741,
             "id": 0,
-            "title": "Photo Of Man Wearing Black Eyeglasses",
             "alt": "Photo Of Man Wearing Black Eyeglasses",
             "sizes": [],
             "local": false,
@@ -787,6 +778,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "776b0ec3-fee4-4e51-ac40-0bb0b9c17d85",
@@ -819,7 +811,6 @@
       "pageTemplateType": "quote"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -846,7 +837,6 @@
             "width": 1080,
             "height": 720,
             "id": 0,
-            "title": "Girl sitting using smartphone photo",
             "alt": "Girl sitting using smartphone photo",
             "sizes": [],
             "local": false,
@@ -1075,6 +1065,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "4293fe58-164e-4172-abea-7b7cc51e7b96",
@@ -1107,7 +1098,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1134,7 +1124,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Woman in white robe sitting on black office rolling chair photo",
             "alt": "Woman in white robe sitting on black office rolling chair photo",
             "sizes": [],
             "local": false,
@@ -1363,6 +1352,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "826ea8cc-4a18-42ec-833d-89d9df40278d",
@@ -1395,7 +1385,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1445,7 +1434,6 @@
             "width": 720,
             "height": 480,
             "id": 0,
-            "title": "Green leaf plants beside white house photo",
             "alt": "Green leaf plants beside white house photo",
             "sizes": [],
             "local": false,
@@ -1627,7 +1615,6 @@
             "width": 720,
             "height": 480,
             "id": 0,
-            "title": "Silver microscope photo",
             "alt": "Silver microscope photo",
             "sizes": [],
             "local": false,
@@ -1710,6 +1697,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "6158b60f-c8b2-47bf-b7d1-fabca2dd2033",
@@ -1730,7 +1718,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1757,7 +1744,6 @@
             "width": 1080,
             "height": 1350,
             "id": 0,
-            "title": "Photo of Woman Wearing Headscarf",
             "alt": "Photo of Woman Wearing Headscarf",
             "sizes": [],
             "local": false,
@@ -1908,6 +1894,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "dd21f4e4-ecc1-441b-9b27-2ce2c4f3aa2f",
@@ -1940,7 +1927,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1967,7 +1953,6 @@
             "width": 1080,
             "height": 720,
             "id": 0,
-            "title": "Children holding hands standing on grasses photo",
             "alt": "Children holding hands standing on grasses photo",
             "sizes": [],
             "local": false,
@@ -2196,6 +2181,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 227, "g": 227, "b": 227 } },
       "type": "page",
@@ -2219,7 +2205,6 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2246,7 +2231,6 @@
             "width": 1080,
             "height": 721,
             "id": 0,
-            "title": "Man in beige blazer holding tablet computer",
             "alt": "Man in beige blazer holding tablet computer",
             "sizes": [],
             "local": false,
@@ -2474,6 +2458,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 227, "g": 227, "b": 227 } },
       "type": "page",
@@ -2497,7 +2482,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2547,7 +2531,6 @@
             "width": 720,
             "height": 479,
             "id": 0,
-            "title": "Boy in green shirt",
             "alt": "Boy in green shirt",
             "sizes": [],
             "local": false,
@@ -2729,7 +2712,6 @@
             "width": 720,
             "height": 1078,
             "id": 0,
-            "title": "Man and Woman Sitting Beside Table",
             "alt": "Man and Woman Sitting Beside Table",
             "sizes": [],
             "local": false,
@@ -2811,6 +2793,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "f744a5bf-2b0c-4b9d-9c0c-17ca5056056b",
@@ -2831,7 +2814,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2947,7 +2929,6 @@
             "width": 480,
             "height": 320,
             "id": 0,
-            "title": "Group of people taking photo",
             "alt": "Group of people taking photo",
             "sizes": [],
             "local": false,
@@ -3076,7 +3057,6 @@
             "width": 480,
             "height": 320,
             "id": 0,
-            "title": "Woman sitting on gray chair while writing on table",
             "alt": "Woman sitting on gray chair while writing on table",
             "sizes": [],
             "local": false,
@@ -3172,6 +3152,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "128b2528-636f-45a9-9524-ac15276cde85",
@@ -3198,5 +3179,8 @@
       },
       "pageTemplateType": "list"
     }
-  ]
+  ],
+  "current": null,
+  "selection": [],
+  "story": {}
 }

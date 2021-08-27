@@ -1,8 +1,5 @@
 {
-  "version": 31,
-  "current": null,
-  "selection": [],
-  "story": {},
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -30,7 +27,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Photo of architecture, coin operated binoculars, downtown",
             "alt": "Photo of architecture, coin operated binoculars, downtown",
             "sizes": [],
             "local": false,
@@ -266,7 +262,6 @@
             "id": 0,
             "length": 9,
             "lengthFormatted": "0:09",
-            "title": "Stock video of a woman speaking",
             "alt": "Stock video of a woman speaking",
             "sizes": [],
             "local": false,
@@ -478,7 +473,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Person touching a cup of coffee and a plate with food",
             "alt": "Person touching a cup of coffee and a plate with food",
             "sizes": [],
             "local": false,
@@ -703,7 +697,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -721,7 +714,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Open brown wooden french door",
             "alt": "Open brown wooden french door",
             "sizes": [],
             "local": false,
@@ -1051,6 +1043,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "0aa8f0fb-3edb-4567-9c74-35d980a0d4fe",
@@ -1127,7 +1120,6 @@
             "id": 0,
             "length": 9,
             "lengthFormatted": "0:09",
-            "title": "Stock video of a woman speaking",
             "alt": "Stock video of a woman speaking",
             "sizes": [],
             "local": false,
@@ -1348,7 +1340,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1366,7 +1357,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Gray concrete buildings beside trees at daytime photo in Central Park, NYC",
             "alt": "Gray concrete buildings beside trees at daytime photo in Central Park, NYC",
             "sizes": [],
             "local": false,
@@ -1697,6 +1687,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "5b44d55a-1df4-4e5e-8986-805712926d28",
@@ -1743,7 +1734,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1761,7 +1751,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "New York City Cityscape Photo",
             "alt": "New York City Cityscape Photo",
             "sizes": [],
             "local": false,
@@ -2093,6 +2082,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "3bbde680-7180-4f34-ba83-6720ceef5d80",
@@ -2158,7 +2148,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Woman in black jacket carrying backpack with tousled hair walking on the street at night",
             "alt": "Woman in black jacket carrying backpack with tousled hair walking on the street at night",
             "sizes": [],
             "local": false,
@@ -2457,7 +2446,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Skyline Photography of Buildings",
             "alt": "Skyline Photography of Buildings",
             "sizes": [],
             "local": false,
@@ -2850,7 +2838,6 @@
             "width": 1080,
             "height": 1920,
             "id": 0,
-            "title": "Two People on Chair Under Ceiling",
             "alt": "Two People on Chair Under Ceiling",
             "sizes": [],
             "local": false,
@@ -3530,7 +3517,6 @@
             "width": 932,
             "height": 720,
             "id": 0,
-            "title": "Woman standing wearing blue denim jacket",
             "alt": "Woman standing wearing blue denim jacket",
             "sizes": [],
             "local": false,
@@ -3565,5 +3551,8 @@
       "id": "46126af3-a79c-47cc-8aba-7fdd15d9f64f",
       "pageTemplateType": "editorial"
     }
-  ]
+  ],
+  "current": null,
+  "selection": [],
+  "story": {}
 }
