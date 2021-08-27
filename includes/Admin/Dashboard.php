@@ -165,7 +165,7 @@ class Dashboard extends Service_Base {
 		$this->hook_suffix['stories-dashboard'] = add_submenu_page(
 			$parent,
 			__( 'Dashboard', 'web-stories' ),
-			__( 'My Stories', 'web-stories' ),
+			__( 'Dashboard', 'web-stories' ),
 			'edit_web-stories',
 			'stories-dashboard',
 			[ $this, 'render' ],

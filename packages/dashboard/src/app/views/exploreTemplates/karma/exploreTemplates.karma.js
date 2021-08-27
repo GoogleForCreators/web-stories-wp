@@ -82,12 +82,12 @@ describe('Grid view', () => {
     await expectAsync(viewTemplates).toHaveNoViolations();
   });
 
-  it('should navigate to My Stories', async () => {
-    const myStoriesMenuItem = fixture.screen.queryByRole('link', {
-      name: /^My Stories$/,
+  it('should navigate to Dashboard', async () => {
+    const DashboardMenuItem = fixture.screen.queryByRole('link', {
+      name: /^Dashboard$/,
     });
 
-    await fixture.events.click(myStoriesMenuItem);
+    await fixture.events.click(DashboardMenuItem);
 
     const viewStories = fixture.screen.queryByText('Viewing all stories');
 

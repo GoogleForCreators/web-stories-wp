@@ -85,7 +85,7 @@ function Header({
         (totalResults += totalStoriesByStatus[filterKey] || 0),
       0
     ),
-    view: DASHBOARD_VIEWS.MY_STORIES,
+    view: DASHBOARD_VIEWS.DASHBOARD,
   });
 
   const handleClick = useCallback(
@@ -158,7 +158,7 @@ function Header({
   return (
     <>
       <PageHeading
-        heading={__('My Stories', 'web-stories')}
+        heading={__('Dashboard', 'web-stories')}
         searchPlaceholder={__('Search Stories', 'web-stories')}
         searchOptions={searchOptions}
         handleSearchChange={debouncedSearchChange}
