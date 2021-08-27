@@ -65,7 +65,7 @@ export const RIGHT_CLICK_MENU_SHORTCUTS = {
   SEND_BACKWARD: {
     display: <StyledKbd>{prettifyShortcut('mod down')}</StyledKbd>,
     title: sprintf(
-      /* Translators: 1: Command/Carat keyboard key.*/
+      /* Translators: 1: Command/Caret keyboard key.*/
       _x(
         '%s down',
         'The keyboard keys "Command" or "Carat" and "down"',
