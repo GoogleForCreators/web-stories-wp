@@ -46,6 +46,8 @@ async function uploadFile(file, checkUpload = true) {
   // Wait for media modal to appear and upload file.
   await expect(page).toUploadFile('.media-modal input[type=file]', tmpFileName);
 
+  await page.waitForSelector('.media-uploader-status:not(.uploading)');
+  await page.waitForSelector('.button.media-button-select:not([disabled])');
   await expect(page).not.toMatchElement('.media-modal .upload-error');
 
   // Upload successful!

@@ -42,6 +42,8 @@ describe('Background Audio', () => {
 
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
 
+      await expect(page).toMatch('Background Audio');
+
       // Toggle the panel which is collapsed by default.
       await expect(page).toClick('[aria-label="Background Audio"]');
 
@@ -52,12 +54,16 @@ describe('Background Audio', () => {
       });
 
       const fileName = await uploadFile('audio.mp3');
-      const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
-      uploadedFiles.push(fileNameNoExt);
+      uploadedFiles.push(fileName);
 
       await expect(page).toClick('button', { text: 'Select audio file' });
 
-      await expect(page).toMatch('audio.mp3');
+      await page.waitForSelector('.media-modal', {
+        visible: false,
+      });
+
+      await expect(page).toMatch(fileName);
+
       await expect(page).toMatchElement('button[aria-label="Play"]');
 
       await percySnapshot(page, 'Story Background Audio');
@@ -71,6 +77,8 @@ describe('Background Audio', () => {
       // Select the current page by clicking on the canvas / safezone.
       await expect(page).toClick('[data-testid="safezone"]');
 
+      await expect(page).toMatch('Page Background Audio');
+
       await expect(page).toClick('button', { text: 'Upload an audio file' });
 
       await page.waitForSelector('.media-modal', {
@@ -78,12 +86,16 @@ describe('Background Audio', () => {
       });
 
       const fileName = await uploadFile('audio.mp3');
-      const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
-      uploadedFiles.push(fileNameNoExt);
+      uploadedFiles.push(fileName);
 
       await expect(page).toClick('button', { text: 'Select audio file' });
 
-      await expect(page).toMatch('audio.mp3');
+      await page.waitForSelector('.media-modal', {
+        visible: false,
+      });
+
+      await expect(page).toMatch(fileName);
+
       await expect(page).toMatchElement('button[aria-label="Play"]');
     });
   });

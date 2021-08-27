@@ -36,10 +36,9 @@ async function uploadMedia(file, exit = true) {
   });
 
   const fileName = await uploadFile(file);
-  const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
 
   await expect(page).toMatchElement(
-    `.attachments-browser .attachments .attachment[aria-label="${fileNameNoExt}"]`
+    `.attachments-browser .attachments .attachment[aria-label="${fileName}"]`
   );
 
   if (exit) {
