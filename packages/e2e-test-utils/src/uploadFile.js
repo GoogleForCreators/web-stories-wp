@@ -27,7 +27,7 @@ import { copyFileSync } from 'fs';
  * The file should reside in packages/e2e-tests/src/assets/.
  *
  * @param {string|null} file The file name to upload, for example 'foo.mp4'.
- * @param {boolean} checkUpload Check upload was successfully.
+ * @param {boolean} checkUpload Whether to check if upload was successful.
  * @return {string|null} The name of the file as it was uploaded.
  */
 async function uploadFile(file, checkUpload = true) {
@@ -39,8 +39,7 @@ async function uploadFile(file, checkUpload = true) {
   );
 
   // Prefixing makes it easier to identify files from tests later on.
-  const newFileName = `e2e-${file}`;
-  const tmpFileName = join(tmpdir(), newFileName);
+  const tmpFileName = join(tmpdir(), `e2e-${file}`);
   copyFileSync(testMediaPath, tmpFileName);
 
   // Wait for media modal to appear and upload file.
@@ -50,10 +49,18 @@ async function uploadFile(file, checkUpload = true) {
   await page.waitForSelector('.button.media-button-select:not([disabled])');
   await expect(page).not.toMatchElement('.media-modal .upload-error');
 
-  // Upload successful!
+  const fileNameEl = await page.waitForSelector(
+    '.media-modal-content .attachment-details .filename'
+  );
+  const newFileName = await fileNameEl.evaluate((el) => el.textContent);
+  const attachmentTitleEl = await page.waitForSelector(
+    '#attachment-details-title'
+  );
+  const attachmentTitle = await attachmentTitleEl.evaluate((el) => el.value);
+
   if (checkUpload) {
-    await page.waitForXPath(
-      `//div[ contains( @class, "filename" ) and contains( text(), "${newFileName}" ) ]`
+    await page.waitForSelector(
+      `.attachments-browser .attachments .attachment[aria-label="${attachmentTitle}"]`
     );
   }
   await page.setDefaultTimeout(3000);

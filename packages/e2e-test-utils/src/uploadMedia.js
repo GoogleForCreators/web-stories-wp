@@ -18,8 +18,6 @@
  */
 import uploadFile from './uploadFile';
 
-const MODAL = '.media-modal';
-
 /**
  * Helper that upload a file in the media dialog in the stories editor.
  *
@@ -31,20 +29,16 @@ async function uploadMedia(file, exit = true) {
   // Clicking will only act on the first element.
   await expect(page).toClick('button', { text: 'Upload' });
 
-  await page.waitForSelector(MODAL, {
+  await page.waitForSelector('.media-modal', {
     visible: true,
   });
 
   const fileName = await uploadFile(file);
 
-  await expect(page).toMatchElement(
-    `.attachments-browser .attachments .attachment[aria-label="${fileName}"]`
-  );
-
   if (exit) {
     await page.keyboard.press('Escape');
 
-    await page.waitForSelector(MODAL, {
+    await page.waitForSelector('.media-modal', {
       visible: false,
     });
   }
