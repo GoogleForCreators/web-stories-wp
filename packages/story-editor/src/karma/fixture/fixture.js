@@ -847,6 +847,17 @@ class APIProviderFixture {
         []
       );
 
+      const getHotlinkInfo = useCallback(
+        () =>
+          asyncResponse({
+            ext: 'jpg',
+            mime_type: 'image/jpeg',
+            type: 'image',
+            file_name: 'example.jpg',
+          }),
+        []
+      );
+
       const getAllStatuses = useCallback(
         () => jasmine.createSpy('getAllStatuses'),
         []
@@ -918,6 +929,7 @@ class APIProviderFixture {
           getDemoStoryById,
           getMedia,
           getLinkMetadata,
+          getHotlinkInfo,
           saveStoryById,
           getAllStatuses,
           getAuthors,
