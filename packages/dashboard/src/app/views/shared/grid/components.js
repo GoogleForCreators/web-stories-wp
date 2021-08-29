@@ -42,7 +42,6 @@ export const Scrim = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 8px;
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   background: ${({ theme }) => theme.colors.opacity.black3};
 `;

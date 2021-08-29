@@ -94,7 +94,7 @@ export default function StoryMenu({
   const isPopoverMenuOpen = contextMenuId === storyId;
 
   const handleDismiss = useCallback(
-    () => onMoreButtonSelected(-1),
+    (evt) => onMoreButtonSelected(evt, -1),
     [onMoreButtonSelected]
   );
 
@@ -110,7 +110,9 @@ export default function StoryMenu({
         menuOpen={isPopoverMenuOpen}
         isVisible={itemActive}
         aria-label={menuLabel || __('More Options', 'web-stories')}
-        onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : storyId)}
+        onClick={(evt) =>
+          onMoreButtonSelected(evt, isPopoverMenuOpen ? -1 : storyId)
+        }
         className={CONTEXT_MENU_BUTTON_CLASS}
         $isInverted={isInverted}
       >
