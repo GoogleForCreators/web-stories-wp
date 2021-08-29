@@ -29,10 +29,10 @@
 |                                                                   | Set text color                                   | 🚨 **0.00%** *(0 / 5)*      |
 |                                                                   | Use font picker                                  | 🏆 **100.00%** *(14 / 14)*  |
 |                                                                   | *[total]*                                        | 🛴 **81.58%** *(31 / 38)*   |
-| Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🛴 **66.67%** *(2 / 3)*     |
+| Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🏆 **100.00%** *(3 / 3)*    |
 |                                                                   | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🛴 **80.00%** *(4 / 5)*     |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(5 / 5)*    |
 | Creator can Add and Write Text                                    | Consecutive text presets                         | 🚨 **33.33%** *(1 / 3)*     |
 |                                                                   | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
 |                                                                   | Select all text inside a textbox                 | 🏆 **100.00%** *(1 / 1)*    |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **68.72%** *(290 / 422)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **69.19%** *(292 / 422)* |
