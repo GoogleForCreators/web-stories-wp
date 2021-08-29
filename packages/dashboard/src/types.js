@@ -62,6 +62,12 @@ export const TemplatePropType = PropTypes.shape({
   description: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   createdBy: PropTypes.string,
+  postersByPage: PropTypes.objectOf(
+    PropTypes.shape({
+      webp: PropTypes.string,
+      png: PropTypes.string,
+    })
+  ),
 });
 
 export const TagPropType = PropTypes.shape({

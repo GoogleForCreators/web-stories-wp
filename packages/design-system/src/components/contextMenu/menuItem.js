@@ -25,7 +25,7 @@ import { sprintf, __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Button } from '../button';
-import { LinkWithRef } from '../typography/link';
+import { Link } from '../typography/link';
 import { Text } from '../typography/text';
 import { THEME_CONSTANTS } from '../../theme';
 import { noop } from '../../utils';
@@ -125,7 +125,7 @@ export const MenuItem = ({
       : {};
 
     return (
-      <LinkWithRef
+      <Link
         ref={itemRef}
         aria-label={itemLabel}
         href={href}
@@ -135,7 +135,7 @@ export const MenuItem = ({
         {...menuItemProps}
       >
         {textContent}
-      </LinkWithRef>
+      </Link>
     );
   }
 
