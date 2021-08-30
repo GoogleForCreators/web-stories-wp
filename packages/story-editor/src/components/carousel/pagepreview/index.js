@@ -99,10 +99,19 @@ function PagePreview({ page, label, ...props }) {
   const hasImage = !isActive && imageBlob;
   const pageAtGenerationTime = useRef();
 
+  // Whenever the page is re-generated and this is not the active page
+  // remove the old (and now stale) image blob
   useEffect(() => {
-    // If this is not the active page, there is a page node and we haven't
-    // snapshotted the current page
-    if (!isActive && pageNode && pageAtGenerationTime.current !== page) {
+    if (pageAtGenerationTime.current !== page && !isActive) {
+      setImageBlob(null);
+      pageAtGenerationTime.current = null;
+    }
+  }, [page, isActive]);
+
+  useEffect(() => {
+    // If this is not the active page, there is a page node and we
+    // don't already have a snapshot
+    if (!isActive && pageNode && !imageBlob) {
       // Schedule an idle callback to actually generate the image
       requestIdleCallback(
         () => {
@@ -116,7 +125,7 @@ function PagePreview({ page, label, ...props }) {
         { timeout: 5000 }
       );
     }
-  }, [isActive, pageNode, page]);
+  }, [isActive, pageNode, imageBlob, page]);
 
   return (
     <UnitsProvider pageSize={{ width, height }}>
