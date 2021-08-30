@@ -33,6 +33,10 @@ import {
  * Internal dependencies
  */
 import StoryPropTypes from '../../../types';
+import {
+  requestIdleCallback,
+  cancelIdleCallback,
+} from '../../../utils/idleCallback';
 import { TransformProvider } from '../../transform';
 import DisplayElement from '../../canvas/displayElement';
 
@@ -113,7 +117,7 @@ function PagePreview({ page, label, ...props }) {
     // don't already have a snapshot
     if (!isActive && pageNode && !imageBlob) {
       // Schedule an idle callback to actually generate the image
-      requestIdleCallback(
+      const id = requestIdleCallback(
         () => {
           import(
             /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
@@ -124,7 +128,12 @@ function PagePreview({ page, label, ...props }) {
         },
         { timeout: 5000 }
       );
+      // If the page somehow regenerates before the snapshot is taken,
+      // make sure to cancel the old request
+      return () => cancelIdleCallback(id);
     }
+    // Required because of eslint: consistent-return
+    return undefined;
   }, [isActive, pageNode, imageBlob, page]);
 
   return (
@@ -133,13 +142,18 @@ function PagePreview({ page, label, ...props }) {
         <Page ref={setPageRef} aria-label={label} {...props}>
           <PreviewWrapper background={backgroundColor}>
             {hasImage ? (
-              <Image src={imageBlob} alt={label} />
+              <Image
+                src={imageBlob}
+                width={width}
+                height={height}
+                alt={label}
+              />
             ) : (
-              page.elements.map(({ id, ...rest }) => (
+              page.elements.map((element) => (
                 <DisplayElement
-                  key={id}
+                  key={element.id}
                   previewMode
-                  element={{ id, ...rest }}
+                  element={element}
                   page={page}
                 />
               ))
