@@ -111,7 +111,7 @@ describe('useMediaUploadQueue', () => {
 
     await waitForNextUpdate();
 
-    expect(result.current.state.isUploading).toBeTrue();
+    expect(result.current.state.isUploading).toBeFalse();
     expect(result.current.state.uploaded).toHaveLength(1);
 
     const { id } = result.current.state.uploaded[0];
