@@ -207,7 +207,7 @@ function useFFmpeg() {
         // eslint-disable-next-line no-console
         console.error(err);
 
-        trackError('video_poster_generation_ffmpeg', err.message);
+        trackError(err.message);
 
         throw err;
       } finally {
@@ -264,7 +264,7 @@ function useFFmpeg() {
         // eslint-disable-next-line no-console
         console.error(err);
 
-        trackError('video_transcoding', err.message);
+        trackError(err.message);
 
         throw err;
       } finally {
@@ -324,7 +324,7 @@ function useFFmpeg() {
         // eslint-disable-next-line no-console
         console.log(err);
 
-        trackError('mute_video_transcoding', err.message);
+        trackError(err.message);
 
         throw err;
       } finally {
@@ -381,7 +381,7 @@ function useFFmpeg() {
         // eslint-disable-next-line no-console
         console.error(err);
 
-        trackError('gif_conversion', err.message);
+        trackError(err.message);
 
         throw err;
       } finally {

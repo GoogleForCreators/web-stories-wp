@@ -35,7 +35,7 @@ function handleErrors(event) {
   }
 
   const errorMessage = `${event.message} (${event.lineno}:${event.colno})`;
-  trackError(errorMessage);
+  trackError(errorMessage, true);
 }
 
 /**

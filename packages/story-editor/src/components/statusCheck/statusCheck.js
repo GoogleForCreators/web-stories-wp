@@ -39,7 +39,7 @@ function StatusCheck() {
     // Only in case of failure do we want to alert the user and track the error.
     getStatusCheck(getContent()).catch((err) => {
       setShowDialog(true);
-      trackError('status_check', err.message);
+      trackError(err.message);
     });
   }, [getStatusCheck]);
 

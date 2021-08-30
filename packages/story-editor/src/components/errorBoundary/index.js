@@ -40,7 +40,7 @@ class ErrorBoundary extends Component {
     const msg = errorInfo
       ? `${error.message}\n\n${errorInfo.componentName}\n${errorInfo.componentStack}`
       : error.message;
-    trackError('editor_error_boundary', msg, true);
+    trackError(msg, true);
   }
 
   render() {
