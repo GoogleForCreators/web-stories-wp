@@ -68,7 +68,7 @@ const SearchIconContainer = styled.div`
 const ClearButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   ${inputIconStyles};
   right: 0;
-  height: 23px;
+  height: 20.5px;
   opacity: 0.4;
 `;
 
