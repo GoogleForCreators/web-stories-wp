@@ -24,7 +24,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import {
   DASHBOARD_VIEWS,
   RESULT_LABELS,
-  SAVED_TEMPLATES_STATUS,
   STORY_STATUS,
   TEMPLATES_GALLERY_STATUS,
 } from '../../constants';
@@ -127,67 +126,6 @@ describe('useGenericResultsLabel()', function () {
       {}
     );
     expect(result.current).toBe('<strong>0</strong> results');
-  });
-
-  // saved templates
-  it(`should have default options initially selected for ${DASHBOARD_VIEWS.SAVED_TEMPLATES}`, function () {
-    const { result } = renderHook(
-      () =>
-        useDashboardResultsLabel({
-          currentFilter: SAVED_TEMPLATES_STATUS.ALL,
-          view: DASHBOARD_VIEWS.SAVED_TEMPLATES,
-        }),
-      {}
-    );
-    expect(result.current).toBe(
-      RESULT_LABELS[DASHBOARD_VIEWS.SAVED_TEMPLATES][SAVED_TEMPLATES_STATUS.ALL]
-    );
-  });
-
-  it(`should have options selected for ${DASHBOARD_VIEWS.SAVED_TEMPLATES} when filtered to current user`, function () {
-    const { result } = renderHook(
-      () =>
-        useDashboardResultsLabel({
-          currentFilter: SAVED_TEMPLATES_STATUS.CURRENT_USER,
-          view: DASHBOARD_VIEWS.SAVED_TEMPLATES,
-        }),
-      {}
-    );
-    expect(result.current).toBe(
-      RESULT_LABELS[DASHBOARD_VIEWS.SAVED_TEMPLATES][
-        SAVED_TEMPLATES_STATUS.CURRENT_USER
-      ]
-    );
-  });
-
-  it(`should have options selected for ${DASHBOARD_VIEWS.SAVED_TEMPLATES} when filtered to bookmarked templates`, function () {
-    const { result } = renderHook(
-      () =>
-        useDashboardResultsLabel({
-          currentFilter: SAVED_TEMPLATES_STATUS.BOOKMARKED,
-          view: DASHBOARD_VIEWS.SAVED_TEMPLATES,
-        }),
-      {}
-    );
-    expect(result.current).toBe(
-      RESULT_LABELS[DASHBOARD_VIEWS.SAVED_TEMPLATES][
-        SAVED_TEMPLATES_STATUS.BOOKMARKED
-      ]
-    );
-  });
-
-  it(`should show counted results if isActiveSearch is true for ${DASHBOARD_VIEWS.SAVED_TEMPLATES}`, function () {
-    const { result } = renderHook(
-      () =>
-        useDashboardResultsLabel({
-          isActiveSearch: true,
-          totalResults: 30,
-          currentFilter: SAVED_TEMPLATES_STATUS.BOOKMARKED,
-          view: DASHBOARD_VIEWS.SAVED_TEMPLATES,
-        }),
-      {}
-    );
-    expect(result.current).toBe('<strong>30</strong> results');
   });
 
   // template gallery

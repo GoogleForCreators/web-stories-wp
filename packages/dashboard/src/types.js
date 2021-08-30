@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@web-stories-wp/story-editor';
 import {
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_STATUS,
@@ -38,7 +37,6 @@ export const StoryPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: DashboardStatusesPropType,
   title: PropTypes.string.isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page),
   modified: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   author: PropTypes.string,
   capabilities: PropTypes.shape({
@@ -51,7 +49,7 @@ export const TemplatePropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: DashboardStatusesPropType,
   title: PropTypes.string.isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page),
+  pages: PropTypes.array,
   modified: PropTypes.object,
   colors: PropTypes.arrayOf(
     PropTypes.shape({

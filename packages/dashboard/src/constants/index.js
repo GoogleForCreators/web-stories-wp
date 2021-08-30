@@ -21,9 +21,8 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Compass, FloppyDisk, HomeWithHeart } from '../icons';
+import { Compass, HomeWithHeart } from '../icons';
 import { STORY_VIEWING_LABELS } from './stories';
-import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
 import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
 
 export const KEYBOARD_USER_CLASS = `useskeyboard`;
@@ -38,7 +37,6 @@ export const Z_INDEX = {
 
 export const APP_ROUTES = {
   DASHBOARD: '/',
-  SAVED_TEMPLATES: '/saved-templates',
   TEMPLATES_GALLERY: '/templates-gallery',
   TEMPLATE_DETAIL: 'template-detail',
 
@@ -51,14 +49,12 @@ export const APP_ROUTES = {
 
 export const NESTED_APP_ROUTES = {
   TEMPLATES_GALLERY_DETAIL: `${APP_ROUTES.TEMPLATES_GALLERY}/${APP_ROUTES.TEMPLATE_DETAIL}`,
-  SAVED_TEMPLATE_DETAIL: `${APP_ROUTES.SAVED_TEMPLATES}/${APP_ROUTES.TEMPLATE_DETAIL}`,
 };
 
 export const ADMIN_TITLE = __('Web Stories', 'web-stories');
 
 export const ROUTE_TITLES = {
   [APP_ROUTES.DASHBOARD]: __('Dashboard', 'web-stories'),
-  [APP_ROUTES.SAVED_TEMPLATES]: __('Saved Templates', 'web-stories'),
   [APP_ROUTES.TEMPLATES_GALLERY]: __('Explore Templates', 'web-stories'),
   [`${APP_ROUTES.TEMPLATES_GALLERY}/${APP_ROUTES.TEMPLATE_DETAIL}`]: __(
     'Template Details',
@@ -74,12 +70,6 @@ export const PRIMARY_PATHS = [
     value: APP_ROUTES.DASHBOARD,
     label: ROUTE_TITLES[APP_ROUTES.DASHBOARD],
     Icon: HomeWithHeart,
-  },
-  {
-    value: APP_ROUTES.SAVED_TEMPLATES,
-    label: ROUTE_TITLES[APP_ROUTES.SAVED_TEMPLATES],
-    inProgress: true,
-    Icon: FloppyDisk,
   },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
@@ -113,12 +103,10 @@ export const VIEW_STYLE_LABELS = {
 
 export const DASHBOARD_VIEWS = {
   DASHBOARD: 'DASHBOARD',
-  SAVED_TEMPLATES: 'SAVED_TEMPLATES',
   TEMPLATES_GALLERY: 'TEMPLATES_GALLERY',
 };
 export const RESULT_LABELS = {
   [DASHBOARD_VIEWS.DASHBOARD]: { ...STORY_VIEWING_LABELS },
-  [DASHBOARD_VIEWS.SAVED_TEMPLATES]: { ...SAVED_TEMPLATES_VIEWING_LABELS },
   [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
 };
 
@@ -132,7 +120,6 @@ export const MIN_IMG_WIDTH = 96;
 
 export * from './components';
 export * from './pageStructure';
-export * from './savedTemplates';
 export * from './settings';
 export * from './stories';
 export * from './templates';

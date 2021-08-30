@@ -115,7 +115,6 @@ describe('Dashboard <StoriesView />', function () {
           },
         }}
       />,
-      { features: { enableInProgressStoryActions: false } },
       {}
     );
 
@@ -156,7 +155,6 @@ describe('Dashboard <StoriesView />', function () {
             showStoriesWhileLoading: { current: false },
           }}
         />,
-        { features: { enableInProgressStoryActions: false } },
         {}
       );
 
@@ -194,7 +192,6 @@ describe('Dashboard <StoriesView />', function () {
             showStoriesWhileLoading: { current: true },
           }}
         />,
-        { features: { enableInProgressStoryActions: false } },
         {}
       );
 
@@ -234,7 +231,6 @@ describe('Dashboard <StoriesView />', function () {
             showStoriesWhileLoading: { current: false },
           }}
         />,
-        { features: { enableInProgressStoryActions: false } },
         {}
       );
 
@@ -272,7 +268,6 @@ describe('Dashboard <StoriesView />', function () {
             showStoriesWhileLoading: { current: true },
           }}
         />,
-        { features: { enableInProgressStoryActions: false } },
         {}
       );
 

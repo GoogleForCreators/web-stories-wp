@@ -21,12 +21,10 @@ import styled from 'styled-components';
 import {
   useCallback,
   useLayoutEffect,
-  useMemo,
   useRef,
   useFocusOut,
   useEffect,
 } from '@web-stories-wp/react';
-import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 import {
@@ -152,8 +150,6 @@ export function LeftRail() {
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
 
-  const enableInProgressViews = useFeature('enableInProgressViews');
-
   const {
     state: { sideBarVisible, numNewTemplates },
     actions: { toggleSideBar, updateNumNewTemplates },
@@ -171,13 +167,6 @@ export function LeftRail() {
     },
     [toggleSideBar, leftRailRef, upperContentRef]
   );
-
-  const enabledPrimaryPaths = useMemo(() => {
-    if (enableInProgressViews) {
-      return PRIMARY_PATHS;
-    }
-    return PRIMARY_PATHS.filter((path) => !path.inProgress);
-  }, [enableInProgressViews]);
 
   const handleSideBarClose = useCallback(() => {
     if (sideBarVisible) {
@@ -251,7 +240,7 @@ export function LeftRail() {
         </Content>
         <Content>
           <NavList>
-            {enabledPrimaryPaths.map(({ Icon, ...path }) => {
+            {PRIMARY_PATHS.map(({ Icon, ...path }) => {
               const isNotificationBubbleEnabled =
                 path.value === APP_ROUTES.TEMPLATES_GALLERY &&
                 state.currentPath !== APP_ROUTES.TEMPLATES_GALLERY;
