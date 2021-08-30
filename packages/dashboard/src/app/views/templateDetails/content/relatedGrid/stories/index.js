@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { TransformProvider } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
@@ -27,7 +26,6 @@ import {
   formattedTemplatesArray,
   STORYBOOK_PAGE_SIZE,
 } from '../../../../../../storybookUtils';
-import FontProvider from '../../../../../font/fontProvider';
 import RelatedGrid from '..';
 
 export default {
@@ -35,16 +33,12 @@ export default {
 };
 
 export const _default = () => (
-  <FontProvider>
-    <TransformProvider>
-      <RelatedGrid
-        pageSize={STORYBOOK_PAGE_SIZE}
-        relatedTemplates={formattedTemplatesArray.slice(0, 4)}
-        templateActions={{
-          createStoryFromTemplate: action('create story from template clicked'),
-          handlePreviewTemplate: action('handle preview template clicked'),
-        }}
-      />
-    </TransformProvider>
-  </FontProvider>
+  <RelatedGrid
+    pageSize={STORYBOOK_PAGE_SIZE}
+    relatedTemplates={formattedTemplatesArray.slice(0, 4)}
+    templateActions={{
+      createStoryFromTemplate: action('create story from template clicked'),
+      handlePreviewTemplate: action('handle preview template clicked'),
+    }}
+  />
 );

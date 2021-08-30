@@ -39,7 +39,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
             { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
           ],
         },
-        hasGradient: true,
+        allowsGradient: true,
       });
 
     // Initially 2 stops should be visible
@@ -100,7 +100,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
           { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // No temp stop visible initially
@@ -130,7 +130,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
           { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // No temp stop visible initially
@@ -154,7 +154,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
           { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // Click first stop (and give a fake offset)
@@ -175,7 +175,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
             { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
           ],
         },
-        hasGradient: true,
+        allowsGradient: true,
       }
     );
 
