@@ -100,7 +100,6 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       {
         isBackground: false,
         opacity: 100,
-        overlay: null,
       },
       true
     );
