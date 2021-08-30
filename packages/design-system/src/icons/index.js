@@ -137,6 +137,7 @@ export { ReactComponent as Table } from './table.svg';
 export { ReactComponent as TailedRectangle } from './tailed_rectangle.svg';
 export { ReactComponent as Timeline } from './timeline.svg';
 export { ReactComponent as Trash } from './trash.svg';
+export { ReactComponent as TurningLine } from './turning_line.svg';
 export { ReactComponent as Union } from './union.svg';
 export { ReactComponent as Video } from './video.svg';
 export { ReactComponent as Launch } from './launch.svg';
