@@ -56,7 +56,7 @@
     "@storybook/client-logger": "^6.3.6",
     "@storybook/react": "^6.3.6",
     "@svgr/webpack": "^5.5.0",
-    "@testing-library/dom": "^8.1.0",
+    "@testing-library/dom": "^8.2.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/react-hooks": "^7.0.1",
