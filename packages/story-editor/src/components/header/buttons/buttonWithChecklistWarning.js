@@ -46,7 +46,7 @@ const Button = styled(DefaultButton)`
   }
 `;
 
-function ButtonWithChecklistWarning({ text, ...buttonProps }) {
+function ButtonWithChecklistWarning({ text, isUploading, ...buttonProps }) {
   const { checkpoint, shouldReviewDialogBeSeen } = useCheckpoint(
     ({ state: { checkpoint, shouldReviewDialogBeSeen } }) => ({
       checkpoint,
@@ -80,8 +80,16 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
     [PPC_CHECKPOINT_STATE.UNAVAILABLE]: '',
   };
 
+  const TOOLTIP_TEXT_UPLOADING = __(
+    'Saving is disabled due to media currently being uploaded.',
+    'web-stories'
+  );
+
   return (
-    <Tooltip title={TOOLTIP_TEXT[checkpoint]} hasTail>
+    <Tooltip
+      title={isUploading ? TOOLTIP_TEXT_UPLOADING : TOOLTIP_TEXT[checkpoint]}
+      hasTail
+    >
       {button}
     </Tooltip>
   );
@@ -89,6 +97,7 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
 
 ButtonWithChecklistWarning.propTypes = {
   text: PropTypes.node.isRequired,
+  isUploading: PropTypes.bool.isRequired,
 };
 
 export default ButtonWithChecklistWarning;
