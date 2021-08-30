@@ -19,7 +19,6 @@
 import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { sprintf, __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -77,15 +76,6 @@ export const MenuItem = ({
     [onClick, onDismiss]
   );
 
-  const itemLabel = shortcut?.title
-    ? sprintf(
-        /* translators: 1: Menu Item Text Label. 2: Keyboard shortcut value. */
-        __('%1$s, or use %2$s on a keyboard', 'web-stories'),
-        ariaLabel || label,
-        shortcut.title
-      )
-    : ariaLabel || label;
-
   const textContent = useMemo(() => {
     if (Icon) {
       return (
@@ -134,7 +124,6 @@ export const MenuItem = ({
     return (
       <Link
         ref={itemRef}
-        aria-label={itemLabel}
         href={href}
         onClick={handleClick}
         onFocus={onFocus}
@@ -150,7 +139,6 @@ export const MenuItem = ({
     return (
       <Button
         ref={itemRef}
-        aria-label={itemLabel}
         disabled={disabled}
         onClick={handleClick}
         onFocus={onFocus}

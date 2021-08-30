@@ -17,12 +17,12 @@
  * External dependencies
  */
 import {
-  getKeyForOS,
-  prettifyShortcut,
+  createShortcutAriaLabel,
+  Shortcut,
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
-import { sprintf, _x, __ } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 
 export const RIGHT_CLICK_MENU_LABELS = {
@@ -59,96 +59,40 @@ const StyledKbd = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
   color: inherit;
+
+  :not(:last-child) {
+    margin-right: 4px;
+  }
 `;
 
 export const RIGHT_CLICK_MENU_SHORTCUTS = {
   SEND_BACKWARD: {
-    display: <StyledKbd>{prettifyShortcut('mod down')}</StyledKbd>,
-    title: sprintf(
-      /* Translators: 1: Command/Caret keyboard key.*/
-      _x(
-        '%s down',
-        'The keyboard keys "Command" or "Caret" and "down"',
-        'web-stories'
-      ),
-      getKeyForOS('mod')
-    ),
+    display: <Shortcut shortcut="mod down" component={StyledKbd} />,
+    title: createShortcutAriaLabel('mod down'),
   },
   SEND_TO_BACK: {
-    display: <StyledKbd>{prettifyShortcut('mod shift down')}</StyledKbd>,
-    title: sprintf(
-      /* Translators: 1: Command/Caret keyboard key.*/
-      _x(
-        '%s Shift down',
-        'The keyboard keys "Command" or "Caret", "Shift", and "down"',
-        'web-stories'
-      ),
-      getKeyForOS('mod')
-    ),
+    display: <Shortcut shortcut="mod shift down" component={StyledKbd} />,
+    title: createShortcutAriaLabel('mod shift down'),
   },
   BRING_FORWARD: {
-    display: <StyledKbd>{prettifyShortcut('mod up')}</StyledKbd>,
-    title: sprintf(
-      /* Translators: 1: Command/Caret keyboard key.*/
-      _x(
-        '%s up',
-        'The keyboard keys "Command" or "Caret" and "up"',
-        'web-stories'
-      ),
-      getKeyForOS('mod')
-    ),
+    display: <Shortcut shortcut="mod up" component={StyledKbd} />,
+    title: createShortcutAriaLabel('mod up'),
   },
   BRING_TO_FRONT: {
-    display: <StyledKbd>{prettifyShortcut('mod shift up')}</StyledKbd>,
-    title: sprintf(
-      /* Translators: 1: Command/Caret keyboard key.*/
-      _x(
-        '%s Shift up',
-        'The keyboard keys "Command" or "Caret", "Shift", and "up"',
-        'web-stories'
-      ),
-      getKeyForOS('mod')
-    ),
+    display: <Shortcut shortcut="mod shift up" component={StyledKbd} />,
+    title: createShortcutAriaLabel('mod shift up'),
   },
   DELETE: {
-    display: <StyledKbd>{prettifyShortcut('delete')}</StyledKbd>,
-    title: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
+    display: <Shortcut shortcut="delete" component={StyledKbd} />,
+    title: createShortcutAriaLabel('delete'),
   },
   COPY_STYLES: {
-    display: (
-      <>
-        <StyledKbd>{prettifyShortcut('alt mod')}</StyledKbd>{' '}
-        <StyledKbd>{'O'}</StyledKbd>
-      </>
-    ),
-    title: sprintf(
-      /* Translators: 1: Alt keyboard key. 2: Command/Caret keyboard key */
-      _x(
-        '%1$s %2$s O',
-        'The keyboard keys "Alt", "Command" or "Caret", and "O"',
-        'web-stories'
-      ),
-      getKeyForOS('alt'),
-      getKeyForOS('mod')
-    ),
+    display: <Shortcut shortcut="alt mod O" component={StyledKbd} />,
+    title: createShortcutAriaLabel('alt mod O'),
   },
   PASTE_STYLES: {
-    display: (
-      <>
-        <StyledKbd>{prettifyShortcut('alt mod')}</StyledKbd>{' '}
-        <StyledKbd>{'P'}</StyledKbd>
-      </>
-    ),
-    title: sprintf(
-      /* Translators: 1: Alt keyboard key. 2: Command/Caret keyboard key */
-      _x(
-        '%1$s %2$s P',
-        'The keyboard keys "Alt", "Command" or "Caret", and "P"',
-        'web-stories'
-      ),
-      getKeyForOS('alt'),
-      getKeyForOS('mod')
-    ),
+    display: <Shortcut shortcut="alt mod P" component={StyledKbd} />,
+    title: createShortcutAriaLabel('alt mod P'),
   },
 };
 
