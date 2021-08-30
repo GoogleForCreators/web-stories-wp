@@ -115,7 +115,6 @@ function BasicColorList({
             isSelected={isSelected}
             isDisabled={isDisabled}
             tabIndex={tabIndex}
-            aria-label={__('Apply color', 'web-stories')}
             title={patternAsBackground}
           />
         );
