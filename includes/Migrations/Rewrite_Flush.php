@@ -42,7 +42,7 @@ class Rewrite_Flush extends Migrate_Base {
 	 */
 	public function migrate() {
 		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-			flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+			flush_rewrite_rules( false );
 		}
 	}
 }
