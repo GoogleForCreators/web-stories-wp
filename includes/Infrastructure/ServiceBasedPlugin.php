@@ -177,6 +177,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false );
+		}
+
 		restore_current_blog();
 	}
 
