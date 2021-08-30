@@ -37,7 +37,6 @@ describe('reshapeStoryObject', () => {
       excerpt: { rendered: '', protected: false },
       author: 1,
       featured_media: 0,
-      featured_media_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
       preview_link: 'http://localhost:8899/preview/27',
       edit_link: 'http://localhost:8899/edit/27',
       template: '',
@@ -47,7 +46,7 @@ describe('reshapeStoryObject', () => {
         'wp:featuredmedia': [
           {
             id: 33,
-            url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
+            source_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
           },
         ],
         author: [{ id: 1, name: 'admin' }],
@@ -94,7 +93,7 @@ describe('reshapeStoryObject', () => {
           'wp:featuredmedia': [
             {
               id: 33,
-              url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
+              source_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
             },
           ],
         },
@@ -138,7 +137,6 @@ describe('reshapeStoryObject', () => {
       excerpt: { rendered: '', protected: false },
       author: 1,
       featured_media: 0,
-      featured_media_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
       preview_link: 'http://localhost:8899/preview/27',
       edit_link: 'http://localhost:8899/edit/27',
       template: '',
@@ -148,7 +146,7 @@ describe('reshapeStoryObject', () => {
         'wp:featuredmedia': [
           {
             id: 33,
-            url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
+            source_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
           },
         ],
         author: [{ id: 1, name: 'admin' }],
@@ -189,7 +187,7 @@ describe('reshapeStoryObject', () => {
           'wp:featuredmedia': [
             {
               id: 33,
-              url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
+              source_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
             },
           ],
         },
@@ -236,7 +234,7 @@ describe('reshapeStoryObject', () => {
       categories: [],
       tags: [],
       _embedded: {
-        'wp:featuredmedia': [{ id: 0, url: '' }],
+        'wp:featuredmedia': [{ id: 0, source_url: '' }],
         author: [{ id: 1, name: 'admin' }],
       },
     };
@@ -265,7 +263,7 @@ describe('reshapeStoryObject', () => {
       categories: [],
       tags: [],
       _embedded: {
-        'wp:featuredmedia': [{ id: 0, url: '' }],
+        'wp:featuredmedia': [{ id: 0, source_url: '' }],
         author: [{ id: 1, name: 'admin' }],
       },
       _links: {

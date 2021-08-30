@@ -19,12 +19,10 @@
  */
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
-import { TransformProvider } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
 import { formattedTemplatesArray } from '../../../../../../storybookUtils';
-import FontProvider from '../../../../../font/fontProvider';
 import DetailsGallery from '..';
 
 export default {
@@ -32,17 +30,11 @@ export default {
 };
 
 export const _default = () => (
-  <FontProvider>
-    <TransformProvider>
-      <DetailsGallery
-        activeTemplateIndex={8}
-        isRTL={boolean('isRTL')}
-        orderedTemplatesLength={12}
-        switchToTemplateByOffset={action(
-          'switch to template by offset clicked'
-        )}
-        template={formattedTemplatesArray[1]}
-      />
-    </TransformProvider>
-  </FontProvider>
+  <DetailsGallery
+    activeTemplateIndex={8}
+    isRTL={boolean('isRTL')}
+    orderedTemplatesLength={12}
+    switchToTemplateByOffset={action('switch to template by offset clicked')}
+    template={formattedTemplatesArray[1]}
+  />
 );

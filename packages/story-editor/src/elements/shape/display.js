@@ -42,8 +42,6 @@ const Element = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
   ${elementWithBorder}
-  ${({ backdropBlur }) =>
-    backdropBlur && `backdrop-filter: blur(${backdropBlur}px)`}
 `;
 
 function ShapeDisplay({ element, previewMode }) {
@@ -55,7 +53,6 @@ function ShapeDisplay({ element, previewMode }) {
     borderRadius,
     width: elementWidth,
     height: elementHeight,
-    backdropBlur,
   } = element;
 
   const { dataToEditorX } = useUnits((state) => ({
@@ -97,7 +94,6 @@ function ShapeDisplay({ element, previewMode }) {
       borderRadius={borderRadius}
       width={elementWidth}
       height={elementHeight}
-      backdropBlur={backdropBlur}
       border={getResponsiveBorder(border, previewMode, dataToEditorX)}
     />
   );

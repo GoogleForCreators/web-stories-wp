@@ -53,7 +53,6 @@ const STORY_FIELDS = [
   'modified',
   'modified_gmt',
   'link',
-  'featured_media_url',
   'preview_link',
   'edit_link',
   // _web_stories_envelope will add these fields, we need them too.
@@ -94,7 +93,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
 
       // Important: Keep in sync with REST API preloading definition.
       const query = {
-        _embed: 'wp:lock,wp:lockuser,author',
+        _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
         context: 'edit',
         _web_stories_envelope: true,
         search: searchTerm || undefined,
@@ -162,7 +161,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
 
       try {
         const path = addQueryArgs(`${storyApi}${story.id}/`, {
-          _embed: 'wp:lock,wp:lockuser,author',
+          _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
         });
 
         const data = {
@@ -296,7 +295,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
         } = story;
 
         const path = addQueryArgs(storyApi, {
-          _embed: 'wp:lock,wp:lockuser,author',
+          _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
           _fields: STORY_FIELDS,
         });
 

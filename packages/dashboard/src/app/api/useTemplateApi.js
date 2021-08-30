@@ -18,55 +18,19 @@
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
-import {
-  toUTCDate,
-  toDate,
-  getSettings,
-  compareDesc,
-} from '@web-stories-wp/date';
+import { toUTCDate, compareDesc } from '@web-stories-wp/date';
 import { addQueryArgs } from '@web-stories-wp/design-system';
 import getAllTemplates from '@web-stories-wp/templates';
 import { base64Encode } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
-import { APP_ROUTES } from '../../constants';
 import templateReducer, {
   defaultTemplatesState,
   ACTION_TYPES as TEMPLATE_ACTION_TYPES,
 } from '../reducer/templates';
 import { ERRORS } from '../textContent';
-
-export function reshapeTemplateObject(isLocal) {
-  return ({
-    id,
-    slug,
-    title,
-    modified,
-    tags,
-    colors,
-    createdBy,
-    description,
-    pages,
-    version,
-    creationDate,
-  }) => ({
-    isLocal,
-    id,
-    title,
-    createdBy,
-    description,
-    slug,
-    status: 'template',
-    modified: toUTCDate(modified),
-    tags,
-    colors,
-    pages,
-    version,
-    centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
-    creationDate: toDate(creationDate, getSettings()),
-  });
-}
+import { reshapeTemplateObject } from '../serializers';
 
 // TODO once templates are all connected to an API this and the above reshapeTemplateObject should be able to be one and the same
 // Connecting the ability to create a template from a story I wanted to be able to see the results on saved templates, this endpoint is still missing some template related data.
@@ -202,28 +166,25 @@ const useTemplateApi = (dataAdapter, config) => {
     return Promise.resolve({});
   }, []);
 
-  const fetchExternalTemplates = useCallback(
-    async (filters) => {
-      dispatch({
-        type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
-        payload: true,
-      });
+  const fetchExternalTemplates = useCallback(async () => {
+    dispatch({
+      type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
+      payload: true,
+    });
 
-      const reshapedTemplates = (await getAllTemplates({ cdnURL }))
-        .map(reshapeTemplateObject(false))
-        .sort((a, b) => compareDesc(a.creationDate, b.creationDate));
-      dispatch({
-        type: TEMPLATE_ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
-        payload: {
-          page: 1,
-          templates: reshapedTemplates,
-          totalPages: 1,
-          totalTemplates: reshapedTemplates.length,
-        },
-      });
-    },
-    [cdnURL]
-  );
+    const reshapedTemplates = (await getAllTemplates({ cdnURL }))
+      .map((template) => reshapeTemplateObject(template, cdnURL))
+      .sort((a, b) => compareDesc(a.creationDate, b.creationDate));
+    dispatch({
+      type: TEMPLATE_ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
+      payload: {
+        page: 1,
+        templates: reshapedTemplates,
+        totalPages: 1,
+        totalTemplates: reshapedTemplates.length,
+      },
+    });
+  }, [cdnURL]);
 
   const fetchExternalTemplateById = useCallback(
     (templateId) => {

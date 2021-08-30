@@ -74,9 +74,9 @@ const TemplateGridItem = forwardRef(
         <Container>
           <CardWrapper $isSelected={isActive}>
             <PicturePoster>
-              <source srcSet={posterSrc.webp} type="image/webp" />
-              <source srcSet={posterSrc.png} type="image/png" />
-              <img src={posterSrc.png} alt={posterAltText} />
+              <source srcSet={posterSrc?.webp} type="image/webp" />
+              <source srcSet={posterSrc?.png} type="image/png" />
+              <img src={posterSrc?.png} alt={posterAltText} />
             </PicturePoster>
             <Gradient />
             <Scrim
@@ -136,7 +136,7 @@ TemplateGridItem.propTypes = {
   posterSrc: PropTypes.shape({
     webp: PropTypes.string.isRequired,
     png: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   slug: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

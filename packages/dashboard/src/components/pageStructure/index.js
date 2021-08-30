@@ -25,7 +25,6 @@ import {
   useRef,
   useFocusOut,
   useEffect,
-  useState,
 } from '@web-stories-wp/react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -148,7 +147,6 @@ export const LoadingContainer = styled.div`
 `;
 
 export function LeftRail() {
-  const [numNewTemplates, setNumNewTemplates] = useState(0);
   const { state } = useRouteHistory();
   const { newStoryURL, version } = useConfig();
   const leftRailRef = useRef(null);
@@ -157,8 +155,8 @@ export function LeftRail() {
   const enableInProgressViews = useFeature('enableInProgressViews');
 
   const {
-    state: { sideBarVisible },
-    actions: { toggleSideBar },
+    state: { sideBarVisible, numNewTemplates },
+    actions: { toggleSideBar, updateNumNewTemplates },
   } = useNavContext();
 
   const onContainerClickCapture = useCallback(
@@ -204,22 +202,27 @@ export function LeftRail() {
   }, []);
 
   // See how many templates are new based on the current date
+  const getNewTemplateCount = useCallback(async () => {
+    const metaData = await getTemplateMetaData();
+    if (metaData) {
+      const newTemplates = getNewTemplatesMetaData(
+        metaData,
+        NEW_TEMPLATE_THRESHOLD_IN_DAYS
+      );
+      return updateNumNewTemplates(newTemplates.length);
+    }
+    return () => {};
+  }, [updateNumNewTemplates]);
+
   useEffect(() => {
     let mounted = true;
-    (async () => {
-      const metaData = await getTemplateMetaData();
-      if (mounted) {
-        const newTemplates = getNewTemplatesMetaData(
-          metaData,
-          NEW_TEMPLATE_THRESHOLD_IN_DAYS
-        );
-        setNumNewTemplates(newTemplates.length);
-      }
-    })();
+    if (mounted) {
+      getNewTemplateCount();
+    }
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [getNewTemplateCount]);
 
   return (
     <LeftRailContainer
@@ -271,7 +274,7 @@ export function LeftRail() {
                     aria-label={appendNewBadgeToLable(
                       path.value === state.currentPath
                         ? sprintf(
-                            /* translators: %s: the current page, for example "My Stories". */
+                            /* translators: %s: the current page, for example "Dashboard". */
                             __('%s (active view)', 'web-stories'),
                             path.label
                           )
@@ -314,7 +317,7 @@ export function LeftRail() {
                 aria-label={
                   path.value === state.currentPath
                     ? sprintf(
-                        /* translators: %s: the current page, for example "My Stories". */
+                        /* translators: %s: the current page, for example "Dashboard". */
                         __('%s (active view)', 'web-stories'),
                         path.label
                       )

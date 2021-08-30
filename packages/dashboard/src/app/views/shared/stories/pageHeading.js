@@ -47,7 +47,7 @@ export const _default = () => {
         searchOptions={[]}
         searchValue={text('Search Value', '')}
         handleSearchChange={(value) => action('Search with value: ', value)}
-        heading={text('Heading', 'My Stories')}
+        heading={text('Heading', 'Dashboard')}
         searchPlaceholder={text('Search Placeholder', 'Find Stories')}
       >
         <InnerContent />

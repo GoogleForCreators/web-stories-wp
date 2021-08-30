@@ -165,7 +165,7 @@ class Dashboard extends Service_Base {
 		$this->hook_suffix['stories-dashboard'] = add_submenu_page(
 			$parent,
 			__( 'Dashboard', 'web-stories' ),
-			__( 'My Stories', 'web-stories' ),
+			__( 'Dashboard', 'web-stories' ),
 			'edit_web-stories',
 			'stories-dashboard',
 			[ $this, 'render' ],
@@ -242,7 +242,7 @@ class Dashboard extends Service_Base {
 			'/web-stories/v1/users/me/',
 			"/web-stories/v1/$rest_base/?" . build_query(
 				[
-					'_embed'                => rawurlencode( 'wp:lock,wp:lockuser,author' ),
+					'_embed'                => rawurlencode( 'wp:lock,wp:lockuser,author,wp:featuredmedia' ),
 					'context'               => 'edit',
 					'order'                 => 'desc',
 					'orderby'               => 'modified',
@@ -262,7 +262,6 @@ class Dashboard extends Service_Base {
 								'modified',
 								'modified_gmt',
 								'link',
-								'featured_media_url',
 								'preview_link',
 								'edit_link',
 								// _web_stories_envelope will add these fields, we need them too.

@@ -1275,6 +1275,24 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Cooking',
+    postersByPage: {
+      0: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      1: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      2: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      3: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    },
   },
   {
     version: 2,
@@ -1474,6 +1492,24 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'DIY',
+    postersByPage: {
+      0: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      1: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      2: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      3: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    },
   },
   {
     version: 2,
@@ -1673,6 +1709,24 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Entertainment',
+    postersByPage: {
+      0: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      1: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      2: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      3: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    },
   },
   {
     version: 2,
@@ -1872,6 +1926,24 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Fashion',
+    postersByPage: {
+      0: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      1: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      2: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      3: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    },
   },
   {
     version: 2,
@@ -2071,6 +2143,24 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Fitness',
+    postersByPage: {
+      0: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      1: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      2: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      3: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    },
   },
   {
     version: 2,
@@ -2270,6 +2360,24 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Travel',
+    postersByPage: {
+      0: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      1: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      2: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      3: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    },
   },
   {
     version: 2,
@@ -2469,6 +2577,24 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Wellbeing',
+    postersByPage: {
+      0: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      1: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      2: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      3: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    },
   },
   {
     version: 2,
@@ -2668,6 +2794,24 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Beauty',
+    postersByPage: {
+      0: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      1: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      2: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      3: {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    },
   },
 ];
 

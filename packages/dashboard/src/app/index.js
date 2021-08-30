@@ -87,7 +87,7 @@ const AppContent = () => {
       addInitialFetchListener,
     })
   );
-  const isFirstLoadOnMyStories = useRef(currentPath === APP_ROUTES.MY_STORIES);
+  const isFirstLoadOnMyStories = useRef(currentPath === APP_ROUTES.DASHBOARD);
   const [isRedirectComplete, setIsRedirectComplete] = useState(
     !isFirstLoadOnMyStories.current
   );
@@ -168,7 +168,7 @@ const AppContent = () => {
         <PageContent fullWidth={hideLeftRail}>
           <Route
             exact
-            path={APP_ROUTES.MY_STORIES}
+            path={APP_ROUTES.DASHBOARD}
             component={<MyStoriesView />}
           />
           <Route
