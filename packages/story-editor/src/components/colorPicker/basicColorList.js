@@ -27,7 +27,6 @@ import {
 } from '@web-stories-wp/patterns';
 import { Swatch, themeHelpers } from '@web-stories-wp/design-system';
 import { useRef } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
