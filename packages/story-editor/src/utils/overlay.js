@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __, _x } from '@web-stories-wp/i18n';
 
 export const OverlayType = {
   NONE: 'none',
@@ -28,7 +28,7 @@ export const OverlayType = {
 
 export const OverlayPreset = {
   [OverlayType.NONE]: {
-    label: __('None', 'web-stories'),
+    label: _x('None', 'overlay', 'web-stories'),
   },
   [OverlayType.SOLID]: {
     label: __('Tint', 'web-stories'),

@@ -41,6 +41,10 @@ export const StoryPropType = PropTypes.shape({
   pages: PropTypes.arrayOf(StoryPropTypes.page),
   modified: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   author: PropTypes.string,
+  capabilities: PropTypes.shape({
+    hasDeleteAction: PropTypes.bool,
+    hasEditAction: PropTypes.bool,
+  }),
 });
 
 export const TemplatePropType = PropTypes.shape({
@@ -58,6 +62,12 @@ export const TemplatePropType = PropTypes.shape({
   description: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   createdBy: PropTypes.string,
+  postersByPage: PropTypes.objectOf(
+    PropTypes.shape({
+      webp: PropTypes.string,
+      png: PropTypes.string,
+    })
+  ),
 });
 
 export const TagPropType = PropTypes.shape({

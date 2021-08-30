@@ -21,14 +21,14 @@ import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import {
-  AnimatedContextMenu,
+  Icons,
+  ContextMenu,
   MenuItemProps,
 } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { EditPencil as EditPencilIcon } from '../../../../icons';
 import { MenuContainer, LogoMenuButton } from '../components';
 
 function PopoverLogoContextMenu({
@@ -73,9 +73,10 @@ function PopoverLogoContextMenu({
           onMenuItemToggle(isPopoverMenuOpen ? null : publisherLogo.id);
         }}
       >
-        <EditPencilIcon aria-hidden="true" />
+        <Icons.Pencil aria-hidden="true" />
       </LogoMenuButton>
-      <AnimatedContextMenu
+      <ContextMenu
+        animate
         isOpen={isPopoverMenuOpen}
         data-testid={`publisher-logo-context-menu-${idx}`}
         items={items}

@@ -26,77 +26,64 @@ import { TEMPLATES_GALLERY_STATUS, VIEW_STYLE } from '../../../../../constants';
 import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
 import Content from '..';
+import { ConfigProvider } from '../../../../config';
 
 const fakeTemplates = [
   {
     id: 1,
+    slug: 'beauty',
     title: 'Beauty',
     createdBy: 'Google',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
     status: 'template',
-    pages: [{ id: '10' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: 'https://example.com',
+    centerTargetAction: '#/subroute-details?id=1',
+    bottomTargetAction: () => {},
   },
   {
     id: 2,
+    slug: 'cooking',
     title: 'Cooking',
     createdBy: 'Google',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
     status: 'template',
-    pages: [{ id: '20' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: 'https://example.com',
+    centerTargetAction: '#/subroute-details?id=2',
+    bottomTargetAction: () => {},
   },
   {
     id: 3,
+    slug: 'fitness',
     title: 'Fitness',
     createdBy: 'Google',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
     status: 'template',
-    pages: [{ id: '30' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: 'https://example.com',
+    centerTargetAction: '#/subroute-details?id=3',
+    bottomTargetAction: () => {},
   },
 ];
 
-jest.mock('@web-stories-wp/story-editor', () => ({
-  __esModule: true,
-  ...jest.requireActual('@web-stories-wp/story-editor'),
-  PreviewPage: ({ page }) => <div data-testid={page.name} />, // eslint-disable-line react/prop-types,react/display-name
-}));
-jest.mock(
-  '../../../../../app/font/fontProvider.js',
-  () =>
-    ({ children }) =>
-      children
-);
-
 describe('Explore Templates <Content />', function () {
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
-
   it('should render the content grid with the correct template count.', function () {
     renderWithProviders(
-      <LayoutProvider>
-        <Content
-          filter={{ view: TEMPLATES_GALLERY_STATUS.ALL }}
-          search={{ keyword: '' }}
-          templates={fakeTemplates}
-          totalTemplates={3}
-          page={{
-            requestNextPage: jest.fn,
-          }}
-          view={{
-            style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300, containerHeight: 300 },
-          }}
-        />
-      </LayoutProvider>
+      <ConfigProvider config={{ cdnURL: 'cdn.example.com' }}>
+        <LayoutProvider>
+          <Content
+            filter={{ view: TEMPLATES_GALLERY_STATUS.ALL }}
+            search={{ keyword: '' }}
+            templates={fakeTemplates}
+            totalTemplates={3}
+            page={{
+              requestNextPage: jest.fn,
+            }}
+            view={{
+              style: VIEW_STYLE.GRID,
+              pageSize: { width: 200, height: 300, containerHeight: 300 },
+            }}
+          />
+        </LayoutProvider>
+      </ConfigProvider>
     );
 
     const useButtons = screen.getAllByTestId(/^template-grid-item/);

@@ -83,7 +83,7 @@ function StoriesPreview(props) {
           excerpt={story.excerpt.rendered ? story.excerpt.rendered : ''}
           date={story.date_gmt}
           author={story._embedded.author[0].name}
-          poster={story.featured_media_url}
+          poster={story._embedded?.['wp:featuredmedia']?.[0]?.source_url}
           imageAlignment={imageAlignment}
           isShowingAuthor={fieldState['show_author']}
           isShowingDate={fieldState['show_date']}

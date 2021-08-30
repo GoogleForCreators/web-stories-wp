@@ -37,7 +37,7 @@ export const Z_INDEX = {
 };
 
 export const APP_ROUTES = {
-  MY_STORIES: '/',
+  DASHBOARD: '/',
   SAVED_TEMPLATES: '/saved-templates',
   TEMPLATES_GALLERY: '/templates-gallery',
   TEMPLATE_DETAIL: 'template-detail',
@@ -57,7 +57,7 @@ export const NESTED_APP_ROUTES = {
 export const ADMIN_TITLE = __('Web Stories', 'web-stories');
 
 export const ROUTE_TITLES = {
-  [APP_ROUTES.MY_STORIES]: __('My Stories', 'web-stories'),
+  [APP_ROUTES.DASHBOARD]: __('Dashboard', 'web-stories'),
   [APP_ROUTES.SAVED_TEMPLATES]: __('Saved Templates', 'web-stories'),
   [APP_ROUTES.TEMPLATES_GALLERY]: __('Explore Templates', 'web-stories'),
   [`${APP_ROUTES.TEMPLATES_GALLERY}/${APP_ROUTES.TEMPLATE_DETAIL}`]: __(
@@ -66,13 +66,13 @@ export const ROUTE_TITLES = {
   ),
   [APP_ROUTES.EDITOR_SETTINGS]: __('Settings', 'web-stories'),
   [APP_ROUTES.SUPPORT]: __('Support', 'web-stories'),
-  DEFAULT: __('My Stories', 'web-stories'),
+  DEFAULT: __('Dashboard', 'web-stories'),
 };
 
 export const PRIMARY_PATHS = [
   {
-    value: APP_ROUTES.MY_STORIES,
-    label: ROUTE_TITLES[APP_ROUTES.MY_STORIES],
+    value: APP_ROUTES.DASHBOARD,
+    label: ROUTE_TITLES[APP_ROUTES.DASHBOARD],
     Icon: HomeWithHeart,
   },
   {
@@ -112,12 +112,12 @@ export const VIEW_STYLE_LABELS = {
 };
 
 export const DASHBOARD_VIEWS = {
-  MY_STORIES: 'MY_STORIES',
+  DASHBOARD: 'DASHBOARD',
   SAVED_TEMPLATES: 'SAVED_TEMPLATES',
   TEMPLATES_GALLERY: 'TEMPLATES_GALLERY',
 };
 export const RESULT_LABELS = {
-  [DASHBOARD_VIEWS.MY_STORIES]: { ...STORY_VIEWING_LABELS },
+  [DASHBOARD_VIEWS.DASHBOARD]: { ...STORY_VIEWING_LABELS },
   [DASHBOARD_VIEWS.SAVED_TEMPLATES]: { ...SAVED_TEMPLATES_VIEWING_LABELS },
   [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
 };

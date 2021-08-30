@@ -33,22 +33,36 @@ const Bubble = styled.div`
   position: relative;
   height: 24px;
   width: 24px;
+
+  ${({ isSmall }) =>
+    isSmall &&
+    css`
+      height: 20px;
+      width: 20px;
+    `};
 `;
 
 const Inner = styled.span`
   ${themeHelpers.fullSizeAbsolute}
   ${themeHelpers.centerContent}
-  ${themeHelpers.expandTextPreset(
-    ({ paragraph }, sizes) => paragraph[sizes.SMALL]
-  )};
+  ${({ isSmall, theme }) =>
+    themeHelpers.expandTextPreset(
+      ({ paragraph }, sizes) => paragraph[isSmall ? sizes.X_SMALL : sizes.SMALL]
+    )({ theme })};
   color: ${({ theme }) => theme.colors.bg.primary};
+  user-select: none;
 `;
 
-export const NotificationBubble = ({ notificationCount, ...props }) => (
-  <Bubble {...props}>
-    <Inner>{notificationCount}</Inner>
+export const NotificationBubble = ({
+  notificationCount,
+  isSmall,
+  ...props
+}) => (
+  <Bubble isSmall={isSmall} {...props}>
+    <Inner isSmall={isSmall}>{notificationCount}</Inner>
   </Bubble>
 );
 NotificationBubble.propTypes = {
   notificationCount: PropTypes.number,
+  isSmall: PropTypes.bool,
 };

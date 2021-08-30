@@ -19,15 +19,33 @@
  */
 import styled from 'styled-components';
 import { boolean, text } from '@storybook/addon-knobs';
-import { TransformProvider } from '@web-stories-wp/story-editor';
-
 /**
  * Internal dependencies
  */
 import CardGallery from '..';
-import formattedTemplatesArray from '../../../dataUtils/formattedTemplatesArray';
-import FontProvider from '../../../app/font/fontProvider';
 
+const demoPosterGroup = [
+  {
+    id: 0,
+    webp: 'https://placekitten.com/g/200/300',
+    png: 'https://placekitten.com/g/200/300',
+  },
+  {
+    id: 1,
+    webp: 'https://placekitten.com/g/200/300',
+    png: 'https://placekitten.com/g/200/300',
+  },
+  {
+    id: 2,
+    webp: 'https://placekitten.com/g/200/300',
+    png: 'https://placekitten.com/g/200/300',
+  },
+  {
+    id: 3,
+    webp: 'https://placekitten.com/g/200/300',
+    png: 'https://placekitten.com/g/200/300',
+  },
+];
 export default {
   title: 'Dashboard/Components/CardGallery',
   component: CardGallery,
@@ -38,16 +56,12 @@ const CardGalleryContainer = styled.div`
 `;
 export const _default = () => {
   return (
-    <FontProvider>
-      <TransformProvider>
-        <CardGalleryContainer>
-          <CardGallery
-            story={formattedTemplatesArray[0]}
-            isRTL={boolean('isRTL')}
-            galleryLabel={text('galleryLabel', 'my aria label text')}
-          />
-        </CardGalleryContainer>
-      </TransformProvider>
-    </FontProvider>
+    <CardGalleryContainer>
+      <CardGallery
+        galleryPosters={demoPosterGroup}
+        isRTL={boolean('isRTL')}
+        galleryLabel={text('galleryLabel', 'my aria label text')}
+      />
+    </CardGalleryContainer>
   );
 };

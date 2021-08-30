@@ -51,9 +51,10 @@ const SwatchList = styled.div.attrs({
   gap: 6px;
 `;
 
-const StyledSwatch = styled(Swatch).attrs({
+const StyledSwatch = styled(Swatch).attrs(({ isSelected }) => ({
   role: 'option',
-})`
+  'aria-selected': isSelected,
+}))`
   ${focusStyle};
 
   ${({ isSelected, theme }) =>
@@ -77,6 +78,7 @@ function BasicColorList({
   handleColorChange,
   allowsOpacity,
   allowsGradient,
+  ...rest
 }) {
   const colorAsBackground = getPatternAsString(color);
   const listRef = useRef(null);
@@ -89,7 +91,7 @@ function BasicColorList({
 
   let firstIndex = 0;
   return (
-    <SwatchList ref={listRef}>
+    <SwatchList ref={listRef} {...rest}>
       {colors.map((pattern, i) => {
         const isTransparentAndInvalid = !allowsOpacity && hasOpacity(pattern);
         const isGradientAndInvalid = !allowsGradient && hasGradient(pattern);
@@ -114,6 +116,7 @@ function BasicColorList({
             isDisabled={isDisabled}
             tabIndex={tabIndex}
             aria-label={__('Apply color', 'web-stories')}
+            title={patternAsBackground}
           />
         );
       })}

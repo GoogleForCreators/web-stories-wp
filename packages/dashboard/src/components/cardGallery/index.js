@@ -17,204 +17,165 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import {
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-  useResizeEffect,
-  useDebouncedCallback,
 } from '@web-stories-wp/react';
-import PropTypes from 'prop-types';
-import { ThemeProvider } from 'styled-components';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import {
-  FULLBLEED_RATIO,
-  PAGE_RATIO,
-  UnitsProvider,
-} from '@web-stories-wp/units';
 import { useGridViewKeys } from '@web-stories-wp/design-system';
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
-import { PreviewPage } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { StoryPropType } from '../../types';
 import {
   GalleryContainer,
-  MiniCardButton,
-  Thumbnail,
-  AspectRatio,
+  ThumbnailButton,
   Thumbnails,
   DisplayPage,
 } from './components';
 
-function sizesFromWidth(width) {
-  return {
-    width,
-    height: width / PAGE_RATIO,
-    containerHeight: width / FULLBLEED_RATIO,
-  };
+function getPosterAltCopy(pageNumber) {
+  return sprintf(
+    /* translators: %s: page number. */
+    __('Poster of template page %s', 'web-stories'),
+    pageNumber
+  );
 }
 
-function getIsThreeRows() {
-  return window.innerWidth < 1600;
-}
-
-function CardGallery({ story, isRTL, galleryLabel }) {
-  const [activePageIndex, setActivePageIndex] = useState(0);
-  const [activePageId, setActivePageId] = useState();
+function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
+  const [selectedGridItemIndex, setSelectedGridItemIndex] = useState(0);
+  const [focusedGridItemIndex, setFocusedGridItemIndex] = useState();
   const containerRef = useRef();
   const gridRef = useRef();
-  const pageRefs = useRef({});
+  const posterRefs = useRef({});
 
-  const displayPageRef = useRef();
-  const thumbnailRef = useRef();
-  const [displayPageSize, setDisplayPageSize] = useState(null);
-  const [thumbnailSize, setThumbnailSize] = useState(null);
-  const [isThreeRows, setIsThreeRows] = useState(getIsThreeRows());
+  const handleMiniCardClick = useCallback((index) => {
+    setSelectedGridItemIndex(index);
+    setFocusedGridItemIndex(index);
+  }, []);
 
-  const { pages = [] } = story;
-
-  const isInteractive = pages.length > 1;
-
-  const handleMiniCardClick = useCallback((index, id) => {
-    setActivePageIndex(index);
-    setActivePageId(id);
+  const handleGalleryItemFocus = useCallback((index) => {
+    setFocusedGridItemIndex(index);
   }, []);
 
   useEffect(() => {
-    // Reset state when the story changes
-    setActivePageIndex(0);
-    setActivePageId(pages[0].id);
-  }, [pages]);
+    // Reset state when posters update
+    if (galleryPosters) {
+      setSelectedGridItemIndex(0);
+      setFocusedGridItemIndex();
+    }
+  }, [galleryPosters]);
 
   useGridViewKeys({
     containerRef,
     gridRef,
-    itemRefs: pageRefs,
+    itemRefs: posterRefs,
     isRTL,
-    currentItemId: activePageId,
-    items: pages,
+    currentItemId: focusedGridItemIndex,
+    items: galleryPosters,
   });
 
-  const debouncedSetDisplayPageSize = useDebouncedCallback(({ width }) => {
-    setDisplayPageSize(sizesFromWidth(width));
-  }, 100);
-  useResizeEffect(displayPageRef, debouncedSetDisplayPageSize, [
-    debouncedSetDisplayPageSize,
-  ]);
-  const debouncedSetThumbnailSize = useDebouncedCallback(({ width }) => {
-    setThumbnailSize(sizesFromWidth(width));
-  }, 100);
-  useResizeEffect(thumbnailRef, debouncedSetThumbnailSize, [
-    debouncedSetThumbnailSize,
-    thumbnailRef.current,
-  ]);
-
-  const debouncedSetIsThreeRows = useDebouncedCallback(() => {
-    setIsThreeRows(getIsThreeRows());
-  }, 100);
-  useEffect(() => {
-    window.addEventListener('resize', debouncedSetIsThreeRows);
-    return () => {
-      window.removeEventListener('resize', debouncedSetIsThreeRows);
-    };
-  }, [debouncedSetIsThreeRows]);
-
   const GalleryItems = useMemo(() => {
-    return pages.map((page, index) => {
-      const isCurrentPage = activePageId === page.id;
-      const isActive = isCurrentPage && isInteractive;
-      const refProps = !index ? { ref: thumbnailRef } : {};
+    return galleryPosters.map((poster, index) => {
+      const key = `gallery_item_${index}`;
+      const pageNumber = index + 1;
+      // If there's not a focused index we want to fall back to the selected grid item
+      const isFocusIndex = focusedGridItemIndex
+        ? focusedGridItemIndex === index
+        : selectedGridItemIndex === index;
+
       return (
-        <Thumbnail
-          key={page.id}
+        <div
+          key={key}
           ref={(el) => {
-            pageRefs.current[page.id] = el;
+            posterRefs.current[index] = el;
           }}
+          onFocus={() => handleGalleryItemFocus(index)}
         >
-          <AspectRatio {...refProps} aspect={1 / FULLBLEED_RATIO}>
-            <MiniCardButton
-              isSelected={isCurrentPage}
-              tabIndex={isActive ? 0 : -1}
-              onClick={() => handleMiniCardClick(index, page.id)}
-              aria-label={
-                isCurrentPage
-                  ? sprintf(
-                      /* translators: %s: page number. */
-                      __('Page %s (current page)', 'web-stories'),
-                      index + 1
-                    )
-                  : sprintf(
-                      /* translators: %s: page number. */
-                      __('Page %s', 'web-stories'),
-                      index + 1
-                    )
-              }
-            >
-              {thumbnailSize && (
-                <UnitsProvider
-                  pageSize={{
-                    height: thumbnailSize.height,
-                    width: thumbnailSize.width,
-                  }}
-                >
-                  <PreviewPage page={page} pageSize={thumbnailSize} />
-                </UnitsProvider>
-              )}
-            </MiniCardButton>
-          </AspectRatio>
-        </Thumbnail>
+          <ThumbnailButton
+            $isSelected={selectedGridItemIndex === index}
+            tabIndex={isFocusIndex ? 0 : -1}
+            onClick={() => handleMiniCardClick(index)}
+            aria-label={
+              selectedGridItemIndex === index
+                ? sprintf(
+                    /* translators: %s: page number. */
+                    __('Page %s (current page)', 'web-stories'),
+                    pageNumber
+                  )
+                : sprintf(
+                    /* translators: %s: page number. */
+                    __('Page %s', 'web-stories'),
+                    pageNumber
+                  )
+            }
+          >
+            <picture>
+              <source srcSet={poster.webp} type="image/webp" />
+              <source srcSet={poster.png} type="image/png" />
+              <img src={poster.png} alt={getPosterAltCopy(pageNumber)} />
+            </picture>
+          </ThumbnailButton>
+        </div>
       );
     });
-  }, [activePageId, handleMiniCardClick, isInteractive, pages, thumbnailSize]);
+  }, [
+    galleryPosters,
+    selectedGridItemIndex,
+    focusedGridItemIndex,
+    handleGalleryItemFocus,
+    handleMiniCardClick,
+  ]);
 
   return (
-    <ThemeProvider
-      theme={(theme) => ({ ...theme, numRows: isThreeRows ? 3 : 4 })}
-    >
-      <GalleryContainer ref={containerRef}>
-        <Thumbnails
-          ref={gridRef}
-          aria-label={galleryLabel}
-          data-testid="mini-cards-container"
-        >
-          {GalleryItems}
-        </Thumbnails>
-        <DisplayPage
-          aria-label={sprintf(
-            /* translators: %s: active preview page number */
-            __('Active Page Preview - Page %s', 'web-stories'),
-            activePageIndex + 1
-          )}
-        >
-          <AspectRatio ref={displayPageRef} aspect={1 / FULLBLEED_RATIO}>
-            {pages[activePageIndex] && displayPageSize && (
-              <UnitsProvider
-                pageSize={{
-                  height: displayPageSize.height,
-                  width: displayPageSize.width,
-                }}
-              >
-                <PreviewPage
-                  page={pages[activePageIndex]}
-                  pageSize={displayPageSize}
-                  animationState={STORY_ANIMATION_STATE.PLAYING}
-                />
-              </UnitsProvider>
-            )}
-          </AspectRatio>
-        </DisplayPage>
-      </GalleryContainer>
-    </ThemeProvider>
+    <GalleryContainer ref={containerRef}>
+      <Thumbnails
+        ref={gridRef}
+        aria-label={galleryLabel}
+        data-testid="mini-cards-container"
+      >
+        {GalleryItems}
+      </Thumbnails>
+      <DisplayPage
+        aria-label={sprintf(
+          /* translators: %s: active preview page number */
+          __('Active Page Preview - Page %s', 'web-stories'),
+          selectedGridItemIndex + 1
+        )}
+      >
+        {galleryPosters[selectedGridItemIndex] && (
+          <picture>
+            <source
+              srcSet={galleryPosters[selectedGridItemIndex].webp}
+              type="image/webp"
+            />
+            <source
+              srcSet={galleryPosters[selectedGridItemIndex].png}
+              type="image/png"
+            />
+            <img
+              src={galleryPosters[selectedGridItemIndex].png}
+              alt={getPosterAltCopy(selectedGridItemIndex + 1)}
+            />
+          </picture>
+        )}
+      </DisplayPage>
+    </GalleryContainer>
   );
 }
 
 CardGallery.propTypes = {
-  story: StoryPropType.isRequired,
+  galleryPosters: PropTypes.arrayOf(
+    PropTypes.shape({
+      png: PropTypes.string,
+      webp: PropTypes.string,
+      id: PropTypes.number,
+    })
+  ).isRequired,
   isRTL: PropTypes.bool,
   galleryLabel: PropTypes.string.isRequired,
 };

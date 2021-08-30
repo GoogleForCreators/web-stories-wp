@@ -244,7 +244,9 @@
       {"name": "Primary", "linkAttribute": "href"},
       "PrimaryLink",
       "SecondaryLink",
-      "ExternalLink"
+      "ExternalLink",
+      "ScrimAnchor",
+      "LinkWithRef"
     ],
     "testing-library/custom-renders": [
       "arrange",
@@ -455,6 +457,7 @@
         }
       },
       "rules": {
+        "import/no-unresolved": "off",
         "import/no-extraneous-dependencies": "off",
         "@wordpress/dependency-group": "off",
         "no-console": "off",

@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { ACTION_TEXT } from '../../../app/highlights';
+import { ACTIONS } from '../../../app/highlights';
 import { Container } from './container';
 
 export class QuickActionMenu extends Container {
@@ -26,73 +26,73 @@ export class QuickActionMenu extends Container {
 
   get changeBackgroundColorButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
+      name: ACTIONS.CHANGE_BACKGROUND_COLOR.text,
     });
   }
 
   get changeColorButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.CHANGE_COLOR,
+      name: ACTIONS.CHANGE_COLOR.text,
     });
   }
 
   get insertBackgroundMediaButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
+      name: ACTIONS.INSERT_BACKGROUND_MEDIA.text,
     });
   }
 
   get insertTextButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.INSERT_TEXT,
+      name: ACTIONS.INSERT_TEXT.text,
     });
   }
 
   get replaceMediaButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.REPLACE_MEDIA,
+      name: ACTIONS.REPLACE_MEDIA.text,
     });
   }
 
   get replaceBackgroundMediaButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
+      name: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
     });
   }
 
   get addAnimationButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.ADD_ANIMATION,
+      name: ACTIONS.ADD_ANIMATION.text,
     });
   }
 
   get addLinkButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.ADD_LINK,
+      name: ACTIONS.ADD_LINK.text,
     });
   }
 
   get addCaptionsButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.ADD_CAPTIONS,
+      name: ACTIONS.ADD_CAPTIONS.text,
     });
   }
 
   get resetElementButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.RESET_ELEMENT,
+      name: ACTIONS.RESET_ELEMENT.text,
     });
   }
 
   get textColorButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.CHANGE_TEXT_COLOR,
+      name: ACTIONS.CHANGE_TEXT_COLOR.text,
     });
   }
 
   get fontButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.CHANGE_FONT,
+      name: ACTIONS.CHANGE_FONT.text,
     });
   }
 }
