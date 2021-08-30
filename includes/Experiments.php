@@ -407,8 +407,8 @@ class Experiments extends Service_Base {
 			 * Creation date: 2021-08-30
 			 */
 			[
-				'name'        => 'enableTaxonomySupport',
-				'label'       => __( 'Taxonomy', 'web-stories' ),
+				'name'        => 'enableTaxonomiesSupport',
+				'label'       => __( 'Taxonomies', 'web-stories' ),
 				'description' => __( 'Enable support of tags and categories for stories', 'web-stories' ),
 				'group'       => 'editor',
 			],
