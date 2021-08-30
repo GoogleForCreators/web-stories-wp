@@ -176,7 +176,7 @@ function useSingleSelectionResize({
     onResize,
     onResizeStart,
     onResizeEnd,
-    keepRatio: isResizingFromCorner,
+    keepRatio: isResizingFromCorner || selectedElement?.type === 'sticker',
     renderDirections: getRenderDirections(resizeRules),
     className: classnames(classNames, {
       'visually-hide-handles': visuallyHideHandles,
