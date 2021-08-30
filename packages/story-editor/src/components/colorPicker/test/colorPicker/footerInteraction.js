@@ -25,14 +25,15 @@ import { createSolid } from '@web-stories-wp/patterns';
 
 import { arrange } from './_utils';
 
-// Disable reason: To be fixed in 8655
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('<ColorPicker /> as the footer is interacted with', () => {
+describe('<ColorPicker /> as the footer is interacted with', () => {
   it('should set hex when edited and invoke onChange', async () => {
-    const { getEditableHexElement, onChange } = arrange({
+    const { getCustomButton, getEditableHexElement, onChange } = arrange({
       color: createSolid(0, 0, 255),
-      hasGradient: true,
+      allowsGradient: true,
     });
+
+    fireEvent.click(getCustomButton());
+
     await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
 
     // At first it's a button
@@ -59,10 +60,18 @@ describe.skip('<ColorPicker /> as the footer is interacted with', () => {
   });
 
   it('should set opacity when edited and invoke onChange', async () => {
-    const { getEditableAlphaElement, getSolidButton, onChange } = arrange({
+    const {
+      getCustomButton,
+      getEditableAlphaElement,
+      getSolidButton,
+      onChange,
+    } = arrange({
       color: createSolid(0, 0, 255, 0.4),
-      hasGradient: true,
+      allowsGradient: true,
     });
+
+    fireEvent.click(getCustomButton());
+
     await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
 
     // At first it's a button
@@ -91,10 +100,18 @@ describe.skip('<ColorPicker /> as the footer is interacted with', () => {
   });
 
   it('should set opacity to default when edited with illegal value and invoke onChange', async () => {
-    const { getEditableAlphaElement, getSolidButton, onChange } = arrange({
+    const {
+      getCustomButton,
+      getEditableAlphaElement,
+      getSolidButton,
+      onChange,
+    } = arrange({
       color: createSolid(0, 0, 255, 0.4),
-      hasGradient: true,
+      allowsGradient: true,
     });
+
+    fireEvent.click(getCustomButton());
+
     await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
 
     // At first it's a button
