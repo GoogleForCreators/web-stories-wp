@@ -108,6 +108,7 @@ export { ReactComponent as MagnifierPlus } from './magnifier_plus.svg';
 export { ReactComponent as Media } from './media.svg';
 export { ReactComponent as MirrorLeftright } from './mirror_leftright.svg';
 export { ReactComponent as MirrorUpdown } from './mirror_updown.svg';
+export { ReactComponent as Muted } from './muted.svg';
 export { ReactComponent as PageMargin } from './page_margin.svg';
 export { ReactComponent as PagePlus } from './page_plus.svg';
 export { ReactComponent as PageSwap } from './page_swap.svg';
