@@ -192,6 +192,18 @@ function TextSetsPane({ paneRef }) {
 
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);
   const toggleId = useMemo(() => `toggle_text_sets_${uuidv4()}`, []);
+
+  const emptyContentMessage = useMemo(
+    () =>
+      showInUse
+        ? __(
+            'No matching Text Sets available. Try adding text to your story.',
+            'web-stories'
+          )
+        : __('No Text Sets available.', 'web-stories'),
+    [showInUse]
+  );
+
   return (
     <SectionContainer id={sectionId}>
       <TitleBar>
@@ -229,9 +241,7 @@ function TextSetsPane({ paneRef }) {
       </FullWidthWrapper>
       <TextSetsWrapper>
         {!filteredTextSets?.length && !areTextSetsLoading ? (
-          <EmptyContentMessage>
-            {__('No Text Sets available.', 'web-stories')}
-          </EmptyContentMessage>
+          <EmptyContentMessage>{emptyContentMessage}</EmptyContentMessage>
         ) : (
           <TextSets paneRef={paneRef} filteredTextSets={filteredTextSets} />
         )}

@@ -26,8 +26,9 @@ const Message = styled.div`
   align-items: center;
   max-width: 400px;
   margin: 8vh auto;
+  text-align: center;
 
-  & > * {
+  * {
     text-align: center;
     margin: 0 auto;
   }
