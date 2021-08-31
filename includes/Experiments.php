@@ -350,6 +350,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Smart text color', 'web-stories' ),
 				'description' => __( 'Enable text insertion with smart color ensuring good contrast with the background', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @merapi
@@ -361,6 +362,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Smart text sets color', 'web-stories' ),
 				'description' => __( 'Enable text sets insertion with smart color ensuring good contrast with the background', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @merapi
