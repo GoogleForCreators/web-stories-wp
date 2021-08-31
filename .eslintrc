@@ -251,7 +251,6 @@
       "SecondaryLink",
       "ExternalLink",
       "ScrimAnchor",
-      "LinkWithRef"
     ],
     "testing-library/custom-renders": [
       "arrange",
