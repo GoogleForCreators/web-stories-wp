@@ -32,6 +32,7 @@ function arrange(
   capabilities = {
     hasAssignAuthorAction: true,
     hasPublishAction: true,
+    hasUploadMediaAction: true,
   }
 ) {
   const updateStory = jest.fn();
