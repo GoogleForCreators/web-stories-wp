@@ -101,8 +101,8 @@ function FramesLayer() {
       {!isAnimating && (
         <FramesPageArea ref={rightClickAreaRef} onScroll={onScroll}>
           {currentPage &&
-            currentPage.elements.map(({ id, ...rest }) => {
-              return <FrameElement key={id} element={{ id, ...rest }} />;
+            currentPage.elements.map((element) => {
+              return <FrameElement key={element.id} element={element} />;
             })}
           <DesignSpaceGuideline
             ref={setDesignSpaceGuideline}

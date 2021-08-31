@@ -34,7 +34,7 @@ import { useGridViewKeys } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { CardGrid, CONTEXT_MENU_BUTTON_CLASS } from '../../../../../components';
+import { CardGrid } from '../../../../../components';
 import {
   StoriesPropType,
   StoryMenuPropType,
@@ -54,7 +54,6 @@ const StoryGrid = styled(CardGrid)`
 
 const StoryGridView = ({
   stories,
-  bottomActionLabel,
   pageSize,
   storyMenu,
   renameStory,
@@ -66,6 +65,7 @@ const StoryGridView = ({
   const itemRefs = useRef({});
   const [activeGridItemId, setActiveGridItemId] = useState();
   const activeGridItemIdRef = useRef();
+  const gridItemIds = useMemo(() => stories.map(({ id }) => id), [stories]);
 
   useGridViewKeys({
     containerRef,
@@ -90,18 +90,40 @@ const StoryGridView = ({
       const newFocusId = returnStoryFocusId?.value;
       setActiveGridItemId(newFocusId);
       // grab the menu button and refocus
-      itemRefs.current?.[newFocusId]
-        ?.querySelector(`.${CONTEXT_MENU_BUTTON_CLASS}`)
-        ?.focus();
+      const firstFocusableElement = itemRefs.current?.[
+        newFocusId
+      ]?.querySelectorAll(['button', 'a'])?.[0];
+
+      firstFocusableElement?.focus();
     }
   }, [activeGridItemId, returnStoryFocusId]);
 
-  // when keyboard focus changes through FocusableGridItem immediately focus the edit preview layer on top of preview
+  // when keyboard focus changes through FocusableGridItem
+  // immediately focus the edit preview layer on top of preview
   useEffect(() => {
     if (activeGridItemId) {
       activeGridItemIdRef.current = activeGridItemId;
     }
   }, [activeGridItemId]);
+
+  // Additional functionality needed when closing context menus to maintain grid item focus
+  const handleMenuToggle = useCallback(
+    (evt, id) => {
+      storyMenu.handleMenuToggle(id);
+      // Conditionally return the focus to the grid when menu is closed using `tab`
+      if (id < 0 && evt?.keyCode === 9) {
+        // Menu is closing.
+        const isNext = !evt?.shiftKey;
+        const idToFocus = isNext
+          ? gridItemIds[gridItemIds.indexOf(activeGridItemId) + 1]
+          : activeGridItemId;
+        returnStoryFocusId.set(idToFocus);
+        activeGridItemIdRef.current = null;
+        setActiveGridItemId(null);
+      }
+    },
+    [activeGridItemId, gridItemIds, returnStoryFocusId, storyMenu]
+  );
 
   // if keyboard is used instead of mouse the useFocusOut doesn't get triggered
   // that is where we are setting active grid item ID to null
@@ -117,6 +139,7 @@ const StoryGridView = ({
   const modifiedStoryMenu = useMemo(() => {
     return {
       ...storyMenu,
+      handleMenuToggle,
       menuItemActions: {
         ...storyMenu.menuItemActions,
         [STORY_CONTEXT_MENU_ACTIONS.DELETE]: (story) => {
@@ -137,19 +160,18 @@ const StoryGridView = ({
         },
       },
     };
-  }, [manuallySetFocusOut, storyMenu]);
+  }, [handleMenuToggle, manuallySetFocusOut, storyMenu]);
 
   const memoizedStoryGrid = useMemo(
     () =>
       stories.map((story) => {
         return (
           <StoryGridItem
-            bottomActionLabel={bottomActionLabel}
-            handleFocus={() => {
-              setActiveGridItemId(story.id);
-            }}
+            onFocus={() => setActiveGridItemId(story.id)}
             isActive={activeGridItemId === story.id}
-            itemRefs={itemRefs}
+            ref={(el) => {
+              itemRefs.current[story.id] = el;
+            }}
             key={story.id}
             pageSize={pageSize}
             renameStory={renameStory}
@@ -158,14 +180,7 @@ const StoryGridView = ({
           />
         );
       }),
-    [
-      activeGridItemId,
-      bottomActionLabel,
-      modifiedStoryMenu,
-      pageSize,
-      renameStory,
-      stories,
-    ]
+    [activeGridItemId, modifiedStoryMenu, pageSize, renameStory, stories]
   );
 
   return (
@@ -183,11 +198,8 @@ const StoryGridView = ({
   );
 };
 
-const ActionLabel = PropTypes.oneOfType([PropTypes.string, PropTypes.node]);
-
 StoryGridView.propTypes = {
   stories: StoriesPropType,
-  bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,

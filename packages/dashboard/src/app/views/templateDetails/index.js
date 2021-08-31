@@ -25,7 +25,6 @@ import {
 } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@web-stories-wp/design-system';
-import { TransformProvider } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
@@ -33,7 +32,6 @@ import { Layout } from '../../../components';
 import { usePagePreviewSize, clamp } from '../../../utils';
 import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
-import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ERRORS } from '../../textContent';
@@ -176,7 +174,7 @@ function TemplateDetails() {
     [activeTemplateIndex, templatesOrderById, actions, templates]
   );
 
-  const onHandleCta = useCallback(() => {
+  const handleCreateStoryFromTemplate = useCallback(() => {
     trackEvent('use_template', {
       name: template.title,
       template_id: template.id,
@@ -185,28 +183,24 @@ function TemplateDetails() {
   }, [createStoryFromTemplate, template]);
 
   return (
-    <FontProvider>
-      <TransformProvider>
-        <Layout.Provider>
-          <Header
-            templateTitle={template?.title}
-            onHandleCtaClick={onHandleCta}
-          />
-          <Content
-            activeTemplateIndex={activeTemplateIndex}
-            isRTL={isRTL}
-            orderedTemplatesLength={templatesOrderById.length}
-            pageSize={pageSize}
-            switchToTemplateByOffset={switchToTemplateByOffset}
-            template={template}
-            relatedTemplates={relatedTemplates}
-            templateActions={{
-              createStoryFromTemplate,
-            }}
-          />
-        </Layout.Provider>
-      </TransformProvider>
-    </FontProvider>
+    <Layout.Provider>
+      <Header
+        templateTitle={template?.title}
+        onHandleCtaClick={handleCreateStoryFromTemplate}
+      />
+      <Content
+        activeTemplateIndex={activeTemplateIndex}
+        isRTL={isRTL}
+        orderedTemplatesLength={templatesOrderById.length}
+        pageSize={pageSize}
+        switchToTemplateByOffset={switchToTemplateByOffset}
+        template={template}
+        relatedTemplates={relatedTemplates}
+        templateActions={{
+          createStoryFromTemplate,
+        }}
+      />
+    </Layout.Provider>
   );
 }
 

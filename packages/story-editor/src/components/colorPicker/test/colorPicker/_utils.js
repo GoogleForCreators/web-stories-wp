@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -52,7 +52,7 @@ function arrange(customProps = {}) {
   const getRadialButton = () =>
     screen.queryByLabelText(/radial gradient pattern/i);
   const getCloseButton = () => screen.queryByLabelText(/close/i);
-  const getEditableHexElement = () => screen.queryByLabelText(/edit hex/i);
+  const getEditableHexElement = () => screen.getByLabelText(/edit hex/i);
   const getEditableAlphaElement = () =>
     screen.queryByLabelText(/edit opacity/i);
   const getGradientLine = () => screen.queryByLabelText(/gradient line/i);
@@ -66,6 +66,24 @@ function arrange(customProps = {}) {
   const getGradientReverse = () =>
     screen.queryByLabelText(/reverse gradient stops/i);
   const getGradientRotate = () => screen.queryByLabelText(/rotate gradient/i);
+  const getSwatchList = (name) => screen.queryByRole('listbox', { name });
+  const getSwatches = (list) =>
+    within(getSwatchList(list)).getAllByRole('option');
+  const getEnabledSwatches = (list) =>
+    within(getSwatchList(list))
+      .getAllByRole('option')
+      .filter(
+        (e) => !e.hasAttribute('disabled') && !e.hasAttribute('aria-disabled')
+      );
+  const getSwatchByLabel = (list, name) =>
+    within(getSwatchList(list)).getByRole('option', { name });
+  const getSelectedSwatch = (list) =>
+    within(getSwatchList(list)).queryByRole('option', {
+      selected: true,
+    });
+  const getCustomButton = () => screen.getByRole('button', { name: 'Custom' });
+  const getAddCustomButton = () => screen.getByRole('button', { name: 'Add' });
+  const getBackButton = () => screen.getByRole('button', { name: 'Go back' });
   const wrapperRerender = (moreCustomProps) =>
     rerender(
       <ThemeProvider theme={theme}>
@@ -87,6 +105,14 @@ function arrange(customProps = {}) {
     getTempGradientStop,
     getGradientReverse,
     getGradientRotate,
+    getSwatchList,
+    getEnabledSwatches,
+    getSwatches,
+    getSwatchByLabel,
+    getSelectedSwatch,
+    getCustomButton,
+    getAddCustomButton,
+    getBackButton,
     onChange,
     onClose,
     rerender: wrapperRerender,

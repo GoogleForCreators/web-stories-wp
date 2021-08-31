@@ -252,7 +252,6 @@ function StoriesView({
     ) {
       return (
         <StoryGridView
-          bottomActionLabel={__('Open in editor', 'web-stories')}
           isLoading={loading?.isLoading}
           pageSize={view.pageSize}
           renameStory={renameStory}

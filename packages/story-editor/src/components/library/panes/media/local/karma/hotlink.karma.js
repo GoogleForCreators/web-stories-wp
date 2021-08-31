@@ -53,17 +53,13 @@ describe('Embedding hotlinked media', () => {
     const insertBtn = await fixture.screen.getByRole('button', {
       name: 'Insert',
     });
+
     await fixture.events.click(input);
-    await fixture.events.keyboard.type('https://example.test');
-    await fixture.events.click(insertBtn);
-
-    const dialog = screen.getByRole('dialog');
-    expect(dialog.textContent).toContain('Invalid link');
-
-    await fixture.events.click(input, { clickCount: 3 });
     await fixture.events.keyboard.type('https://example.jpg');
     await fixture.events.click(insertBtn);
+
     await fixture.events.sleep(500);
+    const dialog = screen.getByRole('dialog');
     await waitFor(() =>
       expect(dialog.textContent).toContain('Media failed to load')
     );

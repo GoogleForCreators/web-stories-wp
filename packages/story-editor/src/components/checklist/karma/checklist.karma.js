@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 /**
  * Internal dependencies
  */
@@ -577,7 +578,62 @@ describe('Checklist integration - Card visibility', () => {
 
   describe('hasUploadMediaAction=false', () => {
     beforeEach(async () => {
-      fixture = new Fixture();
+      fixture = new Fixture({
+        mocks: {
+          getStoryById: () =>
+            Promise.resolve({
+              title: { raw: '' },
+              status: 'draft',
+              author: 1,
+              slug: '',
+              date: '2020-05-06T22:32:37',
+              date_gmt: '2020-05-06T22:32:37',
+              modified: '2020-05-06T22:32:37',
+              excerpt: { raw: '' },
+              link: 'http://stories.local/?post_type=web-story&p=1',
+              preview_link: 'http://stories.local/?post_type=web-story&p=1',
+              story_data: {
+                version: DATA_VERSION,
+                pages: [],
+              },
+              featured_media: 2,
+              featured_media_url: 'http://localhost:9876/__static__/earth.jpg',
+              publisher_logo_url: 'http://localhost:9876/__static__/earth.jpg',
+              permalink_template: 'http://stories3.local/stories/%pagename%/',
+              style_presets: { textStyles: [], colors: [] },
+              password: '',
+              _embedded: {
+                author: [{ id: 1, name: 'John Doe' }],
+                'wp:featuredmedia': [
+                  {
+                    id: 2,
+                    source_url: 'http://localhost:9876/__static__/earth.jpg',
+                    height: 200,
+                    width: 200,
+                  },
+                ],
+              },
+              _links: {
+                'wp:action-assign-author': {
+                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+                },
+                'wp:action-delete': {
+                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+                },
+                'wp:action-publish': {
+                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+                },
+                'wp:action-unfiltered-html': {
+                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+                },
+                'wp:featuredmedia': {
+                  embeddable: true,
+                  href: 'http://stories.local/wp-json/web-stories/v1/media/2',
+                },
+              },
+            }),
+        },
+      });
       fixture.setFlags({ enableChecklistCompanion: true });
 
       fixture.setConfig({ capabilities: { hasUploadMediaAction: false } });
@@ -612,8 +668,6 @@ describe('Checklist integration - Card visibility', () => {
         checkIfCardDoesNotExist
       );
 
-      // add poster image to see new problems
-      await addPosterImageWithIssues();
       posterIssuesRequiringMediaUploadPermissions.forEach(
         checkIfCardDoesNotExist
       );

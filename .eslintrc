@@ -84,6 +84,11 @@
       "noUselessIndex": true
     }],
     "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/media-has-caption": [ "error", {
+      "audio": [ "Audio" ],
+      "video": [ "Video", "FadedVideo", "CropVideo" ],
+      "track": [ "Track" ]
+    }],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",
@@ -244,7 +249,9 @@
       {"name": "Primary", "linkAttribute": "href"},
       "PrimaryLink",
       "SecondaryLink",
-      "ExternalLink"
+      "ExternalLink",
+      "ScrimAnchor",
+      "LinkWithRef"
     ],
     "testing-library/custom-renders": [
       "arrange",

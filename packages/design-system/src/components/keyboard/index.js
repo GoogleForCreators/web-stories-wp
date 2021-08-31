@@ -380,7 +380,7 @@ export function isPlatformMacOS() {
 }
 
 /**
- * Get the key specific to operating system
+ * Get the key specific to operating system.
  *
  * @param {string} key The key to replace. Options: [alt, ctrl, mod, cmd, shift].
  * @return {string} the mapped key. Returns the argument if key is not in options.
@@ -422,6 +422,7 @@ export function prettifyShortcut(shortcut) {
     .replace('right', '→')
     .replace('down', '↓')
     .replace('delete', '⌫')
+    .replace('enter', '⏎')
     .split('+')
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
     .join(delimiter);
@@ -485,6 +486,14 @@ export function createShortcutAriaLabel(shortcut) {
     .join(delimiter);
 }
 
+/**
+ * Returns a prettified shortcut wrapped with a <kbd> element.
+ *
+ * @param {Object} props props
+ * @param {string} props.component Component used to render the shortcuts. Defaults to `<kbd/>`
+ * @param {string} props.shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
+ * @return {Node} Prettified keyboard shortcut.
+ */
 export function Shortcut({ component: Component = <kbd />, shortcut = '' }) {
   const chars = shortcut.split(' ');
 

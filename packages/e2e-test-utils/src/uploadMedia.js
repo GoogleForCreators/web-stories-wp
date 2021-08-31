@@ -18,39 +18,32 @@
  */
 import uploadFile from './uploadFile';
 
-const MODAL = '.media-modal';
-
 /**
  * Helper that upload a file in the media dialog in the stories editor.
  *
- * @param {string}file Filename
- * @param {boolean}exit If this helper should exit the dialog.
- * @return {Promise<string>} Return the filename without ext.
+ * @param {string} file Name of the file to upload.
+ * @param {boolean} exit Whether to exit the media modal.
+ * @return {Promise<string>} Uploaded file name.
  */
 async function uploadMedia(file, exit = true) {
   // Clicking will only act on the first element.
   await expect(page).toClick('button', { text: 'Upload' });
 
-  await page.waitForSelector(MODAL, {
+  await page.waitForSelector('.media-modal', {
     visible: true,
   });
 
   const fileName = await uploadFile(file);
-  const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
-
-  await expect(page).toMatchElement(
-    `.attachments-browser .attachments .attachment[aria-label="${fileNameNoExt}"]`
-  );
 
   if (exit) {
     await page.keyboard.press('Escape');
 
-    await page.waitForSelector(MODAL, {
+    await page.waitForSelector('.media-modal', {
       visible: false,
     });
   }
 
-  return fileNameNoExt;
+  return fileName;
 }
 
 export default uploadMedia;
