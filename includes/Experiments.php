@@ -229,6 +229,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Right click menus', 'web-stories' ),
 				'description' => __( 'Enable a contextual shortcut menu when right clicking in the editor', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @littlemilkstudio

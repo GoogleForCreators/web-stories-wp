@@ -955,6 +955,8 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
+  const stickerItems = useMemo(() => [...layerItems], [layerItems]);
+
   const menuItems = useMemo(() => {
     if (selectedElement?.isDefaultBackground) {
       return pageItems;
@@ -969,10 +971,19 @@ function RightClickMenuProvider({ children }) {
         return shapeItems;
       case ELEMENT_TYPES.TEXT:
         return textItems;
+      case ELEMENT_TYPES.STICKER:
+        return stickerItems;
       default:
         return pageItems;
     }
-  }, [foregroundMediaItems, pageItems, selectedElement, shapeItems, textItems]);
+  }, [
+    foregroundMediaItems,
+    pageItems,
+    selectedElement,
+    shapeItems,
+    stickerItems,
+    textItems,
+  ]);
 
   // Override the browser's context menu if the
   // rightClickAreaRef is set
