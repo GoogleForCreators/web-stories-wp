@@ -13,36 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  PublishPanel,
-  ExcerptPanel,
-  SlugPanel,
-  StatusPanel,
-  PageAdvancementPanel,
-  BackgroundAudioPanel,
-  CategoriesPanel,
-} from '../../panels/document';
+import { useHighlights, states, styles } from '../../../../app/highlights';
+import { SimplePanel } from '../../panel';
 
-function DocumentInspector() {
-  const enabledTaxonomies = useFeature('enableTaxonomiesSupport');
+function CategoriesPanel() {
+  const { highlight, resetHighlight } = useHighlights((state) => ({
+    highlight: state[states.EXCERPT],
+    resetHighlight: state.onFocusOut,
+  }));
+
   return (
-    <>
-      <StatusPanel />
-      <PublishPanel />
-      <ExcerptPanel />
-      <SlugPanel />
-      <PageAdvancementPanel />
-      <BackgroundAudioPanel />
-      {enabledTaxonomies ? <CategoriesPanel /> : null}
-    </>
+    <SimplePanel
+      name="categories"
+      title={__('Categories and Tags', 'web-stories')}
+      css={highlight?.showEffect && styles.FLASH}
+      onAnimationEnd={() => resetHighlight()}
+      collapsedByDefault={false}
+      isPersistable={!highlight}
+    />
   );
 }
 
-export default DocumentInspector;
+export default CategoriesPanel;
