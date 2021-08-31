@@ -19,35 +19,35 @@
 import visitAdminPage from './visitAdminPage';
 
 /**
- * Deletes an attachment with a given file name from the WordPress media library.
- *
- * @param {string} fileName File name with or without extension.
+ * Deletes all manually uploaded attachments from the WordPress media library.
  */
-async function deleteMedia(fileName) {
+async function deleteAllMedia() {
   await visitAdminPage('upload.php', 'mode=list');
 
-  await expect(page).toMatch(fileName);
-
-  // Make row actions appear.
-  const elementId = await page.evaluate((name) => {
-    let _id;
+  const itemsToDelete = await page.evaluate(() => {
+    const items = [];
     document.querySelectorAll('p.filename').forEach((el) => {
       const currentFileName = el.textContent.replace('File name:', '').trim();
-      if (currentFileName.startsWith(name)) {
-        _id = el.closest('tr').id;
+      if (currentFileName.startsWith('e2e-')) {
+        items.push(el.closest('tr').id);
       }
     });
-    return _id;
-  }, fileName);
+    return items;
+  });
 
-  await page.hover(`#${elementId}`);
+  /*eslint-disable no-await-in-loop*/
+  for (const elementId of itemsToDelete) {
+    // Make row actions appear.
+    await page.hover(`#${elementId}`);
 
-  await Promise.all([
-    await expect(page).toClick(`#${elementId} a.submitdelete`),
-    page.waitForNavigation(),
-  ]);
-  await page.waitForSelector(`#message`);
-  await expect(page).toMatch('Media file permanently deleted.');
+    await Promise.all([
+      await expect(page).toClick(`#${elementId} a.submitdelete`),
+      page.waitForNavigation(),
+    ]);
+    await page.waitForSelector(`#message`);
+    await expect(page).toMatch('Media file permanently deleted.');
+  }
+  /*eslint-enable no-await-in-loop*/
 }
 
-export default deleteMedia;
+export default deleteAllMedia;

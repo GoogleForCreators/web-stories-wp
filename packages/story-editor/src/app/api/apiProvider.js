@@ -147,6 +147,7 @@ function APIProvider({ children }) {
       autoAdvance,
       defaultPageDuration,
       currentStoryStyles,
+      backgroundAudio,
       content,
       author,
       ...rest
@@ -158,6 +159,7 @@ function APIProvider({ children }) {
           autoAdvance,
           defaultPageDuration,
           currentStoryStyles,
+          backgroundAudio,
         },
         featured_media: featuredMedia.id,
         style_presets: globalStoryStyles,

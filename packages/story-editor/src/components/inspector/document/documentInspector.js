@@ -23,6 +23,7 @@ import {
   SlugPanel,
   StatusPanel,
   PageAdvancementPanel,
+  BackgroundAudioPanel,
 } from '../../panels/document';
 
 function DocumentInspector() {
@@ -33,6 +34,7 @@ function DocumentInspector() {
       <ExcerptPanel />
       <SlugPanel />
       <PageAdvancementPanel />
+      <BackgroundAudioPanel />
     </>
   );
 }

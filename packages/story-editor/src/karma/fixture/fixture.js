@@ -72,6 +72,8 @@ const DEFAULT_CONFIG = {
   allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
   allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
   allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+  allowedAudioFileTypes: ['mp3', 'aac', 'wav', 'ogg'],
+  allowedAudioMimeTypes: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
   allowedTranscodableMimeTypes: [
     'video/3gpp',
     'video/3gpp2',

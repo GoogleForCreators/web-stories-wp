@@ -133,8 +133,9 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
       name="pageBackground"
-      title={__('Page background', 'web-stories')}
+      title={__('Page Background', 'web-stories')}
       isPersistable={!highlight}
+      collapsedByDefault={false}
     >
       {isDefaultBackground && (
         <Row>
