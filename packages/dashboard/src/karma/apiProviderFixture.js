@@ -80,7 +80,6 @@ export default function ApiProviderFixture({ children }) {
 
   const templateApi = useMemo(
     () => ({
-      createTemplateFromStory: jasmine.createSpy('createTemplateFromStory'),
       fetchExternalTemplates: () =>
         setTemplatesState((currentState) =>
           fetchExternalTemplates(currentState)

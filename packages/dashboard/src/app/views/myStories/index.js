@@ -36,7 +36,6 @@ function MyStories() {
     fetchStories,
     trashStory,
     updateStory,
-    createTemplateFromStory,
     allPagesFetched,
     isLoading,
     stories,
@@ -47,7 +46,6 @@ function MyStories() {
     ({
       actions: {
         storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
-        templateApi: { createTemplateFromStory },
       },
       state: {
         stories: {
@@ -64,7 +62,6 @@ function MyStories() {
       fetchStories,
       trashStory,
       updateStory,
-      createTemplateFromStory,
       allPagesFetched,
       isLoading,
       stories,
@@ -128,7 +125,6 @@ function MyStories() {
         sort={sort}
         stories={orderedStories}
         storyActions={{
-          createTemplateFromStory,
           duplicateStory,
           trashStory,
           updateStory,

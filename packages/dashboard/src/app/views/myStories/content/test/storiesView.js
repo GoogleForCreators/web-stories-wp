@@ -99,7 +99,6 @@ describe('Dashboard <StoriesView />', function () {
           setDirection: noop,
         }}
         storyActions={{
-          createTemplateFromStory: jest.fn,
           duplicateStory: jest.fn,
           trashStory: jest.fn,
           updateStory: jest.fn,
@@ -135,7 +134,6 @@ describe('Dashboard <StoriesView />', function () {
             setDirection: noop,
           }}
           storyActions={{
-            createTemplateFromStory: jest.fn,
             duplicateStory: jest.fn,
             trashStory: jest.fn,
             updateStory: jest.fn,
@@ -172,7 +170,6 @@ describe('Dashboard <StoriesView />', function () {
             setDirection: noop,
           }}
           storyActions={{
-            createTemplateFromStory: jest.fn,
             duplicateStory: jest.fn,
             trashStory: jest.fn,
             updateStory: jest.fn,
@@ -211,7 +208,6 @@ describe('Dashboard <StoriesView />', function () {
             setDirection: noop,
           }}
           storyActions={{
-            createTemplateFromStory: jest.fn,
             duplicateStory: jest.fn,
             trashStory: jest.fn,
             updateStory: jest.fn,
@@ -248,7 +244,6 @@ describe('Dashboard <StoriesView />', function () {
             setDirection: noop,
           }}
           storyActions={{
-            createTemplateFromStory: jest.fn,
             duplicateStory: jest.fn,
             trashStory: jest.fn,
             updateStory: jest.fn,
@@ -289,7 +284,6 @@ describe('Dashboard <StoriesView />', function () {
             setDirection: noop,
           }}
           storyActions={{
-            createTemplateFromStory: jest.fn,
             duplicateStory: jest.fn,
             trashStory: jest.fn,
             updateStory: jest.fn,

@@ -94,7 +94,6 @@ export const StoriesPropType = PropTypes.arrayOf(StoryPropType);
 export const TemplatesPropType = PropTypes.arrayOf(TemplatePropType).isRequired;
 
 export const StoryActionsPropType = PropTypes.shape({
-  createTemplateFromStory: PropTypes.func,
   duplicateStory: PropTypes.func,
   trashStory: PropTypes.func,
   updateStory: PropTypes.func,

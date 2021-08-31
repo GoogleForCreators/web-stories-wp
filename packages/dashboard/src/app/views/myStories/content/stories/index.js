@@ -71,7 +71,6 @@ const page = {
 };
 
 const storyActions = {
-  createTemplateFromStory: action('create template from story clicked'),
   duplicateStory: action('duplicate story clicked'),
   trashStory: action('trash story clicked'),
   updateStory: action('update story clicked'),

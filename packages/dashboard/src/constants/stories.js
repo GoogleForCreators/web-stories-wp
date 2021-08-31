@@ -25,7 +25,6 @@ export const STORY_CONTEXT_MENU_ACTIONS = {
   OPEN_IN_EDITOR: 'open-in-editor-action',
   RENAME: 'rename-action',
   DUPLICATE: 'duplicate-action',
-  CREATE_TEMPLATE: 'create-template-action',
   DELETE: 'delete-story-action',
   COPY_STORY_LINK: 'copy-story-link',
   OPEN_STORY_LINK: 'open-story-link',

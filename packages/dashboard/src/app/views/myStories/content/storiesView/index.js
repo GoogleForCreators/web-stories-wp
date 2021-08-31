@@ -143,14 +143,6 @@ function StoriesView({
     [storyActions]
   );
 
-  const handleCreateTemplateFromStory = useCallback(
-    (story) => {
-      setContextMenuId(-1);
-      storyActions.createTemplateFromStory(story);
-    },
-    [storyActions]
-  );
-
   const handleDeleteStory = useCallback((story) => {
     setContextMenuId(-1);
     setActiveStory(story);
@@ -182,8 +174,6 @@ function StoriesView({
       menuItemActions: {
         default: () => setContextMenuId(-1),
         [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: handleCopyStoryLink,
-        [STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE]:
-          handleCreateTemplateFromStory,
         [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,
         [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: handleDuplicateStory,
         [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: handleOpenStoryInEditor,
@@ -194,7 +184,6 @@ function StoriesView({
   }, [
     contextMenuId,
     handleCopyStoryLink,
-    handleCreateTemplateFromStory,
     handleDeleteStory,
     handleDuplicateStory,
     handleOpenStoryInEditor,

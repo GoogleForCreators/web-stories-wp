@@ -103,7 +103,6 @@ describe('Dashboard <Content />', function () {
               pageSize,
             }}
             storyActions={{
-              createTemplateFromStory: jest.fn,
               duplicateStory: jest.fn,
               trashStory: jest.fn,
               updateStory: jest.fn,
@@ -134,7 +133,6 @@ describe('Dashboard <Content />', function () {
               pageSize,
             }}
             storyActions={{
-              createTemplateFromStory: jest.fn,
               duplicateStory: jest.fn,
               trashStory: jest.fn,
               updateStory: jest.fn,
@@ -163,7 +161,6 @@ describe('Dashboard <Content />', function () {
               pageSize,
             }}
             storyActions={{
-              createTemplateFromStory: jest.fn,
               duplicateStory: jest.fn,
               trashStory: jest.fn,
               updateStory: jest.fn,
