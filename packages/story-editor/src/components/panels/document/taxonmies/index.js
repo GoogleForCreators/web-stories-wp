@@ -13,32 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-/**
- * Internal dependencies
- */
-import CategoriesPanel from '../categories';
 
-const Wrapper = styled.div`
-  background: ${({ theme }) => theme.colors.bg.primary};
-`;
-
-export default {
-  title: 'Stories Editor/Components/Categories',
-  component: Categories,
-};
-
-function Categories() {
-  return <CategoriesPanel />;
-}
-
-export const _default = () => {
-  return (
-    <Wrapper>
-      <Categories />
-    </Wrapper>
-  );
-};
+export { default } from './taxonomies';

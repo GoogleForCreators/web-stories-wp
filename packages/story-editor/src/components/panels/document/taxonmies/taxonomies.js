@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { useHighlights, states, styles } from '../../../../app/highlights';
 import { SimplePanel } from '../../panel';
 
-function CategoriesPanel() {
+function TaxonomiesPanel() {
   const { highlight, resetHighlight } = useHighlights((state) => ({
     highlight: state[states.EXCERPT],
     resetHighlight: state.onFocusOut,
@@ -32,14 +32,13 @@ function CategoriesPanel() {
 
   return (
     <SimplePanel
-      name="categories"
+      name="taxonomies"
       title={__('Categories and Tags', 'web-stories')}
       css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
-      collapsedByDefault={false}
       isPersistable={!highlight}
     />
   );
 }
 
-export default CategoriesPanel;
+export default TaxonomiesPanel;

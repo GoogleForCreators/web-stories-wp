@@ -24,7 +24,7 @@ import { screen } from '@testing-library/react';
  */
 import StoryContext from '../../../../../app/story/context';
 import { renderWithTheme } from '../../../../../testUtils';
-import CategoriesPanel from '../categories';
+import TaxonomiesPanel from '../taxonomies';
 
 function arrange() {
   const updateStory = jest.fn();
@@ -32,7 +32,7 @@ function arrange() {
   const storyContextValue = {
     state: {
       story: {
-        categories: '',
+        taxonomies: '',
       },
     },
     actions: { updateStory },
@@ -40,15 +40,15 @@ function arrange() {
 
   return renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
-      <CategoriesPanel />
+      <TaxonomiesPanel />
     </StoryContext.Provider>
   );
 }
 
-describe('CategoriesPanel', () => {
+describe('TaxonomiesPanel', () => {
   beforeAll(() => {
     localStorage.setItem(
-      'web_stories_ui_panel_settings:categories',
+      'web_stories_ui_panel_settings:taxonomies',
       JSON.stringify({ isCollapsed: false })
     );
   });
@@ -57,7 +57,7 @@ describe('CategoriesPanel', () => {
     localStorage.clear();
   });
 
-  it('should render Categories Panel', () => {
+  it('should render Taxonomies Panel', () => {
     arrange();
     const element = screen.getByRole('button', { name: 'Categories and Tags' });
     expect(element).toBeInTheDocument();

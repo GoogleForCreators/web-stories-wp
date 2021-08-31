@@ -20,4 +20,4 @@ export { default as PublishPanel } from './publish';
 export { default as SlugPanel } from './slug';
 export { default as StatusPanel } from './status';
 export { default as BackgroundAudioPanel } from './backgroundAudio';
-export { default as CategoriesPanel } from './categories';
+export { default as TaxonomiesPanel } from './taxonmies';

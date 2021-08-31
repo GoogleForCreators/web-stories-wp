@@ -27,7 +27,7 @@ import {
   StatusPanel,
   PageAdvancementPanel,
   BackgroundAudioPanel,
-  CategoriesPanel,
+  TaxonomiesPanel,
 } from '../../panels/document';
 
 function DocumentInspector() {
@@ -40,7 +40,7 @@ function DocumentInspector() {
       <SlugPanel />
       <PageAdvancementPanel />
       <BackgroundAudioPanel />
-      {enabledTaxonomies ? <CategoriesPanel /> : null}
+      {enabledTaxonomies ? <TaxonomiesPanel /> : null}
     </>
   );
 }
