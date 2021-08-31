@@ -125,11 +125,9 @@ describe('PublishPanel', () => {
     const element = screen.getByRole('button', { name: 'Story publish time' });
 
     fireEvent.click(element);
-    await waitFor(() =>
-      expect(
-        screen.getByRole('button', { name: 'January 2020' })
-      ).toBeInTheDocument()
-    );
+    expect(
+      await screen.findByRole('button', { name: 'January 2020' })
+    ).toBeInTheDocument();
   });
 
   it('should update the story when choosing a date from the calendar', async () => {
