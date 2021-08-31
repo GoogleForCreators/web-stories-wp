@@ -16,4 +16,3 @@
 
 export { ReactComponent as TenorLogoFull } from './tenor_logo_white.svg';
 export { ReactComponent as UnsplashLogoFull } from './unsplash_logo_full.svg';
-export { ReactComponent as KeyArrowUp } from './key_arrow_up.svg';
