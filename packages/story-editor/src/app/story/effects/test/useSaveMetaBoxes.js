@@ -37,7 +37,6 @@ const render = ({ configValue, isEnabled, ...initialProps }) => {
       useSaveMetaBoxes({ story, isSaving, isAutoSaving }),
     {
       initialProps: { ...initialProps },
-      // eslint-disable-next-line react/display-name, react/prop-types
       wrapper: ({ children }) => (
         <ConfigContext.Provider value={configValue}>
           <APIContext.Provider value={apiContextValue}>
