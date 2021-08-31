@@ -111,6 +111,9 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   );
 
   const onInsert = useCallback(() => {
+    if (!link?.length) {
+      return;
+    }
     if (!isValidUrl(link)) {
       setErrorMsg(__('Invalid link.', 'web-stories'));
       return;
