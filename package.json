@@ -24,9 +24,6 @@
     "node": ">= 15",
     "npm": ">= 7.3"
   },
-  "bin": {
-    "commander": "bin/commander.js"
-  },
   "workspaces": {
     "packages": [
       "packages/*"
