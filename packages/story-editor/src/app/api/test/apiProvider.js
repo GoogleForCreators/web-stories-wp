@@ -41,7 +41,6 @@ jest.mock('@web-stories-wp/templates');
 
 const renderApiProvider = ({ configValue }) => {
   return renderHook(() => useAPI(), {
-    // eslint-disable-next-line react/display-name
     wrapper: (props) => (
       <ConfigProvider config={configValue}>
         <ApiProvider {...props} />
