@@ -175,6 +175,21 @@ class WebStoriesScraperPlugin {
       };
     });
 
+    // Prevent saving 404 pages.
+    registerAction('afterResponse', ({ response }) => {
+      if (response.statusCode === 404) {
+        console.log(`Error 404! Could not download ${response.request.href}.`);
+        return null;
+      }
+
+      return {
+        body: response.body,
+        metadata: {
+          headers: response.headers,
+        },
+      };
+    });
+
     // Clean up resulting HTML file.
     registerAction('onResourceSaved', ({ resource }) => {
       if (resource.isHtml()) {
@@ -199,7 +214,7 @@ class WebStoriesScraperPlugin {
           )
           .replace(/<link rel="https:\/\/api\.w\.org\/"[^>]+>/gm, '')
           // Remove noindex.
-          .replace('<meta name="robots" content="noindex,nofollow">', '')
+          .replace(/<meta name="robots" content="noindex, ?nofollow">/, '')
           // Full URLs for twitter and Open Graph images.
           .replace(
             /<meta property="twitter:image" content="([^>]+)">/gm,
@@ -273,6 +288,8 @@ class WebStoriesScraperPlugin {
               } catch (err) {
                 console.log('Could not extract & modify schema.org metadata.');
               }
+
+              return '';
             }
           )
           // Workaround for https://github.com/website-scraper/node-website-scraper/issues/355.
@@ -335,6 +352,9 @@ const result = await scrape(options);
 
 for (const { url: _url, filename } of result) {
   console.log(
-    `Downloaded ${_url} to ${relative(__dirname, join(directory, filename))}`
+    `Finished downloading ${_url} to ${relative(
+      __dirname,
+      join(directory, filename)
+    )}`
   );
 }

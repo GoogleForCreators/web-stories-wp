@@ -6,6 +6,7 @@ bin/
 build/
 includes/
 node_modules/
+packages/
 plugin-assets/
 third-party/
 vendor/
