@@ -64,6 +64,7 @@ export default function Mask({ onDismiss }) {
         data-testid="context-menu-mask"
         hasOnDismiss={Boolean(onDismiss)}
         onClick={onDismiss || noop}
+        onMouseDown={onDismiss || noop}
       />
     </>
   );
