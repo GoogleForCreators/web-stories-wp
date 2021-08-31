@@ -32,7 +32,7 @@ function arrange() {
   const storyContextValue = {
     state: {
       story: {
-        categories: 'This is the story excerpt.',
+        categories: '',
       },
     },
     actions: { updateStory },

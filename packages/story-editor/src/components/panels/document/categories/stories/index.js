@@ -20,14 +20,14 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { CategoriesPanel } from '../../../panels/document';
+import CategoriesPanel from '../categories';
 
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.bg.primary};
 `;
 
 export default {
-  title: 'Stories Editor/Components/DocumentInspector/Categories',
+  title: 'Stories Editor/Components/Categories',
   component: Categories,
 };
 
@@ -41,10 +41,4 @@ export const _default = () => {
       <Categories />
     </Wrapper>
   );
-};
-
-_default.parameters = {
-  backgrounds: {
-    default: 'Dark',
-  },
 };
