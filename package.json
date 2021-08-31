@@ -83,7 +83,7 @@
     "commander": "^8.1.0",
     "core-js": "^3.16.4",
     "css-loader": "^5.2.7",
-    "cssnano": "^5.0.7",
+    "cssnano": "^5.0.8",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
