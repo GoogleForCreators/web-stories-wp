@@ -42,6 +42,7 @@ import storyReducer, {
 } from '../reducer/stories';
 import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
+import { getStoryColors } from '../../utils';
 
 // Important: Keep in sync with REST API preloading definition.
 const STORY_FIELDS = [
@@ -226,7 +227,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
       });
 
       try {
-        const { createdBy, pages, version } = template;
+        const { createdBy, pages, version, colors } = template;
         const { getStoryPropsToSave } = await import(
           /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@web-stories-wp/story-editor'
         );
@@ -246,10 +247,11 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
           flags,
         });
 
+        const convertedColors = getStoryColors(colors);
+
         const path = addQueryArgs(storyApi, {
           _fields: 'edit_link',
         });
-
         const response = await dataAdapter.post(path, {
           data: {
             ...storyPropsToSave,
@@ -258,6 +260,9 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
               version,
               autoAdvance: true,
               defaultPageDuration: 7,
+              currentStoryStyles: {
+                colors: convertedColors,
+              },
             },
           },
         });
