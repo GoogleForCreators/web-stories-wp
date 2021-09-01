@@ -119,7 +119,7 @@ function FontProvider({ children }) {
     });
   }, []);
 
-  const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
+  const maybeEnqueueFontStyle = useLoadFontFiles();
 
   const curatedFonts = useMemo(
     () => fonts.filter((font) => curatedFontNames.includes(font.name)),

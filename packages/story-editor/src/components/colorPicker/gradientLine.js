@@ -93,7 +93,7 @@ function GradientLine({
 }) {
   const line = useRef();
 
-  useKeyMoveStop(line, onMove, stops, currentStopIndex);
+  useKeyMoveStop(line, onMove);
   useKeyAddStop(line, onAdd, stops, currentStopIndex);
   useKeyDeleteStop(line, onDelete);
   const stopRefs = useKeyFocus(line, stops, currentStopIndex);
