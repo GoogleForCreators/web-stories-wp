@@ -64,6 +64,7 @@ function ColorList({ colors, size, spacing }) {
           color={color}
           title={label}
           ariaLabel={label}
+          data-testid="detail-template-color"
         />
       ))}
     </ColorContainer>
