@@ -150,7 +150,7 @@ function Popup({
 Popup.propTypes = {
   anchor: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
     .isRequired,
-  dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
+  dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   children: PropTypes.node,
   renderContents: PropTypes.func,
   placement: PropTypes.oneOf(Object.values(Placement)),
