@@ -97,6 +97,7 @@ export const MenuItem = ({
         <ItemText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
           forwardedAs="span"
+          aria-label={ariaLabel}
         >
           {label}
           {visuallyHiddenContent}
@@ -113,7 +114,7 @@ export const MenuItem = ({
         )}
       </>
     );
-  }, [Icon, disabled, label, shortcut, tooltipPlacement]);
+  }, [ariaLabel, Icon, disabled, label, shortcut, tooltipPlacement]);
 
   if (href) {
     const newTabProps = newTab
