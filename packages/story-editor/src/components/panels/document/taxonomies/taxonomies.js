@@ -23,12 +23,12 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { SimplePanel } from '../../panel';
 
-function TaxonomiesPanel({ ...rest }) {
+function TaxonomiesPanel({ ...props }) {
   return (
     <SimplePanel
       name="taxonomies"
       title={__('Categories and Tags', 'web-stories')}
-      {...rest}
+      {...props}
     />
   );
 }
