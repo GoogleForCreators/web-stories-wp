@@ -49,8 +49,7 @@ function updateElementsByResourceId(
       if (element.resource?.id === id) {
         return updateElementWithUpdater(
           element,
-          propertiesOrUpdater,
-          pageIndex
+          propertiesOrUpdater
         );
       }
       return element;
