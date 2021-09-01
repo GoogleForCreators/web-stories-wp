@@ -76,6 +76,10 @@ export const MenuItem = ({
     [onClick, onDismiss]
   );
 
+  // Assign aria label to top level link/button if it's an icon button
+  // (no text content)
+  const itemLabel = Icon ? ariaLabel || label : undefined;
+
   const textContent = useMemo(() => {
     if (Icon) {
       return (
@@ -127,6 +131,7 @@ export const MenuItem = ({
     return (
       <Link
         ref={itemRef}
+        aria-label={itemLabel}
         href={href}
         onClick={handleClick}
         onFocus={onFocus}
@@ -142,6 +147,7 @@ export const MenuItem = ({
     return (
       <Button
         ref={itemRef}
+        aria-label={itemLabel}
         disabled={disabled}
         onClick={handleClick}
         onFocus={onFocus}
