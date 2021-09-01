@@ -65,6 +65,13 @@
       "phpunit/phpunit-mock-objects": {
         "Fix PHPUnit for PHP 7.4": "patches/phpunit-mock-objects.patch"
       }
+    },
+    "patches-ignore": {
+      "ampproject/amp-wp": {
+        "phpunit/phpunit-mock-objects": {
+          "We patch this ourselves": "patches/phpunit-mock-objects.patch"
+        }
+      }
     }
   },
   "autoload": {
