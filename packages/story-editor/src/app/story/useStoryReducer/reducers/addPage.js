@@ -48,7 +48,7 @@ function addPage(state, { page, position }) {
   const { id } = page;
 
   // Ensure new page has at least one element
-  if (!page.elements?.length >= 1) {
+  if (Number(page.elements?.length) < 1) {
     return state;
   }
 
