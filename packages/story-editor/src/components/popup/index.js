@@ -28,6 +28,7 @@ import {
   createPortal,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
+import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -60,7 +61,7 @@ const Container = styled.div.attrs(
   position: fixed;
   z-index: 2;
   overflow-y: auto;
-  max-height: 100vh;
+  max-height: calc(100vh - ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px);
 `;
 
 function Popup({
