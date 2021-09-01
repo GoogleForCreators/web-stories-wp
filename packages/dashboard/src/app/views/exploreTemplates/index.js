@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useMemo, useEffect, useCallback } from '@web-stories-wp/react';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -84,6 +85,10 @@ function ExploreTemplates() {
   const handleCreateStoryFromTemplate = useCallback(
     (templateId) => {
       const template = templates[templateId];
+      trackEvent('use_template', {
+        name: template.title,
+        template_id: template.id,
+      });
       createStoryFromTemplate(template);
     },
     [createStoryFromTemplate, templates]

@@ -32,7 +32,7 @@ import LayoutProvider from '../../../../../components/layout/provider';
 import { renderWithProviders } from '../../../../../testUtils';
 import Header from '..';
 
-describe('My Stories <Header />', function () {
+describe('Dashboard <Header />', function () {
   it('should have results label that says "Viewing all templates" on initial page view', function () {
     renderWithProviders(
       <LayoutProvider>

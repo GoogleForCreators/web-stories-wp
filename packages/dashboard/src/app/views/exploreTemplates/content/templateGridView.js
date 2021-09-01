@@ -43,7 +43,7 @@ import { resolveRoute } from '../../../router';
 import TemplateGridItem, { FOCUS_TEMPLATE_CLASS } from './templateGridItem';
 
 function TemplateGridView({ pageSize, templates, templateActions }) {
-  const { isRTL, cdnURL } = useConfig();
+  const { isRTL } = useConfig();
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
@@ -85,35 +85,33 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
 
   const memoizedTemplateItems = useMemo(
     () =>
-      templates.map(({ id, centerTargetAction, slug, status, title }) => {
-        const isActive = activeGridItemId === id;
-        const srcPath = `${cdnURL}images/templates/${slug}/posters/1`;
-        const posterSrc = {
-          webp: `${srcPath}.webp`,
-          png: `${srcPath}.png`,
-        };
-        return (
-          <TemplateGridItem
-            detailLink={resolveRoute(centerTargetAction)}
-            onCreateStory={() => handleUseStory({ id, title })}
-            onFocus={() => {
-              setActiveGridItemId(id);
-            }}
-            height={pageSize.height}
-            id={id}
-            isActive={isActive}
-            key={slug}
-            posterSrc={posterSrc}
-            ref={(el) => {
-              itemRefs.current[id] = el;
-            }}
-            slug={slug}
-            status={status}
-            title={title}
-          />
-        );
-      }),
-    [templates, activeGridItemId, cdnURL, pageSize.height, handleUseStory]
+      templates.map(
+        ({ id, centerTargetAction, slug, status, title, postersByPage }) => {
+          const isActive = activeGridItemId === id;
+          const posterSrc = postersByPage?.[0];
+          return (
+            <TemplateGridItem
+              detailLink={resolveRoute(centerTargetAction)}
+              onCreateStory={() => handleUseStory({ id, title })}
+              onFocus={() => {
+                setActiveGridItemId(id);
+              }}
+              height={pageSize.height}
+              id={id}
+              isActive={isActive}
+              key={slug}
+              posterSrc={posterSrc}
+              ref={(el) => {
+                itemRefs.current[id] = el;
+              }}
+              slug={slug}
+              status={status}
+              title={title}
+            />
+          );
+        }
+      ),
+    [templates, activeGridItemId, pageSize.height, handleUseStory]
   );
   return (
     <div ref={containerRef}>

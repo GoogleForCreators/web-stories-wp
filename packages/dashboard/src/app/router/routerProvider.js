@@ -54,7 +54,7 @@ function RouterProvider({ children, ...props }) {
   // Sync up WP navigation bar with our hash location.
   useEffect(() => {
     let query = `a[href$="#${currentPath}"]`;
-    // `My Stories` link in WP doesn't have a hash in the href
+    // `Dashboard` link in WP doesn't have a hash in the href
     if (currentPath.length <= 1) {
       query = 'a[href$="page=stories-dashboard"]';
     }

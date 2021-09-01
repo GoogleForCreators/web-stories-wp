@@ -87,7 +87,7 @@ const fakeStories = [
   },
 ];
 
-describe('My Stories <StoriesView />', function () {
+describe('Dashboard <StoriesView />', function () {
   it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
     renderWithProviders(
       <StoriesView

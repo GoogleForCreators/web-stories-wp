@@ -29,10 +29,10 @@ import {
 
 describe('Web Stories Widget Block', () => {
   minWPVersionRequired('5.8');
-  beforeEach(async () => {
+  beforeAll(async () => {
     await deleteWidgets();
   });
-  afterAll(async () => {
+  afterEach(async () => {
     await deleteWidgets();
   });
 
@@ -101,6 +101,7 @@ describe('Web Stories Widget Block', () => {
     await visitBlockWidgetScreen();
     const selector = '.wp-block-legacy-widget';
 
+    await page.waitForSelector(selector);
     await expect(page).toMatchElement(selector);
     await expect(page).toClick(selector);
 

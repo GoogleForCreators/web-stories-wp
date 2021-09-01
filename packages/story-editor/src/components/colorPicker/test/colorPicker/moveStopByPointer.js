@@ -35,7 +35,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
           { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // Get first gradient stop
@@ -105,7 +105,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // Get first gradient stop

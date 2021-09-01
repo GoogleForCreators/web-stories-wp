@@ -72,14 +72,29 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         ...props,
       })
         .then((data) => {
+          const {
+            _embedded: embedded = {},
+            status,
+            slug,
+            link,
+            preview_link: previewLink,
+            edit_link: newEditLink,
+            embed_post_link: embedPostLink,
+          } = data;
+
+          let featuredMediaUrl;
+          if ('wp:featuredmedia' in embedded) {
+            featuredMediaUrl = embedded['wp:featuredmedia'][0].source_url;
+          }
+
           const properties = {
-            status: data.status,
-            slug: data.slug,
-            link: data.link,
-            featuredMediaUrl: data.featured_media_url,
-            previewLink: data.preview_link,
-            editLink: data.edit_link,
-            embedPostLink: data.embed_post_link,
+            status,
+            slug,
+            link,
+            previewLink,
+            editLink: newEditLink,
+            embedPostLink,
+            featuredMediaUrl,
           };
           updateStory({ properties });
 

@@ -46,10 +46,24 @@ export const CardWrapper = styled.div`
   width: 100%;
 `;
 
+export const ScrimAnchor = styled.a`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: ${({ theme }) => theme.borders.radius.medium};
+
+  &:hover,
+  &:focus {
+    box-shadow: none;
+    border: ${({ theme }) => `4px solid ${theme.colors.interactiveBg.active}`};
+  }
+`;
 // Components that create the content to display on top of a poster
 // Set guidance for how content should display on top of a poster
 export const StyledStoryDisplayContent = styled.div`
-  padding: 12px 4px 0 4px;
+  padding: 20px 12px 8px 12px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -102,14 +116,6 @@ export const Title = styled(Headline).attrs({
   -webkit-line-clamp: 3;
   /* stylelint-disable-next-line */
   -webkit-box-orient: vertical;
-`;
-
-export const TitleLink = styled(Title).attrs({
-  as: 'a',
-})`
-  &:hover {
-    color: ${({ theme }) => theme.colors.inverted.fg.linkHover};
-  }
 `;
 
 // All body text

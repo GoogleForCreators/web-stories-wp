@@ -135,7 +135,6 @@ function useInsertTextSet() {
             backgroundColor: {
               color: preferredScrimColor,
             },
-            backdropBlur: 4,
             type: 'shape',
           };
           addedElements.push(insertElement(ELEMENT_TYPES.SHAPE, scrim));
