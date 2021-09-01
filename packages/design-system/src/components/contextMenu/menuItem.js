@@ -93,7 +93,7 @@ export const MenuItem = ({
 
     /* Shortcut title to be read by screen reader. */
     const visuallyHiddenContent = shortcut?.title ? (
-      <VisuallyHidden>{shortcut?.title}</VisuallyHidden>
+      <VisuallyHidden>{shortcut.title}</VisuallyHidden>
     ) : null;
 
     return (
