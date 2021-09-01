@@ -157,8 +157,8 @@ Popup.propTypes = {
   spacing: PropTypes.object,
   isOpen: PropTypes.bool,
   invisible: PropTypes.bool,
-  fillWidth: PropTypes.bool,
-  fillHeight: PropTypes.bool,
+  fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   onPositionUpdate: PropTypes.func,
 };
 
