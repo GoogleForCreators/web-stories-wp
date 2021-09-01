@@ -86,6 +86,12 @@ export const MenuItem = ({
         </Tooltip>
       );
     }
+
+    /* Shortcut title to be read by screen reader. */
+    const visuallyHiddenContent = shortcut?.title ? (
+      <VisuallyHidden>{shortcut?.title}</VisuallyHidden>
+    ) : null;
+
     return (
       <>
         <ItemText
@@ -93,21 +99,17 @@ export const MenuItem = ({
           forwardedAs="span"
         >
           {label}
+          {visuallyHiddenContent}
         </ItemText>
         {shortcut?.display && (
-          <>
-            <Shortcut
-              disabled={disabled}
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              forwardedAs="kbd"
-              aria-hidden
-            >
-              {shortcut.display}
-            </Shortcut>
-            <VisuallyHidden>
-              {shortcut?.title || shortcut.display}
-            </VisuallyHidden>
-          </>
+          <Shortcut
+            disabled={disabled}
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+            forwardedAs="kbd"
+            aria-hidden
+          >
+            {shortcut.display}
+          </Shortcut>
         )}
       </>
     );
