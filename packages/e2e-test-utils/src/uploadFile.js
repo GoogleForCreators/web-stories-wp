@@ -59,11 +59,9 @@ async function uploadFile(file, checkUpload = true) {
       '#attachment-details-title'
     );
     const attachmentTitle = await attachmentTitleEl.evaluate((el) => el.value);
+    const escapedTitle = attachmentTitle.replace(/"/g, '\\"');
     await page.waitForSelector(
-      `.attachments-browser .attachments .attachment[aria-label="${attachmentTitle.replace(
-        /"/g,
-        '\\"'
-      )}"]`
+      `.attachments-browser .attachments .attachment[aria-label="${escapedTitle}"]`
     );
   }
   await page.setDefaultTimeout(3000);
