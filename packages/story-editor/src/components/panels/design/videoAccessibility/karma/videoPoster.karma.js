@@ -69,10 +69,10 @@ describe('Video Accessibility Panel', () => {
 
       class Library {}
 
-      class CustomizeImageCropper {}
+      class Cropper {}
 
       media.controller = {
-        CustomizeImageCropper,
+        Cropper,
         Library,
       };
       media.query = () => {};

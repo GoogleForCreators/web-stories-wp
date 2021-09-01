@@ -28,6 +28,7 @@ import { useSnackbar } from '@web-stories-wp/design-system';
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
 import { calculateImageSelectOptions, mustBeCropped } from './utils';
+import WordPressImageCropper from './WordPressImageCropper';
 
 const defaultCropParams = {
   height: 0,
@@ -207,7 +208,7 @@ export default function useMediaPicker({
             suggestedWidth: params.width,
             suggestedHeight: params.height,
           }),
-          new wp.media.controller.CustomizeImageCropper({
+          new WordPressImageCropper({
             imgSelectOptions: calculateImageSelectOptions,
             control,
           }),
