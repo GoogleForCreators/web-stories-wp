@@ -111,7 +111,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   );
 
   const onInsert = useCallback(() => {
-    if (!link?.length) {
+    if (!link) {
       return;
     }
     if (!isValidUrl(link)) {

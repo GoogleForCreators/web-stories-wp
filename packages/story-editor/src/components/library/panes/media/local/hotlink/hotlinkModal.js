@@ -85,12 +85,13 @@ function HotlinkModal({ isOpen, onClose }) {
 
   const onChange = useCallback(
     (value) => {
-      if (!value?.length) {
+      // Always set the error to null when changing.
+      if (errorMsg) {
         setErrorMsg(null);
       }
       setLink(value);
     },
-    [setLink]
+    [setLink, errorMsg]
   );
 
   return (
