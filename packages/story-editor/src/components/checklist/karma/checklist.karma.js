@@ -404,7 +404,7 @@ describe('Checklist integration - Card visibility', () => {
 
     media.controller = {
       Cropper: {
-        extend: () => {}
+        extend: () => {},
       },
       Library,
     };
