@@ -13,36 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  PublishPanel,
-  ExcerptPanel,
-  SlugPanel,
-  StatusPanel,
-  PageAdvancementPanel,
-  BackgroundAudioPanel,
-  TaxonomiesPanel,
-} from '../../panels/document';
+import { SimplePanel } from '../../panel';
 
-function DocumentInspector() {
-  const enabledTaxonomies = useFeature('enableTaxonomiesSupport');
+function TaxonomiesPanel({ ...props }) {
   return (
-    <>
-      <StatusPanel />
-      <PublishPanel />
-      <ExcerptPanel />
-      <SlugPanel />
-      <PageAdvancementPanel />
-      <BackgroundAudioPanel />
-      {enabledTaxonomies ? <TaxonomiesPanel /> : null}
-    </>
+    <SimplePanel
+      name="taxonomies"
+      title={__('Categories and Tags', 'web-stories')}
+      {...props}
+    />
   );
 }
 
-export default DocumentInspector;
+export default TaxonomiesPanel;

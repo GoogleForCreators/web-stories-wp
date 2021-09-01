@@ -16,33 +16,21 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {
-  PublishPanel,
-  ExcerptPanel,
-  SlugPanel,
-  StatusPanel,
-  PageAdvancementPanel,
-  BackgroundAudioPanel,
-  TaxonomiesPanel,
-} from '../../panels/document';
+import TaxonomiesPanel from '../taxonomies';
 
-function DocumentInspector() {
-  const enabledTaxonomies = useFeature('enableTaxonomiesSupport');
-  return (
-    <>
-      <StatusPanel />
-      <PublishPanel />
-      <ExcerptPanel />
-      <SlugPanel />
-      <PageAdvancementPanel />
-      <BackgroundAudioPanel />
-      {enabledTaxonomies ? <TaxonomiesPanel /> : null}
-    </>
-  );
-}
+const Taxonomies = styled(TaxonomiesPanel)`
+  background: ${({ theme }) => theme.colors.bg.primary};
+`;
 
-export default DocumentInspector;
+export default {
+  title: 'Stories Editor/Components/Taxonomies',
+  component: TaxonomiesPanel,
+};
+
+export const _default = () => {
+  return <Taxonomies />;
+};
