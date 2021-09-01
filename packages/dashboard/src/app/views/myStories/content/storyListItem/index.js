@@ -92,7 +92,7 @@ export const StoryListItem = ({
           __('Context menu for %s', 'web-stories'),
           formattedTitle
         )}
-        onMoreButtonSelected={storyMenu.handleMenuToggle}
+        onMoreButtonSelected={(_, id) => storyMenu.handleMenuToggle(id)}
         contextMenuId={storyMenu.contextMenuId}
         storyId={story.id}
         menuItems={generateStoryMenu({

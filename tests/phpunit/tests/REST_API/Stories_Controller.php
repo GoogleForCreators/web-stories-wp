@@ -399,7 +399,6 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$properties = $data['schema']['properties'];
 		$this->assertArrayHasKey( 'story_data', $properties );
-		$this->assertArrayHasKey( 'featured_media_url', $properties );
 	}
 
 	/**

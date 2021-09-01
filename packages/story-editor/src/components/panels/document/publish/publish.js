@@ -117,7 +117,11 @@ function PublishPanel() {
       }
     );
 
-  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
+  const {
+    allowedImageMimeTypes,
+    allowedImageFileTypes,
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
 
   const handleChangePoster = useCallback(
     (image) =>
@@ -217,6 +221,7 @@ function PublishPanel() {
                 ariaLabel={__('Poster image', 'web-stories')}
                 onChangeErrorText={posterErrorMessage}
                 imgProps={featuredMedia}
+                canUpload={hasUploadMediaAction}
               />
             </MediaWrapper>
             <LabelWrapper>
@@ -250,6 +255,7 @@ function PublishPanel() {
                 type={allowedImageMimeTypes}
                 ariaLabel={__('Publisher Logo', 'web-stories')}
                 variant={MEDIA_VARIANTS.CIRCLE}
+                canUpload={hasUploadMediaAction}
               />
             </MediaWrapper>
             <LabelWrapper>

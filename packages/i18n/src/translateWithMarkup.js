@@ -20,8 +20,8 @@
 import { cloneElement, createElement, Fragment } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 
-/** @typedef {import('react').React.ReactNode} ReactNode */
-/** @typedef {import('react').React.ReactElement} ReactElement */
+/** @typedef {import('react').ReactNode} ReactNode */
+/** @typedef {import('react').ReactElement} ReactElement */
 
 // See https://html.spec.whatwg.org/multipage/syntax.html#void-elements
 const VOID_ELEMENTS = [

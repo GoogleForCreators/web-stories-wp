@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __, _x } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 
 /**
@@ -81,7 +81,7 @@ export const _default = () => {
     {
       value: 'c',
       filter: null,
-      label: __('None', 'web-stories'),
+      label: _x('None', 'filter', 'web-stories'),
     },
   ];
   const [value, setValue] = useState('a');

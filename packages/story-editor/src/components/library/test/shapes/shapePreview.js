@@ -60,6 +60,7 @@ describe('ShapePreview', () => {
           canvasContainer: document.body,
           designSpaceGuideline: {},
         },
+        actions: {},
       };
       renderWithTheme(
         <CanvasContext.Provider value={canvasValue}>

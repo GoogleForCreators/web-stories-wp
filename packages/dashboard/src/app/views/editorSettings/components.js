@@ -20,6 +20,9 @@
 import styled, { css } from 'styled-components';
 import {
   Button,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
   Headline,
   Input,
   Link,
@@ -167,33 +170,16 @@ export const MenuContainer = styled.div`
   height: 100%;
 `;
 
-export const LogoMenuButton = styled.button`
+export const LogoMenuButton = styled(Button).attrs({
+  size: BUTTON_SIZES.SMALL,
+  type: BUTTON_TYPES.SECONDARY,
+  variant: BUTTON_VARIANTS.CIRCLE,
+})`
   opacity: ${({ isActive, menuOpen }) => (menuOpen || isActive ? 1 : 0)};
   position: absolute;
-  display: flex;
-  align-items: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 24px;
-  height: 24px;
-  text-align: center;
-  padding: 0;
-  color: ${({ theme }) => theme.colors.standard.white};
-  background: ${({ theme }) => theme.colors.fg.secondary};
-  border-radius: 50%;
-  border: 1px solid transparent;
-  cursor: pointer;
-
-  & > svg {
-    margin: auto;
-    padding: 2px 2px 3px 3px;
-    width: 90%;
-    height: auto;
-    display: block;
-  }
-
-  ${themeHelpers.focusableOutlineCSS};
 `;
 
 export const SaveButton = styled(Button)`

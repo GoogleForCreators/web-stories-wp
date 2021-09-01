@@ -104,7 +104,13 @@ class Hotlinking_Controller extends REST_Controller {
 			return rest_ensure_response( $response );
 		}
 
-		$response = wp_safe_remote_head( $url );
+		$response = wp_safe_remote_head(
+			$url,
+			[
+				/** This filter is documented in wp-includes/class-http.php */
+				'redirection' => apply_filters( 'http_request_redirection_count', 5, $url ),
+			]
+		);
 		if ( is_wp_error( $response ) && 'http_request_failed' === $response->get_error_code() ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}

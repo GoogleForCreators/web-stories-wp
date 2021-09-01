@@ -90,6 +90,15 @@ function DetailsGallery({
   switchToTemplateByOffset,
   template,
 }) {
+  const galleryPosters = useMemo(
+    () =>
+      Object.values(template.postersByPage).map((poster, index) => ({
+        id: index,
+        ...poster,
+      })),
+    [template.postersByPage]
+  );
+
   const { NextButton, PrevButton } = useMemo(() => {
     const Previous = (
       <Button
@@ -158,7 +167,7 @@ function DetailsGallery({
         <PaginationContainer alignLeft>{PrevButton}</PaginationContainer>
         <Inner>
           <CardGallery
-            story={template}
+            galleryPosters={galleryPosters}
             isRTL={isRTL}
             galleryLabel={__('Template details by page', 'web-stories')}
           />

@@ -24,7 +24,6 @@ export { default as useBatchingCallback } from './useBatchingCallback';
 export { default as useCombinedRefs } from './useCombinedRefs';
 export { default as useContextSelector } from './useContextSelector';
 export { default as useFocusOut } from './useFocusOut';
-export { default as useInputEventHandlers } from './useInputEventHandlers';
 export { default as usePrevious } from './usePrevious';
 export { default as useReduction } from './useReduction';
 export { default as useResizeEffect } from './useResizeEffect';

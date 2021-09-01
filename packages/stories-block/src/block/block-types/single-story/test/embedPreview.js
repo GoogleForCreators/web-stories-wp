@@ -31,7 +31,7 @@ const title = 'Stories in AMP';
 jest.mock('../storyPlayer', () => {
   return {
     __esModule: true,
-    //eslint-disable-next-line no-shadow,react/prop-types
+    //eslint-disable-next-line no-shadow
     default: function StoryPlayer({ url, title, onFocus }) {
       return (
         <a href={url} data-testid="amp-story-player" onFocus={onFocus}>

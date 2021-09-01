@@ -20,20 +20,19 @@ import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import { Input } from '@web-stories-wp/design-system';
 import {
   useState,
-  useCallback,
   useRef,
   useLayoutEffect,
+  useCallback,
 } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { getFileExtFromUrl } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../../../../../app';
 import Dialog from '../../../../../dialog';
-import { withProtocol } from '../../../../../../utils/url';
+import { isValidUrl, withProtocol } from '../../../../../../utils/url';
 import useInsert from './useInsert';
 
 const InputWrapper = styled.div`
@@ -57,7 +56,6 @@ function HotlinkModal({ isOpen, onClose }) {
     return () => clearTimeout(timeout);
   }, [isOpen, inputRef]);
 
-  // @todo We're not really uploading anything here, so should we have a fixed list instead?
   let description = __('No file types are currently supported.', 'web-stories');
   if (allowedFileTypes.length) {
     description = sprintf(
@@ -66,40 +64,22 @@ function HotlinkModal({ isOpen, onClose }) {
       translateToExclusiveList(allowedFileTypes)
     );
   }
-  const error = sprintf(
-    /* translators: %s is the description with allowed file extensions. */
-    __('Invalid link. %s', 'web-stories'),
-    description
-  );
   const [link, setLink] = useState('');
-
-  const getFileInfo = useCallback(
-    (value = link) => {
-      // @todo Remove this util and get the type from server-side validation instead.
-      const ext = getFileExtFromUrl(value);
-      let type = null;
-      if (!allowedFileTypes.includes(ext)) {
-        setErrorMsg(error);
-      } else {
-        setErrorMsg(null);
-        type = ['m4v', 'mp4', 'webm'].includes(ext) ? 'video' : 'image';
-      }
-      return {
-        ext,
-        type,
-      };
-    },
-    [link, allowedFileTypes, error]
-  );
 
   const onInsert = useInsert({
     link,
     setLink,
     errorMsg,
     setErrorMsg,
-    getFileInfo,
     onClose,
   });
+
+  const onBlur = useCallback(() => {
+    setLink(withProtocol(link));
+    if (!isValidUrl(link)) {
+      setErrorMsg(__('Invalid link.', 'web-stories'));
+    }
+  }, [link]);
 
   return (
     <Dialog
@@ -117,14 +97,11 @@ function HotlinkModal({ isOpen, onClose }) {
       <InputWrapper>
         <Input
           ref={inputRef}
-          onChange={({ target: { value } }) => {
-            setLink(value);
-            getFileInfo(value);
-          }}
+          onChange={({ target: { value } }) => setLink(value)}
           value={link}
           hint={errorMsg?.length ? errorMsg : description}
           hasError={Boolean(errorMsg?.length)}
-          onBlur={() => setLink(withProtocol(link))}
+          onBlur={onBlur}
           label={__('URL', 'web-stories')}
           type="url"
           required

@@ -30,6 +30,10 @@ jest.mock('../../../../app', () => ({
   useCurrentUser: jest.fn(),
 }));
 
+jest.mock('../../popupMountedContext', () => ({
+  useIsChecklistMounted: jest.fn(() => true),
+}));
+
 const mockUseConfig = useConfig;
 const mockUseCurrentUser = useCurrentUser;
 const mockToggleWebStoriesMediaOptimization = jest.fn();
