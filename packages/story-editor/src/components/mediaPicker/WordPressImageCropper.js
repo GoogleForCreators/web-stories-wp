@@ -23,46 +23,44 @@
  *
  * @see https://github.com/WordPress/wordpress-develop/blob/baa5ba32d8698f6a6a5928bcbd4fea35bd47a8c1/src/js/media/controllers/customize-image-cropper.js
  */
-const WordPressImageCropper = window.wp.media.controller.Cropper.extend(
-  /** @lends wp.media.controller.WordPressImageCropper.prototype */ {
-    /**
-     * Posts the crop details to the admin.
-     *
-     * Uses crop measurements when flexible in both directions.
-     * Constrains flexible side based on image ratio and size of the fixed side.
-     *
-     * @since 4.3.0
-     * @param {Object} attachment The attachment to crop.
-     * @return {Object} A jQuery promise that represents the crop image request.
-     */
-    doCrop: function (attachment) {
-      const cropDetails = attachment.get('cropDetails'),
-        control = this.get('control'),
-        ratio = cropDetails.width / cropDetails.height;
+const WordPressImageCropper = window.wp?.media.controller.Cropper.extend({
+  /**
+   * Posts the crop details to the admin.
+   *
+   * Uses crop measurements when flexible in both directions.
+   * Constrains flexible side based on image ratio and size of the fixed side.
+   *
+   * @since 4.3.0
+   * @param {Object} attachment The attachment to crop.
+   * @return {Object} A jQuery promise that represents the crop image request.
+   */
+  doCrop: function (attachment) {
+    const cropDetails = attachment.get('cropDetails'),
+      control = this.get('control'),
+      ratio = cropDetails.width / cropDetails.height;
 
-      // Use crop measurements when flexible in both directions.
-      if (control.params.flex_width && control.params.flex_height) {
-        cropDetails.dst_width = cropDetails.width;
-        cropDetails.dst_height = cropDetails.height;
+    // Use crop measurements when flexible in both directions.
+    if (control.params.flex_width && control.params.flex_height) {
+      cropDetails.dst_width = cropDetails.width;
+      cropDetails.dst_height = cropDetails.height;
 
-        // Constrain flexible side based on image ratio and size of the fixed side.
-      } else {
-        cropDetails.dst_width = control.params.flex_width
-          ? control.params.height * ratio
-          : control.params.width;
-        cropDetails.dst_height = control.params.flex_height
-          ? control.params.width / ratio
-          : control.params.height;
-      }
+      // Constrain flexible side based on image ratio and size of the fixed side.
+    } else {
+      cropDetails.dst_width = control.params.flex_width
+        ? control.params.height * ratio
+        : control.params.width;
+      cropDetails.dst_height = control.params.flex_height
+        ? control.params.width / ratio
+        : control.params.height;
+    }
 
-      return wp.ajax.post('crop-image', {
-        nonce: attachment.get('nonces').edit,
-        id: attachment.get('id'),
-        context: control.id,
-        cropDetails: cropDetails,
-      });
-    },
-  }
-);
+    return wp.ajax.post('crop-image', {
+      nonce: attachment.get('nonces').edit,
+      id: attachment.get('id'),
+      context: control.id,
+      cropDetails: cropDetails,
+    });
+  },
+});
 
-module.exports = WordPressImageCropper;
+window.wp.media.controller.WordPressImageCropper = WordPressImageCropper;
