@@ -69,10 +69,10 @@ describe('Video Accessibility Panel', () => {
 
       class Library {}
 
-      class Cropper {}
-
       media.controller = {
-        Cropper,
+        Cropper: {
+          extend: () => {}
+        },
         Library,
       };
       media.query = () => {};

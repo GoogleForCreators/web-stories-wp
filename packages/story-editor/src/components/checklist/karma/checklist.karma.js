@@ -402,10 +402,10 @@ describe('Checklist integration - Card visibility', () => {
 
     class Library {}
 
-    class Cropper {}
-
     media.controller = {
-      Cropper,
+      Cropper: {
+        extend: () => {}
+      },
       Library,
     };
     media.query = () => {};
