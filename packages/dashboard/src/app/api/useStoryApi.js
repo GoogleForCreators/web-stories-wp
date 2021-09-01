@@ -36,13 +36,13 @@ import {
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
 } from '../../constants';
+import { getStoryColors } from '../../utils';
 import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
 import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
-import { getStoryColors } from '../../utils';
 
 // Important: Keep in sync with REST API preloading definition.
 const STORY_FIELDS = [
@@ -252,6 +252,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
         const path = addQueryArgs(storyApi, {
           _fields: 'edit_link',
         });
+
         const response = await dataAdapter.post(path, {
           data: {
             ...storyPropsToSave,
