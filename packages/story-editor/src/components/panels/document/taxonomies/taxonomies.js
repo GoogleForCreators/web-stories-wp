@@ -13,32 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import TaxonomiesPanel from '../taxonomies';
+import { SimplePanel } from '../../panel';
 
-const Wrapper = styled.div`
-  background: ${({ theme }) => theme.colors.bg.primary};
-`;
-
-export default {
-  title: 'Stories Editor/Components/Taxonomies',
-  component: TaxonomiesPanel,
-};
-
-function Taxonomies() {
-  return <TaxonomiesPanel />;
+function TaxonomiesPanel({ ...rest }) {
+  return (
+    <SimplePanel
+      name="taxonomies"
+      title={__('Categories and Tags', 'web-stories')}
+      {...rest}
+    />
+  );
 }
 
-export const _default = () => {
-  return (
-    <Wrapper>
-      <Taxonomies />
-    </Wrapper>
-  );
-};
+export default TaxonomiesPanel;

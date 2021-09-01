@@ -13,32 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useHighlights, states, styles } from '../../../../app/highlights';
-import { SimplePanel } from '../../panel';
+import TaxonomiesPanel from '../taxonomies';
 
-function TaxonomiesPanel() {
-  const { highlight, resetHighlight } = useHighlights((state) => ({
-    highlight: state[states.EXCERPT],
-    resetHighlight: state.onFocusOut,
-  }));
+const Taxonomies = styled(TaxonomiesPanel)`
+  background: ${({ theme }) => theme.colors.bg.primary};
+`;
 
-  return (
-    <SimplePanel
-      name="taxonomies"
-      title={__('Categories and Tags', 'web-stories')}
-      css={highlight?.showEffect && styles.FLASH}
-      onAnimationEnd={() => resetHighlight()}
-      isPersistable={!highlight}
-    />
-  );
-}
+export default {
+  title: 'Stories Editor/Components/Taxonomies',
+  component: TaxonomiesPanel,
+};
 
-export default TaxonomiesPanel;
+export const _default = () => {
+  return <Taxonomies />;
+};
