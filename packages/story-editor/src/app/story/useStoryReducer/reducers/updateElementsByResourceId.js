@@ -44,13 +44,10 @@ function updateElementsByResourceId(
   if (id === null) {
     return state;
   }
-  const updatedPages = state.pages.map((page, pageIndex) => {
+  const updatedPages = state.pages.map((page) => {
     const updatedElements = page.elements.map((element) => {
       if (element.resource?.id === id) {
-        return updateElementWithUpdater(
-          element,
-          propertiesOrUpdater
-        );
+        return updateElementWithUpdater(element, propertiesOrUpdater);
       }
       return element;
     });
