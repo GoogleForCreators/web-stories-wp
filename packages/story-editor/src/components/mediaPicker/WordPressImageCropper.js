@@ -22,9 +22,6 @@
  * which requires the 'customize' capability.
  *
  * @see https://github.com/WordPress/wordpress-develop/blob/baa5ba32d8698f6a6a5928bcbd4fea35bd47a8c1/src/js/media/controllers/customize-image-cropper.js
- * @constructs wp.media.controller.CustomizeImageCropper
- * @augments wp.media.controller.CustomizeImageCropper.Cropper
- * @inheritDoc
  */
 const WordPressImageCropper = window.wp.media.controller.Cropper.extend(
   /** @lends wp.media.controller.WordPressImageCropper.prototype */ {
