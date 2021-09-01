@@ -202,27 +202,28 @@ export function LeftRail() {
   }, []);
 
   // See how many templates are new based on the current date
-  const getNewTemplateCount = useCallback(async () => {
-    const metaData = await getTemplateMetaData();
-    if (metaData) {
-      const newTemplates = getNewTemplatesMetaData(
-        metaData,
-        NEW_TEMPLATE_THRESHOLD_IN_DAYS
-      );
-      return updateNumNewTemplates(newTemplates.length);
-    }
-    return () => {};
-  }, [updateNumNewTemplates]);
-
   useEffect(() => {
     let mounted = true;
-    if (mounted) {
-      getNewTemplateCount();
+
+    async function refreshNewTemplateCount() {
+      const metaData = await getTemplateMetaData();
+      if (metaData) {
+        const newTemplates = getNewTemplatesMetaData(
+          metaData,
+          NEW_TEMPLATE_THRESHOLD_IN_DAYS
+        );
+        if (mounted) {
+          updateNumNewTemplates(newTemplates.length);
+        }
+      }
     }
+
+    refreshNewTemplateCount();
+
     return () => {
       mounted = false;
     };
-  }, [getNewTemplateCount]);
+  }, [updateNumNewTemplates]);
 
   return (
     <LeftRailContainer

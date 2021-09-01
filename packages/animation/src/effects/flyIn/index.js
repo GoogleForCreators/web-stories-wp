@@ -70,7 +70,7 @@ export function EffectFlyIn({
     AMPTarget: MoveAMPTarget,
     AMPAnimation: MoveAMPAnimation,
     generatedKeyframes: moveKeyframes,
-  } = new AnimationMove({
+  } = AnimationMove({
     ...offsetLookup[flyInDir],
     duration,
     delay,

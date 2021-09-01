@@ -103,11 +103,9 @@ function useCarouselKeys({ listElement, pageRefs }) {
         return;
       }
       const index = pageIds.indexOf(currentPageId);
-      let newPos = index;
+      let newPos = index + dir;
       if (shiftKey) {
         newPos = dir < 0 ? 0 : pageIds.length - 1;
-      } else {
-        newPos = index + dir;
       }
       if (newPos !== index && newPos >= 0 && newPos < pageIds.length) {
         arrangePage({ pageId: currentPageId, position: newPos });
