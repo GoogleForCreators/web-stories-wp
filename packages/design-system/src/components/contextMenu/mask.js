@@ -58,12 +58,11 @@ export default function Mask({ onDismiss }) {
       {/*
         Disable Reason: Allow pointer events to pass through if there's no 'onDismiss' to preserve transition
         */}
-      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
+      {/* eslint-disable-next-line styled-components-a11y/no-static-element-interactions */}
       <ScreenMask
         ref={maskRef}
         data-testid="context-menu-mask"
         hasOnDismiss={Boolean(onDismiss)}
-        onClick={onDismiss || noop}
         onMouseDown={onDismiss || noop}
       />
     </>
