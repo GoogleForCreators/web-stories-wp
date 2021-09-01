@@ -81,4 +81,5 @@ export const TEMPLATE_NAMES = [
   'sustainability-tips',
   'an-artists-legacy',
   'tips-for-throwing-an-outdoor-luau',
+  'all-about-cars',
 ];
