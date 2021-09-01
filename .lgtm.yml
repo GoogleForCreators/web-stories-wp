@@ -1,3 +1,5 @@
 path_classifiers:
   library:
     - packages/imgareaselect/src
+  test:
+    - packages/karma-fixture/src/client_with_context.html
