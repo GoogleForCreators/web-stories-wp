@@ -47,9 +47,9 @@ function reducer(state, action) {
         ...state,
         value,
         tags: uniquesOnly([
-          ...state.tags.slice(0, state.tags - state.offset),
+          ...state.tags.slice(0, state.tags.length - state.offset),
           ...newTags,
-          ...state.tags.slice(state.tags - state.offset),
+          ...state.tags.slice(state.tags.length - state.offset),
         ]),
       };
     }
