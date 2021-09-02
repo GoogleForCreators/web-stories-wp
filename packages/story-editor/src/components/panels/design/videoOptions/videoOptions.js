@@ -38,6 +38,7 @@ import { useCallback, useMemo, useEffect } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
+import useCanvas from '../../../../app/canvas/useCanvas';
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
@@ -50,6 +51,10 @@ const Row = styled(DefaultRow)`
 
 const StyledButton = styled(Button)`
   padding: 12px 8px;
+`;
+
+const TrimButton = styled(StyledButton)`
+  margin-left: 20px;
 `;
 
 const Label = styled.label`
@@ -72,6 +77,7 @@ const HelperText = styled(Text).attrs({
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const isMuteVideoEnabled = useFeature('enableMuteVideo');
+  const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const { isTranscodingEnabled } = useFFmpeg();
   const { muteExistingVideo } = useLocalMedia((state) => ({
     muteExistingVideo: state.actions.muteExistingVideo,
@@ -105,11 +111,26 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     isMuting,
   ]);
 
+  const shouldDisplayTrimButton = useMemo(
+    () => isSingleElement && isVideoTrimEnabled,
+    [isSingleElement, isVideoTrimEnabled]
+  );
+
   const buttonText = useMemo(() => {
     return isMuting
       ? __('Removing audio', 'web-stories')
       : __('Remove audio', 'web-stories');
   }, [isMuting]);
+
+  const { setEditingElementWithState } = useCanvas(
+    ({ actions: { setEditingElementWithState } }) => ({
+      setEditingElementWithState,
+    })
+  );
+
+  const handleTrim = useCallback(() => {
+    setEditingElementWithState(selectedElements[0].id, { isTrimming: true });
+  }, [setEditingElementWithState, selectedElements]);
 
   const speak = useLiveRegion();
 
@@ -137,6 +158,16 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
             {__('Loop', 'web-stories')}
           </Text>
         </Label>
+        {shouldDisplayTrimButton && (
+          <TrimButton
+            variant={BUTTON_VARIANTS.RECTANGLE}
+            type={BUTTON_TYPES.SECONDARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={handleTrim}
+          >
+            {__('Trim', 'web-stories')}
+          </TrimButton>
+        )}
       </Row>
       {shouldDisplayMuteButton && (
         <>
