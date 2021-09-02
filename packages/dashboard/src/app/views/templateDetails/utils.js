@@ -31,7 +31,7 @@ export const getRelatedTemplates = (template, taggedTemplatesDictionary) => {
   );
 
   // Remove duplicates
-  const uniqueRelatedTemplates = Array.from(new Set(allRelatedTemplates));
+  const uniqueRelatedTemplates = [...new Set(allRelatedTemplates)];
 
   return uniqueRelatedTemplates.filter(({ id }) => id !== template.id);
 };
