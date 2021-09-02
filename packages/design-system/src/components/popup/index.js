@@ -75,6 +75,7 @@ function Popup({
   fillWidth = false,
   fillHeight = false,
   onPositionUpdate = noop,
+  onPlacementUpdate = noop,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -112,6 +113,7 @@ function Popup({
   }, [isOpen, positionPopup]);
 
   useLayoutEffect(onPositionUpdate, [popupState, onPositionUpdate]);
+  useLayoutEffect(onPlacementUpdate, [popupState, onPlacementUpdate]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
 
@@ -147,6 +149,7 @@ Popup.propTypes = {
   fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   onPositionUpdate: PropTypes.func,
+  onPlacementUpdate: PropTypes.func,
 };
 
 export { Popup, PLACEMENT };

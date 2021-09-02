@@ -106,6 +106,7 @@ function Tooltip({
   const [arrowDelta, setArrowDelta] = useState(null);
   const anchorRef = useRef(null);
   const tooltipRef = useRef(null);
+  const dynamicPlacement = useRef(null);
 
   const spacing = useMemo(
     () => ({
@@ -133,6 +134,17 @@ function Tooltip({
 
     setArrowDelta(delta);
   }, []);
+  // When near the bottom of the viewport and the tooltip is placed on the bottom we want to force the tooltip to the top as to not
+  // cutoff the contents of the tooltip.
+  const positionPlacement = useCallback(() => {
+    const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
+    if (
+      placement.startsWith('bottom') &&
+      tooltipElBoundingBox?.height < window.visualViewport.height
+    ) {
+      dynamicPlacement.current = PLACEMENT.TOP;
+    }
+  }, [placement]);
 
   const delay = useRef();
   const onHover = useCallback(
@@ -191,15 +203,16 @@ function Tooltip({
 
       <Popup
         anchor={forceAnchorRef || anchorRef}
-        placement={placement}
+        placement={dynamicPlacement.current || placement}
         spacing={spacing}
         isOpen={Boolean(shown && (shortcut || title))}
         onPositionUpdate={positionArrow}
+        onPlacementUpdate={positionPlacement}
       >
         <TooltipContainer
           className={className}
           ref={tooltipRef}
-          placement={placement}
+          placement={dynamicPlacement.current || placement}
           shown={shown}
           {...tooltipProps}
         >
@@ -216,7 +229,10 @@ function Tooltip({
                   <path d="M1,1 L0.868,1 C0.792,1,0.72,0.853,0.676,0.606 L0.585,0.098 C0.562,-0.033,0.513,-0.033,0.489,0.098 L0.399,0.606 C0.355,0.853,0.283,1,0.207,1 L0,1 L1,1" />
                 </clipPath>
               </SvgForTail>
-              <Tail placement={placement} translateX={arrowDelta} />
+              <Tail
+                placement={dynamicPlacement.current || placement}
+                translateX={arrowDelta}
+              />
             </>
           )}
         </TooltipContainer>
