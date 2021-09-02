@@ -29,6 +29,7 @@ import { prettifyShortcut } from '../keyboard';
 import { THEME_CONSTANTS } from '../../theme';
 import { Text } from '../typography';
 import { RTL_PLACEMENT } from '../popup/constants';
+import { noop } from '../../utils';
 import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID } from './tail';
 
 const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = 8;
@@ -91,10 +92,10 @@ function Tooltip({
   hasTail,
   placement = PLACEMENT.BOTTOM,
   children,
-  onPointerEnter = () => {},
-  onPointerLeave = () => {},
-  onFocus = () => {},
-  onBlur = () => {},
+  onPointerEnter = noop,
+  onPointerLeave = noop,
+  onFocus = noop,
+  onBlur = noop,
   isDelayed = false,
   forceAnchorRef = null,
   tooltipProps = null,

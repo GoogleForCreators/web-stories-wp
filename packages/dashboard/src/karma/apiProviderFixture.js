@@ -183,7 +183,7 @@ function getCurrentUserState() {
 }
 
 function fetchSettings(currentState) {
-  const settingsState = { ...currentState } || getSettingsState();
+  const settingsState = currentState ? { ...currentState } : getSettingsState();
   settingsState.googleAnalyticsId = 'UA-000000-2';
   settingsState.publisherLogoIds = fillerPublisherLogoIds.slice(0, 2);
   return settingsState;
@@ -251,7 +251,7 @@ function fetchStories(
   },
   currentState
 ) {
-  const storiesState = { ...currentState } || getStoriesState();
+  const storiesState = currentState ? { ...currentState } : getStoriesState();
   const statuses = status.split(',');
 
   storiesState.storiesOrderById = Object.values(storiesState.stories)

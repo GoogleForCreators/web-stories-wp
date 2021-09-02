@@ -64,6 +64,30 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
   }
 }
 
+/** @typedef {import('react').MutableRefObject} MutableRefObject */
+
+/**
+ * @typedef {Object} Spacing Spacing
+ * @property {number} x Horizontal spacing.
+ * @property {number} y Vertical spacing.
+ */
+/**
+ * @typedef {Object} Offset Offset
+ * @property {number} x Horizontal position.
+ * @property {number} y Vertical position.
+ * @property {number} width Width.
+ * @property {number} height Height.
+ */
+
+/**
+ *
+ * @param {string} placement Placement.
+ * @param {Spacing} spacing Spacing.
+ * @param {MutableRefObject<HTMLElement>} anchor Anchor element
+ * @param {MutableRefObject<HTMLElement>} dock Dock element.
+ * @param {MutableRefObject<HTMLElement>} popup Popup element.
+ * @return {Offset} Popup offset.
+ */
 export function getOffset(placement, spacing, anchor, dock, popup) {
   const anchorRect = anchor.current.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();

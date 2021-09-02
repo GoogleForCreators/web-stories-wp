@@ -16,16 +16,17 @@
 /**
  * External dependencies
  */
+import { VisuallyHidden } from '@web-stories-wp/design-system';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { useFeatures } from 'flagged';
 import PropTypes from 'prop-types';
-import { useMemo } from '@web-stories-wp/react';
+import { useMemo, forwardRef } from '@web-stories-wp/react';
 import { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { CardGridItem, StoryMenu } from '../../../../../components';
+import { StoryMenu } from '../../../../../components';
 import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
 import { STORY_STATUS } from '../../../../../constants';
 import {
@@ -42,157 +43,159 @@ import {
   Gradient,
   Scrim,
 } from '../../../shared/grid/components';
-import { CardWrapper } from './components';
+import { CardWrapper, CustomCardGridItem, ScrimAnchor } from './components';
 import StoryDisplayContent from './storyDisplayContent';
 
-const StoryGridItem = ({
-  handleFocus,
-  isActive,
-  itemRefs = {},
-  pageSize,
-  renameStory,
-  story,
-  storyMenu,
-}) => {
-  const { enablePostLocking } = useFeatures();
-  const { userId } = useConfig();
-  const tabIndex = isActive ? 0 : -1;
-  const titleRenameProps = renameStory
-    ? {
-        editMode: renameStory?.id === story?.id,
-        onEditComplete: (newTitle) =>
-          renameStory?.handleOnRenameStory(story, newTitle),
-        onEditCancel: renameStory?.handleCancelRename,
-      }
-    : {};
-
-  const isLocked = useMemo(
-    () => enablePostLocking && story?.locked && userId !== story?.lockUser.id,
-    [enablePostLocking, story, userId]
-  );
-
-  const generatedMenuItems = useMemo(
-    () =>
-      generateStoryMenu({
-        menuItemActions: storyMenu.menuItemActions,
-        menuItems: storyMenu.menuItems,
-        story,
-        isLocked,
-      }),
-    [storyMenu, story, isLocked]
-  );
-
-  const storyDate = getRelativeDisplayDate(
-    story?.status === STORY_STATUS.DRAFT
-      ? story?.modified_gmt
-      : story?.created_gmt
-  );
-
-  const formattedTitle = titleFormatted(story.title);
-
-  const memoizedStoryMenu = useMemo(
-    () => (
-      <StoryMenu
-        menuLabel={
-          isLocked
-            ? sprintf(
-                /* translators: 1: story title. 2: user currently editing the story. */
-                __('Context menu for %1$s (locked by %2$s)', 'web-stories'),
-                formattedTitle,
-                story?.lockUser.name
-              )
-            : sprintf(
-                /* translators: %s: story title.*/
-                __('Context menu for %s', 'web-stories'),
-                formattedTitle
-              )
+const StoryGridItem = forwardRef(
+  ({ onFocus, isActive, pageSize, renameStory, story, storyMenu }, ref) => {
+    const { enablePostLocking } = useFeatures();
+    const { userId } = useConfig();
+    const tabIndex = isActive ? 0 : -1;
+    const titleRenameProps = renameStory
+      ? {
+          editMode: renameStory?.id === story?.id,
+          onEditComplete: (newTitle) =>
+            renameStory?.handleOnRenameStory(story, newTitle),
+          onEditCancel: renameStory?.handleCancelRename,
         }
-        itemActive={isActive}
-        tabIndex={tabIndex}
-        onMoreButtonSelected={storyMenu.handleMenuToggle}
-        contextMenuId={storyMenu.contextMenuId}
-        storyId={story.id}
-        isInverted
-        menuItems={generatedMenuItems}
-        menuStyleOverrides={css`
-          /* force menu position to bottom corner */
-          margin: 0 0 0 auto;
-        `}
-      />
-    ),
-    [
-      isLocked,
-      formattedTitle,
-      isActive,
-      tabIndex,
-      storyMenu,
-      story.id,
-      story?.lockUser,
-      generatedMenuItems,
-    ]
-  );
+      : {};
 
-  return (
-    <CardGridItem
-      data-testid={`story-grid-item-${story.id}`}
-      onFocus={handleFocus}
-      $posterHeight={pageSize.posterHeight}
-      ref={(el) => {
-        itemRefs.current[story.id] = el;
-      }}
-      aria-label={sprintf(
-        /* translators: %s: story title.*/
-        __('Details about %s', 'web-stories'),
-        formattedTitle
-      )}
-    >
-      <Container>
-        <CardWrapper>
-          <Poster
-            {...(story.featuredMediaUrl
-              ? {
-                  alt: sprintf(
-                    /* translators: %s: Story title. */
-                    __('%s Poster image', 'web-stories'),
-                    formattedTitle
-                  ),
-                  as: 'img',
-                  src: story.featuredMediaUrl,
-                }
-              : null)}
-          />
-          <Gradient />
-          <Scrim>
-            <StoryDisplayContent
-              author={story.author}
-              contextMenu={memoizedStoryMenu}
-              displayDate={storyDate}
-              formattedTitle={formattedTitle}
-              id={story.id}
-              isLocked={isLocked}
-              lockUser={story?.lockUser}
-              status={story?.status}
-              tabIndex={tabIndex}
-              title={story.title}
-              titleLink={story.editStoryLink}
-              {...titleRenameProps}
+    const isLocked = useMemo(
+      () => enablePostLocking && story?.locked && userId !== story?.lockUser.id,
+      [enablePostLocking, story, userId]
+    );
+
+    const generatedMenuItems = useMemo(
+      () =>
+        generateStoryMenu({
+          menuItemActions: storyMenu.menuItemActions,
+          menuItems: storyMenu.menuItems,
+          story,
+          isLocked,
+        }),
+      [storyMenu, story, isLocked]
+    );
+
+    const storyDate = getRelativeDisplayDate(
+      story?.status === STORY_STATUS.DRAFT
+        ? story?.modified_gmt
+        : story?.created_gmt
+    );
+
+    const formattedTitle = titleFormatted(story.title);
+
+    const memoizedStoryMenu = useMemo(
+      () => (
+        <StoryMenu
+          menuLabel={
+            isLocked
+              ? sprintf(
+                  /* translators: 1: story title. 2: user currently editing the story. */
+                  __('Context menu for %1$s (locked by %2$s)', 'web-stories'),
+                  formattedTitle,
+                  story?.lockUser.name
+                )
+              : sprintf(
+                  /* translators: %s: story title.*/
+                  __('Context menu for %s', 'web-stories'),
+                  formattedTitle
+                )
+          }
+          itemActive={isActive}
+          tabIndex={tabIndex}
+          onMoreButtonSelected={storyMenu.handleMenuToggle}
+          contextMenuId={storyMenu.contextMenuId}
+          storyId={story.id}
+          isInverted
+          menuItems={generatedMenuItems}
+          menuStyleOverrides={css`
+            /* force menu position to bottom corner */
+            margin: 0 0 0 auto;
+          `}
+        />
+      ),
+      [
+        isLocked,
+        formattedTitle,
+        story?.lockUser?.name,
+        story.id,
+        isActive,
+        tabIndex,
+        storyMenu,
+        generatedMenuItems,
+      ]
+    );
+
+    return (
+      <CustomCardGridItem
+        data-testid={`story-grid-item-${story.id}`}
+        onFocus={onFocus}
+        $posterHeight={pageSize.posterHeight}
+        ref={ref}
+        aria-label={sprintf(
+          /* translators: %s: story title.*/
+          __('Details about %s', 'web-stories'),
+          formattedTitle
+        )}
+      >
+        <Container>
+          <CardWrapper>
+            <Poster
+              {...(story.featuredMediaUrl
+                ? {
+                    alt: sprintf(
+                      /* translators: %s: Story title. */
+                      __('%s Poster image', 'web-stories'),
+                      formattedTitle
+                    ),
+                    as: 'img',
+                    src: story.featuredMediaUrl,
+                  }
+                : null)}
             />
-          </Scrim>
-        </CardWrapper>
-      </Container>
-    </CardGridItem>
-  );
-};
+            <Gradient />
+            <Scrim>
+              {story?.capabilities?.hasEditAction && (
+                <ScrimAnchor
+                  className="grid-item-anchor"
+                  data-testid="edit-story-grid-link"
+                  tabIndex={tabIndex}
+                  href={story.editStoryLink}
+                >
+                  <VisuallyHidden>
+                    {sprintf(
+                      /* translators: %s: Story title. */
+                      __('Open %s in Editor', 'web-stories'),
+                      formattedTitle
+                    )}
+                  </VisuallyHidden>
+                </ScrimAnchor>
+              )}
+              <StoryDisplayContent
+                author={story.author}
+                contextMenu={memoizedStoryMenu}
+                displayDate={storyDate}
+                formattedTitle={formattedTitle}
+                id={story.id}
+                isLocked={isLocked}
+                lockUser={story?.lockUser}
+                status={story?.status}
+                title={story.title}
+                {...titleRenameProps}
+              />
+            </Scrim>
+          </CardWrapper>
+        </Container>
+      </CustomCardGridItem>
+    );
+  }
+);
+
+StoryGridItem.displayName = 'StoryGridItem';
 
 StoryGridItem.propTypes = {
-  handleFocus: PropTypes.func,
+  onFocus: PropTypes.func,
   isActive: PropTypes.bool,
-  itemRefs: PropTypes.shape({
-    current: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-    ]),
-  }),
   pageSize: PageSizePropType,
   renameStory: RenameStoryPropType,
   storyMenu: StoryMenuPropType,

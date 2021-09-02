@@ -38,7 +38,6 @@ jest.mock('../wpAdapter', () => ({
         {
           id: 123,
           status: 'publish',
-          featured_media_url: 'https://www.featured-media-123',
           author: 1,
           link: 'https://www.story-link.com',
           preview_link: 'https://www.story-link.com/?preview=true',
@@ -48,7 +47,12 @@ jest.mock('../wpAdapter', () => ({
           modified_gmt: '1970-01-01T00:00:00.000',
           date: '1970-01-01T00:00:00.000',
           date_gmt: '1970-01-01T00:00:00.000',
-          _embedded: { author: [{ id: 1, name: 'admin' }] },
+          _embedded: {
+            author: [{ id: 1, name: 'admin' }],
+            'wp:featuredmedia': [
+              { id: 0, source_url: 'https://www.featured-media-123' },
+            ],
+          },
         },
       ],
     }),
@@ -63,7 +67,6 @@ jest.mock('../wpAdapter', () => ({
     }
     return Promise.resolve({
       id,
-      featured_media_url: `https://www.featured-media-${id}`,
       status: 'publish',
       title: { raw: title, rendered: title },
       author: 1,
@@ -74,7 +77,12 @@ jest.mock('../wpAdapter', () => ({
       link: 'https://www.story-link.com',
       preview_link: 'https://www.story-link.com/?preview=true',
       edit_link: 'https://www.story-link.com/wp-admin/post.php?id=' + id,
-      _embedded: { author: [{ id: 1, name: 'admin' }] },
+      _embedded: {
+        author: [{ id: 1, name: 'admin' }],
+        'wp:featuredmedia': [
+          { id: 0, source_url: `https://www.featured-media-${id}` },
+        ],
+      },
     });
   },
   deleteRequest: (path) => {
@@ -97,7 +105,6 @@ jest.mock('../wpAdapter', () => ({
 describe('ApiProvider', () => {
   it('should return a story in state data when the API request is fired', async () => {
     const { result } = renderHook(() => useApi(), {
-      // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
@@ -134,7 +141,6 @@ describe('ApiProvider', () => {
         locked: false,
         originalStoryData: {
           id: 123,
-          featured_media_url: 'https://www.featured-media-123',
           modified: '1970-01-01T00:00:00.000',
           modified_gmt: '1970-01-01T00:00:00.000',
           preview_link: 'https://www.story-link.com/?preview=true',
@@ -148,7 +154,12 @@ describe('ApiProvider', () => {
             raw: 'Carlos',
             rendered: 'Carlos',
           },
-          _embedded: { author: [{ id: 1, name: 'admin' }] },
+          _embedded: {
+            author: [{ id: 1, name: 'admin' }],
+            'wp:featuredmedia': [
+              { id: 0, source_url: 'https://www.featured-media-123' },
+            ],
+          },
         },
         previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
@@ -159,7 +170,6 @@ describe('ApiProvider', () => {
 
   it('should return an updated story in state data when the API request is fired', async () => {
     const { result } = renderHook(() => useApi(), {
-      // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
@@ -213,7 +223,6 @@ describe('ApiProvider', () => {
           id: 123,
           modified: '1970-01-01T00:00:00.000',
           modified_gmt: '1970-01-01T00:00:00.000',
-          featured_media_url: 'https://www.featured-media-123',
           preview_link: 'https://www.story-link.com/?preview=true',
           edit_link: 'https://www.story-link.com/wp-admin/post.php?id=123',
           date: '1970-01-01T00:00:00.000',
@@ -225,7 +234,12 @@ describe('ApiProvider', () => {
             raw: 'New Title',
             rendered: 'New Title',
           },
-          _embedded: { author: [{ id: 1, name: 'admin' }] },
+          _embedded: {
+            author: [{ id: 1, name: 'admin' }],
+            'wp:featuredmedia': [
+              { id: 0, source_url: 'https://www.featured-media-123' },
+            ],
+          },
         },
         previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
@@ -236,7 +250,6 @@ describe('ApiProvider', () => {
 
   it('should return a duplicated story in state data when the duplicate method is called.', async () => {
     const { result } = renderHook(() => useApi(), {
-      // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
@@ -281,7 +294,6 @@ describe('ApiProvider', () => {
           id: 123,
           modified: '1970-01-01T00:00:00.000',
           modified_gmt: '1970-01-01T00:00:00.000',
-          featured_media_url: 'https://www.featured-media-123',
           preview_link: 'https://www.story-link.com/?preview=true',
           edit_link: 'https://www.story-link.com/wp-admin/post.php?id=123',
           date: '1970-01-01T00:00:00.000',
@@ -293,7 +305,12 @@ describe('ApiProvider', () => {
             raw: 'Carlos',
             rendered: 'Carlos',
           },
-          _embedded: { author: [{ id: 1, name: 'admin' }] },
+          _embedded: {
+            author: [{ id: 1, name: 'admin' }],
+            'wp:featuredmedia': [
+              { id: 0, source_url: 'https://www.featured-media-123' },
+            ],
+          },
         },
         previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
@@ -306,8 +323,8 @@ describe('ApiProvider', () => {
           hasDeleteAction: false,
           hasEditAction: false,
         },
-        featuredMediaUrl: 'https://www.featured-media-456',
         editStoryLink: 'https://www.story-link.com/wp-admin/post.php?id=456',
+        featuredMediaUrl: 'https://www.featured-media-456',
         id: 456,
         modified: '1970-01-01T00:00:00.000',
         modified_gmt: '1970-01-01T00:00:00.000Z',
@@ -325,7 +342,6 @@ describe('ApiProvider', () => {
           id: 456,
           modified: '1970-01-01T00:00:00.000',
           modified_gmt: '1970-01-01T00:00:00.000',
-          featured_media_url: 'https://www.featured-media-456',
           preview_link: 'https://www.story-link.com/?preview=true',
           edit_link: 'https://www.story-link.com/wp-admin/post.php?id=456',
           date: '1970-01-01T00:00:00.000',
@@ -337,7 +353,12 @@ describe('ApiProvider', () => {
             raw: 'Carlos (Copy)',
             rendered: 'Carlos (Copy)',
           },
-          _embedded: { author: [{ id: 1, name: 'admin' }] },
+          _embedded: {
+            author: [{ id: 1, name: 'admin' }],
+            'wp:featuredmedia': [
+              { id: 0, source_url: 'https://www.featured-media-456' },
+            ],
+          },
         },
         previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
@@ -348,7 +369,6 @@ describe('ApiProvider', () => {
 
   it('should delete a story when the trash story method is called.', async () => {
     const { result } = renderHook(() => useApi(), {
-      // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
@@ -372,7 +392,6 @@ describe('ApiProvider', () => {
   it('should call initialFetch listeners once when first storystatuses returned', async () => {
     const listenerMock = jest.fn();
     const { result } = renderHook(() => useApi(), {
-      // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />

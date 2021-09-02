@@ -29,23 +29,13 @@ import StoryPropTypes from '../../types';
  * @param {Object<*>} props Props.
  * @return {*} Rendered component.
  */
-function ShapeOutput({
-  element: { backgroundColor, isDefaultBackground, backdropBlur },
-}) {
+function ShapeOutput({ element: { backgroundColor, isDefaultBackground } }) {
   const style = isDefaultBackground
     ? null
     : generatePatternStyles(backgroundColor);
-  const backdropFilters = backdropBlur
-    ? { backdropFilter: `blur(${backdropBlur}px)` }
-    : null;
   // willChange added by #7380 https://github.com/google/web-stories-wp/pull/7380
   // to prevent issues with the border radius on shapes not being respected when animated
-  return (
-    <div
-      className="fill"
-      style={{ ...style, willChange: 'transform', ...backdropFilters }}
-    />
-  );
+  return <div className="fill" style={{ ...style, willChange: 'transform' }} />;
 }
 
 ShapeOutput.propTypes = {

@@ -35,7 +35,7 @@ describe('<ColorPicker /> when selecting a stop', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // Unfortunately JSDOM does not support tab semantics, so we'll manually

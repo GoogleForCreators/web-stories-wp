@@ -95,7 +95,7 @@ jest.mock(
       children
 );
 
-describe('My Stories <Content />', function () {
+describe('Dashboard <Content />', function () {
   afterEach(() => {
     jest.resetAllMocks();
   });

@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { forwardRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -68,17 +69,17 @@ ConditionalSpanWrapper.propTypes = {
   isWrapped: PropTypes.bool,
 };
 
-export function Link({ children, ...props }) {
+const Link = forwardRef(function Link({ children, ...props }, ref) {
   const isExternalLink = props.target === '_blank';
   return (
-    <StyledAnchor {...props}>
+    <StyledAnchor ref={ref} {...props}>
       <ConditionalSpanWrapper isWrapped={isExternalLink}>
         {children}
         {isExternalLink && <StyledLaunch />}
       </ConditionalSpanWrapper>
     </StyledAnchor>
   );
-}
+});
 Link.propTypes = {
   children: PropTypes.node,
   target: PropTypes.string,
@@ -87,3 +88,5 @@ Link.propTypes = {
 Link.defaultProps = {
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };
+
+export { Link };
