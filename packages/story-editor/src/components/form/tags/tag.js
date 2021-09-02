@@ -25,8 +25,10 @@ import {
   TOOLTIP_PLACEMENT,
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
+import { useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 const Dismiss = styled.button`
   all: unset;
@@ -72,15 +74,20 @@ const TokenText = styled(Text).attrs({
 `;
 
 function Tag({ children, onDismiss }) {
+  const id = useMemo(() => uuidv4(), []);
   return (
     <Token>
-      <TokenText>{children}</TokenText>
+      <TokenText id={id}>{children}</TokenText>
       <Tooltip
         title={__('Remove Tag', 'web-stories')}
         placement={TOOLTIP_PLACEMENT.BOTTOM}
         hasTail
       >
-        <Dismiss onClick={onDismiss}>
+        <Dismiss
+          onClick={onDismiss}
+          aria-label={__('Remove Tag', 'web-stories')}
+          aria-describedby={id}
+        >
           <Icons.Cross />
         </Dismiss>
       </Tooltip>

@@ -46,7 +46,6 @@ const TextInput = styled.input.attrs({ type: 'text' })`
     ({ paragraph }, { SMALL }) => paragraph[SMALL]
   )}
   flex-grow: 1;
-  flex-basis: 5ch;
   border: none;
   outline: none;
   background: transparent;
@@ -63,12 +62,13 @@ function Input(props) {
   });
   const [isInputFocused, setIsInputFocued] = useState(false);
 
+  // Prepare and memoize event handlers to be as self
+  // contained and descriptive as possible
   const { handleFocus, handleBlur, handleKeyDown, handleChange, removeTag } =
     useMemo(
       () => ({
-        handleChange: (e) => {
-          dispatch({ type: ACTIONS.UPDATE_VALUE, payload: e.target.value });
-        },
+        // Key interactions are modeled after WordPress Tag input UX
+        // and are only available when focused on the text input
         handleKeyDown: (e) => {
           if (e.key === 'ArrowLeft' && e.target.value === '') {
             dispatch({ type: ACTIONS.INCREMENT_OFFSET });
@@ -82,6 +82,9 @@ function Input(props) {
           if (['Comma', 'Enter'].includes(e.key)) {
             dispatch({ type: ACTIONS.SUBMIT_VALUE });
           }
+        },
+        handleChange: (e) => {
+          dispatch({ type: ACTIONS.UPDATE_VALUE, payload: e.target.value });
         },
         removeTag: (tag) => () => {
           dispatch({ type: ACTIONS.REMOVE_TAG, payload: tag });
@@ -99,27 +102,33 @@ function Input(props) {
 
   return (
     <Border isInputFocused={isInputFocused}>
-      {[
-        ...tags.slice(0, tags.length - offset),
-        INPUT_KEY,
-        ...tags.slice(tags.length - offset),
-      ].map((tag) =>
-        tag === INPUT_KEY ? (
-          <TextInput
-            key={INPUT_KEY}
-            {...props}
-            value={value}
-            onKeyDown={handleKeyDown}
-            onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          />
-        ) : (
-          <Tag key={tag} onDismiss={removeTag(tag)}>
-            {tag}
-          </Tag>
+      {
+        // Text input should move, relative to end, with offset
+        // this helps with natural tab order and visuals
+        // as you ArrowLeft or ArrowRight through tags
+        [
+          ...tags.slice(0, tags.length - offset),
+          INPUT_KEY,
+          ...tags.slice(tags.length - offset),
+        ].map((tag) =>
+          tag === INPUT_KEY ? (
+            <TextInput
+              {...props}
+              key={INPUT_KEY}
+              value={value}
+              onKeyDown={handleKeyDown}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              size="4"
+            />
+          ) : (
+            <Tag key={tag} onDismiss={removeTag(tag)}>
+              {tag}
+            </Tag>
+          )
         )
-      )}
+      }
     </Border>
   );
 }

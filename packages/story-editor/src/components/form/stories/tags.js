@@ -44,9 +44,9 @@ export const _default = () => {
   return (
     <Bg>
       <Wrapper>
-        <Tags.Label>{'Add New Tag'}</Tags.Label>
-        <Tags.Input />
-        <Tags.Description>
+        <Tags.Label htmlFor="tags-input">{'Add New Tag'}</Tags.Label>
+        <Tags.Input id="tags-input" aria-describedby="tags-description" />
+        <Tags.Description id="tags-description">
           {'Separate with commas or the Enter key.'}
         </Tags.Description>
       </Wrapper>
