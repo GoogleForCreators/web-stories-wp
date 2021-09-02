@@ -26,7 +26,7 @@ import StoryContext from '../../../../../app/story/context';
 import { renderWithTheme } from '../../../../../testUtils';
 import SlugPanel, { MIN_MAX } from '../slug';
 
-function arrange() {
+function arrange(storyConfig = {}) {
   const updateStory = jest.fn();
 
   const storyContextValue = {
@@ -38,6 +38,7 @@ function arrange() {
           prefix: 'https://example.com/',
           suffix: '',
         },
+        ...storyConfig,
       },
     },
     actions: { updateStory },
@@ -74,6 +75,13 @@ describe('SlugPanel', () => {
     arrange();
     const url = screen.getByRole('link', { name: 'https://example.com/foo' });
     expect(url).toBeInTheDocument();
+  });
+
+  it('should not display the input when using non-pretty permalinks', () => {
+    arrange({ permalinkConfig: null });
+    expect(() => screen.getByRole('textbox', { name: 'URL slug' })).toThrow(
+      'Unable to find an accessible element with the role "textbox" and name "URL slug"'
+    );
   });
 
   it('should not allow trailing spaces while typing and onblur', async () => {

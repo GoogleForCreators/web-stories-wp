@@ -27,11 +27,13 @@ import {
   useResizeEffect,
   createPortal,
 } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
+import { noop } from '../../utils/noop';
 import { getTransforms, getOffset } from './utils';
 import { Placement } from './constants';
 
@@ -72,7 +74,7 @@ function Popup({
   invisible,
   fillWidth = false,
   fillHeight = false,
-  onPositionUpdate = () => {},
+  onPositionUpdate = noop,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -144,5 +146,20 @@ function Popup({
       )
     : null;
 }
+
+Popup.propTypes = {
+  anchor: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    .isRequired,
+  dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  children: PropTypes.node,
+  renderContents: PropTypes.func,
+  placement: PropTypes.oneOf(Object.values(Placement)),
+  spacing: PropTypes.object,
+  isOpen: PropTypes.bool,
+  invisible: PropTypes.bool,
+  fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  onPositionUpdate: PropTypes.func,
+};
 
 export default Popup;

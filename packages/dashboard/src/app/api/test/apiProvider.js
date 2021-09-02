@@ -105,7 +105,6 @@ jest.mock('../wpAdapter', () => ({
 describe('ApiProvider', () => {
   it('should return a story in state data when the API request is fired', async () => {
     const { result } = renderHook(() => useApi(), {
-      // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
@@ -171,7 +170,6 @@ describe('ApiProvider', () => {
 
   it('should return an updated story in state data when the API request is fired', async () => {
     const { result } = renderHook(() => useApi(), {
-      // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
@@ -252,7 +250,6 @@ describe('ApiProvider', () => {
 
   it('should return a duplicated story in state data when the duplicate method is called.', async () => {
     const { result } = renderHook(() => useApi(), {
-      // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
@@ -372,7 +369,6 @@ describe('ApiProvider', () => {
 
   it('should delete a story when the trash story method is called.', async () => {
     const { result } = renderHook(() => useApi(), {
-      // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
@@ -396,7 +392,6 @@ describe('ApiProvider', () => {
   it('should call initialFetch listeners once when first storystatuses returned', async () => {
     const listenerMock = jest.fn();
     const { result } = renderHook(() => useApi(), {
-      // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
