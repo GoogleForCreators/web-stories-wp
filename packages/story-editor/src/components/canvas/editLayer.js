@@ -30,7 +30,7 @@ import { getDefinitionForType } from '../../elements';
 import { useStory, useCanvas } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
-import { Layer, PageArea, Z_INDEX } from './layout';
+import { Layer, PageArea, MenuArea, Z_INDEX } from './layout';
 import useFocusCanvas from './useFocusCanvas';
 
 const LayerWithGrayout = styled(Layer)`
@@ -63,7 +63,7 @@ function EditLayer() {
 function EditLayerForElement({ element }) {
   const ref = useRef(null);
   const pageAreaRef = useRef(null);
-  const { editModeGrayout } = getDefinitionForType(element.type);
+  const { editModeGrayout, EditMenu } = getDefinitionForType(element.type);
 
   const { clearEditing } = useCanvas((state) => ({
     clearEditing: state.actions.clearEditing,
@@ -102,6 +102,11 @@ function EditLayerForElement({ element }) {
       >
         <EditElement element={element} />
       </EditPageArea>
+      {EditMenu && (
+        <MenuArea>
+          <EditMenu />
+        </MenuArea>
+      )}
     </LayerWithGrayout>
   );
 }

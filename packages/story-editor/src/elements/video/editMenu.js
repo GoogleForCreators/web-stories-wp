@@ -18,25 +18,21 @@
  * Internal dependencies
  */
 import useCanvas from '../../app/canvas/useCanvas';
-import StoryPropTypes from '../../types';
-import MediaEdit from '../media/edit';
-import Trim from './trim';
 
-function VideoEdit({ element, box, ...rest }) {
+function VideoEditMenu() {
   const { editingElementState } = useCanvas((state) => ({
     editingElementState: state.state.editingElementState,
   }));
 
-  if (editingElementState?.isTrimming) {
-    return <Trim element={element} box={box} {...rest} />;
+  if (!editingElementState?.isTrimming) {
+    return false;
   }
 
-  return <MediaEdit element={element} box={box} {...rest} />;
+  return (
+    <div style={{ border: '2px solid red', backgroundColor: 'hotpink' }}>
+      {'Dummy Edit Menu'}
+    </div>
+  );
 }
 
-VideoEdit.propTypes = {
-  element: StoryPropTypes.elements.video.isRequired,
-  box: StoryPropTypes.box.isRequired,
-};
-
-export default VideoEdit;
+export default VideoEditMenu;
