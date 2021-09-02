@@ -37,6 +37,7 @@ import useRouteHistory from '../../router/useRouteHistory';
 import { ERRORS } from '../../textContent';
 import Header from './header';
 import Content from './content';
+import { getRelatedTemplates } from './utils';
 
 function TemplateDetails() {
   const [template, setTemplate] = useState(null);
@@ -54,33 +55,41 @@ function TemplateDetails() {
   const {
     isLoading,
     templates,
+    templatesByTag,
     templatesOrderById,
     createStoryFromTemplate,
+    fetchMyTemplateById,
     fetchExternalTemplates,
     fetchExternalTemplateById,
-    fetchRelatedTemplates,
   } = useApi(
     ({
       state: {
-        templates: { templates, templatesOrderById, totalPages, isLoading },
+        templates: {
+          templates,
+          templatesByTag,
+          templatesOrderById,
+          totalPages,
+          isLoading,
+        },
       },
       actions: {
         storyApi: { createStoryFromTemplate },
         templateApi: {
           fetchExternalTemplates,
+          fetchMyTemplateById,
           fetchExternalTemplateById,
-          fetchRelatedTemplates,
         },
       },
     }) => ({
       isLoading,
       templates,
+      templatesByTag,
       templatesOrderById,
       totalPages,
       createStoryFromTemplate,
       fetchExternalTemplates,
+      fetchMyTemplateById,
       fetchExternalTemplateById,
-      fetchRelatedTemplates,
     })
   );
   const { isRTL } = useConfig();
@@ -101,8 +110,12 @@ function TemplateDetails() {
     }
 
     const id = parseInt(templateId);
+    const isLocalTemplate = isLocal && isLocal.toLowerCase() === 'true';
+    const templateFetchFn = isLocalTemplate
+      ? fetchMyTemplateById
+      : fetchExternalTemplateById;
 
-    fetchExternalTemplateById(id)
+    templateFetchFn(id)
       .then(setTemplate)
       .catch(() => {
         showSnackbar({
@@ -114,6 +127,7 @@ function TemplateDetails() {
     isLoading,
     fetchExternalTemplates,
     fetchExternalTemplateById,
+    fetchMyTemplateById,
     isLocal,
     templateId,
     templates,
@@ -126,21 +140,14 @@ function TemplateDetails() {
     if (!template || !templateId) {
       return;
     }
-    const id = parseInt(templateId);
 
     setRelatedTemplates(
-      fetchRelatedTemplates(id).map((relatedTemplate) => ({
+      getRelatedTemplates(template, templatesByTag).map((relatedTemplate) => ({
         ...relatedTemplate,
         centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
       }))
     );
-  }, [
-    fetchRelatedTemplates,
-    template,
-    templates,
-    templatesOrderById,
-    templateId,
-  ]);
+  }, [template, templates, templatesByTag, templatesOrderById, templateId]);
 
   const activeTemplateIndex = useMemo(() => {
     if (templatesOrderById.length <= 0) {

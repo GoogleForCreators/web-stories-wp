@@ -86,8 +86,9 @@ export default function ApiProviderFixture({ children }) {
         ),
       fetchExternalTemplateById: (id) =>
         fetchExternalTemplateById(id, templates),
-      fetchRelatedTemplates: (currentTemplateId) =>
-        fetchRelatedTemplates(currentTemplateId, templates),
+      fetchMyTemplates: jasmine.createSpy('fetchMyTemplates'),
+      fetchMyTemplateById: (id) => fetchExternalTemplateById(id, templates),
+      fetchSavedTemplates: jasmine.createSpy('fetchSavedTemplates'),
     }),
     [templates]
   );
@@ -409,16 +410,4 @@ function toggleOptInTracking(currentUser) {
       },
     },
   };
-}
-
-function fetchRelatedTemplates(currentTemplateId, currentState) {
-  if (!currentState.templates || !currentTemplateId) {
-    return [];
-  }
-
-  return currentState.templatesOrderById
-    .filter((id) => id !== currentTemplateId) // Filter out the current/active template
-    .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids
-    .map((id) => currentState.templates[id]) // Map the ids to templates
-    .slice(0, Math.floor(Math.random() * 5) + 1); // Return between 1 and 5 templates
 }
