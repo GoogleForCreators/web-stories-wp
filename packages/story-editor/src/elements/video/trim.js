@@ -19,13 +19,14 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef } from '@web-stories-wp/react';
+import { useRef, useMemo } from '@web-stories-wp/react';
 import { getMediaSizePositionProps } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
+import VideoControls from './controls';
 import { getBackgroundStyle, videoWithScale } from './util';
 
 const Video = styled.video`
@@ -35,10 +36,18 @@ const Video = styled.video`
   ${videoWithScale}
 `;
 
-function VideoTrim({ box: { width, height }, element }) {
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+`;
+
+function VideoTrim({ box, element }) {
+  const { width, height } = box;
   const { poster, resource, tracks, isBackground, scale, focalX, focalY } =
     element;
-  const ref = useRef();
+  const wrapperRef = useRef();
+  const videoRef = useRef();
   let style = {};
   if (isBackground) {
     const styleProps = getBackgroundStyle();
@@ -59,38 +68,63 @@ function VideoTrim({ box: { width, height }, element }) {
 
   videoProps.crossOrigin = 'anonymous';
 
+  const boxAtOrigin = useMemo(
+    () => ({
+      ...box,
+      x: 0,
+      y: 0,
+    }),
+    [box]
+  );
+
   return (
-    <MediaDisplay
-      element={element}
-      mediaRef={ref}
-      showPlaceholder
-      previewMode={false}
-    >
-      <Video
-        poster={poster || resource.poster}
-        style={style}
-        {...videoProps}
-        preload="metadata"
-        loop
-        muted
-        autoPlay
-        tabIndex={0}
-        ref={ref}
-      >
-        {resource.src && <source src={resource.src} type={resource.mimeType} />}
-        {tracks &&
-          tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
-            <track
-              srcLang={srclang}
-              label={label}
-              kind={kind}
-              src={src}
-              key={key}
-              default={i === 0}
-            />
-          ))}
-      </Video>
-    </MediaDisplay>
+    <>
+      <Wrapper ref={wrapperRef}>
+        <MediaDisplay
+          element={element}
+          mediaRef={videoRef}
+          showPlaceholder
+          previewMode={false}
+        >
+          <Video
+            poster={poster || resource.poster}
+            style={style}
+            {...videoProps}
+            preload="metadata"
+            loop
+            muted
+            autoPlay
+            tabIndex={0}
+            ref={videoRef}
+          >
+            {resource.src && (
+              <source src={resource.src} type={resource.mimeType} />
+            )}
+            {tracks &&
+              tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
+                <track
+                  srcLang={srclang}
+                  label={label}
+                  kind={kind}
+                  src={src}
+                  key={key}
+                  default={i === 0}
+                />
+              ))}
+          </Video>
+        </MediaDisplay>
+      </Wrapper>
+      <VideoControls
+        isEditing={false}
+        isTransforming={false}
+        isSingleElement
+        isSelected
+        box={boxAtOrigin}
+        element={element}
+        elementRef={wrapperRef}
+        videoRef={videoRef}
+      />
+    </>
   );
 }
 

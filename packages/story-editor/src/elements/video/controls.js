@@ -120,6 +120,7 @@ function VideoControls({
   isTransforming,
   elementRef,
   element,
+  videoRef = null,
 }) {
   const { isRTL } = useConfig();
   const hasVideoSrc = Boolean(element.resource.src);
@@ -131,8 +132,9 @@ function VideoControls({
   const [isPlaying, setIsPlaying] = useState(!isTransforming && hasVideoSrc);
   const { id } = element;
   const getVideoNode = useCallback(
-    () => document.getElementById(`video-${id}`),
-    [id]
+    () =>
+      videoRef ? videoRef.current : document.getElementById(`video-${id}`),
+    [videoRef, id]
   );
 
   useEffect(() => {
@@ -280,6 +282,7 @@ VideoControls.propTypes = {
   isTransforming: PropTypes.bool.isRequired,
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,
+  videoRef: PropTypes.object,
 };
 
 export default VideoControls;
