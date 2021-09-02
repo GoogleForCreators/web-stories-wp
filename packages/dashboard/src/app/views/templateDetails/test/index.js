@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { groupTemplatesByTag } from '../../../../testUtils';
 import { getRelatedTemplates } from '../utils';
 
 const templates = [
@@ -26,17 +27,7 @@ const templates = [
   { id: 4, tags: ['sake', 'fine dining', 'not as fine dining'] },
 ];
 
-const templatesByType = templates.reduce((result, template) => {
-  template.tags.forEach((tag) => {
-    if (result[tag]) {
-      result[tag].push(template);
-    } else {
-      result[tag] = [template];
-    }
-  });
-
-  return result;
-}, {});
+const templatesByType = groupTemplatesByTag(templates);
 
 describe('getRelatedTemplates', () => {
   it.each`

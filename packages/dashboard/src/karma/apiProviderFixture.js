@@ -33,6 +33,7 @@ import {
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
+import { groupTemplatesByTag } from '../testUtils';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
@@ -385,6 +386,7 @@ function getTemplatesState() {
 
       return acc;
     }, {}),
+    templatesByTag: groupTemplatesByTag(copiedTemplates),
     templatesOrderById: copiedTemplates.map(({ id }) => id),
     totalTemplates: copiedTemplates.length,
     totalPages: 1,
