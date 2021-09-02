@@ -244,7 +244,7 @@ function useMediaUploadQueue() {
               // Cancel uploading if there were any errors.
               cancelUploading({ id, error });
 
-              trackError(error.message);
+              trackError('upload_media', error?.message);
 
               return;
             }
@@ -271,7 +271,7 @@ function useMediaUploadQueue() {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });
 
-                trackError(error.message);
+                trackError('upload_media', error?.message);
 
                 return;
               }
@@ -285,7 +285,7 @@ function useMediaUploadQueue() {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });
 
-                trackError(error.message);
+                trackError('upload_media', error?.message);
 
                 return;
               }
@@ -313,7 +313,7 @@ function useMediaUploadQueue() {
             // Cancel uploading if there were any errors.
             cancelUploading({ id, error });
 
-            trackError(error.message);
+            trackError('upload_media', error?.message);
           } finally {
             trackTiming();
           }

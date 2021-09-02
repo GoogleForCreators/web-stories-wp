@@ -152,7 +152,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
         });
       } catch (err) {
         // TODO: Potentially display error message to user.
-        trackError(err.message);
+        trackError('video_poster_generation', err.message);
       } finally {
         trackTiming();
       }

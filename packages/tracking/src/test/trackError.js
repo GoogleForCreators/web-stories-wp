@@ -38,10 +38,10 @@ describe('trackError', () => {
     gtag.mockImplementationOnce((type, eventName, eventData) => {
       eventData.event_callback();
     });
-    await trackError(error.message);
+    await trackError('test_error', error.message, true);
     expect(gtag).toHaveBeenCalledWith('event', 'exception', {
-      description: 'mock error',
-      fatal: false,
+      description: 'test_error: mock error',
+      fatal: true,
       event_callback: expect.any(Function),
     });
   });
@@ -49,7 +49,7 @@ describe('trackError', () => {
   it('does not push to dataLayer when tracking is disabled', async () => {
     config.trackingEnabled = false;
     const error = new Error('mock error');
-    await trackError(error.message);
+    await trackError('test_error', error.message);
     expect(gtag).not.toHaveBeenCalled();
   });
 });

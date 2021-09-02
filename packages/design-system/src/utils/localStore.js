@@ -38,7 +38,7 @@ function getItemByKey(key) {
     const stored = localStorage.getItem(key);
     parsed = JSON.parse(stored);
   } catch (err) {
-    trackError(err.message);
+    trackError('local_storage_read', err.message);
   }
   return parsed;
 }
@@ -47,7 +47,7 @@ function setItemByKey(key, data) {
   try {
     localStorage.setItem(key, JSON.stringify(data));
   } catch (err) {
-    trackError(err.message);
+    trackError('local_storage_write', err.message);
   }
 }
 

@@ -69,7 +69,7 @@ function getDefaultOnloadCallback(nodeKey, resolve, reject) {
         resolve(thief.getColor(node.firstElementChild));
       })
       .catch((err) => {
-        trackError(err.message);
+        trackError('image_base_color', err.message);
         reject(err);
       });
   };

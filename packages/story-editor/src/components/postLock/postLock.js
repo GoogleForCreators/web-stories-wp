@@ -102,7 +102,7 @@ function PostLock() {
           setNonce(newNonce);
         })
         .catch((err) => {
-          trackError(err.message);
+          trackError('post_lock', err.message);
         });
     }
   }, [
