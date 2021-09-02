@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories\Migrations;
 
+use const WPCOM_IS_VIP_ENV;
+
 /**
  * Class Rewrite_Flush
  *
@@ -41,7 +43,7 @@ class Rewrite_Flush extends Migrate_Base {
 	 * @return void
 	 */
 	public function migrate() {
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
 	}

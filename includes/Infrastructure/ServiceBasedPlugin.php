@@ -20,6 +20,9 @@ namespace Google\Web_Stories\Infrastructure;
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\ServiceContainer\LazilyInstantiatedService;
 use WP_Site;
+use function add_action;
+use function apply_filters;
+use const WPCOM_IS_VIP_ENV;
 
 
 /**
@@ -128,7 +131,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
 	}
@@ -150,7 +153,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
 	}
@@ -177,7 +180,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
 
@@ -219,7 +222,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 */
 	public function register() {
 		if ( false !== static::REGISTRATION_ACTION ) {
-			\add_action(
+			add_action(
 				static::REGISTRATION_ACTION,
 				[ $this, 'register_services' ]
 			);
@@ -263,7 +266,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *                                classes need to implement the
 			 *                                Service interface.
 			 */
-			$filtered_services = \apply_filters(
+			$filtered_services = apply_filters(
 				static::HOOK_PREFIX . static::SERVICES_FILTER,
 				$services
 			);
@@ -282,7 +285,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 					continue;
 				}
 
-				\add_action(
+				add_action(
 					$class::get_registration_action(),
 					function () use ( $id, $class ) {
 						$this->register_service( $id, $class );
@@ -470,7 +473,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *                                implementation bindings. Both
 			 *                                should be FQCNs.
 			 */
-			$bindings = (array) \apply_filters(
+			$bindings = (array) apply_filters(
 				static::HOOK_PREFIX . static::BINDINGS_FILTER,
 				$bindings
 			);
@@ -486,7 +489,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *                                array maps argument names to
 			 *                                values.
 			 */
-			$arguments = (array) \apply_filters(
+			$arguments = (array) apply_filters(
 				static::HOOK_PREFIX . static::ARGUMENTS_FILTER,
 				$arguments
 			);
@@ -500,7 +503,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 * @param array<string> $shared_instances Array of FQCNs to turn
 			 *                                        into shared objects.
 			 */
-			$shared_instances = (array) \apply_filters(
+			$shared_instances = (array) apply_filters(
 				static::HOOK_PREFIX . static::SHARED_INSTANCES_FILTER,
 				$shared_instances
 			);
@@ -514,7 +517,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 * @param array<string> $delegations Associative array of class =>
 			 *                                   callable mappings.
 			 */
-			$delegations = (array) \apply_filters(
+			$delegations = (array) apply_filters(
 				static::HOOK_PREFIX . static::DELEGATIONS_FILTER,
 				$delegations
 			);
