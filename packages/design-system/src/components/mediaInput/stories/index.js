@@ -100,6 +100,34 @@ export const _default = () => (
         <div>
           <Text>
             {'variant: rectangle'} <br />
+            {'no edit icon'}
+          </Text>
+          <MediaInput
+            value={image}
+            canUpload={false}
+            variant={MEDIA_VARIANTS.RECTANGLE}
+            menuOptions={shortDropDownOptions}
+            {...mediaProps}
+          />
+        </div>
+        <div>
+          <Text>
+            {'variant: circle'} <br />
+            {'no edit icon'}
+          </Text>
+          <CircleMedia
+            value={image}
+            canUpload={false}
+            variant={MEDIA_VARIANTS.CIRCLE}
+            menuOptions={shortDropDownOptions}
+            {...mediaProps}
+          />
+        </div>
+      </Row>
+      <Row>
+        <div>
+          <Text>
+            {'variant: rectangle'} <br />
             {'without image'}
           </Text>
           <MediaInput

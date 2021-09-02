@@ -84,7 +84,9 @@ function BasicColorPicker({
   return (
     <>
       <Header handleClose={handleClose}>
-        <DefaultText>{__('Default', 'web-stories')}</DefaultText>
+        <DefaultText id="colorpicker-default-colors-title">
+          {__('Default colors', 'web-stories')}
+        </DefaultText>
       </Header>
       <Body>
         <BasicColorList
@@ -93,16 +95,20 @@ function BasicColorPicker({
           handleColorChange={handleColorChange}
           allowsOpacity={allowsOpacity}
           allowsGradient={allowsGradient}
+          aria-labelledby="colorpicker-default-colors-title"
         />
         {allowsSavedColors && savedColors.length && (
           <>
-            <Label>{__('Saved colors', 'web-stories')}</Label>
+            <Label id="colorpicker-saved-colors-title">
+              {__('Saved colors', 'web-stories')}
+            </Label>
             <BasicColorList
               color={color}
               colors={savedColors}
               handleColorChange={handleColorChange}
               allowsOpacity={allowsOpacity}
               allowsGradient={allowsGradient}
+              aria-labelledby="colorpicker-saved-colors-title"
             />
           </>
         )}

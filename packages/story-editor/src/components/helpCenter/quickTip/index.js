@@ -126,6 +126,7 @@ export function QuickTip({
           {/* `figureSrcImg` is temporary until we get an animation for the embed quick tip.
           Once we have the animation then the .png image won't be necessary */}
           {figureSrcImg && (
+            //eslint-disable-next-line jsx-a11y/media-has-caption
             <Video
               as="img"
               alt={figureAlt}

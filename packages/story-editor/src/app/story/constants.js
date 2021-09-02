@@ -20,4 +20,5 @@ export const ELEMENT_TYPES = {
   TEXT: 'text',
   VIDEO: 'video',
   GIF: 'gif',
+  STICKER: 'sticker',
 };

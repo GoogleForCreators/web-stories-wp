@@ -49,9 +49,7 @@ describe('Eyedropper', () => {
     );
   }
 
-  // Disable reason: To be fixed in 8655
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should get color from the image to page background', async () => {
+  it('should get color from the image to page background', async () => {
     // Insert image that will be the color source
     const image = fixture.editor.library.media.item(1);
     const canvas = fixture.editor.canvas.framesLayer.fullbleed;
@@ -71,10 +69,13 @@ describe('Eyedropper', () => {
     const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
     await fixture.events.click(bgPanel.backgroundColor.button);
     await waitFor(() => expect(bgPanel.backgroundColor.picker).toBeDefined());
+    // Go to the custom color view
+    await fixture.events.click(bgPanel.backgroundColor.picker.custom);
     // Contents of the color picker are lazy loaded
     await waitFor(() =>
       expect(bgPanel.backgroundColor.picker.eyedropper).toBeDefined()
     );
+    // Click the eyedropper icon in the custom view
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
     await waitFor(() => fixture.screen.getByTestId('eyedropperLayer'), {
       timeout: 9000,

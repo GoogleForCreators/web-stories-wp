@@ -18,12 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from '@web-stories-wp/react';
+import { useCallback, useEffect, useMemo } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import {
   __,
@@ -69,7 +64,6 @@ import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import { focusStyle } from '../../../../panels/shared';
 import useFFmpeg from '../../../../../app/media/utils/useFFmpeg';
 import Tooltip from '../../../../tooltip';
-import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
 import LinkInsertion from './hotlink';
@@ -208,8 +202,6 @@ function MediaPane(props) {
     insertElement: state.actions.insertElement,
   }));
 
-  const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
-
   const isSearching = searchTerm.length > 0;
 
   const onClose = resetWithFetch;
@@ -280,7 +272,6 @@ function MediaPane(props) {
     onSelectErrorMessage,
     onClose,
     type: allowedMimeTypes,
-    onPermissionError: () => setIsPermissionDialogOpen(true),
   });
 
   /**
@@ -415,11 +406,6 @@ function MediaPane(props) {
             searchTerm={searchTerm}
           />
         )}
-
-        <MissingUploadPermissionDialog
-          isOpen={isPermissionDialogOpen}
-          onClose={() => setIsPermissionDialogOpen(false)}
-        />
         <VideoOptimizationDialog />
       </PaneInner>
     </StyledPane>

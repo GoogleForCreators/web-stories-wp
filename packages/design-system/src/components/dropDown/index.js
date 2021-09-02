@@ -202,7 +202,7 @@ DropDown.propTypes = {
   onMenuItemClick: PropTypes.func,
   placeholder: PropTypes.string,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
-  popupFillWidth: PropTypes.bool,
+  popupFillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   popupZIndex: PropTypes.number,
   isInline: PropTypes.bool,
   renderItem: PropTypes.object,
