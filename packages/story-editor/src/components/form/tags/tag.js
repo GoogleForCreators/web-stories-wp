@@ -16,14 +16,17 @@
 /**
  * External dependencies
  */
+import {
+  Icons,
+  Text,
+  themeHelpers,
+  THEME_CONSTANTS,
+  Tooltip,
+  TOOLTIP_PLACEMENT,
+} from '@web-stories-wp/design-system';
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import {
-  Text,
-  THEME_CONSTANTS,
-  themeHelpers,
-  Icons,
-} from '@web-stories-wp/design-system';
 
 const Dismiss = styled.button`
   all: unset;
@@ -72,9 +75,15 @@ function Tag({ children, onDismiss }) {
   return (
     <Token>
       <TokenText>{children}</TokenText>
-      <Dismiss onClick={onDismiss}>
-        <Icons.Cross />
-      </Dismiss>
+      <Tooltip
+        title={__('Remove Tag', 'web-stories')}
+        placement={TOOLTIP_PLACEMENT.BOTTOM}
+        hasTail
+      >
+        <Dismiss onClick={onDismiss}>
+          <Icons.Cross />
+        </Dismiss>
+      </Tooltip>
     </Token>
   );
 }

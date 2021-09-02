@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import clamp from '../../../utils/clamp';
+
 function formatTag(tag) {
   return tag.replace(/( +)/g, ' ').trim();
 }
@@ -24,6 +29,9 @@ function uniquesOnly(arr) {
 export const ACTIONS = {
   UPDATE_VALUE: 'updateValue',
   SUBMIT_VALUE: 'submitValue',
+  REMOVE_TAG: 'removeTag',
+  INCREMENT_OFFSET: 'incrementOffset',
+  DECREMENT_OFFSET: 'decrementOffset',
 };
 
 function reducer(state, action) {
@@ -36,26 +44,67 @@ function reducer(state, action) {
         .filter((tag) => tag.length);
       const value = values[values.length - 1];
       return {
+        ...state,
         value,
-        tags: uniquesOnly([...state.tags, ...newTags]),
+        tags: uniquesOnly([
+          ...state.tags.slice(0, state.tags - state.offset),
+          ...newTags,
+          ...state.tags.slice(state.tags - state.offset),
+        ]),
       };
     }
+
     case ACTIONS.SUBMIT_VALUE: {
-      return {
-        value: '',
-        tags: uniquesOnly([...state.tags, formatTag(state.value)]),
-      };
+      const newTag = formatTag(state.value);
+      return newTag === ''
+        ? state
+        : {
+            ...state,
+            value: '',
+            tags: uniquesOnly([
+              ...state.tags.slice(0, state.tags.length - state.offset),
+              newTag,
+              ...state.tags.slice(state.tags.length - state.offset),
+            ]),
+          };
     }
+
     case ACTIONS.REMOVE_TAG: {
-      const removedTagIndex = state.tags.findIndex(
-        (tag) => tag === action.payload
-      );
+      const removedTagIndex =
+        typeof action.payload === 'string'
+          ? // if there's a specified tag, remove that tag
+            state.tags.findIndex((tag) => tag === action.payload)
+          : // otherwise remove at the current offset
+            state.tags.length - 1 - state.offset;
+      return removedTagIndex < 0
+        ? state
+        : {
+            ...state,
+            tags: [
+              ...state.tags.slice(0, removedTagIndex),
+              ...state.tags.slice(removedTagIndex + 1, state.tags.length),
+            ],
+          };
+    }
+
+    case ACTIONS.INCREMENT_OFFSET: {
       return {
         ...state,
-        tags: [
-          ...state.tags.slice(0, removedTagIndex),
-          ...state.tags.slice(removedTagIndex + 1),
-        ],
+        offset: clamp(state.offset + 1, { MIN: 0, MAX: state.tags.length }),
+      };
+    }
+
+    case ACTIONS.DECREMENT_OFFSET: {
+      return {
+        ...state,
+        offset: clamp(state.offset - 1, { MIN: 0, MAX: state.tags.length }),
+      };
+    }
+
+    case ACTIONS.RESET_OFFSET: {
+      return {
+        ...state,
+        offset: 0,
       };
     }
     default:

@@ -19,12 +19,14 @@
 import { themeHelpers } from '@web-stories-wp/design-system';
 import { useMemo, useReducer, useState } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
-
+import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
 import reducer, { ACTIONS } from './reducer';
 import Tag from './tag';
+
+const INPUT_KEY = uuidv4();
 
 const Border = styled.div`
   ${({ theme, isInputFocused }) => css`
@@ -37,25 +39,27 @@ const Border = styled.div`
   flex-wrap: wrap;
   padding: 3px 6px;
   margin-bottom: 6px;
+`;
 
-  > input {
-    ${themeHelpers.expandTextPreset(
-      ({ paragraph }, { SMALL }) => paragraph[SMALL]
-    )}
-    border: none;
-    outline: none;
-    background: transparent;
-    color: inherit;
-    flex-grow: 1;
-    height: 38px;
-    margin: 3px 0;
-  }
+const TextInput = styled.input.attrs({ type: 'text' })`
+  ${themeHelpers.expandTextPreset(
+    ({ paragraph }, { SMALL }) => paragraph[SMALL]
+  )}
+  flex-grow: 1;
+  flex-basis: 5ch;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  height: 38px;
+  margin: 3px 0;
 `;
 
 function Input(props) {
-  const [{ value, tags }, dispatch] = useReducer(reducer, {
+  const [{ value, tags, offset }, dispatch] = useReducer(reducer, {
     value: '',
     tags: [],
+    offset: 0,
   });
   const [isInputFocused, setIsInputFocued] = useState(false);
 
@@ -66,35 +70,56 @@ function Input(props) {
           dispatch({ type: ACTIONS.UPDATE_VALUE, payload: e.target.value });
         },
         handleKeyDown: (e) => {
-          if (['Comma', 'Enter'].includes(e.code)) {
+          if (e.key === 'ArrowLeft' && e.target.value === '') {
+            dispatch({ type: ACTIONS.INCREMENT_OFFSET });
+          }
+          if (e.key === 'ArrowRight' && e.target.value === '') {
+            dispatch({ type: ACTIONS.DECREMENT_OFFSET });
+          }
+          if (e.key === 'Backspace' && e.target.value === '') {
+            dispatch({ type: ACTIONS.REMOVE_TAG });
+          }
+          if (['Comma', 'Enter'].includes(e.key)) {
             dispatch({ type: ACTIONS.SUBMIT_VALUE });
           }
         },
         removeTag: (tag) => () => {
           dispatch({ type: ACTIONS.REMOVE_TAG, payload: tag });
         },
-        handleFocus: () => setIsInputFocued(true),
-        handleBlur: () => setIsInputFocued(false),
+        handleFocus: () => {
+          setIsInputFocued(true);
+        },
+        handleBlur: () => {
+          dispatch({ type: ACTIONS.RESET_OFFSET });
+          setIsInputFocued(false);
+        },
       }),
       []
     );
 
   return (
     <Border isInputFocused={isInputFocused}>
-      {tags.map((tag) => (
-        <Tag key={tag} onDismiss={removeTag(tag)}>
-          {tag}
-        </Tag>
-      ))}
-      <input
-        {...props}
-        type="text"
-        value={value}
-        onKeyDown={handleKeyDown}
-        onChange={handleChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-      />
+      {[
+        ...tags.slice(0, tags.length - offset),
+        INPUT_KEY,
+        ...tags.slice(tags.length - offset),
+      ].map((tag) =>
+        tag === INPUT_KEY ? (
+          <TextInput
+            key={INPUT_KEY}
+            {...props}
+            value={value}
+            onKeyDown={handleKeyDown}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          />
+        ) : (
+          <Tag key={tag} onDismiss={removeTag(tag)}>
+            {tag}
+          </Tag>
+        )
+      )}
     </Border>
   );
 }
