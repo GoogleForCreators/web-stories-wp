@@ -17,7 +17,14 @@
  * External dependencies
  */
 import { themeHelpers } from '@web-stories-wp/design-system';
-import { useMemo, useReducer, useState } from '@web-stories-wp/react';
+import {
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -54,13 +61,21 @@ const TextInput = styled.input.attrs({ type: 'text' })`
   margin: 3px 0;
 `;
 
-function Input(props) {
+function Input({ onChange, ...props }) {
   const [{ value, tags, offset }, dispatch] = useReducer(reducer, {
     value: '',
     tags: [],
     offset: 0,
   });
   const [isInputFocused, setIsInputFocued] = useState(false);
+
+  // Allow parents to pass onChange callback
+  // that updates as tags does.
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+  useEffect(() => {
+    onChangeRef.current(tags);
+  }, [tags]);
 
   // Prepare and memoize event handlers to be as self
   // contained and descriptive as possible
@@ -132,5 +147,7 @@ function Input(props) {
     </Border>
   );
 }
-
+Input.propTypes = {
+  onChange: PropTypes.func,
+};
 export default Input;
