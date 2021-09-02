@@ -103,7 +103,7 @@ function DisplayPage({
 }
 
 DisplayPage.propTypes = {
-  page: StoryPropTypes.page.isRequired,
+  page: StoryPropTypes.page,
   animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
   editingElement: StoryPropTypes.element,
   resetAnimationState: PropTypes.func,

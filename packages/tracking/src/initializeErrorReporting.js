@@ -35,7 +35,7 @@ function handleErrors(event) {
   }
 
   const errorMessage = `${event.message} (${event.lineno}:${event.colno})`;
-  trackError(errorMessage);
+  trackError('uncaught_error', errorMessage, true);
 }
 
 /**
@@ -44,7 +44,7 @@ function handleErrors(event) {
  */
 function handleUncaughtPromises(event) {
   const errorMessage = event.reason || 'Promise rejection';
-  trackError(errorMessage);
+  trackError('uncaught_promise', errorMessage);
 }
 
 function initializeErrorReporting() {
