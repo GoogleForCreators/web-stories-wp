@@ -39,7 +39,7 @@ const ContextMenu = ({ animate, isAlwaysVisible, items, ...props }) => {
         isOpen={isAlwaysVisible || props.isOpen}
       >
         <Menu aria-expanded={props.isOpen} items={items} {...props} />
-        <Shadow />
+        {!animate && <Shadow />}
       </Wrapper>
       {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
     </>
