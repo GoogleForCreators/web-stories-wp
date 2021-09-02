@@ -68,7 +68,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	 */
 	public function prepare_item_for_response( $post, $request ) {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
-		$schema  = $this->get_item_schema();
 
 		if ( 'auto-draft' === $post->post_status && wp_validate_boolean( $request['web_stories_demo'] ) ) {
 			$demo         = new Demo_Content();
@@ -90,11 +89,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		if ( rest_is_field_included( 'style_presets', $fields ) ) {
 			$style_presets         = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
 			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
-		}
-
-		if ( rest_is_field_included( 'featured_media_url', $fields ) ) {
-			$image                      = get_the_post_thumbnail_url( $post, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
-			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 
 		if ( rest_is_field_included( 'preview_link', $fields ) ) {
@@ -236,15 +230,6 @@ class Stories_Controller extends Stories_Base_Controller {
 			'type'        => 'string',
 			'context'     => [ 'edit' ],
 			'format'      => 'uri',
-			'default'     => '',
-		];
-
-		$schema['properties']['featured_media_url'] = [
-			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
-			'type'        => 'string',
-			'format'      => 'uri',
-			'context'     => [ 'view', 'edit', 'embed' ],
-			'readonly'    => true,
 			'default'     => '',
 		];
 
@@ -452,8 +437,8 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		if ( $request['_web_stories_envelope'] ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$response = rest_get_server()->envelope_response( $response, $request['_embed'] ?? false );
+			$embed    = isset( $request['_embed'] ) ? rest_parse_embed_param( $request['_embed'] ) : false;
+			$response = rest_get_server()->envelope_response( $response, $embed );
 		}
 
 		return $response;

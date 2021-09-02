@@ -32,6 +32,9 @@ const config = {
   },
   allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4'],
   allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+  allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+  allowedAudioFileTypes: ['mp3', 'aac', 'wav', 'ogg'],
+  allowedAudioMimeTypes: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
   storyId: 1234,
   api: {
     stories: '',
@@ -47,8 +50,6 @@ const config = {
   },
   capabilities: {
     hasUploadMediaAction: false,
-    hasAssignAuthorAction: false,
-    hasPublishAction: false,
   },
   postLock: {
     interval: 0, // Disables post locking.

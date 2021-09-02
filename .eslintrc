@@ -84,6 +84,11 @@
       "noUselessIndex": true
     }],
     "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/media-has-caption": [ "error", {
+      "audio": [ "Audio" ],
+      "video": [ "Video", "FadedVideo", "CropVideo" ],
+      "track": [ "Track" ]
+    }],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",
@@ -244,7 +249,8 @@
       {"name": "Primary", "linkAttribute": "href"},
       "PrimaryLink",
       "SecondaryLink",
-      "ExternalLink"
+      "ExternalLink",
+      "ScrimAnchor",
     ],
     "testing-library/custom-renders": [
       "arrange",
@@ -455,6 +461,7 @@
         }
       },
       "rules": {
+        "import/no-unresolved": "off",
         "import/no-extraneous-dependencies": "off",
         "@wordpress/dependency-group": "off",
         "no-console": "off",
@@ -528,7 +535,6 @@
         "packages/activation-notice/**/*.js",
         "packages/react/**/*.js",
         "packages/dashboard/src/karma/fixture.js",
-        "packages/story-editor/src/components/canvas/test/useCanvasKeys.js",
         "packages/story-editor/src/karma/fixture/fixture.js",
         "packages/story-block/**/*.js",
         "packages/tinymce-button/**/*.js"

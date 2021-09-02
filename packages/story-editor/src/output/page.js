@@ -33,7 +33,7 @@ import getLongestMediaElement from './utils/getLongestMediaElement';
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
-  const { id, animations, elements, backgroundColor } = page;
+  const { id, animations, elements, backgroundColor, backgroundAudio } = page;
 
   const [backgroundElement, ...regularElements] = elements;
 
@@ -80,6 +80,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
     <amp-story-page
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
+      background-audio={backgroundAudio?.src ?? undefined}
     >
       <StoryAnimation.Provider animations={animations} elements={elements}>
         <StoryAnimation.AMPAnimations />

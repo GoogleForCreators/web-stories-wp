@@ -95,11 +95,14 @@ class AMP extends Service_Base {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param array $options Options.
+	 * @param array|mixed $options Options.
 	 *
-	 * @return array Filtered options.
+	 * @return array|mixed Filtered options.
 	 */
-	public function filter_amp_options( $options ): array {
+	public function filter_amp_options( $options ) {
+		if ( ! is_array( $options ) ) {
+			return $options;
+		}
 		if ( $this->get_request_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
 			$options['theme_support']          = 'standard';
 			$options['supported_post_types'][] = Story_Post_Type::POST_TYPE_SLUG;
@@ -120,7 +123,10 @@ class AMP extends Service_Base {
 	 *
 	 * @return array Supportable post types.
 	 */
-	public function filter_supportable_post_types( $post_types ): array {
+	public function filter_supportable_post_types( $post_types ) {
+		if ( ! is_array( $post_types ) ) {
+			return $post_types;
+		}
 		if ( $this->get_request_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
 			$post_types = array_merge( $post_types, [ Story_Post_Type::POST_TYPE_SLUG ] );
 		} else {
@@ -135,16 +141,20 @@ class AMP extends Service_Base {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param array $sanitizers Sanitizers.
-	 * @return array Sanitizers.
+	 * @param array|mixed $sanitizers Sanitizers.
+	 * @return array|mixed Sanitizers.
 	 */
-	public function add_amp_content_sanitizers( $sanitizers ): array {
+	public function add_amp_content_sanitizers( $sanitizers ) {
 		if ( ! is_singular( 'web-story' ) ) {
 			return $sanitizers;
 		}
 
 		$post = get_queried_object();
 		if ( ! ( $post instanceof WP_Post ) ) {
+			return $sanitizers;
+		}
+
+		if ( ! is_array( $sanitizers ) ) {
 			return $sanitizers;
 		}
 
@@ -217,13 +227,13 @@ class AMP extends Service_Base {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param bool       $excluded Excluded. Default value is whether element already has a `noamphtml` link relation or the URL is among `excluded_urls`.
+	 * @param bool|mixed $excluded Excluded. Default value is whether element already has a `noamphtml` link relation or the URL is among `excluded_urls`.
 	 * @param string     $url      URL considered for exclusion.
 	 * @param string[]   $rel      Link relations.
 	 * @param DOMElement $element  The element considered for excluding from AMP-to-AMP linking. May be instance of `a`, `area`, or `form`.
-	 * @return bool Whether AMP-to-AMP is excluded.
+	 * @return bool|mixed Whether AMP-to-AMP is excluded.
 	 */
-	public function filter_amp_to_amp_linking_element_excluded( $excluded, $url, $rel, $element ): bool {
+	public function filter_amp_to_amp_linking_element_excluded( $excluded, $url, $rel, $element ) {
 		if ( $element instanceof DOMElement && $element->parentNode instanceof DOMElement && 'amp-story-player' === $element->parentNode->tagName ) {
 			return true;
 		}
@@ -242,12 +252,12 @@ class AMP extends Service_Base {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param bool $skipped Whether the post should be skipped from AMP.
-	 * @param int  $post    Post ID.
+	 * @param bool|mixed $skipped Whether the post should be skipped from AMP.
+	 * @param int        $post    Post ID.
 	 *
-	 * @return bool Whether post should be skipped from AMP.
+	 * @return bool|mixed Whether post should be skipped from AMP.
 	 */
-	public function filter_amp_skip_post( $skipped, $post ): bool {
+	public function filter_amp_skip_post( $skipped, $post ) {
 		// This is the opposite to the `AMP__VERSION >= WEBSTORIES_AMP_VERSION` check in the HTML renderer.
 		if (
 			'web-story' === get_post_type( $post )

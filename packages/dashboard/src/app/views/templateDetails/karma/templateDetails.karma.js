@@ -22,11 +22,7 @@ import { within } from '@testing-library/react';
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import {
-  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
-  TEMPLATES_GALLERY_VIEWING_LABELS,
-  TEMPLATES_GALLERY_STATUS,
-} from '../../../../constants';
+import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
 import useApi from '../../../api/useApi';
 
 describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
@@ -46,7 +42,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
   async function navigateToFirstTemplate() {
     const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: /^Explore Templates$/,
+      name: /^Explore Templates/,
     });
 
     await fixture.events.click(exploreTemplatesMenuItem);
@@ -107,22 +103,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
       await fixture.events.click(closeLink);
 
-      const templatesGridEl = fixture.screen.getByLabelText(
-        'Available templates'
-      );
-
-      const hasDirectTextChild = (node) =>
-        (Array.from(node?.childNodes) || []).some(
-          (n) => n?.nodeName === '#text'
-        );
-      const viewTemplates = fixture.screen.getByText(
-        (_, node) =>
-          node.innerHTML ===
-            TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL](
-              templatesGridEl.children.length
-            ) && hasDirectTextChild(node)
-      );
-
+      const viewTemplates = fixture.screen.queryByText('Viewing all templates');
       expect(viewTemplates).toBeTruthy();
     });
 
@@ -174,11 +155,10 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
       ]);
       expect(page4).toEqual(document.activeElement);
 
-      await fixture.events.keyboard.press('right');
       await fixture.events.keyboard.press('Enter');
 
       const activePreviewPage = fixture.screen.getByLabelText(
-        'Active Page Preview - Page 5'
+        'Active Page Preview - Page 4'
       );
 
       expect(activePreviewPage).toBeTruthy();

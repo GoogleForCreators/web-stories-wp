@@ -46,11 +46,10 @@ const LIBRARY_TAB_IDS = new Set(
 function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA.id);
   const [textSets, setTextSets] = useState({});
+  const [areTextSetsLoading, setAreTextSetsLoading] = useState({});
   const [savedTemplates, setSavedTemplates] = useState(null);
   // The first page of templates to fetch is 1.
   const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(1);
-  const [pageCanvasData, setPageCanvasData] = useState(null);
-  const [pageCanvasPromise, setPageCanvasPromise] = useState(null);
 
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
@@ -107,29 +106,27 @@ function LibraryProvider({ children }) {
   const state = useMemo(
     () => ({
       state: {
-        pageCanvasData,
+        areTextSetsLoading,
         tab,
         tabRefs,
         textSets,
         savedTemplates,
         nextTemplatesToFetch,
-        pageCanvasPromise,
       },
       actions: {
-        setPageCanvasData,
         setTab,
         insertElement,
         insertTextSet,
         insertTextSetByOffset,
         setSavedTemplates,
         setNextTemplatesToFetch,
-        setPageCanvasPromise,
       },
       data: {
         tabs: tabs,
       },
     }),
     [
+      areTextSetsLoading,
       tab,
       tabRefs,
       textSets,
@@ -140,16 +137,15 @@ function LibraryProvider({ children }) {
       tabs,
       nextTemplatesToFetch,
       setNextTemplatesToFetch,
-      pageCanvasData,
-      pageCanvasPromise,
-      setPageCanvasPromise,
     ]
   );
   useEffect(() => {
     async function getTextSets() {
       const trackTiming = getTimeTracker('load_text_sets');
+      setAreTextSetsLoading(true);
       setTextSets(await loadTextSets());
       trackTiming();
+      setAreTextSetsLoading(false);
     }
     // if text sets have not been loaded but are needed fetch dynamically imported text sets
     if (tab === TEXT.id && !Object.keys(textSets).length) {

@@ -52,8 +52,8 @@ jest.mock('@web-stories-wp/tracking');
 const mockEvent = {
   preventDefault: jest.fn(),
   stopPropagation: jest.fn(),
-  offsetX: 500,
-  offsetY: -1230,
+  x: 500,
+  y: -1230,
 };
 
 const defaultCanvasContext = {
@@ -368,6 +368,29 @@ describe('useRightClickMenu', () => {
         RIGHT_CLICK_MENU_LABELS.CLEAR_SHAPE_STYLES,
         RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
       ]);
+    });
+  });
+
+  describe('Sticker element right clicked', () => {
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '991199',
+            type: 'sticker',
+          },
+        ],
+      });
+    });
+
+    it('should return the correct menu items', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const labels = result.current.menuItems.map((item) => item.label);
+      expect(labels).toStrictEqual([...expectedLayerActions]);
     });
   });
 });

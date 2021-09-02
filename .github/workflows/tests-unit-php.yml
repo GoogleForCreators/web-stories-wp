@@ -63,9 +63,10 @@ jobs:
           - php: '7.0'
             wp: '5.5'
 
-          - php: '7.4'
-            wp: 'trunk'
-            experimental: true
+    # TODO: Re-enable in https://github.com/google/web-stories-wp/pull/8607
+    #     - php: '7.4'
+    #       wp: 'trunk'
+    #       experimental: true
 
     steps:
       - name: Checkout
@@ -149,7 +150,7 @@ jobs:
         if: ${{ matrix.coverage }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@v2.0.2
+        uses: codecov/codecov-action@v2.0.3
         with:
           file: build/logs/*.xml
         if: ${{ matrix.coverage }}

@@ -229,17 +229,6 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Right click menus', 'web-stories' ),
 				'description' => __( 'Enable a contextual shortcut menu when right clicking in the editor', 'web-stories' ),
 				'group'       => 'editor',
-			],
-			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 6708
-			 * Creation date: 2021-03-23
-			 */
-			[
-				'name'        => 'enableStickers',
-				'label'       => __( 'Stickers', 'web-stories' ),
-				'description' => __( 'Append sticker buttons to the bottom of the shapes panel in library', 'web-stories' ),
-				'group'       => 'editor',
 				'default'     => true,
 			],
 			/**
@@ -355,12 +344,23 @@ class Experiments extends Service_Base {
 			/**
 			 * Author: @miina
 			 * Issue #7986
-			 * Creation date: 2021-08-08
+			 * Creation date: 2021-07-08
 			 */
 			[
 				'name'        => 'enableSmartTextColor',
 				'label'       => __( 'Smart text color', 'web-stories' ),
 				'description' => __( 'Enable text insertion with smart color ensuring good contrast with the background', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @merapi
+			 * Issue #7995
+			 * Creation date: 2021-08-13
+			 */
+			[
+				'name'        => 'enableSmartTextSetsColor',
+				'label'       => __( 'Smart text sets color', 'web-stories' ),
+				'description' => __( 'Enable text sets insertion with smart color ensuring good contrast with the background', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -410,6 +410,18 @@ class Experiments extends Service_Base {
 				'name'        => 'enableHotlinking',
 				'label'       => __( 'Insert media from link', 'web-stories' ),
 				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
+				'group'       => 'editor',
+			],
+
+			/**
+			 * Author: @brookegraham
+			 * Issue: #8832
+			 * Creation date: 2021-08-30
+			 */
+			[
+				'name'        => 'enableTaxonomiesSupport',
+				'label'       => __( 'Taxonomies', 'web-stories' ),
+				'description' => __( 'Enable support of tags and categories for stories', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

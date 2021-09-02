@@ -49,7 +49,7 @@ import {
  * This means things like the unitsProvider and displayElements that we import to the Dashboard from the editor
  * It's maintaining a 2:3 aspect ratio.
  * When fullbleed is visible (as it is for templates) we use the 2:3 aspect ratio w/ overflow to allow the fullBleed height to be visible
- * 3. posterHeight - This is a height based on 3:4 ratio which is what poster images need, this is used on 'my stories' view.
+ * 3. posterHeight - This is a height based on 3:4 ratio which is what poster images need, this is used on 'Dashboard' view.
  *
  * @param {number} width  width of page to base ratios on
  * @return {Object}       heights to use in pagePreviews { fullBleedHeight: Number, storyHeight: Number}

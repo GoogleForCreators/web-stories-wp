@@ -107,9 +107,7 @@ describe('Styling single text field', () => {
       expect(actual).toBe(expected);
     });
 
-    // Disable reason: To be fixed in 8655
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should apply inline formatting correctly for multi-style text field', async () => {
+    it('should apply inline formatting correctly for multi-style text field', async () => {
       const {
         bold,
         italic,
@@ -163,6 +161,7 @@ describe('Styling single text field', () => {
       await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontColor.button);
       waitFor(() => fontColor.picker);
+      await data.fixture.events.click(fontColor.picker.custom);
       await data.fixture.events.click(fontColor.picker.hexButton);
       await data.fixture.events.keyboard.type('00FF00');
       // Wait for debounce in color picker (100ms)

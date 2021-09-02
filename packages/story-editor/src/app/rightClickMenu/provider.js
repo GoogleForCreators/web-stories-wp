@@ -180,8 +180,8 @@ function RightClickMenuProvider({ children }) {
     dispatch({
       type: ACTION_TYPES.OPEN_MENU,
       payload: {
-        x: evt?.offsetX,
-        y: evt?.offsetY,
+        x: evt?.x,
+        y: evt?.y,
       },
     });
 
@@ -955,6 +955,8 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
+  const stickerItems = useMemo(() => [...layerItems], [layerItems]);
+
   const menuItems = useMemo(() => {
     if (selectedElement?.isDefaultBackground) {
       return pageItems;
@@ -969,10 +971,19 @@ function RightClickMenuProvider({ children }) {
         return shapeItems;
       case ELEMENT_TYPES.TEXT:
         return textItems;
+      case ELEMENT_TYPES.STICKER:
+        return stickerItems;
       default:
         return pageItems;
     }
-  }, [foregroundMediaItems, pageItems, selectedElement, shapeItems, textItems]);
+  }, [
+    foregroundMediaItems,
+    pageItems,
+    selectedElement,
+    shapeItems,
+    stickerItems,
+    textItems,
+  ]);
 
   // Override the browser's context menu if the
   // rightClickAreaRef is set
@@ -1016,14 +1027,7 @@ function RightClickMenuProvider({ children }) {
       onOpenMenu: handleOpenMenu,
       rightClickAreaRef,
     }),
-    [
-      handleCloseMenu,
-      handleOpenMenu,
-      isMenuOpen,
-      menuItems,
-      menuPosition,
-      rightClickAreaRef,
-    ]
+    [handleCloseMenu, handleOpenMenu, isMenuOpen, menuItems, menuPosition]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

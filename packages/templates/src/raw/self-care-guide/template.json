@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
       "elements": [
@@ -1804,7 +1804,6 @@
             "height": 1080,
             "posterId": 0,
             "id": 0,
-            "title": "Woman with afro hair, at home",
             "alt": "Woman with afro hair, at home",
             "sizes": [],
             "local": false,
@@ -4868,7 +4867,6 @@
             "height": 1080,
             "posterId": 0,
             "id": 0,
-            "title": "Woman with afro hair, at home",
             "alt": "Woman with afro hair, at home",
             "sizes": [],
             "local": false,

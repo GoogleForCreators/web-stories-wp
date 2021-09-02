@@ -185,7 +185,7 @@ function InnerElement({
   } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
     media = (
       <>
-        {/* eslint-disable-next-line styled-components-a11y/media-has-caption -- No captions because video is muted. */}
+        {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- No captions/tracks because video is muted. */}
         <Video key={src} {...videoProps} ref={mediaElement}>
           {type === ContentType.GIF ? (
             resource.output.src && (

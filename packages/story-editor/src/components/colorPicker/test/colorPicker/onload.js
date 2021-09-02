@@ -18,104 +18,187 @@
  * External dependencies
  */
 import { createSolid } from '@web-stories-wp/patterns';
-import { waitFor } from '@testing-library/react';
+import { waitFor, fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import { arrange } from './_utils';
 
-// Disable reason: To be fixed in 8655
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('<ColorPicker /> as it loads', () => {
-  it('should render with initial focus forced to the solid pattern button', async () => {
-    const { getSolidButton } = arrange();
+describe('<ColorPicker /> as it loads', () => {
+  describe('when opening the basic color picker', () => {
+    it('should render with initial focus forced to the close button', async () => {
+      const { getCloseButton } = arrange();
 
-    const solidButton = getSolidButton();
-    await waitFor(() => expect(solidButton).toBeInTheDocument());
-    await waitFor(() => expect(solidButton).toHaveFocus());
-  });
-
-  it('should correctly set color based on given prop', async () => {
-    const { getEditableHexElement, rerender } = arrange({
-      color: createSolid(255, 0, 0),
+      const closeButton = getCloseButton();
+      await waitFor(() => expect(closeButton).toBeInTheDocument());
+      await waitFor(() => expect(closeButton).toHaveFocus());
     });
 
-    await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
-    expect(getEditableHexElement()).toHaveTextContent(/#ff0000/i);
+    it('should highlight the current color if in list', () => {
+      const { getSelectedSwatch } = arrange({
+        color: createSolid(238, 238, 238),
+      });
 
-    rerender({ color: createSolid(0, 0, 255) });
-
-    await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
-    expect(getEditableHexElement()).toHaveTextContent(/#0000ff/i);
-  });
-
-  it('should correctly set opacity based on given prop', async () => {
-    const { getEditableAlphaElement, rerender } = arrange({
-      color: createSolid(255, 0, 0, 0.7),
+      const swatch = getSelectedSwatch('Default colors');
+      expect(swatch).toBeInTheDocument();
+      expect(swatch).toHaveAccessibleName(/#eee/);
     });
 
-    await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
-    expect(getEditableAlphaElement()).toHaveTextContent(/70%/i);
+    it('should not highlight any color if not in list', () => {
+      const { getSelectedSwatch } = arrange({
+        color: createSolid(237, 238, 238),
+      });
 
-    rerender({ color: createSolid(0, 0, 255) });
-
-    await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
-    expect(getEditableAlphaElement()).toHaveTextContent(/100%/i);
+      const swatch = getSelectedSwatch('Default colors');
+      expect(swatch).toBeNull();
+    });
   });
 
-  it('should correctly set color and opacity based on first stop for a gradient', async () => {
-    const { getEditableHexElement, getEditableAlphaElement } = arrange({
-      color: {
-        type: 'linear',
-        stops: [
-          { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
-          { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 0 },
-        ],
-      },
-      hasGradient: true,
+  describe('when opening the custom color picker', () => {
+    it('should render with initial focus forced to the close button', async () => {
+      const { getCloseButton } = arrange();
+
+      const closeButton = getCloseButton();
+      await waitFor(() => expect(closeButton).toBeInTheDocument());
+      await waitFor(() => expect(closeButton).toHaveFocus());
     });
 
-    await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
+    it('should automatically do so if invoked on a gradient', async () => {
+      const { getEditableHexElement } = arrange({
+        color: {
+          type: 'linear',
+          stops: [
+            { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
+            { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 0 },
+          ],
+        },
+        allowsGradient: true,
+      });
 
-    expect(getEditableHexElement()).toHaveTextContent(/#00ff00/i);
-    expect(getEditableAlphaElement()).toHaveTextContent(/40%/i);
-  });
+      await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
+      expect(getEditableHexElement()).toBeInTheDocument();
+    });
+    it('should do so if invoked on a color and clicking custom button', async () => {
+      const { getCustomButton, getEditableHexElement } = arrange({
+        color: createSolid(255, 0, 0),
+      });
 
-  it('should have gradient buttons only if enabled', async () => {
-    const { getSolidButton, getLinearButton, getRadialButton, rerender } =
-      arrange();
+      fireEvent.click(getCustomButton());
 
-    await waitFor(() => expect(getSolidButton()).toBeInTheDocument());
-    expect(getLinearButton()).not.toBeInTheDocument();
-    expect(getRadialButton()).not.toBeInTheDocument();
-
-    rerender({ hasGradient: true });
-
-    await waitFor(() => expect(getSolidButton()).toBeInTheDocument());
-    expect(getLinearButton()).toBeInTheDocument();
-    expect(getRadialButton()).toBeInTheDocument();
-  });
-
-  it('should have gradient line only if pattern is non-solid', async () => {
-    const { getGradientLine, rerender } = arrange({
-      color: createSolid(0, 0, 0),
-      hasGradient: true,
+      await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
+      expect(getEditableHexElement()).toBeInTheDocument();
     });
 
-    await waitFor(() => expect(getGradientLine()).not.toBeInTheDocument());
+    it('should correctly set color based on given prop', async () => {
+      const { getCustomButton, getEditableHexElement, rerender } = arrange({
+        color: createSolid(255, 0, 0),
+      });
 
-    rerender({
-      color: {
-        stops: [
-          { color: { r: 0, g: 0, b: 255 }, position: 0 },
-          { color: { r: 0, g: 0, b: 255 }, position: 1 },
-        ],
-        type: 'linear',
-      },
-      hasGradient: true,
+      fireEvent.click(getCustomButton());
+
+      await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
+      expect(getEditableHexElement()).toHaveTextContent(/#ff0000/i);
+
+      rerender({ color: createSolid(0, 0, 255) });
+
+      fireEvent.click(getCustomButton());
+
+      await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
+      expect(getEditableHexElement()).toHaveTextContent(/#0000ff/i);
     });
 
-    await waitFor(() => expect(getGradientLine()).toBeInTheDocument());
+    it('should correctly set opacity based on given prop', async () => {
+      const { getCustomButton, getEditableAlphaElement, rerender } = arrange({
+        color: createSolid(255, 0, 0, 0.7),
+      });
+
+      fireEvent.click(getCustomButton());
+
+      await waitFor(() =>
+        expect(getEditableAlphaElement()).toBeInTheDocument()
+      );
+      expect(getEditableAlphaElement()).toHaveTextContent(/70%/i);
+
+      rerender({ color: createSolid(0, 0, 255) });
+
+      fireEvent.click(getCustomButton());
+
+      await waitFor(() =>
+        expect(getEditableAlphaElement()).toBeInTheDocument()
+      );
+      expect(getEditableAlphaElement()).toHaveTextContent(/100%/i);
+    });
+
+    it('should correctly set color and opacity based on first stop for a gradient', async () => {
+      const { getEditableHexElement, getEditableAlphaElement } = arrange({
+        color: {
+          type: 'linear',
+          stops: [
+            { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
+            { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 0 },
+          ],
+        },
+        allowsGradient: true,
+      });
+
+      await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
+
+      expect(getEditableHexElement()).toHaveTextContent(/#00ff00/i);
+      expect(getEditableAlphaElement()).toHaveTextContent(/40%/i);
+    });
+
+    it('should have pattern type buttons only if enabled', async () => {
+      const {
+        getCustomButton,
+        getSolidButton,
+        getLinearButton,
+        getRadialButton,
+        getEditableHexElement,
+        rerender,
+      } = arrange();
+
+      fireEvent.click(getCustomButton());
+
+      await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
+
+      expect(getSolidButton()).not.toBeInTheDocument();
+      expect(getLinearButton()).not.toBeInTheDocument();
+      expect(getRadialButton()).not.toBeInTheDocument();
+
+      rerender({ allowsGradient: true });
+
+      fireEvent.click(getCustomButton());
+
+      await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
+
+      expect(getSolidButton()).toBeInTheDocument();
+      expect(getLinearButton()).toBeInTheDocument();
+      expect(getRadialButton()).toBeInTheDocument();
+    });
+
+    it('should have gradient line only if pattern is non-solid', async () => {
+      const { getCustomButton, getGradientLine, rerender } = arrange({
+        color: createSolid(0, 0, 0),
+        allowsGradient: true,
+      });
+
+      fireEvent.click(getCustomButton());
+
+      await waitFor(() => expect(getGradientLine()).not.toBeInTheDocument());
+
+      rerender({
+        color: {
+          stops: [
+            { color: { r: 0, g: 0, b: 255 }, position: 0 },
+            { color: { r: 0, g: 0, b: 255 }, position: 1 },
+          ],
+          type: 'linear',
+        },
+        allowsGradient: true,
+      });
+
+      await waitFor(() => expect(getGradientLine()).toBeInTheDocument());
+    });
   });
 });

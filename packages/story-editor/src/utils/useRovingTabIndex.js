@@ -74,15 +74,19 @@ export function getSiblingDirection(isRTL, key) {
 }
 
 /**
- * Given an element and a sibling direction, returns that media element's sibling.
+ * Given an element and a sibling direction, returns that media element's next enabled sibling.
  * Media elements are nested 1 level deep.
  *
  * @param {Element} e The element.
  * @param {string} siblingDirection The sibling direction (previousSibling or nextSibling).
  * @return {Element} The sibling.
  */
-function getNextSibling(e, siblingDirection) {
-  return e[siblingDirection];
+function getNextEnabledSibling(e, siblingDirection) {
+  let sibling = e[siblingDirection];
+  while (sibling && sibling.disabled) {
+    sibling = sibling[siblingDirection];
+  }
+  return sibling;
 }
 
 /**
@@ -100,9 +104,9 @@ function getClosestValidSibling(element, siblingDirection) {
   let closestValidSiblingCenter = null;
   let closestValidSiblingDistanceSq = null;
   for (
-    let sibling = getNextSibling(element, siblingDirection);
+    let sibling = getNextEnabledSibling(element, siblingDirection);
     sibling;
-    sibling = getNextSibling(sibling, siblingDirection)
+    sibling = getNextEnabledSibling(sibling, siblingDirection)
   ) {
     const siblingCenter = getCenter(sibling);
     if (Math.floor(siblingCenter.y) === Math.floor(elementCenter.y)) {
@@ -150,7 +154,7 @@ export default function useRovingTabIndex({ ref }, keyEventDeps = []) {
         );
       };
       if (key === 'ArrowLeft' || key === 'ArrowRight') {
-        const sibling = getNextSibling(element, siblingDirection);
+        const sibling = getNextEnabledSibling(element, siblingDirection);
         if (sibling) {
           switchFocusToElement(sibling);
         }
@@ -184,8 +188,8 @@ export default function useRovingTabIndex({ ref }, keyEventDeps = []) {
         let sibling = element;
         for (
           let i = 0;
-          getNextSibling(sibling, siblingDirection) && i < 5;
-          sibling = getNextSibling(sibling, siblingDirection)
+          getNextEnabledSibling(sibling, siblingDirection) && i < 5;
+          sibling = getNextEnabledSibling(sibling, siblingDirection)
         ) {
           i++;
         }
