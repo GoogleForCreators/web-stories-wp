@@ -23,7 +23,7 @@
  *
  * @see https://github.com/WordPress/wordpress-develop/blob/baa5ba32d8698f6a6a5928bcbd4fea35bd47a8c1/src/js/media/controllers/customize-image-cropper.js
  */
-const WordPressImageCropper = window.wp?.media.controller.Cropper.extend({
+const WordPressImageCropper = window.wp?.media?.controller?.Cropper?.extend?.({
   /**
    * Posts the crop details to the admin.
    *
