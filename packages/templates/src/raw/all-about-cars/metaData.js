@@ -35,7 +35,6 @@ export default {
     { label: _x('Catalina Blue', 'color', 'web-stories'), color: '#002e73' },
     { label: _x('Light Aqua Blue', 'color', 'web-stories'), color: '#a2f6fc' },
     { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
     { label: _x('Celestial Blue', 'color', 'web-stories'), color: '#152132' },
   ],
   description: __(
