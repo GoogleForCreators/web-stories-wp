@@ -63,4 +63,4 @@ const WordPressImageCropper = window.wp?.media.controller.Cropper.extend({
   },
 });
 
-window.wp.media.controller.WordPressImageCropper = WordPressImageCropper;
+export default WordPressImageCropper;
