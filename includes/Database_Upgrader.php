@@ -140,7 +140,7 @@ class Database_Upgrader extends Service_Base implements PluginActivationAware, S
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function on_site_initialization( $site ) {
+	public function on_site_initialization( WP_Site $site ) {
 		$this->run_upgrades();
 	}
 

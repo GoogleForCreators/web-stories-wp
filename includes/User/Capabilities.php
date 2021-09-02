@@ -60,7 +60,7 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function on_site_initialization( $site ) {
+	public function on_site_initialization( WP_Site $site ) {
 		$this->add_caps_to_roles();
 	}
 

@@ -31,5 +31,5 @@ interface SiteInitializationAware {
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function on_site_initialization( $site );
+	public function on_site_initialization( WP_Site $site );
 }

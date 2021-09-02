@@ -146,7 +146,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function on_site_initialization( $site ) {
+	public function on_site_initialization( WP_Site $site ) {
 		$this->register();
 	}
 

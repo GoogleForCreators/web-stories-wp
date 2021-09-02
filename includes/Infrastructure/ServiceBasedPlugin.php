@@ -163,7 +163,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function on_site_initialization( $site ) {
+	public function on_site_initialization( WP_Site $site ) {
 		$this->register_services();
 
 		$site_id = (int) $site->blog_id;
@@ -192,7 +192,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param WP_Site $site The site being removed.
 	 * @return void
 	 */
-	public function on_site_removal( $site ) {
+	public function on_site_removal( WP_Site $site ) {
 		$this->register_services();
 
 		$site_id = (int) $site->blog_id;
