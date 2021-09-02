@@ -122,15 +122,24 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       : __('Remove audio', 'web-stories');
   }, [isMuting]);
 
-  const { setEditingElementWithState } = useCanvas(
-    ({ actions: { setEditingElementWithState } }) => ({
+  const { isEditing, setEditingElementWithState, clearEditing } = useCanvas(
+    ({
+      state: { isEditing },
+      actions: { setEditingElementWithState, clearEditing },
+    }) => ({
+      isEditing,
       setEditingElementWithState,
+      clearEditing,
     })
   );
 
   const handleTrim = useCallback(() => {
-    setEditingElementWithState(selectedElements[0].id, { isTrimming: true });
-  }, [setEditingElementWithState, selectedElements]);
+    if (isEditing) {
+      clearEditing();
+    } else {
+      setEditingElementWithState(selectedElements[0].id, { isTrimming: true });
+    }
+  }, [setEditingElementWithState, selectedElements, clearEditing, isEditing]);
 
   const speak = useLiveRegion();
 
