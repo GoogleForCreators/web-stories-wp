@@ -34,7 +34,7 @@ namespace Google\Web_Stories\Infrastructure;
  * @since 1.6.0
  * @internal
  */
-interface Plugin extends PluginActivationAware, PluginDeactivationAware, Registerable {
+interface Plugin extends PluginActivationAware, PluginDeactivationAware, Registerable, SiteInitializationAware, SiteRemovalAware {
 
 	/**
 	 * Get the service container that contains the services that make up the
