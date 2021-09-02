@@ -33,8 +33,6 @@ use WP_Site;
 /**
  * Handles plugin activation.
  *
- * Throws an error if the site is running on PHP < 5.6
- *
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  *
  * @since 1.0.0
@@ -80,6 +78,8 @@ function new_site( $site ) {
 		return;
 	}
 
+	// Runs all SiteInitializationAware services.
+	// This will also flush rewrite rules.
 	PluginFactory::create()->on_site_initialization( $site );
 }
 
