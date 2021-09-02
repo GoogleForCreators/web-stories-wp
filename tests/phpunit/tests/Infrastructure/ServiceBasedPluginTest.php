@@ -10,6 +10,9 @@ use Google\Web_Stories\Tests\Fixture\DummyService;
 use Google\Web_Stories\Tests\Fixture\DummyServiceBasedPlugin;
 use Google\Web_Stories\Tests\TestCase;
 
+/**
+ * @coversDefaultClass \Google\Web_Stories\Infrastructure\ServiceBasedPlugin
+ */
 final class ServiceBasedPluginTest extends TestCase {
 
 	public function test_it_can_be_instantiated() {
