@@ -18,51 +18,19 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useFeature } from 'flagged';
-import { useCallback, useMemo } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import { useCanvas, useStory } from '../../app';
 import VideoTrimContext from './videoTrimContext';
+import useVideoTrimMode from './useVideoTrimMode';
 
 function VideoTrimProvider({ children }) {
-  const isVideoTrimEnabled = useFeature('enableVideoTrim');
-  const { isEditing, isTrimming, setEditingElementWithState, clearEditing } =
-    useCanvas(
-      ({
-        state: { isEditing, editingElementState: { isTrimming } = {} },
-        actions: { setEditingElementWithState, clearEditing },
-      }) => ({
-        isEditing,
-        isTrimming,
-        setEditingElementWithState,
-        clearEditing,
-      })
-    );
-  const { selectedElement } = useStory(({ state: { selectedElements } }) => ({
-    selectedElement: selectedElements.length === 1 ? selectedElements[0] : null,
-  }));
-
-  const toggleTrimMode = useCallback(() => {
-    if (isEditing) {
-      clearEditing();
-    } else {
-      setEditingElementWithState(selectedElement.id, {
-        isTrimming: true,
-      });
-    }
-  }, [isEditing, clearEditing, setEditingElementWithState, selectedElement]);
-
-  const canEnterTrimMode = useMemo(
-    () => selectedElement?.type === 'video' && isVideoTrimEnabled,
-    [selectedElement, isVideoTrimEnabled]
-  );
+  const { isTrimMode, canEnterTrimMode, toggleTrimMode } = useVideoTrimMode();
 
   const value = {
     state: {
-      isTrimMode: isEditing && isTrimming,
+      isTrimMode,
       canEnterTrimMode,
     },
     actions: {
