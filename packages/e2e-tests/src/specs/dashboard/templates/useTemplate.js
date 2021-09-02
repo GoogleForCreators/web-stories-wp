@@ -44,10 +44,16 @@ describe('Template', () => {
 
     await expect(firstTemplate).toClick('a', { text: 'See details' });
     // Get count of template colors to compare to 'saved colors' in the editor.
-    const templateColorCount = await page.evaluate(() => {
-      return document.querySelectorAll(
+    const templateDetailsColors = await page.evaluate(() => {
+      const elements = document.querySelectorAll(
         'div[data-testid="detail-template-color"]'
-      ).length;
+      );
+      const count = elements.length;
+      const colors = [];
+      for (let i = 0; i < count; i++) {
+        colors.push(window.getComputedStyle(elements[i]).backgroundColor);
+      }
+      return colors;
     });
 
     await expect(page).toClick('button', { text: 'Use template' });
@@ -70,14 +76,18 @@ describe('Template', () => {
     await expect(page).toClick('button', { text: 'Saved Colors' });
 
     // Get all saved story colors and subtract 1 button for adding other colors
-    const savedStoryColorCount = await page.evaluate(() => {
-      return (
-        document.querySelectorAll(
-          'div[data-testid="saved-story-colors"] button'
-        ).length - 1
+    const editorSavedColors = await page.evaluate(() => {
+      const elements = document.querySelectorAll(
+        'div[data-testid="saved-story-colors"] button > div'
       );
+      const count = elements.length;
+      const colors = [];
+      for (let i = 0; i < count; i++) {
+        colors.push(window.getComputedStyle(elements[i]).backgroundColor);
+      }
+      return colors;
     });
 
-    expect(savedStoryColorCount).toStrictEqual(templateColorCount);
+    expect(editorSavedColors).toStrictEqual(templateDetailsColors);
   });
 });

@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { createSolidFromString } from '@web-stories-wp/patterns';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -40,11 +41,11 @@ const ColorContainer = styled.div`
 `;
 
 const Color = styled.div`
-  ${({ theme, color, size, spacing }) => `
+  ${({ theme, $backgroundColor, color, size, spacing }) => `
     width: ${size}px;
     height: ${size}px;
     border-radius: 50%;
-    background-color: ${color};
+    background-color: rgb(${$backgroundColor});
     ${borderLookup(theme.colors.border.defaultNormal)[color] || ''};
 
     & + & {
@@ -56,17 +57,22 @@ const Color = styled.div`
 function ColorList({ colors, size, spacing }) {
   return (
     <ColorContainer>
-      {colors.map(({ label, color }) => (
-        <Color
-          key={color}
-          size={size}
-          spacing={spacing}
-          color={color}
-          title={label}
-          ariaLabel={label}
-          data-testid="detail-template-color"
-        />
-      ))}
+      {colors.map(({ label, color }) => {
+        const { r, g, b } = createSolidFromString(color).color;
+        const backgroundColor = `${r}, ${g}, ${b}`;
+        return (
+          <Color
+            key={color}
+            size={size}
+            spacing={spacing}
+            color={color}
+            $backgroundColor={backgroundColor}
+            title={label}
+            ariaLabel={label}
+            data-testid="detail-template-color"
+          />
+        );
+      })}
     </ColorContainer>
   );
 }

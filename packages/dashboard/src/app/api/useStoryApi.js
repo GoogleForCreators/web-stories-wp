@@ -25,6 +25,7 @@ import {
 } from '@web-stories-wp/react';
 import { useFeatures } from 'flagged';
 import { addQueryArgs } from '@web-stories-wp/design-system';
+import { createSolidFromString } from '@web-stories-wp/patterns';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
@@ -36,7 +37,6 @@ import {
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
 } from '../../constants';
-import { getStoryColors } from '../../utils';
 import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
@@ -247,7 +247,9 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
           flags,
         });
 
-        const convertedColors = getStoryColors(colors);
+        const convertedColors = colors.map(({ color }) =>
+          createSolidFromString(color)
+        );
 
         const path = addQueryArgs(storyApi, {
           _fields: 'edit_link',
