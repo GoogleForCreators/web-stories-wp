@@ -38,7 +38,7 @@ import { useCallback, useMemo, useEffect } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import useCanvas from '../../../../app/canvas/useCanvas';
+import useVideoTrim from '../../../videoTrim/useVideoTrim';
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
@@ -77,7 +77,6 @@ const HelperText = styled(Text).attrs({
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const isMuteVideoEnabled = useFeature('enableMuteVideo');
-  const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const { isTranscodingEnabled } = useFFmpeg();
   const { muteExistingVideo } = useLocalMedia((state) => ({
     muteExistingVideo: state.actions.muteExistingVideo,
@@ -111,35 +110,18 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     isMuting,
   ]);
 
-  const shouldDisplayTrimButton = useMemo(
-    () => isSingleElement && isVideoTrimEnabled,
-    [isSingleElement, isVideoTrimEnabled]
-  );
-
   const buttonText = useMemo(() => {
     return isMuting
       ? __('Removing audio', 'web-stories')
       : __('Remove audio', 'web-stories');
   }, [isMuting]);
 
-  const { isEditing, setEditingElementWithState, clearEditing } = useCanvas(
-    ({
-      state: { isEditing },
-      actions: { setEditingElementWithState, clearEditing },
-    }) => ({
-      isEditing,
-      setEditingElementWithState,
-      clearEditing,
+  const { canEnterTrimMode, toggleTrimMode } = useVideoTrim(
+    ({ state: { canEnterTrimMode }, actions: { toggleTrimMode } }) => ({
+      canEnterTrimMode,
+      toggleTrimMode,
     })
   );
-
-  const handleTrim = useCallback(() => {
-    if (isEditing) {
-      clearEditing();
-    } else {
-      setEditingElementWithState(selectedElements[0].id, { isTrimming: true });
-    }
-  }, [setEditingElementWithState, selectedElements, clearEditing, isEditing]);
 
   const speak = useLiveRegion();
 
@@ -167,12 +149,12 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
             {__('Loop', 'web-stories')}
           </Text>
         </Label>
-        {shouldDisplayTrimButton && (
+        {canEnterTrimMode && (
           <TrimButton
             variant={BUTTON_VARIANTS.RECTANGLE}
             type={BUTTON_TYPES.SECONDARY}
             size={BUTTON_SIZES.SMALL}
-            onClick={handleTrim}
+            onClick={toggleTrimMode}
           >
             {__('Trim', 'web-stories')}
           </TrimButton>
