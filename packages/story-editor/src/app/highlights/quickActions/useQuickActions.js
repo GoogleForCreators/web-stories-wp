@@ -230,6 +230,7 @@ const useQuickActions = () => {
     handleFocusTextSetsPanel,
     handleFocusStylePanel,
     handleFocusCaptionsPanel,
+    handleFocusVideoSettingsPanel,
   } = useMemo(
     () => ({
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
@@ -240,6 +241,7 @@ const useQuickActions = () => {
       handleFocusTextColor: handleFocusPanel(states.TEXT_COLOR),
       handleFocusStylePanel: handleFocusPanel(states.STYLE),
       handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
+      handleFocusVideoSettingsPanel: handleFocusPanel(states.VIDEO_SETTINGS),
     }),
     [handleFocusPanel]
   );
@@ -485,12 +487,22 @@ const useQuickActions = () => {
         },
         ...actionMenuProps,
       },
+      {
+        Icon: '',
+        label: ACTIONS.TRIM_VIDEO.text,
+        onClick: (evt) => {
+          handleFocusVideoSettingsPanel()(evt);
+          // @todo Enter edit mode.
+        },
+        ...actionMenuProps,
+      },
       ...clearActions,
     ];
   }, [
     actionMenuProps,
     foregroundImageActions,
     handleFocusCaptionsPanel,
+    handleFocusVideoSettingsPanel,
     selectedElement?.type,
     showClearAction,
   ]);
