@@ -74,7 +74,7 @@ function Input({ onChange, ...props }) {
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
   useEffect(() => {
-    onChangeRef.current(tags);
+    onChangeRef.current?.(tags);
   }, [tags]);
 
   // Prepare and memoize event handlers to be as self
