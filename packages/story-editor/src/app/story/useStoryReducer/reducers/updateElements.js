@@ -87,8 +87,7 @@ function updateElements(
 
         const { animation, ...elem } = updateElementWithUpdater(
           element,
-          propertiesOrUpdater,
-          pageIndex
+          propertiesOrUpdater
         );
 
         const animLookup = animation

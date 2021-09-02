@@ -184,6 +184,7 @@ function PageAttachmentPanel() {
     <SimplePanel
       name="pageAttachment"
       title={__('Page Attachment', 'web-stories')}
+      collapsedByDefault={false}
     >
       <LinkInput
         onChange={(value) => handleChangeUrl(value?.trim())}

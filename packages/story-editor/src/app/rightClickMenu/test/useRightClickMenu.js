@@ -370,4 +370,27 @@ describe('useRightClickMenu', () => {
       ]);
     });
   });
+
+  describe('Sticker element right clicked', () => {
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '991199',
+            type: 'sticker',
+          },
+        ],
+      });
+    });
+
+    it('should return the correct menu items', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const labels = result.current.menuItems.map((item) => item.label);
+      expect(labels).toStrictEqual([...expectedLayerActions]);
+    });
+  });
 });

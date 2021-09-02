@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,22 @@
  */
 
 /**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
+/**
  * Internal dependencies
  */
-import getFileExtFromUrl from '../getFileExtFromUrl';
+import { SimplePanel } from '../../panel';
 
-describe('getFileExtFromUrl', () => {
-  it('should get extension correctly', () => {
-    expect(getFileExtFromUrl('https://example.jpg?foo=bar')).toStrictEqual(
-      'jpg'
-    );
-    expect(getFileExtFromUrl('https://video.mp4')).toStrictEqual('mp4');
-    expect(getFileExtFromUrl('https://example.test/image.png')).toStrictEqual(
-      'png'
-    );
-    expect(getFileExtFromUrl(null)).toStrictEqual('');
-    expect(getFileExtFromUrl(12345)).toStrictEqual('');
-  });
-});
+function TaxonomiesPanel({ ...props }) {
+  return (
+    <SimplePanel
+      name="taxonomies"
+      title={__('Categories and Tags', 'web-stories')}
+      {...props}
+    />
+  );
+}
+
+export default TaxonomiesPanel;

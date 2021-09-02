@@ -57,6 +57,7 @@ import {
 } from '../../../../../utils/getInUseFonts';
 import { Container as SectionContainer } from '../../../common/section';
 import { virtualPaneContainer } from '../../shared/virtualizedPanelGrid';
+import EmptyContentMessage from '../../../../emptyContentMessage';
 import TextSets from './textSets';
 import { CATEGORIES, PANE_TEXT } from './constants';
 
@@ -81,7 +82,12 @@ const TextSetsWrapper = styled.div`
 `;
 
 function TextSetsPane({ paneRef }) {
-  const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
+  const { areTextSetsLoading, textSets } = useLibrary(
+    ({ state: { areTextSetsLoading, textSets } }) => ({
+      areTextSetsLoading,
+      textSets,
+    })
+  );
   const [showInUse, setShowInUse] = useState(false);
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
@@ -186,6 +192,18 @@ function TextSetsPane({ paneRef }) {
 
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);
   const toggleId = useMemo(() => `toggle_text_sets_${uuidv4()}`, []);
+
+  const emptyContentMessage = useMemo(
+    () =>
+      showInUse
+        ? __(
+            'No matching Text Sets available. Try adding text to your story.',
+            'web-stories'
+          )
+        : __('No Text Sets available.', 'web-stories'),
+    [showInUse]
+  );
+
   return (
     <SectionContainer id={sectionId}>
       <TitleBar>
@@ -222,7 +240,11 @@ function TextSetsPane({ paneRef }) {
         />
       </FullWidthWrapper>
       <TextSetsWrapper>
-        <TextSets paneRef={paneRef} filteredTextSets={filteredTextSets} />
+        {!filteredTextSets?.length && !areTextSetsLoading ? (
+          <EmptyContentMessage>{emptyContentMessage}</EmptyContentMessage>
+        ) : (
+          <TextSets paneRef={paneRef} filteredTextSets={filteredTextSets} />
+        )}
       </TextSetsWrapper>
     </SectionContainer>
   );

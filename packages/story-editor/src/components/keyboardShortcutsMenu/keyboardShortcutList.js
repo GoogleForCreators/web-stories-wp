@@ -18,26 +18,26 @@
  * External dependencies
  */
 import { __, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
-import { isPlatformMacOS } from '@web-stories-wp/design-system';
-/**
- * Internal dependencies
- */
-import { SPECIAL_KEYS } from './constants';
+import {
+  isPlatformMacOS,
+  prettifyShortcut,
+  Shortcut,
+} from '@web-stories-wp/design-system';
 
-export const isMacOs = isPlatformMacOS();
-export const cmdOrCtrl = isMacOs ? SPECIAL_KEYS.COMMAND : SPECIAL_KEYS.CONTROL;
-export const optionOrAlt = isMacOs ? SPECIAL_KEYS.OPTION : SPECIAL_KEYS.ALT;
+const isMacOS = isPlatformMacOS();
 
 const LargeKey = (props) => <kbd className="large-key" {...props} />;
+
+const ShiftKeyWrapper = (props) => {
+  return isMacOS ? <kbd {...props} /> : <LargeKey {...props} />;
+};
 
 const shortcuts = {
   header: {
     label: __('Keyboard Shortcuts', 'web-stories'),
     shortcut: (
       <kbd>
-        <kbd aria-label={cmdOrCtrl.title} className="large-key">
-          {cmdOrCtrl.symbol}
-        </kbd>
+        <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
         <kbd>{'/'}</kbd>
       </kbd>
     ),
@@ -47,10 +47,8 @@ const shortcuts = {
       label: __('Element', 'web-stories'),
       shortcut: (
         <kbd>
-          <kbd aria-label={cmdOrCtrl.title} className="large-key">
-            {cmdOrCtrl.symbol}
-          </kbd>
-          <kbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</kbd>
+          <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
+          <kbd>{prettifyShortcut('alt')}</kbd>
           <kbd>{'1'}</kbd>
         </kbd>
       ),
@@ -59,10 +57,8 @@ const shortcuts = {
       label: __('Workspace', 'web-stories'),
       shortcut: (
         <kbd>
-          <kbd aria-label={cmdOrCtrl.title} className="large-key">
-            {cmdOrCtrl.symbol}
-          </kbd>
-          <kbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</kbd>
+          <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
+          <kbd>{prettifyShortcut('alt')}</kbd>
           <kbd>{'2'}</kbd>
         </kbd>
       ),
@@ -71,10 +67,8 @@ const shortcuts = {
       label: __('Design panels', 'web-stories'),
       shortcut: (
         <kbd>
-          <kbd aria-label={cmdOrCtrl.title} className="large-key">
-            {cmdOrCtrl.symbol}
-          </kbd>
-          <kbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</kbd>
+          <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
+          <kbd>{prettifyShortcut('alt')}</kbd>
           <kbd>{'3'}</kbd>
         </kbd>
       ),
@@ -88,9 +82,7 @@ const shortcuts = {
           label: __('Undo', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'Z'}</kbd>
             </kbd>
           ),
@@ -99,12 +91,8 @@ const shortcuts = {
           label: __('Redo', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
-              <kbd aria-label={SPECIAL_KEYS.SHIFT.title}>
-                {SPECIAL_KEYS.SHIFT.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
+              <ShiftKeyWrapper>{prettifyShortcut('shift')}</ShiftKeyWrapper>
               <kbd>{'Z'}</kbd>
             </kbd>
           ),
@@ -113,9 +101,7 @@ const shortcuts = {
           label: __('Save', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'S'}</kbd>
             </kbd>
           ),
@@ -124,9 +110,7 @@ const shortcuts = {
           label: __('Play / Stop', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'K'}</kbd>
             </kbd>
           ),
@@ -142,9 +126,7 @@ const shortcuts = {
           label: __('Insert/edit link', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'K'}</kbd>
             </kbd>
           ),
@@ -153,9 +135,7 @@ const shortcuts = {
           label: __('Bold', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'B'}</kbd>
             </kbd>
           ),
@@ -164,9 +144,7 @@ const shortcuts = {
           label: __('Italic', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'I'}</kbd>
             </kbd>
           ),
@@ -175,9 +153,7 @@ const shortcuts = {
           label: __('Underline', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'U'}</kbd>
             </kbd>
           ),
@@ -191,9 +167,7 @@ const shortcuts = {
           label: __('Copy', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'C'}</kbd>
             </kbd>
           ),
@@ -202,9 +176,7 @@ const shortcuts = {
           label: __('Cut', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'X'}</kbd>
             </kbd>
           ),
@@ -213,9 +185,7 @@ const shortcuts = {
           label: __('Duplicate', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'D'}</kbd>
             </kbd>
           ),
@@ -224,9 +194,7 @@ const shortcuts = {
           label: __('Paste', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'V'}</kbd>
             </kbd>
           ),
@@ -235,10 +203,8 @@ const shortcuts = {
           label: __('Copy Styles', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
-              <kbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
+              <kbd>{prettifyShortcut('alt')}</kbd>
               <kbd>{'O'}</kbd>
             </kbd>
           ),
@@ -247,10 +213,8 @@ const shortcuts = {
           label: __('Paste Styles', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
-              <kbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
+              <kbd>{prettifyShortcut('alt')}</kbd>
               <kbd>{'P'}</kbd>
             </kbd>
           ),
@@ -259,9 +223,7 @@ const shortcuts = {
           label: __('Select all', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'A'}</kbd>
             </kbd>
           ),
@@ -272,17 +234,14 @@ const shortcuts = {
             <kbd>
               <TranslateWithMarkup
                 mapping={{
-                  kbd: <kbd />,
-                  shift: SPECIAL_KEYS.SHIFT.symbol,
+                  lkbd: <LargeKey />,
+                  shortcut: <Shortcut shortcut="shift" />,
                 }}
               >
                 {sprintf(
-                  /* translators: %s: Shift key. */
-                  __('%s <span>+ click</span>', 'web-stories'),
-                  sprintf(
-                    '<kbd aria-label="%s"><shift /></kbd>',
-                    SPECIAL_KEYS.SHIFT.title
-                  )
+                  /* translators: 1: Shift key. */
+                  __('<lkbd>%s</lkbd> <span>+ click</span>', 'web-stories'),
+                  prettifyShortcut('shift')
                 )}
               </TranslateWithMarkup>
             </kbd>
@@ -296,26 +255,17 @@ const shortcuts = {
                 mapping={{
                   kbd: <kbd />,
                   lkbd: <LargeKey />,
-                  cmdOrCtrlSymbol: cmdOrCtrl.symbol,
-                  upSymbol: SPECIAL_KEYS.UP.symbol,
-                  downSymbol: SPECIAL_KEYS.UP.symbol,
                 }}
               >
                 {sprintf(
                   /* translators: 1: Cmd/Ctrl key. 2: Up key. 3: Down key. */
-                  __('%1$s %2$s <span>or</span> %3$s', 'web-stories'),
-                  sprintf(
-                    '<lkbd aria-label="%s"><cmdOrCtrlSymbol /></lkbd>',
-                    cmdOrCtrl.title
+                  __(
+                    '<lkbd>%1$s</lkbd> <kbd>%2$s</kbd> <span>or</span> <kbd>%3$s</kbd>',
+                    'web-stories'
                   ),
-                  sprintf(
-                    '<kbd aria-label="%s"><upSymbol /></kbd>',
-                    SPECIAL_KEYS.UP.title
-                  ),
-                  sprintf(
-                    '<kbd aria-label="%s"><downSymbol /></kbd>',
-                    SPECIAL_KEYS.DOWN.title
-                  )
+                  prettifyShortcut('mod'),
+                  prettifyShortcut('up'),
+                  prettifyShortcut('down')
                 )}
               </TranslateWithMarkup>
             </kbd>
@@ -329,31 +279,18 @@ const shortcuts = {
                 mapping={{
                   kbd: <kbd />,
                   lkbd: <LargeKey />,
-                  cmdOrCtrlSymbol: cmdOrCtrl.symbol,
-                  shiftSymbol: SPECIAL_KEYS.SHIFT.symbol,
-                  upSymbol: SPECIAL_KEYS.UP.symbol,
-                  downSymbol: SPECIAL_KEYS.DOWN.symbol,
                 }}
               >
                 {sprintf(
                   /* translators: 1: Cmd/Ctrl key. 2: Shift key. 3: Up key. 4: Down key. */
-                  __('%1$s %2$s %3$s <span>or</span> %4$s', 'web-stories'),
-                  sprintf(
-                    '<lkbd aria-label="%s"><cmdOrCtrlSymbol /></lkbd>',
-                    cmdOrCtrl.title
+                  __(
+                    '<lkbd>%1$s</lkbd> <lkbd>%2$s</lkbd> <kbd>%3$s</kbd> <span>or</span> <kbd>%4$s</kbd>',
+                    'web-stories'
                   ),
-                  sprintf(
-                    '<kbd aria-label="%s"><shiftSymbol /></kbd>',
-                    SPECIAL_KEYS.SHIFT.title
-                  ),
-                  sprintf(
-                    '<kbd aria-label="%s"><upSymbol /></kbd>',
-                    SPECIAL_KEYS.UP.title
-                  ),
-                  sprintf(
-                    '<kbd aria-label="%s"><downSymbol /></kbd>',
-                    SPECIAL_KEYS.DOWN.title
-                  )
+                  prettifyShortcut('mod'),
+                  prettifyShortcut('shift'),
+                  prettifyShortcut('up'),
+                  prettifyShortcut('down')
                 )}
               </TranslateWithMarkup>
             </kbd>
@@ -366,16 +303,15 @@ const shortcuts = {
               <TranslateWithMarkup
                 mapping={{
                   kbd: <kbd />,
-                  enterSymbol: SPECIAL_KEYS.ENTER.symbol,
                 }}
               >
                 {sprintf(
                   /* translators: %s: Enter key. */
-                  __('%s <span>or double-click</span>', 'web-stories'),
-                  sprintf(
-                    '<kbd aria-label="%s"><enterSymbol /></kbd>',
-                    SPECIAL_KEYS.ENTER.title
-                  )
+                  __(
+                    '<kbd>%s</kbd> <span>or double-click</span>',
+                    'web-stories'
+                  ),
+                  prettifyShortcut('enter')
                 )}
               </TranslateWithMarkup>
             </kbd>
@@ -385,9 +321,7 @@ const shortcuts = {
           label: __('Delete', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd className="large-key" aria-label={SPECIAL_KEYS.DELETE.title}>
-                {SPECIAL_KEYS.DELETE.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('delete')}</kbd>
             </kbd>
           ),
         },
@@ -397,9 +331,7 @@ const shortcuts = {
           label: __('Insert/edit link', 'web-stories'),
           shortcut: (
             <kbd>
-              <kbd aria-label={cmdOrCtrl.title} className="large-key">
-                {cmdOrCtrl.symbol}
-              </kbd>
+              <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd>{'A'}</kbd>
             </kbd>
           ),
@@ -410,17 +342,13 @@ const shortcuts = {
             <kbd>
               <TranslateWithMarkup
                 mapping={{
-                  kbd: <LargeKey />,
-                  cmdOrCtrlSymbol: cmdOrCtrl.symbol,
+                  lkbd: <LargeKey />,
                 }}
               >
                 {sprintf(
                   /* translators: %s: Cmd/Ctrl key. */
-                  __('<span>Hold</span> %s', 'web-stories'),
-                  sprintf(
-                    '<kbd aria-label="%s"><cmdOrCtrlSymbol /></kbd>',
-                    cmdOrCtrl.title
-                  )
+                  __('<span>Hold</span> <lkbd>%s</lkbd>', 'web-stories'),
+                  prettifyShortcut('mod')
                 )}
               </TranslateWithMarkup>
             </kbd>
