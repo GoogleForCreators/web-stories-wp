@@ -46,7 +46,10 @@ class Canonical_Sanitizer extends TestCase {
 
 		$dom = Document::fromHtml( $source );
 
-		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer( $dom );
+		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
+			$dom,
+			[ 'canonical_url' => 'https://example.com/new-canonical.html' ]
+		);
 		$sanitizer->sanitize();
 
 		$actual = $dom->saveHTML( $dom->documentElement );
@@ -66,7 +69,10 @@ class Canonical_Sanitizer extends TestCase {
 
 		$this->go_to( get_permalink( $post_id ) );
 
-		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer( $dom );
+		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
+			$dom,
+			[ 'canonical_url' => get_permalink( $post_id ) ]
+		);
 		$sanitizer->sanitize();
 
 		$actual = $dom->saveHTML( $dom->documentElement );
@@ -89,7 +95,10 @@ class Canonical_Sanitizer extends TestCase {
 
 		$this->go_to( get_permalink( $post_id ) );
 
-		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer( $dom );
+		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
+			$dom,
+			[ 'canonical_url' => get_permalink( $post_id ) ]
+		);
 		$sanitizer->sanitize();
 
 		$actual = $dom->saveHTML( $dom->documentElement );
@@ -122,7 +131,10 @@ class Canonical_Sanitizer extends TestCase {
 		$this->go_to( get_preview_post_link( $post_id ) );
 		$this->assertQueryTrue( 'is_single', 'is_singular', 'is_preview' );
 
-		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer( $dom );
+		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
+			$dom,
+			[ 'canonical_url' => get_permalink( $post_id ) ]
+		);
 		$sanitizer->sanitize();
 
 		$actual = $dom->saveHTML( $dom->documentElement );
@@ -147,7 +159,10 @@ class Canonical_Sanitizer extends TestCase {
 
 		$this->go_to( get_permalink( $post_id ) );
 
-		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer( $dom );
+		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
+			$dom,
+			[ 'canonical_url' => get_permalink( $post_id ) ]
+		);
 		$sanitizer->sanitize();
 
 		$actual = $dom->saveHTML( $dom->documentElement );
