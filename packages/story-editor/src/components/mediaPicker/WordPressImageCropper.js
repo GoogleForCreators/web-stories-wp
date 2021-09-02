@@ -30,7 +30,6 @@ const WordPressImageCropper = window.wp?.media.controller.Cropper.extend({
    * Uses crop measurements when flexible in both directions.
    * Constrains flexible side based on image ratio and size of the fixed side.
    *
-   * @since 4.3.0
    * @param {Object} attachment The attachment to crop.
    * @return {Object} A jQuery promise that represents the crop image request.
    */
