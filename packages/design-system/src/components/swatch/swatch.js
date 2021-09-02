@@ -24,6 +24,7 @@ import {
   getOpaquePattern,
   hasGradient,
   hasOpacity,
+  HexPropType,
 } from '@web-stories-wp/patterns';
 
 /**
@@ -168,14 +169,7 @@ function Swatch({
 
 Swatch.propTypes = {
   children: PropTypes.node,
-  pattern: PropTypes.shape({
-    color: PropTypes.shape({
-      r: PropTypes.number,
-      g: PropTypes.number,
-      b: PropTypes.number,
-      a: PropTypes.number,
-    }),
-  }),
+  pattern: PropTypes.shape({ color: HexPropType.isRequired }),
   isDisabled: PropTypes.bool,
   isSmall: PropTypes.bool,
   isPreview: PropTypes.bool,
