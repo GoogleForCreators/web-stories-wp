@@ -7,16 +7,18 @@
 |                                                                   | Link with Page Attachment                        | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Remove applied link                              | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | *[total]*                                        | 🚨 **31.58%** *(6 / 19)*    |
-| Creator Can Add Image/Video to Page                               | Drag image/video from desktop to canvas          | 🚨 **0.00%** *(0 / 1)*      |
+| Creator Can Add Image/Video to Page                               | Can add media                                    | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | Can edit/delete media                            | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | Drag image/video from desktop to canvas          | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Search media                                     | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*      |
-|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*      |
+|                                                                   | *[total]*                                        | 🚨 **33.33%** *(2 / 6)*     |
 | Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🏆 **100.00%** *(10 / 10)*  |
-|                                                                   | Enter edit mode                                  | 🛴 **60.00%** *(3 / 5)*     |
+|                                                                   | Enter edit mode                                  | 🛴 **80.00%** *(4 / 5)*     |
 |                                                                   | Remove background media                          | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
-|                                                                   | *[total]*                                        | 🛴 **72.73%** *(16 / 22)*   |
+|                                                                   | *[total]*                                        | 🛴 **77.27%** *(17 / 22)*   |
 | Creator Can Style Text                                            | Apply B                                          | 🛴 **80.00%** *(16 / 20)*   |
 |                                                                   | Apply I                                          | 🛴 **54.55%** *(6 / 11)*    |
 |                                                                   | Apply U                                          | 🛴 **50.00%** *(5 / 10)*    |
@@ -74,4 +76,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **71.84%** *(296 / 412)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.60%** *(302 / 416)* |
