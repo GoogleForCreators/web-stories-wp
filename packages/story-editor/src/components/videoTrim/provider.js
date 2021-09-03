@@ -24,17 +24,34 @@ import PropTypes from 'prop-types';
  */
 import VideoTrimContext from './videoTrimContext';
 import useVideoTrimMode from './useVideoTrimMode';
+import useVideoNode from './useVideoNode';
 
 function VideoTrimProvider({ children }) {
   const { isTrimMode, canEnterTrimMode, toggleTrimMode } = useVideoTrimMode();
+  const {
+    currentTime,
+    startOffset,
+    endOffset,
+    maxOffset,
+    setStartOffset,
+    setEndOffset,
+    setVideoNode,
+  } = useVideoNode();
 
   const value = {
     state: {
       isTrimMode,
       canEnterTrimMode,
+      currentTime,
+      startOffset,
+      endOffset,
+      maxOffset,
     },
     actions: {
       toggleTrimMode,
+      setVideoNode,
+      setStartOffset,
+      setEndOffset,
     },
   };
 

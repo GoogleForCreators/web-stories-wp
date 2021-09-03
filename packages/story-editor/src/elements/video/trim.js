@@ -19,13 +19,14 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef, useMemo } from '@web-stories-wp/react';
+import { useRef, useMemo, useCallback } from '@web-stories-wp/react';
 import { getMediaSizePositionProps } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
+import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import VideoControls from './controls';
 import { getBackgroundStyle, videoWithScale } from './util';
 
@@ -77,6 +78,17 @@ function VideoTrim({ box, element }) {
     [box]
   );
 
+  const { setVideoNode } = useVideoTrim(({ actions: { setVideoNode } }) => ({
+    setVideoNode,
+  }));
+  const setRef = useCallback(
+    (node) => {
+      videoRef.current = node;
+      setVideoNode(node);
+    },
+    [setVideoNode]
+  );
+
   return (
     <>
       <Wrapper ref={wrapperRef}>
@@ -91,11 +103,10 @@ function VideoTrim({ box, element }) {
             style={style}
             {...videoProps}
             preload="metadata"
-            loop
             muted
             autoPlay
             tabIndex={0}
-            ref={videoRef}
+            ref={setRef}
           >
             {resource.src && (
               <source src={resource.src} type={resource.mimeType} />
