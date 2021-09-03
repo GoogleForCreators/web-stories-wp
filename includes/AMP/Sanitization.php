@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\AMP;
 
 use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
@@ -385,6 +386,8 @@ class Sanitization {
 	 * accessing options from the database, requiring AMP__VERSION,
 	 * and causing conflicts with our own amp_is_request() compat shim.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.1.0
 	 *
 	 * @see amp_get_content_sanitizers
@@ -420,8 +423,10 @@ class Sanitization {
 			$story = new Story();
 			$story->load_from_post( $post );
 
+			$publisher_logo_id = get_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
+
 			$sanitizers[ Story_Sanitizer::class ] = [
-				'publisher_logo'             => $this->get_publisher_logo(),
+				'publisher_logo'             => wp_get_attachment_image_url( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE ),
 				'publisher'                  => $this->get_publisher_name(),
 				'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
 				'poster_images'              => [

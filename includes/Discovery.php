@@ -140,18 +140,13 @@ class Discovery extends Service_Base {
 	 * @return array $metadata All schema.org metadata for the post.
 	 */
 	protected function get_schemaorg_metadata(): array {
-		$publisher = $this->get_publisher_data();
+		$publisher = $this->get_publisher_name();
 
 		$metadata = [
 			'@context'  => 'http://schema.org',
 			'publisher' => [
 				'@type' => 'Organization',
-				'name'  => $publisher['name'],
-				// @todo: Provide width, height, caption, et al.
-				'logo'  => [
-					'@type' => 'ImageObject',
-					'url'   => $publisher['logo'],
-				],
+				'name'  => $publisher,
 			],
 		];
 
@@ -163,6 +158,19 @@ class Discovery extends Service_Base {
 		$post = get_queried_object();
 
 		if ( $post instanceof WP_Post ) {
+			$publisher_logo_id = get_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
+
+			if ( $publisher_logo_id ) {
+				list( $url, $width, $height ) = wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
+
+				$metadata['publisher']['logo'] = [
+					'@type'  => 'ImageObject',
+					'url'    => $url,
+					'width'  => $width,
+					'height' => $height,
+				];
+			}
+
 			$metadata = array_merge(
 				$metadata,
 				[

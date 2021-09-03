@@ -82,10 +82,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		$fields   = $this->get_fields_for_response( $request );
 		$data     = $response->get_data();
 
-		if ( rest_is_field_included( 'publisher_logo_url', $fields ) ) {
-			$data['publisher_logo_url'] = $this->get_publisher_logo();
-		}
-
 		if ( rest_is_field_included( 'style_presets', $fields ) ) {
 			$style_presets         = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
 			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
@@ -162,16 +158,6 @@ class Stories_Controller extends Stories_Base_Controller {
 			return rest_ensure_response( $response );
 		}
 
-		// If publisher logo is set, let's assign that.
-		$publisher_logo_id = $request->get_param( 'publisher_logo' );
-		if ( $publisher_logo_id ) {
-			$all_publisher_logos   = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-			$all_publisher_logos[] = $publisher_logo_id;
-
-			update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, array_unique( $all_publisher_logos ) );
-			update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $publisher_logo_id );
-		}
-
 		// If style presets are set.
 		$style_presets = $request->get_param( 'style_presets' );
 		if ( is_array( $style_presets ) ) {
@@ -194,14 +180,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		$schema = parent::get_item_schema();
-
-		$schema['properties']['publisher_logo_url'] = [
-			'description' => __( 'Publisher logo URL.', 'web-stories' ),
-			'type'        => 'string',
-			'context'     => [ 'views', 'edit' ],
-			'format'      => 'uri',
-			'default'     => '',
-		];
 
 		$schema['properties']['style_presets'] = [
 			'description' => __( 'Style presets used by all stories', 'web-stories' ),
@@ -459,6 +437,8 @@ class Stories_Controller extends Stories_Base_Controller {
 		$links = parent::prepare_links( $post );
 		add_post_type_support( Story_Post_Type::POST_TYPE_SLUG, 'revisions' );
 
+		// Post Locking.
+
 		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
 		$lock_url = rest_url( trailingslashit( $base ) . $post->ID . '/lock' );
 
@@ -482,6 +462,16 @@ class Stories_Controller extends Stories_Base_Controller {
 					'embeddable' => true,
 				];
 			}
+		}
+
+		// Publisher Logo.
+		$publisher_logo_id = get_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
+
+		if ( $publisher_logo_id ) {
+			$links['https://api.w.org/publisherlogo'] = [
+				'href'       => rest_url( sprintf( '%s/%s', $this->namespace, 'media/' ) . $publisher_logo_id ),
+				'embeddable' => true,
+			];
 		}
 
 		return $links;

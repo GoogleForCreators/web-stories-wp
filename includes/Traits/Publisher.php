@@ -43,64 +43,8 @@ trait Publisher {
 	 *
 	 * @return string
 	 */
-	public function get_publisher_logo_placeholder() {
+	public function get_publisher_logo_placeholder(): string {
 		return WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
-	}
-
-	/**
-	 * Returns the publisher data.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return array Publisher name and logo.
-	 */
-	public function get_publisher_data() : array {
-		$publisher      = $this->get_publisher_name();
-		$publisher_logo = $this->get_publisher_logo();
-
-		return [
-			'name' => $publisher,
-			'logo' => $publisher_logo,
-		];
-	}
-
-	/**
-	 * Get the publisher logo.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @link https://developers.google.com/search/docs/data-types/article#logo-guidelines
-	 * @link https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines
-	 *
-	 * @return string|null Publisher logo image URL, or null if no publisher logos are available.
-	 */
-	public function get_publisher_logo() {
-		$logo_image_url = null;
-
-		$active_publisher_logo = absint( get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
-
-		if ( $active_publisher_logo ) {
-			$logo_image_url = wp_get_attachment_image_url( $active_publisher_logo, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
-
-			if ( ! $logo_image_url ) {
-				$logo_image_url = null;
-			}
-		}
-
-		$placeholder = $this->get_publisher_logo_placeholder();
-
-		/**
-		 * Filters the publisher's logo.
-		 *
-		 * This should point to a square image.
-		 *
-		 * @since 1.0.0
-		 * @since 1.1.0 The $placeholder parameter was deprecated.
-		 *
-		 * @param string|null $logo_image_url URL to the publisher's logo if set.
-		 * @param string      $placeholder    Deprecated.
-		 */
-		return apply_filters( 'web_stories_publisher_logo', $logo_image_url, $placeholder );
 	}
 
 	/**
@@ -110,7 +54,7 @@ trait Publisher {
 	 *
 	 * @return string Publisher Name.
 	 */
-	public function get_publisher_name() {
+	public function get_publisher_name(): string {
 		$name = get_bloginfo( 'name' );
 		/**
 		 * Filters the publisher's name

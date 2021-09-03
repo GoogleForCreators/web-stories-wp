@@ -50,7 +50,6 @@ const STORY_FIELDS = [
   'preview_link',
   'edit_link',
   'embed_post_link',
-  'publisher_logo_url',
   'permalink_template',
   'style_presets',
   'password',
@@ -83,7 +82,7 @@ function APIProvider({ children }) {
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
-        _embed: 'wp:featuredmedia,wp:lockuser,author',
+        _embed: 'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo',
         web_stories_demo: false,
         _fields: STORY_FIELDS,
       });
@@ -129,7 +128,7 @@ function APIProvider({ children }) {
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
-        _embed: 'wp:featuredmedia,author',
+        _embed: 'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo',
         web_stories_demo: true,
         _fields: STORY_FIELDS,
       });
@@ -164,7 +163,9 @@ function APIProvider({ children }) {
         },
         featured_media: featuredMedia.id,
         style_presets: globalStoryStyles,
-        publisher_logo: publisherLogo,
+        meta: {
+          web_stories_publisher_logo: publisherLogo?.id,
+        },
         content: encodeMarkup ? base64Encode(content) : content,
         author: author.id,
         ...rest,
@@ -194,7 +195,7 @@ function APIProvider({ children }) {
           'edit_link',
           'embed_post_link',
         ].join(','),
-        _embed: 'wp:featuredmedia',
+        _embed: 'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo',
       });
 
       return apiFetch({
@@ -208,7 +209,7 @@ function APIProvider({ children }) {
 
   const autoSaveById = useCallback(
     /**
-     * Fire REST API call to save story.
+     * Fire REST API call to autosave story.
      *
      * @param {import('../../types').Story} story Story object.
      * @return {Promise} Return apiFetch promise.

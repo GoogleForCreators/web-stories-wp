@@ -50,8 +50,6 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           excerpt: { raw: excerpt },
           link,
           story_data: storyDataRaw,
-          // todo: get publisher_logo_url image dimensions for prepublish checklist
-          publisher_logo_url: publisherLogoUrl,
           permalink_template: permalinkTemplate,
           style_presets: globalStoryStyles,
           password,
@@ -111,6 +109,22 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           };
         }
 
+        let publisherLogo = {
+          id: 0,
+          height: 0,
+          width: 0,
+          url: '',
+        };
+
+        if ('wp:publisherlogo' in embedded) {
+          publisherLogo = {
+            id: embedded['wp:publisherlogo'][0].id,
+            height: embedded['wp:publisherlogo'][0].media_details?.height,
+            width: embedded['wp:publisherlogo'][0].media_details?.width,
+            url: embedded['wp:publisherlogo'][0].source_url,
+          };
+        }
+
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
         );
@@ -162,7 +176,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           lockUser,
           featuredMedia,
           permalinkConfig,
-          publisherLogoUrl,
+          publisherLogo,
           password,
           previewLink,
           editLink,

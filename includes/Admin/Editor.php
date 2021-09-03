@@ -326,7 +326,7 @@ class Editor extends Service_Base {
 					'storyLocking'  => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],
 				'metadata'                     => [
-					'publisher' => $this->get_publisher_data(),
+					'publisher' => $this->get_publisher_name(),
 				],
 				'postLock'                     => [
 					'interval'         => $time_window,
