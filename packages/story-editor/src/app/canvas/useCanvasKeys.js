@@ -180,7 +180,7 @@ function useCanvasKeys(ref) {
       if (isEditing) {
         return;
       }
-      if (!selectedElements?.length || selectedElements[0].isBackground) {
+      if (selectedElements?.[0]?.isBackground) {
         return;
       }
       const { dx, dy } = getKeyboardMovement(key, shiftKey);
