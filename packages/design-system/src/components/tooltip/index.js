@@ -140,7 +140,7 @@ function Tooltip({
     const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
     if (
       placement.startsWith('bottom') &&
-      tooltipElBoundingBox?.height < window.visualViewport.height
+      tooltipElBoundingBox?.bottom > window.visualViewport.height
     ) {
       dynamicPlacement.current = PLACEMENT.TOP;
     }
