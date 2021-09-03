@@ -180,6 +180,9 @@ function useCanvasKeys(ref) {
       if (isEditing) {
         return;
       }
+      if (!selectedElements?.length || selectedElements[0].isBackground) {
+        return;
+      }
       const { dx, dy } = getKeyboardMovement(key, shiftKey);
       updateSelectedElements({
         properties: ({ x, y }) => ({
@@ -188,7 +191,7 @@ function useCanvasKeys(ref) {
         }),
       });
     },
-    [updateSelectedElements, isEditing]
+    [updateSelectedElements, isEditing, selectedElements]
   );
 
   // Layer up/down.
