@@ -27,7 +27,7 @@ import { getMediaSizePositionProps } from '@web-stories-wp/media';
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
-import VideoControls from './controls';
+import PlayPauseButton from './playPauseButton';
 import { getBackgroundStyle, videoWithScale } from './util';
 
 const Video = styled.video`
@@ -125,11 +125,7 @@ function VideoTrim({ box, element }) {
           </Video>
         </MediaDisplay>
       </Wrapper>
-      <VideoControls
-        isEditing={false}
-        isTransforming={false}
-        isSingleElement
-        isSelected
+      <PlayPauseButton
         box={boxAtOrigin}
         element={element}
         elementRef={wrapperRef}
