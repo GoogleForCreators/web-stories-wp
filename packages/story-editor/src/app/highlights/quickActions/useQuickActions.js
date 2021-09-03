@@ -492,7 +492,7 @@ const useQuickActions = () => {
             ...actionMenuProps,
           },
         ]
-      : null;
+      : [];
   }, [
     actionMenuProps,
     handleFocusVideoSettingsPanel,
