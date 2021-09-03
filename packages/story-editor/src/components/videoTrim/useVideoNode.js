@@ -19,6 +19,11 @@
  */
 import { useEffect, useState, useCallback } from '@web-stories-wp/react';
 
+/**
+ * Internal dependencies
+ */
+import { MEDIA_VIDEO_MINIMUM_DURATION } from '../../constants';
+
 function useVideoNode() {
   const [currentTime, setCurrentTime] = useState(0);
   const [startOffset, rawSetStartOffset] = useState(0);
@@ -59,8 +64,8 @@ function useVideoNode() {
 
   const setStartOffset = useCallback(
     (offset) => {
-      // Start offset must be 1 sec smaller than end offset
-      offset = Math.min(endOffset - 1000, offset);
+      // Start offset must be at least this smaller than end offset
+      offset = Math.min(endOffset - MEDIA_VIDEO_MINIMUM_DURATION, offset);
       rawSetStartOffset(offset);
       videoNode.currentTime = Math.max(videoNode.currentTime, offset / 1000);
     },
@@ -69,8 +74,8 @@ function useVideoNode() {
 
   const setEndOffset = useCallback(
     (offset) => {
-      // End offset must be 1 sec larger than start offset
-      offset = Math.max(startOffset + 1000, offset);
+      // End offset must be at least this larger than start offset
+      offset = Math.max(startOffset + MEDIA_VIDEO_MINIMUM_DURATION, offset);
       rawSetEndOffset(offset);
       videoNode.currentTime = Math.min(videoNode.currentTime, offset / 1000);
     },

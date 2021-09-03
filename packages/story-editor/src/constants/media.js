@@ -24,6 +24,9 @@ export const MEDIA_POSTER_IMAGE_MIME_TYPE = 'image/jpeg';
 export const MEDIA_TRANSCODED_MIME_TYPE = 'video/mp4';
 export const MEDIA_TRANSCODED_FILE_TYPE = 'mp4';
 
+// Minimum duration time in milliseconds for a video
+export const MEDIA_VIDEO_MINIMUM_DURATION = 100;
+
 export const MEDIA_VIDEO_DIMENSIONS_THRESHOLD = {
   HEIGHT: 720,
   WIDTH: 1280,
