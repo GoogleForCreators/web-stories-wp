@@ -53,14 +53,14 @@ function useVideoTrimMode() {
     }
   }, [isEditing, clearEditing, setEditingElementWithState, selectedElement]);
 
-  const canEnterTrimMode = useMemo(
+  const hasTrimMode = useMemo(
     () => selectedElement?.type === 'video' && isVideoTrimEnabled,
     [selectedElement, isVideoTrimEnabled]
   );
 
   return {
     isTrimMode: isEditing && isTrimming,
-    canEnterTrimMode,
+    hasTrimMode,
     toggleTrimMode,
   };
 }

@@ -117,9 +117,9 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       : __('Remove audio', 'web-stories');
   }, [isMuting]);
 
-  const { canEnterTrimMode, toggleTrimMode } = useVideoTrim(
-    ({ state: { canEnterTrimMode }, actions: { toggleTrimMode } }) => ({
-      canEnterTrimMode,
+  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
+    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
+      hasTrimMode,
       toggleTrimMode,
     })
   );
@@ -157,7 +157,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
             {__('Loop', 'web-stories')}
           </Text>
         </Label>
-        {canEnterTrimMode && (
+        {hasTrimMode && (
           <TrimButton
             variant={BUTTON_VARIANTS.RECTANGLE}
             type={BUTTON_TYPES.SECONDARY}

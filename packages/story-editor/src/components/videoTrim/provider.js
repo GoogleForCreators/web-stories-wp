@@ -27,7 +27,7 @@ import useVideoTrimMode from './useVideoTrimMode';
 import useVideoNode from './useVideoNode';
 
 function VideoTrimProvider({ children }) {
-  const { isTrimMode, canEnterTrimMode, toggleTrimMode } = useVideoTrimMode();
+  const { isTrimMode, hasTrimMode, toggleTrimMode } = useVideoTrimMode();
   const {
     currentTime,
     startOffset,
@@ -41,7 +41,7 @@ function VideoTrimProvider({ children }) {
   const value = {
     state: {
       isTrimMode,
-      canEnterTrimMode,
+      hasTrimMode,
       currentTime,
       startOffset,
       endOffset,
