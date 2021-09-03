@@ -33,6 +33,8 @@ function useVideoNode() {
 
     function onLoadedMetadata(evt) {
       const duration = Math.floor(evt.target.duration * 1000);
+      rawSetStartOffset(0);
+      setCurrentTime(0);
       rawSetEndOffset(duration);
       setMaxOffset(duration);
     }
