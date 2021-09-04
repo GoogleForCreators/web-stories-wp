@@ -23,9 +23,6 @@ import getAllTemplates from '@web-stories-wp/templates';
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
 import templateReducer, {
   defaultTemplatesState,
   ACTION_TYPES as TEMPLATE_ACTION_TYPES,
