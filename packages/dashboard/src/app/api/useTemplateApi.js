@@ -51,11 +51,13 @@ const useTemplateApi = (dataAdapter, config) => {
 
         reshapedTemplate.tags.forEach((tag) => {
           if (templatesByTag[tag]) {
-            templatesByTag[tag].push(reshapedTemplate);
+            templatesByTag[tag].push(reshapedTemplate.id);
           } else {
-            templatesByTag[tag] = [reshapedTemplate];
+            templatesByTag[tag] = [reshapedTemplate.id];
           }
         });
+
+        return reshapedTemplate;
       })
       .sort((a, b) => compareDesc(a.creationDate, b.creationDate));
     dispatch({

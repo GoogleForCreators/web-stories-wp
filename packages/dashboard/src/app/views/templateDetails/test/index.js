@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { groupTemplatesByTag } from '../../../../testUtils';
-import { getRelatedTemplates } from '../utils';
+import { getRelatedTemplatesIds } from '../utils';
 
 const templates = [
   { id: 1, tags: ['beauty', 'fries'] },
@@ -29,17 +29,17 @@ const templates = [
 
 const templatesByType = groupTemplatesByTag(templates);
 
-describe('getRelatedTemplates', () => {
+describe('getRelatedTemplatesIds', () => {
   it.each`
     template        | result
-    ${templates[0]} | ${[templates[2]]}
-    ${templates[1]} | ${[templates[2]]}
-    ${templates[2]} | ${[templates[1], templates[0]]}
+    ${templates[0]} | ${[templates[2].id]}
+    ${templates[1]} | ${[templates[2].id]}
+    ${templates[2]} | ${[templates[1].id, templates[0].id]}
     ${templates[3]} | ${[]}
   `(
     'should return related templates for each template',
     ({ template, result }) => {
-      expect(getRelatedTemplates(template, templatesByType)).toStrictEqual(
+      expect(getRelatedTemplatesIds(template, templatesByType)).toStrictEqual(
         expect.arrayContaining(result)
       );
     }

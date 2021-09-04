@@ -18,10 +18,10 @@
  * Get templates related to the currently selected template.
  *
  * @param {Object} template The selected template.
- * @param {Object} taggedTemplatesDictionary Object of templates keyed by tag type.
- * @return {Array} Array of templates related to the selected template.
+ * @param {Object} taggedTemplatesDictionary Object of template ids keyed by tag type.
+ * @return {Array} Array of template ids related to the selected template.
  */
-export const getRelatedTemplates = (template, taggedTemplatesDictionary) => {
+export const getRelatedTemplatesIds = (template, taggedTemplatesDictionary) => {
   if (!taggedTemplatesDictionary || !template.tags) {
     return [];
   }
@@ -33,5 +33,5 @@ export const getRelatedTemplates = (template, taggedTemplatesDictionary) => {
   // Remove duplicates
   const uniqueRelatedTemplates = [...new Set(allRelatedTemplates)];
 
-  return uniqueRelatedTemplates.filter(({ id }) => id !== template.id);
+  return uniqueRelatedTemplates.filter((id) => id !== template.id);
 };

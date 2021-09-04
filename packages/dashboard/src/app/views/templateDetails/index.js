@@ -37,7 +37,7 @@ import useRouteHistory from '../../router/useRouteHistory';
 import { ERRORS } from '../../textContent';
 import Header from './header';
 import Content from './content';
-import { getRelatedTemplates } from './utils';
+import { getRelatedTemplatesIds } from './utils';
 
 function TemplateDetails() {
   const [template, setTemplate] = useState(null);
@@ -141,10 +141,19 @@ function TemplateDetails() {
       return;
     }
 
+    const allRelatedTemplates = getRelatedTemplatesIds(
+      template,
+      templatesByTag
+    );
+
+    const randomRelatedTemplates = allRelatedTemplates
+      .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids;
+      .slice(0, 6); // Get first 6 templates
+
     setRelatedTemplates(
-      getRelatedTemplates(template, templatesByTag).map((relatedTemplate) => ({
-        ...relatedTemplate,
-        centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
+      randomRelatedTemplates.map((id) => ({
+        ...templates[id],
+        centerTargetAction: resolveRelatedTemplateRoute(templates[id]),
       }))
     );
   }, [template, templates, templatesByTag, templatesOrderById, templateId]);

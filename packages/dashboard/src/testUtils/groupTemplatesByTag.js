@@ -24,9 +24,9 @@ export const groupTemplatesByTag = (templates) =>
   templates.reduce((result, template) => {
     template.tags.forEach((tag) => {
       if (result[tag]) {
-        result[tag].push(template);
+        result[tag].push(template.id);
       } else {
-        result[tag] = [template];
+        result[tag] = [template.id];
       }
     });
 

@@ -87,9 +87,6 @@ export default function ApiProviderFixture({ children }) {
         ),
       fetchExternalTemplateById: (id) =>
         fetchExternalTemplateById(id, templates),
-      fetchMyTemplates: jasmine.createSpy('fetchMyTemplates'),
-      fetchMyTemplateById: (id) => fetchExternalTemplateById(id, templates),
-      fetchSavedTemplates: jasmine.createSpy('fetchSavedTemplates'),
     }),
     [templates]
   );
