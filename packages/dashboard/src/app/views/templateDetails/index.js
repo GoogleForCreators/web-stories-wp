@@ -56,7 +56,6 @@ function TemplateDetails() {
     templates,
     templatesOrderById,
     createStoryFromTemplate,
-    fetchMyTemplateById,
     fetchExternalTemplates,
     fetchExternalTemplateById,
     fetchRelatedTemplates,
@@ -69,7 +68,6 @@ function TemplateDetails() {
         storyApi: { createStoryFromTemplate },
         templateApi: {
           fetchExternalTemplates,
-          fetchMyTemplateById,
           fetchExternalTemplateById,
           fetchRelatedTemplates,
         },
@@ -81,7 +79,6 @@ function TemplateDetails() {
       totalPages,
       createStoryFromTemplate,
       fetchExternalTemplates,
-      fetchMyTemplateById,
       fetchExternalTemplateById,
       fetchRelatedTemplates,
     })
@@ -104,12 +101,8 @@ function TemplateDetails() {
     }
 
     const id = parseInt(templateId);
-    const isLocalTemplate = isLocal && isLocal.toLowerCase() === 'true';
-    const templateFetchFn = isLocalTemplate
-      ? fetchMyTemplateById
-      : fetchExternalTemplateById;
 
-    templateFetchFn(id)
+    fetchExternalTemplateById(id)
       .then(setTemplate)
       .catch(() => {
         showSnackbar({
@@ -121,7 +114,6 @@ function TemplateDetails() {
     isLoading,
     fetchExternalTemplates,
     fetchExternalTemplateById,
-    fetchMyTemplateById,
     isLocal,
     templateId,
     templates,

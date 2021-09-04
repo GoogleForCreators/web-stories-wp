@@ -13,36 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { useFeature } from 'flagged';
+
 /**
  * Internal dependencies
  */
-import {
-  PublishPanel,
-  ExcerptPanel,
-  SlugPanel,
-  StatusPanel,
-  PageAdvancementPanel,
-  BackgroundAudioPanel,
-  TaxonomiesPanel,
-} from '../../panels/document';
+import useCanvas from '../../app/canvas/useCanvas';
 
-function DocumentInspector() {
-  const enabledTaxonomies = useFeature('enableTaxonomiesSupport');
+function VideoEditMenu() {
+  const { editingElementState } = useCanvas((state) => ({
+    editingElementState: state.state.editingElementState,
+  }));
+
+  if (!editingElementState?.isTrimming) {
+    return false;
+  }
+
   return (
-    <>
-      <StatusPanel />
-      <PublishPanel />
-      <ExcerptPanel />
-      <SlugPanel />
-      <PageAdvancementPanel />
-      <BackgroundAudioPanel />
-      {enabledTaxonomies ? <TaxonomiesPanel /> : null}
-    </>
+    <div style={{ border: '2px solid red', backgroundColor: 'hotpink' }}>
+      {'Dummy Edit Menu'}
+    </div>
   );
 }
 
-export default DocumentInspector;
+export default VideoEditMenu;

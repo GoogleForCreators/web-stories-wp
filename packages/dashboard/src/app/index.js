@@ -59,7 +59,6 @@ import {
   EditorSettingsView,
   ExploreTemplatesView,
   MyStoriesView,
-  SavedTemplatesView,
   TemplateDetailsView,
 } from './views';
 import useApi from './api/useApi';
@@ -144,9 +143,10 @@ const AppContent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fullPath, isRedirectComplete]);
 
-  const hideLeftRail =
-    matchPath(currentPath, NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL) ||
-    matchPath(currentPath, NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL);
+  const hideLeftRail = matchPath(
+    currentPath,
+    NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL
+  );
 
   useApiAlerts();
   const { clearSnackbar, removeSnack, placement, currentSnacks } =
@@ -178,15 +178,6 @@ const AppContent = () => {
           />
           <Route
             path={NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL}
-            component={<TemplateDetailsView />}
-          />
-          <Route
-            exact
-            path={APP_ROUTES.SAVED_TEMPLATES}
-            component={<SavedTemplatesView />}
-          />
-          <Route
-            path={NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL}
             component={<TemplateDetailsView />}
           />
           <Route
