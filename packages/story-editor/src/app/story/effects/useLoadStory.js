@@ -72,7 +72,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
         };
 
         const author = {
-          id: embedded?.author?.[0].id || o,
+          id: embedded?.author?.[0].id || 0,
           name: embedded?.author?.[0].name || '',
         };
 
