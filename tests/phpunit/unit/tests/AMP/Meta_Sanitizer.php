@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration\AMP;
+namespace Google\Web_Stories\Tests\Unit\AMP;
 
 use AMP_Tag_And_Attribute_Sanitizer;
 use AMP_Allowed_Tags_Generated;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use Google\Web_Stories\Tests\Integration\MarkupComparison;
-use Google\Web_Stories\Tests\Integration\ScriptHash;
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Unit\MarkupComparison;
+use Google\Web_Stories\Tests\Unit\ScriptHash;
+use Google\Web_Stories\Tests\Unit\TestCase;
+use Brain\Monkey;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Meta_Sanitizer
@@ -30,6 +31,18 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class Meta_Sanitizer extends TestCase {
 	use MarkupComparison;
 	use ScriptHash;
+
+	public function set_up() {
+		parent::set_up();
+
+		Monkey\Functions\stubs(
+			[
+				'wp_parse_url' => static function ( $url, $component = null ) {
+					return parse_url( $url, $component ); // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
+				},
+			]
+		);
+	}
 
 	/**
 	 * Test that the expected tag specs exist for the body.
@@ -152,8 +165,8 @@ class Meta_Sanitizer extends TestCase {
 			],
 
 			'Concatenate and reposition script hashes'    => [
-				'<!DOCTYPE html><html><head><meta name="amp-script-src" content="' . esc_attr( $script1_hash ) . '"><meta charset="utf-8"><meta name="amp-script-src" content="' . esc_attr( $script2_hash ) . '"><meta name="viewport" content="width=device-width"><meta name="amp-script-src" content="' . esc_attr( $script3_hash ) . '">' . $amp_boilerplate . '</head><body><meta name="amp-script-src" content="' . esc_attr( $script4_hash ) . '"></body></html>',
-				'<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta name="amp-script-src" content="' . esc_attr( $script1_hash ) . ' ' . esc_attr( $script2_hash ) . ' ' . esc_attr( $script3_hash ) . ' ' . esc_attr( $script4_hash ) . '">' . $amp_boilerplate . '</head><body></body></html>',
+				'<!DOCTYPE html><html><head><meta name="amp-script-src" content="' . $script1_hash . '"><meta charset="utf-8"><meta name="amp-script-src" content="' . $script2_hash . '"><meta name="viewport" content="width=device-width"><meta name="amp-script-src" content="' . $script3_hash . '">' . $amp_boilerplate . '</head><body><meta name="amp-script-src" content="' . $script4_hash . '"></body></html>',
+				'<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta name="amp-script-src" content="' . $script1_hash . ' ' . $script2_hash . ' ' . $script3_hash . ' ' . $script4_hash . '">' . $amp_boilerplate . '</head><body></body></html>',
 			],
 
 			'Remove legacy meta http-equiv=Content-Type'  => [

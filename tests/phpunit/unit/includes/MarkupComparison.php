@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-/**
- * Trait MarkupComparison.
- *
- * @package AmpProject\AmpWP
- */
-
-namespace Google\Web_Stories\Tests\Integration;
+namespace Google\Web_Stories\Tests\Unit;
 
 /**
  * Helper trait for comparing strings of HTML markup.
