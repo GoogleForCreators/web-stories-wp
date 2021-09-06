@@ -126,6 +126,24 @@ trait Post_Type {
 	}
 
 	/**
+	 * Get has_archive property of a post type object.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string $slug
+	 *
+	 * @return bool
+	 */
+	protected function get_post_type_has_archive( string $slug ) {
+		$post_type_obj = get_post_type_object( $slug );
+		if ( ! $post_type_obj instanceof WP_Post_Type ) {
+			return false;
+		}
+
+		return (bool) $post_type_obj->has_archive;
+	}
+
+	/**
 	 * Get rest controller on the post type slug.
 	 *
 	 * @since 1.7.0

@@ -34,6 +34,7 @@ use Google\Web_Stories\Story_Post_Type;
  * @package Google\Web_Stories\Traits
  */
 trait Theme_Support {
+	use Post_Type;
 	/**
 	 * Merges user defined arguments into defaults array.
 	 *
@@ -72,11 +73,7 @@ trait Theme_Support {
 		$support = get_theme_support( 'web-stories' );
 		$support = isset( $support[0] ) && is_array( $support[0] ) ? $support[0] : [];
 
-		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-		$has_archive      = true;
-		if ( $post_type_object ) {
-			$has_archive = $post_type_object->has_archive;
-		}
+		$has_archive = $this->get_post_type_has_archive( Story_Post_Type::POST_TYPE_SLUG );
 
 		$default_support = [
 			'customizer' => [

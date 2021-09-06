@@ -27,6 +27,7 @@ use WP_Widget;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Stories_Script_Data;
 
 /**
@@ -35,7 +36,7 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories extends WP_Widget {
-	use Stories_Script_Data;
+	use Stories_Script_Data, Post_Type;
 
 	const SCRIPT_HANDLE = 'web-stories-widget';
 
@@ -171,11 +172,7 @@ class Stories extends WP_Widget {
 		$orderby            = (string) $instance['orderby'];
 		$order              = (string) $instance['order'];
 
-		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-		$has_archive      = true;
-		if ( $post_type_object ) {
-			$has_archive = $post_type_object->has_archive;
-		}
+		$has_archive = $this->get_post_type_has_archive( Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->input(
 			[
