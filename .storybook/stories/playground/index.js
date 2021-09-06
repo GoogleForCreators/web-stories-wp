@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import App from '@web-stories-wp/story-editor';
+import StoryEditor from '@web-stories-wp/story-editor';
 
 export default {
   title: 'Playground/Stories Editor',
@@ -57,4 +57,4 @@ const config = {
   },
 };
 
-export const _default = () => <App config={config} />;
+export const _default = () => <StoryEditor config={config} />;
