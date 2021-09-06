@@ -78,6 +78,7 @@ function ColorPresetPanel({ isEditMode, handlePresetClick }) {
               handleClick={(preset) =>
                 handlePresetClick(preset, true /* isLocal */)
               }
+              data-testid="saved-story-colors"
               {...groupProps}
             />
           </GroupWrapper>
