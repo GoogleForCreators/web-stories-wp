@@ -132,18 +132,21 @@ function APIProvider({ children }) {
     [stories, getStoryById]
   );
 
+  // @todo Move to wp-story-editor along with PostLock component.
   actions.getStoryLockById = useCallback(
     (storyId) =>
       getStoryLockById ? getStoryLockById(storyId, stories) : undefined,
     [stories, getStoryLockById]
   );
 
+  // @todo Move to wp-story-editor along with PostLock component.
   actions.setStoryLockById = useCallback(
     (storyId) =>
       setStoryLockById ? setStoryLockById(storyId, stories) : undefined,
     [stories, setStoryLockById]
   );
 
+  // @todo Move to wp-story-editor along with PostLock component.
   actions.deleteStoryLockById = useCallback(
     (storyId, nonce) =>
       deleteStoryLockById
