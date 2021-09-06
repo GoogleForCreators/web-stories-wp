@@ -17,21 +17,24 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\Assets;
+use Google\Web_Stories\AMP_Story_Player_Assets as Assets;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP_Story_Player_Assets
  */
-class AMP_Story_Player_Assets extends Test_Case {
+class AMP_Story_Player_Assets extends TestCase {
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
-		$amp_story_player_assets->register();
+		$instance = new Assets();
+		$instance->register();
 
-		$this->assertTrue( wp_style_is( $amp_story_player_assets->get_handle(), 'registered' ) );
-		$this->assertTrue( wp_script_is( $amp_story_player_assets->get_handle(), 'registered' ) );
+		has_action( 'wp_default_styles', [ $instance, 'register_style' ] );
+		has_action( 'wp_default_scripts', [ $instance, 'register_script' ] );
+
+		$this->assertSame( 10, has_action( 'wp_default_styles', [ $instance, 'register_style' ] ) );
+		$this->assertSame( 10, has_action( 'wp_default_scripts', [ $instance, 'register_script' ] ) );
 	}
 }

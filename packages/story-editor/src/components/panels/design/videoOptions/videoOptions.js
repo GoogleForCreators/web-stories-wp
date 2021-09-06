@@ -77,7 +77,6 @@ const HelperText = styled(Text).attrs({
 `;
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
-  const isMuteVideoEnabled = useFeature('enableMuteVideo');
   const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const { isTranscodingEnabled } = useFFmpeg();
   const { muteExistingVideo } = useLocalMedia((state) => ({
@@ -94,8 +93,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
 
   const shouldDisplayMuteButton = useMemo(() => {
     return (
-      (isMuteVideoEnabled &&
-        isTranscodingEnabled &&
+      (isTranscodingEnabled &&
         !local &&
         !isMuted &&
         !isTranscoding &&
@@ -103,7 +101,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       isMuting
     );
   }, [
-    isMuteVideoEnabled,
     isTranscodingEnabled,
     local,
     isMuted,

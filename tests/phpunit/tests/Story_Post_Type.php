@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
  */
-class Story_Post_Type extends Test_Case {
+class Story_Post_Type extends TestCase {
 	use Capabilities_Setup;
 
 	/**
@@ -72,9 +72,6 @@ class Story_Post_Type extends Test_Case {
 	}
 
 	public function tearDown() {
-		$this->set_permalink_structure( '' );
-		$_SERVER['REQUEST_URI'] = '';
-
 		$this->remove_caps_from_roles();
 
 		parent::tearDown();

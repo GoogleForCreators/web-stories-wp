@@ -26,16 +26,16 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
+use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use Google\Web_Stories\REST_API\Stories_Controller;
-use WP_Post_Type;
-use WP_Rewrite;
-use WP_Query;
 use WP_Post;
+use WP_Site;
 
 /**
  * Class Story_Post_Type.
  */
-class Story_Post_Type extends Service_Base {
+class Story_Post_Type extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
 
 	/**
 	 * The slug of the stories post type.
@@ -162,6 +162,30 @@ class Story_Post_Type extends Service_Base {
 	}
 
 	/**
+	 * Act on site initialization.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being initialized.
+	 * @return void
+	 */
+	public function on_site_initialization( WP_Site $site ) {
+		$this->register();
+	}
+
+	/**
+	 * Act on plugin deactivation.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param bool $network_wide Whether the deactivation was done network-wide.
+	 * @return void
+	 */
+	public function on_plugin_deactivation( $network_wide ) {
+		unregister_post_type( self::POST_TYPE_SLUG );
+	}
+
+	/**
 	 * Base64 encoded svg icon.
 	 *
 	 * @since 1.0.0
@@ -178,7 +202,7 @@ class Story_Post_Type extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param array|mixed $fields Array of allowed revision fields.
-	 * @param array       $story Story post array.
+	 * @param array       $story  Story post array.
 	 *
 	 * @return array|mixed Array of allowed fields.
 	 */

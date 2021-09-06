@@ -18,12 +18,12 @@
 namespace Google\Web_Stories\Tests\Admin;
 
 use Google\Web_Stories\Tests\Capabilities_Setup;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Editor
  */
-class Editor extends Test_Case {
+class Editor extends TestCase {
 	use Capabilities_Setup;
 
 	/**
@@ -86,7 +86,6 @@ class Editor extends Test_Case {
 
 	public function tearDown() {
 		$this->set_permalink_structure( '' );
-		$_SERVER['REQUEST_URI'] = '';
 
 		delete_post_meta( self::$story_id, '_edit_lock' );
 
@@ -121,8 +120,6 @@ class Editor extends Test_Case {
 
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$editor->admin_enqueue_scripts( 'post.php' );
-
-		unset( $GLOBALS['current_screen'] );
 
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_script_is( 'fake_js_chunk', 'registered' ) );

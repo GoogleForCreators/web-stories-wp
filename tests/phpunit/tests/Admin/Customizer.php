@@ -20,14 +20,16 @@ namespace Google\Web_Stories\Tests\Admin;
 
 use Google\Web_Stories\Admin\Customizer as TheCustomizer;
 use Google\Web_Stories\Traits\Theme_Support;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use WP_Customize_Manager;
 use WP_Error;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Customizer
+ * @runInSeparateProcess
+ * @preserveGlobalState disabled
  */
-class Customizer extends Test_Case {
+class Customizer extends TestCase {
 	use Theme_Support;
 
 	/**
@@ -451,7 +453,7 @@ class Customizer extends Test_Case {
 
 		update_option( 'web_stories_customizer_settings', $options );
 
-		$this->factory->post->create(
+		self::factory()->post->create(
 			[
 				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 			]

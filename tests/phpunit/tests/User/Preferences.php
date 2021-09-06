@@ -17,13 +17,13 @@
 
 namespace Google\Web_Stories\Tests\User;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use WP_REST_Request;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\User\Preferences
  */
-class Preferences extends Test_Case {
+class Preferences extends TestCase {
 	/**
 	 * Admin user for test.
 	 *

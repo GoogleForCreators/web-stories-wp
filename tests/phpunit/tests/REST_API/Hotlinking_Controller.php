@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
+use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
 use Spy_REST_Server;
@@ -33,14 +34,16 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	protected static $subscriber;
 	protected static $editor;
 
-	const URL_404    = 'https://404.example.com/test.jpg';
-	const URL_500    = 'https://500.example.com/test.jpg';
-	const URL_SVG    = 'https://www.example.com/test.svg';
-	const URL_VALID  = 'http://www.example.com/test.jpg';
-	const URL_DOMAIN = 'http://www.google.com';
-	const URL_PATH   = '/test.jpg';
+	const URL_INVALID = 'https://https://invalid.commmm';
+	const URL_404     = 'https://example.com/404/test.jpg';
+	const URL_500     = 'https://example.com/500/test.jpg';
+	const URL_SVG     = 'https://example.com/test.svg';
+	const URL_VALID   = 'http://example.com/test.jpg';
+	const URL_DOMAIN  = 'http://google.com';
+	const URL_PATH    = '/test.jpg';
 
 	const REST_URL = '/web-stories/v1/hotlink';
+
 	/**
 	 * Count of the number of requests attempted.
 	 *
@@ -105,6 +108,10 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	public function mock_http_request( $preempt, $r, $url ) {
 		++ $this->request_count;
 
+		if ( false !== strpos( $url, self::URL_INVALID ) ) {
+			return $preempt;
+		}
+
 		if ( self::URL_VALID === $url ) {
 			return [
 				'headers'  => [
@@ -159,18 +166,6 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	}
 
 	/**
-	 * @covers ::get_collection_params
-	 */
-	public function test_get_collection_params() {
-		// Collection.
-		$request  = new WP_REST_Request( 'OPTIONS', self::REST_URL );
-		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
-		$this->assertSame( 'view', $data['endpoints'][0]['args']['context']['default'] );
-		$this->assertSame( [ 'view', 'embed', 'edit' ], $data['endpoints'][0]['args']['context']['enum'] );
-	}
-
-	/**
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url() {
@@ -203,7 +198,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	public function test_validate_url_path() {
 		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
 		$result     = $controller->validate_url( self::URL_PATH );
-		$this->assertErrorResponse( 'rest_invalid_url_host', $result, 400 );
+		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
 
 	/**
@@ -212,7 +207,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	public function test_validate_url_invalid() {
 		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
 		$result     = $controller->validate_url( '-1' );
-		$this->assertErrorResponse( 'rest_invalid_url_host', $result, 400 );
+		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
 
 	/**
@@ -221,7 +216,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	public function test_validate_url_invalid2() {
 		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
 		$result     = $controller->validate_url( 'wibble' );
-		$this->assertErrorResponse( 'rest_invalid_url_host', $result, 400 );
+		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
 
 	/**
@@ -264,6 +259,17 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 		$this->assertEquals( $data['code'], 'rest_forbidden' );
 	}
 
+	public function test_url_invalid_url() {
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, self::REST_URL );
+		$request->set_param( 'url', self::URL_INVALID );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertEquals( 0, $this->request_count );
+		$this->assertEquals( 400, $response->get_status() );
+		$this->assertEquals( 'rest_invalid_param', $data['code'] );
+	}
 
 	/**
 	 * @covers ::parse_url

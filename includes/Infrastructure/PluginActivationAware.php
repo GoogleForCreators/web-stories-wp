@@ -1,6 +1,6 @@
 <?php
 /**
- * Interface Deactivateable.
+ * Interface PluginActivationAware.
  *
  * @package   Google\Web_Stories
  * @copyright 2019 Alain Schlesser
@@ -18,26 +18,26 @@
 namespace Google\Web_Stories\Infrastructure;
 
 /**
- * Something that can be deactivated.
+ * Something that can be activated.
  *
  * By tagging a service with this interface, the system will automatically hook
- * it up to the WordPress deactivation hook.
+ * it up to the WordPress activation hook.
  *
  * This way, we can just add the simple interface marker and not worry about how
- * to wire up the code to reach that part during the static deactivation hook.
+ * to wire up the code to reach that part during the static activation hook.
  *
  * @since 1.6.0
  * @internal
  */
-interface Deactivateable {
+interface PluginActivationAware {
 
 	/**
-	 * Deactivate the service.
+	 * Act on plugin activation.
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param bool $network_wide Whether the deactivation was done network-wide.
+	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function deactivate( $network_wide );
+	public function on_plugin_activation( $network_wide );
 }
