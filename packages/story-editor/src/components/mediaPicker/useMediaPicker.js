@@ -197,7 +197,7 @@ export default function useMediaPicker({
       };
 
       // Create the media frame.
-      const fileFrame = window.wp.media({
+      const fileFrame = global.wp.media({
         button,
         states: [
           new wp.media.controller.Library({
@@ -208,10 +208,16 @@ export default function useMediaPicker({
             suggestedWidth: params.width,
             suggestedHeight: params.height,
           }),
-          new WordPressImageCropper({
-            imgSelectOptions: calculateImageSelectOptions,
-            control,
-          }),
+          // In a Karma context `wp.media.controller.Cropper.extend` will not exist yet
+          // during time of import, despite mocking, so WordPressImageCropper won't be
+          // a class with a proper constructor.
+          // This safeguard below prevents errors in tests while retaining full functionality
+          // in the actual app at runtime.
+          WordPressImageCropper &&
+            new WordPressImageCropper({
+              imgSelectOptions: calculateImageSelectOptions,
+              control,
+            }),
         ],
       });
 
