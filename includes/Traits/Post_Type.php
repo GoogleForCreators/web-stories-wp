@@ -130,7 +130,7 @@ trait Post_Type {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param string $slug
+	 * @param string $slug The post type slug.
 	 *
 	 * @return bool
 	 */
