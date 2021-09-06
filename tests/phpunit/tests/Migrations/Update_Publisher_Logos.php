@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Migrations;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class Update_Publisher_Logos
@@ -25,7 +25,7 @@ use Google\Web_Stories\Tests\Test_Case;
  * @coversDefaultClass \Google\Web_Stories\Migrations\Update_Publisher_Logos
  *
  */
-class Update_Publisher_Logos extends Test_Case {
+class Update_Publisher_Logos extends TestCase {
 	/**
 	 * @covers ::migrate
 	 */

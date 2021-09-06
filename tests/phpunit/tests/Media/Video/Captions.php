@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Media\Video;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Media\Video\Captions
  */
-class Captions extends Test_Case {
+class Captions extends TestCase {
 	/**
 	 * @covers ::filter_list_of_allowed_filetypes
 	 * @group ms-required

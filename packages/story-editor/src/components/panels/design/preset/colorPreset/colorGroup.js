@@ -51,6 +51,7 @@ function ColorGroup({
   handleClick,
   displayAdd,
   colorGap = 10,
+  ...rest
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
@@ -62,7 +63,7 @@ function ColorGroup({
   });
 
   return (
-    <Group ref={groupRef} colorGap={colorGap}>
+    <Group ref={groupRef} colorGap={colorGap} {...rest}>
       {colors.map((color, i) => (
         <ButtonWrapper key={JSON.stringify(color)}>
           <Color

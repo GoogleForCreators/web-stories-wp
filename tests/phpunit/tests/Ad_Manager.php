@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Ad_Manager
  */
-class Ad_Manager extends Test_Case {
+class Ad_Manager extends TestCase {
 
 	public function set_up() {
 		parent::set_up();

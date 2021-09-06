@@ -22,7 +22,7 @@ use Google\Web_Stories\Settings;
 /**
  * @coversDefaultClass \Google\Web_Stories\Analytics
  */
-class Analytics extends Test_Case {
+class Analytics extends TestCase {
 
 	/**
 	 * @covers ::register

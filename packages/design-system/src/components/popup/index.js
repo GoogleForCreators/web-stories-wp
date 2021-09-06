@@ -144,8 +144,8 @@ Popup.propTypes = {
   zIndex: PropTypes.number,
   spacing: PropTypes.object,
   isOpen: PropTypes.bool,
-  fillWidth: PropTypes.bool,
-  fillHeight: PropTypes.bool,
+  fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   onPositionUpdate: PropTypes.func,
 };
 

@@ -19,7 +19,7 @@ namespace Google\Web_Stories\Tests\Admin;
 
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Admin\ImgAreaSelect_Patch as Testee;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class ImgAreaSelect_Patch
@@ -28,7 +28,7 @@ use Google\Web_Stories\Tests\Test_Case;
  *
  * @coversDefaultClass \Google\Web_Stories\Admin\ImgAreaSelect_Patch
  */
-class ImgAreaSelect_Patch extends Test_Case {
+class ImgAreaSelect_Patch extends TestCase {
 	/**
 	 * @covers ::register
 	 */

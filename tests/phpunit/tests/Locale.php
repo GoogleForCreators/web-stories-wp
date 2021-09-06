@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Locale
  */
-class Locale extends Test_Case {
+class Locale extends TestCase {
 	/**
 	 * @covers ::get_locale_settings
 	 */

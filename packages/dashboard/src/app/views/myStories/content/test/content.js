@@ -82,19 +82,6 @@ const pageSize = {
   posterHeight: 300,
 };
 
-jest.mock('@web-stories-wp/story-editor', () => ({
-  __esModule: true,
-  ...jest.requireActual('@web-stories-wp/story-editor'),
-  PreviewPage: ({ page }) => <div data-testid={page.name} />, // eslint-disable-line react/prop-types,react/display-name
-}));
-
-jest.mock(
-  '../../../../../app/font/fontProvider.js',
-  () =>
-    ({ children }) =>
-      children
-);
-
 describe('Dashboard <Content />', function () {
   afterEach(() => {
     jest.resetAllMocks();
@@ -116,15 +103,13 @@ describe('Dashboard <Content />', function () {
               pageSize,
             }}
             storyActions={{
-              createTemplateFromStory: jest.fn,
               duplicateStory: jest.fn,
               trashStory: jest.fn,
               updateStory: jest.fn,
             }}
           />
         </LayoutProvider>
-      </SnackbarProvider>,
-      { features: { enableInProgressStoryActions: false } }
+      </SnackbarProvider>
     );
 
     expect(screen.getAllByTestId(/^story-grid-item/)).toHaveLength(
@@ -148,15 +133,13 @@ describe('Dashboard <Content />', function () {
               pageSize,
             }}
             storyActions={{
-              createTemplateFromStory: jest.fn,
               duplicateStory: jest.fn,
               trashStory: jest.fn,
               updateStory: jest.fn,
             }}
           />
         </LayoutProvider>
-      </SnackbarProvider>,
-      { features: { enableInProgressStoryActions: false } }
+      </SnackbarProvider>
     );
 
     expect(screen.getByText('Start telling Stories.')).toBeInTheDocument();
@@ -178,15 +161,13 @@ describe('Dashboard <Content />', function () {
               pageSize,
             }}
             storyActions={{
-              createTemplateFromStory: jest.fn,
               duplicateStory: jest.fn,
               trashStory: jest.fn,
               updateStory: jest.fn,
             }}
           />
         </LayoutProvider>
-      </SnackbarProvider>,
-      { features: { enableInProgressStoryActions: false } }
+      </SnackbarProvider>
     );
 
     expect(

@@ -26,10 +26,8 @@
 
 namespace Google\Web_Stories\Tests\Renderer\Stories;
 
-use Google\Web_Stories\Assets;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\AMP_Story_Player_Assets;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use Google\Web_Stories\Tests\Test_Renderer;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Renderer\Stories\Renderer as AbstractRenderer;
@@ -39,7 +37,7 @@ use Google\Web_Stories\Renderer\Stories\Renderer as AbstractRenderer;
  *
  * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Renderer
  */
-class Renderer extends Test_Case {
+class Renderer extends TestCase {
 
 	/**
 	 * Story post ID.

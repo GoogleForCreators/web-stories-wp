@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class PluginActionLinks
@@ -35,7 +35,7 @@ use Google\Web_Stories\Tests\Test_Case;
  * @coversDefaultClass \Google\Web_Stories\Admin\PluginActionLinks
  *
  */
-class PluginActionLinks extends Test_Case {
+class PluginActionLinks extends TestCase {
 	/**
 	 * @covers ::register
 	 */

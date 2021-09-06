@@ -13,48 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import styled from 'styled-components';
-
 /**
  * Internal dependencies
  */
-import * as Icons from '..';
+import TaxonomiesPanel from '../taxonomies';
 
-export default {
-  title: 'Stories Editor/Icons',
-  component: Icons,
-};
-
-const IconsList = styled.ul`
-  color: ${({ theme }) => theme.colors.opacity.overlayDark};
-  list-style-type: none;
-  li {
-    padding: 10px 0;
-  }
-  svg {
-    height: 1em;
-    width: 1em;
-    margin-right: 10px;
-  }
+const Taxonomies = styled(TaxonomiesPanel)`
+  background: ${({ theme }) => theme.colors.bg.primary};
 `;
 
+export default {
+  title: 'Stories Editor/Components/Taxonomies',
+  component: TaxonomiesPanel,
+};
+
 export const _default = () => {
-  return (
-    <IconsList>
-      {Object.keys(Icons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = Icons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
+  return <Taxonomies />;
 };

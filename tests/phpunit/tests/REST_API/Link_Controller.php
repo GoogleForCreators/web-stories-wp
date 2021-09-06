@@ -25,10 +25,10 @@ class Link_Controller extends Test_REST_TestCase {
 	protected static $subscriber;
 
 	const URL_INVALID          = 'https://https://invalid.commmm';
-	const URL_404              = 'https://404.example.com';
-	const URL_500              = 'https://500.example.com';
-	const URL_CHARACTERS       = 'https://characters.example.com';
-	const URL_EMPTY_DOCUMENT   = 'https://empty.example.com';
+	const URL_404              = 'https://example.com/404';
+	const URL_500              = 'https://example.com/500';
+	const URL_CHARACTERS       = 'https://example.com/characters';
+	const URL_EMPTY_DOCUMENT   = 'https://example.com/empty';
 	const URL_VALID_TITLE_ONLY = 'https://example.com';
 	const URL_VALID            = 'https://amp.dev';
 
@@ -182,10 +182,9 @@ class Link_Controller extends Test_REST_TestCase {
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_INVALID );
 		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
 
-		$this->assertEquals( 404, $response->get_status() );
-		$this->assertEquals( $data['code'], 'rest_invalid_url' );
+		$this->assertEquals( 0, $this->request_count );
+		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
 	}
 
 	public function test_url_returning_500() {
@@ -193,10 +192,8 @@ class Link_Controller extends Test_REST_TestCase {
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_500 );
 		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
 
-		$this->assertEquals( 404, $response->get_status() );
-		$this->assertEquals( $data['code'], 'rest_invalid_url' );
+		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
 	}
 
 	public function test_url_returning_404() {
@@ -222,11 +219,9 @@ class Link_Controller extends Test_REST_TestCase {
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', '' );
 		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
 
 		$this->assertEquals( 0, $this->request_count );
-		$this->assertEquals( 404, $response->get_status() );
-		$this->assertEquals( $data['code'], 'rest_invalid_url' );
+		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
 	}
 
 	public function test_empty_url() {
@@ -244,12 +239,11 @@ class Link_Controller extends Test_REST_TestCase {
 
 		// Subsequent requests is cached and so it should not cause a request.
 		rest_get_server()->dispatch( $request );
-		$this->assertEquals( 1, $this->request_count );
 
+		$this->assertEquals( 1, $this->request_count );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
-
 
 	public function test_characters_url() {
 		wp_set_current_user( self::$editor );

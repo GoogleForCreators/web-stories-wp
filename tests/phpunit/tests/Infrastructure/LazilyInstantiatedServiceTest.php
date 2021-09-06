@@ -5,10 +5,10 @@ namespace Google\Web_Stories\Tests\Infrastructure;
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\ServiceContainer\LazilyInstantiatedService;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use stdClass;
 
-final class LazilyInstantiatedServiceTest extends Test_Case {
+final class LazilyInstantiatedServiceTest extends TestCase {
 
 	public function test_it_can_be_instantiated() {
 		$callable     = static function () {};

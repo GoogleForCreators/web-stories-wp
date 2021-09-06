@@ -21,12 +21,12 @@ use Google\Web_Stories\Assets;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Story_Query;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Generic_Renderer
  */
-class Generic_Renderer extends Test_Case {
+class Generic_Renderer extends TestCase {
 
 	/**
 	 * Stories mock object.
@@ -78,6 +78,16 @@ class Generic_Renderer extends Test_Case {
 		$this->story_query->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
 	}
 
+	public function tear_down() {
+		wp_dequeue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+		wp_deregister_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+
+		wp_dequeue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+		wp_deregister_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+
+		parent::tear_down();
+	}
+
 	/**
 	 * @covers ::load_assets
 	 */
@@ -94,8 +104,8 @@ class Generic_Renderer extends Test_Case {
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
-		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
-		$this->assertTrue( wp_style_is( $amp_story_player_assets->get_handle() ) );
+		$this->assertTrue( wp_script_is( \Google\Web_Stories\Renderer\Stories\Renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_style_is( \Google\Web_Stories\Renderer\Stories\Renderer::STYLE_HANDLE, 'registered' ) );
 	}
 
 	/**
@@ -129,6 +139,6 @@ class Generic_Renderer extends Test_Case {
 		$this->assertStringContainsString( 'web-stories-list__story', $output );
 		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 
+		$this->assertTrue( wp_script_is( \Google\Web_Stories\Renderer\Stories\Renderer::LIGHTBOX_SCRIPT_HANDLE ) );
 	}
-
 }

@@ -324,7 +324,7 @@ Search.propTypes = {
   options: MENU_OPTIONS,
   placeholder: PropTypes.string,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
-  popupFillWidth: PropTypes.number,
+  popupFillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   popupZIndex: PropTypes.number,
   renderItem: PropTypes.object,
   selectedValue: PropTypes.shape({

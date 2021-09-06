@@ -112,7 +112,7 @@ function HotlinkModal({ isOpen, onClose }) {
 }
 
 HotlinkModal.propTypes = {
-  onClose: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
 };
 

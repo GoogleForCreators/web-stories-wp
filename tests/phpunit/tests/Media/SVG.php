@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Media;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Media\SVG
  */
-class SVG extends Test_Case {
+class SVG extends TestCase {
 
 	/**
 	 * @covers ::register

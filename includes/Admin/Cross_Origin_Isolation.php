@@ -179,11 +179,11 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $tag    The `<script>` tag for the enqueued script.
-	 * @param string $handle The script's registered handle.
-	 * @param string $src    The script's source URL.
+	 * @param string|mixed $tag The `<script>` tag for the enqueued script.
+	 * @param string       $handle    The script's registered handle.
+	 * @param string       $src       The script's source URL.
 	 *
-	 * @return string|mixed
+	 * @return string|mixed The filtered script tag.
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
 		return $this->add_attribute( $tag, 'src', $src );

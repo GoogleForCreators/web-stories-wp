@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Experiments
  */
-class Experiments extends Test_Case {
+class Experiments extends TestCase {
 
 	/**
 	 * @var int
@@ -234,9 +234,9 @@ class Experiments extends Test_Case {
 	 * @covers ::is_experiment_enabled
 	 */
 	public function test_is_experiment_enabled() {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'enableBookmarkActions' => true ], false );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'enableInProgressTemplateActions' => true ], false );
 		$experiments = new \Google\Web_Stories\Experiments();
-		$this->assertTrue( $experiments->is_experiment_enabled( 'enableBookmarkActions' ) );
+		$this->assertTrue( $experiments->is_experiment_enabled( 'enableInProgressTemplateActions' ) );
 	}
 
 	/**

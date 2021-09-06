@@ -357,11 +357,11 @@ function useMediaUploadQueue() {
           (item) => !['UPLOADED', 'CANCELLED', 'PENDING'].includes(item.state)
         ),
         pending: state.queue.filter((item) => item.state === 'PENDING'),
-        posterProcessed: state.queue.filter(
-          (item) => item.state === 'UPLOADED'
-        ),
+        uploaded: state.queue.filter((item) => item.state === 'UPLOADED'),
         failures: state.queue.filter((item) => item.state === 'CANCELLED'),
-        isUploading: state.queue.length !== 0,
+        isUploading: state.queue.some(
+          (item) => !['UPLOADED', 'CANCELLED', 'PENDING'].includes(item.state)
+        ),
         isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),
         isMuting: state.queue.some((item) => item.state === 'MUTING'),
       },

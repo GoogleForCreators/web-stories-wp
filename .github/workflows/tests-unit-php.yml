@@ -36,7 +36,7 @@ concurrency:
 
 jobs:
   unit-php:
-    name: 'PHP ${{ matrix.php }} - WP ${{ matrix.wp }}'
+    name: PHP ${{ matrix.php }} - WP ${{ matrix.wp }}${{ matrix.experimental && ' (experimental)' || '' }}${{ matrix.coverage && ' (with coverage)' || '' }}${{ matrix.random && ' (in random order)' || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     services:
@@ -52,7 +52,7 @@ jobs:
     continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
-        php: ['8.0', '7.0']
+        php: ['7.0', '8.0']
         wp: ['latest']
         coverage: [false]
         include:
@@ -63,7 +63,12 @@ jobs:
           - php: '7.0'
             wp: '5.5'
 
-          - php: '7.4'
+          - php: '8.0'
+            wp: 'latest'
+            random: true
+            experimental: true
+
+          - php: '8.0'
             wp: 'trunk'
             experimental: true
 
@@ -140,13 +145,19 @@ jobs:
         run: |
           npm run test:php
           npm run test:php:multisite
-        if: ${{ ! matrix.coverage }}
+        if: ${{ ! matrix.coverage && ! matrix.random }}
 
       - name: Run tests with coverage
         run: |
           npm run test:php -- --coverage-clover build/logs/php-coverage.xml
           npm run test:php -- --coverage-clover build/logs/php-coverage-multisite.xml -c phpunit-multisite.xml.dist
-        if: ${{ matrix.coverage }}
+        if: ${{ matrix.coverage && ! matrix.random }}
+
+      - name: Run tests in random order
+        run: |
+          npm run test:php -- --order-by random
+          npm run test:php:multisite -- --order-by random
+        if: ${{ matrix.random }}
 
       - name: Upload code coverage report
         uses: codecov/codecov-action@v2.0.3

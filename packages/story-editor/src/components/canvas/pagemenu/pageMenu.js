@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback } from '@web-stories-wp/react';
+import { memo, useCallback } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
@@ -181,4 +181,5 @@ function PageMenu() {
   );
 }
 
-export default PageMenu;
+// Don't rerender the page menu needlessly e.g. on element selection change.
+export default memo(PageMenu);

@@ -18,7 +18,7 @@
 namespace Google\Web_Stories\Tests\Renderer;
 
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class Single
@@ -27,7 +27,7 @@ use Google\Web_Stories\Tests\Test_Case;
  *
  * @coversDefaultClass \Google\Web_Stories\Renderer\Oembed
  */
-class Oembed extends Test_Case {
+class Oembed extends TestCase {
 
 	/**
 	 * Admin user for test.

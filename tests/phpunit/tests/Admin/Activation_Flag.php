@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Activation_Flag
  */
-class Activation_Flag extends Test_Case {
+class Activation_Flag extends TestCase {
 	/**
 	 * @covers ::register
 	 */

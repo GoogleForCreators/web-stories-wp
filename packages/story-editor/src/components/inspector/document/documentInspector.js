@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -24,9 +27,11 @@ import {
   StatusPanel,
   PageAdvancementPanel,
   BackgroundAudioPanel,
+  TaxonomiesPanel,
 } from '../../panels/document';
 
 function DocumentInspector() {
+  const enabledTaxonomies = useFeature('enableTaxonomiesSupport');
   return (
     <>
       <StatusPanel />
@@ -35,6 +40,7 @@ function DocumentInspector() {
       <SlugPanel />
       <PageAdvancementPanel />
       <BackgroundAudioPanel />
+      {enabledTaxonomies ? <TaxonomiesPanel /> : null}
     </>
   );
 }

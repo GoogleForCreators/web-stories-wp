@@ -20,12 +20,12 @@ namespace Google\Web_Stories\Tests\Integrations;
 use DOMDocument;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\AMP
  */
-class AMP extends Test_Case {
+class AMP extends TestCase {
 	/**
 	 * @covers ::register
 	 */
@@ -75,8 +75,6 @@ class AMP extends Test_Case {
 		$amp    = new \Google\Web_Stories\Integrations\AMP( new Experiments() );
 		$actual = $amp->filter_amp_options( $before );
 
-		unset( $GLOBALS['current_screen'] );
-
 		$this->assertEqualSets( $expected, $actual );
 	}
 
@@ -97,12 +95,10 @@ class AMP extends Test_Case {
 		$amp    = new \Google\Web_Stories\Integrations\AMP( new Experiments() );
 		$actual = $amp->filter_supportable_post_types( [] );
 
-		unset( $GLOBALS['current_screen'] );
-
 		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $actual );
 	}
 
-	public function data_test_filter_amp_to_amp_linking_element_excluded() {
+	public function data_test_filter_amp_to_amp_linking_element_excluded(): array {
 		$doc = new DOMDocument( '1.0', 'utf-8' );
 
 		$anchor        = $doc->createElement( 'a' );

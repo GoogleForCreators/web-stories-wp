@@ -46,7 +46,7 @@ final class SimpleServiceContainer
 	 *
 	 * @return Service Service that was requested.
 	 */
-	public function get( $id ) {
+	public function get( $id ): Service {
 		if ( ! $this->has( $id ) ) {
 			throw InvalidService::from_service_id( $id );
 		}
@@ -72,7 +72,7 @@ final class SimpleServiceContainer
 	 *
 	 * @return bool
 	 */
-	public function has( $id ) {
+	public function has( $id ): bool {
 		return $this->offsetExists( $id );
 	}
 

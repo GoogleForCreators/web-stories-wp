@@ -17,6 +17,8 @@
 
 namespace Google\Web_Stories\Tests;
 
+use Google\Web_Stories\Infrastructure\Injector\SimpleInjector;
+
 /**
  * Class Database_Upgrader
  *
@@ -24,32 +26,44 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\Database_Upgrader
  *
  */
-class Database_Upgrader extends Test_Case {
-
+class Database_Upgrader extends TestCase {
 	public function set_up() {
 		parent::set_up();
+
 		delete_option( \Google\Web_Stories\Database_Upgrader::OPTION );
 		delete_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION );
+	}
+	
+	/**
+	 * @covers ::register
+	 */
+	public function test_register() {
+		$object = new \Google\Web_Stories\Database_Upgrader( new SimpleInjector() );
+		$object->register();
+
+		$this->assertSame( 5, has_action( 'admin_init', [ $object, 'run_upgrades' ] ) );
 	}
 
 	/**
 	 * @covers ::register
 	 */
-	public function test_register_sets_missing_options() {
-		$object = new \Google\Web_Stories\Database_Upgrader();
+	public function test_register_does_not_set_missing_options_on_frontend() {
+		$object = new \Google\Web_Stories\Database_Upgrader( new SimpleInjector() );
 		$object->register();
-		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
-		$this->assertSame( '0.0.0', get_option( $object::PREVIOUS_OPTION ) );
+		$this->assertFalse( get_option( $object::OPTION ) );
+		$this->assertFalse( get_option( $object::PREVIOUS_OPTION ) );
 	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register_does_not_override_previous_version_if_there_was_no_update() {
+		$GLOBALS['current_screen'] = convert_to_screen( 'post' );
+
 		add_option( \Google\Web_Stories\Database_Upgrader::OPTION, WEBSTORIES_DB_VERSION );
 		add_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.2.3' );
 
-		$object = new \Google\Web_Stories\Database_Upgrader();
+		$object = new \Google\Web_Stories\Database_Upgrader( new SimpleInjector() );
 		$object->register();
 		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
 		$this->assertSame( '1.2.3', get_option( $object::PREVIOUS_OPTION ) );
@@ -57,8 +71,9 @@ class Database_Upgrader extends Test_Case {
 
 	/**
 	 * @group ms-required
+	 * @covers ::on_site_initialization
 	 */
-	public function test_register_sets_missing_options_multisite() {
+	public function test_sets_missing_options_on_site_initialization() {
 		$blog_id = (int) self::factory()->blog->create();
 
 		switch_to_blog( $blog_id );

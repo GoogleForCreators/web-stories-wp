@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Media;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Media\Image_Sizes
  */
-class Image_Sizes extends Test_Case {
+class Image_Sizes extends TestCase {
 
 	/**
 	 * @covers ::register

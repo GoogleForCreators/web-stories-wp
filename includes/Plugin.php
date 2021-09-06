@@ -146,26 +146,6 @@ class Plugin extends ServiceBasedPlugin {
 	}
 
 	/**
-	 * Get the bindings for the dependency injector.
-	 *
-	 * The bindings array contains a map of <interface> => <implementation>
-	 * mappings, both of which should be fully qualified class names (FQCNs).
-	 *
-	 * The <interface> does not need to be the actual PHP `interface` language
-	 * construct, it can be a `class` as well.
-	 *
-	 * Whenever you ask the injector to "make()" an <interface>, it will resolve
-	 * these mappings and return an instance of the final <class> it found.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return array<string> Associative array of fully qualified class names.
-	 */
-	protected function get_bindings(): array {
-		return [];
-	}
-
-	/**
 	 * Get the shared instances for the dependency injector.
 	 *
 	 * The shared instances array contains a list of FQCNs that are meant to be
@@ -189,7 +169,6 @@ class Plugin extends ServiceBasedPlugin {
 			Integrations\Site_Kit::class,
 			Analytics::class,
 			Decoder::class,
-			AMP_Story_Player_Assets::class,
 			Admin\Google_Fonts::class,
 		];
 	}
@@ -213,34 +192,5 @@ class Plugin extends ServiceBasedPlugin {
 				return Services::get( 'injector' );
 			},
 		];
-	}
-
-	/**
-	 * Backward compatibility, old style class stored all classes instances as class properties.
-	 * Use a magic getting to populate these class properties.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @param string $name property name.
-	 *
-	 * @return mixed
-	 */
-	public function __get( $name ) {
-		$services = $this->get_service_classes();
-		if ( isset( $services[ $name ] ) ) {
-			return $this->instantiate_service( $services[ $name ] );
-		}
-
-		if ( 'integrations' === $name ) {
-			return [
-				'webstories_core_themes_support' => $this->instantiate_service( $services['integrations.themes_support'] ),
-				'site-kit'                       => $this->instantiate_service( $services['integrations.sitekit'] ),
-				'nextgen_gallery'                => $this->instantiate_service( $services['integrations.nextgen_gallery'] ),
-				'jetpack'                        => $this->instantiate_service( $services['integrations.jetpack'] ),
-				'amp'                            => $this->instantiate_service( $services['integrations.amp'] ),
-			];
-		}
-
-		return $this->$name;
 	}
 }

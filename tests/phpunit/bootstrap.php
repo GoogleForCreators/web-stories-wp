@@ -56,3 +56,14 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 require $_tests_dir . '/includes/bootstrap.php';
 
 define( 'WEB_STORIES_TEST_DATA_DIR', __DIR__ . '/data' );
+
+/*
+ * The mocks in ServiceBasedPluginTest require the WP_Site class
+ * (as required by SiteInitializationAware::on_site_initialization)
+ * to exist so that it can be mocked.
+ * Since this class only exists on Multisite, it is stubbed here conditionally
+ * for the sole purpose of making the mocking work.
+ */
+if ( ! defined( 'WP_TESTS_MULTISITE' ) || ! WP_TESTS_MULTISITE ) {
+	require_once __DIR__ . '/stubs/WP_Site.php';
+}

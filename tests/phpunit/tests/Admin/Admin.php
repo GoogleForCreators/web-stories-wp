@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Admin
  */
-class Admin extends Test_Case {
+class Admin extends TestCase {
 
 	/**
 	 * Admin user for test.

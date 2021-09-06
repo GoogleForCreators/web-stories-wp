@@ -37,6 +37,18 @@ describe('Inserting WebM Video', () => {
     }
   });
 
+  async function openA11yPanel() {
+    // Open the Accessibility panel.
+    const a11yPanel = await page.$('button[aria-label="Accessibility"]');
+    const isCollapsed = await page.evaluate(
+      (button) => button.getAttribute('aria-expanded') == 'false',
+      a11yPanel
+    );
+    if (isCollapsed) {
+      a11yPanel.click();
+    }
+  }
+
   it('should insert a video via media modal', async () => {
     await createNewStory();
 
@@ -47,7 +59,8 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to appear.
+    // Wait for poster image (inside Accessibility panel) to appear.
+    await openA11yPanel();
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
   });
@@ -65,7 +78,8 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to appear.
+    // Wait for poster image (inside Accessibility panel) to appear.
+    await openA11yPanel();
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
   });
@@ -85,7 +99,8 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to appear.
+    // Wait for poster image (inside Accessibility panel) to appear.
+    await openA11yPanel();
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
 

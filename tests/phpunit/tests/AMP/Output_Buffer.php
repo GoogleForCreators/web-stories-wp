@@ -24,12 +24,12 @@ use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\AMP\Sanitization;
 use Google\Web_Stories\AMP\Optimization;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Output_Buffer
  */
-class Output_Buffer extends Test_Case {
+class Output_Buffer extends TestCase {
 	public function set_up() {
 		parent::set_up();
 

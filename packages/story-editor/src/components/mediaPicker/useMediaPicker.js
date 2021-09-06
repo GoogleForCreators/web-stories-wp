@@ -28,6 +28,7 @@ import { useSnackbar } from '@web-stories-wp/design-system';
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
 import { calculateImageSelectOptions, mustBeCropped } from './utils';
+import WordPressImageCropper from './WordPressImageCropper';
 
 const defaultCropParams = {
   height: 0,
@@ -207,10 +208,16 @@ export default function useMediaPicker({
             suggestedWidth: params.width,
             suggestedHeight: params.height,
           }),
-          new wp.media.controller.CustomizeImageCropper({
-            imgSelectOptions: calculateImageSelectOptions,
-            control,
-          }),
+          // In a Karma context `wp.media.controller.Cropper.extend` will not exist yet
+          // during time of import, despite mocking, so WordPressImageCropper won't be
+          // a class with a proper constructor.
+          // This safeguard below prevents errors in tests while retaining full functionality
+          // in the actual app at runtime.
+          WordPressImageCropper &&
+            new WordPressImageCropper({
+              imgSelectOptions: calculateImageSelectOptions,
+              control,
+            }),
         ],
       });
 

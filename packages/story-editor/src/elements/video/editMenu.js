@@ -1,17 +1,5 @@
-<?php
-/**
- * Test_Class class.
- *
- * Basic test case for use with a WP Integration test test suite.
- *
- * @package   Google\Web_Stories
- * @copyright 2021 Google LLC
- * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
- */
-
-/**
- * Copyright 2021 Google LLC
+/*
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,15 +14,25 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
-
-use Yoast\WPTestUtils\WPIntegration\TestCase;
-
 /**
- * Class Test_Case
- *
- * @package Google\Web_Stories\Tests
+ * Internal dependencies
  */
-abstract class Test_Case extends TestCase {
-	use Private_Access;
+import useCanvas from '../../app/canvas/useCanvas';
+
+function VideoEditMenu() {
+  const { editingElementState } = useCanvas((state) => ({
+    editingElementState: state.state.editingElementState,
+  }));
+
+  if (!editingElementState?.isTrimming) {
+    return false;
+  }
+
+  return (
+    <div style={{ border: '2px solid red', backgroundColor: 'hotpink' }}>
+      {'Dummy Edit Menu'}
+    </div>
+  );
 }
+
+export default VideoEditMenu;

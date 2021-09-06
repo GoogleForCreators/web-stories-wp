@@ -21,7 +21,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Discovery
  */
-class Discovery extends Test_Case {
+class Discovery extends TestCase {
 
 	/**
 	 * User ID.
@@ -89,14 +89,6 @@ class Discovery extends Test_Case {
 
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
-	}
-
-	public function tear_down() {
-		$this->set_permalink_structure( '' );
-		// Set by go_to();
-		$_SERVER['REQUEST_URI'] = '';
-
-		parent::tear_down();
 	}
 
 	/**

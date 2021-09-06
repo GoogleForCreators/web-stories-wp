@@ -21,7 +21,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Web_Stories_Compatibility
  */
-class Web_Stories_Compatibility extends Test_Case {
+class Web_Stories_Compatibility extends TestCase {
 
 	/**
 	 * @covers ::check_extensions

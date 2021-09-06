@@ -18,12 +18,15 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\Capabilities_Setup;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Dashboard
  */
-class Dashboard extends Test_Case {
+class Dashboard extends TestCase {
+	use Capabilities_Setup;
+
 	protected static $user_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {
@@ -32,6 +35,20 @@ class Dashboard extends Test_Case {
 				'role' => 'administrator',
 			]
 		);
+	}
+
+	public function set_up() {
+		parent::set_up();
+		$this->add_caps_to_roles();
+	}
+
+	public function tear_down() {
+		$this->remove_caps_from_roles();
+
+		wp_dequeue_script( \Google\Web_Stories\Admin\Dashboard::SCRIPT_HANDLE );
+		wp_dequeue_style( \Google\Web_Stories\Admin\Dashboard::SCRIPT_HANDLE );
+
+		parent::tear_down();
 	}
 
 	/**
@@ -74,6 +91,8 @@ class Dashboard extends Test_Case {
 	 * @covers ::get_hook_suffix
 	 */
 	public function test_add_menu_page_user_without_permission() {
+		$this->remove_caps_from_roles();
+
 		wp_set_current_user( self::$user_id );
 
 		$dashboard = new \Google\Web_Stories\Admin\Dashboard(

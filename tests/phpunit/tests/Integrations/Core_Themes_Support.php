@@ -18,12 +18,12 @@
 namespace Google\Web_Stories\Tests\Integrations;
 
 use Google\Web_Stories\Admin\Customizer;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Core_Themes_Support
  */
-class Core_Themes_Support extends Test_Case {
+class Core_Themes_Support extends TestCase {
 	/**
 	 * Stub for the conditional tests.
 	 *
