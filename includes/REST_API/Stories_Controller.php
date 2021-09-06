@@ -469,7 +469,7 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		if ( $publisher_logo_id ) {
 			$links['https://api.w.org/publisherlogo'] = [
-				'href'       => rest_url( sprintf( '%s/%s', $this->namespace, 'media/' ) . $publisher_logo_id ),
+				'href'       => rest_url( sprintf( '%s/%s/%s', $this->namespace, 'media', $publisher_logo_id ) ),
 				'embeddable' => true,
 			];
 		}
