@@ -28,6 +28,8 @@ import { useHistory } from '../../history';
 import { createPage } from '../../../elements';
 import getUniquePresets from '../../../utils/getUniquePresets';
 
+/* eslint-disable complexity */
+
 // When ID is set, load story from API.
 function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
   const {
@@ -185,5 +187,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
     clearHistory,
   ]);
 }
+
+/* eslint-enable complexity */
 
 export default useLoadStory;
