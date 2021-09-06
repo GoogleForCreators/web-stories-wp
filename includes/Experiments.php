@@ -354,7 +354,17 @@ class Experiments extends Service_Base {
 				'group'       => 'general',
 				'default'     => true,
 			],
-
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #8811
+			 * Creation date: 2021-09-06
+			 */
+			[
+				'name'        => 'disableArchive',
+				'label'       => __( 'Disable Archive', 'web-stories' ),
+				'description' => __( 'Disable custom post type archive for web stories.', 'web-stories' ),
+				'group'       => 'general',
+			],
 			/**
 			 * Author: @spacedmonkey
 			 * Issue: #8310
