@@ -23,7 +23,7 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import PostPublishDialog from '../postPublishDialog';
+import PostPublishDialog from '..';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Post-Publish',

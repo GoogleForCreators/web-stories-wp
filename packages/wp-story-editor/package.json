@@ -19,5 +19,8 @@
         "@web-stories-wp/tracking": "*",
         "flagged": "^2.0.1"
     },
-    "devDependencies": {}
+    "devDependencies": {
+	    "@storybook/addon-actions": "^6.3.6",
+	    "@storybook/addon-knobs": "^6.3.0"
+    }
 }
