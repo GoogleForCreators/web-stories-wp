@@ -132,6 +132,40 @@ describe('<ColorPicker /> and saved colors', () => {
     expect(getSwatchByLabel('Saved colors', SEMIGRAD_LABEL)).toBeEnabled();
   });
 
+  it('should not add the same custom color twice', async () => {
+    const { getCustomButton, getAddCustomButton, getEditableAlphaElement } =
+      arrange({
+        allowsSavedColors: true,
+        allowsOpacity: true,
+        color: TEAL_COLOR,
+      });
+
+    act(() => {
+      fireEvent.click(getCustomButton());
+    });
+
+    // Wait for the lazy-loaded module
+    await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
+
+    // Click to save the color that already exists.
+    fireEvent.click(getAddCustomButton());
+
+    // Verify the TEAL color that was already saved wasn't added a second time.
+    expect(mockUpdateStory).toHaveBeenCalledWith({
+      properties: {
+        globalStoryStyles: {
+          colors: [
+            TEAL_COLOR,
+            PINK_COLOR,
+            SEMIPINK_COLOR,
+            OPAQUEGRAD_COLOR,
+            SEMIGRAD_COLOR,
+          ],
+        },
+      },
+    });
+  });
+
   it('should invoke updateStory with the added color when adding one', async () => {
     const { getCustomButton, getAddCustomButton, getEditableAlphaElement } =
       arrange({

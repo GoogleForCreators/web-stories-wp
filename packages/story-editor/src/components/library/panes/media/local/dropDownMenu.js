@@ -22,21 +22,36 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef, useState, useMemo } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
-import { Menu, PLACEMENT, Popup } from '@web-stories-wp/design-system';
+import {
+  Button,
+  BUTTON_VARIANTS,
+  Icons,
+  Menu,
+  PLACEMENT,
+  Popup,
+} from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { More } from '../../../../button';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
-const MoreButton = styled(More)`
+const MoreButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
+  display: flex;
+  align-items: center;
   position: absolute;
   top: 8px;
   right: 8px;
   background: ${({ theme }) => theme.colors.bg.secondary};
   color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: 100%;
+  width: 28px;
+  height: 28px;
+`;
+
+const IconContainer = styled.div`
+  height: 32px;
+  width: auto;
 `;
 
 const DropDownContainer = styled.div`
@@ -125,8 +140,6 @@ function DropDownMenu({
           <>
             <MoreButton
               ref={moreButtonRef}
-              width="28"
-              height="28"
               onClick={onMenuOpen}
               aria-label={__('More', 'web-stories')}
               aria-pressed={isMenuOpen}
@@ -134,7 +147,11 @@ function DropDownMenu({
               aria-expanded={isMenuOpen}
               aria-owns={isMenuOpen ? listId : null}
               id={buttonId}
-            />
+            >
+              <IconContainer>
+                <Icons.Dots />
+              </IconContainer>
+            </MoreButton>
             <Popup
               anchor={moreButtonRef}
               placement={PLACEMENT.BOTTOM_START}
