@@ -21,12 +21,6 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef } from '@web-stories-wp/react';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 import getAllTemplates from '@web-stories-wp/templates';
-import { addQueryArgs } from '@web-stories-wp/design-system';
-
-/**
- * WordPress dependencies
- */
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies
@@ -34,27 +28,7 @@ import apiFetch from '@wordpress/api-fetch';
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
-import { flattenFormData, removeImagesFromPageTemplates } from './utils';
-
-// Important: Keep in sync with REST API preloading definition.
-const STORY_FIELDS = [
-  'id',
-  'title',
-  'status',
-  'slug',
-  'date',
-  'modified',
-  'excerpt',
-  'link',
-  'story_data',
-  'preview_link',
-  'edit_link',
-  'embed_post_link',
-  'publisher_logo_url',
-  'permalink_template',
-  'style_presets',
-  'password',
-].join(',');
+import { removeImagesFromPageTemplates } from './utils';
 
 function APIProvider({ children }) {
   const {
@@ -70,6 +44,29 @@ function APIProvider({ children }) {
       storyLocking,
       pageTemplates: customPageTemplates,
     },
+    apiCallbacks: {
+      getStoryById,
+      getStoryLockById,
+      setStoryLockById,
+      deleteStoryLockById,
+      getDemoStoryById,
+      saveStoryById,
+      autoSaveById,
+      getMedia,
+      uploadMedia,
+      updateMedia,
+      deleteMedia,
+      getLinkMetadata,
+      getAuthors,
+      getCurrentUser,
+      updateCurrentUser,
+      saveMetaBoxes,
+      getStatusCheck,
+      getCustomPageTemplates,
+      addPageTemplate,
+      deletePageTemplate,
+      getHotlinkInfo,
+    },
     encodeMarkup,
     cdnURL,
   } = useConfig();
@@ -78,68 +75,6 @@ function APIProvider({ children }) {
     base: [],
     withoutImages: [],
   });
-
-  const actions = {};
-
-  actions.getStoryById = useCallback(
-    (storyId) => {
-      const path = addQueryArgs(`${stories}${storyId}/`, {
-        context: 'edit',
-        _embed: 'wp:featuredmedia,wp:lockuser,author',
-        web_stories_demo: false,
-        _fields: STORY_FIELDS,
-      });
-
-      return apiFetch({ path });
-    },
-    [stories]
-  );
-
-  actions.getStoryLockById = useCallback(
-    (storyId) => {
-      const path = addQueryArgs(`${stories}${storyId}/lock`, {
-        _embed: 'author',
-      });
-
-      return apiFetch({ path });
-    },
-    [stories]
-  );
-
-  actions.setStoryLockById = useCallback(
-    (storyId) => {
-      const path = `${stories}${storyId}/lock`;
-
-      return apiFetch({ path, method: 'POST' });
-    },
-    [stories]
-  );
-
-  actions.deleteStoryLockById = useCallback(
-    (storyId, nonce) => {
-      const data = new window.FormData();
-      data.append('_wpnonce', nonce);
-
-      const url = addQueryArgs(storyLocking, { _method: 'DELETE' });
-
-      window.navigator.sendBeacon?.(url, data);
-    },
-    [storyLocking]
-  );
-
-  actions.getDemoStoryById = useCallback(
-    (storyId) => {
-      const path = addQueryArgs(`${stories}${storyId}/`, {
-        context: 'edit',
-        _embed: 'wp:featuredmedia,author',
-        web_stories_demo: true,
-        _fields: STORY_FIELDS,
-      });
-
-      return apiFetch({ path });
-    },
-    [stories]
-  );
 
   const getStorySaveData = useCallback(
     ({
@@ -175,270 +110,7 @@ function APIProvider({ children }) {
     [encodeMarkup]
   );
 
-  actions.saveStoryById = useCallback(
-    /**
-     * Fire REST API call to save story.
-     *
-     * @param {import('../../types').Story} story Story object.
-     * @return {Promise} Return apiFetch promise.
-     */
-    (story) => {
-      const { storyId } = story;
-
-      // Only require these fields in the response as used by useSaveStory()
-      // to reduce response size.
-      const path = addQueryArgs(`${stories}${storyId}/`, {
-        _fields: [
-          'status',
-          'slug',
-          'link',
-          'preview_link',
-          'edit_link',
-          'embed_post_link',
-        ].join(','),
-        _embed: 'wp:featuredmedia',
-      });
-
-      return apiFetch({
-        path,
-        data: getStorySaveData(story),
-        method: 'POST',
-      });
-    },
-    [stories, getStorySaveData]
-  );
-
-  actions.autoSaveById = useCallback(
-    /**
-     * Fire REST API call to save story.
-     *
-     * @param {import('../../types').Story} story Story object.
-     * @return {Promise} Return apiFetch promise.
-     */
-    (story) => {
-      const { storyId } = story;
-      return apiFetch({
-        path: `${stories}${storyId}/autosaves/`,
-        data: getStorySaveData(story),
-        method: 'POST',
-      });
-    },
-    [stories, getStorySaveData]
-  );
-
-  // Important: Keep in sync with REST API preloading definition.
-  actions.getMedia = useCallback(
-    ({ mediaType, searchTerm, pagingNum, cacheBust }) => {
-      let apiPath = media;
-      const perPage = 100;
-      apiPath = addQueryArgs(apiPath, {
-        context: 'edit',
-        per_page: perPage,
-        page: pagingNum,
-        _web_stories_envelope: true,
-        _fields: [
-          'id',
-          'date_gmt',
-          'media_details',
-          'mime_type',
-          'featured_media',
-          'featured_media_src',
-          'alt_text',
-          'source_url',
-          'media_source',
-          'is_muted',
-          // _web_stories_envelope will add these fields, we need them too.
-          'body',
-          'status',
-          'headers',
-        ].join(','),
-      });
-
-      if (mediaType) {
-        apiPath = addQueryArgs(apiPath, { media_type: mediaType });
-      }
-
-      if (searchTerm) {
-        apiPath = addQueryArgs(apiPath, { search: searchTerm });
-      }
-
-      // cacheBusting is due to the preloading logic preloading and caching
-      // some requests. (see preload_paths in Dashboard.php)
-      // Adding cache_bust forces the path to look different from the preloaded
-      // paths and hence skipping the cache. (cache_bust itself doesn't do
-      // anything)
-      if (cacheBust) {
-        apiPath = addQueryArgs(apiPath, { cache_bust: true });
-      }
-
-      return apiFetch({ path: apiPath }).then((response) => {
-        return { data: response.body, headers: response.headers };
-      });
-    },
-    [media]
-  );
-
-  /**
-   * Upload file to via REST API.
-   *
-   * @param {File}    file           Media File to Save.
-   * @param {?Object} additionalData Additional data to include in the request.
-   * @return {Promise} Media Object Promise.
-   */
-  actions.uploadMedia = useCallback(
-    (file, additionalData) => {
-      // Create upload payload
-      const data = new window.FormData();
-      data.append('file', file, file.name || file.type.replace('/', '.'));
-      Object.entries(additionalData).forEach(([key, value]) =>
-        flattenFormData(data, key, value)
-      );
-
-      // TODO: Intercept window.fetch here to support progressive upload indicator when uploading
-      return apiFetch({
-        path: media,
-        body: data,
-        method: 'POST',
-      });
-    },
-    [media]
-  );
-
-  /**
-   * Update Existing media.
-   *
-   * @param  {number} mediaId
-   * @param  {Object} data Object of properties to update on attachment.
-   * @return {Promise} Media Object Promise.
-   */
-  actions.updateMedia = useCallback(
-    (mediaId, data) => {
-      return apiFetch({
-        path: `${media}${mediaId}/`,
-        data,
-        method: 'POST',
-      });
-    },
-    [media]
-  );
-
-  /**
-   * Delete existing media.
-   *
-   * @param  {number} mediaId
-   * @return {Promise} Media Object Promise.
-   */
-  actions.deleteMedia = useCallback(
-    (mediaId) => {
-      // `apiFetch` by default turns `DELETE` requests into `POST` requests
-      // with `X-HTTP-Method-Override: DELETE` headers.
-      // However, some Web Application Firewall (WAF) solutions prevent this.
-      // `?_method=DELETE` is an alternative solution to override the request method.
-      // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
-      return apiFetch({
-        path: addQueryArgs(`${media}${mediaId}/`, { _method: 'DELETE' }),
-        data: { force: true },
-        method: 'POST',
-      });
-    },
-    [media]
-  );
-
-  actions.getHotlinkInfo = useCallback(
-    (url) => {
-      const path = addQueryArgs(hotlink, { url });
-      return apiFetch({
-        path,
-      });
-    },
-    [hotlink]
-  );
-
-  /**
-   * Gets metadata (title, favicon, etc.) from
-   * a provided URL.
-   *
-   * @param  {number} url
-   * @return {Promise} Result promise
-   */
-  actions.getLinkMetadata = useCallback(
-    (url) => {
-      const path = addQueryArgs(link, { url });
-      return apiFetch({
-        path,
-      });
-    },
-    [link]
-  );
-
-  actions.getAuthors = useCallback(
-    (search = null) => {
-      return apiFetch({
-        path: addQueryArgs(users, { per_page: '100', who: 'authors', search }),
-      });
-    },
-    [users]
-  );
-
-  actions.getCurrentUser = useCallback(() => {
-    return apiFetch({
-      path: currentUser,
-    });
-  }, [currentUser]);
-
-  actions.updateCurrentUser = useCallback(
-    (data) => {
-      return apiFetch({
-        path: currentUser,
-        method: 'POST',
-        data,
-      });
-    },
-    [currentUser]
-  );
-
-  // See https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L72-L126
-  actions.saveMetaBoxes = useCallback(
-    (story, formData) => {
-      // Additional data needed for backward compatibility.
-      // If we do not provide this data, the post will be overridden with the default values.
-      const additionalData = [
-        story.comment_status ? ['comment_status', story.comment_status] : false,
-        story.ping_status ? ['ping_status', story.ping_status] : false,
-        story.sticky ? ['sticky', story.sticky] : false,
-        story.author ? ['post_author', story.author.id] : false,
-      ].filter(Boolean);
-
-      Object.entries(additionalData).forEach(([key, value]) =>
-        flattenFormData(formData, key, value)
-      );
-
-      return apiFetch({
-        url: metaBoxes,
-        method: 'POST',
-        body: formData,
-        parse: false,
-      });
-    },
-    [metaBoxes]
-  );
-
-  /**
-   * Status check, submit html string.
-   *
-   * @param {string} HTML string.
-   * @return {Promise} Result promise
-   */
-  actions.getStatusCheck = useCallback(
-    (content) => {
-      return apiFetch({
-        path: statusCheck,
-        data: { content: encodeMarkup ? base64Encode(content) : content },
-        method: 'POST',
-      });
-    },
-    [statusCheck, encodeMarkup]
-  );
+  const actions = {};
 
   actions.getPageTemplates = useCallback(
     async ({ showImages = false } = {}) => {
@@ -455,59 +127,138 @@ function APIProvider({ children }) {
     [cdnURL]
   );
 
+  actions.getStoryById = useCallback(
+    (storyId) => (getStoryById ? getStoryById(storyId, stories) : undefined),
+    [stories, getStoryById]
+  );
+
+  actions.getStoryLockById = useCallback(
+    (storyId) =>
+      getStoryLockById ? getStoryLockById(storyId, stories) : undefined,
+    [stories, getStoryLockById]
+  );
+
+  actions.setStoryLockById = useCallback(
+    (storyId) =>
+      setStoryLockById ? setStoryLockById(storyId, stories) : undefined,
+    [stories, setStoryLockById]
+  );
+
+  actions.deleteStoryLockById = useCallback(
+    (storyId, nonce) =>
+      deleteStoryLockById
+        ? deleteStoryLockById(storyId, nonce, storyLocking)
+        : undefined,
+    [storyLocking, deleteStoryLockById]
+  );
+
+  actions.getDemoStoryById = useCallback(
+    (storyId) =>
+      getDemoStoryById ? getDemoStoryById(storyId, stories) : undefined,
+    [stories, getDemoStoryById]
+  );
+
+  actions.saveStoryById = useCallback(
+    (story) =>
+      saveStoryById
+        ? saveStoryById(story, stories, getStorySaveData)
+        : undefined,
+    [stories, getStorySaveData, saveStoryById]
+  );
+
+  actions.autoSaveById = useCallback(
+    (story) =>
+      autoSaveById ? autoSaveById(story, stories, getStorySaveData) : undefined,
+    [stories, getStorySaveData, autoSaveById]
+  );
+
+  actions.getMedia = useCallback(
+    ({ mediaType, searchTerm, pagingNum, cacheBust }) =>
+      getMedia
+        ? getMedia({ mediaType, searchTerm, pagingNum, cacheBust }, media)
+        : undefined,
+    [media, getMedia]
+  );
+
+  actions.uploadMedia = useCallback(
+    (file, additionalData) =>
+      uploadMedia ? uploadMedia(file, additionalData, media) : undefined,
+    [media, uploadMedia]
+  );
+
+  actions.updateMedia = useCallback(
+    (mediaId, data) =>
+      updateMedia ? updateMedia(mediaId, data, media) : undefined,
+    [media, updateMedia]
+  );
+
+  actions.deleteMedia = useCallback(
+    (mediaId) => (deleteMedia ? deleteMedia(mediaId, media) : undefined),
+    [media, deleteMedia]
+  );
+
+  actions.getHotlinkInfo = useCallback(
+    (url) => (getHotlinkInfo ? getHotlinkInfo(url, hotlink) : undefined),
+    [hotlink, getHotlinkInfo]
+  );
+
+  actions.getLinkMetadata = useCallback(
+    (url) => (getLinkMetadata ? getLinkMetadata(url, link) : undefined),
+    [link, getLinkMetadata]
+  );
+
+  actions.getAuthors = useCallback(
+    (search = null) => (getAuthors ? getAuthors(search, users) : undefined),
+    [users, getAuthors]
+  );
+
+  actions.getCurrentUser = useCallback(
+    () => (getCurrentUser ? getCurrentUser(currentUser) : undefined),
+    [currentUser, getCurrentUser]
+  );
+
+  actions.updateCurrentUser = useCallback(
+    (data) =>
+      updateCurrentUser ? updateCurrentUser(data, currentUser) : undefined,
+    [currentUser, updateCurrentUser]
+  );
+
+  // @todo Move to wp-story-editor along with meta-boxes.
+  actions.saveMetaBoxes = useCallback(
+    (story, formData) =>
+      saveMetaBoxes ? saveMetaBoxes(story, formData, metaBoxes) : undefined,
+    [metaBoxes, saveMetaBoxes]
+  );
+
+  // @todo Move to wp-story-editor along with StatusCheck component.
+  actions.getStatusCheck = useCallback(
+    (content) =>
+      getStatusCheck
+        ? getStatusCheck(content, statusCheck, encodeMarkup)
+        : undefined,
+    [statusCheck, encodeMarkup, getStatusCheck]
+  );
+
   actions.getCustomPageTemplates = useCallback(
-    (page = 1) => {
-      let apiPath = customPageTemplates;
-      const perPage = 100;
-      apiPath = addQueryArgs(apiPath, {
-        context: 'edit',
-        per_page: perPage,
-        page,
-        _web_stories_envelope: true,
-      });
-      return apiFetch({ path: apiPath }).then(({ headers, body }) => {
-        const totalPages = parseInt(headers['X-WP-TotalPages']);
-        const templates = body.map((template) => {
-          return { ...template['story_data'], templateId: template.id };
-        });
-        return {
-          templates,
-          hasMore: totalPages > page,
-        };
-      });
-    },
-    [customPageTemplates]
+    (page = 1) =>
+      getCustomPageTemplates
+        ? getCustomPageTemplates(page, customPageTemplates)
+        : undefined,
+    [customPageTemplates, getCustomPageTemplates]
   );
 
   actions.addPageTemplate = useCallback(
-    (page) => {
-      return apiFetch({
-        path: `${customPageTemplates}/`,
-        data: {
-          story_data: page,
-          status: 'publish',
-        },
-        method: 'POST',
-      }).then((response) => {
-        return { ...response['story_data'], templateId: response.id };
-      });
-    },
-    [customPageTemplates]
+    (page) =>
+      addPageTemplate ? addPageTemplate(page, customPageTemplates) : undefined,
+    [customPageTemplates, addPageTemplate]
   );
 
   actions.deletePageTemplate = useCallback(
-    (id) => {
-      // `?_method=DELETE` is an alternative solution to override the request method.
-      // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
-      return apiFetch({
-        path: addQueryArgs(`${customPageTemplates}${id}/`, {
-          _method: 'DELETE',
-        }),
-        data: { force: true },
-        method: 'POST',
-      });
-    },
-    [customPageTemplates]
+    (id) =>
+      deletePageTemplate
+        ? deletePageTemplate(id, customPageTemplates)
+        : undefined,
+    [customPageTemplates, deletePageTemplate]
   );
 
   return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
