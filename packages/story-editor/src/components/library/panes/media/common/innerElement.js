@@ -24,7 +24,7 @@ import {
   resourceList,
   ResourcePropTypes,
 } from '@web-stories-wp/media';
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -32,7 +32,6 @@ import useAverageColor from '../../../../../elements/media/useAverageColor';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
-import { Muted } from '../../../../../icons';
 
 const styledTiles = css`
   width: 100%;
@@ -216,7 +215,7 @@ function InnerElement({
         )}
         {type === ContentType.VIDEO && showVideoDetail && isMuted && (
           <MuteWrapper>
-            <Muted />
+            <Icons.Muted />
           </MuteWrapper>
         )}
       </>

@@ -22,13 +22,13 @@ import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import {
+  Icons,
   LockToggle as DefaultLockToggle,
   NumericInput,
 } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { TurningLine } from '../../../../icons';
 import clamp from '../../../../utils/clamp';
 import { Row as DefaultRow, usePresubmitHandler } from '../../../form';
 import {
@@ -201,7 +201,7 @@ function PaddingControls({
         />
         {!lockPadding && (
           <IconWrapper reverse>
-            <TurningLine />
+            <Icons.TurningLine />
           </IconWrapper>
         )}
       </Row>
@@ -225,7 +225,7 @@ function PaddingControls({
             containerStyleOverride={inputContainerStyleOverride}
           />
           <IconWrapper>
-            <TurningLine />
+            <Icons.TurningLine />
           </IconWrapper>
         </Row>
       )}
