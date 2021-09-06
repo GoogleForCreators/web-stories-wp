@@ -21,13 +21,13 @@ use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use WP_Post;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Renderer\Story\HTML
  */
-class HTML extends Test_Case {
+class HTML extends TestCase {
 
 	public function setUp() {
 		parent::setUp();
@@ -120,7 +120,6 @@ class HTML extends Test_Case {
 	 * @covers ::replace_url_scheme
 	 */
 	public function test_replace_url_scheme() {
-		unset( $_SERVER['HTTPS'] );
 		$_SERVER['HTTPS'] = 'on';
 
 		$link = get_home_url( null, 'web-storires/test' );
@@ -133,7 +132,6 @@ class HTML extends Test_Case {
 
 		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
 		$this->assertEquals( $result, $link_https );
-		unset( $_SERVER['HTTPS'] );
 	}
 
 
@@ -141,7 +139,6 @@ class HTML extends Test_Case {
 	 * @covers ::replace_url_scheme
 	 */
 	public function test_replace_url_scheme_different_host() {
-		unset( $_SERVER['HTTPS'] );
 		$_SERVER['HTTPS'] = 'on';
 		$link             = 'https://www.google.com';
 
@@ -150,7 +147,6 @@ class HTML extends Test_Case {
 
 		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
 		$this->assertEquals( $result, $link );
-		unset( $_SERVER['HTTPS'] );
 	}
 
 	/**

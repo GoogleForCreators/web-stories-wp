@@ -17,13 +17,13 @@
 
 namespace Google\Web_Stories\Tests\Media\Video;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use WP_REST_Request;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Media\Video\Poster
  */
-class Poster extends Test_Case {
+class Poster extends TestCase {
 	/**
 	 * @covers ::register
 	 */

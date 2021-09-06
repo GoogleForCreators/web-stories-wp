@@ -17,14 +17,14 @@
 
 namespace Google\Web_Stories\Tests\Media;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use WP_Query;
 use WP_REST_Request;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Media\Media_Source_Taxonomy
  */
-class Media_Source_Taxonomy extends Test_Case {
+class Media_Source_Taxonomy extends TestCase {
 
 	/**
 	 * @covers ::register
@@ -239,8 +239,6 @@ class Media_Source_Taxonomy extends Test_Case {
 		$media->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
-		unset( $GLOBALS['current_screen'] );
-
 		$this->assertSame( $expected, $actual );
 	}
 
@@ -257,8 +255,6 @@ class Media_Source_Taxonomy extends Test_Case {
 		$media = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
 		$media->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
-
-		unset( $GLOBALS['current_screen'], $GLOBALS['wp_the_query'] );
 
 		$this->assertSame( $expected, $actual );
 	}
@@ -303,8 +299,6 @@ class Media_Source_Taxonomy extends Test_Case {
 		$media = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
 		$media->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
-
-		unset( $GLOBALS['current_screen'], $GLOBALS['wp_the_query'] );
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}

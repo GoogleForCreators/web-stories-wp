@@ -50,23 +50,14 @@ abstract class Embed_Base extends Service_Base {
 	protected $assets;
 
 	/**
-	 * AMP_Story_Player_Assets instance.
-	 *
-	 * @var AMP_Story_Player_Assets AMP_Story_Player_Assets instance.
-	 */
-	protected $amp_story_player_assets;
-
-	/**
 	 * Embed Base constructor.
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param Assets                  $assets            Assets instance.
-	 * @param AMP_Story_Player_Assets $amp_story_player_assets AMP_Story_Player_Assets instance.
+	 * @param Assets $assets            Assets instance.
 	 */
-	public function __construct( Assets $assets, AMP_Story_Player_Assets $amp_story_player_assets ) {
-		$this->assets                  = $assets;
-		$this->amp_story_player_assets = $amp_story_player_assets;
+	public function __construct( Assets $assets ) {
+		$this->assets = $assets;
 	}
 
 	/**
@@ -189,7 +180,7 @@ abstract class Embed_Base extends Service_Base {
 		if ( is_feed() ) {
 			$renderer = new Image( $story );
 		} else {
-			$renderer = new Embed( $story, $this->assets, $this->amp_story_player_assets );
+			$renderer = new Embed( $story, $this->assets );
 		}
 
 		return $renderer->render( $attributes );

@@ -19,12 +19,12 @@ namespace Google\Web_Stories\Tests\Renderer\Stories;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Query;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Carousel_Renderer
  */
-class Carousel_Renderer extends Test_Case {
+class Carousel_Renderer extends TestCase {
 
 	/**
 	 * Stories mock object.
@@ -96,6 +96,8 @@ class Carousel_Renderer extends Test_Case {
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Carousel_Renderer( $this->story_query );
 		$renderer->init();
 
+		$this->assertTrue( wp_style_is( $renderer::STYLE_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_script_is( $renderer::LIGHTBOX_SCRIPT_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_script_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_style_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
 	}
