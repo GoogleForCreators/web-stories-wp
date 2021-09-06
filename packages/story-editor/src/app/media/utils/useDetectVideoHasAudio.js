@@ -19,7 +19,6 @@
  */
 import { useCallback } from '@web-stories-wp/react';
 import { hasVideoGotAudio } from '@web-stories-wp/media';
-import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -44,8 +43,6 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
     [updateElementsByResourceId]
   );
 
-  const isMuteVideoEnabled = useFeature('enableMuteVideo');
-
   const updateVideoIsMuted = useCallback(
     /**
      *
@@ -54,7 +51,7 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
      * @return {Promise<void>}
      */
     async (id, src) => {
-      if (!isMuteVideoEnabled || !hasUploadMediaAction) {
+      if (!hasUploadMediaAction) {
         return;
       }
       try {
@@ -81,13 +78,7 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
         // Do nothing for now.
       }
     },
-    [
-      setProperties,
-      updateMedia,
-      updateMediaElement,
-      isMuteVideoEnabled,
-      hasUploadMediaAction,
-    ]
+    [setProperties, updateMedia, updateMediaElement, hasUploadMediaAction]
   );
 
   return {

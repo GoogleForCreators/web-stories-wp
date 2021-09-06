@@ -17,14 +17,14 @@
 
 namespace Google\Web_Stories\Tests\Migrations;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class Add_Media_Source_Video_Optimization
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Video_Optimization
  */
-class Add_Media_Source_Video_Optimization extends Test_Case {
+class Add_Media_Source_Video_Optimization extends TestCase {
 	/**
 	 * @covers ::migrate
 	 * @covers ::get_term

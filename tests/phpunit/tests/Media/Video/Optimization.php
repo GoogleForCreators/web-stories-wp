@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Media\Video;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Media\Video\Optimization
  */
-class Optimization extends Test_Case {
+class Optimization extends TestCase {
 	/**
 	 * @covers ::register
 	 */

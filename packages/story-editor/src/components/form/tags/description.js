@@ -1,16 +1,4 @@
-<?php
-/**
- * Test_Class class.
- *
- * Basic test case for use with a WP Integration test test suite.
- *
- * @package   Google\Web_Stories
- * @copyright 2021 Google LLC
- * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
- */
-
-/**
+/*
  * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-namespace Google\Web_Stories\Tests;
-
-use Yoast\WPTestUtils\WPIntegration\TestCase;
-
 /**
- * Class Test_Case
- *
- * @package Google\Web_Stories\Tests
+ * External dependencies
  */
-abstract class Test_Case extends TestCase {
-	use Private_Access;
-}
+import styled from 'styled-components';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+
+export default styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;

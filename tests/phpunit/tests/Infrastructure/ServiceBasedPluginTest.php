@@ -8,9 +8,12 @@ use Google\Web_Stories\Infrastructure\ServiceContainer;
 use Google\Web_Stories\Infrastructure\ServiceContainer\SimpleServiceContainer;
 use Google\Web_Stories\Tests\Fixture\DummyService;
 use Google\Web_Stories\Tests\Fixture\DummyServiceBasedPlugin;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
-final class ServiceBasedPluginTest extends Test_Case {
+/**
+ * @coversDefaultClass \Google\Web_Stories\Infrastructure\ServiceBasedPlugin
+ */
+final class ServiceBasedPluginTest extends TestCase {
 
 	public function test_it_can_be_instantiated() {
 		$plugin = $this->createMock( ServiceBasedPlugin::class );
@@ -47,11 +50,11 @@ final class ServiceBasedPluginTest extends Test_Case {
 			->setMethodsExcept( [ 'register', 'register_services' ] )
 			->getMock();
 
-		$this->assertEquals( 0, count( $container ) );
+		$this->assertCount( 0, $container );
 
 		$plugin->register();
 
-		$this->assertEquals( 1, count( $container ) );
+		$this->assertCount( 1, $container );
 		$this->assertTrue( $container->has( 'injector' ) );
 		$this->assertInstanceof( Injector::class, $container->get( 'injector' ) );
 	}
@@ -71,11 +74,11 @@ final class ServiceBasedPluginTest extends Test_Case {
 			)
 			->getMock();
 
-		$this->assertEquals( 0, count( $container ) );
+		$this->assertCount( 0, $container );
 
 		$plugin->register();
 
-		$this->assertEquals( 3, count( $container ) );
+		$this->assertCount( 3, $container );
 		$this->assertTrue( $container->has( 'service_a' ) );
 		$this->assertInstanceof( DummyService::class, $container->get( 'service_a' ) );
 		$this->assertTrue( $container->has( 'service_b' ) );
@@ -107,7 +110,7 @@ final class ServiceBasedPluginTest extends Test_Case {
 
 		$plugin->register();
 
-		$this->assertEquals( 2, count( $container ) );
+		$this->assertCount( 2, $container );
 		$this->assertTrue( $container->has( 'filtered_service' ) );
 		$this->assertInstanceof( DummyService::class, $container->get( 'filtered_service' ) );
 		$this->assertfalse( $container->has( 'service_a' ) );
@@ -142,7 +145,7 @@ final class ServiceBasedPluginTest extends Test_Case {
 
 		$plugin->register();
 
-		$this->assertEquals( 4, count( $container ) );
+		$this->assertCount( 4, $container );
 		$this->assertTrue( $container->has( 'service_a' ) );
 		$this->assertInstanceof( DummyService::class, $container->get( 'service_a' ) );
 		$this->assertTrue( $container->has( 'service_b' ) );
@@ -168,7 +171,7 @@ final class ServiceBasedPluginTest extends Test_Case {
 
 		$plugin->register();
 
-		$this->assertEquals( 2, count( $container ) );
+		$this->assertCount( 2, $container );
 		$this->assertTrue( $container->has( 'dummy_service' ) );
 		$this->assertInstanceof( DummyService::class, $container->get( 'dummy_service' ) );
 	}
@@ -192,7 +195,7 @@ final class ServiceBasedPluginTest extends Test_Case {
 
 		$plugin->register();
 
-		$this->assertEquals( 1, count( $container ) );
+		$this->assertCount( 1, $container );
 		$this->assertFalse( $container->has( 'dummy_service' ) );
 	}
 
@@ -219,7 +222,7 @@ final class ServiceBasedPluginTest extends Test_Case {
 
 		$plugin->register();
 
-		$this->assertEquals( 3, count( $container ) );
+		$this->assertCount( 3, $container );
 		$this->assertTrue( $container->has( 'service_a' ) );
 		$this->assertInstanceof( DummyService::class, $container->get( 'service_a' ) );
 		$this->assertTrue( $container->has( 'service_b' ) );
@@ -249,7 +252,7 @@ final class ServiceBasedPluginTest extends Test_Case {
 
 		$plugin->register();
 
-		$this->assertEquals( 3, count( $container ) );
+		$this->assertCount( 3, $container );
 		$this->assertTrue( $container->has( 'service_a' ) );
 		$this->assertInstanceof( DummyService::class, $container->get( 'service_a' ) );
 		$this->assertTrue( $container->has( 'service_b' ) );

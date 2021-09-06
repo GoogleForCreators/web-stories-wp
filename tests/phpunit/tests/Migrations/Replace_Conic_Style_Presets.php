@@ -17,14 +17,14 @@
 
 namespace Google\Web_Stories\Tests\Migrations;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class Replace_Conic_Style_Presets
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Replace_Conic_Style_Presets
  */
-class Replace_Conic_Style_Presets extends Test_Case {
+class Replace_Conic_Style_Presets extends TestCase {
 	/**
 	 * @covers ::migrate
 	 */

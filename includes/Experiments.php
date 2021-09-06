@@ -366,19 +366,6 @@ class Experiments extends Service_Base {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @spacedmonkey
-			 * Issue: #8310
-			 * Creation date: 2021-07-15
-			 */
-			[
-				'name'        => 'enableMuteVideo',
-				'label'       => __( 'Mute Videos', 'web-stories' ),
-				'description' => __( 'Allow videos to be muted in the editor.', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
 			 * Author: @miina
 			 * Issue #471
 			 * Creation date: 2021-08-10

@@ -28,12 +28,12 @@ namespace Google\Web_Stories\Tests\Shortcode;
 
 use Google\Web_Stories\Shortcode\Stories_Shortcode as Testee;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Shortcode\Stories_Shortcode
  */
-class Stories_Shortcode extends Test_Case {
+class Stories_Shortcode extends TestCase {
 	/**
 	 * Story ID.
 	 *
@@ -78,7 +78,7 @@ class Stories_Shortcode extends Test_Case {
 			]
 		);
 
-		$this->assertTrue( false !== strpos( $actual, 'is-view-type-carousel' ) );
+		$this->assertNotSame( false, strpos( $actual, 'is-view-type-carousel' ) );
 	}
 
 	/**
@@ -94,7 +94,7 @@ class Stories_Shortcode extends Test_Case {
 			]
 		);
 
-		$this->assertTrue( false !== strpos( $actual, 'is-view-type-circles' ) );
+		$this->assertNotSame( false, strpos( $actual, 'is-view-type-circles' ) );
 	}
 
 	/**

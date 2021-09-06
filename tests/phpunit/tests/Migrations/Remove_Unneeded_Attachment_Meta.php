@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Migrations;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class Remove_Unneeded_Attachment_Meta
@@ -25,7 +25,7 @@ use Google\Web_Stories\Tests\Test_Case;
  * @coversDefaultClass \Google\Web_Stories\Migrations\Remove_Unneeded_Attachment_Meta
 *
  */
-class Remove_Unneeded_Attachment_Meta extends Test_Case {
+class Remove_Unneeded_Attachment_Meta extends TestCase {
 	/**
 	 * @covers ::migrate
 	 */

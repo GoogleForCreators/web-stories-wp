@@ -307,11 +307,15 @@ class Stories_Controller extends Test_REST_TestCase {
 		$request     = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
+
+		$post               = get_post( $story );
+		list ( $permalink ) = get_sample_permalink( $post->ID, $post->post_title, '' );
+		$permalink          = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
+
+		$data = $response->get_data();
 		$this->assertArrayHasKey( 'preview_link', $data );
-		$story_object = get_post( $story );
-		$slug         = $story_object->post_name;
-		$this->assertContains( $slug, $data['preview_link'] );
+		$this->assertNotEmpty( $data['preview_link'] );
+		$this->assertSame( $permalink, $data['preview_link'] );
 	}
 
 	/**

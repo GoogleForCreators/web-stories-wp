@@ -17,14 +17,14 @@
 
 namespace Google\Web_Stories\Tests\Migrations;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class Add_Poster_Generation_Media_Source
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source
  */
-class Add_Poster_Generation_Media_Source extends Test_Case {
+class Add_Poster_Generation_Media_Source extends TestCase {
 	/**
 	 * @covers ::migrate
 	 * @covers \Google\Web_Stories\Migrations\Migration_Meta_To_Term::migrate

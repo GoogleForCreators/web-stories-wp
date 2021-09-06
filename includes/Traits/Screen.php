@@ -62,7 +62,7 @@ trait Screen {
 	 *
 	 * @return bool
 	 */
-	protected function is_edit_screen( $screen = null ) {
+	protected function is_edit_screen( $screen = null ): bool {
 		if ( null === $screen ) {
 			$screen = $this->get_current_screen();
 		}
@@ -87,7 +87,7 @@ trait Screen {
 	 *
 	 * @return bool
 	 */
-	protected function is_block_editor( $screen = null ) {
+	protected function is_block_editor( $screen = null ): bool {
 		if ( null === $screen ) {
 			$screen = $this->get_current_screen();
 		}

@@ -45,6 +45,9 @@ global.wp.media.controller = {
       },
     },
   },
+  Cropper: {
+    extend: jest.fn(),
+  },
 };
 
 global.IntersectionObserver = class IntersectionObserver {
