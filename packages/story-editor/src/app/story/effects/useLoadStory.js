@@ -71,59 +71,32 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           ),
         };
 
-        let author = {
-          id: 0,
-          name: '',
+        const author = {
+          id: embedded?.author?.[0].id || o,
+          name: embedded?.author?.[0].name || '',
         };
 
-        if ('author' in embedded) {
-          author = {
-            id: embedded.author[0].id,
-            name: embedded.author[0].name,
-          };
-        }
-
-        let featuredMedia = {
-          id: 0,
-          height: 0,
-          width: 0,
-          url: '',
+        const lockUser = {
+          id: embedded?.['wp:lockuser']?.[0].id || 0,
+          name: embedded?.['wp:lockuser']?.[0].name || '',
+          avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
         };
 
-        let lockUser = null;
-
-        if ('wp:lockuser' in embedded) {
-          lockUser = {
-            id: embedded['wp:lockuser'][0].id,
-            name: embedded['wp:lockuser'][0].name,
-            avatar: embedded['wp:lockuser'][0].avatar_urls?.['96'],
-          };
-        }
-
-        if ('wp:featuredmedia' in embedded) {
-          featuredMedia = {
-            id: embedded['wp:featuredmedia'][0].id,
-            height: embedded['wp:featuredmedia'][0].media_details?.height,
-            width: embedded['wp:featuredmedia'][0].media_details?.width,
-            url: embedded['wp:featuredmedia'][0].source_url,
-          };
-        }
-
-        let publisherLogo = {
-          id: 0,
-          height: 0,
-          width: 0,
-          url: '',
+        const featuredMedia = {
+          id: embedded?.['wp:featuredmedia']?.[0].id || 0,
+          height:
+            embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
+          width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
+          url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
         };
 
-        if ('wp:publisherlogo' in embedded) {
-          publisherLogo = {
-            id: embedded['wp:publisherlogo'][0].id,
-            height: embedded['wp:publisherlogo'][0].media_details?.height,
-            width: embedded['wp:publisherlogo'][0].media_details?.width,
-            url: embedded['wp:publisherlogo'][0].source_url,
-          };
-        }
+        const publisherLogo = {
+          id: embedded?.['wp:publisherlogo']?.[0].id || 0,
+          height:
+            embedded?.['wp:publisherlogo']?.[0]?.media_details?.height || 0,
+          width: embedded?.['wp:publisherlogo']?.[0]?.media_details?.width || 0,
+          url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
+        };
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/

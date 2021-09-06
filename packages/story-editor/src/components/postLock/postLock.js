@@ -124,7 +124,7 @@ function PostLock() {
 
   useEffect(() => {
     if (enablePostLocking && showLockedDialog && currentUserLoaded) {
-      if (lockUser && lockUser?.id !== currentUser.id) {
+      if (lockUser?.id !== currentUser.id) {
         setShowDialog(true);
         setUser(lockUser);
       }
