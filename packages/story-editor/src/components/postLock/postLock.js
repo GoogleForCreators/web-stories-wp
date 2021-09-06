@@ -84,14 +84,11 @@ function PostLock() {
     if (enablePostLocking && showLockedDialog && currentUserLoaded) {
       getStoryLockById(storyId)
         .then(({ locked, nonce: newNonce, _embedded }) => {
-          const author = _embedded?.author?.[0] || {};
-          const lockAuthor = author
-            ? {
-                id: author.id,
-                name: author.name,
-                avatar: author.avatar_urls?.['96'],
-              }
-            : null;
+          const lockAuthor = {
+            id: _embedded?.author?.[0]?.id || 0,
+            name: _embedded?.author?.[0]?.name || '',
+            avatar: _embedded?.author?.[0]?.avatar_urls?.['96'] || '',
+          };
           if (locked && lockAuthor?.id !== currentUser.id) {
             setShowDialog(true);
             setUser(lockAuthor);
