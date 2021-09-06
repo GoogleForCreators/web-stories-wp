@@ -21,11 +21,11 @@ import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { LockToggle, NumericInput } from '@web-stories-wp/design-system';
+import { Icons, LockToggle, NumericInput } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { Union } from '../../../../icons';
 import { canMaskHaveBorder } from '../../../../masks';
 import { Row } from '../../../form';
 import Tooltip from '../../../tooltip';
@@ -174,7 +174,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
             {!lockRadius && (
               <>
                 <Icon>
-                  <Union />
+                  <Icons.Union />
                 </Icon>
                 <BoxedNumericInput
                   value={

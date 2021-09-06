@@ -19,6 +19,7 @@
         "@web-stories-wp/karma-fixture": "*",
         "@web-stories-wp/media": "*",
         "@web-stories-wp/migration": "*",
+        "@web-stories-wp/patterns": "*",
         "@web-stories-wp/react": "*",
         "@web-stories-wp/story-editor": "*",
         "@web-stories-wp/templates": "*",
