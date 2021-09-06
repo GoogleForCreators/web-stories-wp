@@ -21,6 +21,7 @@ import App from './editorApp';
 
 export * from './components/transform';
 export * from './app/config';
+export * from './app/api';
 export * from './components/previewPage';
 
 export { default as base64Encode } from './utils/base64Encode';

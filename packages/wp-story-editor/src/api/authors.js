@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+/**
+ * External dependencies
+ */
+import { addQueryArgs } from '@web-stories-wp/design-system';
 
-export { default as APIProvider } from './apiProvider';
-export { default as useAPI } from './useAPI';
-export * from './utils';
+export function getAuthors(search = null, users) {
+  return apiFetch({
+    path: addQueryArgs(users, { per_page: '100', who: 'authors', search }),
+  });
+}
