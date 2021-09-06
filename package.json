@@ -78,7 +78,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "browserslist": "^4.16.8",
     "commander": "^8.1.0",
-    "core-js": "^3.16.4",
+    "core-js": "^3.17.2",
     "css-loader": "^5.2.7",
     "cssnano": "^5.0.8",
     "eslint": "^7.32.0",
