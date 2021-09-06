@@ -37,79 +37,6 @@ class Canonical_Sanitizer extends TestCase {
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$user_id );
 	}
-
-	/**
-	 * @covers ::sanitize
-	 */
-	public function test_sanitize_canonical_exists() {
-		$source = '<html><head><title>Example</title><link rel="canonical" href="https://example.com/canonical.html"></head><body><p>Hello World</p></body></html>';
-
-		$dom = Document::fromHtml( $source );
-
-		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
-			$dom,
-			[ 'canonical_url' => 'https://example.com/new-canonical.html' ]
-		);
-		$sanitizer->sanitize();
-
-		$actual = $dom->saveHTML( $dom->documentElement );
-		$this->assertContains( '<link rel="canonical" href="https://example.com/canonical.html">', $actual );
-	}
-
-	/**
-	 * @covers ::sanitize
-	 */
-	public function test_sanitize_canonical_missing() {
-		$post_id   = self::factory()->post->create();
-		$canonical = wp_get_canonical_url( $post_id );
-
-		$source = '<html><head><title>Example</title></head><body><p>Hello World</p></body></html>';
-
-		$dom = Document::fromHtml( $source );
-
-		$this->go_to( get_permalink( $post_id ) );
-
-		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
-			$dom,
-			[ 'canonical_url' => get_permalink( $post_id ) ]
-		);
-		$sanitizer->sanitize();
-
-		$actual = $dom->saveHTML( $dom->documentElement );
-
-		wp_delete_post( $post_id );
-
-		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
-	}
-
-	/**
-	 * @covers ::sanitize
-	 */
-	public function test_sanitize_canonical_empty_value() {
-		$post_id   = self::factory()->post->create();
-		$canonical = wp_get_canonical_url( $post_id );
-
-		$source = '<html><head><title>Example</title><link rel="canonical" href=""></head><body><p>Hello World</p></body></html>';
-
-		$dom = Document::fromHtml( $source );
-
-		$this->go_to( get_permalink( $post_id ) );
-
-		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
-			$dom,
-			[ 'canonical_url' => get_permalink( $post_id ) ]
-		);
-		$sanitizer->sanitize();
-
-		$actual = $dom->saveHTML( $dom->documentElement );
-
-		wp_delete_post( $post_id );
-
-		$this->assertContains( '<link rel="canonical" href="', $actual );
-		$this->assertNotContains( '<link rel="canonical" href="">', $actual );
-		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
-	}
-
 	/**
 	 * @covers ::sanitize
 	 */
@@ -143,32 +70,6 @@ class Canonical_Sanitizer extends TestCase {
 
 		$this->assertContains( '<link rel="canonical" href="', $actual );
 		$this->assertNotContains( '<link rel="canonical" href="">', $actual );
-		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
-	}
-
-	/**
-	 * @covers ::sanitize
-	 */
-	public function test_sanitize_canonical_missing_existing_link_tags() {
-		$post_id   = self::factory()->post->create();
-		$canonical = wp_get_canonical_url( $post_id );
-
-		$source = '<html><head><title>Example</title><link rel="stylesheet" href="https://example.com/style.css"><link rel="stylesheet" href="https://example.com/style2.css"></head><body><p>Hello World</p></body></html>';
-
-		$dom = Document::fromHtml( $source );
-
-		$this->go_to( get_permalink( $post_id ) );
-
-		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
-			$dom,
-			[ 'canonical_url' => get_permalink( $post_id ) ]
-		);
-		$sanitizer->sanitize();
-
-		$actual = $dom->saveHTML( $dom->documentElement );
-
-		wp_delete_post( $post_id );
-
 		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
 	}
 }

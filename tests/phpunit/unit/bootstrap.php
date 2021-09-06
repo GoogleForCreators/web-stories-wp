@@ -10,6 +10,7 @@
 
 require_once __DIR__ . '/../../../vendor/yoast/wp-test-utils/src/BrainMonkey/bootstrap.php';
 require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../../third-party/vendor/scoper-autoload.php';
 
 define( 'WEBSTORIES_VERSION', '1.0.0' );
 define( 'WEBSTORIES_DB_VERSION', '1.0.0' );
