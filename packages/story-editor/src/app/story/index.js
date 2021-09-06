@@ -15,6 +15,7 @@
  */
 
 export { default as StoryProvider } from './storyProvider';
+export { default as StoryContext } from './context';
 export { default as useStory } from './useStory';
 export {
   useStoryTriggers,

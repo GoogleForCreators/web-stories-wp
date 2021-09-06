@@ -24,6 +24,7 @@ export * from './components/transform';
 export * from './app/config';
 export * from './app/story';
 export * from './components/previewPage';
+export * from './testUtils';
 
 export { default as base64Encode } from './utils/base64Encode';
 export { default as getStoryPropsToSave } from './app/story/utils/getStoryPropsToSave';
