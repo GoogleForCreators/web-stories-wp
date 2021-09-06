@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import App from './editorApp';
+import StoryEditor from './storyEditor';
 import Dialog from './components/dialog';
 
 export * from './components/transform';
@@ -36,4 +36,4 @@ export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cr
 export { ConfigProvider as EditorConfigProvider } from './app/config';
 
 export { Dialog };
-export default App;
+export default StoryEditor;

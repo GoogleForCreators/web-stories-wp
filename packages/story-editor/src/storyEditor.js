@@ -52,7 +52,7 @@ import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calenda
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
 import { MetaBoxesProvider } from './integrations/wordpress/metaBoxes';
 
-function App({ config }) {
+function StoryEditor({ config, children }) {
   const { storyId, isRTL } = config;
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
@@ -83,6 +83,7 @@ function App({ config }) {
                                       <CalendarStyle />
                                       <KeyboardOnlyOutlines />
                                       <Layout />
+                                      {children}
                                     </HelpCenterProvider>
                                   </DropTargetsProvider>
                                 </TransformProvider>
@@ -103,8 +104,9 @@ function App({ config }) {
   );
 }
 
-App.propTypes = {
+StoryEditor.propTypes = {
   config: PropTypes.object.isRequired,
+  children: PropTypes.node,
 };
 
-export default App;
+export default StoryEditor;
