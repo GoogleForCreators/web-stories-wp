@@ -18,9 +18,11 @@
  * Internal dependencies
  */
 import App from './editorApp';
+import Dialog from './components/dialog';
 
 export * from './components/transform';
 export * from './app/config';
+export * from './app/story';
 export * from './components/previewPage';
 
 export { default as base64Encode } from './utils/base64Encode';
@@ -33,4 +35,5 @@ export { default as theme } from './theme'; // @todo To be refactored.
 export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 export { ConfigProvider as EditorConfigProvider } from './app/config';
 
+export { Dialog };
 export default App;
