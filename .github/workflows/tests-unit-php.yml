@@ -145,22 +145,22 @@ jobs:
       - name: Run tests
         run: |
           npm run test:php:unit
-          npm run test:php:integration
-          npm run test:php:multisite
+          npm run test:php:integration:single
+          npm run test:php:integration:multisite
         if: ${{ ! matrix.coverage && ! matrix.random }}
 
       - name: Run tests with coverage
         run: |
           npm run test:php:unit -- --coverage-clover build/logs/php-coverage.xml
-          npm run test:php:integration -- --coverage-clover build/logs/php-coverage-integration.xml
-          npm run test:php:multisite -- --coverage-clover build/logs/php-coverage-multisite.xml
+          npm run test:php:integration:single -- --coverage-clover build/logs/php-coverage-integration.xml
+          npm run test:php:integration:multisite -- --coverage-clover build/logs/php-coverage-multisite.xml
         if: ${{ matrix.coverage && ! matrix.random }}
 
       - name: Run tests in random order
         run: |
           npm run test:php:unit -- --order-by random
-          npm run test:php:integration -- --order-by random
-          npm run test:php:multisite -- --order-by random
+          npm run test:php:integration:single -- --order-by random
+          npm run test:php:integration:multisite -- --order-by random
         if: ${{ matrix.random }}
 
       - name: Upload code coverage report
