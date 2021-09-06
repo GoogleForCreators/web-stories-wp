@@ -110,6 +110,13 @@ class Settings extends Service_Base {
 	const SETTING_NAME_VIDEO_CACHE = 'web_stories_video_cache';
 
 	/**
+	 * Web Stories archive setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_ARCHIVE = 'web_stories_archive';
+
+	/**
 	 * Get the action priority to use for registering the service.
 	 *
 	 * @since 1.6.0
@@ -226,6 +233,17 @@ class Settings extends Service_Base {
 		);
 
 		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_ARCHIVE,
+			[
+				'description'  => __( 'Web Stories Archive', 'web-stories' ),
+				'type'         => 'boolean',
+				'default'      => true,
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
 			self::SETTING_GROUP_EXPERIMENTS,
 			self::SETTING_NAME_EXPERIMENTS,
 			[
@@ -239,5 +257,20 @@ class Settings extends Service_Base {
 				],
 			]
 		);
+
+		add_action( 'add_option_' . self::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
+		add_action( 'update_option_' . self::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
+	}
+
+
+	/**
+	 * Clear rewrite rules on update on setting.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return void
+	 */
+	public function update_archive_setting() {
+		rewrite_flush();
 	}
 }

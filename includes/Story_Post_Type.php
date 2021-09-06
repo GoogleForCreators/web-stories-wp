@@ -122,7 +122,7 @@ class Story_Post_Type extends Service_Base {
 					'with_front' => false,
 				],
 				'public'                => true,
-				'has_archive'           => true,
+				'has_archive'           => get_option( Settings::SETTING_NAME_ARCHIVE, true ),
 				'exclude_from_search'   => true,
 				'show_ui'               => true,
 				'show_in_rest'          => true,
