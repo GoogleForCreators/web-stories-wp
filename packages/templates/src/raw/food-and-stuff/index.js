@@ -15,34 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'food-stuff',
-  title: _x('Food & Stuff', 'template name', 'web-stories'),
-  tags: [
-    _x('Delicious', 'template keyword', 'web-stories'),
-    _x('Baker', 'template keyword', 'web-stories'),
-    _x('Cooking', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Yellow', 'color', 'web-stories'), color: '#fff933' },
-    { label: _x('Orange', 'color', 'web-stories'), color: '#ff922e' },
-    { label: _x('Gray', 'color', 'web-stories'), color: '#676461' },
-    { label: _x('Blue', 'color', 'web-stories'), color: '#3a566e' },
-    { label: _x('Cream', 'color', 'web-stories'), color: '#fff9ee' },
-  ],
-  description: __(
-    'Make your audience salivate by using the Cooking template to create web stories about ingredients, food recipes, how-to’s, restaurant guides and kitchen inspiration.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Cooking', 'template vertical', 'web-stories'),
 };

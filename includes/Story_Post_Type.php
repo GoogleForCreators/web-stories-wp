@@ -26,16 +26,16 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
+use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use Google\Web_Stories\REST_API\Stories_Controller;
-use WP_Post_Type;
-use WP_Rewrite;
-use WP_Query;
 use WP_Post;
+use WP_Site;
 
 /**
  * Class Story_Post_Type.
  */
-class Story_Post_Type extends Service_Base {
+class Story_Post_Type extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
 
 	/**
 	 * The slug of the stories post type.
@@ -139,6 +139,30 @@ class Story_Post_Type extends Service_Base {
 	}
 
 	/**
+	 * Act on site initialization.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being initialized.
+	 * @return void
+	 */
+	public function on_site_initialization( WP_Site $site ) {
+		$this->register();
+	}
+
+	/**
+	 * Act on plugin deactivation.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param bool $network_wide Whether the deactivation was done network-wide.
+	 * @return void
+	 */
+	public function on_plugin_deactivation( $network_wide ) {
+		unregister_post_type( self::POST_TYPE_SLUG );
+	}
+
+	/**
 	 * Base64 encoded svg icon.
 	 *
 	 * @since 1.0.0
@@ -154,12 +178,15 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $fields Array of allowed revision fields.
-	 * @param array $story Story post array.
+	 * @param array|mixed $fields Array of allowed revision fields.
+	 * @param array       $story  Story post array.
 	 *
-	 * @return array Array of allowed fields.
+	 * @return array|mixed Array of allowed fields.
 	 */
-	public function filter_revision_fields( $fields, $story ): array {
+	public function filter_revision_fields( $fields, $story ) {
+		if ( ! is_array( $fields ) ) {
+			return $fields;
+		}
 		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
@@ -171,13 +198,16 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array[] $bulk_messages Arrays of messages, each keyed by the corresponding post type. Messages are
+	 * @param array[]|mixed $bulk_messages Arrays of messages, each keyed by the corresponding post type. Messages are
 	 *                               keyed with 'updated', 'locked', 'deleted', 'trashed', and 'untrashed'.
-	 * @param int[]   $bulk_counts   Array of item counts for each message, used to build internationalized strings.
+	 * @param int[]         $bulk_counts   Array of item counts for each message, used to build internationalized strings.
 	 *
-	 * @return array Bulk counts.
+	 * @return array|mixed Bulk counts.
 	 */
-	public function bulk_post_updated_messages( array $bulk_messages, $bulk_counts ): array {
+	public function bulk_post_updated_messages( $bulk_messages, $bulk_counts ) {
+		if ( ! is_array( $bulk_messages ) ) {
+			return $bulk_messages;
+		}
 		$bulk_messages[ self::POST_TYPE_SLUG ] = [
 			/* translators: %s: Number of stories. */
 			'updated'   => _n( '%s story updated.', '%s stories updated.', $bulk_counts['updated'], 'web-stories' ),
@@ -200,11 +230,14 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $data Array of data to save.
+	 * @param array|mixed $data Array of data to save.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
-	public function change_default_title( $data ): array {
+	public function change_default_title( $data ) {
+		if ( ! is_array( $data ) ) {
+			return $data;
+		}
 		if ( self::POST_TYPE_SLUG === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
 			$data['post_title'] = '';
 		}

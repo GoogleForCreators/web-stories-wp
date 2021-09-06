@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 export { ReactComponent as Compass } from './compass.svg';
-export { ReactComponent as EditPencil } from './editPencil.svg';
 export { ReactComponent as FloppyDisk } from './floppyDisk.svg';
 export { ReactComponent as HomeWithHeart } from './homeWithHeart.svg';
 export { ReactComponent as Menu } from './menu.svg';

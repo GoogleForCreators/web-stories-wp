@@ -93,5 +93,9 @@ class ColorPicker extends Container {
     return this.getByRole('button', { name: /Pick a color from canvas/i });
   }
 
+  get custom() {
+    return this.getByRole('button', { name: /Custom/i });
+  }
+
   // @todo: add accessors for remaining options
 }

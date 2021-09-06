@@ -131,11 +131,14 @@ function EditablePreview({ label, value, width, format, onChange }) {
     );
   }
 
+  // The value is set to 'transparent' by the library if it's black with 0 opacity.
+  // We want to always display hex though.
+  const editValue = value === 'transparent' ? '000000' : value;
   return (
     <Wrapper ref={wrapperRef} tabIndex={-1} onBlur={handleOnBlur}>
       <Suspense fallback={null}>
         <EditableInput
-          value={value}
+          value={editValue}
           ref={editableRef}
           onChange={onChange}
           onChangeComplete={disableEditing}

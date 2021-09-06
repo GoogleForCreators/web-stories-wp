@@ -50,10 +50,10 @@ trackClick(event, 'contact_support');
 
 You can use `trackError` to send [exception events](https://developers.google.com/analytics/devguides/collection/ga4/exceptions) to measure the number and type of crashes or errors that occur on a web page.
 
-The first parameter is the error description, the second one indicates whether the error was fatal or not.
+The first parameter is the prefix, the second one the error description, and the third one indicates whether the error was fatal or not.
 
 ```js
-trackError('Division by zero', false);
+trackError('demo', 'Division by zero', false);
 ```
 
 ### Tracking Events

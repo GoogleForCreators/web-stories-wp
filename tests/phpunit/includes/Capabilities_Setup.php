@@ -17,20 +17,14 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\User\Capabilities;
-
 trait Capabilities_Setup {
-	protected function get_capability_object() {
-		return new Capabilities();
-	}
-
 	public function add_caps_to_roles() {
-		$capability = $this->get_capability_object();
+		$capability = new \Google\Web_Stories\User\Capabilities();
 		$capability->add_caps_to_roles();
 	}
 
 	public function remove_caps_from_roles() {
-		$capability = $this->get_capability_object();
+		$capability = new \Google\Web_Stories\User\Capabilities();
 		$capability->remove_caps_from_roles();
 	}
 }

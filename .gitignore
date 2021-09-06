@@ -3,9 +3,7 @@
 .vscode/
 .DS_Store
 node_modules
-/assets/css
-/assets/js
-/assets/testjs
+/assets
 /packages/migration/src/module.js
 /build
 /bin/build

@@ -55,7 +55,11 @@ describe('ColorPicker', () => {
         );
 
         // Snapshot it
-        await fixture.snapshot();
+        await fixture.snapshot('Basic color picker');
+
+        // Go to the custom color picker as well and snapshot that too
+        await fixture.events.click(bgPanel.backgroundColor.picker.custom);
+        await fixture.snapshot('Custom color picker');
       });
     });
   });

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
 
 /**
@@ -25,7 +25,6 @@ import { getRelativeDisplayDate } from '@web-stories-wp/date';
  */
 import Fixture from '../../../../karma/fixture';
 import {
-  PRIMARY_PATHS,
   STORY_STATUS,
   STORY_STATUSES,
   STORY_VIEWING_LABELS,
@@ -79,6 +78,8 @@ describe('Grid view', () => {
       const expectedStory = storyButtons[i];
       // eslint-disable-next-line no-await-in-loop
       await fixture.events.keyboard.press('right');
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('tab');
       expect(expectedStory).toEqual(document.activeElement);
     }
 
@@ -117,13 +118,13 @@ describe('Grid view', () => {
 
   it('should navigate to Explore Templates', async () => {
     const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: new RegExp('^' + PRIMARY_PATHS[2].label + '$'),
+      name: /^Explore Templates/,
     });
+    expect(exploreTemplatesMenuItem).toBeTruthy();
 
     await fixture.events.click(exploreTemplatesMenuItem);
-
-    const templatesGridEl = fixture.screen.getByLabelText(
-      'Available templates'
+    const templatesGridEl = await waitFor(() =>
+      fixture.screen.queryByText('Viewing all templates')
     );
 
     expect(templatesGridEl).toBeTruthy();
@@ -160,7 +161,9 @@ describe('Grid view', () => {
 
     await fixture.events.keyboard.press('Enter');
 
-    expect(getByText(/A New Title/)).toBeTruthy();
+    expect(
+      getByRole('heading', { level: 3, name: 'A New Title' })
+    ).toBeTruthy();
   });
 
   it('should Duplicate a story', async () => {
@@ -187,9 +190,8 @@ describe('Grid view', () => {
 
     utils = within(firstStory);
 
-    const copiedStory = utils.queryAllByText(/Copy/)[0];
-
-    expect(copiedStory.text.includes('(Copy)')).toBeTruthy();
+    const copiedStory = utils.getByRole('heading', { level: 3 });
+    expect(copiedStory.innerText).toContain('(Copy)');
   });
 
   it('should Delete a story', async () => {
@@ -322,10 +324,11 @@ describe('Grid view', () => {
       await fixture.events.keyboard.type(firstStoryTitle);
 
       // Wait for the debounce
-      await fixture.events.sleep(300);
+      await fixture.events.sleep(500);
 
-      const storyElements =
-        fixture.screen.getAllByTestId(/^story-context-menu-/);
+      const storyElements = await waitFor(() =>
+        fixture.screen.getAllByTestId(/^story-context-menu-/)
+      );
 
       expect(storyElements.length).toEqual(
         Object.values(stories).filter(({ title }) =>
@@ -371,6 +374,7 @@ describe('Grid view', () => {
         // eslint-disable-next-line no-await-in-loop
         await fixture.events.keyboard.press('down');
       }
+      await fixture.events.sleep(300);
       expect(activeListItems[activeListItems.length - 1]).toBe(
         document.activeElement
       );
@@ -495,6 +499,8 @@ describe('Grid view', () => {
         const expectedStory = storyCards[i];
         // eslint-disable-next-line no-await-in-loop
         await fixture.events.keyboard.press('right');
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('tab');
         expect(expectedStory).toEqual(document.activeElement);
       }
     });
@@ -504,8 +510,8 @@ describe('Grid view', () => {
       const [selectedStory] = storyCards;
       await focusOnGridByKeyboard();
       await fixture.events.keyboard.press('right');
-
-      // we should have focused the first story in the grid
+      await fixture.events.keyboard.press('tab');
+      // we should have focused the first story menu in the grid
       expect(selectedStory).toEqual(document.activeElement);
 
       const [activeStoryContextMenu] =
@@ -521,12 +527,13 @@ describe('Grid view', () => {
       // it is focused on the link within the list
       const [firstContextMenuItem, secondContextMenuItem] =
         within(contextMenuList).getAllByRole('menuitem');
+
       expect(firstContextMenuItem.innerText).toEqual(
         document.activeElement.innerText
       );
 
-      // tab to the next item
       await fixture.events.keyboard.press('tab');
+
       expect(secondContextMenuItem.innerText).toEqual(
         document.activeElement.innerText
       );
@@ -540,8 +547,10 @@ describe('Grid view', () => {
       await fixture.events.keyboard.press('Enter');
       const stories = fixture.screen.getAllByTestId(/^story-grid-item-/);
       const firstStory = stories[0];
-      const { getByText } = within(firstStory);
-      expect(getByText(/A New Title/)).toBeTruthy();
+      const { getByRole } = within(firstStory);
+      expect(
+        getByRole('heading', { level: 3, name: 'A New Title' })
+      ).toBeTruthy();
     });
 
     it('should delete a story via keyboard', async () => {
@@ -584,6 +593,7 @@ describe('Grid view', () => {
       //focus the duplicate item of the context menu of the first story
       await getContextMenuItem('Duplicate');
 
+      expect(document.activeElement.innerText).toEqual('Duplicate');
       // confirm duplication
       await fixture.events.keyboard.press('Enter');
 
@@ -594,15 +604,14 @@ describe('Grid view', () => {
       // the copied story is now the first story and contains (Copy)
       const firstStory = stories[0];
       const utils = within(firstStory);
-      const copiedStory = utils.queryAllByText(/Copy/)[0];
-      expect(copiedStory.text.includes('(Copy)')).toBeTruthy();
+
+      const copiedStory = utils.getByRole('heading', { level: 3 });
+      expect(copiedStory.innerText).toContain('(Copy)');
     });
 
     it('should retain focus on menu close', async () => {
       const storyIndex = 1;
-      const storyCards = fixture.screen.getAllByTestId(
-        /^story-context-button-/
-      );
+      const storyCards = fixture.screen.getAllByTestId(/edit-story-grid-link/);
       const selectedStory = storyCards[storyIndex];
       // focus the delete context menu item of the first story with the keyboard
       // test cancelling deletion of the second story (not the default first story)
@@ -632,9 +641,7 @@ describe('Grid view', () => {
     });
 
     it('should exit the grid and re-focus the first item', async () => {
-      const storyCards = fixture.screen.getAllByTestId(
-        /^story-context-button-/
-      );
+      const storyCards = fixture.screen.getAllByTestId(/edit-story-grid-link/);
       const firstStory = storyCards[0];
       const lastStory = storyCards[storyCards.length - 1];
       await focusOnGridByKeyboard();

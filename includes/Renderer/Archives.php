@@ -85,11 +85,11 @@ class Archives extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $content Current content of filter.
+	 * @param string|mixed $content Current content of filter.
 	 *
-	 * @return string
+	 * @return string|mixed
 	 */
-	public function embed_player( $content ): string {
+	public function embed_player( $content ) {
 		$post = get_post();
 
 		if ( is_feed() ) {
@@ -104,7 +104,7 @@ class Archives extends Service_Base {
 			$story = new Story();
 			$story->load_from_post( $post );
 
-			$embed   = new Embed( $story, $this->assets, $this->amp_story_player_assets );
+			$embed   = new Embed( $story, $this->assets );
 			$content = $embed->render();
 		}
 

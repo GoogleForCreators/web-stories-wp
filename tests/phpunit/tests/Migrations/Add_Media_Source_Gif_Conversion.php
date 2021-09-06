@@ -17,14 +17,14 @@
 
 namespace Google\Web_Stories\Tests\Migrations;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class Add_Media_Source_Gif_Conversion
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Gif_Conversion
  */
-class Add_Media_Source_Gif_Conversion extends Test_Case {
+class Add_Media_Source_Gif_Conversion extends TestCase {
 	/**
 	 * @covers ::migrate
 	 * @covers ::get_term

@@ -41,7 +41,6 @@ jest.mock('@web-stories-wp/templates');
 
 const renderApiProvider = ({ configValue }) => {
   return renderHook(() => useAPI(), {
-    // eslint-disable-next-line react/display-name
     wrapper: (props) => (
       <ConfigProvider config={configValue}>
         <ApiProvider {...props} />
@@ -93,12 +92,10 @@ describe('APIProvider', () => {
     getAllTemplatesMock.mockReturnValue(pageTemplates);
 
     const cdnURL = 'https://test.url';
-    const assetsURL = 'https://plugin.url/assets/';
     const { result } = renderApiProvider({
       configValue: {
         api: {},
         cdnURL,
-        assetsURL,
         postLock: { api: '' },
       },
     });
@@ -110,10 +107,7 @@ describe('APIProvider', () => {
       });
     });
 
-    expect(removeImagesFromPageTemplates).toHaveBeenCalledWith({
-      assetsURL,
-      templates: pageTemplates,
-    });
+    expect(removeImagesFromPageTemplates).toHaveBeenCalledWith(pageTemplates);
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
   });
 
@@ -124,12 +118,10 @@ describe('APIProvider', () => {
     removeImagesFromPageTemplates.mockReturnValue(formattedPageTemplates);
 
     const cdnURL = 'https://test.url';
-    const assetsURL = 'https://plugin.url/assets/';
     const { result } = renderApiProvider({
       configValue: {
         api: {},
         cdnURL,
-        assetsURL,
         postLock: { api: '' },
       },
     });
@@ -139,10 +131,7 @@ describe('APIProvider', () => {
       pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
-    expect(removeImagesFromPageTemplates).toHaveBeenCalledWith({
-      assetsURL,
-      templates: pageTemplates,
-    });
+    expect(removeImagesFromPageTemplates).toHaveBeenCalledWith(pageTemplates);
     expect(pageTemplatesResult).toStrictEqual(formattedPageTemplates);
   });
 
@@ -151,12 +140,10 @@ describe('APIProvider', () => {
     getAllTemplatesMock.mockReturnValue(pageTemplates);
 
     const cdnURL = 'https://test.url';
-    const assetsURL = 'https://plugin.url/assets/';
     const { result } = renderApiProvider({
       configValue: {
         api: {},
         cdnURL,
-        assetsURL,
         postLock: { api: '' },
       },
     });

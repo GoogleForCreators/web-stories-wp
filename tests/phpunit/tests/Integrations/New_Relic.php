@@ -17,13 +17,13 @@
 
 namespace Google\Web_Stories\Tests\Integrations;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 use Google\Web_Stories\Integrations\New_Relic as New_Relic_Integration;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\New_Relic
  */
-class New_Relic extends Test_Case {
+class New_Relic extends TestCase {
 	/**
 	 * @covers ::is_needed
 	 */

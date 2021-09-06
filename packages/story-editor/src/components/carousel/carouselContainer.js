@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import {
+  memo,
   useMemo,
   useRef,
   useState,
@@ -67,4 +68,5 @@ function CarouselContainer() {
   );
 }
 
-export default CarouselContainer;
+// Don't rerender the carousel container needlessly e.g. on element selection change.
+export default memo(CarouselContainer);

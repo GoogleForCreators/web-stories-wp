@@ -19,13 +19,13 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { memo } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import Buttons from './buttons';
 import Title from './title';
-import HeaderProvider from './provider';
 
 const Background = styled.header.attrs({
   role: 'group',
@@ -48,17 +48,16 @@ const ButtonCell = styled.div`
 
 function HeaderLayout() {
   return (
-    <HeaderProvider>
-      <Background>
-        <Head>
-          <Title />
-        </Head>
-        <ButtonCell>
-          <Buttons />
-        </ButtonCell>
-      </Background>
-    </HeaderProvider>
+    <Background>
+      <Head>
+        <Title />
+      </Head>
+      <ButtonCell>
+        <Buttons />
+      </ButtonCell>
+    </Background>
   );
 }
 
-export default HeaderLayout;
+// Don't rerender the header needlessly e.g. on element selection change.
+export default memo(HeaderLayout);

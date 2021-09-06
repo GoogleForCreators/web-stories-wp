@@ -1,8 +1,7 @@
 {
-  "version": 32,
+  "version": 33,
   "pages": [
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -417,7 +416,6 @@
             "width": 810,
             "height": 1080,
             "id": 0,
-            "title": "Folded clothes above hanged clothes",
             "alt": "Folded clothes above hanged clothes",
             "sizes": [],
             "local": false,
@@ -508,6 +506,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "09c5e02e-7da6-4216-aea5-691be3ed13bc",
@@ -578,7 +577,6 @@
       "pageTemplateType": "cover"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -605,7 +603,6 @@
             "width": 1080,
             "height": 1617,
             "id": 0,
-            "title": "Man in brown coat",
             "alt": "Man in brown coat",
             "sizes": [],
             "local": false,
@@ -715,6 +712,7 @@
           "type": "shape"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "targets": ["e608ed67-86a8-4ceb-ac10-eb277154251e"],
@@ -747,7 +745,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -774,7 +771,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Man in black 2-piece suit near swimming pool",
             "alt": "Man in black 2-piece suit near swimming pool",
             "sizes": [],
             "local": false,
@@ -970,6 +966,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "36bcf4b1-43ec-4826-b2c0-198d310fd512",
@@ -1002,7 +999,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1029,7 +1025,6 @@
             "width": 1631,
             "height": 1080,
             "id": 0,
-            "title": "Closeup photo of man in black suit jacket",
             "alt": "Closeup photo of man in black suit jacket",
             "sizes": [],
             "local": false,
@@ -1135,6 +1130,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "9bdb1a9f-83bc-46aa-93be-095e434f011e",
@@ -1166,7 +1162,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1193,7 +1188,6 @@
             "width": 1625,
             "height": 1080,
             "id": 0,
-            "title": "Silver colored m lapel pin",
             "alt": "Silver colored m lapel pin",
             "sizes": [],
             "local": false,
@@ -1300,6 +1294,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "75c6170e-c1e2-4074-8a45-50b2ab7a0484",
@@ -1331,7 +1326,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1382,7 +1376,6 @@
             "width": 1620,
             "height": 1080,
             "id": 0,
-            "title": "Black suit jacket hanged on wall",
             "alt": "Black suit jacket hanged on wall",
             "sizes": [],
             "local": false,
@@ -1662,6 +1655,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "targets": ["8f710eb8-e301-4ea3-95f9-6fded111b4d4"],
@@ -1684,7 +1678,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1711,7 +1704,6 @@
             "width": 1620,
             "height": 1080,
             "id": 0,
-            "title": "Person wearing black suit jacket and silver-colored watch",
             "alt": "Person wearing black suit jacket and silver-colored watch",
             "sizes": [],
             "local": false,
@@ -1909,6 +1901,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "4ee89875-c33d-43c0-8c58-a66fad5cfc5e",
@@ -1941,7 +1934,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1968,7 +1960,6 @@
             "width": 1080,
             "height": 1440,
             "id": 0,
-            "title": "Silver round watch",
             "alt": "Silver round watch",
             "sizes": [],
             "local": false,
@@ -2074,6 +2065,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "355688da-0ab9-4668-9501-80f40b606f6d",
@@ -2105,7 +2097,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2156,7 +2147,6 @@
             "width": 1620,
             "height": 1080,
             "id": 0,
-            "title": "Round silver-colored Fossil chronograph watch at 9:22 with brown leather band",
             "alt": "Round silver-colored Fossil chronograph watch at 9:22 with brown leather band",
             "sizes": [],
             "local": false,
@@ -2436,6 +2426,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "targets": ["a025b957-94e1-4c43-b05b-e621764e4506"],
@@ -2458,7 +2449,6 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2485,7 +2475,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Man carrying bag outdoors",
             "alt": "Man carrying bag outdoors",
             "sizes": [],
             "local": false,
@@ -2680,6 +2669,7 @@
           "type": "sticker"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "47ec07e1-0d59-4cbd-9d60-b158d3be5362",
@@ -2721,7 +2711,6 @@
       "pageTemplateType": "section"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2748,7 +2737,6 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Person in black suit holding brown leather bag",
             "alt": "Person in black suit holding brown leather bag",
             "sizes": [],
             "local": false,
@@ -2855,6 +2843,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "073f64c3-2722-4677-b649-8db2d0c3d778",
@@ -2886,7 +2875,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3215,7 +3203,6 @@
             "width": 1080,
             "height": 1512,
             "id": 0,
-            "title": "Black Scarf",
             "alt": "Black Scarf",
             "sizes": [],
             "local": false,
@@ -3240,6 +3227,7 @@
           "type": "image"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "targets": ["e81ccabd-d745-4faa-afc8-36bb402755a0"],
@@ -3262,7 +3250,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -3403,7 +3390,6 @@
             "width": 576,
             "height": 720,
             "id": 0,
-            "title": "Man walking on road while holding bag during daytime",
             "alt": "Man walking on road while holding bag during daytime",
             "sizes": [],
             "local": false,
@@ -3600,7 +3586,6 @@
             "width": 520,
             "height": 720,
             "id": 0,
-            "title": "Woman in yellow tracksuit standing on basketball court side",
             "alt": "Woman in yellow tracksuit standing on basketball court side",
             "sizes": [],
             "local": false,
@@ -3799,7 +3784,6 @@
             "width": 720,
             "height": 480,
             "id": 0,
-            "title": "Pair of brown leather dress shoes with box",
             "alt": "Pair of brown leather dress shoes with box",
             "sizes": [],
             "local": false,
@@ -3965,6 +3949,7 @@
           "type": "text"
         }
       ],
+      "overlay": "none",
       "animations": [
         {
           "id": "712c197d-7176-40b8-8246-1df32be6204d",

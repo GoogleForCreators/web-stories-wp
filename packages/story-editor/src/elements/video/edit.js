@@ -17,12 +17,20 @@
 /**
  * Internal dependencies
  */
+import useCanvas from '../../app/canvas/useCanvas';
 import StoryPropTypes from '../../types';
 import MediaEdit from '../media/edit';
+import Trim from './trim';
 
-// Opacity is adjusted so that the double image opacity would equal
-// the opacity assigned to the video.
 function VideoEdit({ element, box, ...rest }) {
+  const { editingElementState } = useCanvas((state) => ({
+    editingElementState: state.state.editingElementState,
+  }));
+
+  if (editingElementState?.isTrimming) {
+    return <Trim element={element} box={box} {...rest} />;
+  }
+
   return <MediaEdit element={element} box={box} {...rest} />;
 }
 

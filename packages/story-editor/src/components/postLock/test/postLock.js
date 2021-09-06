@@ -126,8 +126,8 @@ describe('PostLock', () => {
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toBeInTheDocument();
 
-    const myStoriesButton = screen.getByRole('link', { name: 'My Stories' });
-    expect(myStoriesButton).toBeInTheDocument();
+    const dashboardButton = screen.getByRole('link', { name: 'Dashboard' });
+    expect(dashboardButton).toBeInTheDocument();
 
     const takeOverButton = screen.getByRole('button', { name: 'Take over' });
     expect(takeOverButton).toBeInTheDocument();
@@ -161,8 +161,8 @@ describe('PostLock', () => {
     });
 
     await waitFor(() => {
-      const myStoriesButton = screen.getByRole('link', { name: 'My Stories' });
-      expect(myStoriesButton).toBeInTheDocument();
+      const dashboardButton = screen.getByRole('link', { name: 'Dashboard' });
+      expect(dashboardButton).toBeInTheDocument();
       expect(
         screen.getByText('John Doe now has editing control of this story.')
       ).toBeInTheDocument();

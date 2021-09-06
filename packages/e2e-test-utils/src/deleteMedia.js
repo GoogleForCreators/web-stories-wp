@@ -19,9 +19,9 @@
 import visitAdminPage from './visitAdminPage';
 
 /**
- * Creates a new story.
+ * Deletes an attachment with a given file name from the WordPress media library.
  *
- * @param {string}fileName File name to delete with ext.
+ * @param {string} fileName File name with or without extension.
  */
 async function deleteMedia(fileName) {
   await visitAdminPage('upload.php', 'mode=list');
@@ -29,16 +29,21 @@ async function deleteMedia(fileName) {
   await expect(page).toMatch(fileName);
 
   // Make row actions appear.
-  const elmId = await page.evaluate((filename) => {
-    return document
-      .querySelector(`a[aria-label="“${filename}” (Edit)"]`)
-      .closest('tr').id;
+  const elementId = await page.evaluate((name) => {
+    let _id;
+    document.querySelectorAll('p.filename').forEach((el) => {
+      const currentFileName = el.textContent.replace('File name:', '').trim();
+      if (currentFileName.startsWith(name)) {
+        _id = el.closest('tr').id;
+      }
+    });
+    return _id;
   }, fileName);
 
-  await page.hover(`#${elmId}`);
+  await page.hover(`#${elementId}`);
 
   await Promise.all([
-    expect(page).toClick(`a[aria-label="Delete “${fileName}” permanently"]`),
+    expect(page).toClick(`#${elementId} a.submitdelete`),
     page.waitForNavigation(),
   ]);
   await page.waitForSelector(`#message`);

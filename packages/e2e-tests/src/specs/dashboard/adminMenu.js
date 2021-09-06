@@ -25,10 +25,10 @@ describe('Admin Menu', () => {
   it.skip('should sync the WP nav with the dashboard nav', async () => {
     await visitDashboard();
 
-    // Initial visit to `/` makes `My Stories` link current in WP
+    // Initial visit to `/` makes `Dashboard` link current in WP
     await page.hover('#menu-posts-web-story');
     await expect(await page.$('#menu-posts-web-story .current a')).toMatch(
-      'My Stories'
+      'Dashboard'
     );
     await page.hover('[aria-label="Main dashboard navigation"]');
 
@@ -67,13 +67,13 @@ describe('Admin Menu', () => {
     await Promise.all([
       page.waitForNavigation(),
       expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
-        text: 'My Stories',
+        text: 'Dashboard',
       }),
     ]);
     await page.waitForTimeout(100);
     await page.hover('#menu-posts-web-story');
     await expect(await page.$('#menu-posts-web-story .current a')).toMatch(
-      'My Stories'
+      'Dashboard'
     );
   });
 });

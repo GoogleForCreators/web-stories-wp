@@ -132,7 +132,10 @@ class Media_Source_Taxonomy extends Service_Base {
 	 *
 	 * @return array $response;
 	 */
-	public function wp_prepare_attachment_for_js( $response, $attachment ): array {
+	public function wp_prepare_attachment_for_js( $response, $attachment ) {
+		if ( ! is_array( $response ) ) {
+			return $response;
+		}
 		$response['media_source'] = $this->get_callback_media_source( $response );
 
 		return $response;
@@ -225,7 +228,10 @@ class Media_Source_Taxonomy extends Service_Base {
 	 *
 	 * @return array Filtered query args.
 	 */
-	public function filter_ajax_query_attachments_args( array $args ): array {
+	public function filter_ajax_query_attachments_args( $args ) {
+		if ( ! is_array( $args ) ) {
+			return $args;
+		}
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;
@@ -263,11 +269,14 @@ class Media_Source_Taxonomy extends Service_Base {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array $args Query args.
+	 * @param array|mixed $args Query args.
 	 *
-	 * @return array Filtered query args.
+	 * @return array|mixed Filtered query args.
 	 */
-	public function filter_rest_generated_media_attachments( array $args ): array {
+	public function filter_rest_generated_media_attachments( $args ) {
+		if ( ! is_array( $args ) ) {
+			return $args;
+		}
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;

@@ -103,11 +103,14 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $buttons Array of TinyMCE buttons.
+	 * @param array|mixed $buttons Array of TinyMCE buttons.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
-	public function tinymce_web_stories_button( array $buttons ): array {
+	public function tinymce_web_stories_button( $buttons ) {
+		if ( ! is_array( $buttons ) ) {
+			return $buttons;
+		}
 		$buttons[] = 'web_stories';
 
 		return $buttons;
@@ -118,11 +121,14 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $plugins Array of TinyMCE plugin scripts.
+	 * @param array|mixed $plugins Array of TinyMCE plugin scripts.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
-	public function web_stories_mce_plugin( array $plugins ): array {
+	public function web_stories_mce_plugin( $plugins ) {
+		if ( ! is_array( $plugins ) ) {
+			return $plugins;
+		}
 		$plugins['web_stories'] = $this->assets->get_base_url( 'assets/js/tinymce-button.js' );
 
 		return $plugins;
@@ -147,17 +153,21 @@ class TinyMCE extends Service_Base {
 	}
 
 	/**
-	 * High jack the tinymce to render an empty script tag for tinymce.
+	 * Hijack the button's script to render an empty script tag.
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param string $tag    The `<script>` tag for the enqueued script.
-	 * @param string $handle The script's registered handle.
-	 * @param string $src    The script's source URL.
+	 * @param string|mixed $tag    The `<script>` tag for the enqueued script.
+	 * @param string       $handle The script's registered handle.
+	 * @param string       $src    The script's source URL.
 	 *
-	 * @return string $tag The `<script>` tag for the enqueued script.
+	 * @return string|mixed The filtered script tag.
 	 */
-	public function script_loader_tag( $tag, $handle, $src ): string {
+	public function script_loader_tag( $tag, $handle, $src ) {
+		if ( ! is_string( $tag ) ) {
+			return $tag;
+		}
+
 		if ( self::SCRIPT_HANDLE === $handle ) {
 			$tag = str_replace( $src, '', $tag );
 			// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- False positive.

@@ -57,6 +57,7 @@ namespace PHPSTORM_META {
 			'user.capabilities'            => \Google\Web_Stories\User\Capabilities::class,
 			'rest.embed_controller'        => \Google\Web_Stories\REST_API\Embed_Controller::class,
 			'rest.link_controller'         => \Google\Web_Stories\REST_API\Link_Controller::class,
+			'rest.hotlinking_controller'   => \Google\Web_Stories\REST_API\Hotlinking_Controller::class,
 			'rest.status_check_controller' => \Google\Web_Stories\REST_API\Status_Check_Controller::class,
 			'rest.stories_autosave'        => \Google\Web_Stories\REST_API\Stories_Autosaves_Controller::class,
 			'rest.stories_lock'            => \Google\Web_Stories\REST_API\Stories_Lock_Controller::class,

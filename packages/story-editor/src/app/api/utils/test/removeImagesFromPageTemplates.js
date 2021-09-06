@@ -26,7 +26,6 @@ import removeImagesFromPageTemplates from '../removeImagesFromPageTemplates';
 jest.mock('@web-stories-wp/templates');
 
 describe('removeImagesFromPageTemplates', () => {
-  const assetsURL = 'https://plugin.url/assets/';
   const templates = [
     {
       id: 'templateid',
@@ -83,11 +82,7 @@ describe('removeImagesFromPageTemplates', () => {
   });
 
   it('should replace images with placeholders', async () => {
-    const result = await removeImagesFromPageTemplates({
-      assetsURL,
-      showImages: false,
-      templates,
-    });
+    const result = await removeImagesFromPageTemplates(templates);
 
     expect(result).toStrictEqual([
       {
@@ -113,7 +108,7 @@ describe('removeImagesFromPageTemplates', () => {
                 resource: {
                   type: 'image',
                   mimeType: 'image/png',
-                  src: 'https://plugin.url/assets/images/editor/grid-placeholder.png',
+                  src: 'https://example.com/path/to/image.png',
                   width: 1680,
                   height: 2938,
                   posterId: 0,
@@ -139,7 +134,7 @@ describe('removeImagesFromPageTemplates', () => {
                 resource: {
                   type: 'image',
                   mimeType: 'image/png',
-                  src: 'https://plugin.url/assets/images/editor/grid-placeholder.png',
+                  src: 'https://example.com/path/to/image.png',
                   width: 1680,
                   height: 2938,
                   posterId: 0,

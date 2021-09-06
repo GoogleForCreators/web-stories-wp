@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\KSES
  */
-class KSES extends Test_Case {
+class KSES extends TestCase {
 
 	/**
 	 * Testing the safecss_filter_attr() function.
@@ -93,7 +93,7 @@ class KSES extends Test_Case {
 	 *     }
 	 * }
 	 */
-	public function data_test_safecss_filter_attr() {
+	public function data_test_safecss_filter_attr(): array {
 		return [
 			// Empty input, empty output.
 			[
@@ -272,7 +272,7 @@ class KSES extends Test_Case {
 	 *     }
 	 * }
 	 */
-	public function data_test_safecss_filter_attr_extended() {
+	public function data_test_safecss_filter_attr_extended(): array {
 		return [
 			// Keyword values.
 			[
@@ -371,7 +371,7 @@ class KSES extends Test_Case {
 		$this->assertArrayHasKey( 'width', $result['testing'] );
 	}
 
-	public function data_test_filter_kses_allowed_html() {
+	public function data_test_filter_kses_allowed_html(): array {
 		return [
 			'Video Element'                    => [
 				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
@@ -416,6 +416,10 @@ class KSES extends Test_Case {
 			'Images with disable-inline-width' => [
 				'<amp-img layout="fill" src="https://example.com/image.jpg" alt="example" srcset="https://example.com/image.jpg 900w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-640x853.jpg 640w,https://example.com/image-225x300.jpg 225w,https://example.com/image-150x200.jpg 150w" sizes="(min-width: 1024px) 14vh, 32vw" disable-inline-width="true"></amp-img>',
 				'<amp-img layout="fill" src="https://example.com/image.jpg" alt="example" srcset="https://example.com/image.jpg 900w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-640x853.jpg 640w,https://example.com/image-225x300.jpg 225w,https://example.com/image-150x200.jpg 150w" sizes="(min-width: 1024px) 14vh, 32vw" disable-inline-width="true"></amp-img>',
+			],
+			'Page Outlink'                     => [
+				'<amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#0047FF" cta-image="https://example.com/32x32icon.jpg" cta-accent-element="background"><a href="https://www.google.com">Read More</a></amp-story-page-outlink>',
+				'<amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#0047FF" cta-image="https://example.com/32x32icon.jpg" cta-accent-element="background"><a href="https://www.google.com">Read More</a></amp-story-page-outlink>',
 			],
 		];
 	}

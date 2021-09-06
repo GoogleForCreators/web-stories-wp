@@ -73,7 +73,7 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	 * @return bool Whether the conditional object is needed.
 	 */
 	public static function is_needed(): bool {
-		// TODO, make this service condtional on WordPress version once core is fixed.
+		// TODO, make this service conditional on WordPress version once core is fixed.
 		return is_admin() && ! wp_doing_ajax();
 	}
 
@@ -93,11 +93,11 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param string $tag    The `<script>` tag for the enqueued script.
-	 * @param string $handle The script's registered handle.
-	 * @param string $src    The script's source URL.
+	 * @param string|mixed $tag    The `<script>` tag for the enqueued script.
+	 * @param string       $handle The script's registered handle.
+	 * @param string       $src    The script's source URL.
 	 *
-	 * @return string
+	 * @return string|mixed The filtered script tag.
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
 		if ( self::SCRIPT_HANDLE !== $handle || ! $this->is_edit_screen() ) {

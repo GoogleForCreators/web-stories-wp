@@ -27,6 +27,7 @@ export default {
   moduleNameMapper: {
     '\\.svg': join(__dirname, '/svgrMock.js'),
     '\\.css': join(__dirname, '/styleMock.js'),
+    '\\.png': join(__dirname, '/imageMock.js'),
   },
   setupFiles: [
     '<rootDir>/tests/js/setup-globals',

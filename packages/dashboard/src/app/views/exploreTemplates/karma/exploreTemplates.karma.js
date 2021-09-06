@@ -42,7 +42,7 @@ describe('Grid view', () => {
 
   function navigateToExploreTemplates() {
     const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: /^Explore Templates$/,
+      name: /^Explore Templates/,
     });
 
     return fixture.events.click(exploreTemplatesMenuItem);
@@ -76,18 +76,18 @@ describe('Grid view', () => {
       : Promise.reject(new Error('could not focus on grid'));
   }
 
-  it('should render', () => {
+  it('should pass accessibility tests', async () => {
     const viewTemplates = fixture.screen.queryByText('Viewing all templates');
-
     expect(viewTemplates).toBeTruthy();
+    await expectAsync(viewTemplates).toHaveNoViolations();
   });
 
-  it('should navigate to My Stories', async () => {
-    const myStoriesMenuItem = fixture.screen.queryByRole('link', {
-      name: /^My Stories$/,
+  it('should navigate to Dashboard', async () => {
+    const DashboardMenuItem = fixture.screen.queryByRole('link', {
+      name: /^Dashboard$/,
     });
 
-    await fixture.events.click(myStoriesMenuItem);
+    await fixture.events.click(DashboardMenuItem);
 
     const viewStories = fixture.screen.queryByText('Viewing all stories');
 

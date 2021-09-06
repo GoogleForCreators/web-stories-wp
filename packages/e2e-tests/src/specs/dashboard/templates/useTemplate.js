@@ -21,7 +21,7 @@ import percySnapshot from '@percy/puppeteer';
 import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Template', () => {
-  it('should be able use existing template for new story', async () => {
+  it('should be able to use existing template for new story', async () => {
     await visitDashboard();
 
     const dashboardNavigation = await expect(page).toMatchElement(
@@ -42,15 +42,52 @@ describe('Template', () => {
 
     await percySnapshot(page, 'Explore Templates');
 
-    await expect(firstTemplate).toClick('button', { text: 'Use template' });
+    await expect(firstTemplate).toClick('a', { text: 'See details' });
+    // Get count of template colors to compare to 'saved colors' in the editor.
+    const templateDetailsColors = await page.evaluate(() => {
+      const elements = document.querySelectorAll(
+        'div[data-testid="detail-template-color"]'
+      );
+      const count = elements.length;
+      const colors = [];
+      for (let i = 0; i < count; i++) {
+        colors.push(window.getComputedStyle(elements[i]).backgroundColor);
+      }
+      return colors;
+    });
+
+    await expect(page).toClick('button', { text: 'Use template' });
     await page.waitForNavigation();
 
     // Wait for media elements to load before continuing.
     await page.waitForSelector('[data-testid="mediaElement-image"]');
-
+    await expect(page).toMatch('Layers');
     await expect(page).toMatchElement('input[placeholder="Add title"]');
     await expect(page).toMatchElement('[data-element-id]');
 
     await percySnapshot(page, 'Story From Template');
+
+    // Select a text layer so 'Saved Colors' panel is present
+    await expect(page).toClick('button[data-testid="layer-option"]', {
+      text: 'Fresh',
+    });
+
+    // Toggle open 'Saved Colors'
+    await expect(page).toClick('button', { text: 'Saved Colors' });
+
+    // Get all saved story colors and subtract 1 button for adding other colors
+    const editorSavedColors = await page.evaluate(() => {
+      const elements = document.querySelectorAll(
+        'div[data-testid="saved-story-colors"] button > div'
+      );
+      const count = elements.length;
+      const colors = [];
+      for (let i = 0; i < count; i++) {
+        colors.push(window.getComputedStyle(elements[i]).backgroundColor);
+      }
+      return colors;
+    });
+
+    expect(editorSavedColors).toStrictEqual(templateDetailsColors);
   });
 });

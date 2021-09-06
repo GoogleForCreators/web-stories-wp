@@ -54,7 +54,7 @@ final class LazilyInstantiatedService implements Service {
 	 *
 	 * @return Service Properly instantiated service.
 	 */
-	public function instantiate() {
+	public function instantiate(): Service {
 		$instantiation = $this->instantiation; // Because uniform variable syntax not supported in PHP 5.6.
 		$service       = $instantiation();
 

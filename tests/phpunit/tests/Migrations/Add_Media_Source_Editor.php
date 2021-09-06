@@ -17,14 +17,14 @@
 
 namespace Google\Web_Stories\Tests\Migrations;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class Add_Media_Source_Editor
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Editor
  */
-class Add_Media_Source_Editor extends Test_Case {
+class Add_Media_Source_Editor extends TestCase {
 	/**
 	 * @covers ::migrate
 	 * @covers ::get_term

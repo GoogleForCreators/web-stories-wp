@@ -35,6 +35,7 @@ import { PLACEMENT } from '../popup';
 const ItemText = styled(Text)`
   width: 200px;
   text-align: left;
+  font-weight: 500;
 `;
 const Shortcut = styled(Text)`
   color: ${({ theme, disabled }) =>
@@ -97,7 +98,7 @@ export const MenuItem = ({
     return (
       <>
         <ItemText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
           forwardedAs="span"
         >
           {label}
@@ -105,7 +106,7 @@ export const MenuItem = ({
         {shortcut?.display && (
           <Shortcut
             disabled={disabled}
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
             forwardedAs="kbd"
           >
             {shortcut.display}

@@ -97,8 +97,7 @@ function PageNav({ isNext = true }) {
         variant={BUTTON_VARIANTS.SQUARE}
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.MEDIUM}
-        isDisabled={!displayNav}
-        isHidden={!displayNav}
+        aria-disabled={!displayNav}
         aria-label={
           isNext
             ? __('Next Page', 'web-stories')

@@ -19,16 +19,19 @@
  */
 import styled from 'styled-components';
 import { memo, useCallback, useEffect, useMemo } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 import { _x } from '@web-stories-wp/i18n';
 import {
   StoryAnimation,
   STORY_ANIMATION_STATE,
   useStoryAnimationContext,
 } from '@web-stories-wp/animation';
+
 /**
  * Internal dependencies
  */
 import { useStory, useCanvas } from '../../app';
+import StoryPropTypes from '../../types';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 import PageAttachment from './pageAttachment';
@@ -83,14 +86,14 @@ function DisplayPage({
   useEffect(() => resetAnimationState, [resetAnimationState, page]);
 
   return page
-    ? page.elements.map(({ id, ...rest }) => {
-        if (editingElement === id) {
+    ? page.elements.map((element) => {
+        if (editingElement === element.id) {
           return null;
         }
         return (
           <DisplayElement
-            key={id}
-            element={{ id, ...rest }}
+            key={element.id}
+            element={element}
             page={page}
             isAnimatable
           />
@@ -98,6 +101,13 @@ function DisplayPage({
       })
     : null;
 }
+
+DisplayPage.propTypes = {
+  page: StoryPropTypes.page,
+  animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
+  editingElement: StoryPropTypes.element,
+  resetAnimationState: PropTypes.func,
+};
 
 function DisplayLayer() {
   const {

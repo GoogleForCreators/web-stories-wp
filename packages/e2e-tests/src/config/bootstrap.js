@@ -24,6 +24,7 @@ import {
   setBrowserViewport,
   setCurrentUser,
   trashAllPosts,
+  deleteAllMedia,
 } from '@web-stories-wp/e2e-test-utils';
 
 // Extend Jest matchers.
@@ -241,6 +242,7 @@ beforeAll(async () => {
   await setCurrentUser('admin', 'password');
   await trashAllPosts();
   await trashAllPosts('web-story');
+  await deleteAllMedia();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
