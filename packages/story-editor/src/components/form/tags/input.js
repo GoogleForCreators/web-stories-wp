@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { themeHelpers } from '@web-stories-wp/design-system';
+import { themeHelpers, BaseInput } from '@web-stories-wp/design-system';
 import {
   useEffect,
   useMemo,
@@ -48,15 +48,9 @@ const Border = styled.div`
   margin-bottom: 6px;
 `;
 
-const TextInput = styled.input.attrs({ type: 'text' })`
-  ${themeHelpers.expandTextPreset(
-    ({ paragraph }, { SMALL }) => paragraph[SMALL]
-  )}
+const TextInput = styled(BaseInput).attrs({ type: 'text' })`
+  width: auto;
   flex-grow: 1;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: inherit;
   height: 38px;
   margin: 3px 0;
 `;

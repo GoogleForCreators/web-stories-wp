@@ -21,7 +21,7 @@ export { Chip } from './chip';
 export { Dialog } from './dialog';
 export { DropDown, DropDownSelect } from './dropDown';
 export { HexInput } from './hex';
-export { Input } from './input';
+export { Input, BaseInput } from './input';
 export { LoadingBar, LOADING_INDICATOR_CLASS } from './loadingBar';
 export { LoadingSpinner } from './loadingSpinner';
 export { MediaInput, MEDIA_VARIANTS } from './mediaInput';
