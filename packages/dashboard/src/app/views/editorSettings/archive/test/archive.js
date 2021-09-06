@@ -65,6 +65,6 @@ describe('Editor Settings: <Archive />', function () {
     fireEvent.click(checkbox);
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith({ Archive: true });
+    expect(onChange).toHaveBeenCalledWith({ archive: true });
   });
 });
