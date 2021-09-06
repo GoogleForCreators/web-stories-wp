@@ -25,6 +25,7 @@ import {
 } from '@web-stories-wp/react';
 import { useFeatures } from 'flagged';
 import { addQueryArgs } from '@web-stories-wp/design-system';
+import { createSolidFromString } from '@web-stories-wp/patterns';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
@@ -226,7 +227,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
       });
 
       try {
-        const { createdBy, pages, version } = template;
+        const { createdBy, pages, version, colors } = template;
         const { getStoryPropsToSave } = await import(
           /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@web-stories-wp/story-editor'
         );
@@ -246,6 +247,10 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
           flags,
         });
 
+        const convertedColors = colors.map(({ color }) =>
+          createSolidFromString(color)
+        );
+
         const path = addQueryArgs(storyApi, {
           _fields: 'edit_link',
         });
@@ -258,6 +263,9 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
               version,
               autoAdvance: true,
               defaultPageDuration: 7,
+              currentStoryStyles: {
+                colors: convertedColors,
+              },
             },
           },
         });

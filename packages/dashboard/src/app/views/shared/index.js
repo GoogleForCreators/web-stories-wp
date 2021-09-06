@@ -17,4 +17,3 @@
 export { default as BodyViewOptions } from './bodyViewOptions';
 export { default as EmptyContentMessage } from './emptyContentMessage';
 export { default as PageHeading } from './pageHeading';
-export { default as SavedTemplateGridView } from './savedTemplateGridView';

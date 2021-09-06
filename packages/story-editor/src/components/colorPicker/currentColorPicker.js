@@ -139,7 +139,12 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
 
-  const handleFormatHex = useCallback((v) => `#${v}`, []);
+  const handleFormatHex = useCallback((v) => {
+    if ('transparent' === v) {
+      v = '000000';
+    }
+    return `#${v}`;
+  }, []);
   const handleFormatPercentage = useCallback((v) => `${v}%`, []);
 
   const handleHexInputChange = useCallback(

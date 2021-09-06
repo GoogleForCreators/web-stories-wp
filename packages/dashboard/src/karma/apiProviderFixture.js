@@ -80,20 +80,14 @@ export default function ApiProviderFixture({ children }) {
 
   const templateApi = useMemo(
     () => ({
-      bookmarkTemplateById: jasmine.createSpy('bookmarkTemplateById'),
-      createTemplateFromStory: jasmine.createSpy('createTemplateFromStory'),
-      fetchBookmarkedTemplates: jasmine.createSpy('fetchBookmarkedTemplates'),
       fetchExternalTemplates: () =>
         setTemplatesState((currentState) =>
           fetchExternalTemplates(currentState)
         ),
       fetchExternalTemplateById: (id) =>
         fetchExternalTemplateById(id, templates),
-      fetchMyTemplates: jasmine.createSpy('fetchMyTemplates'),
-      fetchMyTemplateById: (id) => fetchExternalTemplateById(id, templates),
       fetchRelatedTemplates: (currentTemplateId) =>
         fetchRelatedTemplates(currentTemplateId, templates),
-      fetchSavedTemplates: jasmine.createSpy('fetchSavedTemplates'),
     }),
     [templates]
   );
@@ -385,8 +379,6 @@ function getTemplatesState() {
     allPagesFetched: true,
     error: {},
     isLoading: false,
-    savedTemplates: {},
-    savedTemplatesOrderById: [],
     templates: copiedTemplates.reduce((acc, curr) => {
       acc[curr.id] = curr;
 

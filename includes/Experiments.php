@@ -243,28 +243,6 @@ class Experiments extends Service_Base {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @carlos-kelly
-			 * Issue: 2081
-			 * Creation date: 2020-05-28
-			 */
-			[
-				'name'        => 'enableInProgressViews',
-				'label'       => __( 'Views', 'web-stories' ),
-				'description' => __( 'Enable in-progress views to be accessed', 'web-stories' ),
-				'group'       => 'dashboard',
-			],
-			/**
-			 * Author: @brittanyirl
-			 * Issue: 2344
-			 * Creation date: 2020-06-10
-			 */
-			[
-				'name'        => 'enableInProgressStoryActions',
-				'label'       => __( 'Actions', 'web-stories' ),
-				'description' => __( 'Enable in-progress story actions', 'web-stories' ),
-				'group'       => 'dashboard',
-			],
-			/**
 			 * Author: @brittanyirl
 			 * Issue: 2381
 			 * Creation date: 2020-06-11
@@ -273,17 +251,6 @@ class Experiments extends Service_Base {
 				'name'        => 'enableInProgressTemplateActions',
 				'label'       => __( 'Template actions', 'web-stories' ),
 				'description' => __( 'Enable in-progress template actions', 'web-stories' ),
-				'group'       => 'dashboard',
-			],
-			/**
-			 * Author: @brittanyirl
-			 * Issue: 2292
-			 * Creation date: 2020-06-11
-			 */
-			[
-				'name'        => 'enableBookmarkActions',
-				'label'       => __( 'Bookmarks', 'web-stories' ),
-				'description' => __( 'Enable bookmark actions', 'web-stories' ),
 				'group'       => 'dashboard',
 			],
 			/**
@@ -422,6 +389,18 @@ class Experiments extends Service_Base {
 				'name'        => 'enableTaxonomiesSupport',
 				'label'       => __( 'Taxonomies', 'web-stories' ),
 				'description' => __( 'Enable support of tags and categories for stories', 'web-stories' ),
+				'group'       => 'editor',
+			],
+
+			/**
+			 * Author: @barklund
+			 * Issue: #8877
+			 * Creation date: 2021-09-01
+			 */
+			[
+				'name'        => 'enableVideoTrim',
+				'label'       => __( 'Video trimming', 'web-stories' ),
+				'description' => __( 'Enable video trimming', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];
