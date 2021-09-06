@@ -63,8 +63,7 @@ describe('Handling .mov files', () => {
         visible: true,
       });
       const fileName = await uploadFile('small-video.mov', false);
-      const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
-      uploadedFiles.push(fileNameNoExt);
+      uploadedFiles.push(fileName);
 
       await expect(page).toClick('button', { text: 'Insert into page' });
 
@@ -87,8 +86,7 @@ describe('Handling .mov files', () => {
         visible: true,
       });
       const fileName = await uploadFile('small-video.mov', false);
-      const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
-      uploadedFiles.push(fileNameNoExt);
+      uploadedFiles.push(fileName);
 
       await clickButton(
         '.attachments-browser .attachments .attachment:first-of-type'

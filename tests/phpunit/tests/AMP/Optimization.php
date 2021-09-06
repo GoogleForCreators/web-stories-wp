@@ -24,12 +24,12 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerpl
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimePreloads;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ReorderHead;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\GoogleFontsPreconnect;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Optimization
  */
-class Optimization extends Test_Case {
+class Optimization extends TestCase {
 	/**
 	 * @covers ::optimize_document
 	 * @covers ::get_optimizer

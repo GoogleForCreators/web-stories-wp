@@ -18,12 +18,12 @@
 namespace Google\Web_Stories\Tests\AMP;
 
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Canonical_Sanitizer
  */
-class Canonical_Sanitizer extends Test_Case {
+class Canonical_Sanitizer extends TestCase {
 	protected static $user_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {

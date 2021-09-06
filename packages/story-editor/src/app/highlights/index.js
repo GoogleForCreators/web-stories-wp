@@ -19,7 +19,6 @@
 import { OUTLINE, FLASH } from './styles';
 
 export { default as useHighlights } from './useHighlights';
-export { default as useFocusHighlight } from './useFocusHighlight';
 export { default as HighlightsProvider } from './provider';
 export { default as states } from './states';
 export { ACTIONS } from './quickActions/constants';

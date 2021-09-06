@@ -31,51 +31,7 @@ use WP_Error;
 use WP_Site;
 
 /**
- * Run logic to setup a new site with web stories.
- *
- * @since 1.2.0
- *
- * @return void
- */
-function setup_new_site() {
-	$injector = Services::get_injector();
-	if ( ! method_exists( $injector, 'make' ) ) {
-		return;
-	}
-
-	// Register web-story post type to setup rewrite rules.
-	$story = $injector->make( Story_Post_Type::class );
-	$story->register();
-
-	// Flush rewrite rules after registering post type.
-	rewrite_flush();
-
-	// Setup user capabilities.
-	$capabilities = $injector->make( User\Capabilities::class );
-	$capabilities->add_caps_to_roles();
-
-	// Not using Services::get(...) because the class is only registered on 'admin_init', which we might not be in here.
-	$database_upgrader = $injector->make( Database_Upgrader::class );
-	$database_upgrader->register();
-}
-
-/**
- * Flush rewrites.
- *
- * @since 1.7.0
- *
- * @return void
- */
-function rewrite_flush() {
-	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
-	}
-}
-
-/**
  * Handles plugin activation.
- *
- * Throws an error if the site is running on PHP < 5.6
  *
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  *
@@ -87,17 +43,23 @@ function rewrite_flush() {
  */
 function activate( $network_wide = false ) {
 	$network_wide = (bool) $network_wide;
-	// Ensures capabilities are properly set up as that class is not a service.
-	setup_new_site();
 
-	// Runs all activateable services.
-	get_plugin_instance()->activate( $network_wide );
+	// Runs all PluginActivationAware services.
+	// This will also flush rewrite rules.
+	PluginFactory::create()->on_plugin_activation( $network_wide );
 
+	/**
+	 * Fires after plugin activation.
+	 *
+	 * @param bool $network_wide Whether to activate network-wide.
+	 */
 	do_action( 'web_stories_activation', $network_wide );
 }
 
+register_activation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\activate' );
+
 /**
- * Hook into new site when they are created and run activation hook.
+ * Hook into new site creation on Multisite.
  *
  * @since 1.0.0
  *
@@ -116,20 +78,15 @@ function new_site( $site ) {
 		return;
 	}
 
-	$site_id = (int) $site->blog_id;
-
-	// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
-	switch_to_blog( $site_id );
-
-	setup_new_site();
-
-	restore_current_blog();
+	// Runs all SiteInitializationAware services.
+	// This will also flush rewrite rules.
+	PluginFactory::create()->on_site_initialization( $site );
 }
 
 add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
 
 /**
- * Hook into delete site.
+ * Hook into site removal on Multisite.
  *
  * @since 1.1.0
  *
@@ -149,21 +106,7 @@ function remove_site( $error, $site ) {
 		return;
 	}
 
-	$injector = Services::get_injector();
-	// If something went wrong with the injector, exit early.
-	if ( ! method_exists( $injector, 'make' ) ) {
-		return;
-	}
-	$capabilities = $injector->make( User\Capabilities::class );
-
-	$site_id = (int) $site->blog_id;
-
-	// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
-	switch_to_blog( $site_id );
-
-	$capabilities->remove_caps_from_roles();
-
-	restore_current_blog();
+	PluginFactory::create()->on_site_removal( $site );
 }
 
 add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT_MAX, 2 );
@@ -181,17 +124,20 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  */
 function deactivate( $network_wide = false ) {
 	$network_wide = (bool) $network_wide;
-	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
 
+	// Runs all PluginDeactivationAware services.
 	// This will also flush rewrite rules.
-	get_plugin_instance()->deactivate( $network_wide );
+	PluginFactory::create()->on_plugin_deactivation( $network_wide );
 
+	/**
+	 * Fires after plugin deactivation.
+	 *
+	 * @param bool $network_wide Whether to deactivate network-wide.
+	 */
 	do_action( 'web_stories_deactivation', $network_wide );
 }
 
-register_activation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\activate' );
 register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate' );
-
 
 /**
  * Initializes functionality to improve compatibility with the AMP plugin.
@@ -208,17 +154,18 @@ function load_amp_plugin_compat() {
 
 add_action( 'wp', __NAMESPACE__ . '\load_amp_plugin_compat' );
 
-
 /**
- * Include necessary files.
+ * Load functions for use by plugin developers.
+ *
+ * @todo Move to autoloader
  *
  * @return void
  */
-function includes() {
+function load_functions() {
 	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
 }
 
-add_action( 'init', __NAMESPACE__ . '\includes' );
+add_action( 'init', __NAMESPACE__ . '\load_functions' );
 
 /**
  * Append result of internal request to REST API for purpose of preloading data to be attached to a page.
@@ -251,16 +198,20 @@ function rest_preload_api_request( $memo, $path ): array {
 	}
 
 	$method = 'GET';
-	if ( is_array( $path ) && 2 === count( $path ) ) {
+	if ( is_array( $path ) ) {
+		if ( 2 !== count( $path ) ) {
+			return $memo;
+		}
+
 		$method = end( $path );
-		$path   = reset( $path );
+		$path   = (string) reset( $path );
 
 		if ( ! in_array( $method, [ 'GET', 'OPTIONS' ], true ) ) {
 			$method = 'GET';
 		}
 	}
 
-	$path_parts = wp_parse_url( $path );
+	$path_parts = wp_parse_url( (string) $path );
 	if ( false === $path_parts ) {
 		return $memo;
 	}
@@ -297,19 +248,26 @@ function rest_preload_api_request( $memo, $path ): array {
 }
 
 /**
- * Web stories Plugin Instance
+ * Returns the Web stories plugin instance.
+ *
+ * Can be used by other plugins to integrate with the plugin
+ * or to simply detect whether the plugin is active.
  *
  * @return Plugin
  */
 function get_plugin_instance() {
-	global $web_stories;
-
-	if ( null === $web_stories ) {
-		$web_stories = new Plugin();
-	}
-
-	return $web_stories;
+	return PluginFactory::create();
 }
 
-// Initialize plugin by registering all services.
-get_plugin_instance()->register();
+/**
+ * Bootstrap the plugin.
+ *
+ * @since 1.11.0
+ *
+ * @return void
+ */
+function bootstrap_plugin() {
+	PluginFactory::create()->register();
+}
+
+add_action( 'plugins_loaded', __NAMESPACE__ . '\bootstrap_plugin' );

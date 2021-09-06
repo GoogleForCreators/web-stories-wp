@@ -229,6 +229,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Right click menus', 'web-stories' ),
 				'description' => __( 'Enable a contextual shortcut menu when right clicking in the editor', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @littlemilkstudio
@@ -242,28 +243,6 @@ class Experiments extends Service_Base {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @carlos-kelly
-			 * Issue: 2081
-			 * Creation date: 2020-05-28
-			 */
-			[
-				'name'        => 'enableInProgressViews',
-				'label'       => __( 'Views', 'web-stories' ),
-				'description' => __( 'Enable in-progress views to be accessed', 'web-stories' ),
-				'group'       => 'dashboard',
-			],
-			/**
-			 * Author: @brittanyirl
-			 * Issue: 2344
-			 * Creation date: 2020-06-10
-			 */
-			[
-				'name'        => 'enableInProgressStoryActions',
-				'label'       => __( 'Actions', 'web-stories' ),
-				'description' => __( 'Enable in-progress story actions', 'web-stories' ),
-				'group'       => 'dashboard',
-			],
-			/**
 			 * Author: @brittanyirl
 			 * Issue: 2381
 			 * Creation date: 2020-06-11
@@ -272,17 +251,6 @@ class Experiments extends Service_Base {
 				'name'        => 'enableInProgressTemplateActions',
 				'label'       => __( 'Template actions', 'web-stories' ),
 				'description' => __( 'Enable in-progress template actions', 'web-stories' ),
-				'group'       => 'dashboard',
-			],
-			/**
-			 * Author: @brittanyirl
-			 * Issue: 2292
-			 * Creation date: 2020-06-11
-			 */
-			[
-				'name'        => 'enableBookmarkActions',
-				'label'       => __( 'Bookmarks', 'web-stories' ),
-				'description' => __( 'Enable bookmark actions', 'web-stories' ),
 				'group'       => 'dashboard',
 			],
 			/**
@@ -343,12 +311,23 @@ class Experiments extends Service_Base {
 			/**
 			 * Author: @miina
 			 * Issue #7986
-			 * Creation date: 2021-08-08
+			 * Creation date: 2021-07-08
 			 */
 			[
 				'name'        => 'enableSmartTextColor',
 				'label'       => __( 'Smart text color', 'web-stories' ),
 				'description' => __( 'Enable text insertion with smart color ensuring good contrast with the background', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @merapi
+			 * Issue #7995
+			 * Creation date: 2021-08-13
+			 */
+			[
+				'name'        => 'enableSmartTextSetsColor',
+				'label'       => __( 'Smart text sets color', 'web-stories' ),
+				'description' => __( 'Enable text sets insertion with smart color ensuring good contrast with the background', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -377,19 +356,6 @@ class Experiments extends Service_Base {
 			],
 
 			/**
-			 * Author: @spacedmonkey
-			 * Issue: #8310
-			 * Creation date: 2021-07-15
-			 */
-			[
-				'name'        => 'enableMuteVideo',
-				'label'       => __( 'Mute Videos', 'web-stories' ),
-				'description' => __( 'Allow videos to be muted in the editor.', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
 			 * Author: @miina
 			 * Issue #471
 			 * Creation date: 2021-08-10
@@ -398,6 +364,30 @@ class Experiments extends Service_Base {
 				'name'        => 'enableHotlinking',
 				'label'       => __( 'Insert media from link', 'web-stories' ),
 				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
+				'group'       => 'editor',
+			],
+
+			/**
+			 * Author: @brookegraham
+			 * Issue: #8832
+			 * Creation date: 2021-08-30
+			 */
+			[
+				'name'        => 'enableTaxonomiesSupport',
+				'label'       => __( 'Taxonomies', 'web-stories' ),
+				'description' => __( 'Enable support of tags and categories for stories', 'web-stories' ),
+				'group'       => 'editor',
+			],
+
+			/**
+			 * Author: @barklund
+			 * Issue: #8877
+			 * Creation date: 2021-09-01
+			 */
+			[
+				'name'        => 'enableVideoTrim',
+				'label'       => __( 'Video trimming', 'web-stories' ),
+				'description' => __( 'Enable video trimming', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

@@ -25,6 +25,7 @@ import {
   setCurrentUser,
   toggleVideoOptimization,
   trashAllPosts,
+  deleteAllMedia,
 } from '@web-stories-wp/e2e-test-utils';
 
 // Extend Jest matchers.
@@ -297,6 +298,7 @@ beforeAll(async () => {
   await setCurrentUser('admin', 'password');
   await trashAllPosts();
   await trashAllPosts('web-story');
+  await deleteAllMedia();
 
   // Disable cross-origin isolation by default as it causes issues in Firefox.
   await toggleVideoOptimization(false);

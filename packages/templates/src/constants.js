@@ -13,6 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+// @todo Enable two quiz templates when the interactivity is added to the web story editor.
+// Assets and Stickers for these templates have already been added, to enable these template add them to
+// the TEMPLATE_NAMES array.
+// Templates need to be added:
+//   1. 'beauty-quiz',
+//   2. 'sports-quiz',
+// See https://github.com/google/web-stories-wp/issues/8725 for more details.
+
 export const TEMPLATE_NAMES = [
   'fresh-and-bright',
   'food-and-stuff',
@@ -42,7 +51,6 @@ export const TEMPLATE_NAMES = [
   'ace-hotel-kyoto-review',
   'how-video-calls-saved-the-day',
   'laptop-buying-guide',
-  'beauty-quiz',
   'diy-home-office',
   'kitchen-makeover',
   'self-care-guide',
@@ -65,4 +73,13 @@ export const TEMPLATE_NAMES = [
   'skin-care-at-home',
   'art-books-gift-guide',
   'vintage-chairs-buying-guide',
+  'celebrity-life-story',
+  'series-best-of',
+  'summer-adventure-guide',
+  'one-day-city-itinerary',
+  'technology-advice',
+  'sustainability-tips',
+  'an-artists-legacy',
+  'tips-for-throwing-an-outdoor-luau',
+  'all-about-cars',
 ];

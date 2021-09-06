@@ -28,7 +28,7 @@
  */
 function replaceCurrentPage(state, { page }) {
   // Ensure new page has at least one element
-  if (!page.elements?.length >= 1) {
+  if (!page.elements?.length) {
     return state;
   }
 

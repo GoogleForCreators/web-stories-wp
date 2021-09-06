@@ -165,7 +165,7 @@ class Dashboard extends Service_Base {
 		$this->hook_suffix['stories-dashboard'] = add_submenu_page(
 			$parent,
 			__( 'Dashboard', 'web-stories' ),
-			__( 'My Stories', 'web-stories' ),
+			__( 'Dashboard', 'web-stories' ),
 			'edit_web-stories',
 			'stories-dashboard',
 			[ $this, 'render' ],
@@ -242,7 +242,7 @@ class Dashboard extends Service_Base {
 			'/web-stories/v1/users/me/',
 			"/web-stories/v1/$rest_base/?" . build_query(
 				[
-					'_embed'                => rawurlencode( 'wp:lock,wp:lockuser,author' ),
+					'_embed'                => rawurlencode( 'wp:lock,wp:lockuser,author,wp:featuredmedia' ),
 					'context'               => 'edit',
 					'order'                 => 'desc',
 					'orderby'               => 'modified',
@@ -262,7 +262,6 @@ class Dashboard extends Service_Base {
 								'modified',
 								'modified_gmt',
 								'link',
-								'featured_media_url',
 								'preview_link',
 								'edit_link',
 								// _web_stories_envelope will add these fields, we need them too.
@@ -327,8 +326,7 @@ class Dashboard extends Service_Base {
 
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 
-		$font_handle = $this->google_fonts->get_handle();
-		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $font_handle ] );
+		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $this->google_fonts::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,

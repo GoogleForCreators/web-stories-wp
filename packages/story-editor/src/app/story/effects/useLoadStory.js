@@ -175,6 +175,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           globalStoryStyles,
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,
+          backgroundAudio: storyData?.backgroundAudio,
         };
 
         // TODO read current page and selection from deeplink?

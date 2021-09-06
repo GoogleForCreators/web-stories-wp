@@ -43,6 +43,6 @@ export const PatternPropType = PropTypes.shape({
   }),
   size: PropTypes.shape({
     w: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
+    h: PropTypes.number.isRequired,
   }),
 });

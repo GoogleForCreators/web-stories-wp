@@ -37,6 +37,7 @@ export { default as uploadMedia } from './uploadMedia';
 export { default as uploadPublisherLogo } from './uploadPublisherLogo';
 export { default as toggleVideoOptimization } from './toggleVideoOptimization';
 export { default as deleteMedia } from './deleteMedia';
+export { default as deleteAllMedia } from './deleteAllMedia';
 export { default as deleteWidgets } from './deleteWidgets';
 export { default as getFileName } from './getFileName';
 export { default as trashAllPosts } from './trashAllPosts';

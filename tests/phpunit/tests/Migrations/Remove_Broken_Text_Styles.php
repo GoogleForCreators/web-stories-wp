@@ -17,14 +17,14 @@
 
 namespace Google\Web_Stories\Tests\Migrations;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class Remove_Broken_Text_Styles
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Remove_Broken_Text_Styles
  */
-class Remove_Broken_Text_Styles extends Test_Case {
+class Remove_Broken_Text_Styles extends TestCase {
 	/**
 	 * @covers ::migrate
 	 */

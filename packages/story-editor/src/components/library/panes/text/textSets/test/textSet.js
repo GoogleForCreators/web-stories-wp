@@ -221,6 +221,7 @@ function setup(elements, id) {
       canvasContainer: document.body,
       designSpaceGuideline: {},
     },
+    actions: {},
   };
 
   return renderWithTheme(

@@ -18,212 +18,41 @@
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
-import {
-  toUTCDate,
-  toDate,
-  getSettings,
-  compareDesc,
-} from '@web-stories-wp/date';
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { compareDesc } from '@web-stories-wp/date';
 import getAllTemplates from '@web-stories-wp/templates';
-import { base64Encode } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
-import { APP_ROUTES } from '../../constants';
 import templateReducer, {
   defaultTemplatesState,
   ACTION_TYPES as TEMPLATE_ACTION_TYPES,
 } from '../reducer/templates';
-import { ERRORS } from '../textContent';
+import { reshapeTemplateObject } from '../serializers';
 
-export function reshapeTemplateObject(isLocal) {
-  return ({
-    id,
-    slug,
-    title,
-    modified,
-    tags,
-    colors,
-    createdBy,
-    description,
-    pages,
-    version,
-    creationDate,
-  }) => ({
-    isLocal,
-    id,
-    title,
-    createdBy,
-    description,
-    slug,
-    status: 'template',
-    modified: toUTCDate(modified),
-    tags,
-    colors,
-    pages,
-    version,
-    centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
-    creationDate: toDate(creationDate, getSettings()),
-  });
-}
-
-// TODO once templates are all connected to an API this and the above reshapeTemplateObject should be able to be one and the same
-// Connecting the ability to create a template from a story I wanted to be able to see the results on saved templates, this endpoint is still missing some template related data.
-export function reshapeSavedTemplates({
-  author,
-  isLocal = true,
-  id,
-  title,
-  modified,
-  tags = [],
-  colors = [],
-  createdBy = 'N/A',
-  description,
-  pages,
-}) {
-  return {
-    author,
-    isLocal,
-    id,
-    title: title.rendered,
-    createdBy,
-    description,
-    status: 'template',
-    modified: toUTCDate(modified),
-    tags,
-    colors,
-    pages,
-    centerTargetAction: false, // `${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
-  };
-}
-// TODO: Remove this eslint rule once endpoints are working
-/* eslint-disable no-unused-vars */
 const useTemplateApi = (dataAdapter, config) => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
 
-  const { cdnURL, templateApi, encodeMarkup } = config;
+  const { cdnURL } = config;
 
-  const fetchSavedTemplates = useCallback(() => {
-    // Saved Templates = Bookmarked Templates + My Templates
+  const fetchExternalTemplates = useCallback(async () => {
     dispatch({
-      type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
+      type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
+      payload: true,
+    });
+
+    const reshapedTemplates = (await getAllTemplates({ cdnURL }))
+      .map((template) => reshapeTemplateObject(template, cdnURL))
+      .sort((a, b) => compareDesc(a.creationDate, b.creationDate));
+    dispatch({
+      type: TEMPLATE_ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
       payload: {
-        templates: [],
-        totalPages: 0,
-        totalTemplates: 0,
         page: 1,
+        templates: reshapedTemplates,
+        totalPages: 1,
+        totalTemplates: reshapedTemplates.length,
       },
     });
-    return Promise.resolve([]);
-  }, []);
-
-  const fetchBookmarkedTemplates = useCallback((filters) => {
-    dispatch({
-      type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
-      payload: {
-        templates: [],
-        totalPages: 0,
-        totalTemplates: 0,
-        page: 1,
-      },
-    });
-  }, []);
-
-  const fetchMyTemplates = useCallback(
-    async ({ page = 1 }) => {
-      dispatch({
-        type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
-        payload: true,
-      });
-
-      if (!templateApi) {
-        dispatch({
-          type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
-          payload: {
-            message: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
-          },
-        });
-      }
-
-      const query = {
-        page,
-        per_page: 100,
-        status: 'publish,draft,pending',
-      };
-
-      try {
-        const path = addQueryArgs(templateApi, query);
-        const response = await dataAdapter.get(path, {
-          parse: false,
-          cache: 'no-cache',
-        });
-
-        const totalPages =
-          response.headers && parseInt(response.headers.get('X-WP-TotalPages'));
-
-        const totalTemplates =
-          response.headers && parseInt(response.headers.get('X-WP-Total'));
-
-        const serverTemplateResponse = await response.json();
-
-        const reshapedTemplates = serverTemplateResponse.map(
-          reshapeSavedTemplates
-        );
-
-        dispatch({
-          type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_SUCCESS,
-          payload: {
-            savedTemplates: reshapedTemplates,
-            totalPages,
-            totalTemplates,
-            page,
-          },
-        });
-      } catch (err) {
-        dispatch({
-          type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
-          payload: {
-            message: ERRORS.LOAD_TEMPLATES.MESSAGE,
-            code: err.code,
-          },
-        });
-      } finally {
-        dispatch({
-          type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
-          payload: false,
-        });
-      }
-    },
-    [dataAdapter, templateApi]
-  );
-
-  const fetchMyTemplateById = useCallback((templateId) => {
-    return Promise.resolve({});
-  }, []);
-
-  const fetchExternalTemplates = useCallback(
-    async (filters) => {
-      dispatch({
-        type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
-        payload: true,
-      });
-
-      const reshapedTemplates = (await getAllTemplates({ cdnURL }))
-        .map(reshapeTemplateObject(false))
-        .sort((a, b) => compareDesc(a.creationDate, b.creationDate));
-      dispatch({
-        type: TEMPLATE_ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
-        payload: {
-          page: 1,
-          templates: reshapedTemplates,
-          totalPages: 1,
-          totalTemplates: reshapedTemplates.length,
-        },
-      });
-    },
-    [cdnURL]
-  );
+  }, [cdnURL]);
 
   const fetchExternalTemplateById = useCallback(
     (templateId) => {
@@ -233,65 +62,6 @@ const useTemplateApi = (dataAdapter, config) => {
       return Promise.reject(new Error());
     },
     [state]
-  );
-
-  const bookmarkTemplateById = useCallback((templateId, shouldBookmark) => {
-    if (shouldBookmark) {
-      // api call to bookmark template
-      return Promise.resolve({ success: true });
-    } else {
-      // api call to remove bookmark from template
-      return Promise.resolve({ success: true });
-    }
-  }, []);
-
-  const createTemplateFromStory = useCallback(
-    async (story) => {
-      await dispatch({
-        type: TEMPLATE_ACTION_TYPES.CREATING_TEMPLATE_FROM_STORY,
-        payload: true,
-      });
-
-      try {
-        const {
-          content,
-          story_data,
-          style_presets,
-          publisher_logo,
-          featured_media,
-          title,
-        } = story.originalStoryData;
-
-        await dataAdapter.post(templateApi, {
-          data: {
-            content: encodeMarkup ? base64Encode(content.raw) : content.raw,
-            story_data,
-            featured_media,
-            style_presets,
-            publisher_logo,
-            title,
-          },
-        });
-
-        dispatch({
-          type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_SUCCESS,
-        });
-      } catch (err) {
-        dispatch({
-          type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE,
-          payload: {
-            message: ERRORS.CREATE_TEMPLATE_FROM_STORY.MESSAGE,
-            code: err.code,
-          },
-        });
-      } finally {
-        dispatch({
-          type: TEMPLATE_ACTION_TYPES.CREATING_TEMPLATE_FROM_STORY,
-          payload: false,
-        });
-      }
-    },
-    [dataAdapter, templateApi, encodeMarkup]
   );
 
   const fetchRelatedTemplates = useCallback(
@@ -311,31 +81,14 @@ const useTemplateApi = (dataAdapter, config) => {
 
   const api = useMemo(
     () => ({
-      bookmarkTemplateById,
-      createTemplateFromStory,
-      fetchBookmarkedTemplates,
       fetchExternalTemplates,
       fetchExternalTemplateById,
-      fetchMyTemplates,
-      fetchMyTemplateById,
       fetchRelatedTemplates,
-      fetchSavedTemplates,
     }),
-    [
-      bookmarkTemplateById,
-      createTemplateFromStory,
-      fetchBookmarkedTemplates,
-      fetchExternalTemplateById,
-      fetchExternalTemplates,
-      fetchMyTemplates,
-      fetchMyTemplateById,
-      fetchRelatedTemplates,
-      fetchSavedTemplates,
-    ]
+    [fetchExternalTemplateById, fetchExternalTemplates, fetchRelatedTemplates]
   );
 
   return { templates: state, api };
 };
-/* eslint-enable no-unused-vars */
 
 export default useTemplateApi;

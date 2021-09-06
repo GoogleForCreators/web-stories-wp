@@ -21,13 +21,10 @@ import styled from 'styled-components';
 import {
   useCallback,
   useLayoutEffect,
-  useMemo,
   useRef,
   useFocusOut,
   useEffect,
-  useState,
 } from '@web-stories-wp/react';
-import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 import {
@@ -148,17 +145,14 @@ export const LoadingContainer = styled.div`
 `;
 
 export function LeftRail() {
-  const [numNewTemplates, setNumNewTemplates] = useState(0);
   const { state } = useRouteHistory();
   const { newStoryURL, version } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
 
-  const enableInProgressViews = useFeature('enableInProgressViews');
-
   const {
-    state: { sideBarVisible },
-    actions: { toggleSideBar },
+    state: { sideBarVisible, numNewTemplates },
+    actions: { toggleSideBar, updateNumNewTemplates },
   } = useNavContext();
 
   const onContainerClickCapture = useCallback(
@@ -173,13 +167,6 @@ export function LeftRail() {
     },
     [toggleSideBar, leftRailRef, upperContentRef]
   );
-
-  const enabledPrimaryPaths = useMemo(() => {
-    if (enableInProgressViews) {
-      return PRIMARY_PATHS;
-    }
-    return PRIMARY_PATHS.filter((path) => !path.inProgress);
-  }, [enableInProgressViews]);
 
   const handleSideBarClose = useCallback(() => {
     if (sideBarVisible) {
@@ -206,20 +193,26 @@ export function LeftRail() {
   // See how many templates are new based on the current date
   useEffect(() => {
     let mounted = true;
-    (async () => {
+
+    async function refreshNewTemplateCount() {
       const metaData = await getTemplateMetaData();
-      if (mounted) {
+      if (metaData) {
         const newTemplates = getNewTemplatesMetaData(
           metaData,
           NEW_TEMPLATE_THRESHOLD_IN_DAYS
         );
-        setNumNewTemplates(newTemplates.length);
+        if (mounted) {
+          updateNumNewTemplates(newTemplates.length);
+        }
       }
-    })();
+    }
+
+    refreshNewTemplateCount();
+
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [updateNumNewTemplates]);
 
   return (
     <LeftRailContainer
@@ -247,7 +240,7 @@ export function LeftRail() {
         </Content>
         <Content>
           <NavList>
-            {enabledPrimaryPaths.map(({ Icon, ...path }) => {
+            {PRIMARY_PATHS.map(({ Icon, ...path }) => {
               const isNotificationBubbleEnabled =
                 path.value === APP_ROUTES.TEMPLATES_GALLERY &&
                 state.currentPath !== APP_ROUTES.TEMPLATES_GALLERY;
@@ -271,7 +264,7 @@ export function LeftRail() {
                     aria-label={appendNewBadgeToLable(
                       path.value === state.currentPath
                         ? sprintf(
-                            /* translators: %s: the current page, for example "My Stories". */
+                            /* translators: %s: the current page, for example "Dashboard". */
                             __('%s (active view)', 'web-stories'),
                             path.label
                           )
@@ -314,7 +307,7 @@ export function LeftRail() {
                 aria-label={
                   path.value === state.currentPath
                     ? sprintf(
-                        /* translators: %s: the current page, for example "My Stories". */
+                        /* translators: %s: the current page, for example "Dashboard". */
                         __('%s (active view)', 'web-stories'),
                         path.label
                       )

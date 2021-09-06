@@ -8,7 +8,7 @@
 namespace Google\Web_Stories\Tests\Renderer\Stories\Fields;
 
 use Google\Web_Stories\Renderer\Stories\Fields\BaseField as Testee;
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class BaseField.
@@ -17,7 +17,7 @@ use Google\Web_Stories\Tests\Test_Case;
  *
  * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Fields\BaseField
  */
-class BaseField extends Test_Case {
+class BaseField extends TestCase {
 
 	/**
 	 * Object of class in test.

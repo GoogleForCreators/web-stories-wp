@@ -45,9 +45,6 @@ export const ERRORS = {
     DEFAULT_MESSAGE: __('Cannot connect to data source', 'web-stories'),
     MESSAGE: __('Unable to load templates', 'web-stories'),
   },
-  CREATE_TEMPLATE_FROM_STORY: {
-    MESSAGE: __('Unable to create template from story', 'web-stories'),
-  },
   UPLOAD_PUBLISHER_LOGO: {
     MESSAGE: __('Unable to add publisher logo', 'web-stories'),
     MESSAGE_PLURAL: __('Unable to add publisher logos', 'web-stories'),

@@ -24,7 +24,6 @@ import {
   useMemo,
   useEffect,
 } from '@web-stories-wp/react';
-import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import {
@@ -64,9 +63,6 @@ function StoriesView({
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
-  const enableInProgressStoryActions = useFeature(
-    'enableInProgressStoryActions'
-  );
 
   const [activeDialog, setActiveDialog] = useState('');
   const [activeStory, setActiveStory] = useState(null);
@@ -147,14 +143,6 @@ function StoriesView({
     [storyActions]
   );
 
-  const handleCreateTemplateFromStory = useCallback(
-    (story) => {
-      setContextMenuId(-1);
-      storyActions.createTemplateFromStory(story);
-    },
-    [storyActions]
-  );
-
   const handleDeleteStory = useCallback((story) => {
     setContextMenuId(-1);
     setActiveStory(story);
@@ -179,13 +167,6 @@ function StoriesView({
     [showSnackbar]
   );
 
-  const enabledMenuItems = useMemo(() => {
-    if (enableInProgressStoryActions) {
-      return STORY_CONTEXT_MENU_ITEMS;
-    }
-    return STORY_CONTEXT_MENU_ITEMS.filter((item) => !item.inProgress);
-  }, [enableInProgressStoryActions]);
-
   const storyMenu = useMemo(() => {
     return {
       handleMenuToggle: setContextMenuId,
@@ -193,20 +174,16 @@ function StoriesView({
       menuItemActions: {
         default: () => setContextMenuId(-1),
         [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: handleCopyStoryLink,
-        [STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE]:
-          handleCreateTemplateFromStory,
         [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,
         [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: handleDuplicateStory,
         [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: handleOpenStoryInEditor,
         [STORY_CONTEXT_MENU_ACTIONS.RENAME]: handleRenameStory,
       },
-      menuItems: enabledMenuItems,
+      menuItems: STORY_CONTEXT_MENU_ITEMS,
     };
   }, [
     contextMenuId,
-    enabledMenuItems,
     handleCopyStoryLink,
-    handleCreateTemplateFromStory,
     handleDeleteStory,
     handleDuplicateStory,
     handleOpenStoryInEditor,
@@ -252,7 +229,6 @@ function StoriesView({
     ) {
       return (
         <StoryGridView
-          bottomActionLabel={__('Open in editor', 'web-stories')}
           isLoading={loading?.isLoading}
           pageSize={view.pageSize}
           renameStory={renameStory}

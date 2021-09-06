@@ -61,6 +61,7 @@ function APIProvider({ children }) {
     api: {
       stories,
       media,
+      hotlink,
       link,
       users,
       statusCheck,
@@ -147,6 +148,7 @@ function APIProvider({ children }) {
       autoAdvance,
       defaultPageDuration,
       currentStoryStyles,
+      backgroundAudio,
       content,
       author,
       ...rest
@@ -158,6 +160,7 @@ function APIProvider({ children }) {
           autoAdvance,
           defaultPageDuration,
           currentStoryStyles,
+          backgroundAudio,
         },
         featured_media: featuredMedia.id,
         style_presets: globalStoryStyles,
@@ -187,11 +190,11 @@ function APIProvider({ children }) {
           'status',
           'slug',
           'link',
-          'featured_media_url',
           'preview_link',
           'edit_link',
           'embed_post_link',
         ].join(','),
+        _embed: 'wp:featuredmedia',
       });
 
       return apiFetch({
@@ -337,6 +340,16 @@ function APIProvider({ children }) {
       });
     },
     [media]
+  );
+
+  const getHotlinkInfo = useCallback(
+    (url) => {
+      const path = addQueryArgs(hotlink, { url });
+      return apiFetch({
+        path,
+      });
+    },
+    [hotlink]
   );
 
   /**
@@ -504,6 +517,7 @@ function APIProvider({ children }) {
       setStoryLockById,
       deleteStoryLockById,
       getMedia,
+      getHotlinkInfo,
       getLinkMetadata,
       saveStoryById,
       getAuthors,

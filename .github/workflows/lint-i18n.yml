@@ -48,7 +48,7 @@ jobs:
         run: wp cli info
 
       - name: Install latest version of i18n-command
-        run: wp package install git@github.com:wp-cli/i18n-command.git
+        run: wp package install wp-cli/i18n-command
 
       - name: List packages
         run: wp package list

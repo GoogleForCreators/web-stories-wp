@@ -21,6 +21,7 @@ import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -29,6 +30,7 @@ import { states, useHighlights } from '..';
 import updateProperties from '../../../components/inspector/design/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
+import { useCanvas } from '../../canvas';
 import {
   useStory,
   useStoryTriggersDispatch,
@@ -48,6 +50,7 @@ const {
   Media,
   PictureSwap,
   Captions,
+  Scissors,
 } = Icons;
 
 /** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
@@ -87,6 +90,11 @@ const useQuickActions = () => {
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
+  const { setEditingElementWithState } = useCanvas(
+    ({ actions: { setEditingElementWithState } }) => ({
+      setEditingElementWithState,
+    })
+  );
 
   const undoRef = useRef(undo);
   undoRef.current = undo;
@@ -230,6 +238,7 @@ const useQuickActions = () => {
     handleFocusTextSetsPanel,
     handleFocusStylePanel,
     handleFocusCaptionsPanel,
+    handleFocusVideoSettingsPanel,
   } = useMemo(
     () => ({
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
@@ -240,6 +249,7 @@ const useQuickActions = () => {
       handleFocusTextColor: handleFocusPanel(states.TEXT_COLOR),
       handleFocusStylePanel: handleFocusPanel(states.STYLE),
       handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
+      handleFocusVideoSettingsPanel: handleFocusPanel(states.VIDEO_SETTINGS),
     }),
     [handleFocusPanel]
   );
@@ -462,6 +472,35 @@ const useQuickActions = () => {
     ]
   );
 
+  const isVideoTrimEnabled = useFeature('enableVideoTrim');
+  const videoCommonActions = useMemo(() => {
+    return isVideoTrimEnabled
+      ? [
+          {
+            Icon: Scissors,
+            label: ACTIONS.TRIM_VIDEO.text,
+            onClick: (evt) => {
+              handleFocusVideoSettingsPanel()(evt);
+              setEditingElementWithState(selectedElement.id, {
+                isTrimming: true,
+              });
+              trackEvent('quick_action', {
+                name: ACTIONS.TRIM_VIDEO.trackingEventName,
+                element: selectedElement.type,
+              });
+            },
+            ...actionMenuProps,
+          },
+        ]
+      : [];
+  }, [
+    actionMenuProps,
+    handleFocusVideoSettingsPanel,
+    isVideoTrimEnabled,
+    selectedElement,
+    setEditingElementWithState,
+  ]);
+
   const videoActions = useMemo(() => {
     const [baseActions, clearActions] = showClearAction
       ? [
@@ -485,6 +524,7 @@ const useQuickActions = () => {
         },
         ...actionMenuProps,
       },
+      ...videoCommonActions,
       ...clearActions,
     ];
   }, [
@@ -493,6 +533,7 @@ const useQuickActions = () => {
     handleFocusCaptionsPanel,
     selectedElement?.type,
     showClearAction,
+    videoCommonActions,
   ]);
 
   const backgroundElementMediaActions = useMemo(() => {
@@ -584,8 +625,13 @@ const useQuickActions = () => {
 
   // return background media actions if:
   // 1. the background is selected
-  // 2. and, the background is selected
+  // 2. and, the background is media
   if (isBackgroundSelected && isBackgroundElementMedia) {
+    const isVideo = selectedElement.type === 'video';
+    // In case of video, we're also adding actions that are common for video regardless of bg/not.
+    if (isVideo) {
+      return [...backgroundElementMediaActions, ...videoCommonActions];
+    }
     return backgroundElementMediaActions;
   }
 

@@ -66,7 +66,7 @@ function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
             size={BUTTON_SIZES.SMALL}
             href={dashboardLink}
           >
-            {__('My Stories', 'web-stories')}
+            {__('Dashboard', 'web-stories')}
           </Button>
           <Button
             type={BUTTON_TYPES.TERTIARY}

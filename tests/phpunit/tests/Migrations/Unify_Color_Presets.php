@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Migrations;
 
-use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Tests\TestCase;
 
 /**
  * Class Unify_Color_Presets
@@ -25,7 +25,7 @@ use Google\Web_Stories\Tests\Test_Case;
  * @coversDefaultClass \Google\Web_Stories\Migrations\Unify_Color_Presets
 *
  */
-class Unify_Color_Presets extends Test_Case {
+class Unify_Color_Presets extends TestCase {
 	/**
 	 * @covers ::migrate
 	 */
