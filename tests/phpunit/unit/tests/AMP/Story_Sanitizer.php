@@ -15,17 +15,38 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration\AMP;
+namespace Google\Web_Stories\Tests\Unit\AMP;
 
 use AMP_DOM_Utils;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Publisher;
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Unit\TestCase;
+use Brain\Monkey;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Story_Sanitizer
  */
 class Story_Sanitizer extends TestCase {
+	public function set_up() {
+		parent::set_up();
+
+		$this->stubEscapeFunctions();
+
+		Monkey\Functions\stubs(
+			[
+				'get_bloginfo' => static function( $show ) {
+					switch ( $show ) {
+						case 'charset':
+							return 'UTF-8';
+						case 'language':
+							return 'en-US';
+					}
+
+					return $show;
+				},
+				'is_rtl'       => false,
+			]
+		);
+	}
+
 	/**
 	 * Helper method for tests.
 	 * @param string $source
@@ -42,7 +63,7 @@ class Story_Sanitizer extends TestCase {
 		return $dom->saveHTML( $dom->documentElement );
 	}
 
-	public function get_publisher_logo_data() {
+	public function get_publisher_logo_data(): array {
 		return [
 			'publisher_logo_exists'      => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
