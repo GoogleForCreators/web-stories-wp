@@ -35,6 +35,7 @@ import { initializeTracking } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import * as apiCallbacks from './api';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
 /**
@@ -54,10 +55,15 @@ const initialize = (id, config, flags) => {
 
   initializeTracking('Editor');
 
+  const editorConfig = {
+    ...config,
+    apiCallbacks,
+  };
+
   render(
     <FlagsProvider features={flags}>
       <StrictMode>
-        <App config={config} />
+        <App config={editorConfig} />
       </StrictMode>
     </FlagsProvider>,
     appElement

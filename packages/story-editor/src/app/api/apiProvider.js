@@ -79,7 +79,9 @@ function APIProvider({ children }) {
     withoutImages: [],
   });
 
-  const getStoryById = useCallback(
+  const actions = {};
+
+  actions.getStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
@@ -93,7 +95,7 @@ function APIProvider({ children }) {
     [stories]
   );
 
-  const getStoryLockById = useCallback(
+  actions.getStoryLockById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/lock`, {
         _embed: 'author',
@@ -104,7 +106,7 @@ function APIProvider({ children }) {
     [stories]
   );
 
-  const setStoryLockById = useCallback(
+  actions.setStoryLockById = useCallback(
     (storyId) => {
       const path = `${stories}${storyId}/lock`;
 
@@ -113,7 +115,7 @@ function APIProvider({ children }) {
     [stories]
   );
 
-  const deleteStoryLockById = useCallback(
+  actions.deleteStoryLockById = useCallback(
     (storyId, nonce) => {
       const data = new window.FormData();
       data.append('_wpnonce', nonce);
@@ -125,7 +127,7 @@ function APIProvider({ children }) {
     [storyLocking]
   );
 
-  const getDemoStoryById = useCallback(
+  actions.getDemoStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
@@ -173,7 +175,7 @@ function APIProvider({ children }) {
     [encodeMarkup]
   );
 
-  const saveStoryById = useCallback(
+  actions.saveStoryById = useCallback(
     /**
      * Fire REST API call to save story.
      *
@@ -206,7 +208,7 @@ function APIProvider({ children }) {
     [stories, getStorySaveData]
   );
 
-  const autoSaveById = useCallback(
+  actions.autoSaveById = useCallback(
     /**
      * Fire REST API call to save story.
      *
@@ -225,7 +227,7 @@ function APIProvider({ children }) {
   );
 
   // Important: Keep in sync with REST API preloading definition.
-  const getMedia = useCallback(
+  actions.getMedia = useCallback(
     ({ mediaType, searchTerm, pagingNum, cacheBust }) => {
       let apiPath = media;
       const perPage = 100;
@@ -283,7 +285,7 @@ function APIProvider({ children }) {
    * @param {?Object} additionalData Additional data to include in the request.
    * @return {Promise} Media Object Promise.
    */
-  const uploadMedia = useCallback(
+  actions.uploadMedia = useCallback(
     (file, additionalData) => {
       // Create upload payload
       const data = new window.FormData();
@@ -309,7 +311,7 @@ function APIProvider({ children }) {
    * @param  {Object} data Object of properties to update on attachment.
    * @return {Promise} Media Object Promise.
    */
-  const updateMedia = useCallback(
+  actions.updateMedia = useCallback(
     (mediaId, data) => {
       return apiFetch({
         path: `${media}${mediaId}/`,
@@ -326,7 +328,7 @@ function APIProvider({ children }) {
    * @param  {number} mediaId
    * @return {Promise} Media Object Promise.
    */
-  const deleteMedia = useCallback(
+  actions.deleteMedia = useCallback(
     (mediaId) => {
       // `apiFetch` by default turns `DELETE` requests into `POST` requests
       // with `X-HTTP-Method-Override: DELETE` headers.
@@ -342,7 +344,7 @@ function APIProvider({ children }) {
     [media]
   );
 
-  const getHotlinkInfo = useCallback(
+  actions.getHotlinkInfo = useCallback(
     (url) => {
       const path = addQueryArgs(hotlink, { url });
       return apiFetch({
@@ -359,7 +361,7 @@ function APIProvider({ children }) {
    * @param  {number} url
    * @return {Promise} Result promise
    */
-  const getLinkMetadata = useCallback(
+  actions.getLinkMetadata = useCallback(
     (url) => {
       const path = addQueryArgs(link, { url });
       return apiFetch({
@@ -369,7 +371,7 @@ function APIProvider({ children }) {
     [link]
   );
 
-  const getAuthors = useCallback(
+  actions.getAuthors = useCallback(
     (search = null) => {
       return apiFetch({
         path: addQueryArgs(users, { per_page: '100', who: 'authors', search }),
@@ -378,13 +380,13 @@ function APIProvider({ children }) {
     [users]
   );
 
-  const getCurrentUser = useCallback(() => {
+  actions.getCurrentUser = useCallback(() => {
     return apiFetch({
       path: currentUser,
     });
   }, [currentUser]);
 
-  const updateCurrentUser = useCallback(
+  actions.updateCurrentUser = useCallback(
     (data) => {
       return apiFetch({
         path: currentUser,
@@ -396,7 +398,7 @@ function APIProvider({ children }) {
   );
 
   // See https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L72-L126
-  const saveMetaBoxes = useCallback(
+  actions.saveMetaBoxes = useCallback(
     (story, formData) => {
       // Additional data needed for backward compatibility.
       // If we do not provide this data, the post will be overridden with the default values.
@@ -427,7 +429,7 @@ function APIProvider({ children }) {
    * @param {string} HTML string.
    * @return {Promise} Result promise
    */
-  const getStatusCheck = useCallback(
+  actions.getStatusCheck = useCallback(
     (content) => {
       return apiFetch({
         path: statusCheck,
@@ -438,7 +440,7 @@ function APIProvider({ children }) {
     [statusCheck, encodeMarkup]
   );
 
-  const getPageTemplates = useCallback(
+  actions.getPageTemplates = useCallback(
     async ({ showImages = false } = {}) => {
       // check if pageTemplates have been loaded yet
       if (pageTemplates.current.base.length === 0) {
@@ -453,7 +455,7 @@ function APIProvider({ children }) {
     [cdnURL]
   );
 
-  const getCustomPageTemplates = useCallback(
+  actions.getCustomPageTemplates = useCallback(
     (page = 1) => {
       let apiPath = customPageTemplates;
       const perPage = 100;
@@ -477,7 +479,7 @@ function APIProvider({ children }) {
     [customPageTemplates]
   );
 
-  const addPageTemplate = useCallback(
+  actions.addPageTemplate = useCallback(
     (page) => {
       return apiFetch({
         path: `${customPageTemplates}/`,
@@ -493,7 +495,7 @@ function APIProvider({ children }) {
     [customPageTemplates]
   );
 
-  const deletePageTemplate = useCallback(
+  actions.deletePageTemplate = useCallback(
     (id) => {
       // `?_method=DELETE` is an alternative solution to override the request method.
       // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
@@ -508,34 +510,7 @@ function APIProvider({ children }) {
     [customPageTemplates]
   );
 
-  const state = {
-    actions: {
-      autoSaveById,
-      getStoryById,
-      getDemoStoryById,
-      getStoryLockById,
-      setStoryLockById,
-      deleteStoryLockById,
-      getMedia,
-      getHotlinkInfo,
-      getLinkMetadata,
-      saveStoryById,
-      getAuthors,
-      uploadMedia,
-      updateMedia,
-      deleteMedia,
-      saveMetaBoxes,
-      getStatusCheck,
-      addPageTemplate,
-      getCustomPageTemplates,
-      deletePageTemplate,
-      getPageTemplates,
-      getCurrentUser,
-      updateCurrentUser,
-    },
-  };
-
-  return <Context.Provider value={state}>{children}</Context.Provider>;
+  return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
 }
 
 APIProvider.propTypes = {
