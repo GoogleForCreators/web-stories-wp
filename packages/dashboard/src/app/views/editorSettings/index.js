@@ -43,6 +43,7 @@ import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
 import MediaOptimizationSettings from './mediaOptimization';
 import VideoCacheSettings from './videoCache';
+import ArchiveSettings from './archive';
 
 const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
@@ -63,6 +64,7 @@ function EditorSettings() {
     newlyCreatedMediaIds,
     publisherLogoIds,
     videoCache,
+    archive,
   } = useApi(
     ({
       actions: {
@@ -79,6 +81,7 @@ function EditorSettings() {
           publisherLogoIds,
           activePublisherLogoId,
           videoCache,
+          archive,
         },
         media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
       },
@@ -98,6 +101,7 @@ function EditorSettings() {
       newlyCreatedMediaIds,
       publisherLogoIds,
       videoCache,
+      archive,
     })
   );
 
@@ -386,6 +390,12 @@ function EditorSettings() {
             {canManageSettings && (
               <VideoCacheSettings
                 isEnabled={videoCache}
+                updateSettings={updateSettings}
+              />
+            )}
+            {canManageSettings && (
+              <ArchiveSettings
+                isEnabled={archive}
                 updateSettings={updateSettings}
               />
             )}

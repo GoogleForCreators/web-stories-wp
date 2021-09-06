@@ -36,6 +36,7 @@ export const defaultSettingsState = {
   adManagerSlotId: '',
   adNetwork: AD_NETWORK_TYPE.NONE,
   publisherLogoIds: [],
+  archive: true,
   videoCache: false,
   settingSaved: false,
 };
@@ -75,6 +76,7 @@ function settingsReducer(state, action) {
           ]),
         ],
         videoCache: action.payload.videoCache,
+        archive: action.payload.archive,
       };
     }
 
