@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useState } from '@web-stories-wp/react';
+import { memo, useRef, useState } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { useUnits } from '@web-stories-wp/units';
@@ -238,4 +238,6 @@ DisplayElement.propTypes = {
   isAnimatable: PropTypes.bool,
 };
 
-export default DisplayElement;
+// Don't rerender the display element needlessly (e.g. element selection change)
+// if the element or other props haven't changed.
+export default memo(DisplayElement);

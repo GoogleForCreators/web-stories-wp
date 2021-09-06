@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-import { default as theQuizWhiteBanner } from './whiteBanner';
-import { default as theQuizYellowBanner } from './yellowBanner';
+import useCanvas from '../../app/canvas/useCanvas';
 
-export { theQuizWhiteBanner, theQuizYellowBanner };
+function VideoEditMenu() {
+  const { editingElementState } = useCanvas((state) => ({
+    editingElementState: state.state.editingElementState,
+  }));
+
+  if (!editingElementState?.isTrimming) {
+    return false;
+  }
+
+  return (
+    <div style={{ border: '2px solid red', backgroundColor: 'hotpink' }}>
+      {'Dummy Edit Menu'}
+    </div>
+  );
+}
+
+export default VideoEditMenu;

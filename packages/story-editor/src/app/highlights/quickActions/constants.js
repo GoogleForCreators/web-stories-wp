@@ -68,6 +68,10 @@ export const ACTIONS = {
     trackingEventName: 'replace_media',
     text: __('Replace media', 'web-stories'),
   },
+  TRIM_VIDEO: {
+    trackingEventName: 'trim_video',
+    text: __('Trim video', 'web-stories'),
+  },
 };
 
 export const RESET_PROPERTIES = {

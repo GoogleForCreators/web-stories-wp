@@ -13,32 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { _x } from '@web-stories-wp/i18n';
-import PropTypes from 'prop-types';
-
-const title = _x('White Banner', 'sticker name', 'web-stories');
-
-const WhiteBanner = ({ style }) => (
-  <svg
-    style={style}
-    viewBox="0 0 30 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <title>{title}</title>
-    <path d="M0.0980225 0H29.9019L26.0745 20H0.0980225V0Z" fill="white" />
-  </svg>
-);
-
-WhiteBanner.propTypes = {
-  style: PropTypes.object,
-};
+import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  aspectRatio: 30 / 20,
-  svg: WhiteBanner,
-  title,
+  ...metaData,
+  ...template,
 };
