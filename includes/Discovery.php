@@ -163,6 +163,18 @@ class Discovery extends Service_Base {
 			if ( $publisher_logo_id ) {
 				list( $url, $width, $height ) = wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
 
+				/**
+				 * Filters the publisher logo URL.
+				 *
+				 * @since 1.0.0
+				 * @since 1.1.0 The second parameter was deprecated.
+				 * @since 1.11.0 The second parameter was repurposed to provide the current post object.
+				 *
+				 * @param string|null $logo_image_url Publisher logo URL.
+				 * @param WP_Post     $post           Current post object.
+				 */
+				$url = apply_filters( 'web_stories_publisher_logo', $url, $post );
+
 				$metadata['publisher']['logo'] = [
 					'@type'  => 'ImageObject',
 					'url'    => $url,
