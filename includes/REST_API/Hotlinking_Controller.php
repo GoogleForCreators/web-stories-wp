@@ -297,13 +297,9 @@ class Hotlinking_Controller extends REST_Controller {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
-		$parts = wp_parse_url( $url );
+		$path = wp_parse_url( $url, PHP_URL_PATH );
 
-		if ( ! isset( $parts['host'] ) ) {
-			return new WP_Error( 'rest_invalid_url_host', __( 'Invalid URL Host', 'web-stories' ), [ 'status' => 400 ] );
-		}
-
-		if ( ! isset( $parts['path'] ) || empty( $parts['path'] ) ) {
+		if ( ! $path ) {
 			return new WP_Error( 'rest_invalid_url_path', __( 'Invalid URL Path', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
