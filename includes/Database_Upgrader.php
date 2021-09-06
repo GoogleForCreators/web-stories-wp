@@ -29,7 +29,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Infrastructure\Conditional;
+use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use WP_Site;
 
@@ -38,7 +38,7 @@ use WP_Site;
  *
  * @package Google\Web_Stories
  */
-class Database_Upgrader extends Service_Base implements PluginActivationAware, SiteInitializationAware {
+class Database_Upgrader implements Service, Registerable, PluginActivationAware, SiteInitializationAware {
 
 	/**
 	 * The slug of database option.
@@ -104,20 +104,7 @@ class Database_Upgrader extends Service_Base implements PluginActivationAware, S
 	 * @return void
 	 */
 	public function register() {
-		if ( is_admin() ) {
-			$this->run_upgrades();
-		}
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority(): int {
-		return 5;
+		add_action( 'admin_init', [ $this, 'run_upgrades' ], 5 );
 	}
 
 	/**
@@ -151,7 +138,7 @@ class Database_Upgrader extends Service_Base implements PluginActivationAware, S
 	 *
 	 * @return void
 	 */
-	protected function run_upgrades() {
+	public function run_upgrades() {
 		$version = get_option( self::OPTION, '0.0.0' );
 
 		if ( version_compare( WEBSTORIES_DB_VERSION, $version, '=' ) ) {

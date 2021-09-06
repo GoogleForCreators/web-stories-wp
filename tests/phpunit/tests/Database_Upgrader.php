@@ -33,6 +33,16 @@ class Database_Upgrader extends TestCase {
 		delete_option( \Google\Web_Stories\Database_Upgrader::OPTION );
 		delete_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION );
 	}
+	
+	/**
+	 * @covers ::register
+	 */
+	public function test_register() {
+		$object = new \Google\Web_Stories\Database_Upgrader( new SimpleInjector() );
+		$object->register();
+
+		$this->assertSame( 5, has_action( 'admin_init', [ $object, 'run_upgrades' ] ) );
+	}
 
 	/**
 	 * @covers ::register
@@ -42,18 +52,6 @@ class Database_Upgrader extends TestCase {
 		$object->register();
 		$this->assertFalse( get_option( $object::OPTION ) );
 		$this->assertFalse( get_option( $object::PREVIOUS_OPTION ) );
-	}
-
-	/**
-	 * @covers ::register
-	 */
-	public function test_register_sets_missing_options_in_admin() {
-		$GLOBALS['current_screen'] = convert_to_screen( 'post' );
-
-		$object = new \Google\Web_Stories\Database_Upgrader( new SimpleInjector() );
-		$object->register();
-		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
-		$this->assertSame( '0.0.0', get_option( $object::PREVIOUS_OPTION ) );
 	}
 
 	/**
