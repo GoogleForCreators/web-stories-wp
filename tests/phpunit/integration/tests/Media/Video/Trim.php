@@ -20,16 +20,79 @@ namespace Google\Web_Stories\Tests\Integration\Media\Video;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Media\Video\Optimization
+ * @coversDefaultClass \Google\Web_Stories\Media\Video\Trim
  */
 class Trim extends TestCase {
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$media = new \Google\Web_Stories\Media\Video\Trim();
-		$media->register();
+		$trim = new \Google\Web_Stories\Media\Video\Trim();
+		$trim->register();
+
+		$this->assertSame(
+			10,
+			has_filter(
+				'wp_prepare_attachment_for_js',
+				[
+					$trim,
+					'wp_prepare_attachment_for_js',
+				]
+			)
+		);
+	}
+
+	/**
+	 * @covers ::register_meta
+	 */
+	public function test_register_meta() {
+		$trim = new \Google\Web_Stories\Media\Video\Trim();
+		$this->call_private_method( $trim, 'register_meta' );
 
 		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Video\Trim::TRIM_POST_META_KEY, 'attachment' ) );
+	}
+
+	/**
+	 * @covers ::wp_prepare_attachment_for_js
+	 */
+	public function test_wp_prepare_attachment_for_js() {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
+
+		$trim  = new \Google\Web_Stories\Media\Video\Trim();
+		$image = $trim->wp_prepare_attachment_for_js(
+			[
+				'id'   => $poster_attachment_id,
+				'type' => 'image',
+				'url'  => wp_get_attachment_url( $poster_attachment_id ),
+			]
+		);
+		$video = $trim->wp_prepare_attachment_for_js(
+			[
+				'id'   => $video_attachment_id,
+				'type' => 'video',
+				'url'  => wp_get_attachment_url( $video_attachment_id ),
+			]
+		);
+
+		$this->assertArrayNotHasKey( \Google\Web_Stories\Media\Video\Trim::IS_TRIM_KEY, $image );
+		$this->assertArrayHasKey( \Google\Web_Stories\Media\Video\Trim::IS_TRIM_KEY, $video );
 	}
 }

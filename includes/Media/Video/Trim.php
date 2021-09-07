@@ -43,13 +43,33 @@ class Trim extends Service_Base {
 	const TRIM_POST_META_KEY = 'web_stories_trim';
 
 	/**
-	 * Init.
+	 * Is trim.
+	 *
+	 * @var string
+	 */
+	const IS_TRIM_KEY = 'trim';
+
+	/**
+	 * Register.
 	 *
 	 * @since 1.12.0
 	 *
 	 * @return void
 	 */
 	public function register() {
+		$this->register_meta();
+
+		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ] );
+	}
+
+	/**
+	 * Register meta for attachment post type.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return void
+	 */
+	protected function register_meta() {
 		register_meta(
 			'post',
 			self::TRIM_POST_META_KEY,
@@ -79,5 +99,25 @@ class Trim extends Service_Base {
 				'object_subtype' => 'attachment',
 			]
 		);
+	}
+
+	/**
+	 * Filters the attachment data prepared for JavaScript.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param array|mixed $response   Array of prepared attachment data.
+	 *
+	 * @return array|mixed $response;
+	 */
+	public function wp_prepare_attachment_for_js( $response ) {
+		if ( ! is_array( $response ) ) {
+			return $response;
+		}
+		if ( 'video' === $response['type'] ) {
+			$response[ self::IS_TRIM_KEY ] = get_post_meta( $response['id'], self::TRIM_POST_META_KEY, true );
+		}
+
+		return $response;
 	}
 }
