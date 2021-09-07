@@ -31,6 +31,11 @@ export function getStoryLockById(storyId, stories) {
   return apiFetch({ path });
 }
 
+export function setStoryLockById(storyId, stories) {
+  const path = `${stories}${storyId}/lock`;
+  return apiFetch({ path, method: 'POST' });
+}
+
 export function deleteStoryLockById(storyId, nonce, storyLocking) {
   const data = new window.FormData();
   data.append('_wpnonce', nonce);
