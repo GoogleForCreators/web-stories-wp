@@ -18,6 +18,7 @@
  * External dependencies
  */
 import Mousetrap from 'mousetrap';
+import PropTypes from 'prop-types';
 import {
   useEffect,
   createRef,
@@ -25,10 +26,10 @@ import {
   useContext,
   useBatchingCallback,
 } from '@web-stories-wp/react';
-import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import Context from './context';
 
 const PROP = '__WEB_STORIES_MT__';
@@ -379,12 +380,12 @@ export function isPlatformMacOS() {
 }
 
 /**
- * Prettifies keyboard shortcuts in a platform-agnostic way.
+ * Get the key specific to operating system.
  *
- * @param {string} shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
- * @return {string} Prettified keyboard shortcut.
+ * @param {string} key The key to replace. Options: [alt, ctrl, mod, cmd, shift].
+ * @return {string} the mapped key. Returns the argument if key is not in options.
  */
-export function prettifyShortcut(shortcut) {
+export function getKeyForOS(key) {
   const isMacOS = isPlatformMacOS();
 
   const replacementKeyMap = {
@@ -395,15 +396,27 @@ export function prettifyShortcut(shortcut) {
     shift: isMacOS ? '⇧' : 'Shift',
   };
 
+  return replacementKeyMap[key] || key;
+}
+
+/**
+ * Prettifies keyboard shortcuts in a platform-agnostic way.
+ *
+ * @param {string} shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
+ * @return {string} Prettified keyboard shortcut.
+ */
+export function prettifyShortcut(shortcut) {
+  const isMacOS = isPlatformMacOS();
+
   const delimiter = isMacOS ? '' : '+';
 
   return shortcut
     .toLowerCase()
-    .replace('alt', replacementKeyMap.alt)
-    .replace('ctrl', replacementKeyMap.ctrl)
-    .replace('mod', replacementKeyMap.mod)
-    .replace('cmd', replacementKeyMap.cmd)
-    .replace('shift', replacementKeyMap.shift)
+    .replace('alt', getKeyForOS('alt'))
+    .replace('ctrl', getKeyForOS('ctrl'))
+    .replace('mod', getKeyForOS('mod'))
+    .replace('cmd', getKeyForOS('cmd'))
+    .replace('shift', getKeyForOS('shift'))
     .replace('left', '←')
     .replace('up', '↑')
     .replace('right', '→')
@@ -416,15 +429,84 @@ export function prettifyShortcut(shortcut) {
 }
 
 /**
+ * Creates an aria label for a shortcut.
+ *
+ * Inspired from the worpress Gutenberg plugin:
+ * https://github.com/WordPress/gutenberg/blob/3da717b8d0ac7d7821fc6d0475695ccf3ae2829f/packages/keycodes/src/index.js#L240-L277
+ *
+ * @example
+ * createShortcutAriaLabel('mod alt del'); -> "Command Alt Del"
+ * @param {string} shortcut The keyboard shortcut.
+ * @return {string} The aria label.
+ */
+export function createShortcutAriaLabel(shortcut) {
+  const isMacOS = isPlatformMacOS();
+
+  /* translators: Command key on the keyboard */
+  const command = __('Command', 'web-stories');
+  /* translators: Control key on the keyboard */
+  const control = __('Control', 'web-stories');
+  /* translators: Option key on the keyboard */
+  const option = __('Option', 'web-stories');
+  /* translators: Alt key on the keyboard */
+  const alt = __('Alt', 'web-stories');
+
+  const replacementKeyMap = {
+    alt: isMacOS ? option : alt,
+    mod: isMacOS ? command : control,
+    /* translators: Control key on the keyboard */
+    ctrl: __('Control', 'web-stories'),
+    /* translators: shift key on the keyboard */
+    shift: __('Shift', 'web-stories'),
+    /* translators: delete key on the keyboard */
+    delete: __('Delete', 'web-stories'),
+    /* translators: comma character ',' */
+    ',': __('Comma', 'web-stories'),
+    /* translators: period character '.' */
+    '.': __('Period', 'web-stories'),
+    /* translators: backtick character '`' */
+    '`': __('Backtick', 'web-stories'),
+  };
+
+  const delimiter = isMacOS ? ' ' : '+';
+
+  return shortcut
+    .toLowerCase()
+    .replace('alt', replacementKeyMap.alt)
+    .replace('ctrl', replacementKeyMap.ctrl)
+    .replace('mod', replacementKeyMap.mod)
+    .replace('cmd', replacementKeyMap.cmd)
+    .replace('shift', replacementKeyMap.shift)
+    .replace('delete', replacementKeyMap.delete)
+    .replace(',', replacementKeyMap[','])
+    .replace('.', replacementKeyMap['.'])
+    .replace('`', replacementKeyMap['`'])
+    .split(/[\s+]/)
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join(delimiter);
+}
+
+/**
  * Returns a prettified shortcut wrapped with a <kbd> element.
  *
  * @param {Object} props props
+ * @param {string} props.component Component used to render the shortcuts. Defaults to `<kbd/>`
  * @param {string} props.shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
  * @return {Node} Prettified keyboard shortcut.
  */
-export function Shortcut({ shortcut }) {
-  return shortcut ? <kbd>{prettifyShortcut(shortcut)}</kbd> : null;
+export function Shortcut({ component: Component = <kbd />, shortcut = '' }) {
+  const chars = shortcut.split(' ');
+
+  return (
+    <Component aria-label={createShortcutAriaLabel(shortcut)}>
+      {chars.map((char, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Component key={`${index}-${char}`}>{prettifyShortcut(char)}</Component>
+      ))}
+    </Component>
+  );
 }
 Shortcut.propTypes = {
+  component: PropTypes.node,
   shortcut: PropTypes.string,
 };
