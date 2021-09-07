@@ -2479,7 +2479,7 @@
           "lineHeight": 1.5,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 500; color: #fff\">A paper-themed children’s birth</span>",
+          "content": "<span style=\"font-weight: 500; color: #fff\">A paper-themed children’s birthday party</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -2488,8 +2488,8 @@
             "bottomRight": 2,
             "bottomLeft": 2
           },
-          "width": 148,
-          "height": 46,
+          "width": 162,
+          "height": 65,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,

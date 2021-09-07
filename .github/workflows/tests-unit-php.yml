@@ -129,13 +129,10 @@ jobs:
       - name: Set up tests
         run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${{ job.services.mysql.ports['3306'] }} ${{ matrix.wp }} true
 
-      # 1. Installs PHPUnit 7.5 and patches it to run on PHP 8.
-      # 2. Dumps autoloader so mcaskill/composer-plugin-exclude-files is triggered.
+      # 1. Installs latest possible version of PHPUnit
       - name: Update PHPUnit
         run: |
-          composer require --dev --ignore-platform-reqs --no-interaction --no-scripts --update-with-all-dependencies phpunit/phpunit:^7.5
-          git apply patches/composer.patch
-          composer dump-autoload --no-interaction
+          composer update --dev --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
         if: ${{ matrix.php == '8.0' }}
 
       - name: Set up problem matchers for PHPUnit
@@ -143,20 +140,23 @@ jobs:
 
       - name: Run tests
         run: |
-          npm run test:php
-          npm run test:php:multisite
+          npm run test:php:unit
+          npm run test:php:integration:single
+          npm run test:php:integration:multisite
         if: ${{ ! matrix.coverage && ! matrix.random }}
 
       - name: Run tests with coverage
         run: |
-          npm run test:php -- --coverage-clover build/logs/php-coverage.xml
-          npm run test:php -- --coverage-clover build/logs/php-coverage-multisite.xml -c phpunit-multisite.xml.dist
+          npm run test:php:unit -- --coverage-clover build/logs/php-coverage.xml
+          npm run test:php:integration:single -- --coverage-clover build/logs/php-coverage-integration.xml
+          npm run test:php:integration:multisite -- --coverage-clover build/logs/php-coverage-multisite.xml
         if: ${{ matrix.coverage && ! matrix.random }}
 
       - name: Run tests in random order
         run: |
-          npm run test:php -- --order-by random
-          npm run test:php:multisite -- --order-by random
+          npm run test:php:unit -- --order-by random
+          npm run test:php:integration:single -- --order-by random
+          npm run test:php:integration:multisite -- --order-by random
         if: ${{ matrix.random }}
 
       - name: Upload code coverage report

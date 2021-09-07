@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <phpunit
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  bootstrap="tests/phpunit/bootstrap.php"
+  bootstrap="tests/phpunit/unit/bootstrap.php"
   backupGlobals="false"
   colors="true"
   convertErrorsToExceptions="true"
@@ -16,8 +16,8 @@
 	</php>
 
 	<testsuites>
-		<testsuite name="Web Stories Test Suite">
-			<directory suffix=".php">./tests/phpunit/tests</directory>
+		<testsuite name="Web Stories Unit Test Suite">
+			<directory suffix=".php">./tests/phpunit/unit/tests</directory>
 		</testsuite>
 	</testsuites>
 

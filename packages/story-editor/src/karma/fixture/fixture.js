@@ -35,7 +35,7 @@ import { FixtureEvents } from '@web-stories-wp/karma-fixture';
 /**
  * Internal dependencies
  */
-import App from '../../editorApp';
+import StoryEditor from '../../storyEditor';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import FileProvider from '../../app/file/provider';
@@ -322,7 +322,7 @@ export class Fixture {
 
     const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
-        <App key={Math.random()} config={this._config} />
+        <StoryEditor key={Math.random()} config={this._config} />
       </FlagsProvider>,
       {
         container: root,
