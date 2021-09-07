@@ -168,6 +168,88 @@ function useProcessMedia({
     ]
   );
 
+  const trimExistingVideo = useCallback(
+    ({ resource: oldResource }) => {
+      const { src: url, mimeType } = oldResource;
+
+      const trim = {};
+
+      const onUploadStart = () => {
+        updateExistingElements({
+          oldResource: {
+            ...oldResource,
+            trim,
+            isTrimming: true,
+          },
+        });
+      };
+
+      const onUploadError = () => {
+        updateExistingElements({
+          oldResource: { ...oldResource, isTrimming: false },
+        });
+      };
+
+      const onUploadSuccess = ({ resource }) => {
+        copyResourceData({ oldResource, resource });
+        updateOldMutedObject(oldResource.id, resource.id);
+        if (
+          ['video', 'gif'].includes(resource.type) &&
+          !resource.local &&
+          !resource.posterId
+        ) {
+          uploadVideoPoster(resource.id, resource.src);
+        }
+      };
+
+      const onUploadProgress = ({ resource }) => {
+        const oldResourceWithId = { ...resource, id: oldResource.id };
+        updateExistingElements({
+          oldResource: oldResourceWithId,
+        });
+      };
+
+      const process = async () => {
+        let file = false;
+        try {
+          file = await fetchRemoteFile(url, mimeType);
+        } catch (e) {
+          // Ignore for now.
+          return;
+        }
+
+        await uploadMedia([file], {
+          onUploadSuccess,
+          onUploadStart,
+          onUploadError,
+          onUploadProgress,
+          additionalData: {
+            original_id: oldResource.id,
+            media_source: oldResource?.isOptimized
+              ? 'video-optimization'
+              : 'editor',
+            meta: {
+              web_stories_trim: trim,
+            },
+          },
+          trim,
+          resource: {
+            ...oldResource,
+            trim,
+          },
+        });
+      };
+      return process();
+    },
+    [
+      copyResourceData,
+      uploadMedia,
+      uploadVideoPoster,
+      updateExistingElements,
+      updateOldMutedObject,
+    ]
+  );
+
   const muteExistingVideo = useCallback(
     ({ resource: oldResource }) => {
       const { src: url, mimeType, poster } = oldResource;
@@ -317,6 +399,7 @@ function useProcessMedia({
     optimizeVideo,
     optimizeGif,
     muteExistingVideo,
+    trimExistingVideo,
   };
 }
 
