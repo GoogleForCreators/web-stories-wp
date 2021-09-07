@@ -56,7 +56,7 @@ describe('ContextMenu', () => {
 
     const mask = screen.getByTestId('context-menu-mask');
     act(() => {
-      fireEvent.click(mask);
+      fireEvent.mouseDown(mask);
     });
 
     expect(onDismiss).toHaveBeenCalledTimes(1);
@@ -70,7 +70,7 @@ describe('ContextMenu', () => {
 
     const mask = screen.getByTestId('context-menu-mask');
     act(() => {
-      fireEvent.click(mask, { button: 'right' });
+      fireEvent.mouseDown(mask, { button: 'right' });
     });
 
     expect(onDismiss).toHaveBeenCalledTimes(1);
