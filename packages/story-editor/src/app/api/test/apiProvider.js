@@ -67,6 +67,7 @@ describe('APIProvider', () => {
         api: {
           media: 'mediaPath',
         },
+        apiCallbacks: {},
         postLock: { api: '' },
       },
     });
@@ -95,6 +96,7 @@ describe('APIProvider', () => {
     const { result } = renderApiProvider({
       configValue: {
         api: {},
+        apiCallbacks: {},
         cdnURL,
         postLock: { api: '' },
       },
@@ -121,6 +123,7 @@ describe('APIProvider', () => {
     const { result } = renderApiProvider({
       configValue: {
         api: {},
+        apiCallbacks: {},
         cdnURL,
         postLock: { api: '' },
       },
@@ -143,6 +146,7 @@ describe('APIProvider', () => {
     const { result } = renderApiProvider({
       configValue: {
         api: {},
+        apiCallbacks: {},
         cdnURL,
         postLock: { api: '' },
       },
