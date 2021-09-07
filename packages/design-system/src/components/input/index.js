@@ -91,7 +91,7 @@ const InputContainer = styled.div(
   `
 );
 
-const StyledInput = styled.input(
+export const BaseInput = styled.input(
   ({ hasSuffix, theme }) => css`
     height: 100%;
     width: 100%;
@@ -180,7 +180,7 @@ export const Input = forwardRef(
           hasError={hasError}
           styleOverride={containerStyleOverride}
         >
-          <StyledInput
+          <BaseInput
             id={inputId}
             disabled={disabled}
             ref={(input) => {

@@ -27,7 +27,7 @@
 namespace Google\Web_Stories;
 
 /**
- * Trait Assets
+ * Class Assets
  *
  * @package Google\Web_Stories
  */

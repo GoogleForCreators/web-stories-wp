@@ -710,28 +710,28 @@ function RightClickMenuProvider({ children }) {
     () => [
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD,
         disabled: !canElementMoveBackwards,
         onClick: handleSendBackward,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK,
         disabled: !canElementMoveBackwards,
         onClick: handleSendToBack,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD,
         disabled: !canElementMoveForwards,
         onClick: handleBringForward,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT,
         disabled: !canElementMoveForwards,
         onClick: handleBringToFront,
         ...menuItemProps,
@@ -822,17 +822,13 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
         separator: 'top',
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
         onClick: handleCopyStyles,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_STYLES,
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         onClick: handlePasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
@@ -877,17 +873,13 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
         separator: 'top',
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
         onClick: handleCopyStyles,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         onClick: handlePasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
@@ -917,17 +909,13 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
         separator: 'top',
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
         onClick: handleCopyStyles,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         onClick: handlePasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,

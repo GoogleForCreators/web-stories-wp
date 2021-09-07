@@ -72,10 +72,11 @@ class Link_Controller extends REST_Controller {
 					'permission_callback' => [ $this, 'parse_link_permissions_check' ],
 					'args'                => [
 						'url' => [
-							'description' => __( 'The URL to process.', 'web-stories' ),
-							'required'    => true,
-							'type'        => 'string',
-							'format'      => 'uri',
+							'description'       => __( 'The URL to process.', 'web-stories' ),
+							'required'          => true,
+							'type'              => 'string',
+							'format'            => 'uri',
+							'validate_callback' => [ $this, 'validate_url' ],
 						],
 					],
 				],
@@ -98,10 +99,6 @@ class Link_Controller extends REST_Controller {
 	 */
 	public function parse_link( $request ) {
 		$url = untrailingslashit( $request['url'] );
-
-		if ( empty( $url ) ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
-		}
 
 		/**
 		 * Filters the link data TTL value.
@@ -270,9 +267,7 @@ class Link_Controller extends REST_Controller {
 		$data    = $this->filter_response_by_context( $data, $context );
 
 		// Wrap the data in a response object.
-		$response = rest_ensure_response( $data );
-
-		return $response;
+		return rest_ensure_response( $data );
 	}
 
 	/**
@@ -326,6 +321,25 @@ class Link_Controller extends REST_Controller {
 	public function parse_link_permissions_check() {
 		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to process links.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Callback to validate urls.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param mixed $value Value to be validated.
+	 *
+	 * @return true|WP_Error
+	 */
+	public function validate_url( $value ) {
+		$url = untrailingslashit( $value );
+
+		if ( empty( $url ) || ! wp_http_validate_url( $url ) ) {
+			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
 		return true;

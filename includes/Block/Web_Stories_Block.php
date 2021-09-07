@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Block;
 
+use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
@@ -69,9 +70,8 @@ class Web_Stories_Block extends Embed_Base {
 	 */
 	public function register() {
 		parent::register();
-		$player_handle = $this->amp_story_player_assets->get_handle();
-		$this->assets->register_script_asset( self::SCRIPT_HANDLE, [ $player_handle, Tracking::SCRIPT_HANDLE ] );
-		$this->assets->register_style_asset( self::SCRIPT_HANDLE, [ $player_handle, parent::SCRIPT_HANDLE ] );
+		$this->assets->register_script_asset( self::SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE, Tracking::SCRIPT_HANDLE ] );
+		$this->assets->register_style_asset( self::SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE, parent::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,

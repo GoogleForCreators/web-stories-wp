@@ -385,6 +385,8 @@ class Sanitization {
 	 * accessing options from the database, requiring AMP__VERSION,
 	 * and causing conflicts with our own amp_is_request() compat shim.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.1.0
 	 *
 	 * @see amp_get_content_sanitizers
@@ -395,6 +397,13 @@ class Sanitization {
 	 * @return array Sanitizers.
 	 */
 	protected function get_sanitizers(): array {
+		// This fallback to get_permalink() ensures that there's a canonical link
+		// even when previewing drafts.
+		$canonical_url = wp_get_canonical_url();
+		if ( ! $canonical_url ) {
+			$canonical_url = get_permalink();
+		}
+
 		$sanitizers = [
 			AMP_Script_Sanitizer::class            => [],
 			AMP_Style_Sanitizer::class             => [
@@ -408,7 +417,9 @@ class Sanitization {
 			],
 			Meta_Sanitizer::class                  => [],
 			AMP_Layout_Sanitizer::class            => [],
-			Canonical_Sanitizer::class             => [],
+			Canonical_Sanitizer::class             => [
+				'canonical_url' => $canonical_url,
+			],
 			AMP_Tag_And_Attribute_Sanitizer::class => [],
 		];
 
