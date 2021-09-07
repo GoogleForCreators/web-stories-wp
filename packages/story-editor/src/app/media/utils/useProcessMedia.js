@@ -125,7 +125,11 @@ function useProcessMedia({
         ) {
           uploadVideoPoster(resource.id, resource.src);
         }
-        if ('video' === resource.type && !resource.local && !resource.isMuted) {
+        if (
+          'video' === resource.type &&
+          !resource.local &&
+          resource.isMuted === null
+        ) {
           updateVideoIsMuted(resource.id, resource.src);
         }
       };
@@ -197,12 +201,13 @@ function useProcessMedia({
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldMutedObject(oldResource.id, resource.id);
-        if (
-          ['video', 'gif'].includes(resource.type) &&
-          !resource.local &&
-          !resource.posterId
-        ) {
-          uploadVideoPoster(resource.id, resource.src);
+        if ('video' === resource.type && !resource.local) {
+          if (!resource.posterId) {
+            uploadVideoPoster(resource.id, resource.src);
+          }
+          if (resource.isMuted === null) {
+            updateVideoIsMuted(resource.id, resource.src);
+          }
         }
       };
 
@@ -228,6 +233,7 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
+            is_muted: oldResource.isMuted,
             original_id: oldResource.id,
             media_source: oldResource?.isOptimized
               ? 'video-optimization'
