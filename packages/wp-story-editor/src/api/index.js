@@ -16,11 +16,11 @@
 export * from './authors';
 export * from './getStory';
 export * from './media';
-export * from './metaboxes';
-export * from './metadata';
+export * from './metaboxes'; // @todo Remove direct export.
+export * from './metadata'; // @todo Remove direct export.
 export * from './pageTemplate';
 export * from './saveStory';
-export * from './statusCheck';
-export * from './storyLock';
+export * from './statusCheck'; // @todo Remove direct export.
+export * from './storyLock'; // @todo Remove direct export.
 export * from './user';
 export * from './hotlinkInfo';
