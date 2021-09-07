@@ -474,7 +474,16 @@ const useQuickActions = () => {
 
   const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const videoCommonActions = useMemo(() => {
-    return isVideoTrimEnabled
+    if (!selectedElement?.resource) {
+      return [];
+    }
+    const { resource } = selectedElement;
+    const { local, isMuted, isTranscoding, isTrimming } = resource;
+    return isVideoTrimEnabled &&
+      !local &&
+      !isMuted &&
+      !isTranscoding &&
+      !isTrimming
       ? [
           {
             Icon: Scissors,
