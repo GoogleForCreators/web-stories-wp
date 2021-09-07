@@ -41,8 +41,8 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	/**
 	 * Set up the service architecture before each test run.
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		// We're intentionally avoiding the PluginFactory here as it uses a
 		// static instance, because its whole point is to allow reuse across consumers.
@@ -62,11 +62,11 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	/**
 	 * Clean up again after each test run.
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		$this->set_private_property( Services::class, 'plugin', null );
 		$this->set_private_property( Services::class, 'container', null );
 		$this->set_private_property( Services::class, 'injector', null );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 }
