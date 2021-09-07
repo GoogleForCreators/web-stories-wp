@@ -22,7 +22,7 @@ import { renderWithProviders } from '@web-stories-wp/design-system/src/testUtils
 /**
  * Internal dependencies
  */
-import { Hierarchical } from '..';
+import Hierarchical from '..';
 import { noop } from '../../../../utils/noop';
 
 const OPTIONS = [

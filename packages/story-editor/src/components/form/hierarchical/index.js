@@ -26,6 +26,10 @@ import {
 } from '@web-stories-wp/design-system';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { useCallback, useState } from '@web-stories-wp/react';
+/**
+ * Internal dependencies
+ */
+import { RecursiveShapeType } from '../../../utils/recursiveShapeType';
 
 const Label = styled(Text).attrs({
   forwardedAs: 'label',
@@ -38,13 +42,59 @@ const CheckboxArea = styled.div`
   padding: 8px 0;
 `;
 
+const StepContainer = styled.div`
+  margin-top: 4px;
+  margin-left: 20px;
+`;
+
 const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 4px 0;
 `;
 
-export const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
+/**
+ * Renders a checkbox and all children of the checkbox.
+ *
+ * @param {Object} option The option to render.
+ * @return {Node} The rendered option and children
+ */
+const Option = (option) => {
+  const {
+    id: optionId,
+    label: optionLabel,
+    options,
+    onChange,
+    ...checkboxProps
+  } = option;
+
+  return (
+    <>
+      <CheckboxContainer>
+        <Checkbox
+          {...checkboxProps}
+          id={optionId}
+          onChange={(evt) => onChange(evt, option)}
+        />
+        <Label htmlFor={optionId}>{optionLabel}</Label>
+      </CheckboxContainer>
+      <StepContainer>
+        {options?.map((child) => (
+          <Option key={child.id} onChange={onChange} {...child} />
+        ))}
+      </StepContainer>
+    </>
+  );
+};
+const OptionPropType = PropTypes.shape({
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  checked: PropTypes.bool,
+  label: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(RecursiveShapeType(OptionPropType, 'options')),
+});
+Option.propTypes = PropTypes.arrayOf(OptionPropType);
+
+const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
   const [inputText, setInputText] = useState('');
 
   /**
@@ -57,16 +107,23 @@ export const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
   /**
    * Callback that is called when a checkbox is clicked.
    */
-  const handleCheckboxClick = useCallback(
+  const handleCheckboxChange = useCallback(
     (evt, option) => {
       onChange(evt, { ...option, checked: !option.checked });
     },
     [onChange]
   );
 
-  const filteredOptions = options.filter((option) =>
-    option.label.toLowerCase().includes(inputText.toLowerCase())
-  );
+  /**
+   * Filters a list of options by their labels.
+   *
+   * @param {Object} option The option to check
+   * @return {Array.<Object>} A filtered list of options
+   */
+  const labelMatch = (option) =>
+    option.label.toLowerCase().includes(inputText.toLowerCase()) ||
+    option?.options?.some(labelMatch);
+  const filteredOptions = options.filter(labelMatch);
 
   return (
     <>
@@ -79,23 +136,13 @@ export const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
           __('Search %s', 'web-stories'),
           label
         )}
+        type="search"
         {...inputProps}
       />
-      <CheckboxArea>
-        {filteredOptions.map((option) => {
-          const { id: optionId, label: optionLabel, ...checkboxProps } = option;
-
-          return (
-            <CheckboxContainer key={optionId} role="group">
-              <Checkbox
-                {...checkboxProps}
-                id={optionId}
-                onChange={(evt) => handleCheckboxClick(evt, option)}
-              />
-              <Label htmlFor={optionId}>{optionLabel}</Label>
-            </CheckboxContainer>
-          );
-        })}
+      <CheckboxArea role="group">
+        {filteredOptions.map((option) => (
+          <Option key={option.id} {...option} onChange={handleCheckboxChange} />
+        ))}
       </CheckboxArea>
     </>
   );
@@ -103,12 +150,8 @@ export const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
 Hierarchical.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   label: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      checked: PropTypes.bool,
-      label: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
+export default Hierarchical;

@@ -22,7 +22,7 @@ import { useState } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { Hierarchical } from '..';
+import Hierarchical from '..';
 
 export default {
   title: 'Stories Editor/Components/Form/Hierarchical',
@@ -31,14 +31,42 @@ export default {
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
-  padding: 200px;
+  padding: 50px 200px;
 `;
 
 const DEFAULT_OPTIONS = [
-  { id: 1, label: 'apple', checked: false },
+  {
+    id: 1,
+    label: 'apple',
+    checked: false,
+    options: [
+      { id: 'fitty', label: 'corgi', checked: true },
+      {
+        id: 'sitty',
+        label: 'morgi',
+        checked: true,
+        options: [{ id: 'gritty', label: 'borky', checked: true }],
+      },
+    ],
+  },
   { id: 2, label: 'banana', checked: false },
   { id: 3, label: 'cantaloupe', checked: true },
-  { id: 4, label: 'papaya', checked: false },
+  {
+    id: 4,
+    label: 'papaya',
+    checked: false,
+    options: [
+      {
+        id: '100',
+        label: 'trees',
+        checked: true,
+        options: [
+          { id: '1001', label: 'mees', checked: true },
+          { id: '10011', label: 'lees', checked: true },
+        ],
+      },
+    ],
+  },
   { id: 5, label: 'zebra fish', checked: true },
 ];
 
