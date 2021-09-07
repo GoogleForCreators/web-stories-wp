@@ -30,7 +30,7 @@
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "wp-coding-standards/wpcs": "^2.3",
-    "yoast/wp-test-utils": "^0.2.1"
+    "yoast/wp-test-utils": "^0.2.2"
   },
   "config": {
     "discard-changes": true,
@@ -86,7 +86,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes",
+      "Google\\Web_Stories\\Tests\\Integration\\": "tests/phpunit/integration/includes",
+      "Google\\Web_Stories\\Tests\\Unit\\": "tests/phpunit/unit/includes",
       "PHPStan\\WordPress\\": "tests/phpstan/src"
     }
   },

@@ -25,7 +25,7 @@ import './publicPath';
 /**
  * External dependencies
  */
-import App from '@web-stories-wp/story-editor';
+import StoryEditor from '@web-stories-wp/story-editor';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
 import { FlagsProvider } from 'flagged';
@@ -36,6 +36,7 @@ import { initializeTracking } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
+import { PostPublishDialog } from './components';
 
 /**
  * Initializes the web stories editor.
@@ -57,7 +58,9 @@ const initialize = (id, config, flags) => {
   render(
     <FlagsProvider features={flags}>
       <StrictMode>
-        <App config={config} />
+        <StoryEditor config={config}>
+          <PostPublishDialog />
+        </StoryEditor>
       </StrictMode>
     </FlagsProvider>,
     appElement
