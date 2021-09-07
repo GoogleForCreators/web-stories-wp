@@ -184,13 +184,14 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setAudioProcessing, updateVideoIsMuted, removeAudioProcessing]
   );
 
-  const { optimizeVideo, optimizeGif, muteExistingVideo } = useProcessMedia({
-    uploadVideoPoster,
-    updateVideoIsMuted,
-    uploadMedia,
-    updateMedia,
-    deleteMediaElement,
-  });
+  const { optimizeVideo, optimizeGif, muteExistingVideo, trimExistingVideo } =
+    useProcessMedia({
+      uploadVideoPoster,
+      updateVideoIsMuted,
+      uploadMedia,
+      updateMedia,
+      deleteMediaElement,
+    });
 
   const generateMissingPosters = useCallback(
     ({ mimeType, posterId, id, src, local, type }) => {
@@ -254,6 +255,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       optimizeVideo,
       optimizeGif,
       muteExistingVideo,
+      trimExistingVideo,
     },
   };
 }

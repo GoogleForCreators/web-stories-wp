@@ -195,6 +195,7 @@ function useUploadMedia({
      * @param {Function} args.onUploadSuccess Callback for when upload succeeds.
      * @param {Object} args.additionalData Object of additionalData.
      * @param {boolean} args.muteVideo Should the video being transcoded, should also be muted.
+     * @param {Object} args.trim Trim data.
      * @param {import('@web-stories-wp/media').Resource} args.resource Resource object.
      * @param {Blob} args.posterFile Blob object of poster.
      * @return {void}
@@ -208,6 +209,7 @@ function useUploadMedia({
         onUploadSuccess,
         additionalData,
         muteVideo,
+        trim,
         resource,
         posterFile,
       } = {}
@@ -259,6 +261,7 @@ function useUploadMedia({
             additionalData,
             posterFile,
             muteVideo,
+            trim,
           });
         })
       );

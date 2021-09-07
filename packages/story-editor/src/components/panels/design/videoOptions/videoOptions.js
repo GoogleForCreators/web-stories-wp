@@ -79,11 +79,12 @@ const HelperText = styled(Text).attrs({
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const { isTranscodingEnabled } = useFFmpeg();
-  const { muteExistingVideo } = useLocalMedia((state) => ({
+  const { muteExistingVideo, trimExistingVideo } = useLocalMedia((state) => ({
     muteExistingVideo: state.actions.muteExistingVideo,
+    trimExistingVideo: state.actions.trimExistingVideo,
   }));
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuted, isTranscoding, isMuting, local } = resource;
+  const { isMuted, isTranscoding, isMuting, isTrimming, local } = resource;
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
@@ -97,6 +98,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
         !local &&
         !isMuted &&
         !isTranscoding &&
+        !isTrimming &&
         isSingleElement) ||
       isMuting
     );
@@ -107,12 +109,26 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     isTranscoding,
     isSingleElement,
     isMuting,
+    isTrimming,
   ]);
 
-  const shouldDisplayTrimButton = useMemo(
-    () => isSingleElement && isVideoTrimEnabled,
-    [isSingleElement, isVideoTrimEnabled]
-  );
+  const shouldDisplayTrimButton = useMemo(() => {
+    return (
+      isSingleElement &&
+      isVideoTrimEnabled &&
+      !local &&
+      !isMuted &&
+      !isTranscoding &&
+      !isTrimming
+    );
+  }, [
+    isSingleElement,
+    isVideoTrimEnabled,
+    local,
+    isMuted,
+    isTranscoding,
+    isTrimming,
+  ]);
 
   const buttonText = useMemo(() => {
     return isMuting
@@ -136,8 +152,16 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       clearEditing();
     } else {
       setEditingElementWithState(selectedElements[0].id, { isTrimming: true });
+      trimExistingVideo({ resource, start: '00:00:01', end: '00:00:02' });
     }
-  }, [setEditingElementWithState, selectedElements, clearEditing, isEditing]);
+  }, [
+    setEditingElementWithState,
+    selectedElements,
+    clearEditing,
+    isEditing,
+    resource,
+    trimExistingVideo,
+  ]);
 
   const speak = useLiveRegion();
 

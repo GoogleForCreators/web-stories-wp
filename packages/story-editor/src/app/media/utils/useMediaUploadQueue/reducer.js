@@ -35,6 +35,7 @@ import { revokeBlob } from '@web-stories-wp/media';
  * @param {Object}   action.payload.additionalData Additional Data object.
  * @param {File} action.payload.posterFile File object.
  * @param {boolean} action.payload.muteVideo Whether the video being uploaded should be muted.
+ * @param {Object} action.payload.trim Trim data.
  * @return {Object} New state
  */
 export function addItem(
@@ -50,6 +51,7 @@ export function addItem(
       additionalData,
       posterFile,
       muteVideo,
+      trim,
     },
   }
 ) {
@@ -69,6 +71,7 @@ export function addItem(
     additionalData,
     posterFile,
     muteVideo,
+    trim,
   };
 
   return {
@@ -264,6 +267,62 @@ export function finishMuting(state, { payload: { id, file } }) {
             resource: {
               ...item.resource,
               isMuting: false,
+            },
+          }
+        : item
+    ),
+  };
+}
+
+/**
+ * Starts trimming a file.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @return {Object} New state
+ */
+export function startTrimming(state, { payload: { id } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            state: 'TRIMMING',
+            resource: {
+              ...item.resource,
+              isTrimming: true,
+            },
+          }
+        : item
+    ),
+  };
+}
+
+/**
+ * Finishes trimming a file.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @param {File} action.payload.file New file object.
+ * @return {Object} New state
+ */
+export function finishTrimming(state, { payload: { id, file } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            file,
+            state: 'TRIMMED',
+            resource: {
+              ...item.resource,
+              isTrimming: false,
             },
           }
         : item

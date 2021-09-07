@@ -309,11 +309,8 @@ function useFFmpeg() {
           start,
           '-to',
           end,
-          '-c',
-          'copy',
           tempFileName
         );
-
         const data = ffmpeg.FS('readFile', tempFileName);
 
         return new File(
@@ -509,6 +506,7 @@ function useFFmpeg() {
       stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
+      trimVideo,
     ]
   );
 }

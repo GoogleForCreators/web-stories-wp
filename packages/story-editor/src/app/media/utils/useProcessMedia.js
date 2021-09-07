@@ -169,10 +169,14 @@ function useProcessMedia({
   );
 
   const trimExistingVideo = useCallback(
-    ({ resource: oldResource }) => {
+    ({ resource: oldResource, start, end }) => {
       const { src: url, mimeType } = oldResource;
 
-      const trim = {};
+      const trim = {
+        original: oldResource.id,
+        start,
+        end,
+      };
 
       const onUploadStart = () => {
         updateExistingElements({
@@ -228,9 +232,6 @@ function useProcessMedia({
             media_source: oldResource?.isOptimized
               ? 'video-optimization'
               : 'editor',
-            meta: {
-              web_stories_trim: trim,
-            },
           },
           trim,
           resource: {
