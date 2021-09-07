@@ -114,9 +114,9 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 **Release Date:** September 7, 2021.
 
 * New feature: 8 new templates for creators to choose from.
-* New feature: right click context menu.
+* New feature: right-click menu in the editing canvas.
 * New feature: background audio support.
-* Improved and simplified color picker.
+* New color swatches in color picker.
 * Bug fixes and performance improvements.
 
 = 1.10.1 =
@@ -142,7 +142,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.11.0 =
 
-New templates, right click context menu, improved color picker, and background audio support.
+New templates, right-click menu, improved color picker, and background audio support.
 
 = 1.10.1 =
 
