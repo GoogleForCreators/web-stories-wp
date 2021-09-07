@@ -44,32 +44,34 @@ function APIProvider({ children }) {
       storyLocking,
       pageTemplates: customPageTemplates,
     },
-    apiCallbacks: {
-      getStoryById,
-      getStoryLockById,
-      setStoryLockById,
-      deleteStoryLockById,
-      getDemoStoryById,
-      saveStoryById,
-      autoSaveById,
-      getMedia,
-      uploadMedia,
-      updateMedia,
-      deleteMedia,
-      getLinkMetadata,
-      getAuthors,
-      getCurrentUser,
-      updateCurrentUser,
-      saveMetaBoxes,
-      getStatusCheck,
-      getCustomPageTemplates,
-      addPageTemplate,
-      deletePageTemplate,
-      getHotlinkInfo,
-    },
+    apiCallbacks,
     encodeMarkup,
     cdnURL,
   } = useConfig();
+
+  const {
+    getStoryById,
+    getStoryLockById,
+    setStoryLockById,
+    deleteStoryLockById,
+    getDemoStoryById,
+    saveStoryById,
+    autoSaveById,
+    getMedia,
+    uploadMedia,
+    updateMedia,
+    deleteMedia,
+    getLinkMetadata,
+    getAuthors,
+    getCurrentUser,
+    updateCurrentUser,
+    saveMetaBoxes,
+    getStatusCheck,
+    getCustomPageTemplates,
+    addPageTemplate,
+    deletePageTemplate,
+    getHotlinkInfo,
+  } = apiCallbacks;
 
   const pageTemplates = useRef({
     base: [],
@@ -128,141 +130,121 @@ function APIProvider({ children }) {
   );
 
   actions.getStoryById = useCallback(
-    (storyId) => (getStoryById ? getStoryById(storyId, stories) : undefined),
+    (storyId) => getStoryById(storyId, stories),
     [stories, getStoryById]
   );
 
   // @todo Move to wp-story-editor along with PostLock component.
   actions.getStoryLockById = useCallback(
-    (storyId) =>
-      getStoryLockById ? getStoryLockById(storyId, stories) : undefined,
+    (storyId) => getStoryLockById(storyId, stories),
     [stories, getStoryLockById]
   );
 
   // @todo Move to wp-story-editor along with PostLock component.
   actions.setStoryLockById = useCallback(
-    (storyId) =>
-      setStoryLockById ? setStoryLockById(storyId, stories) : undefined,
+    (storyId) => setStoryLockById(storyId, stories),
     [stories, setStoryLockById]
   );
 
   // @todo Move to wp-story-editor along with PostLock component.
   actions.deleteStoryLockById = useCallback(
-    (storyId, nonce) =>
-      deleteStoryLockById
-        ? deleteStoryLockById(storyId, nonce, storyLocking)
-        : undefined,
+    (storyId, nonce) => deleteStoryLockById(storyId, nonce, storyLocking),
     [storyLocking, deleteStoryLockById]
   );
 
   actions.getDemoStoryById = useCallback(
-    (storyId) =>
-      getDemoStoryById ? getDemoStoryById(storyId, stories) : undefined,
+    (storyId) => getDemoStoryById(storyId, stories),
     [stories, getDemoStoryById]
   );
 
   actions.saveStoryById = useCallback(
-    (story) =>
-      saveStoryById
-        ? saveStoryById(story, stories, getStorySaveData)
-        : undefined,
+    (story) => saveStoryById(story, stories, getStorySaveData),
     [stories, getStorySaveData, saveStoryById]
   );
 
   actions.autoSaveById = useCallback(
-    (story) =>
-      autoSaveById ? autoSaveById(story, stories, getStorySaveData) : undefined,
+    (story) => autoSaveById(story, stories, getStorySaveData),
     [stories, getStorySaveData, autoSaveById]
   );
 
   actions.getMedia = useCallback(
     ({ mediaType, searchTerm, pagingNum, cacheBust }) =>
-      getMedia
-        ? getMedia({ mediaType, searchTerm, pagingNum, cacheBust }, media)
-        : undefined,
+      getMedia({ mediaType, searchTerm, pagingNum, cacheBust }, media),
     [media, getMedia]
   );
 
   actions.uploadMedia = useCallback(
-    (file, additionalData) =>
-      uploadMedia ? uploadMedia(file, additionalData, media) : undefined,
+    (file, additionalData) => uploadMedia(file, additionalData, media),
     [media, uploadMedia]
   );
 
   actions.updateMedia = useCallback(
-    (mediaId, data) =>
-      updateMedia ? updateMedia(mediaId, data, media) : undefined,
+    (mediaId, data) => updateMedia(mediaId, data, media),
     [media, updateMedia]
   );
 
   actions.deleteMedia = useCallback(
-    (mediaId) => (deleteMedia ? deleteMedia(mediaId, media) : undefined),
+    (mediaId) => deleteMedia(mediaId, media),
     [media, deleteMedia]
   );
 
   actions.getHotlinkInfo = useCallback(
-    (url) => (getHotlinkInfo ? getHotlinkInfo(url, hotlink) : undefined),
+    (url) => getHotlinkInfo(url, hotlink),
     [hotlink, getHotlinkInfo]
   );
 
   actions.getLinkMetadata = useCallback(
-    (url) => (getLinkMetadata ? getLinkMetadata(url, link) : undefined),
+    (url) => getLinkMetadata(url, link),
     [link, getLinkMetadata]
   );
 
   actions.getAuthors = useCallback(
-    (search = null) => (getAuthors ? getAuthors(search, users) : undefined),
+    (search = null) => getAuthors(search, users),
     [users, getAuthors]
   );
 
   actions.getCurrentUser = useCallback(
-    () => (getCurrentUser ? getCurrentUser(currentUser) : undefined),
+    () => getCurrentUser(currentUser),
     [currentUser, getCurrentUser]
   );
 
   actions.updateCurrentUser = useCallback(
-    (data) =>
-      updateCurrentUser ? updateCurrentUser(data, currentUser) : undefined,
+    (data) => updateCurrentUser(data, currentUser),
     [currentUser, updateCurrentUser]
   );
 
   // @todo Move to wp-story-editor along with meta-boxes.
   actions.saveMetaBoxes = useCallback(
-    (story, formData) =>
-      saveMetaBoxes ? saveMetaBoxes(story, formData, metaBoxes) : undefined,
+    (story, formData) => saveMetaBoxes(story, formData, metaBoxes),
     [metaBoxes, saveMetaBoxes]
   );
 
   // @todo Move to wp-story-editor along with StatusCheck component.
   actions.getStatusCheck = useCallback(
-    (content) =>
-      getStatusCheck
-        ? getStatusCheck(content, statusCheck, encodeMarkup)
-        : undefined,
+    (content) => getStatusCheck(content, statusCheck, encodeMarkup),
     [statusCheck, encodeMarkup, getStatusCheck]
   );
 
   actions.getCustomPageTemplates = useCallback(
-    (page = 1) =>
-      getCustomPageTemplates
-        ? getCustomPageTemplates(page, customPageTemplates)
-        : undefined,
+    (page = 1) => getCustomPageTemplates(page, customPageTemplates),
     [customPageTemplates, getCustomPageTemplates]
   );
 
   actions.addPageTemplate = useCallback(
-    (page) =>
-      addPageTemplate ? addPageTemplate(page, customPageTemplates) : undefined,
+    (page) => addPageTemplate(page, customPageTemplates),
     [customPageTemplates, addPageTemplate]
   );
 
   actions.deletePageTemplate = useCallback(
-    (id) =>
-      deletePageTemplate
-        ? deletePageTemplate(id, customPageTemplates)
-        : undefined,
+    (id) => deletePageTemplate(id, customPageTemplates),
     [customPageTemplates, deletePageTemplate]
   );
+
+  Object.entries(apiCallbacks).forEach(([name, callback]) => {
+    if (!callback) {
+      actions[name] = undefined;
+    }
+  });
 
   return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
 }
