@@ -4,7 +4,8 @@ index 8f4515700..bb367c9c6 100644
 +++ b/composer.json
 @@ -94,7 +94,19 @@
      "psr-4": {
-       "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes",
+       "Google\\Web_Stories\\Tests\\Integration\\": "tests/phpunit/integration/includes",
+       "Google\\Web_Stories\\Tests\\Unit\\": "tests/phpunit/unit/includes",
        "PHPStan\\WordPress\\": "tests/phpstan/src"
 -    }
 +    },
