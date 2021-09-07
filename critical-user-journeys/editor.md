@@ -14,11 +14,11 @@
 |                                                                   | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*      |
 |                                                                   | *[total]*                                        | 🚨 **33.33%** *(2 / 6)*     |
 | Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🏆 **100.00%** *(10 / 10)*  |
-|                                                                   | Enter edit mode                                  | 🚨 **40.00%** *(2 / 5)*     |
+|                                                                   | Enter edit mode                                  | 🚨 **20.00%** *(1 / 5)*     |
 |                                                                   | Remove background media                          | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
-|                                                                   | *[total]*                                        | 🛴 **68.18%** *(15 / 22)*   |
+|                                                                   | *[total]*                                        | 🛴 **63.64%** *(14 / 22)*   |
 | Creator Can Style Text                                            | Apply B                                          | 🛴 **80.00%** *(16 / 20)*   |
 |                                                                   | Apply I                                          | 🛴 **54.55%** *(6 / 11)*    |
 |                                                                   | Apply U                                          | 🛴 **50.00%** *(5 / 10)*    |
@@ -67,8 +67,8 @@
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
 | Page Templates                                                    | Creator can Apply a Page Template                | 🏆 **100.00%** *(6 / 6)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(6 / 6)*    |
-| Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🛴 **71.43%** *(5 / 7)*     |
-|                                                                   | *[total]*                                        | 🛴 **71.43%** *(5 / 7)*     |
+| Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🛴 **85.71%** *(6 / 7)*     |
+|                                                                   | *[total]*                                        | 🛴 **85.71%** *(6 / 7)*     |
 | User can interact with menu using keyboard                        | Tab to menu                                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | enter to open                                    | 🏆 **100.00%** *(4 / 4)*    |
