@@ -33,7 +33,11 @@ async function visitSettings() {
     text: 'Settings',
   });
 
-  expect(page.url()).toContain('#/editor-settings');
+  // Not using page.url() as it is buggy on Firefox.
+  // See https://github.com/puppeteer/puppeteer/issues/6787.
+  expect(await page.evaluate(() => location.href)).toContain(
+    '#/editor-settings'
+  );
 
   await expect(page).toMatchElement('h2', { text: 'Settings' });
   await expect(page).toMatch('Data Sharing Opt-in');
