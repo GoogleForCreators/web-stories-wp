@@ -80,6 +80,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       } = {},
       callback
     ) => {
+      if (!getMedia) {
+        return;
+      }
+
       fetchMediaStart({ pageToken: p });
       const trackTiming = getTimeTracker('load_media');
       getMedia({

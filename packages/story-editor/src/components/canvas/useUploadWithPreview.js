@@ -81,12 +81,14 @@ function useUploadWithPreview() {
 
   const uploadWithPreview = useCallback(
     (files) => {
-      uploadMedia(files, {
-        onUploadStart,
-        onUploadProgress,
-        onUploadError,
-        onUploadSuccess,
-      });
+      if (uploadMedia) {
+        uploadMedia(files, {
+          onUploadStart,
+          onUploadProgress,
+          onUploadError,
+          onUploadSuccess,
+        });
+      }
     },
     [
       uploadMedia,

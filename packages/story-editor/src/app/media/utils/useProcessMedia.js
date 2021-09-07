@@ -139,6 +139,11 @@ function useProcessMedia({
 
       const process = async () => {
         let file = false;
+
+        if (!uploadMedia) {
+          return;
+        }
+
         try {
           file = await fetchRemoteFile(url, mimeType);
         } catch (e) {
@@ -210,6 +215,11 @@ function useProcessMedia({
       const process = async () => {
         let file = false;
         let posterFile = false;
+
+        if (!uploadMedia) {
+          return;
+        }
+
         try {
           file = await fetchRemoteFile(url, mimeType);
         } catch (e) {
@@ -281,6 +291,11 @@ function useProcessMedia({
 
       const process = async () => {
         let file = false;
+
+        if (!uploadMedia) {
+          return;
+        }
+
         try {
           file = await fetchRemoteFile(url, mimeType);
         } catch (e) {

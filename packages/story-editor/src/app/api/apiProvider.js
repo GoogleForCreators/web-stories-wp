@@ -240,8 +240,10 @@ function APIProvider({ children }) {
     [customPageTemplates, deletePageTemplate]
   );
 
-  Object.entries(apiCallbacks).forEach(([name, callback]) => {
-    if (!callback) {
+  // If some api callbacks have not been provided via configuration
+  // set those actions as undefined, so we can conditionally stop those api calls.
+  Object.keys(actions).forEach((name) => {
+    if (!apiCallbacks[name]) {
       actions[name] = undefined;
     }
   });

@@ -58,6 +58,10 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
 
   const saveStory = useCallback(
     (props) => {
+      if (!saveStoryById) {
+        return Promise.resolve(); // For consistent return.
+      }
+
       setIsSaving(true);
 
       const isStoryAlreadyPublished = ['publish', 'future'].includes(
