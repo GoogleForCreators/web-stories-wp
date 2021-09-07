@@ -245,6 +245,7 @@ function APIProvider({ children }) {
           'source_url',
           'media_source',
           'is_muted',
+          'meta',
           // _web_stories_envelope will add these fields, we need them too.
           'body',
           'status',

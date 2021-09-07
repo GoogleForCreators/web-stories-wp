@@ -56,6 +56,7 @@ $preload_paths = [
 						'status',
 						'slug',
 						'date',
+						'meta',
 						'modified',
 						'excerpt',
 						'link',
