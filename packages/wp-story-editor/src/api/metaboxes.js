@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { flattenFormData } from '@web-stories-wp/story-editor';
-
-/**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Internal dependencies
+ */
+import { flattenFormData } from './utils';
 
 // See https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L72-L126
 export function saveMetaBoxes(story, formData, metaBoxes) {
