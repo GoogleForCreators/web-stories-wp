@@ -32,7 +32,6 @@ import {
   BUTTON_VARIANTS,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
-import { useFeature } from 'flagged';
 import { useCallback, useMemo, useEffect } from '@web-stories-wp/react';
 
 /**
@@ -77,7 +76,6 @@ const HelperText = styled(Text).attrs({
 `;
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
-  const isMuteVideoEnabled = useFeature('enableMuteVideo');
   const { isTranscodingEnabled } = useFFmpeg();
   const { muteExistingVideo } = useLocalMedia((state) => ({
     muteExistingVideo: state.actions.muteExistingVideo,
@@ -93,8 +91,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
 
   const shouldDisplayMuteButton = useMemo(() => {
     return (
-      (isMuteVideoEnabled &&
-        isTranscodingEnabled &&
+      (isTranscodingEnabled &&
         !local &&
         !isMuted &&
         !isTranscoding &&
@@ -102,7 +99,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       isMuting
     );
   }, [
-    isMuteVideoEnabled,
     isTranscodingEnabled,
     local,
     isMuted,

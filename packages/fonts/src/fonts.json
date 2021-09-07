@@ -28112,31 +28112,6 @@
     }
   },
   {
-    "family": "STIX Two Math",
-    "fallbacks": ["serif"],
-    "weights": [400],
-    "styles": ["regular"],
-    "variants": [[0, 400]],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 1000,
-      "asc": 762,
-      "des": -238,
-      "tAsc": 762,
-      "tDes": -238,
-      "tLGap": 250,
-      "wAsc": 2627,
-      "wDes": 1641,
-      "xH": 473,
-      "capH": 657,
-      "yMin": -1641,
-      "yMax": 2627,
-      "hAsc": 762,
-      "hDes": -238,
-      "lGap": 250
-    }
-  },
-  {
     "family": "STIX Two Text",
     "fallbacks": ["serif"],
     "weights": [400, 500, 600, 700],
