@@ -124,6 +124,7 @@ function Publish() {
         onClick={handlePublish}
         disabled={!capabilities?.hasPublishAction || isSaving || isUploading}
         text={text}
+        isUploading={isUploading}
       />
       <ReviewChecklistDialog
         isOpen={showDialog}

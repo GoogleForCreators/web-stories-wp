@@ -17,7 +17,8 @@
  * External dependencies
  */
 import {
-  prettifyShortcut,
+  createShortcutAriaLabel,
+  Shortcut,
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
@@ -58,26 +59,41 @@ const StyledKbd = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
   color: inherit;
+
+  :not(:last-child) {
+    margin-right: 4px;
+  }
 `;
 
 export const RIGHT_CLICK_MENU_SHORTCUTS = {
-  SEND_BACKWARD: <StyledKbd>{prettifyShortcut('mod down')}</StyledKbd>,
-  SEND_TO_BACK: <StyledKbd>{prettifyShortcut('mod shift down')}</StyledKbd>,
-  BRING_FORWARD: <StyledKbd>{prettifyShortcut('mod up')}</StyledKbd>,
-  BRING_TO_FRONT: <StyledKbd>{prettifyShortcut('mod shift up')}</StyledKbd>,
-  DELETE: <StyledKbd>{prettifyShortcut('delete')}</StyledKbd>,
-  COPY_STYLES: (
-    <>
-      <StyledKbd>{prettifyShortcut('alt mod')}</StyledKbd>{' '}
-      <StyledKbd>{'O'}</StyledKbd>
-    </>
-  ),
-  PASTE_STYLES: (
-    <>
-      <StyledKbd>{prettifyShortcut('alt mod')}</StyledKbd>{' '}
-      <StyledKbd>{'P'}</StyledKbd>
-    </>
-  ),
+  SEND_BACKWARD: {
+    display: <Shortcut shortcut="mod down" component={StyledKbd} />,
+    title: createShortcutAriaLabel('mod down'),
+  },
+  SEND_TO_BACK: {
+    display: <Shortcut shortcut="mod shift down" component={StyledKbd} />,
+    title: createShortcutAriaLabel('mod shift down'),
+  },
+  BRING_FORWARD: {
+    display: <Shortcut shortcut="mod up" component={StyledKbd} />,
+    title: createShortcutAriaLabel('mod up'),
+  },
+  BRING_TO_FRONT: {
+    display: <Shortcut shortcut="mod shift up" component={StyledKbd} />,
+    title: createShortcutAriaLabel('mod shift up'),
+  },
+  DELETE: {
+    display: <Shortcut shortcut="delete" component={StyledKbd} />,
+    title: createShortcutAriaLabel('delete'),
+  },
+  COPY_STYLES: {
+    display: <Shortcut shortcut="alt mod O" component={StyledKbd} />,
+    title: createShortcutAriaLabel('alt mod O'),
+  },
+  PASTE_STYLES: {
+    display: <Shortcut shortcut="alt mod P" component={StyledKbd} />,
+    title: createShortcutAriaLabel('alt mod P'),
+  },
 };
 
 export const RIGHT_CLICK_SNACKBAR_TEXT = {

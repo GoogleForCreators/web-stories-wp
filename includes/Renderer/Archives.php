@@ -104,7 +104,7 @@ class Archives extends Service_Base {
 			$story = new Story();
 			$story->load_from_post( $post );
 
-			$embed   = new Embed( $story, $this->assets, $this->amp_story_player_assets );
+			$embed   = new Embed( $story, $this->assets );
 			$content = $embed->render();
 		}
 

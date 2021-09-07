@@ -55,13 +55,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected $assets;
 
 	/**
-	 * AMP_Story_Player_Assets instance.
-	 *
-	 * @var AMP_Story_Player_Assets AMP_Story_Player_Assets instance.
-	 */
-	protected $amp_story_player_assets;
-
-	/**
 	 * Web Stories stylesheet handle.
 	 *
 	 * @var string
@@ -161,13 +154,14 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$this->query           = $query;
 		$this->attributes      = $this->query->get_story_attributes();
 		$this->content_overlay = $this->attributes['show_title'] || $this->attributes['show_date'] || $this->attributes['show_author'] || $this->attributes['show_excerpt'];
+
 		// TODO, find a way to inject this a cleaner way.
 		$injector = Services::get_injector();
 		if ( ! method_exists( $injector, 'make' ) ) {
 			return;
 		}
-		$this->assets                  = $injector->make( Assets::class );
-		$this->amp_story_player_assets = $injector->make( AMP_Story_Player_Assets::class );
+
+		$this->assets = $injector->make( Assets::class );
 	}
 
 	/**
@@ -271,9 +265,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// Web Stories styles for AMP and non-AMP pages.
 		$this->assets->register_style_asset( self::STYLE_HANDLE );
 
-		$player_handle = $this->amp_story_player_assets->get_handle();
 		// Web Stories lightbox script.
-		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ $player_handle ] );
+		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE ] );
 	}
 
 	/**
@@ -496,7 +489,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$single_story_classes = $this->get_single_story_classes();
 		$lightbox_state       = 'lightbox' . $story->get_id() . $this->instance_id;
 		// No need to load these styles on admin as editor styles are being loaded by the block.
-		if ( ! is_admin() || defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
+		if ( ! is_admin() || ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) ) {
 			// Web Stories Styles for AMP and non-AMP pages.
 			$this->assets->enqueue_style_asset( self::STYLE_HANDLE );
 		}
@@ -511,9 +504,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			</div>
 			<?php
 		} else {
-			$player_handle = $this->amp_story_player_assets->get_handle();
-			$this->assets->enqueue_style( $player_handle );
-			$this->assets->enqueue_script( $player_handle );
+			$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+			$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
 			<div class="<?php echo esc_attr( $single_story_classes ); ?>" data-story-url="<?php echo esc_url( $story->get_url() ); ?>">

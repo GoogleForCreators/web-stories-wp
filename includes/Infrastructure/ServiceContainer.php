@@ -58,7 +58,7 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 	 *
 	 * @return bool
 	 */
-	public function has( $id );
+	public function has( $id ): bool;
 
 	/**
 	 * Put a service into the container for later retrieval.

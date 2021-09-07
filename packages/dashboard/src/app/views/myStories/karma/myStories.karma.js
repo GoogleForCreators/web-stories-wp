@@ -93,12 +93,13 @@ describe('Grid view', () => {
     const contextMenuList = contextMenuLists[storyIndex];
 
     // it is focused on the link within the list
-    const contextMenuItem =
-      within(contextMenuList).getByLabelText(contextMenuText);
+    const contextMenuItem = within(contextMenuList).getByRole('button', {
+      name: contextMenuText,
+    });
 
     let limit = 0;
     while (
-      document.activeElement.getAttribute('aria-label') !== contextMenuText &&
+      document.activeElement.textContent !== contextMenuText &&
       limit < 8
     ) {
       // eslint-disable-next-line no-await-in-loop

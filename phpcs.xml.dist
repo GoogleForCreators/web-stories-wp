@@ -25,9 +25,14 @@
 	<rule ref="WordPress-VIP-Go">
 		<type>error</type>
 		<exclude-pattern>tests/*</exclude-pattern>
+		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules" />
 	</rule>
 
-	<rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
+	<rule ref="WordPress.Security.NonceVerification">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+
+  <rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
 		<exclude-pattern>tests/*</exclude-pattern>
 	</rule>
 
@@ -104,5 +109,5 @@
 	<exclude-pattern>assets/js/*.chunks.php</exclude-pattern>
 	<exclude-pattern>includes/polyfills/mbstring.php</exclude-pattern>
 	<exclude-pattern>tests/phpstan/*</exclude-pattern>
-	<exclude-pattern>tests/phpunit/includes/MarkupComparison.php</exclude-pattern>
+	<exclude-pattern>tests/phpunit/unit/includes/MarkupComparison.php</exclude-pattern>
 </ruleset>

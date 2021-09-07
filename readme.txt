@@ -109,6 +109,16 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.11.0 =
+
+**Release Date:** September 7, 2021.
+
+* New feature: 8 new templates for creators to choose from.
+* New feature: right-click menu in the editing canvas.
+* New feature: background audio support.
+* New color swatches in color picker.
+* Bug fixes and performance improvements.
+
 = 1.10.1 =
 
 **Release Date:** August 25, 2021.
@@ -128,19 +138,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * New feature: remove audio tracks to mute videos.
 * Bug fixes and performance improvements.
 
-= 1.9.0 =
-
-**Release Date:** July 13, 2021.
-
-* New feature: freshly redesigned checklist (now located next to the help center).
-* New feature: optimize existing videos in the WordPress media library.
-* New feature: crop publisher logo and poster images directly in the editor.
-* New feature: animated GIFs are now automatically optimized as videos.
-* New feature: 9 new templates for creators to choose from.
-* Minimum requirements are now PHP 7.0+ and WordPress 5.5+.
-* Compatibility with WordPress 5.8.
-
 == Upgrade Notice ==
+
+= 1.11.0 =
+
+New templates, right-click menu, improved color picker, and background audio support.
 
 = 1.10.1 =
 
@@ -149,11 +151,3 @@ Several bug fixes to address potential fatal errors and missing page attachments
 = 1.10.0 =
 
 New templates, eyedropper, stickers, ability to mute videos, bug fixes and performance improvements.
-
-= 1.9.0 =
-
-New templates, redesigned checklist, logo & poster image cropping, broader media optimization, bug fixes and performance improvements.
-
-= 1.8.1 =
-
-5 new templates for inspiring story creation, plus some bug fixes related to animations.
