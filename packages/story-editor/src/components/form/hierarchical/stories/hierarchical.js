@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { useState } from '@web-stories-wp/react';
+
+/**
  * Internal dependencies
  */
 import { Hierarchical } from '..';
@@ -23,6 +29,46 @@ export default {
   component: Hierarchical,
 };
 
+const Wrapper = styled.div`
+  background-color: ${({ theme }) => theme.colors.bg.primary};
+  padding: 200px;
+`;
+
+const DEFAULT_OPTIONS = [
+  { id: 1, label: 'apple', checked: false },
+  { id: 2, label: 'banana', checked: false },
+  { id: 3, label: 'cantaloupe', checked: false },
+];
+
+/*
+1. set checked on the options
+2. Make it work with childrens
+ */
+
 export const _default = () => {
-  return <Hierarchical label="This bitch" />;
+  const [options, setOptions] = useState(DEFAULT_OPTIONS);
+
+  const handleChange = (evt, newOption) => {
+    const optionIndex = options.findIndex(
+      (option) => option.id === newOption.id
+    );
+
+    if (optionIndex > -1) {
+      setOptions((currentOptions) => [
+        ...currentOptions.slice(0, optionIndex),
+        newOption,
+        ...currentOptions.slice(optionIndex + 1),
+      ]);
+    }
+  };
+
+  return (
+    <Wrapper>
+      <Hierarchical
+        label="Categories"
+        options={options}
+        onChange={handleChange}
+      />
+    </Wrapper>
+  );
 };

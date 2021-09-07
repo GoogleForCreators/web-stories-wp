@@ -24,21 +24,91 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { useCallback, useState } from '@web-stories-wp/react';
 
 const Label = styled(Text).attrs({
   forwardedAs: 'label',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
-})``;
+})`
+  margin-left: 12px;
+`;
 
-export const Hierarchical = ({ label }) => {
+const CheckboxArea = styled.div`
+  padding: 8px 0;
+`;
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+`;
+
+export const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
+  const [inputText, setInputText] = useState('');
+
+  /**
+   * Sets the value that filters the displayed items.
+   */
+  const handleInputChange = useCallback((evt) => {
+    setInputText(evt.target.value);
+  }, []);
+
+  /**
+   * Callback that is called when a checkbox is clicked.
+   */
+  const handleCheckboxClick = useCallback(
+    (evt, option) => {
+      onChange(evt, { ...option, checked: !option.checked });
+    },
+    [onChange]
+  );
+
+  const filteredOptions = options.filter((option) =>
+    option.label.toLowerCase().includes(inputText.toLowerCase())
+  );
+
   return (
     <>
-      <Label as="label">{label}</Label>
-      <Input />
-      <Checkbox />
+      <Input
+        value={inputText}
+        onChange={handleInputChange}
+        label={label}
+        aria-label={sprintf(
+          /* Translators: %s: Category grouping label. */
+          __('Search %s', 'web-stories'),
+          label
+        )}
+        {...inputProps}
+      />
+      <CheckboxArea>
+        {filteredOptions.map((option) => {
+          const { id: optionId, label: optionLabel, ...checkboxProps } = option;
+
+          return (
+            <CheckboxContainer key={optionId} role="group">
+              <Checkbox
+                {...checkboxProps}
+                id={optionId}
+                onChange={(evt) => handleCheckboxClick(evt, option)}
+              />
+              <Label htmlFor={optionId}>{optionLabel}</Label>
+            </CheckboxContainer>
+          );
+        })}
+      </CheckboxArea>
     </>
   );
 };
 Hierarchical.propTypes = {
-  label: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  label: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      checked: PropTypes.bool,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onChange: PropTypes.func.isRequired,
 };
