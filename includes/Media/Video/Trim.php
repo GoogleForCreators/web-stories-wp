@@ -94,7 +94,9 @@ class Trim extends Service_Base {
 						],
 					],
 				],
-				'default'        => [],
+				'default'        => [
+					'original' => 0
+				],
 				'single'         => true,
 				'object_subtype' => 'attachment',
 			]
