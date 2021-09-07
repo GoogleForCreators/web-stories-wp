@@ -37,7 +37,9 @@ const Wrapper = styled.div`
 const DEFAULT_OPTIONS = [
   { id: 1, label: 'apple', checked: false },
   { id: 2, label: 'banana', checked: false },
-  { id: 3, label: 'cantaloupe', checked: false },
+  { id: 3, label: 'cantaloupe', checked: true },
+  { id: 4, label: 'papaya', checked: false },
+  { id: 5, label: 'zebra fish', checked: true },
 ];
 
 /*
