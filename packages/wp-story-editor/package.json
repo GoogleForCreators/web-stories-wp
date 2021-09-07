@@ -16,10 +16,10 @@
         "@web-stories-wp/react": "*",
         "@web-stories-wp/story-editor": "*",
         "@web-stories-wp/tracking": "*",
-	    "@wordpress/api-fetch": "^5.2.1",
+        "@wordpress/api-fetch": "^5.2.1",
         "flagged": "^2.0.1"
     },
     "devDependencies": {
-	    "@testing-library/react-hooks": "^7.0.1"
+       "@testing-library/react-hooks": "^7.0.1"
     }
 }
