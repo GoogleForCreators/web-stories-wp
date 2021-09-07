@@ -117,7 +117,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       isSingleElement &&
       isVideoTrimEnabled &&
       !local &&
-      !isMuted &&
+      !isMuting &&
       !isTranscoding &&
       !isTrimming
     );
@@ -125,7 +125,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     isSingleElement,
     isVideoTrimEnabled,
     local,
-    isMuted,
+    isMuting,
     isTranscoding,
     isTrimming,
   ]);
