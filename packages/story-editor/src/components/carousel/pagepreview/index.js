@@ -100,8 +100,18 @@ function PagePreview({ page, label, ...props }) {
   const [imageBlob, setImageBlob] = useState();
   const [pageNode, setPageNode] = useState();
   const setPageRef = useCallback((node) => node && setPageNode(node), []);
-  const hasImage = !isActive && imageBlob;
   const pageAtGenerationTime = useRef();
+
+  const activeStateTracker = useRef(isActive);
+  const isPageImageUnchanged = isActive && activeStateTracker.current === false;
+  const hasImage = (!isActive || isPageImageUnchanged) && imageBlob;
+
+  useEffect(() => {
+    // We're keeping track of the previous active state
+    // so that if the page was not active before but is now, an image would be displayed
+    // since this means that the page hasn't changed compared to its image.
+    activeStateTracker.current = isActive;
+  }, [isActive]);
 
   // Whenever the page is re-generated and this is not the active page
   // remove the old (and now stale) image blob
