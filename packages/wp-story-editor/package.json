@@ -19,5 +19,7 @@
 	    "@wordpress/api-fetch": "^5.2.1",
         "flagged": "^2.0.1"
     },
-    "devDependencies": {}
+    "devDependencies": {
+	    "@testing-library/react-hooks": "^7.0.1"
+    }
 }

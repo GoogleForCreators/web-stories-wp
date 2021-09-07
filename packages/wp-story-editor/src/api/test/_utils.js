@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-const TEST_COLOR = {
-  color: { r: 1, g: 1, b: 1 },
-};
-
-export function createStory(properties = {}) {
-  return {
-    title: { raw: 'title' },
-    excerpt: { raw: 'excerpt' },
-    permalink_template: 'http://localhost:8899/web-stories/%pagename%',
-    style_presets: { colors: [TEST_COLOR] },
-    _embedded: { author: [{ id: 1, name: 'John Doe' }] },
-    ...properties,
-  };
-}
-
-// @todo Move to web-stories-wp ?
 export const GET_MEDIA_RESPONSE_HEADER = {
   'X-WP-Total': 1,
   'X-WP-TotalPages': 1,
 };
 
-// @todo Move to web-stories-wp ?
 export const GET_MEDIA_RESPONSE_BODY = [
   {
     id: 274,
