@@ -106,7 +106,7 @@ function Tooltip({
   const [arrowDelta, setArrowDelta] = useState(null);
   const anchorRef = useRef(null);
   const tooltipRef = useRef(null);
-  const dynamicPlacement = useRef(null);
+  const [dynamicPlacement, setDynamicPlacement] = useState(null);
 
   const spacing = useMemo(
     () => ({
@@ -137,12 +137,11 @@ function Tooltip({
   // When near the bottom of the viewport and the tooltip is placed on the bottom we want to force the tooltip to the top as to not
   // cutoff the contents of the tooltip.
   const positionPlacement = useCallback(() => {
-    const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
-    if (
-      placement.startsWith('bottom') &&
-      tooltipElBoundingBox?.bottom > window.visualViewport.height
-    ) {
-      dynamicPlacement.current = PLACEMENT.TOP;
+    if (placement.startsWith('bottom')) {
+      const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
+      if (tooltipElBoundingBox?.bottom >= window.visualViewport.height) {
+        setDynamicPlacement(PLACEMENT.TOP);
+      }
     }
   }, [placement]);
 
@@ -203,7 +202,7 @@ function Tooltip({
 
       <Popup
         anchor={forceAnchorRef || anchorRef}
-        placement={dynamicPlacement.current || placement}
+        placement={dynamicPlacement || placement}
         spacing={spacing}
         isOpen={Boolean(shown && (shortcut || title))}
         onPositionUpdate={positionArrow}
@@ -212,7 +211,7 @@ function Tooltip({
         <TooltipContainer
           className={className}
           ref={tooltipRef}
-          placement={dynamicPlacement.current || placement}
+          placement={dynamicPlacement || placement}
           shown={shown}
           {...tooltipProps}
         >
@@ -230,7 +229,7 @@ function Tooltip({
                 </clipPath>
               </SvgForTail>
               <Tail
-                placement={dynamicPlacement.current || placement}
+                placement={dynamicPlacement || placement}
                 translateX={arrowDelta}
               />
             </>
