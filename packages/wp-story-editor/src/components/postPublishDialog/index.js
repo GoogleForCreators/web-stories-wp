@@ -17,18 +17,34 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 import { Link, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Dialog, useStory } from '@web-stories-wp/story-editor';
 
-/**
- * Internal dependencies
- */
-import Dialog from '../dialog';
+function PostPublishDialog() {
+  const {
+    embedPostLink: confirmURL,
+    link: storyURL,
+    isFreshlyPublished,
+  } = useStory(
+    ({
+      state: {
+        story: { embedPostLink, link },
+        meta: { isFreshlyPublished },
+      },
+    }) => ({
+      embedPostLink,
+      link,
+      isFreshlyPublished,
+    })
+  );
 
-function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => setIsOpen(Boolean(isFreshlyPublished)), [isFreshlyPublished]);
+
   const onAddToPostClick = useCallback((evt) => {
     trackClick(evt, 'add_story_to_new_post');
   }, []);
@@ -36,6 +52,7 @@ function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
   const onViewStoryClick = useCallback((evt) => {
     trackClick(evt, 'view_story');
   }, []);
+  const onClose = useCallback(() => setIsOpen(false), []);
 
   const primaryText = confirmURL ? __('Add to new post', 'web-stories') : '';
 
@@ -81,16 +98,5 @@ function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
     </Dialog>
   );
 }
-
-PostPublishDialog.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  confirmURL: PropTypes.string,
-  storyURL: PropTypes.string,
-};
-
-PostPublishDialog.defaultProps = {
-  storyURL: '',
-};
 
 export default PostPublishDialog;

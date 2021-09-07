@@ -17,26 +17,35 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
+import { StoryContext } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import PostPublishDialog from '../postPublishDialog';
+import PostPublishDialog from '..';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Post-Publish',
   component: PostPublishDialog,
 };
 
+const storyContext = {
+  state: {
+    story: {
+      embedPostLink:
+        'https://example.com/wp-admin/post-new.php?from-web-story=123',
+      link: '',
+    },
+    meta: {
+      isFreshlyPublished: true,
+    },
+  },
+};
+
 export const _default = () => {
   return (
-    <PostPublishDialog
-      isOpen
-      onClose={action('closed')}
-      storyURL={text('Story URL', 'https://example.com')}
-      confirmURL={text('Confirm URL', 'https://example.com')}
-    />
+    <StoryContext.Provider value={storyContext}>
+      <PostPublishDialog />
+    </StoryContext.Provider>
   );
 };
