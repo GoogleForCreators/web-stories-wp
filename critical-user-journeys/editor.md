@@ -14,11 +14,11 @@
 |                                                                   | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*      |
 |                                                                   | *[total]*                                        | 🚨 **33.33%** *(2 / 6)*     |
 | Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🏆 **100.00%** *(10 / 10)*  |
-|                                                                   | Enter edit mode                                  | 🛴 **60.00%** *(3 / 5)*     |
+|                                                                   | Enter edit mode                                  | 🚨 **20.00%** *(1 / 5)*     |
 |                                                                   | Remove background media                          | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
-|                                                                   | *[total]*                                        | 🛴 **72.73%** *(16 / 22)*   |
+|                                                                   | *[total]*                                        | 🛴 **63.64%** *(14 / 22)*   |
 | Creator Can Style Text                                            | Apply B                                          | 🛴 **80.00%** *(16 / 20)*   |
 |                                                                   | Apply I                                          | 🛴 **54.55%** *(6 / 11)*    |
 |                                                                   | Apply U                                          | 🛴 **50.00%** *(5 / 10)*    |
@@ -29,10 +29,10 @@
 |                                                                   | Set text color                                   | 🚨 **40.00%** *(2 / 5)*     |
 |                                                                   | Use font picker                                  | 🏆 **100.00%** *(14 / 14)*  |
 |                                                                   | *[total]*                                        | 🛴 **86.84%** *(33 / 38)*   |
-| Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🏆 **100.00%** *(3 / 3)*    |
+| Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🛴 **66.67%** *(2 / 3)*     |
 |                                                                   | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(5 / 5)*    |
+|                                                                   | *[total]*                                        | 🛴 **80.00%** *(4 / 5)*     |
 | Creator can Add and Write Text                                    | Consecutive text presets                         | 🚨 **33.33%** *(1 / 3)*     |
 |                                                                   | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
 |                                                                   | Select all text inside a textbox                 | 🏆 **100.00%** *(1 / 1)*    |
@@ -76,4 +76,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.12%** *(300 / 416)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **70.67%** *(294 / 416)* |
