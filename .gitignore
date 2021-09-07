@@ -17,4 +17,3 @@ node_modules
 /vendor
 phpcs.xml
 phpunit.xml
-phpunit-multisite.xml
