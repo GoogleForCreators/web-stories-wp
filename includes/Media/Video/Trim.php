@@ -84,18 +84,18 @@ class Trim extends Service_Base {
 								'type'        => 'integer',
 							],
 							'start'    => [
-								'description' => __( 'Start time in milliseconds', 'web-stories' ),
-								'type'        => 'integer',
+								'description' => __( 'Start time.', 'web-stories' ),
+								'type'        => 'string',
 							],
 							'end'      => [
-								'description' => __( 'End time in milliseconds', 'web-stories' ),
-								'type'        => 'integer',
+								'description' => __( 'End time.', 'web-stories' ),
+								'type'        => 'string',
 							],
 						],
 					],
 				],
 				'default'        => [
-					'original' => 0
+					'original' => 0,
 				],
 				'single'         => true,
 				'object_subtype' => 'attachment',
