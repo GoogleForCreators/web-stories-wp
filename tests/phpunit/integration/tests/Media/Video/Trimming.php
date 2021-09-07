@@ -20,22 +20,22 @@ namespace Google\Web_Stories\Tests\Integration\Media\Video;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Media\Video\Trim
+ * @coversDefaultClass \Google\Web_Stories\Media\Video\Trimming
  */
-class Trim extends TestCase {
+class Trimming extends TestCase {
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$trim = new \Google\Web_Stories\Media\Video\Trim();
-		$trim->register();
+		$trimming = new \Google\Web_Stories\Media\Video\Trimming();
+		$trimming->register();
 
 		$this->assertSame(
 			10,
 			has_filter(
 				'wp_prepare_attachment_for_js',
 				[
-					$trim,
+					$trimming,
 					'wp_prepare_attachment_for_js',
 				]
 			)
@@ -46,10 +46,10 @@ class Trim extends TestCase {
 	 * @covers ::register_meta
 	 */
 	public function test_register_meta() {
-		$trim = new \Google\Web_Stories\Media\Video\Trim();
-		$this->call_private_method( $trim, 'register_meta' );
+		$trimming = new \Google\Web_Stories\Media\Video\Trimming();
+		$this->call_private_method( $trimming, 'register_meta' );
 
-		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Video\Trim::TRIM_POST_META_KEY, 'attachment' ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', $trimming::TRIM_POST_META_KEY, 'attachment' ) );
 	}
 
 	/**
@@ -76,15 +76,15 @@ class Trim extends TestCase {
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
-		$trim  = new \Google\Web_Stories\Media\Video\Trim();
-		$image = $trim->wp_prepare_attachment_for_js(
+		$trimming = new \Google\Web_Stories\Media\Video\Trimming();
+		$image    = $trimming->wp_prepare_attachment_for_js(
 			[
 				'id'   => $poster_attachment_id,
 				'type' => 'image',
 				'url'  => wp_get_attachment_url( $poster_attachment_id ),
 			]
 		);
-		$video = $trim->wp_prepare_attachment_for_js(
+		$video    = $trimming->wp_prepare_attachment_for_js(
 			[
 				'id'   => $video_attachment_id,
 				'type' => 'video',
@@ -92,7 +92,7 @@ class Trim extends TestCase {
 			]
 		);
 
-		$this->assertArrayNotHasKey( \Google\Web_Stories\Media\Video\Trim::IS_TRIM_KEY, $image );
-		$this->assertArrayHasKey( \Google\Web_Stories\Media\Video\Trim::IS_TRIM_KEY, $video );
+		$this->assertArrayNotHasKey( $trimming::IS_TRIM_KEY, $image );
+		$this->assertArrayHasKey( $trimming::IS_TRIM_KEY, $video );
 	}
 }

@@ -100,7 +100,7 @@ class Plugin extends ServiceBasedPlugin {
 		'media.video.muting'           => Media\Video\Muting::class,
 		'media.video.optimization'     => Media\Video\Optimization::class,
 		'media.video.poster'           => Media\Video\Poster::class,
-		'media.video.trim'             => Media\Video\Trim::class,
+		'media.video.trimming'         => Media\Video\Trimming::class,
 		'meta_boxes'                   => Admin\Meta_Boxes::class,
 		'settings'                     => Settings::class,
 		'site_health'                  => Admin\Site_Health::class,

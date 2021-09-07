@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Trim
+ * Class Trimming
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -29,11 +29,11 @@ namespace Google\Web_Stories\Media\Video;
 use Google\Web_Stories\Service_Base;
 
 /**
- * Class Optimization
+ * Class Trimming
  *
  * @package Google\Web_Stories\Media\Video
  */
-class Trim extends Service_Base {
+class Trimming extends Service_Base {
 
 	/**
 	 * The trim video post meta key.
