@@ -156,6 +156,7 @@ function useProcessMedia({
           onUploadProgress,
           additionalData: {
             original_id: oldResource.id,
+            is_muted: oldResource.isMuted,
           },
         });
       };
@@ -254,6 +255,7 @@ function useProcessMedia({
       uploadVideoPoster,
       updateExistingElements,
       updateOldMutedObject,
+      updateVideoIsMuted,
     ]
   );
 
