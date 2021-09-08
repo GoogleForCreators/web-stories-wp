@@ -58,6 +58,7 @@ const OPTIONS = [
 describe('filterOptionsByLabelText', () => {
   it('should do no filtering with no text', () => {
     expect(filterOptionsByLabelText(OPTIONS, '')).toStrictEqual(OPTIONS);
+    expect(filterOptionsByLabelText(OPTIONS, '     ')).toStrictEqual(OPTIONS);
     expect(filterOptionsByLabelText(OPTIONS)).toStrictEqual(OPTIONS);
   });
 
@@ -65,6 +66,14 @@ describe('filterOptionsByLabelText', () => {
     expect(
       filterOptionsByLabelText(OPTIONS, 'this will not match anything')
     ).toStrictEqual([]);
+    expect(filterOptionsByLabelText(OPTIONS, '   apple    ')).toStrictEqual([
+      {
+        checked: false,
+        id: 1,
+        label: 'apple',
+        options: [],
+      },
+    ]);
     expect(filterOptionsByLabelText(OPTIONS, 'org')).toStrictEqual([
       {
         checked: false,
