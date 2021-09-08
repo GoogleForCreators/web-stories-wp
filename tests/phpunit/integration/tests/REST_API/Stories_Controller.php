@@ -119,7 +119,7 @@ class Stories_Controller extends Test_REST_TestCase {
 			3,
 			[
 				'post_status' => 'draft',
-				'post_author' => self::$user_id,
+				'post_author' => self::$author_id,
 				'post_type'   => $post_type,
 			]
 		);
@@ -232,14 +232,42 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayNotHasKey( 'private', $statuses );
 
-		$this->assertEquals( 13, $statuses['all'] );
+		$this->assertEquals( 7, $statuses['all'] );
 		$this->assertEquals( 7, $statuses['publish'] );
-		$this->assertEquals( 3, $statuses['future'] );
-		$this->assertEquals( 3, $statuses['draft'] );
+		$this->assertEquals( 0, $statuses['future'] );
+		$this->assertEquals( 0, $statuses['draft'] );
 
 		$this->assertEquals( 7, $headers['X-WP-Total'] );
 	}
 
+	/**
+	 * @covers ::get_items
+	 */
+	public function test_get_items_author() {
+		wp_set_current_user( self::$author_id );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
+		$request->set_param( 'context', 'edit' );
+		$response = rest_get_server()->dispatch( $request );
+		$headers  = $response->get_headers();
+
+		$this->assertFalse( $response->is_error() );
+		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
+
+		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
+
+		$this->assertArrayHasKey( 'all', $statuses );
+		$this->assertArrayHasKey( 'publish', $statuses );
+		$this->assertArrayHasKey( 'draft', $statuses );
+		$this->assertArrayHasKey( 'future', $statuses );
+		$this->assertArrayNotHasKey( 'private', $statuses );
+
+		$this->assertEquals( 10, $statuses['all'] );
+		$this->assertEquals( 7, $statuses['publish'] );
+		$this->assertEquals( 0, $statuses['future'] );
+		$this->assertEquals( 3, $statuses['draft'] );
+
+		$this->assertEquals( 7, $headers['X-WP-Total'] );
+	}
 	/**
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response

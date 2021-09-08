@@ -399,23 +399,20 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		// Add counts for other statuses.
 		$statuses = [
-			'all'     => [ 'publish' ],
 			'publish' => 'publish',
 		];
 
 		if ( $this->get_post_type_cap( $this->post_type, 'edit_posts' ) ) {
-			$statuses['all'][]  = 'draft';
-			$statuses['all'][]  = 'future';
 			$statuses['draft']  = 'draft';
 			$statuses['future'] = 'future';
 		}
 
-		if ( $this->get_post_type_cap( $this->post_type, 'read_private_posts' ) ) {
-			$statuses['all'][]   = 'private';
+		if ( $this->get_post_type_cap( $this->post_type, 'edit_private_posts' ) ) {
 			$statuses['private'] = 'private';
 		}
+		$edit_others_posts = $this->get_post_type_cap( $this->post_type, 'edit_others_posts' );
 
-		$statuses_count = [];
+		$statuses_count = [ 'all' => 0 ];
 
 		// Strip down query for speed.
 		$query_args['fields']                 = 'ids';
@@ -426,8 +423,12 @@ class Stories_Controller extends Stories_Base_Controller {
 		foreach ( $statuses as $key => $status ) {
 			$posts_query               = new WP_Query();
 			$query_args['post_status'] = $status;
+			if ( 'publish' !== $status && ! $edit_others_posts ) {
+				$query_args['author'] = get_current_user_id();
+			}
 			$posts_query->query( $query_args );
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
+			$statuses_count['all']  = $statuses_count['all'] + $statuses_count[ $key ];
 		}
 
 		// Encode the array as headers do not support passing an array.
