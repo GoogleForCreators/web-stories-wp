@@ -201,7 +201,6 @@ function useProcessMedia({
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
-        updateOldMutedObject(oldResource.id, resource.id);
         if ('video' === resource.type && !resource.local) {
           if (!resource.posterId) {
             uploadVideoPoster(resource.id, resource.src);
@@ -254,7 +253,6 @@ function useProcessMedia({
       uploadMedia,
       uploadVideoPoster,
       updateExistingElements,
-      updateOldMutedObject,
       updateVideoIsMuted,
     ]
   );
