@@ -25,17 +25,17 @@ const OPTIONS = [
     label: 'apple',
     checked: false,
     options: [
-      { id: 'fitty', label: 'corgi', checked: true },
+      { id: 'fitty', label: 'corgi', checked: true, options: [] },
       {
         id: 'sixty',
         label: 'morgi',
         checked: true,
-        options: [{ id: 'gritty', label: 'borky', checked: true }],
+        options: [{ id: 'gritty', label: 'borky', checked: true, options: [] }],
       },
     ],
   },
-  { id: 2, label: 'banana', checked: false },
-  { id: 3, label: 'cantaloupe', checked: true },
+  { id: 2, label: 'banana', checked: false, options: [] },
+  { id: 3, label: 'cantaloupe', checked: true, options: [] },
   {
     id: 4,
     label: 'papaya',
@@ -46,13 +46,13 @@ const OPTIONS = [
         label: 'trees',
         checked: true,
         options: [
-          { id: '1001', label: 'porgi', checked: true },
-          { id: '10011', label: 'hal', checked: true },
+          { id: '1001', label: 'porgi', checked: true, options: [] },
+          { id: '10011', label: 'hal', checked: true, options: [] },
         ],
       },
     ],
   },
-  { id: 5, label: 'zebra fish', checked: true },
+  { id: 5, label: 'zebra fish', checked: true, options: [] },
 ];
 
 describe('filterOptionsByLabelText', () => {
@@ -71,11 +71,12 @@ describe('filterOptionsByLabelText', () => {
         id: 1,
         label: 'apple',
         options: [
-          { checked: true, id: 'fitty', label: 'corgi' },
+          { checked: true, id: 'fitty', label: 'corgi', options: [] },
           {
             checked: true,
             id: 'sixty',
             label: 'morgi',
+            options: [],
           },
         ],
       },
@@ -88,7 +89,9 @@ describe('filterOptionsByLabelText', () => {
             checked: true,
             id: '100',
             label: 'trees',
-            options: [{ checked: true, id: '1001', label: 'porgi' }],
+            options: [
+              { checked: true, id: '1001', label: 'porgi', options: [] },
+            ],
           },
         ],
       },

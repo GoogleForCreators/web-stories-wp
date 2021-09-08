@@ -44,10 +44,7 @@ export const filterOption = (option, labelText = '') => {
     .includes(labelText?.toLowerCase());
 
   // create new option with new children
-  const newOption = { ...rest };
-  if (newChildren.length) {
-    newOption.options = newChildren;
-  }
+  const newOption = { ...rest, options: newChildren };
 
   // Return the filtered option if the current option matches or
   // if option has children that match the label text
