@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import filterOptionsByLabelText from '../filterOptionsByLabelText';
+import { filterOptionsByLabelText } from '../utils';
 
 const OPTIONS = [
   {

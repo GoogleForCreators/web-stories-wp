@@ -25,11 +25,12 @@ import {
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { useCallback, useState } from '@web-stories-wp/react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
-import filterOptionsByLabelText from './filterOptionsByLabelText';
+import { buildOptionsTree, filterOptionsByLabelText } from './utils';
 
 const Label = styled(Text).attrs({
   forwardedAs: 'label',
@@ -97,6 +98,16 @@ Option.propTypes = OptionPropType;
 const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
   const [inputText, setInputText] = useState('');
 
+  const filteredOptionTree = useMemo(
+    () => buildOptionsTree(options),
+    [options]
+  );
+
+  const filteredOptions = filterOptionsByLabelText(
+    filteredOptionTree,
+    inputText
+  );
+
   /**
    * Sets the value that filters the displayed items.
    */
@@ -109,12 +120,10 @@ const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
    */
   const handleCheckboxChange = useCallback(
     (evt, option) => {
-      onChange(evt, { ...option, checked: !option.checked });
+      onChange(evt, { id: option.id, checked: !option.checked });
     },
     [onChange]
   );
-
-  const filteredOptions = filterOptionsByLabelText(options, inputText);
 
   return (
     <>

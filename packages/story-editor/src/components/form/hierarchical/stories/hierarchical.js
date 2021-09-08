@@ -34,57 +34,33 @@ const Wrapper = styled.div`
   padding: 50px 200px;
 `;
 
-const DEFAULT_OPTIONS = [
-  {
-    id: 1,
-    label: 'apple',
-    checked: false,
-    options: [
-      { id: 'fitty', label: 'corgi', checked: true },
-      {
-        id: 'sixty',
-        label: 'morgi',
-        checked: true,
-        options: [{ id: 'gritty', label: 'borky', checked: true }],
-      },
-    ],
-  },
+const OPTIONS = [
+  { id: 1, label: 'apple', checked: false },
+  { id: 'fitty', label: 'corgi', checked: true, parent: 1 },
+  { id: 'sixty', label: 'morgi', checked: true, parent: 1 },
+  { id: 'gritty', label: 'borky', checked: true, parent: 'sixty' },
   { id: 2, label: 'banana', checked: false },
   { id: 3, label: 'cantaloupe', checked: true },
-  {
-    id: 4,
-    label: 'papaya',
-    checked: false,
-    options: [
-      {
-        id: '100',
-        label: 'trees',
-        checked: true,
-        options: [
-          { id: '1001', label: 'porgi', checked: true },
-          { id: '10011', label: 'hal', checked: true },
-        ],
-      },
-    ],
-  },
+  { id: 4, label: 'papaya', checked: false },
+  { id: '100', label: 'trees', checked: true, parent: 4 },
+  { id: '1001', label: 'porgi', checked: true, parent: '100' },
+  { id: '10011', label: 'hal', checked: true, parent: '100' },
   { id: 5, label: 'zebra fish', checked: true },
 ];
 
 export const _default = () => {
-  const [options, setOptions] = useState(DEFAULT_OPTIONS);
+  const [options, setOptions] = useState(OPTIONS);
 
-  const handleChange = (evt, newOption) => {
-    const optionIndex = options.findIndex(
-      (option) => option.id === newOption.id
-    );
+  const handleChange = (evt, { id, checked }) => {
+    setOptions((currentOptions) => {
+      const index = currentOptions.findIndex((option) => option.id === id);
 
-    if (optionIndex > -1) {
-      setOptions((currentOptions) => [
-        ...currentOptions.slice(0, optionIndex),
-        newOption,
-        ...currentOptions.slice(optionIndex + 1),
-      ]);
-    }
+      return [
+        ...currentOptions.slice(0, index),
+        { ...currentOptions[index], checked },
+        ...currentOptions.slice(index + 1),
+      ];
+    });
   };
 
   return (

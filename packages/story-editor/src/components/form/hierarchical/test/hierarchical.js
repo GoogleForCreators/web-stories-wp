@@ -25,16 +25,28 @@ import { renderWithProviders } from '@web-stories-wp/design-system/src/testUtils
 import Hierarchical from '..';
 import { noop } from '../../../../utils/noop';
 
+const OPTIONS = [
+  { id: 1, label: 'apple', checked: false },
+  { id: 'fitty', label: 'corgi', checked: true, parent: 1 },
+  { id: 'sixty', label: 'morgi', checked: true, parent: 1 },
+  { id: 'gritty', label: 'borky', checked: true, parent: 'sixty' },
+  { id: 2, label: 'banana', checked: false },
+  { id: 3, label: 'cantaloupe', checked: true },
+  { id: 4, label: 'papaya', checked: false },
+  { id: '100', label: 'trees', checked: true, parent: 4 },
+  { id: '1001', label: 'porgi', checked: true, parent: '100' },
+  { id: '10011', label: 'hal', checked: true, parent: '100' },
+  { id: 5, label: 'zebra fish', checked: true },
+];
+
+const OPTIONS_WITH_NO_CHILDREN = OPTIONS.filter((option) => !option.parent);
+
 describe('Hierarchical', () => {
   it('typing in the list should filter the first level options', () => {
     renderWithProviders(
       <Hierarchical
         label="Categories"
-        options={[
-          { id: 1, label: 'apple', checked: false },
-          { id: 2, label: 'banana', checked: false },
-          { id: 3, label: 'cantaloupe', checked: true },
-        ]}
+        options={OPTIONS_WITH_NO_CHILDREN}
         onChange={noop}
       />
     );
@@ -44,54 +56,19 @@ describe('Hierarchical', () => {
 
     const options = screen.getAllByRole('checkbox');
 
-    expect(options).toHaveLength(2);
+    expect(options).toHaveLength(3);
     expect(screen.getByRole('checkbox', { name: 'apple' })).toBeInTheDocument();
     expect(
       screen.getByRole('checkbox', { name: 'cantaloupe' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('checkbox', { name: 'papaya' })
     ).toBeInTheDocument();
   });
 
   it('typing in the list should filter nested options', () => {
     renderWithProviders(
-      <Hierarchical
-        label="Categories"
-        options={[
-          {
-            id: 1,
-            label: 'apple',
-            checked: false,
-            options: [
-              { id: 'fitty', label: 'corgi', checked: true },
-              {
-                id: 'sixty',
-                label: 'morgi',
-                checked: true,
-                options: [{ id: 'gritty', label: 'borky', checked: true }],
-              },
-            ],
-          },
-          { id: 2, label: 'banana', checked: false },
-          { id: 3, label: 'cantaloupe', checked: true },
-          {
-            id: 4,
-            label: 'papaya',
-            checked: false,
-            options: [
-              {
-                id: '100',
-                label: 'trees',
-                checked: true,
-                options: [
-                  { id: '1001', label: 'porgi', checked: true },
-                  { id: '10011', label: 'hal', checked: true },
-                ],
-              },
-            ],
-          },
-          { id: 5, label: 'zebra fish', checked: true },
-        ]}
-        onChange={noop}
-      />
+      <Hierarchical label="Categories" options={OPTIONS} onChange={noop} />
     );
     const input = screen.getByRole('searchbox');
 
@@ -108,5 +85,85 @@ describe('Hierarchical', () => {
     ).toBeInTheDocument();
     expect(screen.getByRole('checkbox', { name: 'trees' })).toBeInTheDocument();
     expect(screen.getByRole('checkbox', { name: 'porgi' })).toBeInTheDocument();
+  });
+
+  it('clicking a checkbox should call onChange with the path and new value', () => {
+    const onChange = jest.fn();
+
+    renderWithProviders(
+      <Hierarchical label="Categories" options={OPTIONS} onChange={onChange} />
+    );
+
+    const initialCheckboxLength = screen.getAllByRole('checkbox').length;
+
+    const appleCheckbox = screen.getByRole('checkbox', { name: 'apple' });
+    const morgiCheckbox = screen.getByRole('checkbox', { name: 'morgi' });
+    const treesCheckbox = screen.getByRole('checkbox', { name: 'trees' });
+    const zebraFishCheckbox = screen.getByRole('checkbox', {
+      name: 'zebra fish',
+    });
+
+    fireEvent.click(appleCheckbox);
+
+    expect(onChange).toHaveBeenCalledWith(expect.any(Object), {
+      id: 1,
+      checked: true,
+    });
+
+    fireEvent.click(morgiCheckbox);
+
+    expect(onChange).toHaveBeenCalledWith(expect.any(Object), {
+      id: 'sixty',
+      checked: false,
+    });
+
+    fireEvent.click(treesCheckbox);
+
+    expect(onChange).toHaveBeenCalledWith(expect.any(Object), {
+      id: '100',
+      checked: false,
+    });
+
+    fireEvent.click(zebraFishCheckbox);
+
+    expect(onChange).toHaveBeenCalledWith(expect.any(Object), {
+      id: 5,
+      checked: false,
+    });
+
+    expect(screen.getAllByRole('checkbox')).toHaveLength(initialCheckboxLength);
+  });
+
+  it('should check the correct box when items are filtered', () => {
+    const onChange = jest.fn();
+
+    renderWithProviders(
+      <Hierarchical label="Categories" options={OPTIONS} onChange={onChange} />
+    );
+
+    const input = screen.getByRole('searchbox');
+
+    fireEvent.change(input, { target: { value: 'orgi' } });
+
+    const initialCheckboxLength = screen.getAllByRole('checkbox').length;
+
+    const appleCheckbox = screen.getByRole('checkbox', { name: 'apple' });
+    const morgiCheckbox = screen.getByRole('checkbox', { name: 'morgi' });
+
+    fireEvent.click(appleCheckbox);
+
+    expect(onChange).toHaveBeenCalledWith(expect.any(Object), {
+      id: 1,
+      checked: true,
+    });
+
+    fireEvent.click(morgiCheckbox);
+
+    expect(onChange).toHaveBeenCalledWith(expect.any(Object), {
+      id: 'sixty',
+      checked: false,
+    });
+
+    expect(screen.getAllByRole('checkbox')).toHaveLength(initialCheckboxLength);
   });
 });

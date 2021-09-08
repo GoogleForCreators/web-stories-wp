@@ -13,6 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import groupBy from 'lodash.groupby';
+
+const fillTree = (groupedOptionsByParent, options = []) => {
+  return options?.map((option) => {
+    const children = groupedOptionsByParent[option.id];
+
+    return {
+      ...option,
+      options:
+        children && children.length
+          ? fillTree(groupedOptionsByParent, children)
+          : [],
+    };
+  });
+};
+
+/**
+ * Returns options in a tree form.
+ *
+ * Works similarly to Gutenberg Editor:
+ * https://github.com/WordPress/gutenberg/blob/3f9968e2815cfb56684c1acc9a2700d8e4a02726/packages/editor/src/utils/terms.js#L13-L40
+ *
+ * @param {Array} flatOptions Array of terms in flat format.
+ * @return {Array} Array of terms in tree format.
+ */
+export const buildOptionsTree = (flatOptions) => {
+  const formattedOptions = flatOptions.map((option) => ({
+    options: [],
+    parent: null,
+    ...option,
+  }));
+
+  const groupedOptionsByParent = groupBy(formattedOptions, 'parent');
+
+  return fillTree(groupedOptionsByParent, groupedOptionsByParent[null]);
+};
 
 /**
  * Filters an option and its children based on the label text. Only returns an option iff:
@@ -60,10 +99,8 @@ export const filterOption = (option, labelText = '') => {
  * @param {string} labelText The text to match
  * @return {Array.<Object>} A filtered list of options
  */
-const filterOptionsByLabelText = (options, labelText) =>
+export const filterOptionsByLabelText = (options, labelText) =>
   options.reduce(
     (all, option) => all.concat(filterOption(option, labelText)),
     []
   );
-
-export default filterOptionsByLabelText;
