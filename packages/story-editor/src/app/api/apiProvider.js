@@ -55,6 +55,8 @@ const STORY_FIELDS = [
   'password',
 ].join(',');
 
+const STORY_EMBED = 'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo';
+
 function APIProvider({ children }) {
   const {
     api: {
@@ -82,7 +84,7 @@ function APIProvider({ children }) {
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
-        _embed: 'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo',
+        _embed: STORY_EMBED,
         web_stories_demo: false,
         _fields: STORY_FIELDS,
       });
@@ -128,7 +130,7 @@ function APIProvider({ children }) {
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
-        _embed: 'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo',
+        _embed: STORY_EMBED,
         web_stories_demo: true,
         _fields: STORY_FIELDS,
       });
@@ -195,7 +197,7 @@ function APIProvider({ children }) {
           'edit_link',
           'embed_post_link',
         ].join(','),
-        _embed: 'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo',
+        _embed: STORY_EMBED,
       });
 
       return apiFetch({
