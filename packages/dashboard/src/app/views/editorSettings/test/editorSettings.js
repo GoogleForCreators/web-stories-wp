@@ -240,9 +240,12 @@ describe('Editor Settings: <Editor Settings />', function () {
     );
     setAppElement(container);
 
-    const helperLink = screen.getByText('how to monetize your Web Stories', {
-      selector: 'a',
-    });
+    const helperLink = screen.getByText(
+      (_, node) => node.textContent === 'how to monetize your Web Stories',
+      {
+        selector: 'a',
+      }
+    );
     expect(helperLink).toBeInTheDocument();
   });
 });

@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { within } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
@@ -26,7 +31,6 @@ import useInsertElement from '../useInsertElement';
 
 describe('Right Click Menu integration', () => {
   let fixture;
-  let newPageCarouselButton;
   let duplicatePageCarouselButton;
   let insertElement;
 
@@ -37,9 +41,6 @@ describe('Right Click Menu integration', () => {
 
     insertElement = await fixture.renderHook(() => useInsertElement());
 
-    newPageCarouselButton = fixture.screen.getByRole('button', {
-      name: /New Page/,
-    });
     duplicatePageCarouselButton = fixture.screen.getByRole('button', {
       name: /Duplicate Page/,
     });
@@ -50,15 +51,128 @@ describe('Right Click Menu integration', () => {
     fixture.restore();
   });
 
+  function rightClickMenu() {
+    return fixture.screen.getByRole('group', {
+      name: 'Context Menu for the selected element',
+    });
+  }
+
+  function sendBackward() {
+    return fixture.screen.getByRole('button', {
+      name: /^Send Backward/i,
+    });
+  }
+
+  function sendToBack() {
+    return fixture.screen.getByRole('button', {
+      name: /^Send to Back/i,
+    });
+  }
+
+  function bringForward() {
+    return fixture.screen.getByRole('button', {
+      name: /^Bring Forward/i,
+    });
+  }
+
+  function bringToFront() {
+    return fixture.screen.getByRole('button', {
+      name: /^Bring to Front/i,
+    });
+  }
+
+  function setAsPageBackground() {
+    return fixture.screen.getByRole('button', {
+      name: /^Set as page Background/i,
+    });
+  }
+
+  function scaleAndCropImage() {
+    return fixture.screen.getByRole('button', {
+      name: /^Scale & Crop Image/i,
+    });
+  }
+
+  function scaleAndCropBackgroundImage() {
+    return fixture.screen.getByRole('button', {
+      name: /^Scale & Crop Background Image/i,
+    });
+  }
+
+  function duplicatePage() {
+    const menu = rightClickMenu();
+
+    return within(menu).queryByRole('button', {
+      name: /^Duplicate Page/i,
+    });
+  }
+
+  function deletePage() {
+    const menu = rightClickMenu();
+
+    return within(menu).queryByRole('button', {
+      name: /^Delete Page/i,
+    });
+  }
+
+  function copyImageStyles() {
+    return fixture.screen.getByRole('button', {
+      name: /^Copy Image Styles/i,
+    });
+  }
+
+  function pasteImageStyles() {
+    return fixture.screen.getByRole('button', {
+      name: /^Paste Image Styles/i,
+    });
+  }
+
+  function clearImageStyles() {
+    return fixture.screen.getByRole('button', {
+      name: /^Clear Image Styles/i,
+    });
+  }
+
+  function detachImageFromBackground() {
+    return fixture.screen.getByRole('button', {
+      name: /^Detach Image From Background/i,
+    });
+  }
+
+  function copyStyles() {
+    return fixture.screen.getByRole('button', {
+      name: /^Copy Style/i,
+    });
+  }
+
+  function pasteStyles() {
+    return fixture.screen.getByRole('button', {
+      name: /^Paste Style/i,
+    });
+  }
+
+  function addToSavedStyles() {
+    return fixture.screen.getByRole('button', {
+      name: /^Add Style to/i,
+    });
+  }
+
+  function addToSavedColors() {
+    return fixture.screen.getByRole('button', {
+      name: /^Add Color to/i,
+    });
+  }
+
   /**
    * Closes the browser right click menu by left clicking
    */
   async function closeRightClickMenu() {
     const framesLayer = fixture.screen.getByTestId('FramesLayer');
     // close browser default (only shows in puppeteer tests)
-    await fixture.events.click(framesLayer);
+    const rect = framesLayer.getBoundingClientRect();
+    await fixture.events.mouse.click(rect.left + 1, rect.top + 1);
     // close right click menu
-    await fixture.events.click(framesLayer);
+    await fixture.events.mouse.click(rect.left + 1, rect.top + 1);
   }
 
   /**
@@ -201,7 +315,7 @@ describe('Right Click Menu integration', () => {
         button: 'right',
       });
 
-      expect(fixture.editor.canvas.rightClickMenu).not.toBeNull();
+      expect(rightClickMenu()).not.toBeNull();
     });
 
     // NOTE: this opens the real right click menu, which can't be closed
@@ -219,76 +333,6 @@ describe('Right Click Menu integration', () => {
     });
   });
 
-  describe('default actions', () => {
-    it('should be able to copy a page and paste it to a new page', async () => {
-      // insert element
-      await addEarthImage();
-
-      // apply a background to the page
-      await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
-
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
-      );
-      await fixture.events.keyboard.type('ab12dd');
-
-      // copy the page
-      await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
-        button: 'right',
-      });
-      await fixture.events.click(fixture.editor.canvas.rightClickMenu.copy);
-
-      // add new blank page
-      await fixture.events.click(newPageCarouselButton);
-
-      // paste page
-      await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
-        button: 'right',
-      });
-      await fixture.events.click(fixture.editor.canvas.rightClickMenu.paste);
-
-      // confirm the paste worked.
-      const { pages } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          pages: state.pages,
-        }))
-      );
-
-      verifyPageDuplicated(pages);
-    });
-
-    it('should delete the current page when clicking the "Delete" button', async () => {
-      // duplicate page
-      await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
-        button: 'right',
-      });
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.duplicatePage
-      );
-
-      // insert elements on new page
-      await addEarthImage();
-      await addText();
-
-      // delete page
-      await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
-        button: 'right',
-      });
-      await fixture.events.click(fixture.editor.canvas.rightClickMenu.delete);
-
-      // verify the correct page was deleted
-      const { pages } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          pages: state.pages,
-        }))
-      );
-
-      expect(pages.length).toBe(1);
-      expect(pages[0].elements.length).toBe(1);
-      expect(pages[0].elements[0].isBackground).toBe(true);
-    });
-  });
-
   describe('right click menu: foreground and background media actions', () => {
     it('should set an image as the background and detach an image from the background', async () => {
       const earthImage = await addEarthImage();
@@ -299,9 +343,7 @@ describe('Right Click Menu integration', () => {
       );
 
       // set image as page background
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.setAsPageBackground
-      );
+      await fixture.events.click(setAsPageBackground());
 
       // verify the image has been set as the background
       const { currentPage } = await fixture.renderHook(() =>
@@ -319,9 +361,7 @@ describe('Right Click Menu integration', () => {
       );
 
       // remove from image background
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.detachImageFromBackground
-      );
+      await fixture.events.click(detachImageFromBackground());
 
       // verify the image has been removed from the background
       const { currentPage: newCurrentPage } = await fixture.renderHook(() =>
@@ -346,9 +386,7 @@ describe('Right Click Menu integration', () => {
       );
 
       // foreground: click 'scale and crop image' button
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.scaleAndCropImage
-      );
+      await fixture.events.click(scaleAndCropImage());
 
       // Verify element is being edited
       expect(fixture.screen.getByTestId('edit-panel-slider')).toBeDefined();
@@ -362,9 +400,7 @@ describe('Right Click Menu integration', () => {
       );
 
       // set video as page background
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.setAsPageBackground
-      );
+      await fixture.events.click(setAsPageBackground());
 
       // right click video
       await rightClickOnTarget(
@@ -372,9 +408,7 @@ describe('Right Click Menu integration', () => {
       );
 
       // background: click 'scale and crop image' button
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.scaleAndCropBackgroundImage
-      );
+      await fixture.events.click(scaleAndCropBackgroundImage());
 
       // Verify element is being edited
       expect(fixture.screen.getByTestId('edit-panel-slider')).toBeDefined();
@@ -399,9 +433,7 @@ describe('Right Click Menu integration', () => {
       await rightClickOnTarget(
         fixture.editor.canvas.framesLayer.frame(backgroundElement.id).node
       );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.duplicatePage
-      );
+      await fixture.events.click(duplicatePage());
 
       // verify duplication of all content
       const { pages } = await fixture.renderHook(() =>
@@ -418,9 +450,7 @@ describe('Right Click Menu integration', () => {
       await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
         button: 'right',
       });
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.duplicatePage
-      );
+      await fixture.events.click(duplicatePage());
 
       // insert elements on new page
       await addEarthImage();
@@ -430,9 +460,7 @@ describe('Right Click Menu integration', () => {
       await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
         button: 'right',
       });
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.deletePage
-      );
+      await fixture.events.click(deletePage());
 
       // verify the correct page was deleted
       const { pages } = await fixture.renderHook(() =>
@@ -457,18 +485,10 @@ describe('Right Click Menu integration', () => {
       );
 
       // movement buttons should be disabled
-      expect(
-        fixture.editor.canvas.rightClickMenu.sendBackward.disabled
-      ).toBeTrue();
-      expect(
-        fixture.editor.canvas.rightClickMenu.sendToBack.disabled
-      ).toBeTrue();
-      expect(
-        fixture.editor.canvas.rightClickMenu.bringForward.disabled
-      ).toBeTrue();
-      expect(
-        fixture.editor.canvas.rightClickMenu.bringToFront.disabled
-      ).toBeTrue();
+      expect(sendBackward().disabled).toBeTrue();
+      expect(sendToBack().disabled).toBeTrue();
+      expect(bringForward().disabled).toBeTrue();
+      expect(bringToFront().disabled).toBeTrue();
 
       await closeRightClickMenu();
 
@@ -496,23 +516,13 @@ describe('Right Click Menu integration', () => {
       ).toBe('Ranger');
 
       // More than one layer so some movement buttons will be enabled
-      expect(
-        fixture.editor.canvas.rightClickMenu.sendBackward.disabled
-      ).toBeFalse();
-      expect(
-        fixture.editor.canvas.rightClickMenu.sendToBack.disabled
-      ).toBeFalse();
-      expect(
-        fixture.editor.canvas.rightClickMenu.bringForward.disabled
-      ).toBeTrue();
-      expect(
-        fixture.editor.canvas.rightClickMenu.bringToFront.disabled
-      ).toBeTrue();
+      expect(sendBackward().disabled).toBeFalse();
+      expect(sendToBack().disabled).toBeFalse();
+      expect(bringForward().disabled).toBeTrue();
+      expect(bringToFront().disabled).toBeTrue();
 
       // Move image with 'Send backward'
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.sendBackward
-      );
+      await fixture.events.click(sendBackward());
 
       // verify new layer order
       expect(
@@ -532,23 +542,13 @@ describe('Right Click Menu integration', () => {
 
       // verify all buttons are enabled now that there
       // are layers above and below
-      expect(
-        fixture.editor.canvas.rightClickMenu.sendBackward.disabled
-      ).toBeFalse();
-      expect(
-        fixture.editor.canvas.rightClickMenu.sendToBack.disabled
-      ).toBeFalse();
-      expect(
-        fixture.editor.canvas.rightClickMenu.bringForward.disabled
-      ).toBeFalse();
-      expect(
-        fixture.editor.canvas.rightClickMenu.bringToFront.disabled
-      ).toBeFalse();
+      expect(sendBackward().disabled).toBeFalse();
+      expect(sendToBack().disabled).toBeFalse();
+      expect(bringForward().disabled).toBeFalse();
+      expect(bringToFront().disabled).toBeFalse();
 
       // Move image with 'Bring forward' button
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.bringForward
-      );
+      await fixture.events.click(bringForward());
 
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
@@ -564,9 +564,7 @@ describe('Right Click Menu integration', () => {
       await rightClickOnTarget(
         fixture.editor.canvas.framesLayer.frame(rangerImage.id).node
       );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.sendToBack
-      );
+      await fixture.events.click(sendToBack());
 
       // verify positioning
       await rightClickOnTarget(
@@ -584,23 +582,13 @@ describe('Right Click Menu integration', () => {
 
       // verify 'back' buttons are disabled since ranger image is under everything
       // except the background
-      expect(
-        fixture.editor.canvas.rightClickMenu.sendBackward.disabled
-      ).toBeTrue();
-      expect(
-        fixture.editor.canvas.rightClickMenu.sendToBack.disabled
-      ).toBeTrue();
-      expect(
-        fixture.editor.canvas.rightClickMenu.bringForward.disabled
-      ).toBeFalse();
-      expect(
-        fixture.editor.canvas.rightClickMenu.bringToFront.disabled
-      ).toBeFalse();
+      expect(sendBackward().disabled).toBeTrue();
+      expect(sendToBack().disabled).toBeTrue();
+      expect(bringForward().disabled).toBeFalse();
+      expect(bringToFront().disabled).toBeFalse();
 
       // Move image all the way to the front
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.bringToFront
-      );
+      await fixture.events.click(bringToFront());
 
       // verify positioning
       expect(
@@ -618,18 +606,10 @@ describe('Right Click Menu integration', () => {
       await rightClickOnTarget(
         fixture.editor.canvas.framesLayer.frame(rangerImage.id).node
       );
-      expect(
-        fixture.editor.canvas.rightClickMenu.sendBackward.disabled
-      ).toBeFalse();
-      expect(
-        fixture.editor.canvas.rightClickMenu.sendToBack.disabled
-      ).toBeFalse();
-      expect(
-        fixture.editor.canvas.rightClickMenu.bringForward.disabled
-      ).toBeTrue();
-      expect(
-        fixture.editor.canvas.rightClickMenu.bringToFront.disabled
-      ).toBeTrue();
+      expect(sendBackward().disabled).toBeFalse();
+      expect(sendToBack().disabled).toBeFalse();
+      expect(bringForward().disabled).toBeTrue();
+      expect(bringToFront().disabled).toBeTrue();
     });
 
     describe('right click menu: copying, pasting, and clearing styles', () => {
@@ -671,17 +651,13 @@ describe('Right Click Menu integration', () => {
         await rightClickOnTarget(
           fixture.editor.canvas.framesLayer.frame(earthImage.id).node
         );
-        await fixture.events.click(
-          fixture.editor.canvas.rightClickMenu.copyImageStyles
-        );
+        await fixture.events.click(copyImageStyles());
 
         // paste styles onto ranger image
         await rightClickOnTarget(
           fixture.editor.canvas.framesLayer.frame(rangerImage.id).node
         );
-        await fixture.events.click(
-          fixture.editor.canvas.rightClickMenu.pasteImageStyles
-        );
+        await fixture.events.click(pasteImageStyles());
 
         // verify that the styles were copied and pasted
         const { currentPage } = await fixture.renderHook(() =>
@@ -741,9 +717,7 @@ describe('Right Click Menu integration', () => {
         await rightClickOnTarget(
           fixture.editor.canvas.framesLayer.frame(earthImage.id).node
         );
-        await fixture.events.click(
-          fixture.editor.canvas.rightClickMenu.clearImageStyles
-        );
+        await fixture.events.click(clearImageStyles());
 
         // verify styles were reset to defaults
         const { currentPage } = await fixture.renderHook(() =>
@@ -760,155 +734,6 @@ describe('Right Click Menu integration', () => {
           imageAttributeDefaults
         );
       });
-    });
-  });
-
-  describe('right click menu: background media', () => {
-    it("should duplicate the current page when clicking 'Duplicate page'", async () => {
-      const earthImage = await addEarthImage();
-      await addText();
-
-      // set image as page background
-      await rightClickOnTarget(
-        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
-      );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.setAsPageBackground
-      );
-
-      // duplicate page
-      await rightClickOnTarget(
-        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
-      );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.duplicatePage
-      );
-
-      // verify duplication of all content
-      const { pages } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          pages: state.pages,
-        }))
-      );
-
-      verifyPageDuplicated(pages);
-    });
-
-    it('should delete the current page when clicking the "Delete Page" button', async () => {
-      // duplicate page
-      await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
-        button: 'right',
-      });
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.duplicatePage
-      );
-
-      // insert elements on new page
-      const earthImage = await addEarthImage();
-      await addText();
-
-      // set image as background
-      await rightClickOnTarget(
-        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
-      );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.setAsPageBackground
-      );
-
-      // delete page
-      await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
-        button: 'right',
-      });
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.deletePage
-      );
-
-      // verify the correct page was deleted
-      const { pages } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          pages: state.pages,
-        }))
-      );
-
-      expect(pages.length).toBe(1);
-      expect(pages[0].elements.length).toBe(1);
-      expect(pages[0].elements[0].isBackground).toBe(true);
-      expect(pages.find((element) => element.id === earthImage.id)).toBe(
-        undefined
-      );
-    });
-
-    it('should add new pages before and after the current page', async () => {
-      // add image as background
-      const earthImage = await addEarthImage();
-      await rightClickOnTarget(
-        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
-      );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.setAsPageBackground
-      );
-
-      // add page before
-      await rightClickOnTarget(
-        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
-      );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.addNewPageBefore
-      );
-
-      // go back to original page
-      await fixture.events.mouse.clickOn(
-        fixture.editor.carousel.pages[1].node,
-        5,
-        5
-      );
-
-      // add page after
-      await rightClickOnTarget(
-        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
-      );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.addNewPageAfter
-      );
-
-      // verify new page added after
-      const { pages } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          pages: state.pages,
-        }))
-      );
-
-      expect(pages.length).toBe(3);
-
-      // original page should have the earth image as the background
-      expect(pages[1].elements[0].isBackground).toBeTrue();
-      expect(pages[1].elements[0].id).toBe(earthImage.id);
-      // first page should have the default background
-      expect(pages[0].elements[0].isDefaultBackground).toBeTrue();
-      // third page should have the default background
-      expect(pages[2].elements[0].isDefaultBackground).toBeTrue();
-    });
-
-    it('should highlight the media panel', async () => {
-      // add image as background
-      const earthImage = await addEarthImage();
-      await rightClickOnTarget(
-        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
-      );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.setAsPageBackground
-      );
-
-      // select replace background image
-      await rightClickOnTarget(
-        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
-      );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.replaceBackgroundImage
-      );
-
-      // verify focus
-      expect(document.activeElement).toBe(fixture.editor.library.mediaTab);
     });
   });
 
@@ -956,17 +781,13 @@ describe('Right Click Menu integration', () => {
       await rightClickOnTarget(
         fixture.editor.canvas.framesLayer.frame(textA.id).node
       );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.copyStyles
-      );
+      await fixture.events.click(copyStyles());
 
       // paste text element A styles onto text element B
       await rightClickOnTarget(
         fixture.editor.canvas.framesLayer.frame(textB.id).node
       );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.pasteStyles
-      );
+      await fixture.events.click(pasteStyles());
 
       // verify that the styles were copied and pasted
       const { currentPage } = await fixture.renderHook(() =>
@@ -1004,9 +825,7 @@ describe('Right Click Menu integration', () => {
       await rightClickOnTarget(
         fixture.editor.canvas.framesLayer.frame(text.id).node
       );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.addToSavedColors
-      );
+      await fixture.events.click(addToSavedColors());
 
       // verify that the global color was added
       const { colors } = await fixture.renderHook(() =>
@@ -1037,9 +856,7 @@ describe('Right Click Menu integration', () => {
       await rightClickOnTarget(
         fixture.editor.canvas.framesLayer.frame(text.id).node
       );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.addToSavedStyles
-      );
+      await fixture.events.click(addToSavedStyles());
 
       // verify that the global color was added
       const { textStyles } = await fixture.renderHook(() =>
@@ -1096,9 +913,7 @@ describe('Right Click Menu integration', () => {
       await rightClickOnTarget(
         fixture.editor.canvas.framesLayer.frame(shape.id).node
       );
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.addToSavedColors
-      );
+      await fixture.events.click(addToSavedColors());
 
       // verify that the global color was added
       const { colors } = await fixture.renderHook(() =>

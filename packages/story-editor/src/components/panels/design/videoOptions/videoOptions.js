@@ -32,17 +32,18 @@ import {
   BUTTON_VARIANTS,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
-import { useFeature } from 'flagged';
 import { useCallback, useMemo, useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
+import useVideoTrim from '../../../videoTrim/useVideoTrim';
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
 import { useLocalMedia } from '../../../../app';
+import { states, styles, useHighlights } from '../../../../app/highlights';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -50,6 +51,10 @@ const Row = styled(DefaultRow)`
 
 const StyledButton = styled(Button)`
   padding: 12px 8px;
+`;
+
+const TrimButton = styled(StyledButton)`
+  margin-left: 20px;
 `;
 
 const Label = styled.label`
@@ -71,7 +76,6 @@ const HelperText = styled(Text).attrs({
 `;
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
-  const isMuteVideoEnabled = useFeature('enableMuteVideo');
   const { isTranscodingEnabled } = useFFmpeg();
   const { muteExistingVideo } = useLocalMedia((state) => ({
     muteExistingVideo: state.actions.muteExistingVideo,
@@ -87,8 +91,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
 
   const shouldDisplayMuteButton = useMemo(() => {
     return (
-      (isMuteVideoEnabled &&
-        isTranscodingEnabled &&
+      (isTranscodingEnabled &&
         !local &&
         !isMuted &&
         !isTranscoding &&
@@ -96,7 +99,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       isMuting
     );
   }, [
-    isMuteVideoEnabled,
     isTranscodingEnabled,
     local,
     isMuted,
@@ -111,6 +113,13 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       : __('Remove audio', 'web-stories');
   }, [isMuting]);
 
+  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
+    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
+      hasTrimMode,
+      toggleTrimMode,
+    })
+  );
+
   const speak = useLiveRegion();
 
   useEffect(() => {
@@ -119,10 +128,17 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     }
   }, [isMuting, buttonText, speak]);
 
+  const { highlight, resetHighlight } = useHighlights((state) => ({
+    highlight: state[states.VIDEO_SETTINGS],
+    resetHighlight: state.onFocusOut,
+  }));
+
   const checkboxId = `cb-${uuidv4()}`;
 
   return (
     <SimplePanel
+      css={highlight?.showEffect && styles.FLASH}
+      onAnimationEnd={() => resetHighlight()}
       name="videoOptions"
       title={__('Video Settings', 'web-stories')}
     >
@@ -137,6 +153,16 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
             {__('Loop', 'web-stories')}
           </Text>
         </Label>
+        {hasTrimMode && (
+          <TrimButton
+            variant={BUTTON_VARIANTS.RECTANGLE}
+            type={BUTTON_TYPES.SECONDARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={toggleTrimMode}
+          >
+            {__('Trim', 'web-stories')}
+          </TrimButton>
+        )}
       </Row>
       {shouldDisplayMuteButton && (
         <>

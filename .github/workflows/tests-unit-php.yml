@@ -36,7 +36,7 @@ concurrency:
 
 jobs:
   unit-php:
-    name: 'PHP ${{ matrix.php }} - WP ${{ matrix.wp }}'
+    name: PHP ${{ matrix.php }} - WP ${{ matrix.wp }}${{ matrix.experimental && ' (experimental)' || '' }}${{ matrix.coverage && ' (with coverage)' || '' }}${{ matrix.random && ' (in random order)' || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     services:
@@ -52,7 +52,7 @@ jobs:
     continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
-        php: ['8.0', '7.0']
+        php: ['7.0', '8.0']
         wp: ['latest']
         coverage: [false]
         include:
@@ -63,9 +63,15 @@ jobs:
           - php: '7.0'
             wp: '5.5'
 
-          - php: '7.4'
-            wp: 'trunk'
+          - php: '8.0'
+            wp: 'latest'
+            random: true
             experimental: true
+
+    # TODO: Re-enable in https://github.com/google/web-stories-wp/pull/8607
+    #     - php: '8.0'
+    #       wp: 'trunk'
+    #       experimental: true
 
     steps:
       - name: Checkout
@@ -138,18 +144,27 @@ jobs:
 
       - name: Run tests
         run: |
-          npm run test:php
-          npm run test:php:multisite
-        if: ${{ ! matrix.coverage }}
+          npm run test:php:unit
+          npm run test:php:integration:single
+          npm run test:php:integration:multisite
+        if: ${{ ! matrix.coverage && ! matrix.random }}
 
       - name: Run tests with coverage
         run: |
-          npm run test:php -- --coverage-clover build/logs/php-coverage.xml
-          npm run test:php -- --coverage-clover build/logs/php-coverage-multisite.xml -c phpunit-multisite.xml.dist
-        if: ${{ matrix.coverage }}
+          npm run test:php:unit -- --coverage-clover build/logs/php-coverage.xml
+          npm run test:php:integration:single -- --coverage-clover build/logs/php-coverage-integration.xml
+          npm run test:php:integration:multisite -- --coverage-clover build/logs/php-coverage-multisite.xml
+        if: ${{ matrix.coverage && ! matrix.random }}
+
+      - name: Run tests in random order
+        run: |
+          npm run test:php:unit -- --order-by random
+          npm run test:php:integration:single -- --order-by random
+          npm run test:php:integration:multisite -- --order-by random
+        if: ${{ matrix.random }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@v2.0.2
+        uses: codecov/codecov-action@v2.0.3
         with:
           file: build/logs/*.xml
         if: ${{ matrix.coverage }}

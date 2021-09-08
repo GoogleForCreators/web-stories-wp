@@ -160,18 +160,22 @@ class Poster extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array   $response   Array of prepared attachment data.
-	 * @param WP_Post $attachment Attachment object.
+	 * @param array|mixed $response   Array of prepared attachment data.
+	 * @param WP_Post     $attachment Attachment object.
 	 *
-	 * @return array $response;
+	 * @return array|mixed $response;
 	 */
-	public function wp_prepare_attachment_for_js( $response, $attachment ): array {
+	public function wp_prepare_attachment_for_js( $response, $attachment ) {
+		if ( ! is_array( $response ) ) {
+			return $response;
+		}
 		if ( 'video' === $response['type'] ) {
 			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
 			$image        = '';
 			if ( 0 !== $thumbnail_id ) {
 				$image = $this->get_thumbnail_data( $thumbnail_id );
 			}
+			
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
 		}

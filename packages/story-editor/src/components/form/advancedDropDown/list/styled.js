@@ -18,15 +18,11 @@
  */
 import styled from 'styled-components';
 import {
+  Icons,
   themeHelpers,
   THEME_CONSTANTS,
   Text,
 } from '@web-stories-wp/design-system';
-
-/**
- * Internal dependencies
- */
-import { ReactComponent as Checkmark } from '../../../../icons/checkmark.svg';
 
 export const List = styled.div`
   width: 100%;
@@ -56,6 +52,8 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
     fontFamily,
   },
 }))`
+  display: flex;
+  align-items: center;
   position: relative;
   padding: 8px 16px;
   margin: 6px 0 0 0;
@@ -82,11 +80,10 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   }
 `;
 
-export const Selected = styled(Checkmark)`
-  display: inline-block;
-  width: 8px;
+export const Selected = styled(Icons.Checkmark)`
+  width: 16px;
   height: auto;
-  margin-right: 8px;
+  margin-right: 4px;
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 

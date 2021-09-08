@@ -168,9 +168,9 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 * @param string $handle The style's registered handle.
 	 * @param string $href   The stylesheet's source URL.
 	 *
-	 * @return string
+	 * @return string|mixed
 	 */
-	public function style_loader_tag( $tag, $handle, $href ): string {
+	public function style_loader_tag( $tag, $handle, $href ) {
 		return $this->add_attribute( $tag, 'href', $href );
 	}
 
@@ -179,13 +179,13 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $tag    The `<script>` tag for the enqueued script.
-	 * @param string $handle The script's registered handle.
-	 * @param string $src    The script's source URL.
+	 * @param string|mixed $tag The `<script>` tag for the enqueued script.
+	 * @param string       $handle    The script's registered handle.
+	 * @param string       $src       The script's source URL.
 	 *
-	 * @return string
+	 * @return string|mixed The filtered script tag.
 	 */
-	public function script_loader_tag( $tag, $handle, $src ): string {
+	public function script_loader_tag( $tag, $handle, $src ) {
 		return $this->add_attribute( $tag, 'src', $src );
 	}
 
@@ -194,20 +194,20 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $avatar      HTML for the user's avatar.
-	 * @param mixed  $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
-	 *                            user email, WP_User object, WP_Post object, or WP_Comment object.
-	 * @param int    $size        Square avatar width and height in pixels to retrieve.
-	 * @param string $default     URL for the default image or a default type. Accepts '404', 'retro', 'monsterid',
-	 *                            'wavatar', 'indenticon', 'mystery', 'mm', 'mysteryman', 'blank', or
-	 *                            'gravatar_default'. Default is the value of the 'avatar_default' option, with a
-	 *                            fallback of 'mystery'.
-	 * @param string $alt         Alternative text to use in the avatar image tag. Default empty.
-	 * @param array  $args        Arguments passed to get_avatar_data(), after processing.
+	 * @param string|mixed $avatar      HTML for the user's avatar.
+	 * @param mixed        $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
+	 *                                  user email, WP_User object, WP_Post object, or WP_Comment object.
+	 * @param int          $size        Square avatar width and height in pixels to retrieve.
+	 * @param string       $default     URL for the default image or a default type. Accepts '404', 'retro', 'monsterid',
+	 *                                  'wavatar', 'indenticon', 'mystery', 'mm', 'mysteryman', 'blank', or
+	 *                                  'gravatar_default'. Default is the value of the 'avatar_default' option, with a
+	 *                                  fallback of 'mystery'.
+	 * @param string       $alt         Alternative text to use in the avatar image tag. Default empty.
+	 * @param array        $args        Arguments passed to get_avatar_data(), after processing.
 	 *
-	 * @return string
+	 * @return string|mixed
 	 */
-	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ): string {
+	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ) {
 		return $this->add_attribute( $avatar, 'src', $args['url'] );
 	}
 
@@ -216,13 +216,13 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $html HTML string.
-	 * @param string $attribute Attribute to check for.
-	 * @param string $url URL.
+	 * @param string|mixed $html HTML string.
+	 * @param string       $attribute Attribute to check for.
+	 * @param string       $url URL.
 	 *
-	 * @return string
+	 * @return string|mixed
 	 */
-	protected function add_attribute( string $html, string $attribute, string $url ): string {
+	protected function add_attribute( $html, string $attribute, string $url ) {
 		$site_url = site_url();
 		$url      = esc_url( $url );
 

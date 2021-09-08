@@ -19,10 +19,11 @@ namespace Google\Web_Stories\Infrastructure;
 
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\ServiceContainer\LazilyInstantiatedService;
+use WP_Site;
 use function add_action;
 use function apply_filters;
 use function did_action;
-use function Google\Web_Stories\rewrite_flush;
+use const WPCOM_IS_VIP_ENV;
 
 /**
  * This abstract base plugin provides all the boilerplate code for working with
@@ -114,43 +115,101 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
-	 * Activate the plugin.
+	 * Act on plugin activation.
 	 *
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function activate( $network_wide ) {
+	public function on_plugin_activation( $network_wide ) {
 		$this->register_services();
 
 		foreach ( $this->service_container as $service ) {
-			if ( $service instanceof Activateable ) {
-				$service->activate( $network_wide );
+			if ( $service instanceof PluginActivationAware ) {
+				$service->on_plugin_activation( $network_wide );
 			}
 		}
 
-		rewrite_flush();
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false );
+		}
 	}
 
 	/**
-	 * Deactivate the plugin.
+	 * Act on plugin deactivation.
 	 *
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
 	 */
-	public function deactivate( $network_wide ) {
+	public function on_plugin_deactivation( $network_wide ) {
 		$this->register_services();
 
 		foreach ( $this->service_container as $service ) {
-			if ( $service instanceof Deactivateable ) {
-				$service->deactivate( $network_wide );
+			if ( $service instanceof PluginDeactivationAware ) {
+				$service->on_plugin_deactivation( $network_wide );
 			}
 		}
 
-		rewrite_flush();
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false );
+		}
+	}
+
+	/**
+	 * Act on site initialization on Multisite.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being initialized.
+	 * @return void
+	 */
+	public function on_site_initialization( WP_Site $site ) {
+		$this->register_services();
+
+		$site_id = (int) $site->blog_id;
+
+		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
+		switch_to_blog( $site_id );
+
+		foreach ( $this->service_container as $service ) {
+			if ( $service instanceof SiteInitializationAware ) {
+				$service->on_site_initialization( $site );
+			}
+		}
+
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false );
+		}
+
+		restore_current_blog();
+	}
+
+	/**
+	 * Act on site removal on Multisite.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being removed.
+	 * @return void
+	 */
+	public function on_site_removal( WP_Site $site ) {
+		$this->register_services();
+
+		$site_id = (int) $site->blog_id;
+
+		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
+		switch_to_blog( $site_id );
+
+		foreach ( $this->service_container as $service ) {
+			if ( $service instanceof SiteRemovalAware ) {
+				$service->on_site_removal( $site );
+			}
+		}
+
+		restore_current_blog();
 	}
 
 	/**

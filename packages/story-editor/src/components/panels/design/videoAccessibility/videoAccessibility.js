@@ -66,7 +66,11 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
 
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
-  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
+  const {
+    allowedImageMimeTypes,
+    allowedImageFileTypes,
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
 
   const handleChangePoster = useCallback(
     (image) => {
@@ -148,6 +152,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           ariaLabel={__('Video poster', 'web-stories')}
           menuOptions={['edit', 'reset']}
           imgProps={cropParams}
+          canUpload={hasUploadMediaAction}
         />
         <InputsWrapper>
           <TextArea

@@ -60,6 +60,8 @@ const separatorCSS = css`
   width: 100%;
   height: 1px;
   background-color: ${({ theme }) => theme.colors.divider.primary};
+  margin: 8px 0;
+
   ${({ isIconMenu, theme }) =>
     isIconMenu &&
     css`
@@ -92,8 +94,9 @@ const MenuList = styled.ul`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 16px;
+      padding: 2px 16px;
       border: 0;
+      color: ${({ theme }) => theme.colors.fg.primary};
       transition: background-color ${BUTTON_TRANSITION_TIMING};
     }
     ${({ isIconMenu }) =>
@@ -179,12 +182,24 @@ const Menu = ({
   ...props
 }) => {
   const [focusedIndex, setFocusedIndex] = useState(-1);
+  const wrapperRef = useRef(null);
   const listRef = useRef(null);
   const menuWasAlreadyOpen = useRef(isOpen);
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
-  const totalIndex = useMemo(() => items.length - 1, [items]);
+  // Need ref so that `items.length` changes do not trigger the effect
+  // that focuses an item in the menu when it is first opened.
+  const totalIndex = useRef(items.length - 1);
+  totalIndex.current = items.length - 1;
 
+  /**
+   * Focus event handler for each menu item. Sets the tracked
+   * `focusedIndex` and calls a `focusCallback` if provided.
+   *
+   * @param {Event} ev The triggering event.
+   * @param {number} itemIndex The index of the item.
+   * @param {Function} focusCallback An optional callback function.
+   */
   const handleFocusItem = useCallback((ev, itemIndex, focusCallback) => {
     setFocusedIndex(itemIndex);
     focusCallback?.(ev);
@@ -197,11 +212,12 @@ const Menu = ({
    * @return {void} void
    */
   const handleKeyboardNav = useCallback(
-    ({ key, shiftKey }) => {
+    (evt) => {
+      const { key, shiftKey } = evt;
       const isAscending =
         [KEYS.UP, KEYS.LEFT].includes(key) || (key === KEYS.TAB && shiftKey);
       let index = focusedIndex + (isAscending ? -1 : 1);
-      let terminate = isAscending ? index < 0 : index > totalIndex;
+      let terminate = isAscending ? index < 0 : index > totalIndex.current;
 
       while (!terminate) {
         const element = listRef.current?.children?.[index]?.children?.[0];
@@ -216,16 +232,16 @@ const Menu = ({
         }
 
         index = isAscending ? index - 1 : index + 1;
-        terminate = isAscending ? index < 0 : index > totalIndex;
+        terminate = isAscending ? index < 0 : index > totalIndex.current;
       }
 
       // If we didn't find a focusable element or get to the start/end
       // of the list then **tabbing should close the menu**
       if (key === KEYS.TAB) {
-        onDismiss?.();
+        onDismiss?.(evt);
       }
     },
-    [focusedIndex, onDismiss, totalIndex]
+    [focusedIndex, onDismiss]
   );
 
   useEffect(() => {
@@ -234,7 +250,7 @@ const Menu = ({
     if (isOpen && !menuWasAlreadyOpen.current && listRef?.current) {
       let index = 0;
 
-      while (index <= totalIndex) {
+      while (index <= totalIndex.current) {
         const element = listRef.current?.children?.[index]?.children?.[0];
 
         if (
@@ -252,16 +268,13 @@ const Menu = ({
 
       menuWasAlreadyOpen.current = true;
     }
-  }, [focusedIndex, isOpen, totalIndex]);
-
-  useEffect(() => {
     // reset state when menu is closed. This component does not unmount so
     // we need to reset the state manually
-    if (!isOpen) {
+    else if (!isOpen) {
       setFocusedIndex(-1);
       menuWasAlreadyOpen.current = false;
     }
-  }, [isOpen]);
+  }, [isOpen]); // only run this effect when `isOpen` changes
 
   const keySpec = useMemo(
     () =>
@@ -277,14 +290,18 @@ const Menu = ({
   ]);
 
   return (
-    <MenuWrapper isIconMenu={isIconMenu} role="menu">
+    <MenuWrapper
+      ref={wrapperRef}
+      isIconMenu={isIconMenu}
+      role="menu"
+      {...props}
+    >
       <MenuList
         data-testid="context-menu-list"
         ref={listRef}
         isIconMenu={isIconMenu}
         aria-label={groupLabel}
         role="group"
-        {...props}
       >
         {items.map(({ separator, onFocus, ...itemProps }, index) => (
           <li

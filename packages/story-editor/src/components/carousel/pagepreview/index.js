@@ -22,10 +22,22 @@ import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { UnitsProvider } from '@web-stories-wp/units';
+import {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+} from '@web-stories-wp/react';
+import { useFeature } from 'flagged';
+
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../../types';
+import {
+  requestIdleCallback,
+  cancelIdleCallback,
+} from '../../../utils/idleCallback';
 import { TransformProvider } from '../../transform';
 import DisplayElement from '../../canvas/displayElement';
 
@@ -78,23 +90,76 @@ const PreviewWrapper = styled.div`
   ${({ background }) => generatePatternStyles(background)}
 `;
 
-function PagePreview({ page, ...props }) {
+const Image = styled.img`
+  width: 100%;
+`;
+
+function PagePreview({ page, label, ...props }) {
   const { backgroundColor } = page;
-  const { width, height } = props;
+  const { width, height, isActive } = props;
+
+  const [imageBlob, setImageBlob] = useState();
+  const [pageNode, setPageNode] = useState();
+  const setPageRef = useCallback((node) => node && setPageNode(node), []);
+  const hasImage = !isActive && imageBlob;
+  const pageAtGenerationTime = useRef();
+  const enableThumbnailCaching = useFeature('enableThumbnailCaching');
+
+  // Whenever the page is re-generated and this is not the active page
+  // remove the old (and now stale) image blob
+  useEffect(() => {
+    if (pageAtGenerationTime.current !== page && !isActive) {
+      setImageBlob(null);
+      pageAtGenerationTime.current = null;
+    }
+  }, [page, isActive]);
+
+  useEffect(() => {
+    // If this is not the active page, there is a page node, we
+    // don't already have a snapshot and thumbnail caching is active
+    if (enableThumbnailCaching && !isActive && pageNode && !imageBlob) {
+      // Schedule an idle callback to actually generate the image
+      const id = requestIdleCallback(
+        () => {
+          import(
+            /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
+          ).then((htmlToImage) => {
+            htmlToImage.toJpeg(pageNode, { quality: 1 }).then(setImageBlob);
+            pageAtGenerationTime.current = page;
+          });
+        },
+        { timeout: 5000 }
+      );
+      // If the page somehow regenerates before the snapshot is taken,
+      // make sure to cancel the old request
+      return () => cancelIdleCallback(id);
+    }
+    // Required because of eslint: consistent-return
+    return undefined;
+  }, [enableThumbnailCaching, isActive, pageNode, imageBlob, page]);
 
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page {...props}>
+        <Page ref={setPageRef} aria-label={label} {...props}>
           <PreviewWrapper background={backgroundColor}>
-            {page.elements.map(({ id, ...rest }) => (
-              <DisplayElement
-                key={id}
-                previewMode
-                element={{ id, ...rest }}
-                page={page}
+            {hasImage ? (
+              <Image
+                src={imageBlob}
+                width={width}
+                height={height}
+                alt={label}
               />
-            ))}
+            ) : (
+              page.elements.map((element) => (
+                <DisplayElement
+                  key={element.id}
+                  previewMode
+                  element={element}
+                  page={page}
+                />
+              ))
+            )}
           </PreviewWrapper>
         </Page>
       </TransformProvider>
@@ -104,6 +169,8 @@ function PagePreview({ page, ...props }) {
 
 PagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
+  label: PropTypes.string.isRequired,
+  pageImageData: PropTypes.string,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   isInteractive: PropTypes.bool,

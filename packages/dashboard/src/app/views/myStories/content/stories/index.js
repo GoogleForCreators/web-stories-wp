@@ -71,7 +71,6 @@ const page = {
 };
 
 const storyActions = {
-  createTemplateFromStory: action('create template from story clicked'),
   duplicateStory: action('duplicate story clicked'),
   trashStory: action('trash story clicked'),
   updateStory: action('update story clicked'),
@@ -112,15 +111,13 @@ export const _default = () => {
   });
 
   return (
-    <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <SnackbarProvider>
-        <Layout.Provider>
-          <StorybookLayoutContainer>
-            <Content {...defaultProps} view={{ ...view, pageSize }} />
-          </StorybookLayoutContainer>
-        </Layout.Provider>
-      </SnackbarProvider>
-    </FlagsProvider>
+    <SnackbarProvider>
+      <Layout.Provider>
+        <StorybookLayoutContainer>
+          <Content {...defaultProps} view={{ ...view, pageSize }} />
+        </StorybookLayoutContainer>
+      </Layout.Provider>
+    </SnackbarProvider>
   );
 };
 
@@ -139,19 +136,17 @@ export const AllDataFetched = () => {
     isGrid: true,
   });
   return (
-    <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <SnackbarProvider>
-        <Layout.Provider>
-          <StorybookLayoutContainer>
-            <Content
-              {...defaultProps}
-              allPagesFetched
-              view={{ ...view, pageSize }}
-            />
-          </StorybookLayoutContainer>
-        </Layout.Provider>
-      </SnackbarProvider>
-    </FlagsProvider>
+    <SnackbarProvider>
+      <Layout.Provider>
+        <StorybookLayoutContainer>
+          <Content
+            {...defaultProps}
+            allPagesFetched
+            view={{ ...view, pageSize }}
+          />
+        </StorybookLayoutContainer>
+      </Layout.Provider>
+    </SnackbarProvider>
   );
 };
 
@@ -160,19 +155,17 @@ export const AllDataFetchedAsList = () => {
     thumbnailMode: true,
   });
   return (
-    <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <SnackbarProvider>
-        <Layout.Provider>
-          <StorybookLayoutContainer>
-            <Content
-              {...defaultProps}
-              allPagesFetched
-              view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
-            />
-          </StorybookLayoutContainer>
-        </Layout.Provider>
-      </SnackbarProvider>
-    </FlagsProvider>
+    <SnackbarProvider>
+      <Layout.Provider>
+        <StorybookLayoutContainer>
+          <Content
+            {...defaultProps}
+            allPagesFetched
+            view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
+          />
+        </StorybookLayoutContainer>
+      </Layout.Provider>
+    </SnackbarProvider>
   );
 };
 
@@ -181,17 +174,15 @@ export const _StoriesViewGrid = () => {
     isGrid: true,
   });
   return (
-    <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <SnackbarProvider>
-        <StoriesView
-          filterValue={STORY_STATUS.ALL}
-          sort={sort}
-          storyActions={storyActions}
-          stories={formattedStoriesArray}
-          view={{ ...view, pageSize }}
-        />
-      </SnackbarProvider>
-    </FlagsProvider>
+    <SnackbarProvider>
+      <StoriesView
+        filterValue={STORY_STATUS.ALL}
+        sort={sort}
+        storyActions={storyActions}
+        stories={formattedStoriesArray}
+        view={{ ...view, pageSize }}
+      />
+    </SnackbarProvider>
   );
 };
 
@@ -214,22 +205,20 @@ export const NoSearchResults = () => {
     isGrid: true,
   });
   return (
-    <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <SnackbarProvider>
-        <Layout.Provider>
-          <StorybookLayoutContainer>
-            <Content
-              {...defaultProps}
-              stories={[]}
-              search={{
-                keyword: 'koalas',
-              }}
-              allPagesFetched
-              view={{ ...view, pageSize }}
-            />
-          </StorybookLayoutContainer>
-        </Layout.Provider>
-      </SnackbarProvider>
-    </FlagsProvider>
+    <SnackbarProvider>
+      <Layout.Provider>
+        <StorybookLayoutContainer>
+          <Content
+            {...defaultProps}
+            stories={[]}
+            search={{
+              keyword: 'koalas',
+            }}
+            allPagesFetched
+            view={{ ...view, pageSize }}
+          />
+        </StorybookLayoutContainer>
+      </Layout.Provider>
+    </SnackbarProvider>
   );
 };

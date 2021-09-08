@@ -17,31 +17,31 @@
 /**
  * Internal dependencies
  */
-import flatternFormData from '../flatternFormData';
+import flattenFormData from '../flattenFormData';
 
 const append = jest.fn();
 const FormData = {
   append,
 };
 
-describe('flatternFormData', () => {
+describe('flattenFormData', () => {
   afterEach(() => {
     append.mockClear();
   });
   it('should call append for string', () => {
-    flatternFormData(FormData, 'test', 'value');
+    flattenFormData(FormData, 'test', 'value');
     expect(append).toHaveBeenCalledWith('test', 'value');
   });
 
   it('should call append for object', () => {
-    flatternFormData(FormData, 'test', {
+    flattenFormData(FormData, 'test', {
       meta: 'test',
     });
     expect(append).toHaveBeenCalledWith('test[meta]', 'test');
   });
 
   it('should call append for multiple levels object', () => {
-    flatternFormData(FormData, 'test', {
+    flattenFormData(FormData, 'test', {
       level1: {
         level2: {
           level3: 'test',
@@ -52,7 +52,7 @@ describe('flatternFormData', () => {
   });
 
   it('should call append for null', () => {
-    flatternFormData(FormData, 'test', null);
+    flattenFormData(FormData, 'test', null);
     expect(append).not.toHaveBeenCalledWith('test', null);
   });
 });

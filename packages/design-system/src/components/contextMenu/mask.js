@@ -18,10 +18,10 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useEffect, useRef } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { noop } from '../../utils';
 import { POPOVER_Z_INDEX } from './styled';
 
 const ScreenMask = styled.div`
@@ -36,16 +36,36 @@ const ScreenMask = styled.div`
 `;
 
 export default function Mask({ onDismiss }) {
+  const maskRef = useRef();
+
+  // Right clicking the mask should also close it
+  useEffect(() => {
+    const node = maskRef.current;
+    if (!node) {
+      return undefined;
+    }
+
+    node.addEventListener('contextmenu', onDismiss);
+
+    return () => {
+      node.removeEventListener('contextmenu', onDismiss);
+    };
+  }, [onDismiss]);
+
   return (
     <>
       {/*
-        Disable Reason: Allow pointer events to pass through if there's no 'onDismiss' to preserve transition
+        Disable Reason: Prevent events from propagating so click + drag isn't triggered in the editor.
         */}
-      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
+      {/* eslint-disable-next-line styled-components-a11y/no-static-element-interactions */}
       <ScreenMask
+        ref={maskRef}
         data-testid="context-menu-mask"
         hasOnDismiss={Boolean(onDismiss)}
-        onClick={onDismiss || noop}
+        onMouseDown={(evt) => {
+          evt.stopPropagation();
+          onDismiss?.();
+        }}
       />
     </>
   );

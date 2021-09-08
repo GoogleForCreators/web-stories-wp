@@ -73,11 +73,11 @@ class Admin extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $class Current classes.
+	 * @param string|mixed $class Current classes.
 	 *
-	 * @return string $class List of Classes.
+	 * @return string|mixed $class List of Classes.
 	 */
-	public function admin_body_class( $class ): string {
+	public function admin_body_class( $class ) {
 		$screen = $this->get_current_screen();
 		if ( ! $screen ) {
 			return $class;
@@ -107,12 +107,12 @@ class Admin extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string   $content Default post content.
-	 * @param \WP_Post $post    Post object.
+	 * @param string|mixed $content Default post content.
+	 * @param \WP_Post     $post    Post object.
 	 *
-	 * @return string Pre-filled post content if applicable, or the default content otherwise.
+	 * @return string|mixed Pre-filled post content if applicable, or the default content otherwise.
 	 */
-	public function prefill_post_content( $content, $post ): string {
+	public function prefill_post_content( $content, $post ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $content;
 		}
@@ -175,11 +175,11 @@ class Admin extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $title Default post title.
+	 * @param string|mixed $title Default post title.
 	 *
-	 * @return string Pre-filled post title if applicable, or the default title otherwise.
+	 * @return string|mixed Pre-filled post title if applicable, or the default title otherwise.
 	 */
-	public function prefill_post_title( $title ): string {
+	public function prefill_post_title( $title ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $title;
 		}

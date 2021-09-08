@@ -63,11 +63,11 @@ class NextGen_Gallery extends Service_Base {
 	 *
 	 * @see https://github.com/imagely/nextgen-gallery/blob/9736cc05e63b6b4cceb10b8a9a1de276f5c1ad4b/non_pope/class.photocrati_resource_manager.php
 	 *
-	 * @param bool $valid_request Whether NextGEN Gallery's output buffer should run.
+	 * @param bool|mixed $valid_request Whether NextGEN Gallery's output buffer should run.
 	 *
-	 * @return bool Whether the output buffer should run.
+	 * @return bool|mixed Whether the output buffer should run.
 	 */
-	public function filter_run_ngg_resource_manager( $valid_request ): bool {
+	public function filter_run_ngg_resource_manager( $valid_request ) {
 		if (
 			// Plain permalinks.
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended

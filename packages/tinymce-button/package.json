@@ -11,9 +11,9 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@wordpress/components": "^15.0.0",
+    "@wordpress/components": "^16.0.0",
     "@wordpress/compose": "^5.0.0",
-    "@wordpress/data": "^6.0.0",
+    "@wordpress/data": "^6.0.1",
     "@wordpress/element": "^4.0.0",
     "@wordpress/i18n": "^4.2.1",
     "prop-types": "^15.7.2"

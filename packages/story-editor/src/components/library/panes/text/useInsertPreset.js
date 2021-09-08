@@ -134,7 +134,7 @@ function useInsertPreset() {
   }, [autoColor, presetAtts, insertElement, setColor]);
 
   const insertPreset = useCallback(
-    (element, presetProps = {}) => {
+    async (element, presetProps = {}) => {
       const { isPositioned, accessibleColors, skipCanvasGeneration } =
         presetProps;
       // If it's already positioned, skip calculating that.
@@ -149,11 +149,12 @@ function useInsertPreset() {
           setAutoColor(accessibleColors);
           return;
         }
-        calculateAccessibleTextColors(
-          { ...element, ...atts },
-          setAutoColor,
-          null,
-          skipCanvasGeneration
+        setAutoColor(
+          await calculateAccessibleTextColors(
+            { ...element, ...atts },
+            null,
+            skipCanvasGeneration
+          )
         );
       } else {
         const addedElement = insertElement(TYPE, {

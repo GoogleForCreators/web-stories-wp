@@ -25,6 +25,7 @@ import {
 } from '@web-stories-wp/react';
 import { useFeatures } from 'flagged';
 import { addQueryArgs } from '@web-stories-wp/design-system';
+import { createSolidFromString } from '@web-stories-wp/patterns';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
@@ -53,7 +54,6 @@ const STORY_FIELDS = [
   'modified',
   'modified_gmt',
   'link',
-  'featured_media_url',
   'preview_link',
   'edit_link',
   // _web_stories_envelope will add these fields, we need them too.
@@ -94,7 +94,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
 
       // Important: Keep in sync with REST API preloading definition.
       const query = {
-        _embed: 'wp:lock,wp:lockuser,author',
+        _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
         context: 'edit',
         _web_stories_envelope: true,
         search: searchTerm || undefined,
@@ -162,7 +162,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
 
       try {
         const path = addQueryArgs(`${storyApi}${story.id}/`, {
-          _embed: 'wp:lock,wp:lockuser,author',
+          _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
         });
 
         const data = {
@@ -227,7 +227,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
       });
 
       try {
-        const { createdBy, pages, version } = template;
+        const { createdBy, pages, version, colors } = template;
         const { getStoryPropsToSave } = await import(
           /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@web-stories-wp/story-editor'
         );
@@ -247,6 +247,10 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
           flags,
         });
 
+        const convertedColors = colors.map(({ color }) =>
+          createSolidFromString(color)
+        );
+
         const path = addQueryArgs(storyApi, {
           _fields: 'edit_link',
         });
@@ -259,6 +263,9 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
               version,
               autoAdvance: true,
               defaultPageDuration: 7,
+              currentStoryStyles: {
+                colors: convertedColors,
+              },
             },
           },
         });
@@ -296,7 +303,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
         } = story;
 
         const path = addQueryArgs(storyApi, {
-          _embed: 'wp:lock,wp:lockuser,author',
+          _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
           _fields: STORY_FIELDS,
         });
 

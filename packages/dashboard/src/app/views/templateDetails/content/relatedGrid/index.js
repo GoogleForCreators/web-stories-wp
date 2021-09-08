@@ -29,7 +29,7 @@ import {
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../../../types';
-import { TemplateGridView } from '../../../shared';
+import TemplateGridView from '../../../exploreTemplates/content/templateGridView';
 import { RowContainer } from '../../components';
 
 function RelatedGrid({ pageSize, relatedTemplates, templateActions }) {

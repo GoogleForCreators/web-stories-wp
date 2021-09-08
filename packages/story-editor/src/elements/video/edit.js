@@ -17,12 +17,20 @@
 /**
  * Internal dependencies
  */
+import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import StoryPropTypes from '../../types';
 import MediaEdit from '../media/edit';
+import Trim from './trim';
 
-// Opacity is adjusted so that the double image opacity would equal
-// the opacity assigned to the video.
 function VideoEdit({ element, box, ...rest }) {
+  const { isTrimMode } = useVideoTrim(({ state: { isTrimMode } }) => ({
+    isTrimMode,
+  }));
+
+  if (isTrimMode) {
+    return <Trim element={element} box={box} {...rest} />;
+  }
+
   return <MediaEdit element={element} box={box} {...rest} />;
 }
 

@@ -35,7 +35,7 @@ import { FixtureEvents } from '@web-stories-wp/karma-fixture';
 /**
  * Internal dependencies
  */
-import App from '../../editorApp';
+import StoryEditor from '../../storyEditor';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import FileProvider from '../../app/file/provider';
@@ -72,6 +72,8 @@ const DEFAULT_CONFIG = {
   allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
   allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
   allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+  allowedAudioFileTypes: ['mp3', 'aac', 'wav', 'ogg'],
+  allowedAudioMimeTypes: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
   allowedTranscodableMimeTypes: [
     'video/3gpp',
     'video/3gpp2',
@@ -320,7 +322,7 @@ export class Fixture {
 
     const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
-        <App key={Math.random()} config={this._config} />
+        <StoryEditor key={Math.random()} config={this._config} />
       </FlagsProvider>,
       {
         container: root,
@@ -730,7 +732,6 @@ class APIProviderFixture {
               pages: this._pages,
             },
             featured_media: 0,
-            featured_media_url: '',
             publisher_logo_url:
               'http://stories.local/wp-content/plugins/web-stories/assets/images/logo.png',
             permalink_template: 'http://stories3.local/stories/%pagename%/',
@@ -774,7 +775,6 @@ class APIProviderFixture {
               pages: this._pages,
             },
             featured_media: 0,
-            featured_media_url: '',
             publisher_logo_url:
               'http://stories .local/wp-content/plugins/web-stories/assets/images/logo.png',
             permalink_template: 'http://stories3.local/stories/%pagename%/',
@@ -843,6 +843,17 @@ class APIProviderFixture {
             url: 'https://example.com',
             title: 'Example Site',
             image: 'example.jpg',
+          }),
+        []
+      );
+
+      const getHotlinkInfo = useCallback(
+        () =>
+          asyncResponse({
+            ext: 'jpg',
+            mime_type: 'image/jpeg',
+            type: 'image',
+            file_name: 'example.jpg',
           }),
         []
       );
@@ -918,6 +929,7 @@ class APIProviderFixture {
           getDemoStoryById,
           getMedia,
           getLinkMetadata,
+          getHotlinkInfo,
           saveStoryById,
           getAllStatuses,
           getAuthors,

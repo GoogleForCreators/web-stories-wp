@@ -15,35 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'elegant-travel-itinerary',
-  title: _x('Elegant Travel Itinerary', 'template name', 'web-stories'),
-  tags: [
-    _x('Travel', 'template keyword', 'web-stories'),
-    _x('Trip', 'template keyword', 'web-stories'),
-    _x('Heritage', 'template keyword', 'web-stories'),
-    _x('Frame', 'template keyword', 'web-stories'),
-    _x('Blue', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Night Blue', 'color', 'web-stories'), color: '#151c23' },
-    { label: _x('Porcelain White', 'color', 'web-stories'), color: '#eef0f2' },
-    { label: _x('Aztec Gold', 'color', 'web-stories'), color: '#c89d4f' },
-    { label: _x('Bright Sky Blue', 'color', 'web-stories'), color: '#61a0ff' },
-  ],
-  description: __(
-    'This template’s ornate shapes and design elements inspired by olden architecture will let you travel stories that are beautiful and elegant. Create reviews, tour guides and itineraries for cultural and heritage tourism, luxury travel and more.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Travel', 'template vertical', 'web-stories'),
 };
