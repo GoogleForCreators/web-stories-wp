@@ -75,11 +75,24 @@ function HotlinkModal({ isOpen, onClose }) {
   });
 
   const onBlur = useCallback(() => {
-    setLink(withProtocol(link));
-    if (!isValidUrl(link)) {
-      setErrorMsg(__('Invalid link.', 'web-stories'));
+    if (link?.length > 0) {
+      setLink(withProtocol(link));
+      if (!isValidUrl(link)) {
+        setErrorMsg(__('Invalid link.', 'web-stories'));
+      }
     }
   }, [link]);
+
+  const onChange = useCallback(
+    (value) => {
+      // Always set the error to null when changing.
+      if (errorMsg) {
+        setErrorMsg(null);
+      }
+      setLink(value);
+    },
+    [setLink, errorMsg]
+  );
 
   return (
     <Dialog
@@ -97,7 +110,7 @@ function HotlinkModal({ isOpen, onClose }) {
       <InputWrapper>
         <Input
           ref={inputRef}
-          onChange={({ target: { value } }) => setLink(value)}
+          onChange={({ target: { value } }) => onChange(value)}
           value={link}
           hint={errorMsg?.length ? errorMsg : description}
           hasError={Boolean(errorMsg?.length)}
