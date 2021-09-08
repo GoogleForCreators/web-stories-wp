@@ -106,7 +106,7 @@ function HotlinkModal({ isOpen, onClose }) {
       onPrimary={() => onInsert()}
       primaryText={__('Insert', 'web-stories')}
       secondaryText={__('Cancel', 'web-stories')}
-      primaryRest={{ disabled: Boolean(errorMsg?.length) || !link }}
+      primaryRest={{ disabled: errorMsg || !link }}
     >
       <InputWrapper>
         <Input
