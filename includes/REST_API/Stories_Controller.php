@@ -273,6 +273,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * Retrieves a collection of web stories.
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @since 1.0.0
@@ -407,10 +408,12 @@ class Stories_Controller extends Stories_Base_Controller {
 			$statuses['future'] = 'future';
 		}
 
-		if ( $this->get_post_type_cap( $this->post_type, 'edit_private_posts' ) ) {
+		if ( $this->get_post_type_cap( $this->post_type, 'publish_posts' ) ) {
 			$statuses['private'] = 'private';
 		}
-		$edit_others_posts = $this->get_post_type_cap( $this->post_type, 'edit_others_posts' );
+
+		$edit_others_posts  = $this->get_post_type_cap( $this->post_type, 'edit_others_posts' );
+		$edit_private_posts = $this->get_post_type_cap( $this->post_type, 'edit_private_posts' );
 
 		$statuses_count = [ 'all' => 0 ];
 
@@ -423,7 +426,10 @@ class Stories_Controller extends Stories_Base_Controller {
 		foreach ( $statuses as $key => $status ) {
 			$posts_query               = new WP_Query();
 			$query_args['post_status'] = $status;
-			if ( 'publish' !== $status && ! $edit_others_posts ) {
+			if ( ! in_array( $status, [ 'publish', 'private' ], true ) && ! $edit_others_posts ) {
+				$query_args['author'] = get_current_user_id();
+			}
+			if ( 'private' === $status && ! $edit_private_posts ) {
 				$query_args['author'] = get_current_user_id();
 			}
 			$posts_query->query( $query_args );

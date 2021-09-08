@@ -259,11 +259,12 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'publish', $statuses );
 		$this->assertArrayHasKey( 'draft', $statuses );
 		$this->assertArrayHasKey( 'future', $statuses );
-		$this->assertArrayNotHasKey( 'private', $statuses );
+		$this->assertArrayHasKey( 'private', $statuses );
 
 		$this->assertEquals( 10, $statuses['all'] );
 		$this->assertEquals( 7, $statuses['publish'] );
 		$this->assertEquals( 0, $statuses['future'] );
+		$this->assertEquals( 0, $statuses['private'] );
 		$this->assertEquals( 3, $statuses['draft'] );
 
 		$this->assertEquals( 7, $headers['X-WP-Total'] );
