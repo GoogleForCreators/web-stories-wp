@@ -95,7 +95,7 @@ const OptionPropType = {
 };
 Option.propTypes = OptionPropType;
 
-const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
+const HierarchicalInput = ({ label, options, onChange, ...inputProps }) => {
   const [inputText, setInputText] = useState('');
 
   const filteredOptionTree = useMemo(
@@ -147,11 +147,16 @@ const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
     </>
   );
 };
-Hierarchical.propTypes = {
+HierarchicalInput.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   label: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape(OptionPropType)).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      ...OptionPropType,
+      parent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    })
+  ).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
-export default Hierarchical;
+export default HierarchicalInput;
