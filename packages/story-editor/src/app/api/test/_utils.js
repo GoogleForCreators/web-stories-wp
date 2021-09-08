@@ -29,13 +29,10 @@ export function createStory(properties = {}) {
   };
 }
 
-// @todo Move to web-stories-wp ?
 export const GET_MEDIA_RESPONSE_HEADER = {
   'X-WP-Total': 1,
   'X-WP-TotalPages': 1,
 };
-
-// @todo Move to web-stories-wp ?
 export const GET_MEDIA_RESPONSE_BODY = [
   {
     id: 274,

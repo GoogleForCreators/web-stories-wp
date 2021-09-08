@@ -27,7 +27,7 @@ import apiFetch from '@wordpress/api-fetch';
  *
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
  * @param {Object} stories Stories
- * @param {Function} getStorySaveData
+ * @param {Function} getStorySaveData Function to get save data.
  * @return {Promise} Return apiFetch promise.
  */
 export function saveStoryById(story, stories, getStorySaveData) {
@@ -59,7 +59,7 @@ export function saveStoryById(story, stories, getStorySaveData) {
  *
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
  * @param {Object} stories Stories
- * @param {Function} getStorySaveData
+ * @param {Function} getStorySaveData Function to get save data.
  * @return {Promise} Return apiFetch promise.
  */
 export function autoSaveById(story, stories, getStorySaveData) {
