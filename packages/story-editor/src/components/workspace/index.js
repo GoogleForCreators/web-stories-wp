@@ -20,23 +20,26 @@
 import Inspector from '../inspector';
 import Canvas from '../canvas';
 import { RichTextProvider } from '../richText';
+import { VideoTrimProvider } from '../videoTrim';
 import ErrorBoundary from '../errorBoundary';
 import { CanvasArea, InspectorArea } from './layout';
 
 function Workspace() {
   return (
-    <RichTextProvider>
-      <CanvasArea>
-        <ErrorBoundary>
-          <Canvas />
-        </ErrorBoundary>
-      </CanvasArea>
-      <InspectorArea>
-        <ErrorBoundary>
-          <Inspector />
-        </ErrorBoundary>
-      </InspectorArea>
-    </RichTextProvider>
+    <VideoTrimProvider>
+      <RichTextProvider>
+        <CanvasArea>
+          <ErrorBoundary>
+            <Canvas />
+          </ErrorBoundary>
+        </CanvasArea>
+        <InspectorArea>
+          <ErrorBoundary>
+            <Inspector />
+          </ErrorBoundary>
+        </InspectorArea>
+      </RichTextProvider>
+    </VideoTrimProvider>
   );
 }
 

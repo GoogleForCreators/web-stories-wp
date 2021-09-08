@@ -21,16 +21,15 @@ import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
 import updateProperties from '../../../components/inspector/design/updateProperties';
+import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { useCanvas } from '../../canvas';
 import {
   useStory,
   useStoryTriggersDispatch,
@@ -90,9 +89,10 @@ const useQuickActions = () => {
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
-  const { setEditingElementWithState } = useCanvas(
-    ({ actions: { setEditingElementWithState } }) => ({
-      setEditingElementWithState,
+  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
+    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
+      hasTrimMode,
+      toggleTrimMode,
     })
   );
 
@@ -472,23 +472,15 @@ const useQuickActions = () => {
     ]
   );
 
-  const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const videoCommonActions = useMemo(() => {
-    if (!selectedElement?.resource) {
-      return [];
-    }
-    const { resource } = selectedElement;
-    const { isMuting, isTranscoding, isTrimming } = resource;
-    return isVideoTrimEnabled && !isMuting && !isTranscoding && !isTrimming
+    return hasTrimMode
       ? [
           {
             Icon: Scissors,
             label: ACTIONS.TRIM_VIDEO.text,
             onClick: (evt) => {
               handleFocusVideoSettingsPanel()(evt);
-              setEditingElementWithState(selectedElement.id, {
-                isTrimming: true,
-              });
+              toggleTrimMode();
               trackEvent('quick_action', {
                 name: ACTIONS.TRIM_VIDEO.trackingEventName,
                 element: selectedElement.type,
@@ -501,9 +493,9 @@ const useQuickActions = () => {
   }, [
     actionMenuProps,
     handleFocusVideoSettingsPanel,
-    isVideoTrimEnabled,
+    hasTrimMode,
     selectedElement,
-    setEditingElementWithState,
+    toggleTrimMode,
   ]);
 
   const videoActions = useMemo(() => {

@@ -32,13 +32,12 @@ import {
   BUTTON_VARIANTS,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
-import { useFeature } from 'flagged';
 import { useCallback, useMemo, useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import useCanvas from '../../../../app/canvas/useCanvas';
+import useVideoTrim from '../../../videoTrim/useVideoTrim';
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
@@ -77,14 +76,12 @@ const HelperText = styled(Text).attrs({
 `;
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
-  const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const { isTranscodingEnabled } = useFFmpeg();
-  const { muteExistingVideo, trimExistingVideo } = useLocalMedia((state) => ({
+  const { muteExistingVideo } = useLocalMedia((state) => ({
     muteExistingVideo: state.actions.muteExistingVideo,
-    trimExistingVideo: state.actions.trimExistingVideo,
   }));
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuted, isTranscoding, isMuting, isTrimming, local } = resource;
+  const { isMuted, isTranscoding, isMuting, local } = resource;
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
@@ -98,7 +95,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
         !local &&
         !isMuted &&
         !isTranscoding &&
-        !isTrimming &&
         isSingleElement) ||
       isMuting
     );
@@ -109,25 +105,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     isTranscoding,
     isSingleElement,
     isMuting,
-    isTrimming,
-  ]);
-
-  const shouldDisplayTrimButton = useMemo(() => {
-    return (
-      isSingleElement &&
-      isVideoTrimEnabled &&
-      !local &&
-      !isMuting &&
-      !isTranscoding &&
-      !isTrimming
-    );
-  }, [
-    isSingleElement,
-    isVideoTrimEnabled,
-    local,
-    isMuting,
-    isTranscoding,
-    isTrimming,
   ]);
 
   const buttonText = useMemo(() => {
@@ -136,32 +113,12 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       : __('Remove audio', 'web-stories');
   }, [isMuting]);
 
-  const { isEditing, setEditingElementWithState, clearEditing } = useCanvas(
-    ({
-      state: { isEditing },
-      actions: { setEditingElementWithState, clearEditing },
-    }) => ({
-      isEditing,
-      setEditingElementWithState,
-      clearEditing,
+  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
+    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
+      hasTrimMode,
+      toggleTrimMode,
     })
   );
-
-  const handleTrim = useCallback(() => {
-    if (isEditing) {
-      clearEditing();
-    } else {
-      setEditingElementWithState(selectedElements[0].id, { isTrimming: true });
-      trimExistingVideo({ resource, start: '00:00:01', end: '00:00:02' });
-    }
-  }, [
-    setEditingElementWithState,
-    selectedElements,
-    clearEditing,
-    isEditing,
-    resource,
-    trimExistingVideo,
-  ]);
 
   const speak = useLiveRegion();
 
@@ -196,12 +153,12 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
             {__('Loop', 'web-stories')}
           </Text>
         </Label>
-        {shouldDisplayTrimButton && (
+        {hasTrimMode && (
           <TrimButton
             variant={BUTTON_VARIANTS.RECTANGLE}
             type={BUTTON_TYPES.SECONDARY}
             size={BUTTON_SIZES.SMALL}
-            onClick={handleTrim}
+            onClick={toggleTrimMode}
           >
             {__('Trim', 'web-stories')}
           </TrimButton>
