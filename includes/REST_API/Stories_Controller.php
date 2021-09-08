@@ -426,7 +426,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		foreach ( $statuses as $key => $status ) {
 			$posts_query               = new WP_Query();
 			$query_args['post_status'] = $status;
-			if ( ! in_array( $status, [ 'publish', 'private' ], true ) && ! $edit_others_posts ) {
+			if ( in_array( $status, [ 'draft', 'future' ], true ) && ! $edit_others_posts ) {
 				$query_args['author'] = get_current_user_id();
 			}
 			if ( 'private' === $status && ! $edit_private_posts ) {
