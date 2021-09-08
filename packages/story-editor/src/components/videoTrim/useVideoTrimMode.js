@@ -24,6 +24,7 @@ import { useCallback, useMemo } from '@web-stories-wp/react';
  * Internal dependencies
  */
 import { useCanvas, useStory } from '../../app';
+import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
 function useVideoTrimMode() {
   const isVideoTrimEnabled = useFeature('enableVideoTrim');
@@ -42,8 +43,6 @@ function useVideoTrimMode() {
   const { selectedElement } = useStory(({ state: { selectedElements } }) => ({
     selectedElement: selectedElements.length === 1 ? selectedElements[0] : null,
   }));
-  const { isTranscoding, isMuting, isTrimming, local } =
-    selectedElement.resource;
 
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {
@@ -55,23 +54,23 @@ function useVideoTrimMode() {
     }
   }, [isEditing, clearEditing, setEditingElementWithState, selectedElement]);
 
-  const hasTrimMode = useMemo(
-    () =>
-      selectedElement?.type === 'video' &&
+  const { isTranscodingEnabled } = useFFmpeg();
+
+  const hasTrimMode = useMemo(() => {
+    if (selectedElement?.type !== 'video' || !selectedElement?.resource) {
+      return false;
+    }
+    const { isTranscoding, isMuting, isTrimming, local } =
+      selectedElement.resource || {};
+    return (
       isVideoTrimEnabled &&
+      isTranscodingEnabled &&
       !isTranscoding &&
       !isMuting &&
       !isTrimming &&
-      local,
-    [
-      selectedElement,
-      isVideoTrimEnabled,
-      isTranscoding,
-      isMuting,
-      isTrimming,
-      local,
-    ]
-  );
+      !local
+    );
+  }, [selectedElement, isVideoTrimEnabled, isTranscodingEnabled]);
 
   return {
     isTrimMode: isEditing && isTrimMode,
