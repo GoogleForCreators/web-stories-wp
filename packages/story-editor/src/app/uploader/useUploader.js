@@ -147,10 +147,6 @@ function useUploader() {
    */
   const uploadFile = useCallback(
     (file, additionalData = {}) => {
-      if (!uploadMedia) {
-        return Promise.resolve(); // For consistent return.
-      }
-
       // This will throw if the file cannot be uploaded.
       validateFileForUpload(file);
 

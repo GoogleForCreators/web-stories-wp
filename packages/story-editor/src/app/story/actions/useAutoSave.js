@@ -44,10 +44,6 @@ function useAutoSave({ storyId, pages, story }) {
 
   const autoSave = useCallback(
     (props) => {
-      if (!autoSaveById) {
-        return Promise.resolve(); // For consistent return.
-      }
-
       setIsAutoSaving(true);
       return autoSaveById({
         storyId,
