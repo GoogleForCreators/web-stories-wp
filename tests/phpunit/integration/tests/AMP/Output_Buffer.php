@@ -74,7 +74,6 @@ class Output_Buffer extends TestCase {
 	/**
 	 * Tests that publisher name is correctly replaced.
 	 *
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_name
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher
 	 */
 	public function test_add_publisher() {
