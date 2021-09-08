@@ -27,14 +27,14 @@ import { useCanvas, useStory } from '../../app';
 
 function useVideoTrimMode() {
   const isVideoTrimEnabled = useFeature('enableVideoTrim');
-  const { isEditing, isTrimming, setEditingElementWithState, clearEditing } =
+  const { isEditing, isTrimMode, setEditingElementWithState, clearEditing } =
     useCanvas(
       ({
-        state: { isEditing, editingElementState: { isTrimming } = {} },
+        state: { isEditing, editingElementState: { isTrimMode } = {} },
         actions: { setEditingElementWithState, clearEditing },
       }) => ({
         isEditing,
-        isTrimming,
+        isTrimMode,
         setEditingElementWithState,
         clearEditing,
       })
@@ -42,24 +42,39 @@ function useVideoTrimMode() {
   const { selectedElement } = useStory(({ state: { selectedElements } }) => ({
     selectedElement: selectedElements.length === 1 ? selectedElements[0] : null,
   }));
+  const { isTranscoding, isMuting, isTrimming, local } =
+    selectedElement.resource;
 
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {
       clearEditing();
     } else {
       setEditingElementWithState(selectedElement.id, {
-        isTrimming: true,
+        isTrimMode: true,
       });
     }
   }, [isEditing, clearEditing, setEditingElementWithState, selectedElement]);
 
   const hasTrimMode = useMemo(
-    () => selectedElement?.type === 'video' && isVideoTrimEnabled,
-    [selectedElement, isVideoTrimEnabled]
+    () =>
+      selectedElement?.type === 'video' &&
+      isVideoTrimEnabled &&
+      !isTranscoding &&
+      !isMuting &&
+      !isTrimming &&
+      local,
+    [
+      selectedElement,
+      isVideoTrimEnabled,
+      isTranscoding,
+      isMuting,
+      isTrimming,
+      local,
+    ]
   );
 
   return {
-    isTrimMode: isEditing && isTrimming,
+    isTrimMode: isEditing && isTrimMode,
     hasTrimMode,
     toggleTrimMode,
   };
