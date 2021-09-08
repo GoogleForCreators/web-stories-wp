@@ -40,7 +40,6 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
   useEffect(() => {
     if (storyId && shouldLoad) {
       const callback = isDemo ? getDemoStoryById : getStoryById;
-
       callback(storyId).then((post) => {
         const {
           title: { raw: title },
