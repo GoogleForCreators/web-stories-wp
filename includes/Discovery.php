@@ -29,8 +29,8 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Media\Image_Sizes;
+use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Traits\Post_Type;
-use Google\Web_Stories\Traits\Publisher;
 
 use WP_Post;
 
@@ -38,7 +38,7 @@ use WP_Post;
  * Discovery class.
  */
 class Discovery extends Service_Base {
-	use Publisher, Post_Type;
+	use Post_Type;
 	/**
 	 * Initialize discovery functionality.
 	 *
@@ -140,16 +140,6 @@ class Discovery extends Service_Base {
 	 * @return array $metadata All schema.org metadata for the post.
 	 */
 	protected function get_schemaorg_metadata(): array {
-		$publisher = $this->get_publisher_name();
-
-		$metadata = [
-			'@context'  => 'http://schema.org',
-			'publisher' => [
-				'@type' => 'Organization',
-				'name'  => $publisher,
-			],
-		];
-
 		/**
 		 * We're expecting a post object.
 		 *
@@ -157,38 +147,37 @@ class Discovery extends Service_Base {
 		 */
 		$post = get_queried_object();
 
+		$story = new Story();
+		$story->load_from_post( $post );
+
+		$metadata = [
+			'@context'  => 'http://schema.org',
+			'publisher' => [
+				'@type' => 'Organization',
+				'name'  => $story->get_publisher_name(),
+			],
+		];
+
+		$publisher_logo = $story->get_publisher_logo_src();
+
+		if ( ! empty( $publisher_logo ) ) {
+			list( $url, $width, $height ) = $publisher_logo;
+
+			$metadata['publisher']['logo'] = [
+				'@type'  => 'ImageObject',
+				'url'    => $url,
+				'width'  => $width,
+				'height' => $height,
+			];
+		}
+
 		if ( $post instanceof WP_Post ) {
-			$publisher_logo_id = get_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
-
-			if ( $publisher_logo_id ) {
-				list( $url, $width, $height ) = wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
-
-				/**
-				 * Filters the publisher logo URL.
-				 *
-				 * @since 1.0.0
-				 * @since 1.1.0 The second parameter was deprecated.
-				 * @since 1.11.0 The second parameter was repurposed to provide the current post object.
-				 *
-				 * @param string|null $logo_image_url Publisher logo URL.
-				 * @param WP_Post     $post           Current post object.
-				 */
-				$url = apply_filters( 'web_stories_publisher_logo', $url, $post );
-
-				$metadata['publisher']['logo'] = [
-					'@type'  => 'ImageObject',
-					'url'    => $url,
-					'width'  => $width,
-					'height' => $height,
-				];
-			}
-
 			$metadata = array_merge(
 				$metadata,
 				[
 					'@type'            => 'Article',
 					'mainEntityOfPage' => get_permalink( $post ),
-					'headline'         => get_the_title( $post ),
+					'headline'         => $story->get_title(),
 					'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
 					'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
 				]
@@ -203,9 +192,9 @@ class Discovery extends Service_Base {
 				];
 			}
 
-			$poster = $this->get_poster( $post );
+			$poster = $story->get_poster_portrait();
 			if ( $poster ) {
-				$metadata['image'] = $poster['src'];
+				$metadata['image'] = $poster;
 			}
 		}
 

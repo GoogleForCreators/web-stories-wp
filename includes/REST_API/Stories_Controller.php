@@ -27,11 +27,8 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Demo_Content;
-use Google\Web_Stories\Media\Image_Sizes;
-use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Post_Type;
-use Google\Web_Stories\Traits\Publisher;
 use WP_Query;
 use WP_Error;
 use WP_Post;
@@ -44,7 +41,8 @@ use WP_REST_Response;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories_Controller extends Stories_Base_Controller {
-	use Publisher, Post_Type;
+	use Post_Type;
+
 	/**
 	 * Default style presets to pass if not set.
 	 */

@@ -104,10 +104,9 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document       Document instance.
 	 * @param string                $publisher_logo Publisher logo.
-	 * @param string                $placeholder    Placeholder publisher logo.
 	 * @return void
 	 */
-	private function add_publisher_logo( &$document, $publisher_logo, $placeholder ) {
+	private function add_publisher_logo( &$document, $publisher_logo ) {
 		/**
 		 * The <amp-story> element.
 		 *
@@ -122,7 +121,8 @@ trait Sanitization_Utils {
 		// Add a publisher logo if missing or just a placeholder.
 		$existing_publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
 
-		if ( ! $existing_publisher_logo || $existing_publisher_logo === $placeholder ) {
+		// Backward compatibility for when fallback-wordpress-publisher-logo.png was provided by the plugin.
+		if ( ! $existing_publisher_logo || false !== strpos( $existing_publisher_logo, 'fallback-wordpress-publisher-logo.png' ) ) {
 			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
 		}
 

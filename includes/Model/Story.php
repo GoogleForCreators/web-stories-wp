@@ -110,7 +110,7 @@ class Story {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int|WP_Post $_post Post id or Post object.
+	 * @param int|null|WP_Post $_post Post id or Post object.
 	 *
 	 * @return bool
 	 */
@@ -216,4 +216,94 @@ class Story {
 		return (string) $this->date;
 	}
 
+	/**
+	 * Returns the story's publisher logo ID.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return int Publisher logo ID.
+	 */
+	private function get_publisher_logo_id(): int {
+		return (int) get_post_meta( $this->get_id(), Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
+	}
+
+	/**
+	 * Get the publisher name.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string Publisher Name.
+	 */
+	public function get_publisher_name(): string {
+		$name = get_bloginfo( 'name' );
+		/**
+		 * Filters the publisher's name
+		 *
+		 * @since 1.7.0
+		 *
+		 * @param string $name Publisher Name.
+		 */
+		$name = apply_filters( 'web_stories_publisher_name', $name );
+
+		return esc_attr( $name );
+	}
+
+	/**
+	 * Returns the story's publisher logo URL.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string Publisher logo URL.
+	 */
+	public function get_publisher_logo_url(): string {
+		$publisher_logo_id = $this->get_publisher_logo_id();
+
+		$url  = $publisher_logo_id ? wp_get_attachment_image_url( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE ) : null;
+		$url  = false === $url ? null : $url;
+		$post = $this->get_id() ? get_post( $this->get_id() ) : null;
+
+		/**
+		 * Filters the publisher logo URL.
+		 *
+		 * @since 1.0.0
+		 * @since 1.1.0 The second parameter was deprecated.
+		 * @since 1.11.0 The second parameter was repurposed to provide the current post object.
+		 *
+		 * @param string|null  $url  Publisher logo URL.
+		 * @param WP_Post|null $post Story post object if set.
+		 */
+		return (string) apply_filters( 'web_stories_publisher_logo', $url, $post );
+	}
+
+	/**
+	 * Returns the story's publisher logo URL.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return array {
+	 *     Array of image data, or empty array if no image is available.
+	 *
+	 *     @type string $0 Image source URL.
+	 *     @type int    $1 Image width in pixels.
+	 *     @type int    $2 Image height in pixels.
+	 *     @type bool   $3 Whether the image is a resized image.
+	 * }
+	 */
+	public function get_publisher_logo_src(): array {
+		$publisher_logo_id = $this->get_publisher_logo_id();
+
+		$src  = $publisher_logo_id ? wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE ) : null;
+		$src  = false === $src ? [] : $src;
+		$post = $this->get_id() ? get_post( $this->get_id() ) : null;
+
+		/**
+		 * Filters the publisher logo URL.
+		 *
+		 * @since 1.12.0
+		 *
+		 * @param array        $src  Publisher logo src.
+		 * @param WP_Post|null $post Story post object if set.
+		 */
+		return (array) apply_filters( 'web_stories_publisher_logo_src', $src, $post );
+	}
 }
