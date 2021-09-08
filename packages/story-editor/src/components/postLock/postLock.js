@@ -89,7 +89,7 @@ function PostLock() {
             name: _embedded?.author?.[0]?.name || '',
             avatar: _embedded?.author?.[0]?.avatar_urls?.['96'] || '',
           };
-          if (locked && lockAuthor?.id !== currentUser.id) {
+          if (locked && lockAuthor?.id && lockAuthor?.id !== currentUser.id) {
             setShowDialog(true);
             setUser(lockAuthor);
           } else {
@@ -171,7 +171,7 @@ function PostLock() {
     return () => clearInterval(timeout);
   }, [postLockInterval, currentUserLoaded]);
 
-  if (!enablePostLocking || !showLockedDialog) {
+  if (!enablePostLocking || !showLockedDialog || ! user) {
     return null;
   }
 
