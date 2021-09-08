@@ -171,7 +171,7 @@ function PostLock() {
     return () => clearInterval(timeout);
   }, [postLockInterval, currentUserLoaded]);
 
-  if (!enablePostLocking || !showLockedDialog || ! user) {
+  if (!enablePostLocking || !showLockedDialog || !user) {
     return null;
   }
 
