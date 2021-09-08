@@ -59,7 +59,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @property {boolean|null} isMuted Whether the resource has already been muted.
  * @property {Object} sizes Object of image sizes.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos.
- * @property {?Object} trim An optional object of video trim data.
+ * @property {?Object} trimData An optional object of video trim data.
  */
 
 /**
@@ -93,7 +93,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @property {Object.<string, ResourceSize>} sizes Object of image sizes.
  * @property {Attribution|null} attribution An optional attribution for the resource.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos
- * @property {?Object} trim An optional object of video trim data.
+ * @property {?Object} trimData An optional object of video trim data.
  */
 
 /**
@@ -123,7 +123,7 @@ function createResource({
   isPlaceholder = false,
   isOptimized = false,
   isMuted = false,
-  trim,
+  trimData,
 }) {
   return {
     baseColor,
@@ -146,7 +146,7 @@ function createResource({
     isPlaceholder,
     isOptimized,
     isMuted,
-    trim,
+    trimData,
   };
 }
 

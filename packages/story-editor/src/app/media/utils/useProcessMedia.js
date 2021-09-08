@@ -176,7 +176,7 @@ function useProcessMedia({
     ({ resource: oldResource, start, end }) => {
       const { src: url, mimeType } = oldResource;
 
-      const trim = {
+      const trimData = {
         original: oldResource.id,
         start,
         end,
@@ -186,7 +186,7 @@ function useProcessMedia({
         updateExistingElements({
           oldResource: {
             ...oldResource,
-            trim,
+            trimData,
             isTrimming: true,
           },
         });
@@ -239,10 +239,10 @@ function useProcessMedia({
               ? 'video-optimization'
               : 'editor',
           },
-          trim,
+          trimData,
           resource: {
             ...oldResource,
-            trim,
+            trimData,
           },
         });
       };

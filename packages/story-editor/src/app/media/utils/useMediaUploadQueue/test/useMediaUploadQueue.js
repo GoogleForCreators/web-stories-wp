@@ -55,6 +55,11 @@ const mockAttachment = {
     raw: 'Description',
   },
   featured_media_src: {},
+  meta: {
+    web_stories_is_poster: false,
+    web_stories_poster_id: 0,
+    web_stories_trim: {},
+  },
   is_muted: false,
 };
 
@@ -90,6 +95,7 @@ describe('useMediaUploadQueue', () => {
         isUploading: false,
         isTranscoding: false,
         isMuting: false,
+        isTrimming: false,
       })
     );
   });
@@ -153,6 +159,7 @@ describe('useMediaUploadQueue', () => {
         isUploading: false,
         isTranscoding: false,
         isMuting: false,
+        isTrimming: false,
       })
     );
   });

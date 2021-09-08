@@ -219,7 +219,7 @@ function useMediaUploadQueue() {
             additionalData = {},
             posterFile,
             muteVideo,
-            trim,
+            trimData,
           } = item;
           if ('PENDING' !== itemState) {
             return;
@@ -264,13 +264,13 @@ function useMediaUploadQueue() {
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
           if (isTranscodingEnabled && canTranscodeFile(file)) {
-            if (trim) {
+            if (trimData) {
               startTrimming({ id });
               try {
-                newFile = await trimVideo(file, trim.start, trim.end);
+                newFile = await trimVideo(file, trimData.start, trimData.end);
                 finishTrimming({ id, file: newFile });
                 additionalData.meta = {
-                  web_stories_trim: trim,
+                  web_stories_trim: trimData,
                 };
               } catch (error) {
                 // Cancel uploading if there were any errors.

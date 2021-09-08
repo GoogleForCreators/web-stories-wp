@@ -87,7 +87,7 @@ function getVideoResourceFromAttachment(attachment) {
     alt_text: alt,
     source_url: src,
     media_source: mediaSource,
-    meta: { web_stories_trim: trim },
+    meta: { web_stories_trim: trimData },
   } = attachment;
 
   return createResource({
@@ -110,7 +110,7 @@ function getVideoResourceFromAttachment(attachment) {
     local: false,
     isOptimized: 'video-optimization' === mediaSource,
     isMuted,
-    trim,
+    trimData,
   });
 }
 
