@@ -19,7 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState, useRef, useMemo, useCallback } from '@web-stories-wp/react';
+import {
+  useState,
+  useRef,
+  useMemo,
+  useCallback,
+  useDebouncedCallback,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -106,7 +112,8 @@ function Tooltip({
   const [arrowDelta, setArrowDelta] = useState(null);
   const anchorRef = useRef(null);
   const tooltipRef = useRef(null);
-  const [dynamicPlacement, setDynamicPlacement] = useState(null);
+  const placementRef = useRef(placement);
+  const [realPlacement, setRealPlacement] = useState(placement);
 
   const spacing = useMemo(
     () => ({
@@ -122,28 +129,46 @@ function Tooltip({
     [placement]
   );
 
-  const positionArrow = useCallback(() => {
-    const anchorElBoundingBox = anchorRef.current?.getBoundingClientRect();
-    const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
-    if (!tooltipElBoundingBox || !anchorElBoundingBox) {
-      return;
-    }
-    const delta =
-      getBoundingBoxCenter(anchorElBoundingBox) -
-      getBoundingBoxCenter(tooltipElBoundingBox);
-
-    setArrowDelta(delta);
-  }, []);
   // When near the bottom of the viewport and the tooltip is placed on the bottom we want to force the tooltip to the top as to not
   // cutoff the contents of the tooltip.
-  const positionPlacement = useCallback(() => {
-    if (placement.startsWith('bottom')) {
-      const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
-      if (tooltipElBoundingBox?.bottom >= window.visualViewport.height) {
-        setDynamicPlacement(PLACEMENT.TOP);
+  const positionPlacement = useCallback(
+    ({ offset }) => {
+      if (offset) {
+        const neededVerticalSpace = offset.y + offset.height;
+        // if the tooltip was assigned as bottom we want to always check it
+        if (realPlacement.startsWith('bottom')) {
+          // check to see if there's an overlap with the window edge
+          if (neededVerticalSpace >= window.innerHeight) {
+            // isn't already overridden
+            setRealPlacement(PLACEMENT.TOP);
+          }
+        }
       }
-    }
-  }, [placement]);
+    },
+    [realPlacement]
+  );
+
+  const positionArrow = useCallback(
+    (popupDimensions) => {
+      const anchorElBoundingBox = anchorRef.current?.getBoundingClientRect();
+      const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
+      if (!tooltipElBoundingBox || !anchorElBoundingBox) {
+        return;
+      }
+      positionPlacement(popupDimensions);
+
+      const delta =
+        getBoundingBoxCenter(anchorElBoundingBox) -
+        getBoundingBoxCenter(tooltipElBoundingBox);
+
+      setArrowDelta(delta);
+    },
+    [positionPlacement]
+  );
+
+  const resetPlacement = useDebouncedCallback(() => {
+    setRealPlacement(placementRef.current);
+  }, 100);
 
   const delay = useRef();
   const onHover = useCallback(
@@ -171,6 +196,7 @@ function Tooltip({
     (evt) => {
       setShown(false);
       onPointerLeave(evt);
+      resetPlacement();
       if (isDelayed) {
         clearTimeout(delay.current);
         if (shown) {
@@ -178,7 +204,7 @@ function Tooltip({
         }
       }
     },
-    [isDelayed, shown, onPointerLeave]
+    [onPointerLeave, resetPlacement, isDelayed, shown]
   );
 
   return (
@@ -193,6 +219,7 @@ function Tooltip({
         onBlur={(e) => {
           setShown(false);
           onBlur(e);
+          resetPlacement();
         }}
         ref={anchorRef}
         {...props}
@@ -202,16 +229,15 @@ function Tooltip({
 
       <Popup
         anchor={forceAnchorRef || anchorRef}
-        placement={dynamicPlacement || placement}
+        placement={realPlacement}
         spacing={spacing}
         isOpen={Boolean(shown && (shortcut || title))}
         onPositionUpdate={positionArrow}
-        onPlacementUpdate={positionPlacement}
       >
         <TooltipContainer
           className={className}
           ref={tooltipRef}
-          placement={dynamicPlacement || placement}
+          placement={realPlacement}
           shown={shown}
           {...tooltipProps}
         >
@@ -228,10 +254,7 @@ function Tooltip({
                   <path d="M1,1 L0.868,1 C0.792,1,0.72,0.853,0.676,0.606 L0.585,0.098 C0.562,-0.033,0.513,-0.033,0.489,0.098 L0.399,0.606 C0.355,0.853,0.283,1,0.207,1 L0,1 L1,1" />
                 </clipPath>
               </SvgForTail>
-              <Tail
-                placement={dynamicPlacement || placement}
-                translateX={arrowDelta}
-              />
+              <Tail placement={realPlacement} translateX={arrowDelta} />
             </>
           )}
         </TooltipContainer>
