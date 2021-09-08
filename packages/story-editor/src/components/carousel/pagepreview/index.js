@@ -103,8 +103,7 @@ function PagePreview({ page, label, ...props }) {
   const pageAtGenerationTime = useRef();
 
   const activeStateTracker = useRef(isActive);
-  const isPageImageUnchanged = isActive && activeStateTracker.current === false;
-  const hasImage = (!isActive || isPageImageUnchanged) && imageBlob;
+  const hasImage = (!isActive || !activeStateTracker.current) && imageBlob;
 
   useEffect(() => {
     // We're keeping track of the previous active state
