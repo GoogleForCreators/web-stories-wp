@@ -116,6 +116,7 @@ function PlayPauseButton({
   box,
   isActive = true,
   isTransforming = false,
+  shouldResetOnEnd = true,
   elementRef,
   element,
   videoRef = null,
@@ -163,7 +164,7 @@ function PlayPauseButton({
 
   useEffect(() => {
     const videoNode = getVideoNode();
-    if (!videoNode) {
+    if (!videoNode || !shouldResetOnEnd) {
       return undefined;
     }
 
@@ -174,7 +175,7 @@ function PlayPauseButton({
     };
     videoNode.addEventListener('ended', onVideoEnd);
     return () => videoNode.removeEventListener('ended', onVideoEnd);
-  }, [getVideoNode, id]);
+  }, [shouldResetOnEnd, getVideoNode, id]);
 
   const checkShowControls = useDebouncedCallback(() => {
     if (!isPlayAbove) {
@@ -276,6 +277,7 @@ PlayPauseButton.propTypes = {
   box: StoryPropTypes.box.isRequired,
   isActive: PropTypes.bool,
   isTransforming: PropTypes.bool,
+  shouldResetOnEnd: PropTypes.bool,
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,
   videoRef: PropTypes.object,

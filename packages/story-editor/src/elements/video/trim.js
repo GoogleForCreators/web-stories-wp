@@ -130,6 +130,7 @@ function VideoTrim({ box, element }) {
         element={element}
         elementRef={wrapperRef}
         videoRef={videoRef}
+        shouldResetOnEnd={false}
       />
     </>
   );
