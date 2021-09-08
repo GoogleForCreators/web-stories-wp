@@ -29,7 +29,7 @@ import { useCallback, useState } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { RecursiveShapeType } from '../../../utils/recursiveShapeType';
+import filterOptionsByLabelText from './filterOptionsByLabelText';
 
 const Label = styled(Text).attrs({
   forwardedAs: 'label',
@@ -86,13 +86,13 @@ const Option = (option) => {
     </>
   );
 };
-const OptionPropType = PropTypes.shape({
+const OptionPropType = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   checked: PropTypes.bool,
   label: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(RecursiveShapeType(OptionPropType, 'options')),
-});
-Option.propTypes = PropTypes.arrayOf(OptionPropType);
+  options: PropTypes.array,
+};
+Option.propTypes = OptionPropType;
 
 const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
   const [inputText, setInputText] = useState('');
@@ -114,16 +114,7 @@ const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
     [onChange]
   );
 
-  /**
-   * Filters a list of options by their labels.
-   *
-   * @param {Object} option The option to check
-   * @return {Array.<Object>} A filtered list of options
-   */
-  const labelMatch = (option) =>
-    option.label.toLowerCase().includes(inputText.toLowerCase()) ||
-    option?.options?.some(labelMatch);
-  const filteredOptions = options.filter(labelMatch);
+  const filteredOptions = filterOptionsByLabelText(options, inputText);
 
   return (
     <>
@@ -150,7 +141,7 @@ const Hierarchical = ({ label, options, onChange, ...inputProps }) => {
 Hierarchical.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   label: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(OptionPropType).isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape(OptionPropType)).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

@@ -13,28 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-import { useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import Hierarchical from '..';
+import filterOptionsByLabelText from '../filterOptionsByLabelText';
 
-export default {
-  title: 'Stories Editor/Components/Form/Hierarchical',
-  component: Hierarchical,
-};
-
-const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.primary};
-  padding: 50px 200px;
-`;
-
-const DEFAULT_OPTIONS = [
+const OPTIONS = [
   {
     id: 1,
     label: 'apple',
@@ -70,30 +55,40 @@ const DEFAULT_OPTIONS = [
   { id: 5, label: 'zebra fish', checked: true },
 ];
 
-export const _default = () => {
-  const [options, setOptions] = useState(DEFAULT_OPTIONS);
+describe('filterOptionsByLabelText', () => {
+  it('should do no filtering with no text', () => {
+    expect(filterOptionsByLabelText(OPTIONS, '')).toStrictEqual(OPTIONS);
+    expect(filterOptionsByLabelText(OPTIONS)).toStrictEqual(OPTIONS);
+  });
 
-  const handleChange = (evt, newOption) => {
-    const optionIndex = options.findIndex(
-      (option) => option.id === newOption.id
-    );
-
-    if (optionIndex > -1) {
-      setOptions((currentOptions) => [
-        ...currentOptions.slice(0, optionIndex),
-        newOption,
-        ...currentOptions.slice(optionIndex + 1),
-      ]);
-    }
-  };
-
-  return (
-    <Wrapper>
-      <Hierarchical
-        label="Categories"
-        options={options}
-        onChange={handleChange}
-      />
-    </Wrapper>
-  );
-};
+  it('should filter a list of options', () => {
+    expect(filterOptionsByLabelText(OPTIONS, 'org')).toStrictEqual([
+      {
+        checked: false,
+        id: 1,
+        label: 'apple',
+        options: [
+          { checked: true, id: 'fitty', label: 'corgi' },
+          {
+            checked: true,
+            id: 'sixty',
+            label: 'morgi',
+          },
+        ],
+      },
+      {
+        checked: false,
+        id: 4,
+        label: 'papaya',
+        options: [
+          {
+            checked: true,
+            id: '100',
+            label: 'trees',
+            options: [{ checked: true, id: '1001', label: 'porgi' }],
+          },
+        ],
+      },
+    ]);
+  });
+});
