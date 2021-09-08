@@ -62,6 +62,9 @@ describe('filterOptionsByLabelText', () => {
   });
 
   it('should filter a list of options', () => {
+    expect(
+      filterOptionsByLabelText(OPTIONS, 'this will not match anything')
+    ).toStrictEqual([]);
     expect(filterOptionsByLabelText(OPTIONS, 'org')).toStrictEqual([
       {
         checked: false,
