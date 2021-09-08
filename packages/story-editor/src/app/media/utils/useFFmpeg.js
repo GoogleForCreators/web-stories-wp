@@ -283,7 +283,7 @@ function useFFmpeg() {
    * Trim Video using FFmpeg.
    *
    * @param {File} file Original video file object.
-   * @param {string} start Time stamp of start time of new video. Example '00:01:00'.
+   * @param {string} start Time stamp of start time of new video. Example '00:01:02.345'.
    * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
    * @return {Promise<File>} Transcoded video file object.
    */
