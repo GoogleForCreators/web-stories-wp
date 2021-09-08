@@ -30,13 +30,14 @@ import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
+import DirectionAware from '../../directionAware';
 import { buildOptionsTree, filterOptionsByLabelText } from './utils';
 
 const Label = styled(Text).attrs({
   forwardedAs: 'label',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
-  margin-left: 12px;
+  margin: 0 12px;
 `;
 
 const CheckboxArea = styled.div`
@@ -79,11 +80,13 @@ const Option = (option) => {
         />
         <Label htmlFor={optionId}>{optionLabel}</Label>
       </CheckboxContainer>
-      <StepContainer>
-        {options?.map((child) => (
-          <Option key={child.id} onChange={onChange} {...child} />
-        ))}
-      </StepContainer>
+      <DirectionAware>
+        <StepContainer>
+          {options?.map((child) => (
+            <Option key={child.id} onChange={onChange} {...child} />
+          ))}
+        </StepContainer>
+      </DirectionAware>
     </>
   );
 };
