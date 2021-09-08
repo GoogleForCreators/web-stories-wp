@@ -290,14 +290,18 @@ const Menu = ({
   ]);
 
   return (
-    <MenuWrapper ref={wrapperRef} isIconMenu={isIconMenu} role="menu">
+    <MenuWrapper
+      ref={wrapperRef}
+      isIconMenu={isIconMenu}
+      role="menu"
+      {...props}
+    >
       <MenuList
         data-testid="context-menu-list"
         ref={listRef}
         isIconMenu={isIconMenu}
         aria-label={groupLabel}
         role="group"
-        {...props}
       >
         {items.map(({ separator, onFocus, ...itemProps }, index) => (
           <li
