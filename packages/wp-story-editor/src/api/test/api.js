@@ -19,33 +19,12 @@
 import apiFetch from '@wordpress/api-fetch';
 
 /**
- * External dependencies
- */
-import { act, renderHook } from '@testing-library/react-hooks';
-import {
-  useAPI,
-  APIProvider,
-  ConfigProvider,
-} from '@web-stories-wp/story-editor';
-
-/**
  * Internal dependencies
  */
-import * as apiCallbacks from '..';
-
+import { getMedia } from '..';
 import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
 jest.mock('@wordpress/api-fetch');
-
-const renderAPIProvider = ({ configValue }) => {
-  return renderHook(() => useAPI(), {
-    wrapper: (props) => (
-      <ConfigProvider config={configValue}>
-        <APIProvider {...props} />
-      </ConfigProvider>
-    ),
-  });
-};
 
 describe('API Callbacks', () => {
   beforeEach(() => {
@@ -60,24 +39,15 @@ describe('API Callbacks', () => {
   });
 
   it('getMedia with cacheBust:true should call api with &cache_bust=true', () => {
-    const { result } = renderAPIProvider({
-      configValue: {
-        api: {
-          media: 'mediaPath',
-        },
-        apiCallbacks,
-        postLock: { api: '' },
-      },
-    });
-
-    act(() => {
-      result.current.actions.getMedia({
+    getMedia(
+      {
         mediaType: '',
         searchTerm: '',
         pagingNum: 1,
         cacheBust: true,
-      });
-    });
+      },
+      '/web-stories/v1/media/'
+    );
 
     expect(apiFetch).toHaveBeenCalledWith(
       expect.objectContaining({
