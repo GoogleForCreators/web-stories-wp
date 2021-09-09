@@ -59,7 +59,7 @@ const Container = styled.div`
  * @param {string} props.priorityLabel Label to display in front of the priority options.
  * @param {string} props.searchResultsLabel Label to display in front of matching options when searching.
  * @param {Function} props.renderer Option renderer in case a custom renderer is required.
- * @param {Function} props.activeItemRenderer Active item renderer in case a custom renderer is required.
+ * @param {Function} props.activeItemRenderer Active item renderer in case a activeItemLabel is not enough.
  * @param {boolean} props.isInline If to display the selection list inline instead of as a separate popup modal.
  * @param {string} props.dropDownLabel The visible label of the dropdown select.
  * @return {*} Render.
