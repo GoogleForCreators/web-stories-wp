@@ -16,6 +16,7 @@ namespace PHPSTORM_META {
 			'ad_manager'                   => \Google\Web_Stories\Ad_Manager::class,
 			'admin'                        => \Google\Web_Stories\Admin\Admin::class,
 			'analytics'                    => \Google\Web_Stories\Analytics::class,
+			'assets.l10n'                  => \Google\Web_Stories\Assets_Localization::class,
 			'coi'                          => \Google\Web_Stories\Admin\Cross_Origin_Isolation::class,
 			'customizer'                   => \Google\Web_Stories\Admin\Customizer::class,
 			'dashboard'                    => \Google\Web_Stories\Admin\Dashboard::class,
