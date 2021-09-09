@@ -133,8 +133,9 @@ class Story {
 	 * @return bool
 	 */
 	public function load_from_post( $_post ): bool {
-		$post = get_post( $_post );
+		$this->publisher_name = get_bloginfo( 'name' );
 
+		$post = get_post( $_post );
 		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
 			return false;
 		}
@@ -158,8 +159,6 @@ class Story {
 			$this->publisher_logo_size     = compact( 'width', 'height' );
 			$this->publisher_logo          = $src;
 		}
-
-		$this->publisher_name = get_bloginfo( 'name' );
 
 		return true;
 	}
