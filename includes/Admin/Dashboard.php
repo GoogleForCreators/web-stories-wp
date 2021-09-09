@@ -381,6 +381,7 @@ class Dashboard extends Service_Base {
 				'locale'                => $this->locale->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
 				'wpListURL'             => $classic_wp_list_url,
+				'archiveURL'            => $this->get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
 				'version'               => WEBSTORIES_VERSION,
@@ -416,6 +417,41 @@ class Dashboard extends Service_Base {
 		 * @param array $settings Array of settings passed to web stories dashboard.
 		 */
 		return apply_filters( 'web_stories_dashboard_settings', $settings );
+	}
+
+	/**
+	 * Copy of get_post_type_archive_link function, that ignore if a post type has_archive param.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
+	 *
+	 * @param string $post_type Post type.
+	 * @return string|false The post type archive permalink. False if the post type
+	 *                      does not exist or does not have an archive.
+	 */
+	public function get_post_type_archive_link( $post_type ) {
+		global $wp_rewrite;
+
+		$post_type_obj = get_post_type_object( $post_type );
+		if ( ! $post_type_obj ) {
+			return false;
+		}
+
+		if ( get_option( 'permalink_structure' ) && is_array( $post_type_obj->rewrite ) ) {
+			$struct = ( true === $post_type_obj->has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
+			if ( $post_type_obj->rewrite['with_front'] ) {
+				$struct = $wp_rewrite->front . $struct;
+			} else {
+				$struct = $wp_rewrite->root . $struct;
+			}
+			$link = home_url( user_trailingslashit( $struct, 'post_type_archive' ) );
+		} else {
+			$link = home_url( '?post_type=' . $post_type );
+		}
+
+		/** This filter is documented in wp-includes/link-template.php */
+		return apply_filters( 'post_type_archive_link', $link, $post_type );
 	}
 
 	/**
