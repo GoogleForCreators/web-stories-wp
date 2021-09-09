@@ -48,7 +48,7 @@ export const TEXT = {
 
 const OPTIONS = [
   {
-    label: _x('Default', 'archve type', 'web-stories'),
+    label: _x('Default', 'archive type', 'web-stories'),
     value: ARCHIVE_TYPE.DEFAULT,
   },
   {
