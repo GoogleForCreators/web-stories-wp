@@ -13,33 +13,58 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo } from '@web-stories-wp/react';
-import { v4 as uuidv4 } from 'uuid';
-import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from '@web-stories-wp/react';
+import { __, _x, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
 import { useFeature } from 'flagged';
-import { Checkbox, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { DropDown, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
+
 import {
+  InlineLink,
   SettingForm,
   SettingHeading,
-  CheckboxLabel,
-  CheckboxLabelText,
+  TextInputHelperText,
 } from '../components';
+import { ARCHIVE_TYPE } from '../../../../constants';
 
-export default function ArchiveSettings({ isEnabled = false, updateSettings }) {
-  const archiveId = useMemo(() => `archive-${uuidv4()}`, []);
+export const TEXT = {
+  LABEL: __('Stories Archives', 'web-stories'),
+  SECTION_HEADING: __('Stories Archives', 'web-stories'),
+  ARCHIVE_CONTENT: __(
+    "By default WordPress automatically creates an archive page, displaying your latest stories in your theme's layout.",
+    'web-stories'
+  ),
+  SUB_TEXT_DISABLED: __('Disabled the default archive page.', 'web-stories'),
+  /* translators: %s: archive url. */
+  SUB_TEXT_DEFAULT: __('Visit archive page at <a>%s</a>.', 'web-stories'),
+};
 
+const OPTIONS = [
+  {
+    label: _x('Default', 'archve type', 'web-stories'),
+    value: ARCHIVE_TYPE.DEFAULT,
+  },
+  {
+    label: __('Disabled', 'web-stories'),
+    value: ARCHIVE_TYPE.DISABLED,
+  },
+];
+
+export default function ArchiveSettings({
+  archive = 'default',
+  archiveURL,
+  updateSettings,
+}) {
   const onChange = useCallback(
-    () => updateSettings({ archive: !isEnabled }),
-    [updateSettings, isEnabled]
+    (_, newArchive) => updateSettings({ archive: newArchive }),
+    [updateSettings]
   );
 
   const isFeatureEnabled = useFeature('disableArchive');
@@ -51,37 +76,58 @@ export default function ArchiveSettings({ isEnabled = false, updateSettings }) {
   return (
     <SettingForm>
       <div>
-        <SettingHeading>{__('Stories Archive', 'web-stories')}</SettingHeading>
+        <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
+        <TextInputHelperText
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {TEXT.ARCHIVE_CONTENT}
+        </TextInputHelperText>
       </div>
       <div>
-        <CheckboxLabel forwardedAs="label" htmlFor={archiveId}>
-          <Checkbox
-            id={archiveId}
-            data-testid="archive-settings-checkbox"
-            onChange={onChange}
-            checked={Boolean(isEnabled)}
-          />
-          <CheckboxLabelText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            aria-checked={Boolean(isEnabled)}
-            forwardedAs="span"
-          >
-            {__(
-              "By default WordPress automatically creates an archive page, displaying your latest stories in your theme's layout.",
-              'web-stories'
-            )}
-          </CheckboxLabelText>
-        </CheckboxLabel>
+        <DropDown
+          ariaLabel={TEXT.LABEL}
+          options={OPTIONS}
+          selectedValue={archive}
+          onMenuItemClick={onChange}
+          fillWidth
+        />
+        <TextInputHelperText
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {'disabled' === archive && TEXT.SUB_TEXT_DISABLED}
+          {'default' === archive && (
+            <TranslateWithMarkup
+              mapping={{
+                a: (
+                  <InlineLink
+                    href={archiveURL}
+                    rel="noreferrer"
+                    target="_blank"
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    as="a"
+                  />
+                ),
+              }}
+            >
+              {sprintf(
+                /* translators: %s: archive url. */
+                __('Visit archive page at <a>%s</a>.', 'web-stories'),
+                archiveURL
+              )}
+            </TranslateWithMarkup>
+          )}
+        </TextInputHelperText>
       </div>
     </SettingForm>
   );
 }
 
 ArchiveSettings.propTypes = {
-  isEnabled: PropTypes.bool.isRequired,
+  archive: PropTypes.string.isRequired,
+  archiveURL: PropTypes.string.isRequired,
   updateSettings: PropTypes.func.isRequired,
 };
 
 ArchiveSettings.defaultProps = {
-  isEnabled: false,
+  archive: 'default',
 };

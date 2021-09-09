@@ -130,7 +130,7 @@ export default function useSettingsApi(
         }
 
         if (archive !== undefined) {
-          query.web_stories_archive = Boolean(archive);
+          query.web_stories_archive = archive;
         }
 
         const response = await dataAdapter.post(

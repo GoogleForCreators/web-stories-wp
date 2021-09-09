@@ -111,6 +111,7 @@ function EditorSettings() {
     maxUpload,
     maxUploadFormatted,
     allowedImageMimeTypes,
+    archiveURL,
   } = useConfig();
 
   const {
@@ -395,7 +396,8 @@ function EditorSettings() {
             )}
             {canManageSettings && (
               <ArchiveSettings
-                isEnabled={archive}
+                archive={archive}
+                archiveURL={archiveURL}
                 updateSettings={updateSettings}
               />
             )}

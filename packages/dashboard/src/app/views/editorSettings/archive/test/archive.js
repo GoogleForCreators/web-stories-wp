@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,54 +17,75 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import Archive from '..';
+import { ARCHIVE_TYPE } from '../../../../../constants';
+import ArchiveSetting, { TEXT } from '..';
 
-describe('Editor Settings: <Archive />', function () {
-  it('should not render anything if experiment is not enabled', function () {
-    renderWithProviders(<Archive updateSettings={jest.fn()} isEnabled />);
+describe('Editor Settings: Ad Management group settings <ArchiveSetting />', function () {
+  let archive;
+  let mockUpdate;
 
-    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
+  beforeEach(() => {
+    archive = ARCHIVE_TYPE.DEFAULT;
+    mockUpdate = jest.fn();
   });
 
-  it('should render the archive setting as checked when isEnabled', function () {
+  afterEach(() => {
+    archive = ARCHIVE_TYPE.DEFAULT;
+  });
+
+  it('should render archive dropdown button and helper text for default', function () {
+    const link = 'http://www.example.com/web-stories';
     renderWithProviders(
       <FlagsProvider features={{ disableArchive: true }}>
-        <Archive updateSettings={jest.fn()} isEnabled />
+        <ArchiveSetting
+          archive={archive}
+          updateSettings={mockUpdate}
+          archiveURL={link}
+        />
       </FlagsProvider>
     );
 
-    expect(screen.getByRole('checkbox')).toBeChecked();
+    const sectionHeader = screen.getByText(TEXT.SECTION_HEADING);
+    expect(sectionHeader).toBeInTheDocument();
+
+    const helperLink = screen.getByText(
+      (_, node) => node.textContent === link,
+      {
+        selector: 'a',
+      }
+    );
+    expect(helperLink).toBeInTheDocument();
+
+    const archiveDropdown = screen.getByRole('button');
+    expect(archiveDropdown).toHaveTextContent('Default');
   });
 
-  it('should not render the archive setting as checked when not isEnabled', function () {
+  it('should render archive dropdown button and helper text for disabled', function () {
+    const link = 'http://www.example.com/web-stories';
     renderWithProviders(
       <FlagsProvider features={{ disableArchive: true }}>
-        <Archive updateSettings={jest.fn()} />
+        <ArchiveSetting
+          archive={ARCHIVE_TYPE.DISABLED}
+          updateSettings={mockUpdate}
+          archiveURL={link}
+        />
       </FlagsProvider>
     );
 
-    expect(screen.getByRole('checkbox')).not.toBeChecked();
-  });
+    const sectionHeader = screen.getByText(TEXT.SECTION_HEADING);
+    expect(sectionHeader).toBeInTheDocument();
 
-  it('should update settings when the checkbox is clicked.', function () {
-    const onChange = jest.fn();
-    renderWithProviders(
-      <FlagsProvider features={{ disableArchive: true }}>
-        <Archive updateSettings={onChange} />
-      </FlagsProvider>
-    );
+    const helpText = screen.getByText(TEXT.ARCHIVE_CONTENT);
+    expect(helpText).toBeInTheDocument();
 
-    const checkbox = screen.getByRole('checkbox');
-    fireEvent.click(checkbox);
-
-    expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith({ archive: true });
+    const archiveDropdown = screen.getByRole('button');
+    expect(archiveDropdown).toHaveTextContent('Disabled');
   });
 });

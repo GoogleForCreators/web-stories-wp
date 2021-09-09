@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
 import { FlagsProvider } from 'flagged';
 
 /**
@@ -35,7 +34,8 @@ export const _default = () => {
   return (
     <FlagsProvider features={{ disableArchive: true }}>
       <ArchiveSettings
-        isEnabled={boolean('isEnabled', true)}
+        archive={'default'}
+        archiveURL={'http://www.example.com/web-stories'}
         updateSettings={action('updateSettings fired')}
       />
     </FlagsProvider>
