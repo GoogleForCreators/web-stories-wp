@@ -19,5 +19,6 @@ export { noop } from './noop';
 export { default as addQueryArgs } from './addQueryArgs';
 export { default as labelAccessibilityValidator } from './labelAccessibilityValidator';
 export { default as useLiveRegion } from './useLiveRegion';
+export { default as groupBy } from './groupBy';
 export * from './constants';
 export * from './directions';

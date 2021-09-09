@@ -23,12 +23,11 @@ import {
   useMemo,
   useState,
 } from '@web-stories-wp/react';
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { addQueryArgs, groupBy } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import groupBy from '../../utils/groupBy';
 import fetchAllFromTotalPages from './fetchAllFromPages';
 
 export default function useTagsApi(dataAdapter, { tagsApi }) {
