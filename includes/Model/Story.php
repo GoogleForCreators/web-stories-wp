@@ -63,30 +63,35 @@ class Story {
 	 * @var string
 	 */
 	protected $url = '';
+
 	/**
 	 * Markup.
 	 *
 	 * @var string
 	 */
 	protected $markup = '';
+
 	/**
 	 * Publisher name.
 	 *
 	 * @var string
 	 */
 	protected $publisher_name = '';
+
 	/**
 	 * Publisher logo.
 	 *
 	 * @var string
 	 */
 	protected $publisher_logo;
+
 	/**
 	 * Publisher logo size.
 	 *
 	 * @var array
 	 */
 	protected $publisher_logo_size = [];
+
 	/**
 	 * Poster url - portrait.
 	 *
@@ -154,9 +159,8 @@ class Story {
 
 		$publisher_logo_id = (int) get_post_meta( $this->id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
 		if ( 0 !== $publisher_logo_id ) {
-			$img_src                       = wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
-			list ( $src, $width, $height ) = $img_src;
-			$this->publisher_logo_size     = compact( 'width', 'height' );
+			list ( $src, $width, $height ) = wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
+			$this->publisher_logo_size     = [ $width, $height ];
 			$this->publisher_logo          = $src;
 		}
 
@@ -244,7 +248,7 @@ class Story {
 	}
 
 	/**
-	 * Get the publisher name.
+	 * Returns the publisher name.
 	 *
 	 * @since 1.12.0
 	 *
@@ -276,10 +280,10 @@ class Story {
 		 *
 		 * @since 1.0.0
 		 * @since 1.1.0 The second parameter was deprecated.
-		 * @since 1.11.0 The second parameter was repurposed to provide the current post object.
+		 * @since 1.12.0 The second parameter was repurposed to provide the current story ID.
 		 *
 		 * @param string|null  $url  Publisher logo URL.
-		 * @param int|null     $id   Id of story post.
+		 * @param int|null     $id   Story ID if available.
 		 */
 		return (string) apply_filters( 'web_stories_publisher_logo', $this->publisher_logo, $this->id );
 	}
@@ -290,6 +294,8 @@ class Story {
 	 * @since 1.12.0
 	 *
 	 * @return array {
+	 *     Publisher logo size.
+	 *
 	 *     Array of image data, or empty array if no image is available.
 	 *
 	 *     @type int    $1 Image width in pixels.
@@ -302,8 +308,15 @@ class Story {
 		 *
 		 * @since 1.12.0
 		 *
-		 * @param array        $size  Publisher logo size.
-		 * @param int|null     $id    Id of story post.
+		 * @param array   $size {
+		 *     Publisher logo size.
+		 *
+		 *     Array of image data, or empty array if no image is available.
+		 *
+		 *     @type int    $1 Image width in pixels.
+		 *     @type int    $2 Image height in pixels.
+		 * }
+		 * @param int|null $id   Story ID if available.
 		 */
 		return (array) apply_filters( 'web_stories_publisher_logo_size', $this->publisher_logo_size, $this->id );
 	}

@@ -473,7 +473,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Adds a REST API link if the story is locked.
 	 *
-	 * @since 1.11.0
+	 * @since 1.12.0
 	 *
 	 * @param array   $links Links for the given post.
 	 * @param WP_Post $post Post object.
@@ -511,7 +511,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Adds a REST API link for the story's publisher logo.
 	 *
-	 * @since 1.11.0
+	 * @since 1.12.0
 	 *
 	 * @param array   $links Links for the given post.
 	 * @param WP_Post $post Post object.
