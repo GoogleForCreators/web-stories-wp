@@ -26,10 +26,12 @@ import {
   cancelUploading,
   finishMuting,
   finishTranscoding,
+  finishTrimming,
   finishUploading,
   replacePlaceholderResource,
   startMuting,
   startTranscoding,
+  startTrimming,
   startUploading,
 } from '../reducer';
 
@@ -297,6 +299,88 @@ describe('useMediaUploadQueue', () => {
               isMuting: false,
             },
             state: 'MUTED',
+          },
+        ],
+      });
+    });
+  });
+
+  describe('startTrimming', () => {
+    it('changes state of uploaded item', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              foo: 'bar',
+            },
+            state: 'PENDING',
+          },
+        ],
+      };
+
+      const result = startTrimming(initialState, {
+        payload: {
+          id: 123,
+        },
+      });
+
+      expect(result).toStrictEqual({
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              foo: 'bar',
+              isTrimming: true,
+            },
+            state: 'TRIMMING',
+          },
+        ],
+      });
+    });
+  });
+
+  describe('finishTrimming', () => {
+    it('changes state of uploaded item', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {
+              bar: 'baz',
+            },
+            resource: {
+              foo: 'bar',
+              isTrimming: true,
+            },
+            state: 'TRIMMING',
+          },
+        ],
+      };
+
+      const result = finishTrimming(initialState, {
+        payload: {
+          id: 123,
+          file: {
+            bar: 'foobar',
+          },
+        },
+      });
+
+      expect(result).toStrictEqual({
+        queue: [
+          {
+            id: 123,
+            file: {
+              bar: 'foobar',
+            },
+            resource: {
+              foo: 'bar',
+              isTrimming: false,
+            },
+            state: 'TRIMMED',
           },
         ],
       });
