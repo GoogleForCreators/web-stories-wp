@@ -94,11 +94,13 @@ class Assets {
 		// phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable
 		$chunks = is_readable( $chunks_file ) ? require $chunks_file : [];
 
-		$asset['dependencies'] = $asset['dependencies'] ?? [];
 		// A hash calculated based on the file content of the entry point bundle at <$handle>.js.
 		$asset['version'] = $asset['version'] ?? WEBSTORIES_VERSION;
-		$asset['js']      = $chunks['js'] ?? [];
-		$asset['css']     = $chunks['css'] ?? [];
+
+		$asset['dependencies'] = $asset['dependencies'] ?? [];
+		$asset['js']           = $chunks['js'] ?? [];
+		$asset['css']          = $chunks['css'] ?? [];
+		$asset['chunks']       = $chunks['chunks'] ?? [];
 
 		return $asset;
 	}
@@ -121,17 +123,35 @@ class Assets {
 		$base_script_path = $this->get_base_url( 'assets/js/' );
 		$in_footer        = true;
 
-		// Register any chunks of $script_handle first.
 		$asset = $this->get_asset_metadata( $script_handle );
-		foreach ( $asset['js'] as $script_chunk ) {
+
+		// Register any chunks of $script_handle first.
+		// `$asset['js']` are preloaded chunks, `$asset['chunks']` dynamically imported ones.
+		foreach ( $asset['js'] as $chunk ) {
 			$this->register_script(
-				$script_chunk,
-				$base_script_path . $script_chunk . '.js',
+				$chunk,
+				$base_script_path . $chunk . '.js',
 				[],
 				WEBSTORIES_VERSION,
 				$in_footer
 			);
+
+			wp_set_script_translations( $chunk, 'web-stories' );
 		}
+
+		foreach ( $asset['chunks'] as $dynamic_chunk ) {
+			$this->register_script(
+				$dynamic_chunk,
+				$base_script_path . $dynamic_chunk . '.js',
+				[],
+				WEBSTORIES_VERSION,
+				$in_footer
+			);
+
+			wp_set_script_translations( $dynamic_chunk, 'web-stories' );
+		}
+
+		// Dynamically imported chunks MUST NOT be added as dependencies here.
 		$dependencies = array_merge( $asset['dependencies'], $script_dependencies, $asset['js'] );
 
 		$entry_version = $asset['version'];
@@ -142,6 +162,8 @@ class Assets {
 			$entry_version,
 			$in_footer
 		);
+
+		wp_script_add_data( $script_handle, 'web-stories-chunks', $asset['chunks'] );
 
 		wp_set_script_translations( $script_handle, 'web-stories' );
 	}
