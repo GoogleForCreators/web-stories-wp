@@ -187,7 +187,7 @@ function useProcessMedia({
    */
   const trimExistingVideo = useCallback(
     ({ resource: oldResource, start, end }) => {
-      const { src: url, mimeType } = oldResource;
+      const { src: url, mimeType, poster } = oldResource;
 
       const trimData = {
         original: oldResource.id,
@@ -232,11 +232,19 @@ function useProcessMedia({
 
       const process = async () => {
         let file = false;
+        let posterFile = false;
         try {
           file = await fetchRemoteFile(url, mimeType);
         } catch (e) {
           // Ignore for now.
           return;
+        }
+        if (poster) {
+          try {
+            posterFile = await fetchRemoteBlob(poster);
+          } catch (e) {
+            // Ignore for now.
+          }
         }
 
         await uploadMedia([file], {
@@ -256,6 +264,7 @@ function useProcessMedia({
             ...oldResource,
             trimData,
           },
+          posterFile,
         });
       };
       return process();
