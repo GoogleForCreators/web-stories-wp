@@ -75,7 +75,7 @@ class Trimming extends Service_Base {
 			self::TRIM_POST_META_KEY,
 			[
 				'type'           => 'object',
-				'description'    => __( 'Trimmed data for video.', 'web-stories' ),
+				'description'    => __( 'Video trim data.', 'web-stories' ),
 				'show_in_rest'   => [
 					'schema' => [
 						'properties' => [
