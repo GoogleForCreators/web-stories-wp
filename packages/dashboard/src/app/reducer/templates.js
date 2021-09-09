@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { groupBy } from '@web-stories-wp/design-system';
+import groupBy from '../../utils/groupBy';
 
 export const ACTION_TYPES = {
   LOADING_TEMPLATES: 'loading_templates',
