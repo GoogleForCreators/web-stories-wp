@@ -20,16 +20,18 @@
 import { FlagsProvider } from 'flagged';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { screen, act, waitFor } from '@testing-library/react';
+import {
+  renderWithTheme,
+  ConfigContext,
+  StoryContext,
+  CurrentUserContext,
+  APIContext,
+} from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils';
-import ConfigContext from '../../../app/config/context';
-import StoryContext from '../../../app/story/context';
-import CurrentUserContext from '../../../app/currentUser/context';
 import PostLock from '../postLock';
-import APIContext from '../../../app/api/context';
 
 function setup(response, _storyContextValue = {}) {
   const configValue = {

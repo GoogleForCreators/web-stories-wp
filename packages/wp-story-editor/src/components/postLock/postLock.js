@@ -26,14 +26,16 @@ import {
 } from '@web-stories-wp/react';
 import { useFeatures } from 'flagged';
 import { trackError } from '@web-stories-wp/tracking';
+import {
+  useAPI,
+  useStory,
+  useConfig,
+  useCurrentUser,
+} from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../app/api';
-import { useStory } from '../../app/story';
-import { useConfig } from '../../app/config';
-import { useCurrentUser } from '../../app/currentUser';
 import PostLockDialog from './postLockDialog';
 import PostTakeOverDialog from './postTakeOverDialog';
 

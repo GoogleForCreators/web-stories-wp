@@ -22,13 +22,15 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
+import {
+  renderWithTheme,
+  ConfigContext,
+  APIContext,
+} from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils';
-import ConfigContext from '../../../app/config/context';
-import APIContext from '../../../app/api/context';
 import StatusCheck from '../statusCheck';
 
 function setup(response) {

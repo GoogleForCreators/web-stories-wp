@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import getStoryMarkup from '../../output/utils/getStoryMarkup';
+import { getStoryMarkup } from '@web-stories-wp/story-editor';
 
 export function getContent() {
   const story = {

@@ -19,11 +19,11 @@
  */
 import { useEffect, useCallback, useState } from '@web-stories-wp/react';
 import { trackError } from '@web-stories-wp/tracking';
+import { useAPI } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../app';
 import { getContent } from './utils';
 import StatusCheckFailed from './statusCheckFailed';
 

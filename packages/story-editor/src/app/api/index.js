@@ -16,3 +16,4 @@
 
 export { default as APIProvider } from './apiProvider';
 export { default as useAPI } from './useAPI';
+export { default as APIContext } from './context';
