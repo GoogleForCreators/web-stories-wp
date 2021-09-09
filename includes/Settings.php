@@ -237,9 +237,14 @@ class Settings extends Service_Base {
 			self::SETTING_NAME_ARCHIVE,
 			[
 				'description'  => __( 'Web Stories Archive', 'web-stories' ),
-				'type'         => 'boolean',
-				'default'      => true,
-				'show_in_rest' => true,
+				'type'         => 'string',
+				'default'      => 'default',
+				'show_in_rest' => [
+					'schema' => [
+						'type' => 'string',
+						'enum' => [ 'default', 'disabled' ],
+					]
+				],
 			]
 		);
 

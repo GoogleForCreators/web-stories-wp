@@ -122,7 +122,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 					'with_front' => false,
 				],
 				'public'                => true,
-				'has_archive'           => get_option( Settings::SETTING_NAME_ARCHIVE, true ),
+				'has_archive'           => $this->get_post_type_has_archive(),
 				'exclude_from_search'   => true,
 				'show_ui'               => true,
 				'show_in_rest'          => true,
@@ -171,6 +171,17 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 */
 	protected function get_post_type_icon(): string {
 		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMGM1LjUyMyAwIDEwLTQuNDc3IDEwLTEwUzE1LjUyMyAwIDEwIDAgMCA0LjQ3NyAwIDEwczQuNDc3IDEwIDEwIDEwek01LjUgNmExIDEgMCAwMTEtMUgxMWExIDEgMCAwMTEgMXY4YTEgMSAwIDAxLTEgMUg2LjVhMSAxIDAgMDEtMS0xVjZ6TTEzIDZhMSAxIDAgMDExIDF2NmExIDEgMCAwMS0xIDFWNnptMi43NSAxLjc1QS43NS43NSAwIDAwMTUgN3Y2YS43NS43NSAwIDAwLjc1LS43NXYtNC41eiIgZmlsbD0iI2EwYTVhYSIvPjwvc3ZnPg==';
+	}
+
+	/**
+	 * If post type has archive.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return bool
+	 */
+	protected function get_post_type_has_archive() : bool {
+		return 'default' === get_option( Settings::SETTING_NAME_ARCHIVE, 'default' );
 	}
 
 	/**
