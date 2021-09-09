@@ -27,7 +27,12 @@ describe('getStoryPropsToSave', () => {
       title: 'Story!',
       author: { id: 1, name: 'John Doe' },
       slug: 'story',
-      publisherLogo: 1,
+      publisherLogo: {
+        id: 1,
+        url: 'https://example.com/logo.png',
+        height: 0,
+        width: 0,
+      },
       status: 'publish',
       date: '2020-04-10T07:06:26',
       modified: '',
@@ -58,10 +63,16 @@ describe('getStoryPropsToSave', () => {
     });
     const props = getStoryPropsToSave({ story, pages, metadata });
 
-    expect(props).toStrictEqual({
+    const expected = {
       content: 'Hello World!',
       pages,
       ...neededProps,
-    });
+      meta: {
+        web_stories_publisher_logo: 1,
+      },
+    };
+    delete expected.publisherLogo;
+
+    expect(props).toStrictEqual(expected);
   });
 });

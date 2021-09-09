@@ -23,8 +23,8 @@
 async function publishStory(dismiss = true) {
   await expect(page).toClick('button', { text: 'Publish' });
 
-  // Bypass checklist warning.
-  await page.waitForSelector('.ReactModal__Content');
+  await expect(page).toMatchElement('#modal-review-checklist');
+  await expect(page).toMatch(/Review checklist before publishing/);
   await expect(page).toClick('button', {
     text: /Continue to publish/,
   });
