@@ -99,6 +99,19 @@ class Story_Post_Type extends TestCase {
 	}
 
 	/**
+	 * @covers ::get_post_type_has_archive
+	 */
+	public function test_get_post_type_has_archive() {
+		$story_post_type = $this->get_story_object();
+		$default         = $this->call_private_method( $story_post_type, 'get_post_type_has_archive' );
+		$this->assertTrue( $default );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'disabled' );
+		$disabled         = $this->call_private_method( $story_post_type, 'get_post_type_has_archive' );
+		$this->assertFalse( $disabled );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
+	}
+
+	/**
 	 * @covers ::change_default_title
 	 */
 	public function test_change_default_title() {

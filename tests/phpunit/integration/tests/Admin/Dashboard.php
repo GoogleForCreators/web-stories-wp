@@ -159,6 +159,24 @@ class Dashboard extends TestCase {
 	}
 
 	/**
+	 * @covers ::get_post_type_archive_link
+	 */
+	public function test_get_post_type_archive_link() {
+		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
+			$this->createMock( \Google\Web_Stories\Experiments::class ),
+			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
+			$this->createMock( \Google\Web_Stories\Decoder::class ),
+			$this->createMock( \Google\Web_Stories\Locale::class ),
+			( new \Google\Web_Stories\Admin\Google_Fonts() ),
+			( new \Google\Web_Stories\Assets() )
+		);
+
+		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
+
+		$this->assertContains( 'web-story', $result );
+	}
+
+	/**
 	 * @covers ::enqueue_assets
 	 */
 	public function test_enqueue_assets() {
