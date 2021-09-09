@@ -298,12 +298,12 @@ class Story {
 	 */
 	public function get_publisher_logo_size(): array {
 		/**
-		 * Filters the publisher logo URL.
+		 * Filters the publisher logo size.
 		 *
 		 * @since 1.12.0
 		 *
-		 * @param array        $src  Publisher logo src.
-		 * @param WP_Post|null $post Story post object if set.
+		 * @param array        $size  Publisher logo size.
+		 * @param int|null     $id    Id of story post.
 		 */
 		return (array) apply_filters( 'web_stories_publisher_logo_size', $this->publisher_logo_size, $this->id );
 	}
