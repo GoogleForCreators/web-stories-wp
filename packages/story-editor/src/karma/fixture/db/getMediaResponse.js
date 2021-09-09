@@ -61,7 +61,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_trim: {},
+      web_stories_trim_data: {},
     },
     is_muted: false,
   },
@@ -111,7 +111,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_trim: {},
+      web_stories_trim_data: {},
     },
     is_muted: false,
   },
@@ -161,7 +161,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_trim: {},
+      web_stories_trim_data: {},
     },
     is_muted: false,
   },
@@ -211,7 +211,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_trim: {},
+      web_stories_trim_data: {},
     },
     is_muted: false,
   },
@@ -261,7 +261,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_trim: {},
+      web_stories_trim_data: {},
     },
     is_muted: false,
   },
@@ -297,7 +297,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_trim: {},
+      web_stories_trim_data: {},
     },
     is_muted: false,
   },
@@ -333,7 +333,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_trim: {},
+      web_stories_trim_data: {},
     },
     is_muted: false,
   },
@@ -383,7 +383,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_trim: {},
+      web_stories_trim_data: {},
     },
     is_muted: false,
   },

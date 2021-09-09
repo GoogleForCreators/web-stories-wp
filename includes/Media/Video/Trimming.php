@@ -40,7 +40,7 @@ class Trimming extends Service_Base {
 	 *
 	 * @var string
 	 */
-	const TRIM_POST_META_KEY = 'web_stories_trim';
+	const TRIM_POST_META_KEY = 'web_stories_trim_data';
 
 	/**
 	 * Is trim.
