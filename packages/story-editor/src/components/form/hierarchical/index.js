@@ -22,6 +22,7 @@ import {
   Checkbox,
   Input,
   Text,
+  themeHelpers,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -40,8 +41,22 @@ const Label = styled(Text).attrs({
   margin: 0 12px;
 `;
 
+const Border = styled.div`
+  padding-top: 4px;
+  margin-top: -4px;
+  border-left: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  border-right: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  border-bottom-left-radius: ${({ theme }) => theme.borders.radius.small};
+  border-bottom-right-radius: ${({ theme }) => theme.borders.radius.small};
+`;
+
 const CheckboxArea = styled.div`
-  padding: 8px 0;
+  max-height: 158px;
+  padding: 12px 0 0 12px;
+  overflow-y: scroll;
+
+  ${themeHelpers.scrollbarCSS};
 `;
 
 const StepContainer = styled.div`
@@ -52,7 +67,7 @@ const StepContainer = styled.div`
 const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 4px 0;
+  margin-bottom: 8px;
 `;
 
 /**
@@ -142,11 +157,17 @@ const HierarchicalInput = ({ label, options, onChange, ...inputProps }) => {
         type="search"
         {...inputProps}
       />
-      <CheckboxArea role="group">
-        {filteredOptions.map((option) => (
-          <Option key={option.id} {...option} onChange={handleCheckboxChange} />
-        ))}
-      </CheckboxArea>
+      <Border>
+        <CheckboxArea role="group">
+          {filteredOptions.map((option) => (
+            <Option
+              key={option.id}
+              {...option}
+              onChange={handleCheckboxChange}
+            />
+          ))}
+        </CheckboxArea>
+      </Border>
     </>
   );
 };

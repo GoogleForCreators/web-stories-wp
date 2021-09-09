@@ -67,6 +67,7 @@ export const _default = () => {
     <Wrapper>
       <Hierarchical
         label="Categories"
+        placeholder="Start Typing"
         options={options}
         onChange={handleChange}
       />
