@@ -28,7 +28,12 @@ export function getContent() {
       name: 'John Doe',
     },
     slug: 'story',
-    publisherLogo: 1,
+    publisherLogo: {
+      id: 1,
+      url: 'https://example.com/logo.png',
+      height: 0,
+      width: 0,
+    },
     defaultPageDuration: 7,
     status: 'publish',
     date: '2020-04-10T07:06:26',

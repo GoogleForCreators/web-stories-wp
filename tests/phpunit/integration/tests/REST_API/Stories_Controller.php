@@ -18,6 +18,7 @@
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -154,6 +155,8 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->remove_caps_from_roles();
 
 		$this->set_permalink_structure( '' );
+
+		$this->kses_remove_filters();
 
 		parent::tearDown();
 	}
@@ -523,8 +526,6 @@ class Stories_Controller extends Test_REST_TestCase {
 		$new_data = $response->get_data();
 		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
-
-		$this->kses_remove_filters();
 	}
 
 	/**
@@ -573,8 +574,6 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertEquals( 'Example excerpt', $new_data['excerpt']['raw'] );
 		$this->assertEquals( $attachment_id, $new_data['featured_media'] );
 		$this->assertEqualSets( [ 'pages' => [] ], $new_data['story_data'] );
-
-		$this->kses_remove_filters();
 	}
 
 	/**
@@ -593,8 +592,6 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_post_invalid_id', $response, 404 );
-
-		$this->kses_remove_filters();
 	}
 
 	/**
@@ -631,8 +628,6 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_cannot_create', $response, 403 );
-
-		$this->kses_remove_filters();
 	}
 
 	/**
@@ -664,50 +659,5 @@ class Stories_Controller extends Test_REST_TestCase {
 		$new_data = $response->get_data();
 		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
-		$this->kses_remove_filters();
-	}
-
-	/**
-	 * @covers ::update_item
-	 */
-	public function test_update_item_publisher_id() {
-		wp_set_current_user( self::$user_id );
-		$this->kses_int();
-
-		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
-		$unsanitized_story_data = json_decode( file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
-
-		$story = self::factory()->post->create(
-			[
-				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-			]
-		);
-
-		update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0, false );
-		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [], false );
-
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
-
-		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story/' . $story );
-		$request->set_body_params(
-			[
-				'content'        => $unsanitized_content,
-				'story_data'     => $unsanitized_story_data,
-				'publisher_logo' => $attachment_id,
-			]
-		);
-
-		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
-
-		$all_publisher_logos   = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-		$active_publisher_logo = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
-
-		$this->assertEquals( $unsanitized_content, $data['content']['raw'] );
-		$this->assertEquals( $unsanitized_story_data, $data['story_data'] );
-
-		$this->assertEquals( $attachment_id, $active_publisher_logo );
-		$this->assertContains( $attachment_id, $all_publisher_logos );
-		$this->kses_remove_filters();
 	}
 }

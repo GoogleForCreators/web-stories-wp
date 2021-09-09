@@ -74,7 +74,6 @@ class Output_Buffer extends TestCase {
 	/**
 	 * Tests that publisher name is correctly replaced.
 	 *
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_name
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher
 	 */
 	public function test_add_publisher() {
@@ -98,12 +97,9 @@ class Output_Buffer extends TestCase {
 	/**
 	 * Tests that publisher logo is correctly replaced.
 	 *
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
-		add_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
 
 		$post = self::factory()->post->create_and_get(
 			[
@@ -112,6 +108,9 @@ class Output_Buffer extends TestCase {
 			]
 		);
 
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		add_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, $attachment_id );
+
 		$this->go_to( get_permalink( $post ) );
 
 		$logo = wp_get_attachment_url( $attachment_id );
@@ -119,11 +118,11 @@ class Output_Buffer extends TestCase {
 
 		$actual = $this->prepare_response( $post );
 
-		delete_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
-
 		$this->assertContains( 'publisher-logo-src="http', $actual );
 		$this->assertContains( $name, $actual );
 		$this->assertContains( $logo, $actual );
+
+		delete_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY );
 
 		$actual = $this->prepare_response( $post );
 
@@ -134,7 +133,6 @@ class Output_Buffer extends TestCase {
 	/**
 	 * Tests that publisher logo is correctly replaced.
 	 *
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 */
 	public function test_add_publisher_logo_missing() {

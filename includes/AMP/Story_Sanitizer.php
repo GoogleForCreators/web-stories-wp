@@ -49,7 +49,7 @@ class Story_Sanitizer extends AMP_Base_Sanitizer {
 	public function sanitize() {
 		$this->transform_html_start_tag( $this->dom );
 		$this->transform_a_tags( $this->dom );
-		$this->add_publisher_logo( $this->dom, $this->args['publisher_logo'], $this->args['publisher_logo_placeholder'] );
+		$this->add_publisher_logo( $this->dom, $this->args['publisher_logo'] );
 		$this->add_publisher( $this->dom, $this->args['publisher'] );
 		$this->add_poster_images( $this->dom, $this->args['poster_images'] );
 		$this->deduplicate_inline_styles( $this->dom );
