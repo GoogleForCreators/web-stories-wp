@@ -43,10 +43,18 @@ const RightClickMenu = () => {
   } = useRightClickMenu();
   const ref = useRef();
   // If ContextMenu is already rendered prevent browser's context menu when right clicking on ContextMenu
+  const preventAdditionalContext = (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+  };
+
   useEffect(() => {
     const node = ref.current;
 
-    node.addEventListener('contextmenu', (evt) => evt.preventDefault(), false);
+    node.addEventListener('contextmenu', preventAdditionalContext);
+    return () => {
+      node.removeEventListener('contextmenu', preventAdditionalContext);
+    };
   }, [ref]);
 
   return createPortal(
