@@ -35,7 +35,7 @@ import { revokeBlob } from '@web-stories-wp/media';
  * @param {Object}   action.payload.additionalData Additional Data object.
  * @param {File} action.payload.posterFile File object.
  * @param {boolean} action.payload.muteVideo Whether the video being uploaded should be muted.
- * @param {Object} action.payload.trimData Trim data.
+ * @param {import('@web-stories-wp/media').TrimData} action.payload.trimData Trim data.
  * @return {Object} New state
  */
 export function addItem(

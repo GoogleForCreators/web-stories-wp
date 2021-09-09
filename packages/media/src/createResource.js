@@ -39,6 +39,15 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  */
 
 /**
+ * TrimData object
+ *
+ * @typedef {TrimData} TrimData data object linking a trimmed video to its original
+ * @property {number} original The ID of the original video.
+ * @property {string} start Time stamp of start time of new video. Example '00:01:02.345'.
+ * @property {string} end Time stamp of end time of new video. Example '00:02:00'.
+ */
+
+/**
  * Attachment object.
  *
  * @typedef {Attachment} Attachment
@@ -59,7 +68,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @property {boolean|null} isMuted Whether the resource has already been muted.
  * @property {Object} sizes Object of image sizes.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos.
- * @property {?Object} trimData An optional object of video trim data.
+ * @property {?TrimData} trimData An optional object of video trim data.
  */
 
 /**
@@ -93,7 +102,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @property {Object.<string, ResourceSize>} sizes Object of image sizes.
  * @property {Attribution|null} attribution An optional attribution for the resource.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos
- * @property {?Object} trimData An optional object of video trim data.
+ * @property {?TrimData} trimData An optional object of video trim data.
  */
 
 /**
