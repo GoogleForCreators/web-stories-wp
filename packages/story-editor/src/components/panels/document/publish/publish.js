@@ -186,8 +186,6 @@ function PublishPanel() {
     return message;
   }, [allowedImageFileTypes]);
 
-  console.log({ publisherLogos });
-  console.log('publisherLogo', publisherLogo);
   const publisherLogoOptionRenderer = forwardRef(({ option, ...rest }, ref) => {
     const src =
       option.media_details.sizes?.['web-stories-publisher-logo']?.source_url ||
