@@ -82,14 +82,13 @@ const formattedStoriesArray = [
       tags: [],
       permalink_template: 'http://localhost:8899/web-stories/%pagename%',
       generated_slug: 'orange-shapes',
-      publisher_logo_url:
-        '__WEB_STORIES_TEMPLATE_BASE_URL__/images/fallback-wordpress-publisher-logo.png',
       style_presets: {
         colors: [],
         textStyles: [],
       },
       _embedded: {
         'wp:featuredmedia': [{ id: 0, source_url: '' }],
+        'wp:publisherlogo': [{ id: 0, source_url: '' }],
         author: [{ id: 3, name: 'Jango Fett' }],
       },
       _links: {
@@ -250,14 +249,13 @@ const formattedStoriesArray = [
       tags: [],
       permalink_template: 'http://localhost:8899/web-stories/%pagename%',
       generated_slug: 'green-shapes',
-      publisher_logo_url:
-        '__WEB_STORIES_TEMPLATE_BASE_URL__/images/fallback-wordpress-publisher-logo.png',
       style_presets: {
         colors: [],
         textStyles: [],
       },
       _embedded: {
         'wp:featuredmedia': [{ id: 0, source_url: '' }],
+        'wp:publisherlogo': [{ id: 0, source_url: '' }],
         author: [{ id: 21, name: 'Chewbacca' }],
       },
       _links: {
@@ -418,14 +416,13 @@ const formattedStoriesArray = [
       tags: [],
       permalink_template: 'http://localhost:8899/web-stories/%pagename%',
       generated_slug: 'red-shapes',
-      publisher_logo_url:
-        '__WEB_STORIES_TEMPLATE_BASE_URL__/images/fallback-wordpress-publisher-logo.png',
       style_presets: {
         colors: [],
         textStyles: [],
       },
       _embedded: {
         'wp:featuredmedia': [{ id: 0, source_url: '' }],
+        'wp:publisherlogo': [{ id: 0, source_url: '' }],
         author: [{ id: 4, name: 'Luke Skywalker' }],
       },
       _links: {
@@ -586,14 +583,13 @@ const formattedStoriesArray = [
       tags: [],
       permalink_template: 'http://localhost:8899/web-stories/%pagename%',
       generated_slug: 'blue-shapes',
-      publisher_logo_url:
-        '__WEB_STORIES_TEMPLATE_BASE_URL__/images/fallback-wordpress-publisher-logo.png',
       style_presets: {
         colors: [],
         textStyles: [],
       },
       _embedded: {
         'wp:featuredmedia': [{ id: 0, source_url: '' }],
+        'wp:publisherlogo': [{ id: 0, source_url: '' }],
         author: [{ id: 2, name: 'Lando-Calrissian' }],
       },
       _links: {

@@ -283,7 +283,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return array List of link relations.
 	 */
-	protected function get_available_actions( $post, $request ) {
+	protected function get_available_actions( $post, $request ): array {
 		$rels = parent::get_available_actions( $post, $request );
 
 		if ( $this->check_delete_permission( $post ) ) {
