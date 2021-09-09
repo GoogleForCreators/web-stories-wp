@@ -65,6 +65,7 @@ function APIProvider({ children }) {
       hotlink,
       link,
       users,
+      settings,
       statusCheck,
       metaBoxes,
       currentUser,
@@ -229,7 +230,7 @@ function APIProvider({ children }) {
 
   // Important: Keep in sync with REST API preloading definition.
   const getMedia = useCallback(
-    ({ mediaType, searchTerm, pagingNum, cacheBust }) => {
+    ({ mediaType, searchTerm, pagingNum, cacheBust, include }) => {
       let apiPath = media;
       const perPage = 100;
       apiPath = addQueryArgs(apiPath, {
@@ -270,6 +271,10 @@ function APIProvider({ children }) {
       // anything)
       if (cacheBust) {
         apiPath = addQueryArgs(apiPath, { cache_bust: true });
+      }
+
+      if (include) {
+        apiPath = addQueryArgs(apiPath, { include });
       }
 
       return apiFetch({ path: apiPath }).then((response) => {
@@ -354,6 +359,12 @@ function APIProvider({ children }) {
     },
     [hotlink]
   );
+
+  const getSettings = useCallback(() => {
+    return apiFetch({
+      path: settings,
+    });
+  }, [settings]);
 
   /**
    * Gets metadata (title, favicon, etc.) from
@@ -521,6 +532,7 @@ function APIProvider({ children }) {
       deleteStoryLockById,
       getMedia,
       getHotlinkInfo,
+      getSettings,
       getLinkMetadata,
       saveStoryById,
       getAuthors,

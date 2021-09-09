@@ -98,10 +98,7 @@ OutputStory.propTypes = {
   story: StoryPropTypes.story.isRequired,
   pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
   metadata: PropTypes.shape({
-    publisher: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      logo: PropTypes.string,
-    }),
+    publisher: PropTypes.string.isRequired,
   }).isRequired,
 };
 

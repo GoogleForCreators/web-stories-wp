@@ -98,7 +98,12 @@ export const GridItem = forwardRef(
             publisherLogo.title
           )}
         >
-          <Logo src={publisherLogo.src} alt={publisherLogo.title} />
+          <Logo
+            src={publisherLogo.src}
+            width={publisherLogo.width}
+            height={publisherLogo.height}
+            alt={publisherLogo.title}
+          />
         </GridItemButton>
         {publisherLogo.isDefault && (
           <CenterMutedText

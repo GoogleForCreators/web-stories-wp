@@ -95,9 +95,17 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
         const publisherLogo = {
           id: embedded?.['wp:publisherlogo']?.[0].id || 0,
           height:
-            embedded?.['wp:publisherlogo']?.[0]?.media_details?.height || 0,
-          width: embedded?.['wp:publisherlogo']?.[0]?.media_details?.width || 0,
-          url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
+            embedded?.['wp:publisherlogo']?.[0]?.media_details.sizes?.[
+              'web-stories-publisher-logo'
+            ]?.height || 0,
+          width:
+            embedded?.['wp:publisherlogo']?.[0]?.media_details.sizes?.[
+              'web-stories-publisher-logo'
+            ]?.width || 0,
+          url:
+            embedded?.['wp:publisherlogo']?.[0]?.media_details.sizes?.[
+              'web-stories-publisher-logo'
+            ]?.source_url || '',
         };
 
         const [prefix, suffix] = permalinkTemplate.split(
