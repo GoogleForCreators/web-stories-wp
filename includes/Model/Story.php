@@ -70,6 +70,24 @@ class Story {
 	 */
 	protected $markup = '';
 	/**
+	 * Publisher name.
+	 *
+	 * @var string
+	 */
+	protected $publisher_name = '';
+	/**
+	 * Publisher logo.
+	 *
+	 * @var string
+	 */
+	protected $publisher_logo;
+	/**
+	 * Publisher logo size.
+	 *
+	 * @var array
+	 */
+	protected $publisher_logo_size = [];
+	/**
 	 * Poster url - portrait.
 	 *
 	 * @var string
@@ -132,6 +150,16 @@ class Story {
 		if ( 0 !== $thumbnail_id ) {
 			$this->poster_portrait = (string) wp_get_attachment_image_url( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 		}
+
+		$publisher_logo_id = (int) get_post_meta( $this->id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
+		if ( 0 !== $publisher_logo_id ) {
+			$img_src                       = wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
+			list ( $src, $width, $height ) = $img_src;
+			$this->publisher_logo_size     = compact( 'width', 'height' );
+			$this->publisher_logo          = $src;
+		}
+
+		$this->publisher_name = get_bloginfo( 'name' );
 
 		return true;
 	}
@@ -217,17 +245,6 @@ class Story {
 	}
 
 	/**
-	 * Returns the story's publisher logo ID.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return int Publisher logo ID.
-	 */
-	private function get_publisher_logo_id(): int {
-		return (int) get_post_meta( $this->get_id(), Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
-	}
-
-	/**
 	 * Get the publisher name.
 	 *
 	 * @since 1.12.0
@@ -235,7 +252,6 @@ class Story {
 	 * @return string Publisher Name.
 	 */
 	public function get_publisher_name(): string {
-		$name = get_bloginfo( 'name' );
 		/**
 		 * Filters the publisher's name
 		 *
@@ -243,9 +259,9 @@ class Story {
 		 *
 		 * @param string $name Publisher Name.
 		 */
-		$name = apply_filters( 'web_stories_publisher_name', $name );
+		$this->publisher_name = apply_filters( 'web_stories_publisher_name', $this->publisher_name );
 
-		return esc_attr( $name );
+		return esc_attr( $this->publisher_name );
 	}
 
 	/**
@@ -256,12 +272,6 @@ class Story {
 	 * @return string Publisher logo URL.
 	 */
 	public function get_publisher_logo_url(): string {
-		$publisher_logo_id = $this->get_publisher_logo_id();
-
-		$url  = $publisher_logo_id ? wp_get_attachment_image_url( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE ) : null;
-		$url  = false === $url ? null : $url;
-		$post = $this->get_id() ? get_post( $this->get_id() ) : null;
-
 		/**
 		 * Filters the publisher logo URL.
 		 *
@@ -270,32 +280,24 @@ class Story {
 		 * @since 1.11.0 The second parameter was repurposed to provide the current post object.
 		 *
 		 * @param string|null  $url  Publisher logo URL.
-		 * @param WP_Post|null $post Story post object if set.
+		 * @param int|null     $id   Id of story post.
 		 */
-		return (string) apply_filters( 'web_stories_publisher_logo', $url, $post );
+		return (string) apply_filters( 'web_stories_publisher_logo', $this->publisher_logo, $this->id );
 	}
 
 	/**
-	 * Returns the story's publisher logo URL.
+	 * Returns the story's publisher logo size.
 	 *
 	 * @since 1.12.0
 	 *
 	 * @return array {
 	 *     Array of image data, or empty array if no image is available.
 	 *
-	 *     @type string $0 Image source URL.
 	 *     @type int    $1 Image width in pixels.
 	 *     @type int    $2 Image height in pixels.
-	 *     @type bool   $3 Whether the image is a resized image.
 	 * }
 	 */
-	public function get_publisher_logo_src(): array {
-		$publisher_logo_id = $this->get_publisher_logo_id();
-
-		$src  = $publisher_logo_id ? wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE ) : null;
-		$src  = false === $src ? [] : $src;
-		$post = $this->get_id() ? get_post( $this->get_id() ) : null;
-
+	public function get_publisher_logo_size(): array {
 		/**
 		 * Filters the publisher logo URL.
 		 *
@@ -304,6 +306,6 @@ class Story {
 		 * @param array        $src  Publisher logo src.
 		 * @param WP_Post|null $post Story post object if set.
 		 */
-		return (array) apply_filters( 'web_stories_publisher_logo_src', $src, $post );
+		return (array) apply_filters( 'web_stories_publisher_logo_size', $this->publisher_logo_size, $this->id );
 	}
 }

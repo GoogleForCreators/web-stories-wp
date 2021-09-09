@@ -158,17 +158,13 @@ class Discovery extends Service_Base {
 			],
 		];
 
-		$publisher_logo = $story->get_publisher_logo_src();
+		$url   = $story->get_publisher_logo_url();
+		$sizes = $story->get_publisher_logo_size();
 
-		if ( ! empty( $publisher_logo ) ) {
-			list( $url, $width, $height ) = $publisher_logo;
-
-			$metadata['publisher']['logo'] = [
-				'@type'  => 'ImageObject',
-				'url'    => $url,
-				'width'  => $width,
-				'height' => $height,
-			];
+		if ( ! empty( $url ) && ! empty( $sizes ) ) {
+			$metadata['publisher']['logo']          = $sizes;
+			$metadata['publisher']['logo']['@type'] = 'ImageObject';
+			$metadata['publisher']['logo']['url']   = $url;
 		}
 
 		if ( $post instanceof WP_Post ) {
