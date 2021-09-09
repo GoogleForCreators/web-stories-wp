@@ -159,6 +159,19 @@ class Discovery extends Service_Base {
 		];
 
 		if ( $post instanceof WP_Post ) {
+			$url   = $story->get_publisher_logo_url();
+			$sizes = $story->get_publisher_logo_size();
+
+			if ( ! empty( $url ) && ! empty( $sizes ) ) {
+				list ( $width, $height )       = array_values( $sizes );
+				$metadata['publisher']['logo'] = [
+					'@type'  => 'ImageObject',
+					'url'    => $url,
+					'width'  => $width,
+					'height' => $height,
+				];
+			}
+
 			$metadata = array_merge(
 				$metadata,
 				[
@@ -177,15 +190,6 @@ class Discovery extends Service_Base {
 					'@type' => 'Person',
 					'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
 				];
-			}
-
-			$url   = $story->get_publisher_logo_url();
-			$sizes = $story->get_publisher_logo_size();
-
-			if ( ! empty( $url ) && ! empty( $sizes ) ) {
-				$metadata['publisher']['logo']          = $sizes;
-				$metadata['publisher']['logo']['@type'] = 'ImageObject';
-				$metadata['publisher']['logo']['url']   = $url;
 			}
 
 			$poster = $story->get_poster_portrait();
