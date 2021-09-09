@@ -17,22 +17,19 @@
 /**
  * Internal dependencies
  */
-import useCanvas from '../../app/canvas/useCanvas';
+import useVideoTrim from '../../components/videoTrim/useVideoTrim';
+import VideoTrimmer from '../../components/videoTrim/videoTrimmer';
 
 function VideoEditMenu() {
-  const { editingElementState } = useCanvas((state) => ({
-    editingElementState: state.state.editingElementState,
+  const { isTrimMode } = useVideoTrim(({ state: { isTrimMode } }) => ({
+    isTrimMode,
   }));
 
-  if (!editingElementState?.isTrimming) {
+  if (!isTrimMode) {
     return false;
   }
 
-  return (
-    <div style={{ border: '2px solid red', backgroundColor: 'hotpink' }}>
-      {'Dummy Edit Menu'}
-    </div>
-  );
+  return <VideoTrimmer />;
 }
 
 export default VideoEditMenu;

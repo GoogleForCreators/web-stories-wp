@@ -400,6 +400,18 @@ class Experiments extends Service_Base {
 				'description' => __( 'Enable video trimming', 'web-stories' ),
 				'group'       => 'editor',
 			],
+
+			/**
+			 * Author: @barklund
+			 * Issue: #8973
+			 * Creation date: 2021-09-07
+			 */
+			[
+				'name'        => 'enableThumbnailCaching',
+				'label'       => __( 'Thumbnail Caching', 'web-stories' ),
+				'description' => __( 'Enable thumbnail caching', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

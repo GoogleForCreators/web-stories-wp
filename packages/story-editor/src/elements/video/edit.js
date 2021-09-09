@@ -17,17 +17,17 @@
 /**
  * Internal dependencies
  */
-import useCanvas from '../../app/canvas/useCanvas';
+import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import StoryPropTypes from '../../types';
 import MediaEdit from '../media/edit';
 import Trim from './trim';
 
 function VideoEdit({ element, box, ...rest }) {
-  const { editingElementState } = useCanvas((state) => ({
-    editingElementState: state.state.editingElementState,
+  const { isTrimMode } = useVideoTrim(({ state: { isTrimMode } }) => ({
+    isTrimMode,
   }));
 
-  if (editingElementState?.isTrimming) {
+  if (isTrimMode) {
     return <Trim element={element} box={box} {...rest} />;
   }
 
