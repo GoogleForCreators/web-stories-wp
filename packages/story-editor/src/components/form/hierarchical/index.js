@@ -70,6 +70,11 @@ const CheckboxContainer = styled.div`
   margin-bottom: 8px;
 `;
 
+const NoResultsText = styled(Text)`
+  margin-bottom: 12px;
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;
+
 /**
  * Renders a checkbox and all children of the checkbox.
  *
@@ -113,7 +118,13 @@ const OptionPropType = {
 };
 Option.propTypes = OptionPropType;
 
-const HierarchicalInput = ({ label, options, onChange, ...inputProps }) => {
+const HierarchicalInput = ({
+  label,
+  noOptionsText = __('Category Not Found', 'web-stories'),
+  options,
+  onChange,
+  ...inputProps
+}) => {
   const [inputText, setInputText] = useState('');
 
   const filteredOptionTree = useMemo(
@@ -159,13 +170,19 @@ const HierarchicalInput = ({ label, options, onChange, ...inputProps }) => {
       />
       <Border>
         <CheckboxArea role="group">
-          {filteredOptions.map((option) => (
-            <Option
-              key={option.id}
-              {...option}
-              onChange={handleCheckboxChange}
-            />
-          ))}
+          {filteredOptions.length ? (
+            filteredOptions.map((option) => (
+              <Option
+                key={option.id}
+                {...option}
+                onChange={handleCheckboxChange}
+              />
+            ))
+          ) : (
+            <NoResultsText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+              {noOptionsText}
+            </NoResultsText>
+          )}
         </CheckboxArea>
       </Border>
     </>
@@ -174,6 +191,7 @@ const HierarchicalInput = ({ label, options, onChange, ...inputProps }) => {
 HierarchicalInput.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   label: PropTypes.string.isRequired,
+  noOptionsText: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       ...OptionPropType,
