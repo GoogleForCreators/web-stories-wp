@@ -603,8 +603,8 @@ jobs:
       # See https://developer.wordpress.org/plugins/wordpress-org/how-to-use-subversion/#create-tags-from-trunk
       - name: Create the SVN tag
         run: |
-          svn cp "$PLUGIN_REPO_URL/trunk" "$PLUGIN_REPO_URL/tags/$PLUGIN_VERSION"
-          svn commit -m "Tagging version $PLUGIN_VERSION" \
+          svn cp "$PLUGIN_REPO_URL/trunk" "$PLUGIN_REPO_URL/tags/$PLUGIN_VERSION" \
+           -m "Tagging version $PLUGIN_VERSION" \
            --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
         working-directory: ./svn
 

@@ -42,7 +42,7 @@ $preload_paths = [
 			'_embed'           => rawurlencode(
 				implode(
 					',',
-					[ 'wp:featuredmedia', 'wp:lockuser', 'author' ]
+					[ 'wp:featuredmedia', 'wp:lockuser', 'author', 'wp:publisherlogo' ]
 				)
 			),
 			'context'          => 'edit',
