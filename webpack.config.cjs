@@ -209,14 +209,14 @@ const sharedConfig = {
 };
 
 // Template for html-webpack-plugin to generate JS/CSS chunk manifests in PHP.
-const templateContent = ({ htmlWebpackPlugin }) => {
+const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
   // Extract filename without extension from arrays of JS and CSS chunks.
   // E.g. "../css/some-chunk.css" -> "some-chunk"
   const filenameOf = (pathname) =>
     pathname.substr(pathname.lastIndexOf('/') + 1);
 
   const chunkName = htmlWebpackPlugin.options.chunks[0];
-  const omitPrimaryChunk = (f) => f != chunkName;
+  const omitPrimaryChunk = (f) => f !== chunkName;
 
   const js = htmlWebpackPlugin.files.js
     .map((pathname) => {
@@ -232,10 +232,28 @@ const templateContent = ({ htmlWebpackPlugin }) => {
     })
     .filter(omitPrimaryChunk);
 
-  return `<?php return array(
-    'css' => ${JSON.stringify(css)},
-    'js' => ${JSON.stringify(js)});`;
+  // We're only interested in chunks from dynamic imports;
+  // ones that are not already in `js` and not primaries.
+  const chunks = chunkNames.filter((chunk) => !js.includes(chunk) && ! ['wp-dashboard', 'wp-story-editor'].includes(chunk));
+
+  return `<?php
+  return [
+    'css'    => ${JSON.stringify(css)},
+    'js'     => ${JSON.stringify(js)},
+    'chunks' => ${JSON.stringify(chunks)},
+  ];`;
 };
+
+const templateParameters = (compilation, assets, assetTags, options) => ({
+  compilation,
+  webpackConfig: compilation.options,
+  htmlWebpackPlugin: {
+    tags: assetTags,
+    files: assets,
+    options
+  },
+  chunkNames: compilation.chunks.map( ( { files } ) => files[0].substring(0, files[0].length - '.js'.length) )
+});
 
 const editorAndDashboard = {
   ...sharedConfig,
@@ -257,15 +275,17 @@ const editorAndDashboard = {
       filename: 'wp-story-editor.chunks.php',
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
-      templateContent,
       chunks: ['wp-story-editor'],
+      templateContent,
+      templateParameters,
     }),
     new HtmlWebpackPlugin({
       filename: 'wp-dashboard.chunks.php',
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
-      templateContent,
       chunks: ['wp-dashboard'],
+      templateContent,
+      templateParameters,
     }),
   ],
   optimization: {
