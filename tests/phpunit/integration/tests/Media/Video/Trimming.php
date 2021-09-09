@@ -92,7 +92,7 @@ class Trimming extends TestCase {
 			]
 		);
 
-		$this->assertArrayNotHasKey( $trimming::IS_TRIM_KEY, $image );
-		$this->assertArrayHasKey( $trimming::IS_TRIM_KEY, $video );
+		$this->assertArrayNotHasKey( $trimming::TRIM_DATA_KEY, $image );
+		$this->assertArrayHasKey( $trimming::TRIM_DATA_KEY, $video );
 	}
 }

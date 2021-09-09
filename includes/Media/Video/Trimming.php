@@ -47,7 +47,7 @@ class Trimming extends Service_Base {
 	 *
 	 * @var string
 	 */
-	const IS_TRIM_KEY = 'trim';
+	const TRIM_DATA_KEY = 'trim_data';
 
 	/**
 	 * Register.
@@ -117,7 +117,7 @@ class Trimming extends Service_Base {
 			return $response;
 		}
 		if ( 'video' === $response['type'] ) {
-			$response[ self::IS_TRIM_KEY ] = get_post_meta( $response['id'], self::TRIM_POST_META_KEY, true );
+			$response[ self::TRIM_DATA_KEY ] = get_post_meta( $response['id'], self::TRIM_POST_META_KEY, true );
 		}
 
 		return $response;

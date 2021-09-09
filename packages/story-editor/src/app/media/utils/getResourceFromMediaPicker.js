@@ -49,7 +49,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     },
     media_source: mediaSource,
     is_muted: isMuted,
-    trim: trimData,
+    trim_data: trimData,
   } = mediaPickerEl;
 
   return createResource({
