@@ -243,7 +243,7 @@ class Settings extends Service_Base {
 					'schema' => [
 						'type' => 'string',
 						'enum' => [ 'default', 'disabled' ],
-					]
+					],
 				],
 			]
 		);
