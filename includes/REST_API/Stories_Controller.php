@@ -434,7 +434,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			}
 			$posts_query->query( $query_args );
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
-			$statuses_count['all']  = $statuses_count['all'] + $statuses_count[ $key ];
+			$statuses_count['all'] += $statuses_count[ $key ];
 		}
 
 		// Encode the array as headers do not support passing an array.
