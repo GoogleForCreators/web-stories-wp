@@ -42,8 +42,6 @@ export const TEXT = {
     'web-stories'
   ),
   SUB_TEXT_DISABLED: __('Disabled the default archive page.', 'web-stories'),
-  /* translators: %s: archive url. */
-  SUB_TEXT_DEFAULT: __('Visit archive page at <a>%s</a>.', 'web-stories'),
 };
 
 const OPTIONS = [
