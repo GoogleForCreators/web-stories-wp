@@ -193,13 +193,13 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayHasKey( 'private', $statuses );
 
-		$this->assertEquals( 13, $statuses['all'] );
-		$this->assertEquals( 7, $statuses['publish'] );
-		$this->assertEquals( 3, $statuses['future'] );
-		$this->assertEquals( 3, $statuses['draft'] );
-		$this->assertEquals( 0, $statuses['private'] );
+		$this->assertSame( 13, $statuses['all'] );
+		$this->assertSame( 7, $statuses['publish'] );
+		$this->assertSame( 3, $statuses['future'] );
+		$this->assertSame( 3, $statuses['draft'] );
+		$this->assertSame( 0, $statuses['private'] );
 
-		$this->assertEquals( 3, $headers['X-WP-Total'] );
+		$this->assertSame( 3, $headers['X-WP-Total'] );
 	}
 
 	/**
@@ -235,12 +235,12 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayNotHasKey( 'private', $statuses );
 
-		$this->assertEquals( 7, $statuses['all'] );
-		$this->assertEquals( 7, $statuses['publish'] );
-		$this->assertEquals( 0, $statuses['future'] );
-		$this->assertEquals( 0, $statuses['draft'] );
+		$this->assertSame( 7, $statuses['all'] );
+		$this->assertSame( 7, $statuses['publish'] );
+		$this->assertSame( 0, $statuses['future'] );
+		$this->assertSame( 0, $statuses['draft'] );
 
-		$this->assertEquals( 7, $headers['X-WP-Total'] );
+		$this->assertSame( 7, $headers['X-WP-Total'] );
 	}
 
 	/**
@@ -264,13 +264,13 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayHasKey( 'private', $statuses );
 
-		$this->assertEquals( 10, $statuses['all'] );
-		$this->assertEquals( 7, $statuses['publish'] );
-		$this->assertEquals( 0, $statuses['future'] );
-		$this->assertEquals( 0, $statuses['private'] );
-		$this->assertEquals( 3, $statuses['draft'] );
+		$this->assertSame( 10, $statuses['all'] );
+		$this->assertSame( 7, $statuses['publish'] );
+		$this->assertSame( 0, $statuses['future'] );
+		$this->assertSame( 0, $statuses['private'] );
+		$this->assertSame( 3, $statuses['draft'] );
 
-		$this->assertEquals( 7, $headers['X-WP-Total'] );
+		$this->assertSame( 7, $headers['X-WP-Total'] );
 	}
 	/**
 	 * @covers ::get_item
@@ -428,7 +428,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'draft', $statuses );
 		$this->assertArrayHasKey( 'private', $statuses );
 
-		$this->assertEquals( 3, $data['headers']['X-WP-Total'] );
+		$this->assertSame( 3, $data['headers']['X-WP-Total'] );
 	}
 
 	/**
