@@ -322,7 +322,7 @@ class Editor extends Service_Base {
 					'pageTemplates' => sprintf( '/web-stories/v1/%s/', $page_templates_rest_base ),
 					'media'         => '/web-stories/v1/media/',
 					'hotlink'       => '/web-stories/v1/hotlink/',
-					'settings'       => '/web-stories/v1/settings/',
+					'settings'      => '/web-stories/v1/settings/',
 					'link'          => '/web-stories/v1/link/',
 					'statusCheck'   => '/web-stories/v1/status-check/',
 					'metaBoxes'     => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
