@@ -104,24 +104,14 @@ function PagePreview({ page, label, ...props }) {
   const pageAtGenerationTime = useRef();
   const enableThumbnailCaching = useFeature('enableThumbnailCaching');
 
-  const activeStateTracker = useRef(isActive);
-  const hasImage = (!isActive || !activeStateTracker.current) && imageBlob;
-
-  useEffect(() => {
-    // We're keeping track of the previous active state
-    // so that if the page was not active before but is now, an image would be displayed
-    // since this means that the page hasn't changed compared to its image.
-    activeStateTracker.current = isActive;
-  }, [isActive]);
-
-  // Whenever the page is re-generated and this is not the active page
+  // Whenever the page is re-generated
   // remove the old (and now stale) image blob
   useEffect(() => {
-    if (pageAtGenerationTime.current !== page && !isActive) {
+    if (pageAtGenerationTime.current !== page) {
       setImageBlob(null);
       pageAtGenerationTime.current = null;
     }
-  }, [page, isActive]);
+  }, [page]);
 
   useEffect(() => {
     // If this is not the active page, there is a page node, we
@@ -152,7 +142,7 @@ function PagePreview({ page, label, ...props }) {
       <TransformProvider>
         <Page ref={setPageRef} aria-label={label} {...props}>
           <PreviewWrapper background={backgroundColor}>
-            {hasImage ? (
+            {imageBlob ? (
               <Image
                 src={imageBlob}
                 width={width}
