@@ -96,26 +96,25 @@ function PublishPanel() {
     })
   );
 
-  const { featuredMedia, publisherLogoUrl, updateStory, capabilities } =
-    useStory(
-      ({
-        state: {
-          story: {
-            featuredMedia = { id: 0, url: '', height: 0, width: 0 },
-            publisherLogoUrl = '',
-          },
-          capabilities,
+  const { featuredMedia, publisherLogo, updateStory, capabilities } = useStory(
+    ({
+      state: {
+        story: {
+          featuredMedia = { id: 0, url: '', height: 0, width: 0 },
+          publisherLogo = { id: 0, url: '', height: 0, width: 0 },
         },
-        actions: { updateStory },
-      }) => {
-        return {
-          featuredMedia,
-          publisherLogoUrl,
-          updateStory,
-          capabilities,
-        };
-      }
-    );
+        capabilities,
+      },
+      actions: { updateStory },
+    }) => {
+      return {
+        featuredMedia,
+        publisherLogo,
+        updateStory,
+        capabilities,
+      };
+    }
+  );
 
   const {
     allowedImageMimeTypes,
@@ -143,8 +142,12 @@ function PublishPanel() {
     (image) => {
       updateStory({
         properties: {
-          publisherLogo: image.id,
-          publisherLogoUrl: image.sizes?.full?.url || image.url,
+          publisherLogo: {
+            id: image.id,
+            url: image.sizes?.full?.url || image.url,
+            width: image.sizes?.full?.width || image.width,
+            height: image.sizes?.full?.height || image.height,
+          },
         },
       });
     },
@@ -247,7 +250,7 @@ function PublishPanel() {
                     node.focus();
                   }
                 }}
-                value={publisherLogoUrl}
+                value={publisherLogo.url}
                 onChange={handleChangePublisherLogo}
                 onChangeErrorText={publisherLogoErrorMessage}
                 title={__('Select as publisher logo', 'web-stories')}

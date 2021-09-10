@@ -103,7 +103,7 @@ const StoryDisplayContent = ({
             alt={name}
             height={24}
             width={24}
-            className="lock-user-avatar"
+            data-test-id="lock-user-avatar"
           />
         )}
       </Tooltip>

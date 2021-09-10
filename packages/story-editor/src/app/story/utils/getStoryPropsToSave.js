@@ -30,7 +30,6 @@ function getStoryPropsToSave({ story, pages, metadata }) {
     'excerpt',
     'featuredMedia',
     'password',
-    'publisherLogo',
     'currentStoryStyles',
     'globalStoryStyles',
     'autoAdvance',
@@ -43,6 +42,9 @@ function getStoryPropsToSave({ story, pages, metadata }) {
     content,
     pages,
     ...propsFromStory,
+    meta: {
+      web_stories_publisher_logo: story.publisherLogo?.id,
+    },
   };
 }
 

@@ -53,14 +53,12 @@ karma-dashboard.config.cjs
 package.json
 package-lock.json
 percy.config.yml
-phpcs.xml
 phpcs.xml.dist
 phpmd.xml
 phpstan.neon.dist
-phpunit.xml
 phpunit.xml.dist
-phpunit-multisite.xml
-phpunit-multisite.xml.dist
+phpunit-integration.xml.dist
+phpunit-integration-multisite.xml.dist
 README.md
 scoper.inc.php
 SECURITY.md
