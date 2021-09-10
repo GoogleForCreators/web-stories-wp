@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+const NO_PARENT_VALUE = null;
+
 /**
  * Creates an object composed of keys generated from the
  * values of the `key` in each object.
@@ -66,14 +68,16 @@ const fillTree = (groupedOptionsByParent, options = []) => {
 export const buildOptionsTree = (flatOptions) => {
   const formattedOptions = flatOptions.map((option) => ({
     options: [],
-    parent: null,
+    parent: NO_PARENT_VALUE,
     ...option,
   }));
 
   const groupedOptionsByParent = groupBy(formattedOptions, 'parent');
-  const optionsWithNoParent = groupedOptionsByParent[null] || [];
 
-  return fillTree(groupedOptionsByParent, optionsWithNoParent);
+  return fillTree(
+    groupedOptionsByParent,
+    groupedOptionsByParent[NO_PARENT_VALUE]
+  );
 };
 
 /**
