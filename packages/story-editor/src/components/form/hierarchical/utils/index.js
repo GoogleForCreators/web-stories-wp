@@ -71,8 +71,9 @@ export const buildOptionsTree = (flatOptions) => {
   }));
 
   const groupedOptionsByParent = groupBy(formattedOptions, 'parent');
+  const optionsWithNoParent = groupedOptionsByParent[null] || [];
 
-  return fillTree(groupedOptionsByParent, groupedOptionsByParent[null]);
+  return fillTree(groupedOptionsByParent, optionsWithNoParent);
 };
 
 /**
