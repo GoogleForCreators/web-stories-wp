@@ -277,7 +277,7 @@ class Settings extends Service_Base {
 	 */
 	public function update_archive_setting() {
 		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-			flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+			flush_rewrite_rules( false );
 		}
 	}
 }
