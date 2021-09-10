@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-const NO_PARENT_VALUE = null;
+/**
+ * External dependencies
+ */
+import { v4 as uuidv4 } from 'uuid';
+
+const NO_PARENT_VALUE = uuidv4();
 
 /**
  * Creates an object composed of keys generated from the
