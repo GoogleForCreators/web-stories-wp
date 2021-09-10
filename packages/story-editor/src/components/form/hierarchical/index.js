@@ -24,15 +24,27 @@ import {
   Text,
   themeHelpers,
   THEME_CONSTANTS,
+  useLiveRegion,
 } from '@web-stories-wp/design-system';
-import { __, sprintf } from '@web-stories-wp/i18n';
-import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import {
+  useCallback,
+  useDebouncedCallback,
+  useEffect,
+  useMemo,
+  usePrevious,
+  useState,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import DirectionAware from '../../directionAware';
-import { buildOptionsTree, filterOptionsByLabelText } from './utils';
+import {
+  buildOptionsTree,
+  getOptionCount,
+  filterOptionsByLabelText,
+} from './utils';
 
 const Label = styled(Text).attrs({
   forwardedAs: 'label',
@@ -126,6 +138,8 @@ const HierarchicalInput = ({
   ...inputProps
 }) => {
   const [inputText, setInputText] = useState('');
+  const speak = useLiveRegion('assertive');
+  const debouncedSpeak = useDebouncedCallback(speak, 500);
 
   const filteredOptionTree = useMemo(
     () => buildOptionsTree(options),
@@ -153,6 +167,28 @@ const HierarchicalInput = ({
     },
     [onChange]
   );
+
+  /* Announce count of results found */
+  const previousInput = usePrevious(inputText);
+  useEffect(() => {
+    // only run effect when input changes. Ignore when options change.
+    if (previousInput !== inputText) {
+      const count = getOptionCount(filteredOptions);
+
+      const message = sprintf(
+        /* Translators: %d: Number of results. */
+        _n(
+          '%d result found.',
+          '%d results found.',
+          'web-stories',
+          'web-stories'
+        ),
+        count
+      );
+
+      debouncedSpeak(message);
+    }
+  }, [debouncedSpeak, filteredOptions, inputText, previousInput]);
 
   return (
     <>

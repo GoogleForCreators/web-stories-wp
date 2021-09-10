@@ -131,3 +131,28 @@ export const filterOptionsByLabelText = (options, labelText) =>
     (all, option) => all.concat(filterOption(option, labelText)),
     []
   );
+
+/**
+ * Recursively count the number of `options` in an array of nested objects.
+ *
+ * @param {Array.<Object>} option Array of options to count
+ * @return {number} the count of all options
+ */
+const countOptions = (option) => {
+  if (!option?.options?.length) {
+    return 1;
+  }
+
+  return (
+    1 + option.options.reduce((sum, child) => sum + countOptions(child), 0)
+  );
+};
+
+/**
+ * Recursively count the number of `options` in an array of nested objects.
+ *
+ * @param {Array.<Object>} tree Array of options to count.
+ * @return {number} the count of all options
+ */
+export const getOptionCount = (tree = []) =>
+  tree.reduce((count, option) => count + countOptions(option), 0);

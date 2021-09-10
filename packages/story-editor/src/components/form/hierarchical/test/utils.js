@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { filterOptionsByLabelText } from '../utils';
+import { filterOptionsByLabelText, getOptionCount } from '../utils';
 
 const OPTIONS = [
   {
@@ -105,5 +105,17 @@ describe('filterOptionsByLabelText', () => {
         ],
       },
     ]);
+  });
+});
+
+describe('getOptionCount', () => {
+  it.each`
+    options      | result
+    ${[]}        | ${0}
+    ${undefined} | ${0}
+    ${[{}]}      | ${1}
+    ${OPTIONS}   | ${11}
+  `('should count the number of nested options', ({ options, result }) => {
+    expect(getOptionCount(options)).toStrictEqual(result);
   });
 });
