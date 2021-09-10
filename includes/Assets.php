@@ -139,18 +139,6 @@ class Assets {
 			wp_set_script_translations( $chunk, 'web-stories' );
 		}
 
-		foreach ( $asset['chunks'] as $dynamic_chunk ) {
-			$this->register_script(
-				$dynamic_chunk,
-				$base_script_path . $dynamic_chunk . '.js',
-				[],
-				WEBSTORIES_VERSION,
-				$in_footer
-			);
-
-			wp_set_script_translations( $dynamic_chunk, 'web-stories' );
-		}
-
 		// Dynamically imported chunks MUST NOT be added as dependencies here.
 		$dependencies = array_merge( $asset['dependencies'], $script_dependencies, $asset['js'] );
 
@@ -163,9 +151,39 @@ class Assets {
 			$in_footer
 		);
 
-		wp_script_add_data( $script_handle, 'web-stories-chunks', $asset['chunks'] );
-
 		wp_set_script_translations( $script_handle, 'web-stories' );
+
+		// Register every dynamically imported chunk as a script, just so
+		// that we can print their translations whenever the main script is enqueued.
+		// The actual enqueueing of these chunks is done by the main script via dynamic imports.
+		foreach ( $asset['chunks'] as $dynamic_chunk ) {
+			$this->register_script(
+				$dynamic_chunk,
+				$base_script_path . $dynamic_chunk . '.js',
+				[],
+				WEBSTORIES_VERSION,
+				$in_footer
+			);
+
+			wp_set_script_translations( $dynamic_chunk, 'web-stories' );
+
+			$json_translations = load_script_textdomain( $dynamic_chunk, 'web-stories', null );
+
+			if ( ! $json_translations ) {
+				// Register empty locale data object to ensure the domain still exists.
+				$json_translations = '{ "locale_data": { "messages": { "": {} } } }';
+			}
+
+			$output = <<<JS
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "web-stories", {$json_translations} );
+JS;
+
+			wp_add_inline_script( $script_handle, $output );
+		}
 	}
 
 	/**

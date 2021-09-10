@@ -76,7 +76,6 @@ class Plugin extends ServiceBasedPlugin {
 		'ad_manager'                   => Ad_Manager::class,
 		'admin'                        => Admin\Admin::class,
 		'analytics'                    => Analytics::class,
-		'assets.l10n'                  => Assets_Localization::class,
 		'coi'                          => Admin\Cross_Origin_Isolation::class,
 		'customizer'                   => Admin\Customizer::class,
 		'dashboard'                    => Admin\Dashboard::class,

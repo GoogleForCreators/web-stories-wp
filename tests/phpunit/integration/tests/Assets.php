@@ -89,11 +89,43 @@ class Assets extends TestCase {
 					'version'      => '9.9.9',
 					'js'           => [ 'fake_js_chunk' ],
 					'css'          => [ 'fake_css_chunk' ],
+					'chunks'       => [],
 				]
 			);
 		$assets->register_script_asset( 'test_script' );
 		$this->assertTrue( wp_script_is( 'test_script', 'registered' ) );
 		$this->assertTrue( wp_script_is( 'fake_js_chunk', 'registered' ) );
+	}
+
+	/**
+	 * @covers ::register_script_asset
+	 */
+	public function test_register_script_asset_prints_translations_for_chunks() {
+		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
+		$assets->method( 'get_asset_metadata' )
+			->willReturn(
+				[
+					'dependencies' => [],
+					'version'      => '9.9.9',
+					'js'           => [ 'fake_js_chunk' ],
+					'css'          => [ 'fake_css_chunk' ],
+					'chunks'       => [ 'dynamic_import_chunk' ],
+				]
+			);
+		$assets->register_script_asset( 'test_script' );
+		$this->assertTrue( wp_script_is( 'test_script', 'registered' ) );
+		$this->assertTrue( wp_script_is( 'fake_js_chunk', 'registered' ) );
+		$this->assertTrue( wp_script_is( 'dynamic_import_chunk', 'registered' ) );
+
+		// Verifies that wp_set_script_translations() has been called.
+		$this->assertSame( 'web-stories', wp_scripts()->registered['test_script']->textdomain );
+		$this->assertSame( 'web-stories', wp_scripts()->registered['fake_js_chunk']->textdomain );
+		$this->assertSame( 'web-stories', wp_scripts()->registered['dynamic_import_chunk']->textdomain );
+		$this->assertContains( 'wp-i18n', wp_scripts()->registered['test_script']->deps );
+		$this->assertContains( 'fake_js_chunk', wp_scripts()->registered['test_script']->deps );
+		$this->assertNotContains( 'dynamic_import_chunk', wp_scripts()->registered['test_script']->deps );
+		$this->assertContains( 'wp-i18n', wp_scripts()->registered['fake_js_chunk']->deps );
+		$this->assertContains( 'wp-i18n', wp_scripts()->registered['dynamic_import_chunk']->deps );
 	}
 
 	/**
@@ -108,6 +140,7 @@ class Assets extends TestCase {
 					'version'      => '9.9.9',
 					'js'           => [ 'fake_js_chunk' ],
 					'css'          => [ 'fake_css_chunk' ],
+					'chunks'       => [],
 				]
 			);
 		$assets->register_style_asset( 'test_style' );
