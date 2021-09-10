@@ -24,7 +24,7 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
 import apiFetch from '@wordpress/api-fetch';
 
 export function getStoryLockById(storyId, stories) {
-  const path = addQueryArgs(`${stories}${storyId}/lock`, {
+  const path = addQueryArgs(`${stories}${storyId}/lock/`, {
     _embed: 'author',
   });
 
@@ -32,7 +32,7 @@ export function getStoryLockById(storyId, stories) {
 }
 
 export function setStoryLockById(storyId, stories) {
-  const path = `${stories}${storyId}/lock`;
+  const path = `${stories}${storyId}/lock/`;
   return apiFetch({ path, method: 'POST' });
 }
 

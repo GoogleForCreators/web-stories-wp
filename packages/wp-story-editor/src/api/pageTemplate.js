@@ -23,9 +23,8 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
 import apiFetch from '@wordpress/api-fetch';
 
 export function getCustomPageTemplates(page = 1, customPageTemplates) {
-  let apiPath = customPageTemplates;
   const perPage = 100;
-  apiPath = addQueryArgs(apiPath, {
+  const apiPath = addQueryArgs(customPageTemplates, {
     context: 'edit',
     per_page: perPage,
     page,
