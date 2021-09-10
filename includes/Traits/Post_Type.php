@@ -185,7 +185,7 @@ trait Post_Type {
 		global $wp_rewrite;
 
 		$post_type_obj = get_post_type_object( $slug );
-		if ( ! $post_type_obj ) {
+		if ( ! $post_type_obj instanceof WP_Post_Type ) {
 			return false;
 		}
 
