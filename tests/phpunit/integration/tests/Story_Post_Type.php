@@ -73,6 +73,7 @@ class Story_Post_Type extends TestCase {
 
 	public function tearDown() {
 		$this->remove_caps_from_roles();
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
 
 		parent::tearDown();
 	}
@@ -108,11 +109,26 @@ class Story_Post_Type extends TestCase {
 		$story_post_type = $this->get_story_object();
 		$post_type       = $story_post_type->register_post_type();
 		$this->assertTrue( $post_type->has_archive );
+	}
+
+	/**
+	 * @covers ::register_post_type
+	 */
+	public function test_register_post_type_disabled() {
+		$story_post_type = $this->get_story_object();
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'disabled' );
-		$story_post_type->unregister_post_type();
 		$post_type = $story_post_type->register_post_type();
 		$this->assertFalse( $post_type->has_archive );
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
+	}
+
+	/**
+	 * @covers ::register_post_type
+	 */
+	public function test_register_post_type_default() {
+		$story_post_type = $this->get_story_object();
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'default' );
+		$post_type = $story_post_type->register_post_type();
+		$this->assertTrue( $post_type->has_archive );
 	}
 
 	/**

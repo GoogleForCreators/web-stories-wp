@@ -29,16 +29,35 @@ class Dashboard extends TestCase {
 
 	protected static $user_id;
 
+	protected static $cpt_has_archive = 'cpt_has_archive';
+	protected static $cpt_no_archive  = 'cpt_no_archive';
+
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',
 			]
 		);
+
+		register_post_type(
+			self::$cpt_has_archive,
+			[
+				'has_archive' => true,
+			]
+		);
+
+		register_post_type(
+			self::$cpt_no_archive,
+			[
+				'has_archive' => false,
+			]
+		);
 	}
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$user_id );
+		unregister_post_type( self::$cpt_no_archive );
+		unregister_post_type( self::$cpt_has_archive );
 	}
 
 	public function setUp() {
@@ -172,11 +191,12 @@ class Dashboard extends TestCase {
 			( new \Google\Web_Stories\Assets() )
 		);
 
-		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
-		$this->assertSame( get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ), $result );
 
-		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ \Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG ] );
-		$this->assertNotSame( get_post_type_archive_link( \Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG ), $result );
+		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ self::$cpt_has_archive ] );
+		$this->assertSame( get_post_type_archive_link( self::$cpt_has_archive ), $result );
+
+		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ self::$cpt_no_archive ] );
+		$this->assertNotSame( get_post_type_archive_link( self::$cpt_no_archive ), $result );
 	}
 
 	/**
