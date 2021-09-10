@@ -113,11 +113,9 @@ const Option = (option) => {
         <Label htmlFor={optionId}>{optionLabel}</Label>
       </CheckboxContainer>
       {options?.map((child) => (
-        <DirectionAware key={child.id}>
-          <StepContainer>
-            <Option onChange={onChange} {...child} />
-          </StepContainer>
-        </DirectionAware>
+        <StepContainer key={child.id}>
+          <Option onChange={onChange} {...child} />
+        </StepContainer>
       ))}
     </>
   );
@@ -205,21 +203,25 @@ const HierarchicalInput = ({
         {...inputProps}
       />
       <Border>
-        <CheckboxArea role="group">
-          {filteredOptions.length ? (
-            filteredOptions.map((option) => (
-              <Option
-                key={option.id}
-                {...option}
-                onChange={handleCheckboxChange}
-              />
-            ))
-          ) : (
-            <NoResultsText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-              {noOptionsText}
-            </NoResultsText>
-          )}
-        </CheckboxArea>
+        <DirectionAware>
+          <CheckboxArea role="group">
+            {filteredOptions.length ? (
+              filteredOptions.map((option) => (
+                <Option
+                  key={option.id}
+                  {...option}
+                  onChange={handleCheckboxChange}
+                />
+              ))
+            ) : (
+              <NoResultsText
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              >
+                {noOptionsText}
+              </NoResultsText>
+            )}
+          </CheckboxArea>
+        </DirectionAware>
       </Border>
     </>
   );
