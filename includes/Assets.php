@@ -167,22 +167,7 @@ class Assets {
 
 			wp_set_script_translations( $dynamic_chunk, 'web-stories' );
 
-			$json_translations = load_script_textdomain( $dynamic_chunk, 'web-stories', null );
-
-			if ( ! $json_translations ) {
-				// Register empty locale data object to ensure the domain still exists.
-				$json_translations = '{ "locale_data": { "messages": { "": {} } } }';
-			}
-
-			$output = <<<JS
-( function( domain, translations ) {
-	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
-	localeData[""].domain = domain;
-	wp.i18n.setLocaleData( localeData, domain );
-} )( "web-stories", {$json_translations} );
-JS;
-
-			wp_add_inline_script( $script_handle, $output );
+			wp_add_inline_script( $script_handle, wp_scripts()->print_translations( $dynamic_chunk ) );
 		}
 	}
 
