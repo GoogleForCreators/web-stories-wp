@@ -160,6 +160,7 @@ class Dashboard extends TestCase {
 
 	/**
 	 * @covers ::get_post_type_archive_link
+	 * @covers \Google\Web_Stories\Traits\Post_Type::get_post_type_has_archive
 	 */
 	public function test_get_post_type_archive_link() {
 		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
@@ -172,8 +173,10 @@ class Dashboard extends TestCase {
 		);
 
 		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
+		$this->assertSame( get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ), $result );
 
-		$this->assertSame( get_post_type_archive_link(), $result );
+		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ \Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG ] );
+		$this->assertNotSame( get_post_type_archive_link( \Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG ), $result );
 	}
 
 	/**

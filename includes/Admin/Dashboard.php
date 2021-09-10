@@ -420,44 +420,6 @@ class Dashboard extends Service_Base {
 	}
 
 	/**
-	 * Retrieves the permalink for a post type archive.
-	 *
-	 * Identical to {@see get_post_type_archive_link()}, but also returns a URL
-	 * if the archive page has been disabled.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
-	 *
-	 * @param string $post_type Post type.
-	 * @return string|false The post type archive permalink. False if the post type
-	 *                      does not exist or does not have an archive.
-	 */
-	public function get_post_type_archive_link( $post_type ) {
-		global $wp_rewrite;
-
-		$post_type_obj = get_post_type_object( $post_type );
-		if ( ! $post_type_obj ) {
-			return false;
-		}
-
-		if ( get_option( 'permalink_structure' ) && is_array( $post_type_obj->rewrite ) ) {
-			$struct = ( true === $post_type_obj->has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
-			if ( $post_type_obj->rewrite['with_front'] ) {
-				$struct = $wp_rewrite->front . $struct;
-			} else {
-				$struct = $wp_rewrite->root . $struct;
-			}
-			$link = home_url( user_trailingslashit( $struct, 'post_type_archive' ) );
-		} else {
-			$link = home_url( '?post_type=' . $post_type );
-		}
-
-		/** This filter is documented in wp-includes/link-template.php */
-		return apply_filters( 'post_type_archive_link', $link, $post_type );
-	}
-
-	/**
 	 * Displays a link to the Web Stories dashboard on the WordPress list table view.
 	 *
 	 * @since 1.0.0
