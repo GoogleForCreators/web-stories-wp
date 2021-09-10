@@ -62,6 +62,7 @@ const SmallButton = styled(Button)`
 function GradientPicker({
   stops,
   currentStopIndex,
+  type,
 
   onSelect,
   onAdd,
@@ -95,17 +96,19 @@ function GradientPicker({
             <Icons.ArrowsLeftright />
           </SmallButton>
         </Tooltip>
-        <Tooltip hasTail title={rotateLabel}>
-          <SmallButton
-            onClick={onRotate}
-            aria-label={rotateLabel}
-            type={BUTTON_TYPES.QUATERNARY}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.SQUARE}
-          >
-            <Icons.ArrowRightCurved id="gradient-rotator" />
-          </SmallButton>
-        </Tooltip>
+        {type !== 'radial' && (
+          <Tooltip hasTail title={rotateLabel}>
+            <SmallButton
+              onClick={onRotate}
+              aria-label={rotateLabel}
+              type={BUTTON_TYPES.QUATERNARY}
+              size={BUTTON_SIZES.SMALL}
+              variant={BUTTON_VARIANTS.SQUARE}
+            >
+              <Icons.ArrowRightCurved id="gradient-rotator"/>
+            </SmallButton>
+          </Tooltip>
+        )}
       </Buttons>
     </Wrapper>
   );
@@ -114,6 +117,7 @@ function GradientPicker({
 GradientPicker.propTypes = {
   stops: PropTypes.arrayOf(ColorStopPropType),
   currentStopIndex: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
 
   onSelect: PropTypes.func.isRequired,
   onAdd: PropTypes.func.isRequired,
