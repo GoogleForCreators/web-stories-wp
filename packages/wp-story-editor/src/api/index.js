@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 export * from './authors';
-export * from './getStory';
+export * from './story';
 export * from './media';
 export * from './metaboxes'; // @todo Remove direct export.
 export * from './metadata';
 export * from './pageTemplate';
-export * from './saveStory';
 export * from './statusCheck'; // @todo Remove direct export.
 export * from './storyLock'; // @todo Remove direct export.
 export * from './user';

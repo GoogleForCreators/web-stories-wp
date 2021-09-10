@@ -103,6 +103,9 @@ function APIProvider({ children }) {
         },
         featured_media: featuredMedia.id,
         style_presets: globalStoryStyles,
+        meta: {
+          web_stories_publisher_logo: publisherLogo?.id,
+        },
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,
         author: author.id,

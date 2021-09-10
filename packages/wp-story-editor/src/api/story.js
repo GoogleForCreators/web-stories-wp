@@ -22,6 +22,49 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  */
 import apiFetch from '@wordpress/api-fetch';
 
+// Important: Keep in sync with REST API preloading definition.
+const STORY_FIELDS = [
+  'id',
+  'title',
+  'status',
+  'slug',
+  'date',
+  'modified',
+  'excerpt',
+  'link',
+  'story_data',
+  'preview_link',
+  'edit_link',
+  'embed_post_link',
+  'permalink_template',
+  'style_presets',
+  'password',
+].join(',');
+
+const STORY_EMBED = 'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo';
+
+export function getStoryById(storyId, stories) {
+  const path = addQueryArgs(`${stories}${storyId}/`, {
+    context: 'edit',
+    _embed: STORY_EMBED,
+    web_stories_demo: false,
+    _fields: STORY_FIELDS,
+  });
+
+  return apiFetch({ path });
+}
+
+export function getDemoStoryById(storyId, stories) {
+  const path = addQueryArgs(`${stories}${storyId}/`, {
+    context: 'edit',
+    _embed: STORY_EMBED,
+    web_stories_demo: true,
+    _fields: STORY_FIELDS,
+  });
+
+  return apiFetch({ path });
+}
+
 /**
  * Fire REST API call to save story.
  *
@@ -44,7 +87,7 @@ export function saveStoryById(story, stories, getStorySaveData) {
       'edit_link',
       'embed_post_link',
     ].join(','),
-    _embed: 'wp:featuredmedia',
+    _embed: STORY_EMBED,
   });
 
   return apiFetch({
@@ -55,7 +98,7 @@ export function saveStoryById(story, stories, getStorySaveData) {
 }
 
 /**
- * Fire REST API call to save story.
+ * Fire REST API call to auto-save story.
  *
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
  * @param {Object} stories Stories
