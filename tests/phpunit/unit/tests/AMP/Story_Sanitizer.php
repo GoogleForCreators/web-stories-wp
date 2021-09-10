@@ -65,20 +65,16 @@ class Story_Sanitizer extends TestCase {
 
 	public function get_publisher_logo_data(): array {
 		return [
-			'publisher_logo_exists'      => [
+			'publisher_logo_exists'  => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			],
-			'publisher_logo_missing'     => [
+			'publisher_logo_missing' => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" poster-portrait-src="https://example.com/image.png" publisher-logo-src="https://example.com/publisher_logo.png"></amp-story></body></html>',
 			],
-			'publisher_logo_empty'       => [
+			'publisher_logo_empty'   => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="" poster-portrait-src="https://example.com/image.png"></amp-story>',
-				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/publisher_logo.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
-			],
-			'publisher_logo_placeholder' => [
-				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/placeholder_logo.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/publisher_logo.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			],
 		];
@@ -94,11 +90,10 @@ class Story_Sanitizer extends TestCase {
 	 */
 	public function test_sanitize_publisher_logo( $source, $expected ) {
 		$args = [
-			'publisher'                  => 'Web Stories',
-			'publisher_logo'             => 'https://example.com/publisher_logo.png',
-			'publisher_logo_placeholder' => 'https://example.com/placeholder_logo.png',
-			'poster_images'              => [],
-			'video_cache'                => false,
+			'publisher'      => 'Web Stories',
+			'publisher_logo' => 'https://example.com/publisher_logo.png',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -133,11 +128,10 @@ class Story_Sanitizer extends TestCase {
 	 */
 	public function test_sanitize_poster_image( $source, $expected ) {
 		$args = [
-			'publisher_logo'             => '',
-			'publisher'                  => '',
-			'publisher_logo_placeholder' => '',
-			'poster_images'              => [],
-			'video_cache'                => false,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -151,88 +145,80 @@ class Story_Sanitizer extends TestCase {
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="New publisher" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 				[
-					'publisher_logo'             => '',
-					'publisher'                  => 'New publisher',
-					'publisher_logo_placeholder' => '',
-					'poster_images'              => [],
-					'video_cache'                => false,
+					'publisher_logo' => '',
+					'publisher'      => 'New publisher',
+					'poster_images'  => [],
+					'video_cache'    => false,
 				],
 			],
 			'no_publisher'            => [
 				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png" publisher="New publisher"></amp-story></body></html>',
 				[
-					'publisher_logo'             => '',
-					'publisher'                  => 'New publisher',
-					'publisher_logo_placeholder' => '',
-					'poster_images'              => [],
-					'video_cache'                => false,
+					'publisher_logo' => '',
+					'publisher'      => 'New publisher',
+					'poster_images'  => [],
+					'video_cache'    => false,
 				],
 			],
 			'missing_publisher'       => [
 				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png" publisher=""></amp-story></body></html>',
 				[
-					'publisher_logo'             => '',
-					'publisher'                  => '',
-					'publisher_logo_placeholder' => '',
-					'poster_images'              => [],
-					'video_cache'                => false,
+					'publisher_logo' => '',
+					'publisher'      => '',
+					'poster_images'  => [],
+					'video_cache'    => false,
 				],
 			],
 			'empty_publisher'         => [
 				'<amp-story standalone="" title="Example Story" publisher="" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher="" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 				[
-					'publisher_logo'             => '',
-					'publisher'                  => '',
-					'publisher_logo_placeholder' => '',
-					'poster_images'              => [],
-					'video_cache'                => false,
+					'publisher_logo' => '',
+					'publisher'      => '',
+					'poster_images'  => [],
+					'video_cache'    => false,
 				],
 			],
 			'double_quotes_publisher' => [
 				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png" publisher=\'"double quotes"\'></amp-story></body></html>',
 				[
-					'publisher_logo'             => '',
-					'publisher'                  => '"double quotes"',
-					'publisher_logo_placeholder' => '',
-					'poster_images'              => [],
-					'video_cache'                => false,
+					'publisher_logo' => '',
+					'publisher'      => '"double quotes"',
+					'poster_images'  => [],
+					'video_cache'    => false,
 				],
 			],
 			'single_quotes_publisher' => [
 				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png" publisher="\'single quotes\'"></amp-story></body></html>',
 				[
-					'publisher_logo'             => '',
-					'publisher'                  => "'single quotes'",
-					'publisher_logo_placeholder' => '',
-					'poster_images'              => [],
-					'video_cache'                => false,
+					'publisher_logo' => '',
+					'publisher'      => "'single quotes'",
+					'poster_images'  => [],
+					'video_cache'    => false,
 				],
 			],
 			'not_english_publisher'   => [
 				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png" publisher="PRÓXIMA"></amp-story></body></html>',
 				[
-					'publisher_logo'             => '',
-					'publisher'                  => 'PRÓXIMA',
-					'publisher_logo_placeholder' => '',
-					'poster_images'              => [],
-					'video_cache'                => false,
+					'publisher_logo' => '',
+					'publisher'      => 'PRÓXIMA',
+					'poster_images'  => [],
+					'video_cache'    => false,
 				],
 			],
 			'html_publisher'          => [
 				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png" publisher="this &gt; that &lt; that &lt;randomhtml /&gt;"></amp-story></body></html>',
 				[
-					'publisher_logo'             => '',
-					'publisher'                  => 'this > that < that <randomhtml />',
-					'publisher_logo_placeholder' => '',
-					'poster_images'              => [],
-					'video_cache'                => false,
+					'publisher_logo' => '',
+					'publisher'      => 'this > that < that <randomhtml />',
+					'poster_images'  => [],
+					'video_cache'    => false,
 				],
 			],
 		];
@@ -260,11 +246,10 @@ class Story_Sanitizer extends TestCase {
 		$source = '<html><head></head><body><amp-story></amp-story></body></html>';
 
 		$args = [
-			'publisher_logo'             => '',
-			'publisher'                  => '',
-			'publisher_logo_placeholder' => '',
-			'poster_images'              => [],
-			'video_cache'                => false,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -279,11 +264,10 @@ class Story_Sanitizer extends TestCase {
 		$source = '<html><head></head><body><amp-story><a href="https://www.google.com">Google</a></amp-story></body></html>';
 
 		$args = [
-			'publisher_logo'             => '',
-			'publisher'                  => '',
-			'publisher_logo_placeholder' => '',
-			'poster_images'              => [],
-			'video_cache'                => false,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -299,11 +283,10 @@ class Story_Sanitizer extends TestCase {
 		$source = '<html><head></head><body><amp-story><a href="https://www.google.com" data-tooltip-icon="" data-tooltip-text="">Google</a></amp-story></body></html>';
 
 		$args = [
-			'publisher_logo'             => '',
-			'publisher'                  => '',
-			'publisher_logo_placeholder' => '',
-			'poster_images'              => [],
-			'video_cache'                => false,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -319,11 +302,10 @@ class Story_Sanitizer extends TestCase {
 		$source = '<html><head></head><body><amp-story><div style="color: blue;"></div><div style="color: blue;"></div><div style="color: blue; background: white;"></div><div style="color: red;"></div></amp-story></body></html>';
 
 		$args = [
-			'publisher_logo'             => '',
-			'publisher'                  => '',
-			'publisher_logo_placeholder' => '',
-			'poster_images'              => [],
-			'video_cache'                => false,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -339,11 +321,10 @@ class Story_Sanitizer extends TestCase {
 		$source = '<html><head></head><body><amp-story><amp-video width="720" height="960" poster="https://example.com/poster.jpg" layout="responsive"><source type="video/mp4" src="https://example.com/video.mp4" /></amp-video></amp-story></body></html>';
 
 		$args = [
-			'publisher_logo'             => '',
-			'publisher'                  => '',
-			'publisher_logo_placeholder' => '',
-			'poster_images'              => [],
-			'video_cache'                => false,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -358,11 +339,10 @@ class Story_Sanitizer extends TestCase {
 		$source = '<html><head></head><body><amp-story><amp-video width="720" height="960" poster="https://example.com/poster.jpg" layout="responsive"><source type="video/mp4" src="https://example.com/video.mp4" /></amp-video></amp-story></body></html>';
 
 		$args = [
-			'publisher_logo'             => '',
-			'publisher'                  => '',
-			'publisher_logo_placeholder' => '',
-			'poster_images'              => [],
-			'video_cache'                => true,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => true,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -377,11 +357,10 @@ class Story_Sanitizer extends TestCase {
 		$source = '<html><head></head><body><amp-story><amp-video width="720" height="960" poster="blob:https://example.com/ecee4374-8f8a-4210-8f2d-9c5f8d6a6c5a" layout="responsive"><source type="video/mp4" src="blob:https://example.com/ecee4374-8f8a-4210-8f2d-9c5f8d6a6c5a" /></amp-video><amp-img src="blob:https://example.com/ecee4374-8f8a-4210-8f2d-9c5f8d6a6c5a" width="100" height="100"></amp-img></amp-story></body></html>';
 
 		$args = [
-			'publisher_logo'             => '',
-			'publisher'                  => '',
-			'publisher_logo_placeholder' => '',
-			'poster_images'              => [],
-			'video_cache'                => false,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -396,11 +375,10 @@ class Story_Sanitizer extends TestCase {
 		$source = '<html><head></head><body><amp-story><amp-img src="https://example.com/image.jpg" width="100" height="100" srcset="https://example.com/image.jpg 1000w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-225x300.jpg 225w,https://example.com/image-225x300.jpg 225w,https://example.com/image-150x200.jpg 150w"></amp-img></amp-story></body></html>';
 
 		$args = [
-			'publisher_logo'             => '',
-			'publisher'                  => '',
-			'publisher_logo_placeholder' => '',
-			'poster_images'              => [],
-			'video_cache'                => false,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );

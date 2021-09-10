@@ -32,7 +32,6 @@ use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Screen;
 use WP_Post;
@@ -44,7 +43,7 @@ use WP_Screen;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class AMP extends Service_Base {
-	use Publisher, Screen;
+	use Screen;
 
 	/**
 	 * Slug of the AMP validated URL post type.
@@ -162,14 +161,14 @@ class AMP extends Service_Base {
 
 		$story = new Story();
 		$story->load_from_post( $post );
+
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
-			'publisher_logo'             => $this->get_publisher_logo(),
-			'publisher'                  => $this->get_publisher_name(),
-			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
-			'poster_images'              => [
+			'publisher_logo' => $story->get_publisher_logo_url(),
+			'publisher'      => $story->get_publisher_name(),
+			'poster_images'  => [
 				'poster-portrait-src' => $story->get_poster_portrait(),
 			],
-			'video_cache'                => $video_cache_enabled,
+			'video_cache'    => $video_cache_enabled,
 		];
 
 		return $sanitizers;

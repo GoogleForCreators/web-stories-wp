@@ -59,6 +59,13 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 
 	/**
+	 * Publisher logo meta key.
+	 *
+	 * @var string
+	 */
+	const PUBLISHER_LOGO_META_KEY = 'web_stories_publisher_logo';
+
+	/**
 	 * Registers the post type for stories.
 	 *
 	 * @todo refactor
@@ -116,6 +123,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 					'excerpt',
 					'thumbnail', // Used for poster images.
 					'revisions', // Without this, the REST API will return 404 for an autosave request.
+					'custom-fields',
 				],
 				'rewrite'               => [
 					'slug'       => self::REWRITE_SLUG,
@@ -129,6 +137,21 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 				'rest_controller_class' => Stories_Controller::class,
 				'capability_type'       => [ 'web-story', 'web-stories' ],
 				'map_meta_cap'          => true,
+			]
+		);
+
+		$active_publisher_logo_id = absint( get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
+
+		register_post_meta(
+			self::POST_TYPE_SLUG,
+			self::PUBLISHER_LOGO_META_KEY,
+			[
+				'sanitize_callback' => 'absint',
+				'type'              => 'integer',
+				'description'       => __( 'Publisher logo ID.', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => $active_publisher_logo_id,
+				'single'            => true,
 			]
 		);
 
@@ -187,9 +210,11 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 		if ( ! is_array( $fields ) ) {
 			return $fields;
 		}
+
 		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
+
 		return $fields;
 	}
 

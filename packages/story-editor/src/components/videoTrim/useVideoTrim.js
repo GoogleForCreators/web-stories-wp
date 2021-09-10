@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-const GB_IN_BYTES = 1024 * 1024 * 1024;
+/**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@web-stories-wp/react';
 
-export const MEDIA_TRANSCODING_MAX_FILE_SIZE = 2 * GB_IN_BYTES;
+/**
+ * Internal dependencies
+ */
+import VideoTrimContext from './videoTrimContext';
 
-export const MEDIA_POSTER_IMAGE_FILE_TYPE = 'jpeg';
-export const MEDIA_POSTER_IMAGE_MIME_TYPE = 'image/jpeg';
+function useVideoTrim(selector) {
+  return useContextSelector(VideoTrimContext, selector ?? identity);
+}
 
-export const MEDIA_TRANSCODED_MIME_TYPE = 'video/mp4';
-export const MEDIA_TRANSCODED_FILE_TYPE = 'mp4';
-
-// Minimum duration time in milliseconds for a video
-export const MEDIA_VIDEO_MINIMUM_DURATION = 100;
-
-export const MEDIA_VIDEO_DIMENSIONS_THRESHOLD = {
-  HEIGHT: 720,
-  WIDTH: 1280,
-};
+export default useVideoTrim;

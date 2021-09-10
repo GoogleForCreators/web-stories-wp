@@ -732,12 +732,19 @@ class APIProviderFixture {
               pages: this._pages,
             },
             featured_media: 0,
-            publisher_logo_url:
-              'http://stories.local/wp-content/plugins/web-stories/assets/images/logo.png',
             permalink_template: 'http://stories3.local/stories/%pagename%/',
             style_presets: { textStyles: [], colors: [] },
             password: '',
-            _embedded: { author: [{ id: 1, name: 'John Doe' }] },
+            _embedded: {
+              author: [{ id: 1, name: 'John Doe' }],
+              'wp:publisherlogo': [
+                {
+                  id: 0,
+                  source_url:
+                    'http://stories.local/wp-content/plugins/web-stories/assets/images/logo.png',
+                },
+              ],
+            },
             _links: {
               'wp:action-assign-author': {
                 href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
@@ -775,12 +782,18 @@ class APIProviderFixture {
               pages: this._pages,
             },
             featured_media: 0,
-            publisher_logo_url:
-              'http://stories .local/wp-content/plugins/web-stories/assets/images/logo.png',
             permalink_template: 'http://stories3.local/stories/%pagename%/',
             style_presets: { textStyles: [], colors: [] },
             password: '',
-            _embedded: { author: [{ id: 1, name: 'John Doe' }] },
+            _embedded: {
+              author: [{ id: 1, name: 'John Doe' }],
+              'wp:publisherlogo': [
+                {
+                  id: 0,
+                  source_url: 'http://localhost:9876/__static__/earth.jpg',
+                },
+              ],
+            },
             _links: {
               'wp:action-assign-author': {
                 href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
