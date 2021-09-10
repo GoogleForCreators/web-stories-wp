@@ -41,7 +41,7 @@ export const TEXT = {
     "By default WordPress automatically creates an archive page, displaying your latest stories in your theme's layout.",
     'web-stories'
   ),
-  SUB_TEXT_DISABLED: __('Disabled the default archive page.', 'web-stories'),
+  SUB_TEXT_DISABLED: __('This disables the default archive page.', 'web-stories'),
 };
 
 const OPTIONS = [
@@ -56,7 +56,7 @@ const OPTIONS = [
 ];
 
 export default function ArchiveSettings({
-  archive = 'default',
+  archive = ARCHIVE_TYPE.DEFAULT,
   archiveURL,
   updateSettings,
 }) {
@@ -92,8 +92,8 @@ export default function ArchiveSettings({
         <TextInputHelperText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
         >
-          {'disabled' === archive && TEXT.SUB_TEXT_DISABLED}
-          {'default' === archive && (
+          {ARCHIVE_TYPE.DISABLED === archive && TEXT.SUB_TEXT_DISABLED}
+          {ARCHIVE_TYPE.DEFAULT === archive && (
             <TranslateWithMarkup
               mapping={{
                 a: (
@@ -127,5 +127,5 @@ ArchiveSettings.propTypes = {
 };
 
 ArchiveSettings.defaultProps = {
-  archive: 'default',
+  archive: ARCHIVE_TYPE.DEFAULT,
 };

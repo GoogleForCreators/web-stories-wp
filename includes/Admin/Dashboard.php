@@ -420,7 +420,10 @@ class Dashboard extends Service_Base {
 	}
 
 	/**
-	 * Copy of get_post_type_archive_link function, that ignore if a post type has_archive param.
+	 * Retrieves the permalink for a post type archive.
+	 *
+	 * Identical to {@see get_post_type_archive_link()}, but also returns a URL
+	 * if the archive page has been disabled.
 	 *
 	 * @since 1.12.0
 	 *

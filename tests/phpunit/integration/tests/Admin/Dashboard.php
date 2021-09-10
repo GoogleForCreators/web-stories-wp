@@ -173,7 +173,7 @@ class Dashboard extends TestCase {
 
 		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
 
-		$this->assertContains( 'web-story', $result );
+		$this->assertSame( get_post_type_archive_link(), $result );
 	}
 
 	/**

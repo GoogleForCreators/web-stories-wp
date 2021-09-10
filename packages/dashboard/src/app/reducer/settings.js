@@ -36,7 +36,7 @@ export const defaultSettingsState = {
   adManagerSlotId: '',
   adNetwork: AD_NETWORK_TYPE.NONE,
   publisherLogoIds: [],
-  archive: 'default',
+  archive: ARCHIVE_TYPE.DEFAULT,
   videoCache: false,
   settingSaved: false,
 };

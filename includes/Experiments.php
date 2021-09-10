@@ -361,8 +361,8 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'disableArchive',
-				'label'       => __( 'Disable Archive', 'web-stories' ),
-				'description' => __( 'Disable custom post type archive for web stories.', 'web-stories' ),
+				'label'       => __( 'Archive Page', 'web-stories' ),
+				'description' => __( 'Allow disabling the Web Stories archive page' ),
 				'group'       => 'general',
 			],
 			/**
