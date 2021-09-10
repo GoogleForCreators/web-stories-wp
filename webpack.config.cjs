@@ -234,7 +234,11 @@ const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
 
   // We're only interested in chunks from dynamic imports;
   // ones that are not already in `js` and not primaries.
-  const chunks = chunkNames.filter((chunk) => !js.includes(chunk) && ! ['wp-dashboard', 'wp-story-editor'].includes(chunk));
+  const chunks = chunkNames.filter(
+    (chunk) =>
+      !js.includes(chunk) &&
+      !['wp-dashboard', 'wp-story-editor'].includes(chunk)
+  );
 
   return `<?php
   return [
@@ -250,9 +254,11 @@ const templateParameters = (compilation, assets, assetTags, options) => ({
   htmlWebpackPlugin: {
     tags: assetTags,
     files: assets,
-    options
+    options,
   },
-  chunkNames: compilation.chunks.map( ( { files } ) => files[0].substring(0, files[0].length - '.js'.length) )
+  chunkNames: compilation.chunks.map(({ files }) =>
+    files[0].substring(0, files[0].length - '.js'.length)
+  ),
 });
 
 const editorAndDashboard = {
