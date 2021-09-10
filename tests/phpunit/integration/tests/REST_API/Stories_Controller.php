@@ -184,6 +184,8 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->assertFalse( $response->is_error() );
 		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
+		$this->assertArrayHasKey( 'X-WP-Total', $headers );
+		$this->assertArrayHasKey( 'X-WP-TotalPages', $headers );
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
@@ -200,6 +202,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertSame( 0, $statuses['private'] );
 
 		$this->assertSame( 3, $headers['X-WP-Total'] );
+		$this->assertSame( 1, $headers['X-WP-TotalPages'] );
 	}
 
 	/**
@@ -226,6 +229,8 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->assertFalse( $response->is_error() );
 		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
+		$this->assertArrayHasKey( 'X-WP-Total', $headers );
+		$this->assertArrayHasKey( 'X-WP-TotalPages', $headers );
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
@@ -241,6 +246,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertSame( 0, $statuses['draft'] );
 
 		$this->assertSame( 7, $headers['X-WP-Total'] );
+		$this->assertSame( 1, $headers['X-WP-TotalPages'] );
 	}
 
 	/**
@@ -255,6 +261,8 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->assertFalse( $response->is_error() );
 		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
+		$this->assertArrayHasKey( 'X-WP-Total', $headers );
+		$this->assertArrayHasKey( 'X-WP-TotalPages', $headers );
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
@@ -271,6 +279,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertSame( 3, $statuses['draft'] );
 
 		$this->assertSame( 7, $headers['X-WP-Total'] );
+		$this->assertSame( 1, $headers['X-WP-TotalPages'] );
 	}
 	/**
 	 * @covers ::get_item

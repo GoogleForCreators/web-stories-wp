@@ -392,6 +392,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$edit_private_posts = $this->get_post_type_cap( $this->post_type, 'edit_private_posts' );
 
 		$statuses_count = [ 'all' => 0 ];
+		$total_posts    = 0;
 
 		// Strip down query for speed.
 		$query_args['fields']                 = 'ids';
@@ -411,6 +412,9 @@ class Stories_Controller extends Stories_Base_Controller {
 			$posts_query->query( $query_args );
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 			$statuses_count['all'] += $statuses_count[ $key ];
+			if ( in_array( $status, $args['post_status'], true ) ) {
+				$total_posts += $statuses_count[ $key ];
+			}
 		}
 
 		// Encode the array as headers do not support passing an array.
@@ -418,6 +422,20 @@ class Stories_Controller extends Stories_Base_Controller {
 		if ( $encoded_statuses ) {
 			$response->header( 'X-WP-TotalByStatus', $encoded_statuses );
 		}
+
+		$page      = (int) $posts_query->query_vars['paged'];
+		$max_pages = ceil( $total_posts / (int) $args['posts_per_page'] );
+
+		if ( $page > $max_pages && $total_posts > 0 ) {
+			return new WP_Error(
+				'rest_post_invalid_page_number',
+				__( 'The page number requested is larger than the number of pages available.', 'web-stories' ),
+				[ 'status' => 400 ]
+			);
+		}
+
+		$response->header( 'X-WP-Total', (string) $total_posts );
+		$response->header( 'X-WP-TotalPages', (string) $max_pages );
 
 		if ( $request['_web_stories_envelope'] ) {
 			$embed    = isset( $request['_embed'] ) ? rest_parse_embed_param( $request['_embed'] ) : false;
