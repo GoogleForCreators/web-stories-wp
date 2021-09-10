@@ -362,7 +362,7 @@ class Experiments extends Service_Base {
 			[
 				'name'        => 'disableArchive',
 				'label'       => __( 'Archive Page', 'web-stories' ),
-				'description' => __( 'Allow disabling the Web Stories archive page' ),
+				'description' => __( 'Allow disabling the Web Stories archive page', 'web-stories' ),
 				'group'       => 'general',
 			],
 			/**
