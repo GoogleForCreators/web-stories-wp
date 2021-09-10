@@ -297,6 +297,7 @@ function useFFmpeg() {
       try {
         ffmpeg = await getFFmpegInstance(file);
 
+        // @todo: ensure that this function return the same file type submitted. https://github.com/google/web-stories-wp/issues/8998.
         const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
         const outputFileName =
           getFileName(file) + '-trimmed.' + MEDIA_TRANSCODED_FILE_TYPE;
