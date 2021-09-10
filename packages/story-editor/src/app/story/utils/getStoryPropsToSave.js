@@ -35,6 +35,9 @@ function getStoryPropsToSave({ story, pages, metadata }) {
     'autoAdvance',
     'defaultPageDuration',
     'backgroundAudio',
+    // TODO woof. need to make this dynamic based on
+    // taxonomies returned from WP at some point.
+    'story-tags',
   ]);
 
   const content = getStoryMarkup(story, pages, metadata);

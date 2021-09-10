@@ -69,6 +69,9 @@ function APIProvider({ children }) {
     addPageTemplate,
     deletePageTemplate,
     getHotlinkInfo,
+    getTaxonomies,
+    getTaxonomyTerm,
+    createTaxonomyTerm,
   } = apiCallbacks;
 
   const pageTemplates = useRef({
@@ -76,7 +79,7 @@ function APIProvider({ children }) {
     withoutImages: [],
   });
 
-  const actions = {};
+  const actions = { getTaxonomies, getTaxonomyTerm, createTaxonomyTerm };
 
   actions.getPageTemplates = useCallback(
     async ({ showImages = false } = {}) => {
