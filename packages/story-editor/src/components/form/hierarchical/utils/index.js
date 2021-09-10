@@ -13,11 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import groupBy from 'lodash.groupby';
 
+/**
+ * Creates an object composed of keys generated from the
+ * values of the `key` in each object.
+ *
+ * @param {Array.<Object>} arr The array to iterate over
+ * @param {string|number|undefined|null|boolean} key The key used to group the array items.
+ * @return {Object} The composed object
+ */
+const groupBy = (arr, key) =>
+  arr.reduce((prev, arrItem) => {
+    if (prev[arrItem[key]]) {
+      prev[arrItem[key]].push(arrItem);
+    } else {
+      prev[arrItem[key]] = [arrItem];
+    }
+    return prev;
+  }, {});
+
+/**
+ * Composes a tree from an array of options that are related.
+ * Can be parents or children as defined by the `parent` key.
+ *
+ * @param {Object} groupedOptionsByParent A object of options grouped by parent key.
+ * @param {Array.<Object>} options A flat array of options.
+ * @return {Array.<Object>} A tree of options
+ */
 const fillTree = (groupedOptionsByParent, options = []) => {
   return options?.map((option) => {
     const children = groupedOptionsByParent[option.id];
