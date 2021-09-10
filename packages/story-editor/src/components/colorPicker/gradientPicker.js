@@ -105,7 +105,7 @@ function GradientPicker({
               size={BUTTON_SIZES.SMALL}
               variant={BUTTON_VARIANTS.SQUARE}
             >
-              <Icons.ArrowRightCurved id="gradient-rotator"/>
+              <Icons.ArrowRightCurved id="gradient-rotator" />
             </SmallButton>
           </Tooltip>
         )}
