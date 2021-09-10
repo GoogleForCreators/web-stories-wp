@@ -262,22 +262,5 @@ class Settings extends Service_Base {
 				],
 			]
 		);
-
-		add_action( 'add_option_' . self::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
-		add_action( 'update_option_' . self::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
-	}
-
-
-	/**
-	 * Clear rewrite rules on update on setting.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return void
-	 */
-	public function update_archive_setting() {
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-			flush_rewrite_rules( false );
-		}
 	}
 }
