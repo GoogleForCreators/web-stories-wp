@@ -18,18 +18,124 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import {
+  useCallback,
+  useDebouncedCallback,
+  useMemo,
+} from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
+import { useTaxonomy } from '../../../../app/taxonomy';
+import cleanForSlug from '../../../../utils/cleanForSlug';
+import Tags from '../../../form/tags';
 import { SimplePanel } from '../../panel';
 
-function TaxonomiesPanel({ ...props }) {
+function TaxonomiesPanel(props) {
+  const {
+    taxonomies,
+    createTerm,
+    addSearchResultsToCache,
+    freeformCache,
+    setSelectedFreeformSlugs,
+    selectedFreeformSlugs,
+  } = useTaxonomy(
+    ({
+      state: { taxonomies, freeformCache, selectedFreeformSlugs },
+      actions: {
+        createTerm,
+        addSearchResultsToCache,
+        setSelectedFreeformSlugs,
+      },
+    }) => ({
+      taxonomies,
+      freeformCache,
+      createTerm,
+      addSearchResultsToCache,
+      setSelectedFreeformSlugs,
+      selectedFreeformSlugs,
+    })
+  );
+
+  const _handleFreeformTermsChange = useCallback(
+    (taxonomy) => (termNames) => {
+      termNames.forEach((termName) => createTerm(taxonomy, termName));
+      setSelectedFreeformSlugs(
+        taxonomy,
+        termNames.map((termName) => cleanForSlug(termName))
+      );
+    },
+    [createTerm, setSelectedFreeformSlugs]
+  );
+
+  const _handleFreeformInputChange = useDebouncedCallback(
+    (taxonomy) => (value) => {
+      if (value.length < 3) {
+        return;
+      }
+      addSearchResultsToCache(taxonomy, value);
+    },
+    1000
+  );
+
+  const _termDisplayTransformer = useCallback(
+    (taxonomy) => (tagName) =>
+      freeformCache[taxonomy]?.[cleanForSlug(tagName)]?.name,
+    [freeformCache]
+  );
+
+  // We want to prevent curried functions from creating
+  // a new function on every render so we build them with
+  // memoized args here instead of in the render
+  const taxonomyHandlerTuples = useMemo(
+    () =>
+      (taxonomies || []).map((taxonomy) => [
+        taxonomy,
+        // handlers
+        {
+          handleFreeformTermsChange: _handleFreeformTermsChange(taxonomy),
+          handleFreeformInputChange: _handleFreeformInputChange(taxonomy),
+          termDisplayTransformer: _termDisplayTransformer(taxonomy),
+        },
+      ]),
+    [
+      taxonomies,
+      _handleFreeformTermsChange,
+      _handleFreeformInputChange,
+      _termDisplayTransformer,
+    ]
+  );
+
   return (
     <SimplePanel
       name="taxonomies"
       title={__('Categories and Tags', 'web-stories')}
       {...props}
-    />
+    >
+      {taxonomyHandlerTuples.map(([taxonomy, handlers]) =>
+        // TODO support all taxonomies and differentiate
+        // input component based on `taxonomy.hierarchical`
+        taxonomy.slug === 'story-tag' ? (
+          <div key={taxonomy.slug}>
+            <Tags.Label htmlFor={`${taxonomy.slug}-input`}>
+              {__('Add New Term', 'web-stories')}
+            </Tags.Label>
+            <Tags.Input
+              id={`${taxonomy.slug}-input`}
+              aria-describedby={`${taxonomy.slug}-description`}
+              name="story-tags"
+              onTagsChange={handlers.handleFreeformTermsChange}
+              onInputChange={handlers.handleFreeformInputChange}
+              tagDisplayTransformer={handlers.termDisplayTransformer}
+              initialTags={selectedFreeformSlugs?.[taxonomy.rest_base] || []}
+            />
+            <Tags.Description id={`${taxonomy.slug}-description`}>
+              {__('Separate with commas or the Enter key.', 'web-stories')}
+            </Tags.Description>
+          </div>
+        ) : null
+      )}
+    </SimplePanel>
   );
 }
 

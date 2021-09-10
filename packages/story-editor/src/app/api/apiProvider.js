@@ -53,9 +53,11 @@ const STORY_FIELDS = [
   'permalink_template',
   'style_presets',
   'password',
+  'story-tags',
 ].join(',');
 
-const STORY_EMBED = 'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo';
+const STORY_EMBED =
+  'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo,wp:term';
 
 function APIProvider({ children }) {
   const {
@@ -501,15 +503,34 @@ function APIProvider({ children }) {
       // `?_method=DELETE` is an alternative solution to override the request method.
       // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
       return apiFetch({
-        path: addQueryArgs(`${customPageTemplates}${id}/`, {
-          _method: 'DELETE',
-        }),
-        data: { force: true },
+        path: addQueryArgs(`${customPageTemplates}${id}/`, {}),
+        data: {},
         method: 'POST',
       });
     },
     [customPageTemplates]
   );
+
+  const getTaxonomies = useCallback(() => {
+    return apiFetch({
+      path: addQueryArgs('/wp/v2/taxonomies/', { type: 'web-story' }),
+    });
+  }, []);
+
+  const getTaxonomicTerm = useCallback((taxonomy, args = {}) => {
+    return apiFetch({
+      path: addQueryArgs(`/wp/v2/${taxonomy}`, args),
+    });
+  }, []);
+
+  const createTaxonomicTerm = useCallback((taxonomy, name) => {
+    return apiFetch({
+      path: addQueryArgs(`/wp/v2/${taxonomy}`, {
+        name,
+      }),
+      method: 'POST',
+    });
+  }, []);
 
   const state = {
     actions: {
@@ -535,6 +556,9 @@ function APIProvider({ children }) {
       getPageTemplates,
       getCurrentUser,
       updateCurrentUser,
+      getTaxonomies,
+      getTaxonomicTerm,
+      createTaxonomicTerm,
     },
   };
 
