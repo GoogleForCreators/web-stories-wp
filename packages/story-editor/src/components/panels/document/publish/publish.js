@@ -260,6 +260,7 @@ function PublishPanel() {
     );
 
   const settingsLink = `${window.location.origin}/wp-admin/edit.php?post_type=web-story&page=stories-dashboard#/editor-settings`;
+
   const publisherLogosWithUploadOption = [...publisherLogos];
   if (hasUploadMediaAction) {
     publisherLogosWithUploadOption.unshift(
