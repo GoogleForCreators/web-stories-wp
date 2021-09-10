@@ -112,13 +112,13 @@ const Option = (option) => {
         />
         <Label htmlFor={optionId}>{optionLabel}</Label>
       </CheckboxContainer>
-      <DirectionAware>
-        <StepContainer>
-          {options?.map((child) => (
-            <Option key={child.id} onChange={onChange} {...child} />
-          ))}
-        </StepContainer>
-      </DirectionAware>
+      {options?.map((child) => (
+        <DirectionAware key={child.id}>
+          <StepContainer>
+            <Option onChange={onChange} {...child} />
+          </StepContainer>
+        </DirectionAware>
+      ))}
     </>
   );
 };

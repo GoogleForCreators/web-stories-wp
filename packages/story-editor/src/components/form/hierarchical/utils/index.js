@@ -48,7 +48,7 @@ const groupBy = (arr, key) =>
  * @return {Array.<Object>} A tree of options
  */
 const fillTree = (groupedOptionsByParent, options = []) => {
-  return options?.map((option) => {
+  return options.map((option) => {
     const children = groupedOptionsByParent[option.id];
 
     return {
