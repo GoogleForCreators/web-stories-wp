@@ -41,7 +41,10 @@ export const TEXT = {
     "By default WordPress automatically creates an archive page, displaying your latest stories in your theme's layout.",
     'web-stories'
   ),
-  SUB_TEXT_DISABLED: __('This disables the default archive page.', 'web-stories'),
+  SUB_TEXT_DISABLED: __(
+    'This disables the default archive page.',
+    'web-stories'
+  ),
 };
 
 const OPTIONS = [
