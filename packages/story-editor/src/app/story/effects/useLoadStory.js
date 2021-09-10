@@ -60,6 +60,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           embed_post_link: embedPostLink,
           _embedded: embedded = {},
           _links: links = {},
+          ...taxonomies
         } = post;
 
         const capabilities = {
@@ -92,6 +93,8 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
         };
 
+        let embeddedTerms = [];
+
         const publisherLogo = {
           id: embedded?.['wp:publisherlogo']?.[0].id || 0,
           height:
@@ -99,6 +102,10 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           width: embedded?.['wp:publisherlogo']?.[0]?.media_details?.width || 0,
           url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
         };
+
+        if ('wp:term' in embedded) {
+          embeddedTerms = embedded['wp:term'];
+        }
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
@@ -165,6 +172,8 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,
           backgroundAudio: storyData?.backgroundAudio,
+          embeddedTerms,
+          ...taxonomies,
         };
 
         // TODO read current page and selection from deeplink?
