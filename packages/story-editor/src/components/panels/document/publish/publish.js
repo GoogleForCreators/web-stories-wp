@@ -26,7 +26,12 @@ import {
 } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import { Link, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import {
+  Link,
+  Text,
+  THEME_CONSTANTS,
+  Icons,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -39,6 +44,7 @@ import { Option } from '../../../form/advancedDropDown/list/styled';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
 import { useAPI } from '../../../../app';
+import { useMediaPicker } from '../../../mediaPicker';
 import PublishTime from './publishTime';
 import Author from './author';
 
@@ -88,6 +94,7 @@ const MediaInputWrapper = styled.div`
 `;
 
 const DropdownWrapper = styled.div`
+  position: relative;
   width: 138px;
   margin-left: 30px;
   margin-top: 3px;
@@ -154,7 +161,7 @@ function PublishPanel() {
   const {
     allowedImageMimeTypes,
     allowedImageFileTypes,
-    capabilities: { hasUploadMediaAction },
+    capabilities: { hasUploadMediaAction, canManageSettings },
   } = useConfig();
 
   const handleChangePoster = useCallback(
@@ -186,29 +193,6 @@ function PublishPanel() {
     return message;
   }, [allowedImageFileTypes]);
 
-  const publisherLogoOptionRenderer = forwardRef(({ option, ...rest }, ref) => {
-    const src =
-      option.media_details.sizes?.['web-stories-publisher-logo']?.source_url ||
-      option.source_url;
-    return (
-      <Option value={option.id} ref={ref} {...rest}>
-        <LogoImg src={src} alt="" />
-      </Option>
-    );
-  });
-  const activeItemRenderer = () =>
-    publisherLogo.id ? (
-      <LogoImg src={publisherLogo.url} alt="" />
-    ) : publisherLogos.length ? (
-      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {__('Select logo', 'web-stories')}
-      </Text>
-    ) : (
-      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {__('No publisher logos', 'web-stories')}
-      </Text>
-    );
-
   const onPublisherLogoChange = (option) => {
     const sizeLogo = option.media_details.sizes?.['web-stories-publisher-logo'];
     updateStory({
@@ -223,7 +207,78 @@ function PublishPanel() {
     });
   };
 
+  const publisherLogoErrorMessage = useMemo(() => {
+    let message = __('No file types are currently supported.', 'web-stories');
+
+    if (allowedImageFileTypes.length) {
+      message = sprintf(
+        /* translators: %s: list of allowed file types. */
+        __('Please choose only %s as publisher logo.', 'web-stories'),
+        translateToExclusiveList(allowedImageFileTypes)
+      );
+    }
+
+    return message;
+  }, [allowedImageFileTypes]);
+
+  const openMediaPicker = useMediaPicker({
+    onSelect: onPublisherLogoChange,
+    cropParams: {
+      width: 96,
+      height: 96,
+    },
+    type: allowedImageMimeTypes,
+    onSelectErrorMessage: publisherLogoErrorMessage,
+  });
+
+  const publisherLogoOptionRenderer = forwardRef(
+    ({ option: option, ...rest }, ref) => {
+      if (option.props) {
+        return option;
+      }
+      const src =
+        option.media_details.sizes?.['web-stories-publisher-logo']
+          ?.source_url || option.source_url;
+      return (
+        <Option value={option.id} ref={ref} {...rest}>
+          <LogoImg src={src} alt="" />
+        </Option>
+      );
+    }
+  );
+  const activeItemRenderer = () =>
+    publisherLogo.id ? (
+      <LogoImg src={publisherLogo.url} alt="" />
+    ) : publisherLogos.length ? (
+      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {__('Select logo', 'web-stories')}
+      </Text>
+    ) : (
+      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {__('No logo', 'web-stories')}
+      </Text>
+    );
+
   const settingsLink = `${window.location.origin}/wp-admin/edit.php?post_type=web-story&page=stories-dashboard#/editor-settings`;
+  const publisherLogosWithUploadOption = [...publisherLogos];
+  if (hasUploadMediaAction) {
+    publisherLogosWithUploadOption.unshift(
+      <Option key="upload" onClick={openMediaPicker}>
+        <Icons.ArrowCloud
+          height={32}
+          width={32}
+          aria-label={__('Open media picker', 'web-stories')}
+        />
+        <Text
+          onClick={openMediaPicker}
+          as="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+        >
+          {__('Add new', 'web-stories')}
+        </Text>
+      </Option>
+    );
+  }
 
   return (
     <Panel
@@ -278,14 +333,14 @@ function PublishPanel() {
           <DropdownWrapper>
             <MediaWrapper>
               <AdvancedDropDown
-                options={publisherLogos}
-                primaryOptions={publisherLogos}
+                options={publisherLogosWithUploadOption}
+                primaryOptions={publisherLogosWithUploadOption}
                 onChange={onPublisherLogoChange}
                 aria-label={__('Publisher Logo', 'web-stories')}
                 renderer={publisherLogoOptionRenderer}
                 activeItemRenderer={activeItemRenderer}
                 selectedId={publisherLogo.id}
-                disabled={!publisherLogos?.length}
+                disabled={!publisherLogosWithUploadOption.length}
                 ref={(node) => {
                   if (
                     node &&
@@ -301,14 +356,16 @@ function PublishPanel() {
               <Label>{__('Publisher Logo', 'web-stories')}</Label>
               <Row>
                 <Required />
-                <Link
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  href={settingsLink}
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
-                  {__('Manage', 'web-stories')}
-                </Link>
+                {canManageSettings && (
+                  <Link
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    href={settingsLink}
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                  >
+                    {__('Manage', 'web-stories')}
+                  </Link>
+                )}
               </Row>
             </LabelWrapper>
           </DropdownWrapper>
