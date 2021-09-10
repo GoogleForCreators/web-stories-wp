@@ -106,7 +106,7 @@ class Story_Post_Type extends TestCase {
 	 */
 	public function test_register_post_type() {
 		$story_post_type = $this->get_story_object();
-		$post_type = $story_post_type->register_post_type();
+		$post_type       = $story_post_type->register_post_type();
 		$this->assertTrue( $post_type->has_archive );
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'disabled' );
 		$story_post_type->unregister_post_type();
