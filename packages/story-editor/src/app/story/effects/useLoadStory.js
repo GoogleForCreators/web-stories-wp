@@ -66,25 +66,21 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           publisher_logo,
         } = post;
 
+        const defaultMedia = {
+          id: 0,
+          height: 0,
+          width: 0,
+          url: '',
+        };
+
         const lockUser = lock_user ?? {
           id: 0,
           name: '',
           avatar: '',
         };
 
-        const featuredMedia = featured_media ?? {
-          id: 0,
-          height: 0,
-          width: 0,
-          url: '',
-        };
-
-        const publisherLogo = publisher_logo ?? {
-          id: 0,
-          height: 0,
-          width: 0,
-          url: '',
-        };
+        const featuredMedia = featured_media ?? defaultMedia;
+        const publisherLogo = publisher_logo ?? defaultMedia;
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
