@@ -81,7 +81,7 @@ function APIProvider({ children }) {
   });
 
   // Add custom fields and prepare story response.
-  const prepareStoryResponse = (post) => {
+  const prepareGetStoryResponse = (post) => {
     const { _embedded: embedded = {}, _links: links = {} } = post;
 
     post.author = {
@@ -132,7 +132,7 @@ function APIProvider({ children }) {
         _fields: STORY_FIELDS,
       });
 
-      return apiFetch({ path }).then(prepareStoryResponse);
+      return apiFetch({ path }).then(prepareGetStoryResponse);
     },
     [stories]
   );
@@ -178,7 +178,7 @@ function APIProvider({ children }) {
         _fields: STORY_FIELDS,
       });
 
-      return apiFetch({ path }).then(prepareStoryResponse);
+      return apiFetch({ path }).then(prepareGetStoryResponse);
     },
     [stories]
   );
@@ -247,6 +247,14 @@ function APIProvider({ children }) {
         path,
         data: getStorySaveData(story),
         method: 'POST',
+      }).then((data) => {
+        const { _embedded: embedded = {} } = data;
+
+        if ('wp:featuredmedia' in embedded) {
+          data.featured_media_url = embedded['wp:featuredmedia'][0].source_url;
+        }
+
+        return data;
       });
     },
     [stories, getStorySaveData]
