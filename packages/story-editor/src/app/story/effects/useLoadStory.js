@@ -57,11 +57,34 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           edit_link: editLink,
           embed_post_link: embedPostLink,
           author,
-          capabilities = {},
-          lock_user: lockUser = {},
-          featured_media: featuredMedia = {},
-          publisher_logo: publisherLogo = {},
+          capabilities = {
+            hasPublishAction: false,
+            hasAssignAuthorAction: false,
+          },
+          lock_user,
+          featured_media,
+          publisher_logo,
         } = post;
+
+        const lockUser = lock_user ?? {
+          id: 0,
+          name: '',
+          avatar: '',
+        };
+
+        const featuredMedia = featured_media ?? {
+          id: 0,
+          height: 0,
+          width: 0,
+          url: '',
+        };
+
+        const publisherLogo = publisher_logo ?? {
+          id: 0,
+          height: 0,
+          width: 0,
+          url: '',
+        };
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/

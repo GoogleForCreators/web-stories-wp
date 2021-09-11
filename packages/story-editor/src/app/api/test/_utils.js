@@ -24,7 +24,7 @@ export function createStory(properties = {}) {
     excerpt: { raw: 'excerpt' },
     permalink_template: 'http://localhost:8899/web-stories/%pagename%',
     style_presets: { colors: [TEST_COLOR] },
-    _embedded: { author: [{ id: 1, name: 'John Doe' }] },
+    author: { id: 1, name: 'John Doe' },
     ...properties,
   };
 }
