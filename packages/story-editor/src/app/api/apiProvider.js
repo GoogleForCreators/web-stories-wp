@@ -80,6 +80,49 @@ function APIProvider({ children }) {
     withoutImages: [],
   });
 
+  // Add custom fields and prepare story response.
+  const prepareStoryResponse = (post) => {
+    const { _embedded: embedded = {}, _links: links = {} } = post;
+
+    post.author = {
+      id: embedded?.author?.[0].id || 0,
+      name: embedded?.author?.[0].name || '',
+    };
+
+    post.capabilities = {
+      hasPublishAction: Object.prototype.hasOwnProperty.call(
+        links,
+        'wp:action-publish'
+      ),
+      hasAssignAuthorAction: Object.prototype.hasOwnProperty.call(
+        links,
+        'wp:action-assign-author'
+      ),
+    };
+
+    post.lock_user = {
+      id: embedded?.['wp:lockuser']?.[0].id || 0,
+      name: embedded?.['wp:lockuser']?.[0].name || '',
+      avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
+    };
+
+    post.featured_media = {
+      id: embedded?.['wp:featuredmedia']?.[0].id || 0,
+      height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
+      width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
+      url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+    };
+
+    post.publisher_logo = {
+      id: embedded?.['wp:publisherlogo']?.[0].id || 0,
+      height: embedded?.['wp:publisherlogo']?.[0]?.media_details?.height || 0,
+      width: embedded?.['wp:publisherlogo']?.[0]?.media_details?.width || 0,
+      url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
+    };
+
+    return post;
+  };
+
   const getStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
@@ -89,7 +132,7 @@ function APIProvider({ children }) {
         _fields: STORY_FIELDS,
       });
 
-      return apiFetch({ path });
+      return apiFetch({ path }).then(prepareStoryResponse);
     },
     [stories]
   );
@@ -135,7 +178,7 @@ function APIProvider({ children }) {
         _fields: STORY_FIELDS,
       });
 
-      return apiFetch({ path });
+      return apiFetch({ path }).then(prepareStoryResponse);
     },
     [stories]
   );
