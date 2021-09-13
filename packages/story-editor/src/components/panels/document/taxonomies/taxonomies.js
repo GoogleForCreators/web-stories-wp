@@ -35,37 +35,37 @@ function TaxonomiesPanel(props) {
   const {
     taxonomies,
     createTerm,
+    termCache,
     addSearchResultsToCache,
-    freeformCache,
-    setSelectedFreeformSlugs,
-    selectedFreeformSlugs,
+    setSelectedTaxonomySlugs,
+    selectedSlugs,
   } = useTaxonomy(
     ({
-      state: { taxonomies, freeformCache, selectedFreeformSlugs },
+      state: { taxonomies, termCache, selectedSlugs },
       actions: {
         createTerm,
         addSearchResultsToCache,
-        setSelectedFreeformSlugs,
+        setSelectedTaxonomySlugs,
       },
     }) => ({
       taxonomies,
-      freeformCache,
+      termCache,
       createTerm,
       addSearchResultsToCache,
-      setSelectedFreeformSlugs,
-      selectedFreeformSlugs,
+      setSelectedTaxonomySlugs,
+      selectedSlugs,
     })
   );
 
   const _handleFreeformTermsChange = useCallback(
     (taxonomy) => (termNames) => {
       termNames.forEach((termName) => createTerm(taxonomy, termName));
-      setSelectedFreeformSlugs(
+      setSelectedTaxonomySlugs(
         taxonomy,
         termNames.map((termName) => cleanForSlug(termName))
       );
     },
-    [createTerm, setSelectedFreeformSlugs]
+    [createTerm, setSelectedTaxonomySlugs]
   );
 
   const _handleFreeformInputChange = useDebouncedCallback(
@@ -80,8 +80,8 @@ function TaxonomiesPanel(props) {
 
   const _termDisplayTransformer = useCallback(
     (taxonomy) => (tagName) =>
-      freeformCache[taxonomy]?.[cleanForSlug(tagName)]?.name,
-    [freeformCache]
+      termCache[taxonomy]?.[cleanForSlug(tagName)]?.name,
+    [termCache]
   );
 
   // We want to prevent curried functions from creating
@@ -127,7 +127,7 @@ function TaxonomiesPanel(props) {
               onTagsChange={handlers.handleFreeformTermsChange}
               onInputChange={handlers.handleFreeformInputChange}
               tagDisplayTransformer={handlers.termDisplayTransformer}
-              initialTags={selectedFreeformSlugs?.[taxonomy.rest_base] || []}
+              initialTags={selectedSlugs?.[taxonomy.rest_base] || []}
             />
             <Tags.Description id={`${taxonomy.slug}-description`}>
               {__('Separate with commas or the Enter key.', 'web-stories')}

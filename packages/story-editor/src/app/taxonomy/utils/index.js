@@ -14,9 +14,49 @@
  * limitations under the License.
  */
 
-export function createPropertyMap(entries, keyA, keyB) {
-  return entries.reduce((propertyMap, entry) => {
-    propertyMap[entry[keyA]] = entry[keyB];
-    return propertyMap;
+export function objectFromEntries(entries = []) {
+  return entries.reduce((acc, [key, val]) => {
+    acc[key] = val;
+    return acc;
+  }, {});
+}
+
+export function mapObjectVals(obj = {}, op = (v) => v) {
+  return objectFromEntries(
+    Object.entries(obj).map(([key, val]) => [key, op(val)])
+  );
+}
+
+export function mapObjectKeys(obj = {}, op = (v) => v) {
+  return objectFromEntries(
+    Object.entries(obj).map(([key, val]) => [op(key), val])
+  );
+}
+
+export function mergeObjects(
+  objA = {},
+  objB = {},
+  mergeVals = (valA, valB) => ({ ...valA, ...valB })
+) {
+  return Object.entries(objA).reduce((merge, [key, val]) => {
+    merge[key] = mergeVals(val, merge[key]);
+    return merge;
+  }, objB);
+}
+
+export function dictonaryOnKey(arr, key) {
+  return arr.reduce((map, item) => {
+    map[item[key]] = item;
+    return map;
+  }, {});
+}
+
+export function cacheFromEmbeddedTerms(embeddedTerms = []) {
+  return embeddedTerms.reduce((cache, taxonomy) => {
+    (taxonomy || []).forEach((term) => {
+      cache[term.taxonomy] = cache[term.taxonomy] || {};
+      cache[term.taxonomy][term.slug] = term;
+    });
+    return cache;
   }, {});
 }
