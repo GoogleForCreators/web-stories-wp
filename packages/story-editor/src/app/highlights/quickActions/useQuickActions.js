@@ -214,17 +214,8 @@ const useQuickActions = () => {
   );
 
   const handleFocusMediaPanel = useMemo(() => {
-    const idOrigin = selectedElements?.[0]?.resource?.id
-      ?.toString()
-      .split(':')?.[0];
-    const is3PGif =
-      (!idOrigin || idOrigin?.toLowerCase() === 'media/tenor') &&
-      selectedElements?.[0]?.resource?.type?.toLowerCase() === 'gif';
-    const is3PVideo = idOrigin?.toLowerCase() === 'media/coverr';
-    const is3PImage = idOrigin?.toLowerCase() === 'media/unsplash';
-
-    const panelToFocus =
-      is3PImage || is3PVideo || is3PGif ? states.MEDIA3P : states.MEDIA;
+    const isExternal = selectedElements?.[0]?.resource?.isExternal;
+    const panelToFocus = isExternal ? states.MEDIA3P : states.MEDIA;
 
     return handleFocusPanel(panelToFocus);
   }, [handleFocusPanel, selectedElements]);
