@@ -112,7 +112,7 @@ export const filterOption = (option, labelText = '') => {
   // Find if current option matches
   const matchesCurrentOption = option.label
     .toLowerCase()
-    .includes(labelText?.trim().toLowerCase());
+    .includes(labelText.trim().toLowerCase());
 
   // create new option with new children
   const newOption = { ...rest, options: newChildren };
