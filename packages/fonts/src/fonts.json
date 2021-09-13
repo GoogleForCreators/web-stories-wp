@@ -1279,31 +1279,6 @@
     }
   },
   {
-    "family": "Andada",
-    "fallbacks": ["serif"],
-    "weights": [400],
-    "styles": ["regular"],
-    "variants": [[0, 400]],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 1000,
-      "asc": 942,
-      "des": -235,
-      "tAsc": 942,
-      "tDes": -235,
-      "tLGap": 0,
-      "wAsc": 942,
-      "wDes": 235,
-      "xH": 133,
-      "capH": 137,
-      "yMin": -235,
-      "yMax": 942,
-      "hAsc": 942,
-      "hDes": -235,
-      "lGap": 0
-    }
-  },
-  {
     "family": "Andada Pro",
     "fallbacks": ["serif"],
     "weights": [400, 500, 600, 700, 800],
