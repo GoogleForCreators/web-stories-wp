@@ -21,7 +21,6 @@ import {
   useState,
   useEffect,
   useCallback,
-  useMemo,
   forwardRef,
 } from '@web-stories-wp/react';
 import styled from 'styled-components';
