@@ -736,7 +736,7 @@ class APIProviderFixture {
             author: { id: 1, name: 'John Doe' },
             capabilities: {
               hasPublishAction: false,
-              hasAssignAuthorAction: false,
+              hasAssignAuthorAction: true,
             },
             lock_user: {
               id: 0,
