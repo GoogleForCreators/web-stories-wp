@@ -24,13 +24,13 @@ import apiFetch from '@wordpress/api-fetch';
 
 export function getCustomPageTemplates(page = 1, customPageTemplates) {
   const perPage = 100;
-  const apiPath = addQueryArgs(customPageTemplates, {
+  const path = addQueryArgs(customPageTemplates, {
     context: 'edit',
     per_page: perPage,
     page,
     _web_stories_envelope: true,
   });
-  return apiFetch({ path: apiPath }).then(({ headers, body }) => {
+  return apiFetch({ path }).then(({ headers, body }) => {
     const totalPages = parseInt(headers['X-WP-TotalPages']);
     const templates = body.map((template) => {
       return { ...template['story_data'], templateId: template.id };
