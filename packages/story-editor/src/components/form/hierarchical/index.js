@@ -59,8 +59,8 @@ const Border = styled.div`
   border-left: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   border-right: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   border-bottom: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  border-bottom-left-radius: ${({ theme }) => theme.borders.radius.small};
-  border-bottom-right-radius: ${({ theme }) => theme.borders.radius.small};
+  border-radius: ${({ theme }) =>
+    `0 0 ${theme.borders.radius.small} ${theme.borders.radius.small}`};
 `;
 
 const CheckboxArea = styled.div`
