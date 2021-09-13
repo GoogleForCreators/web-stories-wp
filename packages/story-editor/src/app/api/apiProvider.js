@@ -53,7 +53,6 @@ const STORY_FIELDS = [
   'permalink_template',
   'style_presets',
   'password',
-  'story-tags',
 ].join(',');
 
 const STORY_EMBED =
