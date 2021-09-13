@@ -96,5 +96,3 @@ export const OUTLINK_THEME = {
   LIGHT: 'light',
   CUSTOM: 'custom',
 };
-
-export const MAXIMUM_ENTRIES_PER_PAGE = 100;
