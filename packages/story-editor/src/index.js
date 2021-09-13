@@ -19,6 +19,7 @@
  */
 import StoryEditor from './storyEditor';
 import Dialog from './components/dialog';
+import { default as InterfaceSkeleton } from './components/layout';
 
 export * from './components/transform';
 export * from './app/config';
@@ -36,5 +37,5 @@ export { default as theme } from './theme'; // @todo To be refactored.
 export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 export { ConfigProvider as EditorConfigProvider } from './app/config';
 
-export { Dialog };
+export { Dialog, InterfaceSkeleton };
 export default StoryEditor;

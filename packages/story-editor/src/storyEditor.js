@@ -44,7 +44,6 @@ import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
 import StatusCheck from './components/statusCheck';
 import PostLock from './components/postLock';
-import Layout from './components/layout';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
@@ -82,7 +81,6 @@ function StoryEditor({ config, children }) {
                                       <ModalGlobalStyle />
                                       <CalendarStyle />
                                       <KeyboardOnlyOutlines />
-                                      <Layout />
                                       {children}
                                     </HelpCenterProvider>
                                   </DropTargetsProvider>

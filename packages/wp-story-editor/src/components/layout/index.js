@@ -13,5 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as PostPublishDialog } from './postPublishDialog';
-export { default as Layout } from './layout';
+/**
+ * External dependencies
+ */
+import { InterfaceSkeleton } from '@web-stories-wp/story-editor';
+
+function Layout() {
+  return <InterfaceSkeleton />;
+}
+
+export default Layout;

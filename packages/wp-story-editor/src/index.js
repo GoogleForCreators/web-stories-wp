@@ -36,7 +36,7 @@ import { initializeTracking } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
-import { PostPublishDialog } from './components';
+import { PostPublishDialog, Layout } from './components';
 
 /**
  * Initializes the web stories editor.
@@ -59,6 +59,7 @@ const initialize = (id, config, flags) => {
     <FlagsProvider features={flags}>
       <StrictMode>
         <StoryEditor config={config}>
+          <Layout />
           <PostPublishDialog />
         </StoryEditor>
       </StrictMode>
