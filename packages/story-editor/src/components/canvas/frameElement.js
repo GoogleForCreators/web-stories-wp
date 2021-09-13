@@ -145,11 +145,10 @@ function FrameElement({ element }) {
     !mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE);
   const eventHandlers = {
     onMouseDown: (evt) => {
-      if (isSelected) {
-        elementRef.current.focus({ preventScroll: true });
-      } else {
+      if (!isSelected) {
         handleSelectElement(id, evt);
       }
+      elementRef.current.focus({ preventScroll: true });
       if (!isBackground) {
         evt.stopPropagation();
       }
