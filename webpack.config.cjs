@@ -239,8 +239,7 @@ const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
   // ones that are not already in `js` and not primaries.
   const chunks = chunkNames.filter(
     (chunk) =>
-      !js.includes(chunk) &&
-      ![DASHBOARD_CHUNK, EDITOR_CHUNK].includes(chunk)
+      !js.includes(chunk) && ![DASHBOARD_CHUNK, EDITOR_CHUNK].includes(chunk)
   );
 
   return `<?php
