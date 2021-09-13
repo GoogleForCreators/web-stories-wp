@@ -161,6 +161,7 @@ function PublishPanel() {
   const {
     allowedImageMimeTypes,
     allowedImageFileTypes,
+    dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
   } = useConfig();
 
@@ -246,20 +247,18 @@ function PublishPanel() {
       );
     }
   );
-  const activeItemRenderer = () =>
-    publisherLogo.id ? (
+  const activeItemRenderer = () => {
+    const displayText = publisherLogos.length
+      ? __('Select logo', 'web-stories')
+      : __('No logo', 'web-stories');
+    return publisherLogo.id ? (
       <LogoImg src={publisherLogo.url} alt="" />
-    ) : publisherLogos.length ? (
-      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {__('Select logo', 'web-stories')}
-      </Text>
     ) : (
       <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {__('No logo', 'web-stories')}
+        {displayText}
       </Text>
     );
-
-  const settingsLink = `${window.location.origin}/wp-admin/edit.php?post_type=web-story&page=stories-dashboard#/editor-settings`;
+  };
 
   const publisherLogosWithUploadOption = [...publisherLogos];
   if (hasUploadMediaAction) {
@@ -268,13 +267,9 @@ function PublishPanel() {
         <Icons.ArrowCloud
           height={32}
           width={32}
-          aria-label={__('Open media picker', 'web-stories')}
+          aria-label={__('Add new', 'web-stories')}
         />
-        <Text
-          onClick={openMediaPicker}
-          as="span"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-        >
+        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
           {__('Add new', 'web-stories')}
         </Text>
       </Option>
@@ -361,7 +356,7 @@ function PublishPanel() {
                   <Link
                     rel="noopener noreferrer"
                     target="_blank"
-                    href={settingsLink}
+                    href={dashboardSettingsLink}
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
                   >
                     {__('Manage', 'web-stories')}
