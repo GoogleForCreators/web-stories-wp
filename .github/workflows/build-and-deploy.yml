@@ -103,7 +103,8 @@ jobs:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - uses: "ramsey/composer-install@v1"
+      - name: Install PHP dependencies
+        uses: "ramsey/composer-install@v1"
         with:
           composer-options: "--prefer-dist --no-progress --no-interaction"
 

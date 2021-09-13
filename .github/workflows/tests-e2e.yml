@@ -88,7 +88,8 @@ jobs:
           CI: true
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
-      - uses: "ramsey/composer-install@v1"
+      - name: Install PHP dependencies
+        uses: "ramsey/composer-install@v1"
         with:
           composer-options: "--prefer-dist --no-progress --no-interaction"
 

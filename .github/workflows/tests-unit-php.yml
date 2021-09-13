@@ -87,9 +87,10 @@ jobs:
           php-version: 7.4
           tools: composer
 
-      - uses: "ramsey/composer-install@v1"
-          with:
-            composer-options: "--prefer-dist --no-progress --no-interaction"
+      - name: Install PHP dependencies
+        uses: "ramsey/composer-install@v1"
+        with:
+          composer-options: "--prefer-dist --no-progress --no-interaction"
 
       - name: Remove prefixed dependencies
         run:  rm -rf vendor/*
@@ -102,7 +103,8 @@ jobs:
           coverage: ${{ matrix.coverage && 'xdebug' || 'none' }}
           tools: composer, cs2pr
 
-      - uses: "ramsey/composer-install@v1"
+      - name: Install PHP dependencies
+        uses: "ramsey/composer-install@v1"
         with:
           composer-options: "--prefer-dist --no-progress --no-interaction --no-scripts"
 

@@ -49,7 +49,8 @@ jobs:
       - name: Validate composer.json
         run: composer --no-interaction validate --no-check-all
 
-      - uses: "ramsey/composer-install@v1"
+      - name: Install PHP dependencies
+        uses: "ramsey/composer-install@v1"
         with:
           composer-options: "--prefer-dist --no-progress --no-interaction"
 
