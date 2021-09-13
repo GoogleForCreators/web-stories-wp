@@ -48,12 +48,25 @@ class Assets extends TestCase {
 	 */
 	public function test_register_script() {
 		$assets           = new \Google\Web_Stories\Assets();
-		$results          = $assets->register_script( 'test_script', false );
+		$results          = $assets->register_script( 'test_script', 'https://example.com/test.js' );
 		$register_scripts = $this->get_private_property( $assets, 'register_scripts' );
 		$this->assertArrayHasKey( 'test_script', $register_scripts );
 		$this->assertTrue( $results );
 		$this->assertArrayHasKey( 'test_script', wp_scripts()->registered );
 		$this->assertSame( 'web-stories', wp_scripts()->registered['test_script']->textdomain );
+	}
+
+	/**
+	 * @covers ::register_script
+	 */
+	public function test_register_script_without_src() {
+		$assets           = new \Google\Web_Stories\Assets();
+		$results          = $assets->register_script( 'test_script', false );
+		$register_scripts = $this->get_private_property( $assets, 'register_scripts' );
+		$this->assertArrayHasKey( 'test_script', $register_scripts );
+		$this->assertTrue( $results );
+		$this->assertArrayHasKey( 'test_script', wp_scripts()->registered );
+		$this->assertNull( wp_scripts()->registered['test_script']->textdomain );
 	}
 
 	/**
