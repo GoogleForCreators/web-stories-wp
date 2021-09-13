@@ -287,7 +287,10 @@ class Assets {
 	public function register_script( string $script_handle, $src, array $deps = [], $ver = false, bool $in_footer = false ): bool {
 		if ( ! isset( $this->register_scripts[ $script_handle ] ) ) {
 			$this->register_scripts[ $script_handle ] = wp_register_script( $script_handle, $src, $deps, $ver, $in_footer );
-			wp_set_script_translations( $script_handle, 'web-stories' );
+
+			if ( $src ) {
+				wp_set_script_translations( $script_handle, 'web-stories' );
+			}
 		}
 
 		return $this->register_scripts[ $script_handle ];
