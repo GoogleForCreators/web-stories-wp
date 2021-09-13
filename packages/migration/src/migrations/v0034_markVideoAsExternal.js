@@ -29,7 +29,7 @@ function reducePage({ elements, ...rest }) {
 }
 
 function updateElement(element) {
-  if (!element?.resource) {
+  if (element?.resource) {
     if (element.resource?.id) {
       const resourceId = element.resource.id.toString();
       const is3pMedia = resourceId.startsWith('media/');
