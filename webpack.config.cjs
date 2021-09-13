@@ -208,6 +208,9 @@ const sharedConfig = {
   },
 };
 
+const EDITOR_CHUNK = 'wp-story-editor';
+const DASHBOARD_CHUNK = 'wp-dashboard';
+
 // Template for html-webpack-plugin to generate JS/CSS chunk manifests in PHP.
 const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
   // Extract filename without extension from arrays of JS and CSS chunks.
@@ -237,7 +240,7 @@ const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
   const chunks = chunkNames.filter(
     (chunk) =>
       !js.includes(chunk) &&
-      !['wp-dashboard', 'wp-story-editor'].includes(chunk)
+      ![DASHBOARD_CHUNK, EDITOR_CHUNK].includes(chunk)
   );
 
   return `<?php
@@ -264,8 +267,8 @@ const templateParameters = (compilation, assets, assetTags, options) => ({
 const editorAndDashboard = {
   ...sharedConfig,
   entry: {
-    'wp-story-editor': './packages/wp-story-editor/src/index.js',
-    'wp-dashboard': './packages/wp-dashboard/src/index.js',
+    [EDITOR_CHUNK]: './packages/wp-story-editor/src/index.js',
+    [DASHBOARD_CHUNK]: './packages/wp-dashboard/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins.filter(
@@ -278,18 +281,18 @@ const editorAndDashboard = {
       name: 'Editor & Dashboard',
     }),
     new HtmlWebpackPlugin({
-      filename: 'wp-story-editor.chunks.php',
+      filename: `${EDITOR_CHUNK}.chunks.php`,
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
-      chunks: ['wp-story-editor'],
+      chunks: [EDITOR_CHUNK],
       templateContent,
       templateParameters,
     }),
     new HtmlWebpackPlugin({
-      filename: 'wp-dashboard.chunks.php',
+      filename: `${DASHBOARD_CHUNK}.chunks.php`,
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
-      chunks: ['wp-dashboard'],
+      chunks: [DASHBOARD_CHUNK],
       templateContent,
       templateParameters,
     }),
