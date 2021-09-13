@@ -30,6 +30,7 @@ import cleanForSlug from '../../utils/cleanForSlug';
 import { useAPI } from '../api';
 import { useStory } from '../story';
 import Context from './context';
+import { createPropertyMap } from './utils';
 
 function TaxonomyProvider(props) {
   const [taxonomies, setTaxonomies] = useState([]);
@@ -47,16 +48,28 @@ function TaxonomyProvider(props) {
     ({ actions }) => actions
   );
 
-  // Hydrate selected slugs from initial story load
+  // Get all registered `web-story` taxonomies.
+  useEffect(() => {
+    (async function () {
+      try {
+        const result = await getTaxonomies();
+        setTaxonomies(Object.values(result));
+      } catch (e) {
+        // Do we wanna do anything here?
+      }
+    })();
+  }, [getTaxonomies]);
+
+  // Reference embedded terms in the story and taxonomies
+  // to get the initial selected terms as well as populate
+  // the taxonomy term cache
   const hasHydratedRunOnce = useRef(false);
   useEffect(() => {
     if (taxonomies.length > 0 && isStoryLoaded && !hasHydratedRunOnce.current) {
-      const taxonomySlugToRestBaseMap = taxonomies.reduce(
-        (_taxonomySlugToBaseMap, taxonomy) => {
-          _taxonomySlugToBaseMap[taxonomy.slug] = taxonomy.rest_base;
-          return _taxonomySlugToBaseMap;
-        },
-        {}
+      const taxonomySlugToRestBaseMap = createPropertyMap(
+        taxonomies,
+        'slug',
+        'rest_base'
       );
 
       const initialCache = (story.embeddedTerms || []).reduce(
@@ -92,8 +105,15 @@ function TaxonomyProvider(props) {
     setFreeformCache,
   ]);
 
-  // sync up story data with existing terms
+  // With the freeform taxonomy input, we can have terms selected
+  // that may be in the process of being created or retrieved from
+  // the backend. Becuase of this, we sync up our local selected slugs
+  // with whatever cached terms are available at any given moment.
   useEffect(() => {
+    if (!hasHydratedRunOnce.current) {
+      return;
+    }
+
     const terms = Object.entries(selectedFreeformSlugs)
       .map(([taxonomyRestBase, termSlugs = []]) => [
         taxonomyRestBase,
@@ -111,17 +131,6 @@ function TaxonomyProvider(props) {
       properties: terms,
     });
   }, [updateStory, selectedFreeformSlugs, freeformCache]);
-
-  useEffect(() => {
-    (async function () {
-      try {
-        const result = await getTaxonomies();
-        setTaxonomies(Object.values(result));
-      } catch (e) {
-        // Do we wanna do anything here?
-      }
-    })();
-  }, [getTaxonomies]);
 
   const addSearchResultsToCache = useCallback(
     async (taxonomy, name) => {
@@ -205,7 +214,7 @@ function TaxonomyProvider(props) {
       state: {
         taxonomies,
         freeformCache,
-        selectedFreeformSlugs: selectedFreeformSlugs,
+        selectedFreeformSlugs,
       },
       actions: {
         createTerm,
