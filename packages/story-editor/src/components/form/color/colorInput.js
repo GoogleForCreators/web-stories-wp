@@ -230,7 +230,7 @@ const ColorInput = forwardRef(function ColorInput(
         placement={PLACEMENT.LEFT_START}
         spacing={spacing}
         invisible={isEyedropperActive}
-        renderContents={() => (
+        renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
             color={isMixed ? null : value}
             isEyedropperActive={isEyedropperActive}
@@ -240,6 +240,7 @@ const ColorInput = forwardRef(function ColorInput(
             allowsSavedColors={allowsSavedColors}
             onClose={onClose}
             changedStyle={changedStyle}
+            onDimensionChange={propagateDimensionChange}
           />
         )}
       />
