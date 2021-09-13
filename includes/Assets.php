@@ -167,7 +167,7 @@ class Assets {
 
 			wp_set_script_translations( $dynamic_chunk, 'web-stories' );
 
-			wp_add_inline_script( $script_handle, (string) wp_scripts()->print_translations( $dynamic_chunk ) );
+			wp_add_inline_script( $script_handle, (string) wp_scripts()->print_translations( $dynamic_chunk, false ) );
 		}
 	}
 
