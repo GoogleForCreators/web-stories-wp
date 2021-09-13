@@ -43,7 +43,7 @@ function TaxonomyProvider(props) {
     })
   );
 
-  const { getTaxonomicTerm, createTaxonomicTerm, getTaxonomies } = useAPI(
+  const { getTaxonomyTerm, createTaxonomyTerm, getTaxonomies } = useAPI(
     ({ actions }) => actions
   );
 
@@ -127,7 +127,7 @@ function TaxonomyProvider(props) {
     async (taxonomy, name) => {
       let response = [];
       try {
-        response = await getTaxonomicTerm(taxonomy.rest_base, {
+        response = await getTaxonomyTerm(taxonomy.rest_base, {
           search: name,
           // This is the per_page value Guttenberg is using
           per_page: 20,
@@ -156,7 +156,7 @@ function TaxonomyProvider(props) {
         };
       });
     },
-    [getTaxonomicTerm]
+    [getTaxonomyTerm]
   );
 
   const createTerm = useCallback(
@@ -168,7 +168,7 @@ function TaxonomyProvider(props) {
 
       // create term and add to cache
       try {
-        const newTerm = await createTaxonomicTerm(taxonomy.rest_base, termName);
+        const newTerm = await createTaxonomyTerm(taxonomy.rest_base, termName);
         setFreeformCache((cache) => ({
           ...cache,
           [taxonomy.rest_base]: {
@@ -188,7 +188,7 @@ function TaxonomyProvider(props) {
         }
       }
     },
-    [createTaxonomicTerm, freeformCache, addSearchResultsToCache]
+    [createTaxonomyTerm, freeformCache, addSearchResultsToCache]
   );
 
   const setSelectedFreeformSlugs = useCallback(
