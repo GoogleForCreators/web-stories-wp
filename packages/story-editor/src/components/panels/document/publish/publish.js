@@ -180,20 +180,6 @@ function PublishPanel() {
     [updateStory]
   );
 
-  const posterErrorMessage = useMemo(() => {
-    let message = __('No file types are currently supported.', 'web-stories');
-
-    if (allowedImageFileTypes.length) {
-      message = sprintf(
-        /* translators: %s: list of allowed file types. */
-        __('Please choose only %s as a poster.', 'web-stories'),
-        translateToExclusiveList(allowedImageFileTypes)
-      );
-    }
-
-    return message;
-  }, [allowedImageFileTypes]);
-
   const onPublisherLogoChange = (option) => {
     const sizeLogo = option.media_details.sizes?.['web-stories-publisher-logo'];
     updateStory({
@@ -208,19 +194,30 @@ function PublishPanel() {
     });
   };
 
-  const publisherLogoErrorMessage = useMemo(() => {
-    let message = __('No file types are currently supported.', 'web-stories');
+  const getErrorMessage = (message) => {
+    let returnedMessage = __(
+      'No file types are currently supported.',
+      'web-stories'
+    );
 
     if (allowedImageFileTypes.length) {
-      message = sprintf(
-        /* translators: %s: list of allowed file types. */
-        __('Please choose only %s as publisher logo.', 'web-stories'),
+      returnedMessage = sprintf(
+        message,
         translateToExclusiveList(allowedImageFileTypes)
       );
     }
 
-    return message;
-  }, [allowedImageFileTypes]);
+    return returnedMessage;
+  };
+
+  const publisherLogoErrorMessage = getErrorMessage(
+    /* translators: %s: list of allowed file types. */
+    __('Please choose only %s as publisher logo.', 'web-stories')
+  );
+  const posterErrorMessage = getErrorMessage(
+    /* translators: %s: list of allowed file types. */
+    __('Please choose only %s as a poster.', 'web-stories')
+  );
 
   const openMediaPicker = useMediaPicker({
     onSelect: onPublisherLogoChange,
