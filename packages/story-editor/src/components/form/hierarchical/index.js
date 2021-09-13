@@ -56,9 +56,8 @@ const Label = styled(Text).attrs({
 const Border = styled.div`
   padding-top: 4px;
   margin-top: -4px;
-  border-left: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  border-right: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  border-top: none;
   border-radius: ${({ theme }) =>
     `0 0 ${theme.borders.radius.small} ${theme.borders.radius.small}`};
 `;
