@@ -135,8 +135,6 @@ class Assets {
 				WEBSTORIES_VERSION,
 				$in_footer
 			);
-
-			wp_set_script_translations( $chunk, 'web-stories' );
 		}
 
 		// Dynamically imported chunks MUST NOT be added as dependencies here.
@@ -151,8 +149,6 @@ class Assets {
 			$in_footer
 		);
 
-		wp_set_script_translations( $script_handle, 'web-stories' );
-
 		// Register every dynamically imported chunk as a script, just so
 		// that we can print their translations whenever the main script is enqueued.
 		// The actual enqueueing of these chunks is done by the main script via dynamic imports.
@@ -164,8 +160,6 @@ class Assets {
 				WEBSTORIES_VERSION,
 				$in_footer
 			);
-
-			wp_set_script_translations( $dynamic_chunk, 'web-stories' );
 
 			wp_add_inline_script( $script_handle, (string) wp_scripts()->print_translations( $dynamic_chunk, false ) );
 		}
@@ -293,6 +287,7 @@ class Assets {
 	public function register_script( string $script_handle, $src, array $deps = [], $ver = false, bool $in_footer = false ): bool {
 		if ( ! isset( $this->register_scripts[ $script_handle ] ) ) {
 			$this->register_scripts[ $script_handle ] = wp_register_script( $script_handle, $src, $deps, $ver, $in_footer );
+			wp_set_script_translations( $script_handle, 'web-stories' );
 		}
 
 		return $this->register_scripts[ $script_handle ];

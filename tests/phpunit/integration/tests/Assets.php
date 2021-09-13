@@ -52,8 +52,9 @@ class Assets extends TestCase {
 		$register_scripts = $this->get_private_property( $assets, 'register_scripts' );
 		$this->assertArrayHasKey( 'test_script', $register_scripts );
 		$this->assertTrue( $results );
+		$this->assertArrayHasKey( 'test_script', wp_scripts()->registered );
+		$this->assertSame( 'web-stories', wp_scripts()->registered['test_script']->textdomain );
 	}
-
 
 	/**
 	 * @covers ::enqueue_style
