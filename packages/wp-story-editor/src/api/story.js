@@ -29,11 +29,11 @@ import apiFetch from '@wordpress/api-fetch';
 import { STORY_EMBED, STORY_FIELDS } from './constants';
 import { base64Encode } from './utils';
 
-export function getStoryById(storyId, stories) {
+export function getStoryById(storyId, stories, isDemo = false) {
   const path = addQueryArgs(`${stories}${storyId}/`, {
     context: 'edit',
     _embed: STORY_EMBED,
-    web_stories_demo: false,
+    web_stories_demo: isDemo,
     _fields: STORY_FIELDS,
   });
 
@@ -41,14 +41,7 @@ export function getStoryById(storyId, stories) {
 }
 
 export function getDemoStoryById(storyId, stories) {
-  const path = addQueryArgs(`${stories}${storyId}/`, {
-    context: 'edit',
-    _embed: STORY_EMBED,
-    web_stories_demo: true,
-    _fields: STORY_FIELDS,
-  });
-
-  return apiFetch({ path });
+  return getStoryById(storyId, stories, true);
 }
 
 const getStorySaveData = (
