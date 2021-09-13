@@ -22,26 +22,10 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  */
 import apiFetch from '@wordpress/api-fetch';
 
-// Important: Keep in sync with REST API preloading definition.
-const STORY_FIELDS = [
-  'id',
-  'title',
-  'status',
-  'slug',
-  'date',
-  'modified',
-  'excerpt',
-  'link',
-  'story_data',
-  'preview_link',
-  'edit_link',
-  'embed_post_link',
-  'permalink_template',
-  'style_presets',
-  'password',
-].join(',');
-
-const STORY_EMBED = 'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo';
+/**
+ * Internal dependencies
+ */
+import { STORY_EMBED, STORY_FIELDS } from './constants';
 
 export function getStoryById(storyId, stories) {
   const path = addQueryArgs(`${stories}${storyId}/`, {
