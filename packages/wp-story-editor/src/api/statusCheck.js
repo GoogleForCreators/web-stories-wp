@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { base64Encode } from '@web-stories-wp/story-editor';
-
-/**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Internal dependencies
+ */
+import { base64Encode } from './utils';
 
 /**
  * Status check, submit html string.

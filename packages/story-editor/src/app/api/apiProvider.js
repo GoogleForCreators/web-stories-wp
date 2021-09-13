@@ -19,13 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useRef } from '@web-stories-wp/react';
-import { DATA_VERSION } from '@web-stories-wp/migration';
 import getAllTemplates from '@web-stories-wp/templates';
 
 /**
  * Internal dependencies
  */
-import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
 import { removeImagesFromPageTemplates } from './utils';
@@ -78,43 +76,6 @@ function APIProvider({ children }) {
     withoutImages: [],
   });
 
-  const getStorySaveData = useCallback(
-    ({
-      pages,
-      featuredMedia,
-      globalStoryStyles,
-      publisherLogo,
-      autoAdvance,
-      defaultPageDuration,
-      currentStoryStyles,
-      backgroundAudio,
-      content,
-      author,
-      ...rest
-    }) => {
-      return {
-        story_data: {
-          version: DATA_VERSION,
-          pages,
-          autoAdvance,
-          defaultPageDuration,
-          currentStoryStyles,
-          backgroundAudio,
-        },
-        featured_media: featuredMedia.id,
-        style_presets: globalStoryStyles,
-        meta: {
-          web_stories_publisher_logo: publisherLogo?.id,
-        },
-        publisher_logo: publisherLogo,
-        content: encodeMarkup ? base64Encode(content) : content,
-        author: author.id,
-        ...rest,
-      };
-    },
-    [encodeMarkup]
-  );
-
   const actions = {};
 
   actions.getPageTemplates = useCallback(
@@ -161,13 +122,13 @@ function APIProvider({ children }) {
   );
 
   actions.saveStoryById = useCallback(
-    (story) => saveStoryById(story, stories, getStorySaveData),
-    [stories, getStorySaveData, saveStoryById]
+    (story) => saveStoryById(story, stories, encodeMarkup),
+    [stories, encodeMarkup, saveStoryById]
   );
 
   actions.autoSaveById = useCallback(
-    (story) => autoSaveById(story, stories, getStorySaveData),
-    [stories, getStorySaveData, autoSaveById]
+    (story) => autoSaveById(story, stories, encodeMarkup),
+    [stories, encodeMarkup, autoSaveById]
   );
 
   actions.getMedia = useCallback(

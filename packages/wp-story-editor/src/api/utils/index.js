@@ -14,3 +14,4 @@
  * limitations under the License.
  */
 export { default as flattenFormData } from './flattenFormData';
+export { default as base64Encode } from './base64Encode';

@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { addQueryArgs } from '@web-stories-wp/design-system';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 /**
  * WordPress dependencies
  */
@@ -26,6 +27,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_EMBED, STORY_FIELDS } from './constants';
+import { base64Encode } from './utils';
 
 export function getStoryById(storyId, stories) {
   const path = addQueryArgs(`${stories}${storyId}/`, {
@@ -49,16 +51,54 @@ export function getDemoStoryById(storyId, stories) {
   return apiFetch({ path });
 }
 
+const getStorySaveData = (
+  {
+    pages,
+    featuredMedia,
+    globalStoryStyles,
+    publisherLogo,
+    autoAdvance,
+    defaultPageDuration,
+    currentStoryStyles,
+    backgroundAudio,
+    content,
+    author,
+    ...rest
+  },
+  encodeMarkup
+) => {
+  return {
+    story_data: {
+      version: DATA_VERSION,
+      pages,
+      autoAdvance,
+      defaultPageDuration,
+      currentStoryStyles,
+      backgroundAudio,
+    },
+    featured_media: featuredMedia.id,
+    style_presets: globalStoryStyles,
+    meta: {
+      web_stories_publisher_logo: publisherLogo?.id,
+    },
+    publisher_logo: publisherLogo,
+    content: encodeMarkup ? base64Encode(content) : content,
+    author: author.id,
+    ...rest,
+  };
+};
+
 /**
  * Fire REST API call to save story.
  *
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
  * @param {Object} stories Stories
- * @param {Function} getStorySaveData Function to get save data.
+ * @param {boolean} encodeMarkup Encode markup.
  * @return {Promise} Return apiFetch promise.
  */
-export function saveStoryById(story, stories, getStorySaveData) {
+export function saveStoryById(story, stories, encodeMarkup) {
   const { storyId } = story;
+  const storySaveData = getStorySaveData(story, encodeMarkup);
 
   // Only require these fields in the response as used by useSaveStory()
   // to reduce response size.
@@ -76,7 +116,7 @@ export function saveStoryById(story, stories, getStorySaveData) {
 
   return apiFetch({
     path,
-    data: getStorySaveData(story),
+    data: storySaveData,
     method: 'POST',
   });
 }
@@ -86,14 +126,16 @@ export function saveStoryById(story, stories, getStorySaveData) {
  *
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
  * @param {Object} stories Stories
- * @param {Function} getStorySaveData Function to get save data.
+ * @param {boolean} encodeMarkup Encode markup.
  * @return {Promise} Return apiFetch promise.
  */
-export function autoSaveById(story, stories, getStorySaveData) {
+export function autoSaveById(story, stories, encodeMarkup) {
   const { storyId } = story;
+  const storySaveData = getStorySaveData(story, encodeMarkup);
+
   return apiFetch({
     path: `${stories}${storyId}/autosaves/`,
-    data: getStorySaveData(story),
+    data: storySaveData,
     method: 'POST',
   });
 }
