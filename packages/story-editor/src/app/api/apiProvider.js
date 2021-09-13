@@ -503,8 +503,10 @@ function APIProvider({ children }) {
       // `?_method=DELETE` is an alternative solution to override the request method.
       // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
       return apiFetch({
-        path: addQueryArgs(`${customPageTemplates}${id}/`, {}),
-        data: {},
+        path: addQueryArgs(`${customPageTemplates}${id}/`, {
+          _method: 'DELETE',
+        }),
+        data: { force: true },
         method: 'POST',
       });
     },
@@ -517,15 +519,15 @@ function APIProvider({ children }) {
     });
   }, []);
 
-  const getTaxonomicTerm = useCallback((taxonomy, args = {}) => {
+  const getTaxonomyTerm = useCallback((taxonomy, args = {}) => {
     return apiFetch({
-      path: addQueryArgs(`/wp/v2/${taxonomy}`, args),
+      path: addQueryArgs(`/wp/v2/${taxonomy}/`, args),
     });
   }, []);
 
-  const createTaxonomicTerm = useCallback((taxonomy, name) => {
+  const createTaxonomyTerm = useCallback((taxonomy, name) => {
     return apiFetch({
-      path: addQueryArgs(`/wp/v2/${taxonomy}`, {
+      path: addQueryArgs(`/wp/v2/${taxonomy}/`, {
         name,
       }),
       method: 'POST',
@@ -557,8 +559,8 @@ function APIProvider({ children }) {
       getCurrentUser,
       updateCurrentUser,
       getTaxonomies,
-      getTaxonomicTerm,
-      createTaxonomicTerm,
+      getTaxonomyTerm,
+      createTaxonomyTerm,
     },
   };
 
