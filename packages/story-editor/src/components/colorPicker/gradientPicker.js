@@ -74,6 +74,7 @@ function GradientPicker({
 }) {
   const reverseLabel = __('Reverse gradient stops', 'web-stories');
   const rotateLabel = __('Rotate gradient', 'web-stories');
+  const canRotate = type !== 'radial';
   return (
     <Wrapper>
       <GradientLine
@@ -96,7 +97,7 @@ function GradientPicker({
             <Icons.ArrowsLeftright />
           </SmallButton>
         </Tooltip>
-        {type !== 'radial' && (
+        {canRotate && (
           <Tooltip hasTail title={rotateLabel}>
             <SmallButton
               onClick={onRotate}
