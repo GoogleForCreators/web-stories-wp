@@ -18,10 +18,10 @@
  */
 import {
   useCallback,
-  useMemo,
-  useState,
   useEffect,
+  useMemo,
   useRef,
+  useState,
 } from '@web-stories-wp/react';
 /**
  * Internal dependencies
@@ -30,12 +30,19 @@ import cleanForSlug from '../../utils/cleanForSlug';
 import { useAPI } from '../api';
 import { useStory } from '../story';
 import Context from './context';
-import { createPropertyMap } from './utils';
+import {
+  dictonaryOnKey,
+  mapObjectVals,
+  mergeObjects,
+  objectFromEntries,
+  mapObjectKeys,
+  cacheFromEmbeddedTerms,
+} from './utils';
 
 function TaxonomyProvider(props) {
   const [taxonomies, setTaxonomies] = useState([]);
-  const [selectedFreeformSlugs, _setSelectedFreeformSlugs] = useState({});
-  const [freeformCache, setFreeformCache] = useState({});
+  const [selectedSlugs, setSelectedSlugs] = useState({});
+  const [termCache, setTermCache] = useState({});
   const { updateStory, isStoryLoaded, story } = useStory(
     ({ state: { pages, story }, actions: { updateStory } }) => ({
       updateStory,
@@ -66,44 +73,20 @@ function TaxonomyProvider(props) {
   const hasHydratedRunOnce = useRef(false);
   useEffect(() => {
     if (taxonomies.length > 0 && isStoryLoaded && !hasHydratedRunOnce.current) {
-      const taxonomySlugToRestBaseMap = createPropertyMap(
-        taxonomies,
-        'slug',
-        'rest_base'
+      const taxonomiesBySlug = dictonaryOnKey(taxonomies, 'slug');
+      const initialCache = mapObjectKeys(
+        cacheFromEmbeddedTerms(story.embeddedTerms),
+        (slug) => taxonomiesBySlug[slug].rest_base
       );
-
-      const initialCache = (story.embeddedTerms || []).reduce(
-        (_initialCache, taxonomy) => {
-          (taxonomy || []).forEach((term) => {
-            _initialCache[taxonomySlugToRestBaseMap[term.taxonomy]] =
-              _initialCache[taxonomySlugToRestBaseMap[term.taxonomy]] || {};
-            _initialCache[taxonomySlugToRestBaseMap[term.taxonomy]][term.slug] =
-              term;
-          });
-          return _initialCache;
-        },
-        {}
-      );
-
-      const initialSelectedSlugs = Object.entries(initialCache).reduce(
-        (_initialSelectedSlugs, [taxonomyRestBase, slugTermMap]) => {
-          _initialSelectedSlugs[taxonomyRestBase] = Object.keys(slugTermMap);
-          return _initialSelectedSlugs;
-        },
-        {}
+      const initialSelectedSlugs = mapObjectVals(initialCache, (val) =>
+        Object.keys(val)
       );
 
       hasHydratedRunOnce.current = true;
-      setFreeformCache(initialCache);
-      _setSelectedFreeformSlugs(initialSelectedSlugs);
+      setTermCache(initialCache);
+      setSelectedSlugs(initialSelectedSlugs);
     }
-  }, [
-    story,
-    isStoryLoaded,
-    taxonomies,
-    _setSelectedFreeformSlugs,
-    setFreeformCache,
-  ]);
+  }, [story, isStoryLoaded, taxonomies, setSelectedSlugs, setTermCache]);
 
   // With the freeform taxonomy input, we can have terms selected
   // that may be in the process of being created or retrieved from
@@ -114,23 +97,19 @@ function TaxonomyProvider(props) {
       return;
     }
 
-    const terms = Object.entries(selectedFreeformSlugs)
-      .map(([taxonomyRestBase, termSlugs = []]) => [
+    const termEntries = Object.entries(selectedSlugs).map(
+      ([taxonomyRestBase, termSlugs = []]) => [
         taxonomyRestBase,
         termSlugs
-          .map((termSlug) => freeformCache[taxonomyRestBase]?.[termSlug])
-          .filter((term) => Boolean(term))
-          .map((term) => term.id),
-      ])
-      .reduce((_taxonomies, [taxonomyRestBase, termIds]) => {
-        _taxonomies[taxonomyRestBase] = termIds;
-        return _taxonomies;
-      }, {});
-
+          .map((termSlug) => termCache[taxonomyRestBase]?.[termSlug]?.id)
+          .filter((id) => typeof id === 'number'),
+      ]
+    );
+    const terms = objectFromEntries(termEntries);
     updateStory({
       properties: terms,
     });
-  }, [updateStory, selectedFreeformSlugs, freeformCache]);
+  }, [updateStory, selectedSlugs, termCache]);
 
   const addSearchResultsToCache = useCallback(
     async (taxonomy, name) => {
@@ -138,7 +117,7 @@ function TaxonomyProvider(props) {
       try {
         response = await getTaxonomyTerm(taxonomy.rest_base, {
           search: name,
-          // This is the per_page value Guttenberg is using
+          // This is the per_page value Gutenberg is using
           per_page: 20,
         });
       } catch (e) {
@@ -150,20 +129,11 @@ function TaxonomyProvider(props) {
         return;
       }
 
-      // Format results to fit in our {[taxonomy]: {[slug]: term}} map
-      const termResults = response.reduce((acc, term) => {
-        acc[term.slug] = term;
-        return acc;
-      }, {});
-      setFreeformCache((cache) => {
-        return {
-          ...cache,
-          [taxonomy.rest_base]: {
-            ...termResults,
-            ...cache[taxonomy.rest_base],
-          },
-        };
-      });
+      // Format results to fit in our { [taxonomy]: { [slug]: term } } map
+      const termResults = {
+        [taxonomy.rest_base]: dictonaryOnKey(response, 'slug'),
+      };
+      setTermCache((cache) => mergeObjects(cache, termResults));
     },
     [getTaxonomyTerm]
   );
@@ -171,64 +141,61 @@ function TaxonomyProvider(props) {
   const createTerm = useCallback(
     async (taxonomy, termName) => {
       // make sure the term doesn't already exist locally
-      if (freeformCache[taxonomy.rest_base]?.[cleanForSlug(termName)]) {
+      if (termCache[taxonomy.rest_base]?.[cleanForSlug(termName)]) {
         return;
       }
 
       // create term and add to cache
       try {
         const newTerm = await createTaxonomyTerm(taxonomy.rest_base, termName);
-        setFreeformCache((cache) => ({
-          ...cache,
-          [taxonomy.rest_base]: {
-            ...cache[taxonomy.rest_base],
-            [newTerm.slug]: newTerm,
-          },
-        }));
+        const incomingCache = {
+          [taxonomy.rest_base]: { [newTerm.slug]: newTerm },
+        };
+        setTermCache((cache) => mergeObjects(cache, incomingCache));
       } catch (e) {
         // If the backend says the term already exists
         // we fetch for it as well as related terms to
         // help more thoroughly populate our cache.
         //
         // We could pull down only the exact term, but
-        // we're modeling after Guttenberg.
+        // we're modeling after Gutenberg.
         if (e.code === 'term_exists') {
           addSearchResultsToCache(taxonomy, termName);
         }
       }
     },
-    [createTaxonomyTerm, freeformCache, addSearchResultsToCache]
+    [createTaxonomyTerm, termCache, addSearchResultsToCache]
   );
 
-  const setSelectedFreeformSlugs = useCallback(
+  const setSelectedTaxonomySlugs = useCallback(
     (taxonomy, termSlugs = []) =>
-      _setSelectedFreeformSlugs((selected) => ({
+      setSelectedSlugs((selected) => ({
         ...selected,
         [taxonomy.rest_base]: termSlugs,
       })),
-    [_setSelectedFreeformSlugs]
+    []
   );
 
   const value = useMemo(
     () => ({
       state: {
         taxonomies,
-        freeformCache,
-        selectedFreeformSlugs,
+        termCache,
+        selectedSlugs,
       },
       actions: {
         createTerm,
         addSearchResultsToCache,
-        setSelectedFreeformSlugs,
+        setSelectedTaxonomySlugs,
       },
     }),
     [
       taxonomies,
       createTerm,
-      freeformCache,
+      termCache,
       addSearchResultsToCache,
-      selectedFreeformSlugs,
-      setSelectedFreeformSlugs,
+      selectedSlugs,
+      setSelectedTaxonomySlugs,
     ]
   );
 
