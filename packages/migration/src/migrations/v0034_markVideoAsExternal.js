@@ -29,13 +29,11 @@ function reducePage({ elements, ...rest }) {
 }
 
 function updateElement(element) {
-  if (element.type === 'video' || element.type === 'image') {
+  if (!element?.resource) {
     if (element.resource?.id) {
       const resourceId = element.resource.id.toString();
       const is3pMedia = resourceId.startsWith('media/');
-      if (is3pMedia) {
-        element.resource.isExternal = true;
-      }
+      element.resource.isExternal = is3pMedia;
     } else {
       element.resource.isExternal = true;
     }
