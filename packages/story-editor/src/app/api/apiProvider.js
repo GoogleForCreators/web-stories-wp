@@ -36,10 +36,8 @@ function APIProvider({ children }) {
       hotlink,
       link,
       users,
-      statusCheck,
       metaBoxes,
       currentUser,
-      storyLocking,
       pageTemplates: customPageTemplates,
     },
     apiCallbacks,
@@ -49,9 +47,6 @@ function APIProvider({ children }) {
 
   const {
     getStoryById,
-    getStoryLockById,
-    setStoryLockById,
-    deleteStoryLockById,
     getDemoStoryById,
     saveStoryById,
     autoSaveById,
@@ -64,7 +59,6 @@ function APIProvider({ children }) {
     getCurrentUser,
     updateCurrentUser,
     saveMetaBoxes,
-    getStatusCheck,
     getCustomPageTemplates,
     addPageTemplate,
     deletePageTemplate,
@@ -96,24 +90,6 @@ function APIProvider({ children }) {
   actions.getStoryById = useCallback(
     (storyId) => getStoryById(storyId, stories),
     [stories, getStoryById]
-  );
-
-  // @todo Move to wp-story-editor along with PostLock component.
-  actions.getStoryLockById = useCallback(
-    (storyId) => getStoryLockById(storyId, stories),
-    [stories, getStoryLockById]
-  );
-
-  // @todo Move to wp-story-editor along with PostLock component.
-  actions.setStoryLockById = useCallback(
-    (storyId) => setStoryLockById(storyId, stories),
-    [stories, setStoryLockById]
-  );
-
-  // @todo Move to wp-story-editor along with PostLock component.
-  actions.deleteStoryLockById = useCallback(
-    (storyId, nonce) => deleteStoryLockById(storyId, nonce, storyLocking),
-    [storyLocking, deleteStoryLockById]
   );
 
   actions.getDemoStoryById = useCallback(
@@ -181,12 +157,6 @@ function APIProvider({ children }) {
   actions.saveMetaBoxes = useCallback(
     (story, formData) => saveMetaBoxes(story, formData, metaBoxes),
     [metaBoxes, saveMetaBoxes]
-  );
-
-  // @todo Move to wp-story-editor along with StatusCheck component.
-  actions.getStatusCheck = useCallback(
-    (content) => getStatusCheck(content, statusCheck, encodeMarkup),
-    [statusCheck, encodeMarkup, getStatusCheck]
   );
 
   actions.getCustomPageTemplates = useCallback(
