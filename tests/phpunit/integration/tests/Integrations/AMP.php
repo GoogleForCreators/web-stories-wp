@@ -30,7 +30,7 @@ class AMP extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$amp = new \Google\Web_Stories\Integrations\AMP( new Experiments() );
+		$amp = new \Google\Web_Stories\Integrations\AMP();
 		$amp->register();
 
 		$this->assertSame( 10, has_filter( 'option_amp-options', [ $amp, 'filter_amp_options' ] ) );
@@ -50,7 +50,7 @@ class AMP extends TestCase {
 	 * @covers ::filter_amp_options
 	 */
 	public function test_filter_amp_options_if_not_requested_post_type() {
-		$amp = new \Google\Web_Stories\Integrations\AMP( new Experiments() );
+		$amp = new \Google\Web_Stories\Integrations\AMP();
 		$this->assertEqualSets( [], $amp->filter_amp_options( [] ) );
 	}
 
@@ -72,7 +72,7 @@ class AMP extends TestCase {
 			'supported_templates'  => [ 'is_page', 'is_singular' ],
 		];
 
-		$amp    = new \Google\Web_Stories\Integrations\AMP( new Experiments() );
+		$amp    = new \Google\Web_Stories\Integrations\AMP();
 		$actual = $amp->filter_amp_options( $before );
 
 		$this->assertEqualSets( $expected, $actual );
@@ -82,7 +82,7 @@ class AMP extends TestCase {
 	 * @covers ::filter_supportable_post_types
 	 */
 	public function test_filter_supportable_post_types_if_not_requested_post_type() {
-		$amp = new \Google\Web_Stories\Integrations\AMP( new Experiments() );
+		$amp = new \Google\Web_Stories\Integrations\AMP();
 		$this->assertEqualSets( [], $amp->filter_supportable_post_types( [ Story_Post_Type::POST_TYPE_SLUG ] ) );
 	}
 
@@ -92,7 +92,7 @@ class AMP extends TestCase {
 	public function test_filter_supportable_post_types() {
 		$GLOBALS['current_screen'] = convert_to_screen( Story_Post_Type::POST_TYPE_SLUG );
 
-		$amp    = new \Google\Web_Stories\Integrations\AMP( new Experiments() );
+		$amp    = new \Google\Web_Stories\Integrations\AMP();
 		$actual = $amp->filter_supportable_post_types( [] );
 
 		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $actual );
@@ -137,7 +137,7 @@ class AMP extends TestCase {
 	 * @dataProvider data_test_filter_amp_to_amp_linking_element_excluded
 	 */
 	public function test_filter_amp_to_amp_linking_element_excluded( $args, $expected ) {
-		$amp = new \Google\Web_Stories\Integrations\AMP( new Experiments() );
+		$amp = new \Google\Web_Stories\Integrations\AMP();
 
 		$actual = call_user_func_array( [ $amp, 'filter_amp_to_amp_linking_element_excluded' ], $args );
 		$this->assertSame( $actual, $expected );

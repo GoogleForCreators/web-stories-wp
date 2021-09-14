@@ -77,19 +77,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get Composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Setup Composer cache
-        uses: pat-s/always-upload-cache@v2.1.5
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-            ${{ runner.os }}-
-
       # PHP-Scoper only works on PHP 7.2+ and we need to prefix our dependencies to accurately test them.
       # So we temporarily switch PHP versions, do a full install and then remove the package.
       # Then switch back to the PHP version we want to test and delete the vendor directory.
@@ -100,10 +87,13 @@ jobs:
           php-version: 7.4
           tools: composer
 
-      - name: Install prefixed dependencies
-        run: |
-          composer install --prefer-dist --no-progress --no-interaction
-          rm -rf vendor/*
+      - name: Install PHP dependencies
+        uses: 'ramsey/composer-install@v1'
+        with:
+          composer-options: '--prefer-dist --no-progress --no-interaction'
+
+      - name: Remove prefixed dependencies
+        run: rm -rf vendor/*
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -113,10 +103,13 @@ jobs:
           coverage: ${{ matrix.coverage && 'xdebug' || 'none' }}
           tools: composer, cs2pr
 
-      - name: Install dependencies
-        run: |
-          composer install --prefer-dist --no-progress --no-interaction --no-scripts
-          composer dump-autoload --no-interaction
+      - name: Install PHP dependencies
+        uses: 'ramsey/composer-install@v1'
+        with:
+          composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
+
+      - name: Composer dump autoload
+        run: composer dump-autoload --no-interaction
 
       - name: Shutdown default MySQL service
         run: sudo service mysql stop

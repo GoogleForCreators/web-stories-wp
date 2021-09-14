@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -27,39 +26,21 @@ import { renderWithProviders } from '../../../../../testUtils';
 import VideoCache from '..';
 
 describe('Editor Settings: <VideoCache />', function () {
-  it('should not render anything if experiment is not enabled', function () {
-    renderWithProviders(<VideoCache updateSettings={jest.fn()} isEnabled />);
-
-    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
-  });
-
   it('should render the video cache setting as checked when isEnabled', function () {
-    renderWithProviders(
-      <FlagsProvider features={{ videoCache: true }}>
-        <VideoCache updateSettings={jest.fn()} isEnabled />
-      </FlagsProvider>
-    );
+    renderWithProviders(<VideoCache updateSettings={jest.fn()} isEnabled />);
 
     expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
   it('should not render the video cache setting as checked when not isEnabled', function () {
-    renderWithProviders(
-      <FlagsProvider features={{ videoCache: true }}>
-        <VideoCache updateSettings={jest.fn()} />
-      </FlagsProvider>
-    );
+    renderWithProviders(<VideoCache updateSettings={jest.fn()} />);
 
     expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 
   it('should update settings when the checkbox is clicked.', function () {
     const onChange = jest.fn();
-    renderWithProviders(
-      <FlagsProvider features={{ videoCache: true }}>
-        <VideoCache updateSettings={onChange} />
-      </FlagsProvider>
-    );
+    renderWithProviders(<VideoCache updateSettings={onChange} />);
 
     const checkbox = screen.getByRole('checkbox');
     fireEvent.click(checkbox);
