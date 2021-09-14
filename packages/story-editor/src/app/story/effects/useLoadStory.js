@@ -175,8 +175,8 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           defaultPageDuration: storyData?.defaultPageDuration,
           backgroundAudio: storyData?.backgroundAudio,
           embeddedTerms,
-          storyTags,
-          storyCategories,
+          'story-tags': storyTags,
+          'story-categories': storyCategories,
         };
 
         // TODO read current page and selection from deeplink?
