@@ -79,9 +79,9 @@ describe('mapObjectKeys', () => {
         (key) => `prefixed-${key}`
       )
     ).toStrictEqual({
-      'prefixed-a': 1,
-      'prefixed-b': 2,
-      'prefixed-c': 3,
+      'prefixed-a': 0,
+      'prefixed-b': 1,
+      'prefixed-c': 2,
     });
   });
 });
