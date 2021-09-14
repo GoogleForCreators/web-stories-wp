@@ -71,9 +71,11 @@ function APIProvider({ children }) {
       currentUser,
       storyLocking,
       pageTemplates: customPageTemplates,
+      taxonomies,
     },
     encodeMarkup,
     cdnURL,
+    postType,
   } = useConfig();
 
   const pageTemplates = useRef({
@@ -514,9 +516,9 @@ function APIProvider({ children }) {
 
   const getTaxonomies = useCallback(() => {
     return apiFetch({
-      path: addQueryArgs('/wp/v2/taxonomies/', { type: 'web-story' }),
+      path: addQueryArgs(taxonomies, { type: postType }),
     });
-  }, []);
+  }, [taxonomies, postType]);
 
   const getTaxonomyTerm = useCallback((taxonomy, args = {}) => {
     return apiFetch({

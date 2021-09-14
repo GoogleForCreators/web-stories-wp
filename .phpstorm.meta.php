@@ -64,6 +64,7 @@ namespace PHPSTORM_META {
 			'rest.media'                   => \Google\Web_Stories\REST_API\Stories_Media_Controller::class,
 			'rest.settings'                => \Google\Web_Stories\REST_API\Stories_Settings_Controller::class,
 			'rest.users'                   => \Google\Web_Stories\REST_API\Stories_Users_Controller::class,
+			'rest.taxonomies'              => \Google\Web_Stories\REST_API\Stories_Taxonomies_Controller::class,
 			'rest.template_autosave'       => \Google\Web_Stories\REST_API\Template_Autosaves_Controller::class,
 			'rest.template_lock'           => \Google\Web_Stories\REST_API\Template_Lock_Controller::class,
 			'user_preferences'             => \Google\Web_Stories\User\Preferences::class,
