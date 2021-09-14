@@ -13,4 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as removeImagesFromPageTemplates } from './removeImagesFromPageTemplates';
+/**
+ * External dependencies
+ */
+import { addQueryArgs } from '@web-stories-wp/design-system';
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+
+export function getHotlinkInfo(url, hotlink) {
+  const path = addQueryArgs(hotlink, { url });
+  return apiFetch({
+    path,
+  });
+}

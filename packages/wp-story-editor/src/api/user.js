@@ -13,4 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as removeImagesFromPageTemplates } from './removeImagesFromPageTemplates';
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+
+export function getCurrentUser(currentUser) {
+  return apiFetch({
+    path: currentUser,
+  });
+}
+export function updateCurrentUser(data, currentUser) {
+  return apiFetch({
+    path: currentUser,
+    method: 'POST',
+    data,
+  });
+}

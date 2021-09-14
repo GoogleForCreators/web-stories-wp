@@ -13,4 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as removeImagesFromPageTemplates } from './removeImagesFromPageTemplates';
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Internal dependencies
+ */
+import { base64Encode } from './utils';
+
+/**
+ * Status check, submit html string.
+ *
+ * @param {string} content Content string.
+ * @param {string} statusCheck Status check
+ * @param {string} encodeMarkup Encode markup
+ * @return {Promise} Result promise
+ */
+export function getStatusCheck(content, statusCheck, encodeMarkup) {
+  return apiFetch({
+    path: statusCheck,
+    data: { content: encodeMarkup ? base64Encode(content) : content },
+    method: 'POST',
+  });
+}

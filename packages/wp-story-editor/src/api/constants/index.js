@@ -13,4 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as removeImagesFromPageTemplates } from './removeImagesFromPageTemplates';
+
+// Important: Keep in sync with REST API preloading definition.
+export const STORY_FIELDS = [
+  'id',
+  'title',
+  'status',
+  'slug',
+  'date',
+  'modified',
+  'excerpt',
+  'link',
+  'story_data',
+  'preview_link',
+  'edit_link',
+  'embed_post_link',
+  'permalink_template',
+  'style_presets',
+  'password',
+].join(',');
+
+export const STORY_EMBED =
+  'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo';

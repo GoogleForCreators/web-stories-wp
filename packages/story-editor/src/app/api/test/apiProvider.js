@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
- */
-import apiFetch from '@wordpress/api-fetch';
-
-/**
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
@@ -34,9 +29,6 @@ import { ConfigProvider } from '../../config';
 jest.mock('../utils/removeImagesFromPageTemplates');
 import removeImagesFromPageTemplates from '../utils/removeImagesFromPageTemplates';
 
-import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
-
-jest.mock('@wordpress/api-fetch');
 jest.mock('@web-stories-wp/templates');
 
 const renderApiProvider = ({ configValue }) => {
@@ -52,39 +44,6 @@ const renderApiProvider = ({ configValue }) => {
 describe('APIProvider', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-
-    apiFetch.mockReturnValue(
-      Promise.resolve({
-        body: GET_MEDIA_RESPONSE_BODY,
-        headers: GET_MEDIA_RESPONSE_HEADER,
-      })
-    );
-  });
-
-  it('getMedia with cacheBust:true should call api with &cache_bust=true', () => {
-    const { result } = renderApiProvider({
-      configValue: {
-        api: {
-          media: 'mediaPath',
-        },
-        postLock: { api: '' },
-      },
-    });
-
-    act(() => {
-      result.current.actions.getMedia({
-        mediaType: '',
-        searchTerm: '',
-        pagingNum: 1,
-        cacheBust: true,
-      });
-    });
-
-    expect(apiFetch).toHaveBeenCalledWith(
-      expect.objectContaining({
-        path: expect.stringMatching('&cache_bust=true'),
-      })
-    );
   });
 
   it('getPageTemplates gets pageTemplates w/ cdnURL', async () => {
@@ -95,6 +54,7 @@ describe('APIProvider', () => {
     const { result } = renderApiProvider({
       configValue: {
         api: {},
+        apiCallbacks: {},
         cdnURL,
         postLock: { api: '' },
       },
@@ -121,6 +81,7 @@ describe('APIProvider', () => {
     const { result } = renderApiProvider({
       configValue: {
         api: {},
+        apiCallbacks: {},
         cdnURL,
         postLock: { api: '' },
       },
@@ -143,6 +104,7 @@ describe('APIProvider', () => {
     const { result } = renderApiProvider({
       configValue: {
         api: {},
+        apiCallbacks: {},
         cdnURL,
         postLock: { api: '' },
       },

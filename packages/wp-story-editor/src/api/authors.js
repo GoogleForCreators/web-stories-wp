@@ -13,4 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as removeImagesFromPageTemplates } from './removeImagesFromPageTemplates';
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+/**
+ * External dependencies
+ */
+import { addQueryArgs } from '@web-stories-wp/design-system';
+
+export function getAuthors(search, users) {
+  return apiFetch({
+    path: addQueryArgs(users, { per_page: '100', who: 'authors', search }),
+  });
+}

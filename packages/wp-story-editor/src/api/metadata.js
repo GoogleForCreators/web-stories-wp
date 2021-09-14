@@ -13,4 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as removeImagesFromPageTemplates } from './removeImagesFromPageTemplates';
+/**
+ * External dependencies
+ */
+import { addQueryArgs } from '@web-stories-wp/design-system';
+
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Gets metadata (title, favicon, etc.) from
+ * a provided URL.
+ *
+ * @param  {string} url Url
+ * @param {string} link Link
+ * @return {Promise} Result promise
+ */
+export function getLinkMetadata(url, link) {
+  const path = addQueryArgs(link, { url });
+  return apiFetch({
+    path,
+  });
+}
