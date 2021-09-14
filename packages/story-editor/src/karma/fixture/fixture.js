@@ -48,6 +48,7 @@ import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 import singleSavedTemplate from './db/singleSavedTemplate';
+import HeaderLayout from './components/header';
 
 if ('true' === process.env.CI) {
   configure({
@@ -322,7 +323,9 @@ export class Fixture {
 
     const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
-        <StoryEditor key={Math.random()} config={this._config} />
+        <StoryEditor key={Math.random()} config={this._config}>
+          <Layout header={<HeaderLayout />} />
+        </StoryEditor>
       </FlagsProvider>,
       {
         container: root,
