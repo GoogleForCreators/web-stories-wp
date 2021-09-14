@@ -61,12 +61,15 @@ function Loading() {
   const { isSaving } = useStory((state) => ({
     isSaving: state.state.meta.isSaving,
   }));
+
+  if (!isSaving) {
+    return null;
+  }
+
   return (
-    isSaving && (
-      <Spinner>
-        <CircularProgress size={32} />
-      </Spinner>
-    )
+    <Spinner>
+      <CircularProgress size={32} />
+    </Spinner>
   );
 }
 
