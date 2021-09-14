@@ -514,7 +514,10 @@ function APIProvider({ children }) {
 
   const getTaxonomies = useCallback(() => {
     return apiFetch({
-      path: addQueryArgs('/wp/v2/taxonomies/', { type: 'web-story' }),
+      path: addQueryArgs('/wp/v2/taxonomies/', {
+        type: 'web-story',
+        context: 'edit',
+      }),
     });
   }, []);
 

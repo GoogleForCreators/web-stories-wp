@@ -33,7 +33,7 @@ import Context from './context';
 import {
   dictonaryOnKey,
   mapObjectVals,
-  mergeObjects,
+  mergeNestedDictionaries,
   objectFromEntries,
   mapObjectKeys,
   cacheFromEmbeddedTerms,
@@ -133,7 +133,7 @@ function TaxonomyProvider(props) {
       const termResults = {
         [taxonomy.rest_base]: dictonaryOnKey(response, 'slug'),
       };
-      setTermCache((cache) => mergeObjects(cache, termResults));
+      setTermCache((cache) => mergeNestedDictionaries(cache, termResults));
     },
     [getTaxonomyTerm]
   );
@@ -151,7 +151,7 @@ function TaxonomyProvider(props) {
         const incomingCache = {
           [taxonomy.rest_base]: { [newTerm.slug]: newTerm },
         };
-        setTermCache((cache) => mergeObjects(cache, incomingCache));
+        setTermCache((cache) => mergeNestedDictionaries(cache, incomingCache));
       } catch (e) {
         // If the backend says the term already exists
         // we fetch for it as well as related terms to
