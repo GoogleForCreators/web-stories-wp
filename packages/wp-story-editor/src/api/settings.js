@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './authors';
-export * from './story';
-export * from './media';
-export * from './metaboxes'; // @todo Remove direct export.
-export * from './metadata';
-export * from './pageTemplate';
-export * from './statusCheck'; // @todo Remove direct export.
-export * from './storyLock'; // @todo Remove direct export.
-export * from './user';
-export * from './hotlinkInfo';
-export * from './settings';
+
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+
+export function getSettings(settings) {
+  return apiFetch({
+    path: settings,
+  });
+}

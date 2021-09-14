@@ -36,6 +36,7 @@ function APIProvider({ children }) {
       hotlink,
       link,
       users,
+      settings,
       statusCheck,
       metaBoxes,
       currentUser,
@@ -61,6 +62,7 @@ function APIProvider({ children }) {
     deleteMedia,
     getLinkMetadata,
     getAuthors,
+    getSettings,
     getCurrentUser,
     updateCurrentUser,
     saveMetaBoxes,
@@ -132,8 +134,8 @@ function APIProvider({ children }) {
   );
 
   actions.getMedia = useCallback(
-    ({ mediaType, searchTerm, pagingNum, cacheBust }) =>
-      getMedia({ mediaType, searchTerm, pagingNum, cacheBust }, media),
+    ({ mediaType, searchTerm, pagingNum, cacheBust, include }) =>
+      getMedia({ mediaType, searchTerm, pagingNum, cacheBust, include }, media),
     [media, getMedia]
   );
 
@@ -155,6 +157,11 @@ function APIProvider({ children }) {
   actions.getHotlinkInfo = useCallback(
     (url) => getHotlinkInfo(url, hotlink),
     [hotlink, getHotlinkInfo]
+  );
+
+  actions.getSettings = useCallback(
+    () => getSettings(settings),
+    [getSettings, settings]
   );
 
   actions.getLinkMetadata = useCallback(
