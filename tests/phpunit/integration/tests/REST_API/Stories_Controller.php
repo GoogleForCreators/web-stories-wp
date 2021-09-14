@@ -303,10 +303,10 @@ class Stories_Controller extends Test_REST_TestCase {
 		$data     = $response->get_data();
 		$this->assertArrayHasKey( 'preview_link', $data );
 		$view_link = get_preview_post_link( $story );
-		$this->assertEquals( $view_link, $data['preview_link'] );
+		$this->assertSame( $view_link, $data['preview_link'] );
 		$this->assertArrayHasKey( 'edit_link', $data );
 		$edit_link = get_edit_post_link( $story, 'rest-api' );
-		$this->assertEquals( $edit_link, $data['edit_link'] );
+		$this->assertSame( $edit_link, $data['edit_link'] );
 		$this->assertArrayHasKey( 'embed_post_link', $data );
 		$this->assertContains( (string) $story, $data['embed_post_link'] );
 	}
@@ -359,7 +359,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$data = $response->get_data();
 		$this->assertArrayHasKey( 'preview_link', $data );
 		$this->assertNotEmpty( $data['preview_link'] );
-		$this->assertEquals( $permalink, $data['preview_link'] );
+		$this->assertSame( $permalink, $data['preview_link'] );
 	}
 
 	/**
@@ -469,7 +469,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$results  = wp_list_pluck( $response->get_data(), 'author' );
 
-		$this->assertEquals(
+		$this->assertSame(
 			[
 				self::$user_id,
 				self::$user_id,
@@ -490,7 +490,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$results  = wp_list_pluck( $response->get_data(), 'author' );
 
-		$this->assertEquals(
+		$this->assertSame(
 			[
 				self::$user3_id,
 				self::$user3_id,
