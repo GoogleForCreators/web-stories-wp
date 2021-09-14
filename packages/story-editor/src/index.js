@@ -29,7 +29,6 @@ export * from './app/currentUser';
 export * from './output';
 export * from './testUtils';
 
-export { default as base64Encode } from './utils/base64Encode';
 export { default as getStoryPropsToSave } from './app/story/utils/getStoryPropsToSave';
 export { default as FontContext } from './app/font/context';
 export { default as useLoadFontFiles } from './app/font/actions/useLoadFontFiles';

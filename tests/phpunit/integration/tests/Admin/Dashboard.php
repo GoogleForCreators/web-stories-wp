@@ -176,6 +176,7 @@ class Dashboard extends TestCase {
 					'version'      => '9.9.9',
 					'js'           => [ 'fake_js_chunk' ],
 					'css'          => [ 'fake_css_chunk' ],
+					'chunks'       => [],
 				]
 			);
 
