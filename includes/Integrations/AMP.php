@@ -53,24 +53,6 @@ class AMP extends Service_Base {
 	const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
 
 	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
-	 * HTML constructor.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param Experiments $experiments Experiments instance.
-	 */
-	public function __construct( Experiments $experiments ) {
-		$this->experiments = $experiments;
-	}
-
-	/**
 	 * Initializes all hooks.
 	 *
 	 * @since 1.2.0
@@ -157,7 +139,7 @@ class AMP extends Service_Base {
 			return $sanitizers;
 		}
 
-		$video_cache_enabled = $this->experiments->is_experiment_enabled( 'videoCache' ) && (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
+		$video_cache_enabled = (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
 
 		$story = new Story();
 		$story->load_from_post( $post );

@@ -72,13 +72,20 @@ function ColorPicker({
   allowsSavedColors = false,
   onClose = () => {},
   changedStyle = 'background',
+  onDimensionChange = () => {},
 }) {
   // If initial color is a gradient, start by showing a custom color picker.
   // Note that no such switch happens if the color later changes to a gradient,
   // only if it was a gradient at the moment the color picker mounted.
   const [isCustomPicker, setCustomPicker] = useState(hasGradient(color));
-  const showCustomPicker = useCallback(() => setCustomPicker(true), []);
-  const hideCustomPicker = useCallback(() => setCustomPicker(false), []);
+  const showCustomPicker = useCallback(() => {
+    setCustomPicker(true);
+    onDimensionChange();
+  }, [onDimensionChange]);
+  const hideCustomPicker = useCallback(() => {
+    setCustomPicker(false);
+    onDimensionChange();
+  }, [onDimensionChange]);
 
   const {
     actions: { pushTransform },
@@ -170,6 +177,7 @@ ColorPicker.propTypes = {
   isEyedropperActive: PropTypes.bool,
   color: PatternPropType,
   changedStyle: PropTypes.string,
+  onDimensionChange: PropTypes.func,
 };
 
 export default ColorPicker;
