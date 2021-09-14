@@ -49,9 +49,8 @@ import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
-import { MetaBoxesProvider } from './integrations/wordpress/metaBoxes';
 
-function StoryEditor({ config, children }) {
+function StoryEditor({ config, handleIsSaving, children }) {
   const { storyId, isRTL } = config;
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
@@ -64,32 +63,33 @@ function StoryEditor({ config, children }) {
                 <Media3pApiProvider>
                   <HistoryProvider size={50}>
                     <SnackbarProvider>
-                      <MetaBoxesProvider>
-                        <StoryProvider storyId={storyId}>
-                          <CurrentUserProvider>
-                            <PostLock />
-                            <FontProvider>
-                              <MediaProvider>
-                                <AutoSaveHandler />
-                                <TransformProvider>
-                                  <DropTargetsProvider>
-                                    <HelpCenterProvider>
-                                      <GlobalStyle />
-                                      <DevTools />
-                                      <DefaultMoveableGlobalStyle />
-                                      <CropMoveableGlobalStyle />
-                                      <ModalGlobalStyle />
-                                      <CalendarStyle />
-                                      <KeyboardOnlyOutlines />
-                                      {children}
-                                    </HelpCenterProvider>
-                                  </DropTargetsProvider>
-                                </TransformProvider>
-                              </MediaProvider>
-                            </FontProvider>
-                          </CurrentUserProvider>
-                        </StoryProvider>
-                      </MetaBoxesProvider>
+                      <StoryProvider
+                        storyId={storyId}
+                        handleIsSaving={handleIsSaving}
+                      >
+                        <CurrentUserProvider>
+                          <PostLock />
+                          <FontProvider>
+                            <MediaProvider>
+                              <AutoSaveHandler />
+                              <TransformProvider>
+                                <DropTargetsProvider>
+                                  <HelpCenterProvider>
+                                    <GlobalStyle />
+                                    <DevTools />
+                                    <DefaultMoveableGlobalStyle />
+                                    <CropMoveableGlobalStyle />
+                                    <ModalGlobalStyle />
+                                    <CalendarStyle />
+                                    <KeyboardOnlyOutlines />
+                                    {children}
+                                  </HelpCenterProvider>
+                                </DropTargetsProvider>
+                              </TransformProvider>
+                            </MediaProvider>
+                          </FontProvider>
+                        </CurrentUserProvider>
+                      </StoryProvider>
                     </SnackbarProvider>
                   </HistoryProvider>
                 </Media3pApiProvider>
@@ -104,6 +104,7 @@ function StoryEditor({ config, children }) {
 
 StoryEditor.propTypes = {
   config: PropTypes.object.isRequired,
+  handleIsSaving: PropTypes.func,
   children: PropTypes.node,
 };
 

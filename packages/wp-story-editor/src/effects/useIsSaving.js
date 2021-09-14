@@ -13,6 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as PostPublishDialog } from './postPublishDialog';
-export { default as Layout } from './layout';
-export * from './metaBoxes';
+/**
+ * Internal dependencies
+ */
+import useSaveMetaBoxes from '../components/metaBoxes/useMetaBoxes'; // @todo Refactor code.
+
+function useIsSaving({ isSaving, isAutoSaving, story }) {
+  const { isSavingMetaBoxes } = useSaveMetaBoxes({
+    story,
+    isSaving,
+    isAutoSaving,
+  });
+
+  return isSaving || isAutoSaving || isSavingMetaBoxes;
+}
+
+export default useIsSaving;

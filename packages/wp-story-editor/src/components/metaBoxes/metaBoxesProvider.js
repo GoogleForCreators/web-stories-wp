@@ -19,11 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import { useConfig } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../app';
 import Context from './context';
 
 function MetaBoxesProvider({ children }) {

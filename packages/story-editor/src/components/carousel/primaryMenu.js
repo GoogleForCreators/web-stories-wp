@@ -34,7 +34,6 @@ import {
 /**
  * Internal dependencies
  */
-import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import Tooltip from '../tooltip';
 import GridView from './gridview';
 import ZoomSelector from './zoomSelector';
@@ -63,10 +62,6 @@ const Box = styled.div`
   align-items: center;
 `;
 
-const Space = styled.span`
-  width: 8px;
-`;
-
 function PrimaryMenu() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
 
@@ -82,46 +77,10 @@ function PrimaryMenu() {
     });
   }, [setIsGridViewOpen]);
 
-  const { metaBoxesVisible, toggleMetaBoxesVisible, hasMetaBoxes } =
-    useMetaBoxes(({ state, actions }) => ({
-      hasMetaBoxes: state.hasMetaBoxes,
-      metaBoxesVisible: state.metaBoxesVisible,
-      toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
-    }));
-
-  const handleMetaBoxesClick = useCallback(() => {
-    toggleMetaBoxesVisible();
-    trackEvent('meta_boxes_toggled', {
-      status: metaBoxesVisible ? 'visible' : 'hidden',
-    });
-  }, [metaBoxesVisible, toggleMetaBoxesVisible]);
-
   return (
     <>
       <Wrapper>
         <MenuItems>
-          {hasMetaBoxes && (
-            <>
-              <Box>
-                <Tooltip
-                  title={__('Third-Party Meta Boxes', 'web-stories')}
-                  placement={PLACEMENT.TOP}
-                  hasTail
-                >
-                  <Button
-                    variant={BUTTON_VARIANTS.SQUARE}
-                    type={BUTTON_TYPES.TERTIARY}
-                    size={BUTTON_SIZES.SMALL}
-                    onClick={handleMetaBoxesClick}
-                    aria-label={__('Third-Party Meta Boxes', 'web-stories')}
-                  >
-                    <Icons.LetterMOutline />
-                  </Button>
-                </Tooltip>
-              </Box>
-              <Space />
-            </>
-          )}
           <Box>
             <Tooltip
               title={__('Grid View', 'web-stories')}

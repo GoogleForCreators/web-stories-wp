@@ -27,6 +27,11 @@ import {
   PublishButton,
 } from '@web-stories-wp/story-editor';
 
+/**
+ * Internal dependencies
+ */
+import useMetaBoxes from '../../metaBoxes/useMetaBoxes';
+
 const ButtonList = styled.nav`
   display: flex;
   justify-content: flex-end;
@@ -82,6 +87,10 @@ function Buttons() {
 
   const isDraft = 'draft' === status;
 
+  const { hasMetaBoxes } = useMetaBoxes(({ state }) => ({
+    hasMetaBoxes: state.hasMetaBoxes,
+  }));
+
   return (
     <ButtonList>
       <List>
@@ -90,10 +99,14 @@ function Buttons() {
           <Loading />
         </IconWithSpinner>
         <Space />
-        {isDraft ? <UpdateButton /> : <SwitchToDraftButton />}
+        {isDraft ? (
+          <UpdateButton hasUpdates={hasMetaBoxes} />
+        ) : (
+          <SwitchToDraftButton />
+        )}
         <Space />
         {isDraft && <PublishButton />}
-        {!isDraft && <UpdateButton />}
+        {!isDraft && <UpdateButton hasUpdates={hasMetaBoxes} />}
         <Space />
       </List>
     </ButtonList>

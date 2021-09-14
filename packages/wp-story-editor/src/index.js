@@ -36,7 +36,8 @@ import { initializeTracking } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
-import { PostPublishDialog, Layout } from './components';
+import { PostPublishDialog, Layout, MetaBoxesProvider } from './components';
+import useIsSaving from './effects/useIsSaving';
 
 /**
  * Initializes the web stories editor.
@@ -58,10 +59,12 @@ const initialize = (id, config, flags) => {
   render(
     <FlagsProvider features={flags}>
       <StrictMode>
-        <StoryEditor config={config}>
-          <Layout />
-          <PostPublishDialog />
-        </StoryEditor>
+        <MetaBoxesProvider>
+          <StoryEditor config={config} handleIsSaving={useIsSaving}>
+            <Layout />
+            <PostPublishDialog />
+          </StoryEditor>
+        </MetaBoxesProvider>
       </StrictMode>
     </FlagsProvider>,
     appElement

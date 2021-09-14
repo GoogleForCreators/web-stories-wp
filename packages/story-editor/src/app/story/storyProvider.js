@@ -33,7 +33,6 @@ import useHistoryEntry from './effects/useHistoryEntry';
 import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
-import useSaveMetaBoxes from './effects/useSaveMetaBoxes';
 import { StoryTriggersProvider } from './storyTriggers';
 
 /**
@@ -43,7 +42,7 @@ import { StoryTriggersProvider } from './storyTriggers';
  */
 const EMPTY_ARRAY = [];
 
-function StoryProvider({ storyId, children }) {
+function StoryProvider({ storyId, handleIsSaving, children }) {
   const { isDemo } = useConfig();
   const [hashPageId, setHashPageId] = useHashState('page', null);
   const {
@@ -142,13 +141,6 @@ function StoryProvider({ storyId, children }) {
     story,
   });
 
-  // Legacy Meta Boxes support.
-  const { isSavingMetaBoxes } = useSaveMetaBoxes({
-    story,
-    isSaving,
-    isAutoSaving,
-  });
-
   const fullStory = useMemo(
     () => ({
       pages,
@@ -164,7 +156,13 @@ function StoryProvider({ storyId, children }) {
       animationState,
       capabilities,
       meta: {
-        isSaving: isSaving || isAutoSaving || isSavingMetaBoxes,
+        isSaving: handleIsSaving
+          ? handleIsSaving({
+              story,
+              isSaving,
+              isAutoSaving,
+            })
+          : isSaving || isAutoSaving,
         isFreshlyPublished,
       },
     }),
@@ -183,8 +181,8 @@ function StoryProvider({ storyId, children }) {
       capabilities,
       isSaving,
       isAutoSaving,
-      isSavingMetaBoxes,
       isFreshlyPublished,
+      handleIsSaving,
     ]
   );
 
@@ -209,6 +207,7 @@ function StoryProvider({ storyId, children }) {
 
 StoryProvider.propTypes = {
   children: PropTypes.node,
+  handleIsSaving: PropTypes.func,
   storyId: PropTypes.number,
 };
 

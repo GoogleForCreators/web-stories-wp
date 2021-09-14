@@ -22,9 +22,16 @@ import { InterfaceSkeleton } from '@web-stories-wp/story-editor';
  * Internal dependencies
  */
 import { default as Header } from '../header';
+import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
 
 function Layout() {
-  return <InterfaceSkeleton header={<Header />} />;
+  return (
+    <MetaBoxesProvider>
+      <InterfaceSkeleton header={<Header />}>
+        <MetaBoxes />
+      </InterfaceSkeleton>
+    </MetaBoxesProvider>
+  );
 }
 
 export default Layout;

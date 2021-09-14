@@ -30,7 +30,6 @@ import Proptypes from 'prop-types';
  */
 import Library from '../library';
 import Workspace from '../workspace';
-import MetaBoxes from '../../integrations/wordpress/metaBoxes';
 import {
   CANVAS_MIN_WIDTH,
   LIBRARY_MIN_WIDTH,
@@ -72,12 +71,6 @@ const Area = styled.div`
   z-index: 2;
 `;
 
-const MetaBoxesArea = styled(Area).attrs({
-  area: 'metaboxes',
-})`
-  overflow-y: auto;
-`;
-
 function Layout({ header, children }) {
   const snackbarState = useSnackbar(
     ({ removeSnack, currentSnacks, placement }) => ({
@@ -99,9 +92,6 @@ function Layout({ header, children }) {
                 <Workspace header={header} />
               </CanvasProvider>
               {children}
-              <MetaBoxesArea>
-                <MetaBoxes />
-              </MetaBoxesArea>
             </Editor>
           </HighlightsProvider>
         </ChecklistCheckpointProvider>

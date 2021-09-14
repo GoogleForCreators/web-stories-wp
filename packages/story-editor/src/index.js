@@ -19,11 +19,13 @@
  */
 import StoryEditor from './storyEditor';
 import Dialog from './components/dialog';
+import Tooltip from './components/tooltip';
 import { default as InterfaceSkeleton } from './components/layout';
 
 export * from './components/transform';
 export * from './app/config';
 export * from './app/story';
+export * from './app/api';
 export * from './components/previewPage';
 export * from './components/header';
 export * from './testUtils';
@@ -39,5 +41,5 @@ export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cr
 export { default as CircularProgress } from './components/circularProgress';
 export { ConfigProvider as EditorConfigProvider } from './app/config';
 
-export { Dialog, InterfaceSkeleton };
+export { Dialog, InterfaceSkeleton, Tooltip };
 export default StoryEditor;

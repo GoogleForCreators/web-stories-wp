@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import styled from 'styled-components';
 import { useEffect } from '@web-stories-wp/react';
+import { useConfig } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../app/config';
 import MetaBoxesArea from './metaBoxesArea';
 import useMetaBoxes from './useMetaBoxes';
 
 const Wrapper = styled.div``;
+
+const Area = styled.div`
+  grid-area: ${({ area }) => area};
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+`;
+
+const MetaBoxesContainer = styled(Area).attrs({
+  area: 'metaboxes',
+})`
+  overflow-y: auto;
+`;
 
 function MetaBoxes() {
   const { metaBoxesVisible, hasMetaBoxes } = useMetaBoxes(({ state }) => ({
@@ -53,26 +65,21 @@ function MetaBoxes() {
     };
   }, [postType]);
 
-  if (!hasMetaBoxes) {
-    return null;
-  }
-
-  if (!metaBoxesVisible) {
+  if (!hasMetaBoxes || !metaBoxesVisible) {
     return null;
   }
 
   const locations = Object.keys(metaBoxes);
 
   return (
-    <Wrapper>
-      {locations.map((location) => {
-        return <MetaBoxesArea key={location} location={location} />;
-      })}
-    </Wrapper>
+    <MetaBoxesContainer>
+      <Wrapper>
+        {locations.map((location) => {
+          return <MetaBoxesArea key={location} location={location} />;
+        })}
+      </Wrapper>
+    </MetaBoxesContainer>
   );
 }
 
 export default MetaBoxes;
-
-export { default as MetaBoxesProvider } from './metaBoxesProvider';
-export { default as useMetaBoxes } from './useMetaBoxes';

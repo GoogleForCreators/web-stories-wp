@@ -26,16 +26,16 @@ import {
   useGlobalKeyDownEffect,
   Icons,
 } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { useStory, useLocalMedia, useHistory } from '../../../app';
-import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
 import Tooltip from '../../tooltip';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
-function UpdateButton() {
+function UpdateButton({ hasUpdates = false }) {
   const { isSaving, status, saveStory } = useStory(
     ({
       state: {
@@ -51,9 +51,6 @@ function UpdateButton() {
   const {
     state: { hasNewChanges },
   } = useHistory();
-  const { hasMetaBoxes } = useMetaBoxes(({ state }) => ({
-    hasMetaBoxes: state.hasMetaBoxes,
-  }));
 
   useGlobalKeyDownEffect(
     { key: ['mod+s'] },
@@ -70,8 +67,7 @@ function UpdateButton() {
   // The button is enabled only if we're not already saving nor uploading. And
   // then only if there are new changes or the story has meta-boxes – as these
   // can update without us knowing it.
-  const isEnabled =
-    !isSaving && !isUploading && (hasNewChanges || hasMetaBoxes);
+  const isEnabled = !isSaving && !isUploading && (hasNewChanges || hasUpdates);
   let text;
   switch (status) {
     case 'publish':
@@ -107,5 +103,9 @@ function UpdateButton() {
     />
   );
 }
+
+UpdateButton.propTypes = {
+  hasUpdates: PropTypes.bool,
+};
 
 export default UpdateButton;

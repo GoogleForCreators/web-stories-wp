@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { useEffect, useState, usePrevious } from '@web-stories-wp/react';
+import { useAPI } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import useMetaBoxes from '../../../integrations/wordpress/metaBoxes/useMetaBoxes';
-import { useAPI } from '../../api';
+import useMetaBoxes from './useMetaBoxes';
 
 /**
  * Effect to save meta boxes for a story.
