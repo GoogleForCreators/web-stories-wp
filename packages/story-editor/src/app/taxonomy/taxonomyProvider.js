@@ -80,7 +80,7 @@ function TaxonomyProvider(props) {
       const taxonomiesBySlug = dictonaryOnKey(taxonomies, 'slug');
       const initialCache = mapObjectKeys(
         cacheFromEmbeddedTerms(story.embeddedTerms),
-        (slug) => taxonomiesBySlug[slug].rest_base
+        (slug) => taxonomiesBySlug[slug]?.rest_base
       );
       const initialSelectedSlugs = mapObjectVals(initialCache, (val) =>
         Object.keys(val)
