@@ -108,7 +108,7 @@ jobs:
         with:
           composer-options: "--prefer-dist --no-progress --no-interaction --no-scripts"
 
-      - name: "Composer dump autoload"
+      - name: Composer dump autoload
         run:  composer dump-autoload --no-interaction
 
       - name: Shutdown default MySQL service
