@@ -26,12 +26,6 @@ import { renderWithProviders } from '../../../../../testUtils';
 import VideoCache from '..';
 
 describe('Editor Settings: <VideoCache />', function () {
-  it('should not render anything if experiment is not enabled', function () {
-    renderWithProviders(<VideoCache updateSettings={jest.fn()} isEnabled />);
-
-    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
-  });
-
   it('should render the video cache setting as checked when isEnabled', function () {
     renderWithProviders(<VideoCache updateSettings={jest.fn()} isEnabled />);
 
