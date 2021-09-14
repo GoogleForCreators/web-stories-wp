@@ -21,6 +21,7 @@ import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
+import objectWithout from '../../utils/objectWithout';
 import createNewElement from './createNewElement';
 
 const createPage = (pageProps = null) => {
@@ -36,7 +37,10 @@ const createPage = (pageProps = null) => {
     isBackground: true,
     isDefaultBackground: true,
   };
-  const backgroundElement = createNewElement('shape', backgroundElementProps);
+  const backgroundElement = objectWithout(
+    createNewElement('shape', backgroundElementProps),
+    ['backgroundColor']
+  );
 
   const newAttributes = {
     elements: [backgroundElement],
