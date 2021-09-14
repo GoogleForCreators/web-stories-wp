@@ -517,7 +517,7 @@ function APIProvider({ children }) {
   const getTaxonomies = useCallback(() => {
     return apiFetch({
       path: addQueryArgs(taxonomies,
-        type: postType
+        type: postType,
         context: 'edit',
       }),
     });
