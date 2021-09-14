@@ -273,7 +273,6 @@ function useMediaUploadQueue() {
                   file,
                   trimData.start,
                   trimData.end,
-                  resource.mimeType,
                   ext
                 );
                 finishTrimming({ id, file: newFile });
@@ -291,11 +290,7 @@ function useMediaUploadQueue() {
             } else if (muteVideo) {
               startMuting({ id });
               try {
-                newFile = await stripAudioFromVideo(
-                  file,
-                  resource.mimeType,
-                  ext
-                );
+                newFile = await stripAudioFromVideo(file, ext);
                 finishMuting({ id, file: newFile });
                 additionalData.is_muted = true;
               } catch (error) {
