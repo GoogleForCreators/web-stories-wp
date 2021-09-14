@@ -25,7 +25,7 @@
         "@web-stories-wp/templates": "*",
         "@web-stories-wp/tracking": "*",
         "@web-stories-wp/units": "*",
-        "@wordpress/api-fetch": "^5.2.1",
+        "@wordpress/api-fetch": "^5.2.2",
         "flagged": "^2.0.1",
         "history": "^5.0.1",
         "prop-types": "^15.7.2",
