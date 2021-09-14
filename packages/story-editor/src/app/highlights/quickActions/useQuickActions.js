@@ -214,8 +214,9 @@ const useQuickActions = () => {
   );
 
   const handleFocusMediaPanel = useMemo(() => {
-    const isExternal = selectedElements?.[0]?.resource?.isExternal;
-    const panelToFocus = isExternal ? states.MEDIA3P : states.MEDIA;
+    const resourceId = selectedElements?.[0]?.resource?.id?.toString() || '';
+    const is3PMedia = resourceId.startsWith('media/');
+    const panelToFocus = is3PMedia ? states.MEDIA3P : states.MEDIA;
 
     return handleFocusPanel(panelToFocus);
   }, [handleFocusPanel, selectedElements]);

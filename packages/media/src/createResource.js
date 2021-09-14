@@ -58,6 +58,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @property {boolean} isOptimized Whether the resource has already been optimized.
  * @property {boolean|null} isMuted Whether the resource has already been muted.
  * @property {boolean|null} isExternal Whether the resource is externally hosted.
+ * @property {boolean|null} isPlaceholder Whether the resource is a placeholder.
  * @property {Object} sizes Object of image sizes.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos
  */
@@ -90,6 +91,10 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @property {string|null} lengthFormatted The formatted length for the "video" type.
  * @property {string|null} alt The user-readable accessibility label for the resource.
  * @property {boolean} local Whether the resource has been already uploaded to the server.
+ * @property {boolean} isOptimized Whether the resource has already been optimized.
+ * @property {boolean|null} isMuted Whether the resource has already been muted.
+ * @property {boolean|null} isExternal Whether the resource is externally hosted.
+ * @property {boolean|null} isPlaceholder Whether the resource is a placeholder.
  * @property {Object.<string, ResourceSize>} sizes Object of image sizes.
  * @property {Attribution|null} attribution An optional attribution for the resource.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos
