@@ -70,9 +70,13 @@ function TaxonomyProvider(props) {
   // Reference embedded terms in the story and taxonomies
   // to get the initial selected terms as well as populate
   // the taxonomy term cache
-  const hasHydratedRunOnce = useRef(false);
+  const hasHydrationRunOnce = useRef(false);
   useEffect(() => {
-    if (taxonomies.length > 0 && isStoryLoaded && !hasHydratedRunOnce.current) {
+    if (
+      taxonomies.length > 0 &&
+      isStoryLoaded &&
+      !hasHydrationRunOnce.current
+    ) {
       const taxonomiesBySlug = dictonaryOnKey(taxonomies, 'slug');
       const initialCache = mapObjectKeys(
         cacheFromEmbeddedTerms(story.embeddedTerms),
@@ -82,7 +86,7 @@ function TaxonomyProvider(props) {
         Object.keys(val)
       );
 
-      hasHydratedRunOnce.current = true;
+      hasHydrationRunOnce.current = true;
       setTermCache(initialCache);
       setSelectedSlugs(initialSelectedSlugs);
     }
@@ -93,7 +97,7 @@ function TaxonomyProvider(props) {
   // the backend. Becuase of this, we sync up our local selected slugs
   // with whatever cached terms are available at any given moment.
   useEffect(() => {
-    if (!hasHydratedRunOnce.current) {
+    if (!hasHydrationRunOnce.current) {
       return;
     }
 

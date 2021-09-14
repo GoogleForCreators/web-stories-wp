@@ -58,7 +58,7 @@ export function mapObjectKeys(obj = {}, op = (v) => v) {
 
 /**
  * Merges two object who have children that can't be
- * merged by spreading both object into a new object.
+ * merged by spreading both objects into a new object.
  *
  * Creates an object with a union of both keys
  * and a merge operation performed where both
@@ -69,10 +69,13 @@ export function mapObjectKeys(obj = {}, op = (v) => v) {
  * @return {Object} new unified nested dictionary
  */
 export function mergeNestedDictionaries(dictA = {}, dictB = {}) {
-  return Object.entries(dictA).reduce((merged, [key, val]) => {
-    merged[key] = { ...val, ...merged[key] };
-    return merged;
-  }, dictB);
+  return Object.entries(dictA).reduce(
+    (merged, [key, val]) => {
+      merged[key] = { ...val, ...merged[key] };
+      return merged;
+    },
+    { ...dictB }
+  );
 }
 
 /**
