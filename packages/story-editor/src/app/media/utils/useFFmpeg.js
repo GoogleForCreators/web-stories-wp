@@ -301,7 +301,7 @@ function useFFmpeg() {
         const ext = fileExt || MEDIA_TRANSCODED_FILE_TYPE;
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const tempFileName = uuidv4() + '.' + ext;
-        const outputFileName = getFileName(file) + '-trimmed' + ext;
+        const outputFileName = getFileName(file) + '-trimmed.' + ext;
 
         await ffmpeg.run(
           // Input filename.
