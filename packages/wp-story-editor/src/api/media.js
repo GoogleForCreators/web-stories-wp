@@ -27,35 +27,19 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { flattenFormData } from './utils';
+import { MEDIA_FIELD } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
 export function getMedia(
   { mediaType, searchTerm, pagingNum, cacheBust },
   media
 ) {
-  let apiPath = media;
-  const perPage = 10;
-  apiPath = addQueryArgs(apiPath, {
+  let apiPath = addQueryArgs(media, {
     context: 'edit',
-    per_page: perPage,
+    per_page: 10,
     page: pagingNum,
     _web_stories_envelope: true,
-    _fields: [
-      'id',
-      'date_gmt',
-      'media_details',
-      'mime_type',
-      'featured_media',
-      'featured_media_src',
-      'alt_text',
-      'source_url',
-      'media_source',
-      'is_muted',
-      // _web_stories_envelope will add these fields, we need them too.
-      'body',
-      'status',
-      'headers',
-    ].join(','),
+    _fields: MEDIA_FIELD,
   });
 
   if (mediaType) {
