@@ -305,7 +305,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Prepares the 'tax_query' for a collection of posts.
 	 *
-	 * Remove this method, once WP 5.7 is min required.
+	 * @todo Remove this method once WordPress 5.7 becomes minimum required version.
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
