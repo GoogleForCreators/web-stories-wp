@@ -60,7 +60,9 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           embed_post_link: embedPostLink,
           _embedded: embedded = {},
           _links: links = {},
-          ...taxonomies
+          // TODO  #8849 Make these dynamic
+          'story-tags': storyTags = [],
+          'story-categories': storyCategories = [],
         } = post;
 
         const capabilities = {
@@ -173,7 +175,8 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           defaultPageDuration: storyData?.defaultPageDuration,
           backgroundAudio: storyData?.backgroundAudio,
           embeddedTerms,
-          ...taxonomies,
+          storyTags,
+          storyCategories,
         };
 
         // TODO read current page and selection from deeplink?
