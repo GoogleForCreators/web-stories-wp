@@ -38,7 +38,7 @@ import Tooltip from '../../tooltip';
 
 const PREVIEW_TARGET = 'story-preview';
 
-function Preview() {
+function PreviewButton() {
   const { isSaving, previewLink, status, autoSave, saveStory } = useStory(
     ({
       state: {
@@ -168,4 +168,4 @@ function Preview() {
   );
 }
 
-export default Preview;
+export default PreviewButton;

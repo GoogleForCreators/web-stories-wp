@@ -25,6 +25,7 @@ export * from './components/transform';
 export * from './app/config';
 export * from './app/story';
 export * from './components/previewPage';
+export * from './components/header';
 export * from './testUtils';
 
 export { default as base64Encode } from './utils/base64Encode';
@@ -35,6 +36,7 @@ export { default as StoryPropTypes } from './types';
 export { GlobalStyle } from './theme';
 export { default as theme } from './theme'; // @todo To be refactored.
 export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
+export { default as CircularProgress } from './components/circularProgress';
 export { ConfigProvider as EditorConfigProvider } from './app/config';
 
 export { Dialog, InterfaceSkeleton };

@@ -33,7 +33,7 @@ import {
 import { useStory, useLocalMedia } from '../../../app';
 import Tooltip from '../../tooltip';
 
-function SwitchToDraft() {
+function SwitchToDraftButton() {
   const { isSaving, saveStory } = useStory(
     ({
       state: {
@@ -67,4 +67,4 @@ function SwitchToDraft() {
   );
 }
 
-export default SwitchToDraft;
+export default SwitchToDraftButton;

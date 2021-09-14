@@ -35,7 +35,7 @@ import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
 import Tooltip from '../../tooltip';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
-function Update() {
+function UpdateButton() {
   const { isSaving, status, saveStory } = useStory(
     ({
       state: {
@@ -108,4 +108,4 @@ function Update() {
   );
 }
 
-export default Update;
+export default UpdateButton;

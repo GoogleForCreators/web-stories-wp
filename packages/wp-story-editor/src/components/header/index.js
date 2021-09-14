@@ -20,12 +20,12 @@
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { memo } from '@web-stories-wp/react';
+import { HeaderTitle } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
 import Buttons from './buttons';
-import Title from './title';
 
 const Background = styled.header.attrs({
   role: 'group',
@@ -50,7 +50,7 @@ function HeaderLayout() {
   return (
     <Background>
       <Head>
-        <Title />
+        <HeaderTitle />
       </Head>
       <ButtonCell>
         <Buttons />
