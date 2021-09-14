@@ -19,7 +19,7 @@
 import getFileExtFromUrl from '../getFileExtFromUrl';
 
 describe('getFileExtFromUrl', () => {
-  it('should file ext', () => {
+  it('should find ext', () => {
     expect(getFileExtFromUrl('https://www.example.com/test.jpg')).toStrictEqual(
       'jpg'
     );
