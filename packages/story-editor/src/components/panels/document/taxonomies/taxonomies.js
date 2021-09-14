@@ -31,11 +31,11 @@ import {
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
 import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import styled from 'styled-components';
 import { SimplePanel } from '../../panel';
 import { HierarchicalInput } from '../../../form';
 import { noop } from '../../../../utils/noop';
