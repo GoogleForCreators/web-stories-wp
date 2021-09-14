@@ -60,6 +60,7 @@ export const GET_MEDIA_RESPONSE_BODY = [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
+      web_stories_trim_data: {},
     },
     is_muted: false,
     web_story_media_source: [2],

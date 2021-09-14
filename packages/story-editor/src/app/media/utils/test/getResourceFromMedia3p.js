@@ -102,6 +102,7 @@ describe('getResourceFromMedia3p', () => {
       },
       attribution: undefined,
       output: undefined,
+      trimData: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
       expectedStoryEditorResource
@@ -184,6 +185,7 @@ describe('getResourceFromMedia3p', () => {
           height: 1137.7777777777778,
         },
       },
+      trimData: undefined,
       attribution: undefined,
       output: undefined,
     };
@@ -353,6 +355,7 @@ describe('getResourceFromMedia3p', () => {
       isMuted: false,
       isOptimized: true,
       isExternal: true,
+      trimData: undefined,
       poster:
         'https://c.tenor.com/MCPJ3sVx3GAAAAAe/happy-national-cat-day-peace.png',
       posterId: 'media/tenor:3468838096637910112',
