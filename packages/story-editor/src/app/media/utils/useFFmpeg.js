@@ -285,7 +285,7 @@ function useFFmpeg() {
    * @param {File} file Original video file object.
    * @param {string} start Time stamp of start time of new video. Example '00:01:02.345'.
    * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
-   * @param {string} ext File extension of output file.
+   * @param {string} fileExt File extension of output file.
    * @return {Promise<File>} Transcoded video file object.
    */
   const trimVideo = useCallback(
