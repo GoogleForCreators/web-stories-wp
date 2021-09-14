@@ -24,6 +24,7 @@ import {
   useSnackbar,
   themeHelpers,
 } from '@web-stories-wp/design-system';
+import Proptypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -77,7 +78,7 @@ const MetaBoxesArea = styled(Area).attrs({
   overflow-y: auto;
 `;
 
-function Layout() {
+function Layout({ header, children }) {
   const snackbarState = useSnackbar(
     ({ removeSnack, currentSnacks, placement }) => ({
       onRemove: removeSnack,
@@ -95,8 +96,9 @@ function Layout() {
                 <Area area="lib">
                   <Library />
                 </Area>
-                <Workspace />
+                <Workspace header={header} />
               </CanvasProvider>
+              {children}
               <MetaBoxesArea>
                 <MetaBoxes />
               </MetaBoxesArea>
@@ -108,5 +110,10 @@ function Layout() {
     </>
   );
 }
+
+Layout.propTypes = {
+  children: Proptypes.node,
+  header: Proptypes.node,
+};
 
 export default Layout;

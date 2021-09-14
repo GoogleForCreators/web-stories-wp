@@ -18,8 +18,13 @@
  */
 import { InterfaceSkeleton } from '@web-stories-wp/story-editor';
 
+/**
+ * Internal dependencies
+ */
+import { default as Header } from '../header';
+
 function Layout() {
-  return <InterfaceSkeleton />;
+  return <InterfaceSkeleton header={<Header />} />;
 }
 
 export default Layout;
