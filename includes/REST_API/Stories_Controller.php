@@ -44,6 +44,13 @@ class Stories_Controller extends Stories_Base_Controller {
 	use Post_Type;
 
 	/**
+	 * Query args.
+	 *
+	 * @var array
+	 */
+	private $args = [];
+
+	/**
 	 * Default style presets to pass if not set.
 	 */
 	const EMPTY_STYLE_PRESETS = [
@@ -246,11 +253,20 @@ class Stories_Controller extends Stories_Base_Controller {
 	}
 
 	/**
-	 * Retrieves a collection of web stories.
+	 * Filter the query to cache the value to a class property.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @param array           $args    WP_Query arguments.
+	 * @param WP_REST_Request $request Full details about the request.
+	 *
+	 * @return array Current args.
+	 */
+	public function filter_query( $args, $request ) {
+		$this->args = $this->prepare_tax_query( $args, $request );
+
+		return $args;
+	}
+	/**
+	 * Retrieves a collection of web stories.
 	 *
 	 * @since 1.0.0
 	 *
@@ -259,9 +275,11 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
+		add_filter( "rest_{$this->post_type}_query", [ $this, 'filter_query' ], 100, 2 );
 		add_filter( 'posts_clauses', [ $this, 'filter_posts_clauses' ], 10, 2 );
 		$response = parent::get_items( $request );
 		remove_filter( 'posts_clauses', [ $this, 'filter_posts_clauses' ], 10 );
+		remove_filter( "rest_{$this->post_type}_query", [ $this, 'filter_query' ], 100 );
 
 		if ( is_wp_error( $response ) ) {
 			return $response;
@@ -271,109 +289,116 @@ class Stories_Controller extends Stories_Base_Controller {
 			return $response;
 		}
 
-		// Retrieve the list of registered collection query parameters.
-		$registered = $this->get_collection_params();
-		$args       = [];
-
-		/*
-		 * This array defines mappings between public API query parameters whose
-		 * values are accepted as-passed, and their internal WP_Query parameter
-		 * name equivalents (some are the same). Only values which are also
-		 * present in $registered will be set.
-		 */
-		$parameter_mappings = [
-			'author'         => 'author__in',
-			'author_exclude' => 'author__not_in',
-			'exclude'        => 'post__not_in', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn, WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
-			'include'        => 'post__in',
-			'menu_order'     => 'menu_order',
-			'offset'         => 'offset',
-			'order'          => 'order',
-			'orderby'        => 'orderby',
-			'page'           => 'paged',
-			'parent'         => 'post_parent__in',
-			'parent_exclude' => 'post_parent__not_in',
-			'search'         => 's',
-			'slug'           => 'post_name__in',
-			'status'         => 'post_status',
-		];
-
-		/*
-		 * For each known parameter which is both registered and present in the request,
-		 * set the parameter's value on the query $args.
-		 */
-		foreach ( $parameter_mappings as $api_param => $wp_param ) {
-			if ( isset( $registered[ $api_param ], $request[ $api_param ] ) ) {
-				$args[ $wp_param ] = $request[ $api_param ];
-			}
+		$response = $this->add_response_headers( $response, $request );
+		if ( is_wp_error( $response ) ) {
+			return $response;
 		}
 
-		// Check for & assign any parameters which require special handling or setting.
-		$args['date_query'] = [];
-
-		// Set before into date query. Date query must be specified as an array of an array.
-		if ( isset( $registered['before'], $request['before'] ) ) {
-			$args['date_query'][0]['before'] = $request['before'];
+		if ( $request['_web_stories_envelope'] ) {
+			$embed    = isset( $request['_embed'] ) ? rest_parse_embed_param( $request['_embed'] ) : false;
+			$response = rest_get_server()->envelope_response( $response, $embed );
 		}
 
-		// Set after into date query. Date query must be specified as an array of an array.
-		if ( isset( $registered['after'], $request['after'] ) ) {
-			$args['date_query'][0]['after'] = $request['after'];
+		return $response;
+	}
+
+	/**
+	 * Prepares the 'tax_query' for a collection of posts.
+	 *
+	 * Remove this method, once WP 5.7 is min required.
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param array           $args    WP_Query arguments.
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return array Updated query arguments.
+	 */
+	private function prepare_tax_query( array $args, WP_REST_Request $request ) {
+		$relation = $request['tax_relation'];
+
+		if ( $relation ) {
+			$args['tax_query'] = [ 'relation' => $relation ]; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 		}
 
-		// Ensure our per_page parameter overrides any provided posts_per_page filter.
-		if ( isset( $registered['per_page'] ) ) {
-			$args['posts_per_page'] = $request['per_page'];
-		}
-
-		// Force the post_type argument, since it's not a user input variable.
-		$args['post_type'] = $this->post_type;
-
-		/**
-		 * Filters the query arguments for a request.
-		 *
-		 * Enables adding extra arguments or setting defaults for a post collection request.
-		 *
-		 * @link https://developer.wordpress.org/reference/classes/wp_query/
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param array           $args    Key value array of query var to query value.
-		 * @param WP_REST_Request $request The request used.
-		 */
-		$args       = apply_filters( "rest_{$this->post_type}_query", $args, $request );
-		$query_args = $this->prepare_items_query( $args, $request );
-
-		$taxonomies = wp_list_filter( get_object_taxonomies( $this->post_type, 'objects' ), [ 'show_in_rest' => true ] );
-
-		if ( ! empty( $request['tax_relation'] ) ) {
-			$query_args['tax_query'] = [ 'relation' => $request['tax_relation'] ]; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-		}
+		$taxonomies = wp_list_filter(
+			get_object_taxonomies( $this->post_type, 'objects' ),
+			[ 'show_in_rest' => true ]
+		);
 
 		foreach ( $taxonomies as $taxonomy ) {
-			$base        = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
-			$tax_exclude = $base . '_exclude';
+			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 
-			if ( ! empty( $request[ $base ] ) ) {
-				$query_args['tax_query'][] = [
-					'taxonomy'         => $taxonomy->name,
-					'field'            => 'term_id',
-					'terms'            => $request[ $base ],
-					'include_children' => false,
-				];
+			$tax_include = $request[ $base ];
+			$tax_exclude = $request[ $base . '_exclude' ];
+
+			if ( $tax_include ) {
+				$terms            = [];
+				$include_children = false;
+				$operator         = 'IN';
+
+				if ( rest_is_array( $tax_include ) ) {
+					$terms = $tax_include;
+				} elseif ( rest_is_object( $tax_include ) ) {
+					$terms            = empty( $tax_include['terms'] ) ? [] : $tax_include['terms'];
+					$include_children = ! empty( $tax_include['include_children'] );
+
+					if ( isset( $tax_include['operator'] ) && 'AND' === $tax_include['operator'] ) {
+						$operator = 'AND';
+					}
+				}
+
+				if ( $terms ) {
+					$args['tax_query'][] = [
+						'taxonomy'         => $taxonomy->name,
+						'field'            => 'term_id',
+						'terms'            => $terms,
+						'include_children' => $include_children,
+						'operator'         => $operator,
+					];
+				}
 			}
 
-			if ( ! empty( $request[ $tax_exclude ] ) ) {
-				$query_args['tax_query'][] = [
-					'taxonomy'         => $taxonomy->name,
-					'field'            => 'term_id',
-					'terms'            => $request[ $tax_exclude ],
-					'include_children' => false,
-					'operator'         => 'NOT IN',
-				];
+			if ( $tax_exclude ) {
+				$terms            = [];
+				$include_children = false;
+
+				if ( rest_is_array( $tax_exclude ) ) {
+					$terms = $tax_exclude;
+				} elseif ( rest_is_object( $tax_exclude ) ) {
+					$terms            = empty( $tax_exclude['terms'] ) ? [] : $tax_exclude['terms'];
+					$include_children = ! empty( $tax_exclude['include_children'] );
+				}
+
+				if ( $terms ) {
+					$args['tax_query'][] = [
+						'taxonomy'         => $taxonomy->name,
+						'field'            => 'term_id',
+						'terms'            => $terms,
+						'include_children' => $include_children,
+						'operator'         => 'NOT IN',
+					];
+				}
 			}
 		}
 
+		return $args;
+	}
+
+	/**
+	 * Add response headers, with post counts.
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param WP_REST_Response $response Response object.
+	 * @param WP_REST_Request  $request Request object.
+	 *
+	 * @return WP_REST_Response|WP_Error
+	 */
+	protected function add_response_headers( WP_REST_Response $response, WP_REST_Request $request ) {
 		// Add counts for other statuses.
 		$statuses = [
 			'publish' => 'publish',
@@ -394,6 +419,8 @@ class Stories_Controller extends Stories_Base_Controller {
 		$statuses_count = [ 'all' => 0 ];
 		$total_posts    = 0;
 
+		$query_args = $this->prepare_items_query( $this->args, $request );
+
 		// Strip down query for speed.
 		$query_args['fields']                 = 'ids';
 		$query_args['posts_per_page']         = 1;
@@ -412,7 +439,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			$posts_query->query( $query_args );
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 			$statuses_count['all'] += $statuses_count[ $key ];
-			if ( in_array( $status, $args['post_status'], true ) ) {
+			if ( in_array( $status, $this->args['post_status'], true ) ) {
 				$total_posts += $statuses_count[ $key ];
 			}
 		}
@@ -424,7 +451,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		$page      = (int) $posts_query->query_vars['paged'];
-		$max_pages = ceil( $total_posts / (int) $args['posts_per_page'] );
+		$max_pages = ceil( $total_posts / (int) $this->args['posts_per_page'] );
 
 		if ( $page > $max_pages && $total_posts > 0 ) {
 			return new WP_Error(
@@ -436,11 +463,6 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		$response->header( 'X-WP-Total', (string) $total_posts );
 		$response->header( 'X-WP-TotalPages', (string) $max_pages );
-
-		if ( $request['_web_stories_envelope'] ) {
-			$embed    = isset( $request['_embed'] ) ? rest_parse_embed_param( $request['_embed'] ) : false;
-			$response = rest_get_server()->envelope_response( $response, $embed );
-		}
 
 		return $response;
 	}

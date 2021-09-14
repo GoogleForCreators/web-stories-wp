@@ -173,6 +173,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 	/**
 	 * @covers ::get_items
+	 * @covers ::add_response_headers
 	 */
 	public function test_get_items() {
 		wp_set_current_user( self::$user_id );
@@ -219,6 +220,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 	/**
 	 * @covers ::get_items
+	 * @covers ::add_response_headers
 	 */
 	public function test_get_items_contributor() {
 		wp_set_current_user( self::$contributor_id );
@@ -251,6 +253,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 	/**
 	 * @covers ::get_items
+	 * @covers ::add_response_headers
 	 */
 	public function test_get_items_author() {
 		wp_set_current_user( self::$author_id );
@@ -412,6 +415,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 	/**
 	 * @covers ::get_items
+	 * @covers ::add_response_headers
 	 */
 	public function test_get_items_format() {
 		wp_set_current_user( self::$user_id );
