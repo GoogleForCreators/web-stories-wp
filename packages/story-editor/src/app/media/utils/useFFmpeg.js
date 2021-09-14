@@ -285,10 +285,12 @@ function useFFmpeg() {
    * @param {File} file Original video file object.
    * @param {string} start Time stamp of start time of new video. Example '00:01:02.345'.
    * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
+   * @param {string} type Mime type of output file.
+   * @param {string} ext File extension of output file.
    * @return {Promise<File>} Transcoded video file object.
    */
   const trimVideo = useCallback(
-    async (file, start, end) => {
+    async (file, start, end, mineType, fileExt) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_trim_video_transcoding');
 
@@ -297,10 +299,10 @@ function useFFmpeg() {
       try {
         ffmpeg = await getFFmpegInstance(file);
 
-        // @todo: ensure that this function return the same file type submitted. https://github.com/google/web-stories-wp/issues/8998.
-        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
-        const outputFileName =
-          getFileName(file) + '-trimmed.' + MEDIA_TRANSCODED_FILE_TYPE;
+        const ext = fileExt || MEDIA_TRANSCODED_FILE_TYPE;
+        const type = mineType || MEDIA_TRANSCODED_MIME_TYPE;
+        const tempFileName = uuidv4() + '.' + ext;
+        const outputFileName = getFileName(file) + '-trimmed' + ext;
 
         await ffmpeg.run(
           // Input filename.
@@ -314,13 +316,9 @@ function useFFmpeg() {
         );
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new File(
-          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
-          outputFileName,
-          {
-            type: MEDIA_TRANSCODED_MIME_TYPE,
-          }
-        );
+        return new File([new Blob([data.buffer], { type })], outputFileName, {
+          type,
+        });
       } catch (err) {
         // eslint-disable-next-line no-console
         console.log(err);
@@ -347,7 +345,7 @@ function useFFmpeg() {
    * @return {Promise<File>} Transcoded video file object.
    */
   const stripAudioFromVideo = useCallback(
-    async (file) => {
+    async (file, mineType, fileExt) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_mute_video_transcoding');
 
@@ -356,10 +354,10 @@ function useFFmpeg() {
       try {
         ffmpeg = await getFFmpegInstance(file);
 
-        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
-        const outputFileName =
-          getFileName(file) + '-muted.' + MEDIA_TRANSCODED_FILE_TYPE;
-
+        const ext = fileExt || MEDIA_TRANSCODED_FILE_TYPE;
+        const type = mineType || MEDIA_TRANSCODED_MIME_TYPE;
+        const tempFileName = uuidv4() + '.' + ext;
+        const outputFileName = getFileName(file) + '-muted.' + ext;
         await ffmpeg.run(
           // Input filename.
           '-i',
@@ -374,13 +372,9 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new File(
-          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
-          outputFileName,
-          {
-            type: MEDIA_TRANSCODED_MIME_TYPE,
-          }
-        );
+        return new File([new Blob([data.buffer], { type })], outputFileName, {
+          type,
+        });
       } catch (err) {
         // eslint-disable-next-line no-console
         console.log(err);
