@@ -17,8 +17,18 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect } from '@web-stories-wp/react';
-import { useConfig } from '@web-stories-wp/story-editor';
+import {
+  useEffect,
+  useRef,
+  useState,
+  createPortal,
+} from '@web-stories-wp/react';
+import { useConfig, useStory } from '@web-stories-wp/story-editor';
+/**
+ * Internal dependencies
+ */
+import useSaveMetaBoxes from './useSaveMetaBoxes';
+import MenuItem from './menuItem';
 
 /**
  * Internal dependencies
@@ -46,8 +56,37 @@ function MetaBoxes() {
     hasMetaBoxes: state.hasMetaBoxes,
     metaBoxesVisible: state.metaBoxesVisible,
   }));
+  const [showMenuButton, updateMenuButtonState] = useState(false);
+  const menuButtonContainer = useRef(null);
+
+  const { isSavingStory, isAutoSavingStory, story } = useStory(
+    ({
+      state: {
+        meta: { isSavingStory, isAutoSavingStory },
+        story,
+      },
+    }) => ({ isSavingStory, isAutoSavingStory, story })
+  );
+
+  useSaveMetaBoxes({
+    story,
+    isSavingStory,
+    isAutoSavingStory,
+  });
 
   const { postType, metaBoxes = {} } = useConfig();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      menuButtonContainer.current =
+        document.getElementById('primary-menu-items');
+      updateMenuButtonState(null !== menuButtonContainer.current);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
 
   useEffect(() => {
     // Allow toggling metaboxes panels.
@@ -73,11 +112,15 @@ function MetaBoxes() {
 
   return (
     <MetaBoxesContainer>
-      <Wrapper>
-        {locations.map((location) => {
-          return <MetaBoxesArea key={location} location={location} />;
-        })}
-      </Wrapper>
+      {metaBoxesVisible && (
+        <Wrapper>
+          {locations.map((location) => {
+            return <MetaBoxesArea key={location} location={location} />;
+          })}
+        </Wrapper>
+      )}
+      {showMenuButton &&
+        createPortal(<MenuItem />, menuButtonContainer.current)}
     </MetaBoxesContainer>
   );
 }

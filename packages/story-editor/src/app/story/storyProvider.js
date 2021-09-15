@@ -157,6 +157,8 @@ function StoryProvider({ storyId, children }) {
       capabilities,
       meta: {
         isSaving: isSaving || isAutoSaving,
+        isSavingStory: isSaving,
+        isAutoSavingStory: isAutoSaving,
         isFreshlyPublished,
       },
     }),

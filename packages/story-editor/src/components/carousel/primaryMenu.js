@@ -80,7 +80,7 @@ function PrimaryMenu() {
   return (
     <>
       <Wrapper>
-        <MenuItems>
+        <MenuItems id="primary-menu-items">
           <Box>
             <Tooltip
               title={__('Grid View', 'web-stories')}
