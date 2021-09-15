@@ -41,10 +41,12 @@ function APIProvider({ children }) {
       currentUser,
       storyLocking,
       pageTemplates: customPageTemplates,
+      taxonomies,
     },
     apiCallbacks,
     encodeMarkup,
     cdnURL,
+    postType,
   } = useConfig();
 
   const {
@@ -205,6 +207,21 @@ function APIProvider({ children }) {
   actions.deletePageTemplate = useCallback(
     (id) => deletePageTemplate(id, customPageTemplates),
     [customPageTemplates, deletePageTemplate]
+  );
+
+  actions.getTaxonomies = useCallback(
+    () => getTaxonomies(postType, taxonomies),
+    [postType, taxonomies, getTaxonomies]
+  );
+
+  actions.getTaxonomyTerm = useCallback(
+    (taxonomy, args) => getTaxonomyTerm(taxonomy, args, taxonomies),
+    [taxonomies, getTaxonomyTerm]
+  );
+
+  actions.createTaxonomyTerm = useCallback(
+    (taxonomy, name) => createTaxonomyTerm(taxonomy, name, taxonomies),
+    [taxonomies, createTaxonomyTerm]
   );
 
   // If some api callbacks have not been provided via configuration

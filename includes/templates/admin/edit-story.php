@@ -109,6 +109,11 @@ $preload_paths = [
 		]
 	),
 	'/web-stories/v1/users/me/',
+	'/web-stories/v1/taxonomies/?' . build_query(
+		[
+			'type' => $post_type_object->name,
+		]
+	),
 ];
 
 /**

@@ -60,9 +60,6 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           embed_post_link: embedPostLink,
           _embedded: embedded = {},
           _links: links = {},
-          // TODO  #8849 Make these dynamic
-          'story-tags': storyTags = [],
-          'story-categories': storyCategories = [],
         } = post;
 
         const capabilities = {
@@ -95,8 +92,6 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
         };
 
-        let embeddedTerms = [];
-
         const publisherLogo = {
           id: embedded?.['wp:publisherlogo']?.[0].id || 0,
           height:
@@ -105,9 +100,9 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
         };
 
-        if ('wp:term' in embedded) {
-          embeddedTerms = embedded['wp:term'];
-        }
+        const taxonomies =
+          links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [];
+        const terms = embedded?.['wp:term'] || [];
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
@@ -174,9 +169,8 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,
           backgroundAudio: storyData?.backgroundAudio,
-          embeddedTerms,
-          'story-tags': storyTags,
-          'story-categories': storyCategories,
+          taxonomies,
+          terms,
         };
 
         // TODO read current page and selection from deeplink?

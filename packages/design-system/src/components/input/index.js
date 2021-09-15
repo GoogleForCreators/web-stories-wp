@@ -31,15 +31,18 @@ import { labelAccessibilityValidator } from '../../utils';
 
 const Container = styled.div`
   position: relative;
+  display: inline-block;
   width: 100%;
   min-width: 40px;
 `;
 
 const Label = styled(Text)`
   margin-bottom: 12px;
+  display: inline-block;
 `;
 
 const Hint = styled(Text)`
+  display: inline-block;
   margin-top: 12px;
   color: ${({ hasError, theme }) =>
     theme.colors.fg[hasError ? 'negative' : 'tertiary']};

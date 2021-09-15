@@ -18,93 +18,22 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import {
-  useCallback,
-  useDebouncedCallback,
-  useMemo,
-} from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
 import { useTaxonomy } from '../../../../app/taxonomy';
-import cleanForSlug from '../../../../utils/cleanForSlug';
-import Tags from '../../../form/tags';
 import { SimplePanel } from '../../panel';
+import HierarchicalTermSelector from './HierarchicalTermSelector';
+import FlatTermSelector from './FlatTermSelector';
 
 function TaxonomiesPanel(props) {
-  const {
+  const { taxonomies } = useTaxonomy(({ state: { taxonomies } }) => ({
     taxonomies,
-    createTerm,
-    termCache,
-    addSearchResultsToCache,
-    setSelectedTaxonomySlugs,
-    selectedSlugs,
-  } = useTaxonomy(
-    ({
-      state: { taxonomies, termCache, selectedSlugs },
-      actions: {
-        createTerm,
-        addSearchResultsToCache,
-        setSelectedTaxonomySlugs,
-      },
-    }) => ({
-      taxonomies,
-      termCache,
-      createTerm,
-      addSearchResultsToCache,
-      setSelectedTaxonomySlugs,
-      selectedSlugs,
-    })
-  );
+  }));
 
-  const _handleFreeformTermsChange = useCallback(
-    (taxonomy) => (termNames) => {
-      termNames.forEach((termName) => createTerm(taxonomy, termName));
-      setSelectedTaxonomySlugs(
-        taxonomy,
-        termNames.map((termName) => cleanForSlug(termName))
-      );
-    },
-    [createTerm, setSelectedTaxonomySlugs]
-  );
-
-  const _handleFreeformInputChange = useDebouncedCallback(
-    (taxonomy) => (value) => {
-      if (value.length < 3) {
-        return;
-      }
-      addSearchResultsToCache(taxonomy, value);
-    },
-    1000
-  );
-
-  const _termDisplayTransformer = useCallback(
-    (taxonomy) => (tagName) =>
-      termCache[taxonomy]?.[cleanForSlug(tagName)]?.name,
-    [termCache]
-  );
-
-  // We want to prevent curried functions from creating
-  // a new function on every render so we build them with
-  // memoized args here instead of in the render
-  const taxonomyHandlerTuples = useMemo(
-    () =>
-      (taxonomies || []).map((taxonomy) => [
-        taxonomy,
-        // handlers
-        {
-          handleFreeformTermsChange: _handleFreeformTermsChange(taxonomy),
-          handleFreeformInputChange: _handleFreeformInputChange(taxonomy),
-          termDisplayTransformer: _termDisplayTransformer(taxonomy),
-        },
-      ]),
-    [
-      taxonomies,
-      _handleFreeformTermsChange,
-      _handleFreeformInputChange,
-      _termDisplayTransformer,
-    ]
-  );
+  if (!taxonomies.length) {
+    return null;
+  }
 
   return (
     <SimplePanel
@@ -112,28 +41,12 @@ function TaxonomiesPanel(props) {
       title={__('Categories and Tags', 'web-stories')}
       {...props}
     >
-      {taxonomyHandlerTuples.map(([taxonomy, handlers]) =>
-        // TODO support all taxonomies and differentiate
-        // input component based on `taxonomy.hierarchical`
-        taxonomy.slug === 'story-tag' ? (
-          <div key={taxonomy.slug}>
-            <Tags.Label htmlFor={`${taxonomy.slug}-input`}>
-              {__('Add New Term', 'web-stories')}
-            </Tags.Label>
-            <Tags.Input
-              id={`${taxonomy.slug}-input`}
-              aria-describedby={`${taxonomy.slug}-description`}
-              name="story-tags"
-              onTagsChange={handlers.handleFreeformTermsChange}
-              onInputChange={handlers.handleFreeformInputChange}
-              tagDisplayTransformer={handlers.termDisplayTransformer}
-              initialTags={selectedSlugs?.[taxonomy.rest_base] || []}
-            />
-            <Tags.Description id={`${taxonomy.slug}-description`}>
-              {__('Separate with commas or the Enter key.', 'web-stories')}
-            </Tags.Description>
-          </div>
-        ) : null
+      {taxonomies.map((taxonomy) =>
+        taxonomy.hierarchical ? (
+          <HierarchicalTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+        ) : (
+          <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+        )
       )}
     </SimplePanel>
   );
