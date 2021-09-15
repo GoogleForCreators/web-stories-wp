@@ -54,7 +54,11 @@ function VideoOutput({ element, box }) {
 
   return (
     <MediaOutput element={element} box={box} data-leaf-element="true">
-      <amp-video {...videoProps} id={`el-${element.id}-media`}>
+      <amp-video
+        {...videoProps}
+        id={`el-${element.id}-media`}
+        captions-id={tracks ? `el-${element.id}-captions` : undefined}
+      >
         <source {...sourceProps} />
         {tracks &&
           tracks.map(({ srclang, label, kind, track, id: key }, i) => (
@@ -68,6 +72,13 @@ function VideoOutput({ element, box }) {
             />
           ))}
       </amp-video>
+      {tracks && (
+        <amp-story-captions
+          id={`el-${element.id}-captions`}
+          layout="fixed-height"
+          height="300"
+        />
+      )}
     </MediaOutput>
   );
 }
