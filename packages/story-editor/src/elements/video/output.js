@@ -57,28 +57,13 @@ function VideoOutput({ element, box }) {
       <amp-video
         {...videoProps}
         id={`el-${element.id}-media`}
-        captions-id={tracks ? `el-${element.id}-captions` : undefined}
+        // Actual <amp-story-captions> output happens in OutputPage.
+        captions-id={
+          tracks?.length > 0 ? `el-${element.id}-captions` : undefined
+        }
       >
         <source {...sourceProps} />
-        {tracks &&
-          tracks.map(({ srclang, label, kind, track, id: key }, i) => (
-            <track
-              srcLang={srclang}
-              label={label}
-              kind={kind}
-              src={track}
-              key={key}
-              default={i === 0}
-            />
-          ))}
       </amp-video>
-      {tracks && (
-        <amp-story-captions
-          id={`el-${element.id}-captions`}
-          layout="fixed-height"
-          height="300"
-        />
-      )}
     </MediaOutput>
   );
 }

@@ -22,11 +22,13 @@ import { __ } from '@web-stories-wp/i18n';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
 import { getTotalDuration, StoryAnimation } from '@web-stories-wp/animation';
+
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
 import isElementBelowLimit from '../utils/isElementBelowLimit';
+import { ELEMENT_TYPES } from '../elements';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 
@@ -75,6 +77,12 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           link: null,
         }
   );
+
+  const videoCaptions = elements
+    .filter(
+      ({ type, tracks }) => type === ELEMENT_TYPES.VIDEO && tracks?.length > 0
+    )
+    .map(({ id: videoId }) => `el-${videoId}-captions`);
 
   return (
     <amp-story-page
@@ -129,6 +137,28 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
             {page.pageAttachment.ctaText || __('Learn more', 'web-stories')}
           </a>
         </amp-story-page-outlink>
+      )}
+      {videoCaptions.length > 0 && (
+        <amp-story-grid-layer
+          template="vertical"
+          aspect-ratio={ASPECT_RATIO}
+          class="grid-layer"
+        >
+          <div className="page-fullbleed-area">
+            <div className="captions-area">
+              <div className="captions-scrim">
+                {videoCaptions.map((captionId) => (
+                  <amp-story-captions
+                    key={captionId}
+                    id={captionId}
+                    layout="fixed-height"
+                    height="100"
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </amp-story-grid-layer>
       )}
     </amp-story-page>
   );

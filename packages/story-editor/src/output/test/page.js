@@ -1129,6 +1129,67 @@ describe('Page output', () => {
     });
   });
 
+  describe('video captions', () => {
+    it('should render layer for amp-story-captions', async () => {
+      const props = {
+        id: 'foo',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: 'bar',
+          elements: [
+            {
+              id: 'baz',
+              type: 'video',
+              mimeType: 'video/mp4',
+              scale: 1,
+              origRatio: 9 / 16,
+              x: 50,
+              y: 100,
+              height: 1920,
+              width: 1080,
+              rotationAngle: 0,
+              loop: false,
+              resource: {
+                type: 'video',
+                mimeType: 'video/mp4',
+                id: 123,
+                src: 'https://example.com/video.mp4',
+                poster: 'https://example.com/poster.png',
+                height: 1920,
+                width: 1080,
+                length: 99,
+              },
+              tracks: [
+                {
+                  track: 'https://example.com/track.vtt',
+                  trackId: 123,
+                  trackName: 'track.vtt',
+                  id: 'rersd-fdfd-fdfd-fdfd',
+                  srcLang: '',
+                  label: '',
+                  kind: 'captions',
+                },
+              ],
+            },
+          ],
+        },
+        autoAdvance: true,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const video = container.querySelector('amp-story-captions');
+      await expect(video).toBeInTheDocument();
+      expect(video).toMatchInlineSnapshot(`
+      <amp-story-captions
+        height="100"
+        id="el-baz-captions"
+        layout="fixed-height"
+      />
+      `);
+    });
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
       const props = {
