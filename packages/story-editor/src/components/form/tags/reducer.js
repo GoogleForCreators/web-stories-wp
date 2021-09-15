@@ -1,0 +1,115 @@
+/*
+ * Copyright 2021 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/**
+ * Internal dependencies
+ */
+import clamp from '../../../utils/clamp';
+
+function formatTag(tag) {
+  return tag.replace(/( +)/g, ' ').trim();
+}
+
+function uniquesOnly(arr) {
+  return [...new Set(arr)];
+}
+
+export const ACTIONS = {
+  UPDATE_VALUE: 'updateValue',
+  SUBMIT_VALUE: 'submitValue',
+  REMOVE_TAG: 'removeTag',
+  INCREMENT_OFFSET: 'incrementOffset',
+  DECREMENT_OFFSET: 'decrementOffset',
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case ACTIONS.UPDATE_VALUE: {
+      const values = action.payload.split(',');
+      const newTags = values
+        .slice(0, -1)
+        .map(formatTag)
+        .filter((tag) => tag.length);
+      const value = values[values.length - 1];
+      return {
+        ...state,
+        value,
+        tags: uniquesOnly([
+          ...state.tags.slice(0, state.tags.length - state.offset),
+          ...newTags,
+          ...state.tags.slice(state.tags.length - state.offset),
+        ]),
+      };
+    }
+
+    case ACTIONS.SUBMIT_VALUE: {
+      const newTag = formatTag(state.value);
+      return newTag === ''
+        ? state
+        : {
+            ...state,
+            value: '',
+            tags: uniquesOnly([
+              ...state.tags.slice(0, state.tags.length - state.offset),
+              newTag,
+              ...state.tags.slice(state.tags.length - state.offset),
+            ]),
+          };
+    }
+
+    case ACTIONS.REMOVE_TAG: {
+      const removedTagIndex =
+        typeof action.payload === 'string'
+          ? // if there's a specified tag, remove that tag
+            state.tags.findIndex((tag) => tag === action.payload)
+          : // otherwise remove at the current offset
+            state.tags.length - 1 - state.offset;
+      return removedTagIndex < 0
+        ? state
+        : {
+            ...state,
+            tags: [
+              ...state.tags.slice(0, removedTagIndex),
+              ...state.tags.slice(removedTagIndex + 1, state.tags.length),
+            ],
+          };
+    }
+
+    case ACTIONS.INCREMENT_OFFSET: {
+      return {
+        ...state,
+        offset: clamp(state.offset + 1, { MIN: 0, MAX: state.tags.length }),
+      };
+    }
+
+    case ACTIONS.DECREMENT_OFFSET: {
+      return {
+        ...state,
+        offset: clamp(state.offset - 1, { MIN: 0, MAX: state.tags.length }),
+      };
+    }
+
+    case ACTIONS.RESET_OFFSET: {
+      return {
+        ...state,
+        offset: 0,
+      };
+    }
+    default:
+      return state;
+  }
+}
+
+export default reducer;

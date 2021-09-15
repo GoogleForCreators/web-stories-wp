@@ -93,12 +93,15 @@ describe('Publisher logo', () => {
       text: ERROR_TEXT,
     });
 
-    // Delete one logo
+    // Delete the second logo
     await expect(page).toClick(
       `button[aria-label^="Publisher logo menu for ${logoTwoName}"`
     );
     await expect(page).toClick(
-      'ul[aria-expanded="true"] button[aria-label="Delete"]'
+      '[data-testid="publisher-logo-1"] [data-testid="context-menu-list"] button',
+      {
+        text: 'Delete',
+      }
     );
     await expect(page).toClick('button', { text: 'Delete Logo' });
 

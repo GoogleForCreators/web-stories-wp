@@ -230,18 +230,6 @@ describe('buttons', () => {
     expect(saveStory).not.toHaveBeenCalled();
   });
 
-  it('should display post-publish dialog if recently published', async () => {
-    setupButtons({ meta: { isFreshlyPublished: true } });
-
-    const dismissButton = screen.getByRole('button', { name: 'Dismiss' });
-    expect(dismissButton).toBeInTheDocument();
-    fireEvent.click(dismissButton);
-
-    await waitForElementToBeRemoved(() =>
-      screen.getByRole('button', { name: 'Dismiss' })
-    );
-  });
-
   it('should display Switch to draft button when published', () => {
     const { saveStory } = setupButtons({
       story: { status: 'publish' },

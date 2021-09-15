@@ -300,26 +300,17 @@ jobs:
           coverage: none
           tools: composer
 
-      - name: Get Composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Setup Composer cache
-        uses: pat-s/always-upload-cache@v2.1.5
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-            ${{ runner.os }}-
-
       - name: Install dependencies
         run: |
           npm ci
-          composer install --prefer-dist --no-progress --no-interaction
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+      - name: Install PHP dependencies
+        uses: 'ramsey/composer-install@v1'
+        with:
+          composer-options: '--prefer-dist --no-progress --no-interaction'
 
       - name: Create release branch
         id: release_branch
@@ -603,8 +594,8 @@ jobs:
       # See https://developer.wordpress.org/plugins/wordpress-org/how-to-use-subversion/#create-tags-from-trunk
       - name: Create the SVN tag
         run: |
-          svn cp "$PLUGIN_REPO_URL/trunk" "$PLUGIN_REPO_URL/tags/$PLUGIN_VERSION"
-          svn commit -m "Tagging version $PLUGIN_VERSION" \
+          svn cp "$PLUGIN_REPO_URL/trunk" "$PLUGIN_REPO_URL/tags/$PLUGIN_VERSION" \
+           -m "Tagging version $PLUGIN_VERSION" \
            --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
         working-directory: ./svn
 

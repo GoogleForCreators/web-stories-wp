@@ -56,6 +56,7 @@ const RightClickMenu = () => {
             'web-stories'
           )}
           maskRef={maskRef}
+          onMouseDown={(evt) => evt.stopPropagation()}
         />
       </RightClickMenuContainer>
     </DirectionAware>,

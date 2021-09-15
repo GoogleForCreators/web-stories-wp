@@ -54,12 +54,25 @@ describe('Embedding hotlinked media', () => {
       name: 'Insert',
     });
 
+    // Try inserting from a string that's not a link at all.
+    await fixture.events.click(input);
+    await fixture.events.keyboard.type('d');
+    await fixture.events.click(insertBtn);
+    let dialog = screen.getByRole('dialog');
+    await waitFor(() => expect(dialog.textContent).toContain('Invalid link'));
+
+    // Delete the value, verify now the informative message show instead again.
+    await fixture.events.click(input, { clickCount: 3 });
+    await fixture.events.keyboard.press('Del');
+    dialog = screen.getByRole('dialog');
+    await waitFor(() => expect(dialog.textContent).toContain('You can insert'));
+
     await fixture.events.click(input);
     await fixture.events.keyboard.type('https://example.jpg');
     await fixture.events.click(insertBtn);
 
     await fixture.events.sleep(500);
-    const dialog = screen.getByRole('dialog');
+    dialog = screen.getByRole('dialog');
     await waitFor(() =>
       expect(dialog.textContent).toContain('Media failed to load')
     );

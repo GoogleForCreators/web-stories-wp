@@ -30,8 +30,8 @@ export function createStory(properties = {}) {
 }
 
 export const GET_MEDIA_RESPONSE_HEADER = {
-  'X-WP-Total': 1,
-  'X-WP-TotalPages': 1,
+  totalItems: 1,
+  totalPages: 1,
 };
 export const GET_MEDIA_RESPONSE_BODY = [
   {
@@ -60,6 +60,7 @@ export const GET_MEDIA_RESPONSE_BODY = [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
+      web_stories_trim_data: {},
     },
     is_muted: false,
     web_story_media_source: [2],

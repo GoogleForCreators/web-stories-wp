@@ -18,14 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState, useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
 import CircularProgress from '../../circularProgress';
-import PostPublishDialog from '../postPublishDialog';
 import Preview from './preview';
 import SwitchToDraft from './switchToDraft';
 import Update from './update';
@@ -70,7 +68,7 @@ function Loading() {
 }
 
 function Buttons() {
-  const { status, embedPostLink, link, isFreshlyPublished } = useStory(
+  const { status } = useStory(
     ({
       state: {
         story: { status, embedPostLink, link },
@@ -83,37 +81,24 @@ function Buttons() {
       isFreshlyPublished,
     })
   );
-  const [showDialog, setShowDialog] = useState(false);
-  useEffect(
-    () => setShowDialog(Boolean(isFreshlyPublished)),
-    [isFreshlyPublished]
-  );
 
   const isDraft = 'draft' === status;
 
   return (
-    <>
-      <ButtonList>
-        <List>
-          <IconWithSpinner>
-            <Preview />
-            <Loading />
-          </IconWithSpinner>
-          <Space />
-          {isDraft ? <Update /> : <SwitchToDraft />}
-          <Space />
-          {isDraft && <Publish />}
-          {!isDraft && <Update />}
-          <Space />
-        </List>
-      </ButtonList>
-      <PostPublishDialog
-        isOpen={showDialog}
-        onClose={() => setShowDialog(false)}
-        confirmURL={embedPostLink}
-        storyURL={link}
-      />
-    </>
+    <ButtonList>
+      <List>
+        <IconWithSpinner>
+          <Preview />
+          <Loading />
+        </IconWithSpinner>
+        <Space />
+        {isDraft ? <Update /> : <SwitchToDraft />}
+        <Space />
+        {isDraft && <Publish />}
+        {!isDraft && <Update />}
+        <Space />
+      </List>
+    </ButtonList>
   );
 }
 export default Buttons;

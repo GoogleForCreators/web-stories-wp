@@ -21,11 +21,12 @@
 // That's why the public path assignment is in its own dedicated module and imported here at the very top.
 // See https://webpack.js.org/guides/public-path/#on-the-fly
 import './publicPath';
+import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
 /**
  * External dependencies
  */
-import App from '@web-stories-wp/story-editor';
+import StoryEditor from '@web-stories-wp/story-editor';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
 import { FlagsProvider } from 'flagged';
@@ -35,7 +36,8 @@ import { initializeTracking } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import './style.css'; // This way the general editor styles are loaded before all the component styles.
+import * as apiCallbacks from './api';
+import { PostPublishDialog } from './components';
 
 /**
  * Initializes the web stories editor.
@@ -54,10 +56,17 @@ const initialize = (id, config, flags) => {
 
   initializeTracking('Editor');
 
+  const editorConfig = {
+    ...config,
+    apiCallbacks,
+  };
+
   render(
     <FlagsProvider features={flags}>
       <StrictMode>
-        <App config={config} />
+        <StoryEditor config={editorConfig}>
+          <PostPublishDialog />
+        </StoryEditor>
       </StrictMode>
     </FlagsProvider>,
     appElement

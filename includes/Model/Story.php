@@ -63,12 +63,35 @@ class Story {
 	 * @var string
 	 */
 	protected $url = '';
+
 	/**
 	 * Markup.
 	 *
 	 * @var string
 	 */
 	protected $markup = '';
+
+	/**
+	 * Publisher name.
+	 *
+	 * @var string
+	 */
+	protected $publisher_name = '';
+
+	/**
+	 * Publisher logo.
+	 *
+	 * @var string
+	 */
+	protected $publisher_logo;
+
+	/**
+	 * Publisher logo size.
+	 *
+	 * @var array
+	 */
+	protected $publisher_logo_size = [];
+
 	/**
 	 * Poster url - portrait.
 	 *
@@ -110,13 +133,14 @@ class Story {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int|WP_Post $_post Post id or Post object.
+	 * @param int|null|WP_Post $_post Post id or Post object.
 	 *
 	 * @return bool
 	 */
 	public function load_from_post( $_post ): bool {
-		$post = get_post( $_post );
+		$this->publisher_name = get_bloginfo( 'name' );
 
+		$post = get_post( $_post );
 		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
 			return false;
 		}
@@ -131,6 +155,13 @@ class Story {
 
 		if ( 0 !== $thumbnail_id ) {
 			$this->poster_portrait = (string) wp_get_attachment_image_url( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+		}
+
+		$publisher_logo_id = (int) get_post_meta( $this->id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
+		if ( 0 !== $publisher_logo_id ) {
+			list ( $src, $width, $height ) = wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
+			$this->publisher_logo_size     = [ $width, $height ];
+			$this->publisher_logo          = $src;
 		}
 
 		return true;
@@ -216,4 +247,77 @@ class Story {
 		return (string) $this->date;
 	}
 
+	/**
+	 * Returns the publisher name.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string Publisher Name.
+	 */
+	public function get_publisher_name(): string {
+		/**
+		 * Filters the publisher's name
+		 *
+		 * @since 1.7.0
+		 *
+		 * @param string $name Publisher Name.
+		 */
+		$this->publisher_name = apply_filters( 'web_stories_publisher_name', $this->publisher_name );
+
+		return esc_attr( $this->publisher_name );
+	}
+
+	/**
+	 * Returns the story's publisher logo URL.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string Publisher logo URL.
+	 */
+	public function get_publisher_logo_url(): string {
+		/**
+		 * Filters the publisher logo URL.
+		 *
+		 * @since 1.0.0
+		 * @since 1.1.0 The second parameter was deprecated.
+		 * @since 1.12.0 The second parameter was repurposed to provide the current story ID.
+		 *
+		 * @param string|null  $url  Publisher logo URL.
+		 * @param int|null     $id   Story ID if available.
+		 */
+		return (string) apply_filters( 'web_stories_publisher_logo', $this->publisher_logo, $this->id );
+	}
+
+	/**
+	 * Returns the story's publisher logo size.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return array {
+	 *     Publisher logo size.
+	 *
+	 *     Array of image data, or empty array if no image is available.
+	 *
+	 *     @type int    $1 Image width in pixels.
+	 *     @type int    $2 Image height in pixels.
+	 * }
+	 */
+	public function get_publisher_logo_size(): array {
+		/**
+		 * Filters the publisher logo size.
+		 *
+		 * @since 1.12.0
+		 *
+		 * @param array   $size {
+		 *     Publisher logo size.
+		 *
+		 *     Array of image data, or empty array if no image is available.
+		 *
+		 *     @type int    $1 Image width in pixels.
+		 *     @type int    $2 Image height in pixels.
+		 * }
+		 * @param int|null $id   Story ID if available.
+		 */
+		return (array) apply_filters( 'web_stories_publisher_logo_size', $this->publisher_logo_size, $this->id );
+	}
 }

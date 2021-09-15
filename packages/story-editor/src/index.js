@@ -17,13 +17,15 @@
 /**
  * Internal dependencies
  */
-import App from './editorApp';
+import StoryEditor from './storyEditor';
+import Dialog from './components/dialog';
 
 export * from './components/transform';
 export * from './app/config';
+export * from './app/story';
 export * from './components/previewPage';
+export * from './testUtils';
 
-export { default as base64Encode } from './utils/base64Encode';
 export { default as getStoryPropsToSave } from './app/story/utils/getStoryPropsToSave';
 export { default as FontContext } from './app/font/context';
 export { default as useLoadFontFiles } from './app/font/actions/useLoadFontFiles';
@@ -33,4 +35,5 @@ export { default as theme } from './theme'; // @todo To be refactored.
 export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 export { ConfigProvider as EditorConfigProvider } from './app/config';
 
-export default App;
+export { Dialog };
+export default StoryEditor;

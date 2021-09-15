@@ -243,7 +243,7 @@ function MediaPane(props) {
       if (
         !resource.local &&
         allowedVideoMimeTypes.includes(resource.mimeType) &&
-        !resource.isMuted
+        resource.isMuted === null
       ) {
         updateVideoIsMuted(resource.id, resource.src);
       }
