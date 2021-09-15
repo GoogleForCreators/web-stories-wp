@@ -325,7 +325,6 @@ class Editor extends Service_Base {
 					'link'          => '/web-stories/v1/link/',
 					'statusCheck'   => '/web-stories/v1/status-check/',
 					'taxonomies'    => '/wp/v2/taxonomies/',
-					'taxonomyBase'  => '/wp/v2/',
 					'metaBoxes'     => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
 					'storyLocking'  => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],

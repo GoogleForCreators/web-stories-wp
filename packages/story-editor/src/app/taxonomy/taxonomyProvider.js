@@ -125,8 +125,12 @@ function TaxonomyProvider(props) {
   const addSearchResultsToCache = useCallback(
     async (taxonomy, name) => {
       let response = [];
+      const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href;
+      if (!termsEndpoint) {
+        return;
+      }
       try {
-        response = await getTaxonomyTerm(taxonomy.rest_base, {
+        response = await getTaxonomyTerm(termsEndpoint, {
           search: name,
           // This is the per_page value Gutenberg is using
           per_page: 20,
@@ -156,9 +160,14 @@ function TaxonomyProvider(props) {
         return;
       }
 
+      const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href;
+      if (!termsEndpoint) {
+        return;
+      }
+
       // create term and add to cache
       try {
-        const newTerm = await createTaxonomyTerm(taxonomy.rest_base, termName);
+        const newTerm = await createTaxonomyTerm(termsEndpoint, termName);
         const incomingCache = {
           [taxonomy.rest_base]: { [newTerm.slug]: newTerm },
         };

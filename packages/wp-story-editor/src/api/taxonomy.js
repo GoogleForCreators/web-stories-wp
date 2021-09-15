@@ -43,28 +43,26 @@ export function getTaxonomies(postType, path) {
 /**
  * Get a taxonomy term.
  *
- * @param {string} taxonomy Taxonomy slug.
+ * @param {string} endpoint absolute url to interact with taxonomy
  * @param {Object} args Additional args.
- * @param {string} path API path.
  * @return {Promise} Term promise.
  */
-export function getTaxonomyTerm(taxonomy, args = {}, path) {
+export function getTaxonomyTerm(endpoint, args = {}) {
   return apiFetch({
-    path: addQueryArgs(`${path}${taxonomy}/`, args),
+    url: addQueryArgs(endpoint, args),
   });
 }
 
 /**
  * Create a new taxonomy term.
  *
- * @param {string} taxonomy Taxonomy slug.
+ * @param {string} endpoint absolute url to interact with taxonomy
  * @param {string} name Term name.
- * @param {string} path API path.
  * @return {Promise} Term promise.
  */
-export function createTaxonomyTerm(taxonomy, name, path) {
+export function createTaxonomyTerm(endpoint, name) {
   return apiFetch({
-    path: addQueryArgs(`${path}${taxonomy}/`, {
+    url: addQueryArgs(endpoint, {
       name,
     }),
     method: 'POST',
