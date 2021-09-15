@@ -46,6 +46,11 @@ import {
   filterOptionsByLabelText,
 } from './utils';
 
+const Container = styled.div`
+  margin-bottom: 8px;
+  display: block;
+`;
+
 const Label = styled(Text).attrs({
   forwardedAs: 'label',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -128,6 +133,7 @@ const OptionPropType = {
 Option.propTypes = OptionPropType;
 
 const HierarchicalInput = ({
+  className,
   label,
   noOptionsText = __('Category Not Found', 'web-stories'),
   options,
@@ -187,8 +193,11 @@ const HierarchicalInput = ({
     }
   }, [debouncedSpeak, filteredOptions, inputText, previousInput]);
 
+  const showOptionArea =
+    Boolean(filteredOptions.length) || Boolean(inputText.length);
+
   return (
-    <>
+    <Container className={className}>
       <Input
         value={inputText}
         onChange={handleInputChange}
@@ -201,31 +210,34 @@ const HierarchicalInput = ({
         type="search"
         {...inputProps}
       />
-      <Border>
-        <DirectionAware>
-          <CheckboxArea role="group">
-            {filteredOptions.length ? (
-              filteredOptions.map((option) => (
-                <Option
-                  key={option.id}
-                  {...option}
-                  onChange={handleCheckboxChange}
-                />
-              ))
-            ) : (
-              <NoResultsText
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              >
-                {noOptionsText}
-              </NoResultsText>
-            )}
-          </CheckboxArea>
-        </DirectionAware>
-      </Border>
-    </>
+      {showOptionArea && (
+        <Border>
+          <DirectionAware>
+            <CheckboxArea role="group">
+              {filteredOptions.length ? (
+                filteredOptions.map((option) => (
+                  <Option
+                    key={option.id}
+                    {...option}
+                    onChange={handleCheckboxChange}
+                  />
+                ))
+              ) : (
+                <NoResultsText
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                >
+                  {noOptionsText}
+                </NoResultsText>
+              )}
+            </CheckboxArea>
+          </DirectionAware>
+        </Border>
+      )}
+    </Container>
   );
 };
 HierarchicalInput.propTypes = {
+  className: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   label: PropTypes.string.isRequired,
   noOptionsText: PropTypes.string,
