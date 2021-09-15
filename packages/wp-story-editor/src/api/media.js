@@ -59,9 +59,14 @@ export function getMedia(
     apiPath = addQueryArgs(apiPath, { cache_bust: true });
   }
 
-  return apiFetch({ path: apiPath }).then((response) => {
-    return { data: response.body, headers: response.headers };
-  });
+  return apiFetch({ path: apiPath }).then(({ body, headers }) => ({
+    data: body,
+    headers: {
+      ...headers,
+      totalItems: headers['X-WP-Total'],
+      totalPages: headers['X-WP-TotalPages'],
+    },
+  }));
 }
 
 /**
