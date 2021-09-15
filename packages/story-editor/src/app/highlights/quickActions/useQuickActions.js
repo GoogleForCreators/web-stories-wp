@@ -30,12 +30,8 @@ import updateProperties from '../../../components/inspector/design/updatePropert
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import {
-  useStory,
-  useStoryTriggersDispatch,
-  STORY_EVENTS,
-  ELEMENT_TYPES,
-} from '../../story';
+import { ELEMENT_TYPES } from '../../../elements';
+import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
