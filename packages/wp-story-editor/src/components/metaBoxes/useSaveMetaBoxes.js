@@ -18,11 +18,12 @@
  * External dependencies
  */
 import { useEffect, useState, usePrevious } from '@web-stories-wp/react';
-import { useAPI, useConfig } from '@web-stories-wp/story-editor';
+import { useConfig } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
+import { saveMetaBoxes } from '../../api/metaboxes';
 import useMetaBoxes from './useMetaBoxes';
 
 /**
@@ -44,10 +45,6 @@ function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
   const {
     api: { metaBoxes: apiUrl },
   } = useConfig();
-
-  const {
-    actions: { saveMetaBoxes },
-  } = useAPI();
 
   const [isSavingMetaBoxes, setIsSavingMetaBoxes] = useState(false);
 
@@ -108,7 +105,6 @@ function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
     isAutoSavingStory,
     wasAutoSaving,
     isSavingMetaBoxes,
-    saveMetaBoxes,
     locations,
     apiUrl,
   ]);
