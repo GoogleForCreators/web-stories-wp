@@ -17,13 +17,20 @@
 /**
  * External dependencies
  */
-import { createNewStory, publishStory } from '@web-stories-wp/e2e-test-utils';
+import {
+  createNewStory,
+  publishStory,
+  skipSuiteOnFirefox,
+} from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
 describe('Pre-Publish Checklist', () => {
-  it.only('should show the checklist', async () => {
+  // Thew window size for Firefox is actually smaller than the viewport,
+  // causing the checklist button to be off-screen, thus failing the test.
+  skipSuiteOnFirefox();
+
+  it('should show the checklist', async () => {
     await createNewStory();
-    await expect(page).toMatchElement('button[aria-label="Checklist"]');
     await expect(page).toClick('button[aria-label="Checklist"]');
     await expect(page).toMatch(/You are all set for now/);
 

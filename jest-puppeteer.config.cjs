@@ -36,4 +36,5 @@ module.exports = {
     product: PUPPETEER_PRODUCT,
     args: 'chrome' === PUPPETEER_PRODUCT ? ARGS_CHROME : ARGS_FIREFOX,
   },
+  extraPrefsFirefox: {},
 };
