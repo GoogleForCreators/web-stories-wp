@@ -38,7 +38,7 @@ function OutputStory({
     autoAdvance,
     defaultPageDuration,
     backgroundAudio,
-    publisherLogo: { url: publisherLogo },
+    publisherLogo: { url: publisherLogo } = {},
   },
   pages,
   metadata: { publisher },
