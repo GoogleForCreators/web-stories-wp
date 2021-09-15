@@ -128,10 +128,7 @@ describe('Story output', () => {
         },
       ],
       metadata: {
-        publisher: {
-          name: 'Publisher Name',
-          logo: 'https://example.com/logo.png',
-        },
+        publisher: 'Publisher Name',
       },
     };
 
@@ -193,10 +190,7 @@ describe('Story output', () => {
         },
       ],
       metadata: {
-        publisher: {
-          name: 'Publisher Name',
-          logo: 'https://example.com/logo.png',
-        },
+        publisher: 'Publisher Name',
       },
     };
 
@@ -238,10 +232,7 @@ describe('Story output', () => {
         },
         pages: [],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 
@@ -290,10 +281,7 @@ describe('Story output', () => {
           },
         ],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 
@@ -362,10 +350,7 @@ describe('Story output', () => {
           },
         ],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 
@@ -437,10 +422,7 @@ describe('Story output', () => {
           },
         ],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 
@@ -497,10 +479,7 @@ describe('Story output', () => {
           },
         ],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 

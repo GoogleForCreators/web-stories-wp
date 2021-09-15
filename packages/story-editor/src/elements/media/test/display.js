@@ -36,32 +36,42 @@ describe('MediaDisplay', () => {
 
   beforeEach(() => {
     imageElement = {
-      id: '1',
+      id: 'foo',
       type: 'image',
+      mimeType: 'image/png',
       x: 0,
       y: 0,
       width: 80,
       height: 100,
+      flip: {
+        vertical: false,
+        horizontal: false,
+      },
       rotationAngle: 0,
       scale: 100,
       focalX: 50,
       focalY: 50,
+      isBackground: false,
       resource: {
+        id: 123,
         type: 'image',
         mimeType: 'image/png',
-        src: 'https://example.com/image1',
+        src: 'https://example.com/image1.png',
         width: 1000,
         height: 800,
+        alt: '',
         sizes: {
           medium: {
-            source_url: 'https://example.com/image1-mid',
+            source_url: 'https://example.com/image1-mid.png',
             width: 500,
             height: 400,
+            mime_type: 'image/png',
           },
           full: {
-            source_url: 'https://example.com/image1',
+            source_url: 'https://example.com/image1.png',
             width: 1000,
             height: 800,
+            mime_type: 'image/png',
           },
         },
       },
@@ -77,6 +87,9 @@ describe('MediaDisplay', () => {
       height: 1920,
       width: 1080,
       rotationAngle: 0,
+      cale: 100,
+      focalX: 50,
+      focalY: 50,
       isBackground: false,
       loop: true,
       flip: {
@@ -92,6 +105,7 @@ describe('MediaDisplay', () => {
         height: 1920,
         width: 1080,
         length: 99,
+        alt: '',
       },
     };
 
@@ -108,7 +122,7 @@ describe('MediaDisplay', () => {
     const img = container.querySelector('img');
 
     expect(img.srcset).toBe(
-      'https://example.com/image1 1000w,https://example.com/image1-mid 500w'
+      'https://example.com/image1.png 1000w,https://example.com/image1-mid.png 500w'
     );
     // Take optimized image loading into account, fullsize uses original image
     expect(img.src).toBe(imageElement.resource.src);
