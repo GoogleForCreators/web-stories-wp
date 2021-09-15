@@ -42,10 +42,12 @@ function APIProvider({ children }) {
       currentUser,
       storyLocking,
       pageTemplates: customPageTemplates,
+      taxonomies,
     },
     apiCallbacks,
     encodeMarkup,
     cdnURL,
+    postType,
   } = useConfig();
 
   const {
@@ -71,6 +73,9 @@ function APIProvider({ children }) {
     addPageTemplate,
     deletePageTemplate,
     getHotlinkInfo,
+    getTaxonomies,
+    getTaxonomyTerm,
+    createTaxonomyTerm,
   } = apiCallbacks;
 
   const pageTemplates = useRef({
@@ -78,7 +83,7 @@ function APIProvider({ children }) {
     withoutImages: [],
   });
 
-  const actions = {};
+  const actions = { getTaxonomyTerm, createTaxonomyTerm };
 
   actions.getPageTemplates = useCallback(
     async ({ showImages = false } = {}) => {
@@ -209,6 +214,11 @@ function APIProvider({ children }) {
   actions.deletePageTemplate = useCallback(
     (id) => deletePageTemplate(id, customPageTemplates),
     [customPageTemplates, deletePageTemplate]
+  );
+
+  actions.getTaxonomies = useCallback(
+    () => getTaxonomies(postType, taxonomies),
+    [postType, taxonomies, getTaxonomies]
   );
 
   // If some api callbacks have not been provided via configuration

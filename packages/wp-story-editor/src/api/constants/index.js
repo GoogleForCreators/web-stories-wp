@@ -34,7 +34,7 @@ export const STORY_FIELDS = [
 ].join(',');
 
 export const STORY_EMBED =
-  'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo';
+  'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo,wp:term';
 
 export const MEDIA_FIELD = [
   'id',
