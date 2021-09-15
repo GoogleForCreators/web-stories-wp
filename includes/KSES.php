@@ -509,6 +509,9 @@ class KSES extends Service_Base {
 				'supports-landscape'   => true,
 				'title'                => true,
 			],
+			'amp-story-captions'        => [
+				'height' => true,
+			],
 			'amp-story-page'            => [
 				'auto-advance-after' => true,
 				'background-audio'   => true,
@@ -649,9 +652,9 @@ class KSES extends Service_Base {
 		if ( count( $arrays ) < 2 ) {
 			if ( [] === $arrays ) {
 				return $arrays;
-			} else {
-				return array_shift( $arrays );
 			}
+
+			return array_shift( $arrays );
 		}
 
 		$merged = array_shift( $arrays );
@@ -664,7 +667,6 @@ class KSES extends Service_Base {
 					$merged[ $key ] = $value;
 				}
 			}
-			unset( $key, $value );
 		}
 
 		return $merged;

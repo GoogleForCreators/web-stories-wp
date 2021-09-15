@@ -421,6 +421,10 @@ class KSES extends TestCase {
 				'<amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#0047FF" cta-image="https://example.com/32x32icon.jpg" cta-accent-element="background"><a href="https://www.google.com">Read More</a></amp-story-page-outlink>',
 				'<amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#0047FF" cta-image="https://example.com/32x32icon.jpg" cta-accent-element="background"><a href="https://www.google.com">Read More</a></amp-story-page-outlink>',
 			],
+			'Video Captions'                   => [
+				'<amp-story-captions id="video-123-captions" layout="fixed-height" height="100" />',
+				'<amp-story-captions id="video-123-captions" layout="fixed-height" height="100" />',
+			],
 		];
 	}
 }
