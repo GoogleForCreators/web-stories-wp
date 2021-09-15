@@ -50,7 +50,7 @@ import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cr
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
 
-function StoryEditor({ config, handleIsSaving, children }) {
+function StoryEditor({ config, children }) {
   const { storyId, isRTL } = config;
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
@@ -63,10 +63,7 @@ function StoryEditor({ config, handleIsSaving, children }) {
                 <Media3pApiProvider>
                   <HistoryProvider size={50}>
                     <SnackbarProvider>
-                      <StoryProvider
-                        storyId={storyId}
-                        handleIsSaving={handleIsSaving}
-                      >
+                      <StoryProvider storyId={storyId}>
                         <CurrentUserProvider>
                           <PostLock />
                           <FontProvider>
@@ -104,7 +101,6 @@ function StoryEditor({ config, handleIsSaving, children }) {
 
 StoryEditor.propTypes = {
   config: PropTypes.object.isRequired,
-  handleIsSaving: PropTypes.func,
   children: PropTypes.node,
 };
 

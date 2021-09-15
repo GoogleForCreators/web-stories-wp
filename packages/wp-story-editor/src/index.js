@@ -59,7 +59,7 @@ const initialize = (id, config, flags) => {
     <FlagsProvider features={flags}>
       <StrictMode>
         <MetaBoxesProvider>
-          <StoryEditor config={config} handleIsSaving={() => {}}>
+          <StoryEditor config={config}>
             <Layout />
             <PostPublishDialog />
           </StoryEditor>

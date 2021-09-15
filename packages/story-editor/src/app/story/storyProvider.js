@@ -42,7 +42,7 @@ import { StoryTriggersProvider } from './storyTriggers';
  */
 const EMPTY_ARRAY = [];
 
-function StoryProvider({ storyId, handleIsSaving, children }) {
+function StoryProvider({ storyId, children }) {
   const { isDemo } = useConfig();
   const [hashPageId, setHashPageId] = useHashState('page', null);
   const {
@@ -156,13 +156,7 @@ function StoryProvider({ storyId, handleIsSaving, children }) {
       animationState,
       capabilities,
       meta: {
-        isSaving: handleIsSaving
-          ? handleIsSaving({
-              story,
-              isSaving,
-              isAutoSaving,
-            })
-          : isSaving || isAutoSaving,
+        isSaving: isSaving || isAutoSaving,
         isFreshlyPublished,
       },
     }),
@@ -182,7 +176,6 @@ function StoryProvider({ storyId, handleIsSaving, children }) {
       isSaving,
       isAutoSaving,
       isFreshlyPublished,
-      handleIsSaving,
     ]
   );
 
@@ -207,7 +200,6 @@ function StoryProvider({ storyId, handleIsSaving, children }) {
 
 StoryProvider.propTypes = {
   children: PropTypes.node,
-  handleIsSaving: PropTypes.func,
   storyId: PropTypes.number,
 };
 
