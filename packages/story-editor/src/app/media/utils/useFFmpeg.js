@@ -20,7 +20,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
-import { getFileName } from '@web-stories-wp/media';
+import { getFileName, getTypeFromMime } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -298,7 +298,8 @@ function useFFmpeg() {
       try {
         ffmpeg = await getFFmpegInstance(file);
 
-        const ext = fileExt || MEDIA_TRANSCODED_FILE_TYPE;
+        const ext =
+          fileExt || getTypeFromMime(file?.type) || MEDIA_TRANSCODED_FILE_TYPE;
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileName(file) + '-trimmed.' + ext;
@@ -352,7 +353,8 @@ function useFFmpeg() {
 
       try {
         ffmpeg = await getFFmpegInstance(file);
-        const ext = fileExt || MEDIA_TRANSCODED_FILE_TYPE;
+        const ext =
+          fileExt || getTypeFromMime(file?.type) || MEDIA_TRANSCODED_FILE_TYPE;
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileName(file) + '-muted.' + ext;
