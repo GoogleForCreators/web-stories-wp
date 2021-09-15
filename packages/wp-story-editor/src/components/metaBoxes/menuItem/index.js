@@ -47,6 +47,10 @@ const Space = styled.span`
   width: 8px;
 `;
 
+const Item = styled.div`
+  order: -1;
+`;
+
 function MenuItem() {
   const { metaBoxesVisible, toggleMetaBoxesVisible, hasMetaBoxes } =
     useMetaBoxes(({ state, actions }) => ({
@@ -67,7 +71,7 @@ function MenuItem() {
   }
 
   return (
-    <>
+    <Item>
       <Box>
         <Tooltip
           title={__('Third-Party Meta Boxes', 'web-stories')}
@@ -86,7 +90,7 @@ function MenuItem() {
         </Tooltip>
       </Box>
       <Space />
-    </>
+    </Item>
   );
 }
 

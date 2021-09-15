@@ -81,7 +81,7 @@ function MetaBoxes() {
       menuButtonContainer.current =
         document.getElementById('primary-menu-items');
       updateMenuButtonState(null !== menuButtonContainer.current);
-    }, 1000);
+    }, 800); // @todo This isn't ideal and needs to be removed after adding Slot/Fill.
 
     return () => {
       clearTimeout(timeout);
@@ -104,7 +104,7 @@ function MetaBoxes() {
     };
   }, [postType]);
 
-  if (!hasMetaBoxes || !metaBoxesVisible) {
+  if (!hasMetaBoxes) {
     return null;
   }
 
