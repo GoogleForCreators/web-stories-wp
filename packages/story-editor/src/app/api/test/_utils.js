@@ -30,8 +30,8 @@ export function createStory(properties = {}) {
 }
 
 export const GET_MEDIA_RESPONSE_HEADER = {
-  'X-WP-Total': 1,
-  'X-WP-TotalPages': 1,
+  totalItems: 1,
+  totalPages: 1,
 };
 export const GET_MEDIA_RESPONSE_BODY = [
   {

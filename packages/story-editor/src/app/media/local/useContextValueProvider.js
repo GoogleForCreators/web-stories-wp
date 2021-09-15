@@ -90,8 +90,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         cacheBust: cacheBust,
       })
         .then(({ data, headers }) => {
-          const totalPages = parseInt(headers['X-WP-TotalPages']);
-          const totalItems = parseInt(headers['X-WP-Total']);
+          const totalPages = parseInt(headers.totalPages);
+          const totalItems = parseInt(headers.totalItems);
           const mediaArray = data.map(getResourceFromAttachment);
           const hasMore = p < totalPages;
           callback({
