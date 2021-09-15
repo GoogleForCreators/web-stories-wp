@@ -18,14 +18,13 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
+import { APIContext, ConfigContext } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import APIContext from '../../../api/context';
-import ConfigContext from '../../../config/context';
 import useSaveMetaBoxes from '../useSaveMetaBoxes';
-import { MetaBoxesProvider } from '../../../../integrations/wordpress/metaBoxes';
+import MetaBoxesProvider from '../metaBoxesProvider';
 
 const saveMetaBoxes = jest.fn().mockResolvedValue(true);
 
@@ -93,6 +92,10 @@ describe('useSaveMetaBoxes', () => {
       metaBoxes: {
         normal: [{}],
         advanced: [{}],
+      },
+      api: {
+        metaBoxes:
+          'http://localhost:10003/wp-admin/post.php?post=5&action=edit&meta-box-loader=1&meta-box-loader-nonce=d19ae41860',
       },
     };
 
