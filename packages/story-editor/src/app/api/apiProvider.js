@@ -37,7 +37,6 @@ function APIProvider({ children }) {
       link,
       users,
       statusCheck,
-      metaBoxes,
       currentUser,
       storyLocking,
       pageTemplates: customPageTemplates,
@@ -63,7 +62,6 @@ function APIProvider({ children }) {
     getAuthors,
     getCurrentUser,
     updateCurrentUser,
-    saveMetaBoxes,
     getStatusCheck,
     getCustomPageTemplates,
     addPageTemplate,
@@ -175,12 +173,6 @@ function APIProvider({ children }) {
   actions.updateCurrentUser = useCallback(
     (data) => updateCurrentUser(data, currentUser),
     [currentUser, updateCurrentUser]
-  );
-
-  // @todo Move to wp-story-editor along with meta-boxes.
-  actions.saveMetaBoxes = useCallback(
-    (story, formData) => saveMetaBoxes(story, formData, metaBoxes),
-    [metaBoxes, saveMetaBoxes]
   );
 
   // @todo Move to wp-story-editor along with StatusCheck component.

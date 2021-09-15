@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useEffect, useState, usePrevious } from '@web-stories-wp/react';
-import { useAPI } from '@web-stories-wp/story-editor';
+import { useAPI, useConfig } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
@@ -31,15 +31,19 @@ import useMetaBoxes from './useMetaBoxes';
  * @see https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L24-L126
  * @param {Object} props Hook props.
  * @param {Object} props.story Story object.
- * @param {boolean} props.isSaving Whether saving is in progress.
- * @param {boolean} props.isAutoSaving Whether autosaving is in progress.
+ * @param {boolean} props.isSavingStory Whether saving is in progress.
+ * @param {boolean} props.isAutoSavingStory Whether autosaving is in progress.
  * @return {{isSavingMetaBoxes: boolean}} Metaboxes status.
  */
-function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
+function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
   const { hasMetaBoxes, locations } = useMetaBoxes(({ state }) => ({
     hasMetaBoxes: state.hasMetaBoxes,
     locations: state.locations,
   }));
+
+  const {
+    api: { metaBoxes: apiUrl },
+  } = useConfig();
 
   const {
     actions: { saveMetaBoxes },
@@ -47,15 +51,15 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
 
   const [isSavingMetaBoxes, setIsSavingMetaBoxes] = useState(false);
 
-  const wasSaving = usePrevious(isSaving);
-  const wasAutoSaving = usePrevious(isAutoSaving);
+  const wasSaving = usePrevious(isSavingStory);
+  const wasAutoSaving = usePrevious(isAutoSavingStory);
 
   // Save metaboxes when performing a full save on the post.
   useEffect(() => {
     if (
       !hasMetaBoxes ||
-      isSaving ||
-      isAutoSaving ||
+      isSavingStory ||
+      isAutoSavingStory ||
       isSavingMetaBoxes ||
       !wasSaving ||
       wasAutoSaving
@@ -91,7 +95,7 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
       }, new global.FormData());
 
       setIsSavingMetaBoxes(true);
-      await saveMetaBoxes(story, formData);
+      await saveMetaBoxes(story, formData, apiUrl);
       setIsSavingMetaBoxes(false);
     }
 
@@ -99,13 +103,14 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
   }, [
     hasMetaBoxes,
     story,
-    isSaving,
+    isSavingStory,
     wasSaving,
-    isAutoSaving,
+    isAutoSavingStory,
     wasAutoSaving,
     isSavingMetaBoxes,
     saveMetaBoxes,
     locations,
+    apiUrl,
   ]);
 
   return {

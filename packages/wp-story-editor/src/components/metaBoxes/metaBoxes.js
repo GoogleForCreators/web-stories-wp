@@ -81,12 +81,12 @@ function MetaBoxes() {
       menuButtonContainer.current =
         document.getElementById('primary-menu-items');
       updateMenuButtonState(null !== menuButtonContainer.current);
-    }, 800); // @todo This isn't ideal and needs to be removed after adding Slot/Fill.
+    }, 1500); // @todo This isn't ideal and needs to be removed after adding Slot/Fill.
 
     return () => {
       clearTimeout(timeout);
     };
-  }, []);
+  }, [hasMetaBoxes]);
 
   useEffect(() => {
     // Allow toggling metaboxes panels.
