@@ -124,7 +124,7 @@ function PageAttachmentPanel() {
         });
       })
       .catch(() => {
-        // We're allowing to save invalid URLs, however, remove image in this case.
+        // We're allowing to save invalid URLs, however, remove icon in this case.
         updatePageAttachment({ url: value, icon: '' });
         setIsInvalidUrl(true);
       })
@@ -204,7 +204,7 @@ function PageAttachmentPanel() {
   const checkboxId = `cb-${uuidv4()}`;
 
   let hint;
-  if (displayWarning || !hasValidUrl) {
+  if (displayWarning || isInvalidUrl) {
     hint = displayWarning
       ? __(
           'Links cannot reside below the dashed line when a page attachment is present. If you add a page attachment, your viewers will not be able to click on the link.',
@@ -233,7 +233,7 @@ function PageAttachmentPanel() {
           'Type an address to add a page attachment link',
           'web-stories'
         )}
-        hasError={displayWarning || !hasValidUrl}
+        hasError={displayWarning || isInvalidUrl}
         hint={hint}
       />
       {hasValidUrl && (
