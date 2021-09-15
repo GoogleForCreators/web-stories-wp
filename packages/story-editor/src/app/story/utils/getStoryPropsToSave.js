@@ -35,7 +35,7 @@ function getStoryPropsToSave({ story, pages, metadata }) {
     'autoAdvance',
     'defaultPageDuration',
     'backgroundAudio',
-    ...story.taxonomies,
+    ...(story.taxonomies || []),
   ]);
 
   const content = getStoryMarkup(story, pages, metadata);
