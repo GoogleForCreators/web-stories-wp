@@ -17,20 +17,24 @@
 /**
  * External dependencies
  */
-import {
-  createNewStory,
-  publishStory,
-  triggerHighPriorityChecklistSection,
-} from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, publishStory } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
 describe('Pre-Publish Checklist', () => {
-  it('should show the checklist', async () => {
+  it.only('should show the checklist', async () => {
     await createNewStory();
+    await expect(page).toMatchElement('button[aria-label="Checklist"]');
     await expect(page).toClick('button[aria-label="Checklist"]');
-    await triggerHighPriorityChecklistSection();
+    await expect(page).toMatch(/You are all set for now/);
+
+    // The high priority section of the checklist will show once the story reaches 5 pages.
+    await expect(page).toClick('button[aria-label="Add New Page"]');
+    await expect(page).toClick('button[aria-label="Add New Page"]');
+    await expect(page).toClick('button[aria-label="Add New Page"]');
+    await expect(page).toClick('button[aria-label="Add New Page"]');
+
     await expect(page).toMatchElement(
-      '#pre-publish-checklist[data-isexpanded="true"]'
+      '[aria-label="Potential Story issues by category"][data-isexpanded="true"]'
     );
   });
 
@@ -46,7 +50,7 @@ describe('Pre-Publish Checklist', () => {
 
     await expect(page).toClick('button[aria-label^="Checklist: "]');
     await expect(page).toMatchElement(
-      '#pre-publish-checklist[data-isexpanded="true"]'
+      '[aria-label="Potential Story issues by category"][data-isexpanded="true"]'
     );
     await expect(page).toMatch('Add poster image');
     await percySnapshot(page, 'Prepublish checklist');

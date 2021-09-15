@@ -98,7 +98,6 @@ const ThroughputPopup = forwardRef(function ThroughputPopup(
             popupId={POPUP_ID}
           />
           <Tablist
-            id="pre-publish-checklist"
             data-isexpanded={isOpen}
             aria-label={__('Potential Story issues by category', 'web-stories')}
           >
