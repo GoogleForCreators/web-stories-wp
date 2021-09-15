@@ -29,9 +29,10 @@ ResourcePropTypes.resourceSize = PropTypes.shape({
   height: PropTypes.number.isRequired,
 });
 
-ResourcePropTypes.imageResourceSizes = PropTypes.objectOf(
-  ResourcePropTypes.resourceSize
-);
+ResourcePropTypes.imageResourceSizes = PropTypes.oneOfType([
+  PropTypes.array,
+  PropTypes.objectOf(ResourcePropTypes.resourceSize),
+]);
 
 ResourcePropTypes.videoResourceSizes = PropTypes.oneOfType([
   PropTypes.array,
