@@ -41,10 +41,12 @@ function APIProvider({ children }) {
       currentUser,
       storyLocking,
       pageTemplates: customPageTemplates,
+      taxonomies,
     },
     apiCallbacks,
     encodeMarkup,
     cdnURL,
+    postType,
   } = useConfig();
 
   const {
@@ -206,6 +208,12 @@ function APIProvider({ children }) {
     (id) => deletePageTemplate(id, customPageTemplates),
     [customPageTemplates, deletePageTemplate]
   );
+
+    const getTaxonomies = useCallback(() => {
+    return apiFetch({
+      path: addQueryArgs(taxonomies, { type: postType }),
+    });
+  }, [taxonomies, postType]);
 
   // If some api callbacks have not been provided via configuration
   // set those actions as undefined, so we can stop them conditionally.

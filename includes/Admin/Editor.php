@@ -324,6 +324,7 @@ class Editor extends Service_Base {
 					'hotlink'       => '/web-stories/v1/hotlink/',
 					'link'          => '/web-stories/v1/link/',
 					'statusCheck'   => '/web-stories/v1/status-check/',
+					'taxonomies'    => '/web-stories/v1/taxonomies/',
 					'metaBoxes'     => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
 					'storyLocking'  => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],
