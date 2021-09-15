@@ -42,6 +42,7 @@ function APIProvider({ children }) {
       storyLocking,
       pageTemplates: customPageTemplates,
       taxonomies,
+      taxonomyBase,
     },
     apiCallbacks,
     encodeMarkup,
@@ -81,7 +82,7 @@ function APIProvider({ children }) {
     withoutImages: [],
   });
 
-  const actions = { getTaxonomies, getTaxonomyTerm, createTaxonomyTerm };
+  const actions = {};
 
   actions.getPageTemplates = useCallback(
     async ({ showImages = false } = {}) => {
@@ -215,13 +216,13 @@ function APIProvider({ children }) {
   );
 
   actions.getTaxonomyTerm = useCallback(
-    (taxonomy, args) => getTaxonomyTerm(taxonomy, args, taxonomies),
-    [taxonomies, getTaxonomyTerm]
+    (taxonomy, args) => getTaxonomyTerm(taxonomy, args, taxonomyBase),
+    [taxonomyBase, getTaxonomyTerm]
   );
 
   actions.createTaxonomyTerm = useCallback(
-    (taxonomy, name) => createTaxonomyTerm(taxonomy, name, taxonomies),
-    [taxonomies, createTaxonomyTerm]
+    (taxonomy, name) => createTaxonomyTerm(taxonomy, name, taxonomyBase),
+    [taxonomyBase, createTaxonomyTerm]
   );
 
   // If some api callbacks have not been provided via configuration
