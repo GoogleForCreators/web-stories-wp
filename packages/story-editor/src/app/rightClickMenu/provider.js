@@ -39,13 +39,12 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { useStory } from '..';
-import { createPage, duplicatePage } from '../../elements';
+import { createPage, duplicatePage, ELEMENT_TYPES } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
 import useAddPreset from '../../components/panels/design/preset/useAddPreset';
 import useApplyStyle from '../../components/panels/design/preset/stylePreset/useApplyStyle';
 import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import { useCanvas } from '../canvas';
-import { ELEMENT_TYPES } from '../story';
 import { getTextPresets } from '../../components/panels/design/preset/utils';
 import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import { useHistory } from '../history';
