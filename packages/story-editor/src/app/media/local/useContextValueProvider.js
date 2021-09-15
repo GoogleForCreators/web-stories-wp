@@ -90,8 +90,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         cacheBust: cacheBust,
       })
         .then(({ data, headers }) => {
-          const totalPages = parseInt(headers['X-WP-TotalPages']);
-          const totalItems = parseInt(headers['X-WP-Total']);
+          const totalPages = parseInt(headers.totalPages);
+          const totalItems = parseInt(headers.totalItems);
           const mediaArray = data.map(getResourceFromAttachment);
           const hasMore = p < totalPages;
           callback({
@@ -184,13 +184,14 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setAudioProcessing, updateVideoIsMuted, removeAudioProcessing]
   );
 
-  const { optimizeVideo, optimizeGif, muteExistingVideo } = useProcessMedia({
-    uploadVideoPoster,
-    updateVideoIsMuted,
-    uploadMedia,
-    updateMedia,
-    deleteMediaElement,
-  });
+  const { optimizeVideo, optimizeGif, muteExistingVideo, trimExistingVideo } =
+    useProcessMedia({
+      uploadVideoPoster,
+      updateVideoIsMuted,
+      uploadMedia,
+      updateMedia,
+      deleteMediaElement,
+    });
 
   const generateMissingPosters = useCallback(
     ({ mimeType, posterId, id, src, local, type }) => {
@@ -254,6 +255,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       optimizeVideo,
       optimizeGif,
       muteExistingVideo,
+      trimExistingVideo,
     },
   };
 }

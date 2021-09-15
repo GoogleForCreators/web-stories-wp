@@ -31,6 +31,7 @@ use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Media\Video\Optimization;
 use Google\Web_Stories\Media\Video\Muting;
 use Google\Web_Stories\Media\Video\Poster;
+use Google\Web_Stories\Media\Video\Trimming;
 
 /**
  * Deletes options and transients.
@@ -124,6 +125,7 @@ function delete_stories_post_meta() {
 	delete_post_meta_by_key( Optimization::OPTIMIZED_ID_POST_META_KEY );
 	delete_post_meta_by_key( Muting::MUTED_ID_POST_META_KEY );
 	delete_post_meta_by_key( Muting::IS_MUTED_POST_META_KEY );
+	delete_post_meta_by_key( Trimming::TRIM_POST_META_KEY );
 }
 
 /**
