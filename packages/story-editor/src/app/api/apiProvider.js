@@ -81,7 +81,7 @@ function APIProvider({ children }) {
     withoutImages: [],
   });
 
-  const actions = { getTaxonomies, getTaxonomyTerm, createTaxonomyTerm };
+  const actions = {};
 
   actions.getPageTemplates = useCallback(
     async ({ showImages = false } = {}) => {
@@ -209,11 +209,20 @@ function APIProvider({ children }) {
     [customPageTemplates, deletePageTemplate]
   );
 
-    const getTaxonomies = useCallback(() => {
-    return apiFetch({
-      path: addQueryArgs(taxonomies, { type: postType }),
-    });
-  }, [taxonomies, postType]);
+  actions.getTaxonomies = useCallback(
+    () => getTaxonomies(postType, taxonomies),
+    [postType, taxonomies, getTaxonomies]
+  );
+
+  actions.getTaxonomyTerm = useCallback(
+    (taxonomy, args) => getTaxonomyTerm(taxonomy, args, taxonomies),
+    [taxonomies, getTaxonomyTerm]
+  );
+
+  actions.createTaxonomyTerm = useCallback(
+    (taxonomy, name) => createTaxonomyTerm(taxonomy, name, taxonomies),
+    [taxonomies, createTaxonomyTerm]
+  );
 
   // If some api callbacks have not been provided via configuration
   // set those actions as undefined, so we can stop them conditionally.

@@ -13,33 +13,58 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * WordPress dependencies
- */
-import apiFetch from '@wordpress/api-fetch';
+
 /**
  * External dependencies
  */
 import { addQueryArgs } from '@web-stories-wp/design-system';
 
-export function getTaxonomies() {
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Get all taxonomies.
+ *
+ * @param {string} postType Post type.
+ * @param {string} path API path.
+ * @return {Promise} Taxonomies promise.
+ */
+export function getTaxonomies(postType, path) {
   return apiFetch({
-    path: addQueryArgs('/wp/v2/taxonomies/', {
-      type: 'web-story',
+    path: addQueryArgs(path, {
+      type: postType,
       context: 'edit',
     }),
   });
 }
 
-export function getTaxonomyTerm(taxonomy, args = {}) {
+/**
+ * Get a taxonomy term.
+ *
+ * @param {string} taxonomy Taxonomy slug.
+ * @param {Object} args Additional args.
+ * @param {string} path API path.
+ * @return {Promise} Term promise.
+ */
+export function getTaxonomyTerm(taxonomy, args = {}, path) {
   return apiFetch({
-    path: addQueryArgs(`/wp/v2/${taxonomy}`, args),
+    path: addQueryArgs(`${path}${taxonomy}/`, args),
   });
 }
 
-export function createTaxonomyTerm(taxonomy, name) {
+/**
+ * Create a new taxonomy term.
+ *
+ * @param {string} taxonomy Taxonomy slug.
+ * @param {string} name Term name.
+ * @param {string} path API path.
+ * @return {Promise} Term promise.
+ */
+export function createTaxonomyTerm(taxonomy, name, path) {
   return apiFetch({
-    path: addQueryArgs(`/wp/v2/${taxonomy}`, {
+    path: addQueryArgs(`${path}${taxonomy}/`, {
       name,
     }),
     method: 'POST',
