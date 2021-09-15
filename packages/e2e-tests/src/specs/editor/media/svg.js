@@ -67,6 +67,7 @@ describe('SVG', () => {
 
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
     await expect(page).toClick('[aria-label="Publisher Logo"]');
+    await expect(page).toClick('[aria-label="Add new"]');
 
     await page.waitForSelector(MODAL, {
       visible: true,
