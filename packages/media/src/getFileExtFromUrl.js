@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 const getFileExtFromUrl = (url) =>
-  url.substring(url.lastIndexOf('/')).split('.').slice(1, 2).join('.');
+  url && url.substring(url.lastIndexOf('/')).split('.').slice(1, 2).join('.');
 
 export default getFileExtFromUrl;
