@@ -77,14 +77,10 @@ function Buttons() {
   const { status } = useStory(
     ({
       state: {
-        story: { status, embedPostLink, link },
-        meta: { isFreshlyPublished },
+        story: { status },
       },
     }) => ({
       status,
-      embedPostLink,
-      link,
-      isFreshlyPublished,
     })
   );
 
