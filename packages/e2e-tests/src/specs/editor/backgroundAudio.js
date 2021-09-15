@@ -21,10 +21,14 @@ import {
   createNewStory,
   uploadFile,
   deleteMedia,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
 describe('Background Audio', () => {
+  // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
+  skipSuiteOnFirefox();
+
   let uploadedFiles = [];
 
   beforeEach(() => (uploadedFiles = []));
