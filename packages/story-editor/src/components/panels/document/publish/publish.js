@@ -259,12 +259,12 @@ function PublishPanel() {
   const publisherLogosWithUploadOption = [...publisherLogos];
   if (hasUploadMediaAction) {
     publisherLogosWithUploadOption.unshift(
-      <Option key="upload" onClick={openMediaPicker}>
-        <Icons.ArrowCloud
-          height={32}
-          width={32}
-          aria-label={__('Add new', 'web-stories')}
-        />
+      <Option
+        key="upload"
+        onClick={openMediaPicker}
+        aria-label={__('Add new', 'web-stories')}
+      >
+        <Icons.ArrowCloud height={32} width={32} />
         <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
           {__('Add new', 'web-stories')}
         </Text>
