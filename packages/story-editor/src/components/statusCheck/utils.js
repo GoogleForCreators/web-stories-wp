@@ -56,10 +56,7 @@ export function getContent() {
     },
   ];
   const metadata = {
-    publisher: {
-      name: 'Web Stories',
-      logo: 'https://example.com/logo.png',
-    },
+    publisher: 'Web Stories',
   };
 
   return getStoryMarkup(story, pages, metadata);

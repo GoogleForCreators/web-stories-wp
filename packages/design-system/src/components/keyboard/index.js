@@ -486,15 +486,17 @@ export function createShortcutAriaLabel(shortcut) {
     .join(delimiter);
 }
 
+const Kbd = () => <kbd />;
+
 /**
  * Returns a prettified shortcut wrapped with a <kbd> element.
  *
  * @param {Object} props props
- * @param {string} props.component Component used to render the shortcuts. Defaults to `<kbd/>`
+ * @param {import('react').Component} props.component Component used to render the shortcuts. Defaults to `<kbd/>`
  * @param {string} props.shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
  * @return {Node} Prettified keyboard shortcut.
  */
-export function Shortcut({ component: Component = <kbd />, shortcut = '' }) {
+export function Shortcut({ component: Component = Kbd, shortcut = '' }) {
   const chars = shortcut.split(' ');
 
   return (
@@ -506,7 +508,8 @@ export function Shortcut({ component: Component = <kbd />, shortcut = '' }) {
     </Component>
   );
 }
+
 Shortcut.propTypes = {
-  component: PropTypes.node,
+  component: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   shortcut: PropTypes.string,
 };
