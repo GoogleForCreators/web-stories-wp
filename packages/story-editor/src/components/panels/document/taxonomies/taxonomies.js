@@ -35,19 +35,32 @@ function TaxonomiesPanel(props) {
     return null;
   }
 
+  const allowedTaxonomies = taxonomies.filter((taxonomy) =>
+    ['story-categories', 'story-tags'].includes(taxonomy.rest_base)
+  );
+  allowedTaxonomies.reverse();
+
   return (
     <SimplePanel
       name="taxonomies"
       title={__('Categories and Tags', 'web-stories')}
       {...props}
     >
-      {taxonomies.map((taxonomy) =>
-        taxonomy.hierarchical ? (
-          <HierarchicalTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
-        ) : (
-          <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
-        )
-      )}
+      {allowedTaxonomies.map((taxonomy) => {
+        switch (taxonomy.rest_base) {
+          case 'story-categories':
+            return (
+              <HierarchicalTermSelector
+                taxonomy={taxonomy}
+                key={taxonomy.slug}
+              />
+            );
+          case 'story-tags':
+            return <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />;
+          default:
+            return null;
+        }
+      })}
     </SimplePanel>
   );
 }

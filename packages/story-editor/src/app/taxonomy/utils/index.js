@@ -87,7 +87,7 @@ export function mergeNestedDictionaries(dictA = {}, dictB = {}) {
  * @param {string} key key used to index poperty to be keyed on
  * @return {Object} new object
  */
-export function dictonaryOnKey(arr = [], key) {
+export function dictionaryOnKey(arr = [], key) {
   return arr.reduce((map, item) => {
     map[item[key]] = item;
     return map;
