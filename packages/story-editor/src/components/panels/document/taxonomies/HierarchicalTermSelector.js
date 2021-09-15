@@ -31,7 +31,12 @@ import {
   themeHelpers,
 } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
-import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from '@web-stories-wp/react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -39,6 +44,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { noop } from '../../../../utils/noop';
 import { HierarchicalInput } from '../../../form';
+import { useTaxonomy } from '../../../../app/taxonomy';
 import { ContentHeading } from './shared';
 
 const ContentArea = styled.div`
@@ -95,12 +101,42 @@ const AddNewCategoryButton = styled(Button).attrs({
 `;
 
 function HierarchicalTermSelector({ taxonomy }) {
+  const { addSearchResultsToCache, createTerm, termCache } = useTaxonomy(
+    ({
+      state: { termCache },
+      actions: { addSearchResultsToCache, createTerm },
+    }) => ({
+      addSearchResultsToCache,
+      createTerm,
+      termCache,
+    })
+  );
+
+  // Categories to
+  const categories = useMemo(() => {
+    if (termCache[taxonomy.rest_base]) {
+      return Object.values(termCache[taxonomy.rest_base]).map((category) => {
+        const formattedCategory = { ...category };
+        formattedCategory.value = formattedCategory.id;
+        formattedCategory.label = formattedCategory.slug;
+
+        return formattedCategory;
+      });
+    }
+
+    return [];
+  }, [taxonomy, termCache]);
+
   const [showAddNewCategory, setShowAddNewCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
+  const [selectedParent, setSelectedParent] = useState();
   const dropdownId = useMemo(uuidv4, []);
 
-  const handleShowAddNewCategoryClick = useCallback(() => {
-    setShowAddNewCategory(true);
+  // Should grab categories on mount
+  const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
+
+  const handleToggleNewCategory = useCallback(() => {
+    setShowAddNewCategory((currentValue) => !currentValue);
   }, []);
 
   const handleChangeNewCategoryName = useCallback((evt) => {
@@ -108,18 +144,36 @@ function HierarchicalTermSelector({ taxonomy }) {
   }, []);
 
   const handleAddCategory = useCallback(() => {
+    createTerm(taxonomy, newCategoryName, selectedParent);
     setShowAddNewCategory(false);
-  }, []);
+  }, [createTerm, newCategoryName, selectedParent, taxonomy]);
+
+  const handleParentSelect = useCallback(
+    (evt, menuItem) => setSelectedParent(menuItem),
+    []
+  );
+
+  // Fetch all categories on mount
+  useEffect(() => {
+    // only fetch when `shouldRefetchCategories` is true
+    if (shouldRefetchCategories) {
+      addSearchResultsToCache(taxonomy);
+      setShouldRefetchCategories(false);
+    }
+  }, [addSearchResultsToCache, shouldRefetchCategories, taxonomy]);
 
   return (
     <ContentArea>
       <ContentHeading>{taxonomy.labels.name}</ContentHeading>
       <HierarchicalInput
         label={taxonomy.labels.search_items}
-        options={[]}
+        options={categories}
         onChange={noop}
       />
-      {showAddNewCategory ? (
+      <LinkButton onClick={handleToggleNewCategory}>
+        {taxonomy.labels.add_new_item}
+      </LinkButton>
+      {showAddNewCategory && (
         <AddNewCategoryArea>
           <Input
             label={taxonomy.labels.new_item_name}
@@ -131,16 +185,17 @@ function HierarchicalTermSelector({ taxonomy }) {
             id={dropdownId}
             ariaLabel={taxonomy.labels.parent_item}
             placeholder={taxonomy.labels.parent_item}
-            options={[]}
+            options={categories}
+            selectedValue={selectedParent}
+            onMenuItemClick={handleParentSelect}
           />
-          <AddNewCategoryButton onClick={handleAddCategory}>
+          <AddNewCategoryButton
+            disabled={!newCategoryName.length}
+            onClick={handleAddCategory}
+          >
             {__('Add', 'web-stories')}
           </AddNewCategoryButton>
         </AddNewCategoryArea>
-      ) : (
-        <LinkButton onClick={handleShowAddNewCategoryClick}>
-          {taxonomy.labels.add_new_item}
-        </LinkButton>
       )}
     </ContentArea>
   );

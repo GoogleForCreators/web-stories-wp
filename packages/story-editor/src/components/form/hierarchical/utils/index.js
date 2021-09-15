@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { v4 as uuidv4 } from 'uuid';
-
-const NO_PARENT_VALUE = uuidv4();
+// Categories with no parent will have a parent id of 0
+const NO_PARENT_VALUE = 0;
 
 /**
  * Creates an object composed of keys generated from the

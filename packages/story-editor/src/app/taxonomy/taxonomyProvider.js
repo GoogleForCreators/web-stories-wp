@@ -31,7 +31,7 @@ import { useAPI } from '../api';
 import { useStory } from '../story';
 import Context from './context';
 import {
-  dictonaryOnKey,
+  dictionaryOnKey,
   mapObjectVals,
   mergeNestedDictionaries,
   objectFromEntries,
@@ -82,7 +82,7 @@ function TaxonomyProvider(props) {
       isStoryLoaded &&
       !hasHydrationRunOnce.current
     ) {
-      const taxonomiesBySlug = dictonaryOnKey(taxonomies, 'slug');
+      const taxonomiesBySlug = dictionaryOnKey(taxonomies, 'slug');
       const initialCache = mapObjectKeys(
         cacheFromEmbeddedTerms(terms),
         (slug) => taxonomiesBySlug[slug]?.rest_base
@@ -146,7 +146,7 @@ function TaxonomyProvider(props) {
 
       // Format results to fit in our { [taxonomy]: { [slug]: term } } map
       const termResults = {
-        [taxonomy.rest_base]: dictonaryOnKey(response, 'slug'),
+        [taxonomy.rest_base]: dictionaryOnKey(response, 'slug'),
       };
       setTermCache((cache) => mergeNestedDictionaries(cache, termResults));
     },
@@ -154,7 +154,7 @@ function TaxonomyProvider(props) {
   );
 
   const createTerm = useCallback(
-    async (taxonomy, termName) => {
+    async (taxonomy, termName, parentId) => {
       // make sure the term doesn't already exist locally
       if (termCache[taxonomy.rest_base]?.[cleanForSlug(termName)]) {
         return;
@@ -167,7 +167,12 @@ function TaxonomyProvider(props) {
 
       // create term and add to cache
       try {
-        const newTerm = await createTaxonomyTerm(termsEndpoint, termName);
+        const data = { name: termName };
+        if (parentId) {
+          data.parent = parentId;
+        }
+
+        const newTerm = await createTaxonomyTerm(termsEndpoint, data);
         const incomingCache = {
           [taxonomy.rest_base]: { [newTerm.slug]: newTerm },
         };
