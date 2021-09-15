@@ -23,6 +23,7 @@ import {
   useRef,
   useState,
 } from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
@@ -43,11 +44,12 @@ function TaxonomyProvider(props) {
   const [taxonomies, setTaxonomies] = useState([]);
   const [selectedSlugs, setSelectedSlugs] = useState({});
   const [termCache, setTermCache] = useState({});
-  const { updateStory, isStoryLoaded, story } = useStory(
+  const { updateStory, isStoryLoaded, terms, hasTaxonomies } = useStory(
     ({ state: { pages, story }, actions: { updateStory } }) => ({
       updateStory,
       isStoryLoaded: pages.length > 0,
-      story,
+      terms: story.terms,
+      hasTaxonomies: story?.taxonomies?.length > 0,
     })
   );
 
@@ -57,6 +59,10 @@ function TaxonomyProvider(props) {
 
   // Get all registered `web-story` taxonomies.
   useEffect(() => {
+    if (!hasTaxonomies) {
+      return;
+    }
+
     (async function () {
       try {
         const result = await getTaxonomies();
@@ -65,7 +71,7 @@ function TaxonomyProvider(props) {
         // Do we wanna do anything here?
       }
     })();
-  }, [getTaxonomies]);
+  }, [hasTaxonomies, getTaxonomies]);
 
   // Reference embedded terms in the story and taxonomies
   // to get the initial selected terms as well as populate
@@ -79,7 +85,7 @@ function TaxonomyProvider(props) {
     ) {
       const taxonomiesBySlug = dictonaryOnKey(taxonomies, 'slug');
       const initialCache = mapObjectKeys(
-        cacheFromEmbeddedTerms(story.embeddedTerms),
+        cacheFromEmbeddedTerms(terms),
         (slug) => taxonomiesBySlug[slug]?.rest_base
       );
       const initialSelectedSlugs = mapObjectVals(initialCache, (val) =>
@@ -90,11 +96,11 @@ function TaxonomyProvider(props) {
       setTermCache(initialCache);
       setSelectedSlugs(initialSelectedSlugs);
     }
-  }, [story, isStoryLoaded, taxonomies, setSelectedSlugs, setTermCache]);
+  }, [terms, isStoryLoaded, taxonomies, setSelectedSlugs, setTermCache]);
 
   // With the freeform taxonomy input, we can have terms selected
   // that may be in the process of being created or retrieved from
-  // the backend. Becuase of this, we sync up our local selected slugs
+  // the backend. Because of this, we sync up our local selected slugs
   // with whatever cached terms are available at any given moment.
   useEffect(() => {
     if (!hasHydrationRunOnce.current) {
@@ -109,9 +115,11 @@ function TaxonomyProvider(props) {
           .filter((id) => typeof id === 'number'),
       ]
     );
-    const terms = objectFromEntries(termEntries);
+    const updatedTerms = objectFromEntries(termEntries);
     updateStory({
-      properties: terms,
+      properties: {
+        terms: updatedTerms,
+      },
     });
   }, [updateStory, selectedSlugs, termCache]);
 
