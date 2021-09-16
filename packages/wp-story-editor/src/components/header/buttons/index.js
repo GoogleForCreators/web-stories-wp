@@ -88,7 +88,7 @@ function Buttons() {
     <ButtonList>
       <List>
         <IconWithSpinner>
-          <PreviewButton />
+          <PreviewButton forceIsSaving={isSavingMetaBoxes} />
           {isSaving && <Loading />}
         </IconWithSpinner>
         <Space />
@@ -98,10 +98,10 @@ function Buttons() {
             forceIsSaving={isSavingMetaBoxes}
           />
         ) : (
-          <SwitchToDraftButton />
+          <SwitchToDraftButton forceIsSaving={isSavingMetaBoxes} />
         )}
         <Space />
-        {isDraft && <PublishButton />}
+        {isDraft && <PublishButton forceIsSaving={isSavingMetaBoxes} />}
         {!isDraft && (
           <UpdateButton
             hasUpdates={hasMetaBoxes}
