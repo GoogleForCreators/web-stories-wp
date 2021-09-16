@@ -24,7 +24,6 @@ import { resourceList } from '@web-stories-wp/media';
  * Internal dependencies
  */
 import { TestDisplayElement } from '../../../components/canvas/test/_utils';
-import { OverlayType } from '../../../utils/overlay';
 
 /* eslint-disable testing-library/no-node-access, testing-library/no-container */
 
@@ -179,13 +178,7 @@ describe('MediaDisplay', () => {
     expect(img.style).toMatchSnapshot('empty style after');
   });
 
-  it('should render flipped background video with overlay', () => {
-    const overlayCases = [
-      OverlayType.NONE,
-      OverlayType.SOLID,
-      OverlayType.LINEAR,
-      OverlayType.RADIAL,
-    ];
+  it('should render flipped background video', () => {
     const flipCases = [
       {
         flip: { vertical: true, horizontal: false },
@@ -201,31 +194,27 @@ describe('MediaDisplay', () => {
       },
     ];
 
-    overlayCases.forEach((overlay) => {
-      flipCases.forEach(({ flip, transform }) => {
-        const flippedBackgroundVideo = {
-          ...videoElement,
-          isBackground: true,
-          flip,
-        };
-        const { container } = render(
-          <TestDisplayElement
-            storyContext={{
-              ...storyContext,
-              page: {
-                overlay,
-              },
-            }}
-            element={flippedBackgroundVideo}
-          />
-        );
+    flipCases.forEach(({ flip, transform }) => {
+      const flippedBackgroundVideo = {
+        ...videoElement,
+        isBackground: true,
+        flip,
+      };
+      const { container } = render(
+        <TestDisplayElement
+          storyContext={{
+            ...storyContext,
+            page: {},
+          }}
+          element={flippedBackgroundVideo}
+        />
+      );
 
-        const element = container.querySelector(
-          '[data-element-id="baz"]'
-        ).firstChild;
-        expect(window.getComputedStyle(element)).toMatchObject({
-          transform,
-        });
+      const element = container.querySelector(
+        '[data-element-id="baz"]'
+      ).firstChild;
+      expect(window.getComputedStyle(element)).toMatchObject({
+        transform,
       });
     });
   });
