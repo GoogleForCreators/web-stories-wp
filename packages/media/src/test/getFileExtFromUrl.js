@@ -19,24 +19,18 @@
 import getFileExtFromUrl from '../getFileExtFromUrl';
 
 describe('getFileExtFromUrl', () => {
-  it.each([
-    'https://www.example.com/test.jpg',
-    'https://www.example.com/path/test.jpg',
-    'test.jpg',
-  ])('should %s find ext', (url) => {
-    expect(getFileExtFromUrl(url)).toStrictEqual('jpg');
-  });
-  it.each([
-    'https://www.example.com/test',
-    'https://www.example.com/',
-    '#',
-    '-1',
-    '',
-  ])('should %s not find ext', (url) => {
-    expect(getFileExtFromUrl(url)).toStrictEqual('');
-  });
-
-  it('should null not find ext', () => {
-    expect(getFileExtFromUrl(null)).toBeNull();
+  it.each`
+    url                                        | expected
+    ${'https://www.example.com/test.jpg'}      | ${'jpg'}
+    ${'https://www.example.com/path/test.jpg'} | ${'jpg'}
+    ${'test.jpg'}                              | ${'jpg'}
+    ${'https://www.example.com/test'}          | ${''}
+    ${'https://www.example.com/'}              | ${''}
+    ${'#'}                                     | ${''}
+    ${'-1'}                                    | ${''}
+    ${''}                                      | ${''}
+    ${null}                                    | ${undefined}
+  `('should return "$expected" for url "$url"', ({ url, expected }) => {
+    expect(getFileExtFromUrl(url)).toStrictEqual(expected);
   });
 });
