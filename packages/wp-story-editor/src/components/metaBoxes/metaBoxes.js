@@ -45,7 +45,7 @@ const Area = styled.div`
 `;
 
 const MetaBoxesContainer = styled(Area).attrs({
-  area: 'metaboxes',
+  area: 'supplementary',
 })`
   overflow-y: auto;
 `;

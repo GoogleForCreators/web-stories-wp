@@ -19,7 +19,6 @@
  */
 import StoryEditor from './storyEditor';
 import Dialog from './components/dialog';
-import Tooltip from './components/tooltip';
 
 export * from './components/transform';
 export * from './app/config';
@@ -38,7 +37,8 @@ export { default as theme } from './theme'; // @todo To be refactored.
 export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 export { default as CircularProgress } from './components/circularProgress';
 export { default as InterfaceSkeleton } from './components/layout';
+export { default as Tooltip } from './components/tooltip';
 export { ConfigProvider as EditorConfigProvider } from './app/config';
 
-export { Dialog, Tooltip };
+export { Dialog };
 export default StoryEditor;
