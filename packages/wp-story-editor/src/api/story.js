@@ -69,6 +69,9 @@ const transformGetStoryResponse = (post) => {
     url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
   };
 
+  post.taxonomies = links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [];
+  post.terms = embedded?.['wp:term'] || [];
+
   return post;
 };
 

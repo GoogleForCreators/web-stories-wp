@@ -64,6 +64,8 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           lock_user,
           featured_media,
           publisher_logo,
+          taxonomies,
+          terms,
         } = post;
 
         const defaultMedia = {
@@ -81,10 +83,6 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
 
         const featuredMedia = featured_media ?? defaultMedia;
         const publisherLogo = publisher_logo ?? defaultMedia;
-
-        const taxonomies =
-          links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [];
-        const terms = embedded?.['wp:term'] || [];
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
