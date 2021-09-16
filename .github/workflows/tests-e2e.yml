@@ -39,7 +39,7 @@ concurrency:
 
 jobs:
   e2e:
-    name: '${{ matrix.browser }} - WP ${{ matrix.wp }}'
+    name: ${{ matrix.browser }} - WP ${{ matrix.wp }}${{ matrix.experimental && ' (experimental)' || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     continue-on-error: ${{ matrix.experimental == true }}
