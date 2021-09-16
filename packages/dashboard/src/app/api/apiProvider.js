@@ -30,6 +30,7 @@ import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
 import useUsersApi from './useUserApi';
 import useSettingsApi from './useSettingsApi';
+import useSearchApi from './useSearchApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -58,6 +59,11 @@ export default function ApiProvider({ children }) {
     globalStoriesSettingsApi: api.settings,
   });
 
+  const { api: searchApi } = useSearchApi(dataAdapter, {
+    searchApi: api.search,
+    pagesApi: api.pages,
+  });
+
   const value = useMemo(
     () => ({
       state: {
@@ -73,6 +79,7 @@ export default function ApiProvider({ children }) {
         storyApi,
         templateApi,
         usersApi,
+        searchApi,
       },
     }),
     [
@@ -86,6 +93,7 @@ export default function ApiProvider({ children }) {
       storyApi,
       templateApi,
       usersApi,
+      searchApi,
     ]
   );
 

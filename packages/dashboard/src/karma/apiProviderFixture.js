@@ -101,6 +101,14 @@ export default function ApiProviderFixture({ children }) {
     [currentUser]
   );
 
+  const searchApi = useMemo(
+    () => ({
+      search: jasmine.createSpy('search'),
+      getPageById: jasmine.createSpy('getPageById'),
+    }),
+    []
+  );
+
   const value = useMemo(
     () => ({
       state: {
@@ -116,6 +124,7 @@ export default function ApiProviderFixture({ children }) {
         storyApi,
         templateApi,
         usersApi,
+        searchApi,
       },
     }),
     [
@@ -129,6 +138,7 @@ export default function ApiProviderFixture({ children }) {
       storyApi,
       templateApi,
       usersApi,
+      searchApi,
     ]
   );
 
@@ -167,6 +177,8 @@ function getSettingsState() {
     adSenseSlotId: '',
     adManagerSlotId: '',
     adNetwork: 'none',
+    archive: 'default',
+    archivePageId: 0,
   };
 }
 

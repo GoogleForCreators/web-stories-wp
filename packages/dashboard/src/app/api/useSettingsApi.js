@@ -62,6 +62,7 @@ export default function useSettingsApi(
           publisherLogoIds: response.web_stories_publisher_logos,
           videoCache: response.web_stories_video_cache,
           archive: response.web_stories_archive,
+          archivePageId: response.web_stories_archive_page_id,
         },
       });
     } catch (err) {
@@ -87,6 +88,7 @@ export default function useSettingsApi(
       publisherLogoToMakeDefault,
       videoCache,
       archive,
+      archivePageId,
     }) => {
       dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED });
       try {
@@ -139,6 +141,10 @@ export default function useSettingsApi(
           query.web_stories_archive = archive;
         }
 
+        if (archivePageId !== undefined) {
+          query.web_stories_archive_page_id = archivePageId;
+        }
+
         const response = await dataAdapter.post(
           addQueryArgs(globalStoriesSettingsApi, query)
         );
@@ -156,6 +162,7 @@ export default function useSettingsApi(
             publisherLogoIds: response.web_stories_publisher_logos,
             videoCache: response.web_stories_video_cache,
             archive: response.web_stories_archive,
+            archivePageId: response.web_stories_archive_page_id,
           },
         });
         dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED, payload: true });

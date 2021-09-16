@@ -87,6 +87,8 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 
 		add_action( 'add_option_' . Settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
 		add_action( 'update_option_' . Settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
+		add_action( 'add_option_' . Settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
+		add_action( 'update_option_' . Settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
 	}
 
 	/**
@@ -121,7 +123,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return \WP_Post_Type|\WP_Error
 	 */
 	public function register_post_type() {
-		$has_archive = 'default' === get_option( Settings::SETTING_NAME_ARCHIVE, 'default' );
+		$has_archive = $this->get_has_archive();
 
 		return register_post_type(
 			self::POST_TYPE_SLUG,
@@ -339,5 +341,29 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 			$this->register_post_type();
 			flush_rewrite_rules( false );
 		}
+	}
+
+	/**
+	 * Determines whether the post type should have an archive or not.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return bool|string Whether the post type should have an archive, or archive slug.
+	 */
+	private function get_has_archive() {
+		$archive_page_option    = get_option( Settings::SETTING_NAME_ARCHIVE );
+		$custom_archive_page_id = get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		$has_archive            = true;
+
+		if ( 'disabled' === $archive_page_option ) {
+			$has_archive = false;
+		} elseif ( 'custom' === $archive_page_option && $custom_archive_page_id ) {
+			$uri = get_page_uri( $custom_archive_page_id );
+			if ( $uri ) {
+				$has_archive = urldecode( $uri );
+			}
+		}
+
+		return $has_archive;
 	}
 }

@@ -66,11 +66,15 @@ function EditorSettings() {
     publisherLogoIds,
     videoCache,
     archive,
+    archivePageId,
+    searchPages,
+    getPageById,
   } = useApi(
     ({
       actions: {
         settingsApi: { fetchSettings, updateSettings },
         mediaApi: { fetchMediaById, uploadMedia },
+        searchApi: { search: searchPages, getPageById },
       },
       state: {
         settings: {
@@ -84,6 +88,7 @@ function EditorSettings() {
           activePublisherLogoId,
           videoCache,
           archive,
+          archivePageId,
         },
         media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
       },
@@ -105,6 +110,9 @@ function EditorSettings() {
       publisherLogoIds,
       videoCache,
       archive,
+      archivePageId,
+      searchPages,
+      getPageById,
     })
   );
 
@@ -409,6 +417,9 @@ function EditorSettings() {
                 archive={archive}
                 archiveURL={archiveURL}
                 updateSettings={updateSettings}
+                searchPages={searchPages}
+                archivePageId={archivePageId}
+                getPageById={getPageById}
               />
             )}
             {canManageSettings && (

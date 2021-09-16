@@ -18,10 +18,11 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
+
 /**
  * Internal dependencies
  */
-import useTagsApi from '../useTagsApi';
+import useCategoriesApi from '../useCategoriesApi';
 import wpAdapter from '../wpAdapter';
 
 jest.mock('../wpAdapter', () => ({
@@ -33,29 +34,35 @@ jest.mock('../wpAdapter', () => ({
       json: () =>
         Promise.resolve([
           {
-            id: 7,
-            name: 'Fun',
-            slug: 'fun',
+            id: 13,
+            name: 'Music',
+          },
+          {
+            id: 23,
+            name: 'Art',
           },
         ]),
     }),
 }));
 
-describe('useTagsApi', () => {
-  it('should return tags in state data when the API request is fired', async () => {
+describe('useCategoriesApi', () => {
+  it('should return categories in state data when the API request is fired', async () => {
     const { result } = renderHook(() =>
-      useTagsApi(wpAdapter, { tagsApi: 'tags' })
+      useCategoriesApi(wpAdapter, { categoryApi: 'categories' })
     );
 
     await act(async () => {
-      await result.current.api.fetchTags();
+      await result.current.api.fetchCategories();
     });
 
-    expect(result.current.tags).toStrictEqual({
-      7: {
-        id: 7,
-        name: 'Fun',
-        slug: 'fun',
+    expect(result.current.categories).toStrictEqual({
+      13: {
+        id: 13,
+        name: 'Music',
+      },
+      23: {
+        id: 23,
+        name: 'Art',
       },
     });
   });

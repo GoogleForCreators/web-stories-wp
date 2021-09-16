@@ -38,6 +38,7 @@ export const defaultSettingsState = {
   adNetwork: AD_NETWORK_TYPE.NONE,
   publisherLogoIds: [],
   archive: ARCHIVE_TYPE.DEFAULT,
+  archivePageId: 0,
   videoCache: false,
   settingSaved: false,
 };
@@ -79,6 +80,7 @@ function settingsReducer(state, action) {
         ],
         videoCache: action.payload.videoCache,
         archive: action.payload.archive,
+        archivePageId: action.payload.archivePageId,
       };
     }
 
