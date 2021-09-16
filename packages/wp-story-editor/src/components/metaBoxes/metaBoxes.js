@@ -23,7 +23,7 @@ import {
   useState,
   createPortal,
 } from '@web-stories-wp/react';
-import { useConfig } from '@web-stories-wp/story-editor';
+import { useConfig, useStory } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
@@ -58,18 +58,23 @@ function MetaBoxes() {
   const [showMenuButton, updateMenuButtonState] = useState(false);
   const menuButtonContainer = useRef(null);
   const { postType, metaBoxes = {} } = useConfig();
+  const { pages } = useStory(({ state: { pages } }) => ({ pages }));
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      menuButtonContainer.current =
-        document.getElementById('primary-menu-items');
-      updateMenuButtonState(null !== menuButtonContainer.current);
-    }, 1500); // @todo This isn't ideal and needs to be removed after adding Slot/Fill.
+    let timeout = null;
+
+    if (hasMetaBoxes && pages.length >= 0) {
+      timeout = setTimeout(() => {
+        menuButtonContainer.current =
+          document.getElementById('primary-menu-items');
+        updateMenuButtonState(null !== menuButtonContainer.current);
+      });
+    }
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [hasMetaBoxes]);
+  }, [pages, hasMetaBoxes]);
 
   useEffect(() => {
     // Allow toggling metaboxes panels.
