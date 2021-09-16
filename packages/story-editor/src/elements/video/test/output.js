@@ -145,7 +145,9 @@ describe('Video output', () => {
       await expect(<VideoOutput {...baseProps} />).toBeValidAMPStoryElement();
     });
 
-    it('should produce valid AMP output with track', async () => {
+    // Disable reason: amp-story-captions is not stable yet.
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should produce valid AMP output with track', async () => {
       const props = {
         ...baseProps,
         element: {
