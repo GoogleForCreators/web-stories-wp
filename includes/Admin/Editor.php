@@ -283,6 +283,12 @@ class Editor extends Service_Base {
 		$show_locked_dialog       = apply_filters( 'show_post_locked_dialog', true, $post, $user );
 		$nonce                    = wp_create_nonce( 'wp_rest' );
 		$mime_types               = $this->get_allowed_mime_types();
+		$mime_typesV2             = [];
+
+		foreach( $mime_types as $key => $mime_type_list ){
+			$mime_typesV2[$key]  = $this->get_file_type_exts_with_mimes($mime_type_list);
+		}
+
 		$image_mime_types         = $this->get_allowed_image_mime_types();
 		$audio_mime_types         = $this->get_allowed_audio_mime_types();
 		$page_templates_rest_base = $this->get_post_type_rest_base( Page_Template_Post_Type::POST_TYPE_SLUG );
@@ -303,6 +309,7 @@ class Editor extends Service_Base {
 				'allowedAudioFileTypes'        => $this->get_file_type_exts( $audio_mime_types ),
 				'allowedAudioMimeTypes'        => $audio_mime_types,
 				'allowedMimeTypes'             => $mime_types,
+				'allowedMimeTypesV2'           => $mime_typesV2,
 				'postType'                     => Story_Post_Type::POST_TYPE_SLUG,
 				'storyId'                      => $story_id,
 				'dashboardLink'                => $dashboard_url,

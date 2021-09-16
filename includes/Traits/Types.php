@@ -77,6 +77,31 @@ trait Types {
 	}
 
 	/**
+	 * Returns a list of allowed file types.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param array $mime_types Array of mime types.
+	 *
+	 * @return array
+	 */
+	public function get_file_type_exts_with_mimes( array $mime_types = [] ): array {
+		$allowed_file_types = [];
+		$all_mime_types     = get_allowed_mime_types();
+
+		foreach ( $all_mime_types as $ext => $mime ) {
+			if ( in_array( $mime, $mime_types, true ) ) {
+				$exts = explode( '|', $ext );
+				foreach ( $exts as $thisExt ) {
+					$allowed_file_types[ $thisExt ] = $mime;
+				}
+			}
+		}
+
+		return $allowed_file_types;
+	}
+
+	/**
 	 * Returns a list of allowed mime types per media type (image, audio, video).
 	 *
 	 * @since 1.0.0

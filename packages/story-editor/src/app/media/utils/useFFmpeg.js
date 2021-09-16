@@ -127,6 +127,7 @@ function useFFmpeg() {
     ffmpegCoreUrl,
     allowedTranscodableMimeTypes,
     capabilities: { hasUploadMediaAction },
+    allowedMimeTypesV2,
   } = useConfig();
   const { currentUser } = useCurrentUser(({ state }) => ({
     currentUser: state.currentUser,
@@ -139,6 +140,19 @@ function useFFmpeg() {
    * @type {boolean} Whether the feature flag is enabled.
    */
   const isCrossOriginIsolationEnabled = Boolean(window?.crossOriginIsolated);
+
+  const getExtFromMime = useCallback(
+    (type) => {
+      let allowedMimeTypes = {};
+      Object.values(allowedMimeTypesV2).forEach((value) => {
+        allowedMimeTypes = { ...allowedMimeTypes, ...value };
+      });
+      return Object.keys(allowedMimeTypes).find(
+        (key) => allowedMimeTypes[key] === type
+      );
+    },
+    [allowedMimeTypesV2]
+  );
 
   const getFFmpegInstance = useCallback(
     async (file) => {
@@ -289,7 +303,7 @@ function useFFmpeg() {
    * @return {Promise<File>} Transcoded video file object.
    */
   const trimVideo = useCallback(
-    async (file, start, end, fileExt) => {
+    async (file, start, end) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_trim_video_transcoding');
 
@@ -298,9 +312,8 @@ function useFFmpeg() {
       try {
         ffmpeg = await getFFmpegInstance(file);
 
-        const ext =
-          fileExt || getTypeFromMime(file?.type) || MEDIA_TRANSCODED_FILE_TYPE;
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtFromMime(type) || MEDIA_TRANSCODED_FILE_TYPE;
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileName(file) + '-trimmed.' + ext;
 
@@ -345,7 +358,7 @@ function useFFmpeg() {
    * @return {Promise<File>} Transcoded video file object.
    */
   const stripAudioFromVideo = useCallback(
-    async (file, fileExt) => {
+    async (file) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_mute_video_transcoding');
 
@@ -353,9 +366,8 @@ function useFFmpeg() {
 
       try {
         ffmpeg = await getFFmpegInstance(file);
-        const ext =
-          fileExt || getTypeFromMime(file?.type) || MEDIA_TRANSCODED_FILE_TYPE;
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtFromMime(type) || MEDIA_TRANSCODED_FILE_TYPE;
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileName(file) + '-muted.' + ext;
         await ffmpeg.run(
@@ -391,7 +403,7 @@ function useFFmpeg() {
         trackTiming();
       }
     },
-    [getFFmpegInstance]
+    [getExtFromMime, getFFmpegInstance]
   );
 
   /**
