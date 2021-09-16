@@ -35,8 +35,12 @@ import { useStory, useLocalMedia, useHistory } from '../../../app';
 import Tooltip from '../../tooltip';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
-function UpdateButton({ hasUpdates = false }) {
-  const { isSaving, status, saveStory } = useStory(
+function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
+  const {
+    isSaving: _isSaving,
+    status,
+    saveStory,
+  } = useStory(
     ({
       state: {
         meta: { isSaving },
@@ -45,6 +49,9 @@ function UpdateButton({ hasUpdates = false }) {
       actions: { saveStory },
     }) => ({ isSaving, status, saveStory })
   );
+
+  const isSaving = _isSaving || forceIsSaving;
+
   const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
@@ -106,6 +113,7 @@ function UpdateButton({ hasUpdates = false }) {
 
 UpdateButton.propTypes = {
   hasUpdates: PropTypes.bool,
+  forceIsSaving: PropTypes.bool,
 };
 
 export default UpdateButton;

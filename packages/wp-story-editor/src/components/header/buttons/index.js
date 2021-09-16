@@ -31,6 +31,7 @@ import {
  * Internal dependencies
  */
 import useMetaBoxes from '../../metaBoxes/useMetaBoxes';
+import useIsSaving from '../../../effects/useIsSaving';
 
 const ButtonList = styled.nav`
   display: flex;
@@ -58,14 +59,6 @@ const IconWithSpinner = styled.div`
 `;
 
 function Loading() {
-  const { isSaving } = useStory((state) => ({
-    isSaving: state.state.meta.isSaving,
-  }));
-
-  if (!isSaving) {
-    return null;
-  }
-
   return (
     <Spinner>
       <CircularProgress size={32} />
@@ -89,23 +82,32 @@ function Buttons() {
   const { hasMetaBoxes } = useMetaBoxes(({ state }) => ({
     hasMetaBoxes: state.hasMetaBoxes,
   }));
+  const { isSavingMetaBoxes, isSaving } = useIsSaving();
 
   return (
     <ButtonList>
       <List>
         <IconWithSpinner>
           <PreviewButton />
-          <Loading />
+          {isSaving && <Loading />}
         </IconWithSpinner>
         <Space />
         {isDraft ? (
-          <UpdateButton hasUpdates={hasMetaBoxes} />
+          <UpdateButton
+            hasUpdates={hasMetaBoxes}
+            forceIsSaving={isSavingMetaBoxes}
+          />
         ) : (
           <SwitchToDraftButton />
         )}
         <Space />
         {isDraft && <PublishButton />}
-        {!isDraft && <UpdateButton hasUpdates={hasMetaBoxes} />}
+        {!isDraft && (
+          <UpdateButton
+            hasUpdates={hasMetaBoxes}
+            forceIsSaving={isSavingMetaBoxes}
+          />
+        )}
         <Space />
       </List>
     </ButtonList>

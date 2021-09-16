@@ -23,11 +23,10 @@ import {
   useState,
   createPortal,
 } from '@web-stories-wp/react';
-import { useConfig, useStory } from '@web-stories-wp/story-editor';
+import { useConfig } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
-import useSaveMetaBoxes from './useSaveMetaBoxes';
 import MenuItem from './menuItem';
 
 /**
@@ -58,22 +57,6 @@ function MetaBoxes() {
   }));
   const [showMenuButton, updateMenuButtonState] = useState(false);
   const menuButtonContainer = useRef(null);
-
-  const { isSavingStory, isAutoSavingStory, story } = useStory(
-    ({
-      state: {
-        meta: { isSavingStory, isAutoSavingStory },
-        story,
-      },
-    }) => ({ isSavingStory, isAutoSavingStory, story })
-  );
-
-  useSaveMetaBoxes({
-    story,
-    isSavingStory,
-    isAutoSavingStory,
-  });
-
   const { postType, metaBoxes = {} } = useConfig();
 
   useEffect(() => {
