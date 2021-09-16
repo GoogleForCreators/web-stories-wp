@@ -168,7 +168,8 @@ function HierarchicalTermSelector({ taxonomy }) {
 
   const handleToggleNewCategory = useCallback(() => {
     setShowAddNewCategory((currentValue) => !currentValue);
-  }, []);
+    resetInputs();
+  }, [resetInputs]);
 
   const handleChangeNewCategoryName = useCallback((evt) => {
     setNewCategoryName(evt.target.value);
