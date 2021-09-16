@@ -26,6 +26,7 @@ import {
   toggleVideoOptimization,
   trashAllPosts,
   deleteAllMedia,
+  deleteWidgets,
 } from '@web-stories-wp/e2e-test-utils';
 
 // Extend Jest matchers.
@@ -299,6 +300,7 @@ beforeAll(async () => {
   await trashAllPosts();
   await trashAllPosts('web-story');
   await deleteAllMedia();
+  await deleteWidgets();
 
   // Disable cross-origin isolation by default as it causes issues in Firefox.
   await toggleVideoOptimization(false);
