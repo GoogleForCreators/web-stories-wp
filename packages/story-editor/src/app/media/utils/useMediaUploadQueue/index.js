@@ -32,6 +32,7 @@ import {
   createBlob,
   getFileName,
   getImageDimensions,
+  getFileExtFromUrl,
   isAnimatedGif,
 } from '@web-stories-wp/media';
 
@@ -264,10 +265,16 @@ function useMediaUploadQueue() {
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
           if (isTranscodingEnabled && canTranscodeFile(file)) {
+            const ext = getFileExtFromUrl(resource.src);
             if (trimData) {
               startTrimming({ id });
               try {
-                newFile = await trimVideo(file, trimData.start, trimData.end);
+                newFile = await trimVideo(
+                  file,
+                  trimData.start,
+                  trimData.end,
+                  ext
+                );
                 finishTrimming({ id, file: newFile });
                 additionalData.meta = {
                   web_stories_trim_data: trimData,
@@ -283,7 +290,7 @@ function useMediaUploadQueue() {
             } else if (muteVideo) {
               startMuting({ id });
               try {
-                newFile = await stripAudioFromVideo(file);
+                newFile = await stripAudioFromVideo(file, ext);
                 finishMuting({ id, file: newFile });
                 additionalData.is_muted = true;
               } catch (error) {
