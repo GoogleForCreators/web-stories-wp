@@ -13,7 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const getFileExtFromUrl = (url) =>
-  url && url.substring(url.lastIndexOf('/')).split('.').slice(1, 2).join('.');
 
-export default getFileExtFromUrl;
+/**
+ * External dependencies
+ */
+import mime from 'mime/lite';
+
+/**
+ * Get the file extension for a given mime type.
+ *
+ * @param {string} mimeType Mime type.
+ * @return {string} File extension.
+ */
+export default function getExtensionFromMimeType(mimeType) {
+  return mime.getExtension(mimeType);
+}

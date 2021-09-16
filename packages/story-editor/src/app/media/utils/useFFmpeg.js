@@ -20,7 +20,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
-import { getFileName, getTypeFromMime } from '@web-stories-wp/media';
+import { getExtensionFromMimeType, getFileName, getTypeFromMime } from "@web-stories-wp/media";
 
 /**
  * Internal dependencies
@@ -285,11 +285,10 @@ function useFFmpeg() {
    * @param {File} file Original video file object.
    * @param {string} start Time stamp of start time of new video. Example '00:01:02.345'.
    * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
-   * @param {string} fileExt File extension of output file.
    * @return {Promise<File>} Transcoded video file object.
    */
   const trimVideo = useCallback(
-    async (file, start, end, fileExt) => {
+    async (file, start, end) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_trim_video_transcoding');
 
@@ -298,9 +297,8 @@ function useFFmpeg() {
       try {
         ffmpeg = await getFFmpegInstance(file);
 
-        const ext =
-          fileExt || getTypeFromMime(file?.type) || MEDIA_TRANSCODED_FILE_TYPE;
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileName(file) + '-trimmed.' + ext;
 
@@ -345,7 +343,7 @@ function useFFmpeg() {
    * @return {Promise<File>} Transcoded video file object.
    */
   const stripAudioFromVideo = useCallback(
-    async (file, fileExt) => {
+    async (file) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_mute_video_transcoding');
 
@@ -353,11 +351,12 @@ function useFFmpeg() {
 
       try {
         ffmpeg = await getFFmpegInstance(file);
-        const ext =
-          fileExt || getTypeFromMime(file?.type) || MEDIA_TRANSCODED_FILE_TYPE;
+
         const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
         const tempFileName = uuidv4() + '.' + ext;
         const outputFileName = getFileName(file) + '-muted.' + ext;
+
         await ffmpeg.run(
           // Input filename.
           '-i',
