@@ -13,9 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Insert a widget with the given name.
+ *
+ * @param {string} name Widget name.
+ * @return {Promise<void>}
+ */
 async function insertWidget(name) {
   await expect(page).toMatch(name);
   await expect(page).toClick('button', { text: 'Add widget: ' + name });
   await expect(page).toClick('button', { text: 'Add Widget' });
+  await page.waitForFunction(
+    () => !document.querySelector('.widget.widget-in-question')
+  );
 }
+
 export default insertWidget;
