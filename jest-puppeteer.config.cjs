@@ -25,6 +25,7 @@ const {
 } = process.env;
 
 // Same window size as in percy.config.yml.
+// Different args needed for Firefox, see https://github.com/puppeteer/puppeteer/issues/6442.
 const ARGS_CHROME = ['--window-size=1600,1000'];
 const ARGS_FIREFOX = ['--width=1600', '--height=1000'];
 
