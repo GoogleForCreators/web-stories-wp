@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
-import { APIContext, ConfigContext } from '@web-stories-wp/story-editor';
+import { ConfigContext } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
@@ -26,21 +26,15 @@ import { APIContext, ConfigContext } from '@web-stories-wp/story-editor';
 import useSaveMetaBoxes from '../useSaveMetaBoxes';
 import MetaBoxesProvider from '../metaBoxesProvider';
 
-const saveMetaBoxes = jest.fn().mockResolvedValue(true);
-
-const apiContextValue = { actions: { saveMetaBoxes } };
-
 const render = ({ configValue, isEnabled, ...initialProps }) => {
   return renderHook(
-    ({ story, isSaving, isAutoSaving }) =>
-      useSaveMetaBoxes({ story, isSaving, isAutoSaving }),
+    ({ story, isSavingStory, isAutoSavingStory }) =>
+      useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }),
     {
       initialProps: { ...initialProps },
       wrapper: ({ children }) => (
         <ConfigContext.Provider value={configValue}>
-          <APIContext.Provider value={apiContextValue}>
-            <MetaBoxesProvider>{children}</MetaBoxesProvider>
-          </APIContext.Provider>
+          <MetaBoxesProvider>{children}</MetaBoxesProvider>
         </ConfigContext.Provider>
       ),
     }
@@ -48,10 +42,6 @@ const render = ({ configValue, isEnabled, ...initialProps }) => {
 };
 
 describe('useSaveMetaBoxes', () => {
-  afterEach(() => {
-    saveMetaBoxes.mockReset();
-  });
-
   it('saves meta box form data', async () => {
     const baseFormElement = document.createElement('form');
     baseFormElement.className = 'metabox-base-form';
@@ -103,8 +93,8 @@ describe('useSaveMetaBoxes', () => {
 
     const hookProps = {
       story,
-      isSaving: true,
-      isAutoSaving: false,
+      isSavingStory: true,
+      isAutoSavingStory: false,
     };
 
     const { result, rerender, waitForNextUpdate } = render({
@@ -115,16 +105,10 @@ describe('useSaveMetaBoxes', () => {
 
     expect(result.current.isSavingMetaBoxes).toBeFalse();
 
-    rerender({ ...hookProps, isSaving: false });
+    rerender({ ...hookProps, isSavingStory: false });
 
     expect(result.current.isSavingMetaBoxes).toBeTrue();
     await waitForNextUpdate();
     expect(result.current.isSavingMetaBoxes).toBeFalse();
-
-    expect(saveMetaBoxes).toHaveBeenCalledWith(story, expect.any(FormData));
-    expect(Object.fromEntries(saveMetaBoxes.mock.calls[0][1])).toStrictEqual({
-      'advanced-metabox-input-value': 'Advanced Data',
-      'normal-metabox-input-value': 'Normal Data',
-    });
   });
 });
