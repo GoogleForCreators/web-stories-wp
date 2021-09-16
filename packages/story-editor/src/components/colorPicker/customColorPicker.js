@@ -116,6 +116,7 @@ function CustomColorPicker({
             onDelete={removeCurrentStop}
             onRotate={rotateClockwise}
             onMove={moveCurrentStopBy}
+            type={type}
           />
         )}
         <CurrentColorPicker
