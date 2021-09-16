@@ -147,6 +147,9 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Media failing to play in Firefox.
   'All candidate resources failed to load. Media load paused.',
+
+  // Firefox warning about scroll-linked effects, see https://firefox-source-docs.mozilla.org/performance/scroll-linked_effects.html.
+  'This site appears to use a scroll-linked positioning effect. This may not work well with asynchronous panning',
 ];
 
 export function addAllowedErrorMessage(message) {
