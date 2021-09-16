@@ -78,7 +78,8 @@ function TimeZone({ date }) {
 }
 
 TimeZone.propTypes = {
-  date: PropTypes.string.isRequired,
+  date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)])
+    .isRequired,
 };
 
 export default TimeZone;

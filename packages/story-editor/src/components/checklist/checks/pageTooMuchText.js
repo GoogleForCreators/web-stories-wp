@@ -118,6 +118,7 @@ const PageTooMuchText = () => {
                     width={THUMBNAIL_DIMENSIONS.WIDTH}
                     height={THUMBNAIL_DIMENSIONS.HEIGHT}
                     as="div"
+                    label={__('The offending page', 'web-stories')}
                   />
                 }
                 aria-label={__('Go to offending page', 'web-stories')}
