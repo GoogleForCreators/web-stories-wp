@@ -125,11 +125,14 @@ class KSES extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string[] $attr Array of allowed CSS attributes.
-	 *
-	 * @return array Filtered list of CSS attributes.
+	 * @param string[]|mixed $attr Array of allowed CSS attributes.
+	 * @return array|mixed Filtered list of CSS attributes.
 	 */
-	public function filter_safe_style_css( $attr ): array {
+	public function filter_safe_style_css( $attr ) {
+		if ( ! is_array( $attr ) ) {
+			return $attr;
+		}
+
 		$additional = [
 			'display',
 			'opacity',
@@ -168,7 +171,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return string Filtered string of CSS rules.
 	 */
-	public function safecss_filter_attr( $css ) {
+	public function safecss_filter_attr( $css ): string {
 		$css = wp_kses_no_null( $css );
 		$css = str_replace( [ "\n", "\r", "\t" ], '', $css );
 
@@ -459,9 +462,9 @@ class KSES extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array|string $allowed_tags Allowed tags.
+	 * @param array|mixed $allowed_tags Allowed tags.
 	 *
-	 * @return array|string Allowed tags.
+	 * @return array|mixed Allowed tags.
 	 */
 	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! is_array( $allowed_tags ) ) {
