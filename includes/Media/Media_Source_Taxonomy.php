@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Media;
 
-use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Taxonomy\Taxonomy_Base;
 use Google\Web_Stories\Traits\Screen;
 use WP_Query;
 use WP_Post;
@@ -37,7 +37,7 @@ use WP_REST_Request;
  *
  * @package Google\Web_Stories\Media
  */
-class Media_Source_Taxonomy extends Service_Base {
+class Media_Source_Taxonomy extends Taxonomy_Base {
 	use Screen;
 
 	/**
@@ -69,24 +69,42 @@ class Media_Source_Taxonomy extends Service_Base {
 	}
 
 	/**
-	 * Register taxonomy for attachment post type.
+	 * Taxonomy slug
 	 *
-	 * @since 1.10.0
+	 * @since 1.12.0
 	 *
-	 * @return void
+	 * @return string
 	 */
-	protected function register_taxonomy() {
-		register_taxonomy(
-			self::TAXONOMY_SLUG,
-			'attachment',
-			[
-				'label'        => __( 'Source', 'web-stories' ),
-				'public'       => false,
-				'rewrite'      => false,
-				'hierarchical' => false,
-				'show_in_rest' => true,
-			]
-		);
+	protected function taxonomy_slug() : string {
+		return self::TAXONOMY_SLUG;
+	}
+
+	/**
+	 * Taxonomy post type.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string
+	 */
+	protected function taxonomy_post_type() : string {
+		return 'attachment';
+	}
+
+	/**
+	 * Taxonomy args.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return array
+	 */
+	protected function taxonomy_args() : array {
+		return [
+			'label'        => __( 'Source', 'web-stories' ),
+			'public'       => false,
+			'rewrite'      => false,
+			'hierarchical' => false,
+			'show_in_rest' => true,
+		];
 	}
 
 	/**
