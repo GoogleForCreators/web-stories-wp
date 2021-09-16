@@ -37,6 +37,8 @@ describe('Web Stories Widget Block', () => {
   });
 
   describe('Regular Block', () => {
+    minWPVersionRequired('5.8');
+
     it('should insert a new Web Stories block', async () => {
       await visitBlockWidgetScreen();
       await expect(page).toClick('button[aria-label="Add block"]');
@@ -73,6 +75,8 @@ describe('Web Stories Widget Block', () => {
     // The block toolbar is not reliably appearing on Firefox,
     // so conversion from legacy widget block to Web Stories block isn't working.
     skipSuiteOnFirefox();
+
+    minWPVersionRequired('5.8');
 
     it('should insert a legacy Web Stories widget', async () => {
       await activatePlugin('classic-widgets');
