@@ -26,6 +26,8 @@ import { SimplePanel } from '../../panel';
 import HierarchicalTermSelector from './HierarchicalTermSelector';
 import FlatTermSelector from './FlatTermSelector';
 
+const ENABLED_TAXONOMIES = ['story-tags', 'story-categories'];
+
 function TaxonomiesPanel(props) {
   const { taxonomies } = useTaxonomy(({ state: { taxonomies } }) => ({
     taxonomies,
@@ -35,10 +37,17 @@ function TaxonomiesPanel(props) {
     return null;
   }
 
-  const allowedTaxonomies = taxonomies.filter((taxonomy) =>
-    ['story-categories', 'story-tags'].includes(taxonomy.rest_base)
+  // show categories before tags
+  const sortedTaxonomies = taxonomies.sort(
+    ({ rest_base: restBaseA }, { rest_base: restBaseB }) => {
+      if (restBaseA > restBaseB) {
+        return 1;
+      } else if (restBaseB > restBaseA) {
+        return -1;
+      }
+      return 0;
+    }
   );
-  allowedTaxonomies.reverse();
 
   return (
     <SimplePanel
@@ -46,21 +55,15 @@ function TaxonomiesPanel(props) {
       title={__('Categories and Tags', 'web-stories')}
       {...props}
     >
-      {allowedTaxonomies.map((taxonomy) => {
-        switch (taxonomy.rest_base) {
-          case 'story-categories':
-            return (
-              <HierarchicalTermSelector
-                taxonomy={taxonomy}
-                key={taxonomy.slug}
-              />
-            );
-          case 'story-tags':
-            return <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />;
-          default:
-            return null;
-        }
-      })}
+      {sortedTaxonomies
+        .filter((taxonomy) => ENABLED_TAXONOMIES.includes(taxonomy.rest_base))
+        .map((taxonomy) =>
+          taxonomy.hierarchical ? (
+            <HierarchicalTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+          ) : (
+            <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+          )
+        )}
     </SimplePanel>
   );
 }
