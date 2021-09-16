@@ -145,16 +145,18 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           class="grid-layer"
         >
           <div className="page-fullbleed-area">
-            <div className="captions-area">
-              <div className="captions-scrim">
-                {videoCaptions.map((captionId) => (
-                  <amp-story-captions
-                    key={captionId}
-                    id={captionId}
-                    layout="fixed-height"
-                    height="100"
-                  />
-                ))}
+            <div className="page-safe-area">
+              <div className="captions-area">
+                <div className="captions-scrim">
+                  {videoCaptions.map((captionId) => (
+                    <amp-story-captions
+                      key={captionId}
+                      id={captionId}
+                      layout="fixed-height"
+                      height="100"
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
