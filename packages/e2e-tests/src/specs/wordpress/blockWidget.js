@@ -125,6 +125,7 @@ describe('Web Stories Widget Block', () => {
       // TODO: Fix this on Firefox.
 
       await page.type('.web-stories-field-wrapper input', 'Test Block Widget');
+      await page.keyboard.press('Escape');
       await expect(page).toMatchElement(blockSelector);
       await expect(page).toClick(blockSelector);
 
