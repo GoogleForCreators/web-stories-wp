@@ -118,8 +118,8 @@ function HierarchicalTermSelector({ taxonomy }) {
       return Object.values(termCache[taxonomy.rest_base]).map((category) => {
         const formattedCategory = { ...category };
         formattedCategory.value = formattedCategory.id;
-        formattedCategory.label = formattedCategory.slug;
-        formattedCategory.checked = selectedSlugs[taxonomy.rest_base].includes(
+        formattedCategory.label = formattedCategory.name;
+        formattedCategory.checked = selectedSlugs[taxonomy.rest_base]?.includes(
           category.slug
         );
 
@@ -196,6 +196,7 @@ function HierarchicalTermSelector({ taxonomy }) {
       {showAddNewCategory ? (
         <AddNewCategoryArea>
           <Input
+            name={__('New Category Name', 'web-stories')}
             label={taxonomy.labels.new_item_name}
             value={newCategoryName}
             onChange={handleChangeNewCategoryName}
