@@ -63,6 +63,17 @@ function VideoOutput({ element, box }) {
         }
       >
         <source {...sourceProps} />
+        {tracks &&
+          tracks.map(({ srclang, label, kind, track, id: key }, i) => (
+            <track
+              srcLang={srclang}
+              label={label}
+              kind={kind}
+              src={track}
+              key={key}
+              default={i === 0}
+            />
+          ))}
       </amp-video>
     </MediaOutput>
   );
