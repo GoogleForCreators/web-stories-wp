@@ -160,6 +160,7 @@ function getSettingsState() {
     error: {},
     settingSaved: false,
     googleAnalyticsId: '',
+    usingLegacyAnalytics: false,
     publisherLogoIds: [],
     activePublisherLogoId: fillerPublisherLogoIds[0],
     adSensePublisherId: '',

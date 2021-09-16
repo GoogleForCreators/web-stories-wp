@@ -74,10 +74,6 @@ export default function VideoCacheSettings({
 }
 
 VideoCacheSettings.propTypes = {
-  isEnabled: PropTypes.bool.isRequired,
+  isEnabled: PropTypes.bool,
   updateSettings: PropTypes.func.isRequired,
-};
-
-VideoCacheSettings.defaultProps = {
-  isEnabled: false,
 };

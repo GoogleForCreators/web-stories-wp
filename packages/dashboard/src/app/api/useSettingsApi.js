@@ -53,6 +53,7 @@ export default function useSettingsApi(
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
         payload: {
           googleAnalyticsId: response.web_stories_ga_tracking_id,
+          usingLegacyAnalytics: response.web_stories_using_legacy_analytics,
           adSensePublisherId: response.web_stories_adsense_publisher_id,
           adSenseSlotId: response.web_stories_adsense_slot_id,
           adManagerSlotId: response.web_stories_ad_manager_slot_id,
@@ -75,6 +76,7 @@ export default function useSettingsApi(
   const updateSettings = useCallback(
     async ({
       googleAnalyticsId,
+      usingLegacyAnalytics,
       adSensePublisherId,
       adSenseSlotId,
       adManagerSlotId,
@@ -89,6 +91,10 @@ export default function useSettingsApi(
         const query = {};
         if (googleAnalyticsId !== undefined) {
           query.web_stories_ga_tracking_id = googleAnalyticsId;
+        }
+
+        if (usingLegacyAnalytics !== undefined) {
+          query.web_stories_using_legacy_analytics = usingLegacyAnalytics;
         }
 
         if (adSensePublisherId !== undefined) {
@@ -135,6 +141,7 @@ export default function useSettingsApi(
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
           payload: {
             googleAnalyticsId: response.web_stories_ga_tracking_id,
+            usingLegacyAnalytics: response.web_stories_using_legacy_analytics,
             adSensePublisherId: response.web_stories_adsense_publisher_id,
             adSenseSlotId: response.web_stories_adsense_slot_id,
             adManagerSlotId: response.web_stories_ad_manager_slot_id,

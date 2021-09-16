@@ -51,6 +51,7 @@ function EditorSettings() {
     fetchSettings,
     updateSettings,
     googleAnalyticsId,
+    usingLegacyAnalytics,
     adSensePublisherId,
     adSenseSlotId,
     adManagerSlotId,
@@ -72,6 +73,7 @@ function EditorSettings() {
       state: {
         settings: {
           googleAnalyticsId,
+          usingLegacyAnalytics,
           adSensePublisherId,
           adSenseSlotId,
           adManagerSlotId,
@@ -86,6 +88,7 @@ function EditorSettings() {
       fetchSettings,
       updateSettings,
       googleAnalyticsId,
+      usingLegacyAnalytics,
       adSensePublisherId,
       adSenseSlotId,
       adManagerSlotId,
@@ -163,6 +166,11 @@ function EditorSettings() {
   const handleUpdateGoogleAnalyticsId = useCallback(
     (newGoogleAnalyticsId) =>
       updateSettings({ googleAnalyticsId: newGoogleAnalyticsId }),
+    [updateSettings]
+  );
+
+  const handleMigrateLegacyAnalytics = useCallback(
+    () => updateSettings({ usingLegacyAnalytics: false }),
     [updateSettings]
   );
 
@@ -355,8 +363,10 @@ function EditorSettings() {
           <Main>
             {canManageSettings && (
               <GoogleAnalyticsSettings
-                handleUpdate={handleUpdateGoogleAnalyticsId}
                 googleAnalyticsId={googleAnalyticsId}
+                handleUpdateAnalyticsId={handleUpdateGoogleAnalyticsId}
+                usingLegacyAnalytics={usingLegacyAnalytics}
+                handleMigrateLegacyAnalytics={handleMigrateLegacyAnalytics}
                 siteKitStatus={siteKitStatus}
               />
             )}
