@@ -226,6 +226,8 @@ function PublishPanel() {
     },
     type: allowedImageMimeTypes,
     onSelectErrorMessage: publisherLogoErrorMessage,
+    title: __('Select as publisher logo', 'web-stories'),
+    buttonInsertText: __('Select as publisher logo', 'web-stories'),
   });
 
   const publisherLogoOptionRenderer = forwardRef(
