@@ -119,10 +119,7 @@ function ImageDisplay({ element, box, previewMode }) {
 }
 
 ImageDisplay.propTypes = {
-  element: PropTypes.oneOfType([
-    StoryPropTypes.elements.image,
-    StoryPropTypes.elements.gif,
-  ]).isRequired,
+  element: StoryPropTypes.elements.image.isRequired,
   box: StoryPropTypes.box.isRequired,
   previewMode: PropTypes.bool,
 };

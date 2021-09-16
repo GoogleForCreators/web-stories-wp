@@ -21,3 +21,4 @@ export * from './metadata';
 export * from './pageTemplate';
 export * from './user';
 export * from './hotlinkInfo';
+export * from './taxonomy';

@@ -55,21 +55,35 @@ const TextInput = styled(BaseInput).attrs({ type: 'text' })`
   margin: 3px 0;
 `;
 
-function Input({ onChange, ...props }) {
+function Input({
+  onTagsChange,
+  onInputChange,
+  tagDisplayTransformer,
+  initialTags = [],
+  ...props
+}) {
   const [{ value, tags, offset }, dispatch] = useReducer(reducer, {
     value: '',
-    tags: [],
+    tags: [...initialTags],
     offset: 0,
   });
   const [isInputFocused, setIsInputFocued] = useState(false);
 
-  // Allow parents to pass onChange callback
+  // Allow parents to pass onTagsChange callback
   // that updates as tags does.
-  const onChangeRef = useRef(onChange);
-  onChangeRef.current = onChange;
+  const onTagChangeRef = useRef(onTagsChange);
+  onTagChangeRef.current = onTagsChange;
   useEffect(() => {
-    onChangeRef.current?.(tags);
+    onTagChangeRef.current?.(tags);
   }, [tags]);
+
+  // Allow parents to pass onInputChange callback
+  // that updates as value does.
+  const onInputChangeRef = useRef(onInputChange);
+  onInputChangeRef.current = onInputChange;
+  useEffect(() => {
+    onInputChangeRef.current?.(value);
+  }, [value]);
 
   // Prepare and memoize event handlers to be as self
   // contained and descriptive as possible
@@ -133,7 +147,7 @@ function Input({ onChange, ...props }) {
             />
           ) : (
             <Tag key={tag} onDismiss={removeTag(tag)}>
-              {tag}
+              {tagDisplayTransformer(tag) || tag}
             </Tag>
           )
         )
@@ -142,6 +156,9 @@ function Input({ onChange, ...props }) {
   );
 }
 Input.propTypes = {
-  onChange: PropTypes.func,
+  onTagsChange: PropTypes.func,
+  onInputChange: PropTypes.func,
+  tagDisplayTransformer: PropTypes.func,
+  initialTags: PropTypes.arrayOf(PropTypes.string),
 };
 export default Input;

@@ -19,6 +19,7 @@
  */
 import { waitFor, fireEvent, screen } from '@testing-library/react';
 import { setAppElement, SnackbarContext } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -64,6 +65,14 @@ function setup() {
 }
 
 describe('DeleteDialog', () => {
+  let modalWrapper;
+
+  beforeAll(() => {
+    modalWrapper = document.createElement('aside');
+    document.documentElement.appendChild(modalWrapper);
+    setAppElement(modalWrapper);
+  });
+
   it('should render', () => {
     const { container } = setup();
     setAppElement(container);

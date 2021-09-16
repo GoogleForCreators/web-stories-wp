@@ -831,7 +831,7 @@ class APIProviderFixture {
             .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
-          headers: { 'X-WP-TotalPages': 3 },
+          headers: { totalPages: 3 },
         });
       }, []);
       const uploadMedia = useCallback(

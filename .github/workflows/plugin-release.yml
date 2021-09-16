@@ -308,9 +308,9 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Install PHP dependencies
-        uses: "ramsey/composer-install@v1"
+        uses: 'ramsey/composer-install@v1'
         with:
-          composer-options: "--prefer-dist --no-progress --no-interaction"
+          composer-options: '--prefer-dist --no-progress --no-interaction'
 
       - name: Create release branch
         id: release_branch

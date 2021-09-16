@@ -89,9 +89,9 @@ jobs:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Install PHP dependencies
-        uses: "ramsey/composer-install@v1"
+        uses: 'ramsey/composer-install@v1'
         with:
-          composer-options: "--prefer-dist --no-progress --no-interaction"
+          composer-options: '--prefer-dist --no-progress --no-interaction'
 
       - name: Build plugin
         run: npm run build:js
