@@ -110,9 +110,20 @@ function PageAttachmentPanel() {
     }
   }, [url, displayWarning]);
 
-  const debouncedUpdate = useDebouncedCallback((props) => {
-    updatePageAttachment(props);
-  }, 300);
+  const updatePageAttachment = useCallback(
+    (value) => {
+      const _pageAttachment = {
+        ...pageAttachment,
+        ...value,
+      };
+      updateCurrentPageProperties({
+        properties: { pageAttachment: _pageAttachment },
+      });
+    },
+    [updateCurrentPageProperties, pageAttachment]
+  );
+
+  const debouncedUpdate = useDebouncedCallback(updatePageAttachment, 300);
 
   const populateUrlData = useDebouncedCallback((value) => {
     setFetchingMetadata(true);
@@ -133,21 +144,8 @@ function PageAttachmentPanel() {
       });
   }, 1200);
 
-  const updatePageAttachment = useCallback(
-    (value) => {
-      const _pageAttachment = {
-        ...pageAttachment,
-        ...value,
-      };
-      updateCurrentPageProperties({
-        properties: { pageAttachment: _pageAttachment },
-      });
-    },
-    [updateCurrentPageProperties, pageAttachment]
-  );
-
   const [isInvalidUrl, setIsInvalidUrl] = useState(
-    !isValidUrl(withProtocol(url || '').trim())
+    url && !isValidUrl(withProtocol(url || '').trim())
   );
 
   const isDefault = _ctaText === defaultCTA;
