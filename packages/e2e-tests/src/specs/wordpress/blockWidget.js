@@ -27,7 +27,7 @@ import {
   minWPVersionRequired,
   skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from "@percy/puppeteer";
+import percySnapshot from '@percy/puppeteer';
 
 describe('Web Stories Widget Block', () => {
   minWPVersionRequired('5.8');
@@ -74,7 +74,7 @@ describe('Web Stories Widget Block', () => {
     // so conversion from legacy widget block to Web Stories block isn't working.
     skipSuiteOnFirefox();
 
-    it.only('should insert a legacy Web Stories widget', async () => {
+    it('should insert a legacy Web Stories widget', async () => {
       await activatePlugin('classic-widgets');
 
       await visitAdminPage('widgets.php');
