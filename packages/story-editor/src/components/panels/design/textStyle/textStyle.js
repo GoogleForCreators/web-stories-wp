@@ -73,7 +73,7 @@ function StylePanel(props) {
             setFontsFocused(true);
           }
         }}
-        highlightStylesOverride={fontsFocused && styles.OUTLINE}
+        highlightStylesOverride={fontsFocused ? styles.OUTLINE : []}
       />
       <StyleControls {...props} />
       <ColorControls

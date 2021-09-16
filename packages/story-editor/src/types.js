@@ -121,6 +121,7 @@ const StoryElementPropTypes = {
   link: StoryPropTypes.link,
   opacity: PropTypes.number,
   lockAspectRatio: PropTypes.bool,
+  isBackground: PropTypes.bool,
 };
 
 const StoryMediaPropTypes = {

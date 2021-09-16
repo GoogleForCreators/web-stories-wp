@@ -16,6 +16,7 @@
 /**
  * Internal dependencies
  */
+import cleanForSlug from '../../../utils/cleanForSlug';
 import clamp from '../../../utils/clamp';
 
 function formatTag(tag) {
@@ -23,7 +24,11 @@ function formatTag(tag) {
 }
 
 function uniquesOnly(arr) {
-  return [...new Set(arr)];
+  const slugMap = new Map();
+  arr.forEach((item) => {
+    slugMap.set(cleanForSlug(item), item);
+  });
+  return [...slugMap.values()];
 }
 
 export const ACTIONS = {

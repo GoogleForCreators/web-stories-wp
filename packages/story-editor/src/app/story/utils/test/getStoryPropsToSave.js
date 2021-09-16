@@ -47,6 +47,7 @@ describe('getStoryPropsToSave', () => {
         id: 123,
         mimeType: 'audio/mpeg',
       },
+      taxonomies: [],
     };
     const extraProps = {
       storyId: 1,
@@ -72,6 +73,7 @@ describe('getStoryPropsToSave', () => {
       },
     };
     delete expected.publisherLogo;
+    delete expected.taxonomies;
 
     expect(props).toStrictEqual(expected);
   });
