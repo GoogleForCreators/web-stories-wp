@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import PropTypes from 'prop-types';
 import {
   Button,
   BUTTON_SIZES,
@@ -31,21 +30,15 @@ import {
   themeHelpers,
 } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from '@web-stories-wp/react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { noop } from '../../../../utils/noop';
 import { HierarchicalInput } from '../../../form';
 import { useTaxonomy } from '../../../../app/taxonomy';
-import { ContentHeading } from './shared';
+import { ContentHeading, TaxonomyPropType } from './shared';
 
 const ContentArea = styled.div`
   label,
@@ -65,6 +58,11 @@ const ContentArea = styled.div`
 
 const AddNewCategoryArea = styled.div`
   margin: 24px 0 16px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  column-gap: 8px;
 `;
 
 const LinkButton = styled(Button).attrs({
@@ -101,16 +99,18 @@ const AddNewCategoryButton = styled(Button).attrs({
 `;
 
 function HierarchicalTermSelector({ taxonomy }) {
-  const { addSearchResultsToCache, createTerm, termCache } = useTaxonomy(
-    ({
-      state: { termCache },
-      actions: { addSearchResultsToCache, createTerm },
-    }) => ({
-      addSearchResultsToCache,
-      createTerm,
-      termCache,
-    })
-  );
+  const { createTerm, selectedSlugs, setSelectedTaxonomySlugs, termCache } =
+    useTaxonomy(
+      ({
+        state: { selectedSlugs, termCache },
+        actions: { createTerm, setSelectedTaxonomySlugs },
+      }) => ({
+        createTerm,
+        selectedSlugs,
+        setSelectedTaxonomySlugs,
+        termCache,
+      })
+    );
 
   // Categories to
   const categories = useMemo(() => {
@@ -119,21 +119,52 @@ function HierarchicalTermSelector({ taxonomy }) {
         const formattedCategory = { ...category };
         formattedCategory.value = formattedCategory.id;
         formattedCategory.label = formattedCategory.slug;
+        formattedCategory.checked = selectedSlugs[taxonomy.rest_base].includes(
+          category.slug
+        );
 
         return formattedCategory;
       });
     }
 
     return [];
-  }, [taxonomy, termCache]);
+  }, [selectedSlugs, taxonomy, termCache]);
 
   const [showAddNewCategory, setShowAddNewCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [selectedParent, setSelectedParent] = useState();
   const dropdownId = useMemo(uuidv4, []);
 
-  // Should grab categories on mount
-  const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
+  const resetInputs = useCallback(() => {
+    setNewCategoryName('');
+    setSelectedParent();
+  }, []);
+
+  const handleClickCategory = useCallback(
+    (_evt, { id, checked }) => {
+      const term = categories.find((category) => category.id === id);
+
+      // find the already selected slugs + update those.
+      setSelectedTaxonomySlugs(taxonomy, (currentTerms = []) => {
+        const index = currentTerms.findIndex((slug) => slug === term.slug);
+        // add if term doesn't exist
+        if (checked && index === -1) {
+          return [...currentTerms, term.slug];
+        }
+
+        // remove if term exists
+        if (!checked && index > -1) {
+          return [
+            ...currentTerms.slice(0, index),
+            ...currentTerms.slice(index + 1),
+          ];
+        }
+
+        return currentTerms;
+      });
+    },
+    [categories, setSelectedTaxonomySlugs, taxonomy]
+  );
 
   const handleToggleNewCategory = useCallback(() => {
     setShowAddNewCategory((currentValue) => !currentValue);
@@ -146,21 +177,13 @@ function HierarchicalTermSelector({ taxonomy }) {
   const handleAddCategory = useCallback(() => {
     createTerm(taxonomy, newCategoryName, selectedParent);
     setShowAddNewCategory(false);
-  }, [createTerm, newCategoryName, selectedParent, taxonomy]);
+    resetInputs();
+  }, [createTerm, newCategoryName, resetInputs, selectedParent, taxonomy]);
 
   const handleParentSelect = useCallback(
-    (evt, menuItem) => setSelectedParent(menuItem),
+    (_evt, menuItem) => setSelectedParent(menuItem),
     []
   );
-
-  // Fetch all categories on mount
-  useEffect(() => {
-    // only fetch when `shouldRefetchCategories` is true
-    if (shouldRefetchCategories) {
-      addSearchResultsToCache(taxonomy);
-      setShouldRefetchCategories(false);
-    }
-  }, [addSearchResultsToCache, shouldRefetchCategories, taxonomy]);
 
   return (
     <ContentArea>
@@ -168,12 +191,9 @@ function HierarchicalTermSelector({ taxonomy }) {
       <HierarchicalInput
         label={taxonomy.labels.search_items}
         options={categories}
-        onChange={noop}
+        onChange={handleClickCategory}
       />
-      <LinkButton onClick={handleToggleNewCategory}>
-        {taxonomy.labels.add_new_item}
-      </LinkButton>
-      {showAddNewCategory && (
+      {showAddNewCategory ? (
         <AddNewCategoryArea>
           <Input
             label={taxonomy.labels.new_item_name}
@@ -189,21 +209,29 @@ function HierarchicalTermSelector({ taxonomy }) {
             selectedValue={selectedParent}
             onMenuItemClick={handleParentSelect}
           />
-          <AddNewCategoryButton
-            disabled={!newCategoryName.length}
-            onClick={handleAddCategory}
-          >
-            {__('Add', 'web-stories')}
-          </AddNewCategoryButton>
+          <ButtonContainer>
+            <AddNewCategoryButton
+              disabled={!newCategoryName.length}
+              onClick={handleAddCategory}
+            >
+              {__('Add Category', 'web-stories')}
+            </AddNewCategoryButton>
+            <AddNewCategoryButton onClick={handleToggleNewCategory}>
+              {__('Cancel', 'web-stories')}
+            </AddNewCategoryButton>
+          </ButtonContainer>
         </AddNewCategoryArea>
+      ) : (
+        <LinkButton onClick={handleToggleNewCategory}>
+          {taxonomy.labels.add_new_item}
+        </LinkButton>
       )}
     </ContentArea>
   );
 }
 
 HierarchicalTermSelector.propTypes = {
-  // TODO: Define better prop type.
-  taxonomy: PropTypes.object,
+  taxonomy: TaxonomyPropType,
 };
 
 export default HierarchicalTermSelector;
