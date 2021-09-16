@@ -101,12 +101,12 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
     { key: ['mod+s'] },
     (event) => {
       event.preventDefault();
-      if (isSaving) {
+      if (isSaving || isUploading) {
         return;
       }
       saveStory();
     },
-    [saveStory, isSaving]
+    [saveStory, isSaving, isUploading]
   );
 
   // The button is enabled only if we're not already saving nor uploading. And
