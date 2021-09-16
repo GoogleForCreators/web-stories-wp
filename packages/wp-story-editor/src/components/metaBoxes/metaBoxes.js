@@ -61,9 +61,9 @@ function MetaBoxes() {
   const { pages } = useStory(({ state: { pages } }) => ({ pages }));
 
   useEffect(() => {
-    let timeout = null;
+    let timeout;
 
-    if (hasMetaBoxes && pages.length >= 0) {
+    if (hasMetaBoxes && pages.length > 0) {
       timeout = setTimeout(() => {
         menuButtonContainer.current =
           document.getElementById('primary-menu-items');
