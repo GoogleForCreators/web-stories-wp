@@ -19,3 +19,40 @@ export function skipSuiteOnFirefox() {
     test.only('does not work on Firefox', () => {});
   }
 }
+
+/**
+ * Simple version comparison check.
+ *
+ * Used to determine whether the first version is equal or higher
+ * than the second.
+ *
+ * @param {string} a First version to compare.
+ * @param {string} b Second version to compare.
+ * @return {boolean} Whether the first version >= the second.
+ */
+function versionCompare(a, b) {
+  const aParts = a.split('.').map((e) => Number(e));
+  const bParts = b.split('.').map((e) => Number(e));
+
+  for (const i of Object.keys(aParts)) {
+    bParts[i] = bParts[i] || 0;
+    if (aParts[i] === bParts[i]) {
+      continue;
+    }
+
+    return aParts[i] > bParts[i];
+  }
+  return !(bParts.length > aParts.length);
+}
+
+/**
+ * Check minimum version of WordPress.
+ *
+ * @param {string} minVersion Minimum require WordPress version.
+ */
+export function minWPVersionRequired(minVersion) {
+  const WPVersion = process.env?.WP_VERSION;
+  if ('latest' !== WPVersion && !versionCompare(WPVersion, minVersion)) {
+    test.only('minimum WordPress requirement not met', () => {});
+  }
+}
