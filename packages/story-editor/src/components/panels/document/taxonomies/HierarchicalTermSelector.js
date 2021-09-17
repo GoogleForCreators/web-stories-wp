@@ -239,7 +239,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
           <ButtonContainer>
             <AddNewCategoryButton
               disabled={!newCategoryName.length}
-              onClick={handleSubmit}
+              type="submit"
             >
               {taxonomy.labels.add_new_item}
             </AddNewCategoryButton>

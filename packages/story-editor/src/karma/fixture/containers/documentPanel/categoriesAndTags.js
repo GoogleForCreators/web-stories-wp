@@ -47,8 +47,4 @@ export class CategoriesAndTags extends Container {
   get parentDropdownButton() {
     return this.getByRole('button', { name: /Parent Category/ });
   }
-
-  get addCategoryButton() {
-    return this.getByRole('button', { name: /Add Category/ });
-  }
 }
