@@ -55,6 +55,7 @@ function TaxonomyProvider(props) {
   const { getTaxonomyTerm, createTaxonomyTerm, getTaxonomies } = useAPI(
     ({ actions }) => actions
   );
+  getTaxonomies();
 
   // Get all registered `web-story` taxonomies.
   useEffect(() => {
