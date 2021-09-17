@@ -61,6 +61,13 @@ class Settings extends Service_Base {
 	const SETTING_NAME_TRACKING_ID = 'web_stories_ga_tracking_id';
 
 	/**
+	 * Legacy analytics usage flag.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_USING_LEGACY_ANALYTICS = 'web_stories_using_legacy_analytics';
+
+	/**
 	 * Type of adloader.
 	 *
 	 * @var string
@@ -138,6 +145,18 @@ class Settings extends Service_Base {
 				'type'         => 'string',
 				'default'      => '',
 				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_USING_LEGACY_ANALYTICS,
+			[
+				'description'       => __( 'Using legacy analytics configuration', 'web-stories' ),
+				'type'              => 'boolean',
+				'default'           => false,
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'rest_sanitize_boolean',
 			]
 		);
 

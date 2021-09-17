@@ -30,6 +30,7 @@ class Settings extends TestCase {
 
 		$options = get_registered_settings();
 		$this->assertArrayHasKey( $settings::SETTING_NAME_TRACKING_ID, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_USING_LEGACY_ANALYTICS, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_AD_NETWORK, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_AD_MANAGER_SLOT_ID, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, $options );
