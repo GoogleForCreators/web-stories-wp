@@ -63,7 +63,7 @@ function MetaBoxes() {
   useEffect(() => {
     let timeout;
 
-    if (hasMetaBoxes && pages.length > 0) {
+    if (!showMenuButton && hasMetaBoxes && pages.length > 0) {
       timeout = setTimeout(() => {
         menuButtonContainer.current =
           document.getElementById('primary-menu-items');
@@ -74,7 +74,7 @@ function MetaBoxes() {
     return () => {
       clearTimeout(timeout);
     };
-  }, [pages, hasMetaBoxes]);
+  }, [pages, hasMetaBoxes, showMenuButton]);
 
   useEffect(() => {
     // Allow toggling metaboxes panels.
