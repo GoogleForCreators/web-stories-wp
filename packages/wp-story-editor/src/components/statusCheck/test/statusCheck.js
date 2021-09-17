@@ -32,7 +32,7 @@ import StatusCheck from '../statusCheck';
 jest.mock('../../../api/statusCheck');
 import { getStatusCheck } from '../../../api/statusCheck';
 
-function render() {
+function setup() {
   const configValue = { api: { statusCheck: '' }, metadata: { publisher: '' } };
 
   return renderWithTheme(
@@ -58,7 +58,7 @@ describe('statusCheck', () => {
   it('should do nothing if successful', async () => {
     getStatusCheck.mockReturnValue(Promise.resolve({ success: true }));
 
-    render();
+    setup();
 
     // This seems to be the best way to validate, that a certain
     // element does *not* appear. Not very elegant, though.
@@ -70,7 +70,7 @@ describe('statusCheck', () => {
   it('should display dismissible dialog if failed', async () => {
     getStatusCheck.mockReturnValue(Promise.reject(new Error('api failed')));
 
-    render();
+    setup();
 
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toBeInTheDocument();
