@@ -75,6 +75,7 @@ describe('useAutoSave', () => {
       featuredMedia: { id: 0 },
       password: '',
       globalStoryStyles: '',
+      taxonomies: [],
     };
     const pages = [
       {
@@ -116,6 +117,7 @@ describe('useAutoSave', () => {
       },
     };
     delete expected.publisherLogo;
+    delete expected.taxonomies;
     expect(autoSaveById).toHaveBeenCalledWith(expected);
   });
 });

@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
+
 /**
  * Internal dependencies
  */
@@ -37,13 +38,13 @@ describe('useChecklist', () => {
     expect(result.current.state.isOpen).toBe(false);
   });
 
-  it('updates `isOpen` to false when close fires', async () => {
+  it('updates `isOpen` to false when close fires', () => {
     const { result } = setup();
 
-    await act(() => result.current.actions.toggle());
+    act(() => result.current.actions.toggle());
     expect(result.current.state.isOpen).toBe(true);
 
-    await act(() => result.current.actions.close());
+    act(() => result.current.actions.close());
     expect(result.current.state.isOpen).toBe(false);
   });
 });

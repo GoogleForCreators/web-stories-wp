@@ -343,18 +343,6 @@ class Experiments extends Service_Base {
 				'default'     => true,
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #8310
-			 * Creation date: 2021-07-13
-			 */
-			[
-				'name'        => 'videoCache',
-				'label'       => __( 'Video Cache', 'web-stories' ),
-				'description' => __( 'Reduce hosting costs and improve user experience by serving videos from the Google cache.', 'web-stories' ),
-				'group'       => 'general',
-				'default'     => true,
-			],
-			/**
 			 * Author: @spacedmonkey
 			 * Issue: #8811
 			 * Creation date: 2021-09-06
