@@ -123,8 +123,6 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return \WP_Post_Type|\WP_Error
 	 */
 	public function register_post_type() {
-		$has_archive = $this->get_has_archive();
-
 		return register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -178,7 +176,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 					'with_front' => false,
 				],
 				'public'                => true,
-				'has_archive'           => $has_archive,
+				'has_archive'           => $this->get_has_archive(),
 				'exclude_from_search'   => true,
 				'show_ui'               => true,
 				'show_in_rest'          => true,
