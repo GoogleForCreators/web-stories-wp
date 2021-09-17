@@ -51,7 +51,7 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	}
 
 	/**
-	 * Prepares a taxonomy object for serialization.
+	 * Override the existing prepare_item_for_response to ensure that all links have the correct namespace.
 	 *
 	 * @since 1.12.0
 	 *

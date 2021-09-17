@@ -36,16 +36,22 @@ use WP_Site;
  */
 abstract class Taxonomy_Base extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
 	/**
+	 * Taxonomy key, must not exceed 32 characters.
+	 *
 	 * @var string
 	 */
 	protected $taxonomy_slug;
 
 	/**
-	 * @var string|array
+	 * Object type or array of object types with which the taxonomy should be associated.
+	 *
+	 * @var array|string
 	 */
 	protected $taxonomy_post_type;
 
 	/**
+	 * Register taxonomy on register service.
+	 *
 	 * @since 1.12.0
 	 *
 	 * @return void

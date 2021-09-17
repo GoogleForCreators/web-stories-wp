@@ -34,10 +34,14 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class Category_Taxonomy extends Taxonomy_Base {
 	/**
+	 * Taxonomy key.
+	 *
 	 * @var string
 	 */
 	protected $taxonomy_slug = 'web-story-category';
 	/**
+	 * Post type.
+	 *
 	 * @var string
 	 */
 	protected $taxonomy_post_type = Story_Post_Type::POST_TYPE_SLUG;

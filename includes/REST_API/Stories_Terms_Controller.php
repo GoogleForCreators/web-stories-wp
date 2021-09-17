@@ -62,7 +62,7 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 
 
 	/**
-	 * Prepares links for the request.
+	 * Override the existing prepare_links to ensure that all links have the correct namespace.
 	 *
 	 * @since 1.12.0
 	 *
