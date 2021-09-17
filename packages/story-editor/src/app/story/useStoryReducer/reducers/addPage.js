@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/overlay';
 import { isInsideRange } from './utils';
 
 /**
@@ -52,16 +51,11 @@ function addPage(state, { page, position }) {
     return state;
   }
 
-  const newPage = {
-    overlay: OverlayType.NONE,
-    ...page,
-  };
-
   return {
     ...state,
     pages: [
       ...state.pages.slice(0, insertionPoint),
-      newPage,
+      page,
       ...state.pages.slice(insertionPoint),
     ],
     current: id,

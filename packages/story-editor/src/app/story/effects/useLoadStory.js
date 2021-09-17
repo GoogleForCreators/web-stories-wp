@@ -100,6 +100,10 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
         };
 
+        const taxonomies =
+          links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [];
+        const terms = embedded?.['wp:term'] || [];
+
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
         );
@@ -165,6 +169,8 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,
           backgroundAudio: storyData?.backgroundAudio,
+          taxonomies,
+          terms,
         };
 
         // TODO read current page and selection from deeplink?

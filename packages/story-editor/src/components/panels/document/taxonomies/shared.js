@@ -13,14 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './authors';
-export * from './story';
-export * from './media';
-export * from './metaboxes'; // @todo Remove direct export.
-export * from './metadata';
-export * from './pageTemplate';
-export * from './statusCheck'; // @todo Remove direct export.
-export * from './storyLock'; // @todo Remove direct export.
-export * from './user';
-export * from './hotlinkInfo';
-export * from './taxonomy';
+
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+
+export const ContentHeading = styled(Headline).attrs({
+  as: 'h3',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
+})`
+  margin: 4px 0 16px;
+  font-weight: ${({ theme }) => theme.typography.weight.regular};
+`;
