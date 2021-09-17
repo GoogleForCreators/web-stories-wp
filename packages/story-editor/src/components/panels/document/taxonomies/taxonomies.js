@@ -26,6 +26,7 @@ import { SimplePanel } from '../../panel';
 import HierarchicalTermSelector from './HierarchicalTermSelector';
 import FlatTermSelector from './FlatTermSelector';
 
+// TODO: Remove once verticals and color UI are added.
 const ENABLED_TAXONOMIES = ['story-tags', 'story-categories'];
 
 function TaxonomiesPanel(props) {
