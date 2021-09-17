@@ -53,6 +53,7 @@ class Discovery extends Service_Base {
 		add_action( 'web_stories_story_head', [ $this, 'print_twitter_metadata' ] );
 
 		add_action( 'web_stories_story_head', [ $this, 'print_feed_link' ], 4 );
+		add_action( 'wp_head', [ $this, 'print_feed_link' ], 4 );
 
 		// @todo Check if there's something to skip in the new version.
 		add_action( 'web_stories_story_head', 'rest_output_link_wp_head', 10, 0 );
@@ -365,11 +366,10 @@ class Discovery extends Service_Base {
 			return;
 		}
 
-		$feed_url = add_query_arg(
-			'post_type',
-			Story_Post_Type::POST_TYPE_SLUG,
-			get_feed_link()
-		);
+		$feed = get_post_type_archive_feed_link( Story_Post_Type::POST_TYPE_SLUG );
+		if ( ! $feed ) {
+			return;
+		}
 
 		/* translators: Separator between blog name and feed type in feed links. */
 		$separator = _x( '&raquo;', 'feed link', 'web-stories' );
@@ -382,7 +382,7 @@ class Discovery extends Service_Base {
 			'<link rel="alternate" type="%s" title="%s" href="%s">',
 			esc_attr( feed_content_type() ),
 			esc_attr( $title ),
-			esc_url( $feed_url )
+			esc_url( $feed )
 		);
 	}
 

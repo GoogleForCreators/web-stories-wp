@@ -29,13 +29,16 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\Traits\Post_Type;
 use WP_Post;
+use WP_Query;
 use WP_Site;
 
 /**
  * Class Story_Post_Type.
  */
 class Story_Post_Type extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
+	use Post_Type;
 
 	/**
 	 * The slug of the stories post type.
@@ -89,6 +92,8 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 		add_action( 'update_option_' . Settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
 		add_action( 'add_option_' . Settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
 		add_action( 'update_option_' . Settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
+
+		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
 	}
 
 	/**
@@ -363,5 +368,32 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 		}
 
 		return $has_archive;
+	}
+
+	/**
+	 * Modifies the current query to set up the custom archive page.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param WP_Query $query Current query instance, passed by reference.
+	 * @return void
+	 */
+	public function pre_get_posts( WP_Query $query ) {
+		if ( ! is_string( $this->get_has_archive() ) ) {
+			return;
+		}
+
+		if ( $query->is_admin || ! $query->is_main_query() ) {
+			return;
+		}
+
+		$custom_archive_page_id = get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		$query->set( 'page_id', $custom_archive_page_id );
+		$query->set( 'post_type', 'page' );
+		$query->is_post_type_archive = false;
+		$query->is_archive           = false;
+		$query->is_singular          = true;
+		$query->is_page              = true;
 	}
 }

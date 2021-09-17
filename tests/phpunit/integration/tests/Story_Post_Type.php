@@ -40,6 +40,13 @@ class Story_Post_Type extends TestCase {
 	protected static $story_id;
 
 	/**
+	 * Archive page ID.
+	 *
+	 * @var int
+	 */
+	protected static $archive_page_id;
+
+	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
 	public static function wpSetUpBeforeClass( $factory ) {
@@ -65,7 +72,10 @@ class Story_Post_Type extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
+
+		self::$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 	}
 
 	public function setUp() {
@@ -216,10 +226,8 @@ class Story_Post_Type extends TestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom() {
-		$page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
-
 		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, $page_id );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
 		$actual          = $this->call_private_method( $story_post_type, 'get_has_archive' );
@@ -228,6 +236,38 @@ class Story_Post_Type extends TestCase {
 		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$this->assertIsString( $actual );
-		$this->assertSame( urldecode( get_page_uri( $page_id ) ), $actual );
+		$this->assertSame( urldecode( get_page_uri( self::$archive_page_id ) ), $actual );
+	}
+
+	/**
+	 * @covers ::pre_get_posts
+	 */
+	public function test_pre_get_posts_default_archive() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'default' );
+
+		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$this->go_to( $archive_link );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+
+		$this->assertQueryTrue( 'is_archive', 'is_post_type_archive' );
+	}
+
+	/**
+	 * @covers ::pre_get_posts
+	 */
+	public function test_pre_get_posts_custom_archive() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+
+		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$this->go_to( $archive_link );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		$this->assertQueryTrue( 'is_page', 'is_singular' );
 	}
 }
