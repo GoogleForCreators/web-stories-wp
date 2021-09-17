@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -26,6 +25,17 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import cleanForSlug from '../../../utils/cleanForSlug';
 import { TaxonomyProvider, useTaxonomy } from '..';
+
+function mockResponse(...args) {
+  return new Promise((r) => r(...args));
+}
+
+async function recieveQueuedMockedResponses() {
+  // flush promise queue and resulting react updates
+  await act(async () => {
+    await new Promise((r) => r());
+  });
+}
 
 jest.mock('../../story', () => ({
   __esModule: true,
@@ -36,9 +46,21 @@ jest.mock('../../api', () => ({
   useAPI: jest.fn(),
 }));
 
-function createTaxonomyFromName(taxonomy, name, overrides) {
+function createTaxonomy(slug, overrides) {
   return {
-    id: uuidv4(),
+    slug,
+    rest_base: `${slug}s`,
+    _links: {
+      'wp:items': [{ href: 'someUrl' }],
+    },
+    ...overrides,
+  };
+}
+
+let autoIncrementId = 0;
+function createTermFromName(taxonomy, name, overrides) {
+  return {
+    id: autoIncrementId++,
     name,
     slug: cleanForSlug(name),
     taxonomy: taxonomy.slug,
@@ -46,13 +68,14 @@ function createTaxonomyFromName(taxonomy, name, overrides) {
   };
 }
 
-function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
+async function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
   useAPI.mockImplementation(() => ({
-    getTaxonomyTerm: jest.fn(() => new Promise().resolve([])),
-    createTaxonomyTerm: jest.fn((taxonomy, name) =>
-      new Promise().resolve(createTaxonomyFromName(taxonomy, name))
-    ),
-    getTaxonomies: jest.fn(() => new Promise().resolve({})),
+    getTaxonomyTerm: () => mockResponse([]),
+    createTaxonomyTerm: (_taxonomyEndpoint, name) =>
+      mockResponse(
+        createTermFromName(createTaxonomy('fake restpoint response'), name)
+      ),
+    getTaxonomies: () => mockResponse({}),
     ...useAPIPartial,
   }));
   useStory.mockImplementation(() => ({
@@ -63,36 +86,160 @@ function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
     ...useStoryPartial,
   }));
 
-  return renderHook(() => useTaxonomy(), { wrapper: TaxonomyProvider });
+  const render = renderHook(() => useTaxonomy(), { wrapper: TaxonomyProvider });
+  await recieveQueuedMockedResponses();
+  return render;
 }
 
-describe('useTaxonomy', () => {
-  describe('fetching taxonomies', async () => {
-    it('should fetch taxonomies on mount if taxonomies present on story', () => {
-      const sampleTaxonomy = { slug: 'sample' };
-      const getTaxonomiesMock = jest.fn(() =>
-        new Promise().resolve({
-          sampleTaxonomy,
-        })
-      );
-      const updateStoryMock = jest.fn();
+describe('TaxonomyProvider', () => {
+  it('should fetch taxonomies on mount if taxonomies present on story', async () => {
+    const sampleTaxonomy = createTaxonomy('sample');
+    const getTaxonomiesMock = jest.fn(() =>
+      mockResponse({
+        sampleTaxonomy,
+      })
+    );
 
-      const { rerender } = setup({
-        useAPIPartial: { getTaxonomies: getTaxonomiesMock },
-        useStoryPartial: { hasTaxonomies: true, updateStory: updateStoryMock },
-      });
-      // force effects to run
-      // act(() => rerender());
+    const { result } = await setup({
+      useAPIPartial: { getTaxonomies: getTaxonomiesMock },
+      useStoryPartial: { hasTaxonomies: true },
+    });
 
-      expect(getTaxonomiesMock).toHaveBeenCalledWith();
-      await act(async () => await new Promise().resolve());
-      expect(updateStoryMock).toHaveBeenCalledWith([sampleTaxonomy]);
-      expect(1).toBe(3);
+    expect(getTaxonomiesMock).toHaveBeenCalledWith();
+    expect(result.current.state.taxonomies).toStrictEqual([sampleTaxonomy]);
+  });
+
+  it('populates initial termCache and selected slugs with story terms', async () => {
+    const taxonomy1 = createTaxonomy('taxonomy_1');
+    const taxonomy2 = createTaxonomy('taxonomy_2');
+    const taxonomiesResponse = { taxonomy1, taxonomy2 };
+
+    const taxonomy1Term1 = createTermFromName(taxonomy1, 'term1');
+    const taxonomy1Term2 = createTermFromName(taxonomy1, 'term2');
+    const taxonomy2Term1 = createTermFromName(taxonomy2, 'term1');
+    const terms = [[taxonomy1Term1, taxonomy1Term2], [taxonomy2Term1]];
+
+    const { result } = await setup({
+      useAPIPartial: {
+        getTaxonomies: () => mockResponse(taxonomiesResponse),
+      },
+      useStoryPartial: { terms, isStoryLoaded: true },
+    });
+
+    const { termCache, selectedSlugs, taxonomies } = result.current.state;
+    expect(taxonomies).toHaveLength(2);
+    expect(termCache).toStrictEqual({
+      [taxonomy1.rest_base]: {
+        [taxonomy1Term1.slug]: taxonomy1Term1,
+        [taxonomy1Term2.slug]: taxonomy1Term2,
+      },
+      [taxonomy2.rest_base]: {
+        [taxonomy2Term1.slug]: taxonomy2Term1,
+      },
+    });
+    expect(selectedSlugs).toStrictEqual({
+      [taxonomy1.rest_base]: [taxonomy1Term1.slug, taxonomy1Term2.slug],
+      [taxonomy2.rest_base]: [taxonomy2Term1.slug],
     });
   });
 
-  it('does something', () => {
-    useAPI();
-    expect(useAPI).toHaveBeenCalledWith();
+  it('syncs selected slugs with story', async () => {
+    const updateStoryMock = jest.fn();
+    const sampleTaxonomy = createTaxonomy('sample');
+    const taxonomiesResponse = { sampleTaxonomy };
+
+    const { result } = await setup({
+      useAPIPartial: {
+        getTaxonomies: () => mockResponse(taxonomiesResponse),
+      },
+      useStoryPartial: {
+        isStoryLoaded: true,
+        updateStory: updateStoryMock,
+        terms: [[]],
+      },
+    });
+
+    // Update the terms
+    act(() => {
+      result.current.actions.setSelectedTaxonomySlugs(sampleTaxonomy, [
+        'term1',
+        'term2',
+      ]);
+    });
+
+    // initially the slugs should be selected, but they wont have been
+    // returned from the backend yet, so they shouldn't appear on the story
+    // until we get them
+    expect(result.current.state.selectedSlugs).toStrictEqual({
+      [sampleTaxonomy.rest_base]: ['term1', 'term2'],
+    });
+    expect(updateStoryMock).toHaveBeenCalledWith({
+      properties: {
+        terms: {
+          [sampleTaxonomy.rest_base]: [],
+        },
+      },
+    });
+
+    // Components are responsible for sending create term requests
+    act(() => {
+      // reset autoIncrementId so we know what the mocked
+      // response will generate.
+      autoIncrementId = 0;
+      result.current.actions.createTerm(sampleTaxonomy, 'term1');
+      result.current.actions.createTerm(sampleTaxonomy, 'term2');
+    });
+
+    await recieveQueuedMockedResponses();
+
+    // Once we get responses from the backend, the cache should
+    // be populated with the new terms and we should be able to
+    // now associate the terms with the story
+    expect(result.current.state.selectedSlugs).toStrictEqual({
+      [sampleTaxonomy.rest_base]: ['term1', 'term2'],
+    });
+    expect(updateStoryMock).toHaveBeenCalledWith({
+      properties: {
+        terms: {
+          [sampleTaxonomy.rest_base]: [0, 1],
+        },
+      },
+    });
+  });
+
+  it('populates the terms cache when addSearchResultsToCache(..args) called', async () => {
+    const sampleTaxonomy = createTaxonomy('sample');
+    const taxonomiesResponse = { sampleTaxonomy };
+    const term1 = createTermFromName(sampleTaxonomy, 'term1');
+    const term2 = createTermFromName(sampleTaxonomy, 'term2');
+    const getTaxonomyTermMock = jest.fn(() => mockResponse([term1, term2]));
+
+    const { result } = await setup({
+      useAPIPartial: {
+        getTaxonomies: () => mockResponse(taxonomiesResponse),
+        getTaxonomyTerm: getTaxonomyTermMock,
+      },
+      useStoryPartial: {
+        isStoryLoaded: true,
+      },
+    });
+
+    act(() => {
+      result.current.actions.addSearchResultsToCache(sampleTaxonomy, 'term');
+    });
+
+    expect(getTaxonomyTermMock).toHaveBeenCalledWith('someUrl', {
+      per_page: 20,
+      search: 'term',
+    });
+
+    await recieveQueuedMockedResponses();
+
+    expect(result.current.state.termCache).toStrictEqual({
+      [sampleTaxonomy.rest_base]: {
+        [term1.slug]: term1,
+        [term2.slug]: term2,
+      },
+    });
   });
 });
