@@ -348,4 +348,15 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 		return $rels;
 	}
+
+	/**
+	 * Return namespace.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string
+	 */
+	public function get_namespace() : string {
+		return $this->namespace;
+	}
 }
