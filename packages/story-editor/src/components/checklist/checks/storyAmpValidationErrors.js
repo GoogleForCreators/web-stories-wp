@@ -18,7 +18,6 @@
  */
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useEffect, useRef, useState } from '@web-stories-wp/react';
-
 /**
  * Internal dependencies
  */
@@ -35,8 +34,18 @@ export async function getStoryAmpValidationErrors({ link, status }) {
   try {
     const response = await fetch(link);
     const storyMarkup = await response.text();
-    const { status: markupStatus, errors } =
-      window.amp.validator.validateString(storyMarkup);
+
+    await window.loadValidatorWasm().then((validator) => {
+      console.log({ validator });
+
+      // WebAssembly needs a buffer, this doesn't work
+      const newArrayBuffer = new ArrayBuffer(validator);
+
+      WebAssembly.instantiate(newArrayBuffer);
+      // TODO - proceed with validator and grab validateString(markup);
+    });
+
+    const { status: markupStatus, errors } = false;
 
     if ('FAIL' !== markupStatus) {
       return false;
@@ -68,7 +77,8 @@ export async function getStoryAmpValidationErrors({ link, status }) {
         return true;
       });
     return filteredErrors.length > 0;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return false;
   }
 }
