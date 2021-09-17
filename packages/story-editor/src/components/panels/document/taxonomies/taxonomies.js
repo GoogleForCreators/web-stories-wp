@@ -26,24 +26,17 @@ import { SimplePanel } from '../../panel';
 import HierarchicalTermSelector from './HierarchicalTermSelector';
 import FlatTermSelector from './FlatTermSelector';
 
-// TODO: Remove once verticals and color UI are added.
-const ENABLED_TAXONOMIES = ['story-tags', 'story-categories'];
-
 function TaxonomiesPanel(props) {
   const { taxonomies } = useTaxonomy(({ state: { taxonomies } }) => ({
     taxonomies,
   }));
 
-  const enabledTaxonomies = taxonomies.filter((taxonomy) =>
-    ENABLED_TAXONOMIES.includes(taxonomy.rest_base)
-  );
-
-  if (!enabledTaxonomies.length) {
+  if (!taxonomies.length) {
     return null;
   }
 
   // show categories before tags
-  const sortedTaxonomies = enabledTaxonomies.sort(
+  const sortedTaxonomies = taxonomies.sort(
     ({ rest_base: restBaseA }, { rest_base: restBaseB }) => {
       if (restBaseA > restBaseB) {
         return 1;
@@ -60,13 +53,17 @@ function TaxonomiesPanel(props) {
       title={__('Categories and Tags', 'web-stories')}
       {...props}
     >
-      {sortedTaxonomies.map((taxonomy) =>
-        taxonomy.hierarchical ? (
+      {sortedTaxonomies.map((taxonomy) => {
+        if (!taxonomy?.visibility?.show_ui) {
+          return null;
+        }
+
+        return taxonomy.hierarchical ? (
           <HierarchicalTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
         ) : (
           <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
-        )
-      )}
+        );
+      })}
     </SimplePanel>
   );
 }
