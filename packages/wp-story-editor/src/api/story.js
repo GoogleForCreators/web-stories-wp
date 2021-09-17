@@ -161,7 +161,12 @@ export function saveStoryById(story, stories, encodeMarkup) {
     const { _embedded: embedded = {} } = data;
 
     if ('wp:featuredmedia' in embedded) {
-      data.featured_media_url = embedded['wp:featuredmedia'][0].source_url;
+      data.featured_media = {
+        id: embedded?.['wp:featuredmedia']?.[0].id || 0,
+        height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
+        width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
+        url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+      };
     }
 
     return data;

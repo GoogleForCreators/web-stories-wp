@@ -79,7 +79,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             preview_link: previewLink,
             edit_link: newEditLink,
             embed_post_link: embedPostLink,
-            featured_media_url: featuredMediaUrl,
+            featured_media: featuredMedia,
           } = data;
 
           const properties = {
@@ -89,7 +89,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             previewLink,
             editLink: newEditLink,
             embedPostLink,
-            featuredMediaUrl,
+            featuredMedia,
           };
           updateStory({ properties });
 
