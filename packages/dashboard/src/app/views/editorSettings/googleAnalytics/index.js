@@ -201,6 +201,7 @@ function GoogleAnalyticsSettings({
                 mapping={{
                   a: (
                     <InlineLink
+                      // TODO(#9054): Update documentation link.
                       href="https://example.com"
                       rel="noreferrer"
                       target="_blank"
