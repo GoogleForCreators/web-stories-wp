@@ -34,26 +34,13 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class Category_Taxonomy extends Taxonomy_Base {
 	/**
-	 * Category slug
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return string
+	 * @var string
 	 */
-	protected function taxonomy_slug() : string {
-		return 'web-story-category';
-	}
-
+	protected $taxonomy_slug = 'web-story-category';
 	/**
-	 * Category post type.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return string
+	 * @var string
 	 */
-	protected function taxonomy_post_type() : string {
-		return Story_Post_Type::POST_TYPE_SLUG;
-	}
+	protected $taxonomy_post_type = Story_Post_Type::POST_TYPE_SLUG;
 
 	/**
 	 * Category args.
@@ -62,7 +49,7 @@ class Category_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @return array
 	 */
-	protected function taxonomy_args() : array {
+	protected function taxonomy_args(): array {
 		$labels = [
 			'name'                       => _x( 'Categories', 'taxonomy general name', 'web-stories' ),
 			'singular_name'              => _x( 'Category', 'taxonomy singular name', 'web-stories' ),

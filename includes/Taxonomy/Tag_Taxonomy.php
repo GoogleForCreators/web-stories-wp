@@ -34,27 +34,13 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class Tag_Taxonomy extends Taxonomy_Base {
 	/**
-	 * Taxonomy slug
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return string
+	 * @var string
 	 */
-	protected function taxonomy_slug() : string {
-		return 'web-story-tag';
-	}
-
+	protected $taxonomy_slug = 'web-story-tag';
 	/**
-	 * Taxonomy post type.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return string
+	 * @var string
 	 */
-	protected function taxonomy_post_type() : string {
-		return Story_Post_Type::POST_TYPE_SLUG;
-	}
-
+	protected $taxonomy_post_type = Story_Post_Type::POST_TYPE_SLUG;
 	/**
 	 * Taxonomy args.
 	 *

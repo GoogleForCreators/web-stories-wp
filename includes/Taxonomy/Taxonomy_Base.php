@@ -35,6 +35,15 @@ use WP_Site;
  * Taxonomy_Base class
  */
 abstract class Taxonomy_Base extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
+	/**
+	 * @var string
+	 */
+	protected $taxonomy_slug;
+
+	/**
+	 * @var string|array
+	 */
+	protected $taxonomy_post_type;
 
 	/**
 	 * @since 1.12.0
@@ -53,7 +62,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginDeactivationA
 	 * @return void
 	 */
 	public function register_taxonomy() {
-		register_taxonomy( $this->taxonomy_slug(), $this->taxonomy_post_type(), $this->taxonomy_args() );
+		register_taxonomy( $this->taxonomy_slug, $this->taxonomy_post_type, $this->taxonomy_args() );
 	}
 
 	/**
@@ -64,26 +73,8 @@ abstract class Taxonomy_Base extends Service_Base implements PluginDeactivationA
 	 * @return void
 	 */
 	public function unregister_taxonomy() {
-		unregister_taxonomy( $this->taxonomy_slug() );
+		unregister_taxonomy( $this->taxonomy_slug );
 	}
-
-	/**
-	 * Taxonomy slug
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return string
-	 */
-	abstract protected function taxonomy_slug() : string;
-
-	/**
-	 * Taxonomy post type.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return string
-	 */
-	abstract protected function taxonomy_post_type() : string;
 
 	/**
 	 * Taxonomy args.
@@ -93,7 +84,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginDeactivationA
 	 * @return array
 	 */
 	abstract protected function taxonomy_args() : array;
-
 
 	/**
 	 * Act on site initialization.
