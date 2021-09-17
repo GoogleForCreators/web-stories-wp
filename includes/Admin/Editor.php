@@ -326,7 +326,6 @@ class Editor extends Service_Base {
 					'statusCheck'   => '/web-stories/v1/status-check/',
 					'metaBoxes'     => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
 					'storyLocking'  => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
-					'taxonomies'    => $this->get_taxonomy_endpoints(),
 				],
 				'metadata'                     => [
 					'publisher' => $story->get_publisher_name(),
@@ -357,44 +356,6 @@ class Editor extends Service_Base {
 		 * @param array $settings Array of settings passed to web stories editor.
 		 */
 		return apply_filters( 'web_stories_editor_settings', $settings );
-	}
-
-	/**
-	 * Get taxonomy endpoints.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return array
-	 */
-	protected function get_taxonomy_endpoints() : array {
-		$endpoints  = [];
-		$taxonomies = get_object_taxonomies( Story_Post_Type::POST_TYPE_SLUG, 'objects' );
-		if ( empty( $taxonomies ) ) {
-			return $endpoints;
-		}
-		$endpoints = [];
-
-		foreach ( $taxonomies as $taxonomy_obj ) {
-			// Skip taxonomies that are not public.
-			if ( empty( $taxonomy_obj->show_in_rest ) ) {
-				continue;
-			}
-
-			$controller = $taxonomy_obj->get_rest_controller();
-
-			if ( ! $controller ) {
-				continue;
-			}
-
-			$namespace = method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
-			$tax       = $taxonomy_obj->name;
-			$tax_base  = ! empty( $taxonomy_obj->rest_base ) ? $taxonomy_obj->rest_base : $tax;
-
-
-			$endpoints[ $tax ] = sprintf( '/%s/%s', $namespace, $tax_base );
-		}
-
-		return $endpoints;
 	}
 
 	/**

@@ -38,6 +38,10 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 	 * Override the namespace.
 	 *
 	 * @since 1.12.0
+	 *
+	 * @param string $taxonomy Taxonomy key.
+	 *
+	 * @return void
 	 */
 	public function __construct( $taxonomy ) {
 		parent::__construct( $taxonomy );
@@ -51,7 +55,7 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 	 *
 	 * @return string
 	 */
-	public function get_namespace() {
+	public function get_namespace() : string {
 		return $this->namespace;
 	}
 }
