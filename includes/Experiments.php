@@ -342,7 +342,17 @@ class Experiments extends Service_Base {
 				'group'       => 'editor',
 				'default'     => true,
 			],
-
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #8811
+			 * Creation date: 2021-09-06
+			 */
+			[
+				'name'        => 'disableArchive',
+				'label'       => __( 'Archive Page', 'web-stories' ),
+				'description' => __( 'Allow disabling the Web Stories archive page', 'web-stories' ),
+				'group'       => 'general',
+			],
 			/**
 			 * Author: @miina
 			 * Issue #471

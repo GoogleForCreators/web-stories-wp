@@ -117,6 +117,13 @@ class Settings extends Service_Base {
 	const SETTING_NAME_VIDEO_CACHE = 'web_stories_video_cache';
 
 	/**
+	 * Web Stories archive setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_ARCHIVE = 'web_stories_archive';
+
+	/**
 	 * Get the action priority to use for registering the service.
 	 *
 	 * @since 1.6.0
@@ -241,6 +248,22 @@ class Settings extends Service_Base {
 				'type'         => 'boolean',
 				'default'      => false,
 				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_ARCHIVE,
+			[
+				'description'  => __( 'Web Stories Archive', 'web-stories' ),
+				'type'         => 'string',
+				'default'      => 'default',
+				'show_in_rest' => [
+					'schema' => [
+						'type' => 'string',
+						'enum' => [ 'default', 'disabled' ],
+					],
+				],
 			]
 		);
 

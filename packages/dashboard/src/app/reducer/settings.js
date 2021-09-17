@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { AD_NETWORK_TYPE } from '../../constants';
+import { AD_NETWORK_TYPE, ARCHIVE_TYPE } from '../../constants';
 
 export const ACTION_TYPES = {
   UPDATE_SETTINGS_SUCCESS: 'update_settings_success',
@@ -37,6 +37,7 @@ export const defaultSettingsState = {
   adManagerSlotId: '',
   adNetwork: AD_NETWORK_TYPE.NONE,
   publisherLogoIds: [],
+  archive: ARCHIVE_TYPE.DEFAULT,
   videoCache: false,
   settingSaved: false,
 };
@@ -77,6 +78,7 @@ function settingsReducer(state, action) {
           ]),
         ],
         videoCache: action.payload.videoCache,
+        archive: action.payload.archive,
       };
     }
 
