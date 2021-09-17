@@ -19,7 +19,6 @@
  */
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
-import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -33,11 +32,9 @@ export default {
 
 export const _default = () => {
   return (
-    <FlagsProvider features={{ videoCache: true }}>
-      <VideoCacheSettings
-        isEnabled={boolean('isEnabled', true)}
-        updateSettings={action('updateSettings fired')}
-      />
-    </FlagsProvider>
+    <VideoCacheSettings
+      isEnabled={boolean('isEnabled', true)}
+      updateSettings={action('updateSettings fired')}
+    />
   );
 };

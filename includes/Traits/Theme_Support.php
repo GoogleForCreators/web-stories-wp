@@ -26,12 +26,15 @@
 
 namespace Google\Web_Stories\Traits;
 
+use Google\Web_Stories\Story_Post_Type;
+
 /**
  * Trait Theme_Support
  *
  * @package Google\Web_Stories\Traits
  */
 trait Theme_Support {
+	use Post_Type;
 	/**
 	 * Merges user defined arguments into defaults array.
 	 *
@@ -70,6 +73,8 @@ trait Theme_Support {
 		$support = get_theme_support( 'web-stories' );
 		$support = isset( $support[0] ) && is_array( $support[0] ) ? $support[0] : [];
 
+		$has_archive = $this->get_post_type_has_archive( Story_Post_Type::POST_TYPE_SLUG );
+
 		$default_support = [
 			'customizer' => [
 				'view_type'         => [
@@ -93,8 +98,8 @@ trait Theme_Support {
 					'default' => false,
 				],
 				'archive_link'      => [
-					'enabled' => true,
-					'default' => true,
+					'enabled' => $has_archive,
+					'default' => $has_archive,
 					'label'   => __( 'View all stories', 'web-stories' ),
 				],
 				'sharp_corners'     => [

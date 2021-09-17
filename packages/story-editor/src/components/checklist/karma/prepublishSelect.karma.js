@@ -372,6 +372,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
             height: 529,
             type: 'video',
             src: 'http://localhost:9876/__static__/earth.mp4',
+            alt: 'Planet Earth',
           },
         });
       });
@@ -379,6 +380,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       await addPages(4);
       await openChecklist();
       // high priority should auto expand
+      await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');

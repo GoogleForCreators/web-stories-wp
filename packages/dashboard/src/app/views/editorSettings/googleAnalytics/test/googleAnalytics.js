@@ -48,8 +48,9 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={defaultSiteKitStatus}
+        usingLegacyAnalytics={false}
       />
     );
 
@@ -65,8 +66,9 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={defaultSiteKitStatus}
+        usingLegacyAnalytics={false}
       />
     );
 
@@ -78,12 +80,13 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={{
           ...defaultSiteKitStatus,
           active: true,
           analyticsActive: true,
         }}
+        usingLegacyAnalytics={false}
       />
     );
 
@@ -95,12 +98,13 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={{
           ...defaultSiteKitStatus,
           active: false,
           installed: true,
         }}
+        usingLegacyAnalytics={false}
       />
     );
 
@@ -112,8 +116,9 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     const { rerender } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={defaultSiteKitStatus}
+        usingLegacyAnalytics={false}
       />
     );
 
@@ -126,8 +131,9 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     rerender(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={defaultSiteKitStatus}
+        usingLegacyAnalytics={false}
       />
     );
 
@@ -140,8 +146,9 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     rerender(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={defaultSiteKitStatus}
+        usingLegacyAnalytics={false}
       />
     );
 
@@ -158,8 +165,9 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     const { rerender } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={defaultSiteKitStatus}
+        usingLegacyAnalytics={false}
       />
     );
 
@@ -174,8 +182,9 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     rerender(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={defaultSiteKitStatus}
+        usingLegacyAnalytics={false}
       />
     );
 
@@ -189,8 +198,9 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     rerender(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        handleUpdateAnalyticsId={mockUpdate}
         siteKitStatus={defaultSiteKitStatus}
+        usingLegacyAnalytics={false}
       />
     );
 

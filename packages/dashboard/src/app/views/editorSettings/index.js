@@ -43,6 +43,7 @@ import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
 import MediaOptimizationSettings from './mediaOptimization';
 import VideoCacheSettings from './videoCache';
+import ArchiveSettings from './archive';
 
 const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
@@ -51,6 +52,7 @@ function EditorSettings() {
     fetchSettings,
     updateSettings,
     googleAnalyticsId,
+    usingLegacyAnalytics,
     adSensePublisherId,
     adSenseSlotId,
     adManagerSlotId,
@@ -63,6 +65,7 @@ function EditorSettings() {
     newlyCreatedMediaIds,
     publisherLogoIds,
     videoCache,
+    archive,
   } = useApi(
     ({
       actions: {
@@ -72,6 +75,7 @@ function EditorSettings() {
       state: {
         settings: {
           googleAnalyticsId,
+          usingLegacyAnalytics,
           adSensePublisherId,
           adSenseSlotId,
           adManagerSlotId,
@@ -79,6 +83,7 @@ function EditorSettings() {
           publisherLogoIds,
           activePublisherLogoId,
           videoCache,
+          archive,
         },
         media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
       },
@@ -86,6 +91,7 @@ function EditorSettings() {
       fetchSettings,
       updateSettings,
       googleAnalyticsId,
+      usingLegacyAnalytics,
       adSensePublisherId,
       adSenseSlotId,
       adManagerSlotId,
@@ -98,6 +104,7 @@ function EditorSettings() {
       newlyCreatedMediaIds,
       publisherLogoIds,
       videoCache,
+      archive,
     })
   );
 
@@ -107,6 +114,7 @@ function EditorSettings() {
     maxUpload,
     maxUploadFormatted,
     allowedImageMimeTypes,
+    archiveURL,
   } = useConfig();
 
   const {
@@ -163,6 +171,11 @@ function EditorSettings() {
   const handleUpdateGoogleAnalyticsId = useCallback(
     (newGoogleAnalyticsId) =>
       updateSettings({ googleAnalyticsId: newGoogleAnalyticsId }),
+    [updateSettings]
+  );
+
+  const handleMigrateLegacyAnalytics = useCallback(
+    () => updateSettings({ usingLegacyAnalytics: false }),
     [updateSettings]
   );
 
@@ -355,8 +368,10 @@ function EditorSettings() {
           <Main>
             {canManageSettings && (
               <GoogleAnalyticsSettings
-                handleUpdate={handleUpdateGoogleAnalyticsId}
                 googleAnalyticsId={googleAnalyticsId}
+                handleUpdateAnalyticsId={handleUpdateGoogleAnalyticsId}
+                usingLegacyAnalytics={usingLegacyAnalytics}
+                handleMigrateLegacyAnalytics={handleMigrateLegacyAnalytics}
                 siteKitStatus={siteKitStatus}
               />
             )}
@@ -386,6 +401,13 @@ function EditorSettings() {
             {canManageSettings && (
               <VideoCacheSettings
                 isEnabled={videoCache}
+                updateSettings={updateSettings}
+              />
+            )}
+            {canManageSettings && (
+              <ArchiveSettings
+                archive={archive}
+                archiveURL={archiveURL}
                 updateSettings={updateSettings}
               />
             )}

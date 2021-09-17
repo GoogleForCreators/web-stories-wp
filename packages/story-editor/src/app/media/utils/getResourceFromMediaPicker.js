@@ -49,6 +49,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     },
     media_source: mediaSource,
     is_muted: isMuted,
+    trim_data: trimData,
   } = mediaPickerEl;
 
   return createResource({
@@ -72,6 +73,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     local: false,
     isOptimized: 'video-optimization' === mediaSource,
     isMuted,
+    trimData,
   });
 };
 

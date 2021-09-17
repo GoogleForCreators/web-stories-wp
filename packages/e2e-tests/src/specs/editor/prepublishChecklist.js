@@ -44,9 +44,7 @@ describe('Pre-Publish Checklist', () => {
     await page.reload();
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-    await expect(page).toClick(
-      'button[aria-label="Checklist: 3 unaddressed issues"]'
-    );
+    await expect(page).toClick('button[aria-label^="Checklist: "]');
     await expect(page).toMatchElement(
       '#pre-publish-checklist[data-isexpanded="true"]'
     );

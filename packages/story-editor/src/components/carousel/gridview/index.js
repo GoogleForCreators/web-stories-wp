@@ -267,7 +267,7 @@ function GridView({ onClose }) {
                 <ReorderableItem position={index}>
                   <PagePreview
                     key={page.id}
-                    aria-label={
+                    label={
                       isCurrentPage
                         ? sprintf(
                             /* translators: %s: page number. */
