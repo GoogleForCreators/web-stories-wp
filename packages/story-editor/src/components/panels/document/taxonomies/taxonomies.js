@@ -33,12 +33,16 @@ function TaxonomiesPanel(props) {
     taxonomies,
   }));
 
-  if (!taxonomies.length) {
+  const enabledTaxonomies = taxonomies.filter((taxonomy) =>
+    ENABLED_TAXONOMIES.includes(taxonomy.rest_base)
+  );
+
+  if (!enabledTaxonomies.length) {
     return null;
   }
 
   // show categories before tags
-  const sortedTaxonomies = taxonomies.sort(
+  const sortedTaxonomies = enabledTaxonomies.sort(
     ({ rest_base: restBaseA }, { rest_base: restBaseB }) => {
       if (restBaseA > restBaseB) {
         return 1;
@@ -55,15 +59,13 @@ function TaxonomiesPanel(props) {
       title={__('Categories and Tags', 'web-stories')}
       {...props}
     >
-      {sortedTaxonomies
-        .filter((taxonomy) => ENABLED_TAXONOMIES.includes(taxonomy.rest_base))
-        .map((taxonomy) =>
-          taxonomy.hierarchical ? (
-            <HierarchicalTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
-          ) : (
-            <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
-          )
-        )}
+      {sortedTaxonomies.map((taxonomy) =>
+        taxonomy.hierarchical ? (
+          <HierarchicalTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+        ) : (
+          <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+        )
+      )}
     </SimplePanel>
   );
 }

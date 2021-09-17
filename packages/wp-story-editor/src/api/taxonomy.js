@@ -58,7 +58,7 @@ export function getTaxonomyTerm(endpoint, args = {}) {
  *
  * @param {string} endpoint absolute url to interact with taxonomy
  * @param {Object} data The data being sent.
- * @param {SVGStringList} data.name The name.
+ * @param {string} data.name The name.
  * @param {number|string} data.parent The parent id.
  * @return {Promise} Term promise.
  */
