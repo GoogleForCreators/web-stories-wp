@@ -22,6 +22,8 @@ import {
   useCallback,
   useMemo,
   useRef,
+  useState,
+  useDebouncedCallback,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -85,11 +87,33 @@ export const DropDown = forwardRef(
     ref
   ) => {
     const internalRef = useRef();
+    const placementRef = useRef(placement);
+    const [dynamicPlacement, setDynamicPlacement] = useState(placement);
 
     const { activeOption, isOpen, normalizedOptions } = useDropDown({
       options,
       selectedValue,
     });
+
+    const positionPlacement = useCallback(
+      (popupDimensions) => {
+        // check to see if there's an overlap with the window edge
+        const neededVerticalSpace = popupDimensions?.offset.bottom;
+        // if the popup was assigned as bottom we want to always check it
+        if (
+          popupDimensions &&
+          dynamicPlacement.startsWith('bottom') &&
+          neededVerticalSpace >= window.innerHeight
+        ) {
+          setDynamicPlacement(PLACEMENT.TOP);
+        }
+      },
+      [dynamicPlacement]
+    );
+
+    const resetPlacement = useDebouncedCallback(() => {
+      setDynamicPlacement(placementRef.current);
+    }, 100);
 
     const handleSelectClick = useCallback(
       (event) => {
@@ -102,7 +126,8 @@ export const DropDown = forwardRef(
     const handleDismissMenu = useCallback(() => {
       isOpen.set(false);
       internalRef.current.focus();
-    }, [isOpen, internalRef]);
+      resetPlacement();
+    }, [isOpen, resetPlacement]);
 
     const handleMenuItemClick = useCallback(
       (event, menuItem) => {
@@ -168,7 +193,8 @@ export const DropDown = forwardRef(
           <Popup
             anchor={internalRef}
             isOpen={isOpen.value}
-            placement={placement}
+            placement={dynamicPlacement}
+            onPositionUpdate={positionPlacement}
             fillWidth={popupFillWidth}
             zIndex={popupZIndex}
           >
