@@ -85,7 +85,6 @@ const defaultConfig = {
     stories: '/web-stories/v1/web-story',
     users: '/wp/v2/users',
     currentUser: '/wp/v2/users/me',
-    fonts: '/web-stories/v1/fonts',
     settings: '/wp/v2/settings',
     search: '/wp/v2/search',
     pages: '/wp/v2/pages',
