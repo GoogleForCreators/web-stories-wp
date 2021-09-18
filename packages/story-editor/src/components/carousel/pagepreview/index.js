@@ -94,7 +94,7 @@ const Image = styled.img`
   width: 100%;
 `;
 
-function PagePreview({ page, label, ...props }) {
+function PagePreview({ page, label, shouldForceRegenerate, ...props }) {
   const { backgroundColor } = page;
   const { width, height, isActive } = props;
 
@@ -107,11 +107,11 @@ function PagePreview({ page, label, ...props }) {
   // Whenever the page is re-generated
   // remove the old (and now stale) image blob
   useEffect(() => {
-    if (pageAtGenerationTime.current !== page) {
+    if (pageAtGenerationTime.current !== page || shouldForceRegenerate) {
       setImageBlob(null);
       pageAtGenerationTime.current = null;
     }
-  }, [page]);
+  }, [shouldForceRegenerate, page]);
 
   useEffect(() => {
     // If this is not the active page, there is a page node, we
@@ -175,6 +175,7 @@ PagePreview.propTypes = {
   isInteractive: PropTypes.bool,
   isActive: PropTypes.bool,
   tabIndex: PropTypes.number,
+  shouldForceRegenerate: PropTypes.bool,
 };
 
 export default PagePreview;

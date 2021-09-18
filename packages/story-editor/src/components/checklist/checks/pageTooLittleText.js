@@ -18,6 +18,7 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useMemo } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -44,7 +45,7 @@ export function pageTooLittleText(page) {
   return characterCountForPage(page) < MIN_STORY_CHARACTER_COUNT;
 }
 
-const PageTooLittleText = () => {
+const PageTooLittleText = ({ isVisible }) => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
@@ -80,7 +81,9 @@ const PageTooLittleText = () => {
               key={page.id}
               onClick={() => handleClick(page.id)}
               type={THUMBNAIL_TYPES.PAGE}
-              displayBackground={<ThumbnailPagePreview page={page} />}
+              displayBackground={
+                isVisible ? <ThumbnailPagePreview page={page} /> : null
+              }
               aria-label={__('Go to offending page', 'web-stories')}
             />
           ))}
@@ -88,6 +91,10 @@ const PageTooLittleText = () => {
       }
     />
   ) : null;
+};
+
+PageTooLittleText.propTypes = {
+  isVisible: PropTypes.bool,
 };
 
 export default PageTooLittleText;

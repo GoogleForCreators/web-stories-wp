@@ -14,28 +14,20 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { useFeature } from 'flagged';
-/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../../types';
 import PagePreview from '../../carousel/pagepreview';
 import { THUMBNAIL_DIMENSIONS } from '../../thumbnail';
 
-export const ThumbnailPagePreview = ({ page }) => {
-  const enableThumbnailCaching = useFeature('enableThumbnailCaching');
-
-  return (
-    <PagePreview
-      page={page}
-      width={THUMBNAIL_DIMENSIONS.WIDTH}
-      height={THUMBNAIL_DIMENSIONS.HEIGHT}
-      {...(enableThumbnailCaching ? { as: 'div' } : '')}
-    />
-  );
-};
+export const ThumbnailPagePreview = ({ page }) => (
+  <PagePreview
+    page={page}
+    shouldForceRegenerate
+    width={THUMBNAIL_DIMENSIONS.WIDTH}
+    height={THUMBNAIL_DIMENSIONS.HEIGHT}
+  />
+);
 
 ThumbnailPagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
