@@ -69,11 +69,11 @@
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(6 / 6)*    |
 | Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🛴 **85.71%** *(6 / 7)*     |
 |                                                                   | *[total]*                                        | 🛴 **85.71%** *(6 / 7)*     |
-| User can interact with menu using keyboard                        | Tab to menu                                      | 🏆 **100.00%** *(4 / 4)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
-|                                                                   | enter to open                                    | 🏆 **100.00%** *(4 / 4)*    |
-|                                                                   | esc to close                                     | 🏆 **100.00%** *(4 / 4)*    |
+| User can interact with menu using keyboard                        | Tab to menu                                      | 🛴 **75.00%** *(3 / 4)*     |
+|                                                                   | *[total]*                                        | 🛴 **75.00%** *(3 / 4)*     |
+|                                                                   | enter to open                                    | 🛴 **75.00%** *(3 / 4)*     |
+|                                                                   | esc to close                                     | 🛴 **75.00%** *(3 / 4)*     |
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **73.08%** *(304 / 416)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.12%** *(300 / 416)* |
