@@ -31,6 +31,7 @@ import {
 } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { FixtureEvents } from '@web-stories-wp/karma-fixture';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
@@ -715,10 +716,27 @@ class APIProviderFixture {
 
     // eslint-disable-next-line react/prop-types
     const Comp = ({ children }) => {
-      const getStoryById = useCallback(() => asyncResponse(storyResponse), []);
+      const getStoryById = useCallback(
+        () =>
+          asyncResponse({
+            ...storyResponse,
+            story_data: {
+              version: DATA_VERSION,
+              pages: this._pages,
+            },
+          }),
+        []
+      );
 
       const getDemoStoryById = useCallback(
-        () => asyncResponse(storyResponse),
+        () =>
+          asyncResponse({
+            ...storyResponse,
+            story_data: {
+              version: DATA_VERSION,
+              pages: this._pages,
+            },
+          }),
         []
       );
 
