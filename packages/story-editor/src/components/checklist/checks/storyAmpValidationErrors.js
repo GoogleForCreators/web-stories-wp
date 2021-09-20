@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useEffect, useRef, useState } from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
@@ -25,6 +27,8 @@ import { useStory } from '../../../app';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
+
+/** @typedef {import('amphtml-validator').ValidationResult} ValidationResult */
 
 export async function getStoryAmpValidationErrors({ link, status }) {
   if (!link || !['publish', 'future'].includes(status)) {
@@ -35,17 +39,13 @@ export async function getStoryAmpValidationErrors({ link, status }) {
     const response = await fetch(link);
     const storyMarkup = await response.text();
 
-    await window.loadValidatorWasm().then((validator) => {
-      console.log({ validator });
+    await window.amp.validator.init();
 
-      // WebAssembly needs a buffer, this doesn't work
-      const newArrayBuffer = new ArrayBuffer(validator);
-
-      WebAssembly.instantiate(newArrayBuffer);
-      // TODO - proceed with validator and grab validateString(markup);
-    });
-
-    const { status: markupStatus, errors } = false;
+    /**
+     * @type {ValidationResult}
+     */
+    const validationResult = window.amp.validator.validateString(storyMarkup);
+    const { status: markupStatus, errors } = validationResult;
 
     if ('FAIL' !== markupStatus) {
       return false;
@@ -69,6 +69,7 @@ export async function getStoryAmpValidationErrors({ link, status }) {
         ) {
           return false;
         }
+
         // Missing video posters
         if ('INVALID_URL_PROTOCOL' === code && params?.[0].startsWith('src')) {
           return false;
@@ -77,8 +78,7 @@ export async function getStoryAmpValidationErrors({ link, status }) {
         return true;
       });
     return filteredErrors.length > 0;
-  } catch (error) {
-    console.log(error);
+  } catch {
     return false;
   }
 }
