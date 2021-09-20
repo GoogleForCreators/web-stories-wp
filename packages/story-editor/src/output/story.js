@@ -38,6 +38,7 @@ function OutputStory({
     autoAdvance,
     defaultPageDuration,
     backgroundAudio,
+    publisherLogo: { url: publisherLogo } = {},
   },
   pages,
   metadata: { publisher },
@@ -74,8 +75,8 @@ function OutputStory({
       <body>
         <amp-story
           standalone=""
-          publisher={publisher.name}
-          publisher-logo-src={publisher.logo}
+          publisher={publisher}
+          publisher-logo-src={publisherLogo}
           title={title}
           poster-portrait-src={featuredMediaUrl}
           background-audio={backgroundAudio?.src ?? undefined}
