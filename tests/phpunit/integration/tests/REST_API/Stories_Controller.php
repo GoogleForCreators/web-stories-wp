@@ -20,6 +20,7 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
+use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use Spy_REST_Server;
 use WP_REST_Request;
 
@@ -370,6 +371,35 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->assertArrayHasKey( 'https://api.w.org/action-delete', $links );
 		$this->assertArrayHasKey( 'https://api.w.org/action-edit', $links );
+	}
+
+	/**
+	 * @covers ::get_item
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::add_taxonomy_links
+	 */
+	public function test_get_add_taxonomy_links() {
+		$object = new DummyTaxonomy();
+		$this->set_private_property( $object, 'taxonomy_post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$object->register_taxonomy();
+
+		wp_set_current_user( self::$user_id );
+		$story   = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'publish',
+				'post_author' => self::$user_id,
+			]
+		);
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$request->set_param( 'context', 'edit' );
+		$response = rest_get_server()->dispatch( $request );
+		$links    = $response->get_links();
+
+		$this->assertArrayHasKey( 'https://api.w.org/term', $links );
+		foreach ( $links['https://api.w.org/term'] as $taxonomy ) {
+			$this->assertArrayHasKey( 'href', $taxonomy );
+			$this->assertContains( 'web-stories/v1', $taxonomy['href'] );
+		}
 	}
 
 	/**

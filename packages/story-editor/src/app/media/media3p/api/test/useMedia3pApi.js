@@ -150,6 +150,7 @@ describe('useMedia3pApi', () => {
           isPlaceholder: false,
           isMuted: false,
           isOptimized: false,
+          isExternal: true,
           mimeType: 'image/jpeg',
           output: undefined,
           poster: undefined,

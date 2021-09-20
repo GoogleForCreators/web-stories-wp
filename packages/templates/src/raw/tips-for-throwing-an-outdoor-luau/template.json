@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 34,
   "pages": [
     {
       "elements": [
@@ -618,7 +618,6 @@
           "sticker": { "type": "luauYellowWavyLine" }
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -842,7 +841,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -1020,7 +1018,6 @@
           "y": 429
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "a3e6105a-29c5-4d6d-a87c-afc5f6628ed1",
@@ -1268,7 +1265,6 @@
           "id": "2d18d6db-196d-437e-b6c0-5796008dca95"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -1509,7 +1505,6 @@
           "y": -119
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "413dc340-9e40-471d-a513-66416d25035b",
@@ -1759,7 +1754,6 @@
           "y": -119
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "01bf3391-b0ec-4ba6-9fc9-8d6aa4c26fef",
@@ -2009,7 +2003,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -2108,7 +2101,6 @@
           "y": 26
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "8bc2f54e-e886-4c8c-8baf-0f52cd462767",
@@ -2292,7 +2284,6 @@
           "y": 539
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "bafd51f3-8f19-4cb0-a7d5-429ce00dc256",
@@ -2339,7 +2330,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2739,7 +2729,6 @@
           "sticker": { "type": "luauYellowWavyLine" }
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "f8cc11a1-2875-47d2-8006-65eeb65f58fc",

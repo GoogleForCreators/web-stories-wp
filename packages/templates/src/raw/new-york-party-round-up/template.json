@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 34,
   "pages": [
     {
       "elements": [
@@ -399,7 +399,6 @@
           "y": 343
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 18, "g": 18, "b": 18 } },
       "type": "page",
       "id": "419b9060-9050-419d-8d2f-396256292c90",
@@ -908,7 +907,6 @@
           "focalY": 50
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 18, "g": 18, "b": 18 } },
       "type": "page",
       "id": "e8b15fdf-cd87-4dc0-aef7-f8b6f4dca8d9",
@@ -1410,7 +1408,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 18, "g": 18, "b": 18 } },
       "type": "page",
@@ -1719,7 +1716,6 @@
           "y": 494
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "b059d5d0-9a84-44c0-bf21-b7abc03a6b84",
@@ -2587,7 +2583,6 @@
           "y": 276
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 18, "g": 18, "b": 18 } },
       "type": "page",
       "id": "223eb73e-b383-460a-a6b7-d53d8115f768",
@@ -3018,7 +3013,6 @@
           "type": "sticker"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "0f9552e7-ec84-4386-a0b4-6d888f13cb95",
@@ -3889,7 +3883,6 @@
           "y": 302
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "abb1d4e2-b6a6-4ace-adfa-a70cb2333ca3",
@@ -4319,7 +4312,6 @@
           "type": "sticker"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "4bc233cc-9552-4785-ad08-1530e7e15691",
@@ -5192,7 +5184,6 @@
           "y": 302
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "targets": ["98ae1512-77f3-4e63-a8bb-5e70f543683f"],
@@ -5622,7 +5613,6 @@
           "y": 430
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "6a76995b-bc28-492d-84bb-e7b23d410382",
@@ -6486,7 +6476,6 @@
           "y": 302
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "targets": ["67df62f6-c055-4a5e-b469-73196d0cd1ad"],
@@ -7109,7 +7098,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",

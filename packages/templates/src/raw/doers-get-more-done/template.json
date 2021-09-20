@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 34,
   "pages": [
     {
       "elements": [
@@ -13,7 +13,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "acc2f8e0-b819-4adf-9b9f-7bf7c878d7b9",
@@ -156,7 +155,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "6d60fa52-25c3-4207-acea-45c2c9680fcf",
@@ -283,7 +281,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "a848ae15-78c1-488a-9c2f-befbc69a1fb3",
@@ -489,7 +486,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "5249418e-8fb7-46d7-8af1-835671d52f2b",
@@ -614,9 +610,6 @@
           "height": 1,
           "rotationAngle": 0,
           "mask": { "type": "rectangle" },
-          "backgroundColor": {
-            "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
-          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "0f06a768-d7d7-48c3-94fd-0d200978ef7c"
@@ -1042,7 +1035,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "d4d8e43d-57ff-401c-b525-fabfebb77af4",
@@ -1215,7 +1207,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "4ee0756d-c9b1-4914-a3cf-e0b41a442367",
@@ -1859,7 +1850,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "82dea0d1-dbc5-41e5-9ed7-409bcb672830",
