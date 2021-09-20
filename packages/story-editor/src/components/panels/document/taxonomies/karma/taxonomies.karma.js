@@ -22,9 +22,10 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+import { useStory } from '../../../../../app';
 import { Fixture } from '../../../../../karma';
 
-describe('Categories', () => {
+describe('Categories & Tags Panel', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -48,113 +49,144 @@ describe('Categories', () => {
     );
   }
 
-  describe('cursor interactions', () => {
-    it('should add categories and remove categories', async () => {
-      await openCategoriesAndTagsPanel();
+  async function getStoryTerms() {
+    const {
+      state: {
+        story: { terms },
+      },
+    } = await fixture.renderHook(() => useStory());
 
-      const categoriesAndTags =
-        fixture.editor.inspector.documentPanel.categoriesAndTags;
+    return terms;
+  }
 
-      // click a checkbox
-      expect(categoriesAndTags.categories[0].checked).toBe(true);
-      await fixture.events.click(categoriesAndTags.categories[0]);
-      expect(categoriesAndTags.categories[0].checked).toBe(false);
+  describe('Categories', () => {
+    describe('cursor interactions', () => {
+      it('should add categories and remove categories', async () => {
+        await openCategoriesAndTagsPanel();
 
-      // click a checkbox again
-      await fixture.events.click(categoriesAndTags.categories[0]);
-      expect(categoriesAndTags.categories[0].checked).toBe(true);
-    });
+        const categoriesAndTags =
+          fixture.editor.inspector.documentPanel.categoriesAndTags;
 
-    it('should add new categories', async () => {
-      await openCategoriesAndTagsPanel();
+        // track initial story categories
+        const initialStoryTerms = await getStoryTerms();
 
-      const categoriesAndTags =
-        fixture.editor.inspector.documentPanel.categoriesAndTags;
+        // click a checkbox
+        expect(categoriesAndTags.categories[0].checked).toBe(true);
+        await fixture.events.click(categoriesAndTags.categories[0]);
+        expect(categoriesAndTags.categories[0].checked).toBe(false);
 
-      // find initial categories
-      const initialCategories = categoriesAndTags.categories;
+        // verify category was removed from story
+        let currentStoryTerms = await getStoryTerms();
+        expect(currentStoryTerms['story-categories'].length).toBe(
+          initialStoryTerms['story-categories'].length - 1
+        );
 
-      // open the new category section
-      await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+        // click a checkbox again
+        await fixture.events.click(categoriesAndTags.categories[0]);
+        expect(categoriesAndTags.categories[0].checked).toBe(true);
 
-      // Add new category
-      await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
-      await fixture.events.keyboard.type('deer');
+        // verify category was added to story
+        currentStoryTerms = await getStoryTerms();
+        expect(currentStoryTerms['story-categories'].length).toBe(
+          initialStoryTerms['story-categories'].length
+        );
+      });
 
-      await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+      it('should add new categories', async () => {
+        await openCategoriesAndTagsPanel();
 
-      // validate new checkbox was added
-      const finalCategories = categoriesAndTags.categories;
-      initialCategories.map((checkbox) =>
-        expect(checkbox.name).not.toBe('deer')
-      );
-      expect(finalCategories.length).toBe(initialCategories.length + 1);
-      expect(
-        finalCategories.filter((category) => category.name === 'deer').length
-      ).toBe(1);
-    });
+        const categoriesAndTags =
+          fixture.editor.inspector.documentPanel.categoriesAndTags;
 
-    // TODO: #9063
-    // disable reason: dropdown doesn't close unless the tests are slowed down
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should add a new category as a child of an existing category', async () => {
-      await openCategoriesAndTagsPanel();
+        // track initial categories
+        const initialCategories = categoriesAndTags.categories;
 
-      const categoriesAndTags =
-        fixture.editor.inspector.documentPanel.categoriesAndTags;
+        // open the new category section
+        await fixture.events.click(categoriesAndTags.addNewCategoryButton);
 
-      // find initial categories
-      const initialCategories = categoriesAndTags.categories;
+        // Add new category
+        await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
+        await fixture.events.keyboard.type('deer');
 
-      // open the new category section
-      await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+        await fixture.events.click(categoriesAndTags.addNewCategoryButton);
 
-      // Add new category
-      await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
-      await fixture.events.keyboard.type('deer');
-      await fixture.events.click(categoriesAndTags.parentDropdownButton);
+        // validate new checkbox was added
+        const finalCategories = categoriesAndTags.categories;
+        initialCategories.map((checkbox) =>
+          expect(checkbox.name).not.toBe('deer')
+        );
+        expect(finalCategories.length).toBe(initialCategories.length + 1);
+        expect(
+          finalCategories.filter((category) => category.name === 'deer').length
+        ).toBe(1);
 
-      await waitFor(() =>
-        fixture.screen.getByRole('option', {
-          name: 'Booger',
-        })
-      );
+        // TODO: 9058 - validate new category exists on story once category is checked when added.
+      });
 
-      await fixture.events.click(
-        fixture.screen.getByRole('option', {
-          name: 'Booger',
-        })
-      );
+      // TODO: #9063
+      // disable reason: dropdown doesn't close unless the tests are slowed down
+      // eslint-disable-next-line jasmine/no-disabled-tests
+      xit('should add a new category as a child of an existing category', async () => {
+        await openCategoriesAndTagsPanel();
 
-      await waitFor(() =>
-        fixture.screen
-          .queryByRole('option', {
+        const categoriesAndTags =
+          fixture.editor.inspector.documentPanel.categoriesAndTags;
+
+        // find initial categories
+        const initialCategories = categoriesAndTags.categories;
+
+        // open the new category section
+        await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+
+        // Add new category
+        await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
+        await fixture.events.keyboard.type('deer');
+        await fixture.events.click(categoriesAndTags.parentDropdownButton);
+
+        await waitFor(() =>
+          fixture.screen.getByRole('option', {
             name: 'Booger',
           })
-          .toBeNull()
-      );
+        );
 
-      await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+        await fixture.events.click(
+          fixture.screen.getByRole('option', {
+            name: 'Booger',
+          })
+        );
 
-      // validate new checkbox was added
-      const finalCategories = categoriesAndTags.categories;
-      initialCategories.map((checkbox) =>
-        expect(checkbox.name).not.toBe('deer')
-      );
-      expect(finalCategories.length).toBe(initialCategories.length + 1);
-      expect(
-        finalCategories.filter((category) => category.name === 'deer').length
-      ).toBe(1);
+        await waitFor(() =>
+          fixture.screen
+            .queryByRole('option', {
+              name: 'Booger',
+            })
+            .toBeNull()
+        );
 
-      // validate new checkbox was added as a child
-      // New checkbox will have been added directly after the parent option
-      const boogerIndex = finalCategories.findIndex(
-        (category) => category.name === 'Booger'
-      );
-      const deerIndex = finalCategories.findIndex(
-        (category) => category.name === 'deer'
-      );
-      expect(deerIndex).toBe(boogerIndex + 1);
+        await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+
+        // validate new checkbox was added
+        const finalCategories = categoriesAndTags.categories;
+        initialCategories.map((checkbox) =>
+          expect(checkbox.name).not.toBe('deer')
+        );
+        expect(finalCategories.length).toBe(initialCategories.length + 1);
+        expect(
+          finalCategories.filter((category) => category.name === 'deer').length
+        ).toBe(1);
+
+        // validate new checkbox was added as a child
+        // New checkbox will have been added directly after the parent option
+        const boogerIndex = finalCategories.findIndex(
+          (category) => category.name === 'Booger'
+        );
+        const deerIndex = finalCategories.findIndex(
+          (category) => category.name === 'deer'
+        );
+        expect(deerIndex).toBe(boogerIndex + 1);
+
+        // TODO: 9058 - validate new category exists on story once category is checked when added.
+      });
     });
   });
 
@@ -165,10 +197,13 @@ describe('Categories', () => {
       const categoriesAndTags =
         fixture.editor.inspector.documentPanel.categoriesAndTags;
 
+      // track initial story categories
+      const initialStoryTerms = await getStoryTerms();
+
       // focus the panel button
       await fixture.events.focus(categoriesAndTags.categoriesAndTagsButton);
 
-      // tab to first checkbox and select
+      // tab to first checkbox and un-check
       expect(categoriesAndTags.categories[0].checked).toBe(true);
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
@@ -176,9 +211,21 @@ describe('Categories', () => {
       await fixture.events.keyboard.press('Space');
       expect(categoriesAndTags.categories[0].checked).toBe(false);
 
-      // click a checkbox again
+      // verify category was removed from story
+      let currentStoryTerms = await getStoryTerms();
+      expect(currentStoryTerms['story-categories'].length).toBe(
+        initialStoryTerms['story-categories'].length - 1
+      );
+
+      // check the checkbox again
       await fixture.events.keyboard.press('Space');
       expect(categoriesAndTags.categories[0].checked).toBe(true);
+
+      // verify category was added to story
+      currentStoryTerms = await getStoryTerms();
+      expect(currentStoryTerms['story-categories'].length).toBe(
+        initialStoryTerms['story-categories'].length
+      );
     });
 
     it('should add new categories', async () => {
@@ -228,6 +275,8 @@ describe('Categories', () => {
       expect(
         finalCategories.filter((category) => category.name === 'deer').length
       ).toBe(1);
+
+      // TODO: 9058 - validate new category exists on story once category is checked when added.
     });
 
     it('should add a new category as a child of an existing category', async () => {
@@ -294,6 +343,8 @@ describe('Categories', () => {
         (category) => category.name === 'deer'
       );
       expect(deerIndex).toBe(boogerIndex + 1);
+
+      // TODO: 9058 - validate new category exists on story once category is checked when added.
     });
   });
 });
