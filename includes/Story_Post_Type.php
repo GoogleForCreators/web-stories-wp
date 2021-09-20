@@ -37,7 +37,7 @@ use WP_Site;
 /**
  * Class Story_Post_Type.
  *
- * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class Story_Post_Type extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
 	use Post_Type;
