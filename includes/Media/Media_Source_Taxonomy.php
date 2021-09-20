@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Media;
 
+use Google\Web_Stories\REST_API\Stories_Terms_Controller;
 use Google\Web_Stories\Taxonomy\Taxonomy_Base;
 use Google\Web_Stories\Traits\Screen;
 use WP_Query;
@@ -89,13 +90,14 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @return array
 	 */
-	protected function taxonomy_args() : array {
+	protected function taxonomy_args(): array {
 		return [
-			'label'        => __( 'Source', 'web-stories' ),
-			'public'       => false,
-			'rewrite'      => false,
-			'hierarchical' => false,
-			'show_in_rest' => true,
+			'label'                 => __( 'Source', 'web-stories' ),
+			'public'                => false,
+			'rewrite'               => false,
+			'hierarchical'          => false,
+			'show_in_rest'          => true,
+			'rest_controller_class' => Stories_Terms_Controller::class,
 		];
 	}
 
