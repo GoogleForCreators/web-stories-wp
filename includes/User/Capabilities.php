@@ -184,7 +184,7 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 * @return array
 	 */
 	protected function get_all_capabilities(): array {
-		$all_capabilities = Taxonomy_Base::CAPABILITIES;
+		$all_capabilities = Taxonomy_Base::DEFAULT_CAPABILITIES;
 		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
 		if ( $post_type_object ) {
 			$all_capabilities = array_merge( $all_capabilities, (array) $post_type_object->cap );

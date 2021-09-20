@@ -38,7 +38,7 @@ use WP_Site;
  */
 abstract class Taxonomy_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware, SiteRemovalAware {
 
-	const CAPABILITIES = [
+	const DEFAULT_CAPABILITIES = [
 		'manage_terms' => 'manage_terms_web-stories',
 		'edit_terms'   => 'edit_terms_web-stories',
 		'delete_terms' => 'delete_terms_web-stories',
@@ -134,7 +134,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function on_plugin_activation( $network_wide ){
+	public function on_plugin_activation( $network_wide ) {
 		$this->register_taxonomy();
 	}
 

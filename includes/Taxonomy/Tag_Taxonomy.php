@@ -85,7 +85,7 @@ class Tag_Taxonomy extends Taxonomy_Base {
 			'show_admin_column'     => true,
 			'rewrite'               => true,
 			'show_in_rest'          => true,
-			'capabilities'          => self::CAPABILITIES,
+			'capabilities'          => self::DEFAULT_CAPABILITIES,
 			'rest_controller_class' => Stories_Terms_Controller::class,
 		];
 
