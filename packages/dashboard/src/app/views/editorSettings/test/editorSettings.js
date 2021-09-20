@@ -112,8 +112,8 @@ function createProviderValues({
         usersApi: {
           fetchCurrentUser: mockFetchCurrentUser,
         },
-        searchApi: {
-          search: mockSearch,
+        pagesApi: {
+          searchPages: mockSearch,
           getPageById: mockGetPageById,
         },
       },

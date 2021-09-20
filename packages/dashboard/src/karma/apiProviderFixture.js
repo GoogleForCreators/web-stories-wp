@@ -100,9 +100,9 @@ export default function ApiProviderFixture({ children }) {
     [currentUser]
   );
 
-  const searchApi = useMemo(
+  const pagesApi = useMemo(
     () => ({
-      search: jasmine.createSpy('search'),
+      searchPages: jasmine.createSpy('searchPages'),
       getPageById: jasmine.createSpy('getPageById'),
     }),
     []
@@ -123,7 +123,7 @@ export default function ApiProviderFixture({ children }) {
         storyApi,
         templateApi,
         usersApi,
-        searchApi,
+        pagesApi,
       },
     }),
     [
@@ -137,7 +137,7 @@ export default function ApiProviderFixture({ children }) {
       storyApi,
       templateApi,
       usersApi,
-      searchApi,
+      pagesApi,
     ]
   );
 

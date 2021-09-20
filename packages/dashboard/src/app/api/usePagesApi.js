@@ -20,13 +20,13 @@
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { addQueryArgs } from '@web-stories-wp/design-system';
 
-export default function useSearchApi(dataAdapter, { searchApi, pagesApi }) {
+export default function usePagesApi(dataAdapter, { pagesApi }) {
   const getPageById = useCallback(
     async (id) => {
       try {
         const response = await dataAdapter.get(
           addQueryArgs(`${pagesApi}${id}/`, {
-            _fields: 'title,link',
+            _fields: ['title', 'link'],
           })
         );
 
@@ -41,30 +41,32 @@ export default function useSearchApi(dataAdapter, { searchApi, pagesApi }) {
     [dataAdapter, pagesApi]
   );
 
-  const search = useCallback(
+  const searchPages = useCallback(
     async (searchTerm) => {
       try {
         const response = await dataAdapter.get(
-          addQueryArgs(searchApi, {
+          addQueryArgs(pagesApi, {
             per_page: 100,
             search: searchTerm,
-            type: 'post',
-            subtype: 'page',
+            _fields: ['id', 'title'],
           })
         );
 
-        return response.map(({ id, title }) => ({ value: id, label: title }));
+        return response.map(({ id, title }) => ({
+          value: id,
+          label: title.rendered,
+        }));
       } catch (e) {
         return [];
       }
     },
-    [dataAdapter, searchApi]
+    [dataAdapter, pagesApi]
   );
 
   return useMemo(
     () => ({
-      api: { search, getPageById },
+      api: { searchPages, getPageById },
     }),
-    [search, getPageById]
+    [searchPages, getPageById]
   );
 }

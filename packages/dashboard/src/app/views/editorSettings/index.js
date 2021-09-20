@@ -74,7 +74,7 @@ function EditorSettings() {
       actions: {
         settingsApi: { fetchSettings, updateSettings },
         mediaApi: { fetchMediaById, uploadMedia },
-        searchApi: { search: searchPages, getPageById },
+        pagesApi: { searchPages, getPageById },
       },
       state: {
         settings: {

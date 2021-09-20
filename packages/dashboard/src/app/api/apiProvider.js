@@ -30,7 +30,7 @@ import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
 import useUsersApi from './useUserApi';
 import useSettingsApi from './useSettingsApi';
-import useSearchApi from './useSearchApi';
+import usePagesApi from './usePagesApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -59,8 +59,7 @@ export default function ApiProvider({ children }) {
     globalStoriesSettingsApi: api.settings,
   });
 
-  const { api: searchApi } = useSearchApi(dataAdapter, {
-    searchApi: api.search,
+  const { api: pagesApi } = usePagesApi(dataAdapter, {
     pagesApi: api.pages,
   });
 
@@ -79,7 +78,7 @@ export default function ApiProvider({ children }) {
         storyApi,
         templateApi,
         usersApi,
-        searchApi,
+        pagesApi,
       },
     }),
     [
@@ -93,7 +92,7 @@ export default function ApiProvider({ children }) {
       storyApi,
       templateApi,
       usersApi,
-      searchApi,
+      pagesApi,
     ]
   );
 
