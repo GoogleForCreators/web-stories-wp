@@ -42,7 +42,7 @@ $preload_paths = [
 			'_embed'           => rawurlencode(
 				implode(
 					',',
-					[ 'wp:featuredmedia', 'wp:lockuser', 'author' ]
+					[ 'wp:featuredmedia', 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
 				)
 			),
 			'context'          => 'edit',
@@ -56,6 +56,7 @@ $preload_paths = [
 						'status',
 						'slug',
 						'date',
+						'meta',
 						'modified',
 						'excerpt',
 						'link',
@@ -108,6 +109,11 @@ $preload_paths = [
 		]
 	),
 	'/web-stories/v1/users/me/',
+	'/web-stories/v1/taxonomies/?' . build_query(
+		[
+			'type' => $post_type_object->name,
+		]
+	),
 ];
 
 /**

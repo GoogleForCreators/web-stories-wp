@@ -64,7 +64,7 @@ class Sanitization extends TestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 
 		$document = Document::fromHtml( $original_html );
 		$sanitization->sanitize_document( $document );
@@ -100,7 +100,7 @@ class Sanitization extends TestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 
 		$document = Document::fromHtml( $original_html );
 		$sanitization->sanitize_document( $document );
@@ -149,7 +149,7 @@ class Sanitization extends TestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 
 		$document = Document::fromHtml( $original_html );
 		$sanitization->sanitize_document( $document );
@@ -201,7 +201,7 @@ class Sanitization extends TestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 
 		$document = Document::fromHtml( $original_html );
 		$sanitization->sanitize_document( $document );
@@ -228,7 +228,7 @@ class Sanitization extends TestCase {
 	 * @covers ::get_extension_sources
 	 */
 	public function test_get_extension_sources() {
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 		$sources      = $this->call_private_method( $sanitization, 'get_extension_sources' );
 
 		$actual = [];
@@ -387,7 +387,7 @@ class Sanitization extends TestCase {
 	 * @covers ::is_amp_dev_mode
 	 */
 	public function test_is_amp_dev_mode() {
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 
 		$this->assertFalse( $this->call_private_method( $sanitization, 'is_amp_dev_mode' ) );
 		add_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
@@ -401,7 +401,7 @@ class Sanitization extends TestCase {
 	 * @covers ::is_amp_dev_mode
 	 */
 	public function test_is_amp_dev_mode_authenticated_user_admin_bar_showing() {
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 
 		add_filter( 'show_admin_bar', '__return_true' );
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
@@ -415,7 +415,7 @@ class Sanitization extends TestCase {
 	 * @covers ::is_amp_dev_mode
 	 */
 	public function test_is_amp_dev_mode_unauthenticated_user_admin_bar_forced() {
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 
 		// Test unauthenticated user with admin bar forced.
 		add_filter( 'show_admin_bar', '__return_true' );
@@ -440,7 +440,7 @@ class Sanitization extends TestCase {
 			}
 		);
 
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 		$sanitizers   = $this->call_private_method( $sanitization, 'get_sanitizers' );
 
 		$ordered_sanitizers = array_keys( $sanitizers );
@@ -456,7 +456,7 @@ class Sanitization extends TestCase {
 	 * @covers ::get_sanitizers
 	 */
 	public function test_get_sanitizers_with_dev_mode() {
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 
 		$element_xpaths            = [ '//script[ @id = "hello-world" ]' ];
 		$validation_error_callback = [ $sanitization, 'validation_error_callback' ];
@@ -531,7 +531,7 @@ class Sanitization extends TestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 
 		$document = Document::fromHtml( $original_html );
 		$sanitization->sanitize_document( $document );
@@ -564,7 +564,7 @@ class Sanitization extends TestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = new \Google\Web_Stories\AMP\Sanitization( new Experiments() );
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
 
 		$document = Document::fromHtml( $original_html );
 		$sanitization->sanitize_document( $document );

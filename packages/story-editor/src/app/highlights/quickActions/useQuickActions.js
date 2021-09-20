@@ -21,16 +21,15 @@ import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
 import updateProperties from '../../../components/inspector/design/updateProperties';
+import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { useCanvas } from '../../canvas';
 import {
   useStory,
   useStoryTriggersDispatch,
@@ -90,9 +89,10 @@ const useQuickActions = () => {
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
-  const { setEditingElementWithState } = useCanvas(
-    ({ actions: { setEditingElementWithState } }) => ({
-      setEditingElementWithState,
+  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
+    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
+      hasTrimMode,
+      toggleTrimMode,
     })
   );
 
@@ -214,17 +214,9 @@ const useQuickActions = () => {
   );
 
   const handleFocusMediaPanel = useMemo(() => {
-    const idOrigin = selectedElements?.[0]?.resource?.id
-      ?.toString()
-      .split(':')?.[0];
-    const is3PGif =
-      (!idOrigin || idOrigin?.toLowerCase() === 'media/tenor') &&
-      selectedElements?.[0]?.resource?.type?.toLowerCase() === 'gif';
-    const is3PVideo = idOrigin?.toLowerCase() === 'media/coverr';
-    const is3PImage = idOrigin?.toLowerCase() === 'media/unsplash';
-
-    const panelToFocus =
-      is3PImage || is3PVideo || is3PGif ? states.MEDIA3P : states.MEDIA;
+    const resourceId = selectedElements?.[0]?.resource?.id?.toString() || '';
+    const is3PMedia = resourceId.startsWith('media/');
+    const panelToFocus = is3PMedia ? states.MEDIA3P : states.MEDIA;
 
     return handleFocusPanel(panelToFocus);
   }, [handleFocusPanel, selectedElements]);
@@ -472,18 +464,15 @@ const useQuickActions = () => {
     ]
   );
 
-  const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const videoCommonActions = useMemo(() => {
-    return isVideoTrimEnabled
+    return hasTrimMode
       ? [
           {
             Icon: Scissors,
             label: ACTIONS.TRIM_VIDEO.text,
             onClick: (evt) => {
               handleFocusVideoSettingsPanel()(evt);
-              setEditingElementWithState(selectedElement.id, {
-                isTrimming: true,
-              });
+              toggleTrimMode();
               trackEvent('quick_action', {
                 name: ACTIONS.TRIM_VIDEO.trackingEventName,
                 element: selectedElement.type,
@@ -496,9 +485,9 @@ const useQuickActions = () => {
   }, [
     actionMenuProps,
     handleFocusVideoSettingsPanel,
-    isVideoTrimEnabled,
+    hasTrimMode,
     selectedElement,
-    setEditingElementWithState,
+    toggleTrimMode,
   ]);
 
   const videoActions = useMemo(() => {

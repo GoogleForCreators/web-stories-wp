@@ -84,15 +84,12 @@ function PostLock() {
     if (enablePostLocking && showLockedDialog && currentUserLoaded) {
       getStoryLockById(storyId)
         .then(({ locked, nonce: newNonce, _embedded }) => {
-          const author = _embedded?.author?.[0] || {};
-          const lockAuthor = author
-            ? {
-                id: author.id,
-                name: author.name,
-                avatar: author.avatar_urls?.['96'],
-              }
-            : null;
-          if (locked && lockAuthor?.id !== currentUser.id) {
+          const lockAuthor = {
+            id: _embedded?.author?.[0]?.id || 0,
+            name: _embedded?.author?.[0]?.name || '',
+            avatar: _embedded?.author?.[0]?.avatar_urls?.['96'] || '',
+          };
+          if (locked && lockAuthor?.id && lockAuthor?.id !== currentUser.id) {
             setShowDialog(true);
             setUser(lockAuthor);
           } else {
@@ -124,7 +121,7 @@ function PostLock() {
 
   useEffect(() => {
     if (enablePostLocking && showLockedDialog && currentUserLoaded) {
-      if (lockUser && lockUser?.id !== currentUser.id) {
+      if (lockUser?.id !== currentUser.id) {
         setShowDialog(true);
         setUser(lockUser);
       }
@@ -174,7 +171,7 @@ function PostLock() {
     return () => clearInterval(timeout);
   }, [postLockInterval, currentUserLoaded]);
 
-  if (!enablePostLocking || !showLockedDialog) {
+  if (!enablePostLocking || !showLockedDialog || !user) {
     return null;
   }
 

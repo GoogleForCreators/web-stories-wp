@@ -22,7 +22,6 @@ import {
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import {
   useCallback,
@@ -74,8 +73,6 @@ import { getDefaultPropertiesForType, getElementStyles } from './utils';
  * @return {Node} React node
  */
 function RightClickMenuProvider({ children }) {
-  const enableRightClickMenus = useFeature('enableRightClickMenus');
-
   const { addGlobalPreset: addGlobalTextPreset } = useAddPreset({
     presetType: PRESET_TYPES.STYLE,
   });
@@ -710,28 +707,28 @@ function RightClickMenuProvider({ children }) {
     () => [
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD,
         disabled: !canElementMoveBackwards,
         onClick: handleSendBackward,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK,
         disabled: !canElementMoveBackwards,
         onClick: handleSendToBack,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD,
         disabled: !canElementMoveForwards,
         onClick: handleBringForward,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT,
         disabled: !canElementMoveForwards,
         onClick: handleBringToFront,
         ...menuItemProps,
@@ -822,17 +819,13 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
         separator: 'top',
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
         onClick: handleCopyStyles,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_STYLES,
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         onClick: handlePasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
@@ -877,17 +870,13 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
         separator: 'top',
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
         onClick: handleCopyStyles,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         onClick: handlePasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
@@ -917,17 +906,13 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
         separator: 'top',
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
         onClick: handleCopyStyles,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        },
+        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         onClick: handlePasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
@@ -989,7 +974,7 @@ function RightClickMenuProvider({ children }) {
   // rightClickAreaRef is set
   useEffect(() => {
     const node = rightClickAreaRef.current;
-    if (!enableRightClickMenus || !node) {
+    if (!node) {
       return undefined;
     }
 
@@ -998,7 +983,7 @@ function RightClickMenuProvider({ children }) {
     return () => {
       node.removeEventListener('contextmenu', handleOpenMenu);
     };
-  }, [enableRightClickMenus, handleOpenMenu]);
+  }, [handleOpenMenu]);
 
   useGlobalKeyDownEffect(
     { key: ['mod+alt+o'] },

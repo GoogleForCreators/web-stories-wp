@@ -31,6 +31,25 @@ namespace Google\Web_Stories;
  */
 class Analytics extends Service_Base {
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Experiments $experiments ) {
+		$this->experiments = $experiments;
+	}
+	/**
 	 * Initializes all hooks.
 	 *
 	 * @since 1.0.0
@@ -196,7 +215,7 @@ class Analytics extends Service_Base {
 	}
 
 	/**
-	 * Prints the <amp-analytics> tag for single stories.
+	 * Prints the analytics tag for single stories.
 	 *
 	 * @since 1.0.0
 	 *
@@ -208,12 +227,46 @@ class Analytics extends Service_Base {
 		if ( ! $tracking_id ) {
 			return;
 		}
+
+		if (
+			(bool) get_option( Settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) ||
+			! $this->experiments->is_experiment_enabled( 'enableAutoAnalyticsMigration' )
+		) {
+			$this->print_amp_analytics_tag( $tracking_id );
+		} else {
+			$this->print_amp_story_auto_analytics_tag( $tracking_id );
+		}
+	}
+
+	/**
+	 * Prints the legacy <amp-analytics> tag for single stories.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string $tracking_id Tracking ID.
+	 * @return void
+	 */
+	private function print_amp_analytics_tag( $tracking_id ) {
 		?>
 		<amp-analytics type="gtag" data-credentials="include">
 			<script type="application/json">
 				<?php echo wp_json_encode( $this->get_default_configuration( $tracking_id ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</script>
 		</amp-analytics>
+		<?php
+	}
+
+	/**
+	 * Prints the <amp-story-auto-analytics> tag for single stories.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string $tracking_id Tracking ID.
+	 * @return void
+	 */
+	private function print_amp_story_auto_analytics_tag( $tracking_id ) {
+		?>
+		<amp-story-auto-analytics gtag-id="<?php echo esc_attr( $tracking_id ); ?>"></amp-story-auto-analytics>
 		<?php
 	}
 }

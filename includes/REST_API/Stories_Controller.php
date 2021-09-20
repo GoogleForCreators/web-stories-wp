@@ -27,11 +27,8 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Demo_Content;
-use Google\Web_Stories\Media\Image_Sizes;
-use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Post_Type;
-use Google\Web_Stories\Traits\Publisher;
 use WP_Query;
 use WP_Error;
 use WP_Post;
@@ -44,7 +41,8 @@ use WP_REST_Response;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories_Controller extends Stories_Base_Controller {
-	use Publisher, Post_Type;
+	use Post_Type;
+
 	/**
 	 * Default style presets to pass if not set.
 	 */
@@ -81,10 +79,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
 		$data     = $response->get_data();
-
-		if ( rest_is_field_included( 'publisher_logo_url', $fields ) ) {
-			$data['publisher_logo_url'] = $this->get_publisher_logo();
-		}
 
 		if ( rest_is_field_included( 'style_presets', $fields ) ) {
 			$style_presets         = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
@@ -162,16 +156,6 @@ class Stories_Controller extends Stories_Base_Controller {
 			return rest_ensure_response( $response );
 		}
 
-		// If publisher logo is set, let's assign that.
-		$publisher_logo_id = $request->get_param( 'publisher_logo' );
-		if ( $publisher_logo_id ) {
-			$all_publisher_logos   = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
-			$all_publisher_logos[] = $publisher_logo_id;
-
-			update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, array_unique( $all_publisher_logos ) );
-			update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $publisher_logo_id );
-		}
-
 		// If style presets are set.
 		$style_presets = $request->get_param( 'style_presets' );
 		if ( is_array( $style_presets ) ) {
@@ -194,14 +178,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		$schema = parent::get_item_schema();
-
-		$schema['properties']['publisher_logo_url'] = [
-			'description' => __( 'Publisher logo URL.', 'web-stories' ),
-			'type'        => 'string',
-			'context'     => [ 'views', 'edit' ],
-			'format'      => 'uri',
-			'default'     => '',
-		];
 
 		$schema['properties']['style_presets'] = [
 			'description' => __( 'Style presets used by all stories', 'web-stories' ),
@@ -459,30 +435,8 @@ class Stories_Controller extends Stories_Base_Controller {
 		$links = parent::prepare_links( $post );
 		add_post_type_support( Story_Post_Type::POST_TYPE_SLUG, 'revisions' );
 
-		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
-		$lock_url = rest_url( trailingslashit( $base ) . $post->ID . '/lock' );
-
-		$links['https://api.w.org/lock'] = [
-			'href'       => $lock_url,
-			'embeddable' => true,
-		];
-
-		$lock = get_post_meta( $post->ID, '_edit_lock', true );
-
-		if ( $lock ) {
-			$lock                 = explode( ':', $lock );
-			list ( $time, $user ) = $lock;
-
-			/** This filter is documented in wp-admin/includes/ajax-actions.php */
-			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
-
-			if ( $time && $time > time() - $time_window ) {
-				$links['https://api.w.org/lockuser'] = [
-					'href'       => rest_url( sprintf( '%s/%s', $this->namespace, 'users/' ) . $user ),
-					'embeddable' => true,
-				];
-			}
-		}
+		$links = $this->add_post_locking_link( $links, $post );
+		$links = $this->add_publisher_logo_link( $links, $post );
 
 		return $links;
 	}
@@ -514,5 +468,66 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		return $query_params;
+	}
+
+	/**
+	 * Adds a REST API link if the story is locked.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param array   $links Links for the given post.
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return array Modified list of links.
+	 */
+	private function add_post_locking_link( array $links, WP_Post $post ): array {
+		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
+		$lock_url = rest_url( trailingslashit( $base ) . $post->ID . '/lock' );
+
+		$links['https://api.w.org/lock'] = [
+			'href'       => $lock_url,
+			'embeddable' => true,
+		];
+
+		$lock = get_post_meta( $post->ID, '_edit_lock', true );
+
+		if ( $lock ) {
+			list ( $time, $user ) = explode( ':', $lock );
+
+			/** This filter is documented in wp-admin/includes/ajax-actions.php */
+			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
+
+			if ( $time && $time > time() - $time_window ) {
+				$links['https://api.w.org/lockuser'] = [
+					'href'       => rest_url( sprintf( '%s/%s', $this->namespace, 'users/' ) . $user ),
+					'embeddable' => true,
+				];
+			}
+		}
+
+		return $links;
+	}
+
+	/**
+	 * Adds a REST API link for the story's publisher logo.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param array   $links Links for the given post.
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return array Modified list of links.
+	 */
+	private function add_publisher_logo_link( array $links, WP_Post $post ): array {
+		$publisher_logo_id = get_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
+
+		if ( $publisher_logo_id ) {
+			$links['https://api.w.org/publisherlogo'] = [
+				'href'       => rest_url( sprintf( '%s/%s/%s', $this->namespace, 'media', $publisher_logo_id ) ),
+				'embeddable' => true,
+			];
+		}
+
+		return $links;
 	}
 }

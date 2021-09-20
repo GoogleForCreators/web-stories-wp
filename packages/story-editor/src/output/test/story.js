@@ -53,7 +53,12 @@ describe('Story output', () => {
           width: 640,
           height: 853,
         },
-        publisherLogoUrl: 'https://example.com/logo.png',
+        publisherLogo: {
+          id: 1,
+          url: 'https://example.com/logo.png',
+          height: 0,
+          width: 0,
+        },
         password: '123',
         link: 'https://example.com/story',
         autoAdvance: false,
@@ -123,10 +128,7 @@ describe('Story output', () => {
         },
       ],
       metadata: {
-        publisher: {
-          name: 'Publisher Name',
-          logo: 'https://example.com/logo.png',
-        },
+        publisher: 'Publisher Name',
       },
     };
 
@@ -155,7 +157,12 @@ describe('Story output', () => {
           width: 640,
           height: 853,
         },
-        publisherLogoUrl: 'https://example.com/logo.png',
+        publisherLogo: {
+          id: 1,
+          url: 'https://example.com/logo.png',
+          height: 0,
+          width: 0,
+        },
         password: '123',
         link: 'https://example.com/story',
         autoAdvance: false,
@@ -183,10 +190,7 @@ describe('Story output', () => {
         },
       ],
       metadata: {
-        publisher: {
-          name: 'Publisher Name',
-          logo: 'https://example.com/logo.png',
-        },
+        publisher: 'Publisher Name',
       },
     };
 
@@ -216,17 +220,19 @@ describe('Story output', () => {
             width: 640,
             height: 853,
           },
-          publisherLogoUrl: 'https://example.com/logo.png',
+          publisherLogo: {
+            id: 1,
+            url: 'https://example.com/logo.png',
+            height: 0,
+            width: 0,
+          },
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
         },
         pages: [],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 
@@ -251,7 +257,12 @@ describe('Story output', () => {
             width: 640,
             height: 853,
           },
-          publisherLogoUrl: 'https://example.com/logo.png',
+          publisherLogo: {
+            id: 1,
+            url: 'https://example.com/logo.png',
+            height: 0,
+            width: 0,
+          },
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
@@ -270,10 +281,7 @@ describe('Story output', () => {
           },
         ],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 
@@ -298,7 +306,12 @@ describe('Story output', () => {
             width: 640,
             height: 853,
           },
-          publisherLogoUrl: 'https://example.com/logo.png',
+          publisherLogo: {
+            id: 1,
+            url: 'https://example.com/logo.png',
+            height: 0,
+            width: 0,
+          },
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
@@ -337,10 +350,7 @@ describe('Story output', () => {
           },
         ],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 
@@ -365,7 +375,12 @@ describe('Story output', () => {
             width: 640,
             height: 853,
           },
-          publisherLogoUrl: 'https://example.com/logo.png',
+          publisherLogo: {
+            id: 1,
+            url: 'https://example.com/logo.png',
+            height: 0,
+            width: 0,
+          },
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
@@ -407,10 +422,7 @@ describe('Story output', () => {
           },
         ],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 
@@ -435,7 +447,12 @@ describe('Story output', () => {
             width: 640,
             height: 853,
           },
-          publisherLogoUrl: 'https://example.com/logo.png',
+          publisherLogo: {
+            id: 1,
+            url: 'https://example.com/logo.png',
+            height: 0,
+            width: 0,
+          },
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
@@ -462,10 +479,7 @@ describe('Story output', () => {
           },
         ],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 

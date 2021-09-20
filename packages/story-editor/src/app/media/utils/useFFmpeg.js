@@ -20,7 +20,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
-import { getFileName } from '@web-stories-wp/media';
+import { getExtensionFromMimeType, getFileName } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -280,6 +280,63 @@ function useFFmpeg() {
   );
 
   /**
+   * Trim Video using FFmpeg.
+   *
+   * @param {File} file Original video file object.
+   * @param {string} start Time stamp of start time of new video. Example '00:01:02.345'.
+   * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
+   * @return {Promise<File>} Transcoded video file object.
+   */
+  const trimVideo = useCallback(
+    async (file, start, end) => {
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      const trackTiming = getTimeTracker('load_trim_video_transcoding');
+
+      let ffmpeg;
+
+      try {
+        ffmpeg = await getFFmpegInstance(file);
+
+        const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
+        const tempFileName = uuidv4() + '.' + ext;
+        const outputFileName = getFileName(file) + '-trimmed.' + ext;
+
+        await ffmpeg.run(
+          // Input filename.
+          '-i',
+          file.name,
+          '-ss',
+          start,
+          '-to',
+          end,
+          tempFileName
+        );
+        const data = ffmpeg.FS('readFile', tempFileName);
+
+        return new File([new Blob([data.buffer], { type })], outputFileName, {
+          type,
+        });
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(err);
+
+        trackError('trim_video_transcoding', err.message);
+
+        throw err;
+      } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+
+        trackTiming();
+      }
+    },
+    [getFFmpegInstance]
+  );
+
+  /**
    * Strip audio from video using FFmpeg.
    *
    * @param {File} file Original video file object.
@@ -295,9 +352,10 @@ function useFFmpeg() {
       try {
         ffmpeg = await getFFmpegInstance(file);
 
-        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
-        const outputFileName =
-          getFileName(file) + '-muted.' + MEDIA_TRANSCODED_FILE_TYPE;
+        const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
+        const tempFileName = uuidv4() + '.' + ext;
+        const outputFileName = getFileName(file) + '-muted.' + ext;
 
         await ffmpeg.run(
           // Input filename.
@@ -313,13 +371,9 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new File(
-          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
-          outputFileName,
-          {
-            type: MEDIA_TRANSCODED_MIME_TYPE,
-          }
-        );
+        return new File([new Blob([data.buffer], { type })], outputFileName, {
+          type,
+        });
       } catch (err) {
         // eslint-disable-next-line no-console
         console.log(err);
@@ -437,6 +491,7 @@ function useFFmpeg() {
       stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
+      trimVideo,
     }),
     [
       isTranscodingEnabled,
@@ -445,6 +500,7 @@ function useFFmpeg() {
       stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
+      trimVideo,
     ]
   );
 }

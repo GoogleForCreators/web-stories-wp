@@ -32,7 +32,6 @@ use Google\Web_Stories\Exception\SanitizationException;
 use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Throwable;
 
@@ -46,8 +45,6 @@ use Throwable;
  * @see \AMP_Theme_Support
  */
 class Output_Buffer extends Service_Base implements Conditional {
-	use Publisher;
-
 	/**
 	 * Whether output buffering has started.
 	 *

@@ -29,18 +29,14 @@ ResourcePropTypes.resourceSize = PropTypes.shape({
   height: PropTypes.number.isRequired,
 });
 
-ResourcePropTypes.imageResourceSizes = PropTypes.shape({
-  full: ResourcePropTypes.resourceSize,
-  large: ResourcePropTypes.resourceSize,
-  web_stories_thumbnail: ResourcePropTypes.resourceSize,
-});
+ResourcePropTypes.imageResourceSizes = PropTypes.oneOfType([
+  PropTypes.array,
+  PropTypes.objectOf(ResourcePropTypes.resourceSize),
+]);
 
 ResourcePropTypes.videoResourceSizes = PropTypes.oneOfType([
   PropTypes.array,
-  PropTypes.shape({
-    full: ResourcePropTypes.resourceSize,
-    preview: ResourcePropTypes.resourceSize,
-  }),
+  PropTypes.objectOf(ResourcePropTypes.resourceSize),
 ]);
 
 ResourcePropTypes.imageResource = PropTypes.shape({
@@ -51,7 +47,6 @@ ResourcePropTypes.imageResource = PropTypes.shape({
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   alt: PropTypes.string,
-  title: PropTypes.string,
   sizes: ResourcePropTypes.imageResourceSizes,
 });
 

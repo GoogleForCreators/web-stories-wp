@@ -272,6 +272,7 @@ function getImageResourceFromMedia3p(m) {
     height: imageUrls.full.height,
     alt: m.name,
     local: false,
+    isExternal: true,
     isPlaceholder: false,
     sizes: imageUrls,
     attribution: getAttributionFromMedia3p(m),
@@ -296,6 +297,7 @@ function getVideoResourceFromMedia3p(m) {
     lengthFormatted: formatVideoLength(length),
     alt: m.name,
     local: false,
+    isExternal: true,
     isPlaceholder: false,
     isOptimized: true,
     isMuted: true,
@@ -321,6 +323,7 @@ function getGifResourceFromMedia3p(m) {
     local: false,
     isPlaceholder: false,
     isOptimized: true,
+    isExternal: true,
     sizes: imageUrls,
     output: {
       mimeType: videoUrls.mp4.full.mime_type,

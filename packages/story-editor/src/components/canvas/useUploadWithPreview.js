@@ -65,7 +65,11 @@ function useUploadWithPreview() {
       ) {
         uploadVideoPoster(resource.id, resource.src);
       }
-      if ('video' === resource.type && !resource.local && !resource.isMuted) {
+      if (
+        'video' === resource.type &&
+        !resource.local &&
+        resource.isMuted === null
+      ) {
         updateVideoIsMuted(resource.id, resource.src);
       }
     },

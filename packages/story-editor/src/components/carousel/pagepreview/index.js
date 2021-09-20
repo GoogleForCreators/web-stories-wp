@@ -28,6 +28,7 @@ import {
   useCallback,
   useEffect,
 } from '@web-stories-wp/react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -100,22 +101,22 @@ function PagePreview({ page, label, ...props }) {
   const [imageBlob, setImageBlob] = useState();
   const [pageNode, setPageNode] = useState();
   const setPageRef = useCallback((node) => node && setPageNode(node), []);
-  const hasImage = !isActive && imageBlob;
   const pageAtGenerationTime = useRef();
+  const enableThumbnailCaching = useFeature('enableThumbnailCaching');
 
-  // Whenever the page is re-generated and this is not the active page
+  // Whenever the page is re-generated
   // remove the old (and now stale) image blob
   useEffect(() => {
-    if (pageAtGenerationTime.current !== page && !isActive) {
+    if (pageAtGenerationTime.current !== page) {
       setImageBlob(null);
       pageAtGenerationTime.current = null;
     }
-  }, [page, isActive]);
+  }, [page]);
 
   useEffect(() => {
-    // If this is not the active page, there is a page node and we
-    // don't already have a snapshot
-    if (!isActive && pageNode && !imageBlob) {
+    // If this is not the active page, there is a page node, we
+    // don't already have a snapshot and thumbnail caching is active
+    if (enableThumbnailCaching && !isActive && pageNode && !imageBlob) {
       // Schedule an idle callback to actually generate the image
       const id = requestIdleCallback(
         () => {
@@ -134,14 +135,14 @@ function PagePreview({ page, label, ...props }) {
     }
     // Required because of eslint: consistent-return
     return undefined;
-  }, [isActive, pageNode, imageBlob, page]);
+  }, [enableThumbnailCaching, isActive, pageNode, imageBlob, page]);
 
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
         <Page ref={setPageRef} aria-label={label} {...props}>
           <PreviewWrapper background={backgroundColor}>
-            {hasImage ? (
+            {imageBlob ? (
               <Image
                 src={imageBlob}
                 width={width}

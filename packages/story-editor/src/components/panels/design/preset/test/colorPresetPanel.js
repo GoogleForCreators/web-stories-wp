@@ -19,6 +19,8 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import { createSolid } from '@web-stories-wp/patterns';
+import { setAppElement } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -84,11 +86,13 @@ function arrange(extraStylePresets, extraStateProps, extraStoryPresets) {
     getByLabelText,
     queryByText,
     queryAllByLabelText,
+    container,
   } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <ColorPresetPanel pushUpdate={pushUpdate} />
     </StoryContext.Provider>
   );
+  setAppElement(container);
   return {
     getAllByRole,
     getByRole,

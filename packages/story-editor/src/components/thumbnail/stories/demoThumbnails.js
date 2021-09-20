@@ -218,6 +218,7 @@ const PageThumbnail = (
     width={THUMBNAIL_DIMENSIONS.WIDTH}
     height={THUMBNAIL_DIMENSIONS.HEIGHT}
     as="div"
+    label="Page Thumbnail"
   />
 );
 
