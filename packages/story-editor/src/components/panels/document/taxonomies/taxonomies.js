@@ -21,15 +21,34 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { useTaxonomy } from '../../../../app/taxonomy';
 import { SimplePanel } from '../../panel';
+import HierarchicalTermSelector from './HierarchicalTermSelector';
+import FlatTermSelector from './FlatTermSelector';
 
-function TaxonomiesPanel({ ...props }) {
+function TaxonomiesPanel(props) {
+  const { taxonomies } = useTaxonomy(({ state: { taxonomies } }) => ({
+    taxonomies,
+  }));
+
+  if (!taxonomies.length) {
+    return null;
+  }
+
   return (
     <SimplePanel
       name="taxonomies"
       title={__('Categories and Tags', 'web-stories')}
       {...props}
-    />
+    >
+      {taxonomies.map((taxonomy) =>
+        taxonomy.hierarchical ? (
+          <HierarchicalTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+        ) : (
+          <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+        )
+      )}
+    </SimplePanel>
   );
 }
 

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
+import MockDate from 'mockdate';
 
 /**
  * Internal dependencies
@@ -92,10 +93,12 @@ describe('PublishPanel', () => {
       'web_stories_ui_panel_settings:publishing',
       JSON.stringify({ isCollapsed: false })
     );
+    MockDate.set('2020-07-15T12:00:00+00:00');
   });
 
   afterAll(() => {
     localStorage.clear();
+    MockDate.reset();
   });
 
   it('should render PublishPanel', async () => {

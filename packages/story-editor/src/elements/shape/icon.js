@@ -45,11 +45,16 @@ const ShapePreview = styled.div`
   height: ${({ height }) => height}px;
 `;
 
-function ShapeLayerIcon({ element: { id, mask, backgroundColor } }) {
+function ShapeLayerIcon({
+  element: { id, mask, backgroundColor, isDefaultBackground },
+  currentPage,
+}) {
   const maskDef = getMaskByType(mask.type);
 
   const maskId = `mask-${maskDef.type}-${id}-layer-preview`;
-
+  if (isDefaultBackground) {
+    backgroundColor = currentPage.backgroundColor;
+  }
   return (
     <Container>
       <ShapePreview
@@ -78,6 +83,7 @@ function ShapeLayerIcon({ element: { id, mask, backgroundColor } }) {
 
 ShapeLayerIcon.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  currentPage: StoryPropTypes.page,
 };
 
 export default ShapeLayerIcon;

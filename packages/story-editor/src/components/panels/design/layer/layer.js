@@ -118,7 +118,7 @@ function Layer({ layer }) {
       onClick={handleClick}
     >
       <LayerIconWrapper>
-        <LayerIcon element={layer} />
+        <LayerIcon element={layer} currentPage={currentPage} />
       </LayerIconWrapper>
       <LayerDescription>
         <LayerContentContainer>

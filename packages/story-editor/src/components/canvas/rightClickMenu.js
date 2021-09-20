@@ -18,7 +18,7 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import { ContextMenu } from '@web-stories-wp/design-system';
-import { createPortal } from '@web-stories-wp/react';
+import { createPortal, useRef, useEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -41,10 +41,25 @@ const RightClickMenu = () => {
     onCloseMenu,
     maskRef,
   } = useRightClickMenu();
+  const ref = useRef();
+  // If ContextMenu is already rendered prevent browser's context menu when right clicking on ContextMenu
+  const preventAdditionalContext = (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+  };
+
+  useEffect(() => {
+    const node = ref.current;
+
+    node.addEventListener('contextmenu', preventAdditionalContext);
+    return () => {
+      node.removeEventListener('contextmenu', preventAdditionalContext);
+    };
+  }, [ref]);
 
   return createPortal(
     <DirectionAware>
-      <RightClickMenuContainer position={menuPosition}>
+      <RightClickMenuContainer position={menuPosition} ref={ref}>
         <ContextMenu
           animate
           data-testid="right-click-context-menu"
