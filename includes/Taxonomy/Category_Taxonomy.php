@@ -39,6 +39,7 @@ class Category_Taxonomy extends Taxonomy_Base {
 	 * @var string
 	 */
 	protected $taxonomy_slug = 'web_story_category';
+
 	/**
 	 * Post type.
 	 *
