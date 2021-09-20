@@ -34,6 +34,7 @@ use Google\Web_Stories\Media\Video\Optimization;
 use Google\Web_Stories\Media\Video\Muting;
 use Google\Web_Stories\Media\Video\Poster;
 use Google\Web_Stories\Media\Video\Trimming;
+use WP_Term;
 use WP_Term_Query;
 
 /**
@@ -198,7 +199,9 @@ function delete_terms() {
 	}
 
 	foreach ( $terms as $term ) {
-		wp_delete_term( $term->term_id, $term->taxonomy );
+		if ( $term instanceof WP_Term ) {
+			wp_delete_term( $term->term_id, $term->taxonomy );
+		}
 	}
 }
 
