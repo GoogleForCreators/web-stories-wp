@@ -122,7 +122,7 @@ export function snakeCaseToCamelCase(key = '') {
   return key
     .toLowerCase()
     .replace(
-      /([a-z])([_][a-z])/,
-      (match, group1, group2) => group1 + group2.toUpperCase().replace('_', '')
+      /([a-z])([_][a-z])/g,
+      (_match, group1, group2) => group1 + group2.toUpperCase().replace('_', '')
     );
 }
