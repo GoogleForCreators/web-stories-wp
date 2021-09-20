@@ -53,16 +53,20 @@ class Media_Source_Taxonomy extends TestCase {
 	 * @covers ::register_taxonomy
 	 */
 	public function test_register_taxonomy() {
-		$media = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
+		$media_source_taxonomy = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
+
+		$media = new \Google\Web_Stories\Media\Media_Source_Taxonomy( $media_source_taxonomy );
 		$this->call_private_method( $media, 'register_taxonomy' );
 
-		$this->assertTrue( taxonomy_exists( \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG ) );
+		$this->assertTrue( taxonomy_exists( $media_source_taxonomy->get_taxonomy_slug() ) );
 	}
 
 	/**
 	 * @covers ::rest_api_init
 	 */
 	public function test_rest_api_init() {
+		$media_source_taxonomy = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
+
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
@@ -82,7 +86,7 @@ class Media_Source_Taxonomy extends TestCase {
 		);
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		wp_set_object_terms( $video_attachment_id, 'editor', \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
+		wp_set_object_terms( $video_attachment_id, 'editor', $media_source_taxonomy->get_taxonomy_slug() );
 
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/media/%d', $video_attachment_id ) );
 		$response = rest_get_server()->dispatch( $request );
@@ -154,10 +158,12 @@ class Media_Source_Taxonomy extends TestCase {
 	 * @covers ::get_exclude_tax_query
 	 */
 	public function test_filter_ajax_query_attachments_args() {
+		$media_source = ( new \Google\Web_Stories\Media\Media_Source_Taxonomy() )->get_taxonomy_slug();
+
 		$expected = [
 			'tax_query' => [
 				[
-					'taxonomy' => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
+					'taxonomy' => $media_source,
 					'field'    => 'slug',
 					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 					'operator' => 'NOT IN',
@@ -176,10 +182,11 @@ class Media_Source_Taxonomy extends TestCase {
 	 * @covers ::get_exclude_tax_query
 	 */
 	public function test_filter_ajax_query_attachments_args_existing_tax_query() {
-		$expected = [
+		$media_source = ( new \Google\Web_Stories\Media\Media_Source_Taxonomy() )->get_taxonomy_slug();
+		$expected     = [
 			'tax_query' => [
 				[
-					'taxonomy' => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
+					'taxonomy' => $media_source,
 					'field'    => 'slug',
 					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 					'operator' => 'NOT IN',
@@ -263,9 +270,10 @@ class Media_Source_Taxonomy extends TestCase {
 	 * @covers ::filter_generated_media_attachments
 	 */
 	public function test_filter_generated_media_attachmentss() {
+		$media    = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
 		$expected = [
 			[
-				'taxonomy' => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
+				'taxonomy' => $media->get_taxonomy_slug(),
 				'field'    => 'slug',
 				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 				'operator' => 'NOT IN',
@@ -296,7 +304,6 @@ class Media_Source_Taxonomy extends TestCase {
 			]
 		);
 
-		$media = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
 		$media->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
@@ -307,10 +314,11 @@ class Media_Source_Taxonomy extends TestCase {
 	 * @covers ::filter_rest_generated_media_attachments
 	 */
 	public function test_filter_rest_generated_media_attachments() {
-		$expected = [
+		$media_source = ( new \Google\Web_Stories\Media\Media_Source_Taxonomy() )->get_taxonomy_slug();
+		$expected     = [
 			'tax_query' => [
 				[
-					'taxonomy' => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
+					'taxonomy' => $media_source,
 					'field'    => 'slug',
 					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 					'operator' => 'NOT IN',
