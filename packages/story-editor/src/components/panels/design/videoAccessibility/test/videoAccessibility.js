@@ -27,6 +27,11 @@ import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import ConfigContext from '../../../../../app/config/context';
 
+function MediaUpload({ render }) {
+  const open = jest.fn();
+  return render(open);
+}
+
 function arrange(selectedElements) {
   const configValue = {
     allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
@@ -39,7 +44,7 @@ function arrange(selectedElements) {
     capabilities: {
       hasUploadMediaAction: true,
     },
-    MediaUpload: () => null,
+    MediaUpload,
   };
 
   const wrapper = ({ children }) => (
