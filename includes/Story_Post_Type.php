@@ -179,6 +179,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 				'rewrite'               => [
 					'slug'       => self::REWRITE_SLUG,
 					'with_front' => false,
+					'feeds'      => true,
 				],
 				'public'                => true,
 				'has_archive'           => $this->get_has_archive(),

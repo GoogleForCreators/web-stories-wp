@@ -18,6 +18,8 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Settings;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Discovery
  */
@@ -43,6 +45,13 @@ class Discovery extends TestCase {
 	 * @var int
 	 */
 	protected static $attachment_id;
+
+	/**
+	 * Archive page ID.
+	 *
+	 * @var int
+	 */
+	protected static $archive_page_id;
 
 	/**
 	 * @param $factory
@@ -76,6 +85,8 @@ class Discovery extends TestCase {
 		set_post_thumbnail( self::$story_id, self::$attachment_id );
 
 		add_theme_support( 'automatic-feed-links' );
+
+		self::$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 	}
 
 	public static function wpTearDownAfterClass() {
@@ -173,6 +184,24 @@ class Discovery extends TestCase {
 		$this->assertContains( '<link rel="alternate"', $output );
 		$this->assertContains( get_bloginfo( 'name' ), $output );
 	}
+
+	/**
+	 * @covers ::print_feed_link
+	 */
+	public function test_print_feed_link_custom_archive() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+
+		$object = new \Google\Web_Stories\Discovery();
+		$output = get_echo( [ $object, 'print_feed_link' ] );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		$this->assertContains( '<link rel="alternate"', $output );
+		$this->assertContains( get_bloginfo( 'name' ), $output );
+	}
+
 
 	/**
 	 * @covers ::print_twitter_metadata
