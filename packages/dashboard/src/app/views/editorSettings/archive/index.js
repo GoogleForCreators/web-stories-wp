@@ -199,7 +199,7 @@ export default function ArchiveSettings({
               selectedValue={selectedPage}
               options={searchOptions}
               handleSearchValueChange={handleSearchChange}
-              emptyText={__('No options available', 'web-stories')}
+              emptyText={__('No pages available', 'web-stories')}
               onMenuItemClick={onChangeArchivePageId}
             />
           </TextInputHelperText>
