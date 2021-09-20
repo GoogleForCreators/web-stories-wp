@@ -110,3 +110,19 @@ export function cacheFromEmbeddedTerms(embeddedTerms = []) {
     return cache;
   }, {});
 }
+
+/**
+ * Takes a string that is in snake case and returns the same
+ * term in camel case.
+ *
+ * @param {string} key The key in snake case
+ * @return {string} The key in camel case
+ */
+export function snakeCaseToCamelCase(key = '') {
+  return key
+    .toLowerCase()
+    .replace(
+      /([a-z])([_][a-z])/,
+      (match, group1, group2) => group1 + group2.toUpperCase().replace('_', '')
+    );
+}

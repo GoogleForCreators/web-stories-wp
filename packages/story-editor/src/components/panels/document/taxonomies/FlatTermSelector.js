@@ -88,7 +88,7 @@ function FlatTermSelector({ taxonomy }) {
           onTagsChange={handleFreeformTermsChange}
           onInputChange={handleFreeformInputChange}
           tagDisplayTransformer={termDisplayTransformer}
-          initialTags={selectedSlugs?.[taxonomy.rest_base] || []}
+          initialTags={selectedSlugs?.[taxonomy.restBase] || []}
         />
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separate_items_with_commas}

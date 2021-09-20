@@ -70,14 +70,14 @@ describe('TaxonomiesPanel', () => {
       taxonomies: [
         {
           slug: 'story-tags',
-          rest_base: 'story-tags',
+          restBase: 'story-tags',
           name: 'Tags',
           labels: {},
           hierarchical: false,
         },
         {
           slug: 'story-categories',
-          rest_base: 'story-categories',
+          restBase: 'story-categories',
           name: 'Categories',
           labels: {},
           hierarchical: false,

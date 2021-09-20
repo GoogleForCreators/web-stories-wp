@@ -25,6 +25,7 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import cleanForSlug from '../../../utils/cleanForSlug';
 import { TaxonomyProvider, useTaxonomy } from '..';
+import { snakeCaseToCamelCase } from '../utils';
 
 function mockResponse(...args) {
   return new Promise((r) => r(...args));
@@ -68,6 +69,15 @@ function createTermFromName(taxonomy, name, overrides) {
   };
 }
 
+function formatTaxonomyForFrontend(taxonomy) {
+  const entries = Object.entries(taxonomy);
+  const formattedTaxonomy = entries.map((entry) => [
+    snakeCaseToCamelCase(entry[0]),
+    entry[1],
+  ]);
+  return Object.fromEntries(formattedTaxonomy);
+}
+
 async function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
   useAPI.mockImplementation(() => ({
     getTaxonomyTerm: () => mockResponse([]),
@@ -108,7 +118,9 @@ describe('TaxonomyProvider', () => {
     });
 
     expect(getTaxonomiesMock).toHaveBeenCalledWith();
-    expect(result.current.state.taxonomies).toStrictEqual([sampleTaxonomy]);
+    expect(result.current.state.taxonomies).toStrictEqual([
+      formatTaxonomyForFrontend(sampleTaxonomy),
+    ]);
   });
 
   it('populates initial termCache and selected slugs with story terms', async () => {
@@ -148,6 +160,7 @@ describe('TaxonomyProvider', () => {
   it('syncs selected slugs with story', async () => {
     const updateStoryMock = jest.fn();
     const sampleTaxonomy = createTaxonomy('sample');
+    const frontendTaxonomy = formatTaxonomyForFrontend(sampleTaxonomy);
     const taxonomiesResponse = { sampleTaxonomy };
 
     const { result } = await setup({
@@ -163,7 +176,7 @@ describe('TaxonomyProvider', () => {
 
     // Update the terms
     act(() => {
-      result.current.actions.setSelectedTaxonomySlugs(sampleTaxonomy, [
+      result.current.actions.setSelectedTaxonomySlugs(frontendTaxonomy, [
         'term1',
         'term2',
       ]);
@@ -188,8 +201,8 @@ describe('TaxonomyProvider', () => {
       // reset autoIncrementId so we know what the mocked
       // response will generate.
       autoIncrementId = 0;
-      result.current.actions.createTerm(sampleTaxonomy, 'term1');
-      result.current.actions.createTerm(sampleTaxonomy, 'term2');
+      result.current.actions.createTerm(frontendTaxonomy, 'term1');
+      result.current.actions.createTerm(frontendTaxonomy, 'term2');
     });
 
     await receiveQueuedMockedResponses();
@@ -211,6 +224,7 @@ describe('TaxonomyProvider', () => {
 
   it('populates the terms cache when addSearchResultsToCache(..args) called', async () => {
     const sampleTaxonomy = createTaxonomy('sample');
+    const frontendTaxonomy = formatTaxonomyForFrontend(sampleTaxonomy);
     const taxonomiesResponse = { sampleTaxonomy };
     const term1 = createTermFromName(sampleTaxonomy, 'term1');
     const term2 = createTermFromName(sampleTaxonomy, 'term2');
@@ -227,7 +241,7 @@ describe('TaxonomyProvider', () => {
     });
 
     act(() => {
-      result.current.actions.addSearchResultsToCache(sampleTaxonomy, {
+      result.current.actions.addSearchResultsToCache(frontendTaxonomy, {
         name: 'term',
       });
     });

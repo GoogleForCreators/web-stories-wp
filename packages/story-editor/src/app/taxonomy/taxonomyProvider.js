@@ -37,6 +37,7 @@ import {
   objectFromEntries,
   mapObjectKeys,
   cacheFromEmbeddedTerms,
+  snakeCaseToCamelCase,
 } from './utils';
 
 function TaxonomyProvider(props) {
@@ -67,7 +68,19 @@ function TaxonomyProvider(props) {
     (async function () {
       try {
         const result = await getTaxonomies();
-        setTaxonomies(Object.values(result));
+
+        const formattedTaxonomies = Object.values(result).map((taxonomy) => {
+          const entries = Object.entries(taxonomy);
+
+          const formattedEntries = entries.map((entry) => [
+            snakeCaseToCamelCase(entry[0]),
+            entry[1],
+          ]);
+
+          return Object.fromEntries(formattedEntries);
+        });
+
+        setTaxonomies(formattedTaxonomies);
       } catch (e) {
         // Do we wanna do anything here?
       }
@@ -87,7 +100,7 @@ function TaxonomyProvider(props) {
       const taxonomiesBySlug = dictionaryOnKey(taxonomies, 'slug');
       const initialCache = mapObjectKeys(
         cacheFromEmbeddedTerms(terms),
-        (slug) => taxonomiesBySlug[slug]?.rest_base
+        (slug) => taxonomiesBySlug[slug]?.restBase
       );
       const initialSelectedSlugs = mapObjectVals(initialCache, (val) =>
         Object.keys(val)
@@ -154,7 +167,7 @@ function TaxonomyProvider(props) {
 
       // Format results to fit in our { [taxonomy]: { [slug]: term } } map
       const termResults = {
-        [taxonomy.rest_base]: dictionaryOnKey(response, 'slug'),
+        [taxonomy.restBase]: dictionaryOnKey(response, 'slug'),
       };
       setTermCache((cache) => mergeNestedDictionaries(cache, termResults));
     },
@@ -164,7 +177,7 @@ function TaxonomyProvider(props) {
   const createTerm = useCallback(
     async (taxonomy, termName, parentId) => {
       // make sure the term doesn't already exist locally
-      if (termCache[taxonomy.rest_base]?.[cleanForSlug(termName)]) {
+      if (termCache[taxonomy.restBase]?.[cleanForSlug(termName)]) {
         return;
       }
 
@@ -182,7 +195,7 @@ function TaxonomyProvider(props) {
 
         const newTerm = await createTaxonomyTerm(termsEndpoint, data);
         const incomingCache = {
-          [taxonomy.rest_base]: { [newTerm.slug]: newTerm },
+          [taxonomy.restBase]: { [newTerm.slug]: newTerm },
         };
         setTermCache((cache) => mergeNestedDictionaries(cache, incomingCache));
       } catch (e) {
@@ -204,9 +217,9 @@ function TaxonomyProvider(props) {
     (taxonomy, termSlugs = []) =>
       setSelectedSlugs((selected) => ({
         ...selected,
-        [taxonomy.rest_base]:
+        [taxonomy.restBase]:
           typeof termSlugs === 'function'
-            ? termSlugs(selected[taxonomy.rest_base])
+            ? termSlugs(selected[taxonomy.restBase])
             : termSlugs,
       })),
     []
