@@ -48,107 +48,252 @@ describe('Categories', () => {
     );
   }
 
-  it('should add categories and remove categories', async () => {
-    await openCategoriesAndTagsPanel();
+  describe('cursor interactions', () => {
+    it('should add categories and remove categories', async () => {
+      await openCategoriesAndTagsPanel();
 
-    const categoriesAndTags =
-      fixture.editor.inspector.documentPanel.categoriesAndTags;
+      const categoriesAndTags =
+        fixture.editor.inspector.documentPanel.categoriesAndTags;
 
-    // click a checkbox
-    expect(categoriesAndTags.categories[0].checked).toBe(true);
-    await fixture.events.click(categoriesAndTags.categories[0]);
-    expect(categoriesAndTags.categories[0].checked).toBe(false);
+      // click a checkbox
+      expect(categoriesAndTags.categories[0].checked).toBe(true);
+      await fixture.events.click(categoriesAndTags.categories[0]);
+      expect(categoriesAndTags.categories[0].checked).toBe(false);
 
-    // click a checkbox again
-    await fixture.events.click(categoriesAndTags.categories[0]);
-    expect(categoriesAndTags.categories[0].checked).toBe(true);
-  });
+      // click a checkbox again
+      await fixture.events.click(categoriesAndTags.categories[0]);
+      expect(categoriesAndTags.categories[0].checked).toBe(true);
+    });
 
-  it('should add new categories', async () => {
-    await openCategoriesAndTagsPanel();
+    it('should add new categories', async () => {
+      await openCategoriesAndTagsPanel();
 
-    const categoriesAndTags =
-      fixture.editor.inspector.documentPanel.categoriesAndTags;
+      const categoriesAndTags =
+        fixture.editor.inspector.documentPanel.categoriesAndTags;
 
-    // find initial categories
-    const initialCategories = categoriesAndTags.categories;
+      // find initial categories
+      const initialCategories = categoriesAndTags.categories;
 
-    // open the new category section
-    await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+      // open the new category section
+      await fixture.events.click(categoriesAndTags.addNewCategoryButton);
 
-    // Add new category
-    await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
-    await fixture.events.keyboard.type('deer');
+      // Add new category
+      await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
+      await fixture.events.keyboard.type('deer');
 
-    await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+      await fixture.events.click(categoriesAndTags.addNewCategoryButton);
 
-    // validate new checkbox was added
-    const finalCategories = categoriesAndTags.categories;
-    initialCategories.map((checkbox) => expect(checkbox.name).not.toBe('deer'));
-    expect(finalCategories.length).toBe(initialCategories.length + 1);
-    expect(
-      finalCategories.filter((category) => category.name === 'deer').length
-    ).toBe(1);
-  });
+      // validate new checkbox was added
+      const finalCategories = categoriesAndTags.categories;
+      initialCategories.map((checkbox) =>
+        expect(checkbox.name).not.toBe('deer')
+      );
+      expect(finalCategories.length).toBe(initialCategories.length + 1);
+      expect(
+        finalCategories.filter((category) => category.name === 'deer').length
+      ).toBe(1);
+    });
 
-  // TODO: #9063
-  // disable reason: dropdown doesn't close unless the tests are slowed down
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should add a new category as a child of an existing category', async () => {
-    await openCategoriesAndTagsPanel();
+    // TODO: #9063
+    // disable reason: dropdown doesn't close unless the tests are slowed down
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should add a new category as a child of an existing category', async () => {
+      await openCategoriesAndTagsPanel();
 
-    const categoriesAndTags =
-      fixture.editor.inspector.documentPanel.categoriesAndTags;
+      const categoriesAndTags =
+        fixture.editor.inspector.documentPanel.categoriesAndTags;
 
-    // find initial categories
-    const initialCategories = categoriesAndTags.categories;
+      // find initial categories
+      const initialCategories = categoriesAndTags.categories;
 
-    // open the new category section
-    await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+      // open the new category section
+      await fixture.events.click(categoriesAndTags.addNewCategoryButton);
 
-    // Add new category
-    await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
-    await fixture.events.keyboard.type('deer');
-    await fixture.events.click(categoriesAndTags.parentDropdownButton);
+      // Add new category
+      await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
+      await fixture.events.keyboard.type('deer');
+      await fixture.events.click(categoriesAndTags.parentDropdownButton);
 
-    await waitFor(() =>
-      fixture.screen.getByRole('option', {
-        name: 'Booger',
-      })
-    );
-
-    await fixture.events.click(
-      fixture.screen.getByRole('option', {
-        name: 'Booger',
-      })
-    );
-
-    await waitFor(() =>
-      fixture.screen
-        .queryByRole('option', {
+      await waitFor(() =>
+        fixture.screen.getByRole('option', {
           name: 'Booger',
         })
-        .toBeNull()
-    );
+      );
 
-    await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+      await fixture.events.click(
+        fixture.screen.getByRole('option', {
+          name: 'Booger',
+        })
+      );
 
-    // validate new checkbox was added
-    const finalCategories = categoriesAndTags.categories;
-    initialCategories.map((checkbox) => expect(checkbox.name).not.toBe('deer'));
-    expect(finalCategories.length).toBe(initialCategories.length + 1);
-    expect(
-      finalCategories.filter((category) => category.name === 'deer').length
-    ).toBe(1);
+      await waitFor(() =>
+        fixture.screen
+          .queryByRole('option', {
+            name: 'Booger',
+          })
+          .toBeNull()
+      );
 
-    // validate new checkbox was added as a child
-    // New checkbox will have been added directly after the parent option
-    const boogerIndex = finalCategories.findIndex(
-      (category) => category.name === 'Booger'
-    );
-    const deerIndex = finalCategories.findIndex(
-      (category) => category.name === 'deer'
-    );
-    expect(deerIndex).toBe(boogerIndex + 1);
+      await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+
+      // validate new checkbox was added
+      const finalCategories = categoriesAndTags.categories;
+      initialCategories.map((checkbox) =>
+        expect(checkbox.name).not.toBe('deer')
+      );
+      expect(finalCategories.length).toBe(initialCategories.length + 1);
+      expect(
+        finalCategories.filter((category) => category.name === 'deer').length
+      ).toBe(1);
+
+      // validate new checkbox was added as a child
+      // New checkbox will have been added directly after the parent option
+      const boogerIndex = finalCategories.findIndex(
+        (category) => category.name === 'Booger'
+      );
+      const deerIndex = finalCategories.findIndex(
+        (category) => category.name === 'deer'
+      );
+      expect(deerIndex).toBe(boogerIndex + 1);
+    });
+  });
+
+  describe('keyboard interactions', () => {
+    it('should add categories and remove categories', async () => {
+      await openCategoriesAndTagsPanel();
+
+      const categoriesAndTags =
+        fixture.editor.inspector.documentPanel.categoriesAndTags;
+
+      // focus the panel button
+      await fixture.events.focus(categoriesAndTags.categoriesAndTagsButton);
+
+      // tab to first checkbox and select
+      expect(categoriesAndTags.categories[0].checked).toBe(true);
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      expect(document.activeElement.type).toBe('checkbox');
+      await fixture.events.keyboard.press('Space');
+      expect(categoriesAndTags.categories[0].checked).toBe(false);
+
+      // click a checkbox again
+      await fixture.events.keyboard.press('Space');
+      expect(categoriesAndTags.categories[0].checked).toBe(true);
+    });
+
+    it('should add new categories', async () => {
+      await openCategoriesAndTagsPanel();
+
+      const categoriesAndTags =
+        fixture.editor.inspector.documentPanel.categoriesAndTags;
+
+      // focus the panel button
+      await fixture.events.focus(categoriesAndTags.categoriesAndTagsButton);
+
+      // track initial categories
+      const initialCategories = categoriesAndTags.categories;
+
+      // tab and to new category section
+      let maxTabs = 0;
+      while (
+        maxTabs < 20 &&
+        document.activeElement !== categoriesAndTags.addNewCategoryButton
+      ) {
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('Tab');
+        maxTabs++;
+      }
+      await fixture.events.keyboard.press('Space');
+
+      // Input should be focused
+      expect(document.activeElement).toBe(
+        categoriesAndTags.newCategoryNameInput
+      );
+
+      // Enter name and submit
+      await fixture.events.keyboard.type('deer');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      expect(document.activeElement).toBe(
+        categoriesAndTags.addNewCategoryButton
+      );
+      await fixture.events.keyboard.press('Enter');
+
+      // validate new checkbox was added
+      const finalCategories = categoriesAndTags.categories;
+      initialCategories.map((checkbox) =>
+        expect(checkbox.name).not.toBe('deer')
+      );
+      expect(finalCategories.length).toBe(initialCategories.length + 1);
+      expect(
+        finalCategories.filter((category) => category.name === 'deer').length
+      ).toBe(1);
+    });
+
+    it('should add a new category as a child of an existing category', async () => {
+      await openCategoriesAndTagsPanel();
+
+      const categoriesAndTags =
+        fixture.editor.inspector.documentPanel.categoriesAndTags;
+
+      // focus the panel button
+      await fixture.events.focus(categoriesAndTags.categoriesAndTagsButton);
+
+      // track initial categories
+      const initialCategories = categoriesAndTags.categories;
+
+      // tab and to new category section
+      let maxTabs = 0;
+      while (
+        maxTabs < 20 &&
+        document.activeElement !== categoriesAndTags.addNewCategoryButton
+      ) {
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('Tab');
+        maxTabs++;
+      }
+      await fixture.events.keyboard.press('Space');
+
+      // Input should be focused
+      expect(document.activeElement).toBe(
+        categoriesAndTags.newCategoryNameInput
+      );
+
+      // Enter name
+      await fixture.events.keyboard.type('deer');
+
+      // Add parent
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Space');
+      await fixture.events.keyboard.press('down');
+      await fixture.events.keyboard.press('Enter');
+
+      // Submit
+      await fixture.events.keyboard.press('Tab');
+      expect(document.activeElement).toBe(
+        categoriesAndTags.addNewCategoryButton
+      );
+      await fixture.events.keyboard.press('Enter');
+
+      // validate new checkbox was added
+      const finalCategories = categoriesAndTags.categories;
+      initialCategories.map((checkbox) =>
+        expect(checkbox.name).not.toBe('deer')
+      );
+      expect(finalCategories.length).toBe(initialCategories.length + 1);
+      expect(
+        finalCategories.filter((category) => category.name === 'deer').length
+      ).toBe(1);
+
+      // validate new checkbox was added as a child
+      // New checkbox will have been added directly after the parent option
+      const boogerIndex = finalCategories.findIndex(
+        (category) => category.name === 'Booger'
+      );
+      const deerIndex = finalCategories.findIndex(
+        (category) => category.name === 'deer'
+      );
+      expect(deerIndex).toBe(boogerIndex + 1);
+    });
   });
 });

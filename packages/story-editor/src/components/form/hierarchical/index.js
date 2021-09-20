@@ -68,7 +68,7 @@ const Border = styled.div`
 `;
 
 const CheckboxArea = styled.div`
-  max-height: 158px;
+  max-height: 175px;
   padding: 12px 12px 0 12px;
   overflow-y: scroll;
 

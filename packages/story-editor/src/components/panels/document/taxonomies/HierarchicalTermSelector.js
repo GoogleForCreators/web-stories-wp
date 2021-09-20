@@ -191,6 +191,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
   const handleSubmit = useCallback(
     (evt) => {
       evt.preventDefault();
+
       const parentValue = selectedParent === noParentId ? 0 : selectedParent;
       createTerm(taxonomy, newCategoryName, parentValue);
       setShowAddNewCategory(false);
@@ -223,6 +224,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
       {showAddNewCategory ? (
         <AddNewCategoryForm onSubmit={handleSubmit}>
           <Input
+            autoFocus
             name={taxonomy.labels.new_item_name}
             label={taxonomy.labels.new_item_name}
             value={newCategoryName}
