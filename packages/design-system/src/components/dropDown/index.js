@@ -23,7 +23,6 @@ import {
   useMemo,
   useRef,
   useState,
-  useDebouncedCallback,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -87,7 +86,6 @@ export const DropDown = forwardRef(
     ref
   ) => {
     const internalRef = useRef();
-    const placementRef = useRef(placement);
     const [dynamicPlacement, setDynamicPlacement] = useState(placement);
 
     const { activeOption, isOpen, normalizedOptions } = useDropDown({
@@ -96,24 +94,25 @@ export const DropDown = forwardRef(
     });
 
     const positionPlacement = useCallback(
-      (popupDimensions) => {
+      (popupRef) => {
         // check to see if there's an overlap with the window edge
-        const neededVerticalSpace = popupDimensions?.offset.bottom;
+        const dimensions = popupRef.current?.getBoundingClientRect();
+        const bottom = dimensions?.bottom;
+        const top = dimensions?.top;
         // if the popup was assigned as bottom we want to always check it
         if (
-          popupDimensions &&
           dynamicPlacement.startsWith('bottom') &&
-          neededVerticalSpace >= window.innerHeight
+          bottom >= window.innerHeight
         ) {
           setDynamicPlacement(PLACEMENT.TOP);
+        }
+        // if the popup was assigned as top we want to always check it
+        if (dynamicPlacement.startsWith('top') && top <= 0) {
+          setDynamicPlacement(PLACEMENT.BOTTOM);
         }
       },
       [dynamicPlacement]
     );
-
-    const resetPlacement = useDebouncedCallback(() => {
-      setDynamicPlacement(placementRef.current);
-    }, 100);
 
     const handleSelectClick = useCallback(
       (event) => {
@@ -126,8 +125,8 @@ export const DropDown = forwardRef(
     const handleDismissMenu = useCallback(() => {
       isOpen.set(false);
       internalRef.current.focus();
-      resetPlacement();
-    }, [isOpen, resetPlacement]);
+      setDynamicPlacement(placement);
+    }, [isOpen, placement]);
 
     const handleMenuItemClick = useCallback(
       (event, menuItem) => {
@@ -194,7 +193,7 @@ export const DropDown = forwardRef(
             anchor={internalRef}
             isOpen={isOpen.value}
             placement={dynamicPlacement}
-            onPositionUpdate={positionPlacement}
+            refCallback={positionPlacement}
             fillWidth={popupFillWidth}
             zIndex={popupZIndex}
           >
