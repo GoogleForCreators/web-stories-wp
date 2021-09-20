@@ -27,13 +27,6 @@ import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import ConfigContext from '../../../../../app/config/context';
 
-jest.mock('../../../../mediaPicker', () => ({
-  useMediaPicker: ({ onSelect }) => {
-    const image = { url: 'media1' };
-    return () => onSelect(image);
-  },
-}));
-
 function arrange(selectedElements) {
   const configValue = {
     allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
@@ -46,6 +39,7 @@ function arrange(selectedElements) {
     capabilities: {
       hasUploadMediaAction: true,
     },
+    MediaUpload: () => null,
   };
 
   const wrapper = ({ children }) => (
