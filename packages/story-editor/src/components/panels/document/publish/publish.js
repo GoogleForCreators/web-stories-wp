@@ -114,19 +114,28 @@ function PublishPanel() {
     actions: { getSettings, getMedia },
   } = useAPI();
 
+  const {
+    allowedImageMimeTypes,
+    allowedImageFileTypes,
+    dashboardSettingsLink,
+    capabilities: { hasUploadMediaAction, canManageSettings },
+  } = useConfig();
+
   const [publisherLogos, setPublisherLogos] = useState([]);
 
   useEffect(() => {
-    getSettings().then((settings) => {
-      if (settings.web_stories_publisher_logos.length) {
-        getMedia({
-          include: settings.web_stories_publisher_logos.join(','),
-        }).then((logos) => {
-          setPublisherLogos(logos.data);
-        });
-      }
-    });
-  }, [getMedia, getSettings]);
+    if (canManageSettings) {
+      getSettings().then((settings) => {
+        if (settings.web_stories_publisher_logos.length) {
+          getMedia({
+            include: settings.web_stories_publisher_logos.join(','),
+          }).then((logos) => {
+            setPublisherLogos(logos.data);
+          });
+        }
+      });
+    }
+  }, [canManageSettings, getMedia, getSettings]);
 
   const { highlightPoster, highlightLogo, resetHighlight } = useHighlights(
     (state) => ({
@@ -156,13 +165,6 @@ function PublishPanel() {
       };
     }
   );
-
-  const {
-    allowedImageMimeTypes,
-    allowedImageFileTypes,
-    dashboardSettingsLink,
-    capabilities: { hasUploadMediaAction, canManageSettings },
-  } = useConfig();
 
   const handleChangePoster = useCallback(
     (image) =>
