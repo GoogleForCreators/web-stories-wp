@@ -20,7 +20,8 @@ import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inspector', () => {
   describe('Document', () => {
-    it('should display publisher logo upload', async () => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should display publisher logo upload', async () => {
       await createNewStory();
 
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
@@ -29,7 +30,8 @@ describe('Inspector', () => {
     describe('Contributor User', () => {
       withUser('contributor', 'password');
 
-      it('should not display publisher logo upload', async () => {
+      // eslint-disable-next-line jest/no-disabled-tests
+      it.skip('should not display publisher logo upload', async () => {
         await createNewStory();
         await expect(page).toMatch('Howdy, contributor');
 
