@@ -220,7 +220,7 @@ function TaxonomyProvider(props) {
         (taxonomy) => taxonomy.hierarchical
       );
       hierarchicalTaxonomies.forEach((taxonomy) =>
-        addSearchResultsToCache(taxonomy, { perPage: 100 })
+        addSearchResultsToCache(taxonomy, { perPage: -1 })
       );
 
       setShouldRefetchCategories(false);
