@@ -390,6 +390,10 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 			return;
 		}
 
+		if ( ! $query->is_post_type_archive( self::POST_TYPE_SLUG ) ) {
+			return;
+		}
+
 		$custom_archive_page_id = get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$query->set( 'page_id', $custom_archive_page_id );
