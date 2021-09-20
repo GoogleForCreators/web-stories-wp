@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,21 @@
  * limitations under the License.
  */
 
-export const AD_NETWORK_TYPE = {
-  NONE: 'none',
-  ADSENSE: 'adsense',
-  ADMANAGER: 'admanager',
-};
+/**
+ * Creates an object of templates grouped by tag
+ *
+ * @param {Array.<Object>} templates An array of templates.
+ * @return {Object} An object of templates grouped by tag name
+ */
+export const groupTemplatesByTag = (templates) =>
+  templates.reduce((result, template) => {
+    template.tags.forEach((tag) => {
+      if (result[tag]) {
+        result[tag].push(template.id);
+      } else {
+        result[tag] = [template.id];
+      }
+    });
 
-export const ARCHIVE_TYPE = {
-  DEFAULT: 'default',
-  DISABLED: 'disabled',
-};
+    return result;
+  }, {});
