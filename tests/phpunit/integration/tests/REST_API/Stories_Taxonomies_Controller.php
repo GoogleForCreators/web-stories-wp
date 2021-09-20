@@ -7,7 +7,7 @@ use Google\Web_Stories\Tests\Integration\Test_Taxonomy;
 use WP_REST_Request;
 use WP_REST_Server;
 /**
- * Class Stories_Media_Controller
+ * Class Stories_Taxonomies_Controller
  *
  * @package Google\Web_Stories\Tests\REST_API
  *

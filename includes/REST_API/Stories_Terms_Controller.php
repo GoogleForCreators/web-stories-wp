@@ -69,7 +69,7 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 	 * @param WP_Term $term Term object.
 	 * @return array Links for the given term.
 	 */
-	protected function prepare_links( $term ) {
+	protected function prepare_links( $term ): array {
 		$links          = parent::prepare_links( $term );
 		$links['about'] = [
 			'href' => rest_url( sprintf( '%s/taxonomies/%s', $this->namespace, $this->taxonomy ) ),
@@ -85,6 +85,10 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 
 		foreach ( $taxonomy_obj->object_type as $type ) {
 			$post_type_object = get_post_type_object( $type );
+			
+			if ( ! $post_type_object ) {
+				continue;
+			}
 
 			if ( empty( $post_type_object->show_in_rest ) ) {
 				continue;
