@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
-use Google\Web_Stories\Tests\Integration\Test_Taxonomy;
+use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use Spy_REST_Server;
 use WP_REST_Request;
 
@@ -378,7 +378,7 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::add_taxonomy_links
 	 */
 	public function test_get_add_taxonomy_links() {
-		$object = new Test_Taxonomy();
+		$object = new DummyTaxonomy();
 		$this->set_private_property( $object, 'taxonomy_post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$object->register_taxonomy();
 
