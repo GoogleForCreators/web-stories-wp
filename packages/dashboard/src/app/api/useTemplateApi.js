@@ -40,8 +40,22 @@ const useTemplateApi = (dataAdapter, config) => {
       payload: true,
     });
 
+    const templatesByTag = {};
+
     const reshapedTemplates = (await getAllTemplates({ cdnURL }))
-      .map((template) => reshapeTemplateObject(template, cdnURL))
+      .map((template) => {
+        const reshapedTemplate = reshapeTemplateObject(template, cdnURL);
+
+        reshapedTemplate.tags.forEach((tag) => {
+          if (templatesByTag[tag]) {
+            templatesByTag[tag].push(reshapedTemplate.id);
+          } else {
+            templatesByTag[tag] = [reshapedTemplate.id];
+          }
+        });
+
+        return reshapedTemplate;
+      })
       .sort((a, b) => compareDesc(a.creationDate, b.creationDate));
     dispatch({
       type: TEMPLATE_ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
@@ -50,6 +64,7 @@ const useTemplateApi = (dataAdapter, config) => {
         templates: reshapedTemplates,
         totalPages: 1,
         totalTemplates: reshapedTemplates.length,
+        templatesByTag,
       },
     });
   }, [cdnURL]);
@@ -64,28 +79,12 @@ const useTemplateApi = (dataAdapter, config) => {
     [state]
   );
 
-  const fetchRelatedTemplates = useCallback(
-    (currentTemplateId) => {
-      if (!state.templates || !currentTemplateId) {
-        return [];
-      }
-
-      return state.templatesOrderById
-        .filter((id) => id !== currentTemplateId) // Filter out the current/active template
-        .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids
-        .map((id) => state.templates[id]) // Map the ids to templates
-        .slice(0, Math.floor(Math.random() * 5) + 1); // Return between 1 and 5 templates
-    },
-    [state.templatesOrderById, state.templates]
-  );
-
   const api = useMemo(
     () => ({
       fetchExternalTemplates,
       fetchExternalTemplateById,
-      fetchRelatedTemplates,
     }),
-    [fetchExternalTemplateById, fetchExternalTemplates, fetchRelatedTemplates]
+    [fetchExternalTemplateById, fetchExternalTemplates]
   );
 
   return { templates: state, api };
