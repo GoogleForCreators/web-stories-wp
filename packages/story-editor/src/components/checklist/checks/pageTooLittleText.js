@@ -19,7 +19,6 @@
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-
 /**
  * Internal dependencies
  */

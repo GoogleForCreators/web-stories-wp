@@ -91,9 +91,9 @@ export function DesignChecks(props) {
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
       <DesignPanel {...props}>
         <StoryPagesCount />
-        <PageTooMuchText />
+        <PageTooMuchText isVisible={isVisible} />
         <PageTooLittleText isVisible={isVisible} />
-        <PageTooManyLinks />
+        <PageTooManyLinks isVisible={isVisible} />
         {hasUploadMediaAction && <VideoElementResolution />}
         {hasUploadMediaAction && <ImageElementResolution />}
       </DesignPanel>

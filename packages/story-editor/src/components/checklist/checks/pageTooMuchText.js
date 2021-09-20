@@ -19,6 +19,7 @@
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -55,7 +56,7 @@ export function pageTooMuchText(page) {
   return characterCountForPage(page) > MAX_PAGE_CHARACTER_COUNT;
 }
 
-const PageTooMuchText = () => {
+const PageTooMuchText = ({ isVisible }) => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
@@ -108,7 +109,9 @@ const PageTooMuchText = () => {
                   })
                 }
                 type={THUMBNAIL_TYPES.PAGE}
-                displayBackground={<ThumbnailPagePreview page={page} />}
+                displayBackground={
+                  isVisible ? <ThumbnailPagePreview page={page} /> : null
+                }
                 aria-label={__('Go to offending page', 'web-stories')}
               />
             ))}
@@ -117,6 +120,10 @@ const PageTooMuchText = () => {
       />
     )
   );
+};
+
+PageTooMuchText.propTypes = {
+  isVisible: PropTypes.bool,
 };
 
 export default PageTooMuchText;

@@ -19,7 +19,7 @@
  */
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -48,7 +48,7 @@ export function pageTooManyLinks(page) {
   return elementsWithLinks.length > MAX_LINKS_PER_PAGE;
 }
 
-const PageTooManyLinks = () => {
+const PageTooManyLinks = ({ isVisible }) => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
@@ -86,7 +86,9 @@ const PageTooManyLinks = () => {
                 key={page.id}
                 onClick={() => handleClick(page.id)}
                 type={THUMBNAIL_TYPES.PAGE}
-                displayBackground={<ThumbnailPagePreview page={page} />}
+                displayBackground={
+                  isVisible ? <ThumbnailPagePreview page={page} /> : null
+                }
                 aria-label={__('Go to offending page', 'web-stories')}
               />
             ))}
@@ -95,6 +97,10 @@ const PageTooManyLinks = () => {
       />
     )
   );
+};
+
+PageTooManyLinks.propTypes = {
+  isVisible: PropTypes.bool,
 };
 
 export default PageTooManyLinks;

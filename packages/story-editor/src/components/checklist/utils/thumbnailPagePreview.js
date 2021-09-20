@@ -23,9 +23,9 @@ import { THUMBNAIL_DIMENSIONS } from '../../thumbnail';
 export const ThumbnailPagePreview = ({ page }) => (
   <PagePreview
     page={page}
-    shouldForceRegenerate
     width={THUMBNAIL_DIMENSIONS.WIDTH}
     height={THUMBNAIL_DIMENSIONS.HEIGHT}
+    as="div"
   />
 );
 

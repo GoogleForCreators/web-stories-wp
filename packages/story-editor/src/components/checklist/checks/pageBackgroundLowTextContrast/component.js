@@ -19,7 +19,7 @@
  */
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -37,7 +37,7 @@ import { useRegisterCheck } from '../../countContext';
 import { useIsChecklistMounted } from '../../popupMountedContext';
 import { pageBackgroundTextLowContrast } from './check';
 
-const PageBackgroundTextLowContrast = () => {
+const PageBackgroundTextLowContrast = ({ isVisible }) => {
   const isChecklistMounted = useIsChecklistMounted();
   const [failingPages, setFailingPages] = useState([]);
   const storyPages = useStory(({ state }) => state?.pages);
@@ -101,7 +101,9 @@ const PageBackgroundTextLowContrast = () => {
               key={page.id}
               onClick={() => handleClick(page.id)}
               type={THUMBNAIL_TYPES.PAGE}
-              displayBackground={<ThumbnailPagePreview page={page} />}
+              displayBackground={
+                isVisible ? <ThumbnailPagePreview page={page} /> : null
+              }
               aria-label={__('Go to offending page', 'web-stories')}
             />
           ))}
@@ -109,6 +111,10 @@ const PageBackgroundTextLowContrast = () => {
       }
     />
   ) : null;
+};
+
+PageBackgroundTextLowContrast.propTypes = {
+  isVisible: PropTypes.bool,
 };
 
 export default PageBackgroundTextLowContrast;
