@@ -27,8 +27,12 @@ import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import ConfigContext from '../../../../../app/config/context';
 
-function MediaUpload({ render }) {
-  const open = jest.fn();
+function MediaUpload({ render, onSelect }) {
+  const open = () => {
+    const image = { url: 'media1' };
+    onSelect(image);
+  };
+
   return render(open);
 }
 
