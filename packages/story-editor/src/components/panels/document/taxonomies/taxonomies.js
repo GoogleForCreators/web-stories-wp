@@ -35,6 +35,7 @@ function TaxonomiesPanel(props) {
     return null;
   }
 
+  // TODO: remove this eventually
   // show categories before tags
   const sortedTaxonomies = taxonomies.sort(
     ({ rest_base: restBaseA }, { rest_base: restBaseB }) => {

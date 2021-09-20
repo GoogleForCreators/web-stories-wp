@@ -57,14 +57,14 @@ export function getTaxonomyTerm(endpoint, args = {}) {
  * Create a new taxonomy term.
  *
  * @param {string} endpoint absolute url to interact with taxonomy
- * @param {Object} data The data being sent.
- * @param {string} data.name The name.
- * @param {number|string} data.parent The parent id.
+ * @param {Object} args The args being sent.
+ * @param {string} args.name The name.
+ * @param {number|string} args.parent The parent id.
  * @return {Promise} Term promise.
  */
-export function createTaxonomyTerm(endpoint, data) {
+export function createTaxonomyTerm(endpoint, args) {
   return apiFetch({
-    url: addQueryArgs(endpoint, data),
+    url: addQueryArgs(endpoint, args),
     method: 'POST',
   });
 }
