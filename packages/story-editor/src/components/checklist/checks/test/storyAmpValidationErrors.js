@@ -66,6 +66,7 @@ describe('getStoryAmpValidationErrors', () => {
     windowSpy.mockImplementation(() => ({
       amp: {
         validator: {
+          init: () => {},
           validateString: () => ({
             status: 'FAIL',
             errors: [
@@ -74,7 +75,6 @@ describe('getStoryAmpValidationErrors', () => {
               {
                 code: 'MISSING_URL',
                 severity: 'ERROR',
-                params: ['poster-portrait-src'],
               },
             ],
           }),

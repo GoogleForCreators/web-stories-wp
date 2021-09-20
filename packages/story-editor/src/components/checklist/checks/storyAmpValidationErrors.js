@@ -55,9 +55,7 @@ export async function getStoryAmpValidationErrors({ link, status }) {
 
     const filteredErrors = errors
       .filter(({ severity }) => severity === 'ERROR')
-      .filter(({ code }) => {
-        return flattenedErrorCodes.indexOf(code) > -1;
-      });
+      .filter(({ code }) => flattenedErrorCodes.indexOf(code) > -1);
     return filteredErrors.length > 0;
   } catch {
     return false;
