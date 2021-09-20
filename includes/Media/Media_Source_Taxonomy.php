@@ -42,13 +42,6 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	use Screen;
 
 	/**
-	 * Key for media post type.
-	 *
-	 * @var string
-	 */
-	const TAXONOMY_SLUG = 'web_story_media_source';
-
-	/**
 	 * Taxonomy key.
 	 *
 	 * @var string
