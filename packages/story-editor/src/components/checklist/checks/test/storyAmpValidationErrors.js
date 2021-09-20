@@ -75,6 +75,7 @@ describe('getStoryAmpValidationErrors', () => {
               {
                 code: 'MISSING_URL',
                 severity: 'ERROR',
+                params: ['poster-portrait-src'],
               },
             ],
           }),
