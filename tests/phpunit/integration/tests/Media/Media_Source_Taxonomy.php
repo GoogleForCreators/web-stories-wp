@@ -53,19 +53,19 @@ class Media_Source_Taxonomy extends TestCase {
 	 * @covers ::register_taxonomy
 	 */
 	public function test_register_taxonomy() {
-		$media_source_taxonomy = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
+		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
 
-		$media = new \Google\Web_Stories\Media\Media_Source_Taxonomy( $media_source_taxonomy );
+		$media = new \Google\Web_Stories\Media\Media_Source_Taxonomy( $media_source );
 		$this->call_private_method( $media, 'register_taxonomy' );
 
-		$this->assertTrue( taxonomy_exists( $media_source_taxonomy->get_taxonomy_slug() ) );
+		$this->assertTrue( taxonomy_exists( $media_source->get_taxonomy_slug() ) );
 	}
 
 	/**
 	 * @covers ::rest_api_init
 	 */
 	public function test_rest_api_init() {
-		$media_source_taxonomy = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
+		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
 
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
 		$poster_attachment_id = self::factory()->attachment->create_object(
@@ -86,7 +86,7 @@ class Media_Source_Taxonomy extends TestCase {
 		);
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		wp_set_object_terms( $video_attachment_id, 'editor', $media_source_taxonomy->get_taxonomy_slug() );
+		wp_set_object_terms( $video_attachment_id, 'editor', $media_source->get_taxonomy_slug() );
 
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/media/%d', $video_attachment_id ) );
 		$response = rest_get_server()->dispatch( $request );

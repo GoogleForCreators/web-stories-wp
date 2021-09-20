@@ -32,14 +32,14 @@ class Add_Media_Source_Video_Optimization extends TestCase {
 	 * @covers \Google\Web_Stories\Migrations\Add_Media_Source::migrate
 	 */
 	public function test_migrate() {
-		$media_source_taxonomy = new Media_Source_Taxonomy();
-		$object                = new \Google\Web_Stories\Migrations\Add_Media_Source_Video_Optimization( $media_source_taxonomy );
+		$media_source = new Media_Source_Taxonomy();
+		$object       = new \Google\Web_Stories\Migrations\Add_Media_Source_Video_Optimization( $media_source );
 		$object->migrate();
 		$term = $this->call_private_method( $object, 'get_term' );
 
 		$terms = get_terms(
 			[
-				'taxonomy'   => $media_source_taxonomy->get_taxonomy_slug(),
+				'taxonomy'   => $media_source->get_taxonomy_slug(),
 				'hide_empty' => false,
 			]
 		);

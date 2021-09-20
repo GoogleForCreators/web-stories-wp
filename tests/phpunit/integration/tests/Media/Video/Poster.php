@@ -29,22 +29,22 @@ class Poster extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$media_source_taxonomy = new Media_Source_Taxonomy();
-		$media = new \Google\Web_Stories\Media\Video\Poster($media_source_taxonomy);
-		$media->register();
+		$media_source = new Media_Source_Taxonomy();
+		$poster       = new \Google\Web_Stories\Media\Video\Poster( $media_source );
+		$poster->register();
 
-		$this->assertSame( 10, has_action( 'rest_api_init', [ $media, 'rest_api_init' ] ) );
-		$this->assertSame( 10, has_action( 'delete_attachment', [ $media, 'delete_video_poster' ] ) );
-		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [ $media, 'wp_prepare_attachment_for_js' ] ) );
+		$this->assertSame( 10, has_action( 'rest_api_init', [ $poster, 'rest_api_init' ] ) );
+		$this->assertSame( 10, has_action( 'delete_attachment', [ $poster, 'delete_video_poster' ] ) );
+		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [ $poster, 'wp_prepare_attachment_for_js' ] ) );
 	}
 
 	/**
 	 * @covers ::register_meta
 	 */
 	public function test_register_meta() {
-		$media_source_taxonomy = new Media_Source_Taxonomy();
-		$media = new \Google\Web_Stories\Media\Video\Poster($media_source_taxonomy);
-		$this->call_private_method( $media, 'register_meta' );
+		$media_source = new Media_Source_Taxonomy();
+		$poster       = new \Google\Web_Stories\Media\Video\Poster( $media_source );
+		$this->call_private_method( $poster, 'register_meta' );
 
 		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, 'attachment' ) );
 		$this->assertFalse( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, 'attachment' ) );
@@ -107,9 +107,9 @@ class Poster extends TestCase {
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
-		$media_source_taxonomy = new Media_Source_Taxonomy();
-		$media = new \Google\Web_Stories\Media\Video\Poster($media_source_taxonomy);
-		$image = $media->wp_prepare_attachment_for_js(
+		$media_source = new Media_Source_Taxonomy();
+		$poster       = new \Google\Web_Stories\Media\Video\Poster( $media_source );
+		$image        = $poster->wp_prepare_attachment_for_js(
 			[
 				'id'   => $poster_attachment_id,
 				'type' => 'image',
@@ -117,7 +117,7 @@ class Poster extends TestCase {
 			],
 			get_post( $poster_attachment_id )
 		);
-		$video = $media->wp_prepare_attachment_for_js(
+		$video        = $poster->wp_prepare_attachment_for_js(
 			[
 				'id'   => $video_attachment_id,
 				'type' => 'video',
@@ -136,7 +136,7 @@ class Poster extends TestCase {
 	 * @covers ::get_thumbnail_data
 	 */
 	public function test_get_thumbnail_data() {
-		$attachment_id         = self::factory()->attachment->create_object(
+		$attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -144,9 +144,9 @@ class Poster extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		$media_source_taxonomy = new Media_Source_Taxonomy();
-		$media                 = new \Google\Web_Stories\Media\Video\Poster( $media_source_taxonomy );
-		$result                = $media->get_thumbnail_data( $attachment_id );
+		$media_source  = new Media_Source_Taxonomy();
+		$poster        = new \Google\Web_Stories\Media\Video\Poster( $media_source );
+		$result        = $poster->get_thumbnail_data( $attachment_id );
 		$this->assertCount( 4, $result );
 		$this->assertArrayHasKey( 'src', $result );
 		$this->assertArrayHasKey( 'width', $result );
@@ -168,11 +168,11 @@ class Poster extends TestCase {
 			]
 		);
 
-		$media_source_taxonomy = new Media_Source_Taxonomy();
-		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $media_source_taxonomy->get_taxonomy_slug() );
+		$media_source = new Media_Source_Taxonomy();
+		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $media_source->get_taxonomy_slug() );
 
-		$media  = new \Google\Web_Stories\Media\Video\Poster( $media_source_taxonomy );
-		$result = $media->get_thumbnail_data( $poster_attachment_id );
+		$poster = new \Google\Web_Stories\Media\Video\Poster( $media_source );
+		$result = $poster->get_thumbnail_data( $poster_attachment_id );
 		$this->assertTrue( $result['generated'] );
 	}
 
@@ -198,13 +198,13 @@ class Poster extends TestCase {
 			]
 		);
 
-		$media_source_taxonomy = new Media_Source_Taxonomy();
+		$media_source = new Media_Source_Taxonomy();
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $media_source_taxonomy->get_taxonomy_slug() );
+		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $media_source->get_taxonomy_slug() );
 		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 
-		$media = new \Google\Web_Stories\Media\Video\Poster( $media_source_taxonomy );
-		$media->delete_video_poster( $video_attachment_id );
+		$poster = new \Google\Web_Stories\Media\Video\Poster( $media_source );
+		$poster->delete_video_poster( $video_attachment_id );
 		$this->assertNull( get_post( $poster_attachment_id ) );
 	}
 
@@ -230,9 +230,9 @@ class Poster extends TestCase {
 			]
 		);
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		$media_source_taxonomy = new Media_Source_Taxonomy();
-		$media                 = new \Google\Web_Stories\Media\Video\Poster( $media_source_taxonomy );
-		$media->delete_video_poster( $video_attachment_id );
+		$media_source = new Media_Source_Taxonomy();
+		$poster       = new \Google\Web_Stories\Media\Video\Poster( $media_source );
+		$poster->delete_video_poster( $video_attachment_id );
 		$this->assertNotNull( get_post( $poster_attachment_id ) );
 	}
 
@@ -249,7 +249,7 @@ class Poster extends TestCase {
 			]
 		);
 
-		$poster_attachment_id  = self::factory()->attachment->create_object(
+		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -257,8 +257,8 @@ class Poster extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		$media_source_taxonomy = new Media_Source_Taxonomy();
-		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $media_source_taxonomy->get_taxonomy_slug() );
+		$media_source         = new Media_Source_Taxonomy();
+		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $media_source->get_taxonomy_slug() );
 		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
@@ -270,7 +270,7 @@ class Poster extends TestCase {
 	 * @covers ::is_poster
 	 */
 	public function test_is_poster() {
-		$poster_attachment_id  = self::factory()->attachment->create_object(
+		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -278,18 +278,18 @@ class Poster extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		$media_source_taxonomy = new Media_Source_Taxonomy();
-		$media                 = new \Google\Web_Stories\Media\Video\Poster( $media_source_taxonomy );
+		$media_source         = new Media_Source_Taxonomy();
+		$poster               = new \Google\Web_Stories\Media\Video\Poster( $media_source );
 
-		$result1 = $this->call_private_method( $media, 'is_poster', [ $poster_attachment_id ] );
+		$result1 = $this->call_private_method( $poster, 'is_poster', [ $poster_attachment_id ] );
 		$this->assertFalse( $result1 );
 
-		wp_set_object_terms( $poster_attachment_id, 'editor', $media_source_taxonomy->get_taxonomy_slug() );
-		$result2 = $this->call_private_method( $media, 'is_poster', [ $poster_attachment_id ] );
+		wp_set_object_terms( $poster_attachment_id, 'editor', $media_source->get_taxonomy_slug() );
+		$result2 = $this->call_private_method( $poster, 'is_poster', [ $poster_attachment_id ] );
 		$this->assertFalse( $result2 );
 
-		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $media_source_taxonomy->get_taxonomy_slug() );
-		$result3 = $this->call_private_method( $media, 'is_poster', [ $poster_attachment_id ] );
+		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $media_source->get_taxonomy_slug() );
+		$result3 = $this->call_private_method( $poster, 'is_poster', [ $poster_attachment_id ] );
 		$this->assertTrue( $result3 );
 	}
 }
