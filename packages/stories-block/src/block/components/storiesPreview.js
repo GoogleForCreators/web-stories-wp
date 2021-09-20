@@ -165,7 +165,7 @@ function StoriesPreview(props) {
           <StoriesLoop />
         )}
       </div>
-      {fieldState['show_archive_link'] && (
+      {fieldState['show_archive_link'] && archiveURL && (
         <div className="web-stories-list__archive-link">
           <a target="__blank" href={archiveURL}>
             {viewAllLabel}

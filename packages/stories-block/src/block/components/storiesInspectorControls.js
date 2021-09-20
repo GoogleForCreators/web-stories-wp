@@ -184,7 +184,7 @@ const StoriesInspectorControls = (props) => {
 
             return false;
           })}
-        {fieldState['show_archive_link'] && (
+        {fieldState['show_archive_link'] && archiveURL && (
           <TextControl
             label={__('Archive Link Label', 'web-stories')}
             value={archiveLinkLabel}
