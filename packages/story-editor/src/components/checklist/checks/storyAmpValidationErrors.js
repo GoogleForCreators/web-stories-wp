@@ -25,10 +25,12 @@ import { useEffect, useRef, useState } from '@web-stories-wp/react';
  */
 import { useStory } from '../../../app';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
-import { PRIORITY_COPY } from '../constants';
+import { PRIORITY_COPY, VALIDATION_ERROR_CODES } from '../constants';
 import { useRegisterCheck } from '../countContext';
 
 /** @typedef {import('amphtml-validator').ValidationResult} ValidationResult */
+
+const flattenedErrorCodes = Object.keys(VALIDATION_ERROR_CODES);
 
 export async function getStoryAmpValidationErrors({ link, status }) {
   if (!link || !['publish', 'future'].includes(status)) {
@@ -53,29 +55,8 @@ export async function getStoryAmpValidationErrors({ link, status }) {
 
     const filteredErrors = errors
       .filter(({ severity }) => severity === 'ERROR')
-      .filter(({ code, params }) => {
-        // Filter out errors that are covered in other checks
-        // Already covered by metadata checks.
-
-        // Missing story poster
-        if ('MISSING_URL' === code && params?.[0].startsWith('poster')) {
-          return false;
-        }
-
-        // Missing publisher logo
-        if (
-          'MISSING_URL' === code &&
-          params?.[0].startsWith('publisher-logo')
-        ) {
-          return false;
-        }
-
-        // Missing video posters
-        if ('INVALID_URL_PROTOCOL' === code && params?.[0].startsWith('src')) {
-          return false;
-        }
-
-        return true;
+      .filter(({ code }) => {
+        return flattenedErrorCodes.indexOf(code) > -1;
       });
     return filteredErrors.length > 0;
   } catch {
