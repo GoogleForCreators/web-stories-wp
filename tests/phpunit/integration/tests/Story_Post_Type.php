@@ -73,6 +73,7 @@ class Story_Post_Type extends TestCase {
 
 	public function tearDown() {
 		$this->remove_caps_from_roles();
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
 
 		parent::tearDown();
 	}
@@ -87,6 +88,9 @@ class Story_Post_Type extends TestCase {
 		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
 		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $story_post_type, 'change_default_title' ] ) );
 		$this->assertSame( 10, has_filter( 'bulk_post_updated_messages', [ $story_post_type, 'bulk_post_updated_messages' ] ) );
+
+		$this->assertSame( 10, has_action( 'add_option_' . \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, [ $story_post_type, 'update_archive_setting' ] ) );
+		$this->assertSame( 10, has_action( 'update_option_' . \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, [ $story_post_type, 'update_archive_setting' ] ) );
 	}
 
 	/**
@@ -96,6 +100,45 @@ class Story_Post_Type extends TestCase {
 		$story_post_type = $this->get_story_object();
 		$valid           = $this->call_private_method( $story_post_type, 'get_post_type_icon' );
 		$this->assertContains( 'data:image/svg+xml;base64', $valid );
+	}
+
+	/**
+	 * @covers ::register_post_type
+	 */
+	public function test_register_post_type() {
+		$story_post_type = $this->get_story_object();
+		$post_type       = $story_post_type->register_post_type();
+		$this->assertTrue( $post_type->has_archive );
+	}
+
+	/**
+	 * @covers ::register_post_type
+	 */
+	public function test_register_post_type_disabled() {
+		$story_post_type = $this->get_story_object();
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'disabled' );
+		$post_type = $story_post_type->register_post_type();
+		$this->assertFalse( $post_type->has_archive );
+	}
+
+	/**
+	 * @covers ::register_post_type
+	 */
+	public function test_register_post_type_default() {
+		$story_post_type = $this->get_story_object();
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'default' );
+		$post_type = $story_post_type->register_post_type();
+		$this->assertTrue( $post_type->has_archive );
+	}
+
+	/**
+	 * @covers ::register_meta
+	 */
+	public function test_register_meta() {
+		$story_post_type = $this->get_story_object();
+		$this->call_private_method( $story_post_type, 'register_meta' );
+
+		$this->assertTrue( registered_meta_key_exists( 'post', $story_post_type::PUBLISHER_LOGO_META_KEY, $story_post_type::POST_TYPE_SLUG ) );
 	}
 
 	/**

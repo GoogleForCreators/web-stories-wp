@@ -22,7 +22,6 @@ import {
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import {
   useCallback,
@@ -74,8 +73,6 @@ import { getDefaultPropertiesForType, getElementStyles } from './utils';
  * @return {Node} React node
  */
 function RightClickMenuProvider({ children }) {
-  const enableRightClickMenus = useFeature('enableRightClickMenus');
-
   const { addGlobalPreset: addGlobalTextPreset } = useAddPreset({
     presetType: PRESET_TYPES.STYLE,
   });
@@ -977,7 +974,7 @@ function RightClickMenuProvider({ children }) {
   // rightClickAreaRef is set
   useEffect(() => {
     const node = rightClickAreaRef.current;
-    if (!enableRightClickMenus || !node) {
+    if (!node) {
       return undefined;
     }
 
@@ -986,7 +983,7 @@ function RightClickMenuProvider({ children }) {
     return () => {
       node.removeEventListener('contextmenu', handleOpenMenu);
     };
-  }, [enableRightClickMenus, handleOpenMenu]);
+  }, [handleOpenMenu]);
 
   useGlobalKeyDownEffect(
     { key: ['mod+alt+o'] },
