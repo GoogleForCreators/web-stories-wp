@@ -20,8 +20,7 @@ import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inspector', () => {
   describe('Document', () => {
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should display publisher logo upload', async () => {
+    it('should display publisher logo upload', async () => {
       await createNewStory();
 
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
