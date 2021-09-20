@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import markVideoAsExternal from '../v0034_markVideoAsExternal';
+import markVideoAsExternal from '../v0035_markVideoAsExternal';
 
 describe('markVideoAsExternal', () => {
   it('should migrate 3P video to external', () => {
