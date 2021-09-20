@@ -29,16 +29,35 @@ class Dashboard extends TestCase {
 
 	protected static $user_id;
 
+	protected static $cpt_has_archive = 'cpt_has_archive';
+	protected static $cpt_no_archive  = 'cpt_no_archive';
+
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',
 			]
 		);
+
+		register_post_type(
+			self::$cpt_has_archive,
+			[
+				'has_archive' => true,
+			]
+		);
+
+		register_post_type(
+			self::$cpt_no_archive,
+			[
+				'has_archive' => false,
+			]
+		);
 	}
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$user_id );
+		unregister_post_type( self::$cpt_no_archive );
+		unregister_post_type( self::$cpt_has_archive );
 	}
 
 	public function setUp() {
@@ -156,6 +175,28 @@ class Dashboard extends TestCase {
 		$dashboard->enqueue_assets( 'foo' );
 		$this->assertFalse( wp_script_is( $dashboard::SCRIPT_HANDLE ) );
 		$this->assertFalse( wp_style_is( $dashboard::SCRIPT_HANDLE ) );
+	}
+
+	/**
+	 * @covers ::get_post_type_archive_link
+	 * @covers \Google\Web_Stories\Traits\Post_Type::get_post_type_has_archive
+	 */
+	public function test_get_post_type_archive_link() {
+		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
+			$this->createMock( \Google\Web_Stories\Experiments::class ),
+			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
+			$this->createMock( \Google\Web_Stories\Decoder::class ),
+			$this->createMock( \Google\Web_Stories\Locale::class ),
+			( new \Google\Web_Stories\Admin\Google_Fonts() ),
+			( new \Google\Web_Stories\Assets() )
+		);
+
+
+		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ self::$cpt_has_archive ] );
+		$this->assertSame( get_post_type_archive_link( self::$cpt_has_archive ), $result );
+
+		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ self::$cpt_no_archive ] );
+		$this->assertNotSame( get_post_type_archive_link( self::$cpt_no_archive ), $result );
 	}
 
 	/**

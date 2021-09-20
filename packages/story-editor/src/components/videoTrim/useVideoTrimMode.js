@@ -60,7 +60,7 @@ function useVideoTrimMode() {
     if (selectedElement?.type !== 'video' || !selectedElement?.resource) {
       return false;
     }
-    const { isTranscoding, isMuting, isTrimming, local } =
+    const { isTranscoding, isMuting, isTrimming, local, isExternal } =
       selectedElement.resource || {};
     return (
       isVideoTrimEnabled &&
@@ -68,6 +68,7 @@ function useVideoTrimMode() {
       !isTranscoding &&
       !isMuting &&
       !isTrimming &&
+      !isExternal &&
       !local
     );
   }, [selectedElement, isVideoTrimEnabled, isTranscodingEnabled]);

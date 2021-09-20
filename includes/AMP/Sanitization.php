@@ -59,24 +59,6 @@ use WP_Post;
  */
 class Sanitization {
 	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
-	 * Sanitization constructor.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param Experiments $experiments Experiments instance.
-	 */
-	public function __construct( Experiments $experiments ) {
-		$this->experiments = $experiments;
-	}
-
-	/**
 	 * Sanitizes a document.
 	 *
 	 * @since 1.1.0
@@ -425,7 +407,7 @@ class Sanitization {
 		$post = get_queried_object();
 
 		if ( $post instanceof \WP_Post && Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
-			$video_cache_enabled = $this->experiments->is_experiment_enabled( 'videoCache' ) && (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
+			$video_cache_enabled = (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
 
 			$story = new Story();
 			$story->load_from_post( $post );

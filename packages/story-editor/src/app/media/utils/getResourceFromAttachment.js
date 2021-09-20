@@ -67,6 +67,7 @@ function getImageResourceFromAttachment(attachment) {
     alt,
     sizes,
     local: false,
+    isExternal: false,
   });
 }
 
@@ -87,6 +88,7 @@ function getVideoResourceFromAttachment(attachment) {
     alt_text: alt,
     source_url: src,
     media_source: mediaSource,
+    meta: { web_stories_trim_data: trimData },
   } = attachment;
 
   return createResource({
@@ -107,8 +109,10 @@ function getVideoResourceFromAttachment(attachment) {
     lengthFormatted,
     alt,
     local: false,
+    isExternal: false,
     isOptimized: 'video-optimization' === mediaSource,
     isMuted,
+    trimData,
   });
 }
 
@@ -147,6 +151,7 @@ function getGifResourceFromAttachment(attachment) {
     alt,
     local: false,
     isOptimized: true,
+    isExternal: false,
     output: {
       mimeType: mimeType,
       src: src,

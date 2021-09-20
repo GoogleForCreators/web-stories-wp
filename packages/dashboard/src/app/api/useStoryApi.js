@@ -240,9 +240,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
           },
           pages,
           metadata: {
-            publisher: {
-              name: createdBy,
-            },
+            publisher: createdBy,
           },
           flags,
         });

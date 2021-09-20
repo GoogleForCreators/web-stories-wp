@@ -61,6 +61,7 @@ function useMediaUploadQueue() {
     stripAudioFromVideo,
     getFirstFrameOfVideo,
     convertGifToVideo,
+    trimVideo,
   } = useFFmpeg();
 
   const [state, actions] = useReduction(initialState, reducer);
@@ -73,8 +74,10 @@ function useMediaUploadQueue() {
     cancelUploading,
     startTranscoding,
     startMuting,
+    startTrimming,
     finishTranscoding,
     finishMuting,
+    finishTrimming,
     replacePlaceholderResource,
   } = actions;
 
@@ -216,6 +219,7 @@ function useMediaUploadQueue() {
             additionalData = {},
             posterFile,
             muteVideo,
+            trimData,
           } = item;
           if ('PENDING' !== itemState) {
             return;
@@ -260,13 +264,28 @@ function useMediaUploadQueue() {
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
           if (isTranscodingEnabled && canTranscodeFile(file)) {
-            if (!muteVideo) {
-              startTranscoding({ id });
-
+            if (trimData) {
+              startTrimming({ id });
               try {
-                newFile = await transcodeVideo(file);
-                finishTranscoding({ id, file: newFile });
-                additionalData.media_source = 'video-optimization';
+                newFile = await trimVideo(file, trimData.start, trimData.end);
+                finishTrimming({ id, file: newFile });
+                additionalData.meta = {
+                  web_stories_trim_data: trimData,
+                };
+              } catch (error) {
+                // Cancel uploading if there were any errors.
+                cancelUploading({ id, error });
+
+                trackError('upload_media', error?.message);
+
+                return;
+              }
+            } else if (muteVideo) {
+              startMuting({ id });
+              try {
+                newFile = await stripAudioFromVideo(file);
+                finishMuting({ id, file: newFile });
+                additionalData.is_muted = true;
               } catch (error) {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });
@@ -276,11 +295,12 @@ function useMediaUploadQueue() {
                 return;
               }
             } else {
-              startMuting({ id });
+              startTranscoding({ id });
+
               try {
-                newFile = await stripAudioFromVideo(file);
-                finishMuting({ id, file: newFile });
-                additionalData.is_muted = true;
+                newFile = await transcodeVideo(file);
+                finishTranscoding({ id, file: newFile });
+                additionalData.media_source = 'video-optimization';
               } catch (error) {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });
@@ -348,6 +368,9 @@ function useMediaUploadQueue() {
     convertGifToVideo,
     startMuting,
     finishMuting,
+    trimVideo,
+    startTrimming,
+    finishTrimming,
   ]);
 
   return useMemo(
@@ -364,6 +387,7 @@ function useMediaUploadQueue() {
         ),
         isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),
         isMuting: state.queue.some((item) => item.state === 'MUTING'),
+        isTrimming: state.queue.some((item) => item.state === 'TRIMMING'),
       },
       actions: {
         addItem: actions.addItem,

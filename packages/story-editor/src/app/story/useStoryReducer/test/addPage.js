@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/overlay';
 import { setupReducer } from './_utils';
 
 describe('addPage', () => {
@@ -35,7 +34,6 @@ describe('addPage', () => {
       {
         id: '123',
         elements: [{ id: '456' }],
-        overlay: OverlayType.NONE,
       },
     ]);
   });

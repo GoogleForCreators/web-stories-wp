@@ -98,6 +98,11 @@ function useProcessMedia({
     [updateMedia]
   );
 
+  /**
+   * Optimize video existing video using FFmpeg.
+   *
+   * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+   */
   const optimizeVideo = useCallback(
     ({ resource: oldResource }) => {
       const { src: url, mimeType } = oldResource;
@@ -125,7 +130,11 @@ function useProcessMedia({
         ) {
           uploadVideoPoster(resource.id, resource.src);
         }
-        if ('video' === resource.type && !resource.local && !resource.isMuted) {
+        if (
+          'video' === resource.type &&
+          !resource.local &&
+          resource.isMuted === null
+        ) {
           updateVideoIsMuted(resource.id, resource.src);
         }
       };
@@ -152,6 +161,7 @@ function useProcessMedia({
           onUploadProgress,
           additionalData: {
             original_id: oldResource.id,
+            is_muted: oldResource.isMuted,
           },
         });
       };
@@ -168,6 +178,111 @@ function useProcessMedia({
     ]
   );
 
+  /**
+   * Trim existing video using FFmpeg.
+   *
+   * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+   * @param {string} start Time stamp of start time of new video. Example '00:01:02.345'.
+   * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
+   */
+  const trimExistingVideo = useCallback(
+    ({ resource: oldResource, start, end }) => {
+      const { src: url, mimeType, poster } = oldResource;
+
+      const trimData = {
+        original: oldResource.id,
+        start,
+        end,
+      };
+
+      const onUploadStart = () => {
+        updateExistingElements({
+          oldResource: {
+            ...oldResource,
+            trimData,
+            isTrimming: true,
+          },
+        });
+      };
+
+      const onUploadError = () => {
+        updateExistingElements({
+          oldResource: { ...oldResource, isTrimming: false },
+        });
+      };
+
+      const onUploadSuccess = ({ resource }) => {
+        copyResourceData({ oldResource, resource });
+        if ('video' === resource.type && !resource.local) {
+          if (!resource.posterId) {
+            uploadVideoPoster(resource.id, resource.src);
+          }
+          if (resource.isMuted === null) {
+            updateVideoIsMuted(resource.id, resource.src);
+          }
+        }
+      };
+
+      const onUploadProgress = ({ resource }) => {
+        const oldResourceWithId = { ...resource, id: oldResource.id };
+        updateExistingElements({
+          oldResource: oldResourceWithId,
+        });
+      };
+
+      const process = async () => {
+        let file = false;
+        let posterFile = false;
+        try {
+          file = await fetchRemoteFile(url, mimeType);
+        } catch (e) {
+          // Ignore for now.
+          return;
+        }
+        if (poster) {
+          try {
+            posterFile = await fetchRemoteBlob(poster);
+          } catch (e) {
+            // Ignore for now.
+          }
+        }
+
+        await uploadMedia([file], {
+          onUploadSuccess,
+          onUploadStart,
+          onUploadError,
+          onUploadProgress,
+          additionalData: {
+            is_muted: oldResource.isMuted,
+            original_id: oldResource.id,
+            media_source: oldResource?.isOptimized
+              ? 'video-optimization'
+              : 'editor',
+          },
+          trimData,
+          resource: {
+            ...oldResource,
+            trimData,
+          },
+          posterFile,
+        });
+      };
+      return process();
+    },
+    [
+      copyResourceData,
+      uploadMedia,
+      uploadVideoPoster,
+      updateExistingElements,
+      updateVideoIsMuted,
+    ]
+  );
+
+  /**
+   * Mute existing video using FFmpeg.
+   *
+   * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+   */
   const muteExistingVideo = useCallback(
     ({ resource: oldResource }) => {
       const { src: url, mimeType, poster } = oldResource;
@@ -254,6 +369,11 @@ function useProcessMedia({
     ]
   );
 
+  /**
+   * Convert existing gif to a video using FFmpeg.
+   *
+   * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+   */
   const optimizeGif = useCallback(
     ({ resource: oldResource }) => {
       const { src: url, mimeType } = oldResource;
@@ -317,6 +437,7 @@ function useProcessMedia({
     optimizeVideo,
     optimizeGif,
     muteExistingVideo,
+    trimExistingVideo,
   };
 }
 

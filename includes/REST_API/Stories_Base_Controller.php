@@ -239,6 +239,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.10.0
 	 *
 	 * @param WP_Post $post Post object.
+	 *
 	 * @return array Links for the given post.
 	 */
 	protected function prepare_links( $post ): array {
@@ -271,6 +272,57 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			];
 		}
 
+		$links = $this->add_taxonomy_links( $links, $post );
+
+		return $links;
+	}
+
+	/**
+	 * Adds a REST API links for the taxonomies.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param array   $links Links for the given post.
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return array Modified list of links.
+	 */
+	private function add_taxonomy_links( array $links, WP_Post $post ): array {
+		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );
+
+		if ( empty( $taxonomies ) ) {
+			return $links;
+		}
+		$links['https://api.w.org/term'] = [];
+
+		foreach ( $taxonomies as $taxonomy_obj ) {
+			// Skip taxonomies that are not public.
+			if ( empty( $taxonomy_obj->show_in_rest ) ) {
+				continue;
+			}
+
+			$controller = $taxonomy_obj->get_rest_controller();
+
+			if ( ! $controller ) {
+				continue;
+			}
+
+			$namespace = method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
+			$tax       = $taxonomy_obj->name;
+			$tax_base  = ! empty( $taxonomy_obj->rest_base ) ? $taxonomy_obj->rest_base : $tax;
+
+			$terms_url = add_query_arg(
+				'post',
+				$post->ID,
+				rest_url( sprintf( '%s/%s', $namespace, $tax_base ) )
+			);
+
+			$links['https://api.w.org/term'][] = [
+				'href'       => $terms_url,
+				'taxonomy'   => $tax,
+				'embeddable' => true,
+			];
+		}
 		return $links;
 	}
 
@@ -295,5 +347,16 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		}
 
 		return $rels;
+	}
+
+	/**
+	 * Return namespace.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string
+	 */
+	public function get_namespace() : string {
+		return $this->namespace;
 	}
 }
