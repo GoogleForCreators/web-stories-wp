@@ -58,7 +58,7 @@ class Poster extends Service_Base {
 	protected $media_source_taxonomy;
 
 	/**
-	 * Add_Stories_Caps constructor.
+	 * Poster constructor.
 	 *
 	 * @since 1.12.0
 	 *

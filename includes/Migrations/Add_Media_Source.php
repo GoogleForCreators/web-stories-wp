@@ -43,7 +43,7 @@ abstract class Add_Media_Source extends Migrate_Base {
 	protected $media_source_taxonomy;
 
 	/**
-	 * Add_Stories_Caps constructor.
+	 * Add_Media_Source constructor.
 	 *
 	 * @since 1.12.0
 	 *

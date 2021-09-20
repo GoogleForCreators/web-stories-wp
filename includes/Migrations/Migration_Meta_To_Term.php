@@ -44,7 +44,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	protected $media_source_taxonomy;
 
 	/**
-	 * Add_Stories_Caps constructor.
+	 * Migration_Meta_To_Term constructor.
 	 *
 	 * @since 1.12.0
 	 *
