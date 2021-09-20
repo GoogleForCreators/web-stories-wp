@@ -14,3 +14,4 @@
  * limitations under the License.
  */
 export { default as PostPublishDialog } from './postPublishDialog';
+export { default as MediaUpload } from './mediaUpload';

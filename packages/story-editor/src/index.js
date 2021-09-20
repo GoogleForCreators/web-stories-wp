@@ -23,6 +23,7 @@ import Dialog from './components/dialog';
 export * from './components/transform';
 export * from './app/config';
 export * from './app/story';
+export * from './app/api';
 export * from './components/previewPage';
 export * from './testUtils';
 

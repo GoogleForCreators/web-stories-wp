@@ -44,7 +44,6 @@ import {
  */
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
-import { useMediaPicker } from '../../../../mediaPicker';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import { Select } from '../../../../form';
@@ -172,6 +171,7 @@ function MediaPane(props) {
       video: allowedVideoMimeTypes,
     },
     capabilities: { hasUploadMediaAction },
+    MediaUpload,
   } = useConfig();
 
   const { isTranscodingEnabled } = useFFmpeg();
@@ -267,13 +267,6 @@ function MediaPane(props) {
     );
   }
 
-  const openMediaPicker = useMediaPicker({
-    onSelect,
-    onSelectErrorMessage,
-    onClose,
-    type: allowedMimeTypes,
-  });
-
   /**
    * Filter REST API calls and re-request API.
    *
@@ -361,28 +354,44 @@ function MediaPane(props) {
                 <LinkInsertion />
                 {hasUploadMediaAction && (
                   <Tooltip title={__('Upload', 'web-stories')}>
-                    <Button
-                      variant={BUTTON_VARIANTS.SQUARE}
-                      type={BUTTON_TYPES.SECONDARY}
-                      size={BUTTON_SIZES.SMALL}
-                      onClick={openMediaPicker}
-                      aria-label={__('Upload', 'web-stories')}
-                    >
-                      <Icons.ArrowCloud />
-                    </Button>
+                    <MediaUpload
+                      onSelect={onSelect}
+                      onSelectErrorMessage={onSelectErrorMessage}
+                      onClose={onClose}
+                      type={allowedMimeTypes}
+                      render={(open) => (
+                        <Button
+                          variant={BUTTON_VARIANTS.SQUARE}
+                          type={BUTTON_TYPES.SECONDARY}
+                          size={BUTTON_SIZES.SMALL}
+                          onClick={open}
+                          aria-label={__('Upload', 'web-stories')}
+                        >
+                          <Icons.ArrowCloud />
+                        </Button>
+                      )}
+                    />
                   </Tooltip>
                 )}
               </ButtonsWrapper>
             )}
             {!isSearching && !enableHotlinking && hasUploadMediaAction && (
-              <Button
-                variant={BUTTON_VARIANTS.RECTANGLE}
-                type={BUTTON_TYPES.SECONDARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={openMediaPicker}
-              >
-                {__('Upload', 'web-stories')}
-              </Button>
+              <MediaUpload
+                onSelect={onSelect}
+                onSelectErrorMessage={onSelectErrorMessage}
+                onClose={onClose}
+                type={allowedMimeTypes}
+                render={(open) => (
+                  <Button
+                    variant={BUTTON_VARIANTS.RECTANGLE}
+                    type={BUTTON_TYPES.SECONDARY}
+                    size={BUTTON_SIZES.SMALL}
+                    onClick={open}
+                  >
+                    {__('Upload', 'web-stories')}
+                  </Button>
+                )}
+              />
             )}
           </FilterArea>
         </PaneHeader>

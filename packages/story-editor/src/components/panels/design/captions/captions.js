@@ -39,7 +39,6 @@ import {
  */
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { Row, usePresubmitHandler } from '../../../form';
-import { useMediaPicker } from '../../../mediaPicker';
 import { SimplePanel } from '../../panel';
 import { focusStyle, getCommonValue } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
@@ -92,13 +91,13 @@ export const MIN_MAX = {
 function CaptionsPanel({ selectedElements, pushUpdate }) {
   const tracks = getCommonValue(selectedElements, 'tracks', []);
   const isMixedValue = tracks === MULTIPLE_VALUE;
-  const captionText = __('Upload a file', 'web-stories');
   /* @TODO: Implement error handling after removing modal and
   using native browser upload. */
   const uploadError = false;
 
   const {
     capabilities: { hasUploadMediaAction },
+    MediaUpload,
   } = useConfig();
 
   usePresubmitHandler(
@@ -143,17 +142,6 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     [tracks, pushUpdate]
   );
 
-  const UploadCaption = useMediaPicker({
-    onSelect: handleChangeTrack,
-    onSelectErrorMessage: __(
-      'Please choose a VTT file to use as caption.',
-      'web-stories'
-    ),
-    type: ['text/vtt'],
-    title: captionText,
-    buttonInsertText: __('Select caption', 'web-stories'),
-  });
-
   const { highlight, resetHighlight } = useHighlights((state) => ({
     highlight: state[states.CAPTIONS],
     resetHighlight: state.onFocusOut,
@@ -165,6 +153,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   }
 
   const clearFileText = __('Remove file', 'web-stories');
+  const captionText = __('Upload a file', 'web-stories');
 
   return (
     <SimplePanel
@@ -214,21 +203,33 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
       {!tracks.length && (
         <>
           <Row expand>
-            <UploadButton
-              css={highlight?.showEffect && styles.OUTLINE}
-              onAnimationEnd={() => resetHighlight()}
-              ref={(node) => {
-                if (node && highlight?.focus && highlight?.showEffect) {
-                  node.focus();
-                }
-              }}
-              onClick={UploadCaption}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
-              variant={BUTTON_VARIANTS.RECTANGLE}
-            >
-              {captionText}
-            </UploadButton>
+            <MediaUpload
+              onSelect={handleChangeTrack}
+              onSelectErrorMessage={__(
+                'Please choose a VTT file to use as caption.',
+                'web-stories'
+              )}
+              type={['text/vtt']}
+              title={captionText}
+              buttonInsertText={__('Select caption', 'web-stories')}
+              render={(open) => (
+                <UploadButton
+                  css={highlight?.showEffect && styles.OUTLINE}
+                  onAnimationEnd={() => resetHighlight()}
+                  ref={(node) => {
+                    if (node && highlight?.focus && highlight?.showEffect) {
+                      node.focus();
+                    }
+                  }}
+                  onClick={open}
+                  type={BUTTON_TYPES.SECONDARY}
+                  size={BUTTON_SIZES.SMALL}
+                  variant={BUTTON_VARIANTS.RECTANGLE}
+                >
+                  {captionText}
+                </UploadButton>
+              )}
+            />
           </Row>
           {uploadError && (
             <Row expand>
