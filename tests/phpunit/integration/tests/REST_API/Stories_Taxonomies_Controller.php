@@ -26,9 +26,9 @@ class Stories_Taxonomies_Controller extends Test_REST_TestCase {
 	}
 
 	/**
-	 * @covers ::prepare_links
+	 * @covers ::prepare_item_for_response
 	 */
-	public function test_prepare_links() {
+	public function test_prepare_item_for_response() {
 		$slug     = $this->get_private_property( self::$taxonomy_object, 'taxonomy_slug' );
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/taxonomies/' . $slug );
 		$response = rest_get_server()->dispatch( $request );

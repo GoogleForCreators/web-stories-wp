@@ -21,7 +21,7 @@ use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Taxonomy\Taxonomy_Base;
+ * @coversDefaultClass \Google\Web_Stories\Taxonomy\Taxonomy_Base
  */
 class Taxonomy_Base extends TestCase {
 	/**
