@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Taxonomy;
 
-use Google\Web_Stories\Tests\Integration\Test_Taxonomy;
+use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -28,7 +28,7 @@ class Taxonomy_Base extends TestCase {
 	 * @covers ::register_taxonomy
 	 */
 	public function test_register_taxonomy() {
-		$object = new Test_Taxonomy();
+		$object = new DummyTaxonomy();
 		$object->register_taxonomy();
 		$slug = $this->get_private_property( $object, 'taxonomy_slug' );
 		$this->assertTrue( taxonomy_exists( $slug ) );
@@ -38,7 +38,7 @@ class Taxonomy_Base extends TestCase {
 	 * @covers ::unregister_taxonomy
 	 */
 	public function test_unregister_taxonomy() {
-		$object = new Test_Taxonomy();
+		$object = new DummyTaxonomy();
 		$object->register();
 		$slug = $this->get_private_property( $object, 'taxonomy_slug' );
 		$this->assertTrue( taxonomy_exists( $slug ) );

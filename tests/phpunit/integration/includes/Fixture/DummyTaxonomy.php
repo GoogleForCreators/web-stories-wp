@@ -1,6 +1,6 @@
 <?php
 
-namespace Google\Web_Stories\Tests\Integration;
+namespace Google\Web_Stories\Tests\Integration\Fixture;
 
 use Google\Web_Stories\REST_API\Stories_Terms_Controller;
 use Google\Web_Stories\Taxonomy\Taxonomy_Base;
@@ -8,7 +8,7 @@ use Google\Web_Stories\Taxonomy\Taxonomy_Base;
 /**
  *
  */
-class Test_Taxonomy extends Taxonomy_Base {
+class DummyTaxonomy extends Taxonomy_Base {
 	/**
 	 * @var string
 	 */
