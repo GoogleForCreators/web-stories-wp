@@ -35,6 +35,7 @@ describe('settingsReducer', () => {
       type: ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
       payload: {
         googleAnalyticsId: 'fakeId12345',
+        usingLegacyAnalytics: false,
         activePublisherLogoId: 5,
         publisherLogoIds: [6, 7, 8],
       },
@@ -42,6 +43,7 @@ describe('settingsReducer', () => {
     expect(result).toMatchObject({
       error: {},
       googleAnalyticsId: 'fakeId12345',
+      usingLegacyAnalytics: false,
       activePublisherLogoId: 5,
       publisherLogoIds: [5, 6, 7, 8],
     });
@@ -57,6 +59,7 @@ describe('settingsReducer', () => {
     });
     expect(result).toMatchObject({
       googleAnalyticsId: '',
+      usingLegacyAnalytics: false,
       error: {
         message: ERRORS.LOAD_SETTINGS.MESSAGE,
         id: MOCK_ERROR_ID,
@@ -75,6 +78,7 @@ describe('settingsReducer', () => {
     });
     expect(result).toMatchObject({
       googleAnalyticsId: '',
+      usingLegacyAnalytics: false,
       error: {
         message: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
         id: MOCK_ERROR_ID,
@@ -88,6 +92,7 @@ describe('settingsReducer', () => {
       type: ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
       payload: {
         googleAnalyticsId: 'fakeId12345NEW',
+        usingLegacyAnalytics: false,
         activePublisherLogoId: 5,
         publisherLogoIds: [6, 7, 8],
       },
@@ -95,6 +100,7 @@ describe('settingsReducer', () => {
     expect(result).toMatchObject({
       error: {},
       googleAnalyticsId: 'fakeId12345NEW',
+      usingLegacyAnalytics: false,
       activePublisherLogoId: 5,
       publisherLogoIds: [5, 6, 7, 8],
     });

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,26 @@
  * limitations under the License.
  */
 
-export const AD_NETWORK_TYPE = {
-  NONE: 'none',
-  ADSENSE: 'adsense',
-  ADMANAGER: 'admanager',
-};
+function removeUnusedBackgroundProps({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
+}
 
-export const ARCHIVE_TYPE = {
-  DEFAULT: 'default',
-  DISABLED: 'disabled',
-};
+function reducePage({ elements, overlay, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement(element) {
+  if (element.isDefaultBackground) {
+    delete element.backgroundColor;
+  }
+
+  return element;
+}
+
+export default removeUnusedBackgroundProps;
