@@ -88,12 +88,7 @@ class Tag_Taxonomy extends Taxonomy_Base {
 			'show_admin_column'     => true,
 			'rewrite'               => true,
 			'show_in_rest'          => true,
-			'capabilities'          => [
-				'manage_terms' => 'delete_private_web-stories',
-				'edit_terms'   => 'delete_private_web-stories',
-				'delete_terms' => 'delete_private_web-stories',
-				'assign_terms' => 'edit_web-stories',
-			],
+			'capabilities'          => self::CAPABILITIES,
 			'rest_controller_class' => Stories_Terms_Controller::class,
 		];
 

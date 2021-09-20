@@ -35,6 +35,14 @@ use WP_Site;
  * Taxonomy_Base class
  */
 abstract class Taxonomy_Base extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
+
+	const CAPABILITIES = [
+		'manage_terms' => 'manage_terms_web-stories',
+		'edit_terms'   => 'edit_terms_web-stories',
+		'delete_terms' => 'delete_terms_web-stories',
+		'assign_terms' => 'assign_terms_web-stories',
+	];
+
 	/**
 	 * Taxonomy key, must not exceed 32 characters.
 	 *
