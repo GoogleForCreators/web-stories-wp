@@ -79,6 +79,20 @@ function BackgroundAudioPanelContent({
     [updateBackgroundAudio]
   );
 
+  const renderUploadButton = useCallback(
+    (open) => (
+      <UploadButton
+        onClick={open}
+        type={BUTTON_TYPES.SECONDARY}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.RECTANGLE}
+      >
+        {__('Upload an audio file', 'web-stories')}
+      </UploadButton>
+    ),
+    []
+  );
+
   return (
     <>
       {!backgroundAudio?.src && hasUploadMediaAction && (
@@ -89,16 +103,7 @@ function BackgroundAudioPanelContent({
             type={allowedAudioMimeTypes}
             title={__('Upload an audio file', 'web-stories')}
             buttonInsertText={__('Select audio file', 'web-stories')}
-            render={(open) => (
-              <UploadButton
-                onClick={open}
-                type={BUTTON_TYPES.SECONDARY}
-                size={BUTTON_SIZES.SMALL}
-                variant={BUTTON_VARIANTS.RECTANGLE}
-              >
-                {__('Upload an audio file', 'web-stories')}
-              </UploadButton>
-            )}
+            render={renderUploadButton}
           />
         </Row>
       )}

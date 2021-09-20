@@ -98,21 +98,37 @@ function MediaInput(
 ) {
   const { MediaUpload } = useConfig();
 
-  // Options available for the media input menu.
-  const availableMenuOptions = [
-    { label: __('Edit', 'web-stories'), value: 'edit' },
-    { label: __('Remove', 'web-stories'), value: 'remove' },
-    { label: __('Reset', 'web-stories'), value: 'reset' },
-  ];
+  const renderMediaIcon = useCallback(
+    (open) => {
+      // Options available for the media input menu.
+      const availableMenuOptions = [
+        { label: __('Edit', 'web-stories'), value: 'edit' },
+        { label: __('Remove', 'web-stories'), value: 'remove' },
+        { label: __('Reset', 'web-stories'), value: 'reset' },
+      ];
 
-  // No menu for mixed value.
-  // Match the options from props, if none are matched, menu is not displayed.
-  const dropdownOptions =
-    value === MULTIPLE_VALUE
-      ? []
-      : availableMenuOptions.filter(({ value: option }) =>
-          menuOptions.includes(option)
-        );
+      // No menu for mixed value.
+      // Match the options from props, if none are matched, menu is not displayed.
+      const dropdownOptions =
+        value === MULTIPLE_VALUE
+          ? []
+          : availableMenuOptions.filter(({ value: option }) =>
+              menuOptions.includes(option)
+            );
+
+      return (
+        <MediaInputField
+          open={open}
+          onChange={onChange}
+          dropdownOptions={dropdownOptions}
+          forwardedRef={forwardedRef}
+          value={value}
+          {...rest}
+        />
+      );
+    },
+    [onChange, menuOptions, forwardedRef, value, rest]
+  );
 
   return (
     <MediaUpload
@@ -122,16 +138,7 @@ function MediaInput(
       onSelectErrorMessage={onChangeErrorText}
       type={type}
       cropParams={cropParams}
-      render={(open) => (
-        <MediaInputField
-          open={open}
-          onChange={onChange}
-          dropdownOptions={dropdownOptions}
-          forwardedRef={forwardedRef}
-          value={value}
-          {...rest}
-        />
-      )}
+      render={renderMediaIcon}
     />
   );
 }

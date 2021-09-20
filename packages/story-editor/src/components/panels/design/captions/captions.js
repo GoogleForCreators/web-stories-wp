@@ -148,12 +148,34 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     cancelHighlight: state.cancelEffect,
   }));
 
+  const captionText = __('Upload a file', 'web-stories');
+
+  const renderUploadButton = useCallback(
+    (open) => (
+      <UploadButton
+        css={highlight?.showEffect && styles.OUTLINE}
+        onAnimationEnd={() => resetHighlight()}
+        ref={(node) => {
+          if (node && highlight?.focus && highlight?.showEffect) {
+            node.focus();
+          }
+        }}
+        onClick={open}
+        type={BUTTON_TYPES.SECONDARY}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.RECTANGLE}
+      >
+        {captionText}
+      </UploadButton>
+    ),
+    [resetHighlight, captionText, highlight?.focus, highlight?.showEffect]
+  );
+
   if (!hasUploadMediaAction && !tracks.length) {
     return null;
   }
 
   const clearFileText = __('Remove file', 'web-stories');
-  const captionText = __('Upload a file', 'web-stories');
 
   return (
     <SimplePanel
@@ -212,23 +234,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
               type={['text/vtt']}
               title={captionText}
               buttonInsertText={__('Select caption', 'web-stories')}
-              render={(open) => (
-                <UploadButton
-                  css={highlight?.showEffect && styles.OUTLINE}
-                  onAnimationEnd={() => resetHighlight()}
-                  ref={(node) => {
-                    if (node && highlight?.focus && highlight?.showEffect) {
-                      node.focus();
-                    }
-                  }}
-                  onClick={open}
-                  type={BUTTON_TYPES.SECONDARY}
-                  size={BUTTON_SIZES.SMALL}
-                  variant={BUTTON_VARIANTS.RECTANGLE}
-                >
-                  {captionText}
-                </UploadButton>
-              )}
+              render={renderUploadButton}
             />
           </Row>
           {uploadError && (
