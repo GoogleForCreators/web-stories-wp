@@ -62,27 +62,17 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
             hasAssignAuthorAction: false,
           },
           lock_user,
-          featured_media,
-          publisher_logo,
+          featured_media: featuredMedia,
+          publisher_logo: publisherLogo,
           taxonomies,
           terms,
         } = post;
-
-        const defaultMedia = {
-          id: 0,
-          height: 0,
-          width: 0,
-          url: '',
-        };
 
         const lockUser = lock_user ?? {
           id: 0,
           name: '',
           avatar: '',
         };
-
-        const featuredMedia = featured_media ?? defaultMedia;
-        const publisherLogo = publisher_logo ?? defaultMedia;
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
