@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { canTranscodeResource } from '@web-stories-wp/media';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
@@ -81,8 +82,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo: state.actions.muteExistingVideo,
   }));
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuted, isTranscoding, isMuting, isTrimming, isExternal, local } =
-    resource;
+  const { isMuting, isMuted } = resource;
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
@@ -92,25 +92,16 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
 
   const shouldDisplayMuteButton = useMemo(() => {
     return (
-      (isTranscodingEnabled &&
-        !local &&
-        !isMuted &&
-        !isTrimming &&
-        !isTranscoding &&
-        !isExternal &&
-        isSingleElement) ||
-      isMuting
+      isTranscodingEnabled &&
+      isSingleElement &&
+      ((!isMuted && canTranscodeResource(resource)) || isMuting)
     );
-  }, [
-    isTranscodingEnabled,
-    local,
-    isMuted,
-    isTrimming,
-    isTranscoding,
-    isExternal,
-    isSingleElement,
-    isMuting,
-  ]);
+  }, [isTranscodingEnabled, isSingleElement, isMuted, resource, isMuting]);
+
+  const shouldDisableMuteButton = useMemo(
+    () => !canTranscodeResource(resource),
+    [resource]
+  );
 
   const buttonText = useMemo(() => {
     return isMuting
@@ -173,7 +164,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
         <>
           <Row>
             <StyledButton
-              disabled={isMuting}
+              disabled={shouldDisableMuteButton}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}

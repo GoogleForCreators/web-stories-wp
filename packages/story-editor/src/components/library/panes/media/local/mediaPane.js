@@ -27,7 +27,7 @@ import {
   translateToExclusiveList,
 } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media';
+import { resourceList, canTranscodeResource } from '@web-stories-wp/media';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -214,7 +214,7 @@ function MediaPane(props) {
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     try {
-      if (isTranscodingEnabled) {
+      if (isTranscodingEnabled && canTranscodeResource(resource)) {
         if (transcodableMimeTypes.includes(resource.mimeType)) {
           optimizeVideo({ resource });
         }
