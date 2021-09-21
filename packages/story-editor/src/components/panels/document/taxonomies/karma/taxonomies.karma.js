@@ -22,11 +22,7 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-<<<<<<< HEAD
 import { useStory } from '../../../../../app';
-=======
-import { useStory } from '../../../../../app/story';
->>>>>>> 6851a14ab (karma tests for freeform terms)
 import { Fixture } from '../../../../../karma';
 
 describe('Categories & Tags Panel', () => {
