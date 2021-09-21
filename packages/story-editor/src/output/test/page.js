@@ -1177,7 +1177,7 @@ describe('Page output', () => {
         defaultPageDuration: 7,
         args: {
           enableBetterCaptions: true,
-        }
+        },
       };
 
       const { container } = render(<PageOutput {...props} />);
