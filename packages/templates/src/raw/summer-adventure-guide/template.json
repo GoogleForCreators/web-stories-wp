@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 34,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -281,7 +280,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -780,7 +778,6 @@
           "sticker": { "type": "SummerAdventureDashedTrail" }
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 74, "g": 98, "b": 24 } },
       "type": "page",
       "id": "e56de283-7b57-4559-8610-c9509c489c0e",
@@ -1119,7 +1116,6 @@
           "y": -215
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "2024f354-b683-4695-aa27-45bb7cf00ffe",
@@ -1350,7 +1346,6 @@
           "y": 552
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "f606d759-0a00-4305-af53-323c42f1506a",
@@ -1389,7 +1384,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1539,7 +1533,6 @@
           "id": "3cc1c551-4ea1-431f-809c-e0b0bee668df"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 74, "g": 98, "b": 24 } },
       "type": "page",
@@ -1835,7 +1828,6 @@
           "y": -157
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "74222a16-63ce-4dad-ad01-694e0fd3bace",
@@ -2066,7 +2058,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "c8746a1d-fd8d-48b9-a4c2-2440dc9f3059",
@@ -2105,7 +2096,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2256,7 +2246,6 @@
           "type": "image"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 74, "g": 98, "b": 24 } },
       "type": "page",
@@ -2534,7 +2523,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "9c7b1746-3e1b-4dca-8b57-ff6c4d17b0b5",
@@ -2765,7 +2753,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "1dea70f9-2ce6-4d45-b820-fcf5c16653d3",
@@ -2804,7 +2791,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2955,7 +2941,6 @@
           "type": "image"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 74, "g": 98, "b": 24 } },
       "type": "page",
@@ -2969,7 +2954,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3762,7 +3746,6 @@
           "mask": { "type": "circle" }
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "6ecd68eb-97e5-4547-9436-dc2a2f1309ec",
@@ -3868,7 +3851,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4341,7 +4323,6 @@
           "id": "bfab27f8-6fff-47dc-a220-fa3a919db3ad"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "fdb8fe2f-ba9e-4f27-8dd0-0be32b188df1",

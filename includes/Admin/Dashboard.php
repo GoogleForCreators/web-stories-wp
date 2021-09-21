@@ -381,6 +381,7 @@ class Dashboard extends Service_Base {
 				'locale'                => $this->locale->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
 				'wpListURL'             => $classic_wp_list_url,
+				'archiveURL'            => $this->get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
 				'version'               => WEBSTORIES_VERSION,

@@ -15,3 +15,4 @@
  */
 
 export { default as OutputStory } from './story';
+export { default as getStoryMarkup } from './utils/getStoryMarkup';

@@ -22,26 +22,22 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
+import { renderWithTheme, ConfigContext } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils';
-import ConfigContext from '../../../app/config/context';
-import APIContext from '../../../app/api/context';
 import StatusCheck from '../statusCheck';
 
-function setup(response) {
-  const configValue = { api: { statusCheck: '' }, metadata: { publisher: '' } };
+jest.mock('../../../api/statusCheck');
+import { getStatusCheck } from '../../../api/statusCheck';
 
-  const getStatusCheck = () => response;
-  const apiValue = { actions: { getStatusCheck } };
+function setup() {
+  const configValue = { api: { statusCheck: '' }, metadata: { publisher: '' } };
 
   return renderWithTheme(
     <ConfigContext.Provider value={configValue}>
-      <APIContext.Provider value={apiValue}>
-        <StatusCheck />
-      </APIContext.Provider>
+      <StatusCheck />
     </ConfigContext.Provider>
   );
 }
@@ -59,8 +55,10 @@ describe('statusCheck', () => {
     document.documentElement.removeChild(modalWrapper);
   });
 
-  it('should do nothing if successfull', async () => {
-    setup(Promise.resolve({ success: true }));
+  it('should do nothing if successful', async () => {
+    getStatusCheck.mockReturnValue(Promise.resolve({ success: true }));
+
+    setup();
 
     // This seems to be the best way to validate, that a certain
     // element does *not* appear. Not very elegant, though.
@@ -70,7 +68,9 @@ describe('statusCheck', () => {
   });
 
   it('should display dismissible dialog if failed', async () => {
-    setup(Promise.reject(new Error('api failed')));
+    getStatusCheck.mockReturnValue(Promise.reject(new Error('api failed')));
+
+    setup();
 
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toBeInTheDocument();

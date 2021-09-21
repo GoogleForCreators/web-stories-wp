@@ -35,19 +35,36 @@ function TaxonomiesPanel(props) {
     return null;
   }
 
+  // TODO: remove this eventually
+  // show categories before tags
+  const sortedTaxonomies = taxonomies.sort(
+    ({ rest_base: restBaseA }, { rest_base: restBaseB }) => {
+      if (restBaseA > restBaseB) {
+        return 1;
+      } else if (restBaseB > restBaseA) {
+        return -1;
+      }
+      return 0;
+    }
+  );
+
   return (
     <SimplePanel
       name="taxonomies"
       title={__('Categories and Tags', 'web-stories')}
       {...props}
     >
-      {taxonomies.map((taxonomy) =>
-        taxonomy.hierarchical ? (
+      {sortedTaxonomies.map((taxonomy) => {
+        if (!taxonomy?.visibility?.show_ui) {
+          return null;
+        }
+
+        return taxonomy.hierarchical ? (
           <HierarchicalTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
         ) : (
           <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
-        )
-      )}
+        );
+      })}
     </SimplePanel>
   );
 }
