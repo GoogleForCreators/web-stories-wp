@@ -15,3 +15,5 @@
  */
 export { default as PostPublishDialog } from './postPublishDialog';
 export { default as MediaUpload } from './mediaUpload';
+export { default as PostLock } from './postLock';
+export { default as StatusCheck } from './statusCheck';
