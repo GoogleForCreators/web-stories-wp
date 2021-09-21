@@ -565,6 +565,7 @@ class KSES extends Service_Base {
 				'artwork'                    => true,
 				'attribution'                => true,
 				'autoplay'                   => true,
+				'captions-id'                => true,
 				'controls'                   => true,
 				'controlslist'               => true,
 				'crossorigin'                => true,
