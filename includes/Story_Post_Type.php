@@ -416,6 +416,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 *
 	 * @param string[]|mixed $post_states An array of post display states.
 	 * @param WP_Post        $post        The current post object.
+	 * @return string[]|mixed Filtered post display states.
 	 */
 	public function filter_display_post_states( $post_states, WP_Post $post ) {
 		if ( ! is_array( $post_states ) ) {
