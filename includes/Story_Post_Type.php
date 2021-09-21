@@ -95,6 +95,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 		add_action( 'add_option_' . Settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
 		add_action( 'update_option_' . Settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
 
+		add_filter( 'display_post_states', [ $this, 'filter_display_post_states' ], 10, 2 );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
 	}
 
@@ -402,5 +403,31 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 		$query->is_archive           = false;
 		$query->is_singular          = true;
 		$query->is_page              = true;
+	}
+
+	/**
+	 * Filters the default post display states used in the posts list table.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string[]|mixed $post_states An array of post display states.
+	 * @param WP_Post        $post        The current post object.
+	 */
+	public function filter_display_post_states( $post_states, WP_Post $post ) {
+		if ( ! is_array( $post_states ) ) {
+			return $post_states;
+		}
+
+		if ( ! is_string( $this->get_has_archive() ) ) {
+			return $post_states;
+		}
+
+		$custom_archive_page_id = (int) get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		if ( $post->ID === $custom_archive_page_id ) {
+			$post_states['web_stories_archive_page'] = __( 'Web Stories Archive Page', 'web-stories' );
+		}
+
+		return $post_states;
 	}
 }
