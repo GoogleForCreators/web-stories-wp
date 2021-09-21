@@ -347,4 +347,134 @@ describe('Categories & Tags Panel', () => {
       // TODO: 9058 - validate new category exists on story once category is checked when added.
     });
   });
+
+  describe('Tags', () => {
+    it('populates the tags correctly from the story', async () => {
+      await openCategoriesAndTagsPanel();
+      const currentStoryTerms = await getStoryTerms();
+      const renderedTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
+      expect(renderedTokens.length).toEqual(
+        currentStoryTerms['story-tags'].length
+      );
+    });
+
+    it('can add tags', async () => {
+      await openCategoriesAndTagsPanel();
+      const tag1Name = 'new tag';
+      const tag2Name = 'another tag';
+
+      let currentStoryTerms = await getStoryTerms();
+      const initialTagsLength = currentStoryTerms['story-tags'].length;
+
+      const taxonomyPanel =
+        fixture.editor.inspector.documentPanel.categoriesAndTags;
+      const tagsInput = taxonomyPanel.tagsInput;
+
+      // enter in the first tag
+      await fixture.events.focus(tagsInput);
+      await fixture.events.keyboard.type(tag1Name);
+      await fixture.events.keyboard.press('Enter');
+      await waitFor(
+        () =>
+          fixture.screen.getAllByTestId(/^flat-term-token/).length ===
+          initialTagsLength + 1
+      );
+
+      // See that terms are persisted on the story
+      await waitFor(async () => {
+        currentStoryTerms = await getStoryTerms();
+        expect(currentStoryTerms['story-tags'].length).toEqual(
+          initialTagsLength + 1
+        );
+      });
+
+      // enter in a second tag
+      await fixture.events.keyboard.type(tag2Name);
+      await fixture.events.keyboard.press('Enter');
+      await waitFor(
+        () =>
+          fixture.screen.getAllByTestId(/^flat-term-token/).length ===
+          initialTagsLength + 2
+      );
+
+      // See that terms are persisted on the story
+      await waitFor(async () => {
+        currentStoryTerms = await getStoryTerms();
+        expect(currentStoryTerms['story-tags'].length).toEqual(
+          initialTagsLength + 2
+        );
+      });
+
+      const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
+      expect(tagTokens[initialTagsLength].innerText).toBe(tag1Name);
+      expect(tagTokens[initialTagsLength + 1].innerText).toBe(tag2Name);
+    });
+
+    it('can delete tags with keyboard', async () => {
+      await openCategoriesAndTagsPanel();
+      let currentStoryTerms = await getStoryTerms();
+      const initialTagsLength = currentStoryTerms['story-tags'].length;
+
+      const tagsInput =
+        fixture.editor.inspector.documentPanel.categoriesAndTags.tagsInput;
+
+      const initialTokens = await fixture.screen.getAllByTestId(
+        /^flat-term-token/
+      );
+
+      // delete the first tag with keyboard navigation
+      await fixture.events.focus(tagsInput);
+      await fixture.events.keyboard.press('ArrowLeft');
+      await fixture.events.keyboard.press('Backspace');
+      await waitFor(
+        () =>
+          fixture.screen.getAllByTestId(/^flat-term-token/).length ===
+          initialTagsLength - 1
+      );
+
+      // See that terms are persisted on the story
+      await waitFor(async () => {
+        currentStoryTerms = await getStoryTerms();
+        expect(currentStoryTerms['story-tags'].length).toEqual(
+          initialTagsLength - 1
+        );
+      });
+
+      // See that the right tag was deleted
+      const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
+      expect(tagTokens[0]).toBe(initialTokens[0]);
+      expect(tagTokens[1]).toBe(initialTokens[2]);
+    });
+
+    it('can delete tags with mouse', async () => {
+      await openCategoriesAndTagsPanel();
+      let currentStoryTerms = await getStoryTerms();
+      const taxonomyPanel =
+        fixture.editor.inspector.documentPanel.categoriesAndTags;
+      const initialTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
+      const initialTagsLength = currentStoryTerms['story-tags'].length;
+
+      // delete tag with mouse
+      const removeTagButtons = taxonomyPanel.tagTokenRemoveButtons;
+      await fixture.events.click(removeTagButtons[0]);
+      await waitFor(
+        () =>
+          fixture.screen.getAllByTestId(/^flat-term-token/).length ===
+          initialTagsLength - 1
+      );
+
+      // See that terms are persisted on the story
+      await waitFor(async () => {
+        currentStoryTerms = await getStoryTerms();
+        expect(currentStoryTerms['story-tags'].length).toEqual(
+          initialTagsLength - 1
+        );
+      });
+
+      // see that thee correct token was removed
+      const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
+      expect(tagTokens[0]).toBe(initialTokens[1]);
+      expect(tagTokens[1]).toBe(initialTokens[2]);
+    });
+  });
 });
