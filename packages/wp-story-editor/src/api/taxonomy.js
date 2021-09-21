@@ -23,20 +23,41 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+/**
+ * Internal dependencies
+ */
+import { snakeCaseToCamelCase } from './utils';
 
 /**
  * Get all taxonomies.
  *
  * @param {string} postType Post type.
  * @param {string} path API path.
+ * @param {Object} options Options to transform the data.
+ * @param {Object} options.asCamelCase Response properties will be in camel case.
  * @return {Promise} Taxonomies promise.
  */
-export function getTaxonomies(postType, path) {
-  return apiFetch({
+export async function getTaxonomies(postType, path, { asCamelCase = false }) {
+  const result = apiFetch({
     path: addQueryArgs(path, {
       type: postType,
       context: 'edit',
     }),
+  });
+
+  if (!asCamelCase) {
+    return result;
+  }
+
+  return Object.values(await result).map((taxonomy) => {
+    const entries = Object.entries(taxonomy);
+
+    const formattedEntries = entries.map((entry) => [
+      snakeCaseToCamelCase(entry[0]),
+      entry[1],
+    ]);
+
+    return Object.fromEntries(formattedEntries);
   });
 }
 

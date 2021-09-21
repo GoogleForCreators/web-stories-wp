@@ -25,7 +25,6 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import cleanForSlug from '../../../utils/cleanForSlug';
 import { TaxonomyProvider, useTaxonomy } from '..';
-import { snakeCaseToCamelCase } from '../utils';
 
 function mockResponse(...args) {
   return new Promise((r) => r(...args));
@@ -50,7 +49,7 @@ jest.mock('../../api', () => ({
 function createTaxonomy(slug, overrides) {
   return {
     slug,
-    rest_base: `${slug}s`,
+    restBase: `${slug}s`,
     _links: {
       'wp:items': [{ href: 'someUrl' }],
     },
@@ -67,15 +66,6 @@ function createTermFromName(taxonomy, name, overrides) {
     taxonomy: taxonomy.slug,
     ...overrides,
   };
-}
-
-function formatTaxonomyForFrontend(taxonomy) {
-  const entries = Object.entries(taxonomy);
-  const formattedTaxonomy = entries.map((entry) => [
-    snakeCaseToCamelCase(entry[0]),
-    entry[1],
-  ]);
-  return Object.fromEntries(formattedTaxonomy);
 }
 
 async function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
@@ -106,27 +96,21 @@ async function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
 describe('TaxonomyProvider', () => {
   it('should fetch taxonomies on mount if taxonomies present on story', async () => {
     const sampleTaxonomy = createTaxonomy('sample');
-    const getTaxonomiesMock = jest.fn(() =>
-      mockResponse({
-        sampleTaxonomy,
-      })
-    );
+    const getTaxonomiesMock = jest.fn(() => mockResponse([sampleTaxonomy]));
 
     const { result } = await setup({
       useAPIPartial: { getTaxonomies: getTaxonomiesMock },
       useStoryPartial: { hasTaxonomies: true },
     });
 
-    expect(getTaxonomiesMock).toHaveBeenCalledWith();
-    expect(result.current.state.taxonomies).toStrictEqual([
-      formatTaxonomyForFrontend(sampleTaxonomy),
-    ]);
+    expect(getTaxonomiesMock).toHaveBeenCalledTimes(1);
+    expect(result.current.state.taxonomies).toStrictEqual([sampleTaxonomy]);
   });
 
   it('populates initial termCache and selected slugs with story terms', async () => {
     const taxonomy1 = createTaxonomy('taxonomy_1');
     const taxonomy2 = createTaxonomy('taxonomy_2');
-    const taxonomiesResponse = { taxonomy1, taxonomy2 };
+    const taxonomiesResponse = [taxonomy1, taxonomy2];
 
     const taxonomy1Term1 = createTermFromName(taxonomy1, 'term1');
     const taxonomy1Term2 = createTermFromName(taxonomy1, 'term2');
@@ -143,25 +127,24 @@ describe('TaxonomyProvider', () => {
     const { termCache, selectedSlugs, taxonomies } = result.current.state;
     expect(taxonomies).toHaveLength(2);
     expect(termCache).toStrictEqual({
-      [taxonomy1.rest_base]: {
+      [taxonomy1.restBase]: {
         [taxonomy1Term1.slug]: taxonomy1Term1,
         [taxonomy1Term2.slug]: taxonomy1Term2,
       },
-      [taxonomy2.rest_base]: {
+      [taxonomy2.restBase]: {
         [taxonomy2Term1.slug]: taxonomy2Term1,
       },
     });
     expect(selectedSlugs).toStrictEqual({
-      [taxonomy1.rest_base]: [taxonomy1Term1.slug, taxonomy1Term2.slug],
-      [taxonomy2.rest_base]: [taxonomy2Term1.slug],
+      [taxonomy1.restBase]: [taxonomy1Term1.slug, taxonomy1Term2.slug],
+      [taxonomy2.restBase]: [taxonomy2Term1.slug],
     });
   });
 
   it('syncs selected slugs with story', async () => {
     const updateStoryMock = jest.fn();
     const sampleTaxonomy = createTaxonomy('sample');
-    const frontendTaxonomy = formatTaxonomyForFrontend(sampleTaxonomy);
-    const taxonomiesResponse = { sampleTaxonomy };
+    const taxonomiesResponse = [sampleTaxonomy];
 
     const { result } = await setup({
       useAPIPartial: {
@@ -176,7 +159,7 @@ describe('TaxonomyProvider', () => {
 
     // Update the terms
     act(() => {
-      result.current.actions.setSelectedTaxonomySlugs(frontendTaxonomy, [
+      result.current.actions.setSelectedTaxonomySlugs(sampleTaxonomy, [
         'term1',
         'term2',
       ]);
@@ -186,12 +169,12 @@ describe('TaxonomyProvider', () => {
     // returned from the backend yet, so they shouldn't appear on the story
     // until we get them
     expect(result.current.state.selectedSlugs).toStrictEqual({
-      [sampleTaxonomy.rest_base]: ['term1', 'term2'],
+      [sampleTaxonomy.restBase]: ['term1', 'term2'],
     });
     expect(updateStoryMock).toHaveBeenCalledWith({
       properties: {
         terms: {
-          [sampleTaxonomy.rest_base]: [],
+          [sampleTaxonomy.restBase]: [],
         },
       },
     });
@@ -201,8 +184,8 @@ describe('TaxonomyProvider', () => {
       // reset autoIncrementId so we know what the mocked
       // response will generate.
       autoIncrementId = 0;
-      result.current.actions.createTerm(frontendTaxonomy, 'term1');
-      result.current.actions.createTerm(frontendTaxonomy, 'term2');
+      result.current.actions.createTerm(sampleTaxonomy, 'term1');
+      result.current.actions.createTerm(sampleTaxonomy, 'term2');
     });
 
     await receiveQueuedMockedResponses();
@@ -211,12 +194,12 @@ describe('TaxonomyProvider', () => {
     // be populated with the new terms and we should be able to
     // now associate the terms with the story
     expect(result.current.state.selectedSlugs).toStrictEqual({
-      [sampleTaxonomy.rest_base]: ['term1', 'term2'],
+      [sampleTaxonomy.restBase]: ['term1', 'term2'],
     });
     expect(updateStoryMock).toHaveBeenCalledWith({
       properties: {
         terms: {
-          [sampleTaxonomy.rest_base]: [0, 1],
+          [sampleTaxonomy.restBase]: [0, 1],
         },
       },
     });
@@ -224,7 +207,6 @@ describe('TaxonomyProvider', () => {
 
   it('populates the terms cache when addSearchResultsToCache(..args) called', async () => {
     const sampleTaxonomy = createTaxonomy('sample');
-    const frontendTaxonomy = formatTaxonomyForFrontend(sampleTaxonomy);
     const taxonomiesResponse = { sampleTaxonomy };
     const term1 = createTermFromName(sampleTaxonomy, 'term1');
     const term2 = createTermFromName(sampleTaxonomy, 'term2');
@@ -241,7 +223,7 @@ describe('TaxonomyProvider', () => {
     });
 
     act(() => {
-      result.current.actions.addSearchResultsToCache(frontendTaxonomy, {
+      result.current.actions.addSearchResultsToCache(sampleTaxonomy, {
         name: 'term',
       });
     });
@@ -254,7 +236,7 @@ describe('TaxonomyProvider', () => {
     await receiveQueuedMockedResponses();
 
     expect(result.current.state.termCache).toStrictEqual({
-      [sampleTaxonomy.rest_base]: {
+      [sampleTaxonomy.restBase]: {
         [term1.slug]: term1,
         [term2.slug]: term2,
       },

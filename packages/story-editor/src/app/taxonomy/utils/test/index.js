@@ -24,7 +24,6 @@ import {
   mergeNestedDictionaries,
   dictionaryOnKey,
   cacheFromEmbeddedTerms,
-  snakeCaseToCamelCase,
 } from '..';
 
 describe('objectFromEntries', () => {
@@ -150,20 +149,5 @@ describe('cacheFromEmbeddedTerms', () => {
         slugB: { taxonomy: 'taxonomyB', slug: 'slugB', id: 2 },
       },
     });
-  });
-});
-
-describe('snakeCaseToCamelCase', () => {
-  it.each`
-    key            | result
-    ${''}          | ${''}
-    ${undefined}   | ${''}
-    ${'test'}      | ${'test'}
-    ${'rest_base'} | ${'restBase'}
-    ${'_links'}    | ${'_links'}
-    ${'links_'}    | ${'links_'}
-    ${'a_l'}       | ${'aL'}
-  `('should return the expected string for $key', ({ key, result }) => {
-    expect(snakeCaseToCamelCase(key)).toStrictEqual(result);
   });
 });

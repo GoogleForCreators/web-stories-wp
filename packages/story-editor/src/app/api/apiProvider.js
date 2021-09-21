@@ -180,7 +180,7 @@ function APIProvider({ children }) {
   );
 
   actions.getTaxonomies = useCallback(
-    () => getTaxonomies(postType, taxonomies),
+    (options) => getTaxonomies(postType, taxonomies, options),
     [postType, taxonomies, getTaxonomies]
   );
 

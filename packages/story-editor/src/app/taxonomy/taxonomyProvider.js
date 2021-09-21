@@ -37,7 +37,6 @@ import {
   objectFromEntries,
   mapObjectKeys,
   cacheFromEmbeddedTerms,
-  snakeCaseToCamelCase,
 } from './utils';
 
 function TaxonomyProvider(props) {
@@ -67,20 +66,9 @@ function TaxonomyProvider(props) {
 
     (async function () {
       try {
-        const result = await getTaxonomies();
+        const result = await getTaxonomies({ asCamelCase: true });
 
-        const formattedTaxonomies = Object.values(result).map((taxonomy) => {
-          const entries = Object.entries(taxonomy);
-
-          const formattedEntries = entries.map((entry) => [
-            snakeCaseToCamelCase(entry[0]),
-            entry[1],
-          ]);
-
-          return Object.fromEntries(formattedEntries);
-        });
-
-        setTaxonomies(formattedTaxonomies);
+        setTaxonomies(result);
       } catch (e) {
         // Do we wanna do anything here?
       }
