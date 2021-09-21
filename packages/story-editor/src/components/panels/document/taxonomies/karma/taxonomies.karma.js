@@ -357,7 +357,6 @@ describe('Categories & Tags Panel', () => {
       await openCategoriesAndTagsPanel();
       const currentStoryTerms = await getStoryTerms();
       const renderedTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
-
       expect(renderedTokens.length).toEqual(
         currentStoryTerms['story-tags'].length
       );
@@ -386,10 +385,12 @@ describe('Categories & Tags Panel', () => {
       );
 
       // See that terms are persisted on the story
-      currentStoryTerms = await getStoryTerms();
-      expect(currentStoryTerms['story-tags'].length).toEqual(
-        initialTagsLength + 1
-      );
+      await waitFor(async () => {
+        currentStoryTerms = await getStoryTerms();
+        expect(currentStoryTerms['story-tags'].length).toEqual(
+          initialTagsLength + 1
+        );
+      });
 
       // enter in a second tag
       await fixture.events.keyboard.type(tag2Name);
@@ -401,10 +402,12 @@ describe('Categories & Tags Panel', () => {
       );
 
       // See that terms are persisted on the story
-      currentStoryTerms = await getStoryTerms();
-      expect(currentStoryTerms['story-tags'].length).toEqual(
-        initialTagsLength + 2
-      );
+      await waitFor(async () => {
+        currentStoryTerms = await getStoryTerms();
+        expect(currentStoryTerms['story-tags'].length).toEqual(
+          initialTagsLength + 2
+        );
+      });
 
       const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
       expect(tagTokens[initialTagsLength].innerText).toBe(tag1Name);
@@ -434,10 +437,12 @@ describe('Categories & Tags Panel', () => {
       );
 
       // See that terms are persisted on the story
-      currentStoryTerms = await getStoryTerms();
-      expect(currentStoryTerms['story-tags'].length).toEqual(
-        initialTagsLength - 1
-      );
+      await waitFor(async () => {
+        currentStoryTerms = await getStoryTerms();
+        expect(currentStoryTerms['story-tags'].length).toEqual(
+          initialTagsLength - 1
+        );
+      });
 
       // See that the right tag was deleted
       const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
@@ -463,10 +468,12 @@ describe('Categories & Tags Panel', () => {
       );
 
       // See that terms are persisted on the story
-      currentStoryTerms = await getStoryTerms();
-      expect(currentStoryTerms['story-tags'].length).toEqual(
-        initialTagsLength - 1
-      );
+      await waitFor(async () => {
+        currentStoryTerms = await getStoryTerms();
+        expect(currentStoryTerms['story-tags'].length).toEqual(
+          initialTagsLength - 1
+        );
+      });
 
       // see that thee correct token was removed
       const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
