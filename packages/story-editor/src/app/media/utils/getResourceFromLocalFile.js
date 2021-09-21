@@ -37,7 +37,7 @@ import {
  * @return {import('@web-stories-wp/media').Resource} The local resource object.
  */
 const createLocalResource = (properties) => {
-  return createResource({ ...properties, local: true });
+  return createResource({ ...properties, local: true, isExternal: false });
 };
 
 /**

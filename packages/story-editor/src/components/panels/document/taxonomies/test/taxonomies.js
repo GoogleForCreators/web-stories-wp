@@ -69,9 +69,17 @@ describe('TaxonomiesPanel', () => {
     arrange({
       taxonomies: [
         {
-          slug: 'story-tag',
+          slug: 'story-tags',
+          rest_base: 'story-tags',
           name: 'Tags',
-          labels: [],
+          labels: {},
+          hierarchical: false,
+        },
+        {
+          slug: 'story-categories',
+          rest_base: 'story-categories',
+          name: 'Categories',
+          labels: {},
           hierarchical: false,
         },
       ],

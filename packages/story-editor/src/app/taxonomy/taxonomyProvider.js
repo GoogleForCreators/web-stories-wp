@@ -31,7 +31,7 @@ import { useAPI } from '../api';
 import { useStory } from '../story';
 import Context from './context';
 import {
-  dictonaryOnKey,
+  dictionaryOnKey,
   mapObjectVals,
   mergeNestedDictionaries,
   objectFromEntries,
@@ -43,6 +43,8 @@ function TaxonomyProvider(props) {
   const [taxonomies, setTaxonomies] = useState([]);
   const [selectedSlugs, setSelectedSlugs] = useState({});
   const [termCache, setTermCache] = useState({});
+  // Should grab categories on mount
+  const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
   const { updateStory, isStoryLoaded, terms, hasTaxonomies } = useStory(
     ({ state: { pages, story }, actions: { updateStory } }) => ({
       updateStory,
@@ -82,7 +84,7 @@ function TaxonomyProvider(props) {
       isStoryLoaded &&
       !hasHydrationRunOnce.current
     ) {
-      const taxonomiesBySlug = dictonaryOnKey(taxonomies, 'slug');
+      const taxonomiesBySlug = dictionaryOnKey(taxonomies, 'slug');
       const initialCache = mapObjectKeys(
         cacheFromEmbeddedTerms(terms),
         (slug) => taxonomiesBySlug[slug]?.rest_base
@@ -123,7 +125,14 @@ function TaxonomyProvider(props) {
   }, [updateStory, selectedSlugs, termCache]);
 
   const addSearchResultsToCache = useCallback(
-    async (taxonomy, name) => {
+    async (
+      taxonomy,
+      {
+        name,
+        // This is the per_page value Gutenberg is using
+        perPage = 20,
+      }
+    ) => {
       let response = [];
       const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href;
       if (!termsEndpoint) {
@@ -132,8 +141,7 @@ function TaxonomyProvider(props) {
       try {
         response = await getTaxonomyTerm(termsEndpoint, {
           search: name,
-          // This is the per_page value Gutenberg is using
-          per_page: 20,
+          per_page: perPage,
         });
       } catch (e) {
         // Do we wanna do anything here?
@@ -146,7 +154,7 @@ function TaxonomyProvider(props) {
 
       // Format results to fit in our { [taxonomy]: { [slug]: term } } map
       const termResults = {
-        [taxonomy.rest_base]: dictonaryOnKey(response, 'slug'),
+        [taxonomy.rest_base]: dictionaryOnKey(response, 'slug'),
       };
       setTermCache((cache) => mergeNestedDictionaries(cache, termResults));
     },
@@ -154,7 +162,7 @@ function TaxonomyProvider(props) {
   );
 
   const createTerm = useCallback(
-    async (taxonomy, termName) => {
+    async (taxonomy, termName, parentId) => {
       // make sure the term doesn't already exist locally
       if (termCache[taxonomy.rest_base]?.[cleanForSlug(termName)]) {
         return;
@@ -167,7 +175,12 @@ function TaxonomyProvider(props) {
 
       // create term and add to cache
       try {
-        const newTerm = await createTaxonomyTerm(termsEndpoint, termName);
+        const data = { name: termName };
+        if (parentId) {
+          data.parent = parentId;
+        }
+
+        const newTerm = await createTaxonomyTerm(termsEndpoint, data);
         const incomingCache = {
           [taxonomy.rest_base]: { [newTerm.slug]: newTerm },
         };
@@ -180,7 +193,7 @@ function TaxonomyProvider(props) {
         // We could pull down only the exact term, but
         // we're modeling after Gutenberg.
         if (e.code === 'term_exists') {
-          addSearchResultsToCache(taxonomy, termName);
+          addSearchResultsToCache(taxonomy, { name: termName });
         }
       }
     },
@@ -191,10 +204,28 @@ function TaxonomyProvider(props) {
     (taxonomy, termSlugs = []) =>
       setSelectedSlugs((selected) => ({
         ...selected,
-        [taxonomy.rest_base]: termSlugs,
+        [taxonomy.rest_base]:
+          typeof termSlugs === 'function'
+            ? termSlugs(selected[taxonomy.rest_base])
+            : termSlugs,
       })),
     []
   );
+
+  // Fetch hierarchical taxonomies on mount
+  useEffect(() => {
+    // only fetch when `shouldRefetchCategories` is true
+    if (shouldRefetchCategories && taxonomies?.length) {
+      const hierarchicalTaxonomies = taxonomies.filter(
+        (taxonomy) => taxonomy.hierarchical
+      );
+      hierarchicalTaxonomies.forEach((taxonomy) =>
+        addSearchResultsToCache(taxonomy, { perPage: -1 })
+      );
+
+      setShouldRefetchCategories(false);
+    }
+  }, [addSearchResultsToCache, shouldRefetchCategories, taxonomies]);
 
   const value = useMemo(
     () => ({

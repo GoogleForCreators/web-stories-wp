@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,9 @@
 /**
  * Internal dependencies
  */
-import { Container } from './container';
+import { Container } from '../container';
+import { CategoriesAndTags } from './categoriesAndTags';
 
-/**
- * The editor's canvas. Includes: display, frames, editor layers, carousel,
- * navigation buttons, page menu.
- */
 export class DocumentPanel extends Container {
   constructor(node, path) {
     super(node, path);
@@ -37,5 +34,14 @@ export class DocumentPanel extends Container {
       name: /Poster image/i,
     });
   }
+
+  get categoriesAndTags() {
+    return this._get(
+      this.getByRole('region', { name: /Categories and Tags/ }),
+      'categoriesAndTags',
+      CategoriesAndTags
+    );
+  }
+
   // @TODO: rest of the fields.
 }

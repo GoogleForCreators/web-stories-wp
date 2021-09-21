@@ -52,6 +52,7 @@ import normalizeResourceSizes from './migrations/v0031_normalizeResourceSizes';
 import pageOutlinkTheme from './migrations/v0032_pageOutlinkTheme';
 import removeTitleFromResources from './migrations/v0033_removeTitleFromResources';
 import removeUnusedBackgroundProps from './migrations/v0034_removeUnusedBackgroundProps';
+import markVideoAsExternal from './migrations/v0035_markVideoAsExternal';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -88,6 +89,7 @@ const MIGRATIONS = {
   32: [pageOutlinkTheme],
   33: [removeTitleFromResources],
   34: [removeUnusedBackgroundProps],
+  35: [markVideoAsExternal],
 };
 
 export const DATA_VERSION = Math.max.apply(

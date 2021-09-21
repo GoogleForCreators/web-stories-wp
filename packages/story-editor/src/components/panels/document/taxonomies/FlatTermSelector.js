@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useCallback, useDebouncedCallback } from '@web-stories-wp/react';
 
 /**
@@ -26,7 +25,7 @@ import { useCallback, useDebouncedCallback } from '@web-stories-wp/react';
 import Tags from '../../../form/tags';
 import cleanForSlug from '../../../../utils/cleanForSlug';
 import { useTaxonomy } from '../../../../app/taxonomy';
-import { ContentHeading } from './shared';
+import { ContentHeading, TaxonomyPropType } from './shared';
 
 function FlatTermSelector({ taxonomy }) {
   const {
@@ -67,7 +66,7 @@ function FlatTermSelector({ taxonomy }) {
     if (value.length < 3) {
       return;
     }
-    addSearchResultsToCache(taxonomy, value);
+    addSearchResultsToCache(taxonomy, { name: value });
   }, 1000);
 
   const termDisplayTransformer = useCallback(
@@ -100,8 +99,7 @@ function FlatTermSelector({ taxonomy }) {
 }
 
 FlatTermSelector.propTypes = {
-  // TODO: Define better prop type.
-  taxonomy: PropTypes.object,
+  taxonomy: TaxonomyPropType,
 };
 
 export default FlatTermSelector;
