@@ -19,9 +19,12 @@
         "@web-stories-wp/story-editor": "*",
         "@web-stories-wp/tracking": "*",
         "@wordpress/api-fetch": "^5.2.1",
-        "flagged": "^2.0.1"
+        "flagged": "^2.0.1",
+        "styled-components": "^5.3.1"
     },
     "devDependencies": {
+        "prop-types": "^15.7.2",
+        "@storybook/addon-actions": "^6.3.6",
         "@testing-library/react": "^12.0.0",
         "@testing-library/react-hooks": "^7.0.1"
     }
