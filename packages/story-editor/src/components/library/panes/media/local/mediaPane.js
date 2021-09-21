@@ -221,8 +221,11 @@ function MediaPane(props) {
           optimizeGif({ resource });
         }
       }
-      // WordPress media picker event, sizes.medium.url is the smallest image
-      insertMediaElement(resource, resource.sizes?.medium?.url || resource.url);
+      // WordPress media picker event, sizes.medium.source_url is the smallest image
+      insertMediaElement(
+        resource,
+        resource.sizes?.medium?.source_url || resource.src
+      );
 
       if (
         !resource.posterId &&
@@ -232,7 +235,7 @@ function MediaPane(props) {
       ) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.
-        uploadVideoPoster(resource.id, resource.url);
+        uploadVideoPoster(resource.id, resource.src);
       }
 
       if (
