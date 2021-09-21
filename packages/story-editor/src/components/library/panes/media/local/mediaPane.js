@@ -47,7 +47,6 @@ import { useLocalMedia } from '../../../../../app/media';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import { Select } from '../../../../form';
-import { getResourceFromMediaPicker } from '../../../../../app/media/utils';
 import {
   MediaGalleryMessage,
   PaneHeader,
@@ -209,10 +208,9 @@ function MediaPane(props) {
   /**
    * Callback of select in media picker to insert media element.
    *
-   * @param {Object} mediaPickerEl Object coming from backbone media picker.
+   * @param {Object} resource Object coming from backbone media picker.
    */
-  const onSelect = (mediaPickerEl) => {
-    const resource = getResourceFromMediaPicker(mediaPickerEl);
+  const onSelect = (resource) => {
     try {
       if (isTranscodingEnabled) {
         if (transcodableMimeTypes.includes(resource.mimeType)) {
@@ -224,10 +222,7 @@ function MediaPane(props) {
         }
       }
       // WordPress media picker event, sizes.medium.url is the smallest image
-      insertMediaElement(
-        resource,
-        mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
-      );
+      insertMediaElement(resource, resource.sizes?.medium?.url || resource.url);
 
       if (
         !resource.posterId &&
@@ -237,7 +232,7 @@ function MediaPane(props) {
       ) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.
-        uploadVideoPoster(resource.id, mediaPickerEl.url);
+        uploadVideoPoster(resource.id, resource.url);
       }
 
       if (
