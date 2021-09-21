@@ -22,7 +22,7 @@ import {
   mapObjectVals,
   mapObjectKeys,
   mergeNestedDictionaries,
-  dictonaryOnKey,
+  dictionaryOnKey,
   cacheFromEmbeddedTerms,
 } from '..';
 
@@ -105,11 +105,11 @@ describe('mergeNestedDictionaries', () => {
   });
 });
 
-describe('dictonaryOnKey', () => {
+describe('dictionaryOnKey', () => {
   it('merges nested dictionaries', () => {
     expect(
       mergeNestedDictionaries(
-        dictonaryOnKey(
+        dictionaryOnKey(
           [
             { id: 'id1', a: 'anotherProp' },
             { id: 'id2', a: 'something else' },
