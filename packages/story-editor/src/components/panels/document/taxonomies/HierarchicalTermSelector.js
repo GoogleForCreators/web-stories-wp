@@ -193,6 +193,10 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
     setHasFocus(!hasFocus);
   }, [hasFocus, resetInputs, showAddNewCategory]);
 
+  const handleChangeNewCategoryName = useCallback((evt) => {
+    setNewCategoryName(evt.target.value);
+  }, []);
+
   const handleSubmit = useCallback(
     (evt) => {
       evt.preventDefault();
@@ -211,10 +215,6 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
       taxonomy,
     ]
   );
-
-  const handleChangeNewCategoryName = useCallback((evt) => {
-    setNewCategoryName(evt.target.value);
-  }, []);
 
   const handleParentSelect = useCallback(
     (_evt, menuItem) => setSelectedParent(menuItem),
