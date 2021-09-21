@@ -24,16 +24,14 @@ import {
   createPortal,
 } from '@web-stories-wp/react';
 import { useConfig, useStory } from '@web-stories-wp/story-editor';
-/**
- * Internal dependencies
- */
-import MenuItem from './menuItem';
 
 /**
  * Internal dependencies
  */
+import MenuItem from './menuItem';
 import MetaBoxesArea from './metaBoxesArea';
 import useMetaBoxes from './useMetaBoxes';
+import useSaveMetaBoxes from './useSaveMetaBoxes';
 
 const Wrapper = styled.div``;
 
@@ -58,7 +56,17 @@ function MetaBoxes() {
   const [showMenuButton, updateMenuButtonState] = useState(false);
   const menuButtonContainer = useRef(null);
   const { postType, metaBoxes = {} } = useConfig();
-  const { pages } = useStory(({ state: { pages } }) => ({ pages }));
+  const { pages, isSavingStory, isAutoSavingStory, story } = useStory(
+    ({
+      state: {
+        meta: { isSavingStory, isAutoSavingStory },
+        story,
+        pages,
+      },
+    }) => ({ pages, isSavingStory, isAutoSavingStory, story })
+  );
+
+  useSaveMetaBoxes({ isSavingStory, isAutoSavingStory, story });
 
   useEffect(() => {
     let timeout;

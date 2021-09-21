@@ -110,10 +110,6 @@ function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
     locations,
     apiUrl,
   ]);
-
-  return {
-    isSavingMetaBoxes,
-  };
 }
 
 export default useSaveMetaBoxes;

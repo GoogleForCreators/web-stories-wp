@@ -31,7 +31,6 @@ import {
  * Internal dependencies
  */
 import useMetaBoxes from '../../metaBoxes/useMetaBoxes';
-import useIsSaving from '../../../effects/useIsSaving';
 
 const ButtonList = styled.nav`
   display: flex;
@@ -79,10 +78,20 @@ function Buttons() {
 
   const isDraft = 'draft' === status;
 
-  const { hasMetaBoxes } = useMetaBoxes(({ state }) => ({
-    hasMetaBoxes: state.hasMetaBoxes,
-  }));
-  const { isSavingMetaBoxes, isSaving } = useIsSaving();
+  const { hasMetaBoxes, isSavingMetaBoxes } = useMetaBoxes(
+    ({ state: { hasMetaBoxes, isSavingMetaBoxes } }) => ({
+      hasMetaBoxes,
+      isSavingMetaBoxes,
+    })
+  );
+
+  const { isSaving } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+      },
+    }) => ({ isSaving })
+  );
 
   return (
     <ButtonList>
