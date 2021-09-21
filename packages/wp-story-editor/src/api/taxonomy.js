@@ -33,25 +33,15 @@ import { snakeCaseToCamelCase } from './utils';
  *
  * @param {string} postType Post type.
  * @param {string} path API path.
- * @param {Object} options Options to transform the data.
- * @param {Object} options.asCamelCase Response properties will be in camel case.
  * @return {Promise} Taxonomies promise.
  */
-export async function getTaxonomies(
-  postType,
-  path,
-  { asCamelCase = false } = {}
-) {
+export async function getTaxonomies(postType, path) {
   const result = apiFetch({
     path: addQueryArgs(path, {
       type: postType,
       context: 'edit',
     }),
   });
-
-  if (!asCamelCase) {
-    return result;
-  }
 
   return Object.values(await result).map((taxonomy) => {
     const entries = Object.entries(taxonomy);

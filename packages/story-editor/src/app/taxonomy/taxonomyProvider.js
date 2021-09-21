@@ -66,7 +66,7 @@ function TaxonomyProvider(props) {
 
     (async function () {
       try {
-        const result = await getTaxonomies({ asCamelCase: true });
+        const result = await getTaxonomies();
 
         setTaxonomies(result);
       } catch (e) {
