@@ -223,20 +223,23 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
 
   useEffect(() => {
     const node = ref.current;
-    const handleEnter = (evt) => {
-      if (evt.key === 'Enter') {
-        handleSubmit(evt);
-      }
-    };
+    if (node) {
+      const handleEnter = (evt) => {
+        if (evt.key === 'Enter') {
+          handleSubmit(evt);
+        }
+      };
 
-    node.addEventListener('keypress', handleEnter);
-    return () => {
-      node.removeEventListener('keypress', handleEnter);
-    };
+      node.addEventListener('keypress', handleEnter);
+      return () => {
+        node.removeEventListener('keypress', handleEnter);
+      };
+    }
+    return null;
   }, [handleSubmit, ref]);
 
   return (
-    <ContentArea ref={ref}>
+    <ContentArea>
       <ContentHeading>{taxonomy.labels.name}</ContentHeading>
       <HierarchicalInput
         label={taxonomy.labels.search_items}
@@ -245,7 +248,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
         noOptionsText={taxonomy.labels.not_found}
       />
       {showAddNewCategory ? (
-        <AddNewCategoryForm onSubmit={handleSubmit}>
+        <AddNewCategoryForm ref={ref} onSubmit={handleSubmit}>
           <Input
             autoFocus
             name={taxonomy.labels.new_item_name}
