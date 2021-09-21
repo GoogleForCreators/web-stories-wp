@@ -359,12 +359,16 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 */
 	private function get_has_archive() {
 		$archive_page_option    = get_option( Settings::SETTING_NAME_ARCHIVE );
-		$custom_archive_page_id = get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		$custom_archive_page_id = (int) get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 		$has_archive            = true;
 
 		if ( 'disabled' === $archive_page_option ) {
 			$has_archive = false;
-		} elseif ( 'custom' === $archive_page_option && $custom_archive_page_id ) {
+		} elseif (
+			'custom' === $archive_page_option &&
+			$custom_archive_page_id &&
+			'publish' === get_post_status( $custom_archive_page_id )
+		) {
 			$uri = get_page_uri( $custom_archive_page_id );
 			if ( $uri ) {
 				$has_archive = urldecode( $uri );
@@ -395,7 +399,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 			return;
 		}
 
-		$custom_archive_page_id = get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		$custom_archive_page_id = (int) get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$query->set( 'page_id', $custom_archive_page_id );
 		$query->set( 'post_type', 'page' );
