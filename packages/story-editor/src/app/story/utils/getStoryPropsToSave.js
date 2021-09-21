@@ -19,7 +19,7 @@
 import objectPick from '../../../utils/objectPick';
 import getStoryMarkup from '../../../output/utils/getStoryMarkup';
 
-function getStoryPropsToSave({ story, pages, metadata }) {
+function getStoryPropsToSave({ story, pages, metadata, args = {} }) {
   const { terms, ...propsFromStory } = objectPick(story, [
     'title',
     'status',
@@ -38,7 +38,7 @@ function getStoryPropsToSave({ story, pages, metadata }) {
     'terms',
   ]);
 
-  const content = getStoryMarkup(story, pages, metadata);
+  const content = getStoryMarkup(story, pages, metadata, args);
   return {
     content,
     pages,

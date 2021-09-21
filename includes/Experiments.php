@@ -400,6 +400,18 @@ class Experiments extends Service_Base {
 				'description' => __( 'Enable migration option to story auto analytics', 'web-stories' ),
 				'group'       => 'dashboard',
 			],
+
+			/**
+			 * Author: @swissspidy
+			 * Issue: #5315
+			 * Creation date: 2021-09-23
+			 */
+			[
+				'name'        => 'enableBetterCaptions',
+				'label'       => __( 'Video Captions', 'web-stories' ),
+				'description' => __( 'Improve video captions appearance when viewing stories', 'web-stories' ),
+				'group'       => 'general',
+			],
 		];
 	}
 

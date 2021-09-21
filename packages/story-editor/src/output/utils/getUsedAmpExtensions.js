@@ -28,9 +28,10 @@
  * Always includes the runtime as well as the amp-story extension.
  *
  * @param {Array} pages List of pages.
+ * @param {Object} args Custom args to tweak output.
  * @return {Array<Extension>} List of used AMP extensions.
  */
-const getUsedAmpExtensions = (pages) => {
+const getUsedAmpExtensions = (pages, args = {}) => {
   const extensions = [
     // runtime.
     { src: 'https://cdn.ampproject.org/v0.js' },
@@ -45,10 +46,20 @@ const getUsedAmpExtensions = (pages) => {
     src: 'https://cdn.ampproject.org/v0/amp-video-0.1.js',
   };
 
+  const ampStoryCaptions = {
+    name: 'amp-story-captions',
+    src: 'https://cdn.ampproject.org/v0/amp-story-captions-0.1.js',
+  };
+
   for (const { elements } of pages) {
-    for (const { type } of elements) {
+    for (const { type, tracks } of elements) {
       switch (type) {
         case 'video':
+          extensions.push(ampVideo);
+          if (args.enableBetterCaptions && tracks?.length > 0) {
+            extensions.push(ampStoryCaptions);
+          }
+          break;
         case 'gif':
           extensions.push(ampVideo);
           break;

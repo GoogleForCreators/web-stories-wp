@@ -34,7 +34,12 @@ import getLongestMediaElement from './utils/getLongestMediaElement';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
-function OutputPage({ page, autoAdvance, defaultPageDuration }) {
+function OutputPage({
+  page,
+  autoAdvance = true,
+  defaultPageDuration = 7,
+  args = {},
+}) {
   const { id, animations, elements, backgroundColor, backgroundAudio } = page;
 
   const [backgroundElement, ...regularElements] = elements;
@@ -101,7 +106,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           >
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
-                <OutputElement element={backgroundElement} />
+                <OutputElement element={backgroundElement} args={args} />
                 {backgroundElement.overlay && (
                   <div
                     className="page-background-overlay-area"
@@ -121,7 +126,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
               {validElements.map((element) => (
-                <OutputElement key={element.id} element={element} />
+                <OutputElement key={element.id} element={element} args={args} />
               ))}
             </div>
           </div>
@@ -138,7 +143,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           </a>
         </amp-story-page-outlink>
       )}
-      {videoCaptions.length > 0 && (
+      {args.enableBetterCaptions && videoCaptions.length > 0 && (
         <amp-story-grid-layer
           template="vertical"
           aspect-ratio={ASPECT_RATIO}
@@ -170,11 +175,9 @@ OutputPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
-};
-
-OutputPage.defaultProps = {
-  autoAdvance: true,
-  defaultPageDuration: 7,
+  args: PropTypes.shape({
+    enableBetterCaptions: PropTypes.bool,
+  }),
 };
 
 export default OutputPage;
