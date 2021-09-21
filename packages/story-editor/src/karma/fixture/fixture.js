@@ -65,8 +65,12 @@ if ('true' === process.env.CI) {
 
 export const MEDIA_PER_PAGE = 20;
 
-function MediaUpload({ render: _render }) {
-  const open = () => {};
+function MediaUpload({ render: _render, onSelect }) {
+  const open = () => {
+    const image = { url: 'media1' };
+    onSelect(image);
+  };
+
   return _render(open);
 }
 
