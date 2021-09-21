@@ -16,4 +16,3 @@
 
 export { default as MetaBoxes } from './metaBoxes';
 export { default as MetaBoxesProvider } from './metaBoxesProvider';
-export { default as useMetaBoxes } from './useMetaBoxes';

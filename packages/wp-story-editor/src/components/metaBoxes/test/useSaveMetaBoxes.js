@@ -25,6 +25,7 @@ import { ConfigContext } from '@web-stories-wp/story-editor';
  */
 import useSaveMetaBoxes from '../useSaveMetaBoxes';
 import MetaBoxesProvider from '../metaBoxesProvider';
+import useMetaBoxes from '../useMetaBoxes';
 
 const render = ({ configValue, isEnabled, ...initialProps }) => {
   return renderHook(
@@ -97,18 +98,32 @@ describe('useSaveMetaBoxes', () => {
       isAutoSavingStory: false,
     };
 
-    const { result, rerender, waitForNextUpdate } = render({
+    const { rerender, waitForNextUpdate } = render({
       configValue,
       isEnabled: true,
       ...hookProps,
     });
 
-    expect(result.current.isSavingMetaBoxes).toBeFalse();
+    const {
+      result: {
+        current: {
+          state: { isSavingMetaBoxes },
+        },
+      },
+    } = renderHook(() => useMetaBoxes(), {
+      initialProps: {},
+      wrapper: ({ children }) => (
+        <ConfigContext.Provider value={configValue}>
+          <MetaBoxesProvider>{children}</MetaBoxesProvider>
+        </ConfigContext.Provider>
+      ),
+    });
 
+    expect(isSavingMetaBoxes).toBeFalse();
     rerender({ ...hookProps, isSavingStory: false });
 
-    expect(result.current.isSavingMetaBoxes).toBeTrue();
+    expect(isSavingMetaBoxes).toBeTrue();
     await waitForNextUpdate();
-    expect(result.current.isSavingMetaBoxes).toBeFalse();
+    expect(isSavingMetaBoxes).toBeFalse();
   });
 });
