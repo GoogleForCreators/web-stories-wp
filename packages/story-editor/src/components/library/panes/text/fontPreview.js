@@ -63,12 +63,13 @@ const Preview = styled.button`
 `;
 
 const PreviewText = styled(Text).attrs({ forwardedAs: 'span' })`
-  color: ${({ theme }) => theme.colors.fg.primary};
+  color: ${({ theme, isClone }) =>
+    isClone ? theme.colors.standard.black : theme.colors.fg.primary};
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   font-family: ${({ fontFamily }) => fontFamily};
   line-height: normal;
-  margin: 0px 16px;
+  margin: ${({ isClone }) => (isClone ? 0 : '0px 16px')};
 `;
 
 const DragContainer = styled.div`
@@ -76,7 +77,7 @@ const DragContainer = styled.div`
   opacity: 0;
   background-color: ${({ theme }) => theme.colors.opacity.white24};
   width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
+  line-height: ${({ lineHeight }) => lineHeight}px;
 `;
 
 function FontPreview({ title, element, insertPreset, getPosition }) {
@@ -102,7 +103,6 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
   const enableSmartTextColor = useFeature('enableSmartTextColor');
 
   const presetDataRef = useRef({});
-  const previewRef = useRef(null);
 
   useEffect(() => {
     maybeEnqueueFontStyle([
@@ -181,26 +181,22 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     );
   };
 
-  const sizeProps = {};
-  if (previewRef.current) {
-    const { width, height } = previewRef.current.getBoundingClientRect();
-    sizeProps.width = dataToEditorX(width);
-    sizeProps.height = dataToEditorY(height);
-  }
   return (
-    <Preview ref={previewRef} onClick={onClick}>
+    <Preview onClick={onClick}>
       {getTextDisplay()}
-      {previewRef.current && (
-        <LibraryMoveable
-          cloneElement={DragContainer}
-          cloneProps={{
-            children: getTextDisplay({ fontSize: dataToEditorY(fontSize) }),
-            ...sizeProps,
-          }}
-          elementProps={element}
-          type={'text'}
-        />
-      )}
+      <LibraryMoveable
+        cloneElement={DragContainer}
+        cloneProps={{
+          children: getTextDisplay({
+            fontSize: dataToEditorY(fontSize),
+            isClone: true,
+          }),
+          width: dataToEditorX(element.width),
+          lineHeight: Math.ceil(dataToEditorY(fontSize)),
+        }}
+        elementProps={element}
+        type={'text'}
+      />
     </Preview>
   );
 }
