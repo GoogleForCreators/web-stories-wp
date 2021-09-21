@@ -19,12 +19,15 @@
  */
 import { within, screen } from '@testing-library/react';
 import { noop } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
 import PublisherLogoSettings, { TEXT } from '..';
-import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisherLogos';
+import { rawPublisherLogos } from '../../../../../dataUtils/formattedPublisherLogos';
+
+const publisherLogos = Object.values(rawPublisherLogos);
 
 describe('PublisherLogo', () => {
   const mockHandleAddLogos = jest.fn();
@@ -66,13 +69,11 @@ describe('PublisherLogo', () => {
         onRemoveLogo={noop}
         onUpdateDefaultLogo={noop}
         isLoading={false}
-        publisherLogos={formattedPublisherLogos}
+        publisherLogos={publisherLogos}
       />
     );
 
-    expect(screen.queryAllByRole('img')).toHaveLength(
-      formattedPublisherLogos.length
-    );
+    expect(screen.queryAllByRole('img')).toHaveLength(publisherLogos.length);
   });
 
   it('should specify the first logo displayed as default', () => {
@@ -82,7 +83,7 @@ describe('PublisherLogo', () => {
         onRemoveLogo={noop}
         onUpdateDefaultLogo={noop}
         isLoading={false}
-        publisherLogos={formattedPublisherLogos}
+        publisherLogos={publisherLogos}
       />
     );
 
@@ -98,13 +99,13 @@ describe('PublisherLogo', () => {
         onRemoveLogo={noop}
         onUpdateDefaultLogo={noop}
         isLoading={false}
-        publisherLogos={formattedPublisherLogos}
+        publisherLogos={publisherLogos}
       />
     );
 
     expect(
       screen.queryAllByTestId(/^publisher-logo-context-menu-button-/)
-    ).toHaveLength(formattedPublisherLogos.length);
+    ).toHaveLength(publisherLogos.length);
   });
 
   it('should render an error message if uploadError is present', () => {
@@ -114,7 +115,7 @@ describe('PublisherLogo', () => {
         onRemoveLogo={noop}
         onUpdateDefaultLogo={noop}
         isLoading={false}
-        publisherLogos={formattedPublisherLogos}
+        publisherLogos={publisherLogos}
         uploadError={'Something went wrong.'}
         canUploadFiles
       />
