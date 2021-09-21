@@ -25,6 +25,13 @@ export function createStory(properties = {}) {
     permalink_template: 'http://localhost:8899/web-stories/%pagename%',
     style_presets: { colors: [TEST_COLOR] },
     author: { id: 1, name: 'John Doe' },
+    featured_media: { height: 0, id: 0, url: '', width: 0 },
+    publisher_logo: { height: 0, id: 0, url: '', width: 0 },
+    lock_user: {
+      id: 0,
+      name: '',
+      avatar: '',
+    },
     ...properties,
   };
 }
