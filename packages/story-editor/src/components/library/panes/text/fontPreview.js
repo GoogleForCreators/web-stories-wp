@@ -168,21 +168,22 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     trackEvent('insert_text_preset', { name: title });
   }, [insertPreset, element, title]);
 
-  const getTextDisplay = (props = {}) => {
+  const getTextDisplay = (textProps = {}) => {
+    const { isClone } = textProps;
     return (
       <PreviewText
         font={font}
         fontSize={fontSize}
         fontWeight={fontWeight}
-        {...props}
+        {...textProps}
       >
-        {title}
+        {isClone ? stripHTML(content) : title}
       </PreviewText>
     );
   };
 
   return (
-    <Preview onClick={onClick}>
+    <Preview>
       {getTextDisplay()}
       <LibraryMoveable
         cloneElement={DragContainer}
@@ -196,6 +197,7 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
         }}
         elementProps={element}
         type={'text'}
+        onClick={onClick}
       />
     </Preview>
   );
