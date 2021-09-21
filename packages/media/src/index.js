@@ -26,6 +26,7 @@ export { default as fetchRemoteFile } from './fetchRemoteFile';
 export { default as fetchRemoteBlob } from './fetchRemoteBlob';
 export { default as getFileNameFromUrl } from './getFileNameFromUrl';
 export { default as getFileNameWithExt } from './getFileNameWithExt';
+export { default as getExtensionFromMimeType } from './getExtensionFromMimeType';
 export { default as getFirstFrameOfVideo } from './getFirstFrameOfVideo';
 export { default as getImageDimensions } from './getImageDimensions';
 export { default as getVideoDimensions } from './getVideoDimensions';
