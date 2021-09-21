@@ -35,7 +35,7 @@ export class CategoriesAndTags extends Container {
   }
 
   get addNewCategoryButton() {
-    return this.getByRole('button', { name: /Add New Category/ });
+    return this.queryByRole('button', { name: /Add New Category/ });
   }
 
   get newCategoryNameInput() {

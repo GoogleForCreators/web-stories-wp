@@ -22,6 +22,7 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+import { ConfigProvider } from '../../../../../app/config';
 import TaxonomyContext from '../../../../../app/taxonomy/context';
 import { renderWithTheme } from '../../../../../testUtils';
 import TaxonomiesPanel from '../taxonomies';
@@ -39,9 +40,11 @@ function arrange({ taxonomies }) {
   };
 
   return renderWithTheme(
-    <TaxonomyContext.Provider value={storyContextValue}>
-      <TaxonomiesPanel />
-    </TaxonomyContext.Provider>
+    <ConfigProvider config={{ capabilities: { canManageCategories: true } }}>
+      <TaxonomyContext.Provider value={storyContextValue}>
+        <TaxonomiesPanel />
+      </TaxonomyContext.Provider>
+    </ConfigProvider>
   );
 }
 

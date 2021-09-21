@@ -43,6 +43,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../../../app';
 import { HierarchicalInput } from '../../../form';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { ContentHeading, TaxonomyPropType } from './shared';
@@ -256,47 +257,51 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
         onChange={handleClickCategory}
         noOptionsText={taxonomy.labels.not_found}
       />
-      <LinkButton
-        ref={toggleRef}
-        aria-expanded={false}
-        onClick={handleToggleNewCategory}
-        $isVisible={showAddNewCategory}
-      >
-        {taxonomy.labels.add_new_item}
-      </LinkButton>
-      {showAddNewCategory ? (
-        <AddNewCategoryForm ref={formRef} onSubmit={handleSubmit}>
-          <Input
-            autoFocus
-            name={taxonomy.labels.new_item_name}
-            label={taxonomy.labels.new_item_name}
-            value={newCategoryName}
-            onChange={handleChangeNewCategoryName}
-            hasFocus={hasFocus}
-          />
-          <Label htmlFor={dropdownId}>{taxonomy.labels.parent_item}</Label>
-          <DropDown
-            id={dropdownId}
-            ariaLabel={taxonomy.labels.parent_item}
-            options={dropdownCategories}
-            selectedValue={selectedParent}
-            onMenuItemClick={handleParentSelect}
-          />
-          <ButtonContainer>
-            <AddNewCategoryButton
-              disabled={!newCategoryName.length}
-              type="submit"
-            >
-              {taxonomy.labels.add_new_item}
-            </AddNewCategoryButton>
-            <AddNewCategoryButton
-              aria-expanded
-              onClick={handleToggleNewCategory}
-            >
-              {__('Cancel', 'web-stories')}
-            </AddNewCategoryButton>
-          </ButtonContainer>
-        </AddNewCategoryForm>
+      {canManageCategories ? (
+        <>
+          <LinkButton
+            ref={toggleRef}
+            aria-expanded={false}
+            onClick={handleToggleNewCategory}
+            $isVisible={showAddNewCategory}
+          >
+            {taxonomy.labels.add_new_item}
+          </LinkButton>
+          {showAddNewCategory ? (
+            <AddNewCategoryForm ref={formRef} onSubmit={handleSubmit}>
+              <Input
+                autoFocus
+                name={taxonomy.labels.new_item_name}
+                label={taxonomy.labels.new_item_name}
+                value={newCategoryName}
+                onChange={handleChangeNewCategoryName}
+                hasFocus={hasFocus}
+              />
+              <Label htmlFor={dropdownId}>{taxonomy.labels.parent_item}</Label>
+              <DropDown
+                id={dropdownId}
+                ariaLabel={taxonomy.labels.parent_item}
+                options={dropdownCategories}
+                selectedValue={selectedParent}
+                onMenuItemClick={handleParentSelect}
+              />
+              <ButtonContainer>
+                <AddNewCategoryButton
+                  disabled={!newCategoryName.length}
+                  type="submit"
+                >
+                  {taxonomy.labels.add_new_item}
+                </AddNewCategoryButton>
+                <AddNewCategoryButton
+                  aria-expanded
+                  onClick={handleToggleNewCategory}
+                >
+                  {__('Cancel', 'web-stories')}
+                </AddNewCategoryButton>
+              </ButtonContainer>
+            </AddNewCategoryForm>
+          ) : null}
+        </>
       ) : null}
     </ContentArea>
   );

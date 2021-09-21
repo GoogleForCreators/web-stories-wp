@@ -314,6 +314,7 @@ class Editor extends Service_Base {
 				'capabilities'                 => [
 					'hasUploadMediaAction' => current_user_can( 'upload_files' ),
 					'canManageSettings'    => current_user_can( 'manage_options' ),
+					'canManageCategories'  => current_user_can( 'manage_categories' ),
 				],
 				'api'                          => [
 					'users'         => '/web-stories/v1/users/',
