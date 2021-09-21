@@ -131,9 +131,14 @@ describe('Video output', () => {
           },
         ],
       },
+      args: {
+        enableBetterCaptions: true,
+      },
     };
 
-    const output = <VideoOutput {...props} />;
+    const output = (
+      <VideoOutput {...props} />
+    );
     const outputStr = renderToStaticMarkup(output);
     await expect(outputStr).toStrictEqual(
       expect.stringMatching('captions-id="el-123-captions"')
