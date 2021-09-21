@@ -29,7 +29,13 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
 } from '@web-stories-wp/design-system';
-import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useMemo,
+  useState,
+  useRef,
+  useEffect,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -147,6 +153,8 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
   const [newCategoryName, setNewCategoryName] = useState('');
   const [selectedParent, setSelectedParent] = useState(noParentId);
   const dropdownId = useMemo(uuidv4, []);
+  const [hasFocus, setHasFocus] = useState(false);
+  const ref = useRef();
 
   const resetInputs = useCallback(() => {
     setNewCategoryName('');
@@ -180,13 +188,10 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
   );
 
   const handleToggleNewCategory = useCallback(() => {
-    setShowAddNewCategory((currentValue) => !currentValue);
+    setShowAddNewCategory(!showAddNewCategory);
     resetInputs();
-  }, [resetInputs]);
-
-  const handleChangeNewCategoryName = useCallback((evt) => {
-    setNewCategoryName(evt.target.value);
-  }, []);
+    setHasFocus(!hasFocus);
+  }, [hasFocus, resetInputs, showAddNewCategory]);
 
   const handleSubmit = useCallback(
     (evt) => {
@@ -207,13 +212,31 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
     ]
   );
 
+  const handleChangeNewCategoryName = useCallback((evt) => {
+    setNewCategoryName(evt.target.value);
+  }, []);
+
   const handleParentSelect = useCallback(
     (_evt, menuItem) => setSelectedParent(menuItem),
     []
   );
 
+  useEffect(() => {
+    const node = ref.current;
+    const handleEnter = (evt) => {
+      if (evt.key === 'Enter') {
+        handleSubmit(evt);
+      }
+    };
+
+    node.addEventListener('keypress', handleEnter);
+    return () => {
+      node.removeEventListener('keypress', handleEnter);
+    };
+  }, [handleSubmit, ref]);
+
   return (
-    <ContentArea>
+    <ContentArea ref={ref}>
       <ContentHeading>{taxonomy.labels.name}</ContentHeading>
       <HierarchicalInput
         label={taxonomy.labels.search_items}
@@ -229,6 +252,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
             label={taxonomy.labels.new_item_name}
             value={newCategoryName}
             onChange={handleChangeNewCategoryName}
+            hasFocus={hasFocus}
           />
           <Label htmlFor={dropdownId}>{taxonomy.labels.parent_item}</Label>
           <DropDown
