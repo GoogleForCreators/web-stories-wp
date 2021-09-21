@@ -429,7 +429,9 @@ describe('Categories & Tags Panel', () => {
       // delete the first tag with keyboard navigation
       await fixture.events.focus(tagsInput);
       await fixture.events.keyboard.press('ArrowLeft');
+      await fixture.events.sleep(100);
       await fixture.events.keyboard.press('Del');
+      await fixture.events.sleep(100);
       await waitFor(
         () =>
           fixture.screen.getAllByTestId(/^flat-term-token/).length ===
