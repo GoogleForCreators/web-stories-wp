@@ -86,7 +86,6 @@ const defaultConfig = {
     users: '/wp/v2/users',
     currentUser: '/wp/v2/users/me',
     settings: '/wp/v2/settings',
-    search: '/wp/v2/search',
     pages: '/wp/v2/pages',
   },
 };
