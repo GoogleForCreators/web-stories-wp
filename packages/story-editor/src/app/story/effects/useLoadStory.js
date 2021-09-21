@@ -61,18 +61,12 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
             hasPublishAction: false,
             hasAssignAuthorAction: false,
           },
-          lock_user,
+          lock_user: lockUser,
           featured_media: featuredMedia,
           publisher_logo: publisherLogo,
           taxonomies,
           terms,
         } = post;
-
-        const lockUser = lock_user ?? {
-          id: 0,
-          name: '',
-          avatar: '',
-        };
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
