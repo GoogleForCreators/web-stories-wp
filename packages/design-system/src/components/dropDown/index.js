@@ -96,9 +96,8 @@ export const DropDown = forwardRef(
     const positionPlacement = useCallback(
       (popupRef) => {
         // check to see if there's an overlap with the window edge
-        const dimensions = popupRef.current?.getBoundingClientRect();
-        const bottom = dimensions?.bottom;
-        const top = dimensions?.top;
+        const { bottom, top } = popupRef.current?.getBoundingClientRect() || {};
+
         // if the popup was assigned as bottom we want to always check it
         if (
           dynamicPlacement.startsWith('bottom') &&
