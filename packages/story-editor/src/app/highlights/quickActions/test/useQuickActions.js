@@ -102,6 +102,7 @@ const BACKGROUND_IMAGE_MEDIA3P_ELEMENT = {
   type: 'image',
   resource: {
     id: 'media/unsplash:wsomemedia-123',
+    isExternal: true,
   },
 };
 

@@ -17,8 +17,23 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+
+export const TaxonomyPropType = PropTypes.shape({
+  capabilities: PropTypes.object,
+  description: PropTypes.string,
+  hierarchical: PropTypes.bool,
+  labels: PropTypes.object,
+  name: PropTypes.string.isRequired,
+  rest_base: PropTypes.string.isRequired,
+  show_cloud: PropTypes.bool,
+  slug: PropTypes.string.isRequired,
+  types: PropTypes.arrayOf(PropTypes.string),
+  visibility: PropTypes.object,
+  _links: PropTypes.object,
+});
 
 export const ContentHeading = styled(Headline).attrs({
   as: 'h3',

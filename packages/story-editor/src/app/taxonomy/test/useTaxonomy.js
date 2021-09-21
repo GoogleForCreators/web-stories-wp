@@ -30,7 +30,7 @@ function mockResponse(...args) {
   return new Promise((r) => r(...args));
 }
 
-async function recieveQueuedMockedResponses() {
+async function receiveQueuedMockedResponses() {
   // flush promise queue and resulting react updates
   await act(async () => {
     await new Promise((r) => r());
@@ -71,9 +71,11 @@ function createTermFromName(taxonomy, name, overrides) {
 async function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
   useAPI.mockImplementation(() => ({
     getTaxonomyTerm: () => mockResponse([]),
-    createTaxonomyTerm: (_taxonomyEndpoint, name) =>
+    createTaxonomyTerm: (_taxonomyEndpoint, { name, parent }) =>
       mockResponse(
-        createTermFromName(createTaxonomy('fake restpoint response'), name)
+        createTermFromName(createTaxonomy('fake restpoint response'), name, {
+          parent,
+        })
       ),
     getTaxonomies: () => mockResponse({}),
     ...useAPIPartial,
@@ -87,7 +89,7 @@ async function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
   }));
 
   const render = renderHook(() => useTaxonomy(), { wrapper: TaxonomyProvider });
-  await recieveQueuedMockedResponses();
+  await receiveQueuedMockedResponses();
   return render;
 }
 
@@ -167,7 +169,7 @@ describe('TaxonomyProvider', () => {
       ]);
     });
 
-    // initially the slugs should be selected, but they wont have been
+    // initially the slugs should be selected, but they won't have been
     // returned from the backend yet, so they shouldn't appear on the story
     // until we get them
     expect(result.current.state.selectedSlugs).toStrictEqual({
@@ -190,7 +192,7 @@ describe('TaxonomyProvider', () => {
       result.current.actions.createTerm(sampleTaxonomy, 'term2');
     });
 
-    await recieveQueuedMockedResponses();
+    await receiveQueuedMockedResponses();
 
     // Once we get responses from the backend, the cache should
     // be populated with the new terms and we should be able to
@@ -225,7 +227,9 @@ describe('TaxonomyProvider', () => {
     });
 
     act(() => {
-      result.current.actions.addSearchResultsToCache(sampleTaxonomy, 'term');
+      result.current.actions.addSearchResultsToCache(sampleTaxonomy, {
+        name: 'term',
+      });
     });
 
     expect(getTaxonomyTermMock).toHaveBeenCalledWith('someUrl', {
@@ -233,7 +237,7 @@ describe('TaxonomyProvider', () => {
       search: 'term',
     });
 
-    await recieveQueuedMockedResponses();
+    await receiveQueuedMockedResponses();
 
     expect(result.current.state.termCache).toStrictEqual({
       [sampleTaxonomy.rest_base]: {

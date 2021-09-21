@@ -81,7 +81,8 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo: state.actions.muteExistingVideo,
   }));
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuted, isTranscoding, isMuting, isTrimming, local } = resource;
+  const { isMuted, isTranscoding, isMuting, isTrimming, isExternal, local } =
+    resource;
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
@@ -96,6 +97,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
         !isMuted &&
         !isTrimming &&
         !isTranscoding &&
+        !isExternal &&
         isSingleElement) ||
       isMuting
     );
@@ -105,6 +107,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     isMuted,
     isTrimming,
     isTranscoding,
+    isExternal,
     isSingleElement,
     isMuting,
   ]);

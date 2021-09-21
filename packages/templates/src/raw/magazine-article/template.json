@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 34,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -376,7 +375,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -594,7 +592,6 @@
           "marginOffset": 0.84375
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
       "type": "page",
       "id": "7c52ab9e-0b07-487c-8f22-4c15c478687b",
@@ -881,7 +878,6 @@
           "id": "371e6077-5535-49d0-89ba-ac60672cc6b3"
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "1550d2e0-77cb-4fdf-b7e6-174fec5272d0",
@@ -1099,7 +1095,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "9c786381-ffd9-4a19-85d9-a547d65f514d",
@@ -1138,7 +1133,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1419,7 +1413,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
       "type": "page",
       "id": "a77e1bb0-0924-422c-82f3-dc25e8ed4710",
@@ -1701,7 +1694,6 @@
           "id": "7bfb15b9-715d-4524-90bf-b61c2b613082"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "5ee537f6-d157-4ab7-ab86-e3e17f90e221",
@@ -1747,7 +1739,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1924,7 +1915,6 @@
           "marginOffset": 0.7593749999999986
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "e0ee0137-5860-4c8a-bf79-73956394ec1c",
@@ -2101,7 +2091,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "32d99779-43ca-4527-92b2-cc5cf4765058",
@@ -2409,7 +2398,6 @@
           "id": "2c2a0de2-4fa0-4e6b-869d-ea18f3d7df8c"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "5a3a26fe-beb5-4c17-861f-a1ecb5dea107",
@@ -2603,7 +2591,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "087fc2e6-d4a9-421e-a6e3-5712931f084e",
@@ -2642,7 +2629,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2858,7 +2844,6 @@
           "y": 517
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "22674c47-4f84-40cb-9f41-587cb8d6afd2",
@@ -2871,7 +2856,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3081,7 +3065,6 @@
           "y": 520
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "cede7b34-0a4c-4205-90cc-8f9411c96d01",

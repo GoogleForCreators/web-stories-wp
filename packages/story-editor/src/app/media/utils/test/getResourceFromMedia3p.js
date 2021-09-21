@@ -81,6 +81,7 @@ describe('getResourceFromMedia3p', () => {
       isPlaceholder: false,
       isMuted: true,
       isOptimized: true,
+      isExternal: true,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -165,6 +166,7 @@ describe('getResourceFromMedia3p', () => {
       isPlaceholder: false,
       isMuted: true,
       isOptimized: true,
+      isExternal: true,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -352,6 +354,7 @@ describe('getResourceFromMedia3p', () => {
       isPlaceholder: false,
       isMuted: false,
       isOptimized: true,
+      isExternal: true,
       trimData: undefined,
       poster:
         'https://c.tenor.com/MCPJ3sVx3GAAAAAe/happy-national-cat-day-peace.png',

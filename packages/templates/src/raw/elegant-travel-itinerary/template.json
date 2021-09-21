@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 34,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -537,7 +536,6 @@
           "marginOffset": -8.694000000000003
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "25c8be74-ee08-4dde-a86e-da4f7efc259c",
@@ -725,7 +723,6 @@
           "y": 498
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "44a6850f-bfb3-4a61-b681-8825f8b87f8b",
@@ -922,7 +919,6 @@
           "y": 5
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "0d865475-9baa-4044-92fa-69f68f2a4bc0",
@@ -1105,7 +1101,6 @@
           "type": "sticker"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "9e2de28d-a2ea-48f2-9d1a-6bf7335abe88",
@@ -1144,7 +1139,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2206,7 +2200,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 21, "g": 28, "b": 35 } },
       "type": "page",
       "id": "895018dc-c155-412b-9ad2-600fe543ca1f",
@@ -2291,7 +2284,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2647,7 +2639,6 @@
           "y": 158
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "4920e3cd-83a3-4fc9-9b12-ad9a1cd4912f",
@@ -2831,7 +2822,6 @@
           "type": "sticker"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "00e61c1f-aa53-4165-b669-3d13c57ef0cb",
@@ -2870,7 +2860,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3226,7 +3215,6 @@
           "type": "shape"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "d7bb42a5-a427-484e-a1da-e01855edfc21",
@@ -3266,7 +3254,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3584,7 +3571,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "9ffd2e61-9a83-4255-9a66-a4faf8c2350c",
@@ -3624,7 +3610,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3999,7 +3984,6 @@
           "y": 190
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "6cecde86-7803-4160-b11c-6d72d6eaec64",
@@ -4263,7 +4247,6 @@
           "y": 238
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "c91be718-924b-49af-9aff-ec4ec25258a3",
@@ -4302,7 +4285,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4624,7 +4606,6 @@
           "marginOffset": -38.564
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 21, "g": 28, "b": 35 } },
       "type": "page",
       "id": "4af8e3b1-7d59-42b8-9441-efeb85e86b93",

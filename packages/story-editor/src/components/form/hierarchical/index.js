@@ -202,11 +202,6 @@ const HierarchicalInput = ({
         value={inputText}
         onChange={handleInputChange}
         label={label}
-        aria-label={sprintf(
-          /* Translators: %s: Category grouping label. */
-          __('Search %s', 'web-stories'),
-          label
-        )}
         type="search"
         {...inputProps}
       />
