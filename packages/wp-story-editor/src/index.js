@@ -37,7 +37,12 @@ import { initializeTracking } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import * as apiCallbacks from './api';
-import { PostPublishDialog, MediaUpload, StatusCheck, PostLock } from './components';
+import {
+  PostPublishDialog,
+  MediaUpload,
+  StatusCheck,
+  PostLock,
+} from './components';
 
 /**
  * Initializes the web stories editor.
