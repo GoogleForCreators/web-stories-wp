@@ -19,7 +19,6 @@
  */
 import * as React from 'react';
 const { useCallback, useState, useMemo, forwardRef } = React;
-import { v4 as uuidv4 } from 'uuid';
 
 import { FlagsProvider } from 'flagged';
 import {
@@ -716,6 +715,8 @@ class APIProviderFixture {
    */
   constructor({ mocks = {} } = {}) {
     this._pages = [];
+    // begins at 4 because mocks have children with ids [1, 2, 3]
+    this._termAutoIncrementId = 4;
 
     // eslint-disable-next-line react/prop-types
     const Comp = ({ children }) => {
@@ -871,7 +872,7 @@ class APIProviderFixture {
       const createTaxonomyTerm = useCallback(
         (_endpoint, data) =>
           asyncResponse({
-            id: uuidv4(),
+            id: this._termAutoIncrementId++,
             count: 0,
             description: '',
             link: '',

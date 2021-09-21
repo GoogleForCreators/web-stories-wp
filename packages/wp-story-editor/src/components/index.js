@@ -15,4 +15,6 @@
  */
 export { default as PostPublishDialog } from './postPublishDialog';
 export { default as Layout } from './layout';
+export { default as PostLock } from './postLock';
+export { default as StatusCheck } from './statusCheck';
 export * from './metaBoxes';

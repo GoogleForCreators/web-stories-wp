@@ -18,8 +18,6 @@ export * from './story';
 export * from './media';
 export * from './metadata';
 export * from './pageTemplate';
-export * from './statusCheck'; // @todo Remove direct export.
-export * from './storyLock'; // @todo Remove direct export.
 export * from './user';
 export * from './hotlinkInfo';
 export * from './taxonomy';

@@ -134,7 +134,7 @@ function Tooltip({
   const positionPlacement = useCallback(
     ({ offset }) => {
       // check to see if there's an overlap with the window edge
-      const neededVerticalSpace = offset.y + offset.height;
+      const neededVerticalSpace = offset.bottom;
       // if the tooltip was assigned as bottom we want to always check it
       if (
         offset &&

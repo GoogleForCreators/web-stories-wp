@@ -23,14 +23,15 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-  THEME_CONSTANTS,
+  BUTTON_VARIANTS,
   Text,
+  THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+import { Dialog } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import Dialog from '../dialog';
 import { Img } from './shared';
 
 /**
@@ -38,57 +39,39 @@ import { Img } from './shared';
  * @param {boolean} props.isOpen If open or not.
  * @param {Object} props.user Lock owner's user data as a object.
  * @param {string} props.dashboardLink Link to dashboard.
- * @param {string} props.previewLink Preview link.
  * @param {Function} props.onClose Function when dialog is closed.
  * @return {*} Render.
  */
-function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
-  const dialogTile = __('Story is locked', 'web-stories');
+function PostTakeOverDialog({ isOpen, user, dashboardLink, onClose }) {
+  const dialogTile = __(
+    'Someone else has taken over this story.',
+    'web-stories'
+  );
   const dialogContent = sprintf(
     /* translators: %s: user's name */
-    __(
-      '%s is already editing this story. Do you want to take over?',
-      'web-stories'
-    ),
+    __('%s now has editing control of this story.', 'web-stories'),
     user?.name
   );
 
   return (
     <Dialog
       isOpen={isOpen}
-      onClose={onClose}
       title={dialogTile}
       contentLabel={dialogTile}
+      onClose={onClose}
       actions={
-        <>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            href={dashboardLink}
-          >
-            {__('Dashboard', 'web-stories')}
-          </Button>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            href={previewLink}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {__('Preview', 'web-stories')}
-          </Button>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={onClose}
-          >
-            {__('Take over', 'web-stories')}
-          </Button>
-        </>
+        <Button
+          type={BUTTON_TYPES.QUATERNARY}
+          size={BUTTON_SIZES.SMALL}
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          href={dashboardLink}
+        >
+          {__('Dashboard', 'web-stories')}
+        </Button>
       }
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {user?.avatar && (
+        {user.avatar && (
           <Img
             src={user.avatar}
             alt={user.name}
@@ -103,12 +86,11 @@ function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
   );
 }
 
-PostLockDialog.propTypes = {
+PostTakeOverDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   user: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
-  previewLink: PropTypes.string,
   onClose: PropTypes.func.isRequired,
 };
 
-export default PostLockDialog;
+export default PostTakeOverDialog;
