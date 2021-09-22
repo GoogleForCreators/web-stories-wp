@@ -103,13 +103,11 @@ function createProviderValues({
         },
         usersApi: {},
         publisherLogosApi: {
-          fetchPublisherLogos: mockFetchP        publisherLogosApi: {
           fetchPublisherLogos: mockFetchPublisherLogos,
           addPublisherLogo: mockAddPublisherLogo,
-          mockRemovePublisherogo,
+          removePublisherLogo: mockRemovePublisherLogo,
           setPublisherLogoAsDefault: mockSetPublisherLogoAsDefault,
         },
-        usersApi: {},
       },
     },
   };
