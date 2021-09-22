@@ -14,8 +14,15 @@
  * limitations under the License.
  */
 
-const canTranscodeResource = (resource) => {
-  const { isTranscoding, isMuting, isTrimming, isExternal, local } = resource;
+/**
+ * Ascertain if a resource can be transcoded in it's current state.
+ *
+ * @param {import('@web-stories-wp/media').Resource} resource The resource.
+ * @return {boolean} If the current resource can be transcoded.
+ */
+function canTranscodeResource(resource) {
+  const { isTranscoding, isMuting, isTrimming, isExternal, local } =
+    resource || {};
   return !local && !isExternal && !isTranscoding && !isTrimming && !isMuting;
-};
+}
 export default canTranscodeResource;
