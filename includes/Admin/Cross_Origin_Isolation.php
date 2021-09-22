@@ -29,6 +29,7 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Infrastructure\Conditional;
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Services;
 use Google\Web_Stories\Traits\Screen;
@@ -39,7 +40,7 @@ use Google\Web_Stories\User\Preferences;
  *
  * @package Google\Web_Stories
  */
-class Cross_Origin_Isolation extends Service_Base implements Conditional {
+class Cross_Origin_Isolation extends Service_Base implements Conditional, HasRequirements {
 	use Screen;
 
 	/**
