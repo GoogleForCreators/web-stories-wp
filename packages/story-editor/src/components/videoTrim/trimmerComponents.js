@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
   height: 36px;
   border-radius: 4px;
   border: 1px solid white;
-  background-image: linear-gradient(to right, blue, red, yellow);
+  background-color: white;
 `;
 
 export const Handle = styled(Slider)`

@@ -48,20 +48,12 @@ function VideoTrimmer() {
     maxOffset,
     setStartOffset,
     setEndOffset,
-    trimBackgroundImage,
     hasChanged,
     performTrim,
     resetOffsets,
   } = useVideoTrim(
     ({
-      state: {
-        currentTime,
-        startOffset,
-        endOffset,
-        maxOffset,
-        trimBackgroundImage,
-        hasChanged,
-      },
+      state: { currentTime, startOffset, endOffset, maxOffset, hasChanged },
       actions: { setStartOffset, setEndOffset, performTrim, resetOffsets },
     }) => ({
       currentTime,
@@ -70,7 +62,6 @@ function VideoTrimmer() {
       maxOffset,
       setStartOffset,
       setEndOffset,
-      trimBackgroundImage,
       hasChanged,
       performTrim,
       resetOffsets,
@@ -98,7 +89,7 @@ function VideoTrimmer() {
           </Button>
         </ButtonWrapper>
       )}
-      <Wrapper pageWidth={pageWidth} backgroundImage={trimBackgroundImage}>
+      <Wrapper pageWidth={pageWidth}>
         <UnusedAtStart width={(startOffset / maxOffset) * pageWidth} />
         <UnusedAtEnd
           width={((maxOffset - endOffset) / maxOffset) * pageWidth}
