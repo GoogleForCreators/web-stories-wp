@@ -51,7 +51,7 @@ const OptimizeButton = styled(Button)`
 `;
 
 export function videoElementsNotOptimized(element = {}) {
-  if (!element?.resource) {
+  if (!element.resource) {
     return false;
   }
   const {
