@@ -18,30 +18,26 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
+import { ConfigContext } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import APIContext from '../../../api/context';
-import ConfigContext from '../../../config/context';
 import useSaveMetaBoxes from '../useSaveMetaBoxes';
-import { MetaBoxesProvider } from '../../../../integrations/wordpress/metaBoxes';
-
-const saveMetaBoxes = jest.fn().mockResolvedValue(true);
-
-const apiContextValue = { actions: { saveMetaBoxes } };
+import MetaBoxesProvider from '../metaBoxesProvider';
+import useMetaBoxes from '../useMetaBoxes';
 
 const render = ({ configValue, isEnabled, ...initialProps }) => {
   return renderHook(
-    ({ story, isSaving, isAutoSaving }) =>
-      useSaveMetaBoxes({ story, isSaving, isAutoSaving }),
+    ({ story, isSavingStory, isAutoSavingStory }) => {
+      useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory });
+      return useMetaBoxes();
+    },
     {
       initialProps: { ...initialProps },
       wrapper: ({ children }) => (
         <ConfigContext.Provider value={configValue}>
-          <APIContext.Provider value={apiContextValue}>
-            <MetaBoxesProvider>{children}</MetaBoxesProvider>
-          </APIContext.Provider>
+          <MetaBoxesProvider>{children}</MetaBoxesProvider>
         </ConfigContext.Provider>
       ),
     }
@@ -49,10 +45,6 @@ const render = ({ configValue, isEnabled, ...initialProps }) => {
 };
 
 describe('useSaveMetaBoxes', () => {
-  afterEach(() => {
-    saveMetaBoxes.mockReset();
-  });
-
   it('saves meta box form data', async () => {
     const baseFormElement = document.createElement('form');
     baseFormElement.className = 'metabox-base-form';
@@ -94,34 +86,31 @@ describe('useSaveMetaBoxes', () => {
         normal: [{}],
         advanced: [{}],
       },
+      api: {
+        metaBoxes:
+          'http://localhost:10003/wp-admin/post.php?post=5&action=edit&meta-box-loader=1&meta-box-loader-nonce=d19ae41860',
+      },
     };
 
     const story = { id: 123 };
 
     const hookProps = {
       story,
-      isSaving: true,
-      isAutoSaving: false,
+      isSavingStory: true,
+      isAutoSavingStory: false,
     };
 
-    const { result, rerender, waitForNextUpdate } = render({
+    const { rerender, waitForNextUpdate, result } = render({
       configValue,
       isEnabled: true,
       ...hookProps,
     });
 
-    expect(result.current.isSavingMetaBoxes).toBeFalse();
+    expect(result.current.state.isSavingMetaBoxes).toBeFalse();
+    rerender({ ...hookProps, isSavingStory: false });
 
-    rerender({ ...hookProps, isSaving: false });
-
-    expect(result.current.isSavingMetaBoxes).toBeTrue();
+    expect(result.current.state.isSavingMetaBoxes).toBeTrue();
     await waitForNextUpdate();
-    expect(result.current.isSavingMetaBoxes).toBeFalse();
-
-    expect(saveMetaBoxes).toHaveBeenCalledWith(story, expect.any(FormData));
-    expect(Object.fromEntries(saveMetaBoxes.mock.calls[0][1])).toStrictEqual({
-      'advanced-metabox-input-value': 'Advanced Data',
-      'normal-metabox-input-value': 'Normal Data',
-    });
+    expect(result.current.state.isSavingMetaBoxes).toBeFalse();
   });
 });

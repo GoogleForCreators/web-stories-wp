@@ -39,7 +39,6 @@ const mockFetchSettings = jest.fn();
 const mockFetchMediaById = jest.fn();
 const mockUploadMedia = jest.fn();
 const mockUpdateSettings = jest.fn();
-const mockFetchCurrentUser = jest.fn();
 
 function createProviderValues({
   canUploadFiles,
@@ -104,9 +103,7 @@ function createProviderValues({
           uploadMedia: mockUploadMedia,
           fetchMediaById: mockFetchMediaById,
         },
-        usersApi: {
-          fetchCurrentUser: mockFetchCurrentUser,
-        },
+        usersApi: {},
       },
     },
   };

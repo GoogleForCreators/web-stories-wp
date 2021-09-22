@@ -49,6 +49,7 @@ import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
+import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
 
 if ('true' === process.env.CI) {
@@ -324,7 +325,9 @@ export class Fixture {
 
     const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
-        <StoryEditor key={Math.random()} config={this._config} />
+        <StoryEditor key={Math.random()} config={this._config}>
+          <Layout header={<HeaderLayout />} />
+        </StoryEditor>
       </FlagsProvider>,
       {
         container: root,

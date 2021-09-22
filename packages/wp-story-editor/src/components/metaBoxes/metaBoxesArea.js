@@ -21,12 +21,7 @@ import { useEffect, useRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-
-/**
- * Internal dependencies
- */
-import CircularProgress from '../../../components/circularProgress';
-import { useStory } from '../../../app/story';
+import { CircularProgress, useStory } from '@web-stories-wp/story-editor';
 
 const Wrapper = styled.div`
   position: relative;
