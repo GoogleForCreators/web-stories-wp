@@ -13,7 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as flattenFormData } from './flattenFormData';
-export { default as base64Encode } from './base64Encode';
-export { default as snakeCaseToCamelCase } from './snakeCaseToCamelCase';
-export { default as getResourceFromAttachment } from './getResourceFromAttachment';
+/**
+ * Internal dependencies
+ */
+import snakeCaseToCamelCase from '../snakeCaseToCamelCase';
+
+describe('snakeCaseToCamelCase', () => {
+  it.each`
+    key            | result
+    ${''}          | ${''}
+    ${undefined}   | ${''}
+    ${'test'}      | ${'test'}
+    ${'rest_base'} | ${'restBase'}
+    ${'_links'}    | ${'_links'}
+    ${'links_'}    | ${'links_'}
+    ${'a_l'}       | ${'aL'}
+  `('should return the expected string for $key', ({ key, result }) => {
+    expect(snakeCaseToCamelCase(key)).toStrictEqual(result);
+  });
+});
