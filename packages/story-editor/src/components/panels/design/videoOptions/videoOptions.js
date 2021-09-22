@@ -98,10 +98,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     );
   }, [isTranscodingEnabled, isSingleElement, isMuted, resource, isMuting]);
 
-  const shouldDisableMuteButton = useMemo(
-    () => !canTranscodeResource(resource),
-    [resource]
-  );
+  const shouldDisableMuteButton = !canTranscodeResource(resource);
 
   const buttonText = useMemo(() => {
     return isMuting
