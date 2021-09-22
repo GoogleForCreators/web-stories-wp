@@ -38,7 +38,7 @@ function TaxonomiesPanel(props) {
   // TODO: remove this eventually
   // show categories before tags
   const sortedTaxonomies = taxonomies.sort(
-    ({ rest_base: restBaseA }, { rest_base: restBaseB }) => {
+    ({ restBase: restBaseA }, { restBase: restBaseB }) => {
       if (restBaseA > restBaseB) {
         return 1;
       } else if (restBaseB > restBaseA) {

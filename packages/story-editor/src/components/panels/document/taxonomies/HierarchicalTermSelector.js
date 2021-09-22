@@ -116,12 +116,12 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
     );
 
   const categories = useMemo(() => {
-    if (termCache[taxonomy.rest_base]) {
-      return Object.values(termCache[taxonomy.rest_base]).map((category) => {
+    if (termCache[taxonomy.restBase]) {
+      return Object.values(termCache[taxonomy.restBase]).map((category) => {
         const formattedCategory = { ...category };
         formattedCategory.value = formattedCategory.id;
         formattedCategory.label = formattedCategory.name;
-        formattedCategory.checked = selectedSlugs[taxonomy.rest_base]?.includes(
+        formattedCategory.checked = selectedSlugs[taxonomy.restBase]?.includes(
           category.slug
         );
 
