@@ -19,17 +19,18 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import { useConfig } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../app';
 import Context from './context';
 
 function MetaBoxesProvider({ children }) {
   const { metaBoxes = {} } = useConfig();
 
   const [metaBoxesVisible, setMetaBoxesVisible] = useState(false);
+  const [isSavingMetaBoxes, setIsSavingMetaBoxes] = useState(false);
   const toggleMetaBoxesVisible = useCallback(
     () => setMetaBoxesVisible((visible) => !visible),
     [setMetaBoxesVisible]
@@ -44,6 +45,7 @@ function MetaBoxesProvider({ children }) {
   const state = useMemo(
     () => ({
       state: {
+        isSavingMetaBoxes,
         metaBoxesVisible,
         metaBoxes,
         locations,
@@ -51,10 +53,13 @@ function MetaBoxesProvider({ children }) {
       },
       actions: {
         toggleMetaBoxesVisible,
+        setIsSavingMetaBoxes,
       },
     }),
     [
+      isSavingMetaBoxes,
       metaBoxesVisible,
+      setIsSavingMetaBoxes,
       toggleMetaBoxesVisible,
       metaBoxes,
       locations,

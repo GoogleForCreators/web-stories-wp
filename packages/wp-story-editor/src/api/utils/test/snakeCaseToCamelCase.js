@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
 /**
  * Internal dependencies
  */
-import TitleMissingDialog from '../titleMissingDialog';
+import snakeCaseToCamelCase from '../snakeCaseToCamelCase';
 
-export default {
-  title: 'Stories Editor/Components/Dialog/Title-Missing',
-  component: TitleMissingDialog,
-};
-
-export const _default = () => {
-  return (
-    <TitleMissingDialog
-      isOpen
-      onClose={action('close')}
-      onFix={action('fix')}
-      onIgnore={action('ignore')}
-    />
-  );
-};
+describe('snakeCaseToCamelCase', () => {
+  it.each`
+    key            | result
+    ${''}          | ${''}
+    ${undefined}   | ${''}
+    ${'test'}      | ${'test'}
+    ${'rest_base'} | ${'restBase'}
+    ${'_links'}    | ${'_links'}
+    ${'links_'}    | ${'links_'}
+    ${'a_l'}       | ${'aL'}
+  `('should return the expected string for $key', ({ key, result }) => {
+    expect(snakeCaseToCamelCase(key)).toStrictEqual(result);
+  });
+});

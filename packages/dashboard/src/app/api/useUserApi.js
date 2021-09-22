@@ -17,18 +17,22 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from '@web-stories-wp/react';
 
 export default function useUserApi(dataAdapter, { currentUserApi }) {
   const [currentUser, setCurrentUser] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
-  const fetchCurrentUser = useCallback(async () => {
-    try {
-      setCurrentUser(await dataAdapter.get(currentUserApi));
-    } catch (e) {
-      setCurrentUser({});
+
+  useEffect(() => {
+    if (!Object.keys(currentUser).length) {
+      dataAdapter.get(currentUserApi).then(setCurrentUser);
     }
-  }, [dataAdapter, currentUserApi]);
+  }, [currentUser, currentUserApi, dataAdapter]);
 
   const toggleWebStoriesTrackingOptIn = useCallback(async () => {
     setIsUpdating(true);
@@ -69,14 +73,12 @@ export default function useUserApi(dataAdapter, { currentUserApi }) {
   return useMemo(
     () => ({
       api: {
-        fetchCurrentUser,
         toggleWebStoriesTrackingOptIn,
         toggleWebStoriesMediaOptimization,
       },
       currentUser: { data: currentUser, isUpdating },
     }),
     [
-      fetchCurrentUser,
       toggleWebStoriesTrackingOptIn,
       toggleWebStoriesMediaOptimization,
       currentUser,
