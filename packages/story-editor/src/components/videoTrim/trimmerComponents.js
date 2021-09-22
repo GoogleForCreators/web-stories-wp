@@ -29,7 +29,7 @@ export const Menu = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: black;
+  background-color: ${({ theme }) => theme.colors.bg.primary};
   height: 40px;
   gap: 14px;
 `;
@@ -39,8 +39,9 @@ export const Wrapper = styled.div`
   flex-basis: ${({ pageWidth }) => pageWidth}px;
   height: 36px;
   border-radius: 4px;
-  border: 1px solid white;
-  background-color: white;
+  border: 1px solid ${({ theme }) => theme.colors.standard.white};
+  /* Note: background to be updated in 9104 */
+  background-color: ${({ theme }) => theme.colors.standard.white};
 `;
 
 export const Handle = styled(Slider)`
