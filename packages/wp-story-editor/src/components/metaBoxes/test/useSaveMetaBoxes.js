@@ -29,8 +29,10 @@ import useMetaBoxes from '../useMetaBoxes';
 
 const render = ({ configValue, isEnabled, ...initialProps }) => {
   return renderHook(
-    ({ story, isSavingStory, isAutoSavingStory }) =>
-      useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }),
+    ({ story, isSavingStory, isAutoSavingStory }) => {
+      useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory });
+      return useMetaBoxes();
+    },
     {
       initialProps: { ...initialProps },
       wrapper: ({ children }) => (
@@ -98,32 +100,17 @@ describe('useSaveMetaBoxes', () => {
       isAutoSavingStory: false,
     };
 
-    const { rerender, waitForNextUpdate } = render({
+    const { rerender, waitForNextUpdate, result } = render({
       configValue,
       isEnabled: true,
       ...hookProps,
     });
 
-    const {
-      result: {
-        current: {
-          state: { isSavingMetaBoxes },
-        },
-      },
-    } = renderHook(() => useMetaBoxes(), {
-      initialProps: {},
-      wrapper: ({ children }) => (
-        <ConfigContext.Provider value={configValue}>
-          <MetaBoxesProvider>{children}</MetaBoxesProvider>
-        </ConfigContext.Provider>
-      ),
-    });
-
-    expect(isSavingMetaBoxes).toBeFalse();
+    expect(result.current.state.isSavingMetaBoxes).toBeFalse();
     rerender({ ...hookProps, isSavingStory: false });
 
-    expect(isSavingMetaBoxes).toBeTrue();
+    expect(result.current.state.isSavingMetaBoxes).toBeTrue();
     await waitForNextUpdate();
-    expect(isSavingMetaBoxes).toBeFalse();
+    expect(result.current.state.isSavingMetaBoxes).toBeFalse();
   });
 });
