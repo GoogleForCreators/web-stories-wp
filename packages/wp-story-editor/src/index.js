@@ -26,6 +26,7 @@ import './style.css'; // This way the general editor styles are loaded before al
 /**
  * External dependencies
  */
+import { setLocaleData } from '@web-stories-wp/i18n';
 import StoryEditor from '@web-stories-wp/story-editor';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
@@ -53,6 +54,10 @@ const initialize = (id, config, flags) => {
   setAppElement(appElement);
 
   updateSettings(config.locale);
+
+  if (config.localeData) {
+    setLocaleData(config.localeData);
+  }
 
   initializeTracking('Editor');
 

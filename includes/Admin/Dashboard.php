@@ -401,6 +401,10 @@ class Dashboard extends Service_Base {
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],
 				'siteKitStatus'         => $this->site_kit->get_plugin_status(),
+				'localeData'            => json_decode(
+					(string) load_script_textdomain( self::SCRIPT_HANDLE, 'web-stories' ),
+					true
+				),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

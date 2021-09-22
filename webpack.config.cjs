@@ -187,6 +187,10 @@ const sharedConfig = {
     splitChunks: {
       automaticNameDelimiter: '-',
     },
+    // Prevents mangling of export names to ensure __() calls can be found
+    // as such by I18N string extraction.
+    // See https://github.com/google/web-stories-wp/pull/9001.
+    usedExports: false,
     minimizer: [
       new TerserPlugin({
         parallel: true,

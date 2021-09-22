@@ -11,8 +11,9 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
+    "@tannin/sprintf": "^1.2.0",
     "@web-stories-wp/react": "*",
-    "@wordpress/i18n": "^4.2.2",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "tannin": "^1.2.0"
   }
 }
