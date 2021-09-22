@@ -81,9 +81,9 @@ async function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
     ...useAPIPartial,
   }));
   useStory.mockImplementation(() => ({
-    updateStory: () => {},
+    setTerms: () => {},
     isStoryLoaded: true,
-    terms: [],
+    embeddedTerms: [],
     hasTaxonomies: true,
     ...useStoryPartial,
   }));
@@ -115,13 +115,13 @@ describe('TaxonomyProvider', () => {
     const taxonomy1Term1 = createTermFromName(taxonomy1, 'term1');
     const taxonomy1Term2 = createTermFromName(taxonomy1, 'term2');
     const taxonomy2Term1 = createTermFromName(taxonomy2, 'term1');
-    const terms = [[taxonomy1Term1, taxonomy1Term2], [taxonomy2Term1]];
+    const embeddedTerms = [[taxonomy1Term1, taxonomy1Term2], [taxonomy2Term1]];
 
     const { result } = await setup({
       useAPIPartial: {
         getTaxonomies: () => mockResponse(taxonomiesResponse),
       },
-      useStoryPartial: { terms, isStoryLoaded: true },
+      useStoryPartial: { embeddedTerms, isStoryLoaded: true },
     });
 
     const { termCache, selectedSlugs, taxonomies } = result.current.state;
@@ -142,7 +142,7 @@ describe('TaxonomyProvider', () => {
   });
 
   it('syncs selected slugs with story', async () => {
-    const updateStoryMock = jest.fn();
+    const setTermsMock = jest.fn();
     const sampleTaxonomy = createTaxonomy('sample');
     const taxonomiesResponse = [sampleTaxonomy];
 
@@ -152,8 +152,8 @@ describe('TaxonomyProvider', () => {
       },
       useStoryPartial: {
         isStoryLoaded: true,
-        updateStory: updateStoryMock,
-        terms: [[]],
+        setTerms: setTermsMock,
+        embeddedTerms: [[]],
       },
     });
 
@@ -171,12 +171,8 @@ describe('TaxonomyProvider', () => {
     expect(result.current.state.selectedSlugs).toStrictEqual({
       [sampleTaxonomy.restBase]: ['term1', 'term2'],
     });
-    expect(updateStoryMock).toHaveBeenCalledWith({
-      properties: {
-        terms: {
-          [sampleTaxonomy.restBase]: [],
-        },
-      },
+    expect(setTermsMock).toHaveBeenCalledWith({
+      [sampleTaxonomy.restBase]: [],
     });
 
     // Components are responsible for sending create term requests
@@ -196,12 +192,8 @@ describe('TaxonomyProvider', () => {
     expect(result.current.state.selectedSlugs).toStrictEqual({
       [sampleTaxonomy.restBase]: ['term1', 'term2'],
     });
-    expect(updateStoryMock).toHaveBeenCalledWith({
-      properties: {
-        terms: {
-          [sampleTaxonomy.restBase]: [0, 1],
-        },
-      },
+    expect(setTermsMock).toHaveBeenCalledWith({
+      [sampleTaxonomy.restBase]: [0, 1],
     });
   });
 
