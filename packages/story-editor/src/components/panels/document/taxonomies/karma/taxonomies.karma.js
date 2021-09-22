@@ -103,9 +103,12 @@ describe('Categories & Tags Panel', () => {
 
         // open the new category section
         await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+        // Input should be focused
+        expect(document.activeElement).toBe(
+          categoriesAndTags.newCategoryNameInput
+        );
 
         // Add new category
-        await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
         await fixture.events.keyboard.type('deer');
 
         await fixture.events.click(categoriesAndTags.addNewCategoryButton);
@@ -137,9 +140,12 @@ describe('Categories & Tags Panel', () => {
 
         // open the new category section
         await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+        // Input should be focused
+        expect(document.activeElement).toBe(
+          categoriesAndTags.newCategoryNameInput
+        );
 
         // Add new category
-        await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
         await fixture.events.keyboard.type('deer');
         await fixture.events.click(categoriesAndTags.parentDropdownButton);
 
@@ -345,6 +351,95 @@ describe('Categories & Tags Panel', () => {
       expect(deerIndex).toBe(boogerIndex + 1);
 
       // TODO: 9058 - validate new category exists on story once category is checked when added.
+    });
+
+    it('should submit new categories with Enter button', async () => {
+      await openCategoriesAndTagsPanel();
+
+      const categoriesAndTags =
+        fixture.editor.inspector.documentPanel.categoriesAndTags;
+
+      // focus the panel button
+      await fixture.events.focus(categoriesAndTags.categoriesAndTagsButton);
+
+      // track initial categories
+      const initialCategories = categoriesAndTags.categories;
+
+      // tab to `Add New Category` button / section
+      let maxTabs = 0;
+      while (
+        maxTabs < 20 &&
+        document.activeElement !== categoriesAndTags.addNewCategoryButton
+      ) {
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('Tab');
+        maxTabs++;
+      }
+      // Toggle `Add New Category`
+      await fixture.events.keyboard.press('Space');
+
+      // Input should be focused
+      expect(document.activeElement).toBe(
+        categoriesAndTags.newCategoryNameInput
+      );
+
+      // Enter name and submit
+      await fixture.events.keyboard.type('deer');
+      await fixture.events.keyboard.press('Enter');
+
+      // validate new checkbox was added
+      const finalCategories = categoriesAndTags.categories;
+      initialCategories.map((checkbox) =>
+        expect(checkbox.name).not.toBe('deer')
+      );
+      expect(finalCategories.length).toBe(initialCategories.length + 1);
+      expect(
+        finalCategories.filter((category) => category.name === 'deer').length
+      ).toBe(1);
+
+      // TODO: 9058 - validate new category exists on story once category is checked when added.
+    });
+
+    it('should focus toggle on cancel', async () => {
+      await openCategoriesAndTagsPanel();
+
+      const categoriesAndTags =
+        fixture.editor.inspector.documentPanel.categoriesAndTags;
+
+      // focus the panel button
+      await fixture.events.focus(categoriesAndTags.categoriesAndTagsButton);
+
+      // tab to `Add New Category` section
+      let maxTabs = 0;
+      while (
+        maxTabs < 20 &&
+        document.activeElement !== categoriesAndTags.addNewCategoryButton
+      ) {
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('Tab');
+        maxTabs++;
+      }
+      // Toggle `Add New Category`
+      await fixture.events.keyboard.press('Space');
+
+      // Input should be focused
+      expect(document.activeElement).toBe(
+        categoriesAndTags.newCategoryNameInput
+      );
+
+      // Enter name and submit
+      await fixture.events.keyboard.type('deer');
+      // Tab to Cancel button
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      // Hit Cancel button
+      await fixture.events.keyboard.press('Enter');
+
+      // The toggle `Add New Category` should be focused
+      expect(document.activeElement).toBe(
+        categoriesAndTags.addNewCategoryButton
+      );
     });
   });
 
