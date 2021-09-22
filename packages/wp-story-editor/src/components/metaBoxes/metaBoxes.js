@@ -73,8 +73,9 @@ function MetaBoxes() {
 
     if (!showMenuButton && hasMetaBoxes && pages.length > 0) {
       timeout = setTimeout(() => {
-        menuButtonContainer.current =
-          document.getElementById('primary-menu-items');
+        menuButtonContainer.current = document.getElementById(
+          'additional-primary-menu-items'
+        );
         updateMenuButtonState(null !== menuButtonContainer.current);
       });
     }

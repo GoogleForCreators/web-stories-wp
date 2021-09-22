@@ -47,9 +47,7 @@ const Space = styled.span`
   width: 8px;
 `;
 
-const Item = styled.div`
-  order: -1;
-`;
+const Item = styled.div``;
 
 function MenuItem() {
   const { metaBoxesVisible, toggleMetaBoxesVisible, hasMetaBoxes } =

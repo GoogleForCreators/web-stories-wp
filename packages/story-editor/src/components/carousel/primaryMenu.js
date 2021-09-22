@@ -62,6 +62,8 @@ const Box = styled.div`
   align-items: center;
 `;
 
+const AdditionalMenuItems = styled.div``;
+
 function PrimaryMenu() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
 
@@ -80,7 +82,8 @@ function PrimaryMenu() {
   return (
     <>
       <Wrapper>
-        <MenuItems id="primary-menu-items">
+        <MenuItems>
+          <AdditionalMenuItems id="additional-primary-menu-items" />
           <Box>
             <Tooltip
               title={__('Grid View', 'web-stories')}
