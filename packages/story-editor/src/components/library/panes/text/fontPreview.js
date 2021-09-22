@@ -103,6 +103,7 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
   const enableSmartTextColor = useFeature('enableSmartTextColor');
 
   const presetDataRef = useRef({});
+  const buttonRef = useRef(null);
 
   useEffect(() => {
     maybeEnqueueFontStyle([
@@ -183,7 +184,10 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
   };
 
   return (
-    <Preview>
+    <Preview
+      ref={buttonRef}
+      onClick={(e) => e.target === buttonRef.current && onClick()}
+    >
       {getTextDisplay()}
       <LibraryMoveable
         cloneElement={DragContainer}
