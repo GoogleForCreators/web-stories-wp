@@ -37,6 +37,7 @@ import useRouteHistory from '../../router/useRouteHistory';
 import { ERRORS } from '../../textContent';
 import Header from './header';
 import Content from './content';
+import { getRelatedTemplatesIds } from './utils';
 
 function TemplateDetails() {
   const [template, setTemplate] = useState(null);
@@ -54,33 +55,35 @@ function TemplateDetails() {
   const {
     isLoading,
     templates,
+    templatesByTag,
     templatesOrderById,
     createStoryFromTemplate,
     fetchExternalTemplates,
     fetchExternalTemplateById,
-    fetchRelatedTemplates,
   } = useApi(
     ({
       state: {
-        templates: { templates, templatesOrderById, totalPages, isLoading },
+        templates: {
+          templates,
+          templatesByTag,
+          templatesOrderById,
+          totalPages,
+          isLoading,
+        },
       },
       actions: {
         storyApi: { createStoryFromTemplate },
-        templateApi: {
-          fetchExternalTemplates,
-          fetchExternalTemplateById,
-          fetchRelatedTemplates,
-        },
+        templateApi: { fetchExternalTemplates, fetchExternalTemplateById },
       },
     }) => ({
       isLoading,
       templates,
+      templatesByTag,
       templatesOrderById,
       totalPages,
       createStoryFromTemplate,
       fetchExternalTemplates,
       fetchExternalTemplateById,
-      fetchRelatedTemplates,
     })
   );
   const { isRTL } = useConfig();
@@ -126,21 +129,23 @@ function TemplateDetails() {
     if (!template || !templateId) {
       return;
     }
-    const id = parseInt(templateId);
+
+    const allRelatedTemplates = getRelatedTemplatesIds(
+      template,
+      templatesByTag
+    );
+
+    const randomRelatedTemplates = allRelatedTemplates
+      .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids;
+      .slice(0, 6); // Get first 6 templates
 
     setRelatedTemplates(
-      fetchRelatedTemplates(id).map((relatedTemplate) => ({
-        ...relatedTemplate,
-        centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
+      randomRelatedTemplates.map((id) => ({
+        ...templates[id],
+        centerTargetAction: resolveRelatedTemplateRoute(templates[id]),
       }))
     );
-  }, [
-    fetchRelatedTemplates,
-    template,
-    templates,
-    templatesOrderById,
-    templateId,
-  ]);
+  }, [template, templates, templatesByTag, templatesOrderById, templateId]);
 
   const activeTemplateIndex = useMemo(() => {
     if (templatesOrderById.length <= 0) {

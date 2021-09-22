@@ -37,7 +37,7 @@ import { initializeTracking } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import * as apiCallbacks from './api';
-import { PostPublishDialog } from './components';
+import { PostPublishDialog, StatusCheck, PostLock } from './components';
 
 /**
  * Initializes the web stories editor.
@@ -66,6 +66,8 @@ const initialize = (id, config, flags) => {
       <StrictMode>
         <StoryEditor config={editorConfig}>
           <PostPublishDialog />
+          <StatusCheck />
+          <PostLock />
         </StoryEditor>
       </StrictMode>
     </FlagsProvider>,

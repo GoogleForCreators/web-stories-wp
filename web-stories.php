@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WEBSTORIES_VERSION', '1.12.0-alpha.0' );
-define( 'WEBSTORIES_DB_VERSION', '3.0.11' );
+define( 'WEBSTORIES_DB_VERSION', '3.0.13' );
 define( 'WEBSTORIES_AMP_VERSION', '2.1.4' ); // Version of the AMP library included in the plugin.
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
 define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );

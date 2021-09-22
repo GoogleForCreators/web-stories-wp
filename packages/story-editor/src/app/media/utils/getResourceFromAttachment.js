@@ -67,6 +67,7 @@ function getImageResourceFromAttachment(attachment) {
     alt,
     sizes,
     local: false,
+    isExternal: false,
   });
 }
 
@@ -108,6 +109,7 @@ function getVideoResourceFromAttachment(attachment) {
     lengthFormatted,
     alt,
     local: false,
+    isExternal: false,
     isOptimized: 'video-optimization' === mediaSource,
     isMuted,
     trimData,
@@ -149,6 +151,7 @@ function getGifResourceFromAttachment(attachment) {
     alt,
     local: false,
     isOptimized: true,
+    isExternal: false,
     output: {
       mimeType: mimeType,
       src: src,

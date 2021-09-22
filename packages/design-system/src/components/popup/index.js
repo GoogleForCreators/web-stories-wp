@@ -75,6 +75,7 @@ function Popup({
   fillWidth = false,
   fillHeight = false,
   onPositionUpdate = noop,
+  refCallback = noop,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -112,10 +113,10 @@ function Popup({
     };
   }, [isOpen, positionPopup]);
 
-  useLayoutEffect(
-    () => onPositionUpdate(popupState),
-    [popupState, onPositionUpdate]
-  );
+  useLayoutEffect(() => {
+    onPositionUpdate(popupState);
+    refCallback(popup);
+  }, [popupState, onPositionUpdate, refCallback]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
 
@@ -151,6 +152,7 @@ Popup.propTypes = {
   fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   onPositionUpdate: PropTypes.func,
+  refCallback: PropTypes.func,
 };
 
 export { Popup, PLACEMENT };
