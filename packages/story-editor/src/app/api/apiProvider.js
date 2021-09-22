@@ -36,7 +36,6 @@ function APIProvider({ children }) {
       hotlink,
       link,
       users,
-      metaBoxes,
       currentUser,
       pageTemplates: customPageTemplates,
       taxonomies,
@@ -60,7 +59,6 @@ function APIProvider({ children }) {
     getAuthors,
     getCurrentUser,
     updateCurrentUser,
-    saveMetaBoxes,
     getCustomPageTemplates,
     addPageTemplate,
     deletePageTemplate,
@@ -156,12 +154,6 @@ function APIProvider({ children }) {
   actions.updateCurrentUser = useCallback(
     (data) => updateCurrentUser(data, currentUser),
     [currentUser, updateCurrentUser]
-  );
-
-  // @todo Move to wp-story-editor along with meta-boxes.
-  actions.saveMetaBoxes = useCallback(
-    (story, formData) => saveMetaBoxes(story, formData, metaBoxes),
-    [metaBoxes, saveMetaBoxes]
   );
 
   actions.getCustomPageTemplates = useCallback(

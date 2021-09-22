@@ -33,10 +33,61 @@ import StoryContext from '../../../app/story/context';
 import ConfigContext from '../../../app/config/context';
 import MediaContext from '../../../app/media/context';
 import HistoryContext from '../../../app/history/context';
-import Buttons from '../buttons';
 import { renderWithTheme } from '../../../testUtils';
 import { StoryTriggersProvider } from '../../../app/story/storyTriggers';
 import { CheckpointContext } from '../../checklist';
+import { useStory } from '../../../app';
+import {
+  PreviewButton,
+  PublishButton,
+  SwitchToDraftButton,
+  UpdateButton,
+} from '../buttons';
+import { CircularProgress } from '../../..';
+
+function Loading() {
+  const { isSaving } = useStory((state) => ({
+    isSaving: state.state.meta.isSaving,
+  }));
+
+  return (
+    isSaving && (
+      <div>
+        <CircularProgress size={32} />
+      </div>
+    )
+  );
+}
+
+const Buttons = () => {
+  const { status } = useStory(
+    ({
+      state: {
+        story: { status, embedPostLink, link },
+        meta: { isFreshlyPublished },
+      },
+    }) => ({
+      status,
+      embedPostLink,
+      link,
+      isFreshlyPublished,
+    })
+  );
+
+  const isDraft = 'draft' === status;
+
+  return (
+    <div>
+      <div>
+        <PreviewButton />
+        <Loading />
+      </div>
+      {isDraft ? <UpdateButton /> : <SwitchToDraftButton />}
+      {isDraft && <PublishButton />}
+      {!isDraft && <UpdateButton />}
+    </div>
+  );
+};
 
 function setupButtons({
   story: extraStoryProps,
