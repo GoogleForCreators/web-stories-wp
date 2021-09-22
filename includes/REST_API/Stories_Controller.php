@@ -424,6 +424,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		// Strip down query for speed.
 		$query_args['fields']                 = 'ids';
 		$query_args['posts_per_page']         = 1;
+		$query_args['paged']                  = 1;
 		$query_args['update_post_meta_cache'] = false;
 		$query_args['update_post_term_cache'] = false;
 
