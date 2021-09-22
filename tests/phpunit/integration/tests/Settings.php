@@ -29,10 +29,16 @@ class Settings extends TestCase {
 		$settings->register();
 
 		$options = get_registered_settings();
+		$this->assertArrayHasKey( $settings::SETTING_NAME_EXPERIMENTS, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_TRACKING_ID, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_USING_LEGACY_ANALYTICS, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_AD_NETWORK, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_AD_MANAGER_SLOT_ID, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ADSENSE_SLOT_ID, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_PUBLISHER_LOGOS, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_VIDEO_CACHE, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_ARCHIVE, $options );
 	}
 }

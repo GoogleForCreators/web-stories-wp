@@ -125,8 +125,11 @@ class Plugin extends ServiceBasedPlugin {
 		'rest.media'                   => REST_API\Stories_Media_Controller::class,
 		'rest.settings'                => REST_API\Stories_Settings_Controller::class,
 		'rest.users'                   => REST_API\Stories_Users_Controller::class,
+		'rest.taxonomies'              => REST_API\Stories_Taxonomies_Controller::class,
 		'rest.template_autosave'       => REST_API\Template_Autosaves_Controller::class,
 		'rest.template_lock'           => REST_API\Template_Lock_Controller::class,
+		'taxonomy.category'            => Taxonomy\Category_Taxonomy::class,
+		'taxonomy.tag'                 => Taxonomy\Tag_Taxonomy::class,
 		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
 	];

@@ -50,7 +50,7 @@ function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
 ColorControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
-  textColorRef: PropTypes.object,
+  textColorRef: PropTypes.func,
 };
 
 export default ColorControls;

@@ -24,14 +24,21 @@ export function createStory(properties = {}) {
     excerpt: { raw: 'excerpt' },
     permalink_template: 'http://localhost:8899/web-stories/%pagename%',
     style_presets: { colors: [TEST_COLOR] },
-    _embedded: { author: [{ id: 1, name: 'John Doe' }] },
+    author: { id: 1, name: 'John Doe' },
+    featured_media: { height: 0, id: 0, url: '', width: 0 },
+    publisher_logo: { height: 0, id: 0, url: '', width: 0 },
+    lock_user: {
+      id: 0,
+      name: '',
+      avatar: '',
+    },
     ...properties,
   };
 }
 
 export const GET_MEDIA_RESPONSE_HEADER = {
-  'X-WP-Total': 1,
-  'X-WP-TotalPages': 1,
+  totalItems: 1,
+  totalPages: 1,
 };
 export const GET_MEDIA_RESPONSE_BODY = [
   {

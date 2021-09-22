@@ -28,8 +28,6 @@ import { useHistory } from '../../history';
 import { createPage } from '../../../elements';
 import getUniquePresets from '../../../utils/getUniquePresets';
 
-/* eslint-disable complexity */
-
 // When ID is set, load story from API.
 function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
   const {
@@ -58,47 +56,17 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           preview_link: previewLink,
           edit_link: editLink,
           embed_post_link: embedPostLink,
-          _embedded: embedded = {},
-          _links: links = {},
+          author,
+          capabilities = {
+            hasPublishAction: false,
+            hasAssignAuthorAction: false,
+          },
+          lock_user: lockUser,
+          featured_media: featuredMedia,
+          publisher_logo: publisherLogo,
+          taxonomies,
+          terms,
         } = post;
-
-        const capabilities = {
-          hasPublishAction: Object.prototype.hasOwnProperty.call(
-            links,
-            'wp:action-publish'
-          ),
-          hasAssignAuthorAction: Object.prototype.hasOwnProperty.call(
-            links,
-            'wp:action-assign-author'
-          ),
-        };
-
-        const author = {
-          id: embedded?.author?.[0].id || 0,
-          name: embedded?.author?.[0].name || '',
-        };
-
-        const lockUser = {
-          id: embedded?.['wp:lockuser']?.[0].id || 0,
-          name: embedded?.['wp:lockuser']?.[0].name || '',
-          avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
-        };
-
-        const featuredMedia = {
-          id: embedded?.['wp:featuredmedia']?.[0].id || 0,
-          height:
-            embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
-          width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
-          url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-        };
-
-        const publisherLogo = {
-          id: embedded?.['wp:publisherlogo']?.[0].id || 0,
-          height:
-            embedded?.['wp:publisherlogo']?.[0]?.media_details?.height || 0,
-          width: embedded?.['wp:publisherlogo']?.[0]?.media_details?.width || 0,
-          url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
-        };
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
@@ -165,6 +133,8 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,
           backgroundAudio: storyData?.backgroundAudio,
+          taxonomies,
+          terms,
         };
 
         // TODO read current page and selection from deeplink?
@@ -187,7 +157,5 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
     clearHistory,
   ]);
 }
-
-/* eslint-enable complexity */
 
 export default useLoadStory;

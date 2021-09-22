@@ -36,22 +36,19 @@ function APIProvider({ children }) {
       hotlink,
       link,
       users,
-      statusCheck,
       metaBoxes,
       currentUser,
-      storyLocking,
       pageTemplates: customPageTemplates,
+      taxonomies,
     },
     apiCallbacks,
     encodeMarkup,
     cdnURL,
+    postType,
   } = useConfig();
 
   const {
     getStoryById,
-    getStoryLockById,
-    setStoryLockById,
-    deleteStoryLockById,
     getDemoStoryById,
     saveStoryById,
     autoSaveById,
@@ -64,11 +61,13 @@ function APIProvider({ children }) {
     getCurrentUser,
     updateCurrentUser,
     saveMetaBoxes,
-    getStatusCheck,
     getCustomPageTemplates,
     addPageTemplate,
     deletePageTemplate,
     getHotlinkInfo,
+    getTaxonomies,
+    getTaxonomyTerm,
+    createTaxonomyTerm,
   } = apiCallbacks;
 
   const pageTemplates = useRef({
@@ -76,7 +75,7 @@ function APIProvider({ children }) {
     withoutImages: [],
   });
 
-  const actions = {};
+  const actions = { getTaxonomyTerm, createTaxonomyTerm };
 
   actions.getPageTemplates = useCallback(
     async ({ showImages = false } = {}) => {
@@ -96,24 +95,6 @@ function APIProvider({ children }) {
   actions.getStoryById = useCallback(
     (storyId) => getStoryById(storyId, stories),
     [stories, getStoryById]
-  );
-
-  // @todo Move to wp-story-editor along with PostLock component.
-  actions.getStoryLockById = useCallback(
-    (storyId) => getStoryLockById(storyId, stories),
-    [stories, getStoryLockById]
-  );
-
-  // @todo Move to wp-story-editor along with PostLock component.
-  actions.setStoryLockById = useCallback(
-    (storyId) => setStoryLockById(storyId, stories),
-    [stories, setStoryLockById]
-  );
-
-  // @todo Move to wp-story-editor along with PostLock component.
-  actions.deleteStoryLockById = useCallback(
-    (storyId, nonce) => deleteStoryLockById(storyId, nonce, storyLocking),
-    [storyLocking, deleteStoryLockById]
   );
 
   actions.getDemoStoryById = useCallback(
@@ -183,12 +164,6 @@ function APIProvider({ children }) {
     [metaBoxes, saveMetaBoxes]
   );
 
-  // @todo Move to wp-story-editor along with StatusCheck component.
-  actions.getStatusCheck = useCallback(
-    (content) => getStatusCheck(content, statusCheck, encodeMarkup),
-    [statusCheck, encodeMarkup, getStatusCheck]
-  );
-
   actions.getCustomPageTemplates = useCallback(
     (page = 1) => getCustomPageTemplates(page, customPageTemplates),
     [customPageTemplates, getCustomPageTemplates]
@@ -202,6 +177,11 @@ function APIProvider({ children }) {
   actions.deletePageTemplate = useCallback(
     (id) => deletePageTemplate(id, customPageTemplates),
     [customPageTemplates, deletePageTemplate]
+  );
+
+  actions.getTaxonomies = useCallback(
+    () => getTaxonomies(postType, taxonomies),
+    [postType, taxonomies, getTaxonomies]
   );
 
   // If some api callbacks have not been provided via configuration

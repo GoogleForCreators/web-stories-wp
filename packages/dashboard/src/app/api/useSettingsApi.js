@@ -53,6 +53,7 @@ export default function useSettingsApi(
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
         payload: {
           googleAnalyticsId: response.web_stories_ga_tracking_id,
+          usingLegacyAnalytics: response.web_stories_using_legacy_analytics,
           adSensePublisherId: response.web_stories_adsense_publisher_id,
           adSenseSlotId: response.web_stories_adsense_slot_id,
           adManagerSlotId: response.web_stories_ad_manager_slot_id,
@@ -60,6 +61,7 @@ export default function useSettingsApi(
           activePublisherLogoId: response.web_stories_active_publisher_logo,
           publisherLogoIds: response.web_stories_publisher_logos,
           videoCache: response.web_stories_video_cache,
+          archive: response.web_stories_archive,
         },
       });
     } catch (err) {
@@ -75,6 +77,7 @@ export default function useSettingsApi(
   const updateSettings = useCallback(
     async ({
       googleAnalyticsId,
+      usingLegacyAnalytics,
       adSensePublisherId,
       adSenseSlotId,
       adManagerSlotId,
@@ -83,12 +86,17 @@ export default function useSettingsApi(
       publisherLogoIdToRemove,
       publisherLogoToMakeDefault,
       videoCache,
+      archive,
     }) => {
       dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED });
       try {
         const query = {};
         if (googleAnalyticsId !== undefined) {
           query.web_stories_ga_tracking_id = googleAnalyticsId;
+        }
+
+        if (usingLegacyAnalytics !== undefined) {
+          query.web_stories_using_legacy_analytics = usingLegacyAnalytics;
         }
 
         if (adSensePublisherId !== undefined) {
@@ -127,6 +135,10 @@ export default function useSettingsApi(
           query.web_stories_video_cache = Boolean(videoCache);
         }
 
+        if (archive !== undefined) {
+          query.web_stories_archive = archive;
+        }
+
         const response = await dataAdapter.post(
           addQueryArgs(globalStoriesSettingsApi, query)
         );
@@ -135,6 +147,7 @@ export default function useSettingsApi(
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
           payload: {
             googleAnalyticsId: response.web_stories_ga_tracking_id,
+            usingLegacyAnalytics: response.web_stories_using_legacy_analytics,
             adSensePublisherId: response.web_stories_adsense_publisher_id,
             adSenseSlotId: response.web_stories_adsense_slot_id,
             adManagerSlotId: response.web_stories_ad_manager_slot_id,
@@ -142,6 +155,7 @@ export default function useSettingsApi(
             activePublisherLogoId: response.web_stories_active_publisher_logo,
             publisherLogoIds: response.web_stories_publisher_logos,
             videoCache: response.web_stories_video_cache,
+            archive: response.web_stories_archive,
           },
         });
         dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED, payload: true });

@@ -33,6 +33,7 @@ import {
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
+import { groupTemplatesByTag } from '../testUtils';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
@@ -86,8 +87,6 @@ export default function ApiProviderFixture({ children }) {
         ),
       fetchExternalTemplateById: (id) =>
         fetchExternalTemplateById(id, templates),
-      fetchRelatedTemplates: (currentTemplateId) =>
-        fetchRelatedTemplates(currentTemplateId, templates),
     }),
     [templates]
   );
@@ -160,6 +159,7 @@ function getSettingsState() {
     error: {},
     settingSaved: false,
     googleAnalyticsId: '',
+    usingLegacyAnalytics: false,
     publisherLogoIds: [],
     activePublisherLogoId: fillerPublisherLogoIds[0],
     adSensePublisherId: '',
@@ -384,6 +384,7 @@ function getTemplatesState() {
 
       return acc;
     }, {}),
+    templatesByTag: groupTemplatesByTag(copiedTemplates),
     templatesOrderById: copiedTemplates.map(({ id }) => id),
     totalTemplates: copiedTemplates.length,
     totalPages: 1,
@@ -409,16 +410,4 @@ function toggleOptInTracking(currentUser) {
       },
     },
   };
-}
-
-function fetchRelatedTemplates(currentTemplateId, currentState) {
-  if (!currentState.templates || !currentTemplateId) {
-    return [];
-  }
-
-  return currentState.templatesOrderById
-    .filter((id) => id !== currentTemplateId) // Filter out the current/active template
-    .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids
-    .map((id) => currentState.templates[id]) // Map the ids to templates
-    .slice(0, Math.floor(Math.random() * 5) + 1); // Return between 1 and 5 templates
 }

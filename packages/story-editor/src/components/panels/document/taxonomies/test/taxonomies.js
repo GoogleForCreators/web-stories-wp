@@ -22,26 +22,26 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import StoryContext from '../../../../../app/story/context';
+import TaxonomyContext from '../../../../../app/taxonomy/context';
 import { renderWithTheme } from '../../../../../testUtils';
 import TaxonomiesPanel from '../taxonomies';
 
-function arrange() {
-  const updateStory = jest.fn();
-
+function arrange({ taxonomies }) {
   const storyContextValue = {
     state: {
-      story: {
-        taxonomies: '',
-      },
+      taxonomies,
     },
-    actions: { updateStory },
+    actions: {
+      createTerm: jest.fn(),
+      addSearchResultsToCache: jest.fn(),
+      setSelectedTaxonomySlugs: jest.fn(),
+    },
   };
 
   return renderWithTheme(
-    <StoryContext.Provider value={storyContextValue}>
+    <TaxonomyContext.Provider value={storyContextValue}>
       <TaxonomiesPanel />
-    </StoryContext.Provider>
+    </TaxonomyContext.Provider>
   );
 }
 
@@ -57,8 +57,33 @@ describe('TaxonomiesPanel', () => {
     localStorage.clear();
   });
 
+  it('should not render Taxonomies Panel if there are no taxonomies', () => {
+    arrange({ taxonomies: [] });
+    const element = screen.queryByRole('button', {
+      name: 'Categories and Tags',
+    });
+    expect(element).not.toBeInTheDocument();
+  });
+
   it('should render Taxonomies Panel', () => {
-    arrange();
+    arrange({
+      taxonomies: [
+        {
+          slug: 'story-tags',
+          restBase: 'story-tags',
+          name: 'Tags',
+          labels: {},
+          hierarchical: false,
+        },
+        {
+          slug: 'story-categories',
+          restBase: 'story-categories',
+          name: 'Categories',
+          labels: {},
+          hierarchical: false,
+        },
+      ],
+    });
     const element = screen.getByRole('button', { name: 'Categories and Tags' });
     expect(element).toBeInTheDocument();
   });

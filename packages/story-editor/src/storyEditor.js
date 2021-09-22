@@ -38,12 +38,11 @@ import { StoryProvider } from './app/story';
 import { FontProvider } from './app/font';
 import { MediaProvider } from './app/media';
 import { CurrentUserProvider } from './app/currentUser';
+import { TaxonomyProvider } from './app/taxonomy';
 import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
-import StatusCheck from './components/statusCheck';
-import PostLock from './components/postLock';
 import Layout from './components/layout';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
@@ -60,36 +59,36 @@ function StoryEditor({ config, children }) {
         <ErrorBoundary>
           <ConfigProvider config={config}>
             <APIProvider>
-              <StatusCheck />
               <FileProvider>
                 <Media3pApiProvider>
                   <HistoryProvider size={50}>
                     <SnackbarProvider>
                       <MetaBoxesProvider>
                         <StoryProvider storyId={storyId}>
-                          <CurrentUserProvider>
-                            <PostLock />
-                            <FontProvider>
-                              <MediaProvider>
-                                <AutoSaveHandler />
-                                <TransformProvider>
-                                  <DropTargetsProvider>
-                                    <HelpCenterProvider>
-                                      <GlobalStyle />
-                                      <DevTools />
-                                      <DefaultMoveableGlobalStyle />
-                                      <CropMoveableGlobalStyle />
-                                      <ModalGlobalStyle />
-                                      <CalendarStyle />
-                                      <KeyboardOnlyOutlines />
-                                      <Layout />
-                                      {children}
-                                    </HelpCenterProvider>
-                                  </DropTargetsProvider>
-                                </TransformProvider>
-                              </MediaProvider>
-                            </FontProvider>
-                          </CurrentUserProvider>
+                          <TaxonomyProvider>
+                            <CurrentUserProvider>
+                              <FontProvider>
+                                <MediaProvider>
+                                  <AutoSaveHandler />
+                                  <TransformProvider>
+                                    <DropTargetsProvider>
+                                      <HelpCenterProvider>
+                                        <GlobalStyle />
+                                        <DevTools />
+                                        <DefaultMoveableGlobalStyle />
+                                        <CropMoveableGlobalStyle />
+                                        <ModalGlobalStyle />
+                                        <CalendarStyle />
+                                        <KeyboardOnlyOutlines />
+                                        <Layout />
+                                        {children}
+                                      </HelpCenterProvider>
+                                    </DropTargetsProvider>
+                                  </TransformProvider>
+                                </MediaProvider>
+                              </FontProvider>
+                            </CurrentUserProvider>
+                          </TaxonomyProvider>
                         </StoryProvider>
                       </MetaBoxesProvider>
                     </SnackbarProvider>

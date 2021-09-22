@@ -25,12 +25,15 @@ import {
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
-import { trackClick } from '@web-stories-wp/tracking';
+import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
+  NotificationBubble,
 } from '@web-stories-wp/design-system';
+import styled from 'styled-components';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -47,6 +50,11 @@ import {
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
+
+const StyledNotificationBubble = styled(NotificationBubble)`
+  display: inline-block;
+  margin-left: 10px;
+`;
 
 export const TEXT = {
   CONTEXT: __(
@@ -76,9 +84,14 @@ export const TEXT = {
 
 function GoogleAnalyticsSettings({
   googleAnalyticsId,
-  handleUpdate,
+  handleUpdateAnalyticsId,
+  usingLegacyAnalytics,
+  handleMigrateLegacyAnalytics,
   siteKitStatus = {},
 }) {
+  const isAutoAnalyticsMigrationEnabled = useFeature(
+    'enableAutoAnalyticsMigration'
+  );
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
@@ -90,7 +103,7 @@ function GoogleAnalyticsSettings({
     setAnalyticsId(googleAnalyticsId);
   }, [googleAnalyticsId]);
 
-  const handleUpdateId = useCallback((event) => {
+  const handleUpdateAnalyticsIdId = useCallback((event) => {
     const { value } = event.target;
     setAnalyticsId(value);
 
@@ -105,9 +118,9 @@ function GoogleAnalyticsSettings({
 
   const handleOnSave = useCallback(() => {
     if (canSave) {
-      handleUpdate(analyticsId);
+      handleUpdateAnalyticsId(analyticsId);
     }
-  }, [canSave, analyticsId, handleUpdate]);
+  }, [canSave, analyticsId, handleUpdateAnalyticsId]);
 
   const handleOnKeyDown = useCallback(
     (e) => {
@@ -119,10 +132,25 @@ function GoogleAnalyticsSettings({
     [handleOnSave]
   );
 
+  const handleAnalyticsMigration = useCallback(
+    (evt) => {
+      evt.preventDefault();
+      handleMigrateLegacyAnalytics();
+      trackEvent('migrate_story_auto_analytics');
+    },
+    [handleMigrateLegacyAnalytics]
+  );
+
+  const onAutoAnalyticsClick = useCallback(
+    (evt) => trackClick(evt, 'click_auto_analytics_link'),
+    []
+  );
+
   const onSiteKitClick = useCallback(
     (evt) => trackClick(evt, 'click_site_kit_link'),
     []
   );
+
   const onContextClick = useCallback(
     (evt) => trackClick(evt, 'click_analytics_docs'),
     []
@@ -157,10 +185,51 @@ function GoogleAnalyticsSettings({
       <div>
         <SettingHeading htmlFor="gaTrackingID" as="h3">
           {TEXT.SECTION_HEADING}
+          {usingLegacyAnalytics && isAutoAnalyticsMigrationEnabled && (
+            <StyledNotificationBubble notificationCount={1} isSmall />
+          )}
         </SettingHeading>
         <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
           {siteKitDisplayText}
         </SettingSubheading>
+        {usingLegacyAnalytics && isAutoAnalyticsMigrationEnabled && (
+          <>
+            <SettingSubheading
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              <TranslateWithMarkup
+                mapping={{
+                  a: (
+                    <InlineLink
+                      // TODO(#9054): Update documentation link.
+                      href="https://example.com"
+                      rel="noreferrer"
+                      target="_blank"
+                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                      onClick={onAutoAnalyticsClick}
+                    />
+                  ),
+                }}
+              >
+                {__(
+                  'An improved analytics configuration is now available. <a>Learn more</a>.',
+                  'web-stories'
+                )}
+              </TranslateWithMarkup>
+            </SettingSubheading>
+            <SettingSubheading
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              <SaveButton
+                type={BUTTON_TYPES.SECONDARY}
+                size={BUTTON_SIZES.SMALL}
+                onClick={handleAnalyticsMigration}
+              >
+                {__('Migrate', 'web-stories')}
+              </SaveButton>
+            </SettingSubheading>
+          </>
+        )}
       </div>
       {analyticsActive ? (
         <div>
@@ -180,7 +249,7 @@ function GoogleAnalyticsSettings({
               aria-label={TEXT.ARIA_LABEL}
               id="gaTrackingId"
               value={analyticsId}
-              onChange={handleUpdateId}
+              onChange={handleUpdateAnalyticsIdId}
               onKeyDown={handleOnKeyDown}
               placeholder={TEXT.PLACEHOLDER}
               hasError={Boolean(inputError)}
@@ -223,8 +292,10 @@ function GoogleAnalyticsSettings({
 }
 
 GoogleAnalyticsSettings.propTypes = {
-  handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,
+  handleUpdateAnalyticsId: PropTypes.func,
+  usingLegacyAnalytics: PropTypes.bool,
+  handleMigrateLegacyAnalytics: PropTypes.func,
   siteKitStatus: PropTypes.shape({
     installed: PropTypes.bool,
     active: PropTypes.bool,

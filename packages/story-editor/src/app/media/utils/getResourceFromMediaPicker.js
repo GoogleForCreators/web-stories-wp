@@ -71,6 +71,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     alt,
     sizes,
     local: false,
+    isExternal: false,
     isOptimized: 'video-optimization' === mediaSource,
     isMuted,
     trimData,
