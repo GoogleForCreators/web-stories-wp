@@ -152,7 +152,7 @@ function OutputPage({
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
               <div className="captions-area">
-                <div className="captions-scrim">
+                <div className="captions-wrap">
                   {videoCaptions.map((captionId) => (
                     <amp-story-captions
                       key={captionId}
