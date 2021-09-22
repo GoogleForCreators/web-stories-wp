@@ -236,6 +236,8 @@ class Publisher_Logos_Controller extends REST_Controller {
 			return $post;
 		}
 
+		$prepared = $this->prepare_item_for_response( $post, $request );
+
 		$publisher_logos = $this->filter_publisher_logos( (array) get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [] ) );
 		$publisher_logos = array_values( array_diff( $publisher_logos, [ $post->ID ] ) );
 
@@ -248,7 +250,12 @@ class Publisher_Logos_Controller extends REST_Controller {
 
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, $publisher_logos );
 
-		return $this->prepare_item_for_response( $post, $request );
+		return new WP_REST_Response(
+			[
+				'deleted'  => true,
+				'previous' => $prepared->get_data(),
+			]
+		);
 	}
 
 	/**

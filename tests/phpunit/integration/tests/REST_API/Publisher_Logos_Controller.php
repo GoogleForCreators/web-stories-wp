@@ -378,10 +378,13 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		$data     = $response->get_data();
 		$this->assertEqualSetsWithIndex(
 			[
-				'id'     => self::$attachment_id_2,
-				'title'  => get_the_title( self::$attachment_id_2 ),
-				'url'    => wp_get_attachment_url( self::$attachment_id_2 ),
-				'active' => false,
+				'deleted'  => true,
+				'previous' => [
+					'id'     => self::$attachment_id_2,
+					'title'  => get_the_title( self::$attachment_id_2 ),
+					'url'    => wp_get_attachment_url( self::$attachment_id_2 ),
+					'active' => false,
+				],
 			],
 			$data
 		);
@@ -406,10 +409,13 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		$data = $response->get_data();
 		$this->assertEqualSetsWithIndex(
 			[
-				'id'     => self::$attachment_id_1,
-				'title'  => get_the_title( self::$attachment_id_1 ),
-				'url'    => wp_get_attachment_url( self::$attachment_id_1 ),
-				'active' => false,
+				'deleted'  => true,
+				'previous' => [
+					'id'     => self::$attachment_id_1,
+					'title'  => get_the_title( self::$attachment_id_1 ),
+					'url'    => wp_get_attachment_url( self::$attachment_id_1 ),
+					'active' => true,
+				],
 			],
 			$data
 		);
@@ -436,10 +442,13 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		$data = $response->get_data();
 		$this->assertEqualSetsWithIndex(
 			[
-				'id'     => self::$attachment_id_1,
-				'title'  => get_the_title( self::$attachment_id_1 ),
-				'url'    => wp_get_attachment_url( self::$attachment_id_1 ),
-				'active' => false,
+				'deleted'  => true,
+				'previous' => [
+					'id'     => self::$attachment_id_1,
+					'title'  => get_the_title( self::$attachment_id_1 ),
+					'url'    => wp_get_attachment_url( self::$attachment_id_1 ),
+					'active' => false,
+				],
 			],
 			$data
 		);
