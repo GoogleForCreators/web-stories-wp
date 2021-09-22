@@ -29,7 +29,7 @@ import ConfigContext from '../../../../../app/config/context';
 
 function MediaUpload({ render, onSelect }) {
   const open = () => {
-    const image = { url: 'media1' };
+    const image = { src: 'media1' };
     onSelect(image);
   };
 
