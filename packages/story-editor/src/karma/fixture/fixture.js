@@ -19,7 +19,6 @@
  */
 import * as React from 'react';
 const { useCallback, useState, useMemo, forwardRef } = React;
-import { v4 as uuidv4 } from 'uuid';
 
 import { FlagsProvider } from 'flagged';
 import {
@@ -50,6 +49,7 @@ import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
+import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
 
 if ('true' === process.env.CI) {
@@ -325,7 +325,9 @@ export class Fixture {
 
     const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
-        <StoryEditor key={Math.random()} config={this._config} />
+        <StoryEditor key={Math.random()} config={this._config}>
+          <Layout header={<HeaderLayout />} />
+        </StoryEditor>
       </FlagsProvider>,
       {
         container: root,
@@ -713,6 +715,8 @@ class APIProviderFixture {
    */
   constructor({ mocks = {} } = {}) {
     this._pages = [];
+    // begins at 4 because mocks have children with ids [1, 2, 3]
+    this._termAutoIncrementId = 4;
 
     // eslint-disable-next-line react/prop-types
     const Comp = ({ children }) => {
@@ -868,7 +872,7 @@ class APIProviderFixture {
       const createTaxonomyTerm = useCallback(
         (_endpoint, data) =>
           asyncResponse({
-            id: uuidv4(),
+            id: this._termAutoIncrementId++,
             count: 0,
             description: '',
             link: '',
@@ -886,7 +890,7 @@ class APIProviderFixture {
       );
 
       const getTaxonomies = useCallback(
-        () => asyncResponse({ ...taxonomiesResponse }),
+        () => asyncResponse(taxonomiesResponse),
         []
       );
 

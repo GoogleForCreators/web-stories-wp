@@ -27,6 +27,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
 } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -38,7 +39,7 @@ import Tooltip from '../../tooltip';
 
 const PREVIEW_TARGET = 'story-preview';
 
-function Preview() {
+function PreviewButton({ forceIsSaving = false }) {
   const { isSaving, previewLink, status, autoSave, saveStory } = useStory(
     ({
       state: {
@@ -153,7 +154,7 @@ function Preview() {
           type={BUTTON_TYPES.QUATERNARY}
           size={BUTTON_SIZES.SMALL}
           onClick={openPreviewLink}
-          disabled={isSaving || isUploading}
+          disabled={isSaving || forceIsSaving || isUploading}
           aria-label={label}
         >
           <Icons.Eye />
@@ -168,4 +169,8 @@ function Preview() {
   );
 }
 
-export default Preview;
+PreviewButton.propTypes = {
+  forceIsSaving: PropTypes.bool,
+};
+
+export default PreviewButton;

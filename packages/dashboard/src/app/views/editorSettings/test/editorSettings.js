@@ -39,7 +39,6 @@ const mockFetchSettings = jest.fn();
 const mockFetchMediaById = jest.fn();
 const mockUploadMedia = jest.fn();
 const mockUpdateSettings = jest.fn();
-const mockFetchCurrentUser = jest.fn();
 const mockSearch = jest.fn();
 const mockGetPageById = jest.fn();
 
@@ -109,9 +108,7 @@ function createProviderValues({
           uploadMedia: mockUploadMedia,
           fetchMediaById: mockFetchMediaById,
         },
-        usersApi: {
-          fetchCurrentUser: mockFetchCurrentUser,
-        },
+        usersApi: {},
         pagesApi: {
           searchPages: mockSearch,
           getPageById: mockGetPageById,

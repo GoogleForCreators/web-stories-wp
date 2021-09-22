@@ -13,11 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './authors';
-export * from './story';
-export * from './media';
-export * from './metadata';
-export * from './pageTemplate';
-export * from './user';
-export * from './hotlinkInfo';
-export * from './taxonomy';
+/**
+ * External dependencies
+ */
+import { InterfaceSkeleton } from '@web-stories-wp/story-editor';
+
+/**
+ * Internal dependencies
+ */
+import { default as Header } from '../header';
+import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
+
+function Layout() {
+  return (
+    <MetaBoxesProvider>
+      <InterfaceSkeleton header={<Header />}>
+        <MetaBoxes />
+      </InterfaceSkeleton>
+    </MetaBoxesProvider>
+  );
+}
+
+export default Layout;
