@@ -20,7 +20,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
-import { getFileName } from '@web-stories-wp/media';
+import { getExtensionFromMimeType, getFileName } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -297,10 +297,10 @@ function useFFmpeg() {
       try {
         ffmpeg = await getFFmpegInstance(file);
 
-        // @todo: ensure that this function return the same file type submitted. https://github.com/google/web-stories-wp/issues/8998.
-        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
-        const outputFileName =
-          getFileName(file) + '-trimmed.' + MEDIA_TRANSCODED_FILE_TYPE;
+        const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
+        const tempFileName = uuidv4() + '.' + ext;
+        const outputFileName = getFileName(file) + '-trimmed.' + ext;
 
         await ffmpeg.run(
           // Input filename.
@@ -314,13 +314,9 @@ function useFFmpeg() {
         );
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new File(
-          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
-          outputFileName,
-          {
-            type: MEDIA_TRANSCODED_MIME_TYPE,
-          }
-        );
+        return new File([new Blob([data.buffer], { type })], outputFileName, {
+          type,
+        });
       } catch (err) {
         // eslint-disable-next-line no-console
         console.log(err);
@@ -356,9 +352,10 @@ function useFFmpeg() {
       try {
         ffmpeg = await getFFmpegInstance(file);
 
-        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
-        const outputFileName =
-          getFileName(file) + '-muted.' + MEDIA_TRANSCODED_FILE_TYPE;
+        const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
+        const tempFileName = uuidv4() + '.' + ext;
+        const outputFileName = getFileName(file) + '-muted.' + ext;
 
         await ffmpeg.run(
           // Input filename.
@@ -374,13 +371,9 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new File(
-          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
-          outputFileName,
-          {
-            type: MEDIA_TRANSCODED_MIME_TYPE,
-          }
-        );
+        return new File([new Blob([data.buffer], { type })], outputFileName, {
+          type,
+        });
       } catch (err) {
         // eslint-disable-next-line no-console
         console.log(err);

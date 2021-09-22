@@ -29,8 +29,8 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
-import { DATA_VERSION } from '@web-stories-wp/migration';
 import { FixtureEvents } from '@web-stories-wp/karma-fixture';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
@@ -47,7 +47,9 @@ import formattedTemplatesArray from '../../dataUtils/formattedTemplatesArray';
 import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
+import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
+import storyResponse from './db/storyResponse';
 
 if ('true' === process.env.CI) {
   configure({
@@ -710,103 +712,30 @@ class APIProviderFixture {
    */
   constructor({ mocks = {} } = {}) {
     this._pages = [];
+    // begins at 4 because mocks have children with ids [1, 2, 3]
+    this._termAutoIncrementId = 4;
 
     // eslint-disable-next-line react/prop-types
     const Comp = ({ children }) => {
       const getStoryById = useCallback(
-        // @todo: put this to __db__/
         () =>
           asyncResponse({
-            title: { raw: '' },
-            status: 'draft',
-            author: 1,
-            slug: '',
-            date: '2020-05-06T22:32:37',
-            date_gmt: '2020-05-06T22:32:37',
-            modified: '2020-05-06T22:32:37',
-            excerpt: { raw: '' },
-            link: 'http://stories.local/?post_type=web-story&p=1',
-            preview_link: 'http://stories.local/?post_type=web-story&p=1',
+            ...storyResponse,
             story_data: {
               version: DATA_VERSION,
               pages: this._pages,
-            },
-            featured_media: 0,
-            permalink_template: 'http://stories3.local/stories/%pagename%/',
-            style_presets: { textStyles: [], colors: [] },
-            password: '',
-            _embedded: {
-              author: [{ id: 1, name: 'John Doe' }],
-              'wp:publisherlogo': [
-                {
-                  id: 0,
-                  source_url:
-                    'http://stories.local/wp-content/plugins/web-stories/assets/images/logo.png',
-                },
-              ],
-            },
-            _links: {
-              'wp:action-assign-author': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-delete': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-publish': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-unfiltered-html': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
             },
           }),
         []
       );
 
       const getDemoStoryById = useCallback(
-        // @todo: put this to __db__/
         () =>
           asyncResponse({
-            title: { raw: '' },
-            status: 'draft',
-            author: 1,
-            slug: '',
-            date: '2020-05-06T22:32:37',
-            date_gmt: '2020-05-06T22:32:37',
-            modified: '2020-05-06T22:32:37',
-            excerpt: { raw: '' },
-            link: 'http://stories.local/?post_type=web-story&p=1',
-            preview_link: 'http://stories.local/?post_type=web-story&p=1',
+            ...storyResponse,
             story_data: {
               version: DATA_VERSION,
               pages: this._pages,
-            },
-            featured_media: 0,
-            permalink_template: 'http://stories3.local/stories/%pagename%/',
-            style_presets: { textStyles: [], colors: [] },
-            password: '',
-            _embedded: {
-              author: [{ id: 1, name: 'John Doe' }],
-              'wp:publisherlogo': [
-                {
-                  id: 0,
-                  source_url: 'http://localhost:9876/__static__/earth.jpg',
-                },
-              ],
-            },
-            _links: {
-              'wp:action-assign-author': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-delete': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-publish': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-unfiltered-html': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
             },
           }),
         []
@@ -935,6 +864,33 @@ class APIProviderFixture {
       );
       const deletePageTemplate = useCallback(() => asyncResponse(), []);
 
+      const getTaxonomyTerm = useCallback(() => asyncResponse([]), []);
+
+      const createTaxonomyTerm = useCallback(
+        (_endpoint, data) =>
+          asyncResponse({
+            id: this._termAutoIncrementId++,
+            count: 0,
+            description: '',
+            link: '',
+            name: 'random name',
+            slug:
+              data?.name?.toLowerCase().replace(/[\s./_]/, '-') ||
+              'random-slug',
+            taxonomy: 'story-category',
+            parent: 0,
+            meta: [],
+            _links: {},
+            ...data,
+          }),
+        []
+      );
+
+      const getTaxonomies = useCallback(
+        () => asyncResponse(taxonomiesResponse),
+        []
+      );
+
       const state = {
         actions: {
           autoSaveById,
@@ -955,6 +911,9 @@ class APIProviderFixture {
           getPageTemplates,
           getCurrentUser,
           updateCurrentUser,
+          getTaxonomyTerm,
+          createTaxonomyTerm,
+          getTaxonomies,
           ...mocks,
         },
       };

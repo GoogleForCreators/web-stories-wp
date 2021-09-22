@@ -15,13 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { v4 as uuidv4 } from 'uuid';
-
-const NO_PARENT_VALUE = uuidv4();
-
-/**
  * Creates an object composed of keys generated from the
  * values of the `key` in each object.
  *
@@ -73,16 +66,14 @@ const fillTree = (groupedOptionsByParent, options = []) => {
 export const buildOptionsTree = (flatOptions) => {
   const formattedOptions = flatOptions.map((option) => ({
     options: [],
-    parent: NO_PARENT_VALUE,
+    // Categories with no parent will have a parent id of 0
+    parent: 0,
     ...option,
   }));
 
   const groupedOptionsByParent = groupBy(formattedOptions, 'parent');
 
-  return fillTree(
-    groupedOptionsByParent,
-    groupedOptionsByParent[NO_PARENT_VALUE]
-  );
+  return fillTree(groupedOptionsByParent, groupedOptionsByParent[0]);
 };
 
 /**

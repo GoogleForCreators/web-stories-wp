@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,17 @@
  * limitations under the License.
  */
 
-export { default as ConfigProvider } from './configProvider';
-export { default as ConfigContext } from './context';
-export { default as useConfig } from './useConfig';
+/**
+ * External dependencies
+ */
+import mime from 'mime/lite';
+
+/**
+ * Get the file extension for a given mime type.
+ *
+ * @param {string} mimeType Mime type.
+ * @return {string} File extension.
+ */
+export default function getExtensionFromMimeType(mimeType) {
+  return mime.getExtension(mimeType);
+}

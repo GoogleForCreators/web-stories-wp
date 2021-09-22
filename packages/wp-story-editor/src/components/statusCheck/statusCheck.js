@@ -19,25 +19,27 @@
  */
 import { useEffect, useCallback, useState } from '@web-stories-wp/react';
 import { trackError } from '@web-stories-wp/tracking';
+import { useConfig } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../app';
+import { getStatusCheck } from '../../api/statusCheck';
 import { getContent } from './utils';
 import StatusCheckFailed from './statusCheckFailed';
 
 function StatusCheck() {
-  const {
-    actions: { getStatusCheck },
-  } = useAPI();
   const [showDialog, setShowDialog] = useState(false);
   const closeDialog = useCallback(() => setShowDialog(false), []);
+  const {
+    api: { statusCheck },
+    encodeMarkup,
+  } = useConfig();
 
   useEffect(() => {
     // If it succeeds, do nothing.
     // Only in case of failure do we want to alert the user and track the error.
-    getStatusCheck(getContent())
+    getStatusCheck(getContent(), statusCheck, encodeMarkup)
       .then((result) => {
         if (result && result?.success === true) {
           return;
@@ -53,7 +55,7 @@ function StatusCheck() {
         setShowDialog(true);
         trackError('status_check', err.message);
       });
-  }, [getStatusCheck]);
+  }, [encodeMarkup, statusCheck]);
 
   return <StatusCheckFailed isOpen={showDialog} onClose={closeDialog} />;
 }

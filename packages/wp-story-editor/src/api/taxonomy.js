@@ -23,6 +23,10 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+/**
+ * Internal dependencies
+ */
+import { snakeCaseToCamelCase } from './utils';
 
 /**
  * Get all taxonomies.
@@ -31,12 +35,23 @@ import apiFetch from '@wordpress/api-fetch';
  * @param {string} path API path.
  * @return {Promise} Taxonomies promise.
  */
-export function getTaxonomies(postType, path) {
-  return apiFetch({
+export async function getTaxonomies(postType, path) {
+  const result = await apiFetch({
     path: addQueryArgs(path, {
       type: postType,
       context: 'edit',
     }),
+  });
+
+  return Object.values(result).map((taxonomy) => {
+    const entries = Object.entries(taxonomy);
+
+    const formattedEntries = entries.map((entry) => [
+      snakeCaseToCamelCase(entry[0]),
+      entry[1],
+    ]);
+
+    return Object.fromEntries(formattedEntries);
   });
 }
 
@@ -57,14 +72,14 @@ export function getTaxonomyTerm(endpoint, args = {}) {
  * Create a new taxonomy term.
  *
  * @param {string} endpoint absolute url to interact with taxonomy
- * @param {string} name Term name.
+ * @param {Object} args The args being sent.
+ * @param {string} args.name The name.
+ * @param {number|string} args.parent The parent id.
  * @return {Promise} Term promise.
  */
-export function createTaxonomyTerm(endpoint, name) {
+export function createTaxonomyTerm(endpoint, args) {
   return apiFetch({
-    url: addQueryArgs(endpoint, {
-      name,
-    }),
+    url: addQueryArgs(endpoint, args),
     method: 'POST',
   });
 }
