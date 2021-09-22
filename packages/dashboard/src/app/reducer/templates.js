@@ -31,6 +31,7 @@ export const defaultTemplatesState = {
   error: {},
   isLoading: false,
   templates: {},
+  templatesByTag: {},
   templatesOrderById: [],
   totalTemplates: null,
   totalPages: null,
@@ -73,6 +74,7 @@ function templateReducer(state, action) {
         totalPages: action.payload.totalPages,
         totalTemplates: action.payload.totalTemplates,
         allPagesFetched: action.payload.page >= action.payload.totalPages,
+        templatesByTag: action.payload.templatesByTag,
       };
     }
     case ACTION_TYPES.PLACEHOLDER:

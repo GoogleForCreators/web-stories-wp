@@ -75,13 +75,14 @@ function Popup({
   fillWidth = false,
   fillHeight = false,
   onPositionUpdate = noop,
+  refCallback = noop,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
   const popup = useRef(null);
 
   const positionPopup = useCallback(
-    (evt) => {
+    async (evt) => {
       if (!mounted) {
         return;
       }
@@ -90,7 +91,8 @@ function Popup({
       if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
         return;
       }
-      setPopupState({
+
+      await setPopupState({
         offset:
           anchor?.current && getOffset(placement, spacing, anchor, dock, popup),
       });
@@ -111,7 +113,10 @@ function Popup({
     };
   }, [isOpen, positionPopup]);
 
-  useLayoutEffect(onPositionUpdate, [popupState, onPositionUpdate]);
+  useLayoutEffect(() => {
+    onPositionUpdate(popupState);
+    refCallback(popup);
+  }, [popupState, onPositionUpdate, refCallback]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
 
@@ -147,6 +152,7 @@ Popup.propTypes = {
   fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   onPositionUpdate: PropTypes.func,
+  refCallback: PropTypes.func,
 };
 
 export { Popup, PLACEMENT };

@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\AMP;
 
 use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
@@ -57,26 +58,6 @@ use WP_Post;
  * @see \AMP_Theme_Support
  */
 class Sanitization {
-	use Publisher;
-
-	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
-	 * Sanitization constructor.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param Experiments $experiments Experiments instance.
-	 */
-	public function __construct( Experiments $experiments ) {
-		$this->experiments = $experiments;
-	}
-
 	/**
 	 * Sanitizes a document.
 	 *
@@ -426,19 +407,18 @@ class Sanitization {
 		$post = get_queried_object();
 
 		if ( $post instanceof \WP_Post && Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
-			$video_cache_enabled = $this->experiments->is_experiment_enabled( 'videoCache' ) && (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
+			$video_cache_enabled = (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
 
 			$story = new Story();
 			$story->load_from_post( $post );
 
 			$sanitizers[ Story_Sanitizer::class ] = [
-				'publisher_logo'             => $this->get_publisher_logo(),
-				'publisher'                  => $this->get_publisher_name(),
-				'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
-				'poster_images'              => [
+				'publisher_logo' => $story->get_publisher_logo_url(),
+				'publisher'      => $story->get_publisher_name(),
+				'poster_images'  => [
 					'poster-portrait-src' => $story->get_poster_portrait(),
 				],
-				'video_cache'                => $video_cache_enabled,
+				'video_cache'    => $video_cache_enabled,
 			];
 		}
 

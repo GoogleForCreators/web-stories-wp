@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
+import MockDate from 'mockdate';
 
 /**
  * Internal dependencies
@@ -44,8 +45,8 @@ function arrange(
         author: { id: 1, name: 'John Doe' },
         date: '2020-01-01T20:20:20',
         modified: '2020-01-01T20:20:19',
-        featuredMedia: { url: '' },
-        publisherLogoUrl: '',
+        featuredMedia: { id: 0, url: '', height: 0, width: 0 },
+        publisherLogo: { id: 0, url: '', height: 0, width: 0 },
         status: 'draft',
       },
     },
@@ -92,10 +93,12 @@ describe('PublishPanel', () => {
       'web_stories_ui_panel_settings:publishing',
       JSON.stringify({ isCollapsed: false })
     );
+    MockDate.set('2020-07-15T12:00:00+00:00');
   });
 
   afterAll(() => {
     localStorage.clear();
+    MockDate.reset();
   });
 
   it('should render PublishPanel', async () => {

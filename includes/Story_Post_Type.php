@@ -59,6 +59,13 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 
 	/**
+	 * Publisher logo meta key.
+	 *
+	 * @var string
+	 */
+	const PUBLISHER_LOGO_META_KEY = 'web_stories_publisher_logo';
+
+	/**
 	 * Registers the post type for stories.
 	 *
 	 * @todo refactor
@@ -70,7 +77,53 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return void
 	 */
 	public function register() {
-		register_post_type(
+		$this->register_post_type();
+		$this->register_meta();
+
+		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
+		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
+		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
+		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
+
+		add_action( 'add_option_' . Settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
+		add_action( 'update_option_' . Settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
+	}
+
+	/**
+	 * Act on site initialization.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being initialized.
+	 * @return void
+	 */
+	public function on_site_initialization( WP_Site $site ) {
+		$this->register_post_type();
+	}
+
+	/**
+	 * Act on plugin deactivation.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param bool $network_wide Whether the deactivation was done network-wide.
+	 * @return void
+	 */
+	public function on_plugin_deactivation( $network_wide ) {
+		$this->unregister_post_type();
+	}
+
+	/**
+	 * Register post type.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return \WP_Post_Type|\WP_Error
+	 */
+	public function register_post_type() {
+		$has_archive = 'default' === get_option( Settings::SETTING_NAME_ARCHIVE, 'default' );
+
+		return register_post_type(
 			self::POST_TYPE_SLUG,
 			[
 				'labels'                => [
@@ -116,13 +169,14 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 					'excerpt',
 					'thumbnail', // Used for poster images.
 					'revisions', // Without this, the REST API will return 404 for an autosave request.
+					'custom-fields',
 				],
 				'rewrite'               => [
 					'slug'       => self::REWRITE_SLUG,
 					'with_front' => false,
 				],
 				'public'                => true,
-				'has_archive'           => true,
+				'has_archive'           => $has_archive,
 				'exclude_from_search'   => true,
 				'show_ui'               => true,
 				'show_in_rest'          => true,
@@ -131,35 +185,41 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 				'map_meta_cap'          => true,
 			]
 		);
-
-		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
-		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
-		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
-		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
 	}
 
 	/**
-	 * Act on site initialization.
+	 * Unregister post type.
 	 *
-	 * @since 1.11.0
+	 * @since 1.12.0
 	 *
-	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function on_site_initialization( WP_Site $site ) {
-		$this->register();
-	}
-
-	/**
-	 * Act on plugin deactivation.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @param bool $network_wide Whether the deactivation was done network-wide.
-	 * @return void
-	 */
-	public function on_plugin_deactivation( $network_wide ) {
+	public function unregister_post_type() {
 		unregister_post_type( self::POST_TYPE_SLUG );
+	}
+
+	/**
+	 * Register post meta.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return void
+	 */
+	protected function register_meta() {
+		$active_publisher_logo_id = absint( get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
+
+		register_post_meta(
+			self::POST_TYPE_SLUG,
+			self::PUBLISHER_LOGO_META_KEY,
+			[
+				'sanitize_callback' => 'absint',
+				'type'              => 'integer',
+				'description'       => __( 'Publisher logo ID.', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => $active_publisher_logo_id,
+				'single'            => true,
+			]
+		);
 	}
 
 	/**
@@ -187,9 +247,11 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 		if ( ! is_array( $fields ) ) {
 			return $fields;
 		}
+
 		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
+
 		return $fields;
 	}
 
@@ -262,5 +324,20 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 		$cache_key   = "count_user_{$post->post_type}_{$post->post_author}";
 		$cache_group = 'user_posts_count';
 		wp_cache_delete( $cache_key, $cache_group );
+	}
+
+	/**
+	 * Clear rewrite rules on update on setting.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return void
+	 */
+	public function update_archive_setting() {
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+			$this->unregister_post_type();
+			$this->register_post_type();
+			flush_rewrite_rules( false );
+		}
 	}
 }

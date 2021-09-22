@@ -29,18 +29,12 @@ namespace Google\Web_Stories\Renderer\Story;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\AMP\Story_Sanitizer;
-use Google\Web_Stories\AMP\Optimization;
-use Google\Web_Stories\AMP\Sanitization;
 
 /**
  * Class HTML
  */
 class HTML {
-	use Publisher;
-
 	/**
 	 * Current post.
 	 *

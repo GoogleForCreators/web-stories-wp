@@ -39,7 +39,6 @@ const mockFetchSettings = jest.fn();
 const mockFetchMediaById = jest.fn();
 const mockUploadMedia = jest.fn();
 const mockUpdateSettings = jest.fn();
-const mockFetchCurrentUser = jest.fn();
 
 function createProviderValues({
   canUploadFiles,
@@ -104,9 +103,7 @@ function createProviderValues({
           uploadMedia: mockUploadMedia,
           fetchMediaById: mockFetchMediaById,
         },
-        usersApi: {
-          fetchCurrentUser: mockFetchCurrentUser,
-        },
+        usersApi: {},
       },
     },
   };
@@ -118,6 +115,7 @@ describe('Editor Settings: <Editor Settings />', function () {
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
+        usingLegacyAnalytics: false,
         canUploadFiles: true,
         canManageSettings: true,
         isLoading: false,
@@ -151,6 +149,7 @@ describe('Editor Settings: <Editor Settings />', function () {
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
+        usingLegacyAnalytics: false,
         canUploadFiles: true,
         canManageSettings: true,
         isLoading: false,
@@ -171,6 +170,7 @@ describe('Editor Settings: <Editor Settings />', function () {
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
+        usingLegacyAnalytics: false,
         canUploadFiles: true,
         canManageSettings: true,
         isLoading: false,
@@ -210,6 +210,7 @@ describe('Editor Settings: <Editor Settings />', function () {
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
+        usingLegacyAnalytics: false,
         canUploadFiles: false,
         canManageSettings: true,
         isLoading: false,
@@ -227,6 +228,7 @@ describe('Editor Settings: <Editor Settings />', function () {
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
+        usingLegacyAnalytics: false,
         canUploadFiles: true,
         canManageSettings: true,
         isLoading: false,

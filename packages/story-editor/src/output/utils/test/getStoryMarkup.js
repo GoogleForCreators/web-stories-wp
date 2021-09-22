@@ -32,7 +32,9 @@ describe('getStoryMarkup', () => {
       author: { id: 1, name: 'John Doe' },
       slug: 'story',
       link: 'https://example.com',
-      publisherLogoUrl: 'https://example.com',
+      publisherLogo: {
+        url: 'https://example.com',
+      },
       defaultPageDuration: 7,
       status: 'publish',
       date: '2020-04-10T07:06:26',
@@ -46,11 +48,8 @@ describe('getStoryMarkup', () => {
       },
       password: '',
     };
-    const meta = {
-      publisher: {
-        name: 'AMP',
-        logo: 'https://example.com/fallback-wordpress-publisher-logo.png',
-      },
+    const metadata = {
+      publisher: 'AMP',
     };
     const pages = [
       {
@@ -90,7 +89,7 @@ describe('getStoryMarkup', () => {
         ],
       },
     ];
-    const markup = getStoryMarkup(story, pages, meta);
+    const markup = getStoryMarkup(story, pages, metadata);
     expect(markup).toContain('Hello World');
     expect(markup).toContain('transform:rotate(1deg)');
     expect(markup).toContain(

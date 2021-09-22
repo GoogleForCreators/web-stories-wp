@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/overlay';
 import { setupReducer } from './_utils';
 
 describe('arrangeSelection', () => {
@@ -75,7 +74,6 @@ function getInitialState(selection) {
   return {
     pages: [
       {
-        overlay: OverlayType.NONE,
         id: '111',
         elements: [
           { id: '123', isBackground: true },

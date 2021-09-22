@@ -21,15 +21,51 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { useTaxonomy } from '../../../../app/taxonomy';
 import { SimplePanel } from '../../panel';
+import HierarchicalTermSelector from './HierarchicalTermSelector';
+import FlatTermSelector from './FlatTermSelector';
 
-function TaxonomiesPanel({ ...props }) {
+function TaxonomiesPanel(props) {
+  const { taxonomies } = useTaxonomy(({ state: { taxonomies } }) => ({
+    taxonomies,
+  }));
+
+  if (!taxonomies.length) {
+    return null;
+  }
+
+  // TODO: remove this eventually
+  // show categories before tags
+  const sortedTaxonomies = taxonomies.sort(
+    ({ restBase: restBaseA }, { restBase: restBaseB }) => {
+      if (restBaseA > restBaseB) {
+        return 1;
+      } else if (restBaseB > restBaseA) {
+        return -1;
+      }
+      return 0;
+    }
+  );
+
   return (
     <SimplePanel
       name="taxonomies"
       title={__('Categories and Tags', 'web-stories')}
       {...props}
-    />
+    >
+      {sortedTaxonomies.map((taxonomy) => {
+        if (!taxonomy?.visibility?.show_ui) {
+          return null;
+        }
+
+        return taxonomy.hierarchical ? (
+          <HierarchicalTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+        ) : (
+          <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+        );
+      })}
+    </SimplePanel>
   );
 }
 

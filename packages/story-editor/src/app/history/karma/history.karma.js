@@ -31,7 +31,9 @@ describe('CUJ: Creator can View and Modify Document Settings: Navigating without
     fixture.restore();
   });
 
-  it('should not have new history changes when switching tabs without changes', async () => {
+  // TODO: #9073
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should not have new history changes when switching tabs without changes', async () => {
     // Click on the shapes tab.
     await fixture.events.click(fixture.editor.library.shapesTab);
     // Click on the document tab.

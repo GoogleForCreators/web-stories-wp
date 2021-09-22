@@ -61,7 +61,12 @@ describe('useAutoSave', () => {
       title: 'Story!',
       author: { id: 1, name: 'John Doe' },
       slug: 'story',
-      publisherLogo: 1,
+      publisherLogo: {
+        id: 1,
+        url: 'https://example.com/logo.png',
+        height: 0,
+        width: 0,
+      },
       defaultPageDuration: 7,
       status: 'publish',
       date: '2020-04-10T07:06:26',
@@ -70,6 +75,7 @@ describe('useAutoSave', () => {
       featuredMedia: { id: 0 },
       password: '',
       globalStoryStyles: '',
+      taxonomies: [],
     };
     const pages = [
       {
@@ -106,7 +112,12 @@ describe('useAutoSave', () => {
       ...story,
       pages,
       content: 'Hello World!',
+      meta: {
+        web_stories_publisher_logo: 1,
+      },
     };
+    delete expected.publisherLogo;
+    delete expected.taxonomies;
     expect(autoSaveById).toHaveBeenCalledWith(expected);
   });
 });

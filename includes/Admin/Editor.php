@@ -30,11 +30,11 @@ use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
 use Google\Web_Stories\Traits\Post_Type;
@@ -46,7 +46,7 @@ use WP_Post;
  * @package Google\Web_Stories\Admin
  */
 class Editor extends Service_Base {
-	use Publisher, Types, Screen, Post_Type;
+	use Types, Screen, Post_Type;
 
 	/**
 	 * Web Stories editor script handle.
@@ -244,7 +244,7 @@ class Editor extends Service_Base {
 	 */
 	public function get_editor_settings(): array {
 		$post                 = get_post();
-		$story_id             = ( $post ) ? $post->ID : null;
+		$story_id             = $post->ID ?? null;
 		$rest_base            = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 		$general_settings_url = admin_url( 'options-general.php' );
 
@@ -287,6 +287,9 @@ class Editor extends Service_Base {
 		$audio_mime_types         = $this->get_allowed_audio_mime_types();
 		$page_templates_rest_base = $this->get_post_type_rest_base( Page_Template_Post_Type::POST_TYPE_SLUG );
 
+		$story = new Story();
+		$story->load_from_post( $post );
+
 		$settings = [
 			'id'         => 'web-stories-editor',
 			'config'     => [
@@ -321,11 +324,12 @@ class Editor extends Service_Base {
 					'hotlink'       => '/web-stories/v1/hotlink/',
 					'link'          => '/web-stories/v1/link/',
 					'statusCheck'   => '/web-stories/v1/status-check/',
+					'taxonomies'    => '/web-stories/v1/taxonomies/',
 					'metaBoxes'     => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
 					'storyLocking'  => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],
 				'metadata'                     => [
-					'publisher' => $this->get_publisher_data(),
+					'publisher' => $story->get_publisher_name(),
 				],
 				'postLock'                     => [
 					'interval'         => $time_window,

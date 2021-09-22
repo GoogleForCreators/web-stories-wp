@@ -22,6 +22,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
+import objectWithout from '../../utils/objectWithout';
 import getDefinitionForType from './getDefinitionForType';
 
 const createNewElement = (type, attributes = {}) => {
@@ -30,12 +31,17 @@ const createNewElement = (type, attributes = {}) => {
     throw new Error(`Unknown element type: ${type}`);
   }
   const { defaultAttributes } = element;
-  return {
+  const newElement = {
     ...defaultAttributes,
     ...attributes,
     type,
     id: uuidv4(),
   };
+  // There's an exception for the background shape that should not get all the default attributes.
+  if (attributes.isDefaultBackground) {
+    return objectWithout(newElement, ['backgroundColor']);
+  }
+  return newElement;
 };
 
 export default createNewElement;

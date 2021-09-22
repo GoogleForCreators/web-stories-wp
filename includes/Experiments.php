@@ -220,18 +220,6 @@ class Experiments extends Service_Base {
 	public function get_experiments(): array {
 		return [
 			/**
-			 * Author: @samwhale
-			 * Issue: 6153
-			 * Creation date: 2021-06-07
-			 */
-			[
-				'name'        => 'enableRightClickMenus',
-				'label'       => __( 'Right click menus', 'web-stories' ),
-				'description' => __( 'Enable a contextual shortcut menu when right clicking in the editor', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @littlemilkstudio
 			 * Issue: 6379
 			 * Creation date: 2021-03-09
@@ -343,18 +331,16 @@ class Experiments extends Service_Base {
 				'default'     => true,
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #8310
-			 * Creation date: 2021-07-13
+			 * Author: @spacedmonkey
+			 * Issue: #8811
+			 * Creation date: 2021-09-06
 			 */
 			[
-				'name'        => 'videoCache',
-				'label'       => __( 'Video Cache', 'web-stories' ),
-				'description' => __( 'Reduce hosting costs and improve user experience by serving videos from the Google cache.', 'web-stories' ),
+				'name'        => 'disableArchive',
+				'label'       => __( 'Archive Page', 'web-stories' ),
+				'description' => __( 'Allow disabling the Web Stories archive page', 'web-stories' ),
 				'group'       => 'general',
-				'default'     => true,
 			],
-
 			/**
 			 * Author: @miina
 			 * Issue #471
@@ -401,6 +387,18 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Thumbnail Caching', 'web-stories' ),
 				'description' => __( 'Enable thumbnail caching', 'web-stories' ),
 				'group'       => 'editor',
+			],
+
+			/**
+			 * Author: @swissspidy
+			 * Issue: #7739
+			 * Creation date: 2021-09-17
+			 */
+			[
+				'name'        => 'enableAutoAnalyticsMigration',
+				'label'       => __( 'Auto Analytics', 'web-stories' ),
+				'description' => __( 'Enable migration option to story auto analytics', 'web-stories' ),
+				'group'       => 'dashboard',
 			],
 		];
 	}

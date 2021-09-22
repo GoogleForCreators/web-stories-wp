@@ -97,7 +97,7 @@ function ButtonWithChecklistWarning({ text, isUploading, ...buttonProps }) {
 
 ButtonWithChecklistWarning.propTypes = {
   text: PropTypes.node.isRequired,
-  isUploading: PropTypes.bool.isRequired,
+  isUploading: PropTypes.bool,
 };
 
 export default ButtonWithChecklistWarning;

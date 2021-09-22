@@ -601,8 +601,6 @@ describe('Checklist integration - Card visibility', () => {
                 pages: [],
               },
               featured_media: 2,
-              featured_media_url: 'http://localhost:9876/__static__/earth.jpg',
-              publisher_logo_url: 'http://localhost:9876/__static__/earth.jpg',
               permalink_template: 'http://stories3.local/stories/%pagename%/',
               style_presets: { textStyles: [], colors: [] },
               password: '',
@@ -614,6 +612,12 @@ describe('Checklist integration - Card visibility', () => {
                     source_url: 'http://localhost:9876/__static__/earth.jpg',
                     height: 200,
                     width: 200,
+                  },
+                ],
+                'wp:publisherlogo': [
+                  {
+                    id: 0,
+                    source_url: 'http://localhost:9876/__static__/earth.jpg',
                   },
                 ],
               },

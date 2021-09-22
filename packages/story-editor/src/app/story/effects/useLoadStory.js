@@ -50,66 +50,23 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           excerpt: { raw: excerpt },
           link,
           story_data: storyDataRaw,
-          // todo: get publisher_logo_url image dimensions for prepublish checklist
-          publisher_logo_url: publisherLogoUrl,
           permalink_template: permalinkTemplate,
           style_presets: globalStoryStyles,
           password,
           preview_link: previewLink,
           edit_link: editLink,
           embed_post_link: embedPostLink,
-          _embedded: embedded = {},
-          _links: links = {},
+          author,
+          capabilities = {
+            hasPublishAction: false,
+            hasAssignAuthorAction: false,
+          },
+          lock_user: lockUser,
+          featured_media: featuredMedia,
+          publisher_logo: publisherLogo,
+          taxonomies,
+          terms,
         } = post;
-
-        const capabilities = {
-          hasPublishAction: Object.prototype.hasOwnProperty.call(
-            links,
-            'wp:action-publish'
-          ),
-          hasAssignAuthorAction: Object.prototype.hasOwnProperty.call(
-            links,
-            'wp:action-assign-author'
-          ),
-        };
-
-        let author = {
-          id: 0,
-          name: '',
-        };
-
-        if ('author' in embedded) {
-          author = {
-            id: embedded.author[0].id,
-            name: embedded.author[0].name,
-          };
-        }
-
-        let featuredMedia = {
-          id: 0,
-          height: 0,
-          width: 0,
-          url: '',
-        };
-
-        let lockUser = null;
-
-        if ('wp:lockuser' in embedded) {
-          lockUser = {
-            id: embedded['wp:lockuser'][0].id,
-            name: embedded['wp:lockuser'][0].name,
-            avatar: embedded['wp:lockuser'][0].avatar_urls?.['96'],
-          };
-        }
-
-        if ('wp:featuredmedia' in embedded) {
-          featuredMedia = {
-            id: embedded['wp:featuredmedia'][0].id,
-            height: embedded['wp:featuredmedia'][0].media_details?.height,
-            width: embedded['wp:featuredmedia'][0].media_details?.width,
-            url: embedded['wp:featuredmedia'][0].source_url,
-          };
-        }
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
@@ -162,7 +119,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           lockUser,
           featuredMedia,
           permalinkConfig,
-          publisherLogoUrl,
+          publisherLogo,
           password,
           previewLink,
           editLink,
@@ -176,6 +133,8 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,
           backgroundAudio: storyData?.backgroundAudio,
+          taxonomies,
+          terms,
         };
 
         // TODO read current page and selection from deeplink?

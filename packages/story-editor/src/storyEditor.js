@@ -38,19 +38,16 @@ import { StoryProvider } from './app/story';
 import { FontProvider } from './app/font';
 import { MediaProvider } from './app/media';
 import { CurrentUserProvider } from './app/currentUser';
+import { TaxonomyProvider } from './app/taxonomy';
 import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
-import StatusCheck from './components/statusCheck';
-import PostLock from './components/postLock';
-import Layout from './components/layout';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
-import { MetaBoxesProvider } from './integrations/wordpress/metaBoxes';
 
 function StoryEditor({ config, children }) {
   const { storyId, isRTL } = config;
@@ -60,15 +57,13 @@ function StoryEditor({ config, children }) {
         <ErrorBoundary>
           <ConfigProvider config={config}>
             <APIProvider>
-              <StatusCheck />
               <FileProvider>
                 <Media3pApiProvider>
                   <HistoryProvider size={50}>
                     <SnackbarProvider>
-                      <MetaBoxesProvider>
-                        <StoryProvider storyId={storyId}>
+                      <StoryProvider storyId={storyId}>
+                        <TaxonomyProvider>
                           <CurrentUserProvider>
-                            <PostLock />
                             <FontProvider>
                               <MediaProvider>
                                 <AutoSaveHandler />
@@ -82,7 +77,6 @@ function StoryEditor({ config, children }) {
                                       <ModalGlobalStyle />
                                       <CalendarStyle />
                                       <KeyboardOnlyOutlines />
-                                      <Layout />
                                       {children}
                                     </HelpCenterProvider>
                                   </DropTargetsProvider>
@@ -90,8 +84,8 @@ function StoryEditor({ config, children }) {
                               </MediaProvider>
                             </FontProvider>
                           </CurrentUserProvider>
-                        </StoryProvider>
-                      </MetaBoxesProvider>
+                        </TaxonomyProvider>
+                      </StoryProvider>
                     </SnackbarProvider>
                   </HistoryProvider>
                 </Media3pApiProvider>
