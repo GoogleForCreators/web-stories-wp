@@ -125,7 +125,7 @@ jobs:
       # 1. Installs latest possible version of PHPUnit
       - name: Update PHPUnit
         run: |
-          composer update --dev --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
+          composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
         if: ${{ matrix.php == '8.0' }}
 
       - name: Set up problem matchers for PHPUnit
