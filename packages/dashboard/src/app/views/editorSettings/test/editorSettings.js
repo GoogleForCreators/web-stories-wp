@@ -35,7 +35,6 @@ import { AD_NETWORK_TYPE } from '../../../../constants';
 const mockFetchSettings = jest.fn();
 const mockUploadMedia = jest.fn();
 const mockUpdateSettings = jest.fn();
-const mockFetchCurrentUser = jest.fn();
 const mockFetchPublisherLogos = jest.fn();
 const mockAddPublisherLogo = jest.fn();
 const mockRemovePublisherLogo = jest.fn();
@@ -102,15 +101,15 @@ function createProviderValues({
         mediaApi: {
           uploadMedia: mockUploadMedia,
         },
-        usersApi: {
-          fetchCurrentUser: mockFetchCurrentUser,
-        },
+        usersApi: {},
         publisherLogosApi: {
+          fetchPublisherLogos: mockFetchP        publisherLogosApi: {
           fetchPublisherLogos: mockFetchPublisherLogos,
           addPublisherLogo: mockAddPublisherLogo,
-          removePublisherLogo: mockRemovePublisherLogo,
+          mockRemovePublisherogo,
           setPublisherLogoAsDefault: mockSetPublisherLogoAsDefault,
         },
+        usersApi: {},
       },
     },
   };

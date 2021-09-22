@@ -20,13 +20,13 @@
 import { memo, useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { ContextMenu } from '@web-stories-wp/design-system';
+import Proptypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { useQuickActions } from '../../app/highlights';
 import DirectionAware from '../directionAware';
-import Header from '../header';
 import Carousel from '../carousel';
 import { useLayout } from '../../app';
 import {
@@ -37,7 +37,7 @@ import {
   Z_INDEX,
 } from './layout';
 
-function NavLayer() {
+function NavLayer({ header }) {
   const { hasHorizontalOverflow } = useLayout(
     ({ state: { hasHorizontalOverflow } }) => ({ hasHorizontalOverflow })
   );
@@ -61,9 +61,7 @@ function NavLayer() {
       zIndex={Z_INDEX.NAV}
       onMouseDown={(evt) => evt.stopPropagation()}
     >
-      <HeadArea pointerEvents="initial">
-        <Header />
-      </HeadArea>
+      <HeadArea pointerEvents="initial">{header}</HeadArea>
       {showQuickActions && (
         <DirectionAware>
           <QuickActionsArea>
@@ -87,5 +85,9 @@ function NavLayer() {
     </Layer>
   );
 }
+
+NavLayer.propTypes = {
+  header: Proptypes.node,
+};
 
 export default memo(NavLayer);

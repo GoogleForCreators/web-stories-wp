@@ -90,7 +90,6 @@ export default function ApiProviderFixture({ children }) {
 
   const usersApi = useMemo(
     () => ({
-      fetchCurrentUser: jasmine.createSpy('fetchCurrentUser'),
       toggleWebStoriesTrackingOptIn: () =>
         setCurrentUser(toggleOptInTracking(currentUser)),
     }),

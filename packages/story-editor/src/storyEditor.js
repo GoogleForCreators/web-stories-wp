@@ -43,13 +43,11 @@ import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
-import Layout from './components/layout';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
-import { MetaBoxesProvider } from './integrations/wordpress/metaBoxes';
 
 function StoryEditor({ config, children }) {
   const { storyId, isRTL } = config;
@@ -63,34 +61,31 @@ function StoryEditor({ config, children }) {
                 <Media3pApiProvider>
                   <HistoryProvider size={50}>
                     <SnackbarProvider>
-                      <MetaBoxesProvider>
-                        <StoryProvider storyId={storyId}>
-                          <TaxonomyProvider>
-                            <CurrentUserProvider>
-                              <FontProvider>
-                                <MediaProvider>
-                                  <AutoSaveHandler />
-                                  <TransformProvider>
-                                    <DropTargetsProvider>
-                                      <HelpCenterProvider>
-                                        <GlobalStyle />
-                                        <DevTools />
-                                        <DefaultMoveableGlobalStyle />
-                                        <CropMoveableGlobalStyle />
-                                        <ModalGlobalStyle />
-                                        <CalendarStyle />
-                                        <KeyboardOnlyOutlines />
-                                        <Layout />
-                                        {children}
-                                      </HelpCenterProvider>
-                                    </DropTargetsProvider>
-                                  </TransformProvider>
-                                </MediaProvider>
-                              </FontProvider>
-                            </CurrentUserProvider>
-                          </TaxonomyProvider>
-                        </StoryProvider>
-                      </MetaBoxesProvider>
+                      <StoryProvider storyId={storyId}>
+                        <TaxonomyProvider>
+                          <CurrentUserProvider>
+                            <FontProvider>
+                              <MediaProvider>
+                                <AutoSaveHandler />
+                                <TransformProvider>
+                                  <DropTargetsProvider>
+                                    <HelpCenterProvider>
+                                      <GlobalStyle />
+                                      <DevTools />
+                                      <DefaultMoveableGlobalStyle />
+                                      <CropMoveableGlobalStyle />
+                                      <ModalGlobalStyle />
+                                      <CalendarStyle />
+                                      <KeyboardOnlyOutlines />
+                                      {children}
+                                    </HelpCenterProvider>
+                                  </DropTargetsProvider>
+                                </TransformProvider>
+                              </MediaProvider>
+                            </FontProvider>
+                          </CurrentUserProvider>
+                        </TaxonomyProvider>
+                      </StoryProvider>
                     </SnackbarProvider>
                   </HistoryProvider>
                 </Media3pApiProvider>
