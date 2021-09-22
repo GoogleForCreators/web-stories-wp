@@ -887,7 +887,7 @@ class APIProviderFixture {
       );
 
       const getTaxonomies = useCallback(
-        () => asyncResponse({ ...taxonomiesResponse }),
+        () => asyncResponse(taxonomiesResponse),
         []
       );
 

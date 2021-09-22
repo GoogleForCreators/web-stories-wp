@@ -13,6 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as flattenFormData } from './flattenFormData';
-export { default as base64Encode } from './base64Encode';
-export { default as snakeCaseToCamelCase } from './snakeCaseToCamelCase';
+/**
+ * Takes a string that is in snake case and returns the same
+ * term in camel case.
+ *
+ * @param {string} string The key in snake case
+ * @return {string} The key in camel case
+ */
+function snakeCaseToCamelCase(string = '') {
+  return string
+    .toLowerCase()
+    .replace(
+      /([a-z])([_][a-z])/g,
+      (_match, group1, group2) => group1 + group2.toUpperCase().replace('_', '')
+    );
+}
+
+export default snakeCaseToCamelCase;
