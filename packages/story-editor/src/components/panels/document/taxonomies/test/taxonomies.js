@@ -82,7 +82,7 @@ describe('TaxonomiesPanel', () => {
     arrange({
       taxonomies: [
         {
-          slug: 'web_story_tags',
+          slug: 'web_story_tag',
           restBase: 'web_story_tags',
           name: 'Tags',
           labels: {},

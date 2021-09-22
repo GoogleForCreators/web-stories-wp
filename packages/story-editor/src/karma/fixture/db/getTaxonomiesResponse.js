@@ -56,7 +56,7 @@ export default [
     types: ['web-story'],
     showCloud: true,
     hierarchical: false,
-    restBase: 'web_story_tags',
+    restBase: 'web_story_tag',
     visibility: {
       public: true,
       publicly_queryable: true,
