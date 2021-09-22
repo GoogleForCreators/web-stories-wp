@@ -37,6 +37,7 @@ function VideoTrimProvider({ children }) {
     setStartOffset,
     setEndOffset,
     setVideoNode,
+    resetOffsets,
   } = useVideoNode();
 
   const value = {
@@ -54,6 +55,7 @@ function VideoTrimProvider({ children }) {
       setVideoNode,
       setStartOffset,
       setEndOffset,
+      resetOffsets,
     },
   };
 

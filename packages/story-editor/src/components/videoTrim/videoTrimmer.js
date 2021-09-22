@@ -50,8 +50,8 @@ function VideoTrimmer() {
     setEndOffset,
     trimBackgroundImage,
     hasChanged,
-    toggleTrimMode,
     performTrim,
+    resetOffsets,
   } = useVideoTrim(
     ({
       state: {
@@ -62,7 +62,7 @@ function VideoTrimmer() {
         trimBackgroundImage,
         hasChanged,
       },
-      actions: { setStartOffset, setEndOffset, toggleTrimMode, performTrim },
+      actions: { setStartOffset, setEndOffset, performTrim, resetOffsets },
     }) => ({
       currentTime,
       startOffset,
@@ -72,8 +72,8 @@ function VideoTrimmer() {
       setEndOffset,
       trimBackgroundImage,
       hasChanged,
-      toggleTrimMode,
       performTrim,
+      resetOffsets,
     })
   );
   const { pageWidth } = useLayout(({ state: { pageWidth } }) => ({
@@ -92,7 +92,7 @@ function VideoTrimmer() {
             variant={BUTTON_VARIANTS.RECTANGLE}
             type={BUTTON_TYPES.SECONDARY}
             size={BUTTON_SIZES.SMALL}
-            onClick={toggleTrimMode}
+            onClick={resetOffsets}
           >
             {__('Cancel', 'web-stories')}
           </Button>
