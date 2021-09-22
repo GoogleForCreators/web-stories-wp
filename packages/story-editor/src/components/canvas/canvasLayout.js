@@ -21,6 +21,7 @@ import styled, { StyleSheetManager } from 'styled-components';
 import { memo, useRef, useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { useFeature } from 'flagged';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -50,7 +51,7 @@ const Background = styled.section.attrs({
   user-select: none;
 `;
 
-function CanvasLayout() {
+function CanvasLayout({ header }) {
   const { setCanvasContainer } = useCanvas((state) => ({
     setCanvasContainer: state.actions.setCanvasContainer,
   }));
@@ -83,7 +84,7 @@ function CanvasLayout() {
               <SelectionCanvas>
                 <DisplayLayer />
                 <FramesLayer />
-                <NavLayer />
+                <NavLayer header={header} />
               </SelectionCanvas>
               <EditLayer />
               {enableEyedropper && <EyedropperLayer />}
@@ -94,5 +95,9 @@ function CanvasLayout() {
     </RightClickMenuProvider>
   );
 }
+
+CanvasLayout.propTypes = {
+  header: PropTypes.node,
+};
 
 export default memo(CanvasLayout);
