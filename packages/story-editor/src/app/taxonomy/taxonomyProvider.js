@@ -45,11 +45,11 @@ function TaxonomyProvider(props) {
   const [termCache, setTermCache] = useState({});
   // Should grab categories on mount
   const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
-  const { updateStory, isStoryLoaded, terms, hasTaxonomies } = useStory(
-    ({ state: { pages, story }, actions: { updateStory } }) => ({
-      updateStory,
+  const { setTerms, isStoryLoaded, embeddedTerms, hasTaxonomies } = useStory(
+    ({ state: { pages, story }, actions: { setTerms } }) => ({
+      setTerms,
       isStoryLoaded: pages.length > 0,
-      terms: story.terms,
+      embeddedTerms: story.embeddedTerms,
       hasTaxonomies: story?.taxonomies?.length > 0,
     })
   );
@@ -87,7 +87,7 @@ function TaxonomyProvider(props) {
     ) {
       const taxonomiesBySlug = dictionaryOnKey(taxonomies, 'slug');
       const initialCache = mapObjectKeys(
-        cacheFromEmbeddedTerms(terms),
+        cacheFromEmbeddedTerms(embeddedTerms),
         (slug) => taxonomiesBySlug[slug]?.restBase
       );
       const initialSelectedSlugs = mapObjectVals(initialCache, (val) =>
@@ -98,7 +98,13 @@ function TaxonomyProvider(props) {
       setTermCache(initialCache);
       setSelectedSlugs(initialSelectedSlugs);
     }
-  }, [terms, isStoryLoaded, taxonomies, setSelectedSlugs, setTermCache]);
+  }, [
+    embeddedTerms,
+    isStoryLoaded,
+    taxonomies,
+    setSelectedSlugs,
+    setTermCache,
+  ]);
 
   // With the freeform taxonomy input, we can have terms selected
   // that may be in the process of being created or retrieved from
@@ -118,12 +124,8 @@ function TaxonomyProvider(props) {
       ]
     );
     const updatedTerms = objectFromEntries(termEntries);
-    updateStory({
-      properties: {
-        terms: updatedTerms,
-      },
-    });
-  }, [updateStory, selectedSlugs, termCache]);
+    setTerms(updatedTerms);
+  }, [setTerms, selectedSlugs, termCache]);
 
   const addSearchResultsToCache = useCallback(
     async (

@@ -65,7 +65,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           featured_media: featuredMedia,
           publisher_logo: publisherLogo,
           taxonomies,
-          terms,
+          terms: embeddedTerms,
         } = post;
 
         const [prefix, suffix] = permalinkTemplate.split(
@@ -134,7 +134,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           defaultPageDuration: storyData?.defaultPageDuration,
           backgroundAudio: storyData?.backgroundAudio,
           taxonomies,
-          terms,
+          embeddedTerms,
         };
 
         // TODO read current page and selection from deeplink?

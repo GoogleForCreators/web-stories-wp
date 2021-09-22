@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useEffect } from '@web-stories-wp/react';
+import { useMemo, useEffect, useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -53,8 +53,23 @@ function StoryProvider({ storyId, children }) {
   } = useStoryReducer({
     current: hashPageId,
   });
-  const { pages, current, selection, story, animationState, capabilities } =
-    reducerState;
+  const {
+    pages,
+    current,
+    selection,
+    story: storyWithoutTerms,
+    animationState,
+    capabilities,
+  } = reducerState;
+
+  const [terms, setTerms] = useState({});
+  const story = useMemo(
+    () => ({
+      ...storyWithoutTerms,
+      terms,
+    }),
+    [terms, storyWithoutTerms]
+  );
 
   useEffect(() => setHashPageId(current), [current, setHashPageId]);
 
@@ -122,7 +137,13 @@ function StoryProvider({ storyId, children }) {
   useLoadStory({ restore, shouldLoad, storyId, isDemo });
 
   // These effects send updates to and restores state from history.
-  useHistoryEntry({ pages, current, selection, story, capabilities });
+  useHistoryEntry({
+    pages,
+    current,
+    selection,
+    story: storyWithoutTerms,
+    capabilities,
+  });
   useHistoryReplay({ restore });
 
   // This action allows the user to save the story
@@ -194,6 +215,7 @@ function StoryProvider({ storyId, children }) {
       ...api,
       autoSave,
       saveStory,
+      setTerms,
     },
     internal: { reducerState, restore },
   };
