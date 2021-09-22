@@ -327,7 +327,7 @@ class Publisher_Logos_Controller extends REST_Controller {
 			$data['active']           = $post->ID === $active_publisher_logo_id;
 		}
 
-		if ( in_array( 'url', $fields, true ) ) {
+		if ( rest_is_field_included( 'url', $fields ) ) {
 			$data['url'] = wp_get_attachment_url( $post->ID );
 		}
 
