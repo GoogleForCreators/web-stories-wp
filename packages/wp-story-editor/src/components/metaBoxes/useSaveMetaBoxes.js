@@ -34,7 +34,6 @@ import useMetaBoxes from './useMetaBoxes';
  * @param {Object} props.story Story object.
  * @param {boolean} props.isSavingStory Whether saving is in progress.
  * @param {boolean} props.isAutoSavingStory Whether autosaving is in progress.
- * @return {{isSavingMetaBoxes: boolean}} Metaboxes status.
  */
 function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
   const { hasMetaBoxes, locations, isSavingMetaBoxes, setIsSavingMetaBoxes } =
