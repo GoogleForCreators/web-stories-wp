@@ -24,8 +24,8 @@ import { memo } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
+import HeaderTitle from '../../../../components/header/title';
 import Buttons from './buttons';
-import Title from './title';
 
 const Background = styled.header.attrs({
   role: 'group',
@@ -50,7 +50,7 @@ function HeaderLayout() {
   return (
     <Background>
       <Head>
-        <Title />
+        <HeaderTitle />
       </Head>
       <ButtonCell>
         <Buttons />
