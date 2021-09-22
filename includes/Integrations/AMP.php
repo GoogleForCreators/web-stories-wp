@@ -28,8 +28,8 @@ namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Services;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
@@ -139,7 +139,7 @@ class AMP extends Service_Base {
 			return $sanitizers;
 		}
 
-		$video_cache_enabled = (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
+		$video_cache_enabled = (bool) Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_VIDEO_CACHE );
 
 		$story = new Story();
 		$story->load_from_post( $post );

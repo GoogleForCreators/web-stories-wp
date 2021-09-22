@@ -17,9 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Renderer\Story;
 
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_Post;

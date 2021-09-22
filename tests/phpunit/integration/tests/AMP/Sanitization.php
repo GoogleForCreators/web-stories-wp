@@ -18,7 +18,6 @@
 namespace Google\Web_Stories\Tests\Integration\AMP;
 
 use DOMElement;
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories_Dependencies\AMP_Dev_Mode_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;

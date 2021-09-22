@@ -44,6 +44,12 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
+		// Needed because the block will exist already after hooking up the plugin
+		// on plugins_loaded. This avoids _doing_it_wrong messages
+		// due to registering the plugin (and thus the block) again.
+		// TODO: Figure out a better way.
+		unregister_block_type( 'web-stories/embed' );
+
 		// We're intentionally avoiding the PluginFactory here as it uses a
 		// static instance, because its whole point is to allow reuse across consumers.
 		$this->plugin = new Plugin();

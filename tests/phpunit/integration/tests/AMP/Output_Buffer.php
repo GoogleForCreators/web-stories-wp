@@ -20,7 +20,6 @@ namespace Google\Web_Stories\Tests\Integration\AMP;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\HTML;
-use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\AMP\Sanitization;
 use Google\Web_Stories\AMP\Optimization;

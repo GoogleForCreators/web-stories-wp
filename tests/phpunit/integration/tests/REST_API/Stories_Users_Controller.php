@@ -17,10 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use Spy_REST_Server;
-use WP_REST_Request;
 
 /**
  * Class Stories_Users_Controller
@@ -34,6 +32,13 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 	protected $server;
 
 	protected static $user_id;
+
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\REST_API\Stories_Users_Controller
+	 */
+	private $controller;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
@@ -53,23 +58,21 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 				'post_type'   => $post_type,
 			]
 		);
+	}
+
+	public static function wpTearDownAfterClass() {
+		self::delete_user( self::$user_id );
+	}
+
+	public function setUp() {
+		parent::setUp();
 
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
-	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-	}
-
-	public function setUp() {
-		parent::setUp();
+		$this->controller = new \Google\Web_Stories\REST_API\Stories_Users_Controller();
 
 		$this->add_caps_to_roles();
 
@@ -77,17 +80,21 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 	}
 
 	public function tearDown() {
-		$this->remove_caps_from_roles();
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
 
-		$this->set_permalink_structure( '' );
+		$this->remove_caps_from_roles();
 
 		parent::tearDown();
 	}
 
 	/**
-	 * @covers ::register_routes
+	 * @covers ::register
 	 */
-	public function test_register_routes() {
+	public function test_register() {
+		$this->controller->register();
+
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/users', $routes );
@@ -99,11 +106,13 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 	 * @covers \Google\Web_Stories\Story_Post_Type::clear_user_posts_count
 	 */
 	public function test_count_user_posts() {
-		$controller = new \Google\Web_Stories\REST_API\Stories_Users_Controller();
-		$post_type  = new \Google\Web_Stories\Story_Post_Type();
+		$this->controller->register();
+
+		$post_type = new \Google\Web_Stories\Story_Post_Type();
 		$post_type->register();
+
 		$result1 = $this->call_private_method(
-			$controller,
+			$this->controller,
 			'user_posts_count_public',
 			[
 				self::$user_id,
@@ -120,7 +129,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 			]
 		);
 		$result2 = $this->call_private_method(
-			$controller,
+			$this->controller,
 			'user_posts_count_public',
 			[
 				self::$user_id,
@@ -133,7 +142,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 		wp_delete_post( $post_id, true );
 
 		$result3 = $this->call_private_method(
-			$controller,
+			$this->controller,
 			'user_posts_count_public',
 			[
 				self::$user_id,
@@ -149,6 +158,8 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 	 * @covers \Google\Web_Stories\Story_Post_Type::clear_user_posts_count
 	 */
 	public function test_count_user_posts_invalid() {
+		$this->controller->register();
+
 		$controller = new \Google\Web_Stories\REST_API\Stories_Users_Controller();
 		$post_type  = new \Google\Web_Stories\Story_Post_Type();
 		$post_type->register();

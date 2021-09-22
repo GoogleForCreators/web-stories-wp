@@ -26,14 +26,21 @@ use WP_REST_Request;
  *
  * @package Google\Web_Stories\Tests\REST_API
  *
- * @coversDefaultClass \Google\Web_Stories\REST_API\Lock_Controller
+ * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Lock_Controller
  */
-class Lock_Controller extends Test_REST_TestCase {
+class Stories_Lock_Controller extends Test_REST_TestCase {
 	protected $server;
 
 	protected static $author_id;
 	protected static $subscriber;
 	protected static $editor;
+
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\REST_API\Stories_Lock_Controller
+	 */
+	private $controller;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$subscriber = $factory->user->create(
@@ -52,38 +59,42 @@ class Lock_Controller extends Test_REST_TestCase {
 				'user_email' => 'editor@example.com',
 			]
 		);
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
 	}
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$author_id );
 		self::delete_user( self::$subscriber );
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
 	}
 
 	public function setUp() {
 		parent::setUp();
 
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = new Spy_REST_Server();
+		do_action( 'rest_api_init', $wp_rest_server );
+
+		$this->controller = new \Google\Web_Stories\REST_API\Stories_Lock_Controller();
+
 		$this->add_caps_to_roles();
 	}
 
 	public function tearDown() {
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
+
 		$this->remove_caps_from_roles();
 
 		parent::tearDown();
 	}
 
 	/**
-	 * @covers ::register_routes
+	 * @covers ::register
 	 */
-	public function test_register_routes() {
+	public function test_register() {
+		$this->controller->register();
+
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/web-story/(?P<id>[\d]+)/lock', $routes );
@@ -96,6 +107,8 @@ class Lock_Controller extends Test_REST_TestCase {
 	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$author_id );
 		$story    = self::factory()->post->create(
 			[
@@ -117,6 +130,8 @@ class Lock_Controller extends Test_REST_TestCase {
 	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item_no_story() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$author_id );
 
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/99999/lock' );
@@ -130,6 +145,8 @@ class Lock_Controller extends Test_REST_TestCase {
 	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item_not_a_story() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$author_id );
 
 		$post_id = self::factory()->post->create(
@@ -149,6 +166,8 @@ class Lock_Controller extends Test_REST_TestCase {
 	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item_no_perm() {
+		$this->controller->register();
+
 		$story    = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
@@ -166,6 +185,8 @@ class Lock_Controller extends Test_REST_TestCase {
 	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item_wrong_perm() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$subscriber );
 		$story    = self::factory()->post->create(
 			[
@@ -186,6 +207,8 @@ class Lock_Controller extends Test_REST_TestCase {
 	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item_with_lock() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$author_id );
 		$story    = self::factory()->post->create(
 			[
@@ -213,6 +236,8 @@ class Lock_Controller extends Test_REST_TestCase {
 	 * @covers ::update_item_permissions_check
 	 */
 	public function test_update_item() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$author_id );
 		$story = self::factory()->post->create(
 			[
@@ -235,6 +260,8 @@ class Lock_Controller extends Test_REST_TestCase {
 	 * @covers ::delete_item_permissions_check
 	 */
 	public function test_delete_item() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$author_id );
 		$story = self::factory()->post->create(
 			[
@@ -261,6 +288,8 @@ class Lock_Controller extends Test_REST_TestCase {
 	 * @covers ::delete_item_permissions_check
 	 */
 	public function test_delete_item_with_lock() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$author_id );
 		$story    = self::factory()->post->create(
 			[
@@ -289,6 +318,8 @@ class Lock_Controller extends Test_REST_TestCase {
 	 * @covers ::delete_item_permissions_check
 	 */
 	public function test_delete_item_with_lock_another_user() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$story    = self::factory()->post->create(
 			[
@@ -310,6 +341,8 @@ class Lock_Controller extends Test_REST_TestCase {
 	 * @covers ::get_lock
 	 */
 	public function test_get_lock() {
+		$this->controller->register();
+
 		$controller = new \Google\Web_Stories\REST_API\Stories_Lock_Controller();
 		$story      = self::factory()->post->create(
 			[

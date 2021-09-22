@@ -192,4 +192,13 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 
 		return $all_capabilities;
 	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type', 'taxonomy.category', 'taxonomy.tag' ];
+	}
 }

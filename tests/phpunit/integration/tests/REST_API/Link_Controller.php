@@ -39,6 +39,13 @@ class Link_Controller extends Test_REST_TestCase {
 	 */
 	protected $request_count = 0;
 
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\REST_API\Link_Controller
+	 */
+	private $controller;
+
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$subscriber = $factory->user->create(
 			[
@@ -51,32 +58,34 @@ class Link_Controller extends Test_REST_TestCase {
 				'user_email' => 'editor@example.com',
 			]
 		);
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
 	}
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$subscriber );
 		self::delete_user( self::$editor );
-
-		/** @var WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
 	}
 
 	public function setUp() {
 		parent::setUp();
 
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = new Spy_REST_Server();
+		do_action( 'rest_api_init', $wp_rest_server );
+
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
+
+		$this->controller = new \Google\Web_Stories\REST_API\Link_Controller();
 
 		$this->add_caps_to_roles();
 	}
 
 	public function tearDown() {
+		/** @var WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
+
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 
 		$this->remove_caps_from_roles();
@@ -150,7 +159,12 @@ class Link_Controller extends Test_REST_TestCase {
 		return $preempt;
 	}
 
-	public function test_register_routes() {
+	/**
+	 * @covers ::register
+	 */
+	public function test_register() {
+		$this->controller->register();
+
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/link', $routes );
@@ -163,14 +177,24 @@ class Link_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'args', $route[0] );
 	}
 
-	public function test_without_permission() {
-		// Test without a login.
+	/**
+	 * @covers ::parse_link_permissions_check
+	 */
+	public function test_no_user() {
+		$this->controller->register();
+
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$response = rest_get_server()->dispatch( $request );
 
 		$this->assertEquals( 400, $response->get_status() );
+	}
 
-		// Test with a user that does not have edit_posts capability.
+	/**
+	 * @covers ::parse_link_permissions_check
+	 */
+	public function test_without_permission() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$subscriber );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_VALID );
@@ -181,7 +205,12 @@ class Link_Controller extends Test_REST_TestCase {
 		$this->assertEquals( $data['code'], 'rest_forbidden' );
 	}
 
+	/**
+	 * @covers ::parse_link
+	 */
 	public function test_url_invalid_url() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_INVALID );
@@ -192,6 +221,8 @@ class Link_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_url_returning_500() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_500 );
@@ -201,6 +232,8 @@ class Link_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_url_returning_404() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_404 );
@@ -219,6 +252,8 @@ class Link_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_url_empty_string() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', '' );
@@ -229,6 +264,8 @@ class Link_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_empty_url() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_EMPTY_DOCUMENT );
@@ -250,6 +287,8 @@ class Link_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_characters_url() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_CHARACTERS );
@@ -271,6 +310,8 @@ class Link_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_example_url() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_VALID_TITLE_ONLY );
@@ -292,6 +333,8 @@ class Link_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_valid_url() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_VALID );
@@ -313,6 +356,8 @@ class Link_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_removes_trailing_slashes() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_VALID_TITLE_ONLY );

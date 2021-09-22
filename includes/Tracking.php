@@ -129,6 +129,17 @@ class Tracking extends Service_Base {
 	}
 
 	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'user_preferences' ];
+	}
+
+	/**
 	 * Returns tracking settings to pass to the inline script.
 	 *
 	 * @since 1.0.0
@@ -161,7 +172,7 @@ class Tracking extends Service_Base {
 
 		$site_kit_status = $this->site_kit->get_plugin_status();
 		$active_plugins  = $site_kit_status['active'] ? 'google-site-kit' : '';
-		$analytics       = $site_kit_status['analyticsActive'] ? 'google-site-kit' : ! empty( get_option( Settings::SETTING_NAME_TRACKING_ID ) );
+		$analytics       = $site_kit_status['analyticsActive'] ? 'google-site-kit' : ! empty( Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_TRACKING_ID ) );
 
 		return [
 			'siteLocale'         => get_locale(),
@@ -171,7 +182,7 @@ class Tracking extends Service_Base {
 			'wpVersion'          => get_bloginfo( 'version' ),
 			'phpVersion'         => PHP_VERSION,
 			'isMultisite'        => (int) is_multisite(),
-			'adNetwork'          => (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ),
+			'adNetwork'          => (string) Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_AD_NETWORK, 'none' ),
 			'analytics'          => $analytics,
 			'activePlugins'      => $active_plugins,
 		];
@@ -183,6 +194,6 @@ class Tracking extends Service_Base {
 	 * @return bool True if tracking enabled, and False if not.
 	 */
 	public function is_active(): bool {
-		return (bool) get_user_meta( get_current_user_id(), Preferences::OPTIN_META_KEY, true );
+		return (bool) Services::get( 'user_preferences' )->get_preference( get_current_user_id(), Preferences::OPTIN_META_KEY );
 	}
 }

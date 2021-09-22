@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
-use Google\Web_Stories\Assets;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**

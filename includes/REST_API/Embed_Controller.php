@@ -32,6 +32,7 @@ use Google\Web_Stories\Traits\Document_Parser;
 use Google\Web_Stories\Traits\Post_Type;
 use WP_Error;
 use WP_Http;
+use WP_Network;
 use WP_Post;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -237,7 +238,7 @@ class Embed_Controller extends REST_Controller {
 				$path    = explode( '/', ltrim( $url_parts['path'], '/' ) );
 				$path    = count( $path ) > 2 ? reset( $path ) : false;
 				$network = get_network();
-				if ( $path && $network instanceof \WP_Network ) {
+				if ( $path && $network instanceof WP_Network ) {
 					$qv['path'] = $network->path . $path . '/';
 				}
 			}
@@ -363,10 +364,7 @@ class Embed_Controller extends REST_Controller {
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
 
-		// Wrap the data in a response object.
-		$response = rest_ensure_response( $data );
-
-		return $response;
+		return rest_ensure_response( $data );
 	}
 
 

@@ -30,7 +30,6 @@ use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Screen;
 use WP_Query;
 use WP_Post;
-use WP_REST_Request;
 
 /**
  * Class Media_Source_Taxonomy

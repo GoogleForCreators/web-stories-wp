@@ -17,8 +17,11 @@
 
 namespace Google\Web_Stories\Tests\Integration\User;
 
+use Google\Web_Stories\REST_API\Stories_Users_Controller;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use Spy_REST_Server;
 use WP_REST_Request;
+use WP_REST_Server;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\User\Preferences
@@ -37,6 +40,11 @@ class Preferences extends TestCase {
 	 * @var int
 	 */
 	protected static $author_id;
+
+	/**
+	 * @var \Google\Web_Stories\User\Preferences
+	 */
+	private $instance;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$admin_id = $factory->user->create(
@@ -58,15 +66,25 @@ class Preferences extends TestCase {
 	}
 
 	public function setUp() {
-		$up = new \Google\Web_Stories\User\Preferences();
-		$up->register();
 		parent::setUp();
+
+		/** @var WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = new Spy_REST_Server();
+		do_action( 'rest_api_init', $wp_rest_server );
+
+		$this->instance = new \Google\Web_Stories\User\Preferences();
 	}
 
 	public function tearDown() {
+		/** @var WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
+
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY );
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
+
 		parent::tearDown();
 	}
 
@@ -75,6 +93,9 @@ class Preferences extends TestCase {
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_add_optin_field_to_rest_api() {
+		$this->instance->register();
+		( new Stories_Users_Controller() )->register();
+
 		wp_set_current_user( self::$admin_id );
 
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
@@ -98,6 +119,9 @@ class Preferences extends TestCase {
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_add_optin_field_to_rest_api_for_author_user() {
+		$this->instance->register();
+		( new Stories_Users_Controller() )->register();
+
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
@@ -121,6 +145,9 @@ class Preferences extends TestCase {
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_enables_author_user_to_update_meta_field() {
+		$this->instance->register();
+		( new Stories_Users_Controller() )->register();
+
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, false );
@@ -156,6 +183,9 @@ class Preferences extends TestCase {
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_permission_check_for_authors() {
+		$this->instance->register();
+		( new Stories_Users_Controller() )->register();
+
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, false );
@@ -183,7 +213,6 @@ class Preferences extends TestCase {
 		$data = $response->get_error_data();
 		$this->assertArrayHasKey( 'status', $data );
 		$this->assertEquals( 403, $data['status'] );
-
 	}
 
 	/**
@@ -191,6 +220,9 @@ class Preferences extends TestCase {
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_enables_author_user_to_invalid_type() {
+		$this->instance->register();
+		( new Stories_Users_Controller() )->register();
+
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, false );
@@ -208,7 +240,7 @@ class Preferences extends TestCase {
 		);
 
 		$response = rest_get_server()->dispatch( $request );
-		if ( is_a( $response, 'WP_REST_Response' ) ) {
+		if ( $response instanceof \WP_REST_Response ) {
 			$response = $response->as_error();
 		}
 

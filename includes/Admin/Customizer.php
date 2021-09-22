@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Services;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Layout;
@@ -536,7 +537,7 @@ class Customizer extends Service_Base {
 	 * @return string
 	 */
 	public function render_stories(): string {
-		$options = get_option( self::STORY_OPTION );
+		$options = Services::get( 'settings' )->get_setting( self::STORY_OPTION );
 
 		if ( empty( $options['show_stories'] ) || true !== $options['show_stories'] ) {
 			return '';

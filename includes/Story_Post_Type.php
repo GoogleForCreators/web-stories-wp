@@ -121,7 +121,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return \WP_Post_Type|\WP_Error
 	 */
 	public function register_post_type() {
-		$has_archive = 'default' === get_option( Settings::SETTING_NAME_ARCHIVE, 'default' );
+		$has_archive = 'default' === Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_ARCHIVE, 'default' );
 
 		return register_post_type(
 			self::POST_TYPE_SLUG,
@@ -206,7 +206,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return void
 	 */
 	protected function register_meta() {
-		$active_publisher_logo_id = absint( get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
+		$active_publisher_logo_id = absint( Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0 ) );
 
 		register_post_meta(
 			self::POST_TYPE_SLUG,

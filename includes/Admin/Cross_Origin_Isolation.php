@@ -30,6 +30,7 @@ namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Services;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\User\Preferences;
 
@@ -79,6 +80,38 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 */
 	public static function get_registration_action_priority(): int {
 		return 11;
+	}
+
+	/**
+	 * Check whether the conditional object is currently needed.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return bool Whether the conditional object is needed.
+	 */
+	public static function is_needed(): bool {
+		$user_id = get_current_user_id();
+		if ( ! $user_id ) {
+			return false;
+		}
+
+		// Cross-origin isolation is not needed if users can't upload files anyway.
+		if ( ! user_can( $user_id, 'upload_files' ) ) {
+			return false;
+		}
+
+		return rest_sanitize_boolean( Services::get( 'user_preferences' )->get_preference( $user_id, Preferences::MEDIA_OPTIMIZATION_META_KEY ) );
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'user_preferences' ];
 	}
 
 	/**
@@ -288,28 +321,5 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 */
 	private function starts_with( string $string, string $start_string ): bool {
 		return 0 === strpos( $string, $start_string );
-	}
-
-	/**
-	 * Check whether the conditional object is currently needed.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return bool Whether the conditional object is needed.
-	 */
-	public static function is_needed(): bool {
-		$user_id = get_current_user_id();
-		if ( ! $user_id ) {
-			return false;
-		}
-
-		// Cross-origin isolation is not needed if users can't upload files anyway.
-		if ( ! user_can( $user_id, 'upload_files' ) ) {
-			return false;
-		}
-
-		$check = get_user_meta( $user_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
-
-		return rest_sanitize_boolean( $check );
 	}
 }

@@ -282,4 +282,19 @@ class Settings extends Service_Base {
 	public static function get_registration_action_priority(): int {
 		return 5;
 	}
+
+	/**
+	 * Returns the value for a given setting.
+	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string $key Setting key.
+	 * @param mixed  $default Optional. Default value to return if the option does not exist.
+	 * @return mixed Setting value.
+	 */
+	public function get_setting( $key, $default = false ) {
+		return get_option( $key, $default );
+	}
 }
