@@ -88,38 +88,25 @@ export const ButtonWrapper = styled.div`
   justify-content: ${({ isStart }) => (isStart ? 'flex-end' : 'flex-start')};
 `;
 
-export function UnusedAtStart({ width }) {
+export function Scrim({ width, atStart = false }) {
+  const floatStyle = atStart ? { left: '-1px' } : { right: '-1px' };
+  // These paths appear to be a bit magic, but are exactly what's required to draw the
+  // desired shape, which includes negative border radii and thus cannot be done in CSS only
+  const path = atStart
+    ? `M 4 0 h ${width} a 4 4 0 0 0 -4 4 v 28 a 4 4 0 0 0 4 4 h -${width} a 4 4 0 0 1 -4 -4 v -28 a 4 4 0 0 1 4 -4 Z`
+    : `M 0 0 h ${width} a 4 4 0 0 1 4 4 v 28 a 4 4 0 0 1 -4 4 h -${width} a 4 4 0 0 0 4 -4 v -28 a 4 4 0 0 0 -4 -4 Z`;
+
   return (
     <SVG
-      style={{ left: '-1px', width: `${width + 4}px` }}
+      style={{ width: `${width + 4}px`, ...floatStyle }}
       viewBox={`0 0 ${width + 4} 36`}
     >
-      <path
-        stroke="transparent"
-        fill="black"
-        fillOpacity="0.5"
-        d={`M 4 0 h ${width} a 4 4 0 0 0 -4 4 v 28 a 4 4 0 0 0 4 4 h -${width} a 4 4 0 0 1 -4 -4 v -28 a 4 4 0 0 1 4 -4 Z`}
-      />
+      <path stroke="transparent" fill="black" fillOpacity="0.5" d={path} />
     </SVG>
   );
 }
 
-export function UnusedAtEnd({ width }) {
-  return (
-    <SVG
-      style={{ right: '-1px', width: `${width + 4}px` }}
-      viewBox={`0 0 ${width + 4} 36`}
-    >
-      <path
-        stroke="transparent"
-        fill="black"
-        fillOpacity="0.5"
-        d={`M 0 0 h ${width} a 4 4 0 0 1 4 4 v 28 a 4 4 0 0 1 -4 4 h -${width} a 4 4 0 0 0 4 -4 v -28 a 4 4 0 0 0 -4 -4 Z`}
-      />
-    </SVG>
-  );
-}
-
-UnusedAtStart.propTypes = UnusedAtEnd.propTypes = {
+Scrim.propTypes = {
   width: PropTypes.number.isRequired,
+  atStart: PropTypes.bool,
 };

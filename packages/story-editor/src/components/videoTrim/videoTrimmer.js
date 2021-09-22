@@ -35,8 +35,7 @@ import {
   Wrapper,
   Handle,
   CurrentTime,
-  UnusedAtStart,
-  UnusedAtEnd,
+  Scrim,
   ButtonWrapper,
 } from './trimmerComponents';
 
@@ -97,10 +96,8 @@ function VideoTrimmer() {
         </ButtonWrapper>
       )}
       <Wrapper pageWidth={pageWidth}>
-        <UnusedAtStart width={(startOffset / maxOffset) * pageWidth} />
-        <UnusedAtEnd
-          width={((maxOffset - endOffset) / maxOffset) * pageWidth}
-        />
+        <Scrim atStart width={(startOffset / maxOffset) * pageWidth} />
+        <Scrim width={((maxOffset - endOffset) / maxOffset) * pageWidth} />
         <CurrentTime
           railWidth={pageWidth}
           aria-label={__('Current time', 'web-stories')}
