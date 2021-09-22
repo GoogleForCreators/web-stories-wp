@@ -145,7 +145,7 @@ function PageAttachmentPanel() {
   }, 1200);
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
-    url && !isValidUrl(withProtocol(url || '').trim())
+    url && !isValidUrl(withProtocol(url).trim())
   );
 
   const isDefault = _ctaText === defaultCTA;
@@ -202,7 +202,8 @@ function PageAttachmentPanel() {
   const checkboxId = `cb-${uuidv4()}`;
 
   let hint;
-  if (displayWarning || isInvalidUrl) {
+  const hasError = displayWarning || isInvalidUrl;
+  if (hasError) {
     hint = displayWarning
       ? __(
           'Links cannot reside below the dashed line when a page attachment is present. If you add a page attachment, your viewers will not be able to click on the link.',
@@ -231,7 +232,7 @@ function PageAttachmentPanel() {
           'Type an address to add a page attachment link',
           'web-stories'
         )}
-        hasError={displayWarning || isInvalidUrl}
+        hasError={hasError}
         hint={hint}
       />
       {hasValidUrl && (
