@@ -75,6 +75,13 @@ function VideoTrimmer() {
     return null;
   }
 
+  const sliderProps = {
+    min: 0,
+    max: maxOffset,
+    step: 100,
+    minorStep: 10,
+  };
+
   return (
     <Menu>
       {hasChanged && (
@@ -99,21 +106,21 @@ function VideoTrimmer() {
           aria-label={__('Current time', 'web-stories')}
           disabled
           value={currentTime}
-          max={maxOffset}
+          {...sliderProps}
         />
         <Handle
           railWidth={pageWidth}
-          max={maxOffset}
           value={startOffset}
           aria-label={__('Start offset', 'web-stories')}
           onChange={(val) => setStartOffset(val)}
+          {...sliderProps}
         />
         <Handle
           railWidth={pageWidth}
           value={endOffset}
-          max={maxOffset}
           aria-label={__('End offset', 'web-stories')}
           onChange={(val) => setEndOffset(val)}
+          {...sliderProps}
         />
       </Wrapper>
       {hasChanged && (

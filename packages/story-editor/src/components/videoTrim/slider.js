@@ -29,8 +29,10 @@ const Thumb = styled.button`
 
 function Slider({
   railWidth,
-  min = 0,
-  max = 10000,
+  min,
+  max,
+  step,
+  minorStep = null,
   value = 0,
   onChange = () => {},
   getValueText = null,
@@ -74,10 +76,16 @@ function Slider({
     [onChange, value]
   );
 
-  useKeyDownEffect(ref, 'left', () => handleNudge(-100), [handleNudge]);
-  useKeyDownEffect(ref, 'shift+left', () => handleNudge(-10), [handleNudge]);
-  useKeyDownEffect(ref, 'right', () => handleNudge(100), [handleNudge]);
-  useKeyDownEffect(ref, 'shift+right', () => handleNudge(10), [handleNudge]);
+  useKeyDownEffect(ref, 'left', () => handleNudge(-step), [handleNudge, step]);
+  useKeyDownEffect(ref, 'shift+left', () => handleNudge(-minorStep), [
+    handleNudge,
+    minorStep,
+  ]);
+  useKeyDownEffect(ref, 'right', () => handleNudge(step), [handleNudge, step]);
+  useKeyDownEffect(ref, 'shift+right', () => handleNudge(minorStep), [
+    handleNudge,
+    minorStep,
+  ]);
 
   const ratio = (value - min) / (max - min);
 
@@ -98,8 +106,10 @@ function Slider({
 
 Slider.propTypes = {
   railWidth: PropTypes.number.isRequired,
-  min: PropTypes.number,
-  max: PropTypes.number,
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  step: PropTypes.number.isRequired,
+  minorStep: PropTypes.number.isRequired,
   value: PropTypes.number,
   onChange: PropTypes.func,
   getValueText: PropTypes.func,

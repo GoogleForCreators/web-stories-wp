@@ -30,12 +30,12 @@ import {
 import { MEDIA_VIDEO_MINIMUM_DURATION } from '../../constants';
 
 function useVideoNode() {
-  const [currentTime, setCurrentTime] = useState(0);
-  const [startOffset, rawSetStartOffset] = useState(0);
-  const [originalStartOffset, setOriginalStartOffset] = useState(0);
-  const [endOffset, rawSetEndOffset] = useState(100000);
-  const [originalEndOffset, setOriginalEndOffset] = useState(100000);
-  const [maxOffset, setMaxOffset] = useState(100000);
+  const [currentTime, setCurrentTime] = useState(null);
+  const [startOffset, rawSetStartOffset] = useState(null);
+  const [originalStartOffset, setOriginalStartOffset] = useState(null);
+  const [endOffset, rawSetEndOffset] = useState(null);
+  const [originalEndOffset, setOriginalEndOffset] = useState(null);
+  const [maxOffset, setMaxOffset] = useState(null);
   const [videoNode, setVideoNode] = useState(null);
 
   useEffect(() => {
