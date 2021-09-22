@@ -38,7 +38,39 @@ function Slider({
 }) {
   const ref = useRef();
 
-  const handlePointerDown = useCallback(() => {}, []);
+  const handlePointerDown = useCallback(
+    (downEvent) => {
+      // Stop propagation, but manually set focus
+      downEvent.preventDefault();
+      downEvent.stopPropagation();
+      ref.current.focus();
+
+      const handlePointerMove = function (event) {
+        const deltaX = event.pageX - downEvent.pageX;
+        const deltaRatio = deltaX / railWidth;
+        const deltaValue = deltaRatio * (max - min);
+        const newValue = value + deltaValue;
+        onChange(newValue);
+
+        event.preventDefault();
+        event.stopPropagation();
+      };
+
+      const handlePointerUp = function () {
+        document.removeEventListener('pointermove', handlePointerMove);
+        document.removeEventListener('pointerup', handlePointerUp);
+      };
+
+      document.addEventListener('pointermove', handlePointerMove);
+      document.addEventListener('pointerup', handlePointerUp);
+
+      return () => {
+        document.removeEventListener('pointermove', handlePointerMove);
+        document.removeEventListener('pointerup', handlePointerUp);
+      };
+    },
+    [value, max, min, onChange, railWidth]
+  );
 
   const handleNudge = useCallback(
     (delta) => onChange(value + delta),
