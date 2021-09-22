@@ -124,7 +124,7 @@ function HierarchicalTermSelector({
   );
 
   const categories = useMemo(() => {
-    if (termCache[taxonomy.restBase]) {
+    if (termCache?.[taxonomy.restBase]) {
       return Object.values(termCache[taxonomy.restBase]).map((category) => {
         const formattedCategory = { ...category };
         formattedCategory.value = formattedCategory.id;
@@ -145,7 +145,7 @@ function HierarchicalTermSelector({
       [
         {
           value: NO_PARENT_VALUE,
-          label: `-- ${taxonomy.labels.parent_item} --`,
+          label: `-- ${taxonomy.labels?.parent_item} --`,
         },
       ].concat(categories),
     [categories, taxonomy]
@@ -258,7 +258,7 @@ function HierarchicalTermSelector({
         label={taxonomy.labels.search_items}
         options={categories}
         onChange={handleClickCategory}
-        noOptionsText={taxonomy.labels.not_found}
+        noOptionsText={taxonomy.labels?.not_found}
       />
       {canCreateTerms ? (
         <>

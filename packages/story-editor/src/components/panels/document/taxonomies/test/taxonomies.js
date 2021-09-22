@@ -27,12 +27,12 @@ import { renderWithTheme } from '../../../../../testUtils';
 import TaxonomiesPanel from '../taxonomies';
 import { StoryContext } from '../../../../../app/story';
 
-function arrange({ taxonomies }) {
+function arrange({ taxonomies, isCapable }) {
   const storyContextValue = {
     state: {
       capabilities: taxonomies.reduce((acc, curr) => {
-        acc[`assign-${curr.slug}`] = true;
-        acc[`create-${curr.slug}`] = true;
+        acc[`assign-${curr.slug}`] = isCapable;
+        acc[`create-${curr.slug}`] = isCapable;
         return acc;
       }, {}),
     },
@@ -71,14 +71,14 @@ describe('TaxonomiesPanel', () => {
   });
 
   it('should not render Taxonomies Panel if there are no taxonomies', () => {
-    arrange({ taxonomies: [] });
+    arrange({ taxonomies: [], isCapable: true });
     const element = screen.queryByRole('button', {
       name: 'Categories and Tags',
     });
     expect(element).not.toBeInTheDocument();
   });
 
-  it('should render Taxonomies Panel', () => {
+  it('should not render Taxonomies Panel if there are no visible or assignable taxonomies', () => {
     arrange({
       taxonomies: [
         {
@@ -96,6 +96,42 @@ describe('TaxonomiesPanel', () => {
           hierarchical: false,
         },
       ],
+      isCapable: false,
+    });
+    const element = screen.queryByRole('button', {
+      name: 'Categories and Tags',
+    });
+    expect(element).not.toBeInTheDocument();
+  });
+
+  it('should render Taxonomies Panel', () => {
+    arrange({
+      taxonomies: [
+        {
+          slug: 'web_story_tag',
+          restBase: 'web_story_tags',
+          name: 'Tags',
+          labels: {},
+          hierarchical: false,
+          visibility: {
+            show_ui: true,
+          },
+        },
+        {
+          slug: 'web_story_category',
+          restBase: 'web_story_category',
+          name: 'Categories',
+          labels: {
+            search_items: 'Story Categories',
+            add_new_item: 'Add New',
+          },
+          hierarchical: true,
+          visibility: {
+            show_ui: true,
+          },
+        },
+      ],
+      isCapable: true,
     });
     const element = screen.getByRole('button', { name: 'Categories and Tags' });
     expect(element).toBeInTheDocument();

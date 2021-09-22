@@ -197,7 +197,7 @@ export default [
     types: ['web-story'],
     showCloud: true,
     hierarchical: true,
-    restBase: 'story-categories',
+    restBase: 'web_story_category',
     visibility: {
       public: true,
       publicly_queryable: true,
