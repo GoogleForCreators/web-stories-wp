@@ -36,14 +36,14 @@ import { snakeCaseToCamelCase } from './utils';
  * @return {Promise} Taxonomies promise.
  */
 export async function getTaxonomies(postType, path) {
-  const result = apiFetch({
+  const result = await apiFetch({
     path: addQueryArgs(path, {
       type: postType,
       context: 'edit',
     }),
   });
 
-  return Object.values(await result).map((taxonomy) => {
+  return Object.values(result).map((taxonomy) => {
     const entries = Object.entries(taxonomy);
 
     const formattedEntries = entries.map((entry) => [
