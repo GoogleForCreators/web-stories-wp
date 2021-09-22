@@ -41,7 +41,12 @@ describe('Web Stories Widget Block', () => {
 
     it('should insert a new Web Stories block', async () => {
       await visitBlockWidgetScreen();
-      await expect(page).toClick('button[aria-label="Add block"]');
+      await expect(page).toClick(
+        '.edit-widgets-header-toolbar button[aria-label="Add block"]'
+      );
+      await page.waitForSelector(
+        '.edit-widgets-layout__inserter-panel-content'
+      );
       await page.type('.block-editor-inserter__search-input', 'Web Stories');
       await expect(page).toClick('button span', { text: 'Web Stories' });
 
