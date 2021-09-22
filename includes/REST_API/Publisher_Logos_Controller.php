@@ -351,14 +351,7 @@ class Publisher_Logos_Controller extends REST_Controller {
 	 * @return int[] Filtered list of publisher logos.
 	 */
 	protected function filter_publisher_logos( $publisher_logos ): array {
-		return array_filter(
-			$publisher_logos,
-			static function( $logo ) {
-				$post = get_post( $logo );
-
-				return ! ( ! $post || 'attachment' !== $post->post_type );
-			}
-		);
+		return array_filter( $publisher_logos, 'wp_attachment_is_image' );
 	}
 
 	/**
