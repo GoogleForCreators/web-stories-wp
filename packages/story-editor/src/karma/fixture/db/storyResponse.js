@@ -18,7 +18,32 @@
  */
 import { DATA_VERSION } from '@web-stories-wp/migration';
 
-const storyTags = [];
+const storyTags = [
+  {
+    id: 1,
+    link: 'http://localhost:8899/story-category/gold/pizza',
+    name: 'pizza',
+    slug: 'pizza',
+    taxonomy: 'story-tag',
+    _links: {},
+  },
+  {
+    id: 2,
+    link: 'http://localhost:8899/story-category/burger',
+    name: 'burger',
+    slug: 'burger',
+    taxonomy: 'story-tag',
+    _links: {},
+  },
+  {
+    id: 3,
+    link: 'http://localhost:8899/story-category/frenchFry',
+    name: 'frenchFry',
+    slug: 'frenchFry',
+    taxonomy: 'story-tag',
+    _links: {},
+  },
+];
 const storyVerticals = [];
 const storyColors = [];
 const storyCategories = [
