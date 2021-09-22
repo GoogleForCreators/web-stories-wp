@@ -33,11 +33,9 @@ function useVideoNode() {
   const [currentTime, setCurrentTime] = useState(0);
   const [startOffset, rawSetStartOffset] = useState(0);
   const [originalStartOffset, setOriginalStartOffset] = useState(0);
-  const [endOffset, rawSetEndOffset] = useState(Math.POSITIVE_INFINITY);
-  const [originalEndOffset, setOriginalEndOffset] = useState(
-    Math.POSITIVE_INFINITY
-  );
-  const [maxOffset, setMaxOffset] = useState(Math.POSITIVE_INFINITY);
+  const [endOffset, rawSetEndOffset] = useState(100000);
+  const [originalEndOffset, setOriginalEndOffset] = useState(100000);
+  const [maxOffset, setMaxOffset] = useState(100000);
   const [videoNode, setVideoNode] = useState(null);
 
   useEffect(() => {

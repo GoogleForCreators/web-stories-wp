@@ -64,10 +64,7 @@ function Slider({
       document.addEventListener('pointermove', handlePointerMove);
       document.addEventListener('pointerup', handlePointerUp);
 
-      return () => {
-        document.removeEventListener('pointermove', handlePointerMove);
-        document.removeEventListener('pointerup', handlePointerUp);
-      };
+      return handlePointerUp;
     },
     [value, max, min, onChange, railWidth]
   );
