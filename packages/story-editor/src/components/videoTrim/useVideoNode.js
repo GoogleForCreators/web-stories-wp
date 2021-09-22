@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useCallback } from '@web-stories-wp/react';
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -27,8 +32,12 @@ import { MEDIA_VIDEO_MINIMUM_DURATION } from '../../constants';
 function useVideoNode() {
   const [currentTime, setCurrentTime] = useState(0);
   const [startOffset, rawSetStartOffset] = useState(0);
-  const [maxOffset, setMaxOffset] = useState(Math.POSITIVE_INFINITY);
+  const [originalStartOffset, setOriginalStartOffset] = useState(0);
   const [endOffset, rawSetEndOffset] = useState(Math.POSITIVE_INFINITY);
+  const [originalEndOffset, setOriginalEndOffset] = useState(
+    Math.POSITIVE_INFINITY
+  );
+  const [maxOffset, setMaxOffset] = useState(Math.POSITIVE_INFINITY);
   const [videoNode, setVideoNode] = useState(null);
 
   useEffect(() => {
@@ -39,8 +48,10 @@ function useVideoNode() {
     function onLoadedMetadata(evt) {
       const duration = Math.floor(evt.target.duration * 1000);
       rawSetStartOffset(0);
+      setOriginalStartOffset(0);
       setCurrentTime(0);
       rawSetEndOffset(duration);
+      setOriginalEndOffset(duration);
       setMaxOffset(duration);
     }
     function onTimeUpdate(evt) {
@@ -64,6 +75,7 @@ function useVideoNode() {
     (offset) => {
       // Start offset must be at least this smaller than end offset
       offset = Math.min(endOffset - MEDIA_VIDEO_MINIMUM_DURATION, offset);
+      offset = Math.max(0, offset);
       rawSetStartOffset(offset);
       videoNode.currentTime = Math.max(videoNode.currentTime, offset / 1000);
     },
@@ -74,13 +86,21 @@ function useVideoNode() {
     (offset) => {
       // End offset must be at least this larger than start offset
       offset = Math.max(startOffset + MEDIA_VIDEO_MINIMUM_DURATION, offset);
+      offset = Math.min(maxOffset, offset);
       rawSetEndOffset(offset);
       videoNode.currentTime = Math.min(videoNode.currentTime, offset / 1000);
     },
-    [videoNode, startOffset]
+    [videoNode, startOffset, maxOffset]
+  );
+
+  const hasChanged = useMemo(
+    () =>
+      startOffset !== originalStartOffset || endOffset !== originalEndOffset,
+    [startOffset, originalStartOffset, endOffset, originalEndOffset]
   );
 
   return {
+    hasChanged,
     currentTime,
     startOffset,
     endOffset,
