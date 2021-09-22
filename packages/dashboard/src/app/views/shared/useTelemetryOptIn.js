@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useState,
-  useEffect,
-  useRef,
-} from '@web-stories-wp/react';
+import { useCallback, useState, useEffect } from '@web-stories-wp/react';
 import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
 import { useSnackbar, localStore } from '@web-stories-wp/design-system';
 
@@ -51,15 +46,14 @@ export default function useTelemetryOptIn() {
     setInitialBannerPreviouslyClosed
   );
   const [optInCheckboxClicked, setOptInCheckboxClicked] = useState(false);
-  const { currentUser, toggleWebStoriesTrackingOptIn, fetchCurrentUser } =
-    useApi(
-      ({
-        state: { currentUser },
-        actions: {
-          usersApi: { toggleWebStoriesTrackingOptIn, fetchCurrentUser },
-        },
-      }) => ({ currentUser, toggleWebStoriesTrackingOptIn, fetchCurrentUser })
-    );
+  const { currentUser, toggleWebStoriesTrackingOptIn } = useApi(
+    ({
+      state: { currentUser },
+      actions: {
+        usersApi: { toggleWebStoriesTrackingOptIn },
+      },
+    }) => ({ currentUser, toggleWebStoriesTrackingOptIn })
+  );
   const { currentPath } = useRouteHistory(({ state: { currentPath } }) => ({
     currentPath,
   }));
@@ -69,8 +63,6 @@ export default function useTelemetryOptIn() {
 
   const optedIn = Boolean(currentUser.data.meta?.web_stories_tracking_optin);
 
-  const dataFetched = useRef(false);
-
   useEffect(() => {
     if (optedIn) {
       enableTracking();
@@ -78,13 +70,6 @@ export default function useTelemetryOptIn() {
       disableTracking();
     }
   }, [optedIn]);
-
-  useEffect(() => {
-    if (!dataIsLoaded && !dataFetched.current) {
-      fetchCurrentUser();
-      dataFetched.current = true;
-    }
-  }, [dataIsLoaded, fetchCurrentUser]);
 
   const _toggleWebStoriesTrackingOptIn = useCallback(() => {
     toggleWebStoriesTrackingOptIn();
