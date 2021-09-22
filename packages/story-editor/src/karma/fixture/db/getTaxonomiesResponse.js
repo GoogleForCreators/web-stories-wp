@@ -17,7 +17,7 @@
 export default [
   {
     name: 'Tags',
-    slug: 'story-tag',
+    slug: 'web_story_tag',
     capabilities: {
       manage_terms: 'manage_categories',
       edit_terms: 'manage_categories',
@@ -51,12 +51,12 @@ export default [
       item_link: 'Tag Link',
       item_link_description: 'A link to a tag.',
       menu_name: 'Tags',
-      name_admin_bar: 'story-tag',
+      name_admin_bar: 'web_story_tag',
     },
     types: ['web-story'],
     showCloud: true,
     hierarchical: false,
-    restBase: 'story-tags',
+    restBase: 'web_story_tags',
     visibility: {
       public: true,
       publicly_queryable: true,
@@ -73,7 +73,7 @@ export default [
       ],
       'wp:items': [
         {
-          href: 'http://localhost:8899/wp-json/wp/v2/story-tags',
+          href: 'http://localhost:8899/wp-json/web-stories/v1/web_story_tag',
         },
       ],
       curies: [
@@ -87,7 +87,7 @@ export default [
   },
   {
     name: 'Colors',
-    slug: 'story-color',
+    slug: 'story_color',
     capabilities: {
       manage_terms: 'manage_categories',
       edit_terms: 'manage_categories',
@@ -127,7 +127,7 @@ export default [
     types: ['web-story'],
     showCloud: true,
     hierarchical: false,
-    restBase: 'story-colors',
+    restBase: 'story_colors',
     visibility: {
       public: true,
       publicly_queryable: true,
@@ -158,7 +158,7 @@ export default [
   },
   {
     name: 'Categories',
-    slug: 'story-category',
+    slug: 'web_story_category',
     capabilities: {
       manage_terms: 'manage_categories',
       edit_terms: 'manage_categories',
@@ -285,7 +285,7 @@ export default [
       ],
       'wp:items': [
         {
-          href: 'http://localhost:8899/wp-json/wp/v2/story-verticals',
+          href: 'http://localhost:8899/wp-json/web-stories/v1/web_story_category',
         },
       ],
       curies: [

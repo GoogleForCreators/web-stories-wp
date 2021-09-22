@@ -18,15 +18,21 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { SimplePanel } from '../../panel';
+import { useStory } from '../../../../app';
 import HierarchicalTermSelector from './HierarchicalTermSelector';
 import FlatTermSelector from './FlatTermSelector';
 
 function TaxonomiesPanel(props) {
+  const { capabilities } = useStory(({ state: { capabilities } }) => ({
+    capabilities,
+  }));
+
   const { taxonomies } = useTaxonomy(({ state: { taxonomies } }) => ({
     taxonomies,
   }));
@@ -59,10 +65,26 @@ function TaxonomiesPanel(props) {
           return null;
         }
 
+        const canAssignTerms = Boolean(capabilities[`assign-${taxonomy.slug}`]);
+
+        if (!canAssignTerms) {
+          return null;
+        }
+
+        const canCreateTerms = Boolean(capabilities[`create-${taxonomy.slug}`]);
+
         return taxonomy.hierarchical ? (
-          <HierarchicalTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+          <HierarchicalTermSelector
+            taxonomy={taxonomy}
+            key={taxonomy.slug}
+            canCreateTerms={canCreateTerms}
+          />
         ) : (
-          <FlatTermSelector taxonomy={taxonomy} key={taxonomy.slug} />
+          <FlatTermSelector
+            taxonomy={taxonomy}
+            key={taxonomy.slug}
+            canCreateTerms={canCreateTerms}
+          />
         );
       })}
     </SimplePanel>

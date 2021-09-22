@@ -22,7 +22,7 @@ import {
   useDebouncedCallback,
   useMemo,
 } from '@web-stories-wp/react';
-
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -31,7 +31,7 @@ import cleanForSlug from '../../../../utils/cleanForSlug';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { ContentHeading, TaxonomyPropType } from './shared';
 
-function FlatTermSelector({ taxonomy }) {
+function FlatTermSelector({ taxonomy, canCreateTerms }) {
   const { createTerm, termCache, addSearchResultsToCache, terms, setTerms } =
     useTaxonomy(
       ({
@@ -48,6 +48,10 @@ function FlatTermSelector({ taxonomy }) {
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
+      // TODO(#9034): Allow assigning existing terms from autocomplete, but don't create terms if missing capability.
+      if (!canCreateTerms) {
+        return;
+      }
       // set terms that exist in the cache
       const termNameSlugTuples = termNames.map((name) => [
         cleanForSlug(name),
@@ -73,7 +77,7 @@ function FlatTermSelector({ taxonomy }) {
         createTerm(taxonomy, name, null, true)
       );
     },
-    [taxonomy, createTerm, termCache, setTerms, terms]
+    [canCreateTerms, terms, taxonomy, termCache, setTerms, createTerm]
   );
 
   const handleFreeformInputChange = useDebouncedCallback((value) => {
@@ -126,6 +130,7 @@ function FlatTermSelector({ taxonomy }) {
 
 FlatTermSelector.propTypes = {
   taxonomy: TaxonomyPropType,
+  canCreateTerms: PropTypes.bool,
 };
 
 export default FlatTermSelector;

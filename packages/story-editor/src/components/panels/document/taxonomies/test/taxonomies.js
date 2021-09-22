@@ -22,13 +22,23 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { ConfigProvider } from '../../../../../app/config';
 import TaxonomyContext from '../../../../../app/taxonomy/context';
 import { renderWithTheme } from '../../../../../testUtils';
 import TaxonomiesPanel from '../taxonomies';
+import { StoryContext } from '../../../../../app/story';
 
 function arrange({ taxonomies }) {
   const storyContextValue = {
+    state: {
+      capabilities: taxonomies.reduce((acc, curr) => {
+        acc[`assign-${curr.slug}`] = true;
+        acc[`create-${curr.slug}`] = true;
+        return acc;
+      }, {}),
+    },
+  };
+
+  const taxonomyContextValue = {
     state: {
       taxonomies,
     },
@@ -40,11 +50,11 @@ function arrange({ taxonomies }) {
   };
 
   return renderWithTheme(
-    <ConfigProvider config={{ capabilities: { canManageCategories: true } }}>
-      <TaxonomyContext.Provider value={storyContextValue}>
+    <StoryContext.Provider value={storyContextValue}>
+      <TaxonomyContext.Provider value={taxonomyContextValue}>
         <TaxonomiesPanel />
       </TaxonomyContext.Provider>
-    </ConfigProvider>
+    </StoryContext.Provider>
   );
 }
 
@@ -72,15 +82,15 @@ describe('TaxonomiesPanel', () => {
     arrange({
       taxonomies: [
         {
-          slug: 'story-tags',
-          restBase: 'story-tags',
+          slug: 'web_story_tags',
+          restBase: 'web_story_tags',
           name: 'Tags',
           labels: {},
           hierarchical: false,
         },
         {
-          slug: 'story-categories',
-          restBase: 'story-categories',
+          slug: 'web_story_category',
+          restBase: 'web_story_category',
           name: 'Categories',
           labels: {},
           hierarchical: false,
