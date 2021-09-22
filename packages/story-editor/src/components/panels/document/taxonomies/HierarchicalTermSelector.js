@@ -77,6 +77,8 @@ const ButtonContainer = styled.div`
 const LinkButton = styled(Button).attrs({
   variant: BUTTON_VARIANTS.LINK,
 })`
+  ${(props) => props._showAddNewCategory && 'display: none;'}
+
   margin-bottom: 16px;
 
   ${({ theme }) =>
@@ -154,7 +156,9 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
   const [selectedParent, setSelectedParent] = useState(noParentId);
   const dropdownId = useMemo(uuidv4, []);
   const [hasFocus, setHasFocus] = useState(false);
-  const ref = useRef();
+  const formRef = useRef();
+  const toggleRef = useRef();
+  const [toggleFocus, setToggleFocus] = useState(false);
 
   const resetInputs = useCallback(() => {
     setNewCategoryName('');
@@ -190,8 +194,9 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
   const handleToggleNewCategory = useCallback(() => {
     setShowAddNewCategory(!showAddNewCategory);
     resetInputs();
-    setHasFocus(!hasFocus);
-  }, [hasFocus, resetInputs, showAddNewCategory]);
+    setHasFocus(!showAddNewCategory);
+    setToggleFocus(showAddNewCategory);
+  }, [resetInputs, showAddNewCategory]);
 
   const handleChangeNewCategoryName = useCallback((evt) => {
     setNewCategoryName(evt.target.value);
@@ -205,6 +210,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
       createTerm(taxonomy, newCategoryName, parentValue);
       setShowAddNewCategory(false);
       resetInputs();
+      setToggleFocus(showAddNewCategory);
     },
     [
       createTerm,
@@ -212,6 +218,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
       noParentId,
       resetInputs,
       selectedParent,
+      showAddNewCategory,
       taxonomy,
     ]
   );
@@ -222,7 +229,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
   );
 
   useEffect(() => {
-    const node = ref.current;
+    const node = formRef.current;
     if (node) {
       const handleEnter = (evt) => {
         if (evt.key === 'Enter') {
@@ -236,7 +243,13 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
       };
     }
     return null;
-  }, [handleSubmit, ref]);
+  }, [handleSubmit, formRef]);
+
+  useEffect(() => {
+    if (toggleFocus) {
+      toggleRef.current.focus();
+    }
+  }, [toggleFocus]);
 
   return (
     <ContentArea>
@@ -247,8 +260,16 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
         onChange={handleClickCategory}
         noOptionsText={taxonomy.labels.not_found}
       />
+      <LinkButton
+        ref={toggleRef}
+        aria-expanded={false}
+        onClick={handleToggleNewCategory}
+        _showAddNewCategory={showAddNewCategory}
+      >
+        {taxonomy.labels.add_new_item}
+      </LinkButton>
       {showAddNewCategory ? (
-        <AddNewCategoryForm ref={ref} onSubmit={handleSubmit}>
+        <AddNewCategoryForm ref={formRef} onSubmit={handleSubmit}>
           <Input
             autoFocus
             name={taxonomy.labels.new_item_name}
@@ -280,11 +301,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
             </AddNewCategoryButton>
           </ButtonContainer>
         </AddNewCategoryForm>
-      ) : (
-        <LinkButton aria-expanded={false} onClick={handleToggleNewCategory}>
-          {taxonomy.labels.add_new_item}
-        </LinkButton>
-      )}
+      ) : null}
     </ContentArea>
   );
 }
