@@ -162,6 +162,18 @@ function TaxonomyProvider(props) {
     [getTaxonomyTerm]
   );
 
+  const setSelectedTaxonomySlugs = useCallback(
+    (taxonomy, termSlugs = []) =>
+      setSelectedSlugs((selected) => ({
+        ...selected,
+        [taxonomy.restBase]:
+          typeof termSlugs === 'function'
+            ? termSlugs(selected[taxonomy.restBase])
+            : termSlugs,
+      })),
+    []
+  );
+
   const createTerm = useCallback(
     async (taxonomy, termName, parentId) => {
       // make sure the term doesn't already exist locally
@@ -186,6 +198,10 @@ function TaxonomyProvider(props) {
           [taxonomy.restBase]: { [newTerm.slug]: newTerm },
         };
         setTermCache((cache) => mergeNestedDictionaries(cache, incomingCache));
+        setSelectedTaxonomySlugs(taxonomy, [
+          ...selectedSlugs[taxonomy.restBase],
+          newTerm.slug,
+        ]);
       } catch (e) {
         // If the backend says the term already exists
         // we fetch for it as well as related terms to
@@ -198,19 +214,13 @@ function TaxonomyProvider(props) {
         }
       }
     },
-    [createTaxonomyTerm, termCache, addSearchResultsToCache]
-  );
-
-  const setSelectedTaxonomySlugs = useCallback(
-    (taxonomy, termSlugs = []) =>
-      setSelectedSlugs((selected) => ({
-        ...selected,
-        [taxonomy.restBase]:
-          typeof termSlugs === 'function'
-            ? termSlugs(selected[taxonomy.restBase])
-            : termSlugs,
-      })),
-    []
+    [
+      termCache,
+      createTaxonomyTerm,
+      selectedSlugs,
+      setSelectedTaxonomySlugs,
+      addSearchResultsToCache,
+    ]
   );
 
   // Fetch hierarchical taxonomies on mount
