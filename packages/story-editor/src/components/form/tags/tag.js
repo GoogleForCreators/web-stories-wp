@@ -76,7 +76,7 @@ const TokenText = styled(Text).attrs({
 function Tag({ children, onDismiss }) {
   const id = useMemo(() => uuidv4(), []);
   return (
-    <Token>
+    <Token data-testid="flat-term-token">
       <TokenText id={id}>{children}</TokenText>
       <Tooltip
         title={__('Remove Tag', 'web-stories')}

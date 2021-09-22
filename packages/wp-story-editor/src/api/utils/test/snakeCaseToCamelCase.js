@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import snakeCaseToCamelCase from '../snakeCaseToCamelCase';
 
-export { default as ConfigProvider } from './configProvider';
-export { default as ConfigContext } from './context';
-export { default as useConfig } from './useConfig';
+describe('snakeCaseToCamelCase', () => {
+  it.each`
+    key            | result
+    ${''}          | ${''}
+    ${undefined}   | ${''}
+    ${'test'}      | ${'test'}
+    ${'rest_base'} | ${'restBase'}
+    ${'_links'}    | ${'_links'}
+    ${'links_'}    | ${'links_'}
+    ${'a_l'}       | ${'aL'}
+  `('should return the expected string for $key', ({ key, result }) => {
+    expect(snakeCaseToCamelCase(key)).toStrictEqual(result);
+  });
+});

@@ -116,12 +116,12 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
     );
 
   const categories = useMemo(() => {
-    if (termCache[taxonomy.rest_base]) {
-      return Object.values(termCache[taxonomy.rest_base]).map((category) => {
+    if (termCache[taxonomy.restBase]) {
+      return Object.values(termCache[taxonomy.restBase]).map((category) => {
         const formattedCategory = { ...category };
         formattedCategory.value = formattedCategory.id;
         formattedCategory.label = formattedCategory.name;
-        formattedCategory.checked = selectedSlugs[taxonomy.rest_base]?.includes(
+        formattedCategory.checked = selectedSlugs[taxonomy.restBase]?.includes(
           category.slug
         );
 
@@ -191,6 +191,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
   const handleSubmit = useCallback(
     (evt) => {
       evt.preventDefault();
+
       const parentValue = selectedParent === noParentId ? 0 : selectedParent;
       createTerm(taxonomy, newCategoryName, parentValue);
       setShowAddNewCategory(false);
@@ -223,6 +224,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
       {showAddNewCategory ? (
         <AddNewCategoryForm onSubmit={handleSubmit}>
           <Input
+            autoFocus
             name={taxonomy.labels.new_item_name}
             label={taxonomy.labels.new_item_name}
             value={newCategoryName}

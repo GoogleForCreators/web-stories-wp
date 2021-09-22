@@ -18,7 +18,32 @@
  */
 import { DATA_VERSION } from '@web-stories-wp/migration';
 
-const storyTags = [];
+const storyTags = [
+  {
+    id: 1,
+    link: 'http://localhost:8899/story-category/gold/pizza',
+    name: 'pizza',
+    slug: 'pizza',
+    taxonomy: 'story-tag',
+    _links: {},
+  },
+  {
+    id: 2,
+    link: 'http://localhost:8899/story-category/burger',
+    name: 'burger',
+    slug: 'burger',
+    taxonomy: 'story-tag',
+    _links: {},
+  },
+  {
+    id: 3,
+    link: 'http://localhost:8899/story-category/frenchFry',
+    name: 'frenchFry',
+    slug: 'frenchFry',
+    taxonomy: 'story-tag',
+    _links: {},
+  },
+];
 const storyVerticals = [];
 const storyColors = [];
 const storyCategories = [
@@ -51,7 +76,6 @@ const storyCategories = [
 export default {
   title: { raw: '' },
   status: 'draft',
-  author: 1,
   slug: '',
   date: '2020-05-06T22:32:37',
   date_gmt: '2020-05-06T22:32:37',
@@ -63,55 +87,52 @@ export default {
     version: DATA_VERSION,
     pages: [],
   },
-  featured_media: 0,
   permalink_template: 'http://stories3.local/stories/%pagename%/',
   style_presets: { textStyles: [], colors: [] },
   password: '',
-  _embedded: {
-    author: [{ id: 1, name: 'John Doe' }],
-    'wp:publisherlogo': [
-      {
-        id: 0,
-        source_url:
-          'http://stories.local/wp-content/plugins/web-stories/assets/images/logo.png',
-      },
-    ],
-    'wp:term': [storyTags, storyColors, storyCategories, storyVerticals],
+  author: { id: 1, name: 'John Doe' },
+  capabilities: {
+    hasPublishAction: true,
+    hasAssignAuthorAction: true,
   },
-  _links: {
-    'wp:action-assign-author': {
-      href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-    },
-    'wp:action-delete': {
-      href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-    },
-    'wp:action-publish': {
-      href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-    },
-    'wp:action-unfiltered-html': {
-      href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-    },
-    'wp:term': [
-      {
-        taxonomy: 'story-tag',
-        embeddable: true,
-        href: 'http://localhost:8899/wp-json/wp/v2/story-tags?post=1014',
-      },
-      {
-        taxonomy: 'story-color',
-        embeddable: true,
-        href: 'http://localhost:8899/wp-json/wp/v2/story-colors?post=1014',
-      },
-      {
-        taxonomy: 'story-category',
-        embeddable: true,
-        href: 'http://localhost:8899/wp-json/wp/v2/story-categories?post=1014',
-      },
-      {
-        taxonomy: 'story-vertical',
-        embeddable: true,
-        href: 'http://localhost:8899/wp-json/wp/v2/story-verticals?post=1014',
-      },
-    ],
+  lock_user: {
+    id: 0,
+    name: '',
+    avatar: '',
   },
+  featured_media: {
+    id: 0,
+    height: 0,
+    width: 0,
+    url: '',
+  },
+  publisher_logo: {
+    id: 0,
+    height: 0,
+    width: 0,
+    url: 'http://stories.local/wp-content/plugins/web-stories/assets/images/logo.png',
+  },
+  taxonomies: [
+    {
+      taxonomy: 'story-tag',
+      embeddable: true,
+      href: 'http://localhost:8899/wp-json/wp/v2/story-tags?post=1014',
+    },
+    {
+      taxonomy: 'story-color',
+      embeddable: true,
+      href: 'http://localhost:8899/wp-json/wp/v2/story-colors?post=1014',
+    },
+    {
+      taxonomy: 'story-category',
+      embeddable: true,
+      href: 'http://localhost:8899/wp-json/wp/v2/story-categories?post=1014',
+    },
+    {
+      taxonomy: 'story-vertical',
+      embeddable: true,
+      href: 'http://localhost:8899/wp-json/wp/v2/story-verticals?post=1014',
+    },
+  ],
+  terms: [storyTags, storyColors, storyCategories, storyVerticals],
 };

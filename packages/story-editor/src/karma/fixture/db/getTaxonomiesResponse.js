@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-export default {
-  'story-tag': {
+export default [
+  {
     name: 'Tags',
     slug: 'story-tag',
     capabilities: {
@@ -54,9 +54,9 @@ export default {
       name_admin_bar: 'story-tag',
     },
     types: ['web-story'],
-    show_cloud: true,
+    showCloud: true,
     hierarchical: false,
-    rest_base: 'story-tags',
+    restBase: 'story-tags',
     visibility: {
       public: true,
       publicly_queryable: true,
@@ -85,7 +85,7 @@ export default {
       ],
     },
   },
-  'story-color': {
+  {
     name: 'Colors',
     slug: 'story-color',
     capabilities: {
@@ -125,9 +125,9 @@ export default {
       archives: 'All Colors',
     },
     types: ['web-story'],
-    show_cloud: true,
+    showCloud: true,
     hierarchical: false,
-    rest_base: 'story-colors',
+    restBase: 'story-colors',
     visibility: {
       public: true,
       publicly_queryable: true,
@@ -156,7 +156,7 @@ export default {
       ],
     },
   },
-  'story-category': {
+  {
     name: 'Categories',
     slug: 'story-category',
     capabilities: {
@@ -195,9 +195,9 @@ export default {
       name_admin_bar: 'story-category',
     },
     types: ['web-story'],
-    show_cloud: true,
+    showCloud: true,
     hierarchical: true,
-    rest_base: 'story-categories',
+    restBase: 'story-categories',
     visibility: {
       public: true,
       publicly_queryable: true,
@@ -226,7 +226,7 @@ export default {
       ],
     },
   },
-  'story-vertical': {
+  {
     name: 'Verticals',
     slug: 'story-vertical',
     capabilities: {
@@ -266,9 +266,9 @@ export default {
       archives: 'All Verticals',
     },
     types: ['web-story'],
-    show_cloud: true,
+    showCloud: true,
     hierarchical: true,
-    rest_base: 'story-verticals',
+    restBase: 'story-verticals',
     visibility: {
       public: true,
       publicly_queryable: true,
@@ -297,4 +297,4 @@ export default {
       ],
     },
   },
-};
+];

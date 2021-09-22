@@ -29,6 +29,52 @@ import apiFetch from '@wordpress/api-fetch';
 import { STORY_EMBED, STORY_FIELDS } from './constants';
 import { base64Encode } from './utils';
 
+// Add custom fields and prepare story response.
+const transformGetStoryResponse = (post) => {
+  const { _embedded: embedded = {}, _links: links = {} } = post;
+
+  post.author = {
+    id: embedded?.author?.[0].id || 0,
+    name: embedded?.author?.[0].name || '',
+  };
+
+  post.capabilities = {
+    hasPublishAction: Object.prototype.hasOwnProperty.call(
+      links,
+      'wp:action-publish'
+    ),
+    hasAssignAuthorAction: Object.prototype.hasOwnProperty.call(
+      links,
+      'wp:action-assign-author'
+    ),
+  };
+
+  post.lock_user = {
+    id: embedded?.['wp:lockuser']?.[0].id || 0,
+    name: embedded?.['wp:lockuser']?.[0].name || '',
+    avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
+  };
+
+  post.featured_media = {
+    id: embedded?.['wp:featuredmedia']?.[0].id || 0,
+    height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
+    width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
+    url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+  };
+
+  post.publisher_logo = {
+    id: embedded?.['wp:publisherlogo']?.[0].id || 0,
+    height: embedded?.['wp:publisherlogo']?.[0]?.media_details?.height || 0,
+    width: embedded?.['wp:publisherlogo']?.[0]?.media_details?.width || 0,
+    url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
+  };
+
+  post.taxonomies = links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [];
+  post.terms = embedded?.['wp:term'] || [];
+
+  return post;
+};
+
 export function getStoryById(storyId, stories, isDemo = false) {
   const path = addQueryArgs(`${stories}${storyId}/`, {
     context: 'edit',
@@ -37,7 +83,7 @@ export function getStoryById(storyId, stories, isDemo = false) {
     _fields: STORY_FIELDS,
   });
 
-  return apiFetch({ path });
+  return apiFetch({ path }).then(transformGetStoryResponse);
 }
 
 export function getDemoStoryById(storyId, stories) {
@@ -111,6 +157,17 @@ export function saveStoryById(story, stories, encodeMarkup) {
     path,
     data: storySaveData,
     method: 'POST',
+  }).then((data) => {
+    const { _embedded: embedded = {} } = data;
+
+    data.featured_media = {
+      id: embedded?.['wp:featuredmedia']?.[0].id || 0,
+      height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
+      width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
+      url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+    };
+
+    return data;
   });
 }
 
