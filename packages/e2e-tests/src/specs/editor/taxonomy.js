@@ -30,18 +30,8 @@ describe('Taxonomy', () => {
     await expect(page).toClick('#expand_add_new_hierarchical_term');
     await page.waitForSelector('input[name="New Category Name"]');
     // add a parent category
-    await page.type('input[name="New Category Name"]', 'genres');
+    await page.type('input[name="New Category Name"]', 'electronic');
     await expect(page).toClick('#submit_add_new_hierarchical_term');
-
-    // add a child category
-    // await expect(page).toClick('#expand_add_new_hierarchical_term');
-    // await page.type('input[name="New Category Name"]', 'electronic');
-
-    //   await expect(page).toClick('button[aria-label="Parent Category"]');
-    // TODO: dropdown won't target
-    //   await page.waitForSelector('li[name="genre"]');
-    //   await expect(page).toClick('li[name="genre"]');
-    //   await expect(page).toClick('#submit_add_new_hierarchical_term');
 
     await page.waitForSelector('input[name="electronic"]');
     await expect(page).toClick('input[name="electronic"]');

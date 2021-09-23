@@ -124,7 +124,9 @@ function PublishButton({ forceIsSaving }) {
     <>
       <ButtonWithChecklistWarning
         onClick={handlePublish}
-        disabled={!capabilities?.publish || isSaving || isUploading}
+        disabled={
+          !capabilities?.publish || isSaving || forceIsSaving || isUploading
+        }
         text={text}
         isUploading={isUploading}
       />
