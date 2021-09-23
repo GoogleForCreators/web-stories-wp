@@ -70,6 +70,30 @@ const sharedConfig = {
   },
   module: {
     rules: [
+      {
+        test: require.resolve('@web-stories-wp/i18n'),
+        loader: 'expose-loader',
+        options: {
+          exposes: [
+            {
+              globalName: 'ws.i18n.__',
+              moduleLocalName: '__',
+            },
+            {
+              globalName: 'ws.i18n._n',
+              moduleLocalName: '_n',
+            },
+            {
+              globalName: 'ws.i18n._x',
+              moduleLocalName: '_x',
+            },
+            {
+              globalName: 'ws.i18n._nx',
+              moduleLocalName: '_nx',
+            },
+          ],
+        },
+      },
       !isProduction && {
         test: /\.js$/,
         use: ['source-map-loader'],
