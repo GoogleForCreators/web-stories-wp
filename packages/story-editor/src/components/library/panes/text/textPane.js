@@ -17,14 +17,22 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useResizeEffect } from '@web-stories-wp/react';
+import {
+  useRef,
+  useState,
+  useResizeEffect,
+  useMemo,
+  useCallback,
+} from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
+import { Text, THEME_CONSTANTS, Toggle } from '@web-stories-wp/design-system';
 import { Section, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import { Pane as SharedPane } from '../shared';
@@ -47,13 +55,24 @@ const GridContainer = styled.div`
   gap: 12px;
 `;
 
+const SmartColorToggle = styled.div`
+  display: flex;
+
+  label {
+    cursor: pointer;
+    margin: auto 12px;
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
+`;
+
 function TextPane(props) {
   const paneRef = useRef();
   const [, forceUpdate] = useState();
+  const [useSmartColor, setUseSmartColor] = useState(false);
 
   const { showTextAndShapesSearchInput, enableSmartTextColor } = useFeatures();
 
-  const { getPosition, insertPreset } = useInsertPreset();
+  const { getPosition, insertPreset } = useInsertPreset({ useSmartColor });
   const { generateCanvasFromPage } = usePageAsCanvas();
 
   useResizeEffect(
@@ -64,6 +83,11 @@ function TextPane(props) {
     []
   );
 
+  const handleToggleClick = useCallback(() => {
+    setUseSmartColor((currentValue) => !currentValue);
+  }, []);
+
+  const toggleId = useMemo(() => `toggle_auto_color_${uuidv4()}`, []);
   return (
     <Pane id={paneId} {...props} ref={paneRef}>
       {showTextAndShapesSearchInput && (
@@ -74,10 +98,26 @@ function TextPane(props) {
           disabled
         />
       )}
-
+      <SmartColorToggle>
+        <Text
+          as="label"
+          htmlFor={toggleId}
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {__('Use auto styled text', 'web-stories')}
+        </Text>
+        <Toggle
+          id={toggleId}
+          name={toggleId}
+          checked={useSmartColor}
+          onChange={handleToggleClick}
+        />
+      </SmartColorToggle>
       <Section
         title={__('Presets', 'web-stories')}
-        onPointerOver={() => enableSmartTextColor && generateCanvasFromPage()}
+        onPointerOver={() =>
+          enableSmartTextColor && useSmartColor && generateCanvasFromPage()
+        }
       >
         <GridContainer>
           {PRESETS.map(({ title, element }) => (
