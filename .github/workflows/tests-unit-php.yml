@@ -117,11 +117,12 @@ jobs:
 
       # Installs PHPUnit 9.5+ for tests against trunk and PHPUnit 7.5.x for older versions,
       # because WordPress 5.8 and below don't support newer PHPUnit versions.
+      # PHPUnit 7.5 does support PHP 7.0 though, so we don't run an update there.
       - name: Update PHPUnit
         run: |
           if [[ $WP_VERSION == "trunk" ]]; then
             composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
-          else
+          elif [[ $PHP_VERSION != "7.0" ]]; then
             composer require --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit:^7.5 --with-dependencies
           fi
         env:
