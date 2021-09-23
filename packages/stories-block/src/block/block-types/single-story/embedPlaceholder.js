@@ -65,7 +65,7 @@ const EmbedPlaceholder = ({
   onChange,
   cannotEmbed,
   errorMessage,
-  selectedStories,
+  selectedStories = [],
   setSelectedStories,
 }) => {
   const [isURLInputVisible, setIsURLInputVisible] = useState(false);

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/* eslint complexity: ["error", { "max": 21 }] */
+
 /**
  * External dependencies
  */
@@ -35,12 +37,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { BlockIcon } from '../../icons';
+import FetchSelectedStories from '../../components/storyPicker/fetchSelectedStories';
 import EmbedControls from './embedControls';
 import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';
 import EmbedPreview from './embedPreview';
 import './edit.css';
-import FetchSelectedStories from '../../components/storyPicker/fetchSelectedStories';
 
 const MIN_SIZE = 20;
 
@@ -154,14 +156,12 @@ function StoryEmbedEdit({
     (newStories) => {
       _setSelectedStories(newStories);
       setSelectedStoryIds(newStories.map((story) => story.id));
-      if (newStories) {
-        const link = newStories?.[0]?.link;
-        setLocalURL(link);
-        setEditingURL(false);
-        setCannotEmbed(false);
-        if (link !== outerURL) {
-          fetchStoryData(link);
-        }
+      const link = newStories?.[0]?.link;
+      setLocalURL(link);
+      setEditingURL(false);
+      setCannotEmbed(false);
+      if (link !== outerURL) {
+        fetchStoryData(link);
       }
     },
     [outerURL, fetchStoryData, _setSelectedStories]
@@ -173,7 +173,6 @@ function StoryEmbedEdit({
         event.preventDefault();
       }
 
-      // Reset selected stories, just in case you edit the block.
       _setSelectedStories([]);
       setSelectedStoryIds([]);
       setEditingURL(false);
