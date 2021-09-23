@@ -27,6 +27,17 @@ import { Fixture } from '../../../../../karma';
 
 describe('Categories & Tags Panel', () => {
   let fixture;
+
+  beforeEach(async () => {
+    fixture = new Fixture();
+    fixture.setFlags({ enableTaxonomiesSupport: true });
+    await fixture.render();
+  });
+
+  afterEach(() => {
+    fixture.restore();
+  });
+
   async function openCategoriesAndTagsPanel() {
     // open document panel
     await fixture.events.click(fixture.editor.inspector.documentTab);
@@ -47,15 +58,6 @@ describe('Categories & Tags Panel', () => {
 
     return terms;
   }
-  beforeEach(async () => {
-    fixture = new Fixture();
-    fixture.setFlags({ enableTaxonomiesSupport: true });
-    await fixture.render();
-  });
-
-  afterEach(() => {
-    fixture.restore();
-  });
 
   it('should have no aXe accessibility violations', async () => {
     await openCategoriesAndTagsPanel();
@@ -73,6 +75,7 @@ describe('Categories & Tags Panel', () => {
 
         // track initial story categories
         const initialStoryTerms = await getStoryTerms();
+
         // click a checkbox
         expect(categoriesAndTags.categories[0].checked).toBe(true);
         await fixture.events.click(categoriesAndTags.categories[0]);
@@ -80,7 +83,6 @@ describe('Categories & Tags Panel', () => {
 
         // verify category was removed from story
         let currentStoryTerms = await getStoryTerms();
-
         expect(currentStoryTerms['web_story_category'].length).toBe(
           initialStoryTerms['web_story_category'].length - 1
         );
