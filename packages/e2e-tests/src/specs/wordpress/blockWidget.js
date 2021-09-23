@@ -85,7 +85,9 @@ describe('Web Stories Widget Block', () => {
 
     minWPVersionRequired('5.8');
 
-    it('should insert a legacy Web Stories widget', async () => {
+    // TODO(#7748): Investigate flakey test.
+    //eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should insert a legacy Web Stories widget', async () => {
       await activatePlugin('classic-widgets');
 
       await visitAdminPage('widgets.php');
