@@ -66,9 +66,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[0].node);
     });
 
-    // TODO(#8740): Fix flaky test.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should add text presets below each other if added consecutively', async () => {
+    it('should add text presets below each other if added consecutively', async () => {
       await fixture.events.mouse.moveRel(
         fixture.editor.library.text.preset('Title 1'),
         10,
@@ -81,19 +79,13 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       );
 
       await addPreset('Title 1');
-      // TODO(#8740): Seems like this line is flaky.
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       await addPreset('Title 3');
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
       await addPreset('Paragraph');
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[3].node);
 
       await fixture.snapshot('consecutively added different text presets');
     });
 
-    // TODO(#8740): Fix flaky test.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should ensure staggered presets fit on the page', async () => {
+    it('should ensure staggered presets fit on the page', async () => {
       const POSITION_MARGIN = dataFontEm(1);
       const PARAGRAPH_TEXT =
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
@@ -105,7 +97,6 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       let nodeIndex = 1;
 
       const verifyDefaultPosition = async (name, content) => {
-        // TODO(#8740): Seems like this line is flaky.
         await waitFor(
           () => fixture.editor.canvas.framesLayer.frames[nodeIndex].node
         );
@@ -190,6 +181,11 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
   describe('Easier/smarter text color', () => {
     it('should add text color based on background', async () => {
+      // Enable the smart colors first.
+      await fixture.editor.library.textTab.click();
+      const toggle = fixture.screen.getByRole('checkbox', { name: 'Use auto styled text' });
+      await fixture.events.click(toggle);
+
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
@@ -214,7 +210,6 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         color: { r: 255, g: 255, b: 255, a: 0.7 },
       });
 
-      await fixture.editor.library.textTab.click();
       await fixture.events.mouse.moveRel(
         fixture.editor.library.text.preset('Title 1'),
         10,
