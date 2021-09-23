@@ -453,22 +453,6 @@ function addPublisherLogo(publisherLogoId, currentState) {
   };
 }
 function removePublisherLogo(publisherLogoId, currentState) {
-  const newPublisherLogos = [...currentState.publisherLogos].map(
-    (publisherLogo) => {
-      publisherLogo.active = publisherLogo.id === publisherLogoId;
-      return publisherLogo;
-    }
-  );
-
-  return {
-    ...currentState,
-    isLoading: false,
-    settingSaved: true,
-    publisherLogos: newPublisherLogos,
-  };
-}
-
-function setPublisherLogoAsDefault(publisherLogoId, currentState) {
   const wasDefault = currentState.publisherLogos.some(
     ({ id, active }) => id === publisherLogoId && active
   );
@@ -479,6 +463,22 @@ function setPublisherLogoAsDefault(publisherLogoId, currentState) {
       publisherLogo.active = wasDefault ? 0 === index : publisherLogo.active;
       return publisherLogo;
     });
+
+  return {
+    ...currentState,
+    isLoading: false,
+    settingSaved: true,
+    publisherLogos: newPublisherLogos,
+  };
+}
+
+function setPublisherLogoAsDefault(publisherLogoId, currentState) {
+  const newPublisherLogos = [...currentState.publisherLogos].map(
+    (publisherLogo) => {
+      publisherLogo.active = publisherLogo.id === publisherLogoId;
+      return publisherLogo;
+    }
+  );
 
   return {
     ...currentState,

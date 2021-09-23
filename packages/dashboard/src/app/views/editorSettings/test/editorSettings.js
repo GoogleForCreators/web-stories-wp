@@ -49,7 +49,7 @@ function createProviderValues({
   adSenseSlotId = '',
   adManagerSlotId = '',
   adNetwork = AD_NETWORK_TYPE.NONE,
-  logos,
+  publisherLogos,
 }) {
   return {
     config: {
@@ -90,7 +90,7 @@ function createProviderValues({
           },
         },
         publisherLogos: {
-          publisherLogos: logos,
+          publisherLogos,
         },
       },
       actions: {
@@ -124,7 +124,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         canManageSettings: true,
         isLoading: false,
         logoIds: [],
-        logos: {},
+        publisherLogos: [],
       })
     );
     setAppElement(container);
@@ -157,7 +157,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         canUploadFiles: true,
         canManageSettings: true,
         isLoading: false,
-        logos: rawPublisherLogos,
+        publisherLogos: rawPublisherLogos,
       })
     );
     setAppElement(container);
@@ -176,7 +176,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         canUploadFiles: true,
         canManageSettings: true,
         isLoading: false,
-        logos: rawPublisherLogos,
+        publisherLogos: rawPublisherLogos,
       })
     );
 
@@ -214,8 +214,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         canUploadFiles: false,
         canManageSettings: true,
         isLoading: false,
-        logoIds: [],
-        logos: {},
+        publisherLogos: [],
       })
     );
     setAppElement(container);
@@ -236,8 +235,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         adSenseSlotId: '456',
         adManagerSlotId: '',
         adNetwork: AD_NETWORK_TYPE.ADSENSE,
-        logoIds: [],
-        logos: {},
+        publisherLogos: [],
       })
     );
     setAppElement(container);

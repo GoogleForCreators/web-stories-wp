@@ -206,7 +206,7 @@ describe('publisherLogoReducer', () => {
     });
   });
 
-  it.only(`should update publisherLogos state when ${ACTION_TYPES.REMOVE_SUCCESS} is called`, () => {
+  it(`should update publisherLogos state when ${ACTION_TYPES.REMOVE_SUCCESS} is called`, () => {
     const result = publisherLogoReducer(
       {
         ...initialState,
