@@ -61,15 +61,12 @@ jobs:
         coverage: [false]
         include:
           - php: '8.0'
-            wp: 'latest'
+            wp: '5.8'
             coverage: true
 
           - php: '7.0'
             wp: '5.5'
 
-          # Using a branch instead instead of 'latest' or a specific version ensures we
-          # get the latest test utils from that branch that includes the PHPUnity polyfills.
-          # TODO: Switch to 'latest' once a new minor release is out.
           - php: '8.0'
             wp: '5.8'
             random: true
@@ -91,7 +88,7 @@ jobs:
       # So we temporarily switch PHP versions, do a full install and then remove the package.
       # Then switch back to the PHP version we want to test and delete the vendor directory.
 
-      - name: Setup PHP 7.4
+      - name: Setup PHP 8.0
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
@@ -118,10 +115,18 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
 
+      # Installs PHPUnit 9.5+ for tests against trunk and PHPUnit 7.5.x for older versions,
+      # because WordPress 5.8 and below don't support newer PHPUnit versions.
       - name: Update PHPUnit
         run: |
-          composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
-        if: ${{ matrix.php == '7.4' || matrix.php == '8.0' || matrix.php == '8.1' }}
+          if [[ $WP_VERSION == "trunk" ]]; then
+            composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
+          else
+            composer require --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit:^7.5 --with-dependencies
+          fi
+        env:
+          WP_VERSION: ${{ matrix.wp }}
+          PHP_VERSION: ${{ matrix.php }}
 
       - name: Composer dump autoload
         run: composer dump-autoload --no-interaction
