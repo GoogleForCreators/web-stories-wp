@@ -16,9 +16,23 @@
 /**
  * External dependencies
  */
-import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
+import {
+  createNewStory,
+  withExperimentalFeatures,
+  withUser,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Taxonomy', () => {
+  withExperimentalFeatures(['enableTaxonomiesSupport']);
+
+  const addChildCategory = async ({ parent, child }) => {
+    await expect(page).toClick('#expand_add_new_hierarchical_term');
+    await page.type('input[name="New Category Name"]', child);
+    await expect(page).toClick('button[aria-label="Parent Category"]');
+    await expect(page).toClick('li[role="option"]', { text: parent });
+    await expect(page).toClick('#submit_add_new_hierarchical_term');
+  };
+
   it('should be able to add new categories', async () => {
     await createNewStory();
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
@@ -30,11 +44,17 @@ describe('Taxonomy', () => {
     await expect(page).toClick('#expand_add_new_hierarchical_term');
     await page.waitForSelector('input[name="New Category Name"]');
     // add a parent category
-    await page.type('input[name="New Category Name"]', 'electronic');
+    await page.type('input[name="New Category Name"]', 'music genres');
     await expect(page).toClick('#submit_add_new_hierarchical_term');
 
-    await page.waitForSelector('input[name="electronic"]');
-    await expect(page).toClick('input[name="electronic"]');
+    // add some child categories
+    await addChildCategory({ parent: 'music genres', child: 'rock' });
+    await addChildCategory({ parent: 'music genres', child: 'jazz' });
+    await addChildCategory({ parent: 'music genres', child: 'industrial' });
+    await addChildCategory({ parent: 'music genres', child: 'electro-pop' });
+    await addChildCategory({ parent: 'music genres', child: 'funk' });
+
+    await expect(page).toClick('input[name="rock"]');
   });
 
   describe('Contributor User', () => {
@@ -43,9 +63,10 @@ describe('Taxonomy', () => {
       await createNewStory();
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
       await expect(page).toMatch('Categories and Tags');
+      await page.waitForSelector('input[name="rock"]');
+      await expect(page).toClick('input[name="rock"]');
 
-      await page.waitForSelector('input[name="electronic"]');
-      await expect(page).toClick('input[name="electronic"]');
+      await expect(page).not.toMatch('Add New Category');
     });
   });
 });
