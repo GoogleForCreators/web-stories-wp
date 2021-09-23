@@ -23,11 +23,11 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
-describe('Taxonomy', () => {
+describe.only('Taxonomy', () => {
   withExperimentalFeatures(['enableTaxonomiesSupport']);
 
   const addChildCategory = async ({ parent, child }) => {
-    await expect(page).toClick('#expand_add_new_hierarchical_term');
+    await expect(page).toClick('button#expand_add_new_hierarchical_term');
     await page.type('input[name="New Category Name"]', child);
     await expect(page).toClick('button[aria-label="Parent Category"]');
     await expect(page).toClick('li[role="option"]', { text: parent });
@@ -41,6 +41,7 @@ describe('Taxonomy', () => {
   it('should be able to add new categories', async () => {
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
     await expect(page).toMatch('Categories and Tags');
+
     // Toggle the panel which is collapsed by default.
     await expect(page).toClick('[aria-label="Categories and Tags"]');
     await page.waitForSelector('button#expand_add_new_hierarchical_term');
