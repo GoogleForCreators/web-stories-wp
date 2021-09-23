@@ -44,7 +44,7 @@ describe.only('Taxonomy', () => {
 
     // Toggle the panel which is collapsed by default.
     await expect(page).toClick('[aria-label="Categories and Tags"]');
-    await page.waitForSelector('button#expand_add_new_hierarchical_term');
+    // await page.waitForSelector('button#expand_add_new_hierarchical_term');
     await expect(page).toClick('button#expand_add_new_hierarchical_term');
     await page.waitForSelector('input[name="New Category Name"]');
     // add a parent category
