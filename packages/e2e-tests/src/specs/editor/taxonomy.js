@@ -17,7 +17,11 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
+import {
+  createNewStory,
+  withExperimentalFeatures,
+  withUser,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Taxonomy', () => {
   const addChildCategory = async ({ parent, child }) => {
@@ -29,6 +33,8 @@ describe('Taxonomy', () => {
   };
 
   it('should be able to add new categories', async () => {
+    withExperimentalFeatures(['enableTaxonomiesSupport'], true);
+
     await createNewStory();
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
     await expect(page).toMatch('Categories and Tags');
