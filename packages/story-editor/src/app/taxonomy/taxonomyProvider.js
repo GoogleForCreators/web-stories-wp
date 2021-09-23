@@ -114,7 +114,7 @@ function TaxonomyProvider(props) {
   ]);
 
   const setTerms = useCallback(
-    (taxonomy, termIds = []) =>
+    (taxonomy, termIds = []) => {
       updateStory({
         properties: (story) => ({
           ...story,
@@ -126,7 +126,8 @@ function TaxonomyProvider(props) {
                 : termIds,
           },
         }),
-      }),
+      });
+    },
     [updateStory]
   );
 
@@ -181,7 +182,7 @@ function TaxonomyProvider(props) {
         );
 
         if (selectedTerm) {
-          addTermToSelection(taxonomy, selectedTerm.id);
+          addTermToSelection(taxonomy, selectedTerm);
         }
       }
     },
@@ -256,7 +257,7 @@ function TaxonomyProvider(props) {
       state: {
         taxonomies,
         termCache,
-        terms,
+        terms: Array.isArray(terms) ? {} : terms,
       },
       actions: {
         createTerm,
