@@ -32,9 +32,11 @@ describe('Taxonomy', () => {
     await expect(page).toClick('#submit_add_new_hierarchical_term');
   };
 
-  it('should be able to add new categories', async () => {
-    withExperimentalFeatures(['enableTaxonomiesSupport'], true);
+  beforeAll(async () => {
+    await withExperimentalFeatures(['enableTaxonomiesSupport'], true);
+  });
 
+  it('should be able to add new categories', async () => {
     await createNewStory();
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
     await expect(page).toMatch('Categories and Tags');
