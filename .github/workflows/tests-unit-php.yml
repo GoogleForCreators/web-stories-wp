@@ -110,11 +110,11 @@ jobs:
         uses: 'ramsey/composer-install@v1'
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
-        if: ${{ matrix.php == '7.4' || matrix.php == '8.0' }}
 
       - name: Update PHPUnit
         run: |
           composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
+        if: ${{ matrix.php == '7.4' || matrix.php == '8.0' }}
 
       - name: Composer dump autoload
         run: composer dump-autoload --no-interaction
