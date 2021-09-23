@@ -119,8 +119,11 @@ describe('Categories & Tags Panel', () => {
         expect(
           finalCategories.filter((category) => category.name === 'deer').length
         ).toBe(1);
-
-        // TODO: 9058 - validate new category exists on story once category is checked when added.
+        // validate newly added category was checked
+        const deerIndex = finalCategories.findIndex(
+          (category) => category.name === 'deer'
+        );
+        expect(finalCategories[deerIndex].checked).toBe(true);
       });
 
       // TODO: #9063
@@ -184,8 +187,8 @@ describe('Categories & Tags Panel', () => {
           (category) => category.name === 'deer'
         );
         expect(deerIndex).toBe(boogerIndex + 1);
-
-        // TODO: 9058 - validate new category exists on story once category is checked when added.
+        // validate newly added category was checked
+        expect(finalCategories[deerIndex].checked).toBe(true);
       });
     });
   });
@@ -275,8 +278,11 @@ describe('Categories & Tags Panel', () => {
       expect(
         finalCategories.filter((category) => category.name === 'deer').length
       ).toBe(1);
-
-      // TODO: 9058 - validate new category exists on story once category is checked when added.
+      // validate newly added category was checked
+      const deerIndex = finalCategories.findIndex(
+        (category) => category.name === 'deer'
+      );
+      expect(finalCategories[deerIndex].checked).toBe(true);
     });
 
     it('should add a new category as a child of an existing category', async () => {
@@ -343,8 +349,8 @@ describe('Categories & Tags Panel', () => {
         (category) => category.name === 'deer'
       );
       expect(deerIndex).toBe(boogerIndex + 1);
-
-      // TODO: 9058 - validate new category exists on story once category is checked when added.
+      // validate newly added category was checked
+      expect(finalCategories[deerIndex].checked).toBe(true);
     });
   });
 
