@@ -49,7 +49,8 @@ export const Z_INDEX = {
 };
 
 const HEADER_GAP = 16;
-const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE;
+// 8px extra is for the outline to display.
+const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE + 8;
 const MENU_GAP = 16;
 const CAROUSEL_HEIGHT = 104;
 const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE;

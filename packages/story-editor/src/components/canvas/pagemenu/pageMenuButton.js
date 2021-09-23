@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import {
   Button,
   BUTTON_VARIANTS,
@@ -30,17 +31,21 @@ import {
  */
 import Tooltip from '../../tooltip';
 
+const StyledButton = styled(Button)`
+  margin-top: 4px;
+`;
+
 function PageMenuButton({ children, title, shortcut, ...rest }) {
   return (
     <Tooltip title={title} shortcut={shortcut} hasTail>
-      <Button
+      <StyledButton
         variant={BUTTON_VARIANTS.SQUARE}
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}
         {...rest}
       >
         {children}
-      </Button>
+      </StyledButton>
     </Tooltip>
   );
 }
