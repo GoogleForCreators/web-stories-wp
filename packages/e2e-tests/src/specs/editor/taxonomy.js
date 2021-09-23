@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
 import {
   createNewStory,
   withExperimentalFeatures,
@@ -24,6 +23,8 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Taxonomy', () => {
+  withExperimentalFeatures(['enableTaxonomiesSupport']);
+
   const addChildCategory = async ({ parent, child }) => {
     await expect(page).toClick('#expand_add_new_hierarchical_term');
     await page.type('input[name="New Category Name"]', child);
@@ -32,15 +33,13 @@ describe('Taxonomy', () => {
     await expect(page).toClick('#submit_add_new_hierarchical_term');
   };
 
-  beforeAll(async () => {
-    await withExperimentalFeatures(['enableTaxonomiesSupport'], true);
+  beforeEach(async () => {
+    await createNewStory();
   });
 
   it('should be able to add new categories', async () => {
-    await createNewStory();
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
     await expect(page).toMatch('Categories and Tags');
-
     // Toggle the panel which is collapsed by default.
     await expect(page).toClick('[aria-label="Categories and Tags"]');
 
@@ -58,22 +57,17 @@ describe('Taxonomy', () => {
     await addChildCategory({ parent: 'music genres', child: 'funk' });
 
     await expect(page).toClick('input[name="rock"]');
-
-    await percySnapshot(page, 'Admin Taxonomy');
   });
 
   describe('Contributor User', () => {
     withUser('contributor', 'password');
     it('should be able to manage categories but not add new ones', async () => {
-      await createNewStory();
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
       await expect(page).toMatch('Categories and Tags');
       await page.waitForSelector('input[name="rock"]');
       await expect(page).toClick('input[name="rock"]');
 
       await expect(page).not.toMatch('Add New Category');
-
-      await percySnapshot(page, 'Contributor Taxonomy');
     });
   });
 });
