@@ -44,25 +44,17 @@ class Publisher_Logos_Controller extends REST_Controller {
 	use Post_Type;
 
 	/**
-	 * The namespace of this controller's route.
-	 *
-	 * @since 1.12.0
-	 * @var string
+	 * Constructor.
 	 */
-	protected $namespace = 'web-stories/v1';
-
-	/**
-	 * The base of this controller's route.
-	 *
-	 * @since 1.12.0
-	 * @var string
-	 */
-	protected $rest_base = 'publisher-logos';
+	public function __construct() {
+		$this->namespace = 'web-stories/v1';
+		$this->rest_base = 'publisher-logos';
+	}
 
 	/**
 	 * Registers routes for links.
 	 *
-	 * @since 1.0.0
+	 * @since 1.12.0
 	 *
 	 * @see register_rest_route()
 	 *
