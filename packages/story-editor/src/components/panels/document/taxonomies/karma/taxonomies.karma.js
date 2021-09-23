@@ -73,7 +73,6 @@ describe('Categories & Tags Panel', () => {
 
         // track initial story categories
         const initialStoryTerms = await getStoryTerms();
-        // expect(initialStoryTerms).toBe('tacos');
         // click a checkbox
         expect(categoriesAndTags.categories[0].checked).toBe(true);
         await fixture.events.click(categoriesAndTags.categories[0]);
