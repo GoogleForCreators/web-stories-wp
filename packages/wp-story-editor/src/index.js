@@ -38,10 +38,11 @@ import { initializeTracking } from '@web-stories-wp/tracking';
  */
 import * as apiCallbacks from './api';
 import {
+  Layout,
   PostPublishDialog,
-  MediaUpload,
   StatusCheck,
   PostLock,
+  MediaUpload,
 } from './components';
 
 /**
@@ -71,6 +72,7 @@ const initialize = (id, config, flags) => {
     <FlagsProvider features={flags}>
       <StrictMode>
         <StoryEditor config={editorConfig}>
+          <Layout />
           <PostPublishDialog />
           <StatusCheck />
           <PostLock />

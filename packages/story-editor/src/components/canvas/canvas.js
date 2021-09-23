@@ -15,12 +15,21 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import CanvasLayout from './canvasLayout';
 
-function Canvas() {
-  return <CanvasLayout />;
+function Canvas({ header }) {
+  return <CanvasLayout header={header} />;
 }
+
+Canvas.propTypes = {
+  header: PropTypes.node,
+};
 
 export default Canvas;

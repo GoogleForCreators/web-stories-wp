@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
+import { InterfaceSkeleton } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import TitleMissingDialog from '../titleMissingDialog';
+import { default as Header } from '../header';
+import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
 
-export default {
-  title: 'Stories Editor/Components/Dialog/Title-Missing',
-  component: TitleMissingDialog,
-};
-
-export const _default = () => {
+function Layout() {
   return (
-    <TitleMissingDialog
-      isOpen
-      onClose={action('close')}
-      onFix={action('fix')}
-      onIgnore={action('ignore')}
-    />
+    <MetaBoxesProvider>
+      <InterfaceSkeleton header={<Header />}>
+        <MetaBoxes />
+      </InterfaceSkeleton>
+    </MetaBoxesProvider>
   );
-};
+}
+
+export default Layout;
