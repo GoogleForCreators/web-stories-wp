@@ -74,7 +74,7 @@ function StoryPicker({
       page = 1,
     } = {}) => {
       const query = {
-        _embed: 'author',
+        _embed: 'author,wp:featuredmedia',
         context: 'edit',
         _web_stories_envelope: true,
         search,
