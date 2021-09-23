@@ -36,6 +36,6 @@ class Stories_Terms_Controller extends Test_REST_TestCase {
 		$links    = $response->get_links();
 		$this->assertArrayHasKey( 'about', $links );
 		$this->assertArrayHasKey( 'href', $links['about'][0] );
-		$this->assertContains( 'web-stories/v1', $links['about'][0]['href'] );
+		$this->assertStringContainsString( 'web-stories/v1', $links['about'][0]['href'] );
 	}
 }
