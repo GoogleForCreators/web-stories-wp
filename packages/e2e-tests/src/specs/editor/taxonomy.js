@@ -24,7 +24,7 @@ import {
 import percySnapshot from '@percy/puppeteer';
 
 describe.only('Taxonomy', () => {
-  withExperimentalFeatures(['enableTaxonomiesSupport']);
+  //   withExperimentalFeatures(['enableTaxonomiesSupport']);
 
   const addChildCategory = async ({ parent, child }) => {
     await expect(page).toClick('button#expand_add_new_hierarchical_term');
