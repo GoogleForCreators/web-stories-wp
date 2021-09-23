@@ -204,6 +204,9 @@ const sharedConfig = {
           output: {
             comments: /translators:/i,
           },
+          mangle: {
+            reserved: ['__', '_x', '_n', '_nx']
+          },
         },
         extractComments: false,
       }),
