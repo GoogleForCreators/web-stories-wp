@@ -10,6 +10,7 @@
   },
   "main": "./src/index.js",
   "type": "module",
+  "sideEffects": false,
   "dependencies": {
     "@tannin/sprintf": "^1.2.0",
     "@web-stories-wp/react": "*",
