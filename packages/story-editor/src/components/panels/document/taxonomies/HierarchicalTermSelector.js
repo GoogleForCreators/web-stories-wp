@@ -110,18 +110,14 @@ const AddNewCategoryButton = styled(Button).attrs({
 `;
 
 function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
-  const { createTerm, selectedSlugs, setSelectedTaxonomySlugs, termCache } =
-    useTaxonomy(
-      ({
-        state: { selectedSlugs, termCache },
-        actions: { createTerm, setSelectedTaxonomySlugs },
-      }) => ({
-        createTerm,
-        selectedSlugs,
-        setSelectedTaxonomySlugs,
-        termCache,
-      })
-    );
+  const { createTerm, termCache, terms, setTerms } = useTaxonomy(
+    ({ state: { termCache, terms }, actions: { createTerm, setTerms } }) => ({
+      createTerm,
+      setTerms,
+      termCache,
+      terms,
+    })
+  );
 
   const categories = useMemo(() => {
     if (termCache[taxonomy.restBase]) {
@@ -129,8 +125,8 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
         const formattedCategory = { ...category };
         formattedCategory.value = formattedCategory.id;
         formattedCategory.label = formattedCategory.name;
-        formattedCategory.checked = selectedSlugs[taxonomy.restBase]?.includes(
-          category.slug
+        formattedCategory.checked = terms[taxonomy.restBase]?.includes(
+          category.id
         );
 
         return formattedCategory;
@@ -138,7 +134,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
     }
 
     return [];
-  }, [selectedSlugs, taxonomy, termCache]);
+  }, [taxonomy, termCache, terms]);
 
   const dropdownCategories = useMemo(
     () =>
@@ -170,11 +166,11 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
       const term = categories.find((category) => category.id === id);
 
       // find the already selected slugs + update those.
-      setSelectedTaxonomySlugs(taxonomy, (currentTerms = []) => {
-        const index = currentTerms.findIndex((slug) => slug === term.slug);
+      setTerms(taxonomy, (currentTerms = []) => {
+        const index = currentTerms.findIndex((termId) => termId === term.id);
         // add if term doesn't exist
         if (checked && index === -1) {
-          return [...currentTerms, term.slug];
+          return [...currentTerms, term.id];
         }
 
         // remove if term exists
@@ -188,7 +184,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
         return currentTerms;
       });
     },
-    [categories, setSelectedTaxonomySlugs, taxonomy]
+    [categories, setTerms, taxonomy]
   );
 
   const handleToggleNewCategory = useCallback(() => {
@@ -207,7 +203,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
       evt.preventDefault();
 
       const parentValue = selectedParent === noParentId ? 0 : selectedParent;
-      createTerm(taxonomy, newCategoryName, parentValue);
+      createTerm(taxonomy, newCategoryName, parentValue, true);
       setShowAddNewCategory(false);
       resetInputs();
       setToggleFocus(showAddNewCategory);
