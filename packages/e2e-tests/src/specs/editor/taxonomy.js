@@ -24,7 +24,7 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Taxonomy', () => {
-  withExperimentalFeatures(['enableTaxonomiesSupport']);
+  withExperimentalFeatures(['enableTaxonomiesSupport'], true);
 
   const addChildCategory = async ({ parent, child }) => {
     await expect(page).toClick('#expand_add_new_hierarchical_term');
