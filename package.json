@@ -100,7 +100,7 @@
     "eslint-plugin-styled-components-a11y": "^0.0.34",
     "eslint-plugin-testing-library": "^4.12.3",
     "file-loader": "^6.2.0",
-    "glob": "^7.1.7",
+    "glob": "^7.2.0",
     "html-webpack-plugin": "^4.5.2",
     "husky": "^4.3.7",
     "jasmine-core": "^3.9.0",
