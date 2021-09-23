@@ -90,14 +90,14 @@ const EmbedControls = (props) => {
           */}
           {ToolbarButton ? (
             <ToolbarButton
-              title={__('Edit URL', 'web-stories')}
+              title={__('Edit Embedded Story', 'web-stories')}
               icon="edit"
               onClick={switchBackToURLInput}
             />
           ) : (
             <Button
               className="components-toolbar__control"
-              label={__('Edit URL', 'web-stories')}
+              label={__('Edit Embedded Story', 'web-stories')}
               icon="edit"
               onClick={switchBackToURLInput}
             />

@@ -22,9 +22,40 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { Button, Placeholder, ExternalLink } from '@wordpress/components';
-import { BlockIcon } from '@wordpress/block-editor';
-import { __, _x, sprintf } from '@wordpress/i18n';
+import { useCallback, useState } from '@wordpress/element';
+import { Button, Placeholder } from '@wordpress/components';
+import { BlockIcon, URLPopover } from '@wordpress/block-editor';
+import { __, sprintf } from '@wordpress/i18n';
+import { keyboardReturn } from '@wordpress/icons';
+/**
+ * Internal dependencies
+ */
+import StoryPicker from '../../components/storyPicker/storyPicker';
+
+// eslint-disable-next-line react/prop-types
+const InsertFromURLPopover = ({ src, onChange, onSubmit, onClose }) => (
+  <URLPopover onClose={onClose}>
+    <form
+      className="block-editor-media-placeholder__url-input-form"
+      onSubmit={onSubmit}
+    >
+      <input
+        className="block-editor-media-placeholder__url-input-field"
+        type="url"
+        aria-label={__('Story URL', 'web-stories')}
+        placeholder={__('Paste or type URL', 'web-stories')}
+        onChange={onChange}
+        value={src}
+      />
+      <Button
+        className="block-editor-media-placeholder__url-input-submit-button"
+        icon={keyboardReturn}
+        label={__('Embed', 'web-stories')}
+        type="submit"
+      />
+    </form>
+  </URLPopover>
+);
 
 const EmbedPlaceholder = ({
   icon,
@@ -34,58 +65,92 @@ const EmbedPlaceholder = ({
   onChange,
   cannotEmbed,
   errorMessage,
+  selectedStories,
+  setSelectedStories,
 }) => {
+  const [isURLInputVisible, setIsURLInputVisible] = useState(false);
+  const [isStoryPickerOpen, setIsStoryPickerOpen] = useState(false);
+
+  const openStoryPicker = () => setIsStoryPickerOpen(true);
+  const closeStoryPicker = useCallback(() => {
+    setIsStoryPickerOpen(false);
+  }, []);
+
+  const openURLInput = () => setIsURLInputVisible(true);
+  const closeURLInput = () => setIsURLInputVisible(false);
+
+  const onSubmitSrc = (event) => {
+    closeURLInput();
+    onSubmit(event);
+  };
+
+  const hasStories = selectedStories.length > 0;
+
   return (
-    <Placeholder
-      icon={<BlockIcon icon={icon} showColors />}
-      label={label}
-      className="wp-block-web-stories-embed"
-      instructions={__(
-        'Paste a link to the story you want to display on your site.',
-        'web-stories'
-      )}
-    >
-      <form onSubmit={onSubmit} data-testid="embed-placeholder-form">
-        <input
-          type="url"
-          value={value || ''}
-          className="components-placeholder__input"
-          aria-label={label}
-          placeholder={__('Enter URL to embed here…', 'web-stories')}
-          onChange={onChange}
-        />
-        <Button isPrimary type="submit">
-          {_x('Embed', 'button label', 'web-stories')}
-        </Button>
-      </form>
-      <div className="components-placeholder__learn-more">
-        <ExternalLink
-          href={__(
-            'https://wordpress.org/support/article/embeds/',
-            'web-stories'
-          )}
-        >
-          {__('Learn more about embeds', 'web-stories')}
-        </ExternalLink>
-      </div>
-      {cannotEmbed && (
-        <div className="components-placeholder__error">
-          <div className="components-placeholder__instructions">
-            {__('Sorry, this content could not be embedded.', 'web-stories')}
-            {errorMessage && (
-              <>
-                {' '}
-                {sprintf(
-                  /* translators: %s: error message. */
-                  __('Reason: %s.', 'web-stories'),
-                  errorMessage
-                )}
-              </>
+    <>
+      <Placeholder
+        icon={<BlockIcon icon={icon} showColors />}
+        label={label}
+        className="wp-block-web-stories-embed"
+        instructions={__(
+          'Select an existing story, or add one with a URL.',
+          'web-stories'
+        )}
+      >
+        <>
+          <Button isPrimary onClick={openStoryPicker}>
+            {!hasStories
+              ? __('Select Story', 'web-stories')
+              : __('Replace Story', 'web-stories')}
+          </Button>
+          <div className="block-editor-media-placeholder__url-input-container">
+            <Button
+              className="block-editor-media-placeholder__button"
+              onClick={openURLInput}
+              isPressed={isURLInputVisible}
+              variant="tertiary"
+            >
+              {!hasStories && value
+                ? __('Replace URL', 'web-stories')
+                : __('Insert from URL', 'web-stories')}
+            </Button>
+            {isURLInputVisible && (
+              <InsertFromURLPopover
+                src={value}
+                onChange={onChange}
+                onSubmit={onSubmitSrc}
+                onClose={closeURLInput}
+              />
             )}
           </div>
-        </div>
+        </>
+        {cannotEmbed && (
+          <div className="components-placeholder__error">
+            <div className="components-placeholder__instructions">
+              {__('Sorry, this content could not be embedded.', 'web-stories')}
+              {errorMessage && (
+                <>
+                  {' '}
+                  {sprintf(
+                    /* translators: %s: error message. */
+                    __('Reason: %s.', 'web-stories'),
+                    errorMessage
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </Placeholder>
+      {isStoryPickerOpen && (
+        <StoryPicker
+          closeStoryPicker={closeStoryPicker}
+          maxNumOfStories={1}
+          selectedStories={selectedStories}
+          setSelectedStories={setSelectedStories}
+        />
       )}
-    </Placeholder>
+    </>
   );
 };
 
@@ -97,6 +162,8 @@ EmbedPlaceholder.propTypes = {
   onChange: PropTypes.func,
   cannotEmbed: PropTypes.bool,
   errorMessage: PropTypes.string,
+  selectedStories: PropTypes.array,
+  setSelectedStories: PropTypes.func,
 };
 
 EmbedPlaceholder.defaultProps = {

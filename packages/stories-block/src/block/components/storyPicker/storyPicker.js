@@ -31,13 +31,12 @@ import { addQueryArgs } from '@wordpress/url';
 /**
  * Internal dependencies
  */
+import LoaderContainer from '../loaderContainer';
 import SelectStories from './selectStories';
 import SortStories from './sortStories';
-import LoaderContainer from './components/loaderContainer';
 
 const {
   config: {
-    maxNumOfStories,
     api: { stories: storiesApi },
   },
 } = window.webStoriesBlockSettings;
@@ -46,8 +45,9 @@ function StoryPicker({
   selectedStories,
   setSelectedStories,
   closeStoryPicker,
-  isSortingStories,
-  setIsSortingStories,
+  isSortingStories = false,
+  setIsSortingStories = () => {},
+  maxNumOfStories,
 }) {
   const { createErrorNotice } = useDispatch('core/notices');
 
@@ -119,7 +119,12 @@ function StoryPicker({
 
   return (
     <Modal
-      title={__('Selected Stories', 'web-stories')}
+      title={_n(
+        'Selected Story',
+        'Selected Stories',
+        maxNumOfStories,
+        'web-stories'
+      )}
       onRequestClose={closeStoryPicker}
       shouldCloseOnClickOutside={false}
       className="web-stories-story-picker-modal"
@@ -141,6 +146,7 @@ function StoryPicker({
             setSelectedStories={setLocalSelectedStories}
             hasAllStories={hasAllStories}
             fetchStories={fetchStories}
+            maxNumOfStories={maxNumOfStories}
             isLoading={loadingState === 'loading'}
           />
         )}
@@ -157,25 +163,26 @@ function StoryPicker({
                   maxNumOfStories,
                   'web-stories'
                 ),
-                selectedStories.length,
+                localSelectedStories.length,
                 maxNumOfStories
               )}
             </p>
           )}
         </div>
         <div className="web-stories-story-picker-modal__footer--right">
-          {isSortingStories ? (
-            <Button onClick={() => setIsSortingStories(false)}>
-              {__('Select Stories', 'web-stories')}
-            </Button>
-          ) : (
-            <Button
-              onClick={() => setIsSortingStories(true)}
-              disabled={localSelectedStories.length < 2}
-            >
-              {__('Rearrange Stories', 'web-stories')}
-            </Button>
-          )}
+          {maxNumOfStories > 1 &&
+            (isSortingStories ? (
+              <Button onClick={() => setIsSortingStories(false)}>
+                {__('Select Stories', 'web-stories')}
+              </Button>
+            ) : (
+              <Button
+                onClick={() => setIsSortingStories(true)}
+                disabled={localSelectedStories.length < 2}
+              >
+                {__('Rearrange Stories', 'web-stories')}
+              </Button>
+            ))}
           <Button
             isPrimary
             disabled={!localSelectedStories.length}
@@ -195,6 +202,7 @@ StoryPicker.propTypes = {
   closeStoryPicker: PropTypes.func,
   isSortingStories: PropTypes.bool,
   setIsSortingStories: PropTypes.func,
+  maxNumOfStories: PropTypes.number,
 };
 
 export default StoryPicker;

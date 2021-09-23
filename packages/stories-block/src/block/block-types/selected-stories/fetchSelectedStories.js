@@ -32,7 +32,7 @@ import { useDispatch } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import LoaderContainer from './components/loaderContainer';
+import LoaderContainer from '../../components/loaderContainer';
 
 const {
   config: {

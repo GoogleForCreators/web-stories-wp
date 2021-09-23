@@ -57,6 +57,7 @@ function StoryEmbedEdit({
     align = 'none',
     poster,
     title,
+    stories = [],
   } = attributes;
 
   const [editingURL, setEditingURL] = useState(false);
@@ -64,6 +65,8 @@ function StoryEmbedEdit({
   const [isFetchingData, setIsFetchingData] = useState(false);
   const [storyData, setStoryData] = useState({});
   const [cannotEmbed, setCannotEmbed] = useState(false);
+  const [selectedStoryIds, setSelectedStoryIds] = useState(stories);
+  const [selectedStories, _setSelectedStories] = useState([]);
 
   const showLoadingIndicator = isFetchingData;
   const showPlaceholder = !localURL || !outerURL || editingURL || cannotEmbed;
@@ -73,6 +76,14 @@ function StoryEmbedEdit({
     : _isResizable;
 
   const ref = useRef();
+
+  useEffect(() => {
+    if (attributes.stories.toString() !== selectedStoryIds.toString()) {
+      setAttributes({
+        stories: selectedStoryIds,
+      });
+    }
+  }, [attributes.stories, setAttributes, selectedStoryIds]);
 
   useEffect(() => {
     setLocalURL(outerURL);
@@ -107,9 +118,7 @@ function StoryEmbedEdit({
 
         setCannotEmbed(!(typeof data?.title === 'string'));
         setStoryData(data);
-        setAttributes({
-          url: localURL,
-        });
+        setAttributes({ url });
       } catch (err) {
         // Only care about errors from apiFetch
         if (!(err instanceof TypeError)) {
@@ -121,7 +130,7 @@ function StoryEmbedEdit({
         setIsFetchingData(false);
       }
     },
-    [setAttributes, localURL]
+    [setAttributes]
   );
 
   useEffect(() => {
@@ -133,12 +142,32 @@ function StoryEmbedEdit({
     }
   }, [outerURL, setAttributes, storyData?.title, storyData?.poster]);
 
+  const setSelectedStories = useCallback(
+    (newStories) => {
+      _setSelectedStories(newStories);
+      setSelectedStoryIds(newStories.map((story) => story.id));
+      if (newStories) {
+        const link = newStories?.[0]?.link;
+        setLocalURL(link);
+        setEditingURL(false);
+        setCannotEmbed(false);
+        if (link !== outerURL) {
+          fetchStoryData(link);
+        }
+      }
+    },
+    [outerURL, fetchStoryData, _setSelectedStories]
+  );
+
   const onSubmit = useCallback(
     (event) => {
       if (event) {
         event.preventDefault();
       }
 
+      // Reset selected stories, just in case you edit the block.
+      _setSelectedStories([]);
+      setSelectedStoryIds([]);
       setEditingURL(false);
       setCannotEmbed(false);
       if (localURL !== outerURL) {
@@ -170,7 +199,7 @@ function StoryEmbedEdit({
   const onResizeStart = () => toggleSelection(false);
   const onResizeStop = () => toggleSelection(true);
 
-  const label = __('Story URL', 'web-stories');
+  const label = __('Story Embed', 'web-stories');
 
   if (showPlaceholder) {
     return (
@@ -182,6 +211,8 @@ function StoryEmbedEdit({
         onChange={(event) => setLocalURL(event.target.value)}
         cannotEmbed={cannotEmbed}
         errorMessage={storyData?.message}
+        selectedStories={selectedStories}
+        setSelectedStories={setSelectedStories}
       />
     );
   }
@@ -292,6 +323,7 @@ StoryEmbedEdit.propTypes = {
     url: PropTypes.string,
     title: PropTypes.string,
     poster: PropTypes.string,
+    stories: PropTypes.array,
     width: PropTypes.number,
     height: PropTypes.number,
     align: PropTypes.string,

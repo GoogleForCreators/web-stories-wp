@@ -57,7 +57,7 @@ export const BLOCK_TYPES = [
   },
   {
     id: BLOCK_TYPE_URL,
-    label: __('Story URL', 'web-stories'),
+    label: __('Story Embed', 'web-stories'),
     description: __('Embed a visual story.', 'web-stories'),
     icon: EMBED_STORY_BLOCK_ICON,
   },
