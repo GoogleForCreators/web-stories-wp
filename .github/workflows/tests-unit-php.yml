@@ -106,6 +106,7 @@ jobs:
         uses: 'ramsey/composer-install@v1'
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
+        if: ${{ matrix.php == '7.4' || matrix.php == '8.0' }}
 
       - name: Update PHPUnit
         run: |
