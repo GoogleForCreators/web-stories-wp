@@ -27,8 +27,6 @@ import { renderWithProviders } from '../../../../../testUtils';
 import PublisherLogoSettings, { TEXT } from '..';
 import { rawPublisherLogos } from '../../../../../dataUtils/formattedPublisherLogos';
 
-const publisherLogos = Object.values(rawPublisherLogos);
-
 describe('PublisherLogo', () => {
   const mockHandleAddLogos = jest.fn();
 
@@ -69,11 +67,11 @@ describe('PublisherLogo', () => {
         onRemoveLogo={noop}
         onUpdateDefaultLogo={noop}
         isLoading={false}
-        publisherLogos={publisherLogos}
+        publisherLogos={rawPublisherLogos}
       />
     );
 
-    expect(screen.queryAllByRole('img')).toHaveLength(publisherLogos.length);
+    expect(screen.queryAllByRole('img')).toHaveLength(rawPublisherLogos.length);
   });
 
   it('should specify the first logo displayed as default', () => {
@@ -83,7 +81,7 @@ describe('PublisherLogo', () => {
         onRemoveLogo={noop}
         onUpdateDefaultLogo={noop}
         isLoading={false}
-        publisherLogos={publisherLogos}
+        publisherLogos={rawPublisherLogos}
       />
     );
 
@@ -99,13 +97,13 @@ describe('PublisherLogo', () => {
         onRemoveLogo={noop}
         onUpdateDefaultLogo={noop}
         isLoading={false}
-        publisherLogos={publisherLogos}
+        publisherLogos={rawPublisherLogos}
       />
     );
 
     expect(
       screen.queryAllByTestId(/^publisher-logo-context-menu-button-/)
-    ).toHaveLength(publisherLogos.length);
+    ).toHaveLength(rawPublisherLogos.length);
   });
 
   it('should render an error message if uploadError is present', () => {
@@ -115,7 +113,7 @@ describe('PublisherLogo', () => {
         onRemoveLogo={noop}
         onUpdateDefaultLogo={noop}
         isLoading={false}
-        publisherLogos={publisherLogos}
+        publisherLogos={rawPublisherLogos}
         uploadError={'Something went wrong.'}
         canUploadFiles
       />

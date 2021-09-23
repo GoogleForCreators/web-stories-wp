@@ -35,9 +35,7 @@ export default {
 };
 
 export const _default = () => {
-  const [uploadedContent, setUploadedContent] = useState(
-    Object.values(rawPublisherLogos)
-  );
+  const [uploadedContent, setUploadedContent] = useState(rawPublisherLogos);
 
   const handleAddLogos = useCallback(async (newPublisherLogos) => {
     action('onSubmit fired')(newPublisherLogos);

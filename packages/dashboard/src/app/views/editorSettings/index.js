@@ -106,7 +106,7 @@ function EditorSettings() {
       addPublisherLogo,
       removePublisherLogo,
       setPublisherLogoAsDefault,
-      publisherLogos: Object.values(publisherLogos),
+      publisherLogos,
     })
   );
 

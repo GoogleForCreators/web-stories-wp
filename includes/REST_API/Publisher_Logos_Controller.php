@@ -168,6 +168,10 @@ class Publisher_Logos_Controller extends REST_Controller {
 			$results[] = $this->prepare_response_for_collection( $data );
 		}
 
+		// Ensure the default publisher logo is first in the list.
+		$active = array_column( $results, 'active' );
+		array_multisort( $active, SORT_DESC, $results );
+
 		return rest_ensure_response( $results );
 	}
 

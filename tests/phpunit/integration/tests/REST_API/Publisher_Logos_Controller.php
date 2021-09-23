@@ -185,7 +185,7 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	public function test_get_items() {
 		wp_set_current_user( self::$admin );
 
-		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_1, self::$attachment_id_2, 0, -1, PHP_INT_MAX ] );
+		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_2, 0, -1, PHP_INT_MAX, self::$attachment_id_1 ] );
 		update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, self::$attachment_id_1 );
 
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/publisher-logos' );

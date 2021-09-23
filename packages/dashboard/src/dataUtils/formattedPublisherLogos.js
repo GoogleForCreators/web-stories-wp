@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-export const rawPublisherLogos = {
-  577: {
+export const rawPublisherLogos = [
+  {
     id: 577,
     src: 'https://picsum.photos/96',
     title: 'dummy image 1',
     active: true,
   },
-  584: {
+  {
     id: 584,
     src: 'https://picsum.photos/97',
     title: 'dummy image 2',
     active: false,
   },
-  582: {
+  {
     id: 582,
     src: 'https://picsum.photos/98',
     title: 'dummy image 3',
     active: false,
   },
-  581: {
+  {
     id: 581,
     src: 'https://picsum.photos/99',
     title: 'dummy image 4',
     active: false,
   },
-};
+];

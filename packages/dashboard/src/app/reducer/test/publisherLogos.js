@@ -24,7 +24,7 @@ describe('publisherLogoReducer', () => {
   const initialState = {
     error: {},
     isLoading: false,
-    publisherLogos: {},
+    publisherLogos: [],
     settingSaved: false,
   };
 
@@ -91,20 +91,20 @@ describe('publisherLogoReducer', () => {
     expect(result).toMatchObject({
       error: {},
       isLoading: false,
-      publisherLogos: {
-        123: {
+      publisherLogos: [
+        {
           id: 123,
           url: 'https://example.com',
           title: 'Logo A',
           active: true,
         },
-        456: {
+        {
           id: 456,
           url: 'https://example.com',
           title: 'Logo A',
           active: false,
         },
-      },
+      ],
     });
   });
 
@@ -112,14 +112,14 @@ describe('publisherLogoReducer', () => {
     const result = publisherLogoReducer(
       {
         ...initialState,
-        publisherLogos: {
-          123: {
+        publisherLogos: [
+          {
             id: 123,
             url: 'https://example.com',
             title: 'Logo A',
             active: true,
           },
-        },
+        ],
       },
       {
         type: ACTION_TYPES.ADD_SUCCESS,
@@ -137,20 +137,20 @@ describe('publisherLogoReducer', () => {
     expect(result).toMatchObject({
       error: {},
       isLoading: false,
-      publisherLogos: {
-        123: {
+      publisherLogos: [
+        {
           id: 123,
           url: 'https://example.com',
           title: 'Logo A',
           active: true,
         },
-        456: {
+        {
           id: 456,
           url: 'https://example.com',
           title: 'Logo A',
           active: false,
         },
-      },
+      ],
     });
   });
 
@@ -158,20 +158,20 @@ describe('publisherLogoReducer', () => {
     const result = publisherLogoReducer(
       {
         ...initialState,
-        publisherLogos: {
-          123: {
+        publisherLogos: [
+          {
             id: 123,
             url: 'https://example.com',
             title: 'Logo A',
             active: true,
           },
-          456: {
+          {
             id: 456,
             url: 'https://example.com',
             title: 'Logo A',
             active: false,
           },
-        },
+        ],
       },
       {
         type: ACTION_TYPES.UPDATE_SUCCESS,
@@ -189,41 +189,41 @@ describe('publisherLogoReducer', () => {
     expect(result).toMatchObject({
       error: {},
       isLoading: false,
-      publisherLogos: {
-        123: {
+      publisherLogos: [
+        {
           id: 123,
           url: 'https://example.com',
           title: 'Logo A',
           active: false,
         },
-        456: {
+        {
           id: 456,
           url: 'https://example.com',
           title: 'Logo A',
           active: true,
         },
-      },
+      ],
     });
   });
 
-  it(`should update publisherLogos state when ${ACTION_TYPES.REMOVE_SUCCESS} is called`, () => {
+  it.only(`should update publisherLogos state when ${ACTION_TYPES.REMOVE_SUCCESS} is called`, () => {
     const result = publisherLogoReducer(
       {
         ...initialState,
-        publisherLogos: {
-          123: {
+        publisherLogos: [
+          {
             id: 123,
             url: 'https://example.com',
             title: 'Logo A',
             active: true,
           },
-          456: {
+          {
             id: 456,
             url: 'https://example.com',
             title: 'Logo A',
             active: false,
           },
-        },
+        ],
       },
       {
         type: ACTION_TYPES.REMOVE_SUCCESS,
@@ -236,14 +236,14 @@ describe('publisherLogoReducer', () => {
     expect(result).toMatchObject({
       error: {},
       isLoading: false,
-      publisherLogos: {
-        123: {
+      publisherLogos: [
+        {
           id: 123,
           url: 'https://example.com',
           title: 'Logo A',
           active: true,
         },
-      },
+      ],
     });
   });
 });

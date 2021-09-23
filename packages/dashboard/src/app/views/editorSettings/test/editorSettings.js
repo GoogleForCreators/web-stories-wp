@@ -163,7 +163,7 @@ describe('Editor Settings: <Editor Settings />', function () {
     setAppElement(container);
 
     expect(screen.queryAllByTestId(/^uploaded-publisher-logo-/)).toHaveLength(
-      Object.keys(rawPublisherLogos).length
+      rawPublisherLogos.length
     );
   });
 

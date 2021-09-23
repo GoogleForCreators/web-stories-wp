@@ -405,7 +405,7 @@ function getPublisherLogosState() {
   return {
     error: {},
     isLoading: false,
-    publisherLogos: {},
+    publisherLogos: [],
     settingSaved: false,
   };
 }
@@ -415,32 +415,32 @@ function fetchPublisherLogos(currentState) {
     ...currentState,
     isLoading: true,
     settingSaved: false,
-    publisherLogos: {
-      577: {
+    publisherLogos: [
+      {
         id: 577,
         src: 'https://picsum.photos/96',
         title: 'dummy image 1',
         active: true,
       },
-      584: {
+      {
         id: 584,
         src: 'https://picsum.photos/97',
         title: 'dummy image 2',
         active: false,
       },
-      582: {
+      {
         id: 582,
         src: 'https://picsum.photos/98',
         title: 'dummy image 3',
         active: false,
       },
-      581: {
+      {
         id: 581,
         src: 'https://picsum.photos/99',
         title: 'dummy image 4',
         active: false,
       },
-    },
+    ],
   };
 }
 
@@ -453,38 +453,37 @@ function addPublisherLogo(publisherLogoId, currentState) {
   };
 }
 function removePublisherLogo(publisherLogoId, currentState) {
-  const newPublisherLogos = { ...currentState.publisherLogos };
-
-  const wasDefault = newPublisherLogos[publisherLogoId].active;
-  delete newPublisherLogos[publisherLogoId];
-
-  if (wasDefault) {
-    newPublisherLogos[Object.keys(newPublisherLogos)[0]].active = true;
-  }
+  const newPublisherLogos = [...currentState.publisherLogos].map(
+    (publisherLogo) => {
+      publisherLogo.active = publisherLogo.id === publisherLogoId;
+      return publisherLogo;
+    }
+  );
 
   return {
     ...currentState,
     isLoading: false,
     settingSaved: true,
-    publisherLogos: {
-      ...newPublisherLogos,
-    },
+    publisherLogos: newPublisherLogos,
   };
 }
 
 function setPublisherLogoAsDefault(publisherLogoId, currentState) {
-  const newPublisherLogos = { ...currentState.publisherLogos };
-  for (const id of Object.keys(newPublisherLogos)) {
-    newPublisherLogos[id].active = false;
-  }
-  newPublisherLogos[publisherLogoId].active = true;
+  const wasDefault = currentState.publisherLogos.some(
+    ({ id, active }) => id === publisherLogoId && active
+  );
+
+  const newPublisherLogos = [...currentState.publisherLogos]
+    .filter(({ id }) => id !== publisherLogoId)
+    .map((publisherLogo, index) => {
+      publisherLogo.active = wasDefault ? 0 === index : publisherLogo.active;
+      return publisherLogo;
+    });
 
   return {
     ...currentState,
     isLoading: false,
     settingSaved: true,
-    publisherLogos: {
-      ...newPublisherLogos,
-    },
+    publisherLogos: newPublisherLogos,
   };
 }

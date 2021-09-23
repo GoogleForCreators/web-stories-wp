@@ -29,7 +29,7 @@ export const ACTION_TYPES = {
 export const defaultPublisherLogosState = {
   error: {},
   isLoading: false,
-  publisherLogos: {},
+  publisherLogos: [],
   settingSaved: false,
 };
 
@@ -60,31 +60,18 @@ function publisherLogoReducer(state, action) {
         ...state,
         error: {},
         isLoading: false,
-        publisherLogos: {
+        publisherLogos: [
           ...state.publisherLogos,
-          ...action.payload.publisherLogos
-            .map(({ id, title, url, active }) => ({ id, title, url, active }))
-            .reduce((acc, current) => {
-              if (!current) {
-                return acc;
-              }
-
-              acc[current.id] = current;
-
-              return acc;
-            }, {}),
-        },
+          ...action.payload.publisherLogos,
+        ],
       };
     }
 
     case ACTION_TYPES.ADD_SUCCESS: {
-      const newPublisherLogos = { ...state.publisherLogos };
-      newPublisherLogos[action.payload.publisherLogo.id] = {
-        id: action.payload.publisherLogo.id,
-        title: action.payload.publisherLogo.title,
-        url: action.payload.publisherLogo.url,
-        active: action.payload.publisherLogo.active,
-      };
+      const newPublisherLogos = [
+        ...state.publisherLogos,
+        action.payload.publisherLogo,
+      ];
 
       return {
         ...state,
@@ -96,16 +83,13 @@ function publisherLogoReducer(state, action) {
     }
 
     case ACTION_TYPES.UPDATE_SUCCESS: {
-      const newPublisherLogos = { ...state.publisherLogos };
-      for (const id of Object.keys(newPublisherLogos)) {
-        newPublisherLogos[id].active = false;
-      }
-      newPublisherLogos[action.payload.publisherLogo.id] = {
-        id: action.payload.publisherLogo.id,
-        title: action.payload.publisherLogo.title,
-        url: action.payload.publisherLogo.url,
-        active: action.payload.publisherLogo.active,
-      };
+      const newPublisherLogos = [...state.publisherLogos].map(
+        (publisherLogo) => {
+          publisherLogo.active =
+            publisherLogo.id === action.payload.publisherLogo.id;
+          return publisherLogo;
+        }
+      );
 
       return {
         ...state,
@@ -117,16 +101,18 @@ function publisherLogoReducer(state, action) {
     }
 
     case ACTION_TYPES.REMOVE_SUCCESS: {
-      const wasDefault = state.publisherLogos[action.payload.id].active;
+      const wasDefault = state.publisherLogos.some(
+        ({ id, active }) => id === action.payload.id && active
+      );
 
-      const newPublisherLogos = { ...state.publisherLogos };
-      delete newPublisherLogos[action.payload.id];
-
-      // Mark first remaining logo as the new default one.
-      const nextInLine = Object.keys(newPublisherLogos)[0];
-      if (wasDefault && nextInLine) {
-        newPublisherLogos[nextInLine].active = true;
-      }
+      const newPublisherLogos = [...state.publisherLogos]
+        .filter(({ id }) => id !== action.payload.id)
+        .map((publisherLogo, index) => {
+          publisherLogo.active = wasDefault
+            ? 0 === index
+            : publisherLogo.active;
+          return publisherLogo;
+        });
 
       return {
         ...state,
