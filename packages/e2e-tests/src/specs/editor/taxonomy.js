@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import percySnapshot from '@percy/puppeteer';
 import {
   createNewStory,
   withExperimentalFeatures,
@@ -55,6 +56,8 @@ describe('Taxonomy', () => {
     await addChildCategory({ parent: 'music genres', child: 'funk' });
 
     await expect(page).toClick('input[name="rock"]');
+
+    await percySnapshot(page, 'Admin Taxonomy');
   });
 
   describe('Contributor User', () => {
@@ -67,6 +70,8 @@ describe('Taxonomy', () => {
       await expect(page).toClick('input[name="rock"]');
 
       await expect(page).not.toMatch('Add New Category');
+
+      await percySnapshot(page, 'Contributor Taxonomy');
     });
   });
 });
