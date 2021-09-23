@@ -71,7 +71,7 @@ const sharedConfig = {
   module: {
     rules: [
       {
-        test: require.resolve('@web-stories-wp/i18n'),
+        test: require.resolve('@web-stories-wp/i18n'), // eslint-disable-line node/no-extraneous-require
         loader: 'expose-loader',
         options: {
           exposes: [
