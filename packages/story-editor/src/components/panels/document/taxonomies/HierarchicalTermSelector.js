@@ -77,7 +77,7 @@ const ButtonContainer = styled.div`
 const LinkButton = styled(Button).attrs({
   variant: BUTTON_VARIANTS.LINK,
 })`
-  ${(props) => props._showAddNewCategory && 'display: none;'}
+  ${({ $isVisible }) => $isVisible && 'display: none;'}
 
   margin-bottom: 16px;
 
@@ -264,7 +264,7 @@ function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
         ref={toggleRef}
         aria-expanded={false}
         onClick={handleToggleNewCategory}
-        _showAddNewCategory={showAddNewCategory}
+        $isVisible={showAddNewCategory}
       >
         {taxonomy.labels.add_new_item}
       </LinkButton>
