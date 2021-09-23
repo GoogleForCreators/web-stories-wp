@@ -17,15 +17,9 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import {
-  createNewStory,
-  withExperimentalFeatures,
-  withUser,
-} from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 
 describe('Taxonomy', () => {
-  withExperimentalFeatures(['enableTaxonomiesSupport'], true);
-
   const addChildCategory = async ({ parent, child }) => {
     await expect(page).toClick('#expand_add_new_hierarchical_term');
     await page.type('input[name="New Category Name"]', child);
