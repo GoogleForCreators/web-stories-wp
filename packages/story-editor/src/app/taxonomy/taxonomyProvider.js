@@ -28,6 +28,7 @@ import {
  */
 import cleanForSlug from '../../utils/cleanForSlug';
 import { useAPI } from '../api';
+import { useHistory } from '../history';
 import { useStory } from '../story';
 import Context from './context';
 import {
@@ -39,12 +40,31 @@ import {
   cacheFromEmbeddedTerms,
 } from './utils';
 
+function aSubsetB(a, b) {
+  for (const [taxonomyKey, terms] of Object.entries(a)) {
+    for (const term of terms) {
+      if (!b?.[taxonomyKey]?.includes(term)) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+function equal(terms1, terms2) {
+  return aSubsetB(terms1, terms2) && aSubsetB(terms2, terms1);
+}
+
 function TaxonomyProvider(props) {
   const [taxonomies, setTaxonomies] = useState([]);
   const [selectedSlugs, setSelectedSlugs] = useState({});
   const [termCache, setTermCache] = useState({});
   // Should grab categories on mount
   const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
+  const {
+    actions: { clearHistory },
+  } = useHistory();
   const { updateStory, isStoryLoaded, terms, hasTaxonomies } = useStory(
     ({ state: { pages, story }, actions: { updateStory } }) => ({
       updateStory,
@@ -67,7 +87,6 @@ function TaxonomyProvider(props) {
     (async function () {
       try {
         const result = await getTaxonomies();
-
         setTaxonomies(result);
       } catch (e) {
         // Do we wanna do anything here?
@@ -104,6 +123,7 @@ function TaxonomyProvider(props) {
   // that may be in the process of being created or retrieved from
   // the backend. Because of this, we sync up our local selected slugs
   // with whatever cached terms are available at any given moment.
+  const hasHistoryReset = useRef(false);
   useEffect(() => {
     if (!hasHydrationRunOnce.current) {
       return;
@@ -118,12 +138,28 @@ function TaxonomyProvider(props) {
       ]
     );
     const updatedTerms = objectFromEntries(termEntries);
+
+    // We don't want to update anything on the story if
+    // if the cache update doesn't result in any updates
+    // to the associated ids
+    if (equal(updatedTerms, terms)) {
+      return;
+    }
+
+    // On first load, we don't want the initial deriving
+    // of taxonomies to cause a history ejntry when the user
+    // hasn't done anything.
+    if (!hasHistoryReset.current) {
+      clearHistory();
+      hasHistoryReset.current = true;
+    }
+
     updateStory({
       properties: {
         terms: updatedTerms,
       },
     });
-  }, [updateStory, selectedSlugs, termCache]);
+  }, [updateStory, selectedSlugs, termCache, terms, clearHistory]);
 
   const addSearchResultsToCache = useCallback(
     async (
