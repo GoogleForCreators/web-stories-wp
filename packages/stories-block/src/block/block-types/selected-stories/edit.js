@@ -31,7 +31,7 @@ import { useState, useEffect, useCallback } from '@wordpress/element';
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
 import StoriesPreview from '../../components/storiesPreview';
 import EmbedPlaceholder from './embedPlaceholder';
-import FetchSelectedStories from './fetchSelectedStories';
+import FetchSelectedStories from '../../components/storyPicker/fetchSelectedStories';
 
 function SelectedStoriesEdit({
   icon,

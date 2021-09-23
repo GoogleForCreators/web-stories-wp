@@ -40,6 +40,7 @@ import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';
 import EmbedPreview from './embedPreview';
 import './edit.css';
+import FetchSelectedStories from '../../components/storyPicker/fetchSelectedStories';
 
 const MIN_SIZE = 20;
 
@@ -63,6 +64,7 @@ function StoryEmbedEdit({
   const [editingURL, setEditingURL] = useState(false);
   const [localURL, setLocalURL] = useState(outerURL);
   const [isFetchingData, setIsFetchingData] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [storyData, setStoryData] = useState({});
   const [cannotEmbed, setCannotEmbed] = useState(false);
   const [selectedStoryIds, setSelectedStoryIds] = useState(stories);
@@ -84,6 +86,12 @@ function StoryEmbedEdit({
       });
     }
   }, [attributes.stories, setAttributes, selectedStoryIds]);
+
+  useEffect(() => {
+    if (selectedStoryIds.length && !selectedStories.length) {
+      setIsFetching(true);
+    }
+  }, [selectedStoryIds, selectedStories, setIsFetching]);
 
   useEffect(() => {
     setLocalURL(outerURL);
@@ -200,6 +208,18 @@ function StoryEmbedEdit({
   const onResizeStop = () => toggleSelection(true);
 
   const label = __('Story Embed', 'web-stories');
+
+  if (isFetching) {
+    return (
+      <FetchSelectedStories
+        icon={<BlockIcon />}
+        label={label}
+        selectedStoryIds={selectedStoryIds}
+        setSelectedStories={setSelectedStories}
+        setIsFetching={setIsFetching}
+      />
+    );
+  }
 
   if (showPlaceholder) {
     return (
