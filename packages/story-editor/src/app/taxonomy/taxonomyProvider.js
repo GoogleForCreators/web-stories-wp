@@ -137,7 +137,7 @@ function TaxonomyProvider(props) {
 
   const addTermToSelection = useCallback(
     (taxonomy, term) => {
-      setTerms(taxonomy, (ids) =>
+      setTerms(taxonomy, (ids = []) =>
         ids.includes(term.id) ? ids : [...ids, term.id]
       );
     },
