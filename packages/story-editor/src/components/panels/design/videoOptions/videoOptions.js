@@ -118,11 +118,17 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     isMuting,
   ]);
 
-  const buttonText = useMemo(() => {
+  const muteButtonText = useMemo(() => {
     return isMuting
       ? __('Removing audio', 'web-stories')
       : __('Remove audio', 'web-stories');
   }, [isMuting]);
+
+  const trimButtonText = useMemo(() => {
+    return isTrimming
+      ? __('Trimming', 'web-stories')
+      : __('Trim', 'web-stories');
+  }, [isTrimming]);
 
   const { hasTrimMode, toggleTrimMode } = useVideoTrim(
     ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
@@ -135,9 +141,15 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
 
   useEffect(() => {
     if (isMuting) {
-      speak(buttonText);
+      speak(muteButtonText);
     }
-  }, [isMuting, buttonText, speak]);
+  }, [isMuting, muteButtonText, speak]);
+
+  useEffect(() => {
+    if (isTrimming) {
+      speak(trimButtonText);
+    }
+  }, [isTrimming, trimButtonText, speak]);
 
   const { highlight, resetHighlight } = useHighlights((state) => ({
     highlight: state[states.VIDEO_SETTINGS],
@@ -173,7 +185,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
               size={BUTTON_SIZES.SMALL}
               onClick={toggleTrimMode}
             >
-              {__('Trim', 'web-stories')}
+              {trimButtonText}
             </TrimButton>
             {isTrimming && <CircularProgress size={32} />}
           </TrimWrapper>
@@ -189,7 +201,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
               size={BUTTON_SIZES.SMALL}
               onClick={handleHandleMuteVideo}
             >
-              {buttonText}
+              {muteButtonText}
             </StyledButton>
           </Row>
           <Row>
