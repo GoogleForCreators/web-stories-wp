@@ -64,8 +64,10 @@ describe.only('Taxonomy', () => {
 
   describe('Contributor User', () => {
     withUser('contributor', 'password');
-    await createNewStory();
+
     it('should be able to manage categories but not add new ones', async () => {
+      await createNewStory();
+
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
       await expect(page).toMatch('Categories and Tags');
 
