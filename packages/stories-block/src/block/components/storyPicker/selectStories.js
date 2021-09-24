@@ -248,11 +248,17 @@ function SelectStories({
 
   const addSelectedStory = useCallback(
     (newStory) => {
-      if (selectedStories.length >= maxNumOfStories) {
+      if (selectedStoryIds.includes(newStory.id)) {
         return;
       }
 
-      if (selectedStoryIds.includes(newStory.id)) {
+      // Special case for single story embeds to always change selection.
+      if (1 === maxNumOfStories) {
+        setSelectedStories([newStory]);
+        return;
+      }
+
+      if (selectedStories.length >= maxNumOfStories) {
         return;
       }
 
