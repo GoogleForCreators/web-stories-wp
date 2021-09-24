@@ -187,10 +187,6 @@ const sharedConfig = {
     splitChunks: {
       automaticNameDelimiter: '-',
     },
-    // Prevents mangling of export names to ensure __() calls can be found
-    // as such by I18N string extraction.
-    // See https://github.com/google/web-stories-wp/pull/9001.
-    usedExports: false,
     minimizer: [
       new TerserPlugin({
         parallel: true,
@@ -201,11 +197,8 @@ const sharedConfig = {
           // they're _likely_ component names, and these are useful to have
           // in tracebacks and error messages.
           keep_fnames: /__|_x|_n|_nx|sprintf|^[A-Z].+$/,
-          output: {
+          format: {
             comments: /translators:/i,
-          },
-          mangle: {
-            reserved: ['__', '_x', '_n', '_nx']
           },
         },
         extractComments: false,
