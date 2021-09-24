@@ -45,8 +45,8 @@
 |                                                                   | Save Text Style                                  | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(8 / 8)*    |
 | Creator can Apply or Save a Color from/to Their Preset Library    | Add Colors                                       | 🏆 **100.00%** *(4 / 4)*    |
-|                                                                   | Manage Color Presets                             | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(5 / 5)*    |
+|                                                                   | Manage Color Presets                             | 🚨 **0.00%** *(0 / 1)*      |
+|                                                                   | *[total]*                                        | 🛴 **80.00%** *(4 / 5)*     |
 | Creator can Manipulate Shape                                      | Border Radius                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Border                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
@@ -76,4 +76,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.60%** *(302 / 416)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.12%** *(300 / 416)* |
