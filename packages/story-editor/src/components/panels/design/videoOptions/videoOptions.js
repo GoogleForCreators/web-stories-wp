@@ -44,7 +44,7 @@ import { getCommonValue } from '../../shared';
 import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
 import { useLocalMedia } from '../../../../app';
 import { states, styles, useHighlights } from '../../../../app/highlights';
-import { CircularProgress } from '../../../..';
+import CircularProgress from '../../../circularProgress';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
