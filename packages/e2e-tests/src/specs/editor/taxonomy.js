@@ -76,6 +76,7 @@ describe('Taxonomy', () => {
 
     await publishStory(); // make sure the categories are saved
     await page.reload();
+    await goToAndExpandTaxonomyPanel();
     await page.waitForSelector('input[name="rock"]');
   });
 
