@@ -30,6 +30,7 @@ import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
 import useUsersApi from './useUserApi';
 import useSettingsApi from './useSettingsApi';
+import usePublisherLogosApi from './usePublisherLogosApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -55,8 +56,15 @@ export default function ApiProvider({ children }) {
   });
 
   const { settings, api: settingsApi } = useSettingsApi(dataAdapter, {
-    globalStoriesSettingsApi: api.settings,
+    globalSettingsApi: api.settings,
   });
+
+  const { publisherLogos, api: publisherLogosApi } = usePublisherLogosApi(
+    dataAdapter,
+    {
+      globalPublisherLogosApi: api.publisherLogos,
+    }
+  );
 
   const value = useMemo(
     () => ({
@@ -66,6 +74,7 @@ export default function ApiProvider({ children }) {
         stories,
         templates,
         currentUser,
+        publisherLogos,
       },
       actions: {
         mediaApi,
@@ -73,6 +82,7 @@ export default function ApiProvider({ children }) {
         storyApi,
         templateApi,
         usersApi,
+        publisherLogosApi,
       },
     }),
     [
@@ -86,6 +96,8 @@ export default function ApiProvider({ children }) {
       storyApi,
       templateApi,
       usersApi,
+      publisherLogos,
+      publisherLogosApi,
     ]
   );
 

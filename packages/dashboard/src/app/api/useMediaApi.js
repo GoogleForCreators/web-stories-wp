@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
-import { addQueryArgs } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -30,47 +30,6 @@ import { ERRORS } from '../textContent';
 
 export default function useMediaApi(dataAdapter, { globalMediaApi }) {
   const [state, dispatch] = useReducer(mediaReducer, defaultMediaState);
-
-  const fetchMediaById = useCallback(
-    async (mediaIds) => {
-      dispatch({
-        type: MEDIA_ACTION_TYPES.LOADING_MEDIA,
-      });
-
-      try {
-        const response = await dataAdapter.get(
-          addQueryArgs(globalMediaApi, {
-            include: mediaIds.join(','),
-            per_page: 100,
-          })
-        );
-
-        if (!Array.isArray(response)) {
-          dispatch({
-            type: MEDIA_ACTION_TYPES.FETCH_MEDIA_FAILURE,
-            payload: {
-              message: ERRORS.LOAD_MEDIA.MESSAGE,
-            },
-          });
-        } else {
-          dispatch({
-            type: MEDIA_ACTION_TYPES.FETCH_MEDIA_SUCCESS,
-            payload: {
-              media: response,
-            },
-          });
-        }
-      } catch (err) {
-        dispatch({
-          type: MEDIA_ACTION_TYPES.FETCH_MEDIA_FAILURE,
-          payload: {
-            message: ERRORS.LOAD_MEDIA.MESSAGE,
-          },
-        });
-      }
-    },
-    [dataAdapter, globalMediaApi]
-  );
 
   const uploadMedia = useCallback(
     async (files) => {
@@ -115,9 +74,8 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
   const api = useMemo(
     () => ({
       uploadMedia,
-      fetchMediaById,
     }),
-    [uploadMedia, fetchMediaById]
+    [uploadMedia]
   );
 
   return { media: state, api };

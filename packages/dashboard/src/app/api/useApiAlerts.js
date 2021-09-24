@@ -26,23 +26,34 @@ import { SUCCESS } from '../textContent';
 import useApi from './useApi';
 
 function useApiAlerts() {
-  const { storyError, templateError, settingsError, mediaError, settingSaved } =
-    useApi(
-      ({
-        state: {
-          stories: { error: storyError },
-          templates: { error: templateError },
-          settings: { error: settingsError, settingSaved },
-          media: { error: mediaError },
+  const {
+    storyError,
+    templateError,
+    settingsError,
+    mediaError,
+    settingSaved,
+    publisherLogosError,
+  } = useApi(
+    ({
+      state: {
+        stories: { error: storyError },
+        templates: { error: templateError },
+        settings: { error: settingsError, settingSaved },
+        media: { error: mediaError },
+        publisherLogos: {
+          error: publisherLogosError,
+          settingSaved: publisherLogosSaved,
         },
-      }) => ({
-        storyError,
-        templateError,
-        settingsError,
-        mediaError,
-        settingSaved,
-      })
-    );
+      },
+    }) => ({
+      storyError,
+      templateError,
+      settingsError,
+      mediaError,
+      settingSaved: settingSaved || publisherLogosSaved,
+      publisherLogosError,
+    })
+  );
   const { showSnackbar } = useSnackbar();
 
   const debouncedShowSnackbar = useDebouncedCallback((message) => {
@@ -78,5 +89,11 @@ function useApiAlerts() {
       debouncedShowSnackbar(mediaError.message);
     }
   }, [mediaError, debouncedShowSnackbar]);
+
+  useEffect(() => {
+    if (publisherLogosError?.id) {
+      debouncedShowSnackbar(publisherLogosError.message);
+    }
+  }, [publisherLogosError, debouncedShowSnackbar]);
 }
 export default useApiAlerts;
