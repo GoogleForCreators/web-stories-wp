@@ -16,7 +16,6 @@
 export * from './authors';
 export * from './story';
 export * from './media';
-export * from './metaboxes'; // @todo Remove direct export.
 export * from './metadata';
 export * from './pageTemplate';
 export * from './user';

@@ -23,17 +23,13 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-
 import { ApiContext } from '../app/api/apiProvider';
-
-const noop = () => {};
 
 export default function MockApiProvider({ children, value }) {
   const [currentUser, setCurrentUser] = useState(getCurrentUserState());
 
   const usersApi = useMemo(
     () => ({
-      fetchCurrentUser: noop,
       toggleWebStoriesTrackingOptIn: () =>
         setCurrentUser(toggleOptInTracking(currentUser)),
     }),

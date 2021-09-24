@@ -24,12 +24,12 @@ import {
   useSnackbar,
   themeHelpers,
 } from '@web-stories-wp/design-system';
+import Proptypes from 'prop-types';
 /**
  * Internal dependencies
  */
 import Library from '../library';
 import Workspace from '../workspace';
-import MetaBoxes from '../../integrations/wordpress/metaBoxes';
 import {
   CANVAS_MIN_WIDTH,
   LIBRARY_MIN_WIDTH,
@@ -58,7 +58,7 @@ const Editor = withOverlay(styled.section.attrs({
   display: grid;
   grid:
     'lib   canv        insp' 1fr
-    'lib   metaboxes   insp' auto /
+    'lib   supplementary insp' auto /
     minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
     minmax(${CANVAS_MIN_WIDTH}px, 1fr)
     minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
@@ -71,13 +71,7 @@ const Area = styled.div`
   z-index: 2;
 `;
 
-const MetaBoxesArea = styled(Area).attrs({
-  area: 'metaboxes',
-})`
-  overflow-y: auto;
-`;
-
-function Layout() {
+function Layout({ header, children }) {
   const snackbarState = useSnackbar(
     ({ removeSnack, currentSnacks, placement }) => ({
       onRemove: removeSnack,
@@ -95,11 +89,9 @@ function Layout() {
                 <Area area="lib">
                   <Library />
                 </Area>
-                <Workspace />
+                <Workspace header={header} />
               </CanvasProvider>
-              <MetaBoxesArea>
-                <MetaBoxes />
-              </MetaBoxesArea>
+              {children}
             </Editor>
           </HighlightsProvider>
         </ChecklistCheckpointProvider>
@@ -108,5 +100,10 @@ function Layout() {
     </>
   );
 }
+
+Layout.propTypes = {
+  children: Proptypes.node,
+  header: Proptypes.node,
+};
 
 export default Layout;
