@@ -69,6 +69,7 @@ const EmbedPlaceholder = ({
   selectedStories = [],
   setSelectedStories,
 }) => {
+  const [ src, setSrc ] = useState( value );
   const [isURLInputVisible, setIsURLInputVisible] = useState(false);
   const [isStoryPickerOpen, setIsStoryPickerOpen] = useState(false);
 
@@ -79,6 +80,11 @@ const EmbedPlaceholder = ({
 
   const openURLInput = () => setIsURLInputVisible(true);
   const closeURLInput = () => setIsURLInputVisible(false);
+
+  const onChangeSrc = ( event ) => {
+    setSrc( event.target.value );
+    onChange( event );
+  };
 
   const onSubmitSrc = (event) => {
     closeURLInput();
@@ -117,8 +123,8 @@ const EmbedPlaceholder = ({
             </Button>
             {isURLInputVisible && (
               <InsertFromURLPopover
-                src={value}
-                onChange={onChange}
+                src={src}
+                onChange={onChangeSrc}
                 onSubmit={onSubmitSrc}
                 onClose={closeURLInput}
               />
