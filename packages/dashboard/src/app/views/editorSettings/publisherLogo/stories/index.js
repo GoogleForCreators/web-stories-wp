@@ -17,19 +17,15 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from '@web-stories-wp/react';
+import { useCallback, useState } from '@web-stories-wp/react';
 import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import {
-  createBlob,
-  getFileName,
-  createFileReader,
-} from '@web-stories-wp/media';
+import { createBlob, createFileReader } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
-import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisherLogos';
+import { rawPublisherLogos } from '../../../../../dataUtils/formattedPublisherLogos';
 import { ConfigProvider } from '../../../../config';
 import PublisherLogoSettings from '..';
 
@@ -39,9 +35,7 @@ export default {
 };
 
 export const _default = () => {
-  const [uploadedContent, setUploadedContent] = useState(
-    formattedPublisherLogos
-  );
+  const [uploadedContent, setUploadedContent] = useState(rawPublisherLogos);
 
   const handleAddLogos = useCallback(async (newPublisherLogos) => {
     action('onSubmit fired')(newPublisherLogos);
@@ -54,9 +48,9 @@ export const _default = () => {
           new window.Blob([reader.result], { type: file.type })
         );
         return {
-          src,
+          id: src,
+          url: src,
           title: file.name,
-          alt: getFileName(file.name),
         };
       })
     );
@@ -70,10 +64,9 @@ export const _default = () => {
     action('onDelete fired')(deleteLogo);
 
     setUploadedContent((existingUploadedContent) => {
-      const revisedMockUploads = existingUploadedContent.filter(
+      return existingUploadedContent.filter(
         (uploadedLogo) => uploadedLogo.id !== deleteLogo.id
       );
-      return revisedMockUploads;
     });
   }, []);
 

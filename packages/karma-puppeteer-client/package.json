@@ -2,7 +2,7 @@
   "name": "@web-stories-wp/karma-puppeteer-client",
   "private": true,
   "engines": {
-    "node": ">= 15",
+    "node": ">= 16",
     "npm": "~7"
   },
   "main": "./src/index.cjs",
