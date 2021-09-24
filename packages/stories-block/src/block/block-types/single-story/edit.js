@@ -128,7 +128,9 @@ function StoryEmbedEdit({
 
         setCannotEmbed(!(typeof data?.title === 'string'));
         setStoryData(data);
-        setAttributes({ url });
+        setAttributes({
+          url: localURL,
+        });
       } catch (err) {
         // Only care about errors from apiFetch
         if (!(err instanceof TypeError)) {
@@ -140,7 +142,7 @@ function StoryEmbedEdit({
         setIsFetchingData(false);
       }
     },
-    [setAttributes]
+    [setAttributes, localURL]
   );
 
   useEffect(() => {
@@ -156,15 +158,21 @@ function StoryEmbedEdit({
     (newStories) => {
       _setSelectedStories(newStories);
       setSelectedStoryIds(newStories.map((story) => story.id));
-      const link = newStories?.[0]?.link;
+      const newStory = newStories?.[0];
+      const link = newStory?.link;
+      const data = {
+        title: newStory?.title?.rendered,
+        poster: newStory?._embedded?.['wp:featuredmedia']?.[0]?.source_url,
+      };
+      setStoryData(data);
       setLocalURL(link);
       setEditingURL(false);
       setCannotEmbed(false);
-      if (link !== outerURL) {
-        fetchStoryData(link);
-      }
+      setAttributes({
+        url: link,
+      });
     },
-    [outerURL, fetchStoryData, _setSelectedStories]
+    [_setSelectedStories, setAttributes]
   );
 
   const onSubmit = useCallback(
@@ -208,19 +216,18 @@ function StoryEmbedEdit({
 
   const label = __('Story Embed', 'web-stories');
 
-  if (isFetching) {
-    return (
-      <FetchSelectedStories
-        icon={<BlockIcon />}
-        label={label}
-        selectedStoryIds={selectedStoryIds}
-        setSelectedStories={setSelectedStories}
-        setIsFetching={setIsFetching}
-      />
-    );
-  }
-
   if (showPlaceholder) {
+    if (isFetching) {
+      return (
+        <FetchSelectedStories
+          icon={<BlockIcon />}
+          label={label}
+          selectedStoryIds={selectedStoryIds}
+          setSelectedStories={_setSelectedStories}
+          setIsFetching={setIsFetching}
+        />
+      );
+    }
     return (
       <EmbedPlaceholder
         icon={<BlockIcon />}

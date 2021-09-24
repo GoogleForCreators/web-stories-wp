@@ -69,7 +69,7 @@ const EmbedPlaceholder = ({
   selectedStories = [],
   setSelectedStories,
 }) => {
-  const [ src, setSrc ] = useState( value );
+  const [src, setSrc] = useState(value);
   const [isURLInputVisible, setIsURLInputVisible] = useState(false);
   const [isStoryPickerOpen, setIsStoryPickerOpen] = useState(false);
 
@@ -81,9 +81,9 @@ const EmbedPlaceholder = ({
   const openURLInput = () => setIsURLInputVisible(true);
   const closeURLInput = () => setIsURLInputVisible(false);
 
-  const onChangeSrc = ( event ) => {
-    setSrc( event.target.value );
-    onChange( event );
+  const onChangeSrc = (event) => {
+    setSrc(event.target.value);
+    onChange(event);
   };
 
   const onSubmitSrc = (event) => {
