@@ -94,25 +94,12 @@ class Embed_Controller extends Test_REST_TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
-
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
-
-		$this->add_caps_to_roles();
 	}
 
 	public function tearDown() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
-
-		$this->remove_caps_from_roles();
 
 		parent::tearDown();
 	}

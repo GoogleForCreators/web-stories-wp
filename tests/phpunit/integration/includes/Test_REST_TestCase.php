@@ -39,6 +39,29 @@ use WP_REST_Response;
 abstract class Test_REST_TestCase extends TestCase {
 	use Capabilities_Setup, Kses_Setup;
 
+	public function setUp() {
+		parent::setUp();
+
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = new Spy_REST_Server();
+		do_action( 'rest_api_init', $wp_rest_server );
+
+		$this->add_caps_to_roles();
+
+		$this->set_permalink_structure( '/%postname%/' );
+	}
+
+	public function tearDown() {
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
+
+		$this->remove_caps_from_roles();
+
+		parent::tearDown();
+	}
+
 	/**
 	 * Copied from WordPress code.
 	 *
