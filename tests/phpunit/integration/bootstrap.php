@@ -41,7 +41,7 @@ if ( ! getenv( 'WP_TESTS_DIR' ) && ! getenv( 'WP_DEVELOP_DIR' ) ) {
 define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', dirname( __DIR__, 2 ) . '/vendor/yoast/phpunit-polyfills' );
 
 // Give access to tests_add_filter() function.
-require_once $_tests_dir . 'includes/functions.php';
+require_once $_tests_dir . '/includes/functions.php';
 
 /**
  * Manually load the plugin being tested.
