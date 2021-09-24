@@ -74,20 +74,15 @@ function useMediaPicker({
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const { showSnackbar } = useSnackbar();
+
   useEffect(() => {
     try {
-      // Work around that forces default tab as upload tab.
-      global.wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
-    } catch (e) {
-      // Silence.
-    }
-  });
-  useEffect(() => {
-    try {
-      // Handles the video processing logic from WordPress.
       // The Uploader.success callback is invoked when a user uploads a file.
-      // Race condition concern: the video content is not guaranteed to be
-      // available in this callback. For the video poster insertion, please check: packages/story-editor/src/components/library/panes/media/local/mediaPane.js
+      // This is used to mark files as "uploaded to the story editor"
+      // in case we eventually want to allow filtering such files.
+      // Note: at this point the video has not yet been inserted into the canvas,
+      // it's just in the WP media modal.
+      // Video poster generation for newly added videos is done in <MediaPane>.
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, {
           media_source: 'editor',
@@ -147,8 +142,9 @@ function useMediaPicker({
       }
 
       fileFrame.once('content:activate:browse', () => {
-        // Force-refresh media modal contents every time
-        // to avoid stale data.
+        // Force-refresh media modal contents every time it's opened
+        // to avoid stale data due to media items being upload & updated
+        // through the editor in the meantime.
         fileFrame.content?.get()?.collection?._requery(true);
         fileFrame.content?.get()?.options?.selection?.reset();
       });
