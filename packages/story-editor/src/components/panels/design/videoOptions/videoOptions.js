@@ -75,6 +75,11 @@ const TrimWrapper = styled.div`
   display: flex;
 `;
 
+const Spinner = styled.div`
+  margin-left: 4px;
+  margin-top: 4px;
+`;
+
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 })`
@@ -120,13 +125,13 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
 
   const muteButtonText = useMemo(() => {
     return isMuting
-      ? __('Removing audio', 'web-stories')
+      ? __('Removing audio…', 'web-stories')
       : __('Remove audio', 'web-stories');
   }, [isMuting]);
 
   const trimButtonText = useMemo(() => {
     return isTrimming
-      ? __('Trimming', 'web-stories')
+      ? __('Trimming…', 'web-stories')
       : __('Trim', 'web-stories');
   }, [isTrimming]);
 
@@ -158,6 +163,14 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
 
   const checkboxId = `cb-${uuidv4()}`;
 
+  const Processing = () => {
+    return (
+      <Spinner>
+        <CircularProgress size={24} />
+      </Spinner>
+    );
+  };
+
   return (
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
@@ -187,13 +200,13 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
             >
               {trimButtonText}
             </TrimButton>
-            {isTrimming && <CircularProgress size={32} />}
+            {isTrimming && <Processing />}
           </TrimWrapper>
         )}
       </Row>
       {shouldDisplayMuteButton && (
         <>
-          <Row>
+          <Row spaceBetween={false}>
             <StyledButton
               disabled={isMuting}
               variant={BUTTON_VARIANTS.RECTANGLE}
@@ -203,6 +216,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
             >
               {muteButtonText}
             </StyledButton>
+            {isMuting && <Processing />}
           </Row>
           <Row>
             <HelperText>
