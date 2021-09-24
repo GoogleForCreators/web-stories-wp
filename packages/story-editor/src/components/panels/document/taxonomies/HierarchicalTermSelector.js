@@ -267,7 +267,7 @@ function HierarchicalTermSelector({
             aria-expanded={false}
             onClick={handleToggleNewCategory}
             $isVisible={showAddNewCategory}
-            id="expand_add_new_hierarchical_term"
+            data-testid="expand_add_new_hierarchical_term"
           >
             {taxonomy.labels.add_new_item}
           </LinkButton>
@@ -293,7 +293,7 @@ function HierarchicalTermSelector({
                 <AddNewCategoryButton
                   disabled={!newCategoryName.length}
                   type="submit"
-                  id="submit_add_new_hierarchical_term"
+                  data-testid="submit_add_new_hierarchical_term"
                 >
                   {taxonomy.labels.add_new_item}
                 </AddNewCategoryButton>
