@@ -465,7 +465,8 @@ const useQuickActions = () => {
   );
 
   const videoCommonActions = useMemo(() => {
-    return hasTrimMode
+    const isTrimming = selectedElements?.[0]?.resource?.isTrimming;
+    return !isTrimming && hasTrimMode
       ? [
           {
             Icon: Scissors,
@@ -488,6 +489,7 @@ const useQuickActions = () => {
     hasTrimMode,
     selectedElement,
     toggleTrimMode,
+    selectedElements,
   ]);
 
   const videoActions = useMemo(() => {
