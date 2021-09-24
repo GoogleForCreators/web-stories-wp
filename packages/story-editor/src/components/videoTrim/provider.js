@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
+import { formatMsToHMS } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -48,20 +49,6 @@ function VideoTrimProvider({ children }) {
     resetOffsets,
   } = useVideoNode();
 
-  /**
-   * Converts milliseconds to HH:MM:SS.SSS format.
-   *
-   * @type {function(*): string}
-   */
-  const msToHMS = useCallback((ms) => {
-    let seconds = ms / 1000;
-    const hours = parseInt(seconds / 3600);
-    seconds = seconds % 3600;
-    const minutes = parseInt(seconds / 60);
-    seconds = seconds % 60;
-    return `${hours}:${minutes}:${seconds}`;
-  }, []);
-
   const performTrim = useCallback(() => {
     const { resource } = selectedElements[0];
     if (!resource) {
@@ -69,8 +56,8 @@ function VideoTrimProvider({ children }) {
     }
     trimExistingVideo({
       resource,
-      start: msToHMS(startOffset),
-      end: msToHMS(endOffset),
+      start: formatMsToHMS(startOffset),
+      end: formatMsToHMS(endOffset),
     });
     toggleTrimMode();
   }, [
@@ -78,7 +65,6 @@ function VideoTrimProvider({ children }) {
     startOffset,
     trimExistingVideo,
     selectedElements,
-    msToHMS,
     toggleTrimMode,
   ]);
 
