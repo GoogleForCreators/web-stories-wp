@@ -39,6 +39,8 @@ import {
   ButtonWrapper,
 } from './trimmerComponents';
 
+const BUTTON_SPACE = 130;
+
 function VideoTrimmer() {
   const {
     currentTime,
@@ -66,13 +68,18 @@ function VideoTrimmer() {
       resetOffsets,
     })
   );
-  const { pageWidth } = useLayout(({ state: { pageWidth } }) => ({
-    pageWidth,
-  }));
+  const { workspaceWidth, pageWidth } = useLayout(
+    ({ state: { workspaceWidth, pageWidth } }) => ({
+      workspaceWidth,
+      pageWidth,
+    })
+  );
 
   if (!pageWidth || !maxOffset) {
     return null;
   }
+
+  const railWidth = Math.min(pageWidth, workspaceWidth - 2 * BUTTON_SPACE);
 
   const sliderProps = {
     min: 0,
@@ -95,25 +102,25 @@ function VideoTrimmer() {
           </Button>
         </ButtonWrapper>
       )}
-      <Wrapper pageWidth={pageWidth}>
-        <Scrim atStart width={(startOffset / maxOffset) * pageWidth} />
-        <Scrim width={((maxOffset - endOffset) / maxOffset) * pageWidth} />
+      <Wrapper pageWidth={railWidth}>
+        <Scrim atStart width={(startOffset / maxOffset) * railWidth} />
+        <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
         <CurrentTime
-          railWidth={pageWidth}
+          railWidth={railWidth}
           aria-label={__('Current time', 'web-stories')}
           disabled
           value={currentTime}
           {...sliderProps}
         />
         <Handle
-          railWidth={pageWidth}
+          railWidth={railWidth}
           value={startOffset}
           aria-label={__('Start offset', 'web-stories')}
           onChange={(val) => setStartOffset(val)}
           {...sliderProps}
         />
         <Handle
-          railWidth={pageWidth}
+          railWidth={railWidth}
           value={endOffset}
           aria-label={__('End offset', 'web-stories')}
           onChange={(val) => setEndOffset(val)}
