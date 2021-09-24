@@ -117,14 +117,11 @@ function StoryPicker({
     }
   }, [isFetchingForFirstTime, fetchStories]);
 
+  const title = maxNumOfStories === 1 ? __( 'Selected Story', 'web-stories' ) : __('Selected Stories', 'web-stories');
+
   return (
     <Modal
-      title={_n(
-        'Selected Story',
-        'Selected Stories',
-        maxNumOfStories,
-        'web-stories'
-      )}
+      title={title}
       onRequestClose={closeStoryPicker}
       shouldCloseOnClickOutside={false}
       className="web-stories-story-picker-modal"
