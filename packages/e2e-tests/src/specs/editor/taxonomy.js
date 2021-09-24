@@ -91,7 +91,7 @@ describe('Taxonomy', () => {
       const addNewCategoryButton = await page.$(
         'button[aria-label="Add New Category"]'
       );
-      expect(addNewCategoryButton).toBeUndefined();
+      expect(addNewCategoryButton).toBeNull();
 
       await percySnapshot(page, 'Contributor Taxonomy');
     });
