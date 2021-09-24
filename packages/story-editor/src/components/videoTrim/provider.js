@@ -18,15 +18,23 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useCallback } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
+import { useLocalMedia, useStory } from '../../app';
 import VideoTrimContext from './videoTrimContext';
 import useVideoTrimMode from './useVideoTrimMode';
 import useVideoNode from './useVideoNode';
 
 function VideoTrimProvider({ children }) {
+  const { selectedElements } = useStory(({ state: { selectedElements } }) => ({
+    selectedElements,
+  }));
+  const { trimExistingVideo } = useLocalMedia((state) => ({
+    trimExistingVideo: state.actions.trimExistingVideo,
+  }));
   const { isTrimMode, hasTrimMode, toggleTrimMode } = useVideoTrimMode();
   const {
     hasChanged,
@@ -40,6 +48,27 @@ function VideoTrimProvider({ children }) {
     resetOffsets,
   } = useVideoNode();
 
+  const msToHMS = useCallback((ms) => {
+    let seconds = ms / 1000;
+    const hours = parseInt(seconds / 3600);
+    seconds = seconds % 3600;
+    const minutes = parseInt(seconds / 60);
+    seconds = seconds % 60;
+    return `${hours}:${minutes}:${seconds}`;
+  }, []);
+
+  const performTrim = useCallback(() => {
+    const { resource } = selectedElements[0];
+    if (!resource) {
+      return;
+    }
+    trimExistingVideo({
+      resource,
+      start: msToHMS(startOffset),
+      end: msToHMS(endOffset),
+    });
+  }, [endOffset, startOffset, trimExistingVideo, selectedElements, msToHMS]);
+
   const value = {
     state: {
       hasChanged,
@@ -51,6 +80,7 @@ function VideoTrimProvider({ children }) {
       maxOffset,
     },
     actions: {
+      performTrim,
       toggleTrimMode,
       setVideoNode,
       setStartOffset,
