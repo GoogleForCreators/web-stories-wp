@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Spy_REST_Server;
 use WP_Error;
 use WP_REST_Response;
 
