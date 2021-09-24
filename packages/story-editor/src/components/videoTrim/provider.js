@@ -48,6 +48,11 @@ function VideoTrimProvider({ children }) {
     resetOffsets,
   } = useVideoNode();
 
+  /**
+   * Converts milliseconds to HH:MM:SS.SSS format.
+   *
+   * @type {function(*): string}
+   */
   const msToHMS = useCallback((ms) => {
     let seconds = ms / 1000;
     const hours = parseInt(seconds / 3600);
@@ -67,7 +72,15 @@ function VideoTrimProvider({ children }) {
       start: msToHMS(startOffset),
       end: msToHMS(endOffset),
     });
-  }, [endOffset, startOffset, trimExistingVideo, selectedElements, msToHMS]);
+    toggleTrimMode();
+  }, [
+    endOffset,
+    startOffset,
+    trimExistingVideo,
+    selectedElements,
+    msToHMS,
+    toggleTrimMode,
+  ]);
 
   const value = {
     state: {

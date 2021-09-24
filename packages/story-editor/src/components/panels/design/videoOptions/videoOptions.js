@@ -44,6 +44,7 @@ import { getCommonValue } from '../../shared';
 import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
 import { useLocalMedia } from '../../../../app';
 import { states, styles, useHighlights } from '../../../../app/highlights';
+import { CircularProgress } from '../../../..';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -67,6 +68,11 @@ const StyledCheckbox = styled(Checkbox)`
       box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;
     }
   `}
+`;
+
+const TrimWrapper = styled.div`
+  position: relative;
+  display: flex;
 `;
 
 const HelperText = styled(Text).attrs({
@@ -159,14 +165,18 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           </Text>
         </Label>
         {hasTrimMode && (
-          <TrimButton
-            variant={BUTTON_VARIANTS.RECTANGLE}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={toggleTrimMode}
-          >
-            {__('Trim', 'web-stories')}
-          </TrimButton>
+          <TrimWrapper>
+            <TrimButton
+              disabled={isTrimming}
+              variant={BUTTON_VARIANTS.RECTANGLE}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={toggleTrimMode}
+            >
+              {__('Trim', 'web-stories')}
+            </TrimButton>
+            {isTrimming && <CircularProgress size={32} />}
+          </TrimWrapper>
         )}
       </Row>
       {shouldDisplayMuteButton && (

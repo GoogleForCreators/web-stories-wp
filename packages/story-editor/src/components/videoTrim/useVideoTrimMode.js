@@ -60,14 +60,13 @@ function useVideoTrimMode() {
     if (selectedElement?.type !== 'video' || !selectedElement?.resource) {
       return false;
     }
-    const { isTranscoding, isMuting, isTrimming, local, isExternal } =
+    const { isTranscoding, isMuting, local, isExternal } =
       selectedElement.resource || {};
     return (
       isVideoTrimEnabled &&
       isTranscodingEnabled &&
       !isTranscoding &&
       !isMuting &&
-      !isTrimming &&
       !isExternal &&
       !local
     );
