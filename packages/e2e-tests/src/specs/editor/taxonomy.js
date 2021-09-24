@@ -16,16 +16,10 @@
 /**
  * External dependencies
  */
-import {
-  createNewStory,
-  withExperimentalFeatures,
-  withUser,
-} from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
 describe('Taxonomy', () => {
-  withExperimentalFeatures(['enableTaxonomiesSupport']);
-
   const goToAndExpandTaxonomyPanel = async () => {
     await createNewStory();
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
