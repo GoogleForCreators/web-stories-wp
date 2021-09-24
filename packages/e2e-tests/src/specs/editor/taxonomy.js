@@ -22,7 +22,6 @@ import {
   withExperimentalFeatures,
   withUser,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 describe('Taxonomy', () => {
   withExperimentalFeatures(['enableTaxonomiesSupport']);
@@ -77,10 +76,8 @@ describe('Taxonomy', () => {
     await addChildCategory({ parent: 'music genres', child: 'industrial' });
     await addChildCategory({ parent: 'music genres', child: 'electro-pop' });
     await addChildCategory({ parent: 'music genres', child: 'funk' });
-    await expect(page).toClick('input[name="rock"]');
     // Save terms so that they are available to contributor
     await publishStory();
-    await percySnapshot(page, 'Admin Taxonomy');
   });
 
   describe('Contributor User', () => {
@@ -97,8 +94,6 @@ describe('Taxonomy', () => {
         'button[aria-label="Add New Category"]'
       );
       expect(addNewCategoryButton).toBeNull();
-
-      await percySnapshot(page, 'Contributor Taxonomy');
     });
   });
 });
