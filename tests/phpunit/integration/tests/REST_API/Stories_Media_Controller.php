@@ -98,8 +98,6 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 
 		$this->remove_caps_from_roles();
 
-		$this->set_permalink_structure( '' );
-
 		parent::tearDown();
 	}
 
