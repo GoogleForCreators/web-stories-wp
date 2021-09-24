@@ -71,9 +71,9 @@ function BackgroundAudioPanelContent({
   const onSelect = useCallback(
     (media) => {
       updateBackgroundAudio({
-        src: media.url,
+        src: media.src,
         id: media.id,
-        mimeType: media.mime,
+        mimeType: media.mimeType,
       });
     },
     [updateBackgroundAudio]
