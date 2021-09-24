@@ -37,6 +37,7 @@ const InsertFromURLPopover = ({ src, onChange, onSubmit, onClose }) => (
   <URLPopover onClose={onClose}>
     <form
       className="block-editor-media-placeholder__url-input-form"
+      data-testid="embed-placeholder-form"
       onSubmit={onSubmit}
     >
       <input

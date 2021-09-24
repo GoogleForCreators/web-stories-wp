@@ -32,15 +32,15 @@ describe('EmbedPlaceholder', () => {
       <EmbedPlaceholder
         icon={null}
         label="Embed Placeholder"
-        value="https://example.com"
+        value=""
         onSubmit={onSubmit}
         onChange={onChange}
         cannotEmbed={false}
       />
     );
     expect(screen.getByText('Embed Placeholder')).toBeInTheDocument();
-    expect(screen.getByRole('button')).toHaveTextContent('Embed');
-    expect(screen.getByRole('textbox')).toHaveValue('https://example.com');
+    expect(screen.getByText('Select Story')).toBeInTheDocument();
+    expect(screen.getByText('Insert from URL')).toBeInTheDocument();
   });
 
   it('should trigger onChange callback when typing', () => {
@@ -56,6 +56,9 @@ describe('EmbedPlaceholder', () => {
         cannotEmbed={false}
       />
     );
+
+    fireEvent.click(screen.getByText('Replace URL'));
+
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: 'https://newurl.com' },
     });
@@ -75,6 +78,7 @@ describe('EmbedPlaceholder', () => {
         cannotEmbed={false}
       />
     );
+    fireEvent.click(screen.getByText('Replace URL'));
     fireEvent.submit(screen.getByTestId('embed-placeholder-form'));
     expect(onSubmit).toHaveBeenCalledTimes(1);
   });
