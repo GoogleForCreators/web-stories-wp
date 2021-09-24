@@ -32,19 +32,24 @@ import { useTaxonomy } from '../../../../app/taxonomy';
 import { ContentHeading, TaxonomyPropType } from './shared';
 
 function FlatTermSelector({ taxonomy, canCreateTerms }) {
-  const { createTerm, termCache, addSearchResultsToCache, terms, setTerms } =
-    useTaxonomy(
-      ({
-        state: { termCache, terms },
-        actions: { createTerm, addSearchResultsToCache, setTerms },
-      }) => ({
-        termCache,
-        createTerm,
-        addSearchResultsToCache,
-        terms,
-        setTerms,
-      })
-    );
+  const {
+    createTerm,
+    termCache,
+    addSearchResultsToCache,
+    terms = [],
+    setTerms,
+  } = useTaxonomy(
+    ({
+      state: { termCache, terms },
+      actions: { createTerm, addSearchResultsToCache, setTerms },
+    }) => ({
+      termCache,
+      createTerm,
+      addSearchResultsToCache,
+      terms,
+      setTerms,
+    })
+  );
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {

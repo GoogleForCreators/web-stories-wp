@@ -83,7 +83,7 @@ describe('TaxonomiesPanel', () => {
       taxonomies: [
         {
           slug: 'web_story_tag',
-          restBase: 'web_story_tags',
+          restBase: 'web_story_tag',
           name: 'Tags',
           labels: {},
           hierarchical: false,
@@ -109,7 +109,7 @@ describe('TaxonomiesPanel', () => {
       taxonomies: [
         {
           slug: 'web_story_tag',
-          restBase: 'web_story_tags',
+          restBase: 'web_story_tag',
           name: 'Tags',
           labels: {},
           hierarchical: false,
