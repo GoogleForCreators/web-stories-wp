@@ -106,8 +106,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       (isTranscodingEnabled &&
         !local &&
         !isMuted &&
-        !isTrimming &&
-        !isTranscoding &&
         !isExternal &&
         isSingleElement) ||
       isMuting
@@ -116,8 +114,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     isTranscodingEnabled,
     local,
     isMuted,
-    isTrimming,
-    isTranscoding,
     isExternal,
     isSingleElement,
     isMuting,
@@ -192,7 +188,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
         {hasTrimMode && (
           <TrimWrapper>
             <TrimButton
-              disabled={isTrimming}
+              disabled={isTrimming || isMuting || isTranscoding}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
@@ -208,7 +204,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
         <>
           <Row spaceBetween={false}>
             <StyledButton
-              disabled={isMuting}
+              disabled={isMuting || isTrimming || isTranscoding}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
