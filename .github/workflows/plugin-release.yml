@@ -195,7 +195,7 @@ jobs:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
 
       - name: Read .nvmrc
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
         id: nvm
 
       - name: Setup Node
@@ -284,7 +284,7 @@ jobs:
         continue-on-error: true
 
       - name: Read .nvmrc
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
         id: nvm
 
       - name: Setup Node
@@ -500,7 +500,7 @@ jobs:
           token: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Read .nvmrc
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
         id: nvm
 
       - name: Setup Node
