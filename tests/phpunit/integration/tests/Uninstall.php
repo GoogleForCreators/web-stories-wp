@@ -17,6 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Media\Media_Source_Taxonomy;
+
 /**
  * @runInSeparateProcess
  * @preserveGlobalState disabled
@@ -33,11 +35,12 @@ class Uninstall extends TestCase {
 	public function setUp() {
 		parent::setUp();
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
-		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG ] );
+		$source_taxonomy      = ( new Media_Source_Taxonomy() )->get_taxonomy_slug();
+		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => $source_taxonomy ] );
 		foreach ( self::$attachment_ids as $attachment_id ) {
 			add_post_meta( $attachment_id, 'web_stories_is_poster', '1' );
 			add_post_meta( $attachment_id, 'web_stories_poster_id', '999' );
-			wp_set_object_terms( $attachment_id, $terms_ids, \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
+			wp_set_object_terms( $attachment_id, $terms_ids, $source_taxonomy );
 		}
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG ] );
@@ -61,9 +64,10 @@ class Uninstall extends TestCase {
 
 
 	public function test_delete_terms() {
-		$terms = get_terms(
+		$source_taxonomy = ( new Media_Source_Taxonomy() )->get_taxonomy_slug();
+		$terms           = get_terms(
 			[
-				'taxonomy'   => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
+				'taxonomy'   => $source_taxonomy,
 				'hide_empty' => false,
 			]
 		);
@@ -71,13 +75,13 @@ class Uninstall extends TestCase {
 		\Google\Web_Stories\delete_terms();
 		$terms = get_terms(
 			[
-				'taxonomy'   => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
+				'taxonomy'   => $source_taxonomy,
 				'hide_empty' => false,
 			]
 		);
 		$this->assertEqualSets( [], $terms );
 		foreach ( self::$attachment_ids as $attachment_id ) {
-			$post_terms = get_the_terms( $attachment_id, \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
+			$post_terms = get_the_terms( $attachment_id, $source_taxonomy );
 			$this->assertFalse( $post_terms );
 		}
 	}
