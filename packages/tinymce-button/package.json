@@ -2,7 +2,7 @@
   "name": "@web-stories-wp/tinymce-button",
   "private": true,
   "engines": {
-    "node": ">= 15",
+    "node": ">= 16",
     "npm": "~7"
   },
   "exports": {
@@ -11,7 +11,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@wordpress/components": "^16.0.0",
+    "@wordpress/components": "^17.0.0",
     "@wordpress/compose": "^5.0.0",
     "@wordpress/data": "^6.0.1",
     "@wordpress/element": "^4.0.0",
@@ -19,6 +19,6 @@
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^12.0.0"
+    "@testing-library/react": "^12.1.0"
   }
 }

@@ -21,6 +21,8 @@ import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
@@ -31,7 +33,7 @@ import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 const TRANSITION_DURATION = 300;
 
-function Publish() {
+function PublishButton({ forceIsSaving }) {
   const { isSaving, date, storyId, saveStory, title, editLink, capabilities } =
     useStory(
       ({
@@ -122,7 +124,12 @@ function Publish() {
     <>
       <ButtonWithChecklistWarning
         onClick={handlePublish}
-        disabled={!capabilities?.hasPublishAction || isSaving || isUploading}
+        disabled={
+          !capabilities?.hasPublishAction ||
+          isSaving ||
+          forceIsSaving ||
+          isUploading
+        }
         text={text}
         isUploading={isUploading}
       />
@@ -136,4 +143,8 @@ function Publish() {
   );
 }
 
-export default Publish;
+PublishButton.propTypes = {
+  forceIsSaving: PropTypes.bool,
+};
+
+export default PublishButton;

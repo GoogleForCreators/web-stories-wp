@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
+import { useCallback } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@web-stories-wp/design-system';
 
@@ -30,35 +30,21 @@ import { SUCCESS } from '../../textContent';
 export default function useMediaOptimization() {
   const { showSnackbar } = useSnackbar();
 
-  const { currentUser, toggleWebStoriesMediaOptimization, fetchCurrentUser } =
-    useApi(
-      ({
-        state: { currentUser },
-        actions: {
-          usersApi: { toggleWebStoriesMediaOptimization, fetchCurrentUser },
-        },
-      }) => ({
-        currentUser,
-        toggleWebStoriesMediaOptimization,
-        fetchCurrentUser,
-      })
-    );
-
-  const dataIsLoaded =
-    currentUser.data.meta?.web_stories_media_optimization !== undefined;
+  const { currentUser, toggleWebStoriesMediaOptimization } = useApi(
+    ({
+      state: { currentUser },
+      actions: {
+        usersApi: { toggleWebStoriesMediaOptimization },
+      },
+    }) => ({
+      currentUser,
+      toggleWebStoriesMediaOptimization,
+    })
+  );
 
   const mediaOptimization = Boolean(
     currentUser.data.meta?.web_stories_media_optimization
   );
-
-  const dataFetched = useRef(false);
-
-  useEffect(() => {
-    if (!dataIsLoaded && !dataFetched.current) {
-      fetchCurrentUser();
-      dataFetched.current = true;
-    }
-  }, [dataIsLoaded, fetchCurrentUser]);
 
   const _toggleWebStoriesMediaOptimization = useCallback(() => {
     toggleWebStoriesMediaOptimization();

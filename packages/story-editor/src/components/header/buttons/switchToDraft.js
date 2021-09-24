@@ -26,6 +26,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
 } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -33,7 +34,7 @@ import {
 import { useStory, useLocalMedia } from '../../../app';
 import Tooltip from '../../tooltip';
 
-function SwitchToDraft() {
+function SwitchToDraftButton({ forceIsSaving = false }) {
   const { isSaving, saveStory } = useStory(
     ({
       state: {
@@ -58,7 +59,7 @@ function SwitchToDraft() {
         type={BUTTON_TYPES.QUATERNARY}
         size={BUTTON_SIZES.SMALL}
         onClick={handleUnPublish}
-        disabled={isSaving || isUploading}
+        disabled={isSaving || forceIsSaving || isUploading}
         aria-label={label}
       >
         <Icons.PageSwap />
@@ -67,4 +68,8 @@ function SwitchToDraft() {
   );
 }
 
-export default SwitchToDraft;
+SwitchToDraftButton.propTypes = {
+  forceIsSaving: PropTypes.bool,
+};
+
+export default SwitchToDraftButton;

@@ -36,16 +36,12 @@ describe('settingsReducer', () => {
       payload: {
         googleAnalyticsId: 'fakeId12345',
         usingLegacyAnalytics: false,
-        activePublisherLogoId: 5,
-        publisherLogoIds: [6, 7, 8],
       },
     });
     expect(result).toMatchObject({
       error: {},
       googleAnalyticsId: 'fakeId12345',
       usingLegacyAnalytics: false,
-      activePublisherLogoId: 5,
-      publisherLogoIds: [5, 6, 7, 8],
     });
   });
 
@@ -93,16 +89,12 @@ describe('settingsReducer', () => {
       payload: {
         googleAnalyticsId: 'fakeId12345NEW',
         usingLegacyAnalytics: false,
-        activePublisherLogoId: 5,
-        publisherLogoIds: [6, 7, 8],
       },
     });
     expect(result).toMatchObject({
       error: {},
       googleAnalyticsId: 'fakeId12345NEW',
       usingLegacyAnalytics: false,
-      activePublisherLogoId: 5,
-      publisherLogoIds: [5, 6, 7, 8],
     });
   });
 

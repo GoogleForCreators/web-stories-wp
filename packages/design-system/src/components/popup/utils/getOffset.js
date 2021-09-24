@@ -117,5 +117,7 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
     y: offsetY,
     width: anchorRect.width,
     height: anchorRect.height,
+    // We want to know where the popRect container stops before scrolling begins
+    bottom: popupRect?.bottom,
   };
 }

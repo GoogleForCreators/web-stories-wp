@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import PropTypes from 'prop-types';
 import {
   Button,
   BUTTON_SIZES,
@@ -30,16 +29,25 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
 } from '@web-stories-wp/design-system';
+import {
+  useCallback,
+  useMemo,
+  useState,
+  useRef,
+  useEffect,
+} from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { noop } from '../../../../utils/noop';
 import { HierarchicalInput } from '../../../form';
-import { ContentHeading } from './shared';
+import { useTaxonomy } from '../../../../app/taxonomy';
+import { ContentHeading, TaxonomyPropType } from './shared';
+
+const NO_PARENT_VALUE = 'NO_PARENT_VALUE';
 
 const ContentArea = styled.div`
   label,
@@ -57,13 +65,20 @@ const ContentArea = styled.div`
   }
 `;
 
-const AddNewCategoryArea = styled.div`
+const AddNewCategoryForm = styled.form`
   margin: 24px 0 16px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 8px;
 `;
 
 const LinkButton = styled(Button).attrs({
   variant: BUTTON_VARIANTS.LINK,
 })`
+  ${({ $isVisible }) => $isVisible && 'display: none;'}
+
   margin-bottom: 16px;
 
   ${({ theme }) =>
@@ -94,61 +109,206 @@ const AddNewCategoryButton = styled(Button).attrs({
   margin-top: 20px;
 `;
 
-function HierarchicalTermSelector({ taxonomy }) {
+function HierarchicalTermSelector({ noParentId = NO_PARENT_VALUE, taxonomy }) {
+  const { createTerm, selectedSlugs, setSelectedTaxonomySlugs, termCache } =
+    useTaxonomy(
+      ({
+        state: { selectedSlugs, termCache },
+        actions: { createTerm, setSelectedTaxonomySlugs },
+      }) => ({
+        createTerm,
+        selectedSlugs,
+        setSelectedTaxonomySlugs,
+        termCache,
+      })
+    );
+
+  const categories = useMemo(() => {
+    if (termCache[taxonomy.restBase]) {
+      return Object.values(termCache[taxonomy.restBase]).map((category) => {
+        const formattedCategory = { ...category };
+        formattedCategory.value = formattedCategory.id;
+        formattedCategory.label = formattedCategory.name;
+        formattedCategory.checked = selectedSlugs[taxonomy.restBase]?.includes(
+          category.slug
+        );
+
+        return formattedCategory;
+      });
+    }
+
+    return [];
+  }, [selectedSlugs, taxonomy, termCache]);
+
+  const dropdownCategories = useMemo(
+    () =>
+      [
+        {
+          value: NO_PARENT_VALUE,
+          label: `-- ${taxonomy.labels.parent_item} --`,
+        },
+      ].concat(categories),
+    [categories, taxonomy]
+  );
+
   const [showAddNewCategory, setShowAddNewCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
+  const [selectedParent, setSelectedParent] = useState(noParentId);
   const dropdownId = useMemo(uuidv4, []);
+  const [hasFocus, setHasFocus] = useState(false);
+  const formRef = useRef();
+  const toggleRef = useRef();
+  const [toggleFocus, setToggleFocus] = useState(false);
 
-  const handleShowAddNewCategoryClick = useCallback(() => {
-    setShowAddNewCategory(true);
-  }, []);
+  const resetInputs = useCallback(() => {
+    setNewCategoryName('');
+    setSelectedParent(noParentId);
+  }, [noParentId]);
+
+  const handleClickCategory = useCallback(
+    (_evt, { id, checked }) => {
+      const term = categories.find((category) => category.id === id);
+
+      // find the already selected slugs + update those.
+      setSelectedTaxonomySlugs(taxonomy, (currentTerms = []) => {
+        const index = currentTerms.findIndex((slug) => slug === term.slug);
+        // add if term doesn't exist
+        if (checked && index === -1) {
+          return [...currentTerms, term.slug];
+        }
+
+        // remove if term exists
+        if (!checked && index > -1) {
+          return [
+            ...currentTerms.slice(0, index),
+            ...currentTerms.slice(index + 1),
+          ];
+        }
+
+        return currentTerms;
+      });
+    },
+    [categories, setSelectedTaxonomySlugs, taxonomy]
+  );
+
+  const handleToggleNewCategory = useCallback(() => {
+    setShowAddNewCategory(!showAddNewCategory);
+    resetInputs();
+    setHasFocus(!showAddNewCategory);
+    setToggleFocus(showAddNewCategory);
+  }, [resetInputs, showAddNewCategory]);
 
   const handleChangeNewCategoryName = useCallback((evt) => {
     setNewCategoryName(evt.target.value);
   }, []);
 
-  const handleAddCategory = useCallback(() => {
-    setShowAddNewCategory(false);
-  }, []);
+  const handleSubmit = useCallback(
+    (evt) => {
+      evt.preventDefault();
+
+      const parentValue = selectedParent === noParentId ? 0 : selectedParent;
+      createTerm(taxonomy, newCategoryName, parentValue);
+      setShowAddNewCategory(false);
+      resetInputs();
+      setToggleFocus(showAddNewCategory);
+    },
+    [
+      createTerm,
+      newCategoryName,
+      noParentId,
+      resetInputs,
+      selectedParent,
+      showAddNewCategory,
+      taxonomy,
+    ]
+  );
+
+  const handleParentSelect = useCallback(
+    (_evt, menuItem) => setSelectedParent(menuItem),
+    []
+  );
+
+  useEffect(() => {
+    const node = formRef.current;
+    if (node) {
+      const handleEnter = (evt) => {
+        if (evt.key === 'Enter') {
+          handleSubmit(evt);
+        }
+      };
+
+      node.addEventListener('keypress', handleEnter);
+      return () => {
+        node.removeEventListener('keypress', handleEnter);
+      };
+    }
+    return null;
+  }, [handleSubmit, formRef]);
+
+  useEffect(() => {
+    if (toggleFocus) {
+      toggleRef.current.focus();
+    }
+  }, [toggleFocus]);
 
   return (
     <ContentArea>
       <ContentHeading>{taxonomy.labels.name}</ContentHeading>
       <HierarchicalInput
         label={taxonomy.labels.search_items}
-        options={[]}
-        onChange={noop}
+        options={categories}
+        onChange={handleClickCategory}
+        noOptionsText={taxonomy.labels.not_found}
       />
+      <LinkButton
+        ref={toggleRef}
+        aria-expanded={false}
+        onClick={handleToggleNewCategory}
+        $isVisible={showAddNewCategory}
+      >
+        {taxonomy.labels.add_new_item}
+      </LinkButton>
       {showAddNewCategory ? (
-        <AddNewCategoryArea>
+        <AddNewCategoryForm ref={formRef} onSubmit={handleSubmit}>
           <Input
+            autoFocus
+            name={taxonomy.labels.new_item_name}
             label={taxonomy.labels.new_item_name}
             value={newCategoryName}
             onChange={handleChangeNewCategoryName}
+            hasFocus={hasFocus}
           />
           <Label htmlFor={dropdownId}>{taxonomy.labels.parent_item}</Label>
           <DropDown
             id={dropdownId}
             ariaLabel={taxonomy.labels.parent_item}
-            placeholder={taxonomy.labels.parent_item}
-            options={[]}
+            options={dropdownCategories}
+            selectedValue={selectedParent}
+            onMenuItemClick={handleParentSelect}
           />
-          <AddNewCategoryButton onClick={handleAddCategory}>
-            {__('Add', 'web-stories')}
-          </AddNewCategoryButton>
-        </AddNewCategoryArea>
-      ) : (
-        <LinkButton onClick={handleShowAddNewCategoryClick}>
-          {taxonomy.labels.add_new_item}
-        </LinkButton>
-      )}
+          <ButtonContainer>
+            <AddNewCategoryButton
+              disabled={!newCategoryName.length}
+              type="submit"
+            >
+              {taxonomy.labels.add_new_item}
+            </AddNewCategoryButton>
+            <AddNewCategoryButton
+              aria-expanded
+              onClick={handleToggleNewCategory}
+            >
+              {__('Cancel', 'web-stories')}
+            </AddNewCategoryButton>
+          </ButtonContainer>
+        </AddNewCategoryForm>
+      ) : null}
     </ContentArea>
   );
 }
 
 HierarchicalTermSelector.propTypes = {
-  // TODO: Define better prop type.
-  taxonomy: PropTypes.object,
+  noParentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  taxonomy: TaxonomyPropType,
 };
 
 export default HierarchicalTermSelector;

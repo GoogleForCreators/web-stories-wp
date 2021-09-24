@@ -54,6 +54,7 @@ async function getResourceFromUrl(value, type) {
     height,
     src: value,
     local: false,
+    isExternal: true,
     ...videoData,
   });
 }

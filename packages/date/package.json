@@ -2,7 +2,7 @@
   "name": "@web-stories-wp/date",
   "private": true,
   "engines": {
-    "node": ">= 15",
+    "node": ">= 16",
     "npm": "~7"
   },
   "exports": {
@@ -12,7 +12,7 @@
   "type": "module",
   "dependencies": {
     "@web-stories-wp/i18n": "*",
-    "date-fns": "^2.23.0",
+    "date-fns": "^2.24.0",
     "date-fns-tz": "^1.1.6"
   },
   "devDependencies": {
