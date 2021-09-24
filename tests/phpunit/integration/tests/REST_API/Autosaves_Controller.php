@@ -19,7 +19,6 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
-use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
