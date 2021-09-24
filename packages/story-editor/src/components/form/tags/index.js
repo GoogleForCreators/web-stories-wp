@@ -27,3 +27,4 @@ const Tags = {
 };
 
 export default Tags;
+export { deepEquals } from './reducer';

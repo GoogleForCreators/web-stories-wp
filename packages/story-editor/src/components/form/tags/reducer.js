@@ -35,7 +35,7 @@ function subsetAOfB(a = [], b = []) {
   return a.forEach((v) => b.includes(v));
 }
 
-function deepEquals(a = [], b = []) {
+export function deepEquals(a = [], b = []) {
   return a.length === b.length && a.every((item) => b.includes(item));
 }
 
@@ -147,19 +147,37 @@ function reducer(state, action) {
     // Retain order as much as possible
     // and append new tags to the end
     case ACTIONS.UPDATE_TAGS: {
+      const stateTagsWithSlugs = state.tags.map((name) => [
+        cleanForSlug(name),
+        name,
+      ]);
+      const payloadTagsWithSlugs = action.payload.map((name) => [
+        cleanForSlug(name),
+        name,
+      ]);
       // if the payload is the same as the existing tags
       // we don't want to cause an update.
-      if (deepEquals(state.tags, action.payload)) {
+      if (
+        deepEquals(
+          stateTagsWithSlugs.map(([slug]) => slug),
+          payloadTagsWithSlugs.map(([slug]) => slug)
+        )
+      ) {
         return state;
       }
 
-      const tagsToPersist = state.tags.filter((tag) =>
-        action.payload.includes(tag)
-      );
+      const tagsToPersist = stateTagsWithSlugs
+        .filter(([tagSlug]) =>
+          payloadTagsWithSlugs.map(([slug]) => slug).includes(tagSlug)
+        )
+        .map(([, name]) => name);
 
-      const tagsToAdd = action.payload.filter(
-        (tag) => !state.tags.includes(tag)
-      );
+      const tagsToAdd = payloadTagsWithSlugs
+        .filter(
+          ([tagSlug]) =>
+            !stateTagsWithSlugs.map(([slug]) => slug).includes(tagSlug)
+        )
+        .map(([, name]) => name);
 
       return {
         ...state,

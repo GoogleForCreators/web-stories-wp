@@ -26,7 +26,7 @@ import {
 /**
  * Internal dependencies
  */
-import Tags from '../../../form/tags';
+import Tags, { deepEquals } from '../../../form/tags';
 import cleanForSlug from '../../../../utils/cleanForSlug';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { ContentHeading, TaxonomyPropType } from './shared';
@@ -49,23 +49,31 @@ function FlatTermSelector({ taxonomy }) {
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
       // set terms that exist in the cache
-      const slugs = termNames.map((name) => cleanForSlug(name));
-      const termsInCache = slugs
+      const termNameSlugTuples = termNames.map((name) => [
+        cleanForSlug(name),
+        name,
+      ]);
+      const termsInCache = termNameSlugTuples
+        .map(([slug]) => slug)
         .map((slug) => termCache[taxonomy.restBase]?.[slug])
         .filter((v) => v)
         .map((term) => term.id);
-      setTerms(taxonomy, termsInCache);
 
-      const termsNotInCache = slugs.filter(
-        (slug) => !termCache[taxonomy.restBase]?.[slug]
-      );
+      // We don't want to cause a redundant history entry
+      if (!deepEquals(terms[taxonomy.restBase], termsInCache)) {
+        setTerms(taxonomy, termsInCache);
+      }
+
+      const termNamesNotInCache = termNameSlugTuples
+        .filter(([slug]) => !termCache[taxonomy.restBase]?.[slug])
+        .map(([, name]) => name);
 
       // create new terms for ones that don't
-      termsNotInCache.forEach((termName) =>
-        createTerm(taxonomy, termName, null, true)
+      termNamesNotInCache.forEach((name) =>
+        createTerm(taxonomy, name, null, true)
       );
     },
-    [taxonomy, createTerm, termCache, setTerms]
+    [taxonomy, createTerm, termCache, setTerms, terms]
   );
 
   const handleFreeformInputChange = useDebouncedCallback((value) => {
@@ -84,11 +92,11 @@ function FlatTermSelector({ taxonomy }) {
         return term;
       })
       .filter((term) => term !== undefined)
-      .map((term) => term.slug);
+      .map((term) => term.name);
   }, [taxonomy, terms, termCache]);
 
   const termDisplayTransformer = useCallback(
-    (tagName) => termCache[taxonomy]?.[cleanForSlug(tagName)]?.name,
+    (tagName) => termCache[taxonomy.restBase]?.[cleanForSlug(tagName)]?.name,
     [taxonomy, termCache]
   );
 

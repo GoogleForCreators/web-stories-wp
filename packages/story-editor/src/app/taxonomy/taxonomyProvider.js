@@ -116,16 +116,20 @@ function TaxonomyProvider(props) {
   const setTerms = useCallback(
     (taxonomy, termIds = []) => {
       updateStory({
-        properties: (story) => ({
-          ...story,
-          terms: {
-            ...story.terms,
-            [taxonomy.restBase]:
-              typeof termIds === 'function'
-                ? termIds(story.terms[taxonomy.restBase])
-                : termIds,
-          },
-        }),
+        properties: (story) => {
+          const newTerms =
+            typeof termIds === 'function'
+              ? termIds(story.terms[taxonomy.restBase])
+              : termIds;
+
+          return {
+            ...story,
+            terms: {
+              ...story.terms,
+              [taxonomy.restBase]: newTerms,
+            },
+          };
+        },
       });
     },
     [updateStory]
