@@ -117,7 +117,10 @@ function StoryPicker({
     }
   }, [isFetchingForFirstTime, fetchStories]);
 
-  const title = maxNumOfStories === 1 ? __( 'Selected Story', 'web-stories' ) : __('Selected Stories', 'web-stories');
+  const title =
+    maxNumOfStories === 1
+      ? __('Selected Story', 'web-stories')
+      : __('Selected Stories', 'web-stories');
 
   return (
     <Modal
