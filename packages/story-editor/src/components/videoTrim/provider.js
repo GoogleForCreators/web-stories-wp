@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
-import { formatMsToHMS } from '@web-stories-wp/media';
+import { formatMsToHMS, formatTimeFromLength } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -54,8 +54,13 @@ function VideoTrimProvider({ children }) {
     if (!resource) {
       return;
     }
+    const length =  Math.round((endOffset / 1000) - (startOffset / 1000));
     trimExistingVideo({
-      resource,
+      resource: {
+        ...resource,
+        length,
+        lengthFormatted: formatTimeFromLength(length),
+      },
       start: formatMsToHMS(startOffset),
       end: formatMsToHMS(endOffset),
     });
