@@ -35,9 +35,7 @@ describe('Inspector', () => {
 
         await expect(page).toClick('li[role="tab"]', { text: 'Document' });
 
-        await await expect(page).not.toMatchElement(
-          '[aria-label="Publisher Logo"]'
-        );
+        await expect(page).not.toMatchElement('[aria-label="Publisher Logo"]');
       });
     });
   });
