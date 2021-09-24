@@ -44,7 +44,7 @@ function TaxonomiesPanel(props) {
     const isVisible = taxonomy?.visibility?.show_ui;
     const canAssignTerms = Boolean(capabilities[`assign-${taxonomy?.slug}`]);
 
-    return isVisible && canAssignTerms && taxonomy;
+    return isVisible && canAssignTerms;
   });
 
   if (availableTaxonomies.length === 0) {

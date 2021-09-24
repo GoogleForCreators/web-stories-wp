@@ -18,6 +18,7 @@
  */
 import {
   createNewStory,
+  publishStory,
   withExperimentalFeatures,
   withUser,
 } from '@web-stories-wp/e2e-test-utils';
@@ -71,7 +72,11 @@ describe('Taxonomy', () => {
 
     await expect(page).toClick('input[name="rock"]');
 
-    await percySnapshot(page, 'Admin Taxonomy');
+    // await percySnapshot(page, 'Admin Taxonomy');
+
+    await publishStory(); // make sure the categories are saved
+    await page.reload();
+    await page.waitForSelector('input[name="rock"]');
   });
 
   describe('Contributor User', () => {
