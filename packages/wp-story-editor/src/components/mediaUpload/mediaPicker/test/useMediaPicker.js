@@ -19,10 +19,11 @@
  */
 import { act, renderHook } from '@testing-library/react-hooks';
 import { SnackbarContext } from '@web-stories-wp/design-system';
+import { ConfigContext } from '@web-stories-wp/story-editor';
+
 /**
  * Internal dependencies
  */
-import ConfigContext from '../../../app/config/context';
 import useMediaPicker from '../useMediaPicker';
 
 jest.mock('@web-stories-wp/design-system', () => ({
