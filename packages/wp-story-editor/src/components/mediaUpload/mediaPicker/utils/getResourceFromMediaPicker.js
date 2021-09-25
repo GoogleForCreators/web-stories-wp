@@ -54,7 +54,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
 
   return createResource({
     mimeType,
-    uploadDate: date,
+    creationDate: date,
     src: url || src,
     ...getResourceSize({
       width,

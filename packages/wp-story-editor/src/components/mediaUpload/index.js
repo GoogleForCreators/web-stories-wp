@@ -13,9 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as PostPublishDialog } from './postPublishDialog';
-export { default as Layout } from './layout';
-export { default as MediaUpload } from './mediaUpload';
-export { default as PostLock } from './postLock';
-export { default as StatusCheck } from './statusCheck';
-export * from './metaBoxes';
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import { useMediaPicker } from './mediaPicker';
+
+function MediaUpload({ render, ...rest }) {
+  const open = useMediaPicker(rest);
+
+  return render(open);
+}
+
+MediaUpload.propTypes = {
+  render: PropTypes.func.isRequired,
+  ...useMediaPicker.propTypes,
+};
+
+export default MediaUpload;
