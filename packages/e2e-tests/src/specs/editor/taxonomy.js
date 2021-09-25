@@ -19,13 +19,10 @@
 import {
   createNewStory,
   publishStory,
-  withExperimentalFeatures,
   withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Taxonomy', () => {
-  withExperimentalFeatures(['enableTaxonomiesSupport']);
-
   const goToAndExpandTaxonomyPanel = async () => {
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
     await expect(page).toMatch('Categories and Tags');
