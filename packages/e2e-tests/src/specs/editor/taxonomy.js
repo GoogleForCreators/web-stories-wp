@@ -55,7 +55,9 @@ describe('Taxonomy', () => {
     );
   };
 
-  it('should be able to add new categories', async () => {
+  // TODO  https://github.com/google/web-stories-wp/issues/9149
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should be able to add new categories', async () => {
     await createNewStory();
     await goToAndExpandTaxonomyPanel();
 
