@@ -284,7 +284,7 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'https://api.w.org/term', $links );
 		foreach ( $links['https://api.w.org/term'] as $taxonomy ) {
 			$this->assertArrayHasKey( 'href', $taxonomy );
-			$this->assertContains( 'web-stories/v1', $taxonomy['href'] );
+			$this->assertStringContainsString( 'web-stories/v1', $taxonomy['href'] );
 		}
 	}
 
