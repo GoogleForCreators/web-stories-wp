@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 export { default as calculateImageSelectOptions } from './calculateImageSelectOptions';
+export { default as getResourceFromMediaPicker } from './getResourceFromMediaPicker';
 export { default as mustBeCropped } from './mustBeCropped';

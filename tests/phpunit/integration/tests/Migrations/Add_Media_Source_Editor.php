@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
+use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -31,13 +32,14 @@ class Add_Media_Source_Editor extends TestCase {
 	 * @covers \Google\Web_Stories\Migrations\Add_Media_Source::migrate
 	 */
 	public function test_migrate() {
-		$object = new \Google\Web_Stories\Migrations\Add_Media_Source_Editor();
+		$media_source = new Media_Source_Taxonomy();
+		$object       = new \Google\Web_Stories\Migrations\Add_Media_Source_Editor( $media_source );
 		$object->migrate();
 		$term = $this->call_private_method( $object, 'get_term' );
 
 		$terms = get_terms(
 			[
-				'taxonomy'   => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
+				'taxonomy'   => $media_source->get_taxonomy_slug(),
 				'hide_empty' => false,
 			]
 		);

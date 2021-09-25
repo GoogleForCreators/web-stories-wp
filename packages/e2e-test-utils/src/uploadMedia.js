@@ -33,6 +33,11 @@ async function uploadMedia(file, exit = true) {
     visible: true,
   });
 
+  await expect(page).toClick('.media-modal #menu-item-upload', {
+    text: 'Upload files',
+    visible: true,
+  });
+
   const fileName = await uploadFile(file);
 
   if (exit) {

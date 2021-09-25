@@ -22,7 +22,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { getResourceFromLocalFile, getResourceFromAttachment } from '../utils';
+import { getResourceFromLocalFile } from '../utils';
 import useUploadMedia from '../useUploadMedia';
 
 const mockValidateFileForUpload = jest.fn();
@@ -122,15 +122,12 @@ describe('useUploadMedia', () => {
   beforeEach(() => {
     mockShowSnackbar.mockReset();
     getResourceFromLocalFile.mockReset();
-    getResourceFromAttachment.mockReset();
 
     // Simple implementation of getResourceFromLocalFile that will return
     // null on unsupported resources.
     getResourceFromLocalFile.mockImplementation((e) =>
       isLocalResourceSupported(e) ? e : null
     );
-
-    getResourceFromAttachment.mockImplementation((file) => file);
   });
 
   it('bails early if no files are passed', async () => {

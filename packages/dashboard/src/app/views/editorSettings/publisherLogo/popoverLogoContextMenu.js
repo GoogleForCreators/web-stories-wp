@@ -96,10 +96,10 @@ export const PopoverLogoContextMenuPropTypes = {
   items: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
   onMenuItemToggle: PropTypes.func.isRequired,
   publisherLogo: PropTypes.shape({
-    src: PropTypes.string,
+    url: PropTypes.string,
     title: PropTypes.string,
     id: PropTypes.number,
-    isDefault: PropTypes.bool,
+    active: PropTypes.bool,
   }).isRequired,
 };
 

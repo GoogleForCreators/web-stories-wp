@@ -20,7 +20,7 @@
 /**
  * External dependencies
  */
-import { mkdirSync, rmdirSync } from 'fs';
+import { mkdirSync, rmdirSync, existsSync } from 'fs';
 import { relative } from 'path';
 import program from 'commander';
 import semver from 'semver';
@@ -122,7 +122,9 @@ program
     const buildDirPath = `${PLUGIN_DIR}/${BUILD_DIR}`;
 
     // Make sure build directory exists and is empty.
-    rmdirSync(BUILD_DIR, { recursive: true, force: true });
+    if (existsSync(BUILD_DIR)) {
+      rmdirSync(BUILD_DIR, { recursive: true, force: true });
+    }
     mkdirSync(BUILD_DIR, { recursive: true });
 
     createBuild(PLUGIN_DIR, buildDirPath, composer);

@@ -133,7 +133,7 @@ describe('useMedia3pApi', () => {
       media: [
         {
           baseColor: undefined,
-          alt: 'media/unsplash:1234',
+          alt: 'A cat',
           attribution: {
             author: {
               displayName: 'Maria',
