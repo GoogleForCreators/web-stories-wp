@@ -31,10 +31,10 @@ import {
 } from '@web-stories-wp/design-system';
 import {
   useCallback,
-  useMemo,
-  useState,
-  useRef,
   useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -126,14 +126,13 @@ function HierarchicalTermSelector({
   const categories = useMemo(() => {
     if (termCache?.[taxonomy.restBase]) {
       return Object.values(termCache[taxonomy.restBase]).map((category) => {
-        const formattedCategory = { ...category };
-        formattedCategory.value = formattedCategory.id;
-        formattedCategory.label = formattedCategory.name;
-        formattedCategory.checked = terms[taxonomy.restBase]?.includes(
-          category.id
-        );
-
-        return formattedCategory;
+        return {
+          id: category.id,
+          parent: category.parent,
+          value: category.id,
+          label: category.name,
+          checked: terms[taxonomy.restBase]?.includes(category.id),
+        };
       });
     }
 
