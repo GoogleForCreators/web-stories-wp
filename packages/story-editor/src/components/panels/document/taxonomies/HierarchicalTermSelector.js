@@ -125,15 +125,13 @@ function HierarchicalTermSelector({
 
   const categories = useMemo(() => {
     if (termCache?.[taxonomy.restBase]) {
-      return Object.values(termCache[taxonomy.restBase]).map((category) => {
-        return {
-          id: category.id,
-          parent: category.parent,
-          value: category.id,
-          label: category.name,
-          checked: terms[taxonomy.restBase]?.includes(category.id),
-        };
-      });
+      return Object.values(termCache[taxonomy.restBase]).map((category) => ({
+        id: category.id,
+        parent: category.parent,
+        value: category.id,
+        label: category.name,
+        checked: terms[taxonomy.restBase]?.includes(category.id),
+      }));
     }
 
     return [];
