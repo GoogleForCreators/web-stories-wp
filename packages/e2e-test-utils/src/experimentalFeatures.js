@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import visitAdminPage from './visitAdminPage';
+import { getCurrentUser, setCurrentUser } from './user';
 
 /**
  * Toggle experiments state.
@@ -26,7 +27,10 @@ import visitAdminPage from './visitAdminPage';
  * @param {boolean} enable Whether the features should be enabled or not.
  * @return {Promise<void>}
  */
-async function toggleExperiments(features, enable) {
+export async function toggleExperiments(features, enable) {
+  const currentUser = getCurrentUser();
+  await setCurrentUser('admin', 'password');
+
   await visitAdminPage(
     'edit.php',
     'post_type=web-story&page=web-stories-experiments'
@@ -48,6 +52,8 @@ async function toggleExperiments(features, enable) {
     page.waitForNavigation({ waitUntil: 'networkidle0' }),
     page.click('#submit'),
   ]);
+
+  await setCurrentUser(currentUser.username, currentUser.password);
 }
 
 /**
