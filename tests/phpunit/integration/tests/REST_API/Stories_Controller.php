@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use DateTime;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
@@ -87,13 +88,11 @@ class Stories_Controller extends Test_REST_TestCase {
 			]
 		);
 
-		$future_date = strtotime( '+1 day' );
-
 		$factory->post->create_many(
 			3,
 			[
 				'post_status' => 'future',
-				'post_date'   => date_format( date_create( $future_date ), '%Y-%m-%d %H:%M:%S' ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( '%Y-%m-%d %H:%M:%S' ),
 				'post_author' => self::$user_id,
 				'post_type'   => $post_type,
 			]
@@ -299,16 +298,15 @@ class Stories_Controller extends Test_REST_TestCase {
 	 */
 	public function test_get_item_future() {
 		wp_set_current_user( self::$user_id );
-		$future_date = strtotime( '+1 day' );
-		$story       = self::factory()->post->create(
+		$story   = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
-				'post_date'   => date_format( date_create( $future_date ), '%Y-%m-%d %H:%M:%S' ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( '%Y-%m-%d %H:%M:%S' ),
 				'post_author' => self::$user_id,
 			]
 		);
-		$request     = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
 
@@ -329,16 +327,16 @@ class Stories_Controller extends Test_REST_TestCase {
 	 */
 	public function test_get_item_lock() {
 		wp_set_current_user( self::$user_id );
-		$future_date = strtotime( '+1 day' );
-		$story       = self::factory()->post->create(
+
+		$story    = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
-				'post_date'   => date_format( date_create( $future_date ), '%Y-%m-%d %H:%M:%S' ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( '%Y-%m-%d %H:%M:%S' ),
 				'post_author' => self::$user_id,
 			]
 		);
-		$new_lock    = ( time() - 100 ) . ':' . self::$user_id;
+		$new_lock = ( time() - 100 ) . ':' . self::$user_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );
@@ -354,16 +352,16 @@ class Stories_Controller extends Test_REST_TestCase {
 	 */
 	public function test_get_available_actions() {
 		wp_set_current_user( self::$user_id );
-		$future_date = strtotime( '+1 day' );
-		$story       = self::factory()->post->create(
+
+		$story    = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
-				'post_date'   => date_format( date_create( $future_date ), '%Y-%m-%d %H:%M:%S' ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( '%Y-%m-%d %H:%M:%S' ),
 				'post_author' => self::$user_id,
 			]
 		);
-		$new_lock    = ( time() - 100 ) . ':' . self::$user_id;
+		$new_lock = ( time() - 100 ) . ':' . self::$user_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );

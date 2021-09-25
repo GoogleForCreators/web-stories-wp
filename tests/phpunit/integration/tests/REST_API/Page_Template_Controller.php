@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use DateTime;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use Spy_REST_Server;
@@ -78,13 +79,11 @@ class Page_Template_Controller extends Test_REST_TestCase {
 			]
 		);
 
-		$future_date = strtotime( '+1 day' );
-
 		$factory->post->create_many(
 			3,
 			[
 				'post_status' => 'future',
-				'post_date'   => date_format( date_create( $future_date ), '%Y-%m-%d %H:%M:%S' ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( '%Y-%m-%d %H:%M:%S' ),
 				'post_author' => self::$user_id,
 				'post_type'   => $post_type,
 			]
