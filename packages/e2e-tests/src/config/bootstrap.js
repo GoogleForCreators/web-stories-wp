@@ -25,6 +25,7 @@ import {
   setCurrentUser,
   trashAllPosts,
   deleteAllMedia,
+  trashAllTerms,
 } from '@web-stories-wp/e2e-test-utils';
 
 // Extend Jest matchers.
@@ -242,6 +243,8 @@ beforeAll(async () => {
   await setCurrentUser('admin', 'password');
   await trashAllPosts();
   await trashAllPosts('web-story');
+  await trashAllTerms('web_story_category');
+  await trashAllTerms('web_story_tag');
   await deleteAllMedia();
 });
 
