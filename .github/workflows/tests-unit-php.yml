@@ -52,7 +52,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        php: ['7.0', '7.4']
+        php: ['7.0', '8.0']
 
         # Using a branch instead instead of 'latest' or a specific version ensures we
         # get the latest test utils from that branch that includes the PHPUnity polyfills.
@@ -60,7 +60,8 @@ jobs:
         wp: ['5.8']
         coverage: [false]
         include:
-          - php: '8.0'
+          # Using PHP 7.4 for code coverage run as 8.0 throws errors.
+          - php: '7.4'
             wp: '5.8'
             coverage: true
 
@@ -122,6 +123,8 @@ jobs:
         run: |
           if [[ $WP_VERSION == "trunk" ]]; then
             composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
+          elif [[ $PHP_VERSION != "7.0" ]]; then
+            composer require --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit:^7.5 --with-dependencies
           fi
         env:
           WP_VERSION: ${{ matrix.wp }}
