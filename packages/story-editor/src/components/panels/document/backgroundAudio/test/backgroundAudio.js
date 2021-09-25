@@ -27,6 +27,11 @@ import StoryContext from '../../../../../app/story/context';
 import { renderWithTheme } from '../../../../../testUtils';
 import BackgroundAudioPanel from '../backgroundAudio';
 
+function MediaUpload({ render }) {
+  const open = jest.fn();
+  return render(open);
+}
+
 function arrange({ backgroundAudio, hasUploadMediaAction = true } = {}) {
   const updateStory = jest.fn();
 
@@ -41,6 +46,7 @@ function arrange({ backgroundAudio, hasUploadMediaAction = true } = {}) {
       'audio/ogg',
     ],
     allowedAudioFileTypes: ['mp3', 'aac', 'wav', 'ogg'],
+    MediaUpload,
   };
 
   const storyContextValue = {

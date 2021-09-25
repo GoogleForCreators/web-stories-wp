@@ -29,6 +29,11 @@ import { renderWithTheme } from '../../../../../testUtils';
 import InspectorContext from '../../../../inspector/context';
 import PublishPanel from '../publish';
 
+function MediaUpload({ render }) {
+  const open = jest.fn();
+  return render(open);
+}
+
 function arrange(
   capabilities = {
     hasAssignAuthorAction: true,
@@ -62,6 +67,7 @@ function arrange(
       'image/jpg',
       'image/gif',
     ],
+    MediaUpload,
   };
   const loadUsers = jest.fn();
 

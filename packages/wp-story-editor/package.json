@@ -2,7 +2,7 @@
     "name": "@web-stories-wp/wp-story-editor",
     "private": true,
     "engines": {
-        "node": ">= 15",
+        "node": ">= 16",
         "npm": "~7"
     },
     "exports": {
@@ -14,6 +14,7 @@
         "@web-stories-wp/date": "*",
         "@web-stories-wp/design-system": "*",
         "@web-stories-wp/i18n": "*",
+        "@web-stories-wp/media": "*",
         "@web-stories-wp/migration": "*",
         "@web-stories-wp/react": "*",
         "@web-stories-wp/story-editor": "*",

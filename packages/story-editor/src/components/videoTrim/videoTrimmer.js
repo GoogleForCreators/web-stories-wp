@@ -13,39 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
+import useLayout from '../../app/layout/useLayout';
 import useVideoTrim from './useVideoTrim';
+import {
+  Menu,
+  Wrapper,
+  Handle,
+  CurrentTime,
+  Scrim,
+  ButtonWrapper,
+} from './trimmerComponents';
 
-const Menu = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-  height: 100%;
-`;
-
-const DummyLabel = styled.label`
-  display: flex;
-  flex-direction: column;
-  color: white;
-  font-size: 80%;
-`;
-
-const DummyInput = styled.input.attrs({ type: 'range' })`
-  border: 1px solid white;
-  background-color: black;
-  color: white;
-  width: 100px;
-  text-align: center;
-  margin-right: 20px;
-`;
+const BUTTON_SPACE = 130;
 
 function VideoTrimmer() {
   const {
@@ -55,10 +49,13 @@ function VideoTrimmer() {
     maxOffset,
     setStartOffset,
     setEndOffset,
+    hasChanged,
+    performTrim,
+    resetOffsets,
   } = useVideoTrim(
     ({
-      state: { currentTime, startOffset, endOffset, maxOffset },
-      actions: { setStartOffset, setEndOffset },
+      state: { currentTime, startOffset, endOffset, maxOffset, hasChanged },
+      actions: { setStartOffset, setEndOffset, performTrim, resetOffsets },
     }) => ({
       currentTime,
       startOffset,
@@ -66,27 +63,82 @@ function VideoTrimmer() {
       maxOffset,
       setStartOffset,
       setEndOffset,
+      hasChanged,
+      performTrim,
+      resetOffsets,
+    })
+  );
+  const { workspaceWidth, pageWidth } = useLayout(
+    ({ state: { workspaceWidth, pageWidth } }) => ({
+      workspaceWidth,
+      pageWidth,
     })
   );
 
+  if (!pageWidth || !maxOffset) {
+    return null;
+  }
+
+  const railWidth = Math.min(pageWidth, workspaceWidth - 2 * BUTTON_SPACE);
+
+  const sliderProps = {
+    min: 0,
+    max: maxOffset,
+    step: 100,
+    minorStep: 10,
+  };
+
   return (
     <Menu>
-      <DummyLabel>{'Start: '}</DummyLabel>
-      <DummyInput
-        max={maxOffset}
-        value={startOffset}
-        onChange={(evt) => setStartOffset(evt.target.valueAsNumber)}
-      />
-
-      <DummyLabel>{'Current: '}</DummyLabel>
-      <DummyInput disabled value={currentTime} max={maxOffset} />
-
-      <DummyLabel>{'End: '}</DummyLabel>
-      <DummyInput
-        value={endOffset}
-        max={maxOffset}
-        onChange={(evt) => setEndOffset(evt.target.valueAsNumber)}
-      />
+      {hasChanged && (
+        <ButtonWrapper isStart>
+          <Button
+            variant={BUTTON_VARIANTS.RECTANGLE}
+            type={BUTTON_TYPES.SECONDARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={resetOffsets}
+          >
+            {__('Cancel', 'web-stories')}
+          </Button>
+        </ButtonWrapper>
+      )}
+      <Wrapper pageWidth={railWidth}>
+        <Scrim atStart width={(startOffset / maxOffset) * railWidth} />
+        <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
+        <CurrentTime
+          railWidth={railWidth}
+          aria-label={__('Current time', 'web-stories')}
+          disabled
+          value={currentTime}
+          {...sliderProps}
+        />
+        <Handle
+          railWidth={railWidth}
+          value={startOffset}
+          aria-label={__('Start offset', 'web-stories')}
+          onChange={(val) => setStartOffset(val)}
+          {...sliderProps}
+        />
+        <Handle
+          railWidth={railWidth}
+          value={endOffset}
+          aria-label={__('End offset', 'web-stories')}
+          onChange={(val) => setEndOffset(val)}
+          {...sliderProps}
+        />
+      </Wrapper>
+      {hasChanged && (
+        <ButtonWrapper>
+          <Button
+            variant={BUTTON_VARIANTS.RECTANGLE}
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={performTrim}
+          >
+            {__('Trim', 'web-stories')}
+          </Button>
+        </ButtonWrapper>
+      )}
     </Menu>
   );
 }

@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
+use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
 use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
@@ -32,7 +33,8 @@ class Jetpack extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$jetpack = new Jetpack_Integration();
+		$media_source = new Media_Source_Taxonomy();
+		$jetpack      = new Jetpack_Integration( $media_source );
 		$jetpack->register();
 
 		$this->assertFalse( has_filter( 'wpcom_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
@@ -50,7 +52,8 @@ class Jetpack extends TestCase {
 	public function test_register_is_wpcom() {
 		define( 'IS_WPCOM', true );
 
-		$jetpack = new Jetpack_Integration();
+		$media_source = new Media_Source_Taxonomy();
+		$jetpack      = new Jetpack_Integration( $media_source );
 		$jetpack->register();
 
 		$this->assertSame( 10, has_filter( 'wpcom_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
@@ -63,7 +66,8 @@ class Jetpack extends TestCase {
 	 * @covers ::add_to_jetpack_sitemap
 	 */
 	public function test_add_to_jetpack_sitemap() {
-		$jetpack = new Jetpack_Integration();
+		$media_source = new Media_Source_Taxonomy();
+		$jetpack      = new Jetpack_Integration( $media_source );
 		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $jetpack->add_to_jetpack_sitemap( [] ) );
 	}
 
@@ -82,7 +86,8 @@ class Jetpack extends TestCase {
 		);
 		$attachment          = get_post( $video_attachment_id );
 
-		$jetpack = new Jetpack_Integration();
+		$media_source = new Media_Source_Taxonomy();
+		$jetpack      = new Jetpack_Integration( $media_source );
 		// wp_prepare_attachment_for_js doesn't exactly match the output of media REST API, but it good enough for these tests.
 		$original_data = wp_prepare_attachment_for_js( $attachment );
 
@@ -117,6 +122,8 @@ class Jetpack extends TestCase {
 	 * @covers ::add_term
 	 */
 	public function test_add_term() {
+		$media_source = new Media_Source_Taxonomy();
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -125,12 +132,12 @@ class Jetpack extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		$jetpack              = new Jetpack_Integration();
+		$jetpack              = new Jetpack_Integration( $media_source );
 		$jetpack->register();
 
 		add_post_meta( $poster_attachment_id, Jetpack_Integration::VIDEOPRESS_POSTER_META_KEY, 'hello world' );
 
-		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
+		$terms = wp_get_post_terms( $poster_attachment_id, $media_source->get_taxonomy_slug() );
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertCount( 1, $terms );
 		$this->assertEqualSets( [ 'poster-generation' ], $slugs );
@@ -151,7 +158,8 @@ class Jetpack extends TestCase {
 		);
 		$attachment          = get_post( $video_attachment_id );
 
-		$jetpack = new Jetpack_Integration();
+		$media_source = new Media_Source_Taxonomy();
+		$jetpack      = new Jetpack_Integration( $media_source );
 		add_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ], 10, 3 );
 		$response = wp_prepare_attachment_for_js( $attachment );
 
@@ -182,7 +190,8 @@ class Jetpack extends TestCase {
 	 * @covers ::filter_ajax_query_attachments_args
 	 */
 	public function test_filter_ajax_query_attachments_args() {
-		$jetpack              = new Jetpack_Integration();
+		$media_source         = new Media_Source_Taxonomy();
+		$jetpack              = new Jetpack_Integration( $media_source );
 		$allowed_mime_types   = $jetpack->get_allowed_mime_types();
 		$allowed_mime_types   = array_merge( ...array_values( $allowed_mime_types ) );
 		$allowed_mime_types[] = $jetpack::VIDEOPRESS_MIME_TYPE;
@@ -200,8 +209,9 @@ class Jetpack extends TestCase {
 	 */
 	public function test_format_milliseconds( $milliseconds, $string ) {
 
-		$jetpack = new Jetpack_Integration();
-		$result  = $this->call_private_method( $jetpack, 'format_milliseconds', [ $milliseconds ] );
+		$media_source = new Media_Source_Taxonomy();
+		$jetpack      = new Jetpack_Integration( $media_source );
+		$result       = $this->call_private_method( $jetpack, 'format_milliseconds', [ $milliseconds ] );
 		$this->assertSame( $result, $string );
 	}
 
