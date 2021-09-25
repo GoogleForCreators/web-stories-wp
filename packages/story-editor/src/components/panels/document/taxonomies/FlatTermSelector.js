@@ -53,10 +53,6 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
-      // TODO(#9034): Allow assigning existing terms from autocomplete, but don't create terms if missing capability.
-      if (!canCreateTerms) {
-        return;
-      }
       // set terms that exist in the cache
       const termNameSlugTuples = termNames.map((name) => [
         cleanForSlug(name),
@@ -71,6 +67,11 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       // We don't want to cause a redundant history entry
       if (!deepEquals(terms[taxonomy.restBase], termsInCache)) {
         setTerms(taxonomy, termsInCache);
+      }
+
+      // Return early if user doesn't have capability to create new terms
+      if (!canCreateTerms) {
+        return;
       }
 
       const termNamesNotInCache = termNameSlugTuples

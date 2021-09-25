@@ -81,6 +81,7 @@ describe('Taxonomy', () => {
     // Save terms so that they are available to contributor
     await publishStory();
   });
+  it.todo('should be able to add new tags and existing tags');
 
   describe('Contributor User', () => {
     withUser('contributor', 'password');
@@ -97,5 +98,8 @@ describe('Taxonomy', () => {
       );
       expect(addNewCategoryButton).toBeNull();
     });
+    it.todo(
+      'should be able to add tags that already exist but not create new tags'
+    );
   });
 });
