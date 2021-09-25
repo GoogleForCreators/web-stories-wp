@@ -86,8 +86,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		self::delete_user( self::$editor );
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		/** @var WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
@@ -97,7 +97,7 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		$this->add_caps_to_roles();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		/** @var WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
@@ -107,7 +107,7 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		delete_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
 		delete_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
