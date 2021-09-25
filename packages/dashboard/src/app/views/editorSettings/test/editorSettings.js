@@ -109,12 +109,12 @@ function createProviderValues({
         pagesApi: {
           searchPages: mockSearch,
           getPageById: mockGetPageById,
-          publisherLogosApi: {
-            fetchPublisherLogos: mockFetchPublisherLogos,
-            addPublisherLogo: mockAddPublisherLogo,
-            removePublisherLogo: mockRemovePublisherLogo,
-            setPublisherLogoAsDefault: mockSetPublisherLogoAsDefault,
-          },
+        },
+        publisherLogosApi: {
+          fetchPublisherLogos: mockFetchPublisherLogos,
+          addPublisherLogo: mockAddPublisherLogo,
+          removePublisherLogo: mockRemovePublisherLogo,
+          setPublisherLogoAsDefault: mockSetPublisherLogoAsDefault,
         },
       },
     },
