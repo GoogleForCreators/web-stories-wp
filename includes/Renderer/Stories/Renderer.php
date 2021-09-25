@@ -37,6 +37,9 @@ use Google\Web_Stories\Assets;
 use Iterator;
 use WP_Post;
 
+// Disable reason: prevent false positives due to ReturnTypeWillChange attributes.
+// phpcs:disable Squiz.Commenting.FunctionComment.Missing
+
 /**
  * Renderer class.
  *
@@ -193,6 +196,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return mixed|void
 	 */
+	#[\ReturnTypeWillChange]
 	public function current() {
 		return $this->stories[ $this->position ];
 	}
@@ -204,6 +208,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @retrun void
 	 */
+	#[\ReturnTypeWillChange]
 	public function next() {
 		++ $this->position;
 	}
@@ -215,6 +220,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return bool|float|int|string|void|null
 	 */
+	#[\ReturnTypeWillChange]
 	public function key() {
 		return $this->position;
 	}
@@ -226,6 +232,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return bool|void
 	 */
+	#[\ReturnTypeWillChange]
 	public function valid() {
 		return isset( $this->stories[ $this->position ] );
 	}
@@ -237,6 +244,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function rewind() {
 		$this->position = 0;
 	}
@@ -248,6 +256,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function init() {
 		$this->stories = array_filter( array_map( [ $this, 'prepare_stories' ], $this->query->get_stories() ) );
 
