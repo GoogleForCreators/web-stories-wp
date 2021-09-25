@@ -59,7 +59,7 @@ async function addCategory(name, parent) {
   );
 
   // Todo: Investigate why this sometimes takes longer to appear.
-  await expect(page).toMatch(name);
+  await expect(page).toMatchElement('label', { text: name });
 }
 
 describe('Taxonomy', () => {
@@ -74,7 +74,7 @@ describe('Taxonomy', () => {
     await addCategory('rock', 'music genres');
   });
 
-  it.only('should be able to add new categories', async () => {
+  it('should be able to add new categories', async () => {
     await createNewStory();
     await goToAndExpandTaxonomyPanel();
     await addCategory('jazz', 'music genres');
@@ -107,10 +107,12 @@ describe('Taxonomy', () => {
       await createNewStory();
       await goToAndExpandTaxonomyPanel();
 
-      expect(page).not.toMatchElement('button', { text: 'Add New Category' });
+      await expect(page).not.toMatchElement('button', {
+        text: 'Add New Category',
+      });
 
-      expect(page).toMatchElement('label', { text: 'rock' });
-      expect(page).toClick('label', { text: 'rock' });
+      await expect(page).toMatchElement('label', { text: 'rock' });
+      await expect(page).toClick('label', { text: 'rock' });
 
       await publishStory();
 
@@ -119,7 +121,7 @@ describe('Taxonomy', () => {
 
       await goToAndExpandTaxonomyPanel();
 
-      expect(page).not.toMatchElement(
+      await expect(page).not.toMatchElement(
         'input[name="hierarchical_term_rock"][checked]'
       );
     });
