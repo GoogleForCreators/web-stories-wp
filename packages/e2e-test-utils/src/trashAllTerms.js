@@ -19,6 +19,7 @@
  */
 import visitAdminPage from './visitAdminPage';
 import { getCurrentUser, setCurrentUser } from './user';
+import { toggleExperiments } from './experimentalFeatures';
 
 /**
  * Navigates to the taxonomy's list table and bulk-trashes any terms which exist.
@@ -30,12 +31,17 @@ async function trashAllTerms(taxonomy) {
   const currentUser = getCurrentUser();
   await setCurrentUser('admin', 'password');
 
+  // This enables the feature if not already enabled. Else this is a no-op.
+  await toggleExperiments(['enableTaxonomiesSupport'], true);
+
   await visitAdminPage('edit-tags.php', `taxonomy=${taxonomy}`);
 
   await page.waitForSelector('[id^=cb-select-all-]');
   await page.click('[id^=cb-select-all-]');
   await page.select('#bulk-action-selector-top', 'delete');
   await Promise.all([page.waitForNavigation(), page.click('#doaction')]);
+
+  await toggleExperiments(['enableTaxonomiesSupport'], false);
 
   await setCurrentUser(currentUser.username, currentUser.password);
 }
