@@ -4,6 +4,7 @@
   bootstrap="tests/phpunit/integration/bootstrap.php"
   backupGlobals="false"
   colors="true"
+  failOnRisky="true"
   convertErrorsToExceptions="true"
   convertNoticesToExceptions="true"
   convertWarningsToExceptions="true"
