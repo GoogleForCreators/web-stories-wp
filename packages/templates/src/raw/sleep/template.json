@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 34,
   "pages": [
     {
       "elements": [
@@ -12,7 +12,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
@@ -203,7 +202,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
@@ -423,7 +421,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 75, "g": 92, "b": 84 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
@@ -899,7 +896,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
@@ -1546,7 +1542,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
@@ -1875,7 +1870,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
@@ -2342,7 +2336,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",

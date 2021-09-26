@@ -19,3 +19,8 @@ export const AD_NETWORK_TYPE = {
   ADSENSE: 'adsense',
   ADMANAGER: 'admanager',
 };
+
+export const ARCHIVE_TYPE = {
+  DEFAULT: 'default',
+  DISABLED: 'disabled',
+};

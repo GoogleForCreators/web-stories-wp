@@ -465,6 +465,7 @@ describe('Settings View', () => {
 
     // set focus within logo2
     await fixture.events.keyboard.press('tab');
+
     // activate menu
     await fixture.events.keyboard.press('Enter');
 

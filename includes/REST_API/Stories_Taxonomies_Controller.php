@@ -30,6 +30,9 @@ use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use WP_REST_Taxonomies_Controller;
+use WP_REST_Response;
+use WP_REST_Request;
+use WP_Taxonomy;
 
 /**
  * Stories_Taxonomies_Controller class.
@@ -45,6 +48,40 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	public function __construct() {
 		parent::__construct();
 		$this->namespace = 'web-stories/v1';
+	}
+
+	/**
+	 * Override the existing prepare_item_for_response to ensure that all links have the correct namespace.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param WP_Taxonomy     $taxonomy Taxonomy data.
+	 * @param WP_REST_Request $request  Full details about the request.
+	 * @return WP_REST_Response Response object.
+	 */
+	public function prepare_item_for_response( $taxonomy, $request ) {
+		$response = parent::prepare_item_for_response( $taxonomy, $request );
+
+		$base       = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
+		$controller = $taxonomy->get_rest_controller();
+
+		if ( ! $controller ) {
+			return $response;
+		}
+
+		$namespace = method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
+
+		$response->remove_link( 'https://api.w.org/items' );
+		$response->add_links(
+			[
+				'https://api.w.org/items' => [
+					'href' => rest_url( sprintf( '%s/%s', $namespace, $base ) ),
+				],
+			]
+		);
+
+		/** This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-taxonomies-controller.php */
+		return apply_filters( 'rest_prepare_taxonomy', $response, $taxonomy, $request );
 	}
 
 	/**

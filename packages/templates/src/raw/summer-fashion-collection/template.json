@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 34,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -259,7 +258,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -509,7 +507,6 @@
           }
         }
       ],
-      "overlay": "none",
       "backgroundColor": {
         "type": "linear",
         "stops": [
@@ -545,7 +542,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -978,7 +974,6 @@
           }
         }
       ],
-      "overlay": "none",
       "backgroundColor": {
         "type": "linear",
         "stops": [
@@ -1176,7 +1171,6 @@
           "focalY": 50
         }
       ],
-      "overlay": "none",
       "backgroundColor": {
         "type": "linear",
         "stops": [
@@ -1223,7 +1217,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1566,7 +1559,6 @@
           "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
         }
       ],
-      "overlay": "none",
       "backgroundColor": {
         "type": "linear",
         "stops": [
@@ -1588,7 +1580,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2021,7 +2012,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": {
         "type": "linear",
@@ -2219,7 +2209,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "341b0972-28f1-43ff-af62-755860e18fbf",
@@ -2266,7 +2255,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2610,7 +2598,6 @@
           "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "081ecd5b-dd35-48a1-baba-3da060a9d085",
@@ -2647,7 +2634,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3064,7 +3050,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": {
         "type": "linear",
@@ -3263,7 +3248,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "979f3b8c-3104-4c77-967d-b5f8c5eb91bd",
@@ -3309,7 +3293,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3658,7 +3641,6 @@
           "link": { "url": "https://www.google.com/", "icon": "", "desc": "" }
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "97d3a81f-3ae4-4a6a-85e1-73ab5ac5724e",
@@ -3695,7 +3677,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3893,7 +3874,6 @@
           }
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "c4694f54-248e-423f-9954-ce40fd5a2a01",
@@ -3938,7 +3918,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4369,7 +4348,6 @@
           }
         }
       ],
-      "overlay": "none",
       "backgroundColor": {
         "type": "linear",
         "stops": [

@@ -119,6 +119,7 @@ class Plugin extends ServiceBasedPlugin {
 		'rest.embed_controller'        => REST_API\Embed_Controller::class,
 		'rest.link_controller'         => REST_API\Link_Controller::class,
 		'rest.hotlinking_controller'   => REST_API\Hotlinking_Controller::class,
+		'rest.publisher_logos'         => REST_API\Publisher_Logos_Controller::class,
 		'rest.status_check_controller' => REST_API\Status_Check_Controller::class,
 		'rest.stories_autosave'        => REST_API\Stories_Autosaves_Controller::class,
 		'rest.stories_lock'            => REST_API\Stories_Lock_Controller::class,
@@ -128,6 +129,8 @@ class Plugin extends ServiceBasedPlugin {
 		'rest.taxonomies'              => REST_API\Stories_Taxonomies_Controller::class,
 		'rest.template_autosave'       => REST_API\Template_Autosaves_Controller::class,
 		'rest.template_lock'           => REST_API\Template_Lock_Controller::class,
+		'taxonomy.category'            => Taxonomy\Category_Taxonomy::class,
+		'taxonomy.tag'                 => Taxonomy\Tag_Taxonomy::class,
 		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
 	];

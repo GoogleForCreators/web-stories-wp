@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 34,
   "pages": [
     {
       "elements": [
@@ -423,7 +423,6 @@
           "marginOffset": -48.90899999999999
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "2c6e8501-d399-45fe-a92b-ffacced265c3",
@@ -657,7 +656,6 @@
           "y": 38
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "2b09ba7c-c688-4e5d-b7ba-ed06896ae1a5",
@@ -1043,7 +1041,6 @@
           "type": "sticker"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "0aa8f0fb-3edb-4567-9c74-35d980a0d4fe",
@@ -1308,7 +1305,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "81f7d5a0-dd10-4773-aca4-0cc5d4ac2680",
@@ -1687,7 +1683,6 @@
           "type": "sticker"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "5b44d55a-1df4-4e5e-8986-805712926d28",
@@ -2082,7 +2077,6 @@
           "type": "sticker"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "3bbde680-7180-4f34-ba83-6720ceef5d80",
@@ -2121,7 +2115,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2397,7 +2390,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "481f6fc3-07df-4907-9f68-466dc414f9c1",
@@ -2419,7 +2411,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2782,7 +2773,6 @@
           "y": 113
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "496d883d-373d-4971-bb94-47593630f8f8",
@@ -2811,7 +2801,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3174,7 +3163,6 @@
           "y": 513
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "5381dbae-da78-40fa-95fe-8055266bf280",
@@ -3203,7 +3191,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3536,7 +3523,6 @@
           "id": "9ec2ee0f-9b0a-4c9d-b0e4-40edf5b387a9"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "040d1806-bab7-4d5e-a6aa-439c65091c4e",

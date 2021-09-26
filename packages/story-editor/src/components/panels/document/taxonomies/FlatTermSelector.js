@@ -17,61 +17,86 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import { useCallback, useDebouncedCallback } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useDebouncedCallback,
+  useMemo,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import Tags from '../../../form/tags';
+import Tags, { deepEquals } from '../../../form/tags';
 import cleanForSlug from '../../../../utils/cleanForSlug';
 import { useTaxonomy } from '../../../../app/taxonomy';
-import { ContentHeading } from './shared';
+import { ContentHeading, TaxonomyPropType } from './shared';
 
 function FlatTermSelector({ taxonomy }) {
-  const {
-    createTerm,
-    termCache,
-    addSearchResultsToCache,
-    setSelectedTaxonomySlugs,
-    selectedSlugs,
-  } = useTaxonomy(
-    ({
-      state: { termCache, selectedSlugs },
-      actions: {
+  const { createTerm, termCache, addSearchResultsToCache, terms, setTerms } =
+    useTaxonomy(
+      ({
+        state: { termCache, terms },
+        actions: { createTerm, addSearchResultsToCache, setTerms },
+      }) => ({
+        termCache,
         createTerm,
         addSearchResultsToCache,
-        setSelectedTaxonomySlugs,
-      },
-    }) => ({
-      termCache,
-      createTerm,
-      addSearchResultsToCache,
-      setSelectedTaxonomySlugs,
-      selectedSlugs,
-    })
-  );
+        terms,
+        setTerms,
+      })
+    );
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
-      termNames.forEach((termName) => createTerm(taxonomy, termName));
-      setSelectedTaxonomySlugs(
-        taxonomy,
-        termNames.map((termName) => cleanForSlug(termName))
+      // set terms that exist in the cache
+      const termNameSlugTuples = termNames.map((name) => [
+        cleanForSlug(name),
+        name,
+      ]);
+      const termsInCache = termNameSlugTuples
+        .map(([slug]) => slug)
+        .map((slug) => termCache[taxonomy.restBase]?.[slug])
+        .filter((v) => v)
+        .map((term) => term.id);
+
+      // We don't want to cause a redundant history entry
+      if (!deepEquals(terms[taxonomy.restBase], termsInCache)) {
+        setTerms(taxonomy, termsInCache);
+      }
+
+      const termNamesNotInCache = termNameSlugTuples
+        .filter(([slug]) => !termCache[taxonomy.restBase]?.[slug])
+        .map(([, name]) => name);
+
+      // create new terms for ones that don't
+      termNamesNotInCache.forEach((name) =>
+        createTerm(taxonomy, name, null, true)
       );
     },
-    [taxonomy, createTerm, setSelectedTaxonomySlugs]
+    [taxonomy, createTerm, termCache, setTerms, terms]
   );
 
   const handleFreeformInputChange = useDebouncedCallback((value) => {
     if (value.length < 3) {
       return;
     }
-    addSearchResultsToCache(taxonomy, value);
+    addSearchResultsToCache(taxonomy, { name: value });
   }, 1000);
 
+  const tokens = useMemo(() => {
+    return (terms[taxonomy.restBase] || [])
+      .map((id) => {
+        const term = Object.values(termCache[taxonomy.restBase] || {}).find(
+          (term) => term.id === id
+        );
+        return term;
+      })
+      .filter((term) => term !== undefined)
+      .map((term) => term.name);
+  }, [taxonomy, terms, termCache]);
+
   const termDisplayTransformer = useCallback(
-    (tagName) => termCache[taxonomy]?.[cleanForSlug(tagName)]?.name,
+    (tagName) => termCache[taxonomy.restBase]?.[cleanForSlug(tagName)]?.name,
     [taxonomy, termCache]
   );
 
@@ -89,7 +114,7 @@ function FlatTermSelector({ taxonomy }) {
           onTagsChange={handleFreeformTermsChange}
           onInputChange={handleFreeformInputChange}
           tagDisplayTransformer={termDisplayTransformer}
-          initialTags={selectedSlugs?.[taxonomy.rest_base] || []}
+          tokens={tokens}
         />
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separate_items_with_commas}
@@ -100,8 +125,7 @@ function FlatTermSelector({ taxonomy }) {
 }
 
 FlatTermSelector.propTypes = {
-  // TODO: Define better prop type.
-  taxonomy: PropTypes.object,
+  taxonomy: TaxonomyPropType,
 };
 
 export default FlatTermSelector;

@@ -239,6 +239,7 @@ class Dashboard extends Service_Base {
 
 		$preload_paths = [
 			'/web-stories/v1/settings/',
+			'/web-stories/v1/publisher-logos/',
 			'/web-stories/v1/users/me/',
 			"/web-stories/v1/$rest_base/?" . build_query(
 				[
@@ -381,17 +382,19 @@ class Dashboard extends Service_Base {
 				'locale'                => $this->locale->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
 				'wpListURL'             => $classic_wp_list_url,
+				'archiveURL'            => $this->get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
 				'version'               => WEBSTORIES_VERSION,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),
 				'api'                   => [
-					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
-					'media'       => '/web-stories/v1/media/',
-					'currentUser' => '/web-stories/v1/users/me/',
-					'users'       => '/web-stories/v1/users/',
-					'templates'   => sprintf( '/web-stories/v1/%s/', $templates_rest_base ),
-					'settings'    => '/web-stories/v1/settings/',
+					'stories'        => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'media'          => '/web-stories/v1/media/',
+					'currentUser'    => '/web-stories/v1/users/me/',
+					'users'          => '/web-stories/v1/users/',
+					'templates'      => sprintf( '/web-stories/v1/%s/', $templates_rest_base ),
+					'settings'       => '/web-stories/v1/settings/',
+					'publisherLogos' => '/web-stories/v1/publisher-logos/',
 				],
 				'maxUpload'             => $max_upload_size,
 				'maxUploadFormatted'    => size_format( $max_upload_size ),

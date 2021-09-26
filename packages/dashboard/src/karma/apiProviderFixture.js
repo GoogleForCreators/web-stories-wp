@@ -26,21 +26,21 @@ import { differenceInSeconds } from '@web-stories-wp/date';
  */
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
-import {
-  publisherLogoIds as fillerPublisherLogoIds,
-  rawPublisherLogos,
-} from '../dataUtils/formattedPublisherLogos';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
+import { groupTemplatesByTag } from '../testUtils';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
-  const [media, setMediaState] = useState(getMediaState());
+  const [media] = useState(getMediaState());
   const [settings, setSettingsState] = useState(getSettingsState());
   const [stories, setStoriesState] = useState(getStoriesState());
   const [templates, setTemplatesState] = useState(getTemplatesState());
   const [currentUser, setCurrentUser] = useState(getCurrentUserState());
+  const [publisherLogos, setPublisherLogosState] = useState(
+    getPublisherLogosState()
+  );
 
   const settingsApi = useMemo(
     () => ({
@@ -57,8 +57,6 @@ export default function ApiProviderFixture({ children }) {
   const mediaApi = useMemo(
     () => ({
       uploadMedia: jasmine.createSpy('uploadMedia'),
-      fetchMediaById: (newIds) =>
-        setMediaState((currentState) => fetchMediaById(newIds, currentState)),
     }),
     []
   );
@@ -86,19 +84,38 @@ export default function ApiProviderFixture({ children }) {
         ),
       fetchExternalTemplateById: (id) =>
         fetchExternalTemplateById(id, templates),
-      fetchRelatedTemplates: (currentTemplateId) =>
-        fetchRelatedTemplates(currentTemplateId, templates),
     }),
     [templates]
   );
 
   const usersApi = useMemo(
     () => ({
-      fetchCurrentUser: jasmine.createSpy('fetchCurrentUser'),
       toggleWebStoriesTrackingOptIn: () =>
         setCurrentUser(toggleOptInTracking(currentUser)),
     }),
     [currentUser]
+  );
+
+  const publisherLogosApi = useMemo(
+    () => ({
+      fetchPublisherLogos: () =>
+        setPublisherLogosState((currentState) =>
+          fetchPublisherLogos(currentState)
+        ),
+      addPublisherLogo: (publisherLogoId) =>
+        setPublisherLogosState((currentState) =>
+          addPublisherLogo(publisherLogoId, currentState)
+        ),
+      removePublisherLogo: (publisherLogoId) =>
+        setPublisherLogosState((currentState) =>
+          removePublisherLogo(publisherLogoId, currentState)
+        ),
+      setPublisherLogoAsDefault: (publisherLogoId) =>
+        setPublisherLogosState((currentState) =>
+          setPublisherLogoAsDefault(publisherLogoId, currentState)
+        ),
+    }),
+    []
   );
 
   const value = useMemo(
@@ -109,6 +126,7 @@ export default function ApiProviderFixture({ children }) {
         stories,
         templates,
         currentUser,
+        publisherLogos,
       },
       actions: {
         mediaApi,
@@ -116,6 +134,7 @@ export default function ApiProviderFixture({ children }) {
         storyApi,
         templateApi,
         usersApi,
+        publisherLogosApi,
       },
     }),
     [
@@ -129,6 +148,8 @@ export default function ApiProviderFixture({ children }) {
       storyApi,
       templateApi,
       usersApi,
+      publisherLogos,
+      publisherLogosApi,
     ]
   );
 
@@ -145,14 +166,7 @@ function getMediaState() {
     error: {},
     isLoading: false,
     newlyCreatedMediaIds: [],
-    mediaById: rawPublisherLogos,
   };
-}
-
-function fetchMediaById(newIds, currentState) {
-  const mediaState = { ...(currentState || getMediaState()) };
-  // TODO handle adding Ids
-  return mediaState;
 }
 
 function getSettingsState() {
@@ -160,8 +174,7 @@ function getSettingsState() {
     error: {},
     settingSaved: false,
     googleAnalyticsId: '',
-    publisherLogoIds: [],
-    activePublisherLogoId: fillerPublisherLogoIds[0],
+    usingLegacyAnalytics: false,
     adSensePublisherId: '',
     adSenseSlotId: '',
     adManagerSlotId: '',
@@ -179,17 +192,11 @@ function getCurrentUserState() {
 function fetchSettings(currentState) {
   const settingsState = currentState ? { ...currentState } : getSettingsState();
   settingsState.googleAnalyticsId = 'UA-000000-2';
-  settingsState.publisherLogoIds = fillerPublisherLogoIds.slice(0, 2);
   return settingsState;
 }
 
 function updateSettings(updates, currentState) {
-  const {
-    googleAnalyticsId,
-    publisherLogoIds,
-    publisherLogoIdToRemove,
-    publisherLogoToMakeDefault,
-  } = updates;
+  const { googleAnalyticsId } = updates;
   currentState.settingSaved = true;
 
   if (googleAnalyticsId !== undefined) {
@@ -197,26 +204,8 @@ function updateSettings(updates, currentState) {
       ...currentState,
       googleAnalyticsId,
     };
-  } else if (publisherLogoIds) {
-    return {
-      ...currentState,
-      publisherLogoIds: [
-        ...new Set([...currentState.publisherLogoIds, ...publisherLogoIds]),
-      ],
-    };
-  } else if (publisherLogoIdToRemove) {
-    return {
-      ...currentState,
-      publisherLogoIds: currentState.publisherLogoIds.filter(
-        (logoId) => logoId !== publisherLogoIdToRemove
-      ),
-    };
-  } else if (publisherLogoToMakeDefault) {
-    return {
-      ...currentState,
-      activePublisherLogoId: publisherLogoToMakeDefault,
-    };
   }
+
   return currentState;
 }
 
@@ -384,6 +373,7 @@ function getTemplatesState() {
 
       return acc;
     }, {}),
+    templatesByTag: groupTemplatesByTag(copiedTemplates),
     templatesOrderById: copiedTemplates.map(({ id }) => id),
     totalTemplates: copiedTemplates.length,
     totalPages: 1,
@@ -411,14 +401,89 @@ function toggleOptInTracking(currentUser) {
   };
 }
 
-function fetchRelatedTemplates(currentTemplateId, currentState) {
-  if (!currentState.templates || !currentTemplateId) {
-    return [];
-  }
+function getPublisherLogosState() {
+  return {
+    error: {},
+    isLoading: false,
+    publisherLogos: [],
+    settingSaved: false,
+  };
+}
 
-  return currentState.templatesOrderById
-    .filter((id) => id !== currentTemplateId) // Filter out the current/active template
-    .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids
-    .map((id) => currentState.templates[id]) // Map the ids to templates
-    .slice(0, Math.floor(Math.random() * 5) + 1); // Return between 1 and 5 templates
+function fetchPublisherLogos(currentState) {
+  return {
+    ...currentState,
+    isLoading: true,
+    settingSaved: false,
+    publisherLogos: [
+      {
+        id: 577,
+        src: 'https://picsum.photos/96',
+        title: 'dummy image 1',
+        active: true,
+      },
+      {
+        id: 584,
+        src: 'https://picsum.photos/97',
+        title: 'dummy image 2',
+        active: false,
+      },
+      {
+        id: 582,
+        src: 'https://picsum.photos/98',
+        title: 'dummy image 3',
+        active: false,
+      },
+      {
+        id: 581,
+        src: 'https://picsum.photos/99',
+        title: 'dummy image 4',
+        active: false,
+      },
+    ],
+  };
+}
+
+function addPublisherLogo(publisherLogoId, currentState) {
+  // todo: eventually support uploading new publisher logos.
+  return {
+    ...currentState,
+    isLoading: false,
+    settingSaved: true,
+  };
+}
+function removePublisherLogo(publisherLogoId, currentState) {
+  const wasDefault = currentState.publisherLogos.some(
+    ({ id, active }) => id === publisherLogoId && active
+  );
+
+  const newPublisherLogos = [...currentState.publisherLogos]
+    .filter(({ id }) => id !== publisherLogoId)
+    .map((publisherLogo, index) => {
+      publisherLogo.active = wasDefault ? 0 === index : publisherLogo.active;
+      return publisherLogo;
+    });
+
+  return {
+    ...currentState,
+    isLoading: false,
+    settingSaved: true,
+    publisherLogos: newPublisherLogos,
+  };
+}
+
+function setPublisherLogoAsDefault(publisherLogoId, currentState) {
+  const newPublisherLogos = [...currentState.publisherLogos].map(
+    (publisherLogo) => {
+      publisherLogo.active = publisherLogo.id === publisherLogoId;
+      return publisherLogo;
+    }
+  );
+
+  return {
+    ...currentState,
+    isLoading: false,
+    settingSaved: true,
+    publisherLogos: newPublisherLogos,
+  };
 }

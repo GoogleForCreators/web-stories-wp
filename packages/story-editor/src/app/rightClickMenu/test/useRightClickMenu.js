@@ -27,11 +27,6 @@ import { useCanvas } from '../../canvas';
 import { useStory } from '../../story';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 
-// TODO: #6154 remove when the `enableRightClickMenus` experiment is removed
-jest.mock('flagged', () => ({
-  useFeature: () => true,
-}));
-
 jest.mock('../../canvas', () => ({
   useCanvas: jest.fn(),
 }));

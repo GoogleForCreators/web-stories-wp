@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { AD_NETWORK_TYPE } from '../../constants';
+import { AD_NETWORK_TYPE, ARCHIVE_TYPE } from '../../constants';
 
 export const ACTION_TYPES = {
   UPDATE_SETTINGS_SUCCESS: 'update_settings_success',
@@ -28,14 +28,14 @@ export const ACTION_TYPES = {
 };
 
 export const defaultSettingsState = {
-  activePublisherLogoId: null,
   error: {},
   googleAnalyticsId: '',
+  usingLegacyAnalytics: false,
   adSensePublisherId: '',
   adSenseSlotId: '',
   adManagerSlotId: '',
   adNetwork: AD_NETWORK_TYPE.NONE,
-  publisherLogoIds: [],
+  archive: ARCHIVE_TYPE.DEFAULT,
   videoCache: false,
   settingSaved: false,
 };
@@ -61,20 +61,15 @@ function settingsReducer(state, action) {
     case ACTION_TYPES.UPDATE_SETTINGS_SUCCESS: {
       return {
         ...state,
-        activePublisherLogoId: action.payload.activePublisherLogoId,
         error: {},
         googleAnalyticsId: action.payload.googleAnalyticsId,
+        usingLegacyAnalytics: action.payload.usingLegacyAnalytics,
         adSensePublisherId: action.payload.adSensePublisherId,
         adSenseSlotId: action.payload.adSenseSlotId,
         adManagerSlotId: action.payload.adManagerSlotId,
         adNetwork: action.payload.adNetwork,
-        publisherLogoIds: [
-          ...new Set([
-            action.payload.activePublisherLogoId,
-            ...action.payload.publisherLogoIds,
-          ]),
-        ],
         videoCache: action.payload.videoCache,
+        archive: action.payload.archive,
       };
     }
 

@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
@@ -43,6 +38,7 @@ import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
 import MediaOptimizationSettings from './mediaOptimization';
 import VideoCacheSettings from './videoCache';
+import ArchiveSettings from './archive';
 
 const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
@@ -51,53 +47,66 @@ function EditorSettings() {
     fetchSettings,
     updateSettings,
     googleAnalyticsId,
+    usingLegacyAnalytics,
     adSensePublisherId,
     adSenseSlotId,
     adManagerSlotId,
     adNetwork,
-    fetchMediaById,
     uploadMedia,
-    activePublisherLogoId,
-    isMediaLoading,
-    mediaById,
     newlyCreatedMediaIds,
-    publisherLogoIds,
+    isMediaLoading,
     videoCache,
+    archive,
+    publisherLogos,
+    addPublisherLogo,
+    fetchPublisherLogos,
+    removePublisherLogo,
+    setPublisherLogoAsDefault,
   } = useApi(
     ({
       actions: {
         settingsApi: { fetchSettings, updateSettings },
-        mediaApi: { fetchMediaById, uploadMedia },
+        mediaApi: { uploadMedia },
+        publisherLogosApi: {
+          fetchPublisherLogos,
+          addPublisherLogo,
+          removePublisherLogo,
+          setPublisherLogoAsDefault,
+        },
       },
       state: {
         settings: {
           googleAnalyticsId,
+          usingLegacyAnalytics,
           adSensePublisherId,
           adSenseSlotId,
           adManagerSlotId,
           adNetwork,
-          publisherLogoIds,
-          activePublisherLogoId,
           videoCache,
+          archive,
         },
-        media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
+        media: { isLoading: isMediaLoading, newlyCreatedMediaIds },
+        publisherLogos: { publisherLogos },
       },
     }) => ({
       fetchSettings,
       updateSettings,
       googleAnalyticsId,
+      usingLegacyAnalytics,
       adSensePublisherId,
       adSenseSlotId,
       adManagerSlotId,
       adNetwork,
-      fetchMediaById,
       uploadMedia,
-      activePublisherLogoId,
       isMediaLoading,
-      mediaById,
       newlyCreatedMediaIds,
-      publisherLogoIds,
       videoCache,
+      archive,
+      fetchPublisherLogos,
+      addPublisherLogo,
+      removePublisherLogo,
+      setPublisherLogoAsDefault,
+      publisherLogos,
     })
   );
 
@@ -107,6 +116,7 @@ function EditorSettings() {
     maxUpload,
     maxUploadFormatted,
     allowedImageMimeTypes,
+    archiveURL,
   } = useConfig();
 
   const {
@@ -122,47 +132,32 @@ function EditorSettings() {
   } = useMediaOptimization();
 
   const [activeDialog, setActiveDialog] = useState(null);
-  const [activeLogo, setActiveLogo] = useState('');
+  const [logoToBeDeleted, setLogoToBeDeleted] = useState('');
   const [mediaError, setMediaError] = useState('');
-
-  const mediaIds = useMemo(() => Object.keys(mediaById), [mediaById]);
-  /**
-   * WP settings references publisher logos by ID.
-   * We must retrieve the media for those IDs from /media when present
-   * Summarized below:
-   * FETCH - fetch settings to know what IDs to load media for
-   * then fetch media when publisherLogoIds are in state with useEffect
-   * ADD - first upload new logo to media. use the new ID(s) to update settings.
-   * REMOVE - send ID to remove to settings. Not deleting media, just removing from logos.
-   */
 
   useEffect(() => {
     if (canManageSettings) {
       fetchSettings();
+      fetchPublisherLogos();
     }
-  }, [fetchSettings, canManageSettings]);
+  }, [fetchSettings, fetchPublisherLogos, canManageSettings]);
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
-      const updateObject = { publisherLogoIds: newlyCreatedMediaIds };
-
-      if (publisherLogoIds.filter((id) => id !== 0).length === 0) {
-        updateObject.publisherLogoToMakeDefault = newlyCreatedMediaIds[0];
+      for (const id of newlyCreatedMediaIds) {
+        addPublisherLogo(id);
       }
-
-      updateSettings(updateObject);
     }
-  }, [updateSettings, newlyCreatedMediaIds, publisherLogoIds]);
-
-  useEffect(() => {
-    if (publisherLogoIds.length > 0) {
-      fetchMediaById(publisherLogoIds);
-    }
-  }, [fetchMediaById, publisherLogoIds]);
+  }, [newlyCreatedMediaIds, addPublisherLogo]);
 
   const handleUpdateGoogleAnalyticsId = useCallback(
     (newGoogleAnalyticsId) =>
       updateSettings({ googleAnalyticsId: newGoogleAnalyticsId }),
+    [updateSettings]
+  );
+
+  const handleMigrateLegacyAnalytics = useCallback(
+    () => updateSettings({ usingLegacyAnalytics: false }),
     [updateSettings]
   );
 
@@ -282,70 +277,24 @@ function EditorSettings() {
     [maxUpload, maxUploadFormatted, uploadMedia, allowedImageMimeTypes]
   );
 
-  const handleRemoveLogo = useCallback((media) => {
+  const handleRemoveLogo = useCallback((publisherLogo) => {
     setActiveDialog(ACTIVE_DIALOG_REMOVE_LOGO);
-    setActiveLogo(media.id);
+    setLogoToBeDeleted(publisherLogo);
   }, []);
 
   const handleDialogConfirmRemoveLogo = useCallback(() => {
-    if (activeLogo === activePublisherLogoId) {
-      // find the next publisher logo to make default, there's cases where publisher logo ids have their media removed in the editor but the instance of them as a publisher logo is still present
-      // so we need to find the next available logo by making sure media exists for it as well.
-      const newDefaultLogoId = publisherLogoIds.reduce((acc, logoId) => {
-        if (logoId === activeLogo) {
-          return undefined;
-        }
-        const availableMedia = mediaIds.find(
-          (mediaId) => mediaId.toString() === logoId.toString()
-        );
-
-        if (availableMedia) {
-          return availableMedia;
-        }
-        return acc;
-      }, false);
-
-      updateSettings({
-        publisherLogoIdToRemove: activeLogo,
-        publisherLogoToMakeDefault: newDefaultLogoId,
-      });
-    } else {
-      updateSettings({ publisherLogoIdToRemove: activeLogo });
-    }
+    removePublisherLogo(logoToBeDeleted.id);
     setActiveDialog(null);
-  }, [
-    activeLogo,
-    activePublisherLogoId,
-    mediaIds,
-    publisherLogoIds,
-    updateSettings,
-  ]);
+  }, [logoToBeDeleted, removePublisherLogo]);
 
   const handleUpdateDefaultLogo = useCallback(
-    (media) => updateSettings({ publisherLogoToMakeDefault: media.id }),
-    [updateSettings]
+    (newDefaultLogo) => setPublisherLogoAsDefault(newDefaultLogo.id),
+    [setPublisherLogoAsDefault]
   );
 
   const isActiveRemoveLogoDialog = Boolean(
-    activeDialog === ACTIVE_DIALOG_REMOVE_LOGO && activeLogo
+    activeDialog === ACTIVE_DIALOG_REMOVE_LOGO && logoToBeDeleted
   );
-
-  const orderedPublisherLogos = useMemo(() => {
-    if (Object.keys(mediaById).length <= 0) {
-      return [];
-    }
-
-    return publisherLogoIds
-      .map((publisherLogoId) => {
-        if (mediaById[publisherLogoId]) {
-          return publisherLogoId === activePublisherLogoId
-            ? { ...mediaById[publisherLogoId], isDefault: true }
-            : mediaById[publisherLogoId];
-        }
-        return {}; // this is a safeguard against edge cases where a user has > 100 publisher logos, which is more than we're loading
-      })
-      .filter((logo) => logo?.id);
-  }, [activePublisherLogoId, publisherLogoIds, mediaById]);
 
   return (
     <Layout.Provider>
@@ -355,8 +304,10 @@ function EditorSettings() {
           <Main>
             {canManageSettings && (
               <GoogleAnalyticsSettings
-                handleUpdate={handleUpdateGoogleAnalyticsId}
                 googleAnalyticsId={googleAnalyticsId}
+                handleUpdateAnalyticsId={handleUpdateGoogleAnalyticsId}
+                usingLegacyAnalytics={usingLegacyAnalytics}
+                handleMigrateLegacyAnalytics={handleMigrateLegacyAnalytics}
                 siteKitStatus={siteKitStatus}
               />
             )}
@@ -365,7 +316,7 @@ function EditorSettings() {
                 onAddLogos={handleAddLogos}
                 onRemoveLogo={handleRemoveLogo}
                 onUpdateDefaultLogo={handleUpdateDefaultLogo}
-                publisherLogos={orderedPublisherLogos}
+                publisherLogos={publisherLogos}
                 canUploadFiles={canUploadFiles}
                 isLoading={isMediaLoading}
                 uploadError={mediaError}
@@ -390,6 +341,13 @@ function EditorSettings() {
               />
             )}
             {canManageSettings && (
+              <ArchiveSettings
+                archive={archive}
+                archiveURL={archiveURL}
+                updateSettings={updateSettings}
+              />
+            )}
+            {canManageSettings && (
               <AdManagement
                 updateSettings={updateSettings}
                 adNetwork={adNetwork}
@@ -403,6 +361,7 @@ function EditorSettings() {
         </Layout.Scrollable>
       </Wrapper>
 
+      {/* TODO: Remove this dialog, as it's not technically correct. */}
       <Dialog
         isOpen={isActiveRemoveLogoDialog}
         contentLabel={__(
