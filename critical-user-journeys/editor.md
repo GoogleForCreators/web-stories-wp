@@ -56,11 +56,11 @@
 |                                                                   | Align element to page                            | 🚨 **22.22%** *(2 / 9)*     |
 |                                                                   | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Rotate                                           | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | Selection integration                            | 🏆 **100.00%** *(7 / 7)*    |
+|                                                                   | Selection integration                            | 🛴 **85.71%** *(6 / 7)*     |
 |                                                                   | Set height and width                             | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | *[total]*                                        | 🚨 **43.33%** *(13 / 30)*   |
-| Creator can View and Modify Document Settings                     | Navigating without changes                       | 🚨 **0.00%** *(0 / 1)*      |
-|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 1)*      |
+|                                                                   | *[total]*                                        | 🚨 **40.00%** *(12 / 30)*   |
+| Creator can View and Modify Document Settings                     | Navigating without changes                       | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
 | Creator can View and Modify Document                              | Author                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can transform an element                                  | Snap to place                                    | 🏆 **100.00%** *(1 / 1)*    |
