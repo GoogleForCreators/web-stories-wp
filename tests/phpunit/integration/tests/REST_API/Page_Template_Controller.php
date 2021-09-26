@@ -83,7 +83,7 @@ class Page_Template_Controller extends Test_REST_TestCase {
 			3,
 			[
 				'post_status' => 'future',
-				'post_date'   => ( new DateTime( '+1day' ) )->format( '%Y-%m-%d %H:%M:%S' ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 				'post_type'   => $post_type,
 			]
