@@ -79,8 +79,6 @@ describe('Taxonomy', () => {
     await createNewStory();
     await goToAndExpandTaxonomyPanel();
 
-    // See that category made in another story is available here.
-    await expect(page).toMatchElement('label', { text: 'rock' });
     // Add some new categories.
     await addCategory('jazz', 'music genres');
     await addCategory('industrial', 'music genres');
@@ -93,8 +91,12 @@ describe('Taxonomy', () => {
     await page.reload();
 
     await goToAndExpandTaxonomyPanel();
-
+    // See that category made in another story is available here.
     await expect(page).not.toMatchElement(
+      'input[name="hierarchical_term_rock"][checked]'
+    );
+    // categories added are checked automatically.
+    await expect(page).toMatchElement(
       'input[name="hierarchical_term_funk"][checked]'
     );
     await expect(page).toMatchElement(
