@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -36,7 +36,8 @@
             "alt": "Abstract pattern with circles",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -26,
@@ -74,7 +75,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": -26,
@@ -109,7 +111,8 @@
             "alt": "Man in black leather jacket and black pants walking on street during daytime",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -149,7 +152,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [47, 8, 9]
+            "baseColor": [47, 8, 9],
+            "isExternal": true
           },
           "type": "image",
           "x": 129,
@@ -187,7 +191,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [104, 202, 202]
+            "baseColor": [104, 202, 202],
+            "isExternal": true
           },
           "type": "image",
           "x": 288,
@@ -500,7 +505,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "type": "image",
           "x": -0.5,
@@ -642,7 +648,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [50, 46, 48]
+            "baseColor": [50, 46, 48],
+            "isExternal": true
           },
           "controls": false,
           "loop": false,
@@ -940,7 +947,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "type": "image",
           "x": -41,
@@ -982,7 +990,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "type": "image",
           "width": 178,
@@ -1021,7 +1030,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "type": "image",
           "width": 96,
@@ -1194,7 +1204,8 @@
             "alt": "Timelapse photo of people passing the street",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -1331,7 +1342,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [83, 99, 194]
+            "baseColor": [83, 99, 194],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -1446,7 +1458,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [216, 251, 251]
+            "baseColor": [216, 251, 251],
+            "isExternal": true
           },
           "type": "image",
           "x": 311,
@@ -1484,7 +1497,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [12, 82, 80]
+            "baseColor": [12, 82, 80],
+            "isExternal": true
           },
           "type": "image",
           "x": 138,
@@ -1522,7 +1536,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": -23,
@@ -1606,7 +1621,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [45, 93, 93]
+            "baseColor": [45, 93, 93],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -1743,7 +1759,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [32, 79, 86]
+            "baseColor": [32, 79, 86],
+            "isExternal": true
           },
           "type": "image",
           "x": 22,
@@ -1913,7 +1930,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [58, 44, 53]
+            "baseColor": [58, 44, 53],
+            "isExternal": true
           },
           "type": "image",
           "x": -3,
@@ -2308,7 +2326,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [199, 203, 199]
+            "baseColor": [199, 203, 199],
+            "isExternal": true
           },
           "controls": false,
           "loop": false,
@@ -2580,7 +2599,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [43, 62, 52]
+            "baseColor": [43, 62, 52],
+            "isExternal": true
           },
           "type": "image",
           "x": 74,
@@ -2618,7 +2638,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 207, 189]
+            "baseColor": [218, 207, 189],
+            "isExternal": true
           },
           "type": "image",
           "x": 74,

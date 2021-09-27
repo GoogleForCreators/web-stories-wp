@@ -65,6 +65,15 @@ if ('true' === process.env.CI) {
 
 export const MEDIA_PER_PAGE = 20;
 
+function MediaUpload({ render: _render, onSelect }) {
+  const open = () => {
+    const image = { src: 'media1' };
+    onSelect(image);
+  };
+
+  return _render(open);
+}
+
 const DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
@@ -115,6 +124,7 @@ const DEFAULT_CONFIG = {
     timezone: 'America/New_York',
     weekStartsOn: 0,
   },
+  MediaUpload,
 };
 
 /**

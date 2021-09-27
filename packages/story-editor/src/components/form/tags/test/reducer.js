@@ -25,12 +25,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 0,
         value: '',
         tags: ['tag1'],
+        tagBuffer: null,
       };
       const action = { type: ACTIONS.UPDATE_VALUE, payload: 'potato' };
       const expectedState = {
         offset: 0,
         value: 'potato',
         tags: ['tag1'],
+        tagBuffer: null,
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -40,6 +42,7 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 0,
         value: '',
         tags: ['tag1'],
+        tagBuffer: null,
       };
       const action = {
         type: ACTIONS.UPDATE_VALUE,
@@ -48,7 +51,8 @@ describe('<Tags.Input /> Reducer', () => {
       const expectedState = {
         offset: 0,
         value: ' pizza pie',
-        tags: ['tag1', 'potato', 'tomato'],
+        tags: ['tag1'],
+        tagBuffer: ['tag1', 'potato', 'tomato'],
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -58,6 +62,7 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 0,
         value: '',
         tags: ['tag1'],
+        tagBuffer: null,
       };
       const action = {
         type: ACTIONS.UPDATE_VALUE,
@@ -66,7 +71,8 @@ describe('<Tags.Input /> Reducer', () => {
       const expectedState = {
         offset: 0,
         value: ' pizza   pie',
-        tags: ['tag1', 'potato', 'tomato'],
+        tags: ['tag1'],
+        tagBuffer: ['tag1', 'potato', 'tomato'],
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -76,6 +82,7 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 1,
         value: '',
         tags: ['tag1'],
+        tagBuffer: null,
       };
       const action = {
         type: ACTIONS.UPDATE_VALUE,
@@ -84,7 +91,8 @@ describe('<Tags.Input /> Reducer', () => {
       const expectedState = {
         offset: 1,
         value: ' pizza pie',
-        tags: ['potato', 'tomato', 'tag1'],
+        tags: ['tag1'],
+        tagBuffer: ['potato', 'tomato', 'tag1'],
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -101,7 +109,8 @@ describe('<Tags.Input /> Reducer', () => {
       const expectedState = {
         offset: 0,
         value: '',
-        tags: ['tag1', 'tag2'],
+        tags: ['tag1'],
+        tagBuffer: ['tag1', 'tag2'],
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -116,19 +125,24 @@ describe('<Tags.Input /> Reducer', () => {
       const expectedState = {
         offset: 0,
         value: '',
-        tags: ['tag1', 'tag two'],
+        tags: ['tag1'],
+        tagBuffer: ['tag1', 'tag two'],
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
 
-    it('returns the original state if the value is empty', () => {
+    it('returns the original state with the value reset if the value is empty', () => {
       const oldState = {
         offset: 0,
         value: '    ',
         tags: ['tag1'],
+        tagBuffer: null,
       };
       const action = { type: ACTIONS.SUBMIT_VALUE };
-      expect(reducer(oldState, action)).toStrictEqual(oldState);
+      expect(reducer(oldState, action)).toStrictEqual({
+        ...oldState,
+        value: '',
+      });
     });
 
     it('respects the offset when adding tags', () => {
@@ -136,12 +150,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 1,
         value: 'tag2',
         tags: ['tag1', 'tag3'],
+        tagBuffer: null,
       };
       const action = { type: ACTIONS.SUBMIT_VALUE };
       const expectedState = {
         offset: 1,
         value: '',
-        tags: ['tag1', 'tag2', 'tag3'],
+        tags: ['tag1', 'tag3'],
+        tagBuffer: ['tag1', 'tag2', 'tag3'],
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -153,12 +169,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 1,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       const action = { type: ACTIONS.REMOVE_TAG, payload: 'tag2' };
       const expectedState = {
         offset: 1,
         value: 'tag4',
-        tags: ['tag1', 'tag3'],
+        tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: ['tag1', 'tag3'],
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -167,6 +185,7 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 1,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       const action = { type: ACTIONS.REMOVE_TAG, payload: 'tag8' };
       const expectedState = oldState;
@@ -178,12 +197,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 3,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       let action = { type: ACTIONS.REMOVE_TAG };
       let expectedState = {
         offset: 3,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
 
@@ -191,12 +212,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 2,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       action = { type: ACTIONS.REMOVE_TAG };
       expectedState = {
         offset: 2,
         value: 'tag4',
-        tags: ['tag2', 'tag3'],
+        tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: ['tag2', 'tag3'],
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
 
@@ -204,12 +227,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 1,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       action = { type: ACTIONS.REMOVE_TAG };
       expectedState = {
         offset: 1,
         value: 'tag4',
-        tags: ['tag1', 'tag3'],
+        tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: ['tag1', 'tag3'],
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
 
@@ -217,12 +242,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 0,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       action = { type: ACTIONS.REMOVE_TAG };
       expectedState = {
         offset: 0,
         value: 'tag4',
-        tags: ['tag1', 'tag2'],
+        tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: ['tag1', 'tag2'],
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -234,12 +261,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 0,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       const action = { type: ACTIONS.INCREMENT_OFFSET };
       const expectedState = {
         offset: 1,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -249,12 +278,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 3,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       const action = { type: ACTIONS.INCREMENT_OFFSET };
       const expectedState = {
         offset: 3,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -266,12 +297,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 3,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       const action = { type: ACTIONS.DECREMENT_OFFSET };
       const expectedState = {
         offset: 2,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -281,12 +314,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 0,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       const action = { type: ACTIONS.DECREMENT_OFFSET };
       const expectedState = {
         offset: 0,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
@@ -298,12 +333,14 @@ describe('<Tags.Input /> Reducer', () => {
         offset: 3,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       const action = { type: ACTIONS.RESET_OFFSET };
       const expectedState = {
         offset: 0,
         value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
       };
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });

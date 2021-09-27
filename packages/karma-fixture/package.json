@@ -2,7 +2,7 @@
     "name": "@web-stories-wp/karma-fixture",
     "private": true,
     "engines": {
-        "node": ">= 15",
+        "node": ">= 16",
         "npm": "~7"
     },
     "main": "./src/index.js",
@@ -11,6 +11,6 @@
         "@web-stories-wp/react": "*"
     },
     "devDependencies": {
-       "@testing-library/react": "^12.0.0"
+       "@testing-library/react": "^12.1.0"
     }
 }

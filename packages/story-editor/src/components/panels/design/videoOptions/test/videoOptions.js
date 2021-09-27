@@ -25,12 +25,6 @@ import { screen } from '@testing-library/react';
 import VideoOptions from '../videoOptions';
 import { renderPanel } from '../../../shared/test/_utils';
 
-jest.mock('../../../../mediaPicker', () => ({
-  useMediaPicker: ({ onSelect }) => {
-    const image = { url: 'media1' };
-    return () => onSelect(image);
-  },
-}));
 jest.mock('../../../../../app/config', () => ({
   useConfig: jest.fn(() => ({
     capabilities: { hasUploadMediaAction: true },

@@ -35,7 +35,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Text, THEME_CONSTANTS, Toggle } from '@web-stories-wp/design-system';
 import { SearchInput } from '../../common';
 import { Container as SectionContainer } from '../../common/section';
-import { FontPreview } from '../../text';
+import FontPreview from './fontPreview';
 import { Pane as SharedPane } from '../shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';

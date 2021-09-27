@@ -147,6 +147,7 @@ export const Input = forwardRef(
       label,
       onBlur,
       onFocus,
+      hasFocus = false,
       suffix,
       unit = '',
       value,
@@ -158,7 +159,7 @@ export const Input = forwardRef(
   ) => {
     const inputId = useMemo(() => id || uuidv4(), [id]);
 
-    const [isFocused, setIsFocused] = useState(false);
+    const [isFocused, setIsFocused] = useState(hasFocus);
     const [hasBeenSelected, setHasBeenSelected] = useState(false);
 
     let displayedValue = value;

@@ -26,7 +26,7 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import { flattenFormData } from './utils';
+import { flattenFormData, getResourceFromAttachment } from './utils';
 import { MEDIA_FIELD } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
@@ -59,8 +59,8 @@ export function getMedia(
     apiPath = addQueryArgs(apiPath, { cache_bust: true });
   }
 
-  return apiFetch({ path: apiPath }).then(({ body, headers }) => ({
-    data: body,
+  return apiFetch({ path: apiPath }).then(({ body: attachments, headers }) => ({
+    data: attachments.map(getResourceFromAttachment),
     headers: {
       ...headers,
       totalItems: headers['X-WP-Total'],
@@ -90,7 +90,7 @@ export function uploadMedia(file, additionalData, media) {
     path: media,
     body: data,
     method: 'POST',
-  });
+  }).then((attachment) => getResourceFromAttachment(attachment));
 }
 /**
  * Update Existing media.

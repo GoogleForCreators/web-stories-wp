@@ -73,7 +73,9 @@ describe('Publisher logo', () => {
     uploadedFiles.push(logoTwoName);
   });
 
-  it('should be able to delete all except one logo', async () => {
+  // TODO(#9152): Fix flakey test.
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should be able to delete all except one logo', async () => {
     await visitSettings();
 
     // Upload publisher logo

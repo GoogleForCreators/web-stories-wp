@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -32,7 +32,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [94, 78, 69]
+            "baseColor": [94, 78, 69],
+            "isExternal": true
           }
         },
         {
@@ -269,7 +270,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [183, 177, 176]
+            "baseColor": [183, 177, 176],
+            "isExternal": true
           },
           "tracks": []
         },
@@ -477,7 +479,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [192, 160, 119]
+            "baseColor": [192, 160, 119],
+            "isExternal": true
           }
         },
         {
@@ -717,7 +720,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [177, 163, 156]
+            "baseColor": [177, 163, 156],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 0,
@@ -1124,7 +1128,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [183, 177, 176]
+            "baseColor": [183, 177, 176],
+            "isExternal": true
           },
           "tracks": []
         },
@@ -1358,7 +1363,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [71, 50, 34]
+            "baseColor": [71, 50, 34],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 0,
@@ -1751,7 +1757,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [148, 162, 202]
+            "baseColor": [148, 162, 202],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 0,
@@ -2146,7 +2153,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [18, 29, 35]
+            "baseColor": [18, 29, 35],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2442,7 +2450,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [15, 28, 31]
+            "baseColor": [15, 28, 31],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2832,7 +2841,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [46, 44, 44]
+            "baseColor": [46, 44, 44],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -3510,7 +3520,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [145, 133, 123]
+            "baseColor": [145, 133, 123],
+            "isExternal": true
           },
           "x": 62,
           "y": -4,
