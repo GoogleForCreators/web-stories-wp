@@ -24,39 +24,13 @@ import PropTypes from 'prop-types';
  */
 import { useCallback, useState } from '@wordpress/element';
 import { Button, Placeholder } from '@wordpress/components';
-import { BlockIcon, URLPopover } from '@wordpress/block-editor';
+import { BlockIcon } from '@wordpress/block-editor';
 import { __, sprintf } from '@wordpress/i18n';
-import { keyboardReturn } from '@wordpress/icons';
 /**
  * Internal dependencies
  */
 import StoryPicker from '../../components/storyPicker/storyPicker';
-
-// eslint-disable-next-line react/prop-types
-const InsertFromURLPopover = ({ src, onChange, onSubmit, onClose }) => (
-  <URLPopover onClose={onClose}>
-    <form
-      className="block-editor-media-placeholder__url-input-form"
-      data-testid="embed-placeholder-form"
-      onSubmit={onSubmit}
-    >
-      <input
-        className="block-editor-media-placeholder__url-input-field"
-        type="url"
-        aria-label={__('Story URL', 'web-stories')}
-        placeholder={__('Paste or type URL', 'web-stories')}
-        onChange={onChange}
-        value={src}
-      />
-      <Button
-        className="block-editor-media-placeholder__url-input-submit-button"
-        icon={keyboardReturn}
-        label={__('Embed', 'web-stories')}
-        type="submit"
-      />
-    </form>
-  </URLPopover>
-);
+import InsertFromURLPopover from './insertFromURLPopover';
 
 const EmbedPlaceholder = ({
   icon,
@@ -69,7 +43,7 @@ const EmbedPlaceholder = ({
   selectedStories = [],
   setSelectedStories,
 }) => {
-  const [src, setSrc] = useState(value);
+  const [url, setUrl] = useState(value);
   const [isURLInputVisible, setIsURLInputVisible] = useState(false);
   const [isStoryPickerOpen, setIsStoryPickerOpen] = useState(false);
 
@@ -81,12 +55,12 @@ const EmbedPlaceholder = ({
   const openURLInput = () => setIsURLInputVisible(true);
   const closeURLInput = () => setIsURLInputVisible(false);
 
-  const onChangeSrc = (event) => {
-    setSrc(event.target.value);
+  const onChangeUrl = (event) => {
+    setUrl(event.target.value);
     onChange(event);
   };
 
-  const onSubmitSrc = (event) => {
+  const onSubmitUrl = (event) => {
     closeURLInput();
     onSubmit(event);
   };
@@ -123,9 +97,9 @@ const EmbedPlaceholder = ({
             </Button>
             {isURLInputVisible && (
               <InsertFromURLPopover
-                src={src}
-                onChange={onChangeSrc}
-                onSubmit={onSubmitSrc}
+                url={url}
+                onChange={onChangeUrl}
+                onSubmit={onSubmitUrl}
                 onClose={closeURLInput}
               />
             )}
