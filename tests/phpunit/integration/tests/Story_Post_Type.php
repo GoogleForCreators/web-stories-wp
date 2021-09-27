@@ -17,6 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Google\Web_Stories\Settings;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
  */
@@ -45,6 +47,13 @@ class Story_Post_Type extends TestCase {
 	protected $instance;
 
 	/**
+	 * Archive page ID.
+	 *
+	 * @var int
+	 */
+	protected static $archive_page_id;
+
+	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
 	public static function wpSetUpBeforeClass( $factory ) {
@@ -70,7 +79,10 @@ class Story_Post_Type extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
+
+		self::$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 	}
 
 	public function set_up() {
@@ -160,5 +172,228 @@ class Story_Post_Type extends TestCase {
 		);
 
 		$this->assertSame( '', $post->post_title );
+	}
+
+	/**
+	 * @covers ::get_has_archive
+	 */
+	public function test_get_has_archive_default() {
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$actual          = $this->call_private_method( $story_post_type, 'get_has_archive' );
+		$this->assertTrue( $actual );
+	}
+
+	/**
+	 * @covers ::get_has_archive
+	 */
+	public function test_get_has_archive_disabled() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'disabled' );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$actual          = $this->call_private_method( $story_post_type, 'get_has_archive' );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+
+		$this->assertFalse( $actual );
+	}
+
+	/**
+	 * @covers ::get_has_archive
+	 */
+	public function test_get_has_archive_custom_but_no_page() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$actual          = $this->call_private_method( $story_post_type, 'get_has_archive' );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+
+		$this->assertTrue( $actual );
+	}
+
+	/**
+	 * @covers ::get_has_archive
+	 */
+	public function test_get_has_archive_custom_but_invalid_page() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$actual          = $this->call_private_method( $story_post_type, 'get_has_archive' );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		$this->assertTrue( $actual );
+	}
+
+	/**
+	 * @covers ::get_has_archive
+	 */
+	public function test_get_has_archive_custom() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$actual          = $this->call_private_method( $story_post_type, 'get_has_archive' );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		$this->assertIsString( $actual );
+		$this->assertSame( urldecode( get_page_uri( self::$archive_page_id ) ), $actual );
+	}
+
+	/**
+	 * @covers ::get_has_archive
+	 */
+	public function test_get_has_archive_custom_not_published() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+
+		wp_update_post(
+			[
+				'ID'          => self::$archive_page_id,
+				'post_status' => 'draft',
+			]
+		);
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$actual          = $this->call_private_method( $story_post_type, 'get_has_archive' );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		wp_update_post(
+			[
+				'ID'          => self::$archive_page_id,
+				'post_status' => 'publish',
+			]
+		);
+
+		$this->assertTrue( $actual );
+	}
+
+	/**
+	 * @covers ::pre_get_posts
+	 */
+	public function test_pre_get_posts_default_archive() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'default' );
+
+		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$this->go_to( $archive_link );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+
+		$this->assertQueryTrue( 'is_archive', 'is_post_type_archive' );
+	}
+
+	/**
+	 * @covers ::pre_get_posts
+	 */
+	public function test_pre_get_posts_custom_archive() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+
+		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$this->go_to( $archive_link );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		$this->assertQueryTrue( 'is_page', 'is_singular' );
+	}
+
+	/**
+	 * @covers ::pre_get_posts
+	 */
+	public function test_pre_get_posts_custom_archive_not_published() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+
+		wp_update_post(
+			[
+				'ID'          => self::$archive_page_id,
+				'post_status' => 'draft',
+			]
+		);
+
+		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$this->go_to( $archive_link );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		wp_update_post(
+			[
+				'ID'          => self::$archive_page_id,
+				'post_status' => 'publish',
+			]
+		);
+
+		$this->assertQueryTrue( 'is_archive', 'is_post_type_archive' );
+	}
+
+	/**
+	 * @covers ::filter_display_post_states
+	 */
+	public function test_filter_display_post_states() {
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$actual          = $this->call_private_method( $story_post_type, 'filter_display_post_states', [ [], get_post( self::$archive_page_id ) ] );
+
+		$this->assertSame( [], $actual );
+	}
+
+	/**
+	 * @covers ::filter_display_post_states
+	 */
+	public function test_filter_display_post_states_custom_archive() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$actual          = $this->call_private_method( $story_post_type, 'filter_display_post_states', [ [], get_post( self::$archive_page_id ) ] );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		$this->assertEqualSetsWithIndex(
+			[
+				'web_stories_archive_page' => __( 'Web Stories Archive Page', 'web-stories' ),
+			],
+			$actual
+		);
+	}
+	/**
+	 * @covers ::filter_display_post_states
+	 */
+	public function test_filter_display_post_states_custom_archive_not_published() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+
+		wp_update_post(
+			[
+				'ID'          => self::$archive_page_id,
+				'post_status' => 'draft',
+			]
+		);
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$actual          = $this->call_private_method( $story_post_type, 'filter_display_post_states', [ [], get_post( self::$archive_page_id ) ] );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		wp_update_post(
+			[
+				'ID'          => self::$archive_page_id,
+				'post_status' => 'publish',
+			]
+		);
+
+		$this->assertSame( [], $actual );
 	}
 }

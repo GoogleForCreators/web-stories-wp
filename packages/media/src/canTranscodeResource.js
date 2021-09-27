@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,15 @@
  * limitations under the License.
  */
 
-export { default as FontPreview } from './fontPreview';
+/**
+ * Ascertain if a resource can be transcoded in it's current state.
+ *
+ * @param {import('@web-stories-wp/media').Resource} resource The resource.
+ * @return {boolean} If the current resource can be transcoded.
+ */
+function canTranscodeResource(resource) {
+  const { isTranscoding, isMuting, isTrimming, isExternal, local } =
+    resource || {};
+  return !local && !isExternal && !isTranscoding && !isTrimming && !isMuting;
+}
+export default canTranscodeResource;
