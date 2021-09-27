@@ -29,6 +29,7 @@ namespace Google\Web_Stories\Traits;
 use WP_Post_Type;
 use WP_REST_Controller;
 use WP_REST_Posts_Controller;
+use WP_Rewrite;
 
 /**
  * Trait Post_Type
@@ -37,22 +38,22 @@ use WP_REST_Posts_Controller;
  */
 trait Post_Type {
 	/**
-	 * Get rest base name based on the post type slug.
+	 * Get REST base name based on the post type slug.
 	 *
 	 * @since 1.7.0
 	 *
 	 * @param string $slug The post type slug.
 	 *
-	 * @return string Rest base.
+	 * @return string REST base.
 	 */
-	protected function get_post_type_rest_base( string $slug ) {
+	protected function get_post_type_rest_base( string $slug ): string {
 		$post_type_obj = get_post_type_object( $slug );
 		$rest_base     = $slug;
 		if ( $post_type_obj instanceof WP_Post_Type ) {
 			$rest_base = ( ! empty( $post_type_obj->rest_base ) && is_string( $post_type_obj->rest_base ) ) ? $post_type_obj->rest_base : $post_type_obj->name;
 		}
 
-		return $rest_base;
+		return (string) $rest_base;
 	}
 
 	/**
@@ -110,7 +111,7 @@ trait Post_Type {
 	 *
 	 * @return string
 	 */
-	protected function get_post_type_label( string $slug, string $label ) {
+	protected function get_post_type_label( string $slug, string $label ): string {
 		$post_type_obj = get_post_type_object( $slug );
 		$name          = '';
 
@@ -134,7 +135,7 @@ trait Post_Type {
 	 *
 	 * @return bool
 	 */
-	protected function get_post_type_has_archive( string $slug ) {
+	protected function get_post_type_has_archive( string $slug ): bool {
 		$post_type_obj = get_post_type_object( $slug );
 		if ( ! $post_type_obj instanceof WP_Post_Type ) {
 			return false;

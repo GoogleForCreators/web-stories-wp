@@ -30,6 +30,7 @@ import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
 import useUsersApi from './useUserApi';
 import useSettingsApi from './useSettingsApi';
+import usePagesApi from './usePagesApi';
 import usePublisherLogosApi from './usePublisherLogosApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
@@ -59,6 +60,10 @@ export default function ApiProvider({ children }) {
     globalSettingsApi: api.settings,
   });
 
+  const { api: pagesApi } = usePagesApi(dataAdapter, {
+    pagesApi: api.pages,
+  });
+
   const { publisherLogos, api: publisherLogosApi } = usePublisherLogosApi(
     dataAdapter,
     {
@@ -82,6 +87,7 @@ export default function ApiProvider({ children }) {
         storyApi,
         templateApi,
         usersApi,
+        pagesApi,
         publisherLogosApi,
       },
     }),
@@ -96,6 +102,7 @@ export default function ApiProvider({ children }) {
       storyApi,
       templateApi,
       usersApi,
+      pagesApi,
       publisherLogos,
       publisherLogosApi,
     ]

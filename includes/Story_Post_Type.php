@@ -29,13 +29,18 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\Traits\Post_Type;
 use WP_Post;
+use WP_Query;
 use WP_Site;
 
 /**
  * Class Story_Post_Type.
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class Story_Post_Type extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
+	use Post_Type;
 
 	/**
 	 * The slug of the stories post type.
@@ -87,6 +92,11 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 
 		add_action( 'add_option_' . Settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
 		add_action( 'update_option_' . Settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
+		add_action( 'add_option_' . Settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
+		add_action( 'update_option_' . Settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
+
+		add_filter( 'display_post_states', [ $this, 'filter_display_post_states' ], 10, 2 );
+		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
 	}
 
 	/**
@@ -121,8 +131,6 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return \WP_Post_Type|\WP_Error
 	 */
 	public function register_post_type() {
-		$has_archive = 'default' === get_option( Settings::SETTING_NAME_ARCHIVE, 'default' );
-
 		return register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -174,9 +182,10 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 				'rewrite'               => [
 					'slug'       => self::REWRITE_SLUG,
 					'with_front' => false,
+					'feeds'      => true,
 				],
 				'public'                => true,
-				'has_archive'           => $has_archive,
+				'has_archive'           => $this->get_has_archive(),
 				'exclude_from_search'   => true,
 				'show_ui'               => true,
 				'show_in_rest'          => true,
@@ -339,5 +348,91 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 			$this->register_post_type();
 			flush_rewrite_rules( false );
 		}
+	}
+
+	/**
+	 * Determines whether the post type should have an archive or not.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return bool|string Whether the post type should have an archive, or archive slug.
+	 */
+	private function get_has_archive() {
+		$archive_page_option    = get_option( Settings::SETTING_NAME_ARCHIVE );
+		$custom_archive_page_id = (int) get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		$has_archive            = true;
+
+		if ( 'disabled' === $archive_page_option ) {
+			$has_archive = false;
+		} elseif (
+			'custom' === $archive_page_option &&
+			$custom_archive_page_id &&
+			'publish' === get_post_status( $custom_archive_page_id )
+		) {
+			$uri = get_page_uri( $custom_archive_page_id );
+			if ( $uri ) {
+				$has_archive = urldecode( $uri );
+			}
+		}
+
+		return $has_archive;
+	}
+
+	/**
+	 * Modifies the current query to set up the custom archive page.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param WP_Query $query Current query instance, passed by reference.
+	 * @return void
+	 */
+	public function pre_get_posts( WP_Query $query ) {
+		if ( ! is_string( $this->get_has_archive() ) ) {
+			return;
+		}
+
+		if ( $query->is_admin || ! $query->is_main_query() ) {
+			return;
+		}
+
+		if ( ! $query->is_post_type_archive( self::POST_TYPE_SLUG ) ) {
+			return;
+		}
+
+		$custom_archive_page_id = (int) get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		$query->set( 'page_id', $custom_archive_page_id );
+		$query->set( 'post_type', 'page' );
+		$query->is_post_type_archive = false;
+		$query->is_archive           = false;
+		$query->is_singular          = true;
+		$query->is_page              = true;
+	}
+
+	/**
+	 * Filters the default post display states used in the posts list table.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string[]|mixed $post_states An array of post display states.
+	 * @param WP_Post        $post        The current post object.
+	 * @return string[]|mixed Filtered post display states.
+	 */
+	public function filter_display_post_states( $post_states, WP_Post $post ) {
+		if ( ! is_array( $post_states ) ) {
+			return $post_states;
+		}
+
+		if ( ! is_string( $this->get_has_archive() ) ) {
+			return $post_states;
+		}
+
+		$custom_archive_page_id = (int) get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		if ( $post->ID === $custom_archive_page_id ) {
+			$post_states['web_stories_archive_page'] = __( 'Web Stories Archive Page', 'web-stories' );
+		}
+
+		return $post_states;
 	}
 }

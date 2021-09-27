@@ -336,9 +336,9 @@ class Experiments extends Service_Base {
 			 * Creation date: 2021-09-06
 			 */
 			[
-				'name'        => 'disableArchive',
+				'name'        => 'archivePageCustomization',
 				'label'       => __( 'Archive Page', 'web-stories' ),
-				'description' => __( 'Allow disabling the Web Stories archive page', 'web-stories' ),
+				'description' => __( 'Allow Web Stories archive page customization', 'web-stories' ),
 				'group'       => 'general',
 			],
 			/**
