@@ -38,7 +38,6 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT_INTERVAL;
     fixture = new Fixture();
-    fixture.setFlags({ enableSmartTextColor: true });
     await fixture.render();
   });
 
@@ -183,7 +182,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     it('should add text color based on background', async () => {
       // Enable the smart colors first.
       await fixture.editor.library.textTab.click();
-      const toggle = fixture.screen.getByRole('checkbox', { name: 'Use auto styled text' });
+      const toggle = fixture.screen.getByRole('checkbox', {
+        name: 'Use auto styled text',
+      });
       await fixture.events.click(toggle);
 
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));

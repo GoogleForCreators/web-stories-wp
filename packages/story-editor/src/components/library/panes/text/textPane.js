@@ -33,10 +33,12 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { Text, THEME_CONSTANTS, Toggle } from '@web-stories-wp/design-system';
-import { Section, SearchInput } from '../../common';
+import { SearchInput } from '../../common';
+import { Container as SectionContainer } from '../../common/section';
 import { FontPreview } from '../../text';
 import { Pane as SharedPane } from '../shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
+import useLibrary from '../../useLibrary';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
@@ -68,9 +70,13 @@ const SmartColorToggle = styled.div`
 function TextPane(props) {
   const paneRef = useRef();
   const [, forceUpdate] = useState();
-  const [useSmartColor, setUseSmartColor] = useState(false);
 
-  const { showTextAndShapesSearchInput, enableSmartTextColor } = useFeatures();
+  const { showTextAndShapesSearchInput } = useFeatures();
+
+  const { useSmartColor, setUseSmartColor } = useLibrary((state) => ({
+    useSmartColor: state.state.useSmartColor,
+    setUseSmartColor: state.actions.setUseSmartColor,
+  }));
 
   const { getPosition, insertPreset } = useInsertPreset({ useSmartColor });
   const { generateCanvasFromPage } = usePageAsCanvas();
@@ -85,7 +91,7 @@ function TextPane(props) {
 
   const handleToggleClick = useCallback(() => {
     setUseSmartColor((currentValue) => !currentValue);
-  }, []);
+  }, [setUseSmartColor]);
 
   const toggleId = useMemo(() => `toggle_auto_color_${uuidv4()}`, []);
   return (
@@ -113,11 +119,8 @@ function TextPane(props) {
           onChange={handleToggleClick}
         />
       </SmartColorToggle>
-      <Section
-        title={__('Presets', 'web-stories')}
-        onPointerOver={() =>
-          enableSmartTextColor && useSmartColor && generateCanvasFromPage()
-        }
+      <SectionContainer
+        onPointerOver={() => useSmartColor && generateCanvasFromPage()}
       >
         <GridContainer>
           {PRESETS.map(({ title, element }) => (
@@ -130,7 +133,7 @@ function TextPane(props) {
             />
           ))}
         </GridContainer>
-      </Section>
+      </SectionContainer>
       {paneRef.current && <TextSetsPane paneRef={paneRef} />}
     </Pane>
   );
