@@ -60,16 +60,19 @@ async function loadTemplate(title, imageBaseUrl) {
       }),
     })),
 
-    postersByPage: data.default.pages.map((page, i) => {
+    postersByPage: data.default.pages.reduce((memo, _, i) => {
       const srcPath = `${imageBaseUrl}images/templates/${
         data.default.slug
       }/posters/${i + 1}`;
       return {
-        webp: `${srcPath}.webp`,
-        png: `${srcPath}.png`,
-        type: data.default.pages[i].pageTemplateType,
+        ...memo,
+        [i]: {
+          webp: `${srcPath}.webp`,
+          png: `${srcPath}.png`,
+          type: data.default.pages[i].pageTemplateType,
+        },
       };
-    }),
+    }, {}),
   };
 
   return {
