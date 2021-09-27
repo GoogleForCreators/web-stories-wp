@@ -31,24 +31,10 @@ export default async function ({ cdnURL }) {
   };
 
   return templates.map((template, index) => {
-    const postersByPage = template.pages.reduce((memo, _, i) => {
-      const srcPath = `${cdnURL}images/templates/${template.slug}/posters/${
-        i + 1
-      }`;
-      return {
-        ...memo,
-        [i]: {
-          webp: `${srcPath}.webp`,
-          png: `${srcPath}.png`,
-        },
-      };
-    }, {});
-
     return {
       id: index + 1,
       ...globalConfig,
       ...template,
-      postersByPage,
     };
   });
 }
