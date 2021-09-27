@@ -199,8 +199,8 @@ class Discovery extends TestCase {
 		delete_option( Settings::SETTING_NAME_ARCHIVE );
 		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
-		$this->assertContains( '<link rel="alternate"', $output );
-		$this->assertContains( get_bloginfo( 'name' ), $output );
+		$this->assertStringContainsString( '<link rel="alternate"', $output );
+		$this->assertStringContainsString( get_bloginfo( 'name' ), $output );
 	}
 
 
