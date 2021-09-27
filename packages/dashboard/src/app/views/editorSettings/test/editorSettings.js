@@ -194,14 +194,6 @@ describe('Editor Settings: <Editor Settings />', function () {
 
     fireEvent.click(DeleteFileButton);
 
-    const DeleteDialog = screen.getByRole('dialog');
-    expect(DeleteDialog).toBeInTheDocument();
-
-    const ConfirmDeleteButton = within(DeleteDialog).getByText('Delete Logo');
-    expect(ConfirmDeleteButton).toBeInTheDocument();
-
-    fireEvent.click(ConfirmDeleteButton);
-
     expect(mockRemovePublisherLogo).toHaveBeenCalledTimes(1);
   });
 

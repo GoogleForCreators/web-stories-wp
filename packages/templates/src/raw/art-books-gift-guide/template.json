@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -582,7 +582,8 @@
             "alt": "Cover of the book: Peter Beard",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 42,
@@ -769,7 +770,8 @@
             "alt": "Cover of the book: Vogue and The Metropolitan Museum of Art Costume Institute: Parties,  Exhibitions, People by Hamish Bowles",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 200,
@@ -1365,7 +1367,8 @@
             "alt": "Cover of the book: Breaking Ground: Architecture by Women: Hall, Jane",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 43,
@@ -1401,7 +1404,8 @@
             "alt": "Cover of the book: The New Black Vanguard",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 200,
@@ -1656,7 +1660,8 @@
             "alt": "Illustration of a photo frame",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -25,
@@ -1696,7 +1701,8 @@
             "alt": "Illustration of a photo frame",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 120,
@@ -1733,7 +1739,8 @@
             "alt": "Illustration of a photo frame",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 82,
@@ -1885,7 +1892,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [200, 127, 97]
+            "baseColor": [200, 127, 97],
+            "isExternal": true
           },
           "width": 235,
           "height": 374,
@@ -2161,7 +2169,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [73, 103, 51]
+            "baseColor": [73, 103, 51],
+            "isExternal": true
           },
           "x": 104,
           "y": 13,
@@ -2815,7 +2824,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [41, 51, 59]
+            "baseColor": [41, 51, 59],
+            "isExternal": true
           },
           "x": 20,
           "y": 119,
@@ -2885,7 +2895,8 @@
             "alt": "Woman in black blazer using macbook pro",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 196,
           "height": 248,

@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -38,7 +38,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [165, 154, 137]
+            "baseColor": [165, 154, 137],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": {
@@ -266,7 +267,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [184, 184, 185]
+            "baseColor": [184, 184, 185],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } },
@@ -491,7 +493,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [77, 87, 93]
+            "baseColor": [77, 87, 93],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -932,7 +935,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [56, 56, 56]
+            "baseColor": [56, 56, 56],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } },
@@ -1167,7 +1171,8 @@
             "isPlaceholder": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [53, 54, 63]
+            "baseColor": [53, 54, 63],
+            "isExternal": true
           },
           "controls": false,
           "loop": true,
@@ -1882,7 +1887,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [196, 196, 196]
+            "baseColor": [196, 196, 196],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } },
@@ -2118,7 +2124,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [125, 108, 86]
+            "baseColor": [125, 108, 86],
+            "isExternal": true
           },
           "controls": false,
           "loop": true,
@@ -2997,7 +3004,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [114, 114, 114]
+            "baseColor": [114, 114, 114],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.5 } },
@@ -3227,7 +3235,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [43, 36, 26]
+            "baseColor": [43, 36, 26],
+            "isExternal": true
           },
           "tracks": [],
           "loop": true
@@ -3293,7 +3302,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [46, 46, 46]
+            "baseColor": [46, 46, 46],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } },
@@ -3518,7 +3528,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [192, 183, 178]
+            "baseColor": [192, 183, 178],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3772,7 +3783,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [103, 103, 103]
+            "baseColor": [103, 103, 103],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } },
@@ -4078,7 +4090,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [43, 57, 53]
+            "baseColor": [43, 57, 53],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 47,
@@ -4111,7 +4124,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [22, 24, 23]
+            "baseColor": [22, 24, 23],
+            "isExternal": true
           },
           "x": 170,
           "y": 357,
