@@ -69,7 +69,6 @@ async function loadTemplate(title, imageBaseUrl) {
         [i]: {
           webp: `${srcPath}.webp`,
           png: `${srcPath}.png`,
-          type: data.default.pages[i].pageTemplateType,
         },
       };
     }, {}),
