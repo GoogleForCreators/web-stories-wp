@@ -19,13 +19,12 @@
  */
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import useApi from '../../api/useApi';
-import { Dialog, Layout } from '../../../components';
+import { Layout } from '../../../components';
 import { MIN_IMG_WIDTH, MIN_IMG_HEIGHT } from '../../../constants';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
@@ -39,8 +38,6 @@ import TelemetrySettings from './telemetry';
 import MediaOptimizationSettings from './mediaOptimization';
 import VideoCacheSettings from './videoCache';
 import ArchiveSettings from './archive';
-
-const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
 function EditorSettings() {
   const {
@@ -131,8 +128,6 @@ function EditorSettings() {
     mediaOptimization,
   } = useMediaOptimization();
 
-  const [activeDialog, setActiveDialog] = useState(null);
-  const [logoToBeDeleted, setLogoToBeDeleted] = useState('');
   const [mediaError, setMediaError] = useState('');
 
   useEffect(() => {
@@ -277,23 +272,16 @@ function EditorSettings() {
     [maxUpload, maxUploadFormatted, uploadMedia, allowedImageMimeTypes]
   );
 
-  const handleRemoveLogo = useCallback((publisherLogo) => {
-    setActiveDialog(ACTIVE_DIALOG_REMOVE_LOGO);
-    setLogoToBeDeleted(publisherLogo);
-  }, []);
-
-  const handleDialogConfirmRemoveLogo = useCallback(() => {
-    removePublisherLogo(logoToBeDeleted.id);
-    setActiveDialog(null);
-  }, [logoToBeDeleted, removePublisherLogo]);
+  const handleRemoveLogo = useCallback(
+    (publisherLogo) => {
+      removePublisherLogo(publisherLogo.id);
+    },
+    [removePublisherLogo]
+  );
 
   const handleUpdateDefaultLogo = useCallback(
     (newDefaultLogo) => setPublisherLogoAsDefault(newDefaultLogo.id),
     [setPublisherLogoAsDefault]
-  );
-
-  const isActiveRemoveLogoDialog = Boolean(
-    activeDialog === ACTIVE_DIALOG_REMOVE_LOGO && logoToBeDeleted
   );
 
   return (
@@ -360,27 +348,6 @@ function EditorSettings() {
           </Main>
         </Layout.Scrollable>
       </Wrapper>
-
-      {/* TODO: Remove this dialog, as it's not technically correct. */}
-      <Dialog
-        isOpen={isActiveRemoveLogoDialog}
-        contentLabel={__(
-          'Dialog to confirm removing a publisher logo',
-          'web-stories'
-        )}
-        title={__('Are you sure you want to remove this logo?', 'web-stories')}
-        onClose={() => setActiveDialog(null)}
-        secondaryText={__('Cancel', 'web-stories')}
-        onPrimary={handleDialogConfirmRemoveLogo}
-        primaryText={__('Delete Logo', 'web-stories')}
-      >
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {__(
-            'The logo will be removed from any stories that currently use it as their publisher logo.',
-            'web-stories'
-          )}
-        </Text>
-      </Dialog>
     </Layout.Provider>
   );
 }
