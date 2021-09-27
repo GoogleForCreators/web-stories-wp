@@ -44,7 +44,7 @@ const useTemplateApi = (dataAdapter, config) => {
 
     const reshapedTemplates = (await getAllTemplates({ cdnURL }))
       .map((template) => {
-        const reshapedTemplate = reshapeTemplateObject(template, cdnURL);
+        const reshapedTemplate = reshapeTemplateObject(template);
 
         reshapedTemplate.tags.forEach((tag) => {
           if (templatesByTag[tag]) {
