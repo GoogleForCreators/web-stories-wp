@@ -39,12 +39,14 @@ class Tag_Taxonomy extends Taxonomy_Base {
 	 * @var string
 	 */
 	protected $taxonomy_slug = 'web_story_tag';
+
 	/**
 	 * Post type.
 	 *
 	 * @var string
 	 */
 	protected $taxonomy_post_type = Story_Post_Type::POST_TYPE_SLUG;
+
 	/**
 	 * Taxonomy args.
 	 *

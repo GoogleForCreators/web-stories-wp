@@ -212,7 +212,7 @@ class Editor extends Service_Base {
 
 		wp_enqueue_script(
 			self::AMP_VALIDATOR_SCRIPT_HANDLE,
-			'https://cdn.ampproject.org/v0/validator.js',
+			'https://cdn.ampproject.org/v0/validator_wasm.js',
 			[],
 			WEBSTORIES_VERSION,
 			true

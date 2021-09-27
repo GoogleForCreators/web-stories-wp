@@ -31,6 +31,11 @@ import LinkPanel from '../link';
 
 jest.mock('../../../../../elements');
 
+function MediaUpload({ render }) {
+  const open = jest.fn();
+  return render(open);
+}
+
 function arrange(selectedElements) {
   const configValue = {
     capabilities: {
@@ -43,6 +48,7 @@ function arrange(selectedElements) {
       'image/jpg',
       'image/gif',
     ],
+    MediaUpload,
   };
 
   const canvasContext = {
