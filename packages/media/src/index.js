@@ -32,6 +32,7 @@ export { default as getFirstFrameOfVideo } from './getFirstFrameOfVideo';
 export { default as getImageDimensions } from './getImageDimensions';
 export { default as getVideoDimensions } from './getVideoDimensions';
 export { default as getVideoLength } from './getVideoLength';
+export { default as getVideoLengthDisplay } from './getVideoLengthDisplay';
 export { default as getResourceSize } from './getResourceSize';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
 export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
