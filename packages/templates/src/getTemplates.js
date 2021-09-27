@@ -59,6 +59,20 @@ async function loadTemplate(title, imageBaseUrl) {
         return elem;
       }),
     })),
+
+    postersByPage: data.default.pages.reduce((memo, _, i) => {
+      const srcPath = `${imageBaseUrl}images/templates/${
+        data.default.slug
+      }/posters/${i + 1}`;
+      return {
+        ...memo,
+        [i]: {
+          webp: `${srcPath}.webp`,
+          png: `${srcPath}.png`,
+          type: data.default.pages[i].pageTemplateType,
+        },
+      };
+    }, {}),
   };
 
   return {
