@@ -70,6 +70,23 @@ export function getMedia(
 }
 
 /**
+ * Get media by ID.
+ *
+ * @param {number} mediaId Media ID.
+ * @param {Object} media   Media object.
+ * @return {Promise} Media object promise.
+ */
+export function getMediaById(mediaId, media) {
+  const path = addQueryArgs(`${media}${mediaId}/`, {
+    context: 'edit',
+    _web_stories_envelope: true,
+    _fields: MEDIA_FIELD,
+  });
+
+  return apiFetch({ path });
+}
+
+/**
  * Upload file to via REST API.
  *
  * @param {File}    file           Media File to Save.
