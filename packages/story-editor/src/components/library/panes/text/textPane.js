@@ -39,6 +39,7 @@ import { FontPreview } from '../../text';
 import { Pane as SharedPane } from '../shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
+import Tooltip from '../../../tooltip';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
@@ -112,12 +113,19 @@ function TextPane(props) {
         >
           {__('Use auto styled text', 'web-stories')}
         </Text>
-        <Toggle
-          id={toggleId}
-          name={toggleId}
-          checked={useSmartColor}
-          onChange={handleToggleClick}
-        />
+        <Tooltip
+          title={__(
+            'May impact performance when inserting text',
+            'web-stories'
+          )}
+        >
+          <Toggle
+            id={toggleId}
+            name={toggleId}
+            checked={useSmartColor}
+            onChange={handleToggleClick}
+          />
+        </Tooltip>
       </SmartColorToggle>
       <SectionContainer
         onPointerOver={() => useSmartColor && generateCanvasFromPage()}
