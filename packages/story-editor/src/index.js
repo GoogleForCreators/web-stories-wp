@@ -21,9 +21,13 @@ import StoryEditor from './storyEditor';
 import Dialog from './components/dialog';
 
 export * from './components/transform';
+export * from './components/previewPage';
 export * from './app/config';
 export * from './app/story';
-export * from './components/previewPage';
+export * from './app/api';
+export * from './components/header';
+export * from './app/currentUser';
+export * from './output';
 export * from './testUtils';
 
 export { default as getStoryPropsToSave } from './app/story/utils/getStoryPropsToSave';
@@ -33,6 +37,9 @@ export { default as StoryPropTypes } from './types';
 export { GlobalStyle } from './theme';
 export { default as theme } from './theme'; // @todo To be refactored.
 export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
+export { default as CircularProgress } from './components/circularProgress';
+export { default as InterfaceSkeleton } from './components/layout';
+export { default as Tooltip } from './components/tooltip';
 export { ConfigProvider as EditorConfigProvider } from './app/config';
 
 export { Dialog };

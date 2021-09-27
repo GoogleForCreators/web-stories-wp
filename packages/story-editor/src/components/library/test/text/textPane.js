@@ -20,6 +20,7 @@
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
 import { curatedFontNames } from '@web-stories-wp/fonts';
+import { PAGE_RATIO, UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -32,6 +33,8 @@ import TextPane from '../../panes/text/textPane';
 import { PRESETS } from '../../panes/text/textPresets';
 import useLibrary from '../../useLibrary';
 import useInsertPreset from '../../panes/text/useInsertPreset';
+import { TEXT_SET_SIZE } from '../../../../constants';
+import CanvasContext from '../../../../app/canvas/context';
 
 jest.mock('../../useLibrary');
 jest.mock('../../../../app/font/useFont');
@@ -82,6 +85,17 @@ describe('TextPane', () => {
       },
     };
 
+    const canvasContextValue = {
+      state: {
+        nodesById: {},
+        pageSize: {},
+        pageContainer: document.body,
+        canvasContainer: document.body,
+        designSpaceGuideline: {},
+      },
+      actions: {},
+    };
+
     renderWithTheme(
       <FlagsProvider
         features={{
@@ -90,9 +104,20 @@ describe('TextPane', () => {
           enableSmartTextColor: true,
         }}
       >
-        <FontContext.Provider value={fontContextValues}>
-          <TextPane isActive />
-        </FontContext.Provider>
+        <CanvasContext.Provider value={canvasContextValue}>
+          <FontContext.Provider value={fontContextValues}>
+            <UnitsProvider
+              pageSize={{
+                width: TEXT_SET_SIZE,
+                height: TEXT_SET_SIZE / PAGE_RATIO,
+              }}
+              dataToEditorX={jest.fn()}
+              dataToEditorY={jest.fn()}
+            >
+              <TextPane isActive />
+            </UnitsProvider>
+          </FontContext.Provider>
+        </CanvasContext.Provider>
       </FlagsProvider>
     );
 

@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -38,7 +38,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [165, 154, 137]
+            "baseColor": [165, 154, 137],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": {
@@ -199,7 +200,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "756cda7e-a6b6-433a-9be1-0bad2c112d3d",
@@ -267,7 +267,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [184, 184, 185]
+            "baseColor": [184, 184, 185],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } },
@@ -422,7 +423,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "67a84fd1-16af-414b-8981-a527059933f9",
@@ -493,7 +493,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [77, 87, 93]
+            "baseColor": [77, 87, 93],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -841,7 +842,6 @@
           "type": "sticker"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "d2002a3e-49c9-4326-83e8-9abb5b63b11c",
@@ -935,7 +935,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [56, 56, 56]
+            "baseColor": [56, 56, 56],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } },
@@ -1090,7 +1091,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "fe33f1e3-c73e-47a2-95f6-281dd743e19c",
@@ -1135,7 +1135,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1172,7 +1171,8 @@
             "isPlaceholder": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [53, 54, 63]
+            "baseColor": [53, 54, 63],
+            "isExternal": true
           },
           "controls": false,
           "loop": true,
@@ -1779,7 +1779,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "3a8d54c6-f283-45c9-9614-c503e14a2900",
@@ -1888,7 +1887,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [196, 196, 196]
+            "baseColor": [196, 196, 196],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } },
@@ -2043,7 +2043,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "ed1b12fc-ea34-448d-9f99-5e764e45db49",
@@ -2088,7 +2087,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2126,7 +2124,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [125, 108, 86]
+            "baseColor": [125, 108, 86],
+            "isExternal": true
           },
           "controls": false,
           "loop": true,
@@ -2883,7 +2882,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "1f7a1fca-7347-4fc4-a96b-2047f020bfd1",
@@ -3006,7 +3004,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [114, 114, 114]
+            "baseColor": [114, 114, 114],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.5 } },
@@ -3161,7 +3160,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "b0146edd-d9e6-44b1-a578-a413f9d888b8",
@@ -3237,13 +3235,13 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [43, 36, 26]
+            "baseColor": [43, 36, 26],
+            "isExternal": true
           },
           "tracks": [],
           "loop": true
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -3304,7 +3302,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [46, 46, 46]
+            "baseColor": [46, 46, 46],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } },
@@ -3459,7 +3458,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "2df2ff65-3c18-4abb-8fcf-b84e06b3a8f1",
@@ -3530,7 +3528,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [192, 183, 178]
+            "baseColor": [192, 183, 178],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3709,7 +3708,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "0a6ac25f-20f0-4b70-9500-3f44e47c0626",
@@ -3785,7 +3783,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [103, 103, 103]
+            "baseColor": [103, 103, 103],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } },
@@ -3940,7 +3939,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "5cc9b890-6eae-4f1a-b8c6-3511c543c97a",
@@ -3985,7 +3983,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4093,7 +4090,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [43, 57, 53]
+            "baseColor": [43, 57, 53],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 47,
@@ -4126,7 +4124,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [22, 24, 23]
+            "baseColor": [22, 24, 23],
+            "isExternal": true
           },
           "x": 170,
           "y": 357,
@@ -4289,7 +4288,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "404b77d4-2792-41fd-a381-ee0ad4081673",

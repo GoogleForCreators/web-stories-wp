@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -152,7 +151,8 @@
             "alt": "page01_image02",
             "local": false,
             "isOptimized": false,
-            "baseColor": [203, 180, 146]
+            "baseColor": [203, 180, 146],
+            "isExternal": true
           }
         },
         {
@@ -181,7 +181,8 @@
             "alt": "page01_image01",
             "local": false,
             "isOptimized": false,
-            "baseColor": [229, 229, 216]
+            "baseColor": [229, 229, 216],
+            "isExternal": true
           }
         },
         {
@@ -495,7 +496,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -526,7 +526,8 @@
             "alt": "page02_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [25, 22, 31]
+            "baseColor": [25, 22, 31],
+            "isExternal": true
           },
           "type": "image",
           "x": -39.5,
@@ -754,7 +755,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -785,7 +785,8 @@
             "alt": "page03_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [158, 142, 99]
+            "baseColor": [158, 142, 99],
+            "isExternal": true
           },
           "type": "image",
           "x": -63.5,
@@ -990,7 +991,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1018,7 +1018,8 @@
             "id": 0,
             "alt": "page04_bg",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -53.5,
@@ -1332,7 +1333,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1693,7 +1693,8 @@
             "alt": "page05_image01",
             "local": false,
             "isOptimized": false,
-            "baseColor": [115, 109, 102]
+            "baseColor": [115, 109, 102],
+            "isExternal": true
           },
           "type": "image",
           "x": -40,
@@ -1752,7 +1753,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1783,7 +1783,8 @@
             "alt": "page06_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [205, 206, 202]
+            "baseColor": [205, 206, 202],
+            "isExternal": true
           },
           "type": "image",
           "x": -48,
@@ -2014,7 +2015,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2045,7 +2045,8 @@
             "alt": "page07_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [231, 230, 218]
+            "baseColor": [231, 230, 218],
+            "isExternal": true
           },
           "type": "image",
           "x": -55.5,
@@ -2276,7 +2277,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2307,7 +2307,8 @@
             "alt": "page08_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [152, 158, 62]
+            "baseColor": [152, 158, 62],
+            "isExternal": true
           },
           "type": "image",
           "x": -25,
@@ -2621,7 +2622,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2669,7 +2669,8 @@
             "alt": "page09_image01",
             "local": false,
             "isOptimized": false,
-            "baseColor": [197, 171, 140]
+            "baseColor": [197, 171, 140],
+            "isExternal": true
           },
           "x": 0,
           "y": -74,
@@ -3041,7 +3042,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3072,7 +3072,8 @@
             "alt": "page10_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 158, 106]
+            "baseColor": [196, 158, 106],
+            "isExternal": true
           },
           "type": "image",
           "x": -101,
@@ -3343,7 +3344,8 @@
             "alt": "page11_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [204, 208, 207]
+            "baseColor": [204, 208, 207],
+            "isExternal": true
           }
         },
         {
@@ -3576,7 +3578,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3607,7 +3608,8 @@
             "alt": "page12_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [220, 217, 205]
+            "baseColor": [220, 217, 205],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -3854,7 +3856,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4032,7 +4033,8 @@
             "alt": "page13_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [169, 119, 86]
+            "baseColor": [169, 119, 86],
+            "isExternal": true
           }
         },
         {

@@ -62,7 +62,7 @@ describe('SVG', () => {
     await deleteMedia(filename);
   });
 
-  it('not should be to select SVG as publisher logo', async () => {
+  it('should not allow selecting an SVG file as publisher logo', async () => {
     await createNewStory();
 
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });

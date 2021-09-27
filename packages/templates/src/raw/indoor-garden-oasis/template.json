@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -194,7 +193,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [37, 35, 19]
+            "baseColor": [37, 35, 19],
+            "isExternal": true
           }
         }
       ],
@@ -228,7 +228,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -450,7 +449,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 218, 217]
+            "baseColor": [218, 218, 217],
+            "isExternal": true
           }
         },
         {
@@ -812,7 +812,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [61, 54, 44]
+            "baseColor": [61, 54, 44],
+            "isExternal": true
           }
         },
         {
@@ -1087,7 +1088,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [186, 177, 159]
+            "baseColor": [186, 177, 159],
+            "isExternal": true
           }
         },
         {
@@ -1353,7 +1355,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1393,7 +1394,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [221, 222, 227]
+            "baseColor": [221, 222, 227],
+            "isExternal": true
           }
         },
         {
@@ -1948,7 +1950,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1986,7 +1987,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [212, 212, 199]
+            "baseColor": [212, 212, 199],
+            "isExternal": true
           }
         },
         {
@@ -2517,7 +2519,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2555,7 +2556,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [226, 232, 245]
+            "baseColor": [226, 232, 245],
+            "isExternal": true
           }
         },
         {
@@ -3086,7 +3088,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3133,7 +3134,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [222, 222, 228]
+            "baseColor": [222, 222, 228],
+            "isExternal": true
           }
         },
         {
@@ -3163,7 +3165,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [190, 177, 164]
+            "baseColor": [190, 177, 164],
+            "isExternal": true
           }
         },
         {
@@ -3356,7 +3359,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3464,7 +3466,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [27, 68, 63]
+            "baseColor": [27, 68, 63],
+            "isExternal": true
           }
         },
         {
@@ -3582,7 +3585,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [94, 72, 51]
+            "baseColor": [94, 72, 51],
+            "isExternal": true
           }
         },
         {
@@ -3701,7 +3705,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [231, 230, 232]
+            "baseColor": [231, 230, 232],
+            "isExternal": true
           }
         },
         {

@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -37,7 +36,8 @@
             "alt": "Young Sportswoman Working Out With Battle Ropes In A Gym",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -0.5,
@@ -231,7 +231,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -263,7 +262,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [173, 177, 168]
+            "baseColor": [173, 177, 168],
+            "isExternal": true
           },
           "type": "image",
           "x": -37.5,
@@ -452,7 +452,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -488,7 +487,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [194, 192, 192]
+            "baseColor": [194, 192, 192],
+            "isExternal": true
           },
           "controls": false,
           "loop": false,
@@ -740,7 +740,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -776,7 +775,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [41, 50, 65]
+            "baseColor": [41, 50, 65],
+            "isExternal": true
           },
           "controls": false,
           "loop": false,
@@ -1029,7 +1029,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1065,7 +1064,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [53, 59, 70]
+            "baseColor": [53, 59, 70],
+            "isExternal": true
           },
           "controls": false,
           "loop": false,
@@ -1318,7 +1318,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1354,7 +1353,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [40, 48, 54]
+            "baseColor": [40, 48, 54],
+            "isExternal": true
           },
           "controls": false,
           "loop": false,
@@ -1607,7 +1607,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1643,7 +1642,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [54, 58, 70]
+            "baseColor": [54, 58, 70],
+            "isExternal": true
           },
           "controls": false,
           "loop": false,
@@ -1896,7 +1896,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1932,7 +1931,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [33, 43, 50]
+            "baseColor": [33, 43, 50],
+            "isExternal": true
           },
           "controls": false,
           "loop": false,
@@ -2185,7 +2185,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2221,7 +2220,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [41, 43, 50]
+            "baseColor": [41, 43, 50],
+            "isExternal": true
           },
           "controls": false,
           "loop": false,
@@ -2474,7 +2474,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2510,7 +2509,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [40, 51, 58]
+            "baseColor": [40, 51, 58],
+            "isExternal": true
           },
           "controls": false,
           "loop": false,
@@ -2546,7 +2546,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2582,7 +2581,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [216, 221, 226]
+            "baseColor": [216, 221, 226],
+            "isExternal": true
           },
           "controls": false,
           "loop": false,
@@ -2623,7 +2623,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2655,7 +2654,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [56, 53, 52]
+            "baseColor": [56, 53, 52],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2807,7 +2807,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [207, 207, 210]
+            "baseColor": [207, 207, 210],
+            "isExternal": true
           },
           "type": "image",
           "x": 66,
@@ -2845,7 +2846,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [211, 215, 219]
+            "baseColor": [211, 215, 219],
+            "isExternal": true
           },
           "type": "image",
           "x": 66,
@@ -2883,7 +2885,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [207, 202, 198]
+            "baseColor": [207, 202, 198],
+            "isExternal": true
           },
           "type": "image",
           "x": 66,

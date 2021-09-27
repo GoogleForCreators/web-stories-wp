@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -33,7 +33,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [217, 196, 188]
+            "baseColor": [217, 196, 188],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
         },
@@ -413,7 +414,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": true,
-            "isMuted": true
+            "isMuted": true,
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.2 } },
@@ -618,7 +620,6 @@
           "sticker": { "type": "luauYellowWavyLine" }
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -672,7 +673,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": null
         },
@@ -842,7 +844,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -896,7 +897,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1020,7 +1022,6 @@
           "y": 429
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "a3e6105a-29c5-4d6d-a87c-afc5f6628ed1",
@@ -1083,7 +1084,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1268,7 +1270,6 @@
           "id": "2d18d6db-196d-437e-b6c0-5796008dca95"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -1322,7 +1323,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1509,7 +1511,6 @@
           "y": -119
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "413dc340-9e40-471d-a513-66416d25035b",
@@ -1572,7 +1573,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1759,7 +1761,6 @@
           "y": -119
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "01bf3391-b0ec-4ba6-9fc9-8d6aa4c26fef",
@@ -1822,7 +1823,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2009,7 +2011,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -2067,7 +2068,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": true,
-            "isMuted": true
+            "isMuted": true,
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.15 } },
@@ -2108,7 +2110,6 @@
           "y": 26
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "8bc2f54e-e886-4c8c-8baf-0f52cd462767",
@@ -2179,7 +2180,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.3 } }
         },
@@ -2292,7 +2294,6 @@
           "y": 539
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "bafd51f3-8f19-4cb0-a7d5-429ce00dc256",
@@ -2339,7 +2340,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2602,7 +2602,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2634,7 +2635,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2739,7 +2741,6 @@
           "sticker": { "type": "luauYellowWavyLine" }
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "f8cc11a1-2875-47d2-8006-65eeb65f58fc",

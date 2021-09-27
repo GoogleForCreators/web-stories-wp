@@ -57,6 +57,24 @@ class Jetpack extends Service_Base {
 	const VIDEOPRESS_POSTER_META_KEY = 'videopress_poster_image';
 
 	/**
+	 * Media_Source_Taxonomy instance.
+	 *
+	 * @var Media_Source_Taxonomy Experiments instance.
+	 */
+	protected $media_source_taxonomy;
+
+	/**
+	 * Jetpack constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Media_Source_Taxonomy $media_source_taxonomy Media_Source_Taxonomy instance.
+	 */
+	public function __construct( Media_Source_Taxonomy $media_source_taxonomy ) {
+		$this->media_source_taxonomy = $media_source_taxonomy;
+	}
+
+	/**
 	 * Initializes all hooks.
 	 *
 	 * @since 1.2.0
@@ -284,7 +302,7 @@ class Jetpack extends Service_Base {
 			return;
 		}
 
-		wp_set_object_terms( (int) $object_id, 'poster-generation', Media_Source_Taxonomy::TAXONOMY_SLUG );
+		wp_set_object_terms( (int) $object_id, 'poster-generation', $this->media_source_taxonomy->get_taxonomy_slug() );
 	}
 
 	/**

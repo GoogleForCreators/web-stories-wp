@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo } from '@web-stories-wp/react';
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
 import { __, _x, sprintf } from '@web-stories-wp/i18n';
 import { DropDown, PLACEMENT } from '@web-stories-wp/design-system';
 
@@ -35,10 +35,6 @@ const selectButtonCSS = css`
   span {
     padding: 0;
   }
-`;
-
-const StyledDropDown = styled(DropDown)`
-  margin-right: 8px;
 `;
 
 const ZOOM_OPTIONS = [
@@ -98,7 +94,7 @@ function ZoomSelector() {
   );
 
   return (
-    <StyledDropDown
+    <DropDown
       ariaLabel={__('Zoom Level', 'web-stories')}
       placeholder={placeholder}
       options={ZOOM_OPTIONS}

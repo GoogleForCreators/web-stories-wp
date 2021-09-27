@@ -28,7 +28,7 @@ import wpAdapter from '../wpAdapter';
 describe('useSettingsApi', () => {
   it('should return an error when fetching settings API request fails', async () => {
     const { result } = renderHook(() =>
-      useSettingsApi(wpAdapter, { globalStoriesSettingsApi: 'wordpress' })
+      useSettingsApi(wpAdapter, { globalSettingsApi: 'wordpress' })
     );
 
     await act(async () => {
@@ -42,7 +42,7 @@ describe('useSettingsApi', () => {
 
   it('should return an error when updating settings API request fails', async () => {
     const { result } = renderHook(() =>
-      useSettingsApi(wpAdapter, { globalStoriesSettingsApi: 'wordpress' })
+      useSettingsApi(wpAdapter, { globalSettingsApi: 'wordpress' })
     );
 
     await act(async () => {

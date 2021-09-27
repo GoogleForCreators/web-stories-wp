@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -26,7 +26,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -127,7 +128,8 @@
             "alt": "icon_logo",
             "local": false,
             "sizes": [],
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": 48,
@@ -184,7 +186,6 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "143182cf-804b-4d71-93d8-d4a53c9e6ed6",
@@ -310,7 +311,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Variety of prepared food dishes"
         }
@@ -374,7 +376,6 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "b39e1373-e1d4-40ee-bd0c-298924b61a3e",
@@ -406,7 +407,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Preparing a street food dish"
         },
@@ -575,7 +577,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -727,7 +730,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -873,7 +877,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -1010,7 +1015,6 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "9012bef0-e5e3-4910-8412-a10ce18e23a6",
@@ -1096,7 +1100,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Close up of statue in 3 Kings Monument"
         },
@@ -1207,7 +1212,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -1400,7 +1406,6 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "55fcd4fb-1af4-4540-ac57-a783f94f6864",
@@ -1698,7 +1703,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Boat near beach in Phuket"
         },
@@ -1729,7 +1735,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Person riding a scooter on a road"
         },
@@ -1760,7 +1767,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Close up of red curry dish"
         },
@@ -1791,7 +1799,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Close up of palm branch"
         }
@@ -1910,7 +1919,6 @@
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "282588c3-fbc2-4b63-8260-2e58d0e63294",
@@ -2085,7 +2093,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Variety of peppers"
         },
@@ -2114,7 +2123,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "85439d79-2100-4dc8-9b20-e6e51d2064af",
           "id": "19fd443d-f580-436b-82b4-ef2938c55e89",
@@ -2145,7 +2155,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "19fd443d-f580-436b-82b4-ef2938c55e89",
           "id": "098c9143-7ca0-4b04-866f-02c5c48339d2",

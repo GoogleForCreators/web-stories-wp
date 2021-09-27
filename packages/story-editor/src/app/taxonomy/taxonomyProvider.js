@@ -28,21 +28,25 @@ import {
  */
 import cleanForSlug from '../../utils/cleanForSlug';
 import { useAPI } from '../api';
+import { useHistory } from '../history';
 import { useStory } from '../story';
 import Context from './context';
 import {
-  dictonaryOnKey,
+  dictionaryOnKey,
   mapObjectVals,
   mergeNestedDictionaries,
-  objectFromEntries,
   mapObjectKeys,
   cacheFromEmbeddedTerms,
 } from './utils';
 
 function TaxonomyProvider(props) {
   const [taxonomies, setTaxonomies] = useState([]);
-  const [selectedSlugs, setSelectedSlugs] = useState({});
   const [termCache, setTermCache] = useState({});
+  // Should grab categories on mount
+  const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
+  const {
+    actions: { clearHistory },
+  } = useHistory();
   const { updateStory, isStoryLoaded, terms, hasTaxonomies } = useStory(
     ({ state: { pages, story }, actions: { updateStory } }) => ({
       updateStory,
@@ -65,7 +69,7 @@ function TaxonomyProvider(props) {
     (async function () {
       try {
         const result = await getTaxonomies();
-        setTaxonomies(Object.values(result));
+        setTaxonomies(result);
       } catch (e) {
         // Do we wanna do anything here?
       }
@@ -82,48 +86,74 @@ function TaxonomyProvider(props) {
       isStoryLoaded &&
       !hasHydrationRunOnce.current
     ) {
-      const taxonomiesBySlug = dictonaryOnKey(taxonomies, 'slug');
+      const taxonomiesBySlug = dictionaryOnKey(taxonomies, 'slug');
       const initialCache = mapObjectKeys(
         cacheFromEmbeddedTerms(terms),
-        (slug) => taxonomiesBySlug[slug]?.rest_base
+        (slug) => taxonomiesBySlug[slug]?.restBase
       );
-      const initialSelectedSlugs = mapObjectVals(initialCache, (val) =>
-        Object.keys(val)
+      const initialSelectedTerms = mapObjectVals(initialCache, (val) =>
+        Object.values(val).map((term) => term.id)
       );
 
-      hasHydrationRunOnce.current = true;
       setTermCache(initialCache);
-      setSelectedSlugs(initialSelectedSlugs);
+      clearHistory();
+      updateStory({
+        properties: {
+          terms: initialSelectedTerms,
+        },
+      });
+      hasHydrationRunOnce.current = true;
     }
-  }, [terms, isStoryLoaded, taxonomies, setSelectedSlugs, setTermCache]);
+  }, [
+    terms,
+    isStoryLoaded,
+    taxonomies,
+    setTermCache,
+    clearHistory,
+    updateStory,
+  ]);
 
-  // With the freeform taxonomy input, we can have terms selected
-  // that may be in the process of being created or retrieved from
-  // the backend. Because of this, we sync up our local selected slugs
-  // with whatever cached terms are available at any given moment.
-  useEffect(() => {
-    if (!hasHydrationRunOnce.current) {
-      return;
-    }
+  const setTerms = useCallback(
+    (taxonomy, termIds = []) => {
+      updateStory({
+        properties: (story) => {
+          const newTerms =
+            typeof termIds === 'function'
+              ? termIds(story.terms[taxonomy.restBase])
+              : termIds;
 
-    const termEntries = Object.entries(selectedSlugs).map(
-      ([taxonomyRestBase, termSlugs = []]) => [
-        taxonomyRestBase,
-        termSlugs
-          .map((termSlug) => termCache[taxonomyRestBase]?.[termSlug]?.id)
-          .filter((id) => typeof id === 'number'),
-      ]
-    );
-    const updatedTerms = objectFromEntries(termEntries);
-    updateStory({
-      properties: {
-        terms: updatedTerms,
-      },
-    });
-  }, [updateStory, selectedSlugs, termCache]);
+          return {
+            ...story,
+            terms: {
+              ...story.terms,
+              [taxonomy.restBase]: newTerms,
+            },
+          };
+        },
+      });
+    },
+    [updateStory]
+  );
+
+  const addTermToSelection = useCallback(
+    (taxonomy, term) => {
+      setTerms(taxonomy, (ids = []) =>
+        ids.includes(term.id) ? ids : [...ids, term.id]
+      );
+    },
+    [setTerms]
+  );
 
   const addSearchResultsToCache = useCallback(
-    async (taxonomy, name) => {
+    async (
+      taxonomy,
+      {
+        name,
+        // This is the per_page value Gutenberg is using
+        perPage = 20,
+      },
+      addNameToSelection = false
+    ) => {
       let response = [];
       const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href;
       if (!termsEndpoint) {
@@ -132,8 +162,7 @@ function TaxonomyProvider(props) {
       try {
         response = await getTaxonomyTerm(termsEndpoint, {
           search: name,
-          // This is the per_page value Gutenberg is using
-          per_page: 20,
+          per_page: perPage,
         });
       } catch (e) {
         // Do we wanna do anything here?
@@ -146,17 +175,33 @@ function TaxonomyProvider(props) {
 
       // Format results to fit in our { [taxonomy]: { [slug]: term } } map
       const termResults = {
-        [taxonomy.rest_base]: dictonaryOnKey(response, 'slug'),
+        [taxonomy.restBase]: dictionaryOnKey(response, 'slug'),
       };
       setTermCache((cache) => mergeNestedDictionaries(cache, termResults));
+
+      if (addNameToSelection) {
+        const selectedTermSlug = cleanForSlug(name);
+        const selectedTerm = response.find(
+          (term) => term.slug === selectedTermSlug
+        );
+
+        if (selectedTerm) {
+          addTermToSelection(taxonomy, selectedTerm);
+        }
+      }
     },
-    [getTaxonomyTerm]
+    [getTaxonomyTerm, addTermToSelection]
   );
 
   const createTerm = useCallback(
-    async (taxonomy, termName) => {
+    async (taxonomy, termName, parentId, addToSelection = false) => {
       // make sure the term doesn't already exist locally
-      if (termCache[taxonomy.rest_base]?.[cleanForSlug(termName)]) {
+      const cachedTerm = termCache[taxonomy.restBase]?.[cleanForSlug(termName)];
+      if (cachedTerm) {
+        if (addToSelection) {
+          addTermToSelection(taxonomy, cachedTerm);
+        }
+
         return;
       }
 
@@ -167,11 +212,20 @@ function TaxonomyProvider(props) {
 
       // create term and add to cache
       try {
-        const newTerm = await createTaxonomyTerm(termsEndpoint, termName);
+        const data = { name: termName };
+        if (parentId) {
+          data.parent = parentId;
+        }
+
+        const newTerm = await createTaxonomyTerm(termsEndpoint, data);
         const incomingCache = {
-          [taxonomy.rest_base]: { [newTerm.slug]: newTerm },
+          [taxonomy.restBase]: { [newTerm.slug]: newTerm },
         };
         setTermCache((cache) => mergeNestedDictionaries(cache, incomingCache));
+
+        if (addToSelection) {
+          addTermToSelection(taxonomy, newTerm);
+        }
       } catch (e) {
         // If the backend says the term already exists
         // we fetch for it as well as related terms to
@@ -180,42 +234,48 @@ function TaxonomyProvider(props) {
         // We could pull down only the exact term, but
         // we're modeling after Gutenberg.
         if (e.code === 'term_exists') {
-          addSearchResultsToCache(taxonomy, termName);
+          addSearchResultsToCache(taxonomy, { name: termName }, addToSelection);
         }
       }
     },
-    [createTaxonomyTerm, termCache, addSearchResultsToCache]
+    [createTaxonomyTerm, termCache, addSearchResultsToCache, addTermToSelection]
   );
 
-  const setSelectedTaxonomySlugs = useCallback(
-    (taxonomy, termSlugs = []) =>
-      setSelectedSlugs((selected) => ({
-        ...selected,
-        [taxonomy.rest_base]: termSlugs,
-      })),
-    []
-  );
+  // Fetch hierarchical taxonomies on mount
+  useEffect(() => {
+    // only fetch when `shouldRefetchCategories` is true
+    if (shouldRefetchCategories && taxonomies?.length) {
+      const hierarchicalTaxonomies = taxonomies.filter(
+        (taxonomy) => taxonomy.hierarchical
+      );
+      hierarchicalTaxonomies.forEach((taxonomy) =>
+        addSearchResultsToCache(taxonomy, { perPage: -1 })
+      );
+
+      setShouldRefetchCategories(false);
+    }
+  }, [addSearchResultsToCache, shouldRefetchCategories, taxonomies]);
 
   const value = useMemo(
     () => ({
       state: {
         taxonomies,
         termCache,
-        selectedSlugs,
+        terms: Array.isArray(terms) ? {} : terms,
       },
       actions: {
         createTerm,
         addSearchResultsToCache,
-        setSelectedTaxonomySlugs,
+        setTerms,
       },
     }),
     [
+      termCache,
+      terms,
       taxonomies,
       createTerm,
-      termCache,
       addSearchResultsToCache,
-      selectedSlugs,
-      setSelectedTaxonomySlugs,
+      setTerms,
     ]
   );
 

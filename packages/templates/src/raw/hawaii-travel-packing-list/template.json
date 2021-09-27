@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -72,7 +71,8 @@
             "alt": "Aerial photography of green mountain beside body of water under white sky",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -0.5,
@@ -311,7 +311,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [28, 44, 92]
+            "baseColor": [28, 44, 92],
+            "isExternal": true
           }
         },
         {
@@ -1034,7 +1035,6 @@
           "marginOffset": -1.2200000000000006
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "39eff02a-063b-4ca3-9cae-ca13b83475fa",
@@ -1146,7 +1146,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [53, 53, 33]
+            "baseColor": [53, 53, 33],
+            "isExternal": true
           }
         },
         {
@@ -1319,7 +1320,6 @@
           "y": 0
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "e596c981-5972-4c7f-b8f6-acb54274266f",
@@ -1358,7 +1358,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1494,7 +1493,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [74, 70, 52]
+            "baseColor": [74, 70, 52],
+            "isExternal": true
           },
           "type": "image",
           "x": 48,
@@ -1532,7 +1532,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [51, 45, 49]
+            "baseColor": [51, 45, 49],
+            "isExternal": true
           },
           "type": "image",
           "x": 49,
@@ -1570,7 +1571,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [53, 57, 51]
+            "baseColor": [53, 57, 51],
+            "isExternal": true
           },
           "type": "image",
           "x": 49,
@@ -2019,7 +2021,6 @@
           "marginOffset": -4.440000000000001
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 239, "g": 250, "b": 246 } },
       "type": "page",
       "id": "3514e901-2f15-4b10-b93d-993d1381dd47",
@@ -2033,7 +2034,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2065,7 +2065,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [53, 51, 44]
+            "baseColor": [53, 51, 44],
+            "isExternal": true
           },
           "type": "image",
           "x": -30,
@@ -2479,7 +2480,6 @@
           }
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "31178cc6-3fd4-4f11-a8fa-3d4c98200c38",
@@ -2512,7 +2512,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2544,7 +2543,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [50, 46, 55]
+            "baseColor": [50, 46, 55],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2959,7 +2959,6 @@
           "y": 585
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "e836f760-53a9-46dd-b6b1-1f0dc6b7665c",
@@ -2992,7 +2991,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3024,7 +3022,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [32, 39, 34]
+            "baseColor": [32, 39, 34],
+            "isExternal": true
           },
           "type": "image",
           "x": -5,
@@ -3440,7 +3439,6 @@
           "y": 585
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "08b9a004-ca54-4029-96f2-ee854727aa8f",
@@ -3498,7 +3496,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [71, 129, 161]
+            "baseColor": [71, 129, 161],
+            "isExternal": true
           }
         },
         {
@@ -3671,7 +3670,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "dda719cc-5f18-4741-903a-a35efa589648",
@@ -3710,7 +3708,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3846,7 +3843,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [144, 175, 165]
+            "baseColor": [144, 175, 165],
+            "isExternal": true
           },
           "x": 48,
           "y": 131,
@@ -3884,7 +3882,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [200, 203, 198]
+            "baseColor": [200, 203, 198],
+            "isExternal": true
           },
           "x": 49,
           "y": 314,
@@ -3922,7 +3921,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [5, 159, 174]
+            "baseColor": [5, 159, 174],
+            "isExternal": true
           },
           "x": 49,
           "y": 489,
@@ -4371,7 +4371,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 239, "g": 250, "b": 246 } },
       "type": "page",
@@ -4385,7 +4384,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4417,7 +4415,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [138, 162, 148]
+            "baseColor": [138, 162, 148],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -4832,7 +4831,6 @@
           "y": 585
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "ca2a4b38-2f5e-4642-8f53-e546fe7cbd92",
@@ -4865,7 +4863,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4897,7 +4894,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [193, 201, 201]
+            "baseColor": [193, 201, 201],
+            "isExternal": true
           },
           "type": "image",
           "x": -53,
@@ -5312,7 +5310,6 @@
           "y": 585
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "60f48661-f9e8-4057-b226-4ce584285d55",
@@ -5345,7 +5342,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -5377,7 +5373,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [11, 143, 157]
+            "baseColor": [11, 143, 157],
+            "isExternal": true
           },
           "type": "image",
           "x": -38,
@@ -5792,7 +5789,6 @@
           "y": 585
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "1a20922d-104a-473e-842a-4bbaa18b6000",
@@ -5825,7 +5821,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -6015,7 +6010,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [29, 113, 91]
+            "baseColor": [29, 113, 91],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -6051,7 +6047,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [57, 79, 59]
+            "baseColor": [57, 79, 59],
+            "isExternal": true
           },
           "type": "image",
           "x": 192,
@@ -6248,7 +6245,6 @@
           }
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 239, "g": 250, "b": 246 } },
       "type": "page",
       "id": "24ac301d-7e81-4578-979a-7aaeccd409e3",

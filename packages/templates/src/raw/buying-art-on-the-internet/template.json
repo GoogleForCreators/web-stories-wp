@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -38,7 +37,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [23, 131, 181]
+            "baseColor": [23, 131, 181],
+            "isExternal": true
           },
           "x": 0,
           "y": -57,
@@ -267,7 +267,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
-            "isMuted": true
+            "isMuted": true,
+            "isExternal": true
           },
           "tracks": [],
           "overlay": {
@@ -396,7 +397,6 @@
           "y": 600
         }
       ],
-      "overlay": "none",
       "backgroundColor": {
         "type": "linear",
         "stops": [
@@ -456,7 +456,8 @@
             "alt": "Abstract painting",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } }
         },
@@ -615,12 +616,12 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224]
+            "baseColor": [229, 227, 224],
+            "isExternal": true
           },
           "tracks": []
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 139, "g": 139, "b": 139 } },
       "type": "page",
       "id": "cf875a7d-17df-4be8-baae-85dddd021d73",
@@ -674,7 +675,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [252, 252, 252]
+            "baseColor": [252, 252, 252],
+            "isExternal": true
           }
         },
         {
@@ -880,7 +882,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [24, 36, 36]
+            "baseColor": [24, 36, 36],
+            "isExternal": true
           },
           "x": 75,
           "y": 165,
@@ -893,7 +896,6 @@
           "id": "aac3071a-740f-456b-a762-cf2b35759788"
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "8e6b1578-7804-4deb-91be-42e47da083cc",
@@ -947,7 +949,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [252, 252, 252]
+            "baseColor": [252, 252, 252],
+            "isExternal": true
           }
         },
         {
@@ -1161,11 +1164,11 @@
             "alt": "Multicolored abstract painting",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
@@ -1195,7 +1198,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1224,7 +1226,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [65, 61, 60]
+            "baseColor": [65, 61, 60],
+            "isExternal": true
           },
           "x": 47,
           "y": 36,
@@ -1498,7 +1501,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [24, 28, 28]
+            "baseColor": [24, 28, 28],
+            "isExternal": true
           },
           "width": 318,
           "height": 108,
@@ -1708,7 +1712,8 @@
             "alt": "Art gallery interior",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 318,
           "height": 108,
@@ -1898,7 +1903,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "669b9a28-0169-4a96-a767-402ef0e56a04",
@@ -1960,7 +1964,8 @@
             "alt": "Multicolored abstract painting",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.5 } }
         },
@@ -2119,12 +2124,12 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224]
+            "baseColor": [229, 227, 224],
+            "isExternal": true
           },
           "tracks": []
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 139, "g": 139, "b": 139 } },
       "type": "page",
@@ -2154,7 +2159,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2389,7 +2393,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [248, 232, 224]
+            "baseColor": [248, 232, 224],
+            "isExternal": true
           }
         },
         {
@@ -2526,7 +2531,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "071c48b7-3994-4e4c-9b45-1232bf37325d",
@@ -2548,7 +2552,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2782,7 +2785,8 @@
             "alt": "Assorted-color wall arts",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2919,7 +2923,6 @@
           "y": 0
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "7975c0b1-7521-4f92-8203-ee29411f5b5c",
@@ -2941,7 +2944,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3170,7 +3172,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [248, 232, 224]
+            "baseColor": [248, 232, 224],
+            "isExternal": true
           }
         },
         {
@@ -3307,7 +3310,6 @@
           "y": 0
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "3c100015-0a01-4b4e-aa85-9850d1361e04",
@@ -3352,7 +3354,8 @@
             "alt": "Multicolored abstract painting",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.5 } }
         },
@@ -3472,7 +3475,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 139, "g": 139, "b": 139 } },
       "type": "page",
@@ -3502,7 +3504,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4245,7 +4246,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "114b498e-6134-4cc4-b9f9-f29ad4ff1969",
@@ -4308,7 +4308,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4353,7 +4352,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224]
+            "baseColor": [229, 227, 224],
+            "isExternal": true
           },
           "tracks": [],
           "borderRadius": {
@@ -4574,7 +4574,6 @@
           }
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "6a170e45-4f45-4549-9157-6380423cae69",

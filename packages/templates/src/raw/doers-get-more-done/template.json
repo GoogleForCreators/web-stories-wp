@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -13,7 +13,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "acc2f8e0-b819-4adf-9b9f-7bf7c878d7b9",
@@ -45,7 +44,8 @@
             "id": 0,
             "alt": "page1_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -156,7 +156,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "6d60fa52-25c3-4207-acea-45c2c9680fcf",
@@ -188,7 +187,8 @@
             "id": 0,
             "alt": "page2_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -283,7 +283,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "a848ae15-78c1-488a-9c2f-befbc69a1fb3",
@@ -315,7 +314,8 @@
             "id": 0,
             "alt": "page3_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -489,7 +489,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "5249418e-8fb7-46d7-8af1-835671d52f2b",
@@ -521,7 +520,8 @@
             "id": 0,
             "alt": "page4_page5_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -614,9 +614,6 @@
           "height": 1,
           "rotationAngle": 0,
           "mask": { "type": "rectangle" },
-          "backgroundColor": {
-            "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
-          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "0f06a768-d7d7-48c3-94fd-0d200978ef7c"
@@ -647,7 +644,8 @@
             "id": 0,
             "alt": "page4_page5_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -845,7 +843,8 @@
             "id": 0,
             "alt": "page6_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -1042,7 +1041,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "d4d8e43d-57ff-401c-b525-fabfebb77af4",
@@ -1073,7 +1071,8 @@
             "id": 0,
             "alt": "page7_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -1215,7 +1214,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "4ee0756d-c9b1-4914-a3cf-e0b41a442367",
@@ -1292,7 +1290,8 @@
             "id": 0,
             "alt": "page8_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -1320,7 +1319,8 @@
             "id": 0,
             "alt": "page8_image2",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "ae3014b3-9828-4285-991d-4b0aa1fc83a6",
           "id": "ad72e216-61e5-474b-b187-9f06a613a4d5"
@@ -1351,7 +1351,8 @@
             "id": 0,
             "alt": "page8_image3",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -1687,7 +1688,8 @@
             "id": 0,
             "alt": "page7_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -1859,7 +1861,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 33, "g": 31, "b": 30 } },
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "id": "82dea0d1-dbc5-41e5-9ed7-409bcb672830",
@@ -2106,7 +2107,8 @@
             "id": 0,
             "alt": "page10_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -2137,7 +2139,8 @@
             "id": 0,
             "alt": "page10_image2",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -2168,7 +2171,8 @@
             "id": 0,
             "alt": "page10_image3",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {

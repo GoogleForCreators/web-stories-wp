@@ -14,24 +14,16 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { reshapePublisherLogo } from '../serializers';
-
 export const ACTION_TYPES = {
   LOADING_MEDIA: 'loading_media',
   ADD_MEDIA_SUCCESS: 'add_media_success',
   ADD_MEDIA_FAILURE: 'add_media_failure',
-  FETCH_MEDIA_SUCCESS: 'fetch_media_success',
-  FETCH_MEDIA_FAILURE: 'fetch_media_failure',
 };
 
 export const defaultMediaState = {
   error: {},
   isLoading: false,
   newlyCreatedMediaIds: [],
-  mediaById: {},
 };
 
 function mediaReducer(state, action) {
@@ -44,8 +36,7 @@ function mediaReducer(state, action) {
       };
     }
 
-    case ACTION_TYPES.ADD_MEDIA_FAILURE:
-    case ACTION_TYPES.FETCH_MEDIA_FAILURE: {
+    case ACTION_TYPES.ADD_MEDIA_FAILURE: {
       return {
         ...state,
         error: { ...action.payload, id: Date.now() },
@@ -53,22 +44,11 @@ function mediaReducer(state, action) {
       };
     }
 
-    case ACTION_TYPES.ADD_MEDIA_SUCCESS:
-    case ACTION_TYPES.FETCH_MEDIA_SUCCESS: {
+    case ACTION_TYPES.ADD_MEDIA_SUCCESS: {
       return {
         ...state,
         error: {},
         isLoading: false,
-        mediaById: {
-          ...state.mediaById,
-          ...action.payload.media.reduce((acc, current) => {
-            if (!current) {
-              return acc;
-            }
-            acc[current.id] = reshapePublisherLogo(current);
-            return acc;
-          }, {}),
-        },
         newlyCreatedMediaIds:
           action.payload.newlyCreatedMediaIds || state.newlyCreatedMediaIds,
       };

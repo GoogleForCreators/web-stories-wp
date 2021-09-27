@@ -81,12 +81,14 @@ const defaultConfig = {
   wpListURL: 'http://localhost:8899/wp-admin/edit.php?post_type=web-story',
   cdnURL: 'https://cdn.example.com/',
   version: '1.0.0-alpha.9',
+  archiveURL: 'https://example.com/',
   api: {
     stories: '/web-stories/v1/web-story',
     users: '/wp/v2/users',
     currentUser: '/wp/v2/users/me',
-    fonts: '/web-stories/v1/fonts',
     settings: '/wp/v2/settings',
+    pages: '/wp/v2/pages',
+    publisherLogos: '/web-stories/v1/publisher-logos',
   },
 };
 

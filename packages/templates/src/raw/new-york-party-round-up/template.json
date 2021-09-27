@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,8 @@
             "alt": "Wrinkle texture on dark color",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -69,7 +70,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [47, 36, 35]
+            "baseColor": [47, 36, 35],
+            "isExternal": true
           },
           "x": 84,
           "y": -57,
@@ -315,7 +317,8 @@
             "alt": "Group of people standing inside dome watching concert",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -399,7 +402,6 @@
           "y": 343
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 18, "g": 18, "b": 18 } },
       "type": "page",
       "id": "419b9060-9050-419d-8d2f-396256292c90",
@@ -461,7 +463,8 @@
             "alt": "White distributed particles on black backdrop",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -563,7 +566,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [49, 36, 35]
+            "baseColor": [49, 36, 35],
+            "isExternal": true
           },
           "x": 35,
           "y": 70,
@@ -748,7 +752,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [219, 175, 141]
+            "baseColor": [219, 175, 141],
+            "isExternal": true
           },
           "width": 325,
           "height": 200,
@@ -908,7 +913,6 @@
           "focalY": 50
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 18, "g": 18, "b": 18 } },
       "type": "page",
       "id": "e8b15fdf-cd87-4dc0-aef7-f8b6f4dca8d9",
@@ -963,7 +967,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [172, 60, 60]
+            "baseColor": [172, 60, 60],
+            "isExternal": true
           }
         },
         {
@@ -1064,7 +1069,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [211, 29, 120]
+            "baseColor": [211, 29, 120],
+            "isExternal": true
           },
           "x": 35,
           "y": 68,
@@ -1249,7 +1255,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [250, 106, 208]
+            "baseColor": [250, 106, 208],
+            "isExternal": true
           },
           "width": 325,
           "height": 200,
@@ -1410,7 +1417,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 18, "g": 18, "b": 18 } },
       "type": "page",
@@ -1463,7 +1469,8 @@
             "alt": "Man wearing a cap in a",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1719,7 +1726,6 @@
           "y": 494
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "b059d5d0-9a84-44c0-bf21-b7abc03a6b84",
@@ -1788,7 +1794,8 @@
             "alt": "People partying inside room",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.45 } }
         },
@@ -2587,7 +2594,6 @@
           "y": 276
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 18, "g": 18, "b": 18 } },
       "type": "page",
       "id": "223eb73e-b383-460a-a6b7-d53d8115f768",
@@ -2761,7 +2767,8 @@
             "alt": "Women in club",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": null
         },
@@ -3018,7 +3025,6 @@
           "type": "sticker"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "0f9552e7-ec84-4386-a0b4-6d888f13cb95",
@@ -3080,7 +3086,8 @@
             "alt": "White metal frame in grayscale photography",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3889,7 +3896,6 @@
           "y": 302
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "abb1d4e2-b6a6-4ace-adfa-a70cb2333ca3",
@@ -4063,7 +4069,8 @@
             "alt": "DJ booth in a club",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -4319,7 +4326,6 @@
           "type": "sticker"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "4bc233cc-9552-4785-ad08-1530e7e15691",
@@ -4381,7 +4387,8 @@
             "alt": "Man singing on stage white wearing brown crew-neck shirt",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -5192,7 +5199,6 @@
           "y": 302
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "targets": ["98ae1512-77f3-4e63-a8bb-5e70f543683f"],
@@ -5366,7 +5372,8 @@
             "alt": "Ouf light signage",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -5622,7 +5629,6 @@
           "y": 430
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "6a76995b-bc28-492d-84bb-e7b23d410382",
@@ -5684,7 +5690,8 @@
             "alt": "People dancing inside room with green lights",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -6486,7 +6493,6 @@
           "y": 302
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "targets": ["67df62f6-c055-4a5e-b469-73196d0cd1ad"],
@@ -6662,7 +6668,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [172, 60, 60]
+            "baseColor": [172, 60, 60],
+            "isExternal": true
           }
         },
         {
@@ -6763,7 +6770,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [18, 21, 15]
+            "baseColor": [18, 21, 15],
+            "isExternal": true
           },
           "x": 35,
           "y": 68,
@@ -6873,7 +6881,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [17, 4, 39]
+            "baseColor": [17, 4, 39],
+            "isExternal": true
           },
           "width": 325,
           "height": 200,
@@ -7109,7 +7118,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
