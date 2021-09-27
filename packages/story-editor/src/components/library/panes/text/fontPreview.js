@@ -28,23 +28,26 @@ import {
 import { Text } from '@web-stories-wp/design-system';
 import { useFeature } from 'flagged';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { useFont, useHistory } from '../../../app';
-import StoryPropTypes from '../../../types';
-import stripHTML from '../../../utils/stripHTML';
-import { focusStyle } from '../../panels/shared';
-import usePageAsCanvas from '../../../utils/usePageAsCanvas';
-import useLibrary from '../useLibrary';
+import { useFont, useHistory } from '../../../../app';
+import StoryPropTypes from '../../../../types';
+import stripHTML from '../../../../utils/stripHTML';
+import { focusStyle } from '../../../panels/shared';
+import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
+import useLibrary from '../../useLibrary';
+import LibraryMoveable from '../shared/libraryMoveable';
 
 const Preview = styled.button`
+  position: relative;
   display: flex;
   align-items: center;
   background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};
-  padding: 8px 16px;
+  padding: 8px 0px;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   width: 100%;
   border: none;
@@ -60,11 +63,21 @@ const Preview = styled.button`
 `;
 
 const PreviewText = styled(Text).attrs({ forwardedAs: 'span' })`
-  color: ${({ theme }) => theme.colors.fg.primary};
+  color: ${({ theme, isClone }) =>
+    isClone ? theme.colors.standard.black : theme.colors.fg.primary};
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   font-family: ${({ fontFamily }) => fontFamily};
   line-height: normal;
+  margin: ${({ isClone }) => (isClone ? 0 : '0px 16px')};
+`;
+
+const DragContainer = styled.div`
+  position: absolute;
+  opacity: 0;
+  background-color: ${({ theme }) => theme.colors.opacity.white24};
+  width: ${({ width }) => width}px;
+  line-height: ${({ lineHeight }) => lineHeight}px;
 `;
 
 function FontPreview({ title, element, insertPreset, getPosition }) {
@@ -77,6 +90,11 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     state: { versionNumber },
   } = useHistory();
 
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
+
   const { pageCanvasData } = useLibrary((state) => ({
     pageCanvasData: state.state.pageCanvasData,
   }));
@@ -85,6 +103,7 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
   const enableSmartTextColor = useFeature('enableSmartTextColor');
 
   const presetDataRef = useRef({});
+  const buttonRef = useRef(null);
 
   useEffect(() => {
     maybeEnqueueFontStyle([
@@ -150,11 +169,40 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     trackEvent('insert_text_preset', { name: title });
   }, [insertPreset, element, title]);
 
-  return (
-    <Preview onClick={onClick}>
-      <PreviewText font={font} fontSize={fontSize} fontWeight={fontWeight}>
-        {title}
+  const getTextDisplay = (textProps = {}) => {
+    const { isClone } = textProps;
+    return (
+      <PreviewText
+        font={font}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        {...textProps}
+      >
+        {isClone ? stripHTML(content) : title}
       </PreviewText>
+    );
+  };
+
+  return (
+    <Preview
+      ref={buttonRef}
+      onClick={(e) => e.target === buttonRef.current && onClick()}
+    >
+      {getTextDisplay()}
+      <LibraryMoveable
+        cloneElement={DragContainer}
+        cloneProps={{
+          children: getTextDisplay({
+            fontSize: dataToEditorY(fontSize),
+            isClone: true,
+          }),
+          width: dataToEditorX(element.width),
+          lineHeight: Math.ceil(dataToEditorY(fontSize)),
+        }}
+        elementProps={element}
+        type={'text'}
+        onClick={onClick}
+      />
     </Preview>
   );
 }

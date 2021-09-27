@@ -26,9 +26,9 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Section, SearchInput } from '../../common';
-import { FontPreview } from '../../text';
 import { Pane as SharedPane } from '../shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
+import FontPreview from './fontPreview';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
