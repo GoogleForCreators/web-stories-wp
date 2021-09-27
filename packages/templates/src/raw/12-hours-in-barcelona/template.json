@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -33,7 +33,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [160, 161, 171]
+            "baseColor": [160, 161, 171],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -374,7 +375,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [77, 77, 71]
+            "baseColor": [77, 77, 71],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
@@ -561,7 +563,8 @@
             "alt": "Dashed border line",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 0,
           "y": 265,
@@ -900,7 +903,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [197, 204, 215]
+            "baseColor": [197, 204, 215],
+            "isExternal": true
           }
         },
         {
@@ -1247,7 +1251,8 @@
             "alt": "Dashed border line",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0.5,
@@ -1521,7 +1526,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [131, 90, 52]
+            "baseColor": [131, 90, 52],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
@@ -1691,7 +1697,8 @@
             "alt": "Dashed border line",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 0,
           "y": 285,
@@ -1952,7 +1959,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [134, 177, 214]
+            "baseColor": [134, 177, 214],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -2116,7 +2124,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2369,7 +2378,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [40, 33, 29]
+            "baseColor": [40, 33, 29],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -2536,7 +2546,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2797,7 +2808,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [39, 36, 34]
+            "baseColor": [39, 36, 34],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -2895,7 +2907,8 @@
             "alt": "Dashed border line",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -3203,7 +3216,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [31, 31, 27]
+            "baseColor": [31, 31, 27],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
@@ -3373,7 +3387,8 @@
             "alt": "Dashed border line",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 0,
           "y": 256,
@@ -3635,7 +3650,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [139, 95, 73]
+            "baseColor": [139, 95, 73],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3799,7 +3815,8 @@
             "alt": "Dashed border line",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -4053,7 +4070,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [203, 208, 222]
+            "baseColor": [203, 208, 222],
+            "isExternal": true
           }
         },
         {
@@ -4074,7 +4092,8 @@
             "alt": "Dashed border line",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -4342,7 +4361,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "overlay": null
         },
@@ -4496,7 +4516,8 @@
             "alt": "Polaroids photo frames",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 56,
@@ -4541,7 +4562,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [205, 217, 211]
+            "baseColor": [205, 217, 211],
+            "isExternal": true
           }
         },
         {
@@ -4838,7 +4860,8 @@
             "alt": "Polaroids photo frames",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 116,
@@ -4883,7 +4906,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [186, 186, 182]
+            "baseColor": [186, 186, 182],
+            "isExternal": true
           }
         }
       ],

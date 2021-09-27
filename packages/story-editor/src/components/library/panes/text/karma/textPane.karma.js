@@ -58,6 +58,32 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     await fixture.events.click(fixture.editor.library.text.preset(name));
   }
 
+  describe('Adding text presets', () => {
+    beforeEach(async () => {
+      await fixture.editor.library.textTab.click();
+      // Give some time for everything to be ready for the tests.
+      await fixture.events.sleep(800);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[0].node);
+    });
+
+    it('should add text preset via dragging from the preview', async () => {
+      // Only background initially
+      expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+
+      const title = fixture.editor.library.text.preset('Title 1');
+      const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
+      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+        moveRel(title, 10, 10),
+        down(),
+        /* The steps give time for Moveable to react and display a clone to drag */
+        moveRel(bgFrame, 50, 50, { steps: 20 }),
+        up(),
+      ]);
+      // Now background + 1 extra element
+      expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
+    });
+  });
+
   describe('Adding texts consecutively', () => {
     beforeEach(async () => {
       await fixture.editor.library.textTab.click();

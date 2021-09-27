@@ -394,6 +394,7 @@ class Dashboard extends Service_Base {
 					'users'          => '/web-stories/v1/users/',
 					'templates'      => sprintf( '/web-stories/v1/%s/', $templates_rest_base ),
 					'settings'       => '/web-stories/v1/settings/',
+					'pages'          => '/wp/v2/pages/',
 					'publisherLogos' => '/web-stories/v1/publisher-logos/',
 				],
 				'maxUpload'             => $max_upload_size,

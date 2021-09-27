@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -33,7 +33,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [174, 164, 157]
+            "baseColor": [174, 164, 157],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -250,7 +251,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [161, 162, 171]
+            "baseColor": [161, 162, 171],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -495,7 +497,8 @@
             "alt": "Woman in White and Brown Floral Dress",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -808,7 +811,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [221, 219, 218]
+            "baseColor": [221, 219, 218],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 1, "g": 1, "b": 1, "a": 0.4 } }
         },
@@ -1185,7 +1189,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [86, 77, 61]
+            "baseColor": [86, 77, 61],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 48,
@@ -1228,7 +1233,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [38, 30, 22]
+            "baseColor": [38, 30, 22],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 193,
@@ -1290,7 +1296,8 @@
             "alt": "Person Face in Close Up PhotoWoman Sitting on a Sofa Chair in a Room",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": -334,
@@ -1538,7 +1545,8 @@
             "alt": "Woman Sitting on a Sofa Chair in a Room",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -1843,7 +1851,8 @@
             "alt": "Man in Brown T-shirt Standing Beside Woman in Brown Brassiere",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": -334,
@@ -2079,7 +2088,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [213, 158, 118]
+            "baseColor": [213, 158, 118],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
@@ -2327,7 +2337,8 @@
             "alt": "Girl in pinstriped shirt kissing the woman's forehead",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2632,7 +2643,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [34, 44, 42]
+            "baseColor": [34, 44, 42],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 0,
@@ -2874,7 +2886,8 @@
             "alt": "Man Taking Video With Woman Standing Inside Room",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": -334,
@@ -3267,7 +3280,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [49, 34, 24]
+            "baseColor": [49, 34, 24],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 193,
@@ -3307,7 +3321,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [48, 34, 24]
+            "baseColor": [48, 34, 24],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 193,
@@ -3534,7 +3549,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [220, 188, 161]
+            "baseColor": [220, 188, 161],
+            "isExternal": true
           }
         },
         {
@@ -3687,7 +3703,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [83, 58, 44]
+            "baseColor": [83, 58, 44],
+            "isExternal": true
           }
         },
         {

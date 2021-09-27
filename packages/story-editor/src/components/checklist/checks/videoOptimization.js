@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { sprintf, _n, __ } from '@web-stories-wp/i18n';
+import { canTranscodeResource } from '@web-stories-wp/media';
 import styled from 'styled-components';
 
 /**
@@ -50,20 +51,28 @@ const OptimizeButton = styled(Button)`
 `;
 
 export function videoElementsNotOptimized(element = {}) {
-  if (element.resource?.isTranscoding) {
+  if (!element.resource) {
+    return false;
+  }
+  const {
+    isTranscoding,
+    isOptimized,
+    height = 0,
+    width = 0,
+  } = element.resource;
+  if (isTranscoding) {
     return true;
   }
 
   if (
     element.type !== 'video' ||
-    element.resource?.local ||
-    element.resource?.isOptimized
+    isOptimized ||
+    !canTranscodeResource(element.resource)
   ) {
     return false;
   }
 
-  const videoArea =
-    (element.resource?.height ?? 0) * (element.resource?.width ?? 0);
+  const videoArea = height * width;
   const isLargeVideo =
     videoArea >=
     MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
@@ -124,7 +133,7 @@ export const BulkVideoOptimization = () => {
   const processVideoElement = useCallback(
     async (element) => {
       if (
-        !element.resource.isTranscoding &&
+        canTranscodeResource(element.resource) &&
         state[element.resource.id] !== actionTypes.uploading
       ) {
         dispatch({ type: actionTypes.uploading, element });

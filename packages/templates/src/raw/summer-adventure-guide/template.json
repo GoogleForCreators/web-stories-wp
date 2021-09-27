@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -37,7 +37,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -859,7 +860,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [68, 63, 50]
+            "baseColor": [68, 63, 50],
+            "isExternal": true
           }
         },
         {
@@ -1186,7 +1188,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [57, 47, 25]
+            "baseColor": [57, 47, 25],
+            "isExternal": true
           }
         },
         {
@@ -1515,7 +1518,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [147, 131, 108]
+            "baseColor": [147, 131, 108],
+            "isExternal": true
           },
           "type": "image",
           "x": 66,
@@ -1571,7 +1575,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [211, 204, 197]
+            "baseColor": [211, 204, 197],
+            "isExternal": true
           }
         },
         {
@@ -1898,7 +1903,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [209, 207, 209]
+            "baseColor": [209, 207, 209],
+            "isExternal": true
           }
         },
         {
@@ -2228,7 +2234,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [211, 208, 214]
+            "baseColor": [211, 208, 214],
+            "isExternal": true
           },
           "x": 66,
           "y": 19,
@@ -2283,7 +2290,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [44, 42, 36]
+            "baseColor": [44, 42, 36],
+            "isExternal": true
           }
         },
         {
@@ -2593,7 +2601,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [36, 30, 31]
+            "baseColor": [36, 30, 31],
+            "isExternal": true
           }
         },
         {
@@ -2923,7 +2932,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [193, 176, 150]
+            "baseColor": [193, 176, 150],
+            "isExternal": true
           },
           "x": 66,
           "y": 19,
@@ -3455,7 +3465,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [139, 123, 99]
+            "baseColor": [139, 123, 99],
+            "isExternal": true
           },
           "type": "image",
           "x": 80.5,
@@ -3511,7 +3522,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [55, 64, 60]
+            "baseColor": [55, 64, 60],
+            "isExternal": true
           },
           "type": "image",
           "x": 245.5,
@@ -3567,7 +3579,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [176, 188, 197]
+            "baseColor": [176, 188, 197],
+            "isExternal": true
           },
           "type": "image",
           "x": 73.5,
@@ -4056,7 +4069,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [65, 51, 37]
+            "baseColor": [65, 51, 37],
+            "isExternal": true
           },
           "type": "image",
           "x": 60.5,
