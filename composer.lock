@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ede265bda73d7d743cb15046d05c7c70",
+    "content-hash": "4d2e2200ef5017ac6b437094c7e21479",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -1139,16 +1139,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "1.3.4",
+            "version": "1.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "31467aeb3ca3188158613322d66df81cedd86626"
+                "reference": "472fa8ca4e55483d55ee1e73c963718c4393791d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/31467aeb3ca3188158613322d66df81cedd86626",
-                "reference": "31467aeb3ca3188158613322d66df81cedd86626",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/472fa8ca4e55483d55ee1e73c963718c4393791d",
+                "reference": "472fa8ca4e55483d55ee1e73c963718c4393791d",
                 "shasum": ""
             },
             "require": {
@@ -1202,9 +1202,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mockery/mockery/issues",
-                "source": "https://github.com/mockery/mockery/tree/1.3.4"
+                "source": "https://github.com/mockery/mockery/tree/1.3.5"
             },
-            "time": "2021-02-24T09:51:00+00:00"
+            "time": "2021-09-13T15:33:03+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3459,7 +3459,6 @@
                 "issues": "https://github.com/sebastianbergmann/resource-operations/issues",
                 "source": "https://github.com/sebastianbergmann/resource-operations/tree/master"
             },
-            "abandoned": true,
             "time": "2015-07-28T20:34:47+00:00"
         },
         {
@@ -4131,27 +4130,25 @@
         },
         {
             "name": "yoast/wp-test-utils",
-            "version": "0.2.2",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Yoast/wp-test-utils.git",
-                "reference": "896f7640d86162ff7a0dc6ce59f8837f284521c5"
+                "reference": "21df3a08974ee62f489f64e34be7f26a32ec872c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Yoast/wp-test-utils/zipball/896f7640d86162ff7a0dc6ce59f8837f284521c5",
-                "reference": "896f7640d86162ff7a0dc6ce59f8837f284521c5",
+                "url": "https://api.github.com/repos/Yoast/wp-test-utils/zipball/21df3a08974ee62f489f64e34be7f26a32ec872c",
+                "reference": "21df3a08974ee62f489f64e34be7f26a32ec872c",
                 "shasum": ""
             },
             "require": {
                 "brain/monkey": "^2.6.0",
                 "php": ">=5.6",
-                "yoast/phpunit-polyfills": "^1.0.0"
+                "yoast/phpunit-polyfills": "^1.0.1"
             },
             "require-dev": {
-                "php-parallel-lint/php-console-highlighter": "^0.5",
-                "php-parallel-lint/php-parallel-lint": "^1.3.0",
-                "yoast/yoastcs": "^2.1.0"
+                "yoast/yoastcs": "^2.2.0"
             },
             "type": "library",
             "extra": {
@@ -4163,6 +4160,10 @@
             "autoload": {
                 "classmap": [
                     "src/"
+                ],
+                "exclude-from-classmap": [
+                    "/src/WPIntegration/TestCase.php",
+                    "/src/WPIntegration/TestCaseNoPolyfills.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4193,7 +4194,7 @@
                 "issues": "https://github.com/Yoast/wp-test-utils/issues",
                 "source": "https://github.com/Yoast/wp-test-utils"
             },
-            "time": "2021-06-21T03:45:02+00:00"
+            "time": "2021-09-27T05:50:36+00:00"
         }
     ],
     "aliases": [],
