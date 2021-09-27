@@ -209,7 +209,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       // Enable the smart colors first.
       await fixture.editor.library.textTab.click();
       const toggle = fixture.screen.getByRole('checkbox', {
-        name: 'Use auto styled text',
+        name: 'Adaptive text colors',
       });
       await fixture.events.click(toggle);
 

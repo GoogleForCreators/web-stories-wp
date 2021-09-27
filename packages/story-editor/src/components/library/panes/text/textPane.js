@@ -111,7 +111,7 @@ function TextPane(props) {
           htmlFor={toggleId}
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
         >
-          {__('Use auto styled text', 'web-stories')}
+          {__('Adaptive text colors', 'web-stories')}
         </Text>
         <Tooltip
           title={__(
