@@ -2,7 +2,7 @@
   "name": "@web-stories-wp/templates",
   "private": true,
   "engines": {
-    "node": ">= 15",
+    "node": ">= 16",
     "npm": "~7"
   },
   "exports": {
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@web-stories-wp/stickers": "*",
-    "puppeteer": "^10.2.0",
+    "puppeteer": "^10.4.0",
     "@web-stories-wp/date": "*"
   }
 }

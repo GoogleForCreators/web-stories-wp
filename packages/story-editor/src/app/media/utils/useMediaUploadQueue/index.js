@@ -42,7 +42,6 @@ import { useUploader } from '../../../uploader';
 import { noop } from '../../../../utils/noop';
 import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
-import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
 import * as reducer from './reducer';
 
@@ -322,13 +321,11 @@ function useMediaUploadQueue() {
           const trackTiming = getTimeTracker('load_upload_media');
 
           try {
-            const attachment = await uploadFile(newFile, additionalData);
-
             // The newly uploaded file won't have a poster yet.
             // However, we'll likely still have one on file.
             // Add it back so we're never without one.
             // The final poster will be uploaded later by uploadVideoPoster().
-            newResource = getResourceFromAttachment(attachment);
+            newResource = await uploadFile(newFile, additionalData);
           } catch (error) {
             // Cancel uploading if there were any errors.
             cancelUploading({ id, error });

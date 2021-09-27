@@ -23,7 +23,6 @@ import {
   useEffect,
   useRef,
   useState,
-  useMemo,
   useFocusOut,
 } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
@@ -84,28 +83,24 @@ function PublisherLogoSettings({
   const gridRef = useRef();
   const itemRefs = useRef({});
 
-  const [activePublisherLogoId, setActivePublisherLogoId] = useState(null);
+  const [focusedPublisherLogoId, setFocusedPublisherLogoId] = useState(null);
+
   const [indexRemoved, setIndexRemoved] = useState(null);
 
   const [contextMenuId, setContextMenuId] = useState(null);
 
-  const publisherLogosById = useMemo(
-    () => publisherLogos.map(({ id }) => id),
-    [publisherLogos]
-  );
+  const hasOnlyOneLogo = publisherLogos.length === 1;
 
-  const hasOnlyOneLogo = publisherLogosById.length === 1;
-
-  const publisherLogoCount = useRef(publisherLogosById.length);
+  const publisherLogoCount = useRef(publisherLogos.length);
 
   const handleRemoveLogoClick = useCallback(
     (publisherLogo, idx) => {
       setContextMenuId(-1);
       onRemoveLogo?.(publisherLogo);
       setIndexRemoved(idx);
-      publisherLogoCount.current = publisherLogosById.length;
+      publisherLogoCount.current = publisherLogos.length;
     },
-    [onRemoveLogo, publisherLogosById.length]
+    [onRemoveLogo, publisherLogos.length]
   );
 
   const handleUpdateDefaultLogo = useCallback(
@@ -120,9 +115,9 @@ function PublisherLogoSettings({
   useEffect(() => {
     if (
       Boolean(indexRemoved?.toString()) &&
-      publisherLogosById.length !== publisherLogoCount.current
+      publisherLogos.length !== publisherLogoCount.current
     ) {
-      if (publisherLogosById.length === 0) {
+      if (publisherLogos.length === 0) {
         // if the user has removed their last publisher logo, the logo grid will not render
         // the first element child of containerRef becomes the input upload
         // upload will always be present unless upload is not enabled.
@@ -132,34 +127,32 @@ function PublisherLogoSettings({
       }
 
       const moveItemFocusByIndex =
-        indexRemoved > 0
-          ? publisherLogosById[indexRemoved - 1]
-          : publisherLogosById[0];
+        indexRemoved > 0 ? publisherLogos[indexRemoved - 1] : publisherLogos[0];
 
-      setActivePublisherLogoId(moveItemFocusByIndex);
-      itemRefs.current[moveItemFocusByIndex].firstChild.focus();
+      setFocusedPublisherLogoId(moveItemFocusByIndex.id);
+      itemRefs.current[moveItemFocusByIndex.id].firstChild.focus();
       return setIndexRemoved(null);
     }
     return undefined;
-  }, [indexRemoved, publisherLogosById, setActivePublisherLogoId]);
+  }, [indexRemoved, publisherLogos, setFocusedPublisherLogoId]);
 
   useGridViewKeys({
     containerRef,
     gridRef,
     itemRefs,
     isRTL,
-    currentItemId: activePublisherLogoId,
+    currentItemId: focusedPublisherLogoId,
     items: publisherLogos,
   });
 
   const onMenuItemToggle = useCallback((newMenuId) => {
-    setActivePublisherLogoId(newMenuId);
+    setFocusedPublisherLogoId(newMenuId);
   }, []);
 
   useFocusOut(
     containerRef,
     () => {
-      setActivePublisherLogoId(null);
+      setFocusedPublisherLogoId(null);
       setContextMenuId(null);
     },
     []
@@ -195,12 +188,12 @@ function PublisherLogoSettings({
                   value: contextMenuId,
                 }}
                 index={idx}
-                isActive={activePublisherLogoId === publisherLogo.id}
+                isFocused={focusedPublisherLogoId === publisherLogo.id}
                 onMenuItemToggle={onMenuItemToggle}
                 onRemoveLogo={handleRemoveLogoClick}
                 onUpdateDefaultLogo={handleUpdateDefaultLogo}
                 publisherLogo={publisherLogo}
-                setActivePublisherLogoId={setActivePublisherLogoId}
+                setFocusedPublisherLogoId={setFocusedPublisherLogoId}
                 showLogoContextMenu={!hasOnlyOneLogo}
               />
             ))}

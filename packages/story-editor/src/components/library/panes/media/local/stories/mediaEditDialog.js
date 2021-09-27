@@ -48,7 +48,7 @@ export const _default = () => {
     id: 123,
     type: 'image',
     mimeType: 'image/png',
-    creationDate: Date.now(),
+    creationDate: '2019-11-13T18:15:52Z',
     src: testImage,
     width: 910,
     height: 675,
