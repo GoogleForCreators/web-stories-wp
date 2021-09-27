@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -34,7 +34,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [42, 42, 42]
+            "baseColor": [42, 42, 42],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 68, "g": 35, "b": 131, "a": 0.7 } }
         },
@@ -345,7 +346,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [32, 30, 29]
+            "baseColor": [32, 30, 29],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } }
         },
@@ -617,7 +619,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [45, 53, 54]
+            "baseColor": [45, 53, 54],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -748,7 +751,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [195, 188, 176]
+            "baseColor": [195, 188, 176],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } }
         },
@@ -1238,7 +1242,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [56, 56, 56]
+            "baseColor": [56, 56, 56],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 68, "g": 35, "b": 131, "a": 0.6 } }
         },
@@ -1397,7 +1402,8 @@
             "isOptimized": false,
             "isMuted": false,
             "provider": "local",
-            "baseColor": [204, 209, 207]
+            "baseColor": [204, 209, 207],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 87,
@@ -1472,7 +1478,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [35, 28, 31]
+            "baseColor": [35, 28, 31],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } }
         },
@@ -1954,7 +1961,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [35, 28, 31]
+            "baseColor": [35, 28, 31],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
@@ -2789,7 +2797,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 68, "g": 35, "b": 131, "a": 0.6 } }
         },
@@ -2948,7 +2957,8 @@
             "isOptimized": false,
             "isMuted": false,
             "provider": "local",
-            "baseColor": [204, 209, 207]
+            "baseColor": [204, 209, 207],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 0,
@@ -3023,7 +3033,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [220, 218, 205]
+            "baseColor": [220, 218, 205],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } }
         },
@@ -3514,7 +3525,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [159, 172, 160]
+            "baseColor": [159, 172, 160],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 68, "g": 35, "b": 131, "a": 0.7 } }
         },
@@ -3673,7 +3685,8 @@
             "isOptimized": false,
             "isMuted": false,
             "provider": "local",
-            "baseColor": [204, 209, 207]
+            "baseColor": [204, 209, 207],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 50,
@@ -3754,7 +3767,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [51, 50, 33]
+            "baseColor": [51, 50, 33],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 237,
@@ -3787,7 +3801,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [44, 54, 61]
+            "baseColor": [44, 54, 61],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 97,
@@ -3822,7 +3837,8 @@
             "isOptimized": false,
             "isMuted": false,
             "provider": "local",
-            "baseColor": [61, 61, 59]
+            "baseColor": [61, 61, 59],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 98,
@@ -4376,7 +4392,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [29, 43, 30]
+            "baseColor": [29, 43, 30],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 95,

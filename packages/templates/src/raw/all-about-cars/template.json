@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -34,7 +34,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [63, 62, 59]
+            "baseColor": [63, 62, 59],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -275,7 +276,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [189, 184, 183]
+            "baseColor": [189, 184, 183],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -928,7 +930,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 76,
@@ -1288,7 +1291,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 133,
@@ -1344,7 +1348,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 133,
@@ -1400,7 +1405,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 133,
@@ -1869,7 +1875,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 103,
@@ -1908,7 +1915,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 103,
@@ -1947,7 +1955,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 103,
@@ -1986,7 +1995,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 103,
@@ -2025,7 +2035,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 103,
@@ -2064,7 +2075,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 103,
@@ -2103,7 +2115,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 103,
@@ -2142,7 +2155,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 103,
@@ -2181,7 +2195,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 103,
@@ -2220,7 +2235,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 103,
@@ -2259,7 +2275,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 103,
@@ -2422,7 +2439,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [32, 42, 46]
+            "baseColor": [32, 42, 46],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -2719,7 +2737,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [57, 54, 56]
+            "baseColor": [57, 54, 56],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3024,7 +3043,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [185, 194, 208]
+            "baseColor": [185, 194, 208],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3330,7 +3350,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": true,
-            "isMuted": true
+            "isMuted": true,
+            "isExternal": true
           },
           "tracks": [],
           "overlay": {
@@ -3635,7 +3656,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [102, 86, 75]
+            "baseColor": [102, 86, 75],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -4329,7 +4351,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 127,
@@ -4786,7 +4809,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 127,
@@ -5243,7 +5267,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 127,
@@ -5384,7 +5409,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [199, 199, 193]
+            "baseColor": [199, 199, 193],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 47,
@@ -5417,7 +5443,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [204, 209, 207]
+            "baseColor": [204, 209, 207],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 86,

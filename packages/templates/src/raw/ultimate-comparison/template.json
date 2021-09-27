@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -32,7 +32,8 @@
             "alt": "man in white dress shirt holding smartphone",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -356,7 +357,8 @@
             "alt": "man in black hoodie wearing black headphones",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.2 } }
         },
@@ -516,7 +518,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [211, 219, 219]
+            "baseColor": [211, 219, 219],
+            "isExternal": true
           }
         },
         {
@@ -980,7 +983,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [43, 45, 51]
+            "baseColor": [43, 45, 51],
+            "isExternal": true
           }
         },
         {
@@ -1013,7 +1017,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [202, 198, 194]
+            "baseColor": [202, 198, 194],
+            "isExternal": true
           }
         },
         {
@@ -1786,7 +1791,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [211, 219, 219]
+            "baseColor": [211, 219, 219],
+            "isExternal": true
           }
         },
         {
@@ -2249,7 +2255,8 @@
             "alt": "Woman Looking Up While Wearing Headphones",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2282,7 +2289,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [69, 69, 51]
+            "baseColor": [69, 69, 51],
+            "isExternal": true
           }
         },
         {
@@ -3056,7 +3064,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [45, 47, 50]
+            "baseColor": [45, 47, 50],
+            "isExternal": true
           }
         },
         {
@@ -3511,7 +3520,8 @@
             "alt": "Man in Blue Crew Neck T-shirt Wearing Headphones",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": -1,
@@ -3542,7 +3552,8 @@
             "alt": "man in black jacket wearing black headphones",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 267,
@@ -4341,7 +4352,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [235, 234, 234]
+            "baseColor": [235, 234, 234],
+            "isExternal": true
           }
         },
         {
@@ -4796,7 +4808,8 @@
             "alt": "Man Wearing White Headphones",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": -1,
@@ -4827,7 +4840,8 @@
             "alt": "Woman in Gray Sweatshirt Wearing Headphone",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 266,
@@ -5602,7 +5616,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [23, 23, 23]
+            "baseColor": [23, 23, 23],
+            "isExternal": true
           }
         },
         {
@@ -5633,7 +5648,8 @@
             "alt": "Man Holding Smartphone",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -5961,7 +5977,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [205, 150, 104]
+            "baseColor": [205, 150, 104],
+            "isExternal": true
           }
         },
         {
@@ -5985,7 +6002,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [220, 213, 208]
+            "baseColor": [220, 213, 208],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 295,
@@ -6390,7 +6408,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [23, 23, 23]
+            "baseColor": [23, 23, 23],
+            "isExternal": true
           }
         },
         {
@@ -6424,7 +6443,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [205, 150, 104]
+            "baseColor": [205, 150, 104],
+            "isExternal": true
           }
         },
         {
@@ -8112,7 +8132,8 @@
             "alt": "Joyful millennial woman in headphones listening to music in park",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -8252,7 +8273,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [23, 23, 23]
+            "baseColor": [23, 23, 23],
+            "isExternal": true
           }
         },
         {
@@ -8392,7 +8414,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [107, 101, 90]
+            "baseColor": [107, 101, 90],
+            "isExternal": true
           }
         },
         {
