@@ -2,7 +2,7 @@
   "name": "@web-stories-wp/migration",
   "private": true,
   "engines": {
-    "node": ">= 15",
+    "node": ">= 16",
     "npm": "~7"
   },
   "type": "module",
@@ -18,7 +18,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^13.0.4",
-    "rollup": "^2.56.3"
+    "@rollup/plugin-node-resolve": "^13.0.5",
+    "rollup": "^2.57.0"
   }
 }

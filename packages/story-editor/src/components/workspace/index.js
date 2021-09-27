@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import Inspector from '../inspector';
@@ -24,13 +29,13 @@ import { VideoTrimProvider } from '../videoTrim';
 import ErrorBoundary from '../errorBoundary';
 import { CanvasArea, InspectorArea } from './layout';
 
-function Workspace() {
+function Workspace({ header }) {
   return (
     <VideoTrimProvider>
       <RichTextProvider>
         <CanvasArea>
           <ErrorBoundary>
-            <Canvas />
+            <Canvas header={header} />
           </ErrorBoundary>
         </CanvasArea>
         <InspectorArea>
@@ -42,5 +47,9 @@ function Workspace() {
     </VideoTrimProvider>
   );
 }
+
+Workspace.propTypes = {
+  header: PropTypes.node,
+};
 
 export default Workspace;

@@ -26,7 +26,8 @@
 
 namespace Google\Web_Stories\Media;
 
-use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\REST_API\Stories_Terms_Controller;
+use Google\Web_Stories\Taxonomy\Taxonomy_Base;
 use Google\Web_Stories\Traits\Screen;
 use WP_Query;
 use WP_Post;
@@ -37,15 +38,22 @@ use WP_REST_Request;
  *
  * @package Google\Web_Stories\Media
  */
-class Media_Source_Taxonomy extends Service_Base {
+class Media_Source_Taxonomy extends Taxonomy_Base {
 	use Screen;
 
 	/**
-	 * Key for media post type.
+	 * Taxonomy key.
 	 *
 	 * @var string
 	 */
-	const TAXONOMY_SLUG = 'web_story_media_source';
+	protected $taxonomy_slug = 'web_story_media_source';
+
+	/**
+	 * Post type.
+	 *
+	 * @var string
+	 */
+	protected $taxonomy_post_type = 'attachment';
 
 	/**
 	 * Init.
@@ -69,24 +77,21 @@ class Media_Source_Taxonomy extends Service_Base {
 	}
 
 	/**
-	 * Register taxonomy for attachment post type.
+	 * Taxonomy args.
 	 *
-	 * @since 1.10.0
+	 * @since 1.12.0
 	 *
-	 * @return void
+	 * @return array
 	 */
-	protected function register_taxonomy() {
-		register_taxonomy(
-			self::TAXONOMY_SLUG,
-			'attachment',
-			[
-				'label'        => __( 'Source', 'web-stories' ),
-				'public'       => false,
-				'rewrite'      => false,
-				'hierarchical' => false,
-				'show_in_rest' => true,
-			]
-		);
+	protected function taxonomy_args(): array {
+		return [
+			'label'                 => __( 'Source', 'web-stories' ),
+			'public'                => false,
+			'rewrite'               => false,
+			'hierarchical'          => false,
+			'show_in_rest'          => true,
+			'rest_controller_class' => Stories_Terms_Controller::class,
+		];
 	}
 
 	/**
@@ -99,7 +104,7 @@ class Media_Source_Taxonomy extends Service_Base {
 	public function rest_api_init() {
 		// Custom field, as built in term update require term id and not slug.
 		register_rest_field(
-			'attachment',
+			$this->taxonomy_post_type,
 			'media_source',
 			[
 
@@ -153,7 +158,7 @@ class Media_Source_Taxonomy extends Service_Base {
 	public function get_callback_media_source( $prepared ) {
 		$id = $prepared['id'];
 
-		$terms = get_the_terms( $id, self::TAXONOMY_SLUG );
+		$terms = get_the_terms( $id, $this->taxonomy_slug );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
 			$term = array_shift( $terms );
 
@@ -174,7 +179,7 @@ class Media_Source_Taxonomy extends Service_Base {
 	 * @return true|\WP_Error
 	 */
 	public function update_callback_media_source( $value, $object ) {
-		$check = wp_set_object_terms( $object->ID, $value, self::TAXONOMY_SLUG );
+		$check = wp_set_object_terms( $object->ID, $value, $this->taxonomy_slug );
 		if ( is_wp_error( $check ) ) {
 			return $check;
 		}
@@ -192,7 +197,7 @@ class Media_Source_Taxonomy extends Service_Base {
 	private function get_exclude_tax_query( array $args ): array {
 		$tax_query = [
 			[
-				'taxonomy' => self::TAXONOMY_SLUG,
+				'taxonomy' => $this->taxonomy_slug,
 				'field'    => 'slug',
 				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 				'operator' => 'NOT IN',

@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef, useMemo } from '@web-stories-wp/react';
+import { forwardRef } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
@@ -39,58 +39,51 @@ export const GridItem = forwardRef(
     {
       contextMenuId,
       index,
-      isActive,
       onMenuItemToggle,
       onRemoveLogo,
       onUpdateDefaultLogo,
       publisherLogo,
-      setActivePublisherLogoId,
+      setFocusedPublisherLogoId,
       showLogoContextMenu,
+      isFocused,
     },
     ref
   ) => {
-    const items = useMemo(
-      () => [
-        {
-          label: __('Set as Default', 'web-stories'),
-          onClick: (ev) => {
-            ev.preventDefault();
-            onUpdateDefaultLogo(publisherLogo);
-          },
-          disabled: publisherLogo.isDefault,
+    const items = [
+      {
+        label: __('Set as Default', 'web-stories'),
+        onClick: (ev) => {
+          ev.preventDefault();
+          onUpdateDefaultLogo(publisherLogo);
         },
-        {
-          label: __('Delete', 'web-stories'),
-          onClick: (ev) => {
-            ev.preventDefault();
-            onRemoveLogo(publisherLogo, index);
-          },
+        disabled: publisherLogo.active,
+      },
+      {
+        label: __('Delete', 'web-stories'),
+        onClick: (ev) => {
+          ev.preventDefault();
+          onRemoveLogo(publisherLogo, index);
         },
-      ],
-      [index, publisherLogo, onRemoveLogo, onUpdateDefaultLogo]
-    );
-
-    if (!publisherLogo) {
-      return null;
-    }
+      },
+    ];
 
     return (
       <GridItemContainer
         ref={ref}
         role="listitem"
-        active={publisherLogo.isDefault}
+        active={publisherLogo.active}
         data-testid={`publisher-logo-${index}`}
       >
         <GridItemButton
           onFocus={() => {
-            setActivePublisherLogoId(publisherLogo.id);
+            setFocusedPublisherLogoId(publisherLogo.id);
           }}
           data-testid={`uploaded-publisher-logo-${index}`}
-          isSelected={isActive}
-          tabIndex={isActive ? 0 : -1}
+          isSelected={isFocused}
+          tabIndex={isFocused ? 0 : -1}
           onClick={(e) => {
             e.preventDefault();
-            setActivePublisherLogoId(publisherLogo.id);
+            setFocusedPublisherLogoId(publisherLogo.id);
           }}
           aria-label={sprintf(
             /* translators: %s: logo title.*/
@@ -98,9 +91,9 @@ export const GridItem = forwardRef(
             publisherLogo.title
           )}
         >
-          <Logo src={publisherLogo.src} alt={publisherLogo.title} />
+          <Logo src={publisherLogo.url} alt={publisherLogo.title} />
         </GridItemButton>
-        {publisherLogo.isDefault && (
+        {publisherLogo.active && (
           <CenterMutedText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
           >
@@ -109,7 +102,7 @@ export const GridItem = forwardRef(
         )}
         {showLogoContextMenu && (
           <PopoverLogoContextMenu
-            isActive={isActive}
+            isActive={isFocused}
             idx={index}
             items={items}
             publisherLogo={publisherLogo}
@@ -124,12 +117,12 @@ export const GridItem = forwardRef(
 GridItem.propTypes = {
   contextMenuId: PopoverLogoContextMenuPropTypes.contextMenuId,
   index: PopoverLogoContextMenuPropTypes.idx,
-  isActive: PopoverLogoContextMenuPropTypes.isActive,
   onMenuItemToggle: PopoverLogoContextMenuPropTypes.onMenuItemToggle,
   onRemoveLogo: PropTypes.func.isRequired,
   onUpdateDefaultLogo: PropTypes.func.isRequired,
   publisherLogo: PopoverLogoContextMenuPropTypes.publisherLogo,
-  setActivePublisherLogoId: PropTypes.func.isRequired,
+  setFocusedPublisherLogoId: PropTypes.func.isRequired,
   showLogoContextMenu: PropTypes.bool,
+  isFocused: PropTypes.bool,
 };
 GridItem.displayName = 'GridItem';

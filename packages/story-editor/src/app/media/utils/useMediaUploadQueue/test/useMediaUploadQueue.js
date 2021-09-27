@@ -38,7 +38,8 @@ jest.mock('../../useFFmpeg', () => ({
   })),
 }));
 
-const mockAttachment = {
+// todo: update to be resource object.
+const mockResource = {
   id: 123,
   guid: {
     rendered: 'guid-123',
@@ -65,7 +66,7 @@ const mockAttachment = {
 
 const mockUploadFile = jest
   .fn()
-  .mockImplementation(() => Promise.resolve(mockAttachment));
+  .mockImplementation(() => Promise.resolve(mockResource));
 
 jest.mock('../../../../uploader', () => ({
   useUploader: jest.fn(() => ({

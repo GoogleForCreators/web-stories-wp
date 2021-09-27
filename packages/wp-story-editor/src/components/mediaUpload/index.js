@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import TitleMissingDialog from '../titleMissingDialog';
+import { useMediaPicker } from './mediaPicker';
 
-export default {
-  title: 'Stories Editor/Components/Dialog/Title-Missing',
-  component: TitleMissingDialog,
+function MediaUpload({ render, ...rest }) {
+  const open = useMediaPicker(rest);
+
+  return render(open);
+}
+
+MediaUpload.propTypes = {
+  render: PropTypes.func.isRequired,
+  ...useMediaPicker.propTypes,
 };
 
-export const _default = () => {
-  return (
-    <TitleMissingDialog
-      isOpen
-      onClose={action('close')}
-      onFix={action('fix')}
-      onIgnore={action('ignore')}
-    />
-  );
-};
+export default MediaUpload;

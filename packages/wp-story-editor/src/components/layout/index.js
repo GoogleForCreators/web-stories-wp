@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { InterfaceSkeleton } from '@web-stories-wp/story-editor';
 
-export default function reshapePublisherLogo({ id, source_url, title }) {
-  return {
-    id,
-    src: source_url,
-    title: title?.rendered || '',
-  };
+/**
+ * Internal dependencies
+ */
+import { default as Header } from '../header';
+import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
+
+function Layout() {
+  return (
+    <MetaBoxesProvider>
+      <InterfaceSkeleton header={<Header />}>
+        <MetaBoxes />
+      </InterfaceSkeleton>
+    </MetaBoxesProvider>
+  );
 }
+
+export default Layout;

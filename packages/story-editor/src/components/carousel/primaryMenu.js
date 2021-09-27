@@ -17,27 +17,13 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
-import {
-  Button,
-  Icons,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
-  PLACEMENT,
-  Modal,
-} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
-import Tooltip from '../tooltip';
-import GridView from './gridview';
 import ZoomSelector from './zoomSelector';
+import { GridViewButton } from './gridview';
 
 const Wrapper = styled.div`
   display: flex;
@@ -50,114 +36,21 @@ const Wrapper = styled.div`
 const MenuItems = styled.div`
   position: relative;
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   align-items: center;
   margin: 0 16px 16px;
-`;
-
-const Box = styled.div`
-  width: 32px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Space = styled.span`
-  width: 8px;
+  gap: 8px;
 `;
 
 function PrimaryMenu() {
-  const [isGridViewOpen, setIsGridViewOpen] = useState(false);
-
-  const toggleModal = useCallback(() => {
-    setIsGridViewOpen((prevIsOpen) => {
-      const newIsOpen = !prevIsOpen;
-
-      trackEvent('grid_view_toggled', {
-        status: newIsOpen ? 'open' : 'closed',
-      });
-
-      return newIsOpen;
-    });
-  }, [setIsGridViewOpen]);
-
-  const { metaBoxesVisible, toggleMetaBoxesVisible, hasMetaBoxes } =
-    useMetaBoxes(({ state, actions }) => ({
-      hasMetaBoxes: state.hasMetaBoxes,
-      metaBoxesVisible: state.metaBoxesVisible,
-      toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
-    }));
-
-  const handleMetaBoxesClick = useCallback(() => {
-    toggleMetaBoxesVisible();
-    trackEvent('meta_boxes_toggled', {
-      status: metaBoxesVisible ? 'visible' : 'hidden',
-    });
-  }, [metaBoxesVisible, toggleMetaBoxesVisible]);
-
   return (
-    <>
-      <Wrapper>
-        <MenuItems>
-          {hasMetaBoxes && (
-            <>
-              <Box>
-                <Tooltip
-                  title={__('Third-Party Meta Boxes', 'web-stories')}
-                  placement={PLACEMENT.TOP}
-                  hasTail
-                >
-                  <Button
-                    variant={BUTTON_VARIANTS.SQUARE}
-                    type={BUTTON_TYPES.TERTIARY}
-                    size={BUTTON_SIZES.SMALL}
-                    onClick={handleMetaBoxesClick}
-                    aria-label={__('Third-Party Meta Boxes', 'web-stories')}
-                  >
-                    <Icons.LetterMOutline />
-                  </Button>
-                </Tooltip>
-              </Box>
-              <Space />
-            </>
-          )}
-          <Box>
-            <Tooltip
-              title={__('Grid View', 'web-stories')}
-              placement={PLACEMENT.TOP}
-              hasTail
-            >
-              <Button
-                variant={BUTTON_VARIANTS.SQUARE}
-                type={BUTTON_TYPES.PLAIN}
-                size={BUTTON_SIZES.SMALL}
-                onClick={toggleModal}
-                aria-label={__('Grid View', 'web-stories')}
-              >
-                <Icons.Box4 />
-              </Button>
-            </Tooltip>
-          </Box>
-          <ZoomSelector />
-        </MenuItems>
-      </Wrapper>
-      <Modal
-        isOpen={isGridViewOpen}
-        onClose={toggleModal}
-        contentLabel={__('Grid View', 'web-stories')}
-        overlayStyles={{
-          alignItems: 'stretch',
-          backgroundColor: '#131516', // theme.colors.brand.gray[90]
-        }}
-        contentStyles={{
-          pointerEvents: 'none',
-          flex: 1,
-        }}
-      >
-        <GridView onClose={toggleModal} />
-      </Modal>
-    </>
+    <Wrapper>
+      {/* This ID is used for portal rendering of additional menu items, e.g. for custom meta boxes */}
+      <MenuItems id="primary-menu-items">
+        <ZoomSelector />
+        <GridViewButton />
+      </MenuItems>
+    </Wrapper>
   );
 }
 

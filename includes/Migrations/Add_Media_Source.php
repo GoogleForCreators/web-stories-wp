@@ -36,6 +36,24 @@ use Google\Web_Stories\Media\Media_Source_Taxonomy;
  */
 abstract class Add_Media_Source extends Migrate_Base {
 	/**
+	 * Media_Source_Taxonomy instance.
+	 *
+	 * @var Media_Source_Taxonomy Experiments instance.
+	 */
+	protected $media_source_taxonomy;
+
+	/**
+	 * Add_Media_Source constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Media_Source_Taxonomy $media_source_taxonomy Media_Source_Taxonomy instance.
+	 */
+	public function __construct( Media_Source_Taxonomy $media_source_taxonomy ) {
+		$this->media_source_taxonomy = $media_source_taxonomy;
+	}
+
+	/**
 	 * Add the editor term, to make sure it exists.
 	 *
 	 * @since 1.9.0
@@ -43,7 +61,7 @@ abstract class Add_Media_Source extends Migrate_Base {
 	 * @return void
 	 */
 	public function migrate() {
-		wp_insert_term( $this->get_term(), Media_Source_Taxonomy::TAXONOMY_SLUG );
+		wp_insert_term( $this->get_term(), $this->media_source_taxonomy->get_taxonomy_slug() );
 	}
 
 	/**

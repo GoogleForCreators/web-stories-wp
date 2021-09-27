@@ -28,7 +28,6 @@ import { useConfig } from '../../config';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
-import getResourceFromAttachment from '../utils/getResourceFromAttachment';
 import useDetectVideoHasAudio from '../utils/useDetectVideoHasAudio';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
@@ -92,10 +91,9 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         .then(({ data, headers }) => {
           const totalPages = parseInt(headers.totalPages);
           const totalItems = parseInt(headers.totalItems);
-          const mediaArray = data.map(getResourceFromAttachment);
           const hasMore = p < totalPages;
           callback({
-            media: mediaArray,
+            media: data,
             mediaType: currentMediaType,
             searchTerm: currentSearchTerm,
             pageToken: p,

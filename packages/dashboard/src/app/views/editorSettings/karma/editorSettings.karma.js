@@ -327,12 +327,6 @@ describe('Settings View', () => {
 
     await fixture.events.click(RemovePublisherLogoButton);
 
-    const confirmRemoveButton = fixture.screen.getByRole('button', {
-      name: /^Delete Logo$/,
-    });
-
-    await fixture.events.click(confirmRemoveButton);
-
     const UpdatedPublisherLogos = within(
       await fixture.screen.getByTestId('editor-settings')
     ).queryAllByTestId(/^uploaded-publisher-logo-/);
@@ -372,13 +366,6 @@ describe('Settings View', () => {
 
     // we want to select the second list item
     await fixture.events.keyboard.press('ArrowDown');
-
-    await fixture.events.keyboard.press('Enter');
-
-    // tab through confirmation dialog to remove logo
-    await fixture.events.keyboard.press('Tab');
-
-    await fixture.events.keyboard.press('Tab');
 
     await fixture.events.keyboard.press('Enter');
 
@@ -465,6 +452,7 @@ describe('Settings View', () => {
 
     // set focus within logo2
     await fixture.events.keyboard.press('tab');
+
     // activate menu
     await fixture.events.keyboard.press('Enter');
 

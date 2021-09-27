@@ -26,13 +26,6 @@ import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import ImageAccessibility from '../imageAccessibility';
 
-jest.mock('../../../../mediaPicker', () => ({
-  useMediaPicker: ({ onSelect }) => {
-    const image = { url: 'media1' };
-    return () => onSelect(image);
-  },
-}));
-
 describe('Panels/ImageAccessibility', () => {
   const defaultElement = {
     type: 'image',

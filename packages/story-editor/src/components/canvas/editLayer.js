@@ -103,7 +103,7 @@ function EditLayerForElement({ element }) {
         <EditElement element={element} />
       </EditPageArea>
       {EditMenu && (
-        <MenuArea>
+        <MenuArea showOverflow>
           <EditMenu />
         </MenuArea>
       )}

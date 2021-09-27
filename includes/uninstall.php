@@ -26,12 +26,16 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Taxonomy\Category_Taxonomy;
+use Google\Web_Stories\Taxonomy\Tag_Taxonomy;
 use Google\Web_Stories\User\Preferences;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Media\Video\Optimization;
 use Google\Web_Stories\Media\Video\Muting;
 use Google\Web_Stories\Media\Video\Poster;
 use Google\Web_Stories\Media\Video\Trimming;
+use WP_Term;
+use WP_Term_Query;
 
 /**
  * Deletes options and transients.
@@ -176,21 +180,28 @@ function delete_posts() {
  * @return void
  */
 function delete_terms() {
-	$taxonomy = Media_Source_Taxonomy::TAXONOMY_SLUG;
-	$term_ids = get_terms(
+	$taxonomies = [];
+
+	$taxonomies[] = ( new Media_Source_Taxonomy() )->get_taxonomy_slug();
+	$taxonomies[] = ( new Category_Taxonomy() )->get_taxonomy_slug();
+	$taxonomies[] = ( new Tag_Taxonomy() )->get_taxonomy_slug();
+
+	$term_query = new WP_Term_Query();
+	$terms      = $term_query->query(
 		[
-			'taxonomy'   => $taxonomy,
+			'taxonomy'   => $taxonomies,
 			'hide_empty' => false,
-			'fields'     => 'ids',
 		]
 	);
 
-	if ( empty( $term_ids ) || ! is_array( $term_ids ) ) {
+	if ( empty( $terms ) || ! is_array( $terms ) ) {
 		return;
 	}
 
-	foreach ( $term_ids as $term_id ) {
-		wp_delete_term( $term_id, $taxonomy );
+	foreach ( $terms as $term ) {
+		if ( $term instanceof WP_Term ) {
+			wp_delete_term( $term->term_id, $term->taxonomy );
+		}
 	}
 }
 

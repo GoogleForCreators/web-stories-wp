@@ -14,53 +14,29 @@
  * limitations under the License.
  */
 
-export const publisherLogoIds = [577, 584, 582, 581];
-
-export const rawPublisherLogos = {
-  577: {
-    id: 577,
-    src: 'https://picsum.photos/96',
-    title: 'dummy image 1',
-  },
-  584: {
-    id: 584,
-    src: 'https://picsum.photos/97',
-    title: 'dummy image 2',
-  },
-  582: {
-    id: 582,
-    src: 'https://picsum.photos/98',
-    title: 'dummy image 3',
-  },
-  581: {
-    id: 581,
-    src: 'https://picsum.photos/99',
-    title: 'dummy image 4',
-  },
-};
-
-const formattedPublisherLogos = [
+export const rawPublisherLogos = [
   {
     id: 577,
     src: 'https://picsum.photos/96',
     title: 'dummy image 1',
-    isDefault: true,
+    active: true,
   },
   {
     id: 584,
     src: 'https://picsum.photos/97',
     title: 'dummy image 2',
+    active: false,
   },
   {
     id: 582,
     src: 'https://picsum.photos/98',
     title: 'dummy image 3',
+    active: false,
   },
   {
     id: 581,
     src: 'https://picsum.photos/99',
     title: 'dummy image 4',
+    active: false,
   },
 ];
-
-export default formattedPublisherLogos;
