@@ -55,7 +55,11 @@ function VideoTrimProvider({ children }) {
       return;
     }
     trimExistingVideo({
-      resource,
+      resource: {
+        ...resource,
+        length: Math.round(endOffset / 1000 - startOffset / 1000),
+        lengthFormatted: formatMsToHMS(endOffset - startOffset, true),
+      },
       start: formatMsToHMS(startOffset),
       end: formatMsToHMS(endOffset),
     });
