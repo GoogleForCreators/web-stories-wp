@@ -25,9 +25,9 @@ describe('getVideoLengthDisplay', () => {
   });
 
   it('should return correct results', () => {
-    expect(getVideoLengthDisplay(1000)).toStrictEqual('0:01');
-    expect(getVideoLengthDisplay(60000)).toStrictEqual('1:00');
-    expect(getVideoLengthDisplay(10500)).toStrictEqual('0:11');
-    expect(getVideoLengthDisplay(6000000)).toStrictEqual('1:40:00');
+    expect(getVideoLengthDisplay(1)).toStrictEqual('0:01');
+    expect(getVideoLengthDisplay(60)).toStrictEqual('1:00');
+    expect(getVideoLengthDisplay(610)).toStrictEqual('10:10');
+    expect(getVideoLengthDisplay(6000)).toStrictEqual('1:40:00');
   });
 });

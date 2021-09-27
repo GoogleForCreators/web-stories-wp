@@ -125,11 +125,9 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       : __('Remove audio', 'web-stories');
   }, [isMuting]);
 
-  const trimButtonText = useMemo(() => {
-    return isTrimming
-      ? __('Trimming…', 'web-stories')
-      : __('Trim', 'web-stories');
-  }, [isTrimming]);
+  const trimButtonText = isTrimming
+    ? __('Trimming…', 'web-stories')
+    : __('Trim', 'web-stories');
 
   const { hasTrimMode, toggleTrimMode } = useVideoTrim(
     ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
