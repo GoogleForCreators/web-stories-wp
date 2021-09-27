@@ -90,9 +90,14 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
-  const shouldDisplayMuteButton = isTranscodingEnabled && isSingleElement && ((!isMuted && canTranscodeResource(resource)) || isMuting);
+  const shouldDisplayMuteButton =
+    isTranscodingEnabled &&
+    isSingleElement &&
+    ((!isMuted && canTranscodeResource(resource)) || isMuting);
   const shouldDisableMuteButton = !canTranscodeResource(resource);
-  const buttonText = isMuting ? __('Removing audio', 'web-stories') : __('Remove audio', 'web-stories');
+  const buttonText = isMuting
+    ? __('Removing audio', 'web-stories')
+    : __('Remove audio', 'web-stories');
 
   const { hasTrimMode, toggleTrimMode } = useVideoTrim(
     ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
