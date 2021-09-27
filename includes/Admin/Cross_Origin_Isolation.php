@@ -218,11 +218,15 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 *
 	 * @param string|mixed $html HTML string.
 	 * @param string       $attribute Attribute to check for.
-	 * @param string       $url URL.
+	 * @param string|null  $url URL.
 	 *
 	 * @return string|mixed
 	 */
-	protected function add_attribute( $html, string $attribute, string $url ) {
+	protected function add_attribute( $html, string $attribute, $url ) {
+		if ( ! $url ) {
+			return $html;
+		}
+
 		$site_url = site_url();
 		$url      = esc_url( $url );
 
