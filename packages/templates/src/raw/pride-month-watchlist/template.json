@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -45,7 +45,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [174, 180, 187]
+            "baseColor": [174, 180, 187],
+            "isExternal": true
           }
         },
         {
@@ -76,7 +77,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [187, 179, 187]
+            "baseColor": [187, 179, 187],
+            "isExternal": true
           }
         },
         {
@@ -107,7 +109,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [67, 52, 41]
+            "baseColor": [67, 52, 41],
+            "isExternal": true
           }
         },
         {
@@ -390,7 +393,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [36, 28, 22]
+            "baseColor": [36, 28, 22],
+            "isExternal": true
           }
         }
       ],
@@ -436,7 +440,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [134, 134, 134]
+            "baseColor": [134, 134, 134],
+            "isExternal": true
           },
           "x": 116,
           "y": 0,
@@ -476,7 +481,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [241, 240, 238]
+            "baseColor": [241, 240, 238],
+            "isExternal": true
           }
         },
         {
@@ -663,7 +669,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [95, 101, 101]
+            "baseColor": [95, 101, 101],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -923,7 +930,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [165, 164, 159]
+            "baseColor": [165, 164, 159],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1194,7 +1202,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [179, 178, 180]
+            "baseColor": [179, 178, 180],
+            "isExternal": true
           }
         },
         {
@@ -1225,7 +1234,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [100, 95, 90]
+            "baseColor": [100, 95, 90],
+            "isExternal": true
           }
         },
         {
@@ -1414,7 +1424,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [38, 41, 33]
+            "baseColor": [38, 41, 33],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1671,7 +1682,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [213, 200, 194]
+            "baseColor": [213, 200, 194],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1948,7 +1960,8 @@
             "isOptimized": true,
             "isMuted": true,
             "length": 20,
-            "baseColor": [201, 195, 193]
+            "baseColor": [201, 195, 193],
+            "isExternal": true
           },
           "tracks": []
         },
@@ -2085,7 +2098,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [80, 41, 27]
+            "baseColor": [80, 41, 27],
+            "isExternal": true
           }
         },
         {
@@ -2116,7 +2130,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 189, 186]
+            "baseColor": [196, 189, 186],
+            "isExternal": true
           }
         },
         {
@@ -2303,7 +2318,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [52, 38, 38]
+            "baseColor": [52, 38, 38],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -2561,7 +2577,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [159, 152, 149]
+            "baseColor": [159, 152, 149],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -2890,7 +2907,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [16, 27, 31]
+            "baseColor": [16, 27, 31],
+            "isExternal": true
           }
         },
         {
@@ -3052,7 +3070,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [39, 21, 16]
+            "baseColor": [39, 21, 16],
+            "isExternal": true
           }
         },
         {

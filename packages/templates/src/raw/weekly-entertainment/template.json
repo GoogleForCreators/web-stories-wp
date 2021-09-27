@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -45,7 +45,8 @@
             "id": 0,
             "alt": "page1_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -423,7 +424,8 @@
             "id": 0,
             "alt": "page2_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -901,7 +903,8 @@
             "id": 0,
             "alt": "page4_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -1204,7 +1207,8 @@
             "id": 0,
             "alt": "page5_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "7f6f6565-2e46-4ef5-964c-d6c44350416d",
           "id": "46058255-8bf6-4302-88eb-f9bd71304225"
@@ -1945,7 +1949,8 @@
             "id": 0,
             "alt": "page6_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "7f6f6565-2e46-4ef5-964c-d6c44350416d",
           "id": "9bcf8de4-b888-486b-93cb-f27bc58c637d"
@@ -2099,7 +2104,8 @@
             "id": 0,
             "alt": "page7_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "9bcf8de4-b888-486b-93cb-f27bc58c637d",
           "id": "6314a691-d449-4d99-9f12-64a9c7e5b477"
@@ -2341,7 +2347,8 @@
             "id": 0,
             "alt": "page8_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -2372,7 +2379,8 @@
             "id": 0,
             "alt": "page8_image3",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -2402,7 +2410,8 @@
             "id": 0,
             "alt": "page8_image2",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -3202,7 +3211,8 @@
             "id": 0,
             "alt": "page9_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -3232,7 +3242,8 @@
             "id": 0,
             "alt": "page9_image2",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -3262,7 +3273,8 @@
             "id": 0,
             "alt": "page9_image3",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         }
       ],

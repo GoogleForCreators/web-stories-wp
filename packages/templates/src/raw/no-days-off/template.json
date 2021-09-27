@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -29,7 +29,8 @@
             "id": 0,
             "alt": "page1_bg-red",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -85,7 +86,8 @@
             "id": 0,
             "alt": "page1_logo-generic",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "type": "image",
           "x": 20,
@@ -172,7 +174,8 @@
             "id": 0,
             "alt": "page2_figure-formatted",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -306,7 +309,8 @@
             "id": 0,
             "alt": "page3_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "scale": 150,
           "focalX": 50,
@@ -498,7 +502,8 @@
             "id": 0,
             "alt": "page4_bg-red",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -525,7 +530,8 @@
             "id": 0,
             "alt": "page4_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "scale": 100,
           "focalX": 49.97721576668946,
@@ -715,7 +721,8 @@
             "id": 0,
             "alt": "page5_bg-no-logo",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "scale": 100,
           "focalX": 38.367113188634875,
@@ -974,7 +981,8 @@
             "id": 0,
             "alt": "page6_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "scale": 100,
           "focalX": 50,
@@ -999,7 +1007,8 @@
             "id": 0,
             "alt": "page6_watch",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "type": "image",
           "x": 69,
@@ -1208,7 +1217,8 @@
             "id": 0,
             "alt": "page7_bg-red",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -1468,7 +1478,8 @@
             "id": 0,
             "alt": "page8_story3-formatted",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -1501,7 +1512,8 @@
             "id": 0,
             "alt": "page8_story1-formatted",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -1534,7 +1546,8 @@
             "id": 0,
             "alt": "page8_story2-formatted",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",

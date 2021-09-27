@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -39,7 +39,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [52, 64, 67]
+            "baseColor": [52, 64, 67],
+            "isExternal": true
           },
           "type": "image",
           "x": -34,
@@ -309,7 +310,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [33, 47, 63]
+            "baseColor": [33, 47, 63],
+            "isExternal": true
           },
           "type": "image",
           "width": 674,
@@ -447,7 +449,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [78, 76, 71]
+            "baseColor": [78, 76, 71],
+            "isExternal": true
           },
           "type": "image",
           "x": -5.5,
@@ -694,7 +697,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [157, 139, 127]
+            "baseColor": [157, 139, 127],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -1026,7 +1030,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [206, 204, 211]
+            "baseColor": [206, 204, 211],
+            "isExternal": true
           },
           "type": "image",
           "x": -4,
@@ -1064,7 +1069,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [193, 182, 185]
+            "baseColor": [193, 182, 185],
+            "isExternal": true
           },
           "type": "image",
           "x": -13.5,
@@ -1504,7 +1510,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [187, 197, 190]
+            "baseColor": [187, 197, 190],
+            "isExternal": true
           },
           "type": "image",
           "x": -43,
@@ -1751,7 +1758,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [22, 55, 65]
+            "baseColor": [22, 55, 65],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2065,7 +2073,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [38, 57, 61]
+            "baseColor": [38, 57, 61],
+            "isExternal": true
           },
           "type": "image",
           "x": -135.5,
@@ -2348,7 +2357,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [187, 197, 218]
+            "baseColor": [187, 197, 218],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2595,7 +2605,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [128, 127, 126]
+            "baseColor": [128, 127, 126],
+            "isExternal": true
           },
           "type": "image",
           "x": -3,
@@ -2909,7 +2920,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [83, 68, 65]
+            "baseColor": [83, 68, 65],
+            "isExternal": true
           },
           "type": "image",
           "x": -134,
@@ -3353,7 +3365,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [47, 49, 46]
+            "baseColor": [47, 49, 46],
+            "isExternal": true
           },
           "type": "image",
           "x": 252,
@@ -3448,7 +3461,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [172, 185, 187]
+            "baseColor": [172, 185, 187],
+            "isExternal": true
           },
           "type": "image",
           "x": 34,
@@ -3543,7 +3557,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [208, 205, 206]
+            "baseColor": [208, 205, 206],
+            "isExternal": true
           },
           "type": "image",
           "x": 221,
