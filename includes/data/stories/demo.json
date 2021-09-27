@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -32,7 +32,8 @@
             "title": "",
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": false
           }
         },
         {
@@ -123,7 +124,8 @@
             "title": "",
             "alt": "Web Stories",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": false
           },
           "type": "image",
           "x": 53,
@@ -195,7 +197,8 @@
             "title": "",
             "alt": "",
             "local": true,
-            "sizes": []
+            "sizes": [],
+            "isExternal": false
           }
         },
         {
@@ -357,7 +360,8 @@
             "title": "",
             "alt": "",
             "local": true,
-            "sizes": []
+            "sizes": [],
+            "isExternal": false
           }
         },
         {
@@ -518,7 +522,8 @@
             "title": "",
             "alt": "",
             "local": true,
-            "sizes": []
+            "sizes": [],
+            "isExternal": false
           }
         },
         {
@@ -680,7 +685,8 @@
             "title": "",
             "alt": "",
             "local": true,
-            "sizes": []
+            "sizes": [],
+            "isExternal": false
           }
         },
         {
@@ -841,7 +847,8 @@
             "title": "",
             "alt": "",
             "local": true,
-            "sizes": []
+            "sizes": [],
+            "isExternal": false
           }
         },
         {
@@ -1002,7 +1009,8 @@
             "title": "",
             "alt": "",
             "local": true,
-            "sizes": []
+            "sizes": [],
+            "isExternal": false
           }
         },
         {
@@ -1163,7 +1171,8 @@
             "title": "",
             "alt": "",
             "local": true,
-            "sizes": []
+            "sizes": [],
+            "isExternal": false
           },
           "overlay": null
         },
@@ -1323,7 +1332,8 @@
             "title": "",
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": false
           }
         },
         {

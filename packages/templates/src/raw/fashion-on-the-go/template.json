@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -44,7 +44,8 @@
             "id": 0,
             "alt": "page1_hero",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -91,7 +92,8 @@
             "id": 0,
             "alt": "page1_logo-generic",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "type": "image",
           "x": 27,
@@ -374,7 +376,8 @@
             "id": 0,
             "alt": "page3_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -1236,7 +1239,8 @@
             "id": 0,
             "alt": "page5_handbag-alt",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "type": "image",
           "x": 164,
@@ -2057,7 +2061,8 @@
             "id": 0,
             "alt": "page7_hero",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -2289,7 +2294,8 @@
             "id": 0,
             "alt": "page8_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "scale": 120,
           "focalX": 54.19913419913419,
@@ -2877,7 +2883,8 @@
             "id": 0,
             "alt": "page9_item1-cropped",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -2907,7 +2914,8 @@
             "id": 0,
             "alt": "page9_item2",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -2937,7 +2945,8 @@
             "id": 0,
             "alt": "page9_item3",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -2964,7 +2973,8 @@
             "id": 0,
             "alt": "page9_item4",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "ba68ba92-edcd-4c5c-a4fe-5263fc994e2b",
           "id": "40d8eaeb-1fad-4346-b56b-eef002fcb4db",
