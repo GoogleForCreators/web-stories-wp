@@ -33,7 +33,7 @@ import {
   BUTTON_VARIANTS,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
-import { useCallback, useMemo, useEffect } from '@web-stories-wp/react';
+import { useCallback, useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -90,21 +90,9 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
-  const shouldDisplayMuteButton = useMemo(() => {
-    return (
-      isTranscodingEnabled &&
-      isSingleElement &&
-      ((!isMuted && canTranscodeResource(resource)) || isMuting)
-    );
-  }, [isTranscodingEnabled, isSingleElement, isMuted, resource, isMuting]);
-
+  const shouldDisplayMuteButton = isTranscodingEnabled && isSingleElement && ((!isMuted && canTranscodeResource(resource)) || isMuting);
   const shouldDisableMuteButton = !canTranscodeResource(resource);
-
-  const buttonText = useMemo(() => {
-    return isMuting
-      ? __('Removing audio', 'web-stories')
-      : __('Remove audio', 'web-stories');
-  }, [isMuting]);
+  const buttonText = isMuting ? __('Removing audio', 'web-stories') : __('Remove audio', 'web-stories');
 
   const { hasTrimMode, toggleTrimMode } = useVideoTrim(
     ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
