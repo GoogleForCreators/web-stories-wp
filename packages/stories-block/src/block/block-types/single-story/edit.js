@@ -54,7 +54,7 @@ function StoryEmbedEdit({
   _isResizable,
 }) {
   const {
-    url: outerURL,
+    url: outerURL = '',
     width = 360,
     height = 600,
     align = 'none',
