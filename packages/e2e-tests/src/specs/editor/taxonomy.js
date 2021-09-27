@@ -53,21 +53,17 @@ async function addCategory(name, parent) {
   if (parent) {
     await expect(page).toClick('button', { text: 'Parent Category' });
     await expect(page).toClick('li[role="option"]', { text: parent });
+    await expect(page).toMatchElement('button[aria-label="Parent Category"]', {
+      text: parent,
+    });
   }
 
-  await page.focus('button[data-testid="submit_add_new_hierarchical_term"]');
+  await expect(page).toClick(
+    'button[data-testid="submit_add_new_hierarchical_term"]',
+    { text: 'Add New Category' }
+  );
 
-  await Promise.all([
-    expect(page).toClick(
-      'button[data-testid="submit_add_new_hierarchical_term"]',
-      { text: 'Add New Category' }
-    ),
-    page.waitForResponse(
-      (response) => response.url().includes('web-stories/v1/web_story_') // web_story_tag or web_story_category.
-    ),
-  ]);
-
-  await expect(page).toMatchElement('label', { text: name });
+  await expect(page).toMatchElement('label', { text: name, visible: false });
 }
 
 describe('Taxonomy', () => {
