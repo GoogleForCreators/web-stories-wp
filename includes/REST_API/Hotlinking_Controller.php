@@ -62,12 +62,33 @@ class Hotlinking_Controller extends REST_Controller {
 	public function register_routes() {
 		register_rest_route(
 			$this->namespace,
-			'/' . $this->rest_base,
+			'/' . $this->rest_base . '/validate',
 			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'parse_url' ],
 					'permission_callback' => [ $this, 'parse_url_permissions_check' ],
+					'args'                => [
+						'url' => [
+							'description'       => __( 'The URL to process.', 'web-stories' ),
+							'required'          => true,
+							'type'              => 'string',
+							'format'            => 'uri',
+							'validate_callback' => [ $this, 'validate_url' ],
+						],
+					],
+				],
+			]
+		);
+
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/proxy',
+			[
+				[
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => [ $this, 'proxy_url' ],
+					'permission_callback' => '__return_true',
 					'args'                => [
 						'url' => [
 							'description'       => __( 'The URL to process.', 'web-stories' ),
@@ -114,6 +135,40 @@ class Hotlinking_Controller extends REST_Controller {
 			return rest_ensure_response( $response );
 		}
 
+		$data = $this->get_data( $url );
+
+		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
+
+		$response = $this->prepare_item_for_response( $data, $request );
+
+		return rest_ensure_response( $response );
+	}
+
+	public function proxy_url( $request ) {
+		$url = untrailingslashit( $request['url'] );
+
+		$request = wp_safe_remote_get( $url );
+		if ( is_wp_error( $request ) ) {
+			return false;
+		}
+		$data = $this->get_data( $url );
+		$body = wp_remote_retrieve_body( $request );
+
+
+		header('Content-Type: '.$data['mime_type']);
+		header('Content-Length: ' . $data['file_size']);
+
+		echo $body;
+
+		exit;
+	}
+
+	/**
+	 * @param $url
+	 *
+	 * @return array|WP_Error
+	 */
+	protected function get_data( $url ){
 		$response = wp_safe_remote_head(
 			$url,
 			[
@@ -151,19 +206,13 @@ class Hotlinking_Controller extends REST_Controller {
 			}
 		}
 
-		$data = [
+		return [
 			'ext'       => $ext,
 			'file_name' => $file_name,
 			'file_size' => $file_size,
 			'mime_type' => $mime_type,
 			'type'      => $type,
 		];
-
-		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
-
-		$response = $this->prepare_item_for_response( $data, $request );
-
-		return rest_ensure_response( $response );
 	}
 
 

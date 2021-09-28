@@ -185,6 +185,8 @@ function MediaEdit({ element, box, setLocalProperties }) {
     ...mediaProps,
   };
 
+  const url = resource?.src;
+  alert('hello');
   useEffect(() => {
     if (
       croppedMedia &&
@@ -232,16 +234,14 @@ function MediaEdit({ element, box, setLocalProperties }) {
         /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
         <FadedImage
           {...fadedMediaProps}
-          src={resource.src}
+          src={url}
           srcSet={calculateSrcSet(resource)}
         />
       )}
       {isVideo && (
         //eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- Faded video doesn't need captions.
         <FadedVideo {...fadedMediaProps}>
-          {resource.src && (
-            <source src={resource.src} type={resource.mimeType} />
-          )}
+          {url && <source src={url} type={resource.mimeType} />}
         </FadedVideo>
       )}
       <CropBox ref={setCropBox} {...borderProps}>
@@ -251,7 +251,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
           {isVideo && (
             /*eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- Tracks might not exist. Also, unwanted in edit mode. */
             <CropVideo {...cropMediaProps}>
-              <source src={resource.src} type={resource.mimeType} />
+              <source src={url} type={resource.mimeType} />
             </CropVideo>
           )}
         </WithMask>

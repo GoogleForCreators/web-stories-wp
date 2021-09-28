@@ -26,6 +26,7 @@ import { getMediaSizePositionProps } from '@web-stories-wp/media';
  */
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
+import { useConfig } from '../../app';
 import { getBackgroundStyle, videoWithScale } from './util';
 
 const Video = styled.video`
@@ -56,8 +57,13 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     focalX,
     focalY,
     loop,
+    isExternal,
   } = element;
   const ref = useRef();
+  const {
+    api: { proxy },
+  } = useConfig();
+
   let style = {};
   if (isBackground) {
     const styleProps = getBackgroundStyle();
@@ -79,6 +85,11 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
   videoProps.crossOrigin = 'anonymous';
 
   const muted = Boolean(resource?.isMuted);
+
+  let url = resource?.src;
+  if (isExternal) {
+    url = proxy + '?url=' + url;
+  }
 
   return (
     <MediaDisplay
@@ -111,9 +122,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           data-testid="videoElement"
           data-leaf-element="true"
         >
-          {resource.src && (
-            <source src={resource.src} type={resource.mimeType} />
-          )}
+          {url && <source src={url} type={resource.mimeType} />}
           {tracks &&
             tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
               <track
