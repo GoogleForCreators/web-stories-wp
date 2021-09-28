@@ -59,12 +59,10 @@ function arrange(
     actions: { updateStory },
   };
 
-  const getSettings = jest
-    .fn()
-    .mockResolvedValue({ web_stories_publisher_logos: [] });
+  const getPublisherLogos = jest.fn().mockResolvedValue([]);
   const apiValue = {
     actions: {
-      getSettings,
+      getPublisherLogos,
     },
   };
 
