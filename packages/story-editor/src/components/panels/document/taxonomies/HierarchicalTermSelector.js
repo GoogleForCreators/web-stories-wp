@@ -77,8 +77,6 @@ const ButtonContainer = styled.div`
 const LinkButton = styled(Button).attrs({
   variant: BUTTON_VARIANTS.LINK,
 })`
-  ${({ $isVisible }) => $isVisible && 'display: none;'}
-
   margin-bottom: 16px;
 
   ${({ theme }) =>
@@ -259,15 +257,15 @@ function HierarchicalTermSelector({
       />
       {canCreateTerms ? (
         <>
-          <LinkButton
-            ref={toggleRef}
-            aria-expanded={false}
-            onClick={handleToggleNewCategory}
-            $isVisible={showAddNewCategory}
-            data-testid="expand_add_new_hierarchical_term"
-          >
-            {taxonomy.labels.add_new_item}
-          </LinkButton>
+          {!showAddNewCategory && (
+            <LinkButton
+              ref={toggleRef}
+              aria-expanded={false}
+              onClick={handleToggleNewCategory}
+            >
+              {taxonomy.labels.add_new_item}
+            </LinkButton>
+          )}
           {showAddNewCategory ? (
             <AddNewCategoryForm ref={formRef} onSubmit={handleSubmit}>
               <Input
@@ -290,7 +288,6 @@ function HierarchicalTermSelector({
                 <AddNewCategoryButton
                   disabled={!newCategoryName.length}
                   type="submit"
-                  data-testid="submit_add_new_hierarchical_term"
                 >
                   {taxonomy.labels.add_new_item}
                 </AddNewCategoryButton>

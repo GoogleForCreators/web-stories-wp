@@ -31,6 +31,7 @@ async function trashAllTerms(taxonomy) {
   const currentUser = getCurrentUser();
   await setCurrentUser('admin', 'password');
 
+  // This enables the feature if not already enabled. Else this is a no-op.
   await toggleExperiments(['enableTaxonomiesSupport'], true);
 
   await visitAdminPage('edit-tags.php', `taxonomy=${taxonomy}`);

@@ -23,6 +23,7 @@ import {
   withUser,
   publishStory,
 } from '@web-stories-wp/e2e-test-utils';
+import percySnapshot from '@percy/puppeteer';
 
 async function goToAndExpandTaxonomyPanel() {
   await expect(page).toClick('li[role="tab"]', { text: 'Document' });
@@ -40,26 +41,40 @@ async function goToAndExpandTaxonomyPanel() {
   if (isCollapsed) {
     await taxonomyPanel.click();
   }
+
+  // Small trick to ensure we scroll to this panel.
+  await taxonomyPanel.focus();
 }
 
 async function addCategory(name, parent) {
   await expect(page).toClick('button', { text: 'Add New Category' });
-  await page.type('input[name="New Category Name"]', name);
+  await expect(page).toFill('input[name="New Category Name"]', name);
 
   if (parent) {
-    await expect(page).toClick('button', { text: 'Parent Category' });
+    await expect(page).toClick('button[aria-label="Parent Category"]');
+    await expect(page).toMatchElement('li[role="option"]', { text: parent });
     await expect(page).toClick('li[role="option"]', { text: parent });
+    await expect(page).toMatchElement(
+      'li[role="option"][aria-selected="true"]',
+      { text: parent }
+    );
+
+    await expect(page).toMatchElement('button[aria-label="Parent Category"]', {
+      text: parent,
+    });
+
+    // TODO: Add assertion here to verify the parent was chosen and the dropdown closed.
+    if (await page.$('[aria-label="Parent Category Option List Selector"]')) {
+      await expect(page).toClick('button[aria-label="Parent Category"]');
+    }
   }
 
-  await page.focus('button[data-testid="submit_add_new_hierarchical_term"]');
+  await expect(page).toClick('button', { text: 'Add New Category' });
 
-  await expect(page).toClick(
-    'button[data-testid="submit_add_new_hierarchical_term"]',
-    { text: 'Add New Category' }
-  );
-
-  // Todo: Investigate why this sometimes takes longer to appear.
-  await expect(page).toMatch(name);
+  // TODO: Add assertion here to verify the category was added.
+  await expect(page).toMatchElement('label', {
+    text: name,
+  });
 }
 
 describe('Taxonomy', () => {
@@ -72,11 +87,16 @@ describe('Taxonomy', () => {
 
     await addCategory('music genres');
     await addCategory('rock', 'music genres');
+
+    // No need to save/publish the story, as the new categories will have been
+    // created in the background via the REST API already.
   });
 
-  it.only('should be able to add new categories', async () => {
+  it('should be able to add new categories', async () => {
     await createNewStory();
     await goToAndExpandTaxonomyPanel();
+
+    // Add some new categories.
     await addCategory('jazz', 'music genres');
     await addCategory('industrial', 'music genres');
     await addCategory('electro-pop', 'music genres');
@@ -89,13 +109,18 @@ describe('Taxonomy', () => {
 
     await goToAndExpandTaxonomyPanel();
 
-    expect(page).toMatchElement('input[name="hierarchical_term_rock"]');
-    expect(page).not.toMatchElement(
-      'input[name="hierarchical_term_rock"][checked]'
+    // See that category made in another story is available here.
+    await expect(page).toMatchElement('input[name="hierarchical_term_rock"]');
+
+    // categories added are checked automatically.
+    await expect(page).toMatchElement(
+      'input[name="hierarchical_term_funk"][checked]'
     );
-    expect(page).toMatchElement(
+    await expect(page).toMatchElement(
       'input[name="hierarchical_term_jazz"][checked]'
     );
+
+    await percySnapshot(page, 'Taxonomies - Categories - Admin');
   });
 
   it.todo('should be able to add new tags and existing tags');
@@ -107,21 +132,30 @@ describe('Taxonomy', () => {
       await createNewStory();
       await goToAndExpandTaxonomyPanel();
 
-      expect(page).not.toMatchElement('button', { text: 'Add New Category' });
+      await expect(page).not.toMatchElement('button', {
+        text: 'Add New Category',
+      });
 
-      expect(page).toMatchElement('label', { text: 'rock' });
-      expect(page).toClick('label', { text: 'rock' });
+      await expect(page).toMatchElement('input[name="hierarchical_term_rock"]');
 
-      await publishStory();
+      await expect(page).toClick('label', { text: 'rock' });
+
+      await expect(page).toClick('button[aria-label="Save draft"]');
 
       // Refresh page to verify that the assignments persisted.
       await page.reload();
 
       await goToAndExpandTaxonomyPanel();
 
-      expect(page).not.toMatchElement(
+      await expect(page).toMatchElement(
         'input[name="hierarchical_term_rock"][checked]'
       );
+
+      await expect(page).not.toMatchElement('button', {
+        text: 'Add New Category',
+      });
+
+      await percySnapshot(page, 'Taxonomies - Categories - Contributor');
     });
 
     it.todo(
