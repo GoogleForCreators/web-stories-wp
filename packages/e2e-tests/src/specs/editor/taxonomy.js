@@ -64,12 +64,9 @@ async function addCategory(name, parent) {
     });
 
     // TODO: Add assertion here to verify the parent was chosen and the dropdown closed.
-    if (await page.$('[aria-label="Parent Category Option List Selector"]')) {
-      await expect(page).toClick('button[aria-label="Parent Category"]');
-    }
   }
 
-  await expect(page).toClick('button', { text: 'Add New Category' });
+  await page.keyboard.press('Enter');
 
   // TODO: Add assertion here to verify the category was added.
   await expect(page).toMatchElement('label', {
