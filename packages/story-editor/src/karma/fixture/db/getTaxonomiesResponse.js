@@ -16,8 +16,78 @@
 
 export default [
   {
+    name: 'Categories',
+    slug: 'web_story_category',
+    capabilities: {
+      manage_terms: 'manage_categories',
+      edit_terms: 'manage_categories',
+      delete_terms: 'manage_categories',
+      assign_terms: 'edit_posts',
+    },
+    description: 'Story Categories',
+    labels: {
+      name: 'Categories',
+      singular_name: 'Category',
+      search_items: 'Search Categories',
+      popular_items: null,
+      all_items: 'All Categories',
+      parent_item: 'Parent Category',
+      parent_item_colon: 'Parent Category:',
+      edit_item: 'Edit Category',
+      view_item: 'View Category',
+      update_item: 'Update Category',
+      add_new_item: 'Add New Category',
+      new_item_name: 'New Category Name',
+      separate_items_with_commas: null,
+      add_or_remove_items: null,
+      choose_from_most_used: null,
+      not_found: 'No categories found.',
+      no_terms: 'No categories',
+      filter_by_item: 'Filter by category',
+      items_list_navigation: 'Categories list navigation',
+      items_list: 'Categories list',
+      most_used: 'Most Used',
+      back_to_items: '&larr; Go to Categories',
+      item_link: 'Category Link',
+      item_link_description: 'A link to a category.',
+      menu_name: 'Categories',
+      name_admin_bar: 'story-category',
+    },
+    types: ['web-story'],
+    showCloud: true,
+    hierarchical: true,
+    restBase: 'web_story_category',
+    visibility: {
+      public: true,
+      publicly_queryable: true,
+      show_admin_column: false,
+      show_in_nav_menus: true,
+      show_in_quick_edit: true,
+      show_ui: true,
+    },
+    _links: {
+      collection: [
+        {
+          href: 'http://localhost:8899/wp-json/web-stories/v1/taxonomies',
+        },
+      ],
+      'wp:items': [
+        {
+          href: 'http://localhost:8899/wp-json/wp/v2/story-categories',
+        },
+      ],
+      curies: [
+        {
+          name: 'wp',
+          href: 'https://api.w.org/{rel}',
+          templated: true,
+        },
+      ],
+    },
+  },
+  {
     name: 'Tags',
-    slug: 'story-tag',
+    slug: 'web_story_tag',
     capabilities: {
       manage_terms: 'manage_categories',
       edit_terms: 'manage_categories',
@@ -51,12 +121,12 @@ export default [
       item_link: 'Tag Link',
       item_link_description: 'A link to a tag.',
       menu_name: 'Tags',
-      name_admin_bar: 'story-tag',
+      name_admin_bar: 'web_story_tag',
     },
     types: ['web-story'],
     showCloud: true,
     hierarchical: false,
-    restBase: 'story-tags',
+    restBase: 'web_story_tag',
     visibility: {
       public: true,
       publicly_queryable: true,
@@ -73,7 +143,7 @@ export default [
       ],
       'wp:items': [
         {
-          href: 'http://localhost:8899/wp-json/wp/v2/story-tags',
+          href: 'http://localhost:8899/wp-json/web-stories/v1/web_story_tag',
         },
       ],
       curies: [
@@ -87,7 +157,7 @@ export default [
   },
   {
     name: 'Colors',
-    slug: 'story-color',
+    slug: 'story_color',
     capabilities: {
       manage_terms: 'manage_categories',
       edit_terms: 'manage_categories',
@@ -127,7 +197,7 @@ export default [
     types: ['web-story'],
     showCloud: true,
     hierarchical: false,
-    restBase: 'story-colors',
+    restBase: 'story_colors',
     visibility: {
       public: true,
       publicly_queryable: true,
@@ -145,76 +215,6 @@ export default [
       'wp:items': [
         {
           href: 'http://localhost:8899/wp-json/wp/v2/story-colors',
-        },
-      ],
-      curies: [
-        {
-          name: 'wp',
-          href: 'https://api.w.org/{rel}',
-          templated: true,
-        },
-      ],
-    },
-  },
-  {
-    name: 'Categories',
-    slug: 'story-category',
-    capabilities: {
-      manage_terms: 'manage_categories',
-      edit_terms: 'manage_categories',
-      delete_terms: 'manage_categories',
-      assign_terms: 'edit_posts',
-    },
-    description: 'Story Categories',
-    labels: {
-      name: 'Categories',
-      singular_name: 'Category',
-      search_items: 'Search Categories',
-      popular_items: null,
-      all_items: 'All Categories',
-      parent_item: 'Parent Category',
-      parent_item_colon: 'Parent Category:',
-      edit_item: 'Edit Category',
-      view_item: 'View Category',
-      update_item: 'Update Category',
-      add_new_item: 'Add New Category',
-      new_item_name: 'New Category Name',
-      separate_items_with_commas: null,
-      add_or_remove_items: null,
-      choose_from_most_used: null,
-      not_found: 'No categories found.',
-      no_terms: 'No categories',
-      filter_by_item: 'Filter by category',
-      items_list_navigation: 'Categories list navigation',
-      items_list: 'Categories list',
-      most_used: 'Most Used',
-      back_to_items: '&larr; Go to Categories',
-      item_link: 'Category Link',
-      item_link_description: 'A link to a category.',
-      menu_name: 'Categories',
-      name_admin_bar: 'story-category',
-    },
-    types: ['web-story'],
-    showCloud: true,
-    hierarchical: true,
-    restBase: 'story-categories',
-    visibility: {
-      public: true,
-      publicly_queryable: true,
-      show_admin_column: false,
-      show_in_nav_menus: true,
-      show_in_quick_edit: true,
-      show_ui: true,
-    },
-    _links: {
-      collection: [
-        {
-          href: 'http://localhost:8899/wp-json/web-stories/v1/taxonomies',
-        },
-      ],
-      'wp:items': [
-        {
-          href: 'http://localhost:8899/wp-json/wp/v2/story-categories',
         },
       ],
       curies: [
@@ -285,7 +285,7 @@ export default [
       ],
       'wp:items': [
         {
-          href: 'http://localhost:8899/wp-json/wp/v2/story-verticals',
+          href: 'http://localhost:8899/wp-json/web-stories/v1/web_story_category',
         },
       ],
       curies: [
