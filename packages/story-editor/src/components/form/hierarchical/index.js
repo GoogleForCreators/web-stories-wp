@@ -211,7 +211,7 @@ const HierarchicalInput = ({
               {filteredOptions.length ? (
                 filteredOptions.map((option) => (
                   <Option
-                    key={option.id}
+                    key={`${option.id}-${option.checked}`}
                     {...option}
                     onChange={handleCheckboxChange}
                   />
