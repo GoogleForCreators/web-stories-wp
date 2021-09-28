@@ -19,7 +19,6 @@
  */
 import { useFeature } from 'flagged';
 import { useCallback, useMemo } from '@web-stories-wp/react';
-import { canTranscodeResource } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies

@@ -21,6 +21,7 @@ import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { canTranscodeResource } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -469,8 +470,7 @@ const useQuickActions = () => {
     if (!resource) {
       return [];
     }
-    const { isTrimming, isMuting, isTranscoding } = resource;
-    return !isTrimming && !isMuting && !isTranscoding && hasTrimMode
+    return canTranscodeResource(resource) && hasTrimMode
       ? [
           {
             Icon: Scissors,

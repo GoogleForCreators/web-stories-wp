@@ -101,11 +101,12 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
+  const shouldDisableVideoActions = !canTranscodeResource(resource);
+
   const shouldDisplayMuteButton =
     isTranscodingEnabled &&
     isSingleElement &&
     ((!isMuted && canTranscodeResource(resource)) || isMuting);
-  const shouldDisableMuteButton = !canTranscodeResource(resource);
   const muteButtonText = isMuting
     ? __('Removing audio…', 'web-stories')
     : __('Remove audio', 'web-stories');
@@ -171,7 +172,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
         {hasTrimMode && (
           <TrimWrapper>
             <TrimButton
-              disabled={isTrimming || isMuting || isTranscoding}
+              disabled={shouldDisableVideoActions}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
@@ -187,7 +188,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
         <>
           <Row spaceBetween={false}>
             <StyledButton
-              disabled={shouldDisableMuteButton}
+              disabled={shouldDisableVideoActions}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
