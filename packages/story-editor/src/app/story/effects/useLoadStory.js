@@ -58,8 +58,8 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           embed_post_link: embedPostLink,
           author,
           capabilities = {
-            hasPublishAction: false,
-            hasAssignAuthorAction: false,
+            publish: false,
+            'assign-author': false,
           },
           lock_user: lockUser,
           featured_media: featuredMedia,
