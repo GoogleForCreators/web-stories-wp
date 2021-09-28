@@ -19,14 +19,17 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef, useMemo, useCallback } from '@web-stories-wp/react';
+import { useRef, useMemo, useCallback, useState } from '@web-stories-wp/react';
 import { getMediaSizePositionProps } from '@web-stories-wp/media';
+
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
+import { getResourceFromAttachment } from '../../app/media/utils';
+import { useAPI } from '../../app';
 import PlayPauseButton from './playPauseButton';
 import { getBackgroundStyle, videoWithScale } from './util';
 
@@ -44,9 +47,27 @@ const Wrapper = styled.div`
 `;
 
 function VideoTrim({ box, element }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const { setVideoNode, originalResource, setOriginalResource } = useVideoTrim(
+    ({
+      actions: { setVideoNode, setOriginalResource },
+      state: { originalResource },
+    }) => ({
+      setVideoNode,
+      setOriginalResource,
+      originalResource,
+    })
+  );
+  const {
+    actions: { getMediaById },
+  } = useAPI();
+
   const { width, height } = box;
   const { poster, resource, tracks, isBackground, scale, focalX, focalY } =
     element;
+  const {
+    trimData: { end, start, original },
+  } = resource;
   const wrapperRef = useRef();
   const videoRef = useRef();
   let style = {};
@@ -78,9 +99,6 @@ function VideoTrim({ box, element }) {
     [box]
   );
 
-  const { setVideoNode } = useVideoTrim(({ actions: { setVideoNode } }) => ({
-    setVideoNode,
-  }));
   const setRef = useCallback(
     (node) => {
       videoRef.current = node;
@@ -89,17 +107,42 @@ function VideoTrim({ box, element }) {
     [setVideoNode]
   );
 
+  const fetchOriginalResource = useCallback(() => {
+    setIsLoading(true);
+    getMediaById(original)
+      .then((result) => {
+        setIsLoading(false);
+        const _originalResource = getResourceFromAttachment(result);
+        setOriginalResource(_originalResource);
+      })
+      .catch(() => {
+        setOriginalResource(false);
+        setIsLoading(false);
+      });
+  }, [original, getMediaById, setOriginalResource]);
+
+  // If there's an original video, we should use that for trimming instead.
+  if (original && originalResource === null) {
+    // @todo Add spinner or sth for the time of loading.
+    !isLoading && fetchOriginalResource();
+    return null;
+  }
+  const hasOrigin = originalResource && original;
+  const trimResource = hasOrigin ? originalResource : resource;
+  const trimElement = hasOrigin
+    ? { ...element, resource: originalResource }
+    : element;
   return (
     <>
       <Wrapper ref={wrapperRef}>
         <MediaDisplay
-          element={element}
+          element={trimElement}
           mediaRef={videoRef}
           showPlaceholder
           previewMode={false}
         >
           <Video
-            poster={poster || resource.poster}
+            poster={poster || trimResource.poster}
             style={style}
             {...videoProps}
             preload="metadata"
@@ -108,8 +151,8 @@ function VideoTrim({ box, element }) {
             tabIndex={0}
             ref={setRef}
           >
-            {resource.src && (
-              <source src={resource.src} type={resource.mimeType} />
+            {trimResource.src && (
+              <source src={trimResource.src} type={trimResource.mimeType} />
             )}
             {tracks &&
               tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
@@ -127,7 +170,7 @@ function VideoTrim({ box, element }) {
       </Wrapper>
       <PlayPauseButton
         box={boxAtOrigin}
-        element={element}
+        element={trimElement}
         elementRef={wrapperRef}
         videoRef={videoRef}
         shouldResetOnEnd={false}

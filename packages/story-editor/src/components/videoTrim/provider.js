@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from '@web-stories-wp/react';
+import {useCallback, useState} from '@web-stories-wp/react';
 import { formatMsToHMS } from '@web-stories-wp/media';
 
 /**
@@ -30,6 +30,8 @@ import useVideoTrimMode from './useVideoTrimMode';
 import useVideoNode from './useVideoNode';
 
 function VideoTrimProvider({ children }) {
+  const [originalResource, setOriginalResource] = useState(null);
+
   const { selectedElements } = useStory(({ state: { selectedElements } }) => ({
     selectedElements,
   }));
@@ -81,6 +83,7 @@ function VideoTrimProvider({ children }) {
       startOffset,
       endOffset,
       maxOffset,
+      originalResource,
     },
     actions: {
       performTrim,
@@ -89,6 +92,7 @@ function VideoTrimProvider({ children }) {
       setStartOffset,
       setEndOffset,
       resetOffsets,
+      setOriginalResource,
     },
   };
 
