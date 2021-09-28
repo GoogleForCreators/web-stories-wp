@@ -53,6 +53,11 @@ describe('Background Audio', () => {
         visible: true,
       });
 
+      await expect(page).toClick('.media-modal #menu-item-upload', {
+        text: 'Upload files',
+        visible: true,
+      });
+
       const fileName = await uploadFile('audio.mp3');
       uploadedFiles.push(fileName);
 
@@ -82,6 +87,11 @@ describe('Background Audio', () => {
       await expect(page).toClick('button', { text: 'Upload an audio file' });
 
       await page.waitForSelector('.media-modal', {
+        visible: true,
+      });
+
+      await expect(page).toClick('.media-modal #menu-item-upload', {
+        text: 'Upload files',
         visible: true,
       });
 

@@ -36,7 +36,6 @@ import { useCallback } from '@web-stories-wp/react';
 import { Row } from '../../form';
 import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';
-import { useMediaPicker } from '../../mediaPicker';
 import { useConfig } from '../../../app';
 import { BackgroundAudioPropType } from '../../../types';
 
@@ -60,6 +59,7 @@ function BackgroundAudioPanelContent({
     allowedAudioMimeTypes,
     allowedAudioFileTypes,
     capabilities: { hasUploadMediaAction },
+    MediaUpload,
   } = useConfig();
 
   const onSelectErrorMessage = sprintf(
@@ -71,34 +71,40 @@ function BackgroundAudioPanelContent({
   const onSelect = useCallback(
     (media) => {
       updateBackgroundAudio({
-        src: media.url,
+        src: media.src,
         id: media.id,
-        mimeType: media.mime,
+        mimeType: media.mimeType,
       });
     },
     [updateBackgroundAudio]
   );
 
-  const uploadAudioTrack = useMediaPicker({
-    onSelect,
-    onSelectErrorMessage,
-    type: allowedAudioMimeTypes,
-    title: __('Upload an audio file', 'web-stories'),
-    buttonInsertText: __('Select audio file', 'web-stories'),
-  });
+  const renderUploadButton = useCallback(
+    (open) => (
+      <UploadButton
+        onClick={open}
+        type={BUTTON_TYPES.SECONDARY}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.RECTANGLE}
+      >
+        {__('Upload an audio file', 'web-stories')}
+      </UploadButton>
+    ),
+    []
+  );
 
   return (
     <>
       {!backgroundAudio?.src && hasUploadMediaAction && (
         <Row expand>
-          <UploadButton
-            onClick={uploadAudioTrack}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.RECTANGLE}
-          >
-            {__('Upload an audio file', 'web-stories')}
-          </UploadButton>
+          <MediaUpload
+            onSelect={onSelect}
+            onSelectErrorMessage={onSelectErrorMessage}
+            type={allowedAudioMimeTypes}
+            title={__('Upload an audio file', 'web-stories')}
+            buttonInsertText={__('Select audio file', 'web-stories')}
+            render={renderUploadButton}
+          />
         </Row>
       )}
       {backgroundAudio?.src && (

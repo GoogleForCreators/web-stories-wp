@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -86,6 +87,8 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 		do_action( 'rest_api_init', $wp_rest_server );
 
 		$this->add_caps_to_roles();
+
+		$this->set_permalink_structure( '/%postname%/' );
 	}
 
 	public function tearDown() {
@@ -252,6 +255,41 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 		$this->assertSame( 'Test content', $attachment->post_content );
 		$this->assertSame( 'Test alt', $data['alt_text'] );
 		$this->assertSame( 'Test alt', get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ) );
+	}
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::prepare_links
+	 * @covers ::add_taxonomy_links
+	 */
+	public function test_get_add_taxonomy_links() {
+		$object = new DummyTaxonomy();
+		$this->set_private_property( $object, 'taxonomy_post_type', 'attachment' );
+		$object->register_taxonomy();
+
+		wp_set_current_user( self::$user_id );
+
+		$original_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+				'post_content'   => 'Test content',
+				'post_excerpt'   => 'Test excerpt',
+			]
+		);
+
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media/' . $original_attachment_id );
+		$request->set_param( 'context', 'edit' );
+		$response = rest_get_server()->dispatch( $request );
+		$links    = $response->get_links();
+
+		$this->assertArrayHasKey( 'https://api.w.org/term', $links );
+		foreach ( $links['https://api.w.org/term'] as $taxonomy ) {
+			$this->assertArrayHasKey( 'href', $taxonomy );
+			$this->assertContains( 'web-stories/v1', $taxonomy['href'] );
+		}
 	}
 
 	/**

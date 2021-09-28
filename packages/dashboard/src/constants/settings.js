@@ -23,4 +23,5 @@ export const AD_NETWORK_TYPE = {
 export const ARCHIVE_TYPE = {
   DEFAULT: 'default',
   DISABLED: 'disabled',
+  CUSTOM: 'custom',
 };

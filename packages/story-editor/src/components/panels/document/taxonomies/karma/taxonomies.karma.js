@@ -537,8 +537,8 @@ describe('Categories & Tags Panel', () => {
 
       // See that the right tag was deleted
       const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
-      expect(tagTokens[0]).toBe(initialTokens[0]);
-      expect(tagTokens[1]).toBe(initialTokens[2]);
+      expect(tagTokens[0].innerText).toEqual(initialTokens[0].innerText);
+      expect(tagTokens[1].innerText).toEqual(initialTokens[2].innerText);
     });
 
     it('can delete tags with mouse', async () => {
@@ -568,8 +568,8 @@ describe('Categories & Tags Panel', () => {
 
       // see that thee correct token was removed
       const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
-      expect(tagTokens[0]).toBe(initialTokens[1]);
-      expect(tagTokens[1]).toBe(initialTokens[2]);
+      expect(tagTokens[0].innerText).toEqual(initialTokens[1].innerText);
+      expect(tagTokens[1].innerText).toEqual(initialTokens[2].innerText);
     });
   });
 });

@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -36,7 +36,8 @@
             "alt": "Rover near road and buildings",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -104,
@@ -363,7 +364,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 181, 172]
+            "baseColor": [196, 181, 172],
+            "isExternal": true
           },
           "type": "image",
           "x": 56,
@@ -401,7 +403,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [96, 85, 83]
+            "baseColor": [96, 85, 83],
+            "isExternal": true
           },
           "type": "image",
           "x": 86,
@@ -439,7 +442,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 150, 136]
+            "baseColor": [218, 150, 136],
+            "isExternal": true
           },
           "type": "image",
           "x": 232,
@@ -670,7 +674,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [195, 195, 195]
+            "baseColor": [195, 195, 195],
+            "isExternal": true
           }
         },
         {
@@ -840,7 +845,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 150, 136]
+            "baseColor": [218, 150, 136],
+            "isExternal": true
           },
           "type": "image",
           "x": 47,
@@ -1230,7 +1236,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [34, 129, 157]
+            "baseColor": [34, 129, 157],
+            "isExternal": true
           },
           "type": "image",
           "x": 34,
@@ -1268,7 +1275,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [120, 172, 206]
+            "baseColor": [120, 172, 206],
+            "isExternal": true
           },
           "type": "image",
           "x": 210,
@@ -1306,7 +1314,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [189, 193, 196]
+            "baseColor": [189, 193, 196],
+            "isExternal": true
           },
           "type": "image",
           "x": 104,
@@ -1443,7 +1452,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [175, 183, 183]
+            "baseColor": [175, 183, 183],
+            "isExternal": true
           },
           "type": "image",
           "x": -41,
@@ -1786,7 +1796,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [52, 44, 39]
+            "baseColor": [52, 44, 39],
+            "isExternal": true
           }
         },
         {
@@ -1955,7 +1966,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 181, 172]
+            "baseColor": [196, 181, 172],
+            "isExternal": true
           },
           "x": 47,
           "y": 437,
@@ -2421,7 +2433,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [52, 25, 13]
+            "baseColor": [52, 25, 13],
+            "isExternal": true
           },
           "type": "image",
           "x": 210,
@@ -2459,7 +2472,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [73, 37, 19]
+            "baseColor": [73, 37, 19],
+            "isExternal": true
           },
           "type": "image",
           "x": 35,
@@ -2497,7 +2511,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [203, 114, 61]
+            "baseColor": [203, 114, 61],
+            "isExternal": true
           },
           "type": "image",
           "x": 33,
@@ -2709,7 +2724,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [50, 40, 34]
+            "baseColor": [50, 40, 34],
+            "isExternal": true
           },
           "type": "image",
           "x": -17,
@@ -2901,7 +2917,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [83, 59, 48]
+            "baseColor": [83, 59, 48],
+            "isExternal": true
           }
         },
         {
@@ -3070,7 +3087,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [96, 85, 83]
+            "baseColor": [96, 85, 83],
+            "isExternal": true
           },
           "x": 47,
           "y": 437,
@@ -3536,7 +3554,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [199, 201, 192]
+            "baseColor": [199, 201, 192],
+            "isExternal": true
           },
           "type": "image",
           "x": 35,
@@ -3574,7 +3593,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [128, 105, 83]
+            "baseColor": [128, 105, 83],
+            "isExternal": true
           },
           "type": "image",
           "x": 210,
@@ -3612,7 +3632,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [117, 92, 71]
+            "baseColor": [117, 92, 71],
+            "isExternal": true
           },
           "type": "image",
           "x": 35,
@@ -3674,7 +3695,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [73, 51, 41]
+            "baseColor": [73, 51, 41],
+            "isExternal": true
           },
           "type": "image",
           "x": -17,
@@ -4400,7 +4422,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 183, 172]
+            "baseColor": [196, 183, 172],
+            "isExternal": true
           },
           "type": "image",
           "x": 47,
@@ -4438,7 +4461,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [48, 46, 45]
+            "baseColor": [48, 46, 45],
+            "isExternal": true
           },
           "type": "image",
           "x": 47,

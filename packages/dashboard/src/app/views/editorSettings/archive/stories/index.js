@@ -34,11 +34,18 @@ export default {
 
 export const _default = () => {
   return (
-    <FlagsProvider features={{ disableArchive: true }}>
+    <FlagsProvider features={{ archivePageCustomization: true }}>
       <ArchiveSettings
         archive={select('archive', Object.values(ARCHIVE_TYPE))}
         archiveURL={'http://www.example.com/web-stories'}
         updateSettings={action('updateSettings fired')}
+        archivePageId={0}
+        getPageById={() => ({ value: 1, label: 'Page 1' })}
+        searchPages={() => [
+          { value: 1, label: 'Page 1' },
+          { value: 1, label: 'Page 2' },
+          { value: 1, label: 'Page 3' },
+        ]}
       />
     </FlagsProvider>
   );
