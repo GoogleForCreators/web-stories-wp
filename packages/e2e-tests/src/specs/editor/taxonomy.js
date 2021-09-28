@@ -63,7 +63,13 @@ async function addCategory(name, parent) {
     { text: 'Add New Category' }
   );
 
-  await expect(page).toMatchElement('label', { text: name, visible: false });
+  await expect(page).toMatch('button', { text: 'Add New Category' });
+
+  await expect(page).toMatchElement('label', {
+    text: name,
+    visible: false,
+    timeout: 20000,
+  });
 }
 
 describe('Taxonomy', () => {
