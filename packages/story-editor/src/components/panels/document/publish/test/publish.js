@@ -37,8 +37,8 @@ function MediaUpload({ render }) {
 
 function arrange(
   capabilities = {
-    hasAssignAuthorAction: true,
-    hasPublishAction: true,
+    'assign-author': true,
+    publish: true,
     hasUploadMediaAction: true,
   }
 ) {
@@ -136,7 +136,7 @@ describe('PublishPanel', () => {
 
   it('should not display Author field without correct permissions', async () => {
     arrange({
-      hasAssignAuthorAction: false,
+      'assign-author': false,
     });
     const element = screen.queryByText('Author');
     await waitFor(() => expect(element).toBeNull());

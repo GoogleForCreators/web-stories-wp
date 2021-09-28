@@ -895,7 +895,7 @@ class APIProviderFixture {
             slug:
               data?.name?.toLowerCase().replace(/[\s./_]/, '-') ||
               'random-slug',
-            taxonomy: 'story-category',
+            taxonomy: 'web_story_category',
             parent: 0,
             meta: [],
             _links: {},

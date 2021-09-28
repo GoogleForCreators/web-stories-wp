@@ -277,7 +277,7 @@ function PublishPanel() {
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent>
         <PublishTime />
-        {capabilities?.hasAssignAuthorAction && users && <Author />}
+        {capabilities?.['assign-author'] && users && <Author />}
         <HighlightRow
           isHighlighted={
             highlightPoster?.showEffect || highlightLogo?.showEffect
