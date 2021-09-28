@@ -43,7 +43,6 @@ const keys = {
   PAGE_BACKGROUND: 'PAGE_BACKGROUND',
   POSTER: 'POSTER',
   PUBLISHER_LOGO: 'PUBLISHER_LOGO',
-  VIDEO_SETTINGS: 'VIDEO_SETTINGS',
   VIDEO_A11Y_POSTER: 'VIDEO_A11Y_POSTER',
   STYLE: 'STYLE',
   FONT: 'FONT',
@@ -94,10 +93,6 @@ export const STATES = {
     tab: DESIGN,
   },
   [keys.LINK]: {
-    focus: true,
-    tab: DESIGN,
-  },
-  [keys.VIDEO_SETTINGS]: {
     focus: true,
     tab: DESIGN,
   },

@@ -230,7 +230,6 @@ const useQuickActions = () => {
     handleFocusTextSetsPanel,
     handleFocusStylePanel,
     handleFocusCaptionsPanel,
-    handleFocusVideoSettingsPanel,
   } = useMemo(
     () => ({
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
@@ -241,7 +240,6 @@ const useQuickActions = () => {
       handleFocusTextColor: handleFocusPanel(states.TEXT_COLOR),
       handleFocusStylePanel: handleFocusPanel(states.STYLE),
       handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
-      handleFocusVideoSettingsPanel: handleFocusPanel(states.VIDEO_SETTINGS),
     }),
     [handleFocusPanel]
   );
@@ -470,8 +468,7 @@ const useQuickActions = () => {
           {
             Icon: Scissors,
             label: ACTIONS.TRIM_VIDEO.text,
-            onClick: (evt) => {
-              handleFocusVideoSettingsPanel()(evt);
+            onClick: () => {
               toggleTrimMode();
               trackEvent('quick_action', {
                 name: ACTIONS.TRIM_VIDEO.trackingEventName,
@@ -482,13 +479,7 @@ const useQuickActions = () => {
           },
         ]
       : [];
-  }, [
-    actionMenuProps,
-    handleFocusVideoSettingsPanel,
-    hasTrimMode,
-    selectedElement,
-    toggleTrimMode,
-  ]);
+  }, [actionMenuProps, hasTrimMode, selectedElement, toggleTrimMode]);
 
   const videoActions = useMemo(() => {
     const [baseActions, clearActions] = showClearAction
