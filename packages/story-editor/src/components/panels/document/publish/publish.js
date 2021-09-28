@@ -31,6 +31,7 @@ import {
   THEME_CONSTANTS,
   Icons,
 } from '@web-stories-wp/design-system';
+import { useMediaPicker } from '@web-stories-wp/wp-story-editor/src/components/mediaUpload/mediaPicker';
 
 /**
  * Internal dependencies
@@ -43,7 +44,6 @@ import { Option } from '../../../form/advancedDropDown/list/styled';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
 import { useAPI } from '../../../../app';
-import { useMediaPicker } from '../../../mediaPicker';
 import PublishTime from './publishTime';
 import Author from './author';
 
@@ -103,6 +103,8 @@ const LogoImg = styled.img`
   object-fit: cover;
   width: 100%;
   height: 100%;
+  max-width: 96px;
+  max-height: 96px;
 `;
 
 function PublishPanel() {
@@ -111,7 +113,7 @@ function PublishPanel() {
   } = useInspector();
 
   const {
-    actions: { getSettings, getMedia },
+    actions: { getPublisherLogos, addPublisherLogo },
   } = useAPI();
 
   const {
@@ -124,18 +126,8 @@ function PublishPanel() {
   const [publisherLogos, setPublisherLogos] = useState([]);
 
   useEffect(() => {
-    if (canManageSettings) {
-      getSettings().then((settings) => {
-        if (settings.web_stories_publisher_logos.length) {
-          getMedia({
-            include: settings.web_stories_publisher_logos.join(','),
-          }).then((logos) => {
-            setPublisherLogos(logos.data);
-          });
-        }
-      });
-    }
-  }, [canManageSettings, getMedia, getSettings]);
+    getPublisherLogos().then(setPublisherLogos);
+  }, [getPublisherLogos]);
 
   const { highlightPoster, highlightLogo, resetHighlight } = useHighlights(
     (state) => ({
@@ -181,15 +173,19 @@ function PublishPanel() {
     [updateStory]
   );
 
+  const onNewPublisherLogoSelected = ({ id, src }) => {
+    const newLogo = { id, url: src };
+    addPublisherLogo(id);
+    setPublisherLogos((logos) => [...logos, newLogo]);
+    onPublisherLogoChange(newLogo);
+  };
+
   const onPublisherLogoChange = (option) => {
-    const sizeLogo = option.media_details.sizes?.['web-stories-publisher-logo'];
     updateStory({
       properties: {
         publisherLogo: {
           id: option.id,
-          url: sizeLogo?.source_url || option.source_url,
-          width: sizeLogo?.width || option.media_details.width,
-          height: sizeLogo?.height || option.media_details.height,
+          url: option.url,
         },
       },
     });
@@ -221,7 +217,7 @@ function PublishPanel() {
   );
 
   const openMediaPicker = useMediaPicker({
-    onSelect: onPublisherLogoChange,
+    onSelect: onNewPublisherLogoSelected,
     cropParams: {
       width: 96,
       height: 96,
@@ -237,12 +233,9 @@ function PublishPanel() {
       if (option.props) {
         return option;
       }
-      const src =
-        option.media_details.sizes?.['web-stories-publisher-logo']
-          ?.source_url || option.source_url;
       return (
         <Option value={option.id} ref={ref} {...rest}>
-          <LogoImg src={src} alt="" />
+          <LogoImg src={option.url} alt="" />
         </Option>
       );
     }
@@ -264,7 +257,6 @@ function PublishPanel() {
   if (hasUploadMediaAction) {
     publisherLogosWithUploadOption.unshift(
       <Option
-        key="upload"
         onClick={openMediaPicker}
         aria-label={__('Add new', 'web-stories')}
       >

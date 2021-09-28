@@ -36,7 +36,7 @@ function APIProvider({ children }) {
       hotlink,
       link,
       users,
-      settings,
+      publisherLogos,
       currentUser,
       pageTemplates: customPageTemplates,
       taxonomies,
@@ -58,7 +58,8 @@ function APIProvider({ children }) {
     deleteMedia,
     getLinkMetadata,
     getAuthors,
-    getSettings,
+    getPublisherLogos,
+    addPublisherLogo,
     getCurrentUser,
     updateCurrentUser,
     getCustomPageTemplates,
@@ -113,8 +114,8 @@ function APIProvider({ children }) {
   );
 
   actions.getMedia = useCallback(
-    ({ mediaType, searchTerm, pagingNum, cacheBust, include }) =>
-      getMedia({ mediaType, searchTerm, pagingNum, cacheBust, include }, media),
+    ({ mediaType, searchTerm, pagingNum, cacheBust }) =>
+      getMedia({ mediaType, searchTerm, pagingNum, cacheBust }, media),
     [media, getMedia]
   );
 
@@ -138,9 +139,14 @@ function APIProvider({ children }) {
     [hotlink, getHotlinkInfo]
   );
 
-  actions.getSettings = useCallback(
-    () => getSettings(settings),
-    [getSettings, settings]
+  actions.getPublisherLogos = useCallback(
+    () => getPublisherLogos(publisherLogos),
+    [getPublisherLogos, publisherLogos]
+  );
+
+  actions.addPublisherLogo = useCallback(
+    (id) => addPublisherLogo(publisherLogos, id),
+    [addPublisherLogo, publisherLogos]
   );
 
   actions.getLinkMetadata = useCallback(

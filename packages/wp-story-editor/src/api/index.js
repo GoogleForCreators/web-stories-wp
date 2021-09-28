@@ -20,5 +20,5 @@ export * from './metadata';
 export * from './pageTemplate';
 export * from './user';
 export * from './hotlinkInfo';
-export * from './settings';
+export * from './publisherLogos';
 export * from './taxonomy';

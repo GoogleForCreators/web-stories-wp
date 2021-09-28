@@ -28,6 +28,7 @@
         "@web-stories-wp/text-sets": "*",
         "@web-stories-wp/tracking": "*",
         "@web-stories-wp/units": "*",
+        "@web-stories-wp/wp-story-editor": "*",
         "classnames": "^2.3.1",
         "colorthief": "^2.3.2",
         "draft-js": "^0.11.7",

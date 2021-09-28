@@ -19,8 +19,16 @@
  */
 import apiFetch from '@wordpress/api-fetch';
 
-export function getSettings(settings) {
+export function getPublisherLogos(path) {
   return apiFetch({
-    path: settings,
+    path,
+  });
+}
+
+export function addPublisherLogo(path, id) {
+  return apiFetch({
+    path,
+    data: { id },
+    method: 'POST',
   });
 }
