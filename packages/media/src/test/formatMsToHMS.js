@@ -17,23 +17,16 @@
 /**
  * Internal dependencies
  */
-import preloadVideoMetadata from './preloadVideoMetadata';
-import getVideoLengthFromDisplay from './getVideoLengthDisplay';
+import formatMsToHMS from '../formatMsToHMS';
 
-/**
- * Get video length from a video.
- *
- * @param {string} src Video source.
- * @return {Promise} Video length object.
- */
-const getVideoLength = async (src) => {
-  const video = await preloadVideoMetadata(src);
-  const length = Math.round(video.duration);
-  const lengthFormatted = getVideoLengthFromDisplay(length);
-  return {
-    length,
-    lengthFormatted,
-  };
-};
+describe('formatMsToHMS', () => {
+  it('should correctly format 0', () => {
+    expect(formatMsToHMS(0)).toStrictEqual('00:00:00');
+  });
 
-export default getVideoLength;
+  it('should return correct results', () => {
+    expect(formatMsToHMS(1000)).toStrictEqual('00:00:01');
+    expect(formatMsToHMS(60000)).toStrictEqual('00:01:00');
+    expect(formatMsToHMS(10500)).toStrictEqual('00:00:10.5');
+  });
+});

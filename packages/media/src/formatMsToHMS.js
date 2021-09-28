@@ -17,23 +17,27 @@
 /**
  * Internal dependencies
  */
-import preloadVideoMetadata from './preloadVideoMetadata';
-import getVideoLengthFromDisplay from './getVideoLengthDisplay';
+import formatDuration from './formatDuration';
 
 /**
- * Get video length from a video.
+ * Converts length in milliseconds to HH:MM:SS.SSS format.
  *
- * @param {string} src Video source.
- * @return {Promise} Video length object.
+ * @param {number} ms Original length in milliseconds.
+ * @return {string} Formatted length.
  */
-const getVideoLength = async (src) => {
-  const video = await preloadVideoMetadata(src);
-  const length = Math.round(video.duration);
-  const lengthFormatted = getVideoLengthFromDisplay(length);
-  return {
-    length,
-    lengthFormatted,
-  };
-};
+function formatMsToHMS(ms) {
+  if (!ms) {
+    return '00:00:00';
+  }
+  let seconds = ms / 1000;
+  const hours = parseInt(seconds / 3600);
+  seconds = seconds % 3600;
+  const minutes = parseInt(seconds / 60);
+  seconds = seconds % 60;
 
-export default getVideoLength;
+  return `${formatDuration(hours)}:${formatDuration(minutes)}:${formatDuration(
+    seconds
+  )}`;
+}
+
+export default formatMsToHMS;
