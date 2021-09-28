@@ -45,6 +45,25 @@ class Canonical_Sanitizer extends TestCase {
 	/**
 	 * @covers ::sanitize
 	 */
+	public function test_sanitize_canonical_remove_duplicates() {
+		$source = '<html><head><title>Example</title><link rel="canonical" href="https://example.com/canonical.html"><link rel="canonical" href="https://example.com/canonical2.html"></head><body><p>Hello World</p></body></html>';
+
+		$dom = Document::fromHtml( $source );
+
+		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer(
+			$dom,
+			[ 'canonical_url' => 'https://example.com/new-canonical.html' ]
+		);
+		$sanitizer->sanitize();
+
+		$actual = $dom->saveHTML( $dom->documentElement );
+		$this->assertContains( '<link rel="canonical" href="https://example.com/canonical.html">', $actual );
+		$this->assertNotContains( '<link rel="canonical" href="https://example.com/canonical2.html">', $actual );
+	}
+
+	/**
+	 * @covers ::sanitize
+	 */
 	public function test_sanitize_canonical_missing() {
 		$canonical = 'https://example.com/new-canonical.html';
 

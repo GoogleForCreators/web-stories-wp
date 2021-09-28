@@ -15,25 +15,14 @@
  */
 
 /**
- * Internal dependencies
- */
-import preloadVideoMetadata from './preloadVideoMetadata';
-import getVideoLengthFromDisplay from './getVideoLengthDisplay';
-
-/**
- * Get video length from a video.
+ * Ascertain if a resource can be transcoded in it's current state.
  *
- * @param {string} src Video source.
- * @return {Promise} Video length object.
+ * @param {import('@web-stories-wp/media').Resource} resource The resource.
+ * @return {boolean} If the current resource can be transcoded.
  */
-const getVideoLength = async (src) => {
-  const video = await preloadVideoMetadata(src);
-  const length = Math.round(video.duration);
-  const lengthFormatted = getVideoLengthFromDisplay(length);
-  return {
-    length,
-    lengthFormatted,
-  };
-};
-
-export default getVideoLength;
+function canTranscodeResource(resource) {
+  const { isTranscoding, isMuting, isTrimming, isExternal, local } =
+    resource || {};
+  return !local && !isExternal && !isTranscoding && !isTrimming && !isMuting;
+}
+export default canTranscodeResource;
