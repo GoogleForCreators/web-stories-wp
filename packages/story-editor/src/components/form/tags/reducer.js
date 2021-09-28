@@ -43,6 +43,7 @@ export const ACTIONS = {
   UPDATE_VALUE: 'updateValue',
   SUBMIT_VALUE: 'submitValue',
   REMOVE_TAG: 'removeTag',
+  RESET_VALUE: 'resetValue',
   INCREMENT_OFFSET: 'incrementOffset',
   DECREMENT_OFFSET: 'decrementOffset',
   UPDATE_TAGS: 'updateTags',
@@ -86,7 +87,7 @@ function reducer(state, action) {
     }
 
     case ACTIONS.SUBMIT_VALUE: {
-      const newTag = formatTag(state.value);
+      const newTag = formatTag(action?.payload || state.value);
 
       // don't update tagBuffer if we're not
       // adding any tags
@@ -137,10 +138,10 @@ function reducer(state, action) {
       };
     }
 
-    case ACTIONS.RESET_OFFSET: {
+    case ACTIONS.RESET_VALUE: {
       return {
         ...state,
-        offset: 0,
+        value: '',
       };
     }
 

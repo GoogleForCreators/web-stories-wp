@@ -31,6 +31,7 @@ export default {
   component: TaxonomiesPanel,
 };
 
+// todo wire up context here
 export const _default = () => {
   return <Taxonomies />;
 };

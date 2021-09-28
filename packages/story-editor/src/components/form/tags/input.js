@@ -23,6 +23,8 @@ import {
   useReducer,
   useRef,
   useState,
+  useCallback,
+  useFocusOut,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -30,6 +32,8 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../../app';
+import { noop } from '../../../utils/noop';
 import reducer, { ACTIONS } from './reducer';
 import Tag from './tag';
 
@@ -63,17 +67,66 @@ function Input({
   onUndo = noop,
   ...props
 }) {
+  const { isRTL } = useConfig();
+
   const [{ value, tags, offset, tagBuffer }, dispatch] = useReducer(reducer, {
     value: '',
     tags: [...tokens],
     tagBuffer: null,
     offset: 0,
   });
+
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [autocompleteFocus, setAutocompleteFocus] = useState(false);
+  const [dynamicPlacement, setDynamicPlacement] = useState(PLACEMENT.BOTTOM);
+
+  const inputRef = useRef();
+  const menuRef = useRef();
+  const containerRef = useRef();
+  const listId = uuidv4();
 
   useEffect(() => {
     dispatch({ type: ACTIONS.UPDATE_TAGS, payload: tokens });
   }, [tokens]);
+
+  const filteredAutocompleteSuggestions = useMemo(() => {
+    if (value.length < 3) {
+      return [];
+    }
+    return autocompleteSuggestions.reduce((accum, suggestion) => {
+      if (!suggestion.toLowerCase().startsWith(value.toLowerCase())) {
+        return accum;
+      }
+      return [
+        ...accum,
+        {
+          label: suggestion,
+          value: suggestion,
+          id: uuidv4(),
+        },
+      ];
+    }, []);
+  }, [autocompleteSuggestions, value]);
+
+  const dropDownMenuPlacement = useCallback(
+    (popupRef) => {
+      // check to see if there's an overlap with the window edge
+      const { bottom, top } = popupRef.current?.getBoundingClientRect() || {};
+
+      // if the popup was assigned as bottom we want to always check it
+      if (
+        dynamicPlacement.startsWith('bottom') &&
+        bottom >= window.innerHeight
+      ) {
+        setDynamicPlacement(PLACEMENT.TOP);
+      }
+      // if the popup was assigned as top we want to always check it
+      if (dynamicPlacement.startsWith('top') && top <= 0) {
+        setDynamicPlacement(PLACEMENT.BOTTOM);
+      }
+    },
+    [dynamicPlacement]
+  );
 
   // Allow parents to pass onTagsChange callback
   // that updates as tags does.
@@ -118,6 +171,7 @@ function Input({
           }
 
           if (['Comma', 'Enter', 'Tab'].includes(e.key)) {
+            // TODO something here to prevent focus shift
             dispatch({ type: ACTIONS.SUBMIT_VALUE });
           }
         },
@@ -131,16 +185,42 @@ function Input({
           setIsInputFocused(true);
         },
         handleBlur: () => {
-          dispatch({ type: ACTIONS.RESET_OFFSET });
           setIsInputFocused(false);
+          setAutocompleteFocus(false);
         },
       }),
       [onUndo]
     );
 
   const renderedTags = tagBuffer || tags;
+
+  const handleReturnFocusToInput = useCallback(() => {
+    inputRef?.current.focus();
+    setAutocompleteFocus(false);
+  }, []);
+
+  const handleTagSelectedFromSuggestions = useCallback(
+    async (e, selectedValue) => {
+      e.preventDefault();
+      // It's important these run in order so that focus remains intact
+      await setAutocompleteFocus(false);
+      await dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: selectedValue });
+      await inputRef?.current.focus();
+    },
+    []
+  );
+
+  const handleSubmitOnFocusOut = useCallback(() => {
+    if (filteredAutocompleteSuggestions.length <= 0 && value.length > 0) {
+      setAutocompleteFocus(false);
+      dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: value });
+    }
+  }, [filteredAutocompleteSuggestions, value]);
+
+  useFocusOut(containerRef, handleSubmitOnFocusOut, [handleSubmitOnFocusOut]);
+
   return (
-    <Border isInputFocused={isInputFocused}>
+    <Border ref={containerRef} isInputFocused={isInputFocused}>
       {
         // Text input should move, relative to end, with offset
         // this helps with natural tab order and visuals
@@ -151,16 +231,44 @@ function Input({
           ...renderedTags.slice(renderedTags.length - offset),
         ].map((tag) =>
           tag === INPUT_KEY ? (
-            <TextInput
-              {...props}
-              key={INPUT_KEY}
-              value={value}
-              onKeyDown={handleKeyDown}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              size="4"
-            />
+            <>
+              <TextInput
+                {...props}
+                key={INPUT_KEY}
+                value={value}
+                id={id}
+                onKeyDown={handleKeyDown}
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                size="4"
+                ref={inputRef}
+                aria-owns={listId}
+                autoComplete="off"
+              />
+              {filteredAutocompleteSuggestions.length > 0 && value.length > 3 && (
+                <Popup
+                  anchor={containerRef}
+                  isOpen={filteredAutocompleteSuggestions.length > 0}
+                  placement={dynamicPlacement}
+                  refCallback={dropDownMenuPlacement}
+                >
+                  <MenuWithRef
+                    ref={menuRef}
+                    listId={listId}
+                    hasMenuRole
+                    handleReturnToParent={handleReturnFocusToInput}
+                    isRTL={isRTL}
+                    options={[{ group: filteredAutocompleteSuggestions }]}
+                    onMenuItemClick={handleTagSelectedFromSuggestions}
+                    onDismissMenu={noop} // No need to dismiss, it's either open with options or hidden
+                    menuAriaLabel="todo aria label with i18n"
+                    parentId={id}
+                    isMenuFocused={autocompleteFocus}
+                  />
+                </Popup>
+              )}
+            </>
           ) : (
             <Tag key={tag} onDismiss={removeTag(tag)}>
               {tagDisplayTransformer(tag) || tag}
@@ -172,11 +280,13 @@ function Input({
   );
 }
 Input.propTypes = {
+  autocompleteSuggestions: PropTypes.arrayOf(PropTypes.string),
+  id: PropTypes.string.isRequired,
+  initialTags: PropTypes.arrayOf(PropTypes.string),
   onTagsChange: PropTypes.func,
   onInputChange: PropTypes.func,
   onUndo: PropTypes.func,
   tagDisplayTransformer: PropTypes.func,
-  initialTags: PropTypes.arrayOf(PropTypes.string),
   tokens: PropTypes.arrayOf(PropTypes.string),
 };
 export default Input;

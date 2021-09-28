@@ -113,6 +113,14 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     [taxonomy, termCache]
   );
 
+  const termCacheAsArray = useMemo(
+    () =>
+      Object.values(termCache?.[taxonomy.restBase] || {}).map(
+        ({ name }) => name
+      ),
+    [termCache, taxonomy.restBase]
+  );
+
   return (
     <>
       <ContentHeading>{taxonomy.labels.name}</ContentHeading>

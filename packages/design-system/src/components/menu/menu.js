@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  forwardRef,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 
 /**
@@ -49,25 +54,29 @@ import { EmptyList, ListGroupings } from './list';
  * @param {boolean} props.isAbsolute If true, menu will be placed absolutely rather than statically.
  */
 
-const Menu = ({
-  dropDownHeight,
-  emptyText,
-  menuStylesOverride,
-  hasMenuRole,
-  handleReturnToParent,
-  isMenuFocused = true,
-  isRTL,
-  options = [],
-  listId,
-  onMenuItemClick,
-  onDismissMenu,
-  renderItem,
-  activeValue,
-  menuAriaLabel,
-  parentId,
-  isAbsolute = false,
-}) => {
-  const listRef = useRef();
+const Menu = (
+  {
+    dropDownHeight,
+    emptyText,
+    menuStylesOverride,
+    hasMenuRole,
+    handleReturnToParent,
+    isMenuFocused = true,
+    isRTL,
+    options = [],
+    listId,
+    onMenuItemClick,
+    onDismissMenu,
+    renderItem,
+    activeValue,
+    menuAriaLabel,
+    parentId,
+    isAbsolute = false,
+  },
+  ref
+) => {
+  const _listRef = useRef();
+  const listRef = ref || _listRef;
   const optionsRef = useRef([]);
 
   const handleMenuItemSelect = useCallback(
@@ -107,7 +116,7 @@ const Menu = ({
       0,
       highlighedOptionEl.offsetTop - listEl.clientHeight / 2
     );
-  }, [focusedIndex, isMenuFocused]);
+  }, [focusedIndex, isMenuFocused, listRef]);
 
   return (
     <MenuContainer
@@ -138,6 +147,8 @@ const Menu = ({
   );
 };
 
+const MenuWithRef = forwardRef(Menu);
+
 Menu.propTypes = {
   dropDownHeight: PropTypes.number,
   emptyText: PropTypes.string,
@@ -157,4 +168,4 @@ Menu.propTypes = {
   isAbsolute: PropTypes.bool,
 };
 
-export { Menu };
+export { Menu, MenuWithRef };

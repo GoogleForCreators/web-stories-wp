@@ -161,11 +161,11 @@ function TaxonomyProvider(props) {
       }
       try {
         response = await getTaxonomyTerm(termsEndpoint, {
-          search: name,
+          search_items: name,
           per_page: perPage,
         });
       } catch (e) {
-        // Do we wanna do anything here?
+        // TODO #9033
       }
 
       // Avoid update if we're not actually adding any terms here
