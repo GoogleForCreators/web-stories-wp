@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import { css } from 'styled-components';
 
-export const mediaWithScale = css`
+const mediaWithScale = css`
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
   left: ${({ offsetX }) => `${-offsetX}px`};
   top: ${({ offsetY }) => `${-offsetY}px`};
 `;
 
-export function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
-  // todo@: This is a complete duplication of `mediaWithScale` above. But
-  // no other apparent way to execute interpolate `mediaWithScale` dynamically.
-  return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
-}
+export default mediaWithScale;
