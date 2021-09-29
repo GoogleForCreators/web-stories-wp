@@ -55,8 +55,6 @@ export const LinkButton = styled(Button).attrs({
   ${themeHelpers.expandTextPreset(({ link }, { X_SMALL }) => link[X_SMALL])}
   margin-bottom: 16px;
   font-weight: 500;
-
-  ${({ $isVisible }) => $isVisible && 'display: none;'}
 `;
 
 export const WordCloud = {
