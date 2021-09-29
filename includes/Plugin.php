@@ -130,7 +130,9 @@ class Plugin extends ServiceBasedPlugin {
 		'rest.template_autosave'       => REST_API\Template_Autosaves_Controller::class,
 		'rest.template_lock'           => REST_API\Template_Lock_Controller::class,
 		'taxonomy.category'            => Taxonomy\Category_Taxonomy::class,
+		'taxonomy.color'               => Taxonomy\Color_Taxonomy::class,
 		'taxonomy.tag'                 => Taxonomy\Tag_Taxonomy::class,
+		'taxonomy.vertical'            => Taxonomy\Vertical_Taxonomy::class,
 		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
 	];

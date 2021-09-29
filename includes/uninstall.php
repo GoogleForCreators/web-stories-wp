@@ -27,7 +27,9 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Taxonomy\Category_Taxonomy;
+use Google\Web_Stories\Taxonomy\Color_Taxonomy;
 use Google\Web_Stories\Taxonomy\Tag_Taxonomy;
+use Google\Web_Stories\Taxonomy\Vertical_Taxonomy;
 use Google\Web_Stories\User\Preferences;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Media\Video\Optimization;
@@ -184,7 +186,9 @@ function delete_terms() {
 
 	$taxonomies[] = ( new Media_Source_Taxonomy() )->get_taxonomy_slug();
 	$taxonomies[] = ( new Category_Taxonomy() )->get_taxonomy_slug();
+	$taxonomies[] = ( new Color_Taxonomy() )->get_taxonomy_slug();
 	$taxonomies[] = ( new Tag_Taxonomy() )->get_taxonomy_slug();
+	$taxonomies[] = ( new Vertical_Taxonomy() )->get_taxonomy_slug();
 
 	$term_query = new WP_Term_Query();
 	$terms      = $term_query->query(
