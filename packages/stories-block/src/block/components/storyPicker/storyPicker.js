@@ -153,7 +153,7 @@ function StoryPicker({
       </div>
       <div className="web-stories-story-picker-modal__footer">
         <div className="web-stories-story-picker-modal__footer--left">
-          {!isSortingStories && !isFetchingForFirstTime && (
+          {!isSortingStories && !isFetchingForFirstTime && maxNumOfStories > 1 && (
             <p>
               {sprintf(
                 /* translators: %1$d: Number of selected stories, %2$d: Maximum allowed stories */
