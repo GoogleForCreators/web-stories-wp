@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './authors';
-export * from './story';
-export * from './media';
-export * from './metadata';
-export * from './pageTemplate';
-export * from './user';
-export * from './hotlinkInfo';
-export * from './proxy';
-export * from './taxonomy';
+/**
+ * External dependencies
+ */
+import { addQueryArgs } from '@web-stories-wp/design-system';
+
+export function getProxyUrl(url, proxy, nonce) {
+  const path = addQueryArgs(proxy, { url, _wpnonce: nonce });
+  return path;
+}
