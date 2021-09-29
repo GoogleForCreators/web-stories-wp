@@ -90,11 +90,12 @@ function Input({
   }, [tokens]);
 
   const filteredAutocompleteSuggestions = useMemo(() => {
-    if (value.length < 3) {
+    const cleanValue = value.trim().toLowerCase();
+    if (cleanValue.length < 3) {
       return [];
     }
     return autocompleteSuggestions.reduce((accum, suggestion) => {
-      if (!suggestion.toLowerCase().startsWith(value.toLowerCase())) {
+      if (!suggestion.toLowerCase().startsWith(cleanValue)) {
         return accum;
       }
       return [
@@ -245,7 +246,7 @@ function Input({
                 aria-owns={listId}
                 autoComplete="off"
               />
-              {filteredAutocompleteSuggestions.length > 0 && value.length > 3 && (
+              {filteredAutocompleteSuggestions.length > 0 && value.length >= 3 && (
                 <Popup
                   anchor={containerRef}
                   isOpen={filteredAutocompleteSuggestions.length > 0}

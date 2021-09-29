@@ -472,7 +472,7 @@ describe('Categories & Tags Panel', () => {
       // enter in the first tag
       await fixture.events.focus(tagsInput);
       await fixture.events.keyboard.type(tag1Name);
-      await fixture.events.keyboard.press('Enter');
+      await fixture.events.keyboard.press('Tab');
       await waitFor(
         () =>
           fixture.screen.getAllByTestId(/^flat-term-token/).length ===
@@ -503,6 +503,35 @@ describe('Categories & Tags Panel', () => {
       const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
       expect(tagTokens[initialTagsLength].innerText).toBe(tag1Name);
       expect(tagTokens[initialTagsLength + 1].innerText).toBe(tag2Name);
+    });
+
+    it('can add tags from suggested dropdown menu by keyboard', async () => {
+      await openCategoriesAndTagsPanel();
+      const taxonomyPanel =
+        fixture.editor.inspector.documentPanel.categoriesAndTags;
+      // delete all tags to check if adding them via menu works
+      const { tagTokenRemoveButtons } = taxonomyPanel;
+
+      for (let i = tagTokenRemoveButtons.length - 1; i >= 0; i--) {
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.click(tagTokenRemoveButtons?.[i]);
+      }
+
+      await waitFor(
+        () => fixture.screen.queryAllByTestId(/^flat-term-token/).length === 0
+      );
+
+      const { tagsInput } = taxonomyPanel;
+      // Focus tag input
+      await fixture.events.focus(tagsInput);
+      await fixture.events.keyboard.type('fren');
+      await fixture.events.keyboard.press('ArrowUp');
+      expect(document.activeElement.textContent).toBe('frenchFry');
+      await fixture.events.keyboard.press('Enter');
+
+      await waitFor(
+        () => fixture.screen.queryAllByTestId(/^flat-term-token/).length === 1
+      );
     });
 
     it('can delete tags with keyboard', async () => {
