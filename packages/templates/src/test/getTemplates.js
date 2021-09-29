@@ -41,6 +41,7 @@ describe('getTemplate', () => {
                 i + 1
               }.webp`
             ),
+            type: expect.any(String),
           })
         );
       });
