@@ -63,8 +63,8 @@ export async function toggleExperiments(features, enable) {
  * @param {Array<string>} features Array of experiments to enable.
  */
 export default function withExperimentalFeatures(features) {
-  /* eslint-disable jest/require-top-level-describe */
-  beforeAll(() => toggleExperiments(features, true));
-  afterAll(() => toggleExperiments(features, false));
-  /* eslint-enable jest/require-top-level-describe */
+  /* eslint-disable jest/require-top-level-describe, require-await */
+  beforeAll(async () => toggleExperiments(features, true));
+  afterAll(async () => toggleExperiments(features, false));
+  /* eslint-enable jest/require-top-level-describe, require-await */
 }
