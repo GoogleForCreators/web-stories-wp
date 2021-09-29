@@ -115,12 +115,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     ? __('Trimming…', 'web-stories')
     : __('Trim', 'web-stories');
 
-  const trimButtonText = useMemo(() => {
-    return isTrimming
-      ? __('Trimming…', 'web-stories')
-      : __('Trim', 'web-stories');
-  }, [isTrimming]);
-
   const { hasTrimMode, toggleTrimMode } = useVideoTrim(
     ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
       hasTrimMode,

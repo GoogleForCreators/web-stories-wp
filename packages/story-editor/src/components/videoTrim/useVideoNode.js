@@ -45,13 +45,23 @@ function useVideoNode() {
 
     function onLoadedMetadata(evt) {
       const duration = Math.floor(evt.target.duration * 1000);
-      rawSetStartOffset(0);
-      // @todo Set based on the original video if applicable.
-      setOriginalStartOffset(0);
-      setCurrentTime(0);
-      rawSetEndOffset(duration);
-      setOriginalEndOffset(duration);
       setMaxOffset(duration);
+
+      if (null === originalStartOffset) {
+        setOriginalStartOffset(0);
+        rawSetStartOffset(0);
+        setCurrentTime(0);
+      } else {
+        rawSetStartOffset(originalStartOffset);
+        setCurrentTime(originalStartOffset);
+      }
+
+      if (null === originalEndOffset) {
+        setOriginalEndOffset(duration);
+        rawSetEndOffset(duration);
+      } else {
+        rawSetEndOffset(originalEndOffset);
+      }
     }
     function onTimeUpdate(evt) {
       const currentOffset = Math.floor(evt.target.currentTime * 1000);
@@ -68,7 +78,13 @@ function useVideoNode() {
       videoNode.removeEventListener('timeupdate', onTimeUpdate);
       videoNode.removeEventListener('loadedmetadata', onLoadedMetadata);
     };
-  }, [startOffset, endOffset, videoNode]);
+  }, [
+    startOffset,
+    endOffset,
+    videoNode,
+    originalEndOffset,
+    originalStartOffset,
+  ]);
 
   const setStartOffset = useCallback(
     (offset) => {
@@ -113,6 +129,8 @@ function useVideoNode() {
     setEndOffset,
     setVideoNode,
     resetOffsets,
+    setOriginalStartOffset,
+    setOriginalEndOffset,
   };
 }
 

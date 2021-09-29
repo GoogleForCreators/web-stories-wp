@@ -28,7 +28,6 @@ import { getMediaSizePositionProps } from '@web-stories-wp/media';
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
-import { getResourceFromAttachment } from '../../app/media/utils';
 import { useAPI } from '../../app';
 import PlayPauseButton from './playPauseButton';
 import { getBackgroundStyle, videoWithScale } from './util';
@@ -48,14 +47,27 @@ const Wrapper = styled.div`
 
 function VideoTrim({ box, element }) {
   const [isLoading, setIsLoading] = useState(false);
-  const { setVideoNode, originalResource, setOriginalResource } = useVideoTrim(
+  const {
+    setVideoNode,
+    originalResource,
+    setOriginalResource,
+    setOriginalStartOffset,
+    setOriginalEndOffset,
+  } = useVideoTrim(
     ({
-      actions: { setVideoNode, setOriginalResource },
+      actions: {
+        setVideoNode,
+        setOriginalResource,
+        setOriginalStartOffset,
+        setOriginalEndOffset,
+      },
       state: { originalResource },
     }) => ({
       setVideoNode,
       setOriginalResource,
       originalResource,
+      setOriginalStartOffset,
+      setOriginalEndOffset,
     })
   );
   const {
@@ -78,6 +90,13 @@ function VideoTrim({ box, element }) {
       ...styleProps,
     };
   }
+
+  const getMsFromHMS = useCallback((time) => {
+    const parts = time.split(':');
+    return (
+      1000 * (parts[2] + parseInt(parts[1]) * 60 + parseInt(parts[0]) * 3600)
+    );
+  }, []);
 
   const videoProps = getMediaSizePositionProps(
     resource,
@@ -108,23 +127,35 @@ function VideoTrim({ box, element }) {
   );
 
   const fetchOriginalResource = useCallback(() => {
-    setIsLoading(true);
     getMediaById(original)
-      .then((result) => {
+      .then((_originalResource) => {
         setIsLoading(false);
-        const _originalResource = getResourceFromAttachment(result);
         setOriginalResource(_originalResource);
+        setOriginalEndOffset(getMsFromHMS(end));
+        setOriginalStartOffset(getMsFromHMS(start));
       })
       .catch(() => {
         setOriginalResource(false);
         setIsLoading(false);
       });
-  }, [original, getMediaById, setOriginalResource]);
+  }, [
+    original,
+    getMediaById,
+    setOriginalResource,
+    start,
+    end,
+    setOriginalEndOffset,
+    setOriginalStartOffset,
+    getMsFromHMS,
+  ]);
 
   // If there's an original video, we should use that for trimming instead.
   if (original && originalResource === null) {
     // @todo Add spinner or sth for the time of loading.
-    !isLoading && fetchOriginalResource();
+    if (!isLoading) {
+      setIsLoading(true);
+      fetchOriginalResource();
+    }
     return null;
   }
   const hasOrigin = originalResource && original;
