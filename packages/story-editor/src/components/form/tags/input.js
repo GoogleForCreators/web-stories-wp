@@ -186,7 +186,6 @@ function Input({
         },
         handleBlur: () => {
           setIsInputFocused(false);
-          setAutocompleteFocus(false);
         },
       }),
       [onUndo]
@@ -265,6 +264,7 @@ function Input({
                     menuAriaLabel="todo aria label with i18n"
                     parentId={id}
                     isMenuFocused={autocompleteFocus}
+                    isPositionedOnTop={dynamicPlacement === PLACEMENT.TOP}
                   />
                 </Popup>
               )}

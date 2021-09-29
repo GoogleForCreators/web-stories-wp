@@ -42,6 +42,7 @@ import { EmptyList, ListGroupings } from './list';
  * @param {Function} props.handleReturnToParent If present, when focus is on first option and user keys up, this function will be triggered, meant to pass function to controlling element.
  * @param {boolean} props.hasMenuRole If true, the aria role used for the list is 'menu' instead of 'listbox'.
  * @param {boolean} props.isMenuFocused Defaults to true, if false will prevent useEffect from passing focus to menu items, meant to aid search and typeahead utility.
+ * @param {boolean} props.isPositionedOnTop Defaults to false, used when a menu is positioned on top of an element instead of the default below.
  * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list. These options need to be sanitized with utils/getOptions.
  * @param {string} props.listId ID that comes from parent component that attaches this list to that parent. Used for a11y.
@@ -62,6 +63,7 @@ const Menu = (
     hasMenuRole,
     handleReturnToParent,
     isMenuFocused = true,
+    isPositionedOnTop,
     isRTL,
     options = [],
     listId,
@@ -87,6 +89,7 @@ const Menu = (
   const { focusedIndex, listLength } = useDropDownMenu({
     activeValue,
     handleMenuItemSelect,
+    isPositionedOnTop,
     isRTL,
     options,
     listRef,
@@ -156,6 +159,7 @@ Menu.propTypes = {
   hasMenuRole: PropTypes.bool,
   handleReturnToParent: PropTypes.func,
   isMenuFocused: PropTypes.bool,
+  isPositionedOnTop: PropTypes.bool,
   isRTL: PropTypes.bool,
   options: MENU_OPTIONS,
   listId: PropTypes.string.isRequired,
