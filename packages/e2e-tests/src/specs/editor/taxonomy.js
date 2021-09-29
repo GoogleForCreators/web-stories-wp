@@ -22,6 +22,7 @@ import {
   withExperimentalFeatures,
   withUser,
   publishStory,
+  insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
@@ -68,7 +69,6 @@ async function addCategory(name, parent) {
 
   await page.keyboard.press('Enter');
 
-  // TODO: Add assertion here to verify the category was added.
   await expect(page).toMatchElement('label', {
     text: name,
   });
@@ -89,44 +89,51 @@ describe('Taxonomy', () => {
     // created in the background via the REST API already.
   });
 
-  it('should be able to add new categories', async () => {
-    await createNewStory();
-    await goToAndExpandTaxonomyPanel();
+  describe('Administrator', () => {
+    it('should be able to add new categories', async () => {
+      await createNewStory();
+      await insertStoryTitle('Taxonomies - Categories - Admin');
 
-    // Add some new categories.
-    await addCategory('jazz', 'music genres');
-    await addCategory('industrial', 'music genres');
-    await addCategory('electro-pop', 'music genres');
-    await addCategory('funk', 'music genres');
+      await goToAndExpandTaxonomyPanel();
 
-    await publishStory();
+      // Add some new categories.
+      await addCategory('jazz', 'music genres');
+      await addCategory('industrial', 'music genres');
+      await addCategory('electro-pop', 'music genres');
+      await addCategory('funk', 'music genres');
 
-    // Refresh page to verify that the assignments persisted.
-    await page.reload();
+      await publishStory();
 
-    await goToAndExpandTaxonomyPanel();
+      // Refresh page to verify that the assignments persisted.
+      await page.reload();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-    // See that category made in another story is available here.
-    await expect(page).toMatchElement('input[name="hierarchical_term_rock"]');
+      await goToAndExpandTaxonomyPanel();
 
-    // categories added are checked automatically.
-    await expect(page).toMatchElement(
-      'input[name="hierarchical_term_funk"][checked]'
-    );
-    await expect(page).toMatchElement(
-      'input[name="hierarchical_term_jazz"][checked]'
-    );
+      // See that category made in another story is available here.
+      await expect(page).toMatchElement('input[name="hierarchical_term_rock"]');
 
-    await percySnapshot(page, 'Taxonomies - Categories - Admin');
+      // categories added are checked automatically.
+      await expect(page).toMatchElement(
+        'input[name="hierarchical_term_funk"][checked]'
+      );
+      await expect(page).toMatchElement(
+        'input[name="hierarchical_term_jazz"][checked]'
+      );
+
+      await percySnapshot(page, 'Taxonomies - Categories - Admin');
+    });
   });
 
   it.todo('should be able to add new tags and existing tags');
 
-  describe('Contributor User', () => {
+  describe('Contributor', () => {
     withUser('contributor', 'password');
 
     it('should be able to manage categories but not add new ones', async () => {
       await createNewStory();
+      await insertStoryTitle('Taxonomies - Categories - Contributor');
+
       await goToAndExpandTaxonomyPanel();
 
       await expect(page).not.toMatchElement('button', {
@@ -138,19 +145,20 @@ describe('Taxonomy', () => {
       await expect(page).toClick('label', { text: 'rock' });
 
       await expect(page).toClick('button[aria-label="Save draft"]');
+      await page.waitForSelector(
+        'button[aria-label="Preview"]:not([disabled])'
+      );
 
       // Refresh page to verify that the assignments persisted.
       await page.reload();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+      await expect(page).toMatchElement('a.ab-item', { text: 'View Story' });
 
       await goToAndExpandTaxonomyPanel();
 
       await expect(page).toMatchElement(
         'input[name="hierarchical_term_rock"][checked]'
       );
-
-      await expect(page).not.toMatchElement('button', {
-        text: 'Add New Category',
-      });
 
       await percySnapshot(page, 'Taxonomies - Categories - Contributor');
     });
