@@ -21,6 +21,7 @@ import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { canTranscodeResource } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -465,7 +466,11 @@ const useQuickActions = () => {
   );
 
   const videoCommonActions = useMemo(() => {
-    return hasTrimMode
+    const resource = selectedElements?.[0]?.resource;
+    if (!resource) {
+      return [];
+    }
+    return canTranscodeResource(resource) && hasTrimMode
       ? [
           {
             Icon: Scissors,
@@ -488,6 +493,7 @@ const useQuickActions = () => {
     hasTrimMode,
     selectedElement,
     toggleTrimMode,
+    selectedElements,
   ]);
 
   const videoActions = useMemo(() => {

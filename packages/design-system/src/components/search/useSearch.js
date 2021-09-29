@@ -78,7 +78,7 @@ export default function useSearch({
    */
 
   const normalizedOptions = useMemo(() => {
-    if (!options || options.length == 0) {
+    if (!options || options.length === 0) {
       return [];
     }
     return getOptions(options);
@@ -122,7 +122,7 @@ export default function useSearch({
   );
 
   useEffect(() => {
-    if (inputState?.value === undefined && selectedValue) {
+    if (inputState?.value === undefined && selectedValue?.value !== undefined) {
       inputState.set(selectedValue?.label || '');
     }
   }, [inputState, selectedValue]);

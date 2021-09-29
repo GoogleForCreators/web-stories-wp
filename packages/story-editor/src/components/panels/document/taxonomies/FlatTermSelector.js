@@ -22,7 +22,7 @@ import {
   useDebouncedCallback,
   useMemo,
 } from '@web-stories-wp/react';
-
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -31,20 +31,25 @@ import cleanForSlug from '../../../../utils/cleanForSlug';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { ContentHeading, TaxonomyPropType } from './shared';
 
-function FlatTermSelector({ taxonomy }) {
-  const { createTerm, termCache, addSearchResultsToCache, terms, setTerms } =
-    useTaxonomy(
-      ({
-        state: { termCache, terms },
-        actions: { createTerm, addSearchResultsToCache, setTerms },
-      }) => ({
-        termCache,
-        createTerm,
-        addSearchResultsToCache,
-        terms,
-        setTerms,
-      })
-    );
+function FlatTermSelector({ taxonomy, canCreateTerms }) {
+  const {
+    createTerm,
+    termCache,
+    addSearchResultsToCache,
+    terms = [],
+    setTerms,
+  } = useTaxonomy(
+    ({
+      state: { termCache, terms },
+      actions: { createTerm, addSearchResultsToCache, setTerms },
+    }) => ({
+      termCache,
+      createTerm,
+      addSearchResultsToCache,
+      terms,
+      setTerms,
+    })
+  );
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
@@ -64,6 +69,11 @@ function FlatTermSelector({ taxonomy }) {
         setTerms(taxonomy, termsInCache);
       }
 
+      // Return early if user doesn't have capability to create new terms
+      if (!canCreateTerms) {
+        return;
+      }
+
       const termNamesNotInCache = termNameSlugTuples
         .filter(([slug]) => !termCache[taxonomy.restBase]?.[slug])
         .map(([, name]) => name);
@@ -73,7 +83,7 @@ function FlatTermSelector({ taxonomy }) {
         createTerm(taxonomy, name, null, true)
       );
     },
-    [taxonomy, createTerm, termCache, setTerms, terms]
+    [canCreateTerms, terms, taxonomy, termCache, setTerms, createTerm]
   );
 
   const handleFreeformInputChange = useDebouncedCallback((value) => {
@@ -126,6 +136,7 @@ function FlatTermSelector({ taxonomy }) {
 
 FlatTermSelector.propTypes = {
   taxonomy: TaxonomyPropType,
+  canCreateTerms: PropTypes.bool,
 };
 
 export default FlatTermSelector;

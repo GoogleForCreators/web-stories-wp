@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -199,7 +199,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [212, 213, 208]
+            "baseColor": [212, 213, 208],
+            "isExternal": true
           },
           "x": 23,
           "y": 174,
@@ -352,7 +353,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [16, 17, 17]
+            "baseColor": [16, 17, 17],
+            "isExternal": true
           }
         },
         {
@@ -677,7 +679,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [168, 176, 182]
+            "baseColor": [168, 176, 182],
+            "isExternal": true
           }
         },
         {
@@ -901,7 +904,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [67, 69, 75]
+            "baseColor": [67, 69, 75],
+            "isExternal": true
           },
           "x": 68,
           "y": -3,
@@ -1167,7 +1171,8 @@
             "alt": "Black pendant lamp turned on near glass window",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1536,7 +1541,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [35, 45, 47]
+            "baseColor": [35, 45, 47],
+            "isExternal": true
           },
           "basedOn": "fc59ebdf-d016-4e0e-9089-8edbe91f5527",
           "id": "a3581225-02ac-448b-8ef0-5ef40b26bf5d",
@@ -1596,7 +1602,8 @@
             "alt": "Representation of a map",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1754,7 +1761,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [252, 227, 224]
+            "baseColor": [252, 227, 224],
+            "isExternal": true
           },
           "width": 77,
           "height": 103,
@@ -1921,7 +1929,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [47, 165, 210]
+            "baseColor": [47, 165, 210],
+            "isExternal": true
           },
           "width": 77,
           "height": 103,
@@ -1962,7 +1971,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [5, 5, 5]
+            "baseColor": [5, 5, 5],
+            "isExternal": true
           },
           "width": 77,
           "height": 103,
@@ -2116,7 +2126,8 @@
             "alt": "From above of appetizing piece of cake decorated chocolate powder and mint leaves served near ceramic creamer and forks with light pink chrysanthemum on top placed on wooden board",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 68,
           "y": -3,
@@ -2448,7 +2459,8 @@
             "alt": "Aerial view of city buildings near body of water",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2487,7 +2499,8 @@
             "alt": "Trevi Fountain",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {

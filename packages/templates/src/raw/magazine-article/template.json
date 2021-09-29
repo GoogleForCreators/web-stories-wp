@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -53,7 +53,8 @@
             "alt": "Airplane wing towards clouds",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -15,
@@ -91,7 +92,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "type": "image",
           "x": -172,
@@ -410,7 +412,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "type": "image",
           "width": 756,
@@ -462,7 +465,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [17, 34, 66]
+            "baseColor": [17, 34, 66],
+            "isExternal": true
           },
           "type": "image",
           "x": 48,
@@ -502,7 +506,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "type": "image",
           "width": 756,
@@ -630,7 +635,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [33, 36, 47]
+            "baseColor": [33, 36, 47],
+            "isExternal": true
           },
           "overlay": null
         },
@@ -682,7 +688,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "type": "image",
           "width": 756,
@@ -956,7 +963,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [36, 36, 35]
+            "baseColor": [36, 36, 35],
+            "isExternal": true
           }
         },
         {
@@ -1008,7 +1016,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "width": 756,
           "height": 756,
@@ -1164,7 +1173,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [13, 13, 13]
+            "baseColor": [13, 13, 13],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -1226,7 +1236,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [82, 82, 82]
+            "baseColor": [82, 82, 82],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -1450,7 +1461,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [46, 47, 45]
+            "baseColor": [46, 47, 45],
+            "isExternal": true
           }
         },
         {
@@ -1498,7 +1510,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "width": 756,
           "height": 756,
@@ -1787,7 +1800,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [194, 200, 209]
+            "baseColor": [194, 200, 209],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -1825,7 +1839,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "width": 756,
           "height": 756,
@@ -1952,7 +1967,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [35, 31, 30]
+            "baseColor": [35, 31, 30],
+            "isExternal": true
           }
         },
         {
@@ -2000,7 +2016,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "x": -172,
           "y": -69,
@@ -2154,7 +2171,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [69, 45, 56]
+            "baseColor": [69, 45, 56],
+            "isExternal": true
           }
         },
         {
@@ -2202,7 +2220,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "width": 756,
           "height": 756,
@@ -2476,7 +2495,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [210, 211, 208]
+            "baseColor": [210, 211, 208],
+            "isExternal": true
           }
         },
         {
@@ -2500,7 +2520,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "width": 756,
           "height": 756,
@@ -2677,7 +2698,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [58, 43, 32]
+            "baseColor": [58, 43, 32],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2715,7 +2737,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [177, 172, 168]
+            "baseColor": [177, 172, 168],
+            "isExternal": true
           },
           "type": "image",
           "x": 48,
@@ -2753,7 +2776,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 228]
+            "baseColor": [228, 228, 228],
+            "isExternal": true
           },
           "width": 756,
           "height": 756,
@@ -2904,7 +2928,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 195, 196]
+            "baseColor": [196, 195, 196],
+            "isExternal": true
           },
           "type": "image",
           "x": 20,

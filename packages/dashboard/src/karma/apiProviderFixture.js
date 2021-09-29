@@ -96,6 +96,14 @@ export default function ApiProviderFixture({ children }) {
     [currentUser]
   );
 
+  const pagesApi = useMemo(
+    () => ({
+      searchPages: jasmine.createSpy('searchPages'),
+      getPageById: jasmine.createSpy('getPageById'),
+    }),
+    []
+  );
+
   const publisherLogosApi = useMemo(
     () => ({
       fetchPublisherLogos: () =>
@@ -134,6 +142,7 @@ export default function ApiProviderFixture({ children }) {
         storyApi,
         templateApi,
         usersApi,
+        pagesApi,
         publisherLogosApi,
       },
     }),
@@ -148,6 +157,7 @@ export default function ApiProviderFixture({ children }) {
       storyApi,
       templateApi,
       usersApi,
+      pagesApi,
       publisherLogos,
       publisherLogosApi,
     ]
@@ -179,6 +189,8 @@ function getSettingsState() {
     adSenseSlotId: '',
     adManagerSlotId: '',
     adNetwork: 'none',
+    archive: 'default',
+    archivePageId: 0,
   };
 }
 
