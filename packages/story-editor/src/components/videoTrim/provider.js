@@ -54,7 +54,6 @@ function VideoTrimProvider({ children }) {
   } = useVideoNode();
 
   const performTrim = useCallback(() => {
-    debugger;
     const resourceToTrim = originalResource
       ? originalResource
       : selectedElements[0]?.resource;
