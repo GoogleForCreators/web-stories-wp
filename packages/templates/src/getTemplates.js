@@ -64,7 +64,11 @@ async function loadTemplate(title, imageBaseUrl) {
       const srcPath = `${imageBaseUrl}images/templates/${
         data.default.slug
       }/posters/${i + 1}`;
-      return { webp: `${srcPath}.webp`, png: `${srcPath}.png` };
+      return {
+        webp: `${srcPath}.webp`,
+        png: `${srcPath}.png`,
+        type: data.default.pages[i].pageTemplateType,
+      };
     }),
   };
 
