@@ -116,7 +116,7 @@ const Option = (option) => {
         <Label htmlFor={optionId}>{label}</Label>
       </CheckboxContainer>
       {options?.map((child) => (
-        <StepContainer key={child.id}>
+        <StepContainer key={`${child.id}-${child.checked}`}>
           <Option onChange={onChange} {...child} />
         </StepContainer>
       ))}
@@ -211,7 +211,7 @@ const HierarchicalInput = ({
               {filteredOptions.length ? (
                 filteredOptions.map((option) => (
                   <Option
-                    key={option.id}
+                    key={`${option.id}-${option.checked}`}
                     {...option}
                     onChange={handleCheckboxChange}
                   />
