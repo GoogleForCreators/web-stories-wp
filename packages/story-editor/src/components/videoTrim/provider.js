@@ -54,14 +54,17 @@ function VideoTrimProvider({ children }) {
   } = useVideoNode();
 
   const performTrim = useCallback(() => {
-    const { resource } = selectedElements[0];
-    if (!resource) {
+    debugger;
+    const resourceToTrim = originalResource
+      ? originalResource
+      : selectedElements[0]?.resource;
+    if (!resourceToTrim) {
       return;
     }
     const lengthInSeconds = Math.round(endOffset / 1000 - startOffset / 1000);
     trimExistingVideo({
       resource: {
-        ...resource,
+        ...resourceToTrim,
         length: lengthInSeconds,
         lengthFormatted: getVideoLengthDisplay(lengthInSeconds),
       },
@@ -75,6 +78,7 @@ function VideoTrimProvider({ children }) {
     trimExistingVideo,
     selectedElements,
     toggleTrimMode,
+    originalResource,
   ]);
 
   const value = {
