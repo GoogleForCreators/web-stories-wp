@@ -31,10 +31,10 @@ import {
 } from '@web-stories-wp/design-system';
 import {
   useCallback,
-  useMemo,
-  useState,
-  useRef,
   useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -77,8 +77,6 @@ const ButtonContainer = styled.div`
 const LinkButton = styled(Button).attrs({
   variant: BUTTON_VARIANTS.LINK,
 })`
-  ${({ $isVisible }) => $isVisible && 'display: none;'}
-
   margin-bottom: 16px;
 
   ${({ theme }) =>
@@ -125,16 +123,13 @@ function HierarchicalTermSelector({
 
   const categories = useMemo(() => {
     if (termCache?.[taxonomy.restBase]) {
-      return Object.values(termCache[taxonomy.restBase]).map((category) => {
-        const formattedCategory = { ...category };
-        formattedCategory.value = formattedCategory.id;
-        formattedCategory.label = formattedCategory.name;
-        formattedCategory.checked = terms[taxonomy.restBase]?.includes(
-          category.id
-        );
-
-        return formattedCategory;
-      });
+      return Object.values(termCache[taxonomy.restBase]).map((category) => ({
+        id: category.id,
+        parent: category.parent,
+        value: category.id,
+        label: category.name,
+        checked: terms[taxonomy.restBase]?.includes(category.id),
+      }));
     }
 
     return [];
@@ -262,15 +257,15 @@ function HierarchicalTermSelector({
       />
       {canCreateTerms ? (
         <>
-          <LinkButton
-            ref={toggleRef}
-            aria-expanded={false}
-            onClick={handleToggleNewCategory}
-            $isVisible={showAddNewCategory}
-            data-testid="expand_add_new_hierarchical_term"
-          >
-            {taxonomy.labels.add_new_item}
-          </LinkButton>
+          {!showAddNewCategory && (
+            <LinkButton
+              ref={toggleRef}
+              aria-expanded={false}
+              onClick={handleToggleNewCategory}
+            >
+              {taxonomy.labels.add_new_item}
+            </LinkButton>
+          )}
           {showAddNewCategory ? (
             <AddNewCategoryForm ref={formRef} onSubmit={handleSubmit}>
               <Input
@@ -293,7 +288,6 @@ function HierarchicalTermSelector({
                 <AddNewCategoryButton
                   disabled={!newCategoryName.length}
                   type="submit"
-                  data-testid="submit_add_new_hierarchical_term"
                 >
                   {taxonomy.labels.add_new_item}
                 </AddNewCategoryButton>
