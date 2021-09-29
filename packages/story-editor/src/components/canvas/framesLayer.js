@@ -86,6 +86,14 @@ function FramesLayer() {
       }),
     [setScrollOffset]
   );
+  const { isEditing, hasEditMenu = false } = useCanvas(
+    ({ state: { isEditing, editingElementState: { hasEditMenu } = {} } }) => ({
+      isEditing,
+      hasEditMenu,
+    })
+  );
+
+  const isEditingWithMenu = isEditing && hasEditMenu;
 
   return (
     <Layer
@@ -118,7 +126,7 @@ function FramesLayer() {
         // Cancel lasso.
         onMouseDown={(evt) => evt.stopPropagation()}
       >
-        <PageMenu />
+        {!isEditingWithMenu && <PageMenu />}
       </MenuArea>
       <NavPrevArea>
         <PageNav isNext={false} />
