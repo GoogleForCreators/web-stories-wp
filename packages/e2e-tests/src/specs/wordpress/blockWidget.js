@@ -45,10 +45,10 @@ describe('Web Stories Widget Block', () => {
     await page.waitForSelector('.web-stories-block-configuration-panel');
     await expect(page).toClick('.web-stories-block-configuration-panel');
 
-    await expect(page).toClick('button[aria-label="Embed a visual story."]');
+    await expect(page).toClick('button[aria-label="Embed a single story."]');
 
     await expect(page).toMatch(
-      'Select an existing story, or add one with a URL.'
+      'Select an existing story from your site, or add one with a URL.'
     );
     await expect(page).toClick('button', { text: 'Insert from URL' });
 

@@ -74,7 +74,7 @@ const EmbedPlaceholder = ({
         label={label}
         className="wp-block-web-stories-embed"
         instructions={__(
-          'Select an existing story, or add one with a URL.',
+          'Select an existing story from your site, or add one with a URL.',
           'web-stories'
         )}
       >

@@ -214,7 +214,7 @@ function StoryEmbedEdit({
   const onResizeStart = () => toggleSelection(false);
   const onResizeStop = () => toggleSelection(true);
 
-  const label = __('Story Embed', 'web-stories');
+  const label = __('Single Story', 'web-stories');
 
   if (showPlaceholder) {
     if (isFetching) {

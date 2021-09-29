@@ -84,10 +84,10 @@ describe('Web Stories Block', () => {
 
     await page.waitForSelector('.web-stories-block-configuration-panel');
 
-    await expect(page).toClick('button', { text: 'Story Embed' });
+    await expect(page).toClick('button', { text: 'Single Story' });
 
     await expect(page).toMatch(
-      'Select an existing story, or add one with a URL.'
+      'Select an existing story from your site, or add one with a URL.'
     );
     await expect(page).toClick('button', { text: 'Insert from URL' });
 
