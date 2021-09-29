@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -33,7 +33,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [217, 196, 188]
+            "baseColor": [217, 196, 188],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
         },
@@ -413,7 +414,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": true,
-            "isMuted": true
+            "isMuted": true,
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.2 } },
@@ -671,7 +673,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": null
         },
@@ -894,7 +897,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1080,7 +1084,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1318,7 +1323,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1567,7 +1573,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1816,7 +1823,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2060,7 +2068,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": true,
-            "isMuted": true
+            "isMuted": true,
+            "isExternal": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.15 } },
@@ -2171,7 +2180,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.3 } }
         },
@@ -2592,7 +2602,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2624,7 +2635,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {

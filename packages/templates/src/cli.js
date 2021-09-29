@@ -132,6 +132,10 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
         path: `${screenshotsPath}${templateName}/${currentPage}.png`,
       });
 
+      await templatePageSafeArea.screenshot({
+        path: `${screenshotsPath}${templateName}/${currentPage}.webp`,
+      });
+
       if (currentPage !== totalPages - 1) {
         await pagePreview.click('aria/Next page');
       }

@@ -27,7 +27,7 @@ import { renderWithProviders } from '../../../../../testUtils';
 import { ARCHIVE_TYPE } from '../../../../../constants';
 import ArchiveSetting, { TEXT } from '..';
 
-describe('Editor Settings: Ad Management group settings <ArchiveSetting />', function () {
+describe('Editor Settings: Archive page settings <ArchiveSetting />', function () {
   let archive;
   let mockUpdate;
 
@@ -43,11 +43,14 @@ describe('Editor Settings: Ad Management group settings <ArchiveSetting />', fun
   it('should render archive dropdown button and helper text for default', function () {
     const link = 'http://www.example.com/web-stories';
     renderWithProviders(
-      <FlagsProvider features={{ disableArchive: true }}>
+      <FlagsProvider features={{ archivePageCustomization: true }}>
         <ArchiveSetting
           archive={archive}
           updateSettings={mockUpdate}
           archiveURL={link}
+          archivePageId={0}
+          searchPages={jest.fn()}
+          getPageById={jest.fn()}
         />
       </FlagsProvider>
     );
@@ -70,11 +73,14 @@ describe('Editor Settings: Ad Management group settings <ArchiveSetting />', fun
   it('should render archive dropdown button and helper text for disabled', function () {
     const link = 'http://www.example.com/web-stories';
     renderWithProviders(
-      <FlagsProvider features={{ disableArchive: true }}>
+      <FlagsProvider features={{ archivePageCustomization: true }}>
         <ArchiveSetting
           archive={ARCHIVE_TYPE.DISABLED}
           updateSettings={mockUpdate}
           archiveURL={link}
+          archivePageId={0}
+          searchPages={jest.fn()}
+          getPageById={jest.fn()}
         />
       </FlagsProvider>
     );

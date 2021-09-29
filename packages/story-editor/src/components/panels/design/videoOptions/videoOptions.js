@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { canTranscodeResource } from '@web-stories-wp/media';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
@@ -32,7 +33,7 @@ import {
   BUTTON_VARIANTS,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
-import { useCallback, useMemo, useEffect } from '@web-stories-wp/react';
+import { useCallback, useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -92,8 +93,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo: state.actions.muteExistingVideo,
   }));
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuted, isTranscoding, isMuting, isTrimming, isExternal, local } =
-    resource;
+  const { isMuting, isMuted, isTrimming } = resource;
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
@@ -101,29 +101,19 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
-  const shouldDisplayMuteButton = useMemo(() => {
-    return (
-      (isTranscodingEnabled &&
-        !local &&
-        !isMuted &&
-        !isExternal &&
-        isSingleElement) ||
-      isMuting
-    );
-  }, [
-    isTranscodingEnabled,
-    local,
-    isMuted,
-    isExternal,
-    isSingleElement,
-    isMuting,
-  ]);
+  const shouldDisableVideoActions = !canTranscodeResource(resource);
 
-  const muteButtonText = useMemo(() => {
-    return isMuting
-      ? __('Removing audio…', 'web-stories')
-      : __('Remove audio', 'web-stories');
-  }, [isMuting]);
+  const shouldDisplayMuteButton =
+    isTranscodingEnabled &&
+    isSingleElement &&
+    ((!isMuted && canTranscodeResource(resource)) || isMuting);
+  const muteButtonText = isMuting
+    ? __('Removing audio…', 'web-stories')
+    : __('Remove audio', 'web-stories');
+
+  const trimButtonText = isTrimming
+    ? __('Trimming…', 'web-stories')
+    : __('Trim', 'web-stories');
 
   const trimButtonText = useMemo(() => {
     return isTrimming
@@ -188,7 +178,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
         {hasTrimMode && (
           <TrimWrapper>
             <TrimButton
-              disabled={isTrimming || isMuting || isTranscoding}
+              disabled={shouldDisableVideoActions}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
@@ -204,7 +194,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
         <>
           <Row spaceBetween={false}>
             <StyledButton
-              disabled={isMuting || isTrimming || isTranscoding}
+              disabled={shouldDisableVideoActions}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}

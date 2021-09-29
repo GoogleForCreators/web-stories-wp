@@ -21,7 +21,6 @@ import formatMsToHMS from '../formatMsToHMS';
 
 describe('formatMsToHMS', () => {
   it('should correctly format 0', () => {
-    expect(formatMsToHMS(0, true)).toStrictEqual('0:00');
     expect(formatMsToHMS(0)).toStrictEqual('00:00:00');
   });
 
@@ -29,12 +28,5 @@ describe('formatMsToHMS', () => {
     expect(formatMsToHMS(1000)).toStrictEqual('00:00:01');
     expect(formatMsToHMS(60000)).toStrictEqual('00:01:00');
     expect(formatMsToHMS(10500)).toStrictEqual('00:00:10.5');
-  });
-
-  it('should return correct results when displaying length for the user', () => {
-    expect(formatMsToHMS(1000, true)).toStrictEqual('0:01');
-    expect(formatMsToHMS(60000, true)).toStrictEqual('1:00');
-    expect(formatMsToHMS(10500, true)).toStrictEqual('0:11');
-    expect(formatMsToHMS(6000000, true)).toStrictEqual('1:40:00');
   });
 });

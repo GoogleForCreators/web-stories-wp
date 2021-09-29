@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -60,7 +60,8 @@
             "id": 0,
             "alt": "page1_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "41a5dd8e-e12b-46fb-aef1-63b71a2475bf",
           "id": "8dbfe563-a930-4de7-90d7-e9681be1e98e"
@@ -116,7 +117,8 @@
             "id": 0,
             "alt": "icon_logo",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "type": "image",
           "x": 170.5,
@@ -453,7 +455,8 @@
             "id": 0,
             "alt": "page3_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -707,7 +710,8 @@
             "id": 0,
             "alt": "page4_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -946,7 +950,8 @@
             "id": 0,
             "alt": "page5_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "8dbfe563-a930-4de7-90d7-e9681be1e98e",
           "id": "e5936b3b-e398-4cdd-a2f5-91128b4c10b9"
@@ -1167,7 +1172,8 @@
             "id": 0,
             "alt": "page6_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -1378,7 +1384,8 @@
             "id": 0,
             "alt": "page7_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -1590,7 +1597,8 @@
             "id": 0,
             "alt": "page8_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "e5936b3b-e398-4cdd-a2f5-91128b4c10b9",
           "id": "a406280f-9a0b-4140-83fb-e9cac472886f"
@@ -2385,7 +2393,8 @@
             "id": 0,
             "alt": "page10_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -2414,7 +2423,8 @@
             "id": 0,
             "alt": "page10_image2",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "20ab13c0-b782-40f7-8700-a99d9b56008c",
           "id": "70006d51-6f37-47b4-9074-b193a473caab"
@@ -2444,7 +2454,8 @@
             "id": 0,
             "alt": "page10_image3",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "70006d51-6f37-47b4-9074-b193a473caab",
           "id": "46172f61-dfd3-4105-a3b3-9e6b95e32a4c"
@@ -2476,7 +2487,8 @@
             "id": 0,
             "alt": "page10_image4",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {

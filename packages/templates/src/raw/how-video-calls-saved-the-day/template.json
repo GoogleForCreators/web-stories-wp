@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -143,7 +143,8 @@
             "alt": "Happy ethnic woman sitting at table with laptop",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 196,
           "y": 322,
@@ -258,7 +259,8 @@
             "alt": "Woman using macbook",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 278,
           "height": 175,
@@ -818,7 +820,8 @@
             "alt": "White arrow",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 321,
@@ -1075,7 +1078,8 @@
             "alt": "Boy In White Polo Shirt Crying",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 0,
           "y": 433,
@@ -1505,7 +1509,8 @@
             "alt": "Cartoon figure of a person riding a scooter",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -1557,7 +1562,8 @@
             "alt": "Woman in gray tank top",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 156,
           "height": 97,
@@ -1722,7 +1728,8 @@
             "alt": "Cartoon figure parachuting",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 68,
@@ -1774,7 +1781,8 @@
             "alt": "Woman wearing black eyeglasses",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 156,
           "height": 97,
@@ -2080,7 +2088,8 @@
             "alt": "Photo Of Woman Wearing White Shirt",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 412,
           "height": 250,
@@ -2268,7 +2277,8 @@
             "alt": "Orchid plant in a pot",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 18,
@@ -2557,7 +2567,8 @@
             "alt": "Cartoon figure of a woman using laptop",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 26,
@@ -2610,7 +2621,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [100, 111, 111]
+            "baseColor": [100, 111, 111],
+            "isExternal": true
           },
           "width": 156,
           "height": 97,
@@ -2864,7 +2876,8 @@
             "alt": "Cheerful girlfriends eating pizza and drinking beer in kitchen",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 3,
           "y": 72,
@@ -2900,7 +2913,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [188, 173, 159]
+            "baseColor": [188, 173, 159],
+            "isExternal": true
           },
           "width": 206,
           "height": 126,
@@ -2932,7 +2946,8 @@
             "alt": "Cheerful woman smiling while sitting at table with laptop",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 201,
           "height": 125,
@@ -2964,7 +2979,8 @@
             "alt": "Woman sitting on sofa while looking at phone with laptop on lap",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 201,
           "height": 126,
@@ -3295,7 +3311,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [60, 60, 60]
+            "baseColor": [60, 60, 60],
+            "isExternal": true
           },
           "type": "image",
           "x": 250,
@@ -3331,7 +3348,8 @@
             "alt": "Black woman messaging on modern cellphone",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 50,
           "y": 258,
@@ -3366,7 +3384,8 @@
             "alt": "woman lying on bed with two cats",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 155,
           "height": 96,

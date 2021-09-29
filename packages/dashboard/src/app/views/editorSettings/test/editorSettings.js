@@ -23,10 +23,7 @@ import { setAppElement } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import {
-  publisherLogoIds,
-  rawPublisherLogos,
-} from '../../../../dataUtils/formattedPublisherLogos';
+import { rawPublisherLogos } from '../../../../dataUtils/formattedPublisherLogos';
 import { renderWithProviders } from '../../../../testUtils';
 import { TEXT as AD_NETWORK_TEXT } from '../adManagement';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
@@ -36,22 +33,25 @@ import EditorSettings from '..';
 import { AD_NETWORK_TYPE } from '../../../../constants';
 
 const mockFetchSettings = jest.fn();
-const mockFetchMediaById = jest.fn();
 const mockUploadMedia = jest.fn();
 const mockUpdateSettings = jest.fn();
+const mockSearch = jest.fn();
+const mockGetPageById = jest.fn();
+const mockFetchPublisherLogos = jest.fn();
+const mockAddPublisherLogo = jest.fn();
+const mockRemovePublisherLogo = jest.fn();
+const mockSetPublisherLogoAsDefault = jest.fn();
 
 function createProviderValues({
   canUploadFiles,
   canManageSettings,
-  activeLogoId,
   isLoading,
   googleAnalyticsId,
   adSensePublisherId = '',
   adSenseSlotId = '',
   adManagerSlotId = '',
   adNetwork = AD_NETWORK_TYPE.NONE,
-  logoIds,
-  logos,
+  publisherLogos,
 }) {
   return {
     config: {
@@ -62,6 +62,7 @@ function createProviderValues({
       },
       maxUpload: 104857600,
       maxUploadFormatted: '100 MB',
+      archiveURL: 'https://example.com/archive',
     },
     api: {
       state: {
@@ -71,14 +72,13 @@ function createProviderValues({
           adSenseSlotId,
           adManagerSlotId,
           adNetwork,
-          activePublisherLogoId: activeLogoId,
-          publisherLogoIds: logoIds,
           error: {},
+          archive: 'default',
+          archivePageId: 0,
         },
         media: {
           isLoading,
           newlyCreatedMediaIds: [],
-          mediaById: logos,
           error: {},
         },
         stories: { error: {} },
@@ -93,6 +93,9 @@ function createProviderValues({
             },
           },
         },
+        publisherLogos: {
+          publisherLogos,
+        },
       },
       actions: {
         settingsApi: {
@@ -101,9 +104,18 @@ function createProviderValues({
         },
         mediaApi: {
           uploadMedia: mockUploadMedia,
-          fetchMediaById: mockFetchMediaById,
         },
         usersApi: {},
+        pagesApi: {
+          searchPages: mockSearch,
+          getPageById: mockGetPageById,
+        },
+        publisherLogosApi: {
+          fetchPublisherLogos: mockFetchPublisherLogos,
+          addPublisherLogo: mockAddPublisherLogo,
+          removePublisherLogo: mockRemovePublisherLogo,
+          setPublisherLogoAsDefault: mockSetPublisherLogoAsDefault,
+        },
       },
     },
   };
@@ -120,7 +132,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         canManageSettings: true,
         isLoading: false,
         logoIds: [],
-        logos: {},
+        publisherLogos: [],
       })
     );
     setAppElement(container);
@@ -153,19 +165,17 @@ describe('Editor Settings: <Editor Settings />', function () {
         canUploadFiles: true,
         canManageSettings: true,
         isLoading: false,
-        activeLogoId: publisherLogoIds[0],
-        logoIds: publisherLogoIds,
-        logos: rawPublisherLogos,
+        publisherLogos: rawPublisherLogos,
       })
     );
     setAppElement(container);
 
     expect(screen.queryAllByTestId(/^uploaded-publisher-logo-/)).toHaveLength(
-      publisherLogoIds.length
+      rawPublisherLogos.length
     );
   });
 
-  it('should call mockUpdateSettings when a logo is removed', function () {
+  it('should call mockRemovePublisherLogo when a logo is removed', function () {
     renderWithProviders(
       <EditorSettings />,
       createProviderValues({
@@ -174,9 +184,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         canUploadFiles: true,
         canManageSettings: true,
         isLoading: false,
-        activeLogoId: publisherLogoIds[0],
-        logoIds: publisherLogoIds,
-        logos: rawPublisherLogos,
+        publisherLogos: rawPublisherLogos,
       })
     );
 
@@ -194,15 +202,7 @@ describe('Editor Settings: <Editor Settings />', function () {
 
     fireEvent.click(DeleteFileButton);
 
-    const DeleteDialog = screen.getByRole('dialog');
-    expect(DeleteDialog).toBeInTheDocument();
-
-    const ConfirmDeleteButton = within(DeleteDialog).getByText('Delete Logo');
-    expect(ConfirmDeleteButton).toBeInTheDocument();
-
-    fireEvent.click(ConfirmDeleteButton);
-
-    expect(mockUpdateSettings).toHaveBeenCalledTimes(1);
+    expect(mockRemovePublisherLogo).toHaveBeenCalledTimes(1);
   });
 
   it('should render settings page without file upload section when canUploadFiles is false', function () {
@@ -214,8 +214,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         canUploadFiles: false,
         canManageSettings: true,
         isLoading: false,
-        logoIds: [],
-        logos: {},
+        publisherLogos: [],
       })
     );
     setAppElement(container);
@@ -236,8 +235,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         adSenseSlotId: '456',
         adManagerSlotId: '',
         adNetwork: AD_NETWORK_TYPE.ADSENSE,
-        logoIds: [],
-        logos: {},
+        publisherLogos: [],
       })
     );
     setAppElement(container);

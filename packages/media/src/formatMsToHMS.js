@@ -23,12 +23,11 @@ import formatDuration from './formatDuration';
  * Converts length in milliseconds to HH:MM:SS.SSS format.
  *
  * @param {number} ms Original length in milliseconds.
- * @param {boolean} isForDisplay If the output is for displaying to the user.
  * @return {string} Formatted length.
  */
-function formatMsToHMS(ms, isForDisplay = false) {
+function formatMsToHMS(ms) {
   if (!ms) {
-    return isForDisplay ? '0:00' : '00:00:00';
+    return '00:00:00';
   }
   let seconds = ms / 1000;
   const hours = parseInt(seconds / 3600);
@@ -36,18 +35,9 @@ function formatMsToHMS(ms, isForDisplay = false) {
   const minutes = parseInt(seconds / 60);
   seconds = seconds % 60;
 
-  if (!isForDisplay) {
-    return `${formatDuration(hours)}:${formatDuration(
-      minutes
-    )}:${formatDuration(seconds)}`;
-  }
-
-  // If we're getting the length for displaying for the user.
-  seconds = Math.round(seconds);
-  if (hours) {
-    return `${hours}:${formatDuration(minutes)}:${formatDuration(seconds)}`;
-  }
-  return `${minutes}:${formatDuration(seconds)}`;
+  return `${formatDuration(hours)}:${formatDuration(minutes)}:${formatDuration(
+    seconds
+  )}`;
 }
 
 export default formatMsToHMS;

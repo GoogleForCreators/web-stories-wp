@@ -17,49 +17,73 @@
 /**
  * External dependencies
  */
-import { useCallback, useDebouncedCallback } from '@web-stories-wp/react';
-
+import {
+  useCallback,
+  useDebouncedCallback,
+  useMemo,
+} from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import Tags from '../../../form/tags';
+import Tags, { deepEquals } from '../../../form/tags';
 import cleanForSlug from '../../../../utils/cleanForSlug';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { ContentHeading, TaxonomyPropType } from './shared';
 
-function FlatTermSelector({ taxonomy }) {
+function FlatTermSelector({ taxonomy, canCreateTerms }) {
   const {
     createTerm,
     termCache,
     addSearchResultsToCache,
-    setSelectedTaxonomySlugs,
-    selectedSlugs,
+    terms = [],
+    setTerms,
   } = useTaxonomy(
     ({
-      state: { termCache, selectedSlugs },
-      actions: {
-        createTerm,
-        addSearchResultsToCache,
-        setSelectedTaxonomySlugs,
-      },
+      state: { termCache, terms },
+      actions: { createTerm, addSearchResultsToCache, setTerms },
     }) => ({
       termCache,
       createTerm,
       addSearchResultsToCache,
-      setSelectedTaxonomySlugs,
-      selectedSlugs,
+      terms,
+      setTerms,
     })
   );
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
-      termNames.forEach((termName) => createTerm(taxonomy, termName));
-      setSelectedTaxonomySlugs(
-        taxonomy,
-        termNames.map((termName) => cleanForSlug(termName))
+      // set terms that exist in the cache
+      const termNameSlugTuples = termNames.map((name) => [
+        cleanForSlug(name),
+        name,
+      ]);
+      const termsInCache = termNameSlugTuples
+        .map(([slug]) => slug)
+        .map((slug) => termCache[taxonomy.restBase]?.[slug])
+        .filter((v) => v)
+        .map((term) => term.id);
+
+      // We don't want to cause a redundant history entry
+      if (!deepEquals(terms[taxonomy.restBase], termsInCache)) {
+        setTerms(taxonomy, termsInCache);
+      }
+
+      // Return early if user doesn't have capability to create new terms
+      if (!canCreateTerms) {
+        return;
+      }
+
+      const termNamesNotInCache = termNameSlugTuples
+        .filter(([slug]) => !termCache[taxonomy.restBase]?.[slug])
+        .map(([, name]) => name);
+
+      // create new terms for ones that don't
+      termNamesNotInCache.forEach((name) =>
+        createTerm(taxonomy, name, null, true)
       );
     },
-    [taxonomy, createTerm, setSelectedTaxonomySlugs]
+    [canCreateTerms, terms, taxonomy, termCache, setTerms, createTerm]
   );
 
   const handleFreeformInputChange = useDebouncedCallback((value) => {
@@ -69,8 +93,20 @@ function FlatTermSelector({ taxonomy }) {
     addSearchResultsToCache(taxonomy, { name: value });
   }, 1000);
 
+  const tokens = useMemo(() => {
+    return (terms[taxonomy.restBase] || [])
+      .map((id) => {
+        const term = Object.values(termCache[taxonomy.restBase] || {}).find(
+          (term) => term.id === id
+        );
+        return term;
+      })
+      .filter((term) => term !== undefined)
+      .map((term) => term.name);
+  }, [taxonomy, terms, termCache]);
+
   const termDisplayTransformer = useCallback(
-    (tagName) => termCache[taxonomy]?.[cleanForSlug(tagName)]?.name,
+    (tagName) => termCache[taxonomy.restBase]?.[cleanForSlug(tagName)]?.name,
     [taxonomy, termCache]
   );
 
@@ -88,7 +124,7 @@ function FlatTermSelector({ taxonomy }) {
           onTagsChange={handleFreeformTermsChange}
           onInputChange={handleFreeformInputChange}
           tagDisplayTransformer={termDisplayTransformer}
-          initialTags={selectedSlugs?.[taxonomy.restBase] || []}
+          tokens={tokens}
         />
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separate_items_with_commas}
@@ -100,6 +136,7 @@ function FlatTermSelector({ taxonomy }) {
 
 FlatTermSelector.propTypes = {
   taxonomy: TaxonomyPropType,
+  canCreateTerms: PropTypes.bool,
 };
 
 export default FlatTermSelector;

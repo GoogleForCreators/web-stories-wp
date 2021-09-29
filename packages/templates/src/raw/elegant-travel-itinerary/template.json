@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -36,7 +36,8 @@
             "alt": "Locomotive engine",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -346,7 +347,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [54, 56, 48]
+            "baseColor": [54, 56, 48],
+            "isExternal": true
           }
         },
         {
@@ -613,7 +615,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 225, 223]
+            "baseColor": [218, 225, 223],
+            "isExternal": true
           }
         },
         {
@@ -800,7 +803,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [27, 38, 44]
+            "baseColor": [27, 38, 44],
+            "isExternal": true
           }
         },
         {
@@ -982,7 +986,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [195, 162, 125]
+            "baseColor": [195, 162, 125],
+            "isExternal": true
           }
         },
         {
@@ -1170,7 +1175,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -1297,7 +1303,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": 101.5,
@@ -2315,7 +2322,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2353,7 +2361,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2391,7 +2400,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [58, 54, 63]
+            "baseColor": [58, 54, 63],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2703,7 +2713,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [219, 188, 170]
+            "baseColor": [219, 188, 170],
+            "isExternal": true
           }
         },
         {
@@ -2891,7 +2902,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2929,7 +2941,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -2967,7 +2980,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [146, 129, 161]
+            "baseColor": [146, 129, 161],
+            "isExternal": true
           },
           "type": "image",
           "x": -10,
@@ -3302,7 +3316,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [88, 99, 100]
+            "baseColor": [88, 99, 100],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -3338,7 +3353,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [20, 28, 36]
+            "baseColor": [20, 28, 36],
+            "isExternal": true
           },
           "type": "image",
           "x": -207,
@@ -3641,7 +3657,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -3679,7 +3696,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [212, 211, 209]
+            "baseColor": [212, 211, 209],
+            "isExternal": true
           },
           "type": "image",
           "x": -10,
@@ -3965,7 +3983,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "width": 337,
@@ -4048,7 +4067,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [45, 39, 39]
+            "baseColor": [45, 39, 39],
+            "isExternal": true
           }
         },
         {
@@ -4409,7 +4429,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [215, 213, 210]
+            "baseColor": [215, 213, 210],
+            "isExternal": true
           },
           "type": "image",
           "x": 57,
@@ -4444,7 +4465,8 @@
             "alt": "Photo of house near cliff and body of water",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 57,

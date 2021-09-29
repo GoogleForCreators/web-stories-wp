@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import preloadVideoMetadata from './preloadVideoMetadata';
-import formatMsToHMS from './formatMsToHMS';
+import getVideoLengthFromDisplay from './getVideoLengthDisplay';
 
 /**
  * Get video length from a video.
@@ -29,7 +29,7 @@ import formatMsToHMS from './formatMsToHMS';
 const getVideoLength = async (src) => {
   const video = await preloadVideoMetadata(src);
   const length = Math.round(video.duration);
-  const lengthFormatted = formatMsToHMS(length * 1000, true /* isForDisplay */);
+  const lengthFormatted = getVideoLengthFromDisplay(length);
   return {
     length,
     lengthFormatted,
