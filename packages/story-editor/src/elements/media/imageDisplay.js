@@ -81,7 +81,8 @@ function ImageDisplay({ element, box, previewMode }) {
     let mounted = true;
     if (resourceList.get(resource.id)?.type !== 'fullsize' && resource.src) {
       timeout = setTimeout(async () => {
-        const preloadedImg = await preloadImage(resource.src, srcSet);
+        const url = getProxiedUrl(resource, resource.src);
+        const preloadedImg = await preloadImage(url, srcSet);
         if (mounted) {
           resourceList.set(resource.id, {
             type: 'fullsize',
@@ -95,7 +96,7 @@ function ImageDisplay({ element, box, previewMode }) {
       mounted = false;
       clearTimeout(timeout);
     };
-  }, [resource.id, resource.src, srcSet, srcType]);
+  }, [getProxiedUrl, resource, resource.id, resource.src, srcSet, srcType]);
 
   const showPlaceholder = srcType !== 'fullsize';
 
