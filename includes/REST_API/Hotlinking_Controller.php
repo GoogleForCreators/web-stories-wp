@@ -174,9 +174,9 @@ class Hotlinking_Controller extends REST_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function proxy_url( $request ) {
-		$url = untrailingslashit( $request['url'] );
-
-		$proxy_request = wp_safe_remote_get( $url );
+		$url           = untrailingslashit( $request['url'] );
+		$args          = $this->get_request_args( $url );
+		$proxy_request = wp_safe_remote_get( $url, $args );
 		if ( is_wp_error( $proxy_request ) ) {
 			return $proxy_request;
 		}
@@ -202,13 +202,8 @@ class Hotlinking_Controller extends REST_Controller {
 	 * @return array|WP_Error
 	 */
 	protected function get_data( string $url ) {
-		$response = wp_safe_remote_head(
-			$url,
-			[
-				/** This filter is documented in wp-includes/class-http.php */
-				'redirection' => apply_filters( 'http_request_redirection_count', 5, $url ),
-			]
-		);
+		$args     = $this->get_request_args( $url );
+		$response = wp_safe_remote_head( $url, $args );
 		if ( is_wp_error( $response ) && 'http_request_failed' === $response->get_error_code() ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
@@ -248,6 +243,23 @@ class Hotlinking_Controller extends REST_Controller {
 		];
 	}
 
+	/**
+	 * Get request args.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string $url URL to be passed as filter.
+	 *
+	 * @return array
+	 */
+	protected function get_request_args( string $url ) : array {
+		return [
+			'limit_response_size' => 15728640, // 15MB.
+			'timeout'             => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
+			/** This filter is documented in wp-includes/class-http.php */
+			'redirection' => apply_filters( 'http_request_redirection_count', 5, $url ),
+		];
+	}
 
 	/**
 	 * Prepares response asset response.
