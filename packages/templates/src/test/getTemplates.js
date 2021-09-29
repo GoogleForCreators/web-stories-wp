@@ -41,19 +41,8 @@ describe('getTemplate', () => {
                 i + 1
               }.webp`
             ),
-            type: expect.any(String),
           })
         );
-      });
-    });
-  });
-
-  it('should match postersByPage.type with pages.pageTemplateType', async () => {
-    const templates = await getTemplates('example.com/');
-
-    templates.forEach((template) => {
-      template.postersByPage.forEach((page, i) => {
-        expect(page.type).toStrictEqual(template.pages[i].pageTemplateType);
       });
     });
   });
