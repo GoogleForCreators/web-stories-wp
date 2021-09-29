@@ -39,6 +39,7 @@ import {
 import Dashboard from '../dashboard';
 import ApiProvider from '../app/api/apiProvider';
 import { AppFrame } from '../components';
+import InterfaceSkeleton from '../components/interfaceSkeleton';
 import ApiProviderFixture from './apiProviderFixture';
 
 if ('true' === process.env.CI) {
@@ -202,7 +203,9 @@ export default class Fixture {
 
     const { container } = render(
       <FlagsProvider features={this._flags}>
-        <Dashboard key={Math.random()} config={this._config} />
+        <Dashboard key={Math.random()} config={this._config}>
+          <InterfaceSkeleton />
+        </Dashboard>
       </FlagsProvider>,
       {
         container: root,
