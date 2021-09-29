@@ -48,7 +48,7 @@ function useInsertTextSet(shouldUseSmartColor = false) {
   );
 
   const insertTextSet = useBatchingCallback(
-    async (toAdd, skipAutoColor = false) => {
+    async (toAdd, applySmartColor = shouldUseSmartColor) => {
       const htmlFormatters = getHTMLFormatters();
       const { setColor } = htmlFormatters;
       const addedElements = [];
@@ -81,7 +81,7 @@ function useInsertTextSet(shouldUseSmartColor = false) {
       let preferredScrimColor, scrimsCount, useScrim;
 
       // Insert scrim as a first element if needed.
-      if (shouldUseSmartColor && !skipAutoColor && !hasPredefinedColor) {
+      if (applySmartColor && !hasPredefinedColor) {
         textElementsContrasts = await Promise.all(
           toAdd.map((element) =>
             element.type === 'text'
@@ -147,7 +147,7 @@ function useInsertTextSet(shouldUseSmartColor = false) {
           'textSetWidth',
           'textSetHeight',
         ]);
-        if (shouldUseSmartColor && !skipAutoColor && !hasPredefinedColor) {
+        if (applySmartColor && !hasPredefinedColor) {
           // If scrim is used - adjust the colors, otherwise use defaults.
           const scrimContrastingTextColor =
             preferredScrimColor.r === 0 ? white : black;
@@ -210,7 +210,7 @@ function useInsertTextSet(shouldUseSmartColor = false) {
         })
         .filter((el) => el);
 
-      insertTextSet(positionedTextSet, true /* Skips using auto color */);
+      insertTextSet(positionedTextSet, false /* Skips using smart color */);
     },
     [insertTextSet]
   );
