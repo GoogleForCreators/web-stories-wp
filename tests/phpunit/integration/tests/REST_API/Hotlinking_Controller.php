@@ -35,14 +35,14 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	protected static $editor;
 
 	const URL_INVALID = 'https://https://invalid.commmm';
-	const URL_404     = 'https://example.com/404/test.jpg';
-	const URL_500     = 'https://example.com/500/test.jpg';
-	const URL_SVG     = 'https://example.com/test.svg';
-	const URL_VALID   = 'http://example.com/test.jpg';
-	const URL_DOMAIN  = 'http://google.com';
-	const URL_PATH    = '/test.jpg';
+	const URL_404 = 'https://example.com/404/test.jpg';
+	const URL_500 = 'https://example.com/500/test.jpg';
+	const URL_SVG = 'https://example.com/test.svg';
+	const URL_VALID = 'http://example.com/test.jpg';
+	const URL_DOMAIN = 'http://google.com';
+	const URL_PATH = '/test.jpg';
 
-	const REST_URL = '/web-stories/v1/hotlink';
+	const REST_URL = '/web-stories/v1/hotlink/validate';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -103,6 +103,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
 	 * @param mixed  $r       HTTP request arguments.
 	 * @param string $url     The request URL.
+	 *
 	 * @return array|WP_Error Response data.
 	 */
 	public function mock_http_request( $preempt, $r, $url ) {
@@ -169,7 +170,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url() {
-		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( new \Google\Web_Stories\Experiments() );
 		$result     = $controller->validate_url( self::URL_VALID );
 		$this->assertTrue( $result );
 	}
@@ -178,7 +179,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_empty() {
-		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( new \Google\Web_Stories\Experiments() );
 		$result     = $controller->validate_url( '' );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
@@ -187,7 +188,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_domain() {
-		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( new \Google\Web_Stories\Experiments() );
 		$result     = $controller->validate_url( self::URL_DOMAIN );
 		$this->assertErrorResponse( 'rest_invalid_url_path', $result, 400 );
 	}
@@ -196,7 +197,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_path() {
-		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( new \Google\Web_Stories\Experiments() );
 		$result     = $controller->validate_url( self::URL_PATH );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
@@ -205,7 +206,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_invalid() {
-		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( new \Google\Web_Stories\Experiments() );
 		$result     = $controller->validate_url( '-1' );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
@@ -214,7 +215,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::validate_url
 	 */
 	public function test_validate_url_invalid2() {
-		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( new \Google\Web_Stories\Experiments() );
 		$result     = $controller->validate_url( 'wibble' );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
@@ -223,7 +224,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 * @covers ::get_item_schema
 	 */
 	public function test_get_item_schema() {
-		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( new \Google\Web_Stories\Experiments() );
 		$data       = $controller->get_item_schema();
 
 		$properties = $data['properties'];

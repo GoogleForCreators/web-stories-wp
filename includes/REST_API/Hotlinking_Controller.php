@@ -133,31 +133,11 @@ class Hotlinking_Controller extends REST_Controller {
 	public function parse_url( $request ) {
 		$url = untrailingslashit( $request['url'] );
 
-		/**
-		 * Filters the hotlinking data TTL value.
-		 *
-		 * @since 1.11.0
-		 *
-		 * @param int $time Time to live (in seconds). Default is 1 day.
-		 * @param string $url The attempted URL.
-		 */
-		$cache_ttl = apply_filters( 'web_stories_hotlinking_url_data_cache_ttl', DAY_IN_SECONDS, $url );
-		$cache_key = 'web_stories_url_data_' . md5( $url );
-
-		$data = get_transient( $cache_key );
-		if ( ! empty( $data ) ) {
-			$response = $this->prepare_item_for_response( json_decode( $data, true ), $request );
-
-			return rest_ensure_response( $response );
-		}
-
 		$data = $this->get_data( $url );
 
 		if ( is_wp_error( $data ) ) {
 			return $data;
 		}
-
-		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 
 		$response = $this->prepare_item_for_response( $data, $request );
 
@@ -174,22 +154,26 @@ class Hotlinking_Controller extends REST_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function proxy_url( $request ) {
-		$url           = untrailingslashit( $request['url'] );
+		$url = untrailingslashit( $request['url'] );
+
+		$data = $this->get_data( $url );
+
+		if ( is_wp_error( $data ) ) {
+			return $data;
+		}
+
 		$args          = $this->get_request_args( $url );
 		$proxy_request = wp_safe_remote_get( $url, $args );
 		if ( is_wp_error( $proxy_request ) ) {
 			return $proxy_request;
 		}
-		$data = $this->get_data( $url );
-		if ( is_wp_error( $data ) ) {
-			return $data;
-		}
+
 		$body = wp_remote_retrieve_body( $proxy_request );
 
 		header( 'Content-Type: ' . $data['mime_type'] );
 		header( 'Content-Length: ' . $data['file_size'] );
 
-		echo $body;
+		echo $body; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		exit;
 	}
@@ -202,6 +186,13 @@ class Hotlinking_Controller extends REST_Controller {
 	 * @return array|WP_Error
 	 */
 	protected function get_data( string $url ) {
+		$cache_key = 'web_stories_url_data_' . md5( $url );
+
+		$data = get_transient( $cache_key );
+		if ( ! empty( $data ) ) {
+			return json_decode( $data, true );
+		}
+
 		$args     = $this->get_request_args( $url );
 		$response = wp_safe_remote_head( $url, $args );
 		if ( is_wp_error( $response ) && 'http_request_failed' === $response->get_error_code() ) {
@@ -234,13 +225,27 @@ class Hotlinking_Controller extends REST_Controller {
 			}
 		}
 
-		return [
+		$data = [
 			'ext'       => $ext,
 			'file_name' => $file_name,
 			'file_size' => $file_size,
 			'mime_type' => $mime_type,
 			'type'      => $type,
 		];
+
+		/**
+		 * Filters the hotlinking data TTL value.
+		 *
+		 * @since 1.11.0
+		 *
+		 * @param int $time Time to live (in seconds). Default is 1 day.
+		 * @param string $url The attempted URL.
+		 */
+		$cache_ttl = apply_filters( 'web_stories_hotlinking_url_data_cache_ttl', DAY_IN_SECONDS, $url );
+
+		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
+
+		return $data;
 	}
 
 	/**
@@ -257,7 +262,7 @@ class Hotlinking_Controller extends REST_Controller {
 			'limit_response_size' => 15728640, // 15MB.
 			'timeout'             => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 			/** This filter is documented in wp-includes/class-http.php */
-			'redirection' => apply_filters( 'http_request_redirection_count', 5, $url ),
+			'redirection'         => apply_filters( 'http_request_redirection_count', 5, $url ),
 		];
 	}
 
