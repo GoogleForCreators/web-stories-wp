@@ -70,6 +70,7 @@ const purifyCss = async (rawContent, outputPath) => {
     //console.log("CSS reduction", before.length - after.length);
 
     content = content.replace("</head>", `<style amp-custom>${after}</style></head>`);
+    content = content.replace("<style amp-custom=\"\"></style>", '');
   }
   return content;
 };
