@@ -35,7 +35,7 @@ import useInsertElement from './useInsertElement';
 
 const SCRIM_PADDING = 24;
 
-function useInsertTextSet(useSmartColor = false) {
+function useInsertTextSet(shouldUseSmartColor = false) {
   const insertElement = useInsertElement();
   const { calculateAccessibleTextColors } = usePageAsCanvas();
 
@@ -81,7 +81,7 @@ function useInsertTextSet(useSmartColor = false) {
       let preferredScrimColor, scrimsCount, useScrim;
 
       // Insert scrim as a first element if needed.
-      if (useSmartColor && !skipAutoColor && !hasPredefinedColor) {
+      if (shouldUseSmartColor && !skipAutoColor && !hasPredefinedColor) {
         textElementsContrasts = await Promise.all(
           toAdd.map((element) =>
             element.type === 'text'
@@ -147,7 +147,7 @@ function useInsertTextSet(useSmartColor = false) {
           'textSetWidth',
           'textSetHeight',
         ]);
-        if (useSmartColor && !skipAutoColor && !hasPredefinedColor) {
+        if (shouldUseSmartColor && !skipAutoColor && !hasPredefinedColor) {
           // If scrim is used - adjust the colors, otherwise use defaults.
           const scrimContrastingTextColor =
             preferredScrimColor.r === 0 ? white : black;
@@ -176,7 +176,7 @@ function useInsertTextSet(useSmartColor = false) {
     },
     [
       calculateAccessibleTextColors,
-      useSmartColor,
+      shouldUseSmartColor,
       insertElement,
       setSelectedElementsById,
     ]

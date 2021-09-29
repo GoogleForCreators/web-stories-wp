@@ -35,11 +35,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { Text, THEME_CONSTANTS, Toggle } from '@web-stories-wp/design-system';
 import { SearchInput } from '../../common';
 import { Container as SectionContainer } from '../../common/section';
-import FontPreview from './fontPreview';
 import { Pane as SharedPane } from '../shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import Tooltip from '../../../tooltip';
+import FontPreview from './fontPreview';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
@@ -74,12 +74,16 @@ function TextPane(props) {
 
   const { showTextAndShapesSearchInput } = useFeatures();
 
-  const { useSmartColor, setUseSmartColor } = useLibrary((state) => ({
-    useSmartColor: state.state.useSmartColor,
-    setUseSmartColor: state.actions.setUseSmartColor,
-  }));
+  const { shouldUseSmartColor, setShouldUseSmartColor } = useLibrary(
+    (state) => ({
+      shouldUseSmartColor: state.state.shouldUseSmartColor,
+      setShouldUseSmartColor: state.actions.setShouldUseSmartColor,
+    })
+  );
 
-  const { getPosition, insertPreset } = useInsertPreset({ useSmartColor });
+  const { getPosition, insertPreset } = useInsertPreset({
+    shouldUseSmartColor,
+  });
   const { generateCanvasFromPage } = usePageAsCanvas();
 
   useResizeEffect(
@@ -91,8 +95,8 @@ function TextPane(props) {
   );
 
   const handleToggleClick = useCallback(() => {
-    setUseSmartColor((currentValue) => !currentValue);
-  }, [setUseSmartColor]);
+    setShouldUseSmartColor((currentValue) => !currentValue);
+  }, [setShouldUseSmartColor]);
 
   const toggleId = useMemo(() => `toggle_auto_color_${uuidv4()}`, []);
   return (
@@ -121,14 +125,13 @@ function TextPane(props) {
         >
           <Toggle
             id={toggleId}
-            name={toggleId}
-            checked={useSmartColor}
+            checked={shouldUseSmartColor}
             onChange={handleToggleClick}
           />
         </Tooltip>
       </SmartColorToggle>
       <SectionContainer
-        onPointerOver={() => useSmartColor && generateCanvasFromPage()}
+        onPointerOver={() => shouldUseSmartColor && generateCanvasFromPage()}
       >
         <GridContainer>
           {PRESETS.map(({ title, element }) => (

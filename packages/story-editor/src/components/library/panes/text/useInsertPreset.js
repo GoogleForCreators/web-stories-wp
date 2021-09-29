@@ -39,7 +39,7 @@ import { calculateTextHeight } from '../../../../utils/textMeasurements';
 const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';
 
-function useInsertPreset({ useSmartColor }) {
+function useInsertPreset({ shouldUseSmartColor }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -136,7 +136,7 @@ function useInsertPreset({ useSmartColor }) {
         presetProps;
       // If it's already positioned, skip calculating that.
       const atts = isPositioned ? {} : getPosition(element);
-      if (useSmartColor) {
+      if (shouldUseSmartColor) {
         setPresetAtts({
           ...element,
           ...atts,
@@ -164,7 +164,12 @@ function useInsertPreset({ useSmartColor }) {
         };
       }
     },
-    [getPosition, calculateAccessibleTextColors, useSmartColor, insertElement]
+    [
+      getPosition,
+      calculateAccessibleTextColors,
+      shouldUseSmartColor,
+      insertElement,
+    ]
   );
   return {
     getPosition,

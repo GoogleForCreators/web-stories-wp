@@ -94,9 +94,9 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { pageCanvasData, useSmartColor } = useLibrary((state) => ({
+  const { pageCanvasData, shouldUseSmartColor } = useLibrary((state) => ({
     pageCanvasData: state.state.pageCanvasData,
-    useSmartColor: state.state.useSmartColor,
+    shouldUseSmartColor: state.state.shouldUseSmartColor,
   }));
 
   const { calculateAccessibleTextColors } = usePageAsCanvas();
@@ -117,7 +117,7 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
   // Gets the position and the color already once the canvas information is available, to use it directly when inserting.
   useLayoutEffect(() => {
     async function getPositionAndColor() {
-      if (!pageCanvasData || !useSmartColor) {
+      if (!pageCanvasData || !shouldUseSmartColor) {
         return;
       }
       // If nothing changed meanwhile and we already have color data, don't make new calculations.
@@ -147,7 +147,7 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     calculateAccessibleTextColors,
     element,
     getPosition,
-    useSmartColor,
+    shouldUseSmartColor,
     pageCanvasData,
     versionNumber,
   ]);
