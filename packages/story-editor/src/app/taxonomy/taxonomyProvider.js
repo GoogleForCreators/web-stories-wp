@@ -168,8 +168,8 @@ function TaxonomyProvider(props) {
       };
       setTermCache((cache) => mergeNestedDictionaries(cache, termResults));
 
-      if (addNameToSelection) {
-        const selectedTermSlug = cleanForSlug(name);
+      if (addNameToSelection && args.search) {
+        const selectedTermSlug = cleanForSlug(args.search);
         const selectedTerm = response.find(
           (term) => term.slug === selectedTermSlug
         );
@@ -225,7 +225,11 @@ function TaxonomyProvider(props) {
         // We could pull down only the exact term, but
         // we're modeling after Gutenberg.
         if (e.code === 'term_exists') {
-          addSearchResultsToCache(taxonomy, { name: termName }, addToSelection);
+          addSearchResultsToCache(
+            taxonomy,
+            { search: termName },
+            addToSelection
+          );
         }
       }
     },
@@ -258,6 +262,7 @@ function TaxonomyProvider(props) {
         createTerm,
         addSearchResultsToCache,
         setTerms,
+        addTermToSelection,
       },
     }),
     [
@@ -267,6 +272,7 @@ function TaxonomyProvider(props) {
       createTerm,
       addSearchResultsToCache,
       setTerms,
+      addTermToSelection,
     ]
   );
 

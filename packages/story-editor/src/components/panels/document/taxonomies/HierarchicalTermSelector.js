@@ -45,7 +45,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { HierarchicalInput } from '../../../form';
 import { useTaxonomy } from '../../../../app/taxonomy';
-import { ContentHeading, TaxonomyPropType } from './shared';
+import { ContentHeading, TaxonomyPropType, LinkButton } from './shared';
 
 const NO_PARENT_VALUE = 'NO_PARENT_VALUE';
 
@@ -72,23 +72,6 @@ const AddNewCategoryForm = styled.form`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 8px;
-`;
-
-const LinkButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.LINK,
-})`
-  margin-bottom: 16px;
-
-  ${({ theme }) =>
-    themeHelpers.expandPresetStyles({
-      preset:
-        theme.typography.presets.link[
-          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL
-        ],
-      theme,
-    })};
-
-  font-weight: 500;
 `;
 
 const Label = styled(Text).attrs({
