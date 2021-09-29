@@ -24,7 +24,7 @@ describe('Inspector', () => {
       await createNewStory();
 
       await expect(page).toClick('li[role="tab"]', { text: 'Document' });
-      await await expect(page).toMatchElement('[aria-label="Publisher Logo"]');
+      await expect(page).toMatchElement('[aria-label="Publisher Logo"]');
     });
     describe('Contributor User', () => {
       withUser('contributor', 'password');
@@ -35,9 +35,7 @@ describe('Inspector', () => {
 
         await expect(page).toClick('li[role="tab"]', { text: 'Document' });
 
-        await await expect(page).not.toMatchElement(
-          '[aria-label="Publisher Logo"]'
-        );
+        await expect(page).not.toMatchElement('[aria-label="Publisher Logo"]');
       });
     });
   });
