@@ -322,7 +322,7 @@ class Editor extends Service_Base {
 					'pageTemplates' => sprintf( '/web-stories/v1/%s/', $page_templates_rest_base ),
 					'media'         => '/web-stories/v1/media/',
 					'hotlink'       => '/web-stories/v1/hotlink/validate',
-					'proxy'         => rest_url('/web-stories/v1/hotlink/proxy'),
+					'proxy'         => rest_url( '/web-stories/v1/hotlink/proxy' ),
 					'link'          => '/web-stories/v1/link/',
 					'statusCheck'   => '/web-stories/v1/status-check/',
 					'taxonomies'    => '/web-stories/v1/taxonomies/',

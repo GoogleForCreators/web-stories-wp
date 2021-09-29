@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Types;
@@ -42,12 +43,25 @@ use WP_REST_Server;
  */
 class Hotlinking_Controller extends REST_Controller {
 	use Post_Type, Types;
+
+	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
 	/**
 	 * Constructor.
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 *
+	 * @return void
 	 */
-	public function __construct() {
-		$this->namespace = 'web-stories/v1';
-		$this->rest_base = 'hotlink';
+	public function __construct( Experiments $experiments ) {
+		$this->experiments = $experiments;
+		$this->namespace   = 'web-stories/v1';
+		$this->rest_base   = 'hotlink';
 	}
 
 	/**
@@ -81,6 +95,10 @@ class Hotlinking_Controller extends REST_Controller {
 			]
 		);
 
+		if ( ! $this->experiments->is_experiment_enabled( 'enableCORSProxy' ) ) {
+			return;
+		}
+
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base . '/proxy',
@@ -88,7 +106,7 @@ class Hotlinking_Controller extends REST_Controller {
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'proxy_url' ],
-					'permission_callback' => '__return_true',
+					'permission_callback' => [ $this, 'parse_url_permissions_check' ],
 					'args'                => [
 						'url' => [
 							'description'       => __( 'The URL to process.', 'web-stories' ),
@@ -105,8 +123,6 @@ class Hotlinking_Controller extends REST_Controller {
 
 	/**
 	 * Parses a URL to return some metadata for inserting external media.
-	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.11.0
 	 *
@@ -137,6 +153,10 @@ class Hotlinking_Controller extends REST_Controller {
 
 		$data = $this->get_data( $url );
 
+		if ( is_wp_error( $data ) ) {
+			return $data;
+		}
+
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 
 		$response = $this->prepare_item_for_response( $data, $request );
@@ -144,19 +164,30 @@ class Hotlinking_Controller extends REST_Controller {
 		return rest_ensure_response( $response );
 	}
 
+	/**
+	 * Parses a URL to return proxied file.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 *
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
 	public function proxy_url( $request ) {
 		$url = untrailingslashit( $request['url'] );
 
-		$request = wp_safe_remote_get( $url );
-		if ( is_wp_error( $request ) ) {
-			return false;
+		$proxy_request = wp_safe_remote_get( $url );
+		if ( is_wp_error( $proxy_request ) ) {
+			return $proxy_request;
 		}
 		$data = $this->get_data( $url );
-		$body = wp_remote_retrieve_body( $request );
+		if ( is_wp_error( $data ) ) {
+			return $data;
+		}
+		$body = wp_remote_retrieve_body( $proxy_request );
 
-
-		header('Content-Type: '.$data['mime_type']);
-		header('Content-Length: ' . $data['file_size']);
+		header( 'Content-Type: ' . $data['mime_type'] );
+		header( 'Content-Length: ' . $data['file_size'] );
 
 		echo $body;
 
@@ -164,11 +195,13 @@ class Hotlinking_Controller extends REST_Controller {
 	}
 
 	/**
-	 * @param $url
+	 * Get some basic information about a requested url.
+	 *
+	 * @param string $url URL to get data.
 	 *
 	 * @return array|WP_Error
 	 */
-	protected function get_data( $url ){
+	protected function get_data( string $url ) {
 		$response = wp_safe_remote_head(
 			$url,
 			[

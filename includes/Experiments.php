@@ -354,6 +354,18 @@ class Experiments extends Service_Base {
 			],
 
 			/**
+			 * Author: @spacedmonkey
+			 * Issue #9039
+			 * Creation date: 2021-09-29
+			 */
+			[
+				'name'        => 'enableCORSProxy',
+				'label'       => __( 'CORS Proxy', 'web-stories' ),
+				'description' => __( 'Enable inserting media element without CORS headers', 'web-stories' ),
+				'group'       => 'editor',
+			],
+
+			/**
 			 * Author: @brookegraham
 			 * Issue: #8832
 			 * Creation date: 2021-08-30
