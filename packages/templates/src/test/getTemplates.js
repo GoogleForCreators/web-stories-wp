@@ -48,6 +48,16 @@ describe('getTemplate', () => {
     });
   });
 
+  it('should match postersByPage.type with pages.pageTemplateType', async () => {
+    const templates = await getTemplates('example.com/');
+
+    templates.forEach((template) => {
+      template.postersByPage.forEach((page, i) => {
+        expect(page.type).toStrictEqual(template.pages[i].pageTemplateType);
+      });
+    });
+  });
+
   it('should replace __WEB_STORIES_TEMPLATE_BASE_URL__/ with imageUrl for each page', async () => {
     const templates = await getTemplates('example.com/');
 
