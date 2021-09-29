@@ -17,9 +17,9 @@
 /**
  * Internal dependencies
  */
-import App from './app';
+import Dashboard from './app';
 
-export default App;
+export default Dashboard;
 export { GlobalStyle as DashboardGlobalStyle } from './theme';
 export { default as DashboardKeyboardOnlyOutline } from './utils/keyboardOnlyOutline';
 export { ConfigProvider as DashboardConfigProvider } from './app/config';
