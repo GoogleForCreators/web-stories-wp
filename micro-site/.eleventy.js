@@ -45,16 +45,11 @@ const { promisify } = require("util");
 const fs = require("fs");
 const hasha = require("hasha");
 const readFile = promisify(require("fs").readFile);
-const pluginRss = require("@11ty/eleventy-plugin-rss");
-const pluginNavigation = require("@11ty/eleventy-navigation");
-const markdownIt = require("markdown-it");
-const markdownItAnchor = require("markdown-it-anchor");
 const localImages = require("./third_party/eleventy-plugin-local-images/.eleventy.js");
 const CleanCSS = require("clean-css");
 const Nunjucks = require("nunjucks");
-const DATA_DIR = "_data"
+const DATA_DIR = "_data";
 const ampPlugin = require('@ampproject/eleventy-plugin-amp');
-
 
 module.exports = function (eleventyConfig) {
 
@@ -68,18 +63,15 @@ module.exports = function (eleventyConfig) {
     const locale = context.page.filePathStem.split('/')[1];
 
     try {
-      const dict = JSON.parse(fs.readFileSync(`${DATA_DIR}/${locale}/${locale}.json`))
+      const dict = JSON.parse(fs.readFileSync(`${DATA_DIR}/${locale}/${locale}.json`));
       return new Nunjucks.runtime.SafeString(dict[str] || str)
     } catch (e) {
       return new Nunjucks.runtime.SafeString(str)
     }
-  })
+  });
 
   eleventyConfig.setLibrary("njk", nunjucksEnvironment);
 
-
-
-  eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(ampPlugin, {
     verbose: true,
     imageOptimization: true,
@@ -136,7 +128,7 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addNunjucksAsyncFilter("_", (what) => {
-    console.log(what)
+    console.log(what);
     return what
   });
 
@@ -169,20 +161,8 @@ module.exports = function (eleventyConfig) {
   // But without this the JS build artefacts doesn't trigger a build.
   eleventyConfig.setUseGitIgnore(false);
 
-  /* Markdown Overrides */
-  let markdownLibrary = markdownIt({
-    html: true,
-    breaks: true,
-    linkify: true,
-  }).use(markdownItAnchor, {
-    permalink: true,
-    permalinkClass: "direct-link",
-    permalinkSymbol: "#",
-  });
-  eleventyConfig.setLibrary("md", markdownLibrary);
-
   return {
-    templateFormats: ["md", "njk", "html", "liquid"],
+    templateFormats: ["njk", "html"],
 
     // If your site lives in a different subdirectory, change this.
     // Leading or trailing slashes are all normalized away, so don’t worry about those.
