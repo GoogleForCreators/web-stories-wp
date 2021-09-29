@@ -181,7 +181,7 @@ describe('TaxonomyProvider', () => {
 
     expect(getTaxonomyTermMock).toHaveBeenCalledWith('someUrl', {
       per_page: 20,
-      search: 'term',
+      search_items: 'term',
     });
 
     await receiveQueuedMockedResponses();
