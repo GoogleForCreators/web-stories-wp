@@ -27,6 +27,7 @@ import {
   useCallback,
   useFocusOut,
 } from '@web-stories-wp/react';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -69,7 +70,6 @@ function Input({
   ...props
 }) {
   const { isRTL } = useConfig();
-
   const [{ value, tags, offset, tagBuffer }, dispatch] = useReducer(reducer, {
     value: '',
     tags: [...tokens],
@@ -264,7 +264,11 @@ function Input({
                     options={[{ group: filteredAutocompleteSuggestions }]}
                     onMenuItemClick={handleTagSelectedFromSuggestions}
                     onDismissMenu={noop} // No need to dismiss, it's either open with options or hidden
-                    menuAriaLabel="todo aria label with i18n"
+                    menuAriaLabel={sprintf(
+                      /* translators: %s: title of freeform terms */
+                      __('Available terms for %s', 'web-stories'),
+                      props.name
+                    )}
                     parentId={id}
                     isMenuFocused={autocompleteFocus}
                     isPositionedOnTop={dynamicPlacement === PLACEMENT.TOP}
@@ -284,6 +288,7 @@ function Input({
 }
 Input.propTypes = {
   autocompleteSuggestions: PropTypes.arrayOf(PropTypes.string),
+  name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   initialTags: PropTypes.arrayOf(PropTypes.string),
   onTagsChange: PropTypes.func,
