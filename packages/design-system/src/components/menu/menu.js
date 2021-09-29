@@ -78,7 +78,7 @@ const Menu = (
   ref
 ) => {
   const _listRef = useRef();
-  const listRef = ref || _listRef;
+  const listRef = ref?.current ? ref : _listRef;
   const optionsRef = useRef([]);
 
   const handleMenuItemSelect = useCallback(

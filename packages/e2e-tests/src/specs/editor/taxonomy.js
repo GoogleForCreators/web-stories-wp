@@ -74,16 +74,32 @@ async function addCategory(name, parent) {
   });
 }
 
+async function addTag(name) {
+  await page.focus('input#web_story_tag-input');
+  await page.type('input#web_story_tag-input', name);
+  await page.keyboard.press('Enter');
+  await expect(page).toMatchElement(
+    'span[data-testid="flat-term-token"] span',
+    {
+      text: name,
+    }
+  );
+}
+
 describe('Taxonomy', () => {
   withExperimentalFeatures(['enableTaxonomiesSupport']);
 
-  // Create some categories before running all tests so that they are available there.
+  // Create some categories and tags before running all tests so that they are available there.
   beforeAll(async () => {
     await createNewStory();
     await goToAndExpandTaxonomyPanel();
 
     await addCategory('music genres');
     await addCategory('rock', 'music genres');
+
+    await addTag('adventure');
+    await addTag('sci-fi');
+    await addTag('comedy');
 
     // No need to save/publish the story, as the new categories will have been
     // created in the background via the REST API already.
@@ -123,9 +139,39 @@ describe('Taxonomy', () => {
 
       await percySnapshot(page, 'Taxonomies - Categories - Admin');
     });
-  });
 
-  it.todo('should be able to add new tags and existing tags');
+    it('should be able to add new tags and existing tags', async () => {
+      await createNewStory();
+      await insertStoryTitle('Taxonomies - Tags - Admin');
+
+      await goToAndExpandTaxonomyPanel();
+
+      // Add some new tags.
+      await addTag('noir');
+      await addTag('action');
+
+      // Find an existing tag and select it.
+      await page.focus('input#web_story_tag-input');
+      await page.type('input#web_story_tag-input', 'adven');
+      await expect(page).toClick('adventure');
+
+      await publishStory();
+
+      // Refresh page to verify that the assignments persisted.
+      await page.reload();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+
+      await goToAndExpandTaxonomyPanel();
+
+      // See that added tags persist.
+      await expect(page).toMatchElement(
+        'span[data-testid="flat-term-token"] span',
+        {
+          text: 'noir',
+        }
+      );
+    });
+  });
 
   describe('Contributor', () => {
     withUser('contributor', 'password');

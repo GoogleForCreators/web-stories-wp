@@ -18,6 +18,7 @@
  */
 import { themeHelpers, BaseInput, noop } from '@web-stories-wp/design-system';
 import {
+  Fragment,
   useEffect,
   useMemo,
   useReducer,
@@ -231,7 +232,7 @@ function Input({
           ...renderedTags.slice(renderedTags.length - offset),
         ].map((tag) =>
           tag === INPUT_KEY ? (
-            <>
+            <Fragment key={id}>
               <TextInput
                 {...props}
                 key={INPUT_KEY}
@@ -243,7 +244,6 @@ function Input({
                 onBlur={handleBlur}
                 size="4"
                 ref={inputRef}
-                aria-owns={listId}
                 autoComplete="off"
               />
               {filteredAutocompleteSuggestions.length > 0 && value.length >= 3 && (
@@ -271,7 +271,7 @@ function Input({
                   />
                 </Popup>
               )}
-            </>
+            </Fragment>
           ) : (
             <Tag key={tag} onDismiss={removeTag(tag)}>
               {tagDisplayTransformer(tag) || tag}
