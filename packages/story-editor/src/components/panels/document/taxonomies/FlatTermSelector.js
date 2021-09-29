@@ -21,6 +21,8 @@ import {
   useCallback,
   useDebouncedCallback,
   useMemo,
+  useState,
+  useEffect,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 /**
@@ -33,6 +35,7 @@ import { useHistory } from '../../../../app';
 import { ContentHeading, TaxonomyPropType } from './shared';
 
 function FlatTermSelector({ taxonomy, canCreateTerms }) {
+  const [mostUsed, setMostUsed] = useState([]);
   const {
     createTerm,
     termCache,
@@ -93,7 +96,11 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     if (value.length < 3) {
       return;
     }
-    addSearchResultsToCache(taxonomy, { name: value });
+    addSearchResultsToCache(taxonomy, {
+      name: value,
+      // This is the per_page value Gutenberg is using
+      per_page: 20,
+    });
   }, 1000);
 
   const tokens = useMemo(() => {
@@ -112,6 +119,19 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     (tagName) => termCache[taxonomy.restBase]?.[cleanForSlug(tagName)]?.name,
     [taxonomy, termCache]
   );
+
+  useEffect(() => {
+    (async function () {
+      const results = await addSearchResultsToCache(taxonomy, {
+        context: 'edit',
+        orderby: 'count',
+        order: 'desc',
+        hide_empty: true,
+      });
+      // console.log('RESULT ', results);
+      setMostUsed(results);
+    })();
+  }, [taxonomy, addSearchResultsToCache]);
 
   return (
     <>
@@ -133,6 +153,11 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separate_items_with_commas}
         </Tags.Description>
+        <ul>
+          {mostUsed.map((term) => (
+            <li key={term.id}>{term.name}</li>
+          ))}
+        </ul>
       </div>
     </>
   );
