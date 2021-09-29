@@ -81,6 +81,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       try {
         const proxiedUrl = getProxiedUrl({ isExternal: true }, link);
         const resource = await getResourceFromUrl(proxiedUrl, type);
+        resource.alt = originalFileName;
         resource.src = link;
         resource.mimeType = mimeType;
         if ('video' === type && hasUploadMediaAction) {
