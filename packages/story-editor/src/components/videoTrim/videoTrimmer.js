@@ -53,11 +53,11 @@ function VideoTrimmer() {
     setEndOffset,
     hasChanged,
     performTrim,
-    resetOffsets,
+    toggleTrimMode,
   } = useVideoTrim(
     ({
       state: { currentTime, startOffset, endOffset, maxOffset, hasChanged },
-      actions: { setStartOffset, setEndOffset, performTrim, resetOffsets },
+      actions: { setStartOffset, setEndOffset, performTrim, toggleTrimMode },
     }) => ({
       currentTime,
       startOffset,
@@ -67,7 +67,7 @@ function VideoTrimmer() {
       setEndOffset,
       hasChanged,
       performTrim,
-      resetOffsets,
+      toggleTrimMode,
     })
   );
   const { workspaceWidth, pageWidth } = useLayout(
@@ -77,7 +77,7 @@ function VideoTrimmer() {
     })
   );
 
-  const menu = useRef();
+  const menu = useRef(null);
 
   // Keep focus trapped within the menu
   useFocusTrapping({ ref: menu });
@@ -90,7 +90,7 @@ function VideoTrimmer() {
   }, []);
 
   if (!pageWidth || !maxOffset) {
-    return null;
+    return <Menu ref={menu} />;
   }
 
   const railWidth = Math.min(pageWidth, workspaceWidth - 2 * BUTTON_SPACE);
@@ -104,19 +104,17 @@ function VideoTrimmer() {
 
   return (
     <Menu ref={menu}>
-      {hasChanged && (
-        <ButtonWrapper isStart>
-          <Button
-            variant={BUTTON_VARIANTS.RECTANGLE}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={resetOffsets}
-            ref={setCancelRef}
-          >
-            {__('Cancel', 'web-stories')}
-          </Button>
-        </ButtonWrapper>
-      )}
+      <ButtonWrapper isStart>
+        <Button
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          type={BUTTON_TYPES.SECONDARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={toggleTrimMode}
+          ref={setCancelRef}
+        >
+          {__('Cancel', 'web-stories')}
+        </Button>
+      </ButtonWrapper>
       <Wrapper pageWidth={railWidth}>
         <Scrim atStart width={(startOffset / maxOffset) * railWidth} />
         <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
@@ -142,18 +140,17 @@ function VideoTrimmer() {
           {...sliderProps}
         />
       </Wrapper>
-      {hasChanged && (
-        <ButtonWrapper>
-          <Button
-            variant={BUTTON_VARIANTS.RECTANGLE}
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={performTrim}
-          >
-            {__('Trim', 'web-stories')}
-          </Button>
-        </ButtonWrapper>
-      )}
+      <ButtonWrapper>
+        <Button
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          type={BUTTON_TYPES.PRIMARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={performTrim}
+          disabled={!hasChanged}
+        >
+          {__('Trim', 'web-stories')}
+        </Button>
+      </ButtonWrapper>
     </Menu>
   );
 }
