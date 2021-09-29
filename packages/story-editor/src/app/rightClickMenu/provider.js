@@ -22,6 +22,7 @@ import {
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { canTranscodeResource } from '@web-stories-wp/media';
 import PropTypes from 'prop-types';
 import {
   useCallback,
@@ -815,6 +816,7 @@ function RightClickMenuProvider({ children }) {
             {
               label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
               onClick: toggleTrimMode,
+              disabled: !canTranscodeResource(selectedElement?.resource),
               ...menuItemProps,
             },
           ]
@@ -835,8 +837,7 @@ function RightClickMenuProvider({ children }) {
     hasTrimMode,
     menuItemProps,
     pageManipulationItems,
-    selectedElement?.isDefaultBackground,
-    selectedElement?.type,
+    selectedElement,
     toggleTrimMode,
   ]);
 
@@ -913,6 +914,7 @@ function RightClickMenuProvider({ children }) {
             {
               label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
               onClick: toggleTrimMode,
+              disabled: !canTranscodeResource(selectedElement?.resource),
               ...menuItemProps,
             },
           ]
