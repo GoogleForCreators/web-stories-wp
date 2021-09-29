@@ -36,7 +36,7 @@ import {
 /**
  * Internal dependencies
  */
-import App from '../app';
+import Dashboard from '../dashboard';
 import ApiProvider from '../app/api/apiProvider';
 import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
@@ -202,7 +202,7 @@ export default class Fixture {
 
     const { container } = render(
       <FlagsProvider features={this._flags}>
-        <App key={Math.random()} config={this._config} />
+        <Dashboard key={Math.random()} config={this._config} />
       </FlagsProvider>,
       {
         container: root,
