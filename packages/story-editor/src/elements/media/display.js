@@ -38,7 +38,7 @@ import {
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
-import { getMediaWithScaleCss } from './util';
+import { getMediaWithScaleCss } from './utils';
 
 const Element = styled.div.attrs({ className: 'story-media-display-element' })`
   ${elementFillContent}

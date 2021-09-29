@@ -32,9 +32,7 @@ import {
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-
-import { useConfig } from '../../app';
-import { mediaWithScale } from './util';
+import { mediaWithScale, useProxyUrl } from './utils';
 import MediaDisplay from './display';
 
 const Img = styled.img`
@@ -45,11 +43,7 @@ const Img = styled.img`
 function ImageDisplay({ element, box, previewMode }) {
   const { resource, scale, focalX, focalY } = element;
   const { width, height } = box;
-  const { isExternal } = resource;
   const ref = useRef();
-  const {
-    api: { proxy },
-  } = useConfig();
 
   let initialSrcType = 'smallest';
   let initialSrc = getSmallestUrlForWidth(0, resource);
@@ -64,10 +58,8 @@ function ImageDisplay({ element, box, previewMode }) {
     initialSrc = resource.src;
   }
 
-  if (isExternal) {
-    initialSrc = proxy + '?url=' + initialSrc;
-  }
-  console.log(isExternal, initialSrc);
+  const { getProxiedUrl } = useProxyUrl();
+  initialSrc = getProxiedUrl(resource, initialSrc);
 
   const [srcType, setSrcType] = useState(initialSrcType);
   const [src, setSrc] = useState(initialSrc);

@@ -26,7 +26,7 @@ import { getMediaSizePositionProps } from '@web-stories-wp/media';
  */
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
-import { useConfig } from '../../app';
+import { useProxyUrl } from '../media/utils';
 import { getBackgroundStyle, videoWithScale } from './util';
 
 const Video = styled.video`
@@ -57,12 +57,9 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     focalX,
     focalY,
     loop,
-    isExternal,
   } = element;
   const ref = useRef();
-  const {
-    api: { proxy },
-  } = useConfig();
+  const { getProxiedUrl } = useProxyUrl();
 
   let style = {};
   if (isBackground) {
@@ -86,10 +83,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
 
   const muted = Boolean(resource?.isMuted);
 
-  let url = resource?.src;
-  if (isExternal) {
-    url = proxy + '?url=' + url;
-  }
+  const url = getProxiedUrl(resource, resource?.src);
 
   return (
     <MediaDisplay

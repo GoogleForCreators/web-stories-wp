@@ -23,6 +23,7 @@ import { getSmallestUrlForWidth } from '@web-stories-wp/media';
  */
 import StoryPropTypes from '../../types';
 import VisibleImage from '../media/visibleImage';
+import { useProxyUrl } from '../media/utils';
 
 function ImageLayerIcon({
   element: {
@@ -30,7 +31,9 @@ function ImageLayerIcon({
     resource: { alt },
   },
 }) {
-  const src = getSmallestUrlForWidth(0, resource);
+  const url = getSmallestUrlForWidth(0, resource);
+  const { getProxiedUrl } = useProxyUrl();
+  const src = getProxiedUrl(resource, url);
   return <VisibleImage src={src} alt={alt} height="20" />;
 }
 

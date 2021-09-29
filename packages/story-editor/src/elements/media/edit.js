@@ -43,7 +43,7 @@ import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
 import { shouldDisplayBorder } from '../../utils/elementBorder';
 import EditCropMoveable from './editCropMoveable';
-import { mediaWithScale } from './util';
+import { mediaWithScale, useProxyUrl } from './utils';
 import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
 import { MEDIA_MASK_OPACITY } from './constants';
@@ -117,6 +117,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
   const elementRef = useRef();
+  const { getProxiedUrl } = useProxyUrl();
 
   const isUpdatedLocally = useRef(false);
   const lastLocalProperties = useRef({ scale });
@@ -185,8 +186,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
     ...mediaProps,
   };
 
-  const url = resource?.src;
-  alert('hello');
+  const url = getProxiedUrl(resource, resource?.src);
   useEffect(() => {
     if (
       croppedMedia &&
