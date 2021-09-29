@@ -68,7 +68,7 @@ function Input({
     tagBuffer: null,
     offset: 0,
   });
-  const [isInputFocused, setIsInputFocued] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   useEffect(() => {
     dispatch({ type: ACTIONS.UPDATE_TAGS, payload: tokens });
@@ -110,7 +110,7 @@ function Input({
           if (e.key === 'Backspace' && e.target.value === '') {
             dispatch({ type: ACTIONS.REMOVE_TAG });
           }
-          if (['Comma', 'Enter'].includes(e.key)) {
+          if (['Comma', 'Enter', 'Tab'].includes(e.key)) {
             dispatch({ type: ACTIONS.SUBMIT_VALUE });
           }
         },
@@ -121,11 +121,11 @@ function Input({
           dispatch({ type: ACTIONS.REMOVE_TAG, payload: tag });
         },
         handleFocus: () => {
-          setIsInputFocued(true);
+          setIsInputFocused(true);
         },
         handleBlur: () => {
           dispatch({ type: ACTIONS.RESET_OFFSET });
-          setIsInputFocued(false);
+          setIsInputFocused(false);
         },
       }),
       []

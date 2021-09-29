@@ -38,16 +38,17 @@ const transformGetStoryResponse = (post) => {
     name: embedded?.author?.[0].name || '',
   };
 
-  post.capabilities = {
-    hasPublishAction: Object.prototype.hasOwnProperty.call(
-      links,
-      'wp:action-publish'
-    ),
-    hasAssignAuthorAction: Object.prototype.hasOwnProperty.call(
-      links,
-      'wp:action-assign-author'
-    ),
-  };
+  post.capabilities = {};
+
+  for (const link of Object.keys(links)) {
+    if (!link.startsWith('wp:action-')) {
+      continue;
+    }
+
+    // Turn 'wp:action-assign-author' into 'assign-author'
+    const capability = link.replace('wp:action-', '');
+    post.capabilities[capability] = true;
+  }
 
   post.lock_user = {
     id: embedded?.['wp:lockuser']?.[0].id || 0,
