@@ -94,9 +94,10 @@ function TextPane(props) {
     []
   );
 
-  const handleToggleClick = useCallback(() => {
-    setShouldUseSmartColor((currentValue) => !currentValue);
-  }, [setShouldUseSmartColor]);
+  const handleToggleClick = useCallback(
+    () => setShouldUseSmartColor((currentValue) => !currentValue),
+    [setShouldUseSmartColor]
+  );
 
   const toggleId = useMemo(() => `toggle_auto_color_${uuidv4()}`, []);
   return (
