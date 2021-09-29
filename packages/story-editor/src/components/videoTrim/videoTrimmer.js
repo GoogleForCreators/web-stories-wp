@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { useRef, useCallback } from '@web-stories-wp/react';
 import {
   Button,
   BUTTON_SIZES,
@@ -29,6 +30,7 @@ import {
  * Internal dependencies
  */
 import useLayout from '../../app/layout/useLayout';
+import useFocusTrapping from '../../utils/useFocusTrapping';
 import useVideoTrim from './useVideoTrim';
 import {
   Menu,
@@ -75,6 +77,18 @@ function VideoTrimmer() {
     })
   );
 
+  const menu = useRef();
+
+  // Keep focus trapped within the menu
+  useFocusTrapping({ ref: menu });
+
+  // Auto-focus the cancel button on mount
+  const setCancelRef = useCallback((node) => {
+    if (node) {
+      node.focus();
+    }
+  }, []);
+
   if (!pageWidth || !maxOffset) {
     return null;
   }
@@ -89,7 +103,7 @@ function VideoTrimmer() {
   };
 
   return (
-    <Menu>
+    <Menu ref={menu}>
       {hasChanged && (
         <ButtonWrapper isStart>
           <Button
@@ -97,6 +111,7 @@ function VideoTrimmer() {
             type={BUTTON_TYPES.SECONDARY}
             size={BUTTON_SIZES.SMALL}
             onClick={resetOffsets}
+            ref={setCancelRef}
           >
             {__('Cancel', 'web-stories')}
           </Button>
