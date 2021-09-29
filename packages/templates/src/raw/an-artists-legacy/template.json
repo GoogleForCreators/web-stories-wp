@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -56,7 +56,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [10, 96, 191]
+            "baseColor": [10, 96, 191],
+            "isExternal": true
           }
         },
         {
@@ -382,7 +383,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": true,
-            "isMuted": true
+            "isMuted": true,
+            "isExternal": true
           },
           "tracks": [],
           "loop": true
@@ -627,7 +629,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [6, 61, 129]
+            "baseColor": [6, 61, 129],
+            "isExternal": true
           }
         },
         {
@@ -849,7 +852,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [204, 197, 216]
+            "baseColor": [204, 197, 216],
+            "isExternal": true
           }
         },
         {
@@ -1023,7 +1027,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [5, 110, 221]
+            "baseColor": [5, 110, 221],
+            "isExternal": true
           }
         }
       ],
@@ -1078,7 +1083,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": true,
-            "isMuted": true
+            "isMuted": true,
+            "isExternal": true
           },
           "tracks": [],
           "loop": true
@@ -1175,7 +1181,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1216,7 +1223,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [35, 75, 121]
+            "baseColor": [35, 75, 121],
+            "isExternal": true
           }
         },
         {
@@ -1446,7 +1454,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [218, 205, 197]
+            "baseColor": [218, 205, 197],
+            "isExternal": true
           }
         },
         {
@@ -1620,7 +1629,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [158, 176, 209]
+            "baseColor": [158, 176, 209],
+            "isExternal": true
           }
         }
       ],
@@ -1784,7 +1794,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [205, 211, 211]
+            "baseColor": [205, 211, 211],
+            "isExternal": true
           }
         }
       ],
@@ -1873,7 +1884,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2002,7 +2014,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": true,
-            "isMuted": true
+            "isMuted": true,
+            "isExternal": true
           },
           "tracks": [],
           "loop": true
@@ -2099,7 +2112,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2273,7 +2287,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [202, 177, 98]
+            "baseColor": [202, 177, 98],
+            "isExternal": true
           }
         }
       ],
@@ -2361,7 +2376,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [17, 57, 139]
+            "baseColor": [17, 57, 139],
+            "isExternal": true
           }
         },
         {
@@ -2535,7 +2551,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [43, 88, 129]
+            "baseColor": [43, 88, 129],
+            "isExternal": true
           }
         }
       ],
@@ -2683,7 +2700,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {

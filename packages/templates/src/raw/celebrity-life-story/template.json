@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -34,7 +34,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [34, 35, 37]
+            "baseColor": [34, 35, 37],
+            "isExternal": true
           }
         },
         {
@@ -57,7 +58,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": -128,
           "y": 191,
@@ -402,7 +404,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [183, 173, 158]
+            "baseColor": [183, 173, 158],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -539,7 +542,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [14, 14, 14]
+            "baseColor": [14, 14, 14],
+            "isExternal": true
           }
         },
         {
@@ -562,7 +566,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 754,
           "height": 720,
@@ -822,7 +827,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [23, 19, 14]
+            "baseColor": [23, 19, 14],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1076,7 +1082,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [54, 35, 52]
+            "baseColor": [54, 35, 52],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1324,7 +1331,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [200, 122, 99]
+            "baseColor": [200, 122, 99],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1572,7 +1580,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [14, 14, 14]
+            "baseColor": [14, 14, 14],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1820,7 +1829,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [194, 194, 194]
+            "baseColor": [194, 194, 194],
+            "isExternal": true
           }
         },
         {
@@ -1843,7 +1853,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 754,
           "height": 720,
@@ -2103,7 +2114,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [209, 206, 205]
+            "baseColor": [209, 206, 205],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -2359,7 +2371,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [49, 52, 49]
+            "baseColor": [49, 52, 49],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -2607,7 +2620,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [37, 37, 37]
+            "baseColor": [37, 37, 37],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -2855,7 +2869,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [72, 58, 26]
+            "baseColor": [72, 58, 26],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3103,7 +3118,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [65, 52, 43]
+            "baseColor": [65, 52, 43],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3355,7 +3371,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 52,
           "y": 57,
@@ -3618,7 +3635,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [50, 60, 62]
+            "baseColor": [50, 60, 62],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 281,
@@ -3815,7 +3833,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [30, 25, 8]
+            "baseColor": [30, 25, 8],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 48,

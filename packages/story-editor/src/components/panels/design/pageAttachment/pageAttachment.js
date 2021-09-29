@@ -37,8 +37,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useStory, useCanvas } from '../../../../app';
-import { isValidUrl, withProtocol } from '../../../../utils/url';
+import { useStory, useCanvas, useAPI } from '../../../../app';
+import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
@@ -72,6 +72,9 @@ function PageAttachmentPanel() {
   const { setDisplayLinkGuidelines } = useCanvas((state) => ({
     setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
   }));
+  const {
+    actions: { getLinkMetadata },
+  } = useAPI();
 
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
@@ -79,6 +82,7 @@ function PageAttachmentPanel() {
   const [_ctaText, _setCtaText] = useState(ctaText);
   const [_url, _setUrl] = useState(url);
   const [displayWarning, setDisplayWarning] = useState(false);
+  const [fetchingMetadata, setFetchingMetadata] = useState(false);
 
   const { getLinksInAttachmentArea } = useElementsWithLinks();
   const linksInAttachmentArea = getLinksInAttachmentArea();
@@ -108,12 +112,6 @@ function PageAttachmentPanel() {
 
   const updatePageAttachment = useCallback(
     (value) => {
-      const trimmedUrl = (value.url || '').trim();
-      if (value.url) {
-        const urlWithProtocol = withProtocol(trimmedUrl);
-        const valid = isValidUrl(urlWithProtocol);
-        setIsInvalidUrl(!valid);
-      }
       const _pageAttachment = {
         ...pageAttachment,
         ...value,
@@ -125,12 +123,29 @@ function PageAttachmentPanel() {
     [updateCurrentPageProperties, pageAttachment]
   );
 
-  const debouncedUpdate = useDebouncedCallback((props) => {
-    updatePageAttachment(props);
-  }, 300);
+  const debouncedUpdate = useDebouncedCallback(updatePageAttachment, 300);
+
+  const populateUrlData = useDebouncedCallback((value) => {
+    setFetchingMetadata(true);
+    getLinkMetadata(value)
+      .then(({ image }) => {
+        updatePageAttachment({
+          url: value,
+          icon: image ? toAbsoluteUrl(value, image) : '',
+        });
+      })
+      .catch(() => {
+        // We're allowing to save invalid URLs, however, remove icon in this case.
+        updatePageAttachment({ url: value, icon: '' });
+        setIsInvalidUrl(true);
+      })
+      .finally(() => {
+        setFetchingMetadata(false);
+      });
+  }, 1200);
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
-    !isValidUrl(withProtocol(url || '').trim())
+    url && !isValidUrl(withProtocol(url).trim())
   );
 
   const isDefault = _ctaText === defaultCTA;
@@ -139,9 +154,14 @@ function PageAttachmentPanel() {
   const handleChangeUrl = useCallback(
     (value) => {
       _setUrl(value);
-      debouncedUpdate({ url: value });
+      setIsInvalidUrl(false);
+      const urlWithProtocol = withProtocol(value.trim());
+      const valid = isValidUrl(urlWithProtocol);
+      if (valid) {
+        populateUrlData(urlWithProtocol);
+      }
     },
-    [debouncedUpdate]
+    [populateUrlData]
   );
 
   const handleChangeCta = useCallback(
@@ -180,6 +200,17 @@ function PageAttachmentPanel() {
   );
 
   const checkboxId = `cb-${uuidv4()}`;
+
+  let hint;
+  const hasError = displayWarning || isInvalidUrl;
+  if (hasError) {
+    hint = displayWarning
+      ? __(
+          'Links cannot reside below the dashed line when a page attachment is present. If you add a page attachment, your viewers will not be able to click on the link.',
+          'web-stories'
+        )
+      : __('Invalid link', 'web-stories');
+  }
   return (
     <SimplePanel
       name="pageAttachment"
@@ -201,15 +232,8 @@ function PageAttachmentPanel() {
           'Type an address to add a page attachment link',
           'web-stories'
         )}
-        hasError={displayWarning}
-        hint={
-          displayWarning
-            ? __(
-                'Links cannot reside below the dashed line when a page attachment is present. If you add a page attachment, your viewers will not be able to click on the link.',
-                'web-stories'
-              )
-            : undefined
-        }
+        hasError={hasError}
+        hint={hint}
       />
       {hasValidUrl && (
         <>
@@ -245,7 +269,12 @@ function PageAttachmentPanel() {
             </Label>
           </StyledRow>
           <StyledRow>
-            <LinkIcon handleChange={handleChangeIcon} icon={icon} />
+            <LinkIcon
+              handleChange={handleChangeIcon}
+              icon={icon}
+              isLoading={fetchingMetadata}
+              disabled={fetchingMetadata}
+            />
             <Space />
             <Text
               as="span"

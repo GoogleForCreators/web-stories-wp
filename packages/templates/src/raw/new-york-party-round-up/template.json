@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,8 @@
             "alt": "Wrinkle texture on dark color",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -69,7 +70,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [47, 36, 35]
+            "baseColor": [47, 36, 35],
+            "isExternal": true
           },
           "x": 84,
           "y": -57,
@@ -315,7 +317,8 @@
             "alt": "Group of people standing inside dome watching concert",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -460,7 +463,8 @@
             "alt": "White distributed particles on black backdrop",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -562,7 +566,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [49, 36, 35]
+            "baseColor": [49, 36, 35],
+            "isExternal": true
           },
           "x": 35,
           "y": 70,
@@ -747,7 +752,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [219, 175, 141]
+            "baseColor": [219, 175, 141],
+            "isExternal": true
           },
           "width": 325,
           "height": 200,
@@ -961,7 +967,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [172, 60, 60]
+            "baseColor": [172, 60, 60],
+            "isExternal": true
           }
         },
         {
@@ -1062,7 +1069,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [211, 29, 120]
+            "baseColor": [211, 29, 120],
+            "isExternal": true
           },
           "x": 35,
           "y": 68,
@@ -1247,7 +1255,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [250, 106, 208]
+            "baseColor": [250, 106, 208],
+            "isExternal": true
           },
           "width": 325,
           "height": 200,
@@ -1460,7 +1469,8 @@
             "alt": "Man wearing a cap in a",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1784,7 +1794,8 @@
             "alt": "People partying inside room",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.45 } }
         },
@@ -2756,7 +2767,8 @@
             "alt": "Women in club",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": null
         },
@@ -3074,7 +3086,8 @@
             "alt": "White metal frame in grayscale photography",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -4056,7 +4069,8 @@
             "alt": "DJ booth in a club",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -4373,7 +4387,8 @@
             "alt": "Man singing on stage white wearing brown crew-neck shirt",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -5357,7 +5372,8 @@
             "alt": "Ouf light signage",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -5674,7 +5690,8 @@
             "alt": "People dancing inside room with green lights",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -6651,7 +6668,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [172, 60, 60]
+            "baseColor": [172, 60, 60],
+            "isExternal": true
           }
         },
         {
@@ -6752,7 +6770,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [18, 21, 15]
+            "baseColor": [18, 21, 15],
+            "isExternal": true
           },
           "x": 35,
           "y": 68,
@@ -6862,7 +6881,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [17, 4, 39]
+            "baseColor": [17, 4, 39],
+            "isExternal": true
           },
           "width": 325,
           "height": 200,

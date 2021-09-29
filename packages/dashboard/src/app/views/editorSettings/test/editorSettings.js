@@ -35,6 +35,8 @@ import { AD_NETWORK_TYPE } from '../../../../constants';
 const mockFetchSettings = jest.fn();
 const mockUploadMedia = jest.fn();
 const mockUpdateSettings = jest.fn();
+const mockSearch = jest.fn();
+const mockGetPageById = jest.fn();
 const mockFetchPublisherLogos = jest.fn();
 const mockAddPublisherLogo = jest.fn();
 const mockRemovePublisherLogo = jest.fn();
@@ -71,6 +73,8 @@ function createProviderValues({
           adManagerSlotId,
           adNetwork,
           error: {},
+          archive: 'default',
+          archivePageId: 0,
         },
         media: {
           isLoading,
@@ -102,6 +106,10 @@ function createProviderValues({
           uploadMedia: mockUploadMedia,
         },
         usersApi: {},
+        pagesApi: {
+          searchPages: mockSearch,
+          getPageById: mockGetPageById,
+        },
         publisherLogosApi: {
           fetchPublisherLogos: mockFetchPublisherLogos,
           addPublisherLogo: mockAddPublisherLogo,

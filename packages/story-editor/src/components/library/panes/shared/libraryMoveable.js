@@ -190,6 +190,7 @@ function LibraryMoveable({
   }, [overlayRef]);
 
   const onDragStart = ({ set, inputEvent }) => {
+    inputEvent.stopPropagation();
     setDidManuallyReset(false);
     // Note: we can't set isDragging true here since a "click" is also considered dragStart.
     set(frame.translate);

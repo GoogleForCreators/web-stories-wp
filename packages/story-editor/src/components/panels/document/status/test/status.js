@@ -28,7 +28,7 @@ import StatusPanel from '../status';
 
 function arrange(
   capabilities = {
-    hasPublishAction: true,
+    publish: true,
   }
 ) {
   const updateStory = jest.fn();
@@ -76,7 +76,7 @@ describe('StatusPanel', () => {
 
   it('should not render the status option without correct permissions', () => {
     arrange({
-      hasPublishAction: false,
+      publish: false,
     });
     expect(screen.queryByText('Public')).not.toBeInTheDocument();
   });

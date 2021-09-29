@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -71,7 +71,8 @@
             "alt": "Aerial photography of green mountain beside body of water under white sky",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -0.5,
@@ -310,7 +311,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [28, 44, 92]
+            "baseColor": [28, 44, 92],
+            "isExternal": true
           }
         },
         {
@@ -1144,7 +1146,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [53, 53, 33]
+            "baseColor": [53, 53, 33],
+            "isExternal": true
           }
         },
         {
@@ -1490,7 +1493,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [74, 70, 52]
+            "baseColor": [74, 70, 52],
+            "isExternal": true
           },
           "type": "image",
           "x": 48,
@@ -1528,7 +1532,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [51, 45, 49]
+            "baseColor": [51, 45, 49],
+            "isExternal": true
           },
           "type": "image",
           "x": 49,
@@ -1566,7 +1571,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [53, 57, 51]
+            "baseColor": [53, 57, 51],
+            "isExternal": true
           },
           "type": "image",
           "x": 49,
@@ -2059,7 +2065,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [53, 51, 44]
+            "baseColor": [53, 51, 44],
+            "isExternal": true
           },
           "type": "image",
           "x": -30,
@@ -2536,7 +2543,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [50, 46, 55]
+            "baseColor": [50, 46, 55],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -3014,7 +3022,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [32, 39, 34]
+            "baseColor": [32, 39, 34],
+            "isExternal": true
           },
           "type": "image",
           "x": -5,
@@ -3487,7 +3496,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [71, 129, 161]
+            "baseColor": [71, 129, 161],
+            "isExternal": true
           }
         },
         {
@@ -3833,7 +3843,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [144, 175, 165]
+            "baseColor": [144, 175, 165],
+            "isExternal": true
           },
           "x": 48,
           "y": 131,
@@ -3871,7 +3882,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [200, 203, 198]
+            "baseColor": [200, 203, 198],
+            "isExternal": true
           },
           "x": 49,
           "y": 314,
@@ -3909,7 +3921,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [5, 159, 174]
+            "baseColor": [5, 159, 174],
+            "isExternal": true
           },
           "x": 49,
           "y": 489,
@@ -4402,7 +4415,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [138, 162, 148]
+            "baseColor": [138, 162, 148],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -4880,7 +4894,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [193, 201, 201]
+            "baseColor": [193, 201, 201],
+            "isExternal": true
           },
           "type": "image",
           "x": -53,
@@ -5358,7 +5373,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [11, 143, 157]
+            "baseColor": [11, 143, 157],
+            "isExternal": true
           },
           "type": "image",
           "x": -38,
@@ -5994,7 +6010,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [29, 113, 91]
+            "baseColor": [29, 113, 91],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -6030,7 +6047,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [57, 79, 59]
+            "baseColor": [57, 79, 59],
+            "isExternal": true
           },
           "type": "image",
           "x": 192,

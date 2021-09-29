@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -62,7 +62,8 @@
             "id": 0,
             "alt": "page01_bg",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -5,
@@ -398,7 +399,8 @@
             "local": false,
             "isMuted": true,
             "isOptimized": true,
-            "baseColor": [181, 178, 179]
+            "baseColor": [181, 178, 179],
+            "isExternal": true
           },
           "tracks": [],
           "overlay": null,
@@ -634,7 +636,8 @@
             "alt": "page03_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 224, 218]
+            "baseColor": [228, 224, 218],
+            "isExternal": true
           }
         },
         {
@@ -900,7 +903,8 @@
             "id": 0,
             "alt": "page04_bg",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -15,
@@ -1645,7 +1649,8 @@
             "alt": "page06_07_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [55, 58, 49]
+            "baseColor": [55, 58, 49],
+            "isExternal": true
           }
         },
         {
@@ -1924,7 +1929,8 @@
             "alt": "page06_07_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [55, 58, 49]
+            "baseColor": [55, 58, 49],
+            "isExternal": true
           }
         },
         {
@@ -2368,7 +2374,8 @@
             "alt": "page08_image01",
             "local": false,
             "isOptimized": false,
-            "baseColor": [180, 158, 129]
+            "baseColor": [180, 158, 129],
+            "isExternal": true
           },
           "type": "image",
           "x": -147,
@@ -2769,7 +2776,8 @@
             "alt": "page09_image01",
             "local": false,
             "isOptimized": false,
-            "baseColor": [76, 83, 56]
+            "baseColor": [76, 83, 56],
+            "isExternal": true
           },
           "type": "image",
           "x": -60,
@@ -3015,7 +3023,8 @@
             "id": 0,
             "alt": "page10_image01",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -65,
@@ -3264,7 +3273,8 @@
             "alt": "apage11_image01",
             "local": false,
             "isOptimized": false,
-            "baseColor": [201, 196, 182]
+            "baseColor": [201, 196, 182],
+            "isExternal": true
           },
           "type": "image",
           "x": -128,
@@ -3697,7 +3707,8 @@
             "alt": "page12_image01",
             "local": false,
             "isOptimized": false,
-            "baseColor": [70, 64, 55]
+            "baseColor": [70, 64, 55],
+            "isExternal": true
           }
         },
         {
@@ -3736,7 +3747,8 @@
             "alt": "page12_image02",
             "local": false,
             "isOptimized": false,
-            "baseColor": [213, 207, 195]
+            "baseColor": [213, 207, 195],
+            "isExternal": true
           }
         },
         {
@@ -3775,7 +3787,8 @@
             "alt": "page12_image03",
             "local": false,
             "isOptimized": false,
-            "baseColor": [195, 204, 175]
+            "baseColor": [195, 204, 175],
+            "isExternal": true
           }
         }
       ],

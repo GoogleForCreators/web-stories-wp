@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -45,7 +45,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [200, 199, 196]
+            "baseColor": [200, 199, 196],
+            "isExternal": true
           },
           "overlay": null
         },
@@ -67,7 +68,8 @@
             "alt": "House Symbol in circle.",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 47,
@@ -285,7 +287,8 @@
             "alt": "Female Remote Worker Typing On Laptop At Home",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 263,
@@ -440,7 +443,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 194, 193]
+            "baseColor": [196, 194, 193],
+            "isExternal": true
           },
           "x": 48,
           "y": 44,
@@ -472,7 +476,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [204, 194, 186]
+            "baseColor": [204, 194, 186],
+            "isExternal": true
           },
           "x": 245,
           "y": 359,
@@ -598,7 +603,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [172, 185, 184]
+            "baseColor": [172, 185, 184],
+            "isExternal": true
           }
         },
         {
@@ -832,7 +838,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [210, 213, 214]
+            "baseColor": [210, 213, 214],
+            "isExternal": true
           }
         },
         {
@@ -853,7 +860,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [225, 224, 220]
+            "baseColor": [225, 224, 220],
+            "isExternal": true
           },
           "x": 51,
           "y": 138,
@@ -995,7 +1003,8 @@
             "alt": "Positive Young Woman Using Laptop In Modern Living Room With Wooden Staircase",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 47,
@@ -1072,7 +1081,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [212, 210, 204]
+            "baseColor": [212, 210, 204],
+            "isExternal": true
           },
           "x": 0,
           "y": -58,
@@ -1359,7 +1369,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [191, 189, 185]
+            "baseColor": [191, 189, 185],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 0,
@@ -1509,7 +1520,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [152, 143, 133]
+            "baseColor": [152, 143, 133],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 0,
@@ -1793,7 +1805,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [191, 200, 201]
+            "baseColor": [191, 200, 201],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 0,
@@ -1943,7 +1956,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [202, 194, 187]
+            "baseColor": [202, 194, 187],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 0,
@@ -2156,7 +2170,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [201, 201, 199]
+            "baseColor": [201, 201, 199],
+            "isExternal": true
           }
         },
         {
@@ -2518,7 +2533,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [124, 111, 96]
+            "baseColor": [124, 111, 96],
+            "isExternal": true
           },
           "x": 44,
           "y": 138,
@@ -2558,7 +2574,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 190, 184]
+            "baseColor": [196, 190, 184],
+            "isExternal": true
           }
         },
         {

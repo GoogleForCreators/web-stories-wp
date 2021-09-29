@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -26,7 +26,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -127,7 +128,8 @@
             "alt": "icon_logo",
             "local": false,
             "sizes": [],
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": 48,
@@ -309,7 +311,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Variety of prepared food dishes"
         }
@@ -404,7 +407,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Preparing a street food dish"
         },
@@ -573,7 +577,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -725,7 +730,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -871,7 +877,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -1093,7 +1100,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Close up of statue in 3 Kings Monument"
         },
@@ -1204,7 +1212,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -1694,7 +1703,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Boat near beach in Phuket"
         },
@@ -1725,7 +1735,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Person riding a scooter on a road"
         },
@@ -1756,7 +1767,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Close up of red curry dish"
         },
@@ -1787,7 +1799,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Close up of palm branch"
         }
@@ -2080,7 +2093,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "alt": "Variety of peppers"
         },
@@ -2109,7 +2123,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "85439d79-2100-4dc8-9b20-e6e51d2064af",
           "id": "19fd443d-f580-436b-82b4-ef2938c55e89",
@@ -2140,7 +2155,8 @@
             "id": 0,
             "alt": "",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "19fd443d-f580-436b-82b4-ef2938c55e89",
           "id": "098c9143-7ca0-4b04-866f-02c5c48339d2",
