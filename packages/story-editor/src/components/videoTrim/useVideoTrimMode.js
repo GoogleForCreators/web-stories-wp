@@ -19,7 +19,6 @@
  */
 import { useFeature } from 'flagged';
 import { useCallback, useMemo } from '@web-stories-wp/react';
-import { canTranscodeResource } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -61,12 +60,8 @@ function useVideoTrimMode() {
     if (selectedElement?.type !== 'video' || !selectedElement?.resource) {
       return false;
     }
-    const { resource } = selectedElement;
-    return (
-      isVideoTrimEnabled &&
-      isTranscodingEnabled &&
-      canTranscodeResource(resource)
-    );
+    const { local, isExternal } = selectedElement.resource || {};
+    return isVideoTrimEnabled && isTranscodingEnabled && !isExternal && !local;
   }, [selectedElement, isVideoTrimEnabled, isTranscodingEnabled]);
 
   return {

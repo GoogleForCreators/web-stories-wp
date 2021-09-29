@@ -17,23 +17,23 @@
 /**
  * Internal dependencies
  */
-import preloadVideoMetadata from './preloadVideoMetadata';
-import getVideoLengthFromDisplay from './getVideoLengthDisplay';
+import formatDuration from './formatDuration';
 
 /**
- * Get video length from a video.
+ * Get video length to display from seconds.
  *
- * @param {string} src Video source.
- * @return {Promise} Video length object.
+ * @param {number} seconds Length in seconds.
+ * @return {string} Video length in H:MM:SS format.
  */
-const getVideoLength = async (src) => {
-  const video = await preloadVideoMetadata(src);
-  const length = Math.round(video.duration);
-  const lengthFormatted = getVideoLengthFromDisplay(length);
-  return {
-    length,
-    lengthFormatted,
-  };
-};
+function getVideoLengthDisplay(seconds) {
+  const hours = parseInt(seconds / 3600);
+  seconds = seconds % 3600;
+  const minutes = parseInt(seconds / 60);
+  seconds = seconds % 60;
+  if (hours) {
+    return `${hours}:${formatDuration(minutes)}:${formatDuration(seconds)}`;
+  }
+  return `${minutes}:${formatDuration(seconds)}`;
+}
 
-export default getVideoLength;
+export default getVideoLengthDisplay;
