@@ -34,6 +34,7 @@ function APIProvider({ children }) {
       stories,
       media,
       hotlink,
+      proxy,
       link,
       users,
       currentUser,
@@ -41,6 +42,7 @@ function APIProvider({ children }) {
       taxonomies,
     },
     apiCallbacks,
+    nonce,
     encodeMarkup,
     cdnURL,
     postType,
@@ -63,6 +65,7 @@ function APIProvider({ children }) {
     addPageTemplate,
     deletePageTemplate,
     getHotlinkInfo,
+    getProxyUrl,
     getTaxonomies,
     getTaxonomyTerm,
     createTaxonomyTerm,
@@ -134,6 +137,11 @@ function APIProvider({ children }) {
   actions.getHotlinkInfo = useCallback(
     (url) => getHotlinkInfo(url, hotlink),
     [hotlink, getHotlinkInfo]
+  );
+
+  actions.getProxyUrl = useCallback(
+    (url) => getProxyUrl(url, proxy, nonce),
+    [proxy, getProxyUrl, nonce]
   );
 
   actions.getLinkMetadata = useCallback(
