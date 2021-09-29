@@ -51,6 +51,7 @@ function useVideoTrimMode() {
       setEditingElementWithState(selectedElement.id, {
         isTrimMode: true,
         hasEditMenu: true,
+        showOverflow: false,
       });
     }
   }, [isEditing, clearEditing, setEditingElementWithState, selectedElement]);
