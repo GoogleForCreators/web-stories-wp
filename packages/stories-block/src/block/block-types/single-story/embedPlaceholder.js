@@ -37,7 +37,6 @@ const EmbedPlaceholder = ({
   label,
   value,
   onSubmit,
-  onChange,
   cannotEmbed,
   errorMessage,
   selectedStories = [],
@@ -57,12 +56,13 @@ const EmbedPlaceholder = ({
 
   const onChangeUrl = (event) => {
     setUrl(event.target.value);
-    onChange(event);
   };
 
   const onSubmitUrl = (event) => {
+    event.preventDefault();
+
     closeURLInput();
-    onSubmit(event);
+    onSubmit(url);
   };
 
   const hasStories = selectedStories.length > 0;
@@ -140,7 +140,6 @@ EmbedPlaceholder.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
   onSubmit: PropTypes.func,
-  onChange: PropTypes.func,
   cannotEmbed: PropTypes.bool,
   errorMessage: PropTypes.string,
   selectedStories: PropTypes.array,

@@ -27,14 +27,12 @@ import EmbedPlaceholder from '../embedPlaceholder';
 describe('EmbedPlaceholder', () => {
   it('should display the embed placeholder', () => {
     const onSubmit = jest.fn();
-    const onChange = jest.fn();
     render(
       <EmbedPlaceholder
         icon={null}
         label="Embed Placeholder"
         value=""
         onSubmit={onSubmit}
-        onChange={onChange}
         cannotEmbed={false}
       />
     );
@@ -43,38 +41,14 @@ describe('EmbedPlaceholder', () => {
     expect(screen.getByText('Insert from URL')).toBeInTheDocument();
   });
 
-  it('should trigger onChange callback when typing', () => {
-    const onSubmit = jest.fn();
-    const onChange = jest.fn();
-    render(
-      <EmbedPlaceholder
-        icon={null}
-        label="Embed Placeholder"
-        value="https://example.com"
-        onSubmit={onSubmit}
-        onChange={onChange}
-        cannotEmbed={false}
-      />
-    );
-
-    fireEvent.click(screen.getByText('Replace URL'));
-
-    fireEvent.change(screen.getByRole('textbox'), {
-      target: { value: 'https://newurl.com' },
-    });
-    expect(onChange).toHaveBeenCalledTimes(1);
-  });
-
   it('should trigger onSubmit callback when submitting the form', () => {
     const onSubmit = jest.fn();
-    const onChange = jest.fn();
     render(
       <EmbedPlaceholder
         icon={null}
         label="Embed Placeholder"
         value="https://example.com"
         onSubmit={onSubmit}
-        onChange={onChange}
         cannotEmbed={false}
       />
     );
@@ -85,14 +59,12 @@ describe('EmbedPlaceholder', () => {
 
   it('should display a message if embedding is not possible', () => {
     const onSubmit = jest.fn();
-    const onChange = jest.fn();
     render(
       <EmbedPlaceholder
         icon={null}
         label="Embed Placeholder"
         value="https://example.com"
         onSubmit={onSubmit}
-        onChange={onChange}
         cannotEmbed
       />
     );

@@ -129,7 +129,7 @@ function StoryEmbedEdit({
         setCannotEmbed(!(typeof data?.title === 'string'));
         setStoryData(data);
         setAttributes({
-          url: localURL,
+          url: url,
         });
       } catch (err) {
         // Only care about errors from apiFetch
@@ -142,7 +142,7 @@ function StoryEmbedEdit({
         setIsFetchingData(false);
       }
     },
-    [setAttributes, localURL]
+    [setAttributes]
   );
 
   useEffect(() => {
@@ -176,20 +176,18 @@ function StoryEmbedEdit({
   );
 
   const onSubmit = useCallback(
-    (event) => {
-      if (event) {
-        event.preventDefault();
-      }
-
+    (url) => {
       _setSelectedStories([]);
       setSelectedStoryIds([]);
       setEditingURL(false);
       setCannotEmbed(false);
-      if (localURL !== outerURL) {
-        fetchStoryData(localURL);
+      setLocalURL(url);
+
+      if (url !== outerURL) {
+        fetchStoryData(url);
       }
     },
-    [localURL, outerURL, fetchStoryData]
+    [outerURL, fetchStoryData]
   );
 
   const switchBackToURLInput = useCallback(() => {
@@ -234,7 +232,6 @@ function StoryEmbedEdit({
         label={label}
         value={localURL}
         onSubmit={onSubmit}
-        onChange={(event) => setLocalURL(event.target.value)}
         cannotEmbed={cannotEmbed}
         errorMessage={storyData?.message}
         selectedStories={selectedStories}
