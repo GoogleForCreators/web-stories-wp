@@ -251,8 +251,10 @@ function Input({
                   isOpen={filteredAutocompleteSuggestions.length > 0}
                   placement={dynamicPlacement}
                   refCallback={dropDownMenuPlacement}
+                  fillWidth
                 >
                   <MenuWithRef
+                    activeValue={value}
                     ref={menuRef}
                     listId={listId}
                     hasMenuRole
