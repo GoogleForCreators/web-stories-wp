@@ -90,6 +90,8 @@ function VideoTrimmer() {
   }, []);
 
   if (!pageWidth || !maxOffset) {
+    // We still need a reffed element, or the focus trap will break,
+    // so just return an empty element
     return <Menu ref={menu} />;
   }
 
