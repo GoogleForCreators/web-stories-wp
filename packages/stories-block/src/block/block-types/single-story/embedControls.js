@@ -89,16 +89,13 @@ const EmbedControls = (props) => {
           See https://developer.wordpress.org/block-editor/components/toolbar-button/#inside-blockcontrols
           */}
           {ToolbarButton ? (
-            <ToolbarButton
-              title={__('Edit Embedded Story', 'web-stories')}
-              icon="edit"
-              onClick={switchBackToURLInput}
-            />
+            <ToolbarButton onClick={switchBackToURLInput}>
+              {__('Replace', 'web-stories')}
+            </ToolbarButton>
           ) : (
             <Button
               className="components-toolbar__control"
-              label={__('Edit Embedded Story', 'web-stories')}
-              icon="edit"
+              title={__('Replace', 'web-stories')}
               onClick={switchBackToURLInput}
             />
           )}
