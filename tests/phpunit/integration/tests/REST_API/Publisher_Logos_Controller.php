@@ -4,7 +4,6 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
-use Spy_REST_Server;
 use WP_REST_Request;
 use WP_REST_Server;
 
@@ -86,24 +85,7 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		self::delete_user( self::$editor );
 	}
 
-	public function set_up() {
-		parent::set_up();
-
-		/** @var WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
-
-		$this->add_caps_to_roles();
-	}
-
 	public function tear_down() {
-		/** @var WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
-		$this->remove_caps_from_roles();
-
 		delete_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
 		delete_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
