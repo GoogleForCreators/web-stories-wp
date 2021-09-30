@@ -57,8 +57,8 @@ class Canonical_Sanitizer extends TestCase {
 		$sanitizer->sanitize();
 
 		$actual = $dom->saveHTML( $dom->documentElement );
-		$this->assertContains( '<link rel="canonical" href="https://example.com/canonical.html">', $actual );
-		$this->assertNotContains( '<link rel="canonical" href="https://example.com/canonical2.html">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="https://example.com/canonical.html">', $actual );
+		$this->assertStringNotContainsString( '<link rel="canonical" href="https://example.com/canonical2.html">', $actual );
 	}
 
 	/**
