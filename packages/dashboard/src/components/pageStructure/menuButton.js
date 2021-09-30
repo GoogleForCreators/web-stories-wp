@@ -57,7 +57,7 @@ const TransparentButton = styled.button`
     `}
 `;
 
-export default function NavMenuButton({ showOnlyOnSmallViewport }) {
+function NavMenuButton({ showOnlyOnSmallViewport }) {
   const { actions } = useNavContext();
   return (
     <TransparentButton
@@ -73,3 +73,5 @@ export default function NavMenuButton({ showOnlyOnSmallViewport }) {
 NavMenuButton.propTypes = {
   showOnlyOnSmallViewport: PropTypes.bool,
 };
+
+export default NavMenuButton;

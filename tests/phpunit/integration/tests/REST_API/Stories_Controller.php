@@ -17,11 +17,9 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Settings;
-use Google\Web_Stories\Story_Post_Type;
+use DateTime;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
-use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
@@ -87,13 +85,11 @@ class Stories_Controller extends Test_REST_TestCase {
 			]
 		);
 
-		$future_date = strtotime( '+1 day' );
-
 		$factory->post->create_many(
 			3,
 			[
 				'post_status' => 'future',
-				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 				'post_type'   => $post_type,
 			]
@@ -127,39 +123,11 @@ class Stories_Controller extends Test_REST_TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
-		self::delete_user( self::$user2_id );
-		self::delete_user( self::$user3_id );
-		self::delete_user( self::$author_id );
-		self::delete_user( self::$contributor_id );
-	}
-
-	public function setUp() {
-		parent::setUp();
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
-
-		$this->add_caps_to_roles();
-
-		$this->set_permalink_structure( '/%postname%/' );
-	}
-
-	public function tearDown() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
-		$this->remove_caps_from_roles();
-
-		$this->set_permalink_structure( '' );
+	public function tear_down() {
 
 		$this->kses_remove_filters();
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -268,7 +236,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$edit_link = get_edit_post_link( $story, 'rest-api' );
 		$this->assertSame( $edit_link, $data['edit_link'] );
 		$this->assertArrayHasKey( 'embed_post_link', $data );
-		$this->assertContains( (string) $story, $data['embed_post_link'] );
+		$this->assertStringContainsString( (string) $story, $data['embed_post_link'] );
 	}
 
 	/**
@@ -299,16 +267,15 @@ class Stories_Controller extends Test_REST_TestCase {
 	 */
 	public function test_get_item_future() {
 		wp_set_current_user( self::$user_id );
-		$future_date = strtotime( '+1 day' );
-		$story       = self::factory()->post->create(
+		$story   = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
-				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 			]
 		);
-		$request     = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
 
@@ -329,16 +296,16 @@ class Stories_Controller extends Test_REST_TestCase {
 	 */
 	public function test_get_item_lock() {
 		wp_set_current_user( self::$user_id );
-		$future_date = strtotime( '+1 day' );
-		$story       = self::factory()->post->create(
+
+		$story    = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
-				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 			]
 		);
-		$new_lock    = ( time() - 100 ) . ':' . self::$user_id;
+		$new_lock = ( time() - 100 ) . ':' . self::$user_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );
@@ -354,16 +321,16 @@ class Stories_Controller extends Test_REST_TestCase {
 	 */
 	public function test_get_available_actions() {
 		wp_set_current_user( self::$user_id );
-		$future_date = strtotime( '+1 day' );
-		$story       = self::factory()->post->create(
+
+		$story    = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
-				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 			]
 		);
-		$new_lock    = ( time() - 100 ) . ':' . self::$user_id;
+		$new_lock = ( time() - 100 ) . ':' . self::$user_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );
@@ -398,7 +365,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'https://api.w.org/term', $links );
 		foreach ( $links['https://api.w.org/term'] as $taxonomy ) {
 			$this->assertArrayHasKey( 'href', $taxonomy );
-			$this->assertContains( 'web-stories/v1', $taxonomy['href'] );
+			$this->assertStringContainsString( 'web-stories/v1', $taxonomy['href'] );
 		}
 	}
 

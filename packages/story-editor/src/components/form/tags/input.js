@@ -59,23 +59,31 @@ function Input({
   onTagsChange,
   onInputChange,
   tagDisplayTransformer,
-  initialTags = [],
+  tokens = [],
   ...props
 }) {
-  const [{ value, tags, offset }, dispatch] = useReducer(reducer, {
+  const [{ value, tags, offset, tagBuffer }, dispatch] = useReducer(reducer, {
     value: '',
-    tags: [...initialTags],
+    tags: [...tokens],
+    tagBuffer: null,
     offset: 0,
   });
-  const [isInputFocused, setIsInputFocued] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
+  useEffect(() => {
+    dispatch({ type: ACTIONS.UPDATE_TAGS, payload: tokens });
+  }, [tokens]);
 
   // Allow parents to pass onTagsChange callback
   // that updates as tags does.
   const onTagChangeRef = useRef(onTagsChange);
   onTagChangeRef.current = onTagsChange;
   useEffect(() => {
-    onTagChangeRef.current?.(tags);
-  }, [tags]);
+    if (!tagBuffer) {
+      return;
+    }
+    onTagChangeRef.current?.(tagBuffer);
+  }, [tagBuffer]);
 
   // Allow parents to pass onInputChange callback
   // that updates as value does.
@@ -102,7 +110,7 @@ function Input({
           if (e.key === 'Backspace' && e.target.value === '') {
             dispatch({ type: ACTIONS.REMOVE_TAG });
           }
-          if (['Comma', 'Enter'].includes(e.key)) {
+          if (['Comma', 'Enter', 'Tab'].includes(e.key)) {
             dispatch({ type: ACTIONS.SUBMIT_VALUE });
           }
         },
@@ -113,16 +121,17 @@ function Input({
           dispatch({ type: ACTIONS.REMOVE_TAG, payload: tag });
         },
         handleFocus: () => {
-          setIsInputFocued(true);
+          setIsInputFocused(true);
         },
         handleBlur: () => {
           dispatch({ type: ACTIONS.RESET_OFFSET });
-          setIsInputFocued(false);
+          setIsInputFocused(false);
         },
       }),
       []
     );
 
+  const renderedTags = tagBuffer || tags;
   return (
     <Border isInputFocused={isInputFocused}>
       {
@@ -130,9 +139,9 @@ function Input({
         // this helps with natural tab order and visuals
         // as you ArrowLeft or ArrowRight through tags
         [
-          ...tags.slice(0, tags.length - offset),
+          ...renderedTags.slice(0, renderedTags.length - offset),
           INPUT_KEY,
-          ...tags.slice(tags.length - offset),
+          ...renderedTags.slice(renderedTags.length - offset),
         ].map((tag) =>
           tag === INPUT_KEY ? (
             <TextInput
@@ -160,5 +169,6 @@ Input.propTypes = {
   onInputChange: PropTypes.func,
   tagDisplayTransformer: PropTypes.func,
   initialTags: PropTypes.arrayOf(PropTypes.string),
+  tokens: PropTypes.arrayOf(PropTypes.string),
 };
 export default Input;

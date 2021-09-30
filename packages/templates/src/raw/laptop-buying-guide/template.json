@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -152,7 +152,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 4, 4]
+            "baseColor": [4, 4, 4],
+            "isExternal": true
           },
           "type": "image",
           "x": 13,
@@ -189,7 +190,8 @@
             "alt": "Pointer hand icon",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 317,
@@ -406,7 +408,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [20, 20, 23]
+            "baseColor": [20, 20, 23],
+            "isExternal": true
           },
           "x": 0,
           "y": -57,
@@ -607,7 +610,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [178, 140, 71]
+            "baseColor": [178, 140, 71],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.6 } }
         },
@@ -998,7 +1002,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 4, 4]
+            "baseColor": [4, 4, 4],
+            "isExternal": true
           },
           "type": "image",
           "x": 17,
@@ -1363,7 +1368,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [5, 5, 5]
+            "baseColor": [5, 5, 5],
+            "isExternal": true
           },
           "type": "image",
           "x": -49,
@@ -1912,7 +1918,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 84, 252]
+            "baseColor": [4, 84, 252],
+            "isExternal": true
           },
           "resizeWidth": 242.328,
           "resizeHeight": 12.3438
@@ -2119,7 +2126,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 84, 252]
+            "baseColor": [4, 84, 252],
+            "isExternal": true
           },
           "resizeWidth": 212.031,
           "resizeHeight": 13.2188,
@@ -2330,7 +2338,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 84, 252]
+            "baseColor": [4, 84, 252],
+            "isExternal": true
           },
           "resizeWidth": 132.328,
           "resizeHeight": 11.4844,
@@ -2491,7 +2500,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [160, 113, 69]
+            "baseColor": [160, 113, 69],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.6 } }
         },
@@ -2882,7 +2892,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [199, 199, 199]
+            "baseColor": [199, 199, 199],
+            "isExternal": true
           },
           "type": "image",
           "width": 384,
@@ -3245,7 +3256,8 @@
             "alt": "Macbook Pro 16\" mockup",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 17,
@@ -4483,7 +4495,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [230, 211, 195]
+            "baseColor": [230, 211, 195],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.6 } }
         },
@@ -4871,7 +4884,8 @@
             "alt": "Clean Macbook Air mockup",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 378,
@@ -5234,7 +5248,8 @@
             "alt": "Laptop floating angled Open",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -5624,7 +5639,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 4, 4]
+            "baseColor": [4, 4, 4],
+            "isExternal": true
           },
           "type": "image",
           "x": 45,
@@ -5901,7 +5917,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [216, 217, 218]
+            "baseColor": [216, 217, 218],
+            "isExternal": true
           },
           "type": "image",
           "x": 54,
@@ -6175,7 +6192,8 @@
             "alt": "Laptop floating angled Open",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 131,
@@ -6614,7 +6632,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [216, 219, 220]
+            "baseColor": [216, 219, 220],
+            "isExternal": true
           },
           "x": 76,
           "y": 153,
@@ -6868,7 +6887,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [213, 207, 197]
+            "baseColor": [213, 207, 197],
+            "isExternal": true
           }
         },
         {

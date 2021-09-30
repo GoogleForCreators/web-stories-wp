@@ -124,6 +124,13 @@ class Settings extends Service_Base {
 	const SETTING_NAME_ARCHIVE = 'web_stories_archive';
 
 	/**
+	 * Web Stories archive page ID setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_ARCHIVE_PAGE_ID = 'web_stories_archive_page_id';
+
+	/**
 	 * Get the action priority to use for registering the service.
 	 *
 	 * @since 1.6.0
@@ -261,9 +268,20 @@ class Settings extends Service_Base {
 				'show_in_rest' => [
 					'schema' => [
 						'type' => 'string',
-						'enum' => [ 'default', 'disabled' ],
+						'enum' => [ 'default', 'disabled', 'custom' ],
 					],
 				],
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_ARCHIVE_PAGE_ID,
+			[
+				'description'  => __( 'Web Stories Archive Page ID', 'web-stories' ),
+				'type'         => 'integer',
+				'default'      => 0,
+				'show_in_rest' => true,
 			]
 		);
 

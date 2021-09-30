@@ -46,51 +46,12 @@ describe('Video Accessibility Panel', () => {
     beforeEach(async () => {
       await fixture.events.click(fixture.editor.library.media.item(5)); // item 5 is a video
       vaPanel = fixture.editor.inspector.designPanel.videoAccessibility;
-
-      const media = () => ({
-        state: () => ({
-          get: () => ({
-            first: () => ({
-              toJSON: () => ({
-                url: 'http://dummy:url/',
-                mime: 'image/jpeg',
-                width: 640,
-                height: 480,
-              }),
-            }),
-          }),
-        }),
-        on: (type, callback) => callback(),
-        once: (type, callback) => callback(),
-        open: () => {},
-        close: () => {},
-        setState: () => {},
-      });
-
-      class Library {}
-
-      class Cropper {
-        extend() {
-          return class ExtendedCropper {};
-        }
-      }
-
-      media.controller = {
-        Cropper,
-        Library,
-      };
-      media.query = () => {};
-
-      // Create fake media browser
-      window.wp = {
-        ...window.wp,
-        media,
-      };
     });
 
     it('should allow user to edit and reset poster image using mouse', async () => {
       // Remember original poster image
       const originalPoster = vaPanel.posterImage.src;
+
       vaPanel.posterMenuButton.scrollIntoView();
 
       // Expect menu button to exist
@@ -103,8 +64,8 @@ describe('Video Accessibility Panel', () => {
       // And click on edit
       await fixture.events.click(vaPanel.posterMenuEdit);
 
-      // Expect poster image to have updated
-      expect(vaPanel.posterImage.src).toBe('http://dummy:url/');
+      // Expect poster image to have updated ( See MediaUpload component in fixture.js )
+      expect(vaPanel.posterImage.src).toMatch(/^http.+\/media1$/);
 
       // Now open menu and click reset
       await fixture.events.click(vaPanel.posterMenuButton);
@@ -138,8 +99,8 @@ describe('Video Accessibility Panel', () => {
       expect(vaPanel.posterMenuEdit).toHaveFocus();
       await fixture.events.keyboard.press('Enter');
 
-      // Expect poster image to have updated
-      expect(vaPanel.posterImage.src).toBe('http://dummy:url/');
+      // Expect poster image to have updated ( See MediaUpload component in fixture.js )
+      expect(vaPanel.posterImage.src).toMatch(/^http.+\/media1$/);
 
       // Now open menu and click reset
       await focusOnTitle();

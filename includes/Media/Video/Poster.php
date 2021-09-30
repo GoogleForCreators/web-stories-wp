@@ -51,6 +51,24 @@ class Poster extends Service_Base {
 	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
+	 * Media_Source_Taxonomy instance.
+	 *
+	 * @var Media_Source_Taxonomy Experiments instance.
+	 */
+	protected $media_source_taxonomy;
+
+	/**
+	 * Poster constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Media_Source_Taxonomy $media_source_taxonomy Media_Source_Taxonomy instance.
+	 */
+	public function __construct( Media_Source_Taxonomy $media_source_taxonomy ) {
+		$this->media_source_taxonomy = $media_source_taxonomy;
+	}
+
+	/**
 	 * Init.
 	 *
 	 * @since 1.10.0
@@ -175,7 +193,7 @@ class Poster extends Service_Base {
 			if ( 0 !== $thumbnail_id ) {
 				$image = $this->get_thumbnail_data( $thumbnail_id );
 			}
-			
+
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
 		}
@@ -235,7 +253,7 @@ class Poster extends Service_Base {
 	 * @return bool
 	 */
 	protected function is_poster( int $post_id ): bool {
-		$terms = get_the_terms( $post_id, Media_Source_Taxonomy::TAXONOMY_SLUG );
+		$terms = get_the_terms( $post_id, $this->media_source_taxonomy->get_taxonomy_slug() );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );
 

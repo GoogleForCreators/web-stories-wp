@@ -19,20 +19,15 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState } from '@web-stories-wp/react';
+import { useState } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { Icons } from '@web-stories-wp/design-system';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
-import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
-import { BACKGROUND_TEXT_MODE } from '../../../../constants';
-import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
-import { getHTMLFormatters } from '../../../richText/htmlManipulation';
 import { DEFAULT_PRESET } from './textPresets';
 
 const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
@@ -89,53 +84,17 @@ function TextIcon(props) {
     insertElement: state.actions.insertElement,
   }));
 
-  const enableSmartTextColor = useFeature('enableSmartTextColor');
-
   const [isHoveringQuick, setIsHoveringQuick] = useState(false);
   const [isFocusingQuick, setIsFocusingQuick] = useState(false);
 
-  const [autoColor, setAutoColor] = useState(null);
-  const { calculateAccessibleTextColors, generateCanvasFromPage } =
-    usePageAsCanvas();
-
-  const htmlFormatters = getHTMLFormatters();
-  const { setColor } = htmlFormatters;
-
-  useEffect(() => {
-    if (autoColor) {
-      // Add all the necessary props in case of color / highlight.
-      const { content } = DEFAULT_PRESET;
-      const { color, backgroundColor } = autoColor;
-      const highlightProps = backgroundColor
-        ? {
-            backgroundColor: { color: backgroundColor },
-            backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
-            padding: applyHiddenPadding(DEFAULT_PRESET),
-          }
-        : null;
-      insertElement('text', {
-        ...DEFAULT_PRESET,
-        content: color ? setColor(content, { color }) : content,
-        ...highlightProps,
-      });
-      setAutoColor(null);
-    }
-  }, [autoColor, insertElement, setColor]);
-
-  const handleAddText = async (evt) => {
+  const handleAddText = (evt) => {
     evt.stopPropagation();
-    if (enableSmartTextColor) {
-      setAutoColor(await calculateAccessibleTextColors(DEFAULT_PRESET));
-    } else {
-      insertElement('text', DEFAULT_PRESET);
-    }
+    insertElement('text', DEFAULT_PRESET);
     trackEvent('library_text_quick_action');
   };
   const { isActive } = props;
   return (
-    <TextIconContainer
-      onPointerOver={() => enableSmartTextColor && generateCanvasFromPage()}
-    >
+    <TextIconContainer>
       <IconWrapper>
         <AnimatedTextIcon
           id="text-tab-icon"

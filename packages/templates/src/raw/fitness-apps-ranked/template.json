@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -33,7 +33,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [214, 205, 180]
+            "baseColor": [214, 205, 180],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -371,7 +372,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [180, 184, 190]
+            "baseColor": [180, 184, 190],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 34, "g": 43, "b": 73, "a": 0.1 } }
         },
@@ -527,7 +529,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [128, 149, 179]
+            "baseColor": [128, 149, 179],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
@@ -659,7 +662,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [51, 50, 57]
+            "baseColor": [51, 50, 57],
+            "isExternal": true
           },
           "x": 114,
           "y": 92,
@@ -695,7 +699,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [13, 13, 13]
+            "baseColor": [13, 13, 13],
+            "isExternal": true
           },
           "x": 99.5,
           "y": 77,
@@ -982,7 +987,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [27, 18, 16]
+            "baseColor": [27, 18, 16],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1154,7 +1160,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [128, 149, 179]
+            "baseColor": [128, 149, 179],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
@@ -1283,7 +1290,8 @@
             "alt": "fitness app screen showing 3 jump series with woman jumping above gray sand",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 117.5,
           "y": 94,
@@ -1318,7 +1326,8 @@
             "alt": "smart phone frame",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 99.5,
           "y": 77,
@@ -1605,7 +1614,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [177, 158, 143]
+            "baseColor": [177, 158, 143],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1774,7 +1784,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [128, 149, 179]
+            "baseColor": [128, 149, 179],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
@@ -1903,7 +1914,8 @@
             "alt": "fitness app screen to start the weekly routine",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 114,
           "y": 94,
@@ -1938,7 +1950,8 @@
             "alt": "smart phone frame",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 99.5,
           "y": 77,
@@ -2217,7 +2230,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [216, 225, 225]
+            "baseColor": [216, 225, 225],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3361,7 +3375,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [29, 18, 11]
+            "baseColor": [29, 18, 11],
+            "isExternal": true
           }
         },
         {
@@ -3476,7 +3491,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [209, 217, 214]
+            "baseColor": [209, 217, 214],
+            "isExternal": true
           }
         },
         {
@@ -3591,7 +3607,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [190, 170, 164]
+            "baseColor": [190, 170, 164],
+            "isExternal": true
           }
         },
         {

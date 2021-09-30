@@ -1,11 +1,14 @@
 <?xml version="1.0" ?>
 <phpunit
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   bootstrap="tests/phpunit/integration/bootstrap.php"
   backupGlobals="false"
   colors="true"
+  failOnRisky="true"
   convertErrorsToExceptions="true"
   convertNoticesToExceptions="true"
   convertWarningsToExceptions="true"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.2/phpunit.xsd"
 >
 	<php>
 		<ini name="error_reporting" value="32767" />

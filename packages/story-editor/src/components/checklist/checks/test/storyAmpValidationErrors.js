@@ -66,6 +66,7 @@ describe('getStoryAmpValidationErrors', () => {
     windowSpy.mockImplementation(() => ({
       amp: {
         validator: {
+          init: () => {},
           validateString: () => ({
             status: 'FAIL',
             errors: [

@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [153, 104, 76]
+            "baseColor": [153, 104, 76],
+            "isExternal": true
           }
         },
         {
@@ -253,7 +254,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 169, 146]
+            "baseColor": [218, 169, 146],
+            "isExternal": true
           }
         },
         {
@@ -1469,7 +1471,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [207, 206, 204]
+            "baseColor": [207, 206, 204],
+            "isExternal": true
           },
           "x": 86.5,
           "y": 81,
@@ -1499,7 +1502,8 @@
             "alt": "Frame baguette creativity picture",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 49,
@@ -2153,7 +2157,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [194, 178, 164]
+            "baseColor": [194, 178, 164],
+            "isExternal": true
           },
           "x": 94.5,
           "y": 81,
@@ -2186,7 +2191,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [64, 94, 80]
+            "baseColor": [64, 94, 80],
+            "isExternal": true
           },
           "type": "image",
           "x": 49,
@@ -3360,7 +3366,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [165, 118, 93]
+            "baseColor": [165, 118, 93],
+            "isExternal": true
           },
           "type": "image",
           "x": -17,
@@ -3601,7 +3608,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [251, 199, 203]
+            "baseColor": [251, 199, 203],
+            "isExternal": true
           },
           "type": "image",
           "x": -6,
@@ -4156,7 +4164,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [235, 209, 191]
+            "baseColor": [235, 209, 191],
+            "isExternal": true
           },
           "type": "image",
           "x": 226,
@@ -4194,7 +4203,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [224, 173, 162]
+            "baseColor": [224, 173, 162],
+            "isExternal": true
           },
           "type": "image",
           "x": 53,
@@ -4232,7 +4242,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [213, 175, 145]
+            "baseColor": [213, 175, 145],
+            "isExternal": true
           },
           "type": "image",
           "x": 53,

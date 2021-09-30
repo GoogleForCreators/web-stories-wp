@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -193,7 +193,8 @@
             "alt": "Set of natural toiletries on marble table in bathroom",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -234,7 +235,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [203, 197, 190]
+            "baseColor": [203, 197, 190],
+            "isExternal": true
           }
         },
         {
@@ -473,7 +475,8 @@
             "alt": "Woman doing yoga",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -813,7 +816,8 @@
             "alt": "Woman doing yoga",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1225,7 +1229,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [154, 150, 146]
+            "baseColor": [154, 150, 146],
+            "isExternal": true
           }
         },
         {
@@ -1416,7 +1421,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [203, 197, 190]
+            "baseColor": [203, 197, 190],
+            "isExternal": true
           }
         },
         {
@@ -1803,7 +1809,8 @@
             "alt": "Woman with afro hair, at home",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2214,7 +2221,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [171, 172, 175]
+            "baseColor": [171, 172, 175],
+            "isExternal": true
           }
         },
         {
@@ -2403,7 +2411,8 @@
             "alt": "Woman Sleeping",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2791,7 +2800,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [221, 221, 221]
+            "baseColor": [221, 221, 221],
+            "isExternal": true
           }
         },
         {
@@ -3202,7 +3212,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [217, 232, 232]
+            "baseColor": [217, 232, 232],
+            "isExternal": true
           }
         },
         {
@@ -3392,7 +3403,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [182, 71, 63]
+            "baseColor": [182, 71, 63],
+            "isExternal": true
           }
         },
         {
@@ -3779,7 +3791,8 @@
             "alt": "Clear Glass Bowl with Herbs and Tea",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -4190,7 +4203,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 228, 229]
+            "baseColor": [228, 228, 229],
+            "isExternal": true
           }
         },
         {
@@ -4380,7 +4394,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [107, 86, 79]
+            "baseColor": [107, 86, 79],
+            "isExternal": true
           }
         },
         {
@@ -4750,7 +4765,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [219, 212, 211]
+            "baseColor": [219, 212, 211],
+            "isExternal": true
           }
         },
         {
@@ -4862,7 +4878,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [72, 73, 68]
+            "baseColor": [72, 73, 68],
+            "isExternal": true
           }
         },
         {
@@ -4903,7 +4920,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [71, 38, 26]
+            "baseColor": [71, 38, 26],
+            "isExternal": true
           }
         },
         {
@@ -5168,7 +5186,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [179, 183, 185]
+            "baseColor": [179, 183, 185],
+            "isExternal": true
           }
         },
         {

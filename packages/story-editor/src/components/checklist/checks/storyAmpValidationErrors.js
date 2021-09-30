@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -27,6 +28,8 @@ import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
 
+/** @typedef {import('amphtml-validator').ValidationResult} ValidationResult */
+
 export async function getStoryAmpValidationErrors({ link, status }) {
   if (!link || !['publish', 'future'].includes(status)) {
     return false;
@@ -35,13 +38,19 @@ export async function getStoryAmpValidationErrors({ link, status }) {
   try {
     const response = await fetch(link);
     const storyMarkup = await response.text();
-    const { status: markupStatus, errors } =
-      window.amp.validator.validateString(storyMarkup);
+
+    await window.amp.validator.init();
+
+    /**
+     * @type {ValidationResult}
+     */
+    const validationResult = window.amp.validator.validateString(storyMarkup);
+    const { status: markupStatus, errors } = validationResult;
 
     if ('FAIL' !== markupStatus) {
       return false;
     }
-
+    // Error codes can be found here: // https://github.com/ampproject/amphtml/blob/cfb102aafc1543788b77f3ef9bd138c753e13097/validator/validator.proto#L853
     const filteredErrors = errors
       .filter(({ severity }) => severity === 'ERROR')
       .filter(({ code, params }) => {
