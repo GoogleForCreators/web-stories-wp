@@ -27,7 +27,6 @@ import {
   useCallback,
   useFocusOut,
 } from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -62,8 +61,11 @@ const TextInput = styled(BaseInput).attrs({ type: 'text' })`
 `;
 
 function Input({
+  suggestedTerms = [],
+  id,
   onTagsChange,
   onInputChange,
+  suggestedTermsLabel,
   tagDisplayTransformer,
   tokens = [],
   onUndo = noop,
@@ -78,7 +80,7 @@ function Input({
   });
 
   const [isInputFocused, setIsInputFocused] = useState(false);
-  const [autocompleteFocus, setAutocompleteFocus] = useState(false);
+  const [suggestedTermsFocus, setSuggestedTermsFocus] = useState(false);
   const [dynamicPlacement, setDynamicPlacement] = useState(PLACEMENT.BOTTOM);
 
   const inputRef = useRef();
@@ -90,12 +92,12 @@ function Input({
     dispatch({ type: ACTIONS.UPDATE_TAGS, payload: tokens });
   }, [tokens]);
 
-  const filteredAutocompleteSuggestions = useMemo(() => {
+  const filteredSuggestedTerms = useMemo(() => {
     const cleanValue = value.trim().toLowerCase();
     if (cleanValue.length < 3) {
       return [];
     }
-    return autocompleteSuggestions.reduce((accum, suggestion) => {
+    return suggestedTerms.reduce((accum, suggestion) => {
       if (!suggestion.toLowerCase().startsWith(cleanValue)) {
         return accum;
       }
@@ -108,7 +110,7 @@ function Input({
         },
       ];
     }, []);
-  }, [autocompleteSuggestions, value]);
+  }, [suggestedTerms, value]);
 
   const dropDownMenuPlacement = useCallback(
     (popupRef) => {
@@ -197,14 +199,14 @@ function Input({
 
   const handleReturnFocusToInput = useCallback(() => {
     inputRef?.current.focus();
-    setAutocompleteFocus(false);
+    setSuggestedTermsFocus(false);
   }, []);
 
   const handleTagSelectedFromSuggestions = useCallback(
     async (e, selectedValue) => {
       e.preventDefault();
       // It's important these run in order so that focus remains intact
-      await setAutocompleteFocus(false);
+      await setSuggestedTermsFocus(false);
       await dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: selectedValue });
       await inputRef?.current.focus();
     },
@@ -212,11 +214,11 @@ function Input({
   );
 
   const handleSubmitOnFocusOut = useCallback(() => {
-    if (filteredAutocompleteSuggestions.length <= 0 && value.length > 0) {
-      setAutocompleteFocus(false);
+    if (filteredSuggestedTerms.length <= 0 && value.length > 0) {
+      setSuggestedTermsFocus(false);
       dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: value });
     }
-  }, [filteredAutocompleteSuggestions, value]);
+  }, [filteredSuggestedTerms, value]);
 
   useFocusOut(containerRef, handleSubmitOnFocusOut, [handleSubmitOnFocusOut]);
 
@@ -246,10 +248,10 @@ function Input({
                 ref={inputRef}
                 autoComplete="off"
               />
-              {filteredAutocompleteSuggestions.length > 0 && value.length >= 3 && (
+              {filteredSuggestedTerms.length > 0 && value.length >= 3 && (
                 <Popup
                   anchor={containerRef}
-                  isOpen={filteredAutocompleteSuggestions.length > 0}
+                  isOpen={filteredSuggestedTerms.length > 0}
                   placement={dynamicPlacement}
                   refCallback={dropDownMenuPlacement}
                   fillWidth
@@ -261,16 +263,11 @@ function Input({
                     hasMenuRole
                     handleReturnToParent={handleReturnFocusToInput}
                     isRTL={isRTL}
-                    options={[{ group: filteredAutocompleteSuggestions }]}
+                    options={[{ group: filteredSuggestedTerms }]}
                     onMenuItemClick={handleTagSelectedFromSuggestions}
                     onDismissMenu={noop} // No need to dismiss, it's either open with options or hidden
-                    menuAriaLabel={sprintf(
-                      /* translators: %s: title of freeform terms */
-                      __('Available terms for %s', 'web-stories'),
-                      props.name
-                    )}
-                    parentId={id}
-                    isMenuFocused={autocompleteFocus}
+                    menuAriaLabel={suggestedTermsLabel}
+                    isMenuFocused={suggestedTermsFocus}
                     isPositionedOnTop={dynamicPlacement === PLACEMENT.TOP}
                   />
                 </Popup>
@@ -287,7 +284,7 @@ function Input({
   );
 }
 Input.propTypes = {
-  autocompleteSuggestions: PropTypes.arrayOf(PropTypes.string),
+  suggestedTerms: PropTypes.arrayOf(PropTypes.string),
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   initialTags: PropTypes.arrayOf(PropTypes.string),
