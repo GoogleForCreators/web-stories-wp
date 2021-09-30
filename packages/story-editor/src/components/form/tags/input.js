@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { themeHelpers, BaseInput } from '@web-stories-wp/design-system';
+import { themeHelpers, BaseInput, noop } from '@web-stories-wp/design-system';
 import {
   useEffect,
   useMemo,
@@ -60,6 +60,7 @@ function Input({
   onInputChange,
   tagDisplayTransformer,
   tokens = [],
+  onUndo = noop,
   ...props
 }) {
   const [{ value, tags, offset, tagBuffer }, dispatch] = useReducer(reducer, {
@@ -101,15 +102,21 @@ function Input({
         // Key interactions are modeled after WordPress Tag input UX
         // and are only available when focused on the text input
         handleKeyDown: (e) => {
-          if (e.key === 'ArrowLeft' && e.target.value === '') {
-            dispatch({ type: ACTIONS.INCREMENT_OFFSET });
+          if (e.target.value === '') {
+            if (e.key === 'ArrowLeft') {
+              dispatch({ type: ACTIONS.INCREMENT_OFFSET });
+            }
+            if (e.key === 'ArrowRight') {
+              dispatch({ type: ACTIONS.DECREMENT_OFFSET });
+            }
+            if (e.key === 'Backspace') {
+              dispatch({ type: ACTIONS.REMOVE_TAG });
+            }
+            if (e.key === 'z' && e.metaKey) {
+              onUndo(e);
+            }
           }
-          if (e.key === 'ArrowRight' && e.target.value === '') {
-            dispatch({ type: ACTIONS.DECREMENT_OFFSET });
-          }
-          if (e.key === 'Backspace' && e.target.value === '') {
-            dispatch({ type: ACTIONS.REMOVE_TAG });
-          }
+
           if (['Comma', 'Enter', 'Tab'].includes(e.key)) {
             dispatch({ type: ACTIONS.SUBMIT_VALUE });
           }
@@ -128,7 +135,7 @@ function Input({
           setIsInputFocused(false);
         },
       }),
-      []
+      [onUndo]
     );
 
   const renderedTags = tagBuffer || tags;
@@ -167,6 +174,7 @@ function Input({
 Input.propTypes = {
   onTagsChange: PropTypes.func,
   onInputChange: PropTypes.func,
+  onUndo: PropTypes.func,
   tagDisplayTransformer: PropTypes.func,
   initialTags: PropTypes.arrayOf(PropTypes.string),
   tokens: PropTypes.arrayOf(PropTypes.string),
