@@ -160,9 +160,11 @@ class Embed_Controller extends Test_REST_TestCase {
 	}
 
 	/**
-	 * @covers ::register
+	 * @covers ::register_routes
 	 */
 	public function test_register_routes() {
+		$this->controller->register_routes();
+
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/embed', $routes );
