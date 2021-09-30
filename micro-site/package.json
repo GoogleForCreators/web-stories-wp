@@ -24,6 +24,7 @@
     "hasha": "^5.2.0",
     "html-minifier": "^4.0.0",
     "image-size": "^1.0.0",
+    "jsdom": "^17.0.0",
     "lru-cache": "^6.0.0",
     "purge-from-html": "^1.0.3",
     "purgecss": "^4.0.3",
