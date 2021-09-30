@@ -62,10 +62,19 @@ function VideoTrimProvider({ children }) {
     }
     // Get length for displaying correct value in the library for the new video.
     const lengthInSeconds = Math.round(endOffset / 1000 - startOffset / 1000);
+    // If we have the original resource but the original doesn't have one, let's use the ID of the original.
+    const originalId =
+      originalResource && !originalResource.trimData.original
+        ? originalResource.id
+        : 0;
     // Use the same resource ID for proper element update.
     trimExistingVideo({
       resource: {
         ...resourceToTrim,
+        trimData: {
+          ...resourceToTrim.trimData,
+          original: originalId,
+        },
         id: selectedElements[0].resource.id,
         length: lengthInSeconds,
         lengthFormatted: getVideoLengthDisplay(lengthInSeconds),
