@@ -101,7 +101,6 @@ describe('TextPane', () => {
         features={{
           showTextSets: false,
           showTextAndShapesSearchInput: false,
-          enableSmartTextColor: true,
         }}
       >
         <CanvasContext.Provider value={canvasContextValue}>
