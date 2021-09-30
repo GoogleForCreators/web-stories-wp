@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -213,7 +213,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [229, 228, 227]
+            "baseColor": [229, 228, 227],
+            "isExternal": true
           }
         },
         {
@@ -246,7 +247,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [193, 186, 181]
+            "baseColor": [193, 186, 181],
+            "isExternal": true
           }
         }
       ],
@@ -361,7 +363,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [136, 122, 115]
+            "baseColor": [136, 122, 115],
+            "isExternal": true
           },
           "tracks": []
         },
@@ -728,7 +731,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [204, 206, 205]
+            "baseColor": [204, 206, 205],
+            "isExternal": true
           }
         },
         {
@@ -762,7 +766,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [203, 205, 204]
+            "baseColor": [203, 205, 204],
+            "isExternal": true
           }
         },
         {
@@ -796,7 +801,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [190, 184, 178]
+            "baseColor": [190, 184, 178],
+            "isExternal": true
           }
         },
         {
@@ -829,7 +835,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [220, 218, 217]
+            "baseColor": [220, 218, 217],
+            "isExternal": true
           }
         }
       ],
@@ -1054,7 +1061,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [207, 210, 214]
+            "baseColor": [207, 210, 214],
+            "isExternal": true
           }
         },
         {
@@ -1087,7 +1095,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [211, 203, 196]
+            "baseColor": [211, 203, 196],
+            "isExternal": true
           }
         },
         {
@@ -1120,7 +1129,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [202, 194, 188]
+            "baseColor": [202, 194, 188],
+            "isExternal": true
           }
         },
         {
@@ -1154,7 +1164,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [209, 208, 206]
+            "baseColor": [209, 208, 206],
+            "isExternal": true
           }
         }
       ],
@@ -1388,7 +1399,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [198, 197, 200]
+            "baseColor": [198, 197, 200],
+            "isExternal": true
           }
         },
         {
@@ -1421,7 +1433,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [192, 185, 180]
+            "baseColor": [192, 185, 180],
+            "isExternal": true
           }
         },
         {
@@ -1455,7 +1468,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [195, 195, 193]
+            "baseColor": [195, 195, 193],
+            "isExternal": true
           }
         },
         {
@@ -1488,7 +1502,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [208, 210, 210]
+            "baseColor": [208, 210, 210],
+            "isExternal": true
           }
         }
       ],
@@ -1567,7 +1582,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [200, 187, 169]
+            "baseColor": [200, 187, 169],
+            "isExternal": true
           },
           "tracks": []
         }
@@ -1718,7 +1734,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [178, 175, 172]
+            "baseColor": [178, 175, 172],
+            "isExternal": true
           }
         }
       ],
@@ -1765,7 +1782,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [201, 197, 186]
+            "baseColor": [201, 197, 186],
+            "isExternal": true
           },
           "tracks": []
         }
@@ -1923,7 +1941,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [203, 201, 204]
+            "baseColor": [203, 201, 204],
+            "isExternal": true
           }
         }
       ],
@@ -1976,7 +1995,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [195, 195, 193]
+            "baseColor": [195, 195, 193],
+            "isExternal": true
           }
         },
         {
@@ -2211,7 +2231,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [201, 195, 195]
+            "baseColor": [201, 195, 195],
+            "isExternal": true
           }
         },
         {
@@ -2553,7 +2574,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [214, 216, 216]
+            "baseColor": [214, 216, 216],
+            "isExternal": true
           }
         },
         {
@@ -2652,7 +2674,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [229, 228, 228]
+            "baseColor": [229, 228, 228],
+            "isExternal": true
           }
         },
         {
@@ -2742,7 +2765,8 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [222, 221, 220]
+            "baseColor": [222, 221, 220],
+            "isExternal": true
           },
           "x": 58,
           "y": 449,

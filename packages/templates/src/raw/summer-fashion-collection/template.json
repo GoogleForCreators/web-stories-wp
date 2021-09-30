@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -211,7 +211,8 @@
             "alt": "Woman holding her black hat",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         }
       ],
@@ -465,7 +466,8 @@
             "alt": "Woman in yellow crew-neck t-shirt and blue denim bottoms",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -503,7 +505,8 @@
             "alt": "Woman in black off-shoulder shirt sitting on brown wooden stairs",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         }
       ],
@@ -681,7 +684,8 @@
             "alt": "Woman in blue bralette holding sunglasses putting on her eyes",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 328,
           "height": 400,
@@ -1018,7 +1022,8 @@
             "alt": "Woman in white and black crop top and blue denim shorts standing near red car",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1279,7 +1284,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [207, 183, 171]
+            "baseColor": [207, 183, 171],
+            "isExternal": true
           },
           "x": 180,
           "y": 98,
@@ -1322,7 +1328,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [160, 127, 105]
+            "baseColor": [160, 127, 105],
+            "isExternal": true
           },
           "width": 160,
           "height": 240,
@@ -1361,7 +1368,8 @@
             "alt": "Woman leaning beside orange wall",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 187,
           "height": 205,
@@ -1400,7 +1408,8 @@
             "alt": "Woman raising right hand",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 205,
           "height": 205,
@@ -1718,7 +1727,8 @@
             "alt": "Woman in pink suit walking near garden",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 328,
           "height": 400,
@@ -2047,7 +2057,8 @@
             "alt": "Woman wearing orange v-neck overall dress sitting on chair",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 48,
@@ -2318,7 +2329,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [44, 58, 56]
+            "baseColor": [44, 58, 56],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 180,
@@ -2357,7 +2369,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [221, 212, 208]
+            "baseColor": [221, 212, 208],
+            "isExternal": true
           },
           "x": 0,
           "y": 98,
@@ -2396,7 +2409,8 @@
             "alt": "Celebrity sitting beside yellow flower fields",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 225,
           "y": 358,
@@ -2436,7 +2450,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [198, 184, 173]
+            "baseColor": [198, 184, 173],
+            "isExternal": true
           },
           "x": 0,
           "y": 358,
@@ -2753,7 +2768,8 @@
             "alt": "Walking woman wearing red and white floral half-sleeved dress near the building during daytime",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "x": 45,
           "y": 102,
@@ -3096,7 +3112,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [150, 136, 110]
+            "baseColor": [150, 136, 110],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3357,7 +3374,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [222, 212, 207]
+            "baseColor": [222, 212, 207],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 180,
@@ -3397,7 +3415,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [195, 188, 170]
+            "baseColor": [195, 188, 170],
+            "isExternal": true
           },
           "x": 0,
           "y": 98,
@@ -3438,7 +3457,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [192, 168, 144]
+            "baseColor": [192, 168, 144],
+            "isExternal": true
           },
           "x": 225,
           "y": 358,
@@ -3479,7 +3499,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [209, 194, 171]
+            "baseColor": [209, 194, 171],
+            "isExternal": true
           },
           "x": 0,
           "y": 358,
@@ -3829,7 +3850,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [223, 214, 203]
+            "baseColor": [223, 214, 203],
+            "isExternal": true
           }
         },
         {
@@ -3870,7 +3892,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [47, 48, 40]
+            "baseColor": [47, 48, 40],
+            "isExternal": true
           }
         }
       ],
@@ -4266,7 +4289,8 @@
             "alt": "Selective focus photography of woman standing beside rail during daytime",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -4305,7 +4329,8 @@
             "alt": "Woman wearing black shirt standing in front of wall",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -4344,7 +4369,8 @@
             "alt": "Woman in yellow dress sitting on sand during daytime",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         }
       ],

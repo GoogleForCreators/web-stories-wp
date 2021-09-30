@@ -74,14 +74,16 @@ function useUploadVideoFrame({ updateMediaElement }) {
         posterFile.name = fileName;
       }
 
-      const {
-        id: posterId,
-        source_url: poster,
-        media_details: { width: posterWidth, height: posterHeight },
-      } = await uploadFile(posterFile, {
+      const resource = await uploadFile(posterFile, {
         post: id,
         media_source: 'poster-generation',
       });
+      const {
+        id: posterId,
+        src: poster,
+        width: posterWidth,
+        height: posterHeight,
+      } = resource;
 
       // If video ID is not set, skip relating media.
       if (id) {

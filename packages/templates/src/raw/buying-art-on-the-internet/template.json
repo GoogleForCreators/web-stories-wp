@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -37,7 +37,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [23, 131, 181]
+            "baseColor": [23, 131, 181],
+            "isExternal": true
           },
           "x": 0,
           "y": -57,
@@ -266,7 +267,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
-            "isMuted": true
+            "isMuted": true,
+            "isExternal": true
           },
           "tracks": [],
           "overlay": {
@@ -454,7 +456,8 @@
             "alt": "Abstract painting",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.4 } }
         },
@@ -613,7 +616,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224]
+            "baseColor": [229, 227, 224],
+            "isExternal": true
           },
           "tracks": []
         }
@@ -671,7 +675,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [252, 252, 252]
+            "baseColor": [252, 252, 252],
+            "isExternal": true
           }
         },
         {
@@ -877,7 +882,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [24, 36, 36]
+            "baseColor": [24, 36, 36],
+            "isExternal": true
           },
           "x": 75,
           "y": 165,
@@ -943,7 +949,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [252, 252, 252]
+            "baseColor": [252, 252, 252],
+            "isExternal": true
           }
         },
         {
@@ -1157,7 +1164,8 @@
             "alt": "Multicolored abstract painting",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         }
       ],
@@ -1218,7 +1226,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [65, 61, 60]
+            "baseColor": [65, 61, 60],
+            "isExternal": true
           },
           "x": 47,
           "y": 36,
@@ -1492,7 +1501,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [24, 28, 28]
+            "baseColor": [24, 28, 28],
+            "isExternal": true
           },
           "width": 318,
           "height": 108,
@@ -1702,7 +1712,8 @@
             "alt": "Art gallery interior",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "width": 318,
           "height": 108,
@@ -1953,7 +1964,8 @@
             "alt": "Multicolored abstract painting",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.5 } }
         },
@@ -2112,7 +2124,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224]
+            "baseColor": [229, 227, 224],
+            "isExternal": true
           },
           "tracks": []
         }
@@ -2380,7 +2393,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [248, 232, 224]
+            "baseColor": [248, 232, 224],
+            "isExternal": true
           }
         },
         {
@@ -2771,7 +2785,8 @@
             "alt": "Assorted-color wall arts",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -3157,7 +3172,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [248, 232, 224]
+            "baseColor": [248, 232, 224],
+            "isExternal": true
           }
         },
         {
@@ -3338,7 +3354,8 @@
             "alt": "Multicolored abstract painting",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.5 } }
         },
@@ -4335,7 +4352,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224]
+            "baseColor": [229, 227, 224],
+            "isExternal": true
           },
           "tracks": [],
           "borderRadius": {

@@ -18,6 +18,7 @@
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
+use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
@@ -84,23 +85,30 @@ class Embed_Controller extends Test_REST_TestCase {
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$subscriber );
-		self::delete_user( self::$editor );
-		self::delete_user( self::$admin );
-	}
+	public function set_up() {
+		parent::set_up();
 
-	public function setUp() {
-		parent::setUp();
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = new Spy_REST_Server();
+		do_action( 'rest_api_init', $wp_rest_server );
 
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
+
+		$this->add_caps_to_roles();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
+
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 
-		parent::tearDown();
+		$this->remove_caps_from_roles();
+
+		parent::tear_down();
 	}
 
 	/**

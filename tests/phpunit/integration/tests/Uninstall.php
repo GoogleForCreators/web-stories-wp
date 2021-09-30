@@ -32,8 +32,8 @@ class Uninstall extends TestCase {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
 		$source_taxonomy      = ( new Media_Source_Taxonomy() )->get_taxonomy_slug();
 		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => $source_taxonomy ] );

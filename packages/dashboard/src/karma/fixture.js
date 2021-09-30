@@ -36,9 +36,10 @@ import {
 /**
  * Internal dependencies
  */
-import App from '../app';
+import Dashboard from '../dashboard';
 import ApiProvider from '../app/api/apiProvider';
 import { AppFrame } from '../components';
+import InterfaceSkeleton from '../components/interfaceSkeleton';
 import ApiProviderFixture from './apiProviderFixture';
 
 if ('true' === process.env.CI) {
@@ -86,8 +87,8 @@ const defaultConfig = {
     stories: '/web-stories/v1/web-story',
     users: '/wp/v2/users',
     currentUser: '/wp/v2/users/me',
-    fonts: '/web-stories/v1/fonts',
     settings: '/wp/v2/settings',
+    pages: '/wp/v2/pages',
     publisherLogos: '/web-stories/v1/publisher-logos',
   },
 };
@@ -202,7 +203,9 @@ export default class Fixture {
 
     const { container } = render(
       <FlagsProvider features={this._flags}>
-        <App key={Math.random()} config={this._config} />
+        <Dashboard key={Math.random()} config={this._config}>
+          <InterfaceSkeleton />
+        </Dashboard>
       </FlagsProvider>,
       {
         container: root,

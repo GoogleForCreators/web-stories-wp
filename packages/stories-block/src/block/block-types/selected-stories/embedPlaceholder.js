@@ -30,7 +30,11 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import StoryPicker from './storyPicker';
+import StoryPicker from '../../components/storyPicker/storyPicker';
+
+const {
+  config: { maxNumOfStories },
+} = window.webStoriesBlockSettings;
 
 const EmbedPlaceholder = ({
   icon,
@@ -120,6 +124,7 @@ const EmbedPlaceholder = ({
           setSelectedStories={setSelectedStories}
           isSortingStories={isSortingStories}
           setIsSortingStories={setIsSortingStories}
+          maxNumOfStories={maxNumOfStories}
         />
       )}
     </>

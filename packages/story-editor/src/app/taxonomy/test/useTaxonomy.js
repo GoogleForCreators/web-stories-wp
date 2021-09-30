@@ -45,6 +45,12 @@ jest.mock('../../api', () => ({
   __esModule: true,
   useAPI: jest.fn(),
 }));
+jest.mock('../../history', () => ({
+  __esModule: true,
+  useHistory: () => ({
+    actions: { clearHistory: () => {} },
+  }),
+}));
 
 function createTaxonomy(slug, overrides) {
   return {
@@ -108,6 +114,7 @@ describe('TaxonomyProvider', () => {
   });
 
   it('populates initial termCache and selected slugs with story terms', async () => {
+    const updateStoryMock = jest.fn();
     const taxonomy1 = createTaxonomy('taxonomy_1');
     const taxonomy2 = createTaxonomy('taxonomy_2');
     const taxonomiesResponse = [taxonomy1, taxonomy2];
@@ -115,16 +122,20 @@ describe('TaxonomyProvider', () => {
     const taxonomy1Term1 = createTermFromName(taxonomy1, 'term1');
     const taxonomy1Term2 = createTermFromName(taxonomy1, 'term2');
     const taxonomy2Term1 = createTermFromName(taxonomy2, 'term1');
-    const terms = [[taxonomy1Term1, taxonomy1Term2], [taxonomy2Term1]];
+    const embeddedTerms = [[taxonomy1Term1, taxonomy1Term2], [taxonomy2Term1]];
 
     const { result } = await setup({
       useAPIPartial: {
         getTaxonomies: () => mockResponse(taxonomiesResponse),
       },
-      useStoryPartial: { terms, isStoryLoaded: true },
+      useStoryPartial: {
+        terms: embeddedTerms,
+        isStoryLoaded: true,
+        updateStory: updateStoryMock,
+      },
     });
 
-    const { termCache, selectedSlugs, taxonomies } = result.current.state;
+    const { termCache, taxonomies } = result.current.state;
     expect(taxonomies).toHaveLength(2);
     expect(termCache).toStrictEqual({
       [taxonomy1.restBase]: {
@@ -135,71 +146,11 @@ describe('TaxonomyProvider', () => {
         [taxonomy2Term1.slug]: taxonomy2Term1,
       },
     });
-    expect(selectedSlugs).toStrictEqual({
-      [taxonomy1.restBase]: [taxonomy1Term1.slug, taxonomy1Term2.slug],
-      [taxonomy2.restBase]: [taxonomy2Term1.slug],
-    });
-  });
-
-  it('syncs selected slugs with story', async () => {
-    const updateStoryMock = jest.fn();
-    const sampleTaxonomy = createTaxonomy('sample');
-    const taxonomiesResponse = [sampleTaxonomy];
-
-    const { result } = await setup({
-      useAPIPartial: {
-        getTaxonomies: () => mockResponse(taxonomiesResponse),
-      },
-      useStoryPartial: {
-        isStoryLoaded: true,
-        updateStory: updateStoryMock,
-        terms: [[]],
-      },
-    });
-
-    // Update the terms
-    act(() => {
-      result.current.actions.setSelectedTaxonomySlugs(sampleTaxonomy, [
-        'term1',
-        'term2',
-      ]);
-    });
-
-    // initially the slugs should be selected, but they won't have been
-    // returned from the backend yet, so they shouldn't appear on the story
-    // until we get them
-    expect(result.current.state.selectedSlugs).toStrictEqual({
-      [sampleTaxonomy.restBase]: ['term1', 'term2'],
-    });
     expect(updateStoryMock).toHaveBeenCalledWith({
       properties: {
         terms: {
-          [sampleTaxonomy.restBase]: [],
-        },
-      },
-    });
-
-    // Components are responsible for sending create term requests
-    act(() => {
-      // reset autoIncrementId so we know what the mocked
-      // response will generate.
-      autoIncrementId = 0;
-      result.current.actions.createTerm(sampleTaxonomy, 'term1');
-      result.current.actions.createTerm(sampleTaxonomy, 'term2');
-    });
-
-    await receiveQueuedMockedResponses();
-
-    // Once we get responses from the backend, the cache should
-    // be populated with the new terms and we should be able to
-    // now associate the terms with the story
-    expect(result.current.state.selectedSlugs).toStrictEqual({
-      [sampleTaxonomy.restBase]: ['term1', 'term2'],
-    });
-    expect(updateStoryMock).toHaveBeenCalledWith({
-      properties: {
-        terms: {
-          [sampleTaxonomy.restBase]: [0, 1],
+          [taxonomy1.restBase]: [taxonomy1Term1.id, taxonomy1Term2.id],
+          [taxonomy2.restBase]: [taxonomy2Term1.id],
         },
       },
     });

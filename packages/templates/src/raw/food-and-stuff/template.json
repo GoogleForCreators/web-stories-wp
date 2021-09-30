@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -34,7 +34,8 @@
             "height": 23,
             "id": 0,
             "alt": "icon_logo",
-            "local": true
+            "local": true,
+            "isExternal": true
           },
           "type": "image",
           "x": 168.5,
@@ -75,7 +76,8 @@
             "id": 0,
             "alt": "page1_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -320,7 +322,8 @@
             "alt": "page3_image1",
             "local": false,
             "sizes": [],
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           }
         },
         {
@@ -929,7 +932,8 @@
             "id": 0,
             "alt": "page5_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "mask": {
             "type": "rectangle",
@@ -1101,7 +1105,8 @@
             "id": 0,
             "alt": "page5_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {
@@ -1877,7 +1882,8 @@
             "id": 0,
             "alt": "page7_bg",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "4b496f17-b72e-4ead-aaa9-92936156e01f",
           "id": "6f97df5b-14e7-4b83-be99-b82cd767f0ff"
@@ -2445,7 +2451,8 @@
             "id": 0,
             "alt": "page8_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "6f97df5b-14e7-4b83-be99-b82cd767f0ff",
           "id": "c9526803-1a13-4a9e-93ca-9f6d9b14cc61"
@@ -2717,7 +2724,8 @@
             "id": 0,
             "alt": "page9_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "f5d57c6a-fc29-4136-ba9d-08d3119d1cd2",
           "id": "3e2b3e2f-40a7-4301-9dae-4a8772ecad92",
@@ -2749,7 +2757,8 @@
             "id": 0,
             "alt": "page9_image4",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "73ba04c5-2f32-44c3-9c96-a9300e9c4e89",
           "id": "2729ff59-dfa0-4d0d-9023-de6d26f812ac"
@@ -2779,7 +2788,8 @@
             "id": 0,
             "alt": "page9_image3",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "90256502-5ed3-4354-90f3-16ef1e0d1d3a",
           "id": "73ba04c5-2f32-44c3-9c96-a9300e9c4e89"
@@ -2809,7 +2819,8 @@
             "id": 0,
             "alt": "page9_image2",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           },
           "basedOn": "f5d57c6a-fc29-4136-ba9d-08d3119d1cd2",
           "id": "90256502-5ed3-4354-90f3-16ef1e0d1d3a"
@@ -2840,7 +2851,8 @@
             "id": 0,
             "alt": "page9_image1",
             "local": false,
-            "sizes": []
+            "sizes": [],
+            "isExternal": true
           }
         },
         {

@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Spy_REST_Server;
 use WP_REST_Request;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 
@@ -57,18 +58,28 @@ class Status_Check_Controller extends Test_REST_TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$subscriber );
-		self::delete_user( self::$editor );
-	}
+	public function set_up() {
+		parent::set_up();
 
-	public function setUp() {
-		parent::setUp();
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = new Spy_REST_Server();
+		do_action( 'rest_api_init', $wp_rest_server );
 
 		$this->request_count = 0;
+
+		$this->add_caps_to_roles();
 	}
 
+	public function tear_down() {
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
 
+		$this->remove_caps_from_roles();
+
+		parent::tear_down();
+	}
 
 	/**
 	 * @covers ::register_routes

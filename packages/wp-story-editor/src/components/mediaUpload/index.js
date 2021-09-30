@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,5 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
 
-export { default as FontPreview } from './fontPreview';
+/**
+ * Internal dependencies
+ */
+import { useMediaPicker } from './mediaPicker';
+
+function MediaUpload({ render, ...rest }) {
+  const open = useMediaPicker(rest);
+
+  return render(open);
+}
+
+MediaUpload.propTypes = {
+  render: PropTypes.func.isRequired,
+  ...useMediaPicker.propTypes,
+};
+
+export default MediaUpload;

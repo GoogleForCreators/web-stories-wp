@@ -49,11 +49,13 @@ export const Z_INDEX = {
 };
 
 const HEADER_GAP = 16;
-const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE;
-const MENU_GAP = 16;
+// 8px extra is for the focus outline to display.
+const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE + 8;
+const MENU_GAP = 12;
 const CAROUSEL_HEIGHT = 104;
-const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE;
-const PAGE_NAV_GAP = 24;
+// 8px extra is for the focus outline to display.
+const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;
+const PAGE_NAV_GAP = 20;
 
 const Layer = styled.section`
   ${pointerEventsCss}

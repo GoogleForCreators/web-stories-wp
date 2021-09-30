@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -46,7 +46,8 @@
             "id": 0,
             "alt": "page01_image1",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -313,7 +314,8 @@
             "id": 0,
             "alt": "page02_image1",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -510,7 +512,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
-            "isMuted": true
+            "isMuted": true,
+            "isExternal": true
           },
           "tracks": [],
           "overlay": {
@@ -1291,7 +1294,8 @@
             "id": 0,
             "alt": "page05_image1",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1533,7 +1537,8 @@
             "id": 0,
             "alt": "page06_image1",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -1791,7 +1796,8 @@
             "id": 0,
             "alt": "page07_image1",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -2039,7 +2045,8 @@
             "alt": "page08_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [235, 231, 221]
+            "baseColor": [235, 231, 221],
+            "isExternal": true
           }
         },
         {
@@ -2298,7 +2305,8 @@
             "alt": "page09_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [206, 197, 191]
+            "baseColor": [206, 197, 191],
+            "isExternal": true
           }
         },
         {
@@ -2540,7 +2548,8 @@
             "id": 0,
             "alt": "page10_image1",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           }
         },
         {
@@ -3020,7 +3029,8 @@
             "alt": "page13_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [105, 76, 61]
+            "baseColor": [105, 76, 61],
+            "isExternal": true
           }
         },
         {
@@ -3052,7 +3062,8 @@
             "alt": "page11_image2",
             "local": false,
             "isOptimized": false,
-            "baseColor": [153, 141, 120]
+            "baseColor": [153, 141, 120],
+            "isExternal": true
           }
         },
         {
@@ -3224,7 +3235,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [145, 108, 82]
+            "baseColor": [145, 108, 82],
+            "isExternal": true
           }
         }
       ],

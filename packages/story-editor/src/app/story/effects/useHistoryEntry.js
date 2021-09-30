@@ -25,7 +25,7 @@ import { useEffect, useRef } from '@web-stories-wp/react';
 import { useHistory } from '../../history';
 
 // Record any change to core variables in history (history will know if it's a replay)
-function useHistoryEntry({ story, current, pages, selection }) {
+function useHistoryEntry({ story, current, pages, selection, capabilities }) {
   const {
     actions: { stateToHistory },
   } = useHistory();
@@ -43,8 +43,9 @@ function useHistoryEntry({ story, current, pages, selection }) {
       current: currentPageIndexRef.current,
       selection: selectedElementIdsRef.current,
       pages,
+      capabilities,
     });
-  }, [story, pages, stateToHistory]);
+  }, [story, pages, stateToHistory, capabilities]);
 }
 
 export default useHistoryEntry;

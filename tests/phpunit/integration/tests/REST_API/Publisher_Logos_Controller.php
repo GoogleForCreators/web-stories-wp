@@ -4,6 +4,7 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
+use Spy_REST_Server;
 use WP_REST_Request;
 use WP_REST_Server;
 
@@ -85,11 +86,28 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		self::delete_user( self::$editor );
 	}
 
-	public function tearDown() {
+	public function set_up() {
+		parent::set_up();
+
+		/** @var WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = new Spy_REST_Server();
+		do_action( 'rest_api_init', $wp_rest_server );
+
+		$this->add_caps_to_roles();
+	}
+
+	public function tear_down() {
+		/** @var WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
+
+		$this->remove_caps_from_roles();
+
 		delete_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
 		delete_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -174,24 +192,14 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 		$this->assertCount( 2, $data );
-		$this->assertArraySubset(
-			[
-				'id'     => self::$attachment_id_1,
-				'title'  => get_the_title( self::$attachment_id_1 ),
-				'url'    => wp_get_attachment_url( self::$attachment_id_1 ),
-				'active' => true,
-			],
-			$data[0]
-		);
-		$this->assertArraySubset(
-			[
-				'id'     => self::$attachment_id_2,
-				'title'  => get_the_title( self::$attachment_id_2 ),
-				'url'    => wp_get_attachment_url( self::$attachment_id_2 ),
-				'active' => false,
-			],
-			$data[1]
-		);
+		$this->assertSame( self::$attachment_id_1, $data[0]['id'] );
+		$this->assertSame( get_the_title( self::$attachment_id_1 ), $data[0]['title'] );
+		$this->assertSame( wp_get_attachment_url( self::$attachment_id_1 ), $data[0]['url'] );
+		$this->assertTrue( $data[0]['active'] );
+		$this->assertSame( self::$attachment_id_2, $data[1]['id'] );
+		$this->assertSame( get_the_title( self::$attachment_id_2 ), $data[1]['title'] );
+		$this->assertSame( wp_get_attachment_url( self::$attachment_id_2 ), $data[1]['url'] );
+		$this->assertFalse( $data[1]['active'] );
 	}
 
 	/**

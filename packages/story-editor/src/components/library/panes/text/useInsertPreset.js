@@ -23,7 +23,6 @@ import {
   useState,
 } from '@web-stories-wp/react';
 import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -40,15 +39,13 @@ import { calculateTextHeight } from '../../../../utils/textMeasurements';
 const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';
 
-function useInsertPreset() {
+function useInsertPreset({ shouldUseSmartColor }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
   const {
     state: { versionNumber },
   } = useHistory();
-
-  const enableSmartTextColor = useFeature('enableSmartTextColor');
 
   const htmlFormatters = getHTMLFormatters();
   const { setColor } = htmlFormatters;
@@ -139,7 +136,7 @@ function useInsertPreset() {
         presetProps;
       // If it's already positioned, skip calculating that.
       const atts = isPositioned ? {} : getPosition(element);
-      if (enableSmartTextColor) {
+      if (shouldUseSmartColor) {
         setPresetAtts({
           ...element,
           ...atts,
@@ -170,7 +167,7 @@ function useInsertPreset() {
     [
       getPosition,
       calculateAccessibleTextColors,
-      enableSmartTextColor,
+      shouldUseSmartColor,
       insertElement,
     ]
   );

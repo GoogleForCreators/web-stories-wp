@@ -122,31 +122,33 @@ function PublishPanel() {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 
+  // Used for onSelect prop in MediaUpload component.
   const handleChangePoster = useCallback(
-    (image) =>
+    (resource) =>
       updateStory({
         properties: {
           featuredMedia: {
-            id: image.id,
-            height: image.sizes?.full?.height || image.height,
-            url: image.sizes?.full?.url || image.url,
-            width: image.sizes?.full?.width || image.width,
+            id: resource.id,
+            height: resource.sizes?.full?.height || resource.height,
+            url: resource.sizes?.full?.source_url || resource.src,
+            width: resource.sizes?.full?.width || resource.width,
           },
         },
       }),
     [updateStory]
   );
 
+  // Used for onSelect prop in MediaUpload component.
   // @todo Enforce square image while selecting in Media Library.
   const handleChangePublisherLogo = useCallback(
-    (image) => {
+    (resource) => {
       updateStory({
         properties: {
           publisherLogo: {
-            id: image.id,
-            url: image.sizes?.full?.url || image.url,
-            width: image.sizes?.full?.width || image.width,
-            height: image.sizes?.full?.height || image.height,
+            id: resource.id,
+            url: resource.sizes?.full?.source_url || resource.src,
+            width: resource.sizes?.full?.width || resource.width,
+            height: resource.sizes?.full?.height || resource.height,
           },
         },
       });
@@ -191,7 +193,7 @@ function PublishPanel() {
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent>
         <PublishTime />
-        {capabilities?.hasAssignAuthorAction && users && <Author />}
+        {capabilities?.['assign-author'] && users && <Author />}
         <HighlightRow
           isHighlighted={
             highlightPoster?.showEffect || highlightLogo?.showEffect

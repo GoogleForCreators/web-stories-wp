@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import formatDuration from './formatDuration';
 import preloadVideoMetadata from './preloadVideoMetadata';
+import getVideoLengthFromDisplay from './getVideoLengthDisplay';
 
 /**
  * Get video length from a video.
@@ -29,17 +29,7 @@ import preloadVideoMetadata from './preloadVideoMetadata';
 const getVideoLength = async (src) => {
   const video = await preloadVideoMetadata(src);
   const length = Math.round(video.duration);
-  let lengthFormatted;
-  const seconds = formatDuration(length % 60);
-  let minutes = Math.floor(length / 60);
-  const hours = Math.floor(minutes / 60);
-
-  if (hours) {
-    minutes = formatDuration(minutes % 60);
-    lengthFormatted = `${hours}:${minutes}:${seconds}`;
-  } else {
-    lengthFormatted = `${minutes}:${seconds}`;
-  }
+  const lengthFormatted = getVideoLengthFromDisplay(length);
   return {
     length,
     lengthFormatted,

@@ -1,5 +1,5 @@
 {
-  "version": 34,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -160,7 +160,8 @@
             "height": 369,
             "id": 0,
             "alt": "page01_image1",
-            "local": false
+            "local": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 48,
@@ -251,7 +252,8 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "overlay": null
         },
@@ -379,7 +381,8 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "x": -27.5,
@@ -412,7 +415,8 @@
             "height": 316,
             "id": 0,
             "alt": "page03_image1",
-            "local": false
+            "local": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 46,
@@ -736,7 +740,8 @@
             "id": 0,
             "alt": "page04_image1",
             "local": false,
-            "baseColor": [26, 50, 67]
+            "baseColor": [26, 50, 67],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -765,7 +770,8 @@
             "id": 0,
             "alt": "sticker_sound",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 991,
@@ -909,7 +915,8 @@
             "id": 0,
             "alt": "page05_image1",
             "local": false,
-            "baseColor": [46, 59, 75]
+            "baseColor": [46, 59, 75],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1181,7 +1188,8 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "width": 467,
           "height": 444,
@@ -1234,7 +1242,8 @@
             "alt": "page06_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [18, 19, 25]
+            "baseColor": [18, 19, 25],
+            "isExternal": true
           }
         },
         {
@@ -1538,7 +1547,8 @@
             "id": 0,
             "alt": "page07_image1",
             "local": false,
-            "baseColor": [47, 33, 37]
+            "baseColor": [47, 33, 37],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1567,7 +1577,8 @@
             "id": 0,
             "alt": "sticker_sound",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 991,
@@ -1711,7 +1722,8 @@
             "alt": "page08_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [174, 143, 125]
+            "baseColor": [174, 143, 125],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -1983,7 +1995,8 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "width": 467,
           "height": 444,
@@ -2036,7 +2049,8 @@
             "alt": "page09_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [41, 37, 25]
+            "baseColor": [41, 37, 25],
+            "isExternal": true
           }
         },
         {
@@ -2340,7 +2354,8 @@
             "id": 0,
             "alt": "page10_image1",
             "local": false,
-            "baseColor": [142, 137, 129]
+            "baseColor": [142, 137, 129],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -2369,7 +2384,8 @@
             "id": 0,
             "alt": "sticker_sound",
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 991,
@@ -2512,7 +2528,8 @@
             "id": 0,
             "alt": "page11_image1",
             "local": false,
-            "baseColor": [107, 106, 104]
+            "baseColor": [107, 106, 104],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -2784,7 +2801,8 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "width": 467,
           "height": 444,
@@ -3091,7 +3109,8 @@
             "alt": "page15_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [102, 54, 54]
+            "baseColor": [102, 54, 54],
+            "isExternal": true
           }
         }
       ],
@@ -3139,7 +3158,8 @@
             "id": 0,
             "alt": "page16_image1",
             "local": false,
-            "baseColor": [115, 112, 125]
+            "baseColor": [115, 112, 125],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3169,7 +3189,8 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255]
+            "baseColor": [255, 255, 255],
+            "isExternal": true
           },
           "type": "image",
           "width": 991,
@@ -3312,7 +3333,8 @@
             "id": 0,
             "alt": "page17_image1",
             "local": false,
-            "baseColor": [106, 54, 78]
+            "baseColor": [106, 54, 78],
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -3644,7 +3666,8 @@
             "height": 255,
             "id": 0,
             "alt": "page19_image1",
-            "local": false
+            "local": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 48,

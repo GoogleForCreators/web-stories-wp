@@ -22,16 +22,16 @@ namespace Google\Web_Stories\Tests\Integration;
  */
 class AdSense extends TestCase {
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK, 'adsense' );
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_SLOT_ID, '123' );
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, '456' );
 	}
 
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK );
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_SLOT_ID );
@@ -82,6 +82,6 @@ class AdSense extends TestCase {
 		$adsense = new \Google\Web_Stories\AdSense();
 
 		$output = get_echo( [ $adsense, 'print_adsense_tag' ] );
-		$this->assertContains( '<amp-story-auto-ads>', $output );
+		$this->assertStringContainsString( '<amp-story-auto-ads>', $output );
 	}
 }
