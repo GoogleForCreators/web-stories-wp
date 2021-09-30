@@ -30,7 +30,9 @@ import {
  * Internal dependencies
  */
 import useLayout from '../../app/layout/useLayout';
+import useConfig from '../../app/config/useConfig';
 import useFocusTrapping from '../../utils/useFocusTrapping';
+import DirectionAware from '../directionAware';
 import useVideoTrim from './useVideoTrim';
 import {
   Menu,
@@ -79,6 +81,8 @@ function VideoTrimmer() {
 
   const menu = useRef(null);
 
+  const { isRTL } = useConfig();
+
   // Keep focus trapped within the menu
   useFocusTrapping({ ref: menu });
 
@@ -98,6 +102,7 @@ function VideoTrimmer() {
   const railWidth = Math.min(pageWidth, workspaceWidth - 2 * BUTTON_SPACE);
 
   const sliderProps = {
+    isRTL,
     min: 0,
     max: maxOffset,
     step: 100,
@@ -117,31 +122,39 @@ function VideoTrimmer() {
           {__('Cancel', 'web-stories')}
         </Button>
       </ButtonWrapper>
-      <Wrapper pageWidth={railWidth}>
-        <Scrim atStart width={(startOffset / maxOffset) * railWidth} />
-        <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
-        <CurrentTime
-          railWidth={railWidth}
-          aria-label={__('Current time', 'web-stories')}
-          disabled
-          value={currentTime}
-          {...sliderProps}
-        />
-        <Handle
-          railWidth={railWidth}
-          value={startOffset}
-          aria-label={__('Start offset', 'web-stories')}
-          onChange={(val) => setStartOffset(val)}
-          {...sliderProps}
-        />
-        <Handle
-          railWidth={railWidth}
-          value={endOffset}
-          aria-label={__('End offset', 'web-stories')}
-          onChange={(val) => setEndOffset(val)}
-          {...sliderProps}
-        />
-      </Wrapper>
+      <DirectionAware>
+        <Wrapper pageWidth={railWidth}>
+          <Scrim
+            isLeftAligned={!isRTL}
+            width={(startOffset / maxOffset) * railWidth}
+          />
+          <Scrim
+            isLeftAligned={isRTL}
+            width={((maxOffset - endOffset) / maxOffset) * railWidth}
+          />
+          <CurrentTime
+            railWidth={railWidth}
+            aria-label={__('Current time', 'web-stories')}
+            disabled
+            value={currentTime}
+            {...sliderProps}
+          />
+          <Handle
+            railWidth={railWidth}
+            value={startOffset}
+            aria-label={__('Start offset', 'web-stories')}
+            onChange={(val) => setStartOffset(val)}
+            {...sliderProps}
+          />
+          <Handle
+            railWidth={railWidth}
+            value={endOffset}
+            aria-label={__('End offset', 'web-stories')}
+            onChange={(val) => setEndOffset(val)}
+            {...sliderProps}
+          />
+        </Wrapper>
+      </DirectionAware>
       <ButtonWrapper>
         <Button
           variant={BUTTON_VARIANTS.RECTANGLE}
