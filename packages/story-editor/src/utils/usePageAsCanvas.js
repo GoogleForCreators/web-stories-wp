@@ -158,7 +158,7 @@ function usePageAsCanvas() {
             resolve(getAccessibleTextColorsFromPixels(pixelData, fontSize));
           } catch (e) {
             // Fall back to default color if failing to get image data.
-            resolve(null);
+            resolve({ color: null });
           }
         };
         // If we have data and nothing has changed or we can skip the canvas update, just calculate the contrast.
