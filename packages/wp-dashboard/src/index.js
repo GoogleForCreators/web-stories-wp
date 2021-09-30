@@ -26,7 +26,7 @@ import './style.css'; // This way the general dashboard styles are loaded before
 /**
  * External dependencies
  */
-import App from '@web-stories-wp/dashboard';
+import Dashboard, { InterfaceSkeleton } from '@web-stories-wp/dashboard';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
 import { FlagsProvider } from 'flagged';
@@ -64,7 +64,9 @@ const initialize = async (id, config, flags) => {
   render(
     <FlagsProvider features={flags}>
       <StrictMode>
-        <App config={dashboardConfig} />
+        <Dashboard config={dashboardConfig}>
+          <InterfaceSkeleton />
+        </Dashboard>
       </StrictMode>
     </FlagsProvider>,
     appElement

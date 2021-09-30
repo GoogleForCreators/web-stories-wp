@@ -17,17 +17,28 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useResizeEffect } from '@web-stories-wp/react';
+import {
+  useRef,
+  useState,
+  useResizeEffect,
+  useMemo,
+  useCallback,
+} from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { Section, SearchInput } from '../../common';
+import { Text, THEME_CONSTANTS, Toggle } from '@web-stories-wp/design-system';
+import { SearchInput } from '../../common';
+import { Container as SectionContainer } from '../../common/section';
 import { Pane as SharedPane } from '../shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
+import useLibrary from '../../useLibrary';
+import Tooltip from '../../../tooltip';
 import FontPreview from './fontPreview';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
@@ -47,13 +58,32 @@ const GridContainer = styled.div`
   gap: 12px;
 `;
 
+const SmartColorToggle = styled.div`
+  display: flex;
+
+  label {
+    cursor: pointer;
+    margin: auto 12px;
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
+`;
+
 function TextPane(props) {
   const paneRef = useRef();
   const [, forceUpdate] = useState();
 
-  const { showTextAndShapesSearchInput, enableSmartTextColor } = useFeatures();
+  const { showTextAndShapesSearchInput } = useFeatures();
 
-  const { getPosition, insertPreset } = useInsertPreset();
+  const { shouldUseSmartColor, setShouldUseSmartColor } = useLibrary(
+    (state) => ({
+      shouldUseSmartColor: state.state.shouldUseSmartColor,
+      setShouldUseSmartColor: state.actions.setShouldUseSmartColor,
+    })
+  );
+
+  const { getPosition, insertPreset } = useInsertPreset({
+    shouldUseSmartColor,
+  });
   const { generateCanvasFromPage } = usePageAsCanvas();
 
   useResizeEffect(
@@ -64,6 +94,12 @@ function TextPane(props) {
     []
   );
 
+  const handleToggleClick = useCallback(
+    () => setShouldUseSmartColor((currentValue) => !currentValue),
+    [setShouldUseSmartColor]
+  );
+
+  const toggleId = useMemo(() => `toggle_auto_color_${uuidv4()}`, []);
   return (
     <Pane id={paneId} {...props} ref={paneRef}>
       {showTextAndShapesSearchInput && (
@@ -74,10 +110,29 @@ function TextPane(props) {
           disabled
         />
       )}
-
-      <Section
-        title={__('Presets', 'web-stories')}
-        onPointerOver={() => enableSmartTextColor && generateCanvasFromPage()}
+      <SmartColorToggle>
+        <Text
+          as="label"
+          htmlFor={toggleId}
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {__('Adaptive text colors', 'web-stories')}
+        </Text>
+        <Tooltip
+          title={__(
+            'May impact performance when inserting text',
+            'web-stories'
+          )}
+        >
+          <Toggle
+            id={toggleId}
+            checked={shouldUseSmartColor}
+            onChange={handleToggleClick}
+          />
+        </Tooltip>
+      </SmartColorToggle>
+      <SectionContainer
+        onPointerOver={() => shouldUseSmartColor && generateCanvasFromPage()}
       >
         <GridContainer>
           {PRESETS.map(({ title, element }) => (
@@ -90,7 +145,7 @@ function TextPane(props) {
             />
           ))}
         </GridContainer>
-      </Section>
+      </SectionContainer>
       {paneRef.current && <TextSetsPane paneRef={paneRef} />}
     </Pane>
   );
