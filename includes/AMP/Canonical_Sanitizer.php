@@ -61,6 +61,16 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 
 		$query = $this->dom->xpath->query( '//link[@rel="canonical"]', $this->dom->head );
 
+		// Remove any duplicate items first.
+		if ( $query instanceof DOMNodeList && $query->length > 1 ) {
+			for ( $i = 1; $i < $query->length; $i++ ) {
+				$node = $query->item( $i );
+				if ( $node ) {
+					$this->dom->head->removeChild( $node );
+				}
+			}
+		}
+
 		/**
 		 * DOMElement
 		 *

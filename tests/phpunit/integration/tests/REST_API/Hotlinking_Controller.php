@@ -77,8 +77,8 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 		self::delete_user( self::$editor );
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
@@ -94,7 +94,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 		$this->add_caps_to_roles();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
@@ -103,7 +103,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

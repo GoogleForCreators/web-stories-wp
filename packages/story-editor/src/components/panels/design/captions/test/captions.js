@@ -27,6 +27,11 @@ import ConfigContext from '../../../../../app/config/context';
 import { renderPanel } from '../../../shared/test/_utils';
 import Captions from '../captions';
 
+function MediaUpload({ render }) {
+  const open = jest.fn();
+  return render(open);
+}
+
 describe('Panels/Captions', () => {
   const defaultElement = {
     type: 'video',
@@ -39,6 +44,7 @@ describe('Panels/Captions', () => {
         hasUploadMediaAction: true,
       },
       ...config,
+      MediaUpload,
     };
 
     const wrapper = ({ children }) => (

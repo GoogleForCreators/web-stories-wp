@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { canTranscodeResource } from '@web-stories-wp/media';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
@@ -32,7 +33,7 @@ import {
   BUTTON_VARIANTS,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
-import { useCallback, useMemo, useEffect } from '@web-stories-wp/react';
+import { useCallback, useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -43,7 +44,7 @@ import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
 import { useLocalMedia } from '../../../../app';
-import { states, styles, useHighlights } from '../../../../app/highlights';
+import CircularProgress from '../../../circularProgress';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -69,6 +70,16 @@ const StyledCheckbox = styled(Checkbox)`
   `}
 `;
 
+const TrimWrapper = styled.div`
+  position: relative;
+  display: flex;
+`;
+
+const Spinner = styled.div`
+  margin-left: 4px;
+  margin-top: 4px;
+`;
+
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 })`
@@ -81,8 +92,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo: state.actions.muteExistingVideo,
   }));
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuted, isTranscoding, isMuting, isTrimming, isExternal, local } =
-    resource;
+  const { isMuting, isMuted, isTrimming } = resource;
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
@@ -90,33 +100,19 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
-  const shouldDisplayMuteButton = useMemo(() => {
-    return (
-      (isTranscodingEnabled &&
-        !local &&
-        !isMuted &&
-        !isTrimming &&
-        !isTranscoding &&
-        !isExternal &&
-        isSingleElement) ||
-      isMuting
-    );
-  }, [
-    isTranscodingEnabled,
-    local,
-    isMuted,
-    isTrimming,
-    isTranscoding,
-    isExternal,
-    isSingleElement,
-    isMuting,
-  ]);
+  const shouldDisableVideoActions = !canTranscodeResource(resource);
 
-  const buttonText = useMemo(() => {
-    return isMuting
-      ? __('Removing audio', 'web-stories')
-      : __('Remove audio', 'web-stories');
-  }, [isMuting]);
+  const shouldDisplayMuteButton =
+    isTranscodingEnabled &&
+    isSingleElement &&
+    ((!isMuted && canTranscodeResource(resource)) || isMuting);
+  const muteButtonText = isMuting
+    ? __('Removing audio…', 'web-stories')
+    : __('Remove audio', 'web-stories');
+
+  const trimButtonText = isTrimming
+    ? __('Trimming…', 'web-stories')
+    : __('Trim', 'web-stories');
 
   const { hasTrimMode, toggleTrimMode } = useVideoTrim(
     ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
@@ -129,21 +125,28 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
 
   useEffect(() => {
     if (isMuting) {
-      speak(buttonText);
+      speak(muteButtonText);
     }
-  }, [isMuting, buttonText, speak]);
+  }, [isMuting, muteButtonText, speak]);
 
-  const { highlight, resetHighlight } = useHighlights((state) => ({
-    highlight: state[states.VIDEO_SETTINGS],
-    resetHighlight: state.onFocusOut,
-  }));
+  useEffect(() => {
+    if (isTrimming) {
+      speak(trimButtonText);
+    }
+  }, [isTrimming, trimButtonText, speak]);
 
   const checkboxId = `cb-${uuidv4()}`;
 
+  const Processing = () => {
+    return (
+      <Spinner>
+        <CircularProgress size={24} />
+      </Spinner>
+    );
+  };
+
   return (
     <SimplePanel
-      css={highlight?.showEffect && styles.FLASH}
-      onAnimationEnd={() => resetHighlight()}
       name="videoOptions"
       title={__('Video Settings', 'web-stories')}
     >
@@ -159,28 +162,33 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           </Text>
         </Label>
         {hasTrimMode && (
-          <TrimButton
-            variant={BUTTON_VARIANTS.RECTANGLE}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={toggleTrimMode}
-          >
-            {__('Trim', 'web-stories')}
-          </TrimButton>
+          <TrimWrapper>
+            <TrimButton
+              disabled={shouldDisableVideoActions}
+              variant={BUTTON_VARIANTS.RECTANGLE}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={toggleTrimMode}
+            >
+              {trimButtonText}
+            </TrimButton>
+            {isTrimming && <Processing />}
+          </TrimWrapper>
         )}
       </Row>
       {shouldDisplayMuteButton && (
         <>
-          <Row>
+          <Row spaceBetween={false}>
             <StyledButton
-              disabled={isMuting}
+              disabled={shouldDisableVideoActions}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
               onClick={handleHandleMuteVideo}
             >
-              {buttonText}
+              {muteButtonText}
             </StyledButton>
+            {isMuting && <Processing />}
           </Row>
           <Row>
             <HelperText>

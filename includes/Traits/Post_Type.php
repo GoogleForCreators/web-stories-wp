@@ -29,6 +29,7 @@ namespace Google\Web_Stories\Traits;
 use WP_Post_Type;
 use WP_REST_Controller;
 use WP_REST_Posts_Controller;
+use WP_Rewrite;
 
 /**
  * Trait Post_Type
@@ -37,13 +38,13 @@ use WP_REST_Posts_Controller;
  */
 trait Post_Type {
 	/**
-	 * Get rest base name based on the post type slug.
+	 * Get REST base name based on the post type slug.
 	 *
 	 * @since 1.7.0
 	 *
 	 * @param string $slug The post type slug.
 	 *
-	 * @return string Rest base.
+	 * @return string REST base.
 	 */
 	protected function get_post_type_rest_base( string $slug ): string {
 		$post_type_obj = get_post_type_object( $slug );
@@ -52,7 +53,7 @@ trait Post_Type {
 			$rest_base = ( ! empty( $post_type_obj->rest_base ) && is_string( $post_type_obj->rest_base ) ) ? $post_type_obj->rest_base : $post_type_obj->name;
 		}
 
-		return $rest_base;
+		return (string) $rest_base;
 	}
 
 	/**

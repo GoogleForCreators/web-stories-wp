@@ -39,10 +39,6 @@ class Experiments extends TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
-	}
-
 	/**
 	 * @covers ::register
 	 */
@@ -123,7 +119,7 @@ class Experiments extends TestCase {
 			]
 		);
 
-		$this->assertNotContains( "checked='checked'", $output );
+		$this->assertStringNotContainsString( "checked='checked'", $output );
 	}
 
 	/**
@@ -156,7 +152,7 @@ class Experiments extends TestCase {
 				],
 			]
 		);
-		$this->assertContains( "checked='checked'", $output );
+		$this->assertStringContainsString( "checked='checked'", $output );
 	}
 
 	/**
@@ -189,8 +185,8 @@ class Experiments extends TestCase {
 			]
 		);
 
-		$this->assertContains( "checked='checked'", $output );
-		$this->assertContains( 'disabled', $output );
+		$this->assertStringContainsString( "checked='checked'", $output );
+		$this->assertStringContainsString( 'disabled', $output );
 	}
 
 	/**
@@ -232,8 +228,8 @@ class Experiments extends TestCase {
 		$this->assertNotEmpty( $experiments->get_experiment_statuses( 'editor' ) );
 
 		foreach ( $experiments->get_experiment_statuses( 'editor' ) as $key => $status ) {
-			$this->assertInternalType( 'string', $key );
-			$this->assertInternalType( 'bool', $status );
+			$this->assertIsString( $key );
+			$this->assertIsBool( $status );
 		}
 	}
 

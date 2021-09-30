@@ -33,8 +33,8 @@ class Stories_Taxonomies_Controller extends Test_REST_TestCase {
 		self::$taxonomy_object->unregister_taxonomy();
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
@@ -44,12 +44,12 @@ class Stories_Taxonomies_Controller extends Test_REST_TestCase {
 		$this->controller = new \Google\Web_Stories\REST_API\Stories_Taxonomies_Controller();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -63,6 +63,6 @@ class Stories_Taxonomies_Controller extends Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$links    = $response->get_links();
 		$this->assertArrayHasKey( 'https://api.w.org/items', $links );
-		$this->assertContains( 'web-stories/v1', $links['https://api.w.org/items'][0]['href'] );
+		$this->assertStringContainsString( 'web-stories/v1', $links['https://api.w.org/items'][0]['href'] );
 	}
 }

@@ -76,7 +76,7 @@ function Buttons() {
     })
   );
 
-  const isDraft = 'draft' === status;
+  const isDraft = 'draft' === status || !status;
 
   const { hasMetaBoxes, isSavingMetaBoxes } = useMetaBoxes(
     ({ state: { hasMetaBoxes, isSavingMetaBoxes } }) => ({

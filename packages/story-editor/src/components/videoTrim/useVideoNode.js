@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useCallback } from '@web-stories-wp/react';
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -25,10 +30,12 @@ import { useEffect, useState, useCallback } from '@web-stories-wp/react';
 import { MEDIA_VIDEO_MINIMUM_DURATION } from '../../constants';
 
 function useVideoNode() {
-  const [currentTime, setCurrentTime] = useState(0);
-  const [startOffset, rawSetStartOffset] = useState(0);
-  const [maxOffset, setMaxOffset] = useState(Math.POSITIVE_INFINITY);
-  const [endOffset, rawSetEndOffset] = useState(Math.POSITIVE_INFINITY);
+  const [currentTime, setCurrentTime] = useState(null);
+  const [startOffset, rawSetStartOffset] = useState(null);
+  const [originalStartOffset, setOriginalStartOffset] = useState(null);
+  const [endOffset, rawSetEndOffset] = useState(null);
+  const [originalEndOffset, setOriginalEndOffset] = useState(null);
+  const [maxOffset, setMaxOffset] = useState(null);
   const [videoNode, setVideoNode] = useState(null);
 
   useEffect(() => {
@@ -39,13 +46,15 @@ function useVideoNode() {
     function onLoadedMetadata(evt) {
       const duration = Math.floor(evt.target.duration * 1000);
       rawSetStartOffset(0);
+      setOriginalStartOffset(0);
       setCurrentTime(0);
       rawSetEndOffset(duration);
+      setOriginalEndOffset(duration);
       setMaxOffset(duration);
     }
     function onTimeUpdate(evt) {
       const currentOffset = Math.floor(evt.target.currentTime * 1000);
-      setCurrentTime(currentOffset);
+      setCurrentTime(Math.min(currentOffset, endOffset));
       if (currentOffset >= endOffset) {
         videoNode.currentTime = startOffset / 1000;
         videoNode.play();
@@ -64,6 +73,7 @@ function useVideoNode() {
     (offset) => {
       // Start offset must be at least this smaller than end offset
       offset = Math.min(endOffset - MEDIA_VIDEO_MINIMUM_DURATION, offset);
+      offset = Math.max(0, offset);
       rawSetStartOffset(offset);
       videoNode.currentTime = Math.max(videoNode.currentTime, offset / 1000);
     },
@@ -74,13 +84,26 @@ function useVideoNode() {
     (offset) => {
       // End offset must be at least this larger than start offset
       offset = Math.max(startOffset + MEDIA_VIDEO_MINIMUM_DURATION, offset);
+      offset = Math.min(maxOffset, offset);
       rawSetEndOffset(offset);
       videoNode.currentTime = Math.min(videoNode.currentTime, offset / 1000);
     },
-    [videoNode, startOffset]
+    [videoNode, startOffset, maxOffset]
+  );
+
+  const resetOffsets = useCallback(() => {
+    rawSetStartOffset(originalStartOffset);
+    rawSetEndOffset(originalEndOffset);
+  }, [originalStartOffset, originalEndOffset]);
+
+  const hasChanged = useMemo(
+    () =>
+      startOffset !== originalStartOffset || endOffset !== originalEndOffset,
+    [startOffset, originalStartOffset, endOffset, originalEndOffset]
   );
 
   return {
+    hasChanged,
     currentTime,
     startOffset,
     endOffset,
@@ -88,6 +111,7 @@ function useVideoNode() {
     setStartOffset,
     setEndOffset,
     setVideoNode,
+    resetOffsets,
   };
 }
 

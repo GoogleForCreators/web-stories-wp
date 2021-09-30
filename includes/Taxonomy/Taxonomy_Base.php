@@ -150,4 +150,16 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	public function on_plugin_deactivation( $network_wide ) {
 		$this->unregister_taxonomy();
 	}
+
+	/**
+	 * Get taxonomy slug.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string
+	 */
+	public function get_taxonomy_slug(): string {
+		return $this->taxonomy_slug;
+	}
+
 }

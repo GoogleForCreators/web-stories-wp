@@ -47,7 +47,7 @@ class Demo_Content extends TestCase {
 		$title = $demo->get_title();
 
 		$this->assertNotEmpty( $title );
-		$this->assertInternalType( 'string', $title );
+		$this->assertIsString( $title );
 	}
 
 	/**
@@ -68,8 +68,8 @@ class Demo_Content extends TestCase {
 		$demo    = new \Google\Web_Stories\Demo_Content();
 		$content = $demo->get_content();
 
-		$this->assertNotContains( 'https://replaceme.com', $content, 'Not all URLs have been replaced' );
-		$this->assertContains( WEBSTORIES_CDN_URL . '/images/demo-story/', $content, 'Assets URLs have been corrupted' );
+		$this->assertStringNotContainsString( 'https://replaceme.com', $content, 'Not all URLs have been replaced' );
+		$this->assertStringContainsString( WEBSTORIES_CDN_URL . '/images/demo-story/', $content, 'Assets URLs have been corrupted' );
 	}
 
 	/**
@@ -79,6 +79,6 @@ class Demo_Content extends TestCase {
 		$demo    = new \Google\Web_Stories\Demo_Content();
 		$content = $demo->get_content();
 
-		$this->assertNotContains( 'L10N_PLACEHOLDER', $content, 'Not all localization placeholders have been replaced' );
+		$this->assertStringNotContainsString( 'L10N_PLACEHOLDER', $content, 'Not all localization placeholders have been replaced' );
 	}
 }

@@ -477,10 +477,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 		if ( is_a( $class, Delayed::class, true ) ) {
 			$registration_action = $class::get_registration_action();
 
-			if ( \did_action( $registration_action ) ) {
+			if ( did_action( $registration_action ) ) {
 				$this->maybe_register_service( $id, $class );
 			} else {
-				\add_action(
+				add_action(
 					$registration_action,
 					function () use ( $id, $class ) {
 						$this->maybe_register_service( $id, $class );

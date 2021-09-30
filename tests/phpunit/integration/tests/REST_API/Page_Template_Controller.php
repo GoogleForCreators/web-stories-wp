@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use DateTime;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -37,6 +38,13 @@ class Page_Template_Controller extends Test_REST_TestCase {
 	protected static $user3_id;
 
 	protected static $author_id;
+
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\REST_API\Page_Template_Controller
+	 */
+	private $controller;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
@@ -77,13 +85,11 @@ class Page_Template_Controller extends Test_REST_TestCase {
 			]
 		);
 
-		$future_date = strtotime( '+1 day' );
-
 		$factory->post->create_many(
 			3,
 			[
 				'post_status' => 'future',
-				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 				'post_type'   => $post_type,
 			]
@@ -115,36 +121,31 @@ class Page_Template_Controller extends Test_REST_TestCase {
 				'post_type'   => $post_type,
 			]
 		);
+	}
+
+	public function set_up() {
+		parent::set_up();
 
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
-	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
-		self::delete_user( self::$user2_id );
-		self::delete_user( self::$user3_id );
-		self::delete_user( self::$author_id );
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-	}
-
-	public function setUp() {
-		parent::setUp();
+		$this->controller = new \Google\Web_Stories\REST_API\Page_Template_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->add_caps_to_roles();
 
 		$this->set_permalink_structure( '/%postname%/' );
 	}
 
-	public function tearDown() {
+	public function tear_down() {
+		/** @var \WP_REST_Server $wp_rest_server */
+		global $wp_rest_server;
+		$wp_rest_server = null;
+
 		$this->remove_caps_from_roles();
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -161,7 +162,10 @@ class Page_Template_Controller extends Test_REST_TestCase {
 	 * @covers ::get_items
 	 */
 	public function test_get_items_format() {
+		$this->controller->register_routes();
+
 		wp_set_current_user( self::$user_id );
+
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
 		$request->set_param( 'status', [ 'draft' ] );
 		$request->set_param( 'context', 'edit' );

@@ -195,11 +195,11 @@ jobs:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
 
       - name: Read .nvmrc
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.4.0
+        uses: actions/setup-node@v2.4.1
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
           cache: npm
@@ -284,11 +284,11 @@ jobs:
         continue-on-error: true
 
       - name: Read .nvmrc
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.4.0
+        uses: actions/setup-node@v2.4.1
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
           cache: npm
@@ -296,7 +296,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.0'
           coverage: none
           tools: composer
 
@@ -500,11 +500,11 @@ jobs:
           token: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Read .nvmrc
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.4.0
+        uses: actions/setup-node@v2.4.1
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
           cache: npm

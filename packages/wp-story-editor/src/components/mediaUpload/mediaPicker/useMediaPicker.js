@@ -21,13 +21,17 @@ import { useCallback, useEffect, useMemo } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@web-stories-wp/design-system';
+import { useConfig, useAPI } from '@web-stories-wp/story-editor';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../app/config';
-import { useAPI } from '../../app/api';
-import { calculateImageSelectOptions, mustBeCropped } from './utils';
+import {
+  calculateImageSelectOptions,
+  mustBeCropped,
+  getResourceFromMediaPicker,
+} from './utils';
 import WordPressImageCropper from './WordPressImageCropper';
 
 const defaultCropParams = {
@@ -52,7 +56,7 @@ const defaultCropParams = {
  * @param {Object} props.cropParams Object params for cropped images.
  * @return {Function} Callback to open the media picker.
  */
-export default function useMediaPicker({
+function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
   buttonInsertText = __('Insert into page', 'web-stories'),
   onSelect,
@@ -70,20 +74,15 @@ export default function useMediaPicker({
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const { showSnackbar } = useSnackbar();
+
   useEffect(() => {
     try {
-      // Work around that forces default tab as upload tab.
-      global.wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
-    } catch (e) {
-      // Silence.
-    }
-  });
-  useEffect(() => {
-    try {
-      // Handles the video processing logic from WordPress.
       // The Uploader.success callback is invoked when a user uploads a file.
-      // Race condition concern: the video content is not guaranteed to be
-      // available in this callback. For the video poster insertion, please check: packages/story-editor/src/components/library/panes/media/local/mediaPane.js
+      // This is used to mark files as "uploaded to the story editor"
+      // in case we eventually want to allow filtering such files.
+      // Note: at this point the video has not yet been inserted into the canvas,
+      // it's just in the WP media modal.
+      // Video poster generation for newly added videos is done in <MediaPane>.
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, {
           media_source: 'editor',
@@ -135,7 +134,7 @@ export default function useMediaPicker({
           return;
         }
         mediaPickerEl.alt = mediaPickerEl.alt || mediaPickerEl.title;
-        onSelect(mediaPickerEl);
+        onSelect(getResourceFromMediaPicker(mediaPickerEl));
       });
 
       if (onClose) {
@@ -143,8 +142,9 @@ export default function useMediaPicker({
       }
 
       fileFrame.once('content:activate:browse', () => {
-        // Force-refresh media modal contents every time
-        // to avoid stale data.
+        // Force-refresh media modal contents every time it's opened
+        // to avoid stale data due to media items being upload & updated
+        // through the editor in the meantime.
         fileFrame.content?.get()?.collection?._requery(true);
         fileFrame.content?.get()?.options?.selection?.reset();
       });
@@ -227,7 +227,7 @@ export default function useMediaPicker({
           updateMedia(attachment.id, { media_source: 'editor', alt_text });
           attachment.alt = alt_text;
         }
-        onSelect(attachment);
+        onSelect(getResourceFromMediaPicker(attachment));
       });
 
       fileFrame.once('skippedcrop', () => {
@@ -237,7 +237,7 @@ export default function useMediaPicker({
           .first()
           .toJSON();
         mediaPickerEl.alt = mediaPickerEl.alt || mediaPickerEl.title;
-        onSelect(mediaPickerEl);
+        onSelect(getResourceFromMediaPicker(mediaPickerEl));
       });
 
       fileFrame.once('select', () => {
@@ -262,7 +262,7 @@ export default function useMediaPicker({
           !control.params.flex_height
         ) {
           mediaPickerEl.alt = mediaPickerEl.alt || mediaPickerEl.title;
-          onSelect(mediaPickerEl);
+          onSelect(getResourceFromMediaPicker(mediaPickerEl));
           fileFrame.close();
         } else {
           fileFrame.setState('cropper');
@@ -305,3 +305,20 @@ export default function useMediaPicker({
     return cropParams ? openCropper : openMediaDialog;
   }, [cropParams, openCropper, openMediaDialog]);
 }
+
+useMediaPicker.propTypes = {
+  title: PropTypes.string,
+  buttonInsertText: PropTypes.string,
+  onSelect: PropTypes.func.isRequired,
+  onSelectErrorMessage: PropTypes.string,
+  onClose: PropTypes.func,
+  onPermissionError: PropTypes.func,
+  type: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  cropParams: PropTypes.object,
+  multiple: PropTypes.bool,
+};
+
+export default useMediaPicker;

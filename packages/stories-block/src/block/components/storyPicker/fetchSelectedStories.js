@@ -32,7 +32,7 @@ import { useDispatch } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import LoaderContainer from './components/loaderContainer';
+import LoaderContainer from '../loaderContainer';
 
 const {
   config: {
@@ -53,7 +53,7 @@ function FetchSelectedStories({
     try {
       const response = await apiFetch({
         path: addQueryArgs(storiesApi, {
-          _embed: 'author',
+          _embed: 'author,wp:featuredmedia',
           context: 'edit',
           include: selectedStoryIds,
           orderby: selectedStoryIds.length > 0 ? 'include' : undefined,

@@ -60,13 +60,9 @@ class Preferences extends TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$admin_id );
-		self::delete_user( self::$author_id );
-	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		/** @var WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
@@ -76,7 +72,7 @@ class Preferences extends TestCase {
 		$this->instance = new \Google\Web_Stories\User\Preferences();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		/** @var WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
@@ -85,7 +81,7 @@ class Preferences extends TestCase {
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY );
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

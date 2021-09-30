@@ -95,14 +95,8 @@ class Embed_Controller extends Test_REST_TestCase {
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$subscriber );
-		self::delete_user( self::$editor );
-		self::delete_user( self::$admin );
-	}
-
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		/** @var WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
@@ -117,7 +111,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		$this->add_caps_to_roles();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		/** @var WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
@@ -126,7 +120,7 @@ class Embed_Controller extends Test_REST_TestCase {
 
 		$this->remove_caps_from_roles();
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -169,8 +163,6 @@ class Embed_Controller extends Test_REST_TestCase {
 	 * @covers ::register
 	 */
 	public function test_register_routes() {
-		$this->controller->register();
-
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/embed', $routes );

@@ -28,7 +28,6 @@ export const ACTION_TYPES = {
 };
 
 export const defaultSettingsState = {
-  activePublisherLogoId: null,
   error: {},
   googleAnalyticsId: '',
   usingLegacyAnalytics: false,
@@ -36,8 +35,8 @@ export const defaultSettingsState = {
   adSenseSlotId: '',
   adManagerSlotId: '',
   adNetwork: AD_NETWORK_TYPE.NONE,
-  publisherLogoIds: [],
   archive: ARCHIVE_TYPE.DEFAULT,
+  archivePageId: 0,
   videoCache: false,
   settingSaved: false,
 };
@@ -63,7 +62,6 @@ function settingsReducer(state, action) {
     case ACTION_TYPES.UPDATE_SETTINGS_SUCCESS: {
       return {
         ...state,
-        activePublisherLogoId: action.payload.activePublisherLogoId,
         error: {},
         googleAnalyticsId: action.payload.googleAnalyticsId,
         usingLegacyAnalytics: action.payload.usingLegacyAnalytics,
@@ -71,14 +69,9 @@ function settingsReducer(state, action) {
         adSenseSlotId: action.payload.adSenseSlotId,
         adManagerSlotId: action.payload.adManagerSlotId,
         adNetwork: action.payload.adNetwork,
-        publisherLogoIds: [
-          ...new Set([
-            action.payload.activePublisherLogoId,
-            ...action.payload.publisherLogoIds,
-          ]),
-        ],
         videoCache: action.payload.videoCache,
         archive: action.payload.archive,
+        archivePageId: action.payload.archivePageId,
       };
     }
 

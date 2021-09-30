@@ -254,7 +254,7 @@ class Story_Sanitizer extends TestCase {
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
-		$this->assertContains( ' lang="en-US"', $actual );
+		$this->assertStringContainsString( ' lang="en-US"', $actual );
 	}
 
 	/**
@@ -272,8 +272,8 @@ class Story_Sanitizer extends TestCase {
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
-		$this->assertContains( 'rel="noreferrer"', $actual );
-		$this->assertContains( 'target="_blank"', $actual );
+		$this->assertStringContainsString( 'rel="noreferrer"', $actual );
+		$this->assertStringContainsString( 'target="_blank"', $actual );
 	}
 
 	/**
@@ -291,8 +291,8 @@ class Story_Sanitizer extends TestCase {
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
-		$this->assertNotContains( 'data-tooltip-icon', $actual );
-		$this->assertNotContains( 'data-tooltip-text', $actual );
+		$this->assertStringNotContainsString( 'data-tooltip-icon', $actual );
+		$this->assertStringNotContainsString( 'data-tooltip-text', $actual );
 	}
 
 	/**
@@ -310,8 +310,8 @@ class Story_Sanitizer extends TestCase {
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
-		$this->assertContains( '<style>._a7988c6{color: blue;}._91f054f{color: blue; background: white;}._f479d19{color: red;}</style>', $actual );
-		$this->assertNotContains( 'style="', $actual );
+		$this->assertStringContainsString( '<style>._a7988c6{color: blue;}._91f054f{color: blue; background: white;}._f479d19{color: red;}</style>', $actual );
+		$this->assertStringNotContainsString( 'style="', $actual );
 	}
 
 	/**
@@ -329,7 +329,7 @@ class Story_Sanitizer extends TestCase {
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
-		$this->assertNotContains( 'cache="google"', $actual );
+		$this->assertStringNotContainsString( 'cache="google"', $actual );
 	}
 
 	/**
@@ -347,7 +347,7 @@ class Story_Sanitizer extends TestCase {
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
-		$this->assertContains( 'cache="google"', $actual );
+		$this->assertStringContainsString( 'cache="google"', $actual );
 	}
 
 	/**
@@ -365,7 +365,7 @@ class Story_Sanitizer extends TestCase {
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
-		$this->assertNotContains( 'blob:', $actual );
+		$this->assertStringNotContainsString( 'blob:', $actual );
 	}
 
 	/**
@@ -383,6 +383,6 @@ class Story_Sanitizer extends TestCase {
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
-		$this->assertContains( 'srcset="https://example.com/image.jpg 1000w, https://example.com/image-768x1024.jpg 768w, https://example.com/image-225x300.jpg 225w, https://example.com/image-150x200.jpg 150w"', $actual );
+		$this->assertStringContainsString( 'srcset="https://example.com/image.jpg 1000w, https://example.com/image-768x1024.jpg 768w, https://example.com/image-225x300.jpg 225w, https://example.com/image-150x200.jpg 150w"', $actual );
 	}
 }

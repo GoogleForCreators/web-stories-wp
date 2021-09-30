@@ -106,7 +106,7 @@ function setupButtons({
   const storyContextValue = {
     state: {
       capabilities: {
-        hasPublishAction: true,
+        publish: true,
       },
       meta: { isSaving: false, isFreshlyPublished: false, ...extraMetaProps },
       story: {
@@ -390,7 +390,7 @@ describe('buttons', () => {
 
   it('should disable publish button when user lacks permission', () => {
     setupButtons({
-      storyState: { capabilities: { hasPublishAction: false } },
+      storyState: { capabilities: { publish: false } },
     });
     expect(screen.getByRole('button', { name: 'Publish' })).toBeDisabled();
   });

@@ -29,14 +29,11 @@ import settingsReducer, {
 } from '../reducer/settings';
 import { ERRORS } from '../textContent';
 
-export default function useSettingsApi(
-  dataAdapter,
-  { globalStoriesSettingsApi }
-) {
+export default function useSettingsApi(dataAdapter, { globalSettingsApi }) {
   const [state, dispatch] = useReducer(settingsReducer, defaultSettingsState);
 
   const fetchSettings = useCallback(async () => {
-    if (!globalStoriesSettingsApi) {
+    if (!globalSettingsApi) {
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_FAILURE,
         payload: {
@@ -45,9 +42,7 @@ export default function useSettingsApi(
       });
     }
     try {
-      const response = await dataAdapter.get(
-        addQueryArgs(globalStoriesSettingsApi)
-      );
+      const response = await dataAdapter.get(addQueryArgs(globalSettingsApi));
 
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
@@ -58,10 +53,9 @@ export default function useSettingsApi(
           adSenseSlotId: response.web_stories_adsense_slot_id,
           adManagerSlotId: response.web_stories_ad_manager_slot_id,
           adNetwork: response.web_stories_ad_network,
-          activePublisherLogoId: response.web_stories_active_publisher_logo,
-          publisherLogoIds: response.web_stories_publisher_logos,
           videoCache: response.web_stories_video_cache,
           archive: response.web_stories_archive,
+          archivePageId: response.web_stories_archive_page_id,
         },
       });
     } catch (err) {
@@ -72,7 +66,7 @@ export default function useSettingsApi(
         },
       });
     }
-  }, [dataAdapter, globalStoriesSettingsApi]);
+  }, [dataAdapter, globalSettingsApi]);
 
   const updateSettings = useCallback(
     async ({
@@ -82,11 +76,9 @@ export default function useSettingsApi(
       adSenseSlotId,
       adManagerSlotId,
       adNetwork,
-      publisherLogoIds,
-      publisherLogoIdToRemove,
-      publisherLogoToMakeDefault,
       videoCache,
       archive,
+      archivePageId,
     }) => {
       dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED });
       try {
@@ -115,22 +107,6 @@ export default function useSettingsApi(
           query.web_stories_ad_network = adNetwork;
         }
 
-        if (publisherLogoIds) {
-          query.web_stories_publisher_logos = [
-            ...new Set([...state.publisherLogoIds, ...publisherLogoIds]),
-          ].join(',');
-        }
-
-        if (publisherLogoIdToRemove) {
-          query.web_stories_publisher_logos = state.publisherLogoIds
-            .filter((logoId) => logoId !== publisherLogoIdToRemove)
-            .join(',');
-        }
-
-        if (publisherLogoToMakeDefault) {
-          query.web_stories_active_publisher_logo = publisherLogoToMakeDefault;
-        }
-
         if (videoCache !== undefined) {
           query.web_stories_video_cache = Boolean(videoCache);
         }
@@ -139,8 +115,12 @@ export default function useSettingsApi(
           query.web_stories_archive = archive;
         }
 
+        if (archivePageId !== undefined) {
+          query.web_stories_archive_page_id = archivePageId;
+        }
+
         const response = await dataAdapter.post(
-          addQueryArgs(globalStoriesSettingsApi, query)
+          addQueryArgs(globalSettingsApi, query)
         );
 
         dispatch({
@@ -152,10 +132,9 @@ export default function useSettingsApi(
             adSenseSlotId: response.web_stories_adsense_slot_id,
             adManagerSlotId: response.web_stories_ad_manager_slot_id,
             adNetwork: response.web_stories_ad_network,
-            activePublisherLogoId: response.web_stories_active_publisher_logo,
-            publisherLogoIds: response.web_stories_publisher_logos,
             videoCache: response.web_stories_video_cache,
             archive: response.web_stories_archive,
+            archivePageId: response.web_stories_archive_page_id,
           },
         });
         dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED, payload: true });
@@ -168,7 +147,7 @@ export default function useSettingsApi(
         });
       }
     },
-    [dataAdapter, globalStoriesSettingsApi, state.publisherLogoIds]
+    [dataAdapter, globalSettingsApi]
   );
 
   const api = useMemo(
