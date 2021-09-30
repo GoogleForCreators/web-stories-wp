@@ -29,7 +29,7 @@ import { useMemo } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import ItemOverlay from './components/itemOverlay';
+import ItemOverlay from './itemOverlay';
 
 const noop = () => {};
 

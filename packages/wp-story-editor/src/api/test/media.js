@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * WordPress dependencies
  */
@@ -26,7 +27,7 @@ import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
 jest.mock('@wordpress/api-fetch');
 
-describe('API Callbacks', () => {
+describe('Media API Callbacks', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 

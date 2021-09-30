@@ -26,7 +26,6 @@ import {
   useRef,
 } from '@web-stories-wp/react';
 import { Text } from '@web-stories-wp/design-system';
-import { useFeature } from 'flagged';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useUnits } from '@web-stories-wp/units';
 
@@ -95,12 +94,12 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { pageCanvasData } = useLibrary((state) => ({
+  const { pageCanvasData, shouldUseSmartColor } = useLibrary((state) => ({
     pageCanvasData: state.state.pageCanvasData,
+    shouldUseSmartColor: state.state.shouldUseSmartColor,
   }));
 
   const { calculateAccessibleTextColors } = usePageAsCanvas();
-  const enableSmartTextColor = useFeature('enableSmartTextColor');
 
   const presetDataRef = useRef({});
   const buttonRef = useRef(null);
@@ -118,7 +117,7 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
   // Gets the position and the color already once the canvas information is available, to use it directly when inserting.
   useLayoutEffect(() => {
     async function getPositionAndColor() {
-      if (!pageCanvasData || !enableSmartTextColor) {
+      if (!pageCanvasData || !shouldUseSmartColor) {
         return;
       }
       // If nothing changed meanwhile and we already have color data, don't make new calculations.
@@ -148,7 +147,7 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     calculateAccessibleTextColors,
     element,
     getPosition,
-    enableSmartTextColor,
+    shouldUseSmartColor,
     pageCanvasData,
     versionNumber,
   ]);

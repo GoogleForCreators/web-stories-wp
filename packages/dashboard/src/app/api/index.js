@@ -13,27 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
-import preloadVideoMetadata from './preloadVideoMetadata';
-import getVideoLengthFromDisplay from './getVideoLengthDisplay';
-
-/**
- * Get video length from a video.
- *
- * @param {string} src Video source.
- * @return {Promise} Video length object.
- */
-const getVideoLength = async (src) => {
-  const video = await preloadVideoMetadata(src);
-  const length = Math.round(video.duration);
-  const lengthFormatted = getVideoLengthFromDisplay(length);
-  return {
-    length,
-    lengthFormatted,
-  };
-};
-
-export default getVideoLength;
+export { default as ApiProvider } from './apiProvider';
