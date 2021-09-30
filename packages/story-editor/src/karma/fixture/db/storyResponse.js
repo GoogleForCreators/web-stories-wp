@@ -53,6 +53,7 @@ const storyCategories = [
     name: 'Booger',
     slug: 'booger',
     taxonomy: 'web_story_category',
+    parent: 0,
     _links: {},
   },
   {
@@ -61,6 +62,7 @@ const storyCategories = [
     name: 'Multiple words',
     slug: 'multiple-words',
     taxonomy: 'web_story_category',
+    parent: 0,
     _links: {},
   },
   {
@@ -69,6 +71,7 @@ const storyCategories = [
     name: 'gold',
     slug: 'gold',
     taxonomy: 'web_story_category',
+    parent: 0,
     _links: {},
   },
 ];

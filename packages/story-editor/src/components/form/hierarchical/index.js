@@ -26,7 +26,7 @@ import {
   THEME_CONSTANTS,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
-import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { _n, sprintf } from '@web-stories-wp/i18n';
 import {
   useCallback,
   useDebouncedCallback,
@@ -98,26 +98,25 @@ const NoResultsText = styled(Text)`
  * @return {Node} The rendered option and children
  */
 const Option = (option) => {
-  const {
-    id: optionId,
-    label: optionLabel,
-    options,
-    onChange,
-    ...checkboxProps
-  } = option;
+  const { id, label, options, onChange, checked, value } = option;
+
+  const optionId = `hierarchical_term_option_${id}`;
+  const optionName = `hierarchical_term_${label}`;
 
   return (
     <>
       <CheckboxContainer>
         <Checkbox
-          {...checkboxProps}
           id={optionId}
+          value={value}
+          checked={checked}
+          name={optionName}
           onChange={(evt) => onChange(evt, option)}
         />
-        <Label htmlFor={optionId}>{optionLabel}</Label>
+        <Label htmlFor={optionId}>{label}</Label>
       </CheckboxContainer>
       {options?.map((child) => (
-        <StepContainer key={child.id}>
+        <StepContainer key={`${child.id}-${child.checked}`}>
           <Option onChange={onChange} {...child} />
         </StepContainer>
       ))}
@@ -135,7 +134,7 @@ Option.propTypes = OptionPropType;
 const HierarchicalInput = ({
   className,
   label,
-  noOptionsText = __('Category Not Found', 'web-stories'),
+  noOptionsText,
   options,
   onChange,
   ...inputProps
@@ -212,7 +211,7 @@ const HierarchicalInput = ({
               {filteredOptions.length ? (
                 filteredOptions.map((option) => (
                   <Option
-                    key={option.id}
+                    key={`${option.id}-${option.checked}`}
                     {...option}
                     onChange={handleCheckboxChange}
                   />
@@ -235,7 +234,7 @@ HierarchicalInput.propTypes = {
   className: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   label: PropTypes.string.isRequired,
-  noOptionsText: PropTypes.string,
+  noOptionsText: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       ...OptionPropType,

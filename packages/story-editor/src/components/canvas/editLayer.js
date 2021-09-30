@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { memo, useEffect, useRef } from '@web-stories-wp/react';
 import { _x } from '@web-stories-wp/i18n';
@@ -44,9 +45,15 @@ function EditLayer() {
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,
   }));
-  const { editingElementId } = useCanvas((state) => ({
-    editingElementId: state.state.editingElement,
-  }));
+
+  const { editingElement: editingElementId, showOverflow = true } = useCanvas(
+    ({
+      state: { editingElement, editingElementState: { showOverflow } = {} },
+    }) => ({
+      editingElement,
+      showOverflow,
+    })
+  );
 
   const editingElement =
     editingElementId &&
@@ -57,10 +64,12 @@ function EditLayer() {
     return null;
   }
 
-  return <EditLayerForElement element={editingElement} />;
+  return (
+    <EditLayerForElement element={editingElement} showOverflow={showOverflow} />
+  );
 }
 
-function EditLayerForElement({ element }) {
+function EditLayerForElement({ element, showOverflow }) {
   const ref = useRef(null);
   const pageAreaRef = useRef(null);
   const { editModeGrayout, EditMenu } = getDefinitionForType(element.type);
@@ -97,8 +106,8 @@ function EditLayerForElement({ element }) {
       <EditPageArea
         ref={pageAreaRef}
         isControlled
-        showOverflow
-        overflow="visible"
+        showOverflow={showOverflow}
+        overflow={showOverflow ? 'visible' : 'hidden'}
       >
         <EditElement element={element} />
       </EditPageArea>
@@ -113,6 +122,7 @@ function EditLayerForElement({ element }) {
 
 EditLayerForElement.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  showOverflow: PropTypes.bool.isRequired,
 };
 
 export default memo(EditLayer);

@@ -44,7 +44,6 @@ import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
 import { useLocalMedia } from '../../../../app';
-import { states, styles, useHighlights } from '../../../../app/highlights';
 import CircularProgress from '../../../circularProgress';
 
 const Row = styled(DefaultRow)`
@@ -136,11 +135,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     }
   }, [isTrimming, trimButtonText, speak]);
 
-  const { highlight, resetHighlight } = useHighlights((state) => ({
-    highlight: state[states.VIDEO_SETTINGS],
-    resetHighlight: state.onFocusOut,
-  }));
-
   const checkboxId = `cb-${uuidv4()}`;
 
   const Processing = () => {
@@ -153,8 +147,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel
-      css={highlight?.showEffect && styles.FLASH}
-      onAnimationEnd={() => resetHighlight()}
       name="videoOptions"
       title={__('Video Settings', 'web-stories')}
     >
