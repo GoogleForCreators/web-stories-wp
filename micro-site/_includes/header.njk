@@ -13,14 +13,11 @@
       </li>
       <li {% if rootClass == 'docs' %} class="current" {% endif %}>
         <a href="/docs">{{$("Documentation") }}</a>
-        {% if rootClass != 'docs' %}
           <button class="toggle" [class]="docsMenuActive? 'toggle active' : 'toggle'" class="hide" on="tap:AMP.setState({docsMenuActive: !docsMenuActive})" >
             {% include "./img/toggle.svg" %}
             <span class="visuallyhidden">show submenu for "Documentation"</span>
           </button>
           {% include "documentation_menu.njk" %}
-        {% endif %}
-
       </li>
       <li>
         <a href="https://wordpress.org/support/plugin/web-stories/">{{$("Support") }}</a>

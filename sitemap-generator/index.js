@@ -33,7 +33,17 @@ const stories = readdirSync(resolve(__dirname, '..', 'public', 'stories')).map(
   (slug) => ({ url: `/stories/${slug}/` })
 );
 
-const links = [{ url: '/' }, { url: '/docs/' }, ...stories];
+const links = [
+  { url: '/' },
+  { url: '/docs/' },
+  { url: '/docs/getting-started' },
+  { url: '/docs/how-to' },
+  { url: '/docs/best-practices' },
+  { url: '/docs/seo' },
+  { url: '/docs/faq' },
+  { url: '/docs/terms' },
+  ...stories,
+];
 
 const stream = new SitemapStream({ hostname: HOSTNAME });
 
