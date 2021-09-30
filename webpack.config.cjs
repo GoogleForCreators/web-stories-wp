@@ -227,7 +227,7 @@ const sharedConfig = {
           // they're _likely_ component names, and these are useful to have
           // in tracebacks and error messages.
           keep_fnames: /__|_x|_n|_nx|sprintf|^[A-Z].+$/,
-          format: {
+          output: {
             comments: /translators:/i,
           },
         },
