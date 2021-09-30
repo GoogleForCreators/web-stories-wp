@@ -14,6 +14,12 @@ vendor/
 phpcs.xml
 public/stories/*
 public/sitemap.xml
+public/css
+public/docs
+public/fonts
+public/img
+public/video
+public/index.html
 
 # Stories with custom modifications
 !public/stories/a-day-in-the-life-of-dap-the-contract
