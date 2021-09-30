@@ -43,6 +43,7 @@ export const ACTIONS = {
   UPDATE_VALUE: 'updateValue',
   SUBMIT_VALUE: 'submitValue',
   REMOVE_TAG: 'removeTag',
+  RESET_OFFSET: 'resetOffset',
   RESET_VALUE: 'resetValue',
   INCREMENT_OFFSET: 'incrementOffset',
   DECREMENT_OFFSET: 'decrementOffset',
@@ -135,6 +136,13 @@ function reducer(state, action) {
       return {
         ...state,
         offset: clamp(state.offset - 1, { MIN: 0, MAX: state.tags.length }),
+      };
+    }
+
+    case ACTIONS.RESET_OFFSET: {
+      return {
+        ...state,
+        offset: 0,
       };
     }
 

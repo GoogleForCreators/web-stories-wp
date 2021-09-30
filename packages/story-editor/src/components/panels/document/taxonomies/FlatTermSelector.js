@@ -39,17 +39,24 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     flatSearchResults = [],
     addSearchResultsToCache,
     terms = [],
+    setFlatSearchResults,
     setTerms,
   } = useTaxonomy(
     ({
       state: { flatSearchResults, termCache, terms },
-      actions: { createTerm, addSearchResultsToCache, setTerms },
+      actions: {
+        createTerm,
+        addSearchResultsToCache,
+        setFlatSearchResults,
+        setTerms,
+      },
     }) => ({
       flatSearchResults,
       termCache,
       createTerm,
       addSearchResultsToCache,
       terms,
+      setFlatSearchResults,
       setTerms,
     })
   );
@@ -92,6 +99,11 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
   );
 
   const handleFreeformInputChange = useDebouncedCallback((value) => {
+    if (value.length === 0) {
+      setFlatSearchResults([]);
+      return;
+    }
+
     if (value.length < 3) {
       return;
     }

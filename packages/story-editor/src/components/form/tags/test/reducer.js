@@ -327,6 +327,25 @@ describe('<Tags.Input /> Reducer', () => {
     });
   });
 
+  describe('ACTIONS.RESET_OFFSET', () => {
+    it('should reset offset to 0', () => {
+      const oldState = {
+        offset: 3,
+        value: 'tag4',
+        tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
+      };
+      const action = { type: ACTIONS.RESET_OFFSET };
+      const expectedState = {
+        offset: 0,
+        value: '',
+        tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
+      };
+      expect(reducer(oldState, action)).toStrictEqual(expectedState);
+    });
+  });
+
   describe('ACTIONS.RESET_VALUE', () => {
     it('should reset value to empty string', () => {
       const oldState = {

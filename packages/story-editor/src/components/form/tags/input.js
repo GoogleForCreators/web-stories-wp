@@ -61,7 +61,6 @@ const TextInput = styled(BaseInput).attrs({ type: 'text' })`
 
 function Input({
   suggestedTerms = [],
-  id,
   onTagsChange,
   onInputChange,
   suggestedTermsLabel,
@@ -152,9 +151,7 @@ function Input({
               onUndo(e);
             }
           }
-
-          if (['Comma', 'Enter', 'Tab'].includes(e.key)) {
-            // TODO something here to prevent focus shift
+          if (['Comma', ',', 'Enter', 'Tab'].includes(e.key)) {
             dispatch({ type: ACTIONS.SUBMIT_VALUE });
           }
         },
@@ -163,11 +160,13 @@ function Input({
         },
         removeTag: (tag) => () => {
           dispatch({ type: ACTIONS.REMOVE_TAG, payload: tag });
+          inputRef?.current.focus();
         },
         handleFocus: () => {
           setIsInputFocused(true);
         },
         handleBlur: () => {
+          dispatch({ type: ACTIONS.RESET_OFFSET });
           setIsInputFocused(false);
         },
       }),
@@ -213,7 +212,6 @@ function Input({
               {...props}
               key={INPUT_KEY}
               value={value}
-              id={id}
               onKeyDown={handleKeyDown}
               onChange={handleChange}
               onFocus={handleFocus}
@@ -259,7 +257,6 @@ function Input({
 Input.propTypes = {
   suggestedTerms: PropTypes.arrayOf(PropTypes.string),
   name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
   initialTags: PropTypes.arrayOf(PropTypes.string),
   onTagsChange: PropTypes.func,
   onInputChange: PropTypes.func,

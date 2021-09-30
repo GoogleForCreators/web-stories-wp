@@ -268,6 +268,7 @@ function TaxonomyProvider(props) {
       actions: {
         createTerm,
         addSearchResultsToCache,
+        setFlatSearchResults,
         setTerms,
         addTermToSelection,
       },
@@ -280,6 +281,7 @@ function TaxonomyProvider(props) {
       createTerm,
       addSearchResultsToCache,
       addTermToSelection,
+      setFlatSearchResults,
       setTerms,
     ]
   );
