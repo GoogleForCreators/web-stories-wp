@@ -31,7 +31,6 @@ import {
   THEME_CONSTANTS,
   Icons,
 } from '@web-stories-wp/design-system';
-import { useMediaPicker } from '@web-stories-wp/wp-story-editor/src/components/mediaUpload/mediaPicker';
 
 /**
  * Internal dependencies
@@ -121,6 +120,7 @@ function PublishPanel() {
     allowedImageFileTypes,
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
+    MediaUpload,
   } = useConfig();
 
   const [publisherLogos, setPublisherLogos] = useState([]);
@@ -216,18 +216,6 @@ function PublishPanel() {
     __('Please choose only %s as a poster.', 'web-stories')
   );
 
-  const openMediaPicker = useMediaPicker({
-    onSelect: onNewPublisherLogoSelected,
-    cropParams: {
-      width: 96,
-      height: 96,
-    },
-    type: allowedImageMimeTypes,
-    onSelectErrorMessage: publisherLogoErrorMessage,
-    title: __('Select as publisher logo', 'web-stories'),
-    buttonInsertText: __('Select as publisher logo', 'web-stories'),
-  });
-
   const publisherLogoOptionRenderer = forwardRef(
     ({ option: option, ...rest }, ref) => {
       if (option.props) {
@@ -253,18 +241,30 @@ function PublishPanel() {
     );
   };
 
+  const renderUploadButton = (open) => (
+    <Option onClick={open} aria-label={__('Add new', 'web-stories')}>
+      <Icons.ArrowCloud height={32} width={32} />
+      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+        {__('Add new', 'web-stories')}
+      </Text>
+    </Option>
+  );
   const publisherLogosWithUploadOption = [...publisherLogos];
   if (hasUploadMediaAction) {
+    const cropParams = {
+      width: 96,
+      height: 96,
+    };
     publisherLogosWithUploadOption.unshift(
-      <Option
-        onClick={openMediaPicker}
-        aria-label={__('Add new', 'web-stories')}
-      >
-        <Icons.ArrowCloud height={32} width={32} />
-        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-          {__('Add new', 'web-stories')}
-        </Text>
-      </Option>
+      <MediaUpload
+        onSelect={onNewPublisherLogoSelected}
+        onSelectErrorMessage={publisherLogoErrorMessage}
+        type={allowedImageMimeTypes}
+        render={renderUploadButton}
+        title={__('Select as publisher logo', 'web-stories')}
+        buttonInsertText={__('Select as publisher logo', 'web-stories')}
+        cropParams={cropParams}
+      />
     );
   }
 

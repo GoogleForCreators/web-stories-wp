@@ -31,7 +31,7 @@ import { MEDIA_FIELD } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
 export function getMedia(
-  { mediaType, searchTerm, pagingNum, cacheBust, include },
+  { mediaType, searchTerm, pagingNum, cacheBust },
   media
 ) {
   let apiPath = addQueryArgs(media, {
@@ -57,10 +57,6 @@ export function getMedia(
   // anything)
   if (cacheBust) {
     apiPath = addQueryArgs(apiPath, { cache_bust: true });
-  }
-
-  if (include) {
-    apiPath = addQueryArgs(apiPath, { include });
   }
 
   return apiFetch({ path: apiPath }).then(({ body: attachments, headers }) => ({
