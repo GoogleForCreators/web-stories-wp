@@ -191,7 +191,7 @@ class Assets {
 	 */
 	public function enqueue_script_asset( string $script_handle, array $script_dependencies = [], bool $with_i18n = true ) {
 		$this->register_script_asset( $script_handle, $script_dependencies, $with_i18n );
-		$this->enqueue_script( $script_handle, $with_i18n );
+		$this->enqueue_script( $script_handle );
 	}
 
 	/**
@@ -357,7 +357,7 @@ class Assets {
 	 * @return void
 	 */
 	public function enqueue_script( string $script_handle, string $src = '', array $deps = [], $ver = false, bool $in_footer = false, bool $with_i18n = false ) {
-		$this->register_script( $script_handle, $src, $deps, $ver, $in_footer );
+		$this->register_script( $script_handle, $src, $deps, $ver, $in_footer, $with_i18n );
 		wp_enqueue_script( $script_handle, $src, $deps, $ver, $in_footer );
 	}
 
