@@ -161,7 +161,7 @@ function TaxonomyProvider(props) {
       }
       try {
         response = await getTaxonomyTerm(termsEndpoint, {
-          search_items: name,
+          search: name,
           per_page: perPage,
         });
       } catch (e) {
