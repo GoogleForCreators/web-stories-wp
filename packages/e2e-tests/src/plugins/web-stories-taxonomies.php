@@ -16,6 +16,7 @@ function add_taxonomies() {
 		[
 			'description'  => 'Story Tags',
 			'show_in_rest' => true,
+			'show_ui'      => true,
 			'rest_base'    => 'story-tags',
 		]
 	);
@@ -26,6 +27,7 @@ function add_taxonomies() {
 		[
 			'description'  => 'Story Colors',
 			'show_in_rest' => true,
+			'show_ui'      => true,
 			'rest_base'    => 'story-colors',
 			'labels'       => [
 				'name'                       => 'Colors',
@@ -60,6 +62,7 @@ function add_taxonomies() {
 			'description'  => 'Story Categories',
 			'hierarchical' => true,
 			'show_in_rest' => true,
+			'show_ui'      => true,
 			'rest_base'    => 'story-categories',
 		]
 	);
@@ -71,6 +74,7 @@ function add_taxonomies() {
 			'description'  => 'Story Verticals',
 			'hierarchical' => true,
 			'show_in_rest' => true,
+			'show_ui'      => true,
 			'rest_base'    => 'story-verticals',
 			'labels'       => [
 				'name'                  => 'Verticals',
