@@ -28,11 +28,13 @@ import percySnapshot from '@percy/puppeteer';
 
 async function goToAndExpandTaxonomyPanel() {
   await expect(page).toClick('li[role="tab"]', { text: 'Document' });
-  await expect(page).toMatch('Categories and Tags');
 
   const taxonomyPanel = await page.$(
     'button[aria-label="Categories and Tags"]'
   );
+
+  // Small trick to ensure we scroll to this panel.
+  await taxonomyPanel.focus();
 
   const isCollapsed = await page.evaluate(
     (button) => button.getAttribute('aria-expanded') === 'false',
@@ -42,9 +44,6 @@ async function goToAndExpandTaxonomyPanel() {
   if (isCollapsed) {
     await taxonomyPanel.click();
   }
-
-  // Small trick to ensure we scroll to this panel.
-  await taxonomyPanel.focus();
 }
 
 async function addCategory(name, parent) {
