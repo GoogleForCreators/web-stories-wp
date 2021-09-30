@@ -104,7 +104,7 @@ function VideoTrim({ box, element }) {
             style={style}
             {...videoProps}
             preload="metadata"
-            autoplay
+            autoPlay
             tabIndex={0}
             ref={setRef}
           >
