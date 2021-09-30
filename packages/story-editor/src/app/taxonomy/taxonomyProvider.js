@@ -42,6 +42,7 @@ import {
 function TaxonomyProvider(props) {
   const [taxonomies, setTaxonomies] = useState([]);
   const [termCache, setTermCache] = useState({});
+  const [flatSearchResults, setFlatSearchResults] = useState([]);
   // Should grab categories on mount
   const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
   const {
@@ -145,42 +146,33 @@ function TaxonomyProvider(props) {
   );
 
   const addSearchResultsToCache = useCallback(
-    async (
-      taxonomy,
-      {
-        name,
-        // This is the per_page value Gutenberg is using
-        perPage = 20,
-      },
-      addNameToSelection = false
-    ) => {
+    async (taxonomy, args, addNameToSelection = false) => {
       let response = [];
       const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href;
       if (!termsEndpoint) {
         return;
       }
       try {
-        response = await getTaxonomyTerm(termsEndpoint, {
-          search: name,
-          per_page: perPage,
-        });
+        response = await getTaxonomyTerm(termsEndpoint, args);
       } catch (e) {
         // TODO #9033
       }
 
       // Avoid update if we're not actually adding any terms here
       if (response.length < 1) {
-        return;
+        // eslint-disable-next-line consistent-return
+        return response;
       }
 
       // Format results to fit in our { [taxonomy]: { [slug]: term } } map
       const termResults = {
         [taxonomy.restBase]: dictionaryOnKey(response, 'slug'),
       };
+
       setTermCache((cache) => mergeNestedDictionaries(cache, termResults));
 
-      if (addNameToSelection) {
-        const selectedTermSlug = cleanForSlug(name);
+      if (addNameToSelection && args.search) {
+        const selectedTermSlug = cleanForSlug(args.search);
         const selectedTerm = response.find(
           (term) => term.slug === selectedTermSlug
         );
@@ -188,7 +180,12 @@ function TaxonomyProvider(props) {
         if (selectedTerm) {
           addTermToSelection(taxonomy, selectedTerm);
         }
+      } else if (args.search) {
+        setFlatSearchResults(response);
       }
+
+      // eslint-disable-next-line consistent-return
+      return response;
     },
     [getTaxonomyTerm, addTermToSelection]
   );
@@ -234,7 +231,11 @@ function TaxonomyProvider(props) {
         // We could pull down only the exact term, but
         // we're modeling after Gutenberg.
         if (e.code === 'term_exists') {
-          addSearchResultsToCache(taxonomy, { name: termName }, addToSelection);
+          addSearchResultsToCache(
+            taxonomy,
+            { search: termName },
+            addToSelection
+          );
         }
       }
     },
@@ -259,6 +260,7 @@ function TaxonomyProvider(props) {
   const value = useMemo(
     () => ({
       state: {
+        flatSearchResults,
         taxonomies,
         termCache,
         terms: Array.isArray(terms) ? {} : terms,
@@ -267,14 +269,17 @@ function TaxonomyProvider(props) {
         createTerm,
         addSearchResultsToCache,
         setTerms,
+        addTermToSelection,
       },
     }),
     [
+      flatSearchResults,
       termCache,
       terms,
       taxonomies,
       createTerm,
       addSearchResultsToCache,
+      addTermToSelection,
       setTerms,
     ]
   );

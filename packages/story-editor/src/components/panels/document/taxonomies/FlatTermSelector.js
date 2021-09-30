@@ -36,14 +36,16 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
   const {
     createTerm,
     termCache,
+    flatSearchResults = [],
     addSearchResultsToCache,
     terms = [],
     setTerms,
   } = useTaxonomy(
     ({
-      state: { termCache, terms },
+      state: { flatSearchResults, termCache, terms },
       actions: { createTerm, addSearchResultsToCache, setTerms },
     }) => ({
+      flatSearchResults,
       termCache,
       createTerm,
       addSearchResultsToCache,
@@ -93,7 +95,11 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     if (value.length < 3) {
       return;
     }
-    addSearchResultsToCache(taxonomy, { name: value });
+    addSearchResultsToCache(taxonomy, {
+      search: value,
+      // This is the per_page value Gutenberg is using
+      per_page: 20,
+    });
   }, 1000);
 
   const tokens = useMemo(() => {
@@ -113,12 +119,14 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     [taxonomy, termCache]
   );
 
-  const termCacheAsArray = useMemo(
+  const suggestedTerms = useMemo(
     () =>
-      Object.values(termCache?.[taxonomy.restBase] || {}).map(
-        ({ name }) => name
-      ),
-    [termCache, taxonomy.restBase]
+      flatSearchResults.map(({ name, id }) => ({
+        label: name,
+        value: name,
+        id,
+      })),
+    [flatSearchResults]
   );
 
   return (
@@ -137,6 +145,8 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
           tagDisplayTransformer={termDisplayTransformer}
           tokens={tokens}
           onUndo={undo}
+          suggestedTerms={suggestedTerms}
+          suggestedTermsLabel={taxonomy?.labels?.items_list}
         />
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separate_items_with_commas}

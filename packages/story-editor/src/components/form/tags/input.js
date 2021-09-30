@@ -18,7 +18,6 @@
  */
 import { themeHelpers, BaseInput, noop } from '@web-stories-wp/design-system';
 import {
-  Fragment,
   useEffect,
   useMemo,
   useReducer,
@@ -91,26 +90,6 @@ function Input({
   useEffect(() => {
     dispatch({ type: ACTIONS.UPDATE_TAGS, payload: tokens });
   }, [tokens]);
-
-  const filteredSuggestedTerms = useMemo(() => {
-    const cleanValue = value.trim().toLowerCase();
-    if (cleanValue.length < 3) {
-      return [];
-    }
-    return suggestedTerms.reduce((accum, suggestion) => {
-      if (!suggestion.toLowerCase().startsWith(cleanValue)) {
-        return accum;
-      }
-      return [
-        ...accum,
-        {
-          label: suggestion,
-          value: suggestion,
-          id: uuidv4(),
-        },
-      ];
-    }, []);
-  }, [suggestedTerms, value]);
 
   const dropDownMenuPlacement = useCallback(
     (popupRef) => {
@@ -202,23 +181,19 @@ function Input({
     setSuggestedTermsFocus(false);
   }, []);
 
-  const handleTagSelectedFromSuggestions = useCallback(
-    async (e, selectedValue) => {
-      e.preventDefault();
-      // It's important these run in order so that focus remains intact
-      await setSuggestedTermsFocus(false);
-      await dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: selectedValue });
-      await inputRef?.current.focus();
-    },
-    []
-  );
+  const handleTagSelectedFromSuggestions = useCallback((e, selectedValue) => {
+    e.preventDefault();
+    setSuggestedTermsFocus(false);
+    dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: selectedValue });
+    inputRef?.current.focus();
+  }, []);
 
   const handleSubmitOnFocusOut = useCallback(() => {
-    if (filteredSuggestedTerms.length <= 0 && value.length > 0) {
+    if (suggestedTerms.length <= 0 && value.length > 0) {
       setSuggestedTermsFocus(false);
       dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: value });
     }
-  }, [filteredSuggestedTerms, value]);
+  }, [suggestedTerms, value]);
 
   useFocusOut(containerRef, handleSubmitOnFocusOut, [handleSubmitOnFocusOut]);
 
@@ -234,45 +209,19 @@ function Input({
           ...renderedTags.slice(renderedTags.length - offset),
         ].map((tag) =>
           tag === INPUT_KEY ? (
-            <Fragment key={id}>
-              <TextInput
-                {...props}
-                key={INPUT_KEY}
-                value={value}
-                id={id}
-                onKeyDown={handleKeyDown}
-                onChange={handleChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                size="4"
-                ref={inputRef}
-                autoComplete="off"
-              />
-              {filteredSuggestedTerms.length > 0 && value.length >= 3 && (
-                <Popup
-                  anchor={containerRef}
-                  isOpen={filteredSuggestedTerms.length > 0}
-                  placement={dynamicPlacement}
-                  refCallback={dropDownMenuPlacement}
-                  fillWidth
-                >
-                  <MenuWithRef
-                    activeValue={value}
-                    ref={menuRef}
-                    listId={listId}
-                    hasMenuRole
-                    handleReturnToParent={handleReturnFocusToInput}
-                    isRTL={isRTL}
-                    options={[{ group: filteredSuggestedTerms }]}
-                    onMenuItemClick={handleTagSelectedFromSuggestions}
-                    onDismissMenu={noop} // No need to dismiss, it's either open with options or hidden
-                    menuAriaLabel={suggestedTermsLabel}
-                    isMenuFocused={suggestedTermsFocus}
-                    isPositionedOnTop={dynamicPlacement === PLACEMENT.TOP}
-                  />
-                </Popup>
-              )}
-            </Fragment>
+            <TextInput
+              {...props}
+              key={INPUT_KEY}
+              value={value}
+              id={id}
+              onKeyDown={handleKeyDown}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              size="4"
+              ref={inputRef}
+              autoComplete="off"
+            />
           ) : (
             <Tag key={tag} onDismiss={removeTag(tag)}>
               {tagDisplayTransformer(tag) || tag}
@@ -280,6 +229,30 @@ function Input({
           )
         )
       }
+      {suggestedTerms.length > 0 && value.length >= 3 && (
+        <Popup
+          anchor={containerRef}
+          isOpen={suggestedTerms.length > 0}
+          placement={dynamicPlacement}
+          refCallback={dropDownMenuPlacement}
+          fillWidth
+        >
+          <MenuWithRef
+            activeValue={value}
+            ref={menuRef}
+            listId={listId}
+            hasMenuRole
+            handleReturnToParent={handleReturnFocusToInput}
+            isRTL={isRTL}
+            options={[{ group: suggestedTerms }]}
+            onMenuItemClick={handleTagSelectedFromSuggestions}
+            onDismissMenu={noop} // No need to dismiss, it's either open with options or hidden
+            menuAriaLabel={suggestedTermsLabel}
+            isMenuFocused={suggestedTermsFocus}
+            isPositionedOnTop={dynamicPlacement === PLACEMENT.TOP}
+          />
+        </Popup>
+      )}
     </Border>
   );
 }
