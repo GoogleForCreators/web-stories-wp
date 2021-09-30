@@ -525,7 +525,7 @@ describe('Categories & Tags Panel', () => {
       // Focus tag input
       await fixture.events.focus(tagsInput);
       await fixture.events.keyboard.type('fren');
-      await fixture.events.keyboard.press('ArrowUp');
+      await fixture.events.keyboard.press('ArrowDown');
       expect(document.activeElement.textContent).toBe('frenchFry');
       await fixture.events.keyboard.press('Enter');
 

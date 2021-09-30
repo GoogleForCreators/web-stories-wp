@@ -131,15 +131,6 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     [taxonomy, termCache]
   );
 
-  const suggestedTerms = useMemo(
-    () =>
-      flatSearchResults.map(({ name, id }) => ({
-        name,
-        id,
-      })),
-    [flatSearchResults]
-  );
-
   return (
     <>
       <ContentHeading>{taxonomy.labels.name}</ContentHeading>

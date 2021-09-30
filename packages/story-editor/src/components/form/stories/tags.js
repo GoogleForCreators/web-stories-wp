@@ -49,13 +49,10 @@ export const _default = () => {
           id="tags-input"
           aria-describedby="tags-description"
           name="web_story_tag"
-          autocompleteSuggestions={[
-            'banana',
-            'strawberry',
-            'strawberries',
-            'straws',
-            'starburst',
-            'sunburst',
+          suggestedTerms={[
+            { name: 'banana', id: 1 },
+            { name: 'anna', id: 2 },
+            { name: 'nana', id: 3 },
           ]}
         />
         <Tags.Description id="tags-description">
