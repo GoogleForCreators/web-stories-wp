@@ -51,9 +51,7 @@ function VideoTrimProvider({ children }) {
     fetchOriginalResource,
     shouldFetchResource,
   } = useVideoNode();
-  const { isTrimMode, hasTrimMode, toggleTrimMode } = useVideoTrimMode({
-    setOriginalResource,
-  });
+  const { isTrimMode, hasTrimMode, toggleTrimMode } = useVideoTrimMode();
 
   const performTrim = useCallback(() => {
     const resourceToTrim = originalResource

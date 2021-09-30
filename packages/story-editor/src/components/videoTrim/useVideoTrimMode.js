@@ -26,7 +26,7 @@ import { useCallback, useMemo } from '@web-stories-wp/react';
 import { useCanvas, useStory } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
-function useVideoTrimMode({ setOriginalResource }) {
+function useVideoTrimMode() {
   const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const { isEditing, isTrimMode, setEditingElementWithState, clearEditing } =
     useCanvas(
@@ -48,18 +48,11 @@ function useVideoTrimMode({ setOriginalResource }) {
     if (isEditing) {
       clearEditing();
     } else {
-      setOriginalResource(null);
       setEditingElementWithState(selectedElement.id, {
         isTrimMode: true,
       });
     }
-  }, [
-    isEditing,
-    clearEditing,
-    setEditingElementWithState,
-    selectedElement,
-    setOriginalResource,
-  ]);
+  }, [isEditing, clearEditing, setEditingElementWithState, selectedElement]);
 
   const { isTranscodingEnabled } = useFFmpeg();
 
