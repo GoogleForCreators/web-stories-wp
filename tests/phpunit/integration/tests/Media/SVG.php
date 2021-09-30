@@ -23,44 +23,58 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * @coversDefaultClass \Google\Web_Stories\Media\SVG
  */
 class SVG extends TestCase {
+	/**
+	 * Test instance.
+	 * @var \Google\Web_Stories\Media\SVG
+	 */
+	protected $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+
+		$this->instance = new \Google\Web_Stories\Media\SVG( $experiments );
+	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$svg = $this->get_svg_object();
-		$svg->register();
+		$this->instance->register();
 
 		$this->assertSame(
 			10,
 			has_filter(
 				'web_stories_allowed_mime_types',
 				[
-					$svg,
+					$this->instance,
 					'web_stories_allowed_mime_types',
 				]
 			)
 		);
-		$this->assertSame( 10, has_filter( 'upload_mimes', [ $svg, 'upload_mimes_add_svg' ] ) );
-		$this->assertSame( 10, has_filter( 'mime_types', [ $svg, 'mime_types_add_svg' ] ) );
-		$this->assertSame( 10, has_filter( 'wp_handle_upload_prefilter', [ $svg, 'wp_handle_upload' ] ) );
+		$this->assertSame( 10, has_filter( 'upload_mimes', [ $this->instance, 'upload_mimes_add_svg' ] ) );
+		$this->assertSame( 10, has_filter( 'mime_types', [ $this->instance, 'mime_types_add_svg' ] ) );
+		$this->assertSame( 10, has_filter( 'wp_handle_upload_prefilter', [ $this->instance, 'wp_handle_upload' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
 				'wp_generate_attachment_metadata',
 				[
-					$svg,
+					$this->instance,
 					'wp_generate_attachment_metadata',
 				]
 			)
 		);
-		$this->assertSame( 10, has_filter( 'wp_check_filetype_and_ext', [ $svg, 'wp_check_filetype_and_ext' ] ) );
+		$this->assertSame( 10, has_filter( 'wp_check_filetype_and_ext', [ $this->instance, 'wp_check_filetype_and_ext' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
 				'site_option_upload_filetypes',
 				[
-					$svg,
+					$this->instance,
 					'filter_list_of_allowed_filetypes',
 				]
 			)
@@ -71,8 +85,7 @@ class SVG extends TestCase {
 	 * @covers ::svg_already_enabled
 	 */
 	public function test_svg_already_enabled() {
-		$svg      = $this->get_svg_object();
-		$_results = $this->call_private_method( $svg, 'svg_already_enabled' );
+		$_results = $this->call_private_method( $this->instance, 'svg_already_enabled' );
 
 		$this->assertFalse( $_results );
 	}
@@ -81,13 +94,13 @@ class SVG extends TestCase {
 	 * @covers ::upload_mimes_add_svg
 	 */
 	public function test_upload_mimes_add_svg() {
-		$svg = $this->get_svg_object();
-		$svg->register();
+		$this->instance->register();
+
 		$allowed_mime_types = wp_get_mime_types();
 		$mine_types         = array_values( $allowed_mime_types );
 		$this->assertContains( 'image/svg+xml', $mine_types );
 
-		$allowed_mime_types = $svg->upload_mimes_add_svg( [] );
+		$allowed_mime_types = $this->instance->upload_mimes_add_svg( [] );
 		$mine_types         = array_values( $allowed_mime_types );
 		$this->assertContains( 'image/svg+xml', $mine_types );
 	}
@@ -96,13 +109,13 @@ class SVG extends TestCase {
 	 * @covers ::mime_types_add_svg
 	 */
 	public function test_mime_types_add_svg() {
-		$svg = $this->get_svg_object();
-		$svg->register();
+		$this->instance->register();
+
 		$allowed_mime_types = get_allowed_mime_types();
 		$mine_types         = array_values( $allowed_mime_types );
 		$this->assertContains( 'image/svg+xml', $mine_types );
 
-		$allowed_mime_types = $svg->mime_types_add_svg( [] );
+		$allowed_mime_types = $this->instance->mime_types_add_svg( [] );
 		$mine_types         = array_values( $allowed_mime_types );
 		$this->assertContains( 'image/svg+xml', $mine_types );
 	}
@@ -112,8 +125,7 @@ class SVG extends TestCase {
 	 * @covers ::web_stories_allowed_mime_types
 	 */
 	public function test_web_stories_allowed_mime_types() {
-		$svg                = $this->get_svg_object();
-		$allowed_mime_types = $svg->web_stories_allowed_mime_types( [] );
+		$allowed_mime_types = $this->instance->web_stories_allowed_mime_types( [] );
 
 		$this->assertArrayHasKey( 'image', $allowed_mime_types );
 		$this->assertContains( 'image/svg+xml', $allowed_mime_types['image'] );
@@ -123,11 +135,10 @@ class SVG extends TestCase {
 	 * @covers ::filter_list_of_allowed_filetypes
 	 */
 	public function test_filter_list_of_allowed_filetypes() {
-		$svg = $this->get_svg_object();
-		$svg->register();
-		$setting = get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
+		$this->instance->register();
 
-		$this->assertContains( 'svg', $setting );
+		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
+		$this->assertContains( 'svg', $site_exts );
 	}
 
 	/**
@@ -135,7 +146,7 @@ class SVG extends TestCase {
 	 * @covers ::get_svg_size
 	 */
 	public function test_upload_svg() {
-		$svg_attachment_id = self::factory()->attachment->create_object(
+		$attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => WEB_STORIES_TEST_DATA_DIR . '/video-play.svg',
 				'post_parent'    => 0,
@@ -144,10 +155,9 @@ class SVG extends TestCase {
 			]
 		);
 
-		$svg = $this->get_svg_object();
-		$svg->register();
+		$this->instance->register();
 
-		$attachment_metadata = wp_generate_attachment_metadata( $svg_attachment_id, get_attached_file( $svg_attachment_id ) );
+		$attachment_metadata = wp_generate_attachment_metadata( $attachment_id, get_attached_file( $attachment_id ) );
 		$this->assertArrayHasKey( 'width', $attachment_metadata );
 		$this->assertArrayHasKey( 'height', $attachment_metadata );
 		$this->assertArrayHasKey( 'file', $attachment_metadata );
@@ -162,7 +172,7 @@ class SVG extends TestCase {
 	 * @covers ::wp_generate_attachment_metadata
 	 */
 	public function test_wp_generate_attachment_metadata_update() {
-		$svg_attachment_id = self::factory()->attachment->create_object(
+		$attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => WEB_STORIES_TEST_DATA_DIR . '/video-play.svg',
 				'post_parent'    => 0,
@@ -171,8 +181,7 @@ class SVG extends TestCase {
 			]
 		);
 
-		$svg    = $this->get_svg_object();
-		$result = $svg->wp_generate_attachment_metadata( [], $svg_attachment_id, 'update' );
+		$result = $this->instance->wp_generate_attachment_metadata( [], $attachment_id, 'update' );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -190,8 +199,7 @@ class SVG extends TestCase {
 			]
 		);
 
-		$svg    = $this->get_svg_object();
-		$result = $svg->wp_generate_attachment_metadata( [], $attachment_id, 'create' );
+		$result = $this->instance->wp_generate_attachment_metadata( [], $attachment_id, 'create' );
 		$this->assertEqualSets( [], $result );
 	}
 
@@ -199,8 +207,7 @@ class SVG extends TestCase {
 	 * @covers ::sanitize
 	 */
 	public function test_sanitize() {
-		$svg      = $this->get_svg_object();
-		$_results = $this->call_private_method( $svg, 'sanitize', [ WEB_STORIES_TEST_DATA_DIR . '/video-play.svg' ] );
+		$_results = $this->call_private_method( $this->instance, 'sanitize', [ WEB_STORIES_TEST_DATA_DIR . '/video-play.svg' ] );
 
 		$this->assertTrue( $_results );
 	}
@@ -209,8 +216,7 @@ class SVG extends TestCase {
 	 * @covers ::sanitize
 	 */
 	public function test_sanitize_fail() {
-		$svg      = $this->get_svg_object();
-		$_results = $this->call_private_method( $svg, 'sanitize', [ WEB_STORIES_TEST_DATA_DIR . '/animated.svg' ] );
+		$_results = $this->call_private_method( $this->instance, 'sanitize', [ WEB_STORIES_TEST_DATA_DIR . '/animated.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'insecure_svg_file', $_results->get_error_code() );
@@ -223,8 +229,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_svg_size_from_viewbox() {
-		$svg      = $this->get_svg_object();
-		$_results = $this->call_private_method( $svg, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/why.svg' ] );
+		$_results = $this->call_private_method( $this->instance, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/why.svg' ] );
 
 		$this->assertEqualSetsWithIndex(
 			[
@@ -243,8 +248,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_svg_size_invalid_size() {
-		$svg      = $this->get_svg_object();
-		$_results = $this->call_private_method( $svg, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/add.svg' ] );
+		$_results = $this->call_private_method( $this->instance, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/add.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'invalid_svg_size', $_results->get_error_code() );
@@ -257,8 +261,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_svg_size_invalid_viewbox() {
-		$svg      = $this->get_svg_object();
-		$_results = $this->call_private_method( $svg, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/add-invalid.svg' ] );
+		$_results = $this->call_private_method( $this->instance, 'get_svg_size', [ WEB_STORIES_TEST_DATA_DIR . '/add-invalid.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'invalid_svg_size', $_results->get_error_code() );
@@ -269,8 +272,7 @@ class SVG extends TestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_xml_invalid_file() {
-		$svg      = $this->get_svg_object();
-		$_results = $this->call_private_method( $svg, 'get_xml', [ '<invalid' ] );
+		$_results = $this->call_private_method( $this->instance, 'get_xml', [ '<invalid' ] );
 
 		$this->assertFalse( $_results );
 	}
@@ -280,8 +282,7 @@ class SVG extends TestCase {
 	 * @covers ::get_svg_data
 	 */
 	public function test_sanitize_invalid_file() {
-		$svg      = $this->get_svg_object();
-		$_results = $this->call_private_method( $svg, 'sanitize', [ '' ] );
+		$_results = $this->call_private_method( $this->instance, 'sanitize', [ '' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'invalid_xml_svg', $_results->get_error_code() );
@@ -292,8 +293,7 @@ class SVG extends TestCase {
 	 * @covers ::wp_check_filetype_and_ext
 	 */
 	public function test_wp_check_filetype_and_ext() {
-		$svg = $this->get_svg_object();
-		$svg->register();
+		$this->instance->register();
 		$filepath = WEB_STORIES_TEST_DATA_DIR . '/animated.svg';
 		$data     = wp_check_filetype_and_ext( $filepath, $filepath );
 		$this->assertArrayHasKey( 'ext', $data );
@@ -308,8 +308,7 @@ class SVG extends TestCase {
 	 * @covers ::wp_check_filetype_and_ext
 	 */
 	public function test_wp_check_filetype_and_ext_method() {
-		$svg  = $this->get_svg_object();
-		$data = $svg->wp_check_filetype_and_ext( [], '', '', [], 'image/svg' );
+		$data = $this->instance->wp_check_filetype_and_ext( [], '', '', [], 'image/svg' );
 
 		$this->assertArrayHasKey( 'ext', $data );
 		$this->assertArrayHasKey( 'type', $data );
@@ -322,12 +321,11 @@ class SVG extends TestCase {
 	 * @covers ::wp_handle_upload
 	 */
 	public function test_wp_handle_upload() {
-		$svg    = $this->get_svg_object();
 		$upload = [
 			'tmp_name' => WEB_STORIES_TEST_DATA_DIR . '/video-play.svg',
 			'type'     => 'image/svg+xml',
 		];
-		$data   = $svg->wp_handle_upload( $upload );
+		$data   = $this->instance->wp_handle_upload( $upload );
 		$this->assertSame( $data, $upload );
 	}
 
@@ -335,23 +333,11 @@ class SVG extends TestCase {
 	 * @covers ::wp_handle_upload
 	 */
 	public function test_wp_handle_upload_invalid() {
-		$svg    = $this->get_svg_object();
 		$upload = [
 			'tmp_name' => WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg',
 			'type'     => 'image/jpeg',
 		];
-		$data   = $svg->wp_handle_upload( $upload );
+		$data   = $this->instance->wp_handle_upload( $upload );
 		$this->assertSame( $data, $upload );
-	}
-
-	/**
-	 * @return \Google\Web_Stories\Media\SVG
-	 */
-	protected function get_svg_object() {
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$experiments->method( 'is_experiment_enabled' )
-					->willReturn( true );
-
-		return new \Google\Web_Stories\Media\SVG( $experiments );
 	}
 }

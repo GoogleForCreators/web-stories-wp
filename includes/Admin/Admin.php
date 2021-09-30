@@ -156,7 +156,7 @@ class Admin extends Service_Base {
 		$renderer = new Image( $story );
 		$html     = $renderer->render( $args );
 
-		$content = '<!-- wp:web-stories/embed {"url":"%1$s","title":"%2$s","poster":"%3$s","width":"%4$s","height":"%5$s","align":"%6$s"} -->%7$s<!-- /wp:web-stories/embed -->';
+		$content = '<!-- wp:web-stories/embed {"blockType":"url","url":"%1$s","title":"%2$s","poster":"%3$s","width":"%4$s","height":"%5$s","align":"%6$s","stories": [%7$s]} -->%8$s<!-- /wp:web-stories/embed -->';
 
 		return sprintf(
 			$content,
@@ -166,6 +166,7 @@ class Admin extends Service_Base {
 			absint( $args['width'] ),
 			absint( $args['height'] ),
 			esc_js( $args['align'] ),
+			absint( $post_id ),
 			$html
 		);
 	}

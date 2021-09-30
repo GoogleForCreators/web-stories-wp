@@ -91,7 +91,7 @@ class Admin extends TestCase {
 		wp_set_current_user( self::$admin_id );
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$result                    = $admin->admin_body_class( 'current' );
-		$this->assertContains( 'folded', $result );
+		$this->assertStringContainsString( 'folded', $result );
 	}
 
 	/**
@@ -103,8 +103,8 @@ class Admin extends TestCase {
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
 		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
-		$this->assertContains( 'wp-block-web-stories-embed', $result );
-		$this->assertContains( $poster, $result );
+		$this->assertStringContainsString( 'wp-block-web-stories-embed', $result );
+		$this->assertStringContainsString( $poster, $result );
 	}
 
 	/**
@@ -129,8 +129,8 @@ class Admin extends TestCase {
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
 		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
-		$this->assertContains( '[web_stories_embed', $result );
-		$this->assertContains( $poster, $result );
+		$this->assertStringContainsString( '[web_stories_embed', $result );
+		$this->assertStringContainsString( $poster, $result );
 		remove_filter( 'use_block_editor_for_post', '__return_false' );
 	}
 

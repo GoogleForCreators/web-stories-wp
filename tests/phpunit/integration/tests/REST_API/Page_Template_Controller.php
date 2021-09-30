@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use DateTime;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use Spy_REST_Server;
@@ -78,13 +79,11 @@ class Page_Template_Controller extends Test_REST_TestCase {
 			]
 		);
 
-		$future_date = strtotime( '+1 day' );
-
 		$factory->post->create_many(
 			3,
 			[
 				'post_status' => 'future',
-				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 				'post_type'   => $post_type,
 			]
@@ -118,15 +117,8 @@ class Page_Template_Controller extends Test_REST_TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
-		self::delete_user( self::$user2_id );
-		self::delete_user( self::$user3_id );
-		self::delete_user( self::$author_id );
-	}
-
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
@@ -138,7 +130,7 @@ class Page_Template_Controller extends Test_REST_TestCase {
 		$this->set_permalink_structure( '/%postname%/' );
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
@@ -147,7 +139,7 @@ class Page_Template_Controller extends Test_REST_TestCase {
 
 		$this->set_permalink_structure( '' );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

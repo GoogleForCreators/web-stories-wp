@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import visitAdminPage from './visitAdminPage';
+import { getCurrentUser, setCurrentUser } from './user';
 
 /**
  * Toggle experiments state.
@@ -26,7 +27,10 @@ import visitAdminPage from './visitAdminPage';
  * @param {boolean} enable Whether the features should be enabled or not.
  * @return {Promise<void>}
  */
-async function toggleExperiments(features, enable) {
+export async function toggleExperiments(features, enable) {
+  const currentUser = getCurrentUser();
+  await setCurrentUser('admin', 'password');
+
   await visitAdminPage(
     'edit.php',
     'post_type=web-story&page=web-stories-experiments'
@@ -46,6 +50,8 @@ async function toggleExperiments(features, enable) {
 
   await Promise.all([page.waitForNavigation(), page.click('#submit')]);
   await expect(page).toMatch('Settings saved.');
+
+  await setCurrentUser(currentUser.username, currentUser.password);
 }
 
 /**
@@ -55,6 +61,8 @@ async function toggleExperiments(features, enable) {
  * @param {Array<string>} features Array of experiments to enable.
  */
 export default function withExperimentalFeatures(features) {
-  beforeAll(() => toggleExperiments(features, true));
-  afterAll(() => toggleExperiments(features, false));
+  /* eslint-disable require-await */
+  beforeAll(async () => toggleExperiments(features, true));
+  afterAll(async () => toggleExperiments(features, false));
+  /* eslint-enable require-await */
 }

@@ -43,6 +43,7 @@ Reference this table when needing to know what a quick action will do when click
 |Insert media|Open and highlight the `media pane` in the `library`. Focus the media tab button.|
 |Insert text|Open and highlight the `text pane` in the `library`. Focus the text tab button.|
 |Replace background/media|Open and highlight one of the media panes in the `library`. The media pane opened will depend on the type of the element selected. Focus the relevant tab button.|
+|Trim video|Enter video trim mode similar to button in design panel.|
 
 ### Visibility
 

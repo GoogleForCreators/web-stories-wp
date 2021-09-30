@@ -34,10 +34,6 @@ class Tracking extends TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
-	}
-
 	/**
 	 * @covers ::register
 	 */
@@ -112,12 +108,12 @@ class Tracking extends TestCase {
 		$this->assertSame( get_bloginfo( 'version' ), $settings['userProperties']['wpVersion'] );
 		$this->assertSame( 'administrator', $settings['userProperties']['userRole'] );
 		$this->assertSame( 'enableFoo,enableBar', $settings['userProperties']['enabledExperiments'] );
-		$this->assertInternalType( 'string', $settings['userProperties']['wpVersion'] );
-		$this->assertInternalType( 'string', $settings['userProperties']['phpVersion'] );
-		$this->assertInternalType( 'int', $settings['userProperties']['isMultisite'] );
-		$this->assertInternalType( 'string', $settings['userProperties']['adNetwork'] );
-		$this->assertInternalType( 'string', $settings['userProperties']['analytics'] );
-		$this->assertInternalType( 'string', $settings['userProperties']['activePlugins'] );
+		$this->assertIsString( $settings['userProperties']['wpVersion'] );
+		$this->assertIsString( $settings['userProperties']['phpVersion'] );
+		$this->assertIsInt( $settings['userProperties']['isMultisite'] );
+		$this->assertIsString( $settings['userProperties']['adNetwork'] );
+		$this->assertIsString( $settings['userProperties']['analytics'] );
+		$this->assertIsString( $settings['userProperties']['activePlugins'] );
 	}
 
 	/**

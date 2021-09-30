@@ -47,13 +47,8 @@ class Cross_Origin_Isolation extends TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$admin_id );
-		self::delete_user( self::$contributor_id );
-	}
-
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		$user_preferences = new \Google\Web_Stories\User\Preferences();
 		$user_preferences->register();
@@ -144,7 +139,7 @@ class Cross_Origin_Isolation extends TestCase {
 		$attribute = 'src';
 		$url       = 'http://www.google.com/test.jpg';
 		$result    = $this->call_private_method( $instance, 'add_attribute', [ $html, $attribute, $url ] );
-		$this->assertContains( 'crossorigin', $result );
+		$this->assertStringContainsString( 'crossorigin', $result );
 	}
 	/**
 	 * @covers ::add_attribute
@@ -157,7 +152,7 @@ class Cross_Origin_Isolation extends TestCase {
 		$html      = sprintf( "<img src='%s' alt='test' />", $url );
 		$attribute = 'src';
 		$result    = $this->call_private_method( $instance, 'add_attribute', [ $html, $attribute, $url ] );
-		$this->assertNotContains( 'crossorigin', $result );
+		$this->assertStringNotContainsString( 'crossorigin', $result );
 	}
 
 	/**
@@ -171,7 +166,7 @@ class Cross_Origin_Isolation extends TestCase {
 		$attribute = 'src';
 		$url       = '/test.jpg';
 		$result    = $this->call_private_method( $instance, 'add_attribute', [ $html, $attribute, $url ] );
-		$this->assertNotContains( 'crossorigin', $result );
+		$this->assertStringNotContainsString( 'crossorigin', $result );
 	}
 
 	/**
@@ -233,26 +228,26 @@ class Cross_Origin_Isolation extends TestCase {
 		$instance = new \Google\Web_Stories\Admin\Cross_Origin_Isolation();
 		$result   = $this->call_private_method( $instance, 'replace_in_dom', [ $html ] );
 
-		$this->assertContains( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0.js"></script>', $result );
-		$this->assertContains( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>', $result );
-		$this->assertContains( '<link crossorigin="anonymous" href="https://fonts.googleapis.com/css2?display=swap&#038;family=Roboto" rel="stylesheet" />', $result );
-		$this->assertContains( '<img alt="test" crossorigin="anonymous" src="http://www.example.com/test1.jpg" loading="eager" />', $result );
-		$this->assertContains( "<img crossorigin='anonymous' src='http://www.example.com/test2.jpg' alt='test' />", $result );
-		$this->assertContains( '<iframe src="http://www.example.com"></iframe>', $result );
-		$this->assertContains( 'crossorigin="use-credentials"', $result );
-		$this->assertContains( '<a href="http://www.example.com/test1.jpg">Test</a>', $result );
-		$this->assertContains( '<video crossorigin="anonymous"><source src="http://www.example.com/video1.mp4"></video>', $result );
-		$this->assertContains( '<video crossorigin="anonymous" src="http://www.example.com/video3.mp4"></video>', $result );
-		$this->assertContains( '<audio crossorigin="anonymous"><source src="http://www.example.com/audio1.mp3"></audio>', $result );
-		$this->assertContains( '<audio crossorigin="anonymous" src="http://www.example.com/audio3.mp3"></audio>', $result );
-		$this->assertContains( "<img src='$site_url/test3.jpg' alt=\"test\" />", $result );
-		$this->assertContains( "<iframe src=\"$site_url\"></iframe>", $result );
-		$this->assertContains( "<video><source src=\"$site_url/video2.mp4\"></video>", $result );
-		$this->assertContains( "<video src=\"$site_url/video4.mp4\"></video>", $result );
-		$this->assertContains( "<audio><source src=\"$site_url/audio2.mp3\"></audio>", $result );
-		$this->assertContains( "<audio src=\"$site_url/audio4.mp3\"></audio>", $result );
-		$this->assertContains( "<script async=\"\" src=\"$site_url\"></script>", $result );
-		$this->assertContains( "<link href=\"$site_url/site.css\" rel=\"stylesheet\" />", $result );
+		$this->assertStringContainsString( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0.js"></script>', $result );
+		$this->assertStringContainsString( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>', $result );
+		$this->assertStringContainsString( '<link crossorigin="anonymous" href="https://fonts.googleapis.com/css2?display=swap&#038;family=Roboto" rel="stylesheet" />', $result );
+		$this->assertStringContainsString( '<img alt="test" crossorigin="anonymous" src="http://www.example.com/test1.jpg" loading="eager" />', $result );
+		$this->assertStringContainsString( "<img crossorigin='anonymous' src='http://www.example.com/test2.jpg' alt='test' />", $result );
+		$this->assertStringContainsString( '<iframe src="http://www.example.com"></iframe>', $result );
+		$this->assertStringContainsString( 'crossorigin="use-credentials"', $result );
+		$this->assertStringContainsString( '<a href="http://www.example.com/test1.jpg">Test</a>', $result );
+		$this->assertStringContainsString( '<video crossorigin="anonymous"><source src="http://www.example.com/video1.mp4"></video>', $result );
+		$this->assertStringContainsString( '<video crossorigin="anonymous" src="http://www.example.com/video3.mp4"></video>', $result );
+		$this->assertStringContainsString( '<audio crossorigin="anonymous"><source src="http://www.example.com/audio1.mp3"></audio>', $result );
+		$this->assertStringContainsString( '<audio crossorigin="anonymous" src="http://www.example.com/audio3.mp3"></audio>', $result );
+		$this->assertStringContainsString( "<img src='$site_url/test3.jpg' alt=\"test\" />", $result );
+		$this->assertStringContainsString( "<iframe src=\"$site_url\"></iframe>", $result );
+		$this->assertStringContainsString( "<video><source src=\"$site_url/video2.mp4\"></video>", $result );
+		$this->assertStringContainsString( "<video src=\"$site_url/video4.mp4\"></video>", $result );
+		$this->assertStringContainsString( "<audio><source src=\"$site_url/audio2.mp3\"></audio>", $result );
+		$this->assertStringContainsString( "<audio src=\"$site_url/audio4.mp3\"></audio>", $result );
+		$this->assertStringContainsString( "<script async=\"\" src=\"$site_url\"></script>", $result );
+		$this->assertStringContainsString( "<link href=\"$site_url/site.css\" rel=\"stylesheet\" />", $result );
 	}
 
 	/**
@@ -262,7 +257,7 @@ class Cross_Origin_Isolation extends TestCase {
 		$html     = '<html><img src="http://www.example.com/test1.jpg" /><invalid /</html';
 		$instance = new \Google\Web_Stories\Admin\Cross_Origin_Isolation();
 		$result   = $this->call_private_method( $instance, 'replace_in_dom', [ $html ] );
-		$this->assertContains( '<img crossorigin="anonymous" src="http://www.example.com/test1.jpg" />', $result );
+		$this->assertStringContainsString( '<img crossorigin="anonymous" src="http://www.example.com/test1.jpg" />', $result );
 	}
 
 	/**
@@ -274,8 +269,8 @@ class Cross_Origin_Isolation extends TestCase {
 		require_once ABSPATH . WPINC . '/media-template.php';
 		$instance = new \Google\Web_Stories\Admin\Cross_Origin_Isolation();
 		$output   = get_echo( [ $instance, 'custom_print_media_templates' ] );
-		$this->assertContains( '<audio crossorigin="anonymous"', $output );
-		$this->assertContains( '<img crossorigin="anonymous"', $output );
-		$this->assertContains( '<video crossorigin="anonymous"', $output );
+		$this->assertStringContainsString( '<audio crossorigin="anonymous"', $output );
+		$this->assertStringContainsString( '<img crossorigin="anonymous"', $output );
+		$this->assertStringContainsString( '<video crossorigin="anonymous"', $output );
 	}
 }

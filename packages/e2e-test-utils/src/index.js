@@ -41,6 +41,7 @@ export { default as deleteAllMedia } from './deleteAllMedia';
 export { default as deleteWidgets } from './deleteWidgets';
 export { default as getFileName } from './getFileName';
 export { default as trashAllPosts } from './trashAllPosts';
+export { default as trashAllTerms } from './trashAllTerms';
 export { default as visitAdminPage } from './visitAdminPage';
 export { setCurrentUser, getCurrentUser } from './user';
 export { default as activatePlugin } from './activatePlugin';

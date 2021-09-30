@@ -36,5 +36,5 @@ export default function withUser(username, password) {
     await toggleVideoOptimization(false);
   });
 
-  afterAll(() => setCurrentUser(currentUser.username, currentUser.password));
+  afterAll(async () => setCurrentUser(currentUser.username, currentUser.password));
 }

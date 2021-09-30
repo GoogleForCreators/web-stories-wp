@@ -17,10 +17,11 @@
 /**
  * Internal dependencies
  */
-import App from './app';
+import Dashboard from './dashboard';
 
-export default App;
+export * from './app';
 export { GlobalStyle as DashboardGlobalStyle } from './theme';
 export { default as DashboardKeyboardOnlyOutline } from './utils/keyboardOnlyOutline';
-export { ConfigProvider as DashboardConfigProvider } from './app/config';
-export { default as ApiProvider } from './app/api/apiProvider';
+export { default as InterfaceSkeleton } from './components/interfaceSkeleton';
+
+export default Dashboard;

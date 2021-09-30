@@ -39,7 +39,7 @@ class Stories extends TestCase {
 	 *
 	 * @return void
 	 */
-	public static function setUpBeforeClass() {
+	public static function set_up_before_class() {
 		$assets       = new \Google\Web_Stories\Assets();
 		self::$testee = new Testee( $assets );
 	}
@@ -147,9 +147,9 @@ class Stories extends TestCase {
 
 		$dropdown = get_echo( $function );
 
-		$this->assertContains( 'Test input', $dropdown );
-		$this->assertContains( '<input', $dropdown );
-		$this->assertContains( '<label', $dropdown );
+		$this->assertStringContainsString( 'Test input', $dropdown );
+		$this->assertStringContainsString( '<input', $dropdown );
+		$this->assertStringContainsString( '<label', $dropdown );
 	}
 
 	/**
@@ -168,10 +168,10 @@ class Stories extends TestCase {
 
 		$dropdown = get_echo( $function );
 
-		$this->assertContains( 'Test input', $dropdown );
-		$this->assertContains( 'selected=', $dropdown );
-		$this->assertContains( '<select', $dropdown );
-		$this->assertContains( '<label', $dropdown );
+		$this->assertStringContainsString( 'Test input', $dropdown );
+		$this->assertStringContainsString( 'selected=', $dropdown );
+		$this->assertStringContainsString( '<select', $dropdown );
+		$this->assertStringContainsString( '<label', $dropdown );
 	}
 
 	/**
@@ -190,10 +190,10 @@ class Stories extends TestCase {
 
 		$radio = get_echo( $function );
 
-		$this->assertContains( 'Test input', $radio );
-		$this->assertContains( 'checked=', $radio );
-		$this->assertContains( '<input', $radio );
-		$this->assertContains( '<label', $radio );
+		$this->assertStringContainsString( 'Test input', $radio );
+		$this->assertStringContainsString( 'checked=', $radio );
+		$this->assertStringContainsString( '<input', $radio );
+		$this->assertStringContainsString( '<label', $radio );
 	}
 
 	/**
@@ -207,7 +207,7 @@ class Stories extends TestCase {
 
 		$label = $this->call_private_method( self::$testee, 'label', [ $args ] );
 
-		$this->assertContains( 'Test input', $label );
-		$this->assertContains( '<label', $label );
+		$this->assertStringContainsString( 'Test input', $label );
+		$this->assertStringContainsString( '<label', $label );
 	}
 }

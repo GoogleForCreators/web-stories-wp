@@ -50,7 +50,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
         icon={<BlockIcon />}
         setAttributes={setAttributes}
         instructions={__(
-          'Embed a collection of your latest stories, select your own or enter an URL',
+          'Embed a collection of your latest stories, select your own or enter an URL.',
           'web-stories'
         )}
         selectionOptions={BLOCK_TYPES}
