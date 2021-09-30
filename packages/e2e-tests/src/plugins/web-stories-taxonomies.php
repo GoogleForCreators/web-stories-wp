@@ -11,17 +11,6 @@ namespace Google\Web_Stories\E2E_Tests;
 
 function add_taxonomies() {
 	register_taxonomy(
-		'story-tag',
-		'web-story',
-		[
-			'description'  => 'Story Tags',
-			'show_in_rest' => true,
-			'show_ui'      => true,
-			'rest_base'    => 'story-tags',
-		]
-	);
-
-	register_taxonomy(
 		'story-color',
 		'web-story',
 		[
@@ -52,18 +41,6 @@ function add_taxonomies() {
 				'item_link'                  => 'Color Color',
 				'item_link_description'      => 'A link to a color.',
 			],
-		]
-	);
-
-	register_taxonomy(
-		'story-category',
-		'web-story',
-		[
-			'description'  => 'Story Categories',
-			'hierarchical' => true,
-			'show_in_rest' => true,
-			'show_ui'      => true,
-			'rest_base'    => 'story-categories',
 		]
 	);
 
