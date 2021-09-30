@@ -40,7 +40,6 @@ export default function useDropDownMenu({
   activeValue,
   handleMenuItemSelect,
   handleReturnToParent,
-  isPositionedOnTop,
   isRTL,
   options = [],
   listRef,
@@ -113,22 +112,9 @@ export default function useDropDownMenu({
         focusedIndex === 0
       ) {
         handleReturnToParent?.();
-      } else if (
-        isPositionedOnTop &&
-        key === KEYS.ARROW_DOWN &&
-        focusedIndex === listLength - 1
-      ) {
-        handleReturnToParent?.();
       }
     },
-    [
-      focusedIndex,
-      handleMoveFocus,
-      handleReturnToParent,
-      isPositionedOnTop,
-      isRTL,
-      listLength,
-    ]
+    [focusedIndex, handleMoveFocus, handleReturnToParent, isRTL, listLength]
   );
 
   const handleMenuItemEnter = useCallback(

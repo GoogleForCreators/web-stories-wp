@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  forwardRef,
-} from '@web-stories-wp/react';
+import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 
 /**
@@ -42,7 +37,6 @@ import { EmptyList, ListGroupings } from './list';
  * @param {Function} props.handleReturnToParent If present, when focus is on first option and user keys up, this function will be triggered, meant to pass function to controlling element.
  * @param {boolean} props.hasMenuRole If true, the aria role used for the list is 'menu' instead of 'listbox'.
  * @param {boolean} props.isMenuFocused Defaults to true, if false will prevent useEffect from passing focus to menu items, meant to aid search and typeahead utility.
- * @param {boolean} props.isPositionedOnTop Defaults to false, used when a menu is positioned on top of an element instead of the default below.
  * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list. These options need to be sanitized with utils/getOptions.
  * @param {string} props.listId ID that comes from parent component that attaches this list to that parent. Used for a11y.
@@ -55,30 +49,25 @@ import { EmptyList, ListGroupings } from './list';
  * @param {boolean} props.isAbsolute If true, menu will be placed absolutely rather than statically.
  */
 
-const Menu = (
-  {
-    dropDownHeight,
-    emptyText,
-    menuStylesOverride,
-    hasMenuRole,
-    handleReturnToParent,
-    isMenuFocused = true,
-    isPositionedOnTop,
-    isRTL,
-    options = [],
-    listId,
-    onMenuItemClick,
-    onDismissMenu,
-    renderItem,
-    activeValue,
-    menuAriaLabel,
-    parentId,
-    isAbsolute = false,
-  },
-  ref
-) => {
-  const _listRef = useRef();
-  const listRef = ref?.current ? ref : _listRef;
+const Menu = ({
+  dropDownHeight,
+  emptyText,
+  menuStylesOverride,
+  hasMenuRole,
+  handleReturnToParent,
+  isMenuFocused = true,
+  isRTL,
+  options = [],
+  listId,
+  onMenuItemClick,
+  onDismissMenu,
+  renderItem,
+  activeValue,
+  menuAriaLabel,
+  parentId,
+  isAbsolute = false,
+}) => {
+  const listRef = useRef();
   const optionsRef = useRef([]);
 
   const handleMenuItemSelect = useCallback(
@@ -89,7 +78,6 @@ const Menu = (
   const { focusedIndex, listLength } = useDropDownMenu({
     activeValue,
     handleMenuItemSelect,
-    isPositionedOnTop,
     isRTL,
     options,
     listRef,
@@ -119,7 +107,7 @@ const Menu = (
       0,
       highlighedOptionEl.offsetTop - listEl.clientHeight / 2
     );
-  }, [focusedIndex, isMenuFocused, listRef]);
+  }, [focusedIndex, isMenuFocused]);
 
   return (
     <MenuContainer
@@ -150,8 +138,6 @@ const Menu = (
   );
 };
 
-const MenuWithRef = forwardRef(Menu);
-
 Menu.propTypes = {
   dropDownHeight: PropTypes.number,
   emptyText: PropTypes.string,
@@ -159,7 +145,6 @@ Menu.propTypes = {
   hasMenuRole: PropTypes.bool,
   handleReturnToParent: PropTypes.func,
   isMenuFocused: PropTypes.bool,
-  isPositionedOnTop: PropTypes.bool,
   isRTL: PropTypes.bool,
   options: MENU_OPTIONS,
   listId: PropTypes.string.isRequired,
@@ -172,4 +157,4 @@ Menu.propTypes = {
   isAbsolute: PropTypes.bool,
 };
 
-export { Menu, MenuWithRef };
+export { Menu };

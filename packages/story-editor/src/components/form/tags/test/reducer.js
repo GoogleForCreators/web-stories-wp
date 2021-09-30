@@ -338,7 +338,7 @@ describe('<Tags.Input /> Reducer', () => {
       const action = { type: ACTIONS.RESET_OFFSET };
       const expectedState = {
         offset: 0,
-        value: '',
+        value: 'tag4',
         tags: ['tag1', 'tag2', 'tag3'],
         tagBuffer: null,
       };

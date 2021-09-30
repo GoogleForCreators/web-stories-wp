@@ -16,7 +16,12 @@
 /**
  * External dependencies
  */
-import { themeHelpers, BaseInput, noop } from '@web-stories-wp/design-system';
+import {
+  themeHelpers,
+  BaseInput,
+  List,
+  noop,
+} from '@web-stories-wp/design-system';
 import {
   useEffect,
   useMemo,
@@ -24,7 +29,6 @@ import {
   useRef,
   useState,
   useCallback,
-  useFocusOut,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -32,8 +36,6 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../app';
-import { noop } from '../../../utils/noop';
 import reducer, { ACTIONS } from './reducer';
 import Tag from './tag';
 
@@ -59,6 +61,18 @@ const TextInput = styled(BaseInput).attrs({ type: 'text' })`
   margin: 3px 0;
 `;
 
+const SuggestionList = styled(List)`
+  display: block;
+  list-style-type: none;
+  width: 100%;
+  margin-top: 4px;
+  li {
+    padding: 4px;
+    width: 100%;
+    ${themeHelpers.focusableOutlineCSS()}
+    border-radius: ${({ theme }) => theme.borders.radius.small};
+  }
+`;
 function Input({
   suggestedTerms = [],
   onTagsChange,
@@ -69,7 +83,6 @@ function Input({
   onUndo = noop,
   ...props
 }) {
-  const { isRTL } = useConfig();
   const [{ value, tags, offset, tagBuffer }, dispatch] = useReducer(reducer, {
     value: '',
     tags: [...tokens],
@@ -78,37 +91,14 @@ function Input({
   });
 
   const [isInputFocused, setIsInputFocused] = useState(false);
-  const [suggestedTermsFocus, setSuggestedTermsFocus] = useState(false);
-  const [dynamicPlacement, setDynamicPlacement] = useState(PLACEMENT.BOTTOM);
 
   const inputRef = useRef();
   const menuRef = useRef();
   const containerRef = useRef();
-  const listId = uuidv4();
 
   useEffect(() => {
     dispatch({ type: ACTIONS.UPDATE_TAGS, payload: tokens });
   }, [tokens]);
-
-  const dropDownMenuPlacement = useCallback(
-    (popupRef) => {
-      // check to see if there's an overlap with the window edge
-      const { bottom, top } = popupRef.current?.getBoundingClientRect() || {};
-
-      // if the popup was assigned as bottom we want to always check it
-      if (
-        dynamicPlacement.startsWith('bottom') &&
-        bottom >= window.innerHeight
-      ) {
-        setDynamicPlacement(PLACEMENT.TOP);
-      }
-      // if the popup was assigned as top we want to always check it
-      if (dynamicPlacement.startsWith('top') && top <= 0) {
-        setDynamicPlacement(PLACEMENT.BOTTOM);
-      }
-    },
-    [dynamicPlacement]
-  );
 
   // Allow parents to pass onTagsChange callback
   // that updates as tags does.
@@ -175,26 +165,36 @@ function Input({
 
   const renderedTags = tagBuffer || tags;
 
-  const handleReturnFocusToInput = useCallback(() => {
-    inputRef?.current.focus();
-    setSuggestedTermsFocus(false);
-  }, []);
-
   const handleTagSelectedFromSuggestions = useCallback((e, selectedValue) => {
     e.preventDefault();
-    setSuggestedTermsFocus(false);
     dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: selectedValue });
     inputRef?.current.focus();
   }, []);
 
-  const handleSubmitOnFocusOut = useCallback(() => {
-    if (suggestedTerms.length <= 0 && value.length > 0) {
-      setSuggestedTermsFocus(false);
-      dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: value });
-    }
-  }, [suggestedTerms, value]);
+  const totalSuggestions = suggestedTerms.length - 1;
 
-  useFocusOut(containerRef, handleSubmitOnFocusOut, [handleSubmitOnFocusOut]);
+  const handleSuggestionKeyDown = useCallback(
+    (e, index, name) => {
+      const nextChild = index + 1;
+      const previousChild = index - 1;
+      if (e.key === 'ArrowDown') {
+        if (nextChild <= totalSuggestions) {
+          menuRef?.current?.children?.[nextChild]?.focus();
+        }
+      }
+      if (e.key === 'ArrowUp') {
+        if (previousChild < 0) {
+          inputRef?.current.focus();
+        } else {
+          menuRef?.current?.children?.[previousChild]?.focus();
+        }
+      }
+      if (e.key === 'Enter') {
+        handleTagSelectedFromSuggestions(e, name);
+      }
+    },
+    [handleTagSelectedFromSuggestions, totalSuggestions]
+  );
 
   return (
     <Border ref={containerRef} isInputFocused={isInputFocused}>
@@ -228,34 +228,32 @@ function Input({
         )
       }
       {suggestedTerms.length > 0 && value.length >= 3 && (
-        <Popup
-          anchor={containerRef}
-          isOpen={suggestedTerms.length > 0}
-          placement={dynamicPlacement}
-          refCallback={dropDownMenuPlacement}
-          fillWidth
+        <SuggestionList
+          aria-label={suggestedTermsLabel}
+          role="listbox"
+          ref={menuRef}
         >
-          <MenuWithRef
-            activeValue={value}
-            ref={menuRef}
-            listId={listId}
-            hasMenuRole
-            handleReturnToParent={handleReturnFocusToInput}
-            isRTL={isRTL}
-            options={[{ group: suggestedTerms }]}
-            onMenuItemClick={handleTagSelectedFromSuggestions}
-            onDismissMenu={noop} // No need to dismiss, it's either open with options or hidden
-            menuAriaLabel={suggestedTermsLabel}
-            isMenuFocused={suggestedTermsFocus}
-            isPositionedOnTop={dynamicPlacement === PLACEMENT.TOP}
-          />
-        </Popup>
+          {suggestedTerms.map(({ name, id }, index) => (
+            <li
+              key={id}
+              aria-selected={value === name}
+              role="option"
+              tabIndex={0}
+              onClick={(e) => handleTagSelectedFromSuggestions(e, name)}
+              onKeyDown={(e) => handleSuggestionKeyDown(e, index, name)}
+            >
+              {name}
+            </li>
+          ))}
+        </SuggestionList>
       )}
     </Border>
   );
 }
 Input.propTypes = {
-  suggestedTerms: PropTypes.arrayOf(PropTypes.string),
+  suggestedTerms: PropTypes.arrayOf(
+    PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
+  ),
   name: PropTypes.string.isRequired,
   initialTags: PropTypes.arrayOf(PropTypes.string),
   onTagsChange: PropTypes.func,

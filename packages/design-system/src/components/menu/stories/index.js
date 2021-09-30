@@ -112,7 +112,6 @@ export const _default = () => {
           activeValue={selectedValue}
           menuAriaLabel={text('menuAriaLabel', 'default aria label')}
           parentId={text('parentId', 'id-menu-associates-with')}
-          isPositionedOnTop={boolean('isPositionedOnTop')}
         />
       </Container>
     </DarkThemeProvider>
@@ -141,7 +140,6 @@ export const LightTheme = () => {
         activeValue={selectedValue}
         menuAriaLabel={text('menuAriaLabel', 'default aria label')}
         parentId={text('parentId', 'id-menu-associates-with')}
-        isPositionedOnTop={boolean('isPositionedOnTop')}
       />
     </Container>
   );
@@ -169,7 +167,6 @@ export const NoOptionsMenu = () => {
         activeValue={selectedValue}
         menuAriaLabel={text('menuAriaLabel', 'default aria label')}
         parentId={text('parentId', 'id-menu-associates-with')}
-        isPositionedOnTop={boolean('isPositionedOnTop')}
       />
     </Container>
   );
@@ -197,7 +194,6 @@ export const ReallyLongLabelsMenu = () => {
         activeValue={selectedValue}
         menuAriaLabel={text('menuAriaLabel', 'default aria label')}
         parentId={text('parentId', 'id-menu-associates-with')}
-        isPositionedOnTop={boolean('isPositionedOnTop')}
       />
     </Container>
   );
@@ -225,7 +221,6 @@ export const SubMenus = () => {
         activeValue={selectedValue}
         menuAriaLabel={text('menuAriaLabel', 'default aria label')}
         parentId={text('parentId', 'id-menu-associates-with')}
-        isPositionedOnTop={boolean('isPositionedOnTop')}
       />
     </Container>
   );
@@ -272,7 +267,6 @@ export const OverriddenAnimationProofOfConcept = () => {
           parentId={text('parentId', 'id-menu-associates-with')}
           menuStylesOverride={styleOverrideForAnimationEffectMenu}
           renderItem={RenderItemOverride}
-          isPositionedOnTop={boolean('isPositionedOnTop')}
         />
       </Container>
     </DarkThemeProvider>
