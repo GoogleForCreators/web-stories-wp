@@ -63,7 +63,7 @@ function TaxonomiesPanel(props) {
       {availableTaxonomies.map((taxonomy) => {
         const canCreateTerms = Boolean(
           capabilities[`create-${taxonomy?.restBase}`] ||
-            capabilities[`create-${taxonomy.slug}`]
+            capabilities[`create-${taxonomy?.slug}`]
         );
 
         return taxonomy.hierarchical ? (
