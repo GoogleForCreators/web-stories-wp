@@ -31,6 +31,6 @@ class Embed extends TestCase {
 			'width'  => 360,
 		];
 		$render = $embed->render( $args );
-		$this->assertContains( 'test title', $render );
+		$this->assertStringContainsString( 'test title', $render );
 	}
 }

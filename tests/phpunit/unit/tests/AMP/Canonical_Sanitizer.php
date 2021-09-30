@@ -39,7 +39,7 @@ class Canonical_Sanitizer extends TestCase {
 		$sanitizer->sanitize();
 
 		$actual = $dom->saveHTML( $dom->documentElement );
-		$this->assertContains( '<link rel="canonical" href="https://example.com/canonical.html">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="https://example.com/canonical.html">', $actual );
 	}
 
 	/**
@@ -79,7 +79,7 @@ class Canonical_Sanitizer extends TestCase {
 
 		$actual = $dom->saveHTML( $dom->documentElement );
 
-		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="' . $canonical . '">', $actual );
 	}
 
 	/**
@@ -100,9 +100,9 @@ class Canonical_Sanitizer extends TestCase {
 
 		$actual = $dom->saveHTML( $dom->documentElement );
 
-		$this->assertContains( '<link rel="canonical" href="', $actual );
-		$this->assertNotContains( '<link rel="canonical" href="">', $actual );
-		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="', $actual );
+		$this->assertStringNotContainsString( '<link rel="canonical" href="">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="' . $canonical . '">', $actual );
 	}
 
 	/**
@@ -123,6 +123,6 @@ class Canonical_Sanitizer extends TestCase {
 
 		$actual = $dom->saveHTML( $dom->documentElement );
 
-		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="' . $canonical . '">', $actual );
 	}
 }

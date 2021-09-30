@@ -72,8 +72,8 @@ class Carousel_Renderer extends TestCase {
 	/**
 	 * Runs once before any test in the class run.
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		$this->story_model = $this->createMock( Story::class );
 		$this->story_query = $this->createMock( Story_Query::class );
@@ -130,9 +130,9 @@ class Carousel_Renderer extends TestCase {
 
 		$output = $renderer->render();
 
-		$this->assertContains( 'web-stories-list alignnone is-view-type-carousel', $output );
-		$this->assertContains( 'web-stories-list__story', $output );
-		$this->assertContains( 'web-stories-list__story-poster', $output );
+		$this->assertStringContainsString( 'web-stories-list alignnone is-view-type-carousel', $output );
+		$this->assertStringContainsString( 'web-stories-list__story', $output );
+		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 
 	}
 
