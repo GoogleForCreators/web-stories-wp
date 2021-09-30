@@ -70,7 +70,7 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
       const stories = await apiFetch({
         path: addQueryArgs(storiesApi, {
           per_page: 20,
-          _embed: 'author',
+          _embed: 'author,wp:featuredmedia',
           orderby: query.orderby || 'modified',
           order: query.order || 'desc',
           author: query.author || undefined,
