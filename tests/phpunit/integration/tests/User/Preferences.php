@@ -65,7 +65,6 @@ class Preferences extends TestCase {
 		);
 	}
 
-
 	public function set_up() {
 		parent::set_up();
 
