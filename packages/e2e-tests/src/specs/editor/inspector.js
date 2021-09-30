@@ -29,8 +29,7 @@ describe('Inspector', () => {
     describe('Contributor User', () => {
       withUser('contributor', 'password');
 
-      // eslint-disable-next-line jest/no-disabled-tests
-      it.skip('should not display publisher logo upload', async () => {
+      it('should not display publisher logo upload', async () => {
         await createNewStory();
         await expect(page).toMatch('Howdy, contributor');
 
