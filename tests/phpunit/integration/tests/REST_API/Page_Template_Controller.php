@@ -18,9 +18,7 @@
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use DateTime;
-use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
-use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
@@ -115,31 +113,6 @@ class Page_Template_Controller extends Test_REST_TestCase {
 				'post_type'   => $post_type,
 			]
 		);
-	}
-
-	public function set_up() {
-		parent::set_up();
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
-
-		$this->add_caps_to_roles();
-
-		$this->set_permalink_structure( '/%postname%/' );
-	}
-
-	public function tear_down() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
-		$this->remove_caps_from_roles();
-
-		$this->set_permalink_structure( '' );
-
-		parent::tear_down();
 	}
 
 	/**
