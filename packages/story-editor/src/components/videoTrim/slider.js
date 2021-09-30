@@ -36,7 +36,6 @@ function Slider({
   value = 0,
   onChange = () => {},
   getValueText = null,
-  isRTL = false,
   ...rest
 }) {
   const ref = useRef();
@@ -77,32 +76,20 @@ function Slider({
     [onChange, value]
   );
 
-  const sign = isRTL ? -1 : 1;
-
-  useKeyDownEffect(ref, 'left', () => handleNudge(sign * -step), [
-    handleNudge,
-    step,
-    sign,
-  ]);
-  useKeyDownEffect(ref, 'shift+left', () => handleNudge(sign * -minorStep), [
+  useKeyDownEffect(ref, 'left', () => handleNudge(-step), [handleNudge, step]);
+  useKeyDownEffect(ref, 'shift+left', () => handleNudge(-minorStep), [
     handleNudge,
     minorStep,
-    sign,
   ]);
-  useKeyDownEffect(ref, 'right', () => handleNudge(sign * step), [
-    handleNudge,
-    step,
-    sign,
-  ]);
-  useKeyDownEffect(ref, 'shift+right', () => handleNudge(sign * minorStep), [
+  useKeyDownEffect(ref, 'right', () => handleNudge(step), [handleNudge, step]);
+  useKeyDownEffect(ref, 'shift+right', () => handleNudge(minorStep), [
     handleNudge,
     minorStep,
-    sign,
   ]);
 
   const ratio = (value - min) / (max - min);
   const cssValue = `${(ratio * railWidth).toFixed(2)}px`;
-  const sliderStyle = isRTL ? { right: cssValue } : { left: cssValue };
+  const sliderStyle = { left: cssValue };
 
   return (
     <Thumb
@@ -128,7 +115,6 @@ Slider.propTypes = {
   value: PropTypes.number,
   onChange: PropTypes.func,
   getValueText: PropTypes.func,
-  isRTL: PropTypes.bool,
 };
 
 export default Slider;
