@@ -18,7 +18,6 @@
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Decoder;
-use Spy_REST_Server;
 use WP_REST_Request;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 
@@ -37,13 +36,6 @@ class Status_Check_Controller extends Test_REST_TestCase {
 
 	protected static $editor;
 	protected static $subscriber;
-
-	/**
-	 * Count of the number of requests attempted.
-	 *
-	 * @var int
-	 */
-	protected $request_count = 0;
 
 	/**
 	 * Test instance.
@@ -69,26 +61,7 @@ class Status_Check_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->request_count = 0;
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
-
 		$this->controller = new \Google\Web_Stories\REST_API\Status_Check_Controller( new Decoder() );
-
-		$this->add_caps_to_roles();
-	}
-
-	public function tear_down() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
-		$this->remove_caps_from_roles();
-
-		parent::tear_down();
 	}
 
 	/**
