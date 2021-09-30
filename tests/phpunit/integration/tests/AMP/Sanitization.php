@@ -30,13 +30,13 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * @coversDefaultClass \Google\Web_Stories\AMP\Sanitization
  */
 class Sanitization extends TestCase {
-	public function tearDown() {
+	public function tear_down() {
 		remove_all_filters( 'web_stories_amp_sanitizers' );
 		remove_all_filters( 'web_stories_amp_dev_mode_enabled' );
 		remove_all_filters( 'web_stories_amp_dev_mode_element_xpaths' );
 		remove_all_filters( 'show_admin_bar' );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

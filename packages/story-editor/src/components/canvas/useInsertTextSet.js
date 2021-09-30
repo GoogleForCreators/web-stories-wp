@@ -23,7 +23,6 @@ import {
   FULLBLEED_HEIGHT,
   PAGE_WIDTH,
 } from '@web-stories-wp/units';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -37,10 +36,9 @@ import useInsertElement from './useInsertElement';
 
 const SCRIM_PADDING = 24;
 
-function useInsertTextSet() {
+function useInsertTextSet(shouldUseSmartColor = false) {
   const insertElement = useInsertElement();
   const { calculateAccessibleTextColors } = usePageAsCanvas();
-  const enableSmartTextSetsColor = useFeature('enableSmartTextSetsColor');
 
   const { setSelectedElementsById } = useStory(
     ({ actions: { setSelectedElementsById } }) => {
@@ -51,7 +49,7 @@ function useInsertTextSet() {
   );
 
   const insertTextSet = useBatchingCallback(
-    async (toAdd) => {
+    async (toAdd, applySmartColor = shouldUseSmartColor) => {
       const htmlFormatters = getHTMLFormatters();
       const { setColor } = htmlFormatters;
       const addedElements = [];
@@ -84,7 +82,7 @@ function useInsertTextSet() {
       let preferredScrimColor, scrimsCount, useScrim;
 
       // Insert scrim as a first element if needed.
-      if (enableSmartTextSetsColor && !hasPredefinedColor) {
+      if (applySmartColor && !hasPredefinedColor) {
         textElementsContrasts = await Promise.all(
           toAdd.map((element) =>
             element.type === 'text'
@@ -150,7 +148,7 @@ function useInsertTextSet() {
           'textSetWidth',
           'textSetHeight',
         ]);
-        if (enableSmartTextSetsColor && !hasPredefinedColor) {
+        if (applySmartColor && !hasPredefinedColor) {
           // If scrim is used - adjust the colors, otherwise use defaults.
           const scrimContrastingTextColor =
             preferredScrimColor.r === 0 ? white : black;
@@ -179,7 +177,7 @@ function useInsertTextSet() {
     },
     [
       calculateAccessibleTextColors,
-      enableSmartTextSetsColor,
+      shouldUseSmartColor,
       insertElement,
       setSelectedElementsById,
     ]
@@ -213,7 +211,7 @@ function useInsertTextSet() {
         })
         .filter((el) => el);
 
-      insertTextSet(positionedTextSet);
+      insertTextSet(positionedTextSet, false /* Skips using smart color */);
     },
     [insertTextSet]
   );

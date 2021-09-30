@@ -26,17 +26,17 @@ class Activation_Notice extends TestCase {
 	protected $activation_flag;
 	protected $assets;
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->activation_flag = new \Google\Web_Stories\Admin\Activation_Flag();
 		$this->activation_flag->set_activation_flag();
 		$this->assets = new \Google\Web_Stories\Assets();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		$this->activation_flag->delete_activation_flag();
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -61,7 +61,7 @@ class Activation_Notice extends TestCase {
 		$flag_before       = $this->activation_flag->get_activation_flag();
 		$output            = get_echo( [ $activation_notice, 'render_notice' ] );
 		$flag_after        = $this->activation_flag->get_activation_flag();
-		$this->assertContains( 'web-stories-plugin-activation-notice', $output );
+		$this->assertStringContainsString( 'web-stories-plugin-activation-notice', $output );
 		$this->assertTrue( $flag_before );
 		$this->assertFalse( $flag_after );
 	}

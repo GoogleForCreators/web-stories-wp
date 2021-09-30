@@ -70,22 +70,22 @@ class Generic_Renderer extends TestCase {
 	/**
 	 * Runs once before any test in the class run.
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		$this->story_model = $this->createMock( Story::class );
 		$this->story_query = $this->createMock( Story_Query::class );
 		$this->story_query->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		wp_dequeue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 		wp_deregister_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 
 		wp_dequeue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 		wp_deregister_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -135,9 +135,9 @@ class Generic_Renderer extends TestCase {
 
 		$output = $renderer->render();
 
-		$this->assertContains( 'web-stories-list alignnone is-view-type-grid', $output );
-		$this->assertContains( 'web-stories-list__story', $output );
-		$this->assertContains( 'web-stories-list__story-poster', $output );
+		$this->assertStringContainsString( 'web-stories-list alignnone is-view-type-grid', $output );
+		$this->assertStringContainsString( 'web-stories-list__story', $output );
+		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Renderer\Stories\Renderer::LIGHTBOX_SCRIPT_HANDLE ) );
 	}

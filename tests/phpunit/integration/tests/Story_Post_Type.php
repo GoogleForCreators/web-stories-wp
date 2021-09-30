@@ -40,6 +40,13 @@ class Story_Post_Type extends TestCase {
 	protected static $story_id;
 
 	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Story_Post_Type
+	 */
+	protected $instance;
+
+	/**
 	 * Archive page ID.
 	 *
 	 * @var int
@@ -78,48 +85,49 @@ class Story_Post_Type extends TestCase {
 		self::$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = new \Google\Web_Stories\Story_Post_Type();
+
 		$this->add_caps_to_roles();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
+
 		$this->remove_caps_from_roles();
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
-		$story_post_type->register();
+		$this->instance->register();
 
-		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
-		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $story_post_type, 'change_default_title' ] ) );
-		$this->assertSame( 10, has_filter( 'bulk_post_updated_messages', [ $story_post_type, 'bulk_post_updated_messages' ] ) );
+		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $this->instance, 'filter_revision_fields' ] ) );
+		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $this->instance, 'change_default_title' ] ) );
+		$this->assertSame( 10, has_filter( 'bulk_post_updated_messages', [ $this->instance, 'bulk_post_updated_messages' ] ) );
 
-		$this->assertSame( 10, has_action( 'add_option_' . \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, [ $story_post_type, 'update_archive_setting' ] ) );
-		$this->assertSame( 10, has_action( 'update_option_' . \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, [ $story_post_type, 'update_archive_setting' ] ) );
+		$this->assertSame( 10, has_action( 'add_option_' . \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, [ $this->instance, 'update_archive_setting' ] ) );
+		$this->assertSame( 10, has_action( 'update_option_' . \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, [ $this->instance, 'update_archive_setting' ] ) );
 	}
 
 	/**
 	 * @covers ::get_post_type_icon
 	 */
 	public function test_get_post_type_icon() {
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
-		$valid           = $this->call_private_method( $story_post_type, 'get_post_type_icon' );
-		$this->assertContains( 'data:image/svg+xml;base64', $valid );
+		$valid = $this->call_private_method( $this->instance, 'get_post_type_icon' );
+		$this->assertStringContainsString( 'data:image/svg+xml;base64', $valid );
 	}
 
 	/**
 	 * @covers ::register_post_type
 	 */
 	public function test_register_post_type() {
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
-		$post_type       = $story_post_type->register_post_type();
+		$post_type = $this->instance->register_post_type();
 		$this->assertTrue( $post_type->has_archive );
 	}
 
@@ -127,9 +135,8 @@ class Story_Post_Type extends TestCase {
 	 * @covers ::register_post_type
 	 */
 	public function test_register_post_type_disabled() {
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'disabled' );
-		$post_type = $story_post_type->register_post_type();
+		$post_type = $this->instance->register_post_type();
 		$this->assertFalse( $post_type->has_archive );
 	}
 
@@ -137,9 +144,8 @@ class Story_Post_Type extends TestCase {
 	 * @covers ::register_post_type
 	 */
 	public function test_register_post_type_default() {
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'default' );
-		$post_type = $story_post_type->register_post_type();
+		$post_type = $this->instance->register_post_type();
 		$this->assertTrue( $post_type->has_archive );
 	}
 
@@ -147,10 +153,9 @@ class Story_Post_Type extends TestCase {
 	 * @covers ::register_meta
 	 */
 	public function test_register_meta() {
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
-		$this->call_private_method( $story_post_type, 'register_meta' );
+		$this->call_private_method( $this->instance, 'register_meta' );
 
-		$this->assertTrue( registered_meta_key_exists( 'post', $story_post_type::PUBLISHER_LOGO_META_KEY, $story_post_type::POST_TYPE_SLUG ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::PUBLISHER_LOGO_META_KEY, $this->instance::POST_TYPE_SLUG ) );
 	}
 
 	/**
