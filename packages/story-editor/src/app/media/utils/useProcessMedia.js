@@ -189,8 +189,11 @@ function useProcessMedia({
     ({ resource: oldResource, start, end }) => {
       const { src: url, mimeType, poster } = oldResource;
 
+      // If we already have an original ID, use that instead.
       const trimData = {
-        original: oldResource.id,
+        original: oldResource.trimData?.original
+          ? oldResource.trimData.original
+          : oldResource.id,
         start,
         end,
       };

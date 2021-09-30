@@ -60,10 +60,13 @@ function VideoTrimProvider({ children }) {
     if (!resourceToTrim) {
       return;
     }
+    // Get length for displaying correct value in the library for the new video.
     const lengthInSeconds = Math.round(endOffset / 1000 - startOffset / 1000);
+    // Use the same resource ID for proper element update.
     trimExistingVideo({
       resource: {
         ...resourceToTrim,
+        id: selectedElements[0].resource.id,
         length: lengthInSeconds,
         lengthFormatted: getVideoLengthDisplay(lengthInSeconds),
       },
@@ -71,6 +74,7 @@ function VideoTrimProvider({ children }) {
       end: formatMsToHMS(endOffset),
     });
     toggleTrimMode();
+    setOriginalResource(null);
   }, [
     endOffset,
     startOffset,
@@ -78,6 +82,7 @@ function VideoTrimProvider({ children }) {
     selectedElements,
     toggleTrimMode,
     originalResource,
+    setOriginalResource,
   ]);
 
   const value = {
