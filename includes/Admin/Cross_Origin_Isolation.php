@@ -107,6 +107,8 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional, HasReq
 	/**
 	 * Get the list of service IDs required for this service to be registered.
 	 *
+	 * Needed because the service is used in the static `is_needed()` method.
+	 *
 	 * @since 1.12.0
 	 *
 	 * @return string[] List of required services.

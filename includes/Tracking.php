@@ -35,7 +35,7 @@ use Google\Web_Stories\User\Preferences;
 /**
  * Tracking class.
  */
-class Tracking extends Service_Base implements HasRequirements {
+class Tracking extends Service_Base {
 	/**
 	 * Web Stories tracking script handle.
 	 *
@@ -151,17 +151,6 @@ class Tracking extends Service_Base implements HasRequirements {
 	 */
 	public static function get_registration_action(): string {
 		return 'admin_init';
-	}
-
-	/**
-	 * Get the list of service IDs required for this service to be registered.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return string[] List of required services.
-	 */
-	public static function get_requirements(): array {
-		return [ 'user_preferences' ];
 	}
 
 	/**

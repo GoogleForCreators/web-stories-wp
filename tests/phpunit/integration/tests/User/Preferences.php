@@ -46,6 +46,11 @@ class Preferences extends TestCase {
 	 */
 	private $instance;
 
+	/**
+	 * @var Stories_Users_Controller
+	 */
+	private $users_controller;
+
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$admin_id = $factory->user->create(
 			[
@@ -69,7 +74,8 @@ class Preferences extends TestCase {
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
 
-		$this->instance = new \Google\Web_Stories\User\Preferences();
+		$this->instance         = new \Google\Web_Stories\User\Preferences();
+		$this->users_controller = new Stories_Users_Controller();
 	}
 
 	public function tear_down() {
@@ -90,7 +96,7 @@ class Preferences extends TestCase {
 	 */
 	public function test_add_optin_field_to_rest_api() {
 		$this->instance->register();
-		( new Stories_Users_Controller() )->register();
+		$this->users_controller->register();
 
 		wp_set_current_user( self::$admin_id );
 
@@ -116,7 +122,7 @@ class Preferences extends TestCase {
 	 */
 	public function test_add_optin_field_to_rest_api_for_author_user() {
 		$this->instance->register();
-		( new Stories_Users_Controller() )->register();
+		$this->users_controller->register();
 
 		wp_set_current_user( self::$author_id );
 
@@ -142,7 +148,7 @@ class Preferences extends TestCase {
 	 */
 	public function test_enables_author_user_to_update_meta_field() {
 		$this->instance->register();
-		( new Stories_Users_Controller() )->register();
+		$this->users_controller->register();
 
 		wp_set_current_user( self::$author_id );
 
@@ -180,7 +186,7 @@ class Preferences extends TestCase {
 	 */
 	public function test_permission_check_for_authors() {
 		$this->instance->register();
-		( new Stories_Users_Controller() )->register();
+		$this->users_controller->register();
 
 		wp_set_current_user( self::$author_id );
 
@@ -217,7 +223,7 @@ class Preferences extends TestCase {
 	 */
 	public function test_enables_author_user_to_invalid_type() {
 		$this->instance->register();
-		( new Stories_Users_Controller() )->register();
+		$this->users_controller->register();
 
 		wp_set_current_user( self::$author_id );
 

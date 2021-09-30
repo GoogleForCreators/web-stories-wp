@@ -72,6 +72,8 @@ class KSES extends Service_Base implements HasRequirements {
 	/**
 	 * Get the list of service IDs required for this service to be registered.
 	 *
+	 * @todo Inject post type instance via constructor instead.
+	 *
 	 * @since 1.12.0
 	 *
 	 * @return string[] List of required services.
