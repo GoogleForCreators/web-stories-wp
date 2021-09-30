@@ -36,5 +36,8 @@ export default function withUser(username, password) {
     await toggleVideoOptimization(false);
   });
 
-  afterAll(async () => setCurrentUser(currentUser.username, currentUser.password));
+  // eslint-disable-next-line require-await
+  afterAll(async () =>
+    setCurrentUser(currentUser.username, currentUser.password)
+  );
 }
