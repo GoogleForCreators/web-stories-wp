@@ -110,6 +110,7 @@ class Story_Post_Type extends TestCase {
 		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $this->instance, 'filter_revision_fields' ] ) );
 		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $this->instance, 'change_default_title' ] ) );
 		$this->assertSame( 10, has_filter( 'bulk_post_updated_messages', [ $this->instance, 'bulk_post_updated_messages' ] ) );
+		$this->assertSame( 10, has_filter( 'pre_handle_404', [ $this->instance, 'redirect_post_type_archive_urls' ] ) );
 
 		$this->assertSame( 10, has_action( 'add_option_' . \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, [ $this->instance, 'update_archive_setting' ] ) );
 		$this->assertSame( 10, has_action( 'update_option_' . \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, [ $this->instance, 'update_archive_setting' ] ) );
@@ -395,5 +396,102 @@ class Story_Post_Type extends TestCase {
 		);
 
 		$this->assertSame( [], $actual );
+	}
+
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_true() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$query           = new \WP_Query();
+		$result          = $story_post_type->redirect_post_type_archive_urls( true, $query );
+		$this->assertTrue( $result );
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_no_permalink() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$query           = new \WP_Query();
+		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		$this->assertFalse( $result );
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_permalinks() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$query           = new \WP_Query();
+		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		$this->assertFalse( $result );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_page() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+
+		$query                    = new \WP_Query();
+		$query->query['pagename'] = $story_post_type::REWRITE_SLUG;
+		$query->set( 'name', $story_post_type::REWRITE_SLUG );
+		$query->set( 'page', self::$story_id );
+
+		add_filter( 'post_type_link', '__return_false' );
+		add_filter( 'post_type_archive_link', '__return_false' );
+		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		remove_filter( 'post_type_link', '__return_false' );
+		remove_filter( 'post_type_archive_link', '__return_false' );
+
+		$this->assertFalse( $result );
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_pagename_set() {
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+
+		$query                    = new \WP_Query();
+		$query->query['pagename'] = $story_post_type::REWRITE_SLUG;
+		$query->set( 'pagename', $story_post_type::REWRITE_SLUG );
+
+		add_filter( 'post_type_archive_link', '__return_false' );
+		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		remove_filter( 'post_type_archive_link', '__return_false' );
+
+		$this->assertFalse( $result );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 	}
 }

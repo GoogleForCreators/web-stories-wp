@@ -89,6 +89,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
+		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
 
 		add_action( 'add_option_' . Settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
 		add_action( 'update_option_' . Settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
@@ -313,6 +314,37 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 			$data['post_title'] = '';
 		}
 		return $data;
+	}
+
+	/**
+	 * Handles redirects to the post type archive.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param bool      $bypass Pass-through of the pre_handle_404 filter value.
+	 * @param \WP_Query $query The WP_Query object.
+	 * @return bool Whether to pass-through or not.
+	 */
+	public function redirect_post_type_archive_urls( $bypass, $query ) {
+		global $wp_rewrite;
+
+		if ( $bypass || ! is_string( $this->get_has_archive() ) || ( ! $wp_rewrite instanceof \WP_Rewrite || ! $wp_rewrite->using_permalinks() ) ) {
+			return $bypass;
+		}
+
+		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
+		if ( self::REWRITE_SLUG === $query->get( 'pagename' ) || self::REWRITE_SLUG === $query->get( 'name' ) ) {
+			$redirect_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
+
+			if ( ! $redirect_url ) {
+				return $bypass;
+			}
+
+			wp_safe_redirect( $redirect_url, 301 );
+			exit;
+		}
+
+		return $bypass;
 	}
 
 	/**
