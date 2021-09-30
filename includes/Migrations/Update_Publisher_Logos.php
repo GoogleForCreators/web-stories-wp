@@ -36,6 +36,25 @@ use Google\Web_Stories\Settings;
  * @package Google\Web_Stories\Migrations
  */
 class Update_Publisher_Logos extends Migrate_Base {
+	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
 
 	/**
 	 * Split publisher logos into two options.
@@ -46,7 +65,7 @@ class Update_Publisher_Logos extends Migrate_Base {
 	 */
 	public function migrate() {
 		$publisher_logo_id       = 0;
-		$publisher_logo_settings = (array) Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
+		$publisher_logo_settings = (array) $this->settings->get_setting( Settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
 
 		if ( ! empty( $publisher_logo_settings['active'] ) ) {
 			$publisher_logo_id = $publisher_logo_settings['active'];

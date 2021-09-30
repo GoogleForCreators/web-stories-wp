@@ -71,6 +71,26 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	const PUBLISHER_LOGO_META_KEY = 'web_stories_publisher_logo';
 
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
+
+	/**
 	 * Registers the post type for stories.
 	 *
 	 * @todo refactor
@@ -131,8 +151,6 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return \WP_Post_Type|\WP_Error
 	 */
 	public function register_post_type() {
-		$has_archive = 'default' === Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_ARCHIVE, 'default' );
-
 		return register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -217,7 +235,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return void
 	 */
 	protected function register_meta() {
-		$active_publisher_logo_id = absint( Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0 ) );
+		$active_publisher_logo_id = absint( $this->settings->get_setting( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0 ) );
 
 		register_post_meta(
 			self::POST_TYPE_SLUG,
@@ -360,8 +378,8 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return bool|string Whether the post type should have an archive, or archive slug.
 	 */
 	private function get_has_archive() {
-		$archive_page_option    = get_option( Settings::SETTING_NAME_ARCHIVE );
-		$custom_archive_page_id = (int) get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		$archive_page_option    = $this->settings->get_setting( Settings::SETTING_NAME_ARCHIVE );
+		$custom_archive_page_id = (int) $this->settings->get_setting( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 		$has_archive            = true;
 
 		if ( 'disabled' === $archive_page_option ) {

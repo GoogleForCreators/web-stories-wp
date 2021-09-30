@@ -53,6 +53,26 @@ class AMP extends Service_Base {
 	const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
 
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
+
+	/**
 	 * Initializes all hooks.
 	 *
 	 * @since 1.2.0
@@ -100,9 +120,9 @@ class AMP extends Service_Base {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param string[] $post_types Post types.
+	 * @param string[]|mixed $post_types Supportable post types.
 	 *
-	 * @return array Supportable post types.
+	 * @return array|mixed Supportable post types.
 	 */
 	public function filter_supportable_post_types( $post_types ) {
 		if ( ! is_array( $post_types ) ) {
@@ -139,7 +159,7 @@ class AMP extends Service_Base {
 			return $sanitizers;
 		}
 
-		$video_cache_enabled = (bool) Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_VIDEO_CACHE );
+		$video_cache_enabled = (bool) $this->settings->get_setting( Settings::SETTING_NAME_VIDEO_CACHE );
 
 		$story = new Story();
 		$story->load_from_post( $post );

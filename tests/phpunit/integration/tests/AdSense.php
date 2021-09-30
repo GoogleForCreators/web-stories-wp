@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests\Integration;
 /**
  * @coversDefaultClass \Google\Web_Stories\AdSense
  */
-class AdSense extends TestCase {
+class AdSense extends DependencyInjectedTestCase {
 
 	public function set_up() {
 		parent::set_up();
@@ -42,7 +42,7 @@ class AdSense extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$adsense = new \Google\Web_Stories\AdSense();
+		$adsense = $this->injector->make( \Google\Web_Stories\AdSense::class );
 		$adsense->register();
 
 		$this->assertSame( 10, has_action( 'web_stories_print_analytics', [ $adsense, 'print_adsense_tag' ] ) );
@@ -52,7 +52,7 @@ class AdSense extends TestCase {
 	 * @covers ::get_publisher_id
 	 */
 	public function test_get_publisher_id() {
-		$adsense = new \Google\Web_Stories\AdSense();
+		$adsense = $this->injector->make( \Google\Web_Stories\AdSense::class );
 		$result  = $this->call_private_method( $adsense, 'get_publisher_id' );
 		$this->assertSame( '456', $result );
 	}
@@ -61,7 +61,7 @@ class AdSense extends TestCase {
 	 * @covers ::get_slot_id
 	 */
 	public function test_get_slot_id() {
-		$adsense = new \Google\Web_Stories\AdSense();
+		$adsense = $this->injector->make( \Google\Web_Stories\AdSense::class );
 		$result  = $this->call_private_method( $adsense, 'get_slot_id' );
 		$this->assertSame( '123', $result );
 	}
@@ -70,7 +70,7 @@ class AdSense extends TestCase {
 	 * @covers ::is_enabled
 	 */
 	public function test_is_enabled() {
-		$adsense = new \Google\Web_Stories\AdSense();
+		$adsense = $this->injector->make( \Google\Web_Stories\AdSense::class );
 		$result  = $this->call_private_method( $adsense, 'is_enabled' );
 		$this->assertTrue( $result );
 	}
@@ -79,7 +79,7 @@ class AdSense extends TestCase {
 	 * @covers ::print_adsense_tag
 	 */
 	public function test_print_adsense_tag() {
-		$adsense = new \Google\Web_Stories\AdSense();
+		$adsense = $this->injector->make( \Google\Web_Stories\AdSense::class );
 
 		$output = get_echo( [ $adsense, 'print_adsense_tag' ] );
 		$this->assertStringContainsString( '<amp-story-auto-ads>', $output );

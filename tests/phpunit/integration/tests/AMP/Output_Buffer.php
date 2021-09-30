@@ -23,12 +23,13 @@ use Google\Web_Stories\Renderer\Story\HTML;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\AMP\Sanitization;
 use Google\Web_Stories\AMP\Optimization;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Output_Buffer
  */
-class Output_Buffer extends TestCase {
+class Output_Buffer extends DependencyInjectedTestCase {
 	public function set_up() {
 		parent::set_up();
 
@@ -46,7 +47,7 @@ class Output_Buffer extends TestCase {
 	}
 
 	protected function prepare_response( $post ): string {
-		$instance = new \Google\Web_Stories\AMP\Output_Buffer( new Sanitization( new Experiments() ), new Optimization() );
+		$instance = $this->injector->make( \Google\Web_Stories\AMP\Output_Buffer::class );
 		$story    = new Story();
 		$story->load_from_post( $post );
 

@@ -20,14 +20,15 @@ namespace Google\Web_Stories\Tests\Integration;
 /**
  * @coversDefaultClass \Google\Web_Stories\Page_Template_Post_Type
  */
-class Page_Template_Post_Type extends TestCase {
+class Page_Template_Post_Type extends DependencyInjectedTestCase {
 	use Capabilities_Setup;
+
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$story = new \Google\Web_Stories\Story_Post_Type();
-		$story->register();
+		$instance = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$instance->register();
 
 		$ptpt = new \Google\Web_Stories\Page_Template_Post_Type();
 		$ptpt->register();

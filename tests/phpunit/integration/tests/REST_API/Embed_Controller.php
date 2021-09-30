@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use WP_REST_Request;
@@ -298,7 +299,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?)
-		$story_post_type = new Story_Post_Type();
+		$story_post_type = new Story_Post_Type( new Settings() );
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );
@@ -330,7 +331,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?).
-		$story_post_type = new Story_Post_Type();
+		$story_post_type = new Story_Post_Type( new Settings() );
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );

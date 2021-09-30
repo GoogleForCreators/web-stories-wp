@@ -28,9 +28,6 @@ class New_Relic extends TestCase {
 	 * @covers ::is_needed
 	 */
 	public function test_is_needed() {
-		$new_relic = new New_Relic_Integration();
-		$result    = $this->call_private_method( $new_relic, 'is_needed' );
-
-		$this->assertSame( function_exists( 'newrelic_disable_autorum' ), $result );
+		$this->assertSame( function_exists( 'newrelic_disable_autorum' ), New_Relic_Integration::is_needed() );
 	}
 }

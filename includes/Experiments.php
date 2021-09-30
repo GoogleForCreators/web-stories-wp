@@ -47,6 +47,26 @@ class Experiments extends Service_Base {
 	private $hook_suffix;
 
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
+
+	/**
 	 * Initializes experiments
 	 *
 	 * @return void
@@ -439,7 +459,7 @@ class Experiments extends Service_Base {
 			return (bool) $experiment['default'];
 		}
 
-		$experiments = Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_EXPERIMENTS, [] );
+		$experiments = $this->settings->get_setting( Settings::SETTING_NAME_EXPERIMENTS, [] );
 		return ! empty( $experiments[ $name ] );
 	}
 

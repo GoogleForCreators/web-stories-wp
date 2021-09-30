@@ -56,6 +56,26 @@ use DOMElement;
  */
 class Sanitization {
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
+
+	/**
 	 * Sanitizes a document.
 	 *
 	 * @since 1.1.0
@@ -404,7 +424,7 @@ class Sanitization {
 		$post = get_queried_object();
 
 		if ( $post instanceof \WP_Post && Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
-			$video_cache_enabled = (bool) Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_VIDEO_CACHE );
+			$video_cache_enabled = (bool) $this->settings->get_setting( Settings::SETTING_NAME_VIDEO_CACHE );
 
 			$story = new Story();
 			$story->load_from_post( $post );

@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests\Integration;
 /**
  * @coversDefaultClass \Google\Web_Stories\Ad_Manager
  */
-class Ad_Manager extends TestCase {
+class Ad_Manager extends DependencyInjectedTestCase {
 
 	public function set_up() {
 		parent::set_up();
@@ -40,7 +40,7 @@ class Ad_Manager extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$adsense = new \Google\Web_Stories\Ad_Manager();
+		$adsense = $this->injector->make( \Google\Web_Stories\Ad_Manager::class );
 		$adsense->register();
 
 		$this->assertSame( 10, has_action( 'web_stories_print_analytics', [ $adsense, 'print_ad_manager_tag' ] ) );
@@ -50,7 +50,7 @@ class Ad_Manager extends TestCase {
 	 * @covers ::get_slot_id
 	 */
 	public function test_get_slot_id() {
-		$adsense = new \Google\Web_Stories\Ad_Manager();
+		$adsense = $this->injector->make( \Google\Web_Stories\Ad_Manager::class );
 		$result  = $this->call_private_method( $adsense, 'get_slot_id' );
 		$this->assertSame( '123', $result );
 	}
@@ -59,7 +59,7 @@ class Ad_Manager extends TestCase {
 	 * @covers ::is_enabled
 	 */
 	public function test_is_enabled() {
-		$adsense = new \Google\Web_Stories\Ad_Manager();
+		$adsense = $this->injector->make( \Google\Web_Stories\Ad_Manager::class );
 		$result  = $this->call_private_method( $adsense, 'is_enabled' );
 		$this->assertTrue( $result );
 	}
@@ -68,7 +68,7 @@ class Ad_Manager extends TestCase {
 	 * @covers ::print_ad_manager_tag
 	 */
 	public function test_print_ad_manager_tag() {
-		$adsense = new \Google\Web_Stories\Ad_Manager();
+		$adsense = $this->injector->make( \Google\Web_Stories\Ad_Manager::class );
 
 		$output = get_echo( [ $adsense, 'print_ad_manager_tag' ] );
 		$this->assertStringContainsString( '<amp-story-auto-ads>', $output );

@@ -31,6 +31,26 @@ namespace Google\Web_Stories;
  */
 class Ad_Manager extends Service_Base {
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
+
+	/**
 	 * Initializes all hooks.
 	 *
 	 * @since 1.3.0
@@ -49,7 +69,7 @@ class Ad_Manager extends Service_Base {
 	 * @return string Slot ID.
 	 */
 	private function get_slot_id(): string {
-		return (string) Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_AD_MANAGER_SLOT_ID );
+		return (string) $this->settings->get_setting( Settings::SETTING_NAME_AD_MANAGER_SLOT_ID );
 	}
 
 	/**
@@ -60,7 +80,7 @@ class Ad_Manager extends Service_Base {
 	 * @return bool
 	 */
 	private function is_enabled(): bool {
-		return ( 'admanager' === (string) Services::get( 'settings' )->get_setting( Settings::SETTING_NAME_AD_NETWORK, 'none' ) );
+		return ( 'admanager' === (string) $this->settings->get_setting( Settings::SETTING_NAME_AD_NETWORK, 'none' ) );
 	}
 
 	/**

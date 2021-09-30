@@ -22,13 +22,12 @@ use Google\Web_Stories\Settings;
 /**
  * @coversDefaultClass \Google\Web_Stories\Analytics
  */
-class Analytics extends TestCase {
-
+class Analytics extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$analytics = new \Google\Web_Stories\Analytics( new \Google\Web_Stories\Experiments() );
+		$analytics = $this->injector->make( \Google\Web_Stories\Analytics::class );
 		$analytics->register();
 
 		$this->assertSame( 10, has_filter( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] ) );
@@ -39,7 +38,7 @@ class Analytics extends TestCase {
 	 */
 	public function test_get_tracking_id_casts_to_string() {
 		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
-		$analytics = new \Google\Web_Stories\Analytics( new \Google\Web_Stories\Experiments() );
+		$analytics = $this->injector->make( \Google\Web_Stories\Analytics::class );
 		$this->assertSame( '123456789', $analytics->get_tracking_id() );
 	}
 
@@ -48,7 +47,7 @@ class Analytics extends TestCase {
 	 */
 	public function test_get_default_configuration() {
 		$tracking_id = '123456789';
-		$analytics   = new \Google\Web_Stories\Analytics( new \Google\Web_Stories\Experiments() );
+		$analytics   = $this->injector->make( \Google\Web_Stories\Analytics::class );
 		$actual      = $analytics->get_default_configuration( $tracking_id );
 		$this->assertArrayHasKey( 'vars', $actual );
 		$this->assertArrayHasKey( 'gtag_id', $actual['vars'] );
@@ -78,7 +77,7 @@ class Analytics extends TestCase {
 		$experiments->method( 'is_experiment_enabled' )
 					->willReturn( true );
 
-		$analytics     = new \Google\Web_Stories\Analytics( $experiments );
+		$analytics     = new \Google\Web_Stories\Analytics( $this->injector->make( Settings::class ), $experiments );
 		$actual_before = get_echo( [ $analytics, 'print_analytics_tag' ] );
 
 		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
@@ -94,7 +93,7 @@ class Analytics extends TestCase {
 	 * @covers ::print_analytics_tag
 	 */
 	public function test_print_analytics_tag_legacy() {
-		$analytics     = new \Google\Web_Stories\Analytics( new \Google\Web_Stories\Experiments() );
+		$analytics     = $this->injector->make( \Google\Web_Stories\Analytics::class );
 		$actual_before = get_echo( [ $analytics, 'print_analytics_tag' ] );
 
 		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );

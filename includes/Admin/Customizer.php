@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Services;
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Layout;
@@ -71,6 +72,26 @@ class Customizer extends Service_Base {
 	 * @var WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 */
 	private $wp_customize;
+
+	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
 
 	/**
 	 * Initializes the customizer logic.
@@ -537,7 +558,7 @@ class Customizer extends Service_Base {
 	 * @return string
 	 */
 	public function render_stories(): string {
-		$options = Services::get( 'settings' )->get_setting( self::STORY_OPTION );
+		$options = $this->settings->get_setting( self::STORY_OPTION );
 
 		if ( empty( $options['show_stories'] ) || true !== $options['show_stories'] ) {
 			return '';
