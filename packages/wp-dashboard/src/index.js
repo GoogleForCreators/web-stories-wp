@@ -49,8 +49,8 @@ const initialize = async (id, config, flags) => {
 
   updateSettings(config.locale);
 
-  if (config.localeData) {
-    setLocaleData(config.localeData);
+  for (const localeData of config.localeData || []) {
+    setLocaleData(localeData);
   }
 
   // Already tracking screen views in AppContent, no need to send page views as well.

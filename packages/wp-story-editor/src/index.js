@@ -61,8 +61,8 @@ const initialize = (id, config, flags) => {
 
   updateSettings(config.locale);
 
-  if (config.localeData) {
-    setLocaleData(config.localeData);
+  for (const localeData of config.localeData || []) {
+    setLocaleData(localeData);
   }
 
   initializeTracking('Editor');

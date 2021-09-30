@@ -325,7 +325,7 @@ class Dashboard extends Service_Base {
 			return;
 		}
 
-		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ], false );
 
 		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $this->google_fonts::SCRIPT_HANDLE ] );
 
@@ -404,10 +404,7 @@ class Dashboard extends Service_Base {
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],
 				'siteKitStatus'         => $this->site_kit->get_plugin_status(),
-				'localeData'            => json_decode(
-					(string) load_script_textdomain( self::SCRIPT_HANDLE, 'web-stories' ),
-					true
-				),
+				'localeData'            => $this->assets->get_translations( self::SCRIPT_HANDLE ),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
