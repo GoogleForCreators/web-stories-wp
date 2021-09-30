@@ -334,6 +334,15 @@ main a:hover {
   color: #93bcf9;
 }
 
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  background: #f6f8fa;
+  color: #24292f;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
 aside li {
   line-height: 2.5rem;
 }

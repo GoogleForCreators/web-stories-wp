@@ -45,7 +45,6 @@ const { promisify } = require("util");
 const fs = require("fs");
 const hasha = require("hasha");
 const readFile = promisify(require("fs").readFile);
-const localImages = require("./third_party/eleventy-plugin-local-images/.eleventy.js");
 const CleanCSS = require("clean-css");
 const Nunjucks = require("nunjucks");
 const DATA_DIR = "_data";
@@ -79,14 +78,6 @@ module.exports = function (eleventyConfig) {
       output: "../public",
       outputDir: "../public/img"
     }
-  });
-
-  eleventyConfig.addPlugin(localImages, {
-    distPath: "../public",
-    assetPath: "/img/remote",
-    selector:
-      "img,amp-img,amp-video,meta[property='og:image'],meta[name='twitter:image'],amp-story",
-    verbose: false,
   });
 
   eleventyConfig.addPlugin(require("./_11ty/csp.js"));
