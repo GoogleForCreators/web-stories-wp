@@ -60,6 +60,13 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 		$this->instance = $this->injector->make( \Google\Web_Stories\Admin\Cross_Origin_Isolation::class );
 	}
 
+	public function tear_down() {
+		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
+		delete_user_meta( self::$contributor_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
+
+		parent::tear_down();
+	}
+
 	/**
 	 * @covers ::register
 	 */
@@ -77,8 +84,6 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 		$this->assertSame( 10, has_filter( 'style_loader_tag', [ $this->instance, 'style_loader_tag' ] ) );
 		$this->assertSame( 10, has_filter( 'script_loader_tag', [ $this->instance, 'script_loader_tag' ] ) );
 		$this->assertSame( 10, has_filter( 'get_avatar', [ $this->instance, 'get_avatar' ] ) );
-
-		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
 	}
 
 	/**
@@ -96,7 +101,6 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	 */
 	public function test_is_needed_default_user_meta_value() {
 		wp_set_current_user( self::$admin_id );
-		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
 
 		$this->assertTrue( \Google\Web_Stories\Admin\Cross_Origin_Isolation::is_needed() );
 	}
