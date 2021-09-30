@@ -117,7 +117,7 @@ class Stories_Controller extends Test_REST_TestCase {
 			3,
 			[
 				'post_status' => 'draft',
-				'post_author' => self::$user_id,
+				'post_author' => self::$author_id,
 				'post_type'   => $post_type,
 			]
 		);
@@ -142,6 +142,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 	/**
 	 * @covers ::get_items
+	 * @covers ::add_response_headers
 	 */
 	public function test_get_items() {
 		wp_set_current_user( self::$user_id );
@@ -153,6 +154,8 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->assertFalse( $response->is_error() );
 		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
+		$this->assertArrayHasKey( 'X-WP-Total', $headers );
+		$this->assertArrayHasKey( 'X-WP-TotalPages', $headers );
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
@@ -162,13 +165,14 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayHasKey( 'private', $statuses );
 
-		$this->assertEquals( 13, $statuses['all'] );
-		$this->assertEquals( 7, $statuses['publish'] );
-		$this->assertEquals( 3, $statuses['future'] );
-		$this->assertEquals( 3, $statuses['draft'] );
-		$this->assertEquals( 0, $statuses['private'] );
+		$this->assertSame( 13, $statuses['all'] );
+		$this->assertSame( 7, $statuses['publish'] );
+		$this->assertSame( 3, $statuses['future'] );
+		$this->assertSame( 3, $statuses['draft'] );
+		$this->assertSame( 0, $statuses['private'] );
 
-		$this->assertEquals( 3, $headers['X-WP-Total'] );
+		$this->assertSame( '3', $headers['X-WP-Total'] );
+		$this->assertSame( '1', $headers['X-WP-TotalPages'] );
 	}
 
 	/**
@@ -185,6 +189,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 	/**
 	 * @covers ::get_items
+	 * @covers ::add_response_headers
 	 */
 	public function test_get_items_contributor() {
 		wp_set_current_user( self::$contributor_id );
@@ -195,6 +200,8 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->assertFalse( $response->is_error() );
 		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
+		$this->assertArrayHasKey( 'X-WP-Total', $headers );
+		$this->assertArrayHasKey( 'X-WP-TotalPages', $headers );
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
@@ -204,14 +211,48 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayNotHasKey( 'private', $statuses );
 
-		$this->assertEquals( 13, $statuses['all'] );
-		$this->assertEquals( 7, $statuses['publish'] );
-		$this->assertEquals( 3, $statuses['future'] );
-		$this->assertEquals( 3, $statuses['draft'] );
+		$this->assertSame( 7, $statuses['all'] );
+		$this->assertSame( 7, $statuses['publish'] );
+		$this->assertSame( 0, $statuses['future'] );
+		$this->assertSame( 0, $statuses['draft'] );
 
-		$this->assertEquals( 7, $headers['X-WP-Total'] );
+		$this->assertSame( '7', $headers['X-WP-Total'] );
+		$this->assertSame( '1', $headers['X-WP-TotalPages'] );
 	}
 
+	/**
+	 * @covers ::get_items
+	 * @covers ::add_response_headers
+	 */
+	public function test_get_items_author() {
+		wp_set_current_user( self::$author_id );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
+		$request->set_param( 'context', 'edit' );
+		$response = rest_get_server()->dispatch( $request );
+		$headers  = $response->get_headers();
+
+		$this->assertFalse( $response->is_error() );
+		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
+		$this->assertArrayHasKey( 'X-WP-Total', $headers );
+		$this->assertArrayHasKey( 'X-WP-TotalPages', $headers );
+
+		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
+
+		$this->assertArrayHasKey( 'all', $statuses );
+		$this->assertArrayHasKey( 'publish', $statuses );
+		$this->assertArrayHasKey( 'draft', $statuses );
+		$this->assertArrayHasKey( 'future', $statuses );
+		$this->assertArrayHasKey( 'private', $statuses );
+
+		$this->assertSame( 10, $statuses['all'] );
+		$this->assertSame( 7, $statuses['publish'] );
+		$this->assertSame( 0, $statuses['future'] );
+		$this->assertSame( 0, $statuses['private'] );
+		$this->assertSame( 3, $statuses['draft'] );
+
+		$this->assertSame( '7', $headers['X-WP-Total'] );
+		$this->assertSame( '1', $headers['X-WP-TotalPages'] );
+	}
 	/**
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response
@@ -371,6 +412,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 	/**
 	 * @covers ::get_items
+	 * @covers ::add_response_headers
 	 */
 	public function test_get_items_format() {
 		wp_set_current_user( self::$user_id );
@@ -396,7 +438,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'draft', $statuses );
 		$this->assertArrayHasKey( 'private', $statuses );
 
-		$this->assertEquals( 3, $data['headers']['X-WP-Total'] );
+		$this->assertSame( '3', $data['headers']['X-WP-Total'] );
 	}
 
 	/**
@@ -476,14 +518,14 @@ class Stories_Controller extends Test_REST_TestCase {
 		$query->set( 'orderby', 'story_author' );
 
 		$orderby = $controller->filter_posts_clauses( $initial_clauses, $query );
-		$this->assertEquals( $orderby, $initial_clauses );
+		$this->assertSame( $orderby, $initial_clauses );
 
 		$query = new \WP_Query();
 		$query->set( 'post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$query->set( 'orderby', 'author' );
 
 		$orderby = $controller->filter_posts_clauses( $initial_clauses, $query );
-		$this->assertEquals( $orderby, $initial_clauses );
+		$this->assertSame( $orderby, $initial_clauses );
 	}
 
 	/**
@@ -521,8 +563,8 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
-		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
-		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
+		$this->assertSame( $unsanitized_content, $new_data['content']['raw'] );
+		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
 	}
 
 	/**
@@ -567,10 +609,10 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'story_data', $new_data );
 		$this->assertArrayHasKey( 'featured_media', $new_data );
 
-		$this->assertEquals( 'Example title (Copy)', $new_data['title']['raw'] );
-		$this->assertEquals( 'Example excerpt', $new_data['excerpt']['raw'] );
-		$this->assertEquals( $attachment_id, $new_data['featured_media'] );
-		$this->assertEqualSets( [ 'pages' => [] ], $new_data['story_data'] );
+		$this->assertSame( 'Example title (Copy)', $new_data['title']['raw'] );
+		$this->assertSame( 'Example excerpt', $new_data['excerpt']['raw'] );
+		$this->assertSame( $attachment_id, $new_data['featured_media'] );
+		$this->assertSame( [ 'pages' => [] ], $new_data['story_data'] );
 	}
 
 	/**
@@ -654,7 +696,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
-		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
-		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
+		$this->assertSame( $unsanitized_content, $new_data['content']['raw'] );
+		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
 	}
 }
