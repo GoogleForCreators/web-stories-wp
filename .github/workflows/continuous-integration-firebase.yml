@@ -29,6 +29,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          (cd micro-site && npm ci)
           (cd web-stories-scraper && npm ci)
           (cd sitemap-generator && npm ci)
         env:
@@ -47,6 +48,9 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
           ignorePaths: 'node_modules/**,build/**,public/static/**'
+
+      - name: Build website
+        run: cd micro-site && npm run build
 
       - name: Build XML Sitemap
         run: node ./sitemap-generator/index.js ./public/sitemap.xml

@@ -1,0 +1,40 @@
+{
+  "name": "web-stories-micro-site",
+  "private": "true",
+  "version": "0.0.3",
+  "license": "MIT",
+  "description": "A website!",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/google/web-stories-wp.git"
+  },
+  "homepage": "https://wp.stories.google/",
+  "dependencies": {
+    "@ampproject/eleventy-plugin-amp": "^0.5.5",
+    "@saschazar/wasm-avif": "^2.0.0",
+    "clean-css": "^5.2.0",
+    "concurrently": "^6.2.2",
+    "csp-hash-generator": "0.0.3",
+    "csso": "^4.0.3",
+    "datauri": "^4.1.0",
+    "hasha": "^5.2.0",
+    "html-minifier": "^4.0.0",
+    "image-size": "^1.0.0",
+    "lru-cache": "^6.0.0",
+    "purge-from-html": "^1.0.3",
+    "purgecss": "^4.0.3",
+    "sharp": "^0.29.1",
+    "twitter": "^1.7.1"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^0.12.1",
+    "luxon": "^2.0.2"
+  },
+  "peerDependencies": {
+    "nunjucks": "^3"
+  }
+}

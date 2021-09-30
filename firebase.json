@@ -9,11 +9,11 @@
     "trailingSlash": true,
     "headers": [
       {
-        "source": "**/*.@(jpg|jpeg|gif|png|mp4|webm)",
+        "source": "**/*.@(jpg|jpeg|gif|png|mp4|webm|svg|ttf|woff2)",
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "max-age=3600"
+            "value": "max-age=31536000,immutable"
           }
         ]
       },
@@ -22,7 +22,7 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "max-age=604800"
+            "value": "max-age=604800,immutable"
           },
           {
             "key": "Access-Control-Allow-Origin",

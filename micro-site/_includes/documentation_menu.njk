@@ -1,0 +1,61 @@
+{% set DOCS_BASE = '/docs' %}
+
+<!-- this should not exist -->
+<!-- change it to be generated from the docs themselves-->
+<ul id="docs_menu" class="docs_flyout {% if rootClass == "docs" %}docs_page{% endif %}">
+  <span>
+    <li><a href="{{ DOCS_BASE }}/getting-started">Getting Started</a></li>
+    <ul id="getting_started_menu">
+      <li><a href="{{ DOCS_BASE }}/getting-started#Installation">Installing the Plugin</a></li>
+      <li><a href="{{ DOCS_BASE }}/getting-started#Dashboard">Web Stories Dashboard</a></li>
+      <li><a href="{{ DOCS_BASE }}/getting-started#Navigating-the-editor">The Story Editor</a></li>
+      <li><a href="{{ DOCS_BASE }}/getting-started#Help-Center">Help Center</a></li>
+      <li><a href="{{ DOCS_BASE }}/getting-started#Checklist">Pre-Publish Checklist</a></li>
+      <li><a href="{{ DOCS_BASE }}/getting-started#Keyboard-Shortcuts">Keyboard Shortcuts</a></li>
+      <li><a id="l4" href="{{ DOCS_BASE }}/getting-started#Templates">Available Templates</a></li>
+      <li id="t1" class="docTrack" aria-hidden="true"></li>
+    </ul>
+  </span>
+  <span>
+    <li><a href="{{ DOCS_BASE }}/how-to">How to use the editor</a></li>
+    <ul id="how_to_use_menu">
+      <li><a href="{{ DOCS_BASE }}/how-to#Uploading-media">Uploading Media</a></li>
+      <li><a href="{{ DOCS_BASE }}/how-to#Using-media-from-third-party-providers">Third-party Media</a></li>
+      <li><a href="{{ DOCS_BASE }}/how-to#Add-a-background-image-or-video">Adding Background Media</a></li>
+      <li><a href="{{ DOCS_BASE }}/how-to#Page-Templates">Using Page Templates</a></li>
+      <li><a href="{{ DOCS_BASE }}/how-to#Masking-cropping">Masking &amp; Cropping</a></li>
+      <li><a href="{{ DOCS_BASE }}/how-to#Adding-text">Adding Text</a></li>
+      <li><a href="{{ DOCS_BASE }}/how-to#Adding-links">Adding Links</a>
+      <li><a href="{{ DOCS_BASE }}/how-to#Animate-page-elements">Animating Elements</a></li>
+      <li><a href="{{ DOCS_BASE }}/how-to#Add-borders">Borders &amp; Corner Radius</a></li>
+      <li><a href="{{ DOCS_BASE }}/how-to#Add-a-page-attachment">Page Attachments</a></li>
+      <li><a href="{{ DOCS_BASE }}/how-to#Saved-Styles">Saving &amp; Reusing Styles</a></li>
+      <li id="t2" class="docTrack" aria-hidden="true"></li>
+    </ul>
+  </span>
+  <span>
+    <li><a href="{{ DOCS_BASE }}/best-practices">Best Practices</a></li>
+    <ul id="best_practices_menu">
+      <li><a href="{{ DOCS_BASE }}/best-practices#Using-assistive-text-for-images-video">Using assistive text</a></li>
+      <li><a href="{{ DOCS_BASE }}/best-practices#Video-captioning">Include video captions</a></li>
+      <li><a href="{{ DOCS_BASE }}/best-practices#Avoiding-burned-in-text-on-assets">Avoiding ‘burned-in’ text</a></li>
+      <li><a href="{{ DOCS_BASE }}/best-practices#Media-Optimization">Optimizing images &amp; videos</a></li>
+      <li><a href="{{ DOCS_BASE }}/best-practices#Embeds">Embedding Stories</a></li>
+      <li id="t4" class="docTrack" aria-hidden="true"></li>
+    </ul>
+  </span>
+  <span>
+    <li><a href="{{ DOCS_BASE }}/seo">SEO &amp; Optimization</a></li>
+    <ul id="seo_optimization_menu">
+      <li><a href="{{ DOCS_BASE }}/seo#Adding-necessary-metadata">Adding necessary metadata</a></li>
+      <li><a href="{{ DOCS_BASE }}/seo#Monetize-your-stories">Monetize your stories</a></li>
+      <li><a href="{{ DOCS_BASE }}/seo#Adding-Analytics">Adding analytics</a></li>
+      <li><a href="https://blog.amp.dev/2020/02/12/seo-for-amp-stories/">Additional SEO advice</a></li>
+      <li id="t3" class="docTrack" aria-hidden="true"></li>
+    </ul>
+  </span>
+  <span>
+  <li><a href="{{ DOCS_BASE }}/faq">FAQ</a></li>
+  <li><a href="{{ DOCS_BASE }}/terms">Terms</a></li>
+  </span>
+</ul>
