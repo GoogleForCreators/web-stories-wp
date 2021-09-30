@@ -52,7 +52,7 @@ export default function ApiProvider({ children }) {
     storyApi: api.stories,
   });
 
-  const { media, api: mediaApi } = useMediaApi(dataAdapter, {
+  const { media, api: mediaApi } = useMediaApi({
     globalMediaApi: api.media,
   });
 

@@ -13,4 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export function uploadMedia() {}
+
+/**
+ * Internal dependencies
+ */
+import { default as dataAdapter } from './utils/wpAdapter';
+
+/**
+ * Upload media ( Used on settings page )
+ *
+ * @param {Object} files Uploaded files.
+ * @param {string} apiPath String.
+ * @return {Promise}
+ */
+export function uploadMedia(files, apiPath) {
+  return Promise.all(
+    Object.values(files).map((file) => {
+      const data = new window.FormData();
+
+      data.append('file', file, file.name || file.type.replace('/', '.'));
+
+      return dataAdapter.post(apiPath, {
+        body: data,
+      });
+    })
+  );
+}
