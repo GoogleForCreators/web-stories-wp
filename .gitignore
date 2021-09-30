@@ -20,6 +20,7 @@ public/fonts
 public/img
 public/video
 public/index.html
+micro-site/.cache
 
 # Stories with custom modifications
 !public/stories/a-day-in-the-life-of-dap-the-contract
