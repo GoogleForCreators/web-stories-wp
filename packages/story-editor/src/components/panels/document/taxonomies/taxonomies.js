@@ -42,9 +42,9 @@ function TaxonomiesPanel(props) {
 
   const availableTaxonomies = taxonomies.filter((taxonomy) => {
     const isVisible = taxonomy?.visibility?.show_ui;
-    const canAssignTerms = Boolean(
-      capabilities[`assign-${taxonomy?.restBase || taxonomy?.slug}`]
-    );
+    const canAssignTerms =
+      Boolean(capabilities[`assign-${taxonomy?.slug}`]) ||
+      Boolean(capabilities[`assign-${taxonomy?.restBase}`]);
 
     return isVisible && canAssignTerms;
   });
@@ -60,9 +60,9 @@ function TaxonomiesPanel(props) {
       {...props}
     >
       {availableTaxonomies.map((taxonomy) => {
-        const canCreateTerms = Boolean(
-          capabilities[`create-${taxonomy?.restBase || taxonomy.slug}`]
-        );
+        const canCreateTerms =
+          Boolean(capabilities[`create-${taxonomy.slug}`]) ||
+          Boolean(capabilities[`create-${taxonomy?.restBase}`]);
         return taxonomy.hierarchical ? (
           <HierarchicalTermSelector
             taxonomy={taxonomy}
