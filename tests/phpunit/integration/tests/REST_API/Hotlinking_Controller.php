@@ -35,12 +35,12 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	protected static $editor;
 
 	const URL_INVALID = 'https://https://invalid.commmm';
-	const URL_404 = 'https://example.com/404/test.jpg';
-	const URL_500 = 'https://example.com/500/test.jpg';
-	const URL_SVG = 'https://example.com/test.svg';
-	const URL_VALID = 'http://example.com/test.jpg';
-	const URL_DOMAIN = 'http://google.com';
-	const URL_PATH = '/test.jpg';
+	const URL_404     = 'https://example.com/404/test.jpg';
+	const URL_500     = 'https://example.com/500/test.jpg';
+	const URL_SVG     = 'https://example.com/test.svg';
+	const URL_VALID   = 'http://example.com/test.jpg';
+	const URL_DOMAIN  = 'http://google.com';
+	const URL_PATH    = '/test.jpg';
 
 	const REST_URL = '/web-stories/v1/hotlink/validate';
 
