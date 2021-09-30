@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef, useMemo, useCallback, useState } from '@web-stories-wp/react';
+import { useRef, useMemo, useCallback } from '@web-stories-wp/react';
 import { getMediaSizePositionProps } from '@web-stories-wp/media';
 
 /**
@@ -28,7 +28,7 @@ import { getMediaSizePositionProps } from '@web-stories-wp/media';
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
-import { useAPI } from '../../app';
+import CircularProgress from '../../components/circularProgress';
 import PlayPauseButton from './playPauseButton';
 import { getBackgroundStyle, videoWithScale } from './util';
 
@@ -45,38 +45,32 @@ const Wrapper = styled.div`
   position: absolute;
 `;
 
+const Spinner = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 function VideoTrim({ box, element }) {
-  const [isLoading, setIsLoading] = useState(false);
   const {
     setVideoNode,
     originalResource,
-    setOriginalResource,
-    setOriginalStartOffset,
-    setOriginalEndOffset,
-    originalEndOffset,
-    originalStartOffset,
+    fetchOriginalResource,
+    isFetchingResource,
+    shouldFetchResource,
   } = useVideoTrim(
     ({
-      actions: {
-        setVideoNode,
-        setOriginalResource,
-        setOriginalStartOffset,
-        setOriginalEndOffset,
-      },
-      state: { originalResource, originalEndOffset, originalStartOffset },
+      actions: { setVideoNode, fetchOriginalResource, shouldFetchResource },
+      state: { originalResource, isFetchingResource },
     }) => ({
       setVideoNode,
-      setOriginalResource,
       originalResource,
-      setOriginalStartOffset,
-      setOriginalEndOffset,
-      originalEndOffset,
-      originalStartOffset,
+      fetchOriginalResource,
+      isFetchingResource,
+      shouldFetchResource,
     })
   );
-  const {
-    actions: { getMediaById },
-  } = useAPI();
 
   const { width, height } = box;
   const { poster, resource, tracks, isBackground, scale, focalX, focalY } =
@@ -131,53 +125,17 @@ function VideoTrim({ box, element }) {
   );
   const endTime = useMemo(() => getMsFromHMS(end), [end, getMsFromHMS]);
   const startTime = useMemo(() => getMsFromHMS(start), [start, getMsFromHMS]);
-  const fetchOriginalResource = useCallback(() => {
-    getMediaById(original)
-      .then((_originalResource) => {
-        setIsLoading(false);
-        setOriginalResource(_originalResource);
-        setOriginalEndOffset(endTime);
-        setOriginalStartOffset(startTime);
-      })
-      .catch(() => {
-        setOriginalResource(false);
-        setIsLoading(false);
-      });
-  }, [
-    original,
-    getMediaById,
-    setOriginalResource,
-    startTime,
-    endTime,
-    setOriginalEndOffset,
-    setOriginalStartOffset,
-  ]);
-
-  const shouldFetchResource = useCallback(() => {
-    if (
-      original &&
-      (originalResource === null || original !== originalResource.id)
-    ) {
-      return true;
-    }
-    return endTime !== originalEndOffset || startTime !== originalStartOffset;
-  }, [
-    startTime,
-    endTime,
-    originalStartOffset,
-    originalEndOffset,
-    original,
-    originalResource,
-  ]);
 
   // If there's an original video, we should use that for trimming instead.
-  if (shouldFetchResource()) {
-    // @todo Add spinner or sth for the time of loading.
-    if (!isLoading) {
-      setIsLoading(true);
-      fetchOriginalResource();
-    }
-    return null;
+  if (!isFetchingResource && shouldFetchResource({ end, start, original })) {
+    fetchOriginalResource({ original, endTime, startTime });
+    return (
+      <Wrapper>
+        <Spinner>
+          <CircularProgress />
+        </Spinner>
+      </Wrapper>
+    );
   }
   const hasOrigin = originalResource && original;
   const trimResource = hasOrigin ? originalResource : resource;

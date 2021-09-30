@@ -104,7 +104,7 @@ function EditLayerForElement({ element }) {
       </EditPageArea>
       {EditMenu && (
         <MenuArea showOverflow>
-          <EditMenu />
+          <EditMenu element={element} />
         </MenuArea>
       )}
     </LayerWithGrayout>

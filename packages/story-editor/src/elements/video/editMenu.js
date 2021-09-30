@@ -19,17 +19,28 @@
  */
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import VideoTrimmer from '../../components/videoTrim/videoTrimmer';
+import StoryPropTypes from '../../types';
 
-function VideoEditMenu() {
-  const { isTrimMode } = useVideoTrim(({ state: { isTrimMode } }) => ({
-    isTrimMode,
-  }));
+function VideoEditMenu({ element: { resource } }) {
+  const { isTrimMode, shouldFetchResource } = useVideoTrim(
+    ({ state: { isTrimMode }, actions: { shouldFetchResource } }) => ({
+      isTrimMode,
+      shouldFetchResource,
+    })
+  );
 
   if (!isTrimMode) {
     return false;
   }
-
+  // Don't display trimmer if the original resource isn't loaded.
+  if (shouldFetchResource(resource?.trimData || {})) {
+    return false;
+  }
   return <VideoTrimmer />;
 }
+
+VideoEditMenu.propTypes = {
+  element: StoryPropTypes.element,
+};
 
 export default VideoEditMenu;

@@ -28,6 +28,7 @@ import {
  * Internal dependencies
  */
 import { MEDIA_VIDEO_MINIMUM_DURATION } from '../../constants';
+import { useAPI } from '../../app';
 
 function useVideoNode() {
   const [currentTime, setCurrentTime] = useState(null);
@@ -37,6 +38,12 @@ function useVideoNode() {
   const [originalEndOffset, setOriginalEndOffset] = useState(null);
   const [maxOffset, setMaxOffset] = useState(null);
   const [videoNode, setVideoNode] = useState(null);
+  const [originalResource, setOriginalResource] = useState(null);
+  const [isFetchingResource, setIsFetchingResource] = useState(false);
+
+  const {
+    actions: { getMediaById },
+  } = useAPI();
 
   useEffect(() => {
     if (!videoNode) {
@@ -120,6 +127,48 @@ function useVideoNode() {
     [startOffset, originalStartOffset, endOffset, originalEndOffset]
   );
 
+  const fetchOriginalResource = useCallback(
+    ({ original, endTime, startTime }) => {
+      // If already fetching, cancel.
+      if (isFetchingResource) {
+        return;
+      }
+      setIsFetchingResource(true);
+      getMediaById(original)
+        .then((_originalResource) => {
+          setIsFetchingResource(false);
+          setOriginalResource(_originalResource);
+          setOriginalEndOffset(endTime);
+          setOriginalStartOffset(startTime);
+        })
+        .catch(() => {
+          setOriginalResource(false);
+          setIsFetchingResource(false);
+        });
+    },
+    [getMediaById, isFetchingResource]
+  );
+
+  // @todo Create an util for it.
+  const getMsFromHMS = useCallback((time) => {
+    const parts = time.split(':');
+    return (
+      1000 * (parts[2] + parseInt(parts[1]) * 60 + parseInt(parts[0]) * 3600)
+    );
+  }, []);
+
+  const shouldFetchResource = useCallback(
+    ({ end, start, original }) => {
+      return (
+        original &&
+        (getMsFromHMS(end) !== originalEndOffset ||
+          getMsFromHMS(start) !== originalStartOffset ||
+          original !== originalResource?.id)
+      );
+    },
+    [originalResource, originalEndOffset, originalStartOffset, getMsFromHMS]
+  );
+
   return {
     hasChanged,
     currentTime,
@@ -130,10 +179,11 @@ function useVideoNode() {
     setEndOffset,
     setVideoNode,
     resetOffsets,
-    originalEndOffset,
-    originalStartOffset,
-    setOriginalStartOffset,
-    setOriginalEndOffset,
+    originalResource,
+    setOriginalResource,
+    isFetchingResource,
+    fetchOriginalResource,
+    shouldFetchResource,
   };
 }
 
