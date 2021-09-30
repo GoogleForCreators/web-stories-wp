@@ -40,8 +40,8 @@ use WP_REST_Response;
 abstract class Test_REST_TestCase extends TestCase {
 	use Capabilities_Setup, Kses_Setup;
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
@@ -53,14 +53,14 @@ abstract class Test_REST_TestCase extends TestCase {
 		$this->set_permalink_structure( '/%postname%/' );
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
 
 		$this->remove_caps_from_roles();
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
