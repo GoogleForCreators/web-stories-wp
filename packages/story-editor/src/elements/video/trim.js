@@ -53,6 +53,8 @@ function VideoTrim({ box, element }) {
     setOriginalResource,
     setOriginalStartOffset,
     setOriginalEndOffset,
+    originalEndOffset,
+    originalStartOffset,
   } = useVideoTrim(
     ({
       actions: {
@@ -61,13 +63,15 @@ function VideoTrim({ box, element }) {
         setOriginalStartOffset,
         setOriginalEndOffset,
       },
-      state: { originalResource },
+      state: { originalResource, originalEndOffset, originalStartOffset },
     }) => ({
       setVideoNode,
       setOriginalResource,
       originalResource,
       setOriginalStartOffset,
       setOriginalEndOffset,
+      originalEndOffset,
+      originalStartOffset,
     })
   );
   const {
@@ -125,14 +129,15 @@ function VideoTrim({ box, element }) {
     },
     [setVideoNode]
   );
-
+  const endTime = useMemo(() => getMsFromHMS(end), [end, getMsFromHMS]);
+  const startTime = useMemo(() => getMsFromHMS(start), [start, getMsFromHMS]);
   const fetchOriginalResource = useCallback(() => {
     getMediaById(original)
       .then((_originalResource) => {
         setIsLoading(false);
         setOriginalResource(_originalResource);
-        setOriginalEndOffset(getMsFromHMS(end));
-        setOriginalStartOffset(getMsFromHMS(start));
+        setOriginalEndOffset(endTime);
+        setOriginalStartOffset(startTime);
       })
       .catch(() => {
         setOriginalResource(false);
@@ -142,15 +147,31 @@ function VideoTrim({ box, element }) {
     original,
     getMediaById,
     setOriginalResource,
-    start,
-    end,
+    startTime,
+    endTime,
     setOriginalEndOffset,
     setOriginalStartOffset,
-    getMsFromHMS,
+  ]);
+
+  const shouldFetchResource = useCallback(() => {
+    if (
+      original &&
+      (originalResource === null || original !== originalResource.id)
+    ) {
+      return true;
+    }
+    return endTime !== originalEndOffset || startTime !== originalStartOffset;
+  }, [
+    startTime,
+    endTime,
+    originalStartOffset,
+    originalEndOffset,
+    original,
+    originalResource,
   ]);
 
   // If there's an original video, we should use that for trimming instead.
-  if (original && originalResource === null) {
+  if (shouldFetchResource()) {
     // @todo Add spinner or sth for the time of loading.
     if (!isLoading) {
       setIsLoading(true);

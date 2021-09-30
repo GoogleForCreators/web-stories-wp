@@ -54,6 +54,7 @@ function useVideoNode() {
       } else {
         rawSetStartOffset(originalStartOffset);
         setCurrentTime(originalStartOffset);
+        videoNode.currentTime = originalStartOffset / 1000;
       }
 
       if (null === originalEndOffset) {
@@ -129,6 +130,8 @@ function useVideoNode() {
     setEndOffset,
     setVideoNode,
     resetOffsets,
+    originalEndOffset,
+    originalStartOffset,
     setOriginalStartOffset,
     setOriginalEndOffset,
   };

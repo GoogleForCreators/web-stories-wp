@@ -51,6 +51,8 @@ function VideoTrimProvider({ children }) {
     resetOffsets,
     setOriginalStartOffset,
     setOriginalEndOffset,
+    originalEndOffset,
+    originalStartOffset,
   } = useVideoNode();
 
   const performTrim = useCallback(() => {
@@ -104,6 +106,8 @@ function VideoTrimProvider({ children }) {
       endOffset,
       maxOffset,
       originalResource,
+      originalEndOffset,
+      originalStartOffset,
     },
     actions: {
       performTrim,

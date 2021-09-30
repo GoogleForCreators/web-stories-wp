@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
