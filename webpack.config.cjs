@@ -58,7 +58,7 @@ const sharedConfig = {
   output: {
     path: path.resolve(process.cwd(), 'assets', 'js'),
     filename: '[name].js',
-    chunkFilename: '[name]-[chunkhash].js',
+    chunkFilename: '[name].js',
     publicPath: '',
     /**
      * If multiple webpack runtimes (from different compilations) are used on the same webpage,
