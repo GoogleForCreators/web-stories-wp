@@ -23,6 +23,7 @@ import {
   useCallback,
   useMemo,
 } from '@web-stories-wp/react';
+import { getMsFromHMS } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -149,14 +150,6 @@ function useVideoNode() {
     [getMediaById, isFetchingResource]
   );
 
-  // @todo Create an util for it.
-  const getMsFromHMS = useCallback((time) => {
-    const parts = time.split(':');
-    return (
-      1000 * (parts[2] + parseInt(parts[1]) * 60 + parseInt(parts[0]) * 3600)
-    );
-  }, []);
-
   const shouldFetchResource = useCallback(
     ({ end, start, original }) => {
       return (
@@ -166,8 +159,14 @@ function useVideoNode() {
           original !== originalResource?.id)
       );
     },
-    [originalResource, originalEndOffset, originalStartOffset, getMsFromHMS]
+    [originalResource, originalEndOffset, originalStartOffset]
   );
+
+  const resetNodeTrimData = useCallback(() => {
+    setOriginalResource(null);
+    setOriginalStartOffset(null);
+    setOriginalEndOffset(null);
+  }, []);
 
   return {
     hasChanged,
@@ -178,9 +177,9 @@ function useVideoNode() {
     setStartOffset,
     setEndOffset,
     setVideoNode,
+    resetNodeTrimData,
     resetOffsets,
     originalResource,
-    setOriginalResource,
     isFetchingResource,
     fetchOriginalResource,
     shouldFetchResource,

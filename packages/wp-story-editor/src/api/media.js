@@ -79,7 +79,6 @@ export function getMedia(
 export function getMediaById(mediaId, media) {
   const path = addQueryArgs(`${media}${mediaId}/`, {
     context: 'edit',
-    _web_stories_envelope: true,
     _fields: MEDIA_FIELD,
   });
 

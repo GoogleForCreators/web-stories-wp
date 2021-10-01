@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef, useMemo, useCallback } from '@web-stories-wp/react';
-import { getMediaSizePositionProps } from '@web-stories-wp/media';
+import { getMediaSizePositionProps, getMsFromHMS } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -89,13 +89,6 @@ function VideoTrim({ box, element }) {
     };
   }
 
-  const getMsFromHMS = useCallback((time) => {
-    const parts = time.split(':');
-    return (
-      1000 * (parts[2] + parseInt(parts[1]) * 60 + parseInt(parts[0]) * 3600)
-    );
-  }, []);
-
   const videoProps = getMediaSizePositionProps(
     resource,
     width,
@@ -123,11 +116,11 @@ function VideoTrim({ box, element }) {
     },
     [setVideoNode]
   );
-  const endTime = useMemo(() => getMsFromHMS(end), [end, getMsFromHMS]);
-  const startTime = useMemo(() => getMsFromHMS(start), [start, getMsFromHMS]);
 
   // If there's an original video, we should use that for trimming instead.
   if (!isFetchingResource && shouldFetchResource({ end, start, original })) {
+    const endTime = getMsFromHMS(end);
+    const startTime = getMsFromHMS(start);
     fetchOriginalResource({ original, endTime, startTime });
     return (
       <Wrapper>

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
 import { formatMsToHMS, getVideoLengthDisplay } from '@web-stories-wp/media';
 
 /**
@@ -45,13 +45,23 @@ function VideoTrimProvider({ children }) {
     setStartOffset,
     setEndOffset,
     setVideoNode,
+    resetNodeTrimData,
     resetOffsets,
     originalResource,
-    setOriginalResource,
     fetchOriginalResource,
     shouldFetchResource,
   } = useVideoNode();
   const { isTrimMode, hasTrimMode, toggleTrimMode } = useVideoTrimMode();
+
+  const trimModeTracker = useRef(isTrimMode);
+
+  useEffect(() => {
+    // If we're not in trim mode but we were before, reset the node data as well.
+    if (!isTrimMode && trimModeTracker.current === true) {
+      resetNodeTrimData();
+    }
+    trimModeTracker.current = isTrimMode;
+  }, [isTrimMode, resetNodeTrimData]);
 
   const performTrim = useCallback(() => {
     const resourceToTrim = originalResource
@@ -83,7 +93,7 @@ function VideoTrimProvider({ children }) {
       end: formatMsToHMS(endOffset),
     });
     toggleTrimMode();
-    setOriginalResource(null);
+    resetNodeTrimData();
   }, [
     endOffset,
     startOffset,
@@ -91,7 +101,7 @@ function VideoTrimProvider({ children }) {
     selectedElements,
     toggleTrimMode,
     originalResource,
-    setOriginalResource,
+    resetNodeTrimData,
   ]);
 
   const value = {
