@@ -49,26 +49,19 @@ async function goToAndExpandTaxonomyPanel() {
 
 async function addCategory(name, parent) {
   await expect(page).toClick('button', { text: 'Add New Category' });
-  await expect(page).toFill('input[name="New Category Name"]', name);
 
   if (parent) {
     await expect(page).toClick('button[aria-label="Parent Category"]');
     await expect(page).toMatchElement('li[role="option"]', { text: parent });
-    await expect(page).toClick('li[role="option"]', { text: parent });
-    await expect(page).toMatchElement(
-      'li[role="option"][aria-selected="true"]',
-      { text: parent }
-    );
 
+    await expect(page).toClick('li[role="option"]', { text: parent });
     await expect(page).toMatchElement('button[aria-label="Parent Category"]', {
       text: parent,
     });
-
-    // TODO: Add assertion here to verify the parent was chosen and the dropdown closed.
   }
 
+  await expect(page).toFill('input[name="New Category Name"]', name);
   await page.keyboard.press('Enter');
-
   await expect(page).toMatchElement('label', {
     text: name,
   });
