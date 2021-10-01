@@ -17,11 +17,9 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Settings;
-use Google\Web_Stories\Story_Post_Type;
+use DateTime;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
-use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
@@ -87,13 +85,11 @@ class Stories_Controller extends Test_REST_TestCase {
 			]
 		);
 
-		$future_date = strtotime( '+1 day' );
-
 		$factory->post->create_many(
 			3,
 			[
 				'post_status' => 'future',
-				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 				'post_type'   => $post_type,
 			]
@@ -121,45 +117,17 @@ class Stories_Controller extends Test_REST_TestCase {
 			3,
 			[
 				'post_status' => 'draft',
-				'post_author' => self::$user_id,
+				'post_author' => self::$author_id,
 				'post_type'   => $post_type,
 			]
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
-		self::delete_user( self::$user2_id );
-		self::delete_user( self::$user3_id );
-		self::delete_user( self::$author_id );
-		self::delete_user( self::$contributor_id );
-	}
-
-	public function setUp() {
-		parent::setUp();
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
-
-		$this->add_caps_to_roles();
-
-		$this->set_permalink_structure( '/%postname%/' );
-	}
-
-	public function tearDown() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
-		$this->remove_caps_from_roles();
-
-		$this->set_permalink_structure( '' );
+	public function tear_down() {
 
 		$this->kses_remove_filters();
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -174,6 +142,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 	/**
 	 * @covers ::get_items
+	 * @covers ::add_response_headers
 	 */
 	public function test_get_items() {
 		wp_set_current_user( self::$user_id );
@@ -185,6 +154,8 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->assertFalse( $response->is_error() );
 		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
+		$this->assertArrayHasKey( 'X-WP-Total', $headers );
+		$this->assertArrayHasKey( 'X-WP-TotalPages', $headers );
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
@@ -194,13 +165,14 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayHasKey( 'private', $statuses );
 
-		$this->assertEquals( 13, $statuses['all'] );
-		$this->assertEquals( 7, $statuses['publish'] );
-		$this->assertEquals( 3, $statuses['future'] );
-		$this->assertEquals( 3, $statuses['draft'] );
-		$this->assertEquals( 0, $statuses['private'] );
+		$this->assertSame( 13, $statuses['all'] );
+		$this->assertSame( 7, $statuses['publish'] );
+		$this->assertSame( 3, $statuses['future'] );
+		$this->assertSame( 3, $statuses['draft'] );
+		$this->assertSame( 0, $statuses['private'] );
 
-		$this->assertEquals( 3, $headers['X-WP-Total'] );
+		$this->assertSame( '3', $headers['X-WP-Total'] );
+		$this->assertSame( '1', $headers['X-WP-TotalPages'] );
 	}
 
 	/**
@@ -217,6 +189,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 	/**
 	 * @covers ::get_items
+	 * @covers ::add_response_headers
 	 */
 	public function test_get_items_contributor() {
 		wp_set_current_user( self::$contributor_id );
@@ -227,6 +200,8 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->assertFalse( $response->is_error() );
 		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
+		$this->assertArrayHasKey( 'X-WP-Total', $headers );
+		$this->assertArrayHasKey( 'X-WP-TotalPages', $headers );
 
 		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
 
@@ -236,14 +211,48 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayNotHasKey( 'private', $statuses );
 
-		$this->assertEquals( 13, $statuses['all'] );
-		$this->assertEquals( 7, $statuses['publish'] );
-		$this->assertEquals( 3, $statuses['future'] );
-		$this->assertEquals( 3, $statuses['draft'] );
+		$this->assertSame( 7, $statuses['all'] );
+		$this->assertSame( 7, $statuses['publish'] );
+		$this->assertSame( 0, $statuses['future'] );
+		$this->assertSame( 0, $statuses['draft'] );
 
-		$this->assertEquals( 7, $headers['X-WP-Total'] );
+		$this->assertSame( '7', $headers['X-WP-Total'] );
+		$this->assertSame( '1', $headers['X-WP-TotalPages'] );
 	}
 
+	/**
+	 * @covers ::get_items
+	 * @covers ::add_response_headers
+	 */
+	public function test_get_items_author() {
+		wp_set_current_user( self::$author_id );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
+		$request->set_param( 'context', 'edit' );
+		$response = rest_get_server()->dispatch( $request );
+		$headers  = $response->get_headers();
+
+		$this->assertFalse( $response->is_error() );
+		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
+		$this->assertArrayHasKey( 'X-WP-Total', $headers );
+		$this->assertArrayHasKey( 'X-WP-TotalPages', $headers );
+
+		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
+
+		$this->assertArrayHasKey( 'all', $statuses );
+		$this->assertArrayHasKey( 'publish', $statuses );
+		$this->assertArrayHasKey( 'draft', $statuses );
+		$this->assertArrayHasKey( 'future', $statuses );
+		$this->assertArrayHasKey( 'private', $statuses );
+
+		$this->assertSame( 10, $statuses['all'] );
+		$this->assertSame( 7, $statuses['publish'] );
+		$this->assertSame( 0, $statuses['future'] );
+		$this->assertSame( 0, $statuses['private'] );
+		$this->assertSame( 3, $statuses['draft'] );
+
+		$this->assertSame( '7', $headers['X-WP-Total'] );
+		$this->assertSame( '1', $headers['X-WP-TotalPages'] );
+	}
 	/**
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response
@@ -268,7 +277,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$edit_link = get_edit_post_link( $story, 'rest-api' );
 		$this->assertSame( $edit_link, $data['edit_link'] );
 		$this->assertArrayHasKey( 'embed_post_link', $data );
-		$this->assertContains( (string) $story, $data['embed_post_link'] );
+		$this->assertStringContainsString( (string) $story, $data['embed_post_link'] );
 	}
 
 	/**
@@ -299,16 +308,15 @@ class Stories_Controller extends Test_REST_TestCase {
 	 */
 	public function test_get_item_future() {
 		wp_set_current_user( self::$user_id );
-		$future_date = strtotime( '+1 day' );
-		$story       = self::factory()->post->create(
+		$story   = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
-				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 			]
 		);
-		$request     = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$request->set_param( 'context', 'edit' );
 		$response = rest_get_server()->dispatch( $request );
 
@@ -329,16 +337,16 @@ class Stories_Controller extends Test_REST_TestCase {
 	 */
 	public function test_get_item_lock() {
 		wp_set_current_user( self::$user_id );
-		$future_date = strtotime( '+1 day' );
-		$story       = self::factory()->post->create(
+
+		$story    = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
-				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 			]
 		);
-		$new_lock    = ( time() - 100 ) . ':' . self::$user_id;
+		$new_lock = ( time() - 100 ) . ':' . self::$user_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );
@@ -354,16 +362,16 @@ class Stories_Controller extends Test_REST_TestCase {
 	 */
 	public function test_get_available_actions() {
 		wp_set_current_user( self::$user_id );
-		$future_date = strtotime( '+1 day' );
-		$story       = self::factory()->post->create(
+
+		$story    = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'future',
-				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
 			]
 		);
-		$new_lock    = ( time() - 100 ) . ':' . self::$user_id;
+		$new_lock = ( time() - 100 ) . ':' . self::$user_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
 		$response = rest_get_server()->dispatch( $request );
@@ -398,12 +406,13 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'https://api.w.org/term', $links );
 		foreach ( $links['https://api.w.org/term'] as $taxonomy ) {
 			$this->assertArrayHasKey( 'href', $taxonomy );
-			$this->assertContains( 'web-stories/v1', $taxonomy['href'] );
+			$this->assertStringContainsString( 'web-stories/v1', $taxonomy['href'] );
 		}
 	}
 
 	/**
 	 * @covers ::get_items
+	 * @covers ::add_response_headers
 	 */
 	public function test_get_items_format() {
 		wp_set_current_user( self::$user_id );
@@ -429,7 +438,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'draft', $statuses );
 		$this->assertArrayHasKey( 'private', $statuses );
 
-		$this->assertEquals( 3, $data['headers']['X-WP-Total'] );
+		$this->assertSame( '3', $data['headers']['X-WP-Total'] );
 	}
 
 	/**
@@ -509,14 +518,14 @@ class Stories_Controller extends Test_REST_TestCase {
 		$query->set( 'orderby', 'story_author' );
 
 		$orderby = $controller->filter_posts_clauses( $initial_clauses, $query );
-		$this->assertEquals( $orderby, $initial_clauses );
+		$this->assertSame( $orderby, $initial_clauses );
 
 		$query = new \WP_Query();
 		$query->set( 'post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$query->set( 'orderby', 'author' );
 
 		$orderby = $controller->filter_posts_clauses( $initial_clauses, $query );
-		$this->assertEquals( $orderby, $initial_clauses );
+		$this->assertSame( $orderby, $initial_clauses );
 	}
 
 	/**
@@ -554,8 +563,8 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
-		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
-		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
+		$this->assertSame( $unsanitized_content, $new_data['content']['raw'] );
+		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
 	}
 
 	/**
@@ -600,10 +609,10 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'story_data', $new_data );
 		$this->assertArrayHasKey( 'featured_media', $new_data );
 
-		$this->assertEquals( 'Example title (Copy)', $new_data['title']['raw'] );
-		$this->assertEquals( 'Example excerpt', $new_data['excerpt']['raw'] );
-		$this->assertEquals( $attachment_id, $new_data['featured_media'] );
-		$this->assertEqualSets( [ 'pages' => [] ], $new_data['story_data'] );
+		$this->assertSame( 'Example title (Copy)', $new_data['title']['raw'] );
+		$this->assertSame( 'Example excerpt', $new_data['excerpt']['raw'] );
+		$this->assertSame( $attachment_id, $new_data['featured_media'] );
+		$this->assertSame( [ 'pages' => [] ], $new_data['story_data'] );
 	}
 
 	/**
@@ -687,7 +696,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
-		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
-		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
+		$this->assertSame( $unsanitized_content, $new_data['content']['raw'] );
+		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
 	}
 }

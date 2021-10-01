@@ -64,7 +64,7 @@ class Analytics extends TestCase {
 			foreach ( $trigger_config['vars'] as $value ) {
 				// Catch typos like ${foo) instead of ${foo}.
 				if ( false !== strpos( $value, '$' ) ) {
-					$this->assertRegExp( '/^\${[^}]+}$/', $value, 'Invalid variable declaration present' );
+					$this->assertMatchesRegularExpression( '/^\${[^}]+}$/', $value, 'Invalid variable declaration present' );
 				}
 			}
 		}
@@ -87,7 +87,7 @@ class Analytics extends TestCase {
 		$actual_after = get_echo( [ $analytics, 'print_analytics_tag' ] );
 
 		$this->assertEmpty( $actual_before );
-		$this->assertContains( '<amp-story-auto-analytics', $actual_after );
+		$this->assertStringContainsString( '<amp-story-auto-analytics', $actual_after );
 	}
 
 	/**
@@ -103,6 +103,6 @@ class Analytics extends TestCase {
 		$actual_after = get_echo( [ $analytics, 'print_analytics_tag' ] );
 
 		$this->assertEmpty( $actual_before );
-		$this->assertContains( '<amp-analytics', $actual_after );
+		$this->assertStringContainsString( '<amp-analytics', $actual_after );
 	}
 }

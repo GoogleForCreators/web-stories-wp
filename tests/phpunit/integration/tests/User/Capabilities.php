@@ -26,15 +26,15 @@ use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
 class Capabilities extends TestCase {
 	use Capabilities_Setup;
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->add_caps_to_roles();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		$this->remove_caps_from_roles();
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

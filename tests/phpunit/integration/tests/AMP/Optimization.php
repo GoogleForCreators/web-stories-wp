@@ -67,8 +67,8 @@ class Optimization extends TestCase {
 
 		$actual = $document->saveHTML();
 
-		$this->assertContains( 'transformed="self;v=1', $actual );
-		$this->assertNotContains( 'Cannot remove boilerplate because of an unsupported layout: amp-story', $actual );
+		$this->assertStringContainsString( 'transformed="self;v=1', $actual );
+		$this->assertStringNotContainsString( 'Cannot remove boilerplate because of an unsupported layout: amp-story', $actual );
 	}
 
 	/**
