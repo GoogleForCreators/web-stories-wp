@@ -52,6 +52,10 @@ const Paragraph = styled.p`
   ${textCss};
 `;
 
+const Div = styled.div`
+  ${textCss};
+`;
+
 const Span = styled.span`
   ${textCss};
 `;
@@ -80,6 +84,8 @@ export const Text = ({ as, disabled, ...props }) => {
       return <Span {...props} />;
     case 'kbd':
       return <Kbd {...props} />;
+    case 'div':
+      return <Div {...props} />;
     default:
       return <Paragraph {...props} />;
   }

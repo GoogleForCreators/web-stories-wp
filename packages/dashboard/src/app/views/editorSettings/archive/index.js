@@ -193,6 +193,7 @@ export default function ArchiveSettings({
         {ARCHIVE_TYPE.CUSTOM === archive && (
           <TextInputHelperText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            as="div"
           >
             <Search
               placeholder={__('Select page', 'web-stories')}
