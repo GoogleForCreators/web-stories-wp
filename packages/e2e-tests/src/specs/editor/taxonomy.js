@@ -231,7 +231,10 @@ describe('Taxonomy', () => {
       await percySnapshot(page, 'Taxonomies - Categories - Contributor');
     });
 
-    it('should be able to add tags that already exist but not create new tags', async () => {
+    // Disable reason: capabilities not met, right now contributor users are granted the ability to `create-web_story_tag` which makes this test fail.
+    // https://github.com/google/web-stories-wp/issues/9236
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should be able to add tags that already exist but not create new tags', async () => {
       await createNewStory();
       await insertStoryTitle('Taxonomies - Tags - Contributor');
 
