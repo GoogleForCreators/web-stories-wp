@@ -160,7 +160,9 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
   });
 
   describe('Easier/smarter text set color', () => {
-    it('should add text color based on background', async () => {
+    // TODO(#9224): Fix flaky test.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should add text color based on background', async () => {
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
