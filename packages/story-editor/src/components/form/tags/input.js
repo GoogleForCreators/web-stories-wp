@@ -49,9 +49,14 @@ const Border = styled.div`
     ${isInputFocused && themeHelpers.focusCSS};
   `}
   display: flex;
+  flex-direction: column;
+  margin-bottom: 6px;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
   flex-wrap: wrap;
   padding: 3px 6px;
-  margin-bottom: 6px;
 `;
 
 const TextInput = styled(BaseInput).attrs({ type: 'text' })`
@@ -62,10 +67,13 @@ const TextInput = styled(BaseInput).attrs({ type: 'text' })`
 `;
 
 const SuggestionList = styled(List)`
+  border-top: ${({ theme }) =>
+    `1px solid ${theme.colors.border.defaultNormal}`};
   display: block;
   list-style-type: none;
   width: 100%;
-  margin-top: 4px;
+  padding: 6px 4px 4px;
+  margin-top: 6px;
   li {
     padding: 4px;
     width: 100%;
@@ -198,40 +206,43 @@ function Input({
 
   return (
     <Border ref={containerRef} isInputFocused={isInputFocused}>
-      {
-        // Text input should move, relative to end, with offset
-        // this helps with natural tab order and visuals
-        // as you ArrowLeft or ArrowRight through tags
-        [
-          ...renderedTags.slice(0, renderedTags.length - offset),
-          INPUT_KEY,
-          ...renderedTags.slice(renderedTags.length - offset),
-        ].map((tag) =>
-          tag === INPUT_KEY ? (
-            <TextInput
-              {...props}
-              key={INPUT_KEY}
-              value={value}
-              onKeyDown={handleKeyDown}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              size="4"
-              ref={inputRef}
-              autoComplete="off"
-            />
-          ) : (
-            <Tag key={tag} onDismiss={removeTag(tag)}>
-              {tagDisplayTransformer(tag) || tag}
-            </Tag>
+      <InputWrapper>
+        {
+          // Text input should move, relative to end, with offset
+          // this helps with natural tab order and visuals
+          // as you ArrowLeft or ArrowRight through tags
+          [
+            ...renderedTags.slice(0, renderedTags.length - offset),
+            INPUT_KEY,
+            ...renderedTags.slice(renderedTags.length - offset),
+          ].map((tag) =>
+            tag === INPUT_KEY ? (
+              <TextInput
+                {...props}
+                key={INPUT_KEY}
+                value={value}
+                onKeyDown={handleKeyDown}
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                size="4"
+                ref={inputRef}
+                autoComplete="off"
+              />
+            ) : (
+              <Tag key={tag} onDismiss={removeTag(tag)}>
+                {tagDisplayTransformer(tag) || tag}
+              </Tag>
+            )
           )
-        )
-      }
-      {suggestedTerms.length > 0 && value.length >= 3 && (
+        }
+      </InputWrapper>
+      {suggestedTerms.length > 0 && (
         <SuggestionList
           aria-label={suggestedTermsLabel}
           role="listbox"
           ref={menuRef}
+          data-testid="suggested_terms_list"
         >
           {suggestedTerms.map(({ name, id }, index) => (
             <li

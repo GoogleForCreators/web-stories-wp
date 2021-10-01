@@ -21,6 +21,7 @@ import {
   useCallback,
   useDebouncedCallback,
   useMemo,
+  useState,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 /**
@@ -36,32 +37,24 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
   const {
     createTerm,
     termCache,
-    flatSearchResults = [],
     addSearchResultsToCache,
     terms = [],
-    setFlatSearchResults,
     setTerms,
   } = useTaxonomy(
     ({
-      state: { flatSearchResults, termCache, terms },
-      actions: {
-        createTerm,
-        addSearchResultsToCache,
-        setFlatSearchResults,
-        setTerms,
-      },
+      state: { termCache, terms },
+      actions: { createTerm, addSearchResultsToCache, setTerms },
     }) => ({
-      flatSearchResults,
       termCache,
       createTerm,
       addSearchResultsToCache,
       terms,
-      setFlatSearchResults,
       setTerms,
     })
   );
 
   const { undo } = useHistory(({ actions: { undo } }) => ({ undo }));
+  const [searchResults, setSearchResults] = useState([]);
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
@@ -98,20 +91,21 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     [canCreateTerms, terms, taxonomy, termCache, setTerms, createTerm]
   );
 
-  const handleFreeformInputChange = useDebouncedCallback((value) => {
+  const handleFreeformInputChange = useDebouncedCallback(async (value) => {
     if (value.length === 0) {
-      setFlatSearchResults([]);
+      setSearchResults([]);
       return;
     }
 
     if (value.length < 3) {
       return;
     }
-    addSearchResultsToCache(taxonomy, {
+    const results = await addSearchResultsToCache(taxonomy, {
       search: value,
       // This is the per_page value Gutenberg is using
       per_page: 20,
     });
+    setSearchResults(results);
   }, 1000);
 
   const tokens = useMemo(() => {
@@ -147,7 +141,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
           tagDisplayTransformer={termDisplayTransformer}
           tokens={tokens}
           onUndo={undo}
-          suggestedTerms={suggestedTerms}
+          suggestedTerms={searchResults}
           suggestedTermsLabel={taxonomy?.labels?.items_list}
         />
         <Tags.Description id={`${taxonomy.slug}-description`}>

@@ -42,7 +42,6 @@ import {
 function TaxonomyProvider(props) {
   const [taxonomies, setTaxonomies] = useState([]);
   const [termCache, setTermCache] = useState({});
-  const [flatSearchResults, setFlatSearchResults] = useState([]);
   // Should grab categories on mount
   const [shouldRefetchCategories, setShouldRefetchCategories] = useState(true);
   const {
@@ -180,8 +179,6 @@ function TaxonomyProvider(props) {
         if (selectedTerm) {
           addTermToSelection(taxonomy, selectedTerm);
         }
-      } else if (args.search) {
-        setFlatSearchResults(response);
       }
 
       // eslint-disable-next-line consistent-return
@@ -260,7 +257,6 @@ function TaxonomyProvider(props) {
   const value = useMemo(
     () => ({
       state: {
-        flatSearchResults,
         taxonomies,
         termCache,
         terms: Array.isArray(terms) ? {} : terms,
@@ -268,20 +264,17 @@ function TaxonomyProvider(props) {
       actions: {
         createTerm,
         addSearchResultsToCache,
-        setFlatSearchResults,
         setTerms,
         addTermToSelection,
       },
     }),
     [
-      flatSearchResults,
       termCache,
       terms,
       taxonomies,
       createTerm,
       addSearchResultsToCache,
       addTermToSelection,
-      setFlatSearchResults,
       setTerms,
     ]
   );
