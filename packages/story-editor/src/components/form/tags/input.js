@@ -90,7 +90,6 @@ const SuggestionList = styled(List)`
 `;
 function Input({
   suggestedTerms = [],
-  helpId,
   onTagsChange,
   onInputChange,
   suggestedTermsLabel,
@@ -245,8 +244,6 @@ function Input({
                 size="4"
                 ref={inputRef}
                 autoComplete={isSuggestionsOpen ? 'off' : 'on'}
-                aria-expanded={isSuggestionsOpen}
-                aria-describedby={helpId}
                 aria-autocomplete="list"
                 aria-owns={isSuggestionsOpen ? suggestionListId : null}
               />
@@ -284,7 +281,6 @@ function Input({
   );
 }
 Input.propTypes = {
-  helpId: PropTypes.string,
   initialTags: PropTypes.arrayOf(PropTypes.string),
   name: PropTypes.string.isRequired,
   onInputChange: PropTypes.func,

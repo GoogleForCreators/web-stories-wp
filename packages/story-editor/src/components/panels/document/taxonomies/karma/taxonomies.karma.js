@@ -472,7 +472,7 @@ describe('Categories & Tags Panel', () => {
       // enter in the first tag
       await fixture.events.focus(tagsInput);
       await fixture.events.keyboard.type(tag1Name);
-      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Enter');
       await waitFor(
         () =>
           fixture.screen.getAllByTestId(/^flat-term-token/).length ===
