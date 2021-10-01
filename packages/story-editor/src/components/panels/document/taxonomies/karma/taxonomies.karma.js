@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -460,7 +460,7 @@ describe('Categories & Tags Panel', () => {
       );
     });
 
-    it('can add tags', async () => {
+    it('can add tags with input', async () => {
       await openCategoriesAndTagsPanel();
       const tag1Name = 'new tag';
       const tag2Name = 'another tag';
@@ -503,6 +503,33 @@ describe('Categories & Tags Panel', () => {
       const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
       expect(tagTokens[initialTagsLength].innerText).toBe(tag1Name);
       expect(tagTokens[initialTagsLength + 1].innerText).toBe(tag2Name);
+    });
+
+    it('can add tags with Most Used', async () => {
+      await openCategoriesAndTagsPanel();
+      const initialTagsLength = (await getStoryTerms())['web_story_tag'].length;
+
+      // get all most used terms
+      const storyTagsMostUsed = fixture.screen.getByTestId(
+        /^web_story_tag-most-used/
+      );
+      const mostUsedButtons = within(storyTagsMostUsed).getAllByRole('button');
+
+      // click on the first most used term
+      await fixture.events.click(mostUsedButtons[0]);
+
+      // see that the term appears in the input
+      const tagTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
+      expect(tagTokens[tagTokens.length - 1].innerText).toBe(
+        // most used buttons have comma separators in them
+        mostUsedButtons[0].innerText.split(',')[0]
+      );
+
+      // see that the term id is associated with the story
+      const currentStoryTerms = await getStoryTerms();
+      expect(currentStoryTerms['web_story_tag'].length).toEqual(
+        initialTagsLength + 1
+      );
     });
 
     it('can delete tags with keyboard', async () => {
