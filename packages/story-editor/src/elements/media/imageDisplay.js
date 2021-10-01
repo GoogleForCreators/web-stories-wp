@@ -107,6 +107,7 @@ function ImageDisplay({ element, box, previewMode }) {
       <Img
         ref={ref}
         draggable={false}
+        decoding="sync"
         src={src}
         srcSet={srcSet}
         alt={resource.alt}

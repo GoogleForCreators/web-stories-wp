@@ -97,7 +97,7 @@ function BasicColorPicker({
           allowsGradient={allowsGradient}
           aria-labelledby="colorpicker-default-colors-title"
         />
-        {allowsSavedColors && savedColors.length && (
+        {allowsSavedColors && savedColors.length > 0 && (
           <>
             <Label id="colorpicker-saved-colors-title">
               {__('Saved colors', 'web-stories')}

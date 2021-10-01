@@ -29,6 +29,7 @@ import PropTypes from 'prop-types';
 import Tags, { deepEquals } from '../../../form/tags';
 import cleanForSlug from '../../../../utils/cleanForSlug';
 import { useTaxonomy } from '../../../../app/taxonomy';
+import { useHistory } from '../../../../app';
 import { ContentHeading, TaxonomyPropType } from './shared';
 
 function FlatTermSelector({ taxonomy, canCreateTerms }) {
@@ -50,6 +51,8 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       setTerms,
     })
   );
+
+  const { undo } = useHistory(({ actions: { undo } }) => ({ undo }));
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
@@ -125,6 +128,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
           onInputChange={handleFreeformInputChange}
           tagDisplayTransformer={termDisplayTransformer}
           tokens={tokens}
+          onUndo={undo}
         />
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separate_items_with_commas}
