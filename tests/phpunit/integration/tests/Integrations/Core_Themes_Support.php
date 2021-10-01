@@ -42,6 +42,8 @@ class Core_Themes_Support extends TestCase {
 	 * Runs prior to each test and sets up the testee object.
 	 */
 	public function set_up() {
+		parent::set_up();
+
 		$this->stylesheet = get_stylesheet();
 
 		// Set stylesheet from one of the supported themes.
