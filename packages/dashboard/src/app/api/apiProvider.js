@@ -48,15 +48,9 @@ export default function ApiProvider({ children }) {
     encodeMarkup,
   });
 
-  const { stories, api: storyApi } = useStoryApi(dataAdapter, {
-    storyApi: api.stories,
-  });
-
+  const { stories, api: storyApi } = useStoryApi(api.stories);
   const { media, api: mediaApi } = useMediaApi(api.media);
-
-  const { settings, api: settingsApi } = useSettingsApi(dataAdapter, {
-    globalSettingsApi: api.settings,
-  });
+  const { settings, api: settingsApi } = useSettingsApi(api.settings);
 
   const { api: pagesApi } = usePagesApi(api.pages);
 

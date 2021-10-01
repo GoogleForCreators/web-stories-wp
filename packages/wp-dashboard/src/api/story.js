@@ -13,12 +13,86 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export function duplicateStory() {}
+/**
+ * External dependencies
+ */
+import { addQueryArgs } from '@web-stories-wp/design-system';
+import { ORDER_BY_SORT } from '@web-stories-wp/dashboard';
 
-export function fetchStories() {}
+/**
+ * Internal dependencies
+ */
+import { default as dataAdapter } from './utils/wpAdapter';
+import { STORY_FIELDS } from './constants';
 
-export function trashStory() {}
+export function fetchStories(queryParams, apiPath) {
+  const { status, sortOption, sortDirection, searchTerm, page, perPage } =
+    queryParams;
 
-export function updateStory() {}
+  // Important: Keep in sync with REST API preloading definition.
+  const query = {
+    _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
+    context: 'edit',
+    _web_stories_envelope: true,
+    search: searchTerm || undefined,
+    orderby: sortOption,
+    page,
+    per_page: perPage,
+    order: sortDirection || ORDER_BY_SORT[sortOption],
+    status,
+    _fields: STORY_FIELDS,
+  };
 
-export function createStoryFromTemplate() {}
+  return dataAdapter.get(addQueryArgs(apiPath, query));
+}
+
+export function trashStory(storyId, apiPath) {
+  return dataAdapter.deleteRequest(`${apiPath}${storyId}`);
+}
+
+export function updateStory(story, apiPath) {
+  const path = addQueryArgs(`${apiPath}${story.id}/`, {
+    _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
+  });
+
+  const data = {
+    id: story.id,
+    author: story.originalStoryData.author,
+    title: story.title?.raw || story.title,
+  };
+
+  return dataAdapter.post(path, {
+    data,
+  });
+}
+
+export function createStoryFromTemplate(storyData, storyPropsToSave, apiPath) {
+  const path = addQueryArgs(apiPath, {
+    _fields: 'edit_link',
+  });
+
+  return dataAdapter.post(path, {
+    data: {
+      ...storyPropsToSave,
+      story_data: storyData,
+    },
+  });
+}
+
+export function duplicateStory(story, apiPath) {
+  const {
+    originalStoryData: { id },
+  } = story;
+
+  const path = addQueryArgs(apiPath, {
+    _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
+    _fields: STORY_FIELDS,
+  });
+
+  return dataAdapter.post(path, {
+    data: {
+      original_id: id,
+      status: 'draft',
+    },
+  });
+}

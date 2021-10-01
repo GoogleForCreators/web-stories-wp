@@ -24,7 +24,6 @@ import {
   useRef,
 } from '@web-stories-wp/react';
 import { useFeatures } from 'flagged';
-import { addQueryArgs } from '@web-stories-wp/design-system';
 import { createSolidFromString } from '@web-stories-wp/patterns';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 
@@ -34,7 +33,6 @@ import { getTimeTracker } from '@web-stories-wp/tracking';
 import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
-  ORDER_BY_SORT,
   STORIES_PER_REQUEST,
 } from '../../constants';
 import storyReducer, {
@@ -43,40 +41,34 @@ import storyReducer, {
 } from '../reducer/stories';
 import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
+import { useConfig } from '../config';
 
-// Important: Keep in sync with REST API preloading definition.
-const STORY_FIELDS = [
-  'id',
-  'title',
-  'status',
-  'date',
-  'date_gmt',
-  'modified',
-  'modified_gmt',
-  'link',
-  'preview_link',
-  'edit_link',
-  // _web_stories_envelope will add these fields, we need them too.
-  'body',
-  'status',
-  'headers',
-].join(',');
-
-const useStoryApi = (dataAdapter, { storyApi }) => {
+const useStoryApi = (storyApi) => {
   const isInitialFetch = useRef(true);
   const initialFetchListeners = useMemo(() => new Map(), []);
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
   const flags = useFeatures();
+  const {
+    apiCallbacks: {
+      duplicateStory: duplicateStoryCallback,
+      fetchStories: fetchStoriesCallback,
+      trashStory: trashStoryCallback,
+      updateStory: updateStoryCallback,
+      createStoryFromTemplate: createStoryFromTemplateCallback,
+    },
+  } = useConfig();
 
   const fetchStories = useCallback(
-    async ({
-      status = STORY_STATUSES[0].value,
-      sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
-      sortDirection,
-      searchTerm,
-      page = 1,
-      perPage = STORIES_PER_REQUEST,
-    }) => {
+    async (queryParams) => {
+      const {
+        status = STORY_STATUSES[0].value, // @todo Move these to wp-dashboard?
+        sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
+        sortDirection,
+        searchTerm,
+        page = 1,
+        perPage = STORIES_PER_REQUEST,
+      } = queryParams;
+
       dispatch({
         type: STORY_ACTION_TYPES.LOADING_STORIES,
         payload: true,
@@ -92,31 +84,26 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
         return;
       }
 
-      // Important: Keep in sync with REST API preloading definition.
-      const query = {
-        _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
-        context: 'edit',
-        _web_stories_envelope: true,
-        search: searchTerm || undefined,
-        orderby: sortOption,
-        page,
-        per_page: perPage,
-        order: sortDirection || ORDER_BY_SORT[sortOption],
-        status,
-        _fields: STORY_FIELDS,
-      };
-
       const trackTiming = getTimeTracker('load_stories');
 
       try {
-        const path = addQueryArgs(storyApi, query);
-        const response = await dataAdapter.get(path);
+        const response = await fetchStoriesCallback(
+          {
+            status,
+            sortOption,
+            sortDirection,
+            searchTerm,
+            page,
+            perPage,
+          },
+          storyApi
+        );
 
         const totalPages =
-          response.headers && parseInt(response.headers['X-WP-TotalPages']);
+          response.headers && parseInt(response.headers['X-WP-TotalPages']); // @todo Rename from wp-dashboard.
         const totalStoriesByStatus =
           response.headers &&
-          JSON.parse(response.headers['X-WP-TotalByStatus']);
+          JSON.parse(response.headers['X-WP-TotalByStatus']); // @todo Rename from wp-dashboard.
 
         // Hook into first fetch of story statuses.
         if (isInitialFetch.current) {
@@ -153,7 +140,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
         trackTiming();
       }
     },
-    [storyApi, dataAdapter, initialFetchListeners]
+    [storyApi, fetchStoriesCallback, initialFetchListeners]
   );
 
   const updateStory = useCallback(
@@ -161,19 +148,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
       const trackTiming = getTimeTracker('load_update_story');
 
       try {
-        const path = addQueryArgs(`${storyApi}${story.id}/`, {
-          _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
-        });
-
-        const data = {
-          id: story.id,
-          author: story.originalStoryData.author,
-          title: story.title?.raw || story.title,
-        };
-
-        const response = await dataAdapter.post(path, {
-          data,
-        });
+        const response = await updateStoryCallback(story, storyApi);
 
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
@@ -191,7 +166,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
         trackTiming();
       }
     },
-    [storyApi, dataAdapter]
+    [storyApi, updateStoryCallback]
   );
 
   const trashStory = useCallback(
@@ -199,7 +174,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
       const trackTiming = getTimeTracker('load_trash_story');
 
       try {
-        await dataAdapter.deleteRequest(`${storyApi}${story.id}`);
+        await trashStoryCallback(story.id, storyApi);
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY,
           payload: { id: story.id, storyStatus: story.status },
@@ -216,7 +191,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
         trackTiming();
       }
     },
-    [storyApi, dataAdapter]
+    [storyApi, trashStoryCallback]
   );
 
   const createStoryFromTemplate = useCallback(
@@ -249,24 +224,21 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
           createSolidFromString(color)
         );
 
-        const path = addQueryArgs(storyApi, {
-          _fields: 'edit_link',
-        });
-
-        const response = await dataAdapter.post(path, {
-          data: {
-            ...storyPropsToSave,
-            story_data: {
-              pages,
-              version,
-              autoAdvance: true,
-              defaultPageDuration: 7,
-              currentStoryStyles: {
-                colors: convertedColors,
-              },
-            },
+        const storyData = {
+          pages,
+          version,
+          autoAdvance: true,
+          defaultPageDuration: 7,
+          currentStoryStyles: {
+            colors: convertedColors,
           },
-        });
+        };
+
+        const response = await createStoryFromTemplateCallback(
+          storyData,
+          storyPropsToSave,
+          storyApi
+        );
 
         dispatch({
           type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS,
@@ -288,7 +260,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
         });
       }
     },
-    [dataAdapter, storyApi, flags]
+    [createStoryFromTemplateCallback, storyApi, flags]
   );
 
   const duplicateStory = useCallback(
@@ -296,21 +268,8 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
       const trackTiming = getTimeTracker('load_duplicate_story');
 
       try {
-        const {
-          originalStoryData: { id },
-        } = story;
+        const response = await duplicateStoryCallback(story, storyApi);
 
-        const path = addQueryArgs(storyApi, {
-          _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
-          _fields: STORY_FIELDS,
-        });
-
-        const response = await dataAdapter.post(path, {
-          data: {
-            original_id: id,
-            status: 'draft',
-          },
-        });
         dispatch({
           type: STORY_ACTION_TYPES.DUPLICATE_STORY,
           payload: reshapeStoryObject(response),
@@ -327,7 +286,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
         trackTiming();
       }
     },
-    [storyApi, dataAdapter]
+    [storyApi, duplicateStoryCallback]
   );
 
   const addInitialFetchListener = useCallback(

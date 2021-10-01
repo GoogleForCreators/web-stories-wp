@@ -13,6 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export function fetchSettings() {}
+/**
+ * External dependencies
+ */
+import { addQueryArgs } from '@web-stories-wp/design-system';
 
-export function updateSettings() {}
+/**
+ * Internal dependencies
+ */
+import { default as dataAdapter } from './utils/wpAdapter';
+
+/**
+ * Fetch settings.
+ * Used on settings page.
+ *
+ * @param {string} apiPath API path.
+ * @return {Promise} Request promise.
+ */
+export function fetchSettings(apiPath) {
+  return dataAdapter.get(addQueryArgs(apiPath)); // @todo Why addQueryArgs was originally used ?
+}
+
+/**
+ * Update settings.
+ *
+ * @param {Object} query Query arguments to apply to URL.
+ * @param {string} apiPath API path.
+ * @return {Promise} Request promise.
+ */
+export function updateSettings(query, apiPath) {
+  return dataAdapter.post(addQueryArgs(apiPath, query));
+}

@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { useCallback, useReducer } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -28,9 +27,16 @@ import settingsReducer, {
   ACTION_TYPES as SETTINGS_ACTION_TYPES,
 } from '../reducer/settings';
 import { ERRORS } from '../textContent';
+import { useConfig } from '../config';
 
-export default function useSettingsApi(dataAdapter, { globalSettingsApi }) {
+export default function useSettingsApi(globalSettingsApi) {
   const [state, dispatch] = useReducer(settingsReducer, defaultSettingsState);
+  const {
+    apiCallbacks: {
+      fetchSettings: fetchSettingsCallback,
+      updateSettings: updateSettingsCallback,
+    },
+  } = useConfig();
 
   const fetchSettings = useCallback(async () => {
     if (!globalSettingsApi) {
@@ -42,7 +48,7 @@ export default function useSettingsApi(dataAdapter, { globalSettingsApi }) {
       });
     }
     try {
-      const response = await dataAdapter.get(addQueryArgs(globalSettingsApi));
+      const response = await fetchSettingsCallback(globalSettingsApi);
 
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
@@ -66,7 +72,7 @@ export default function useSettingsApi(dataAdapter, { globalSettingsApi }) {
         },
       });
     }
-  }, [dataAdapter, globalSettingsApi]);
+  }, [fetchSettingsCallback, globalSettingsApi]);
 
   const updateSettings = useCallback(
     async ({
@@ -119,9 +125,7 @@ export default function useSettingsApi(dataAdapter, { globalSettingsApi }) {
           query.web_stories_archive_page_id = archivePageId;
         }
 
-        const response = await dataAdapter.post(
-          addQueryArgs(globalSettingsApi, query)
-        );
+        const response = await updateSettingsCallback(query, globalSettingsApi);
 
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
@@ -147,16 +151,14 @@ export default function useSettingsApi(dataAdapter, { globalSettingsApi }) {
         });
       }
     },
-    [dataAdapter, globalSettingsApi]
+    [updateSettingsCallback, globalSettingsApi]
   );
 
-  const api = useMemo(
-    () => ({
+  return {
+    settings: state,
+    api: {
       fetchSettings,
       updateSettings,
-    }),
-    [fetchSettings, updateSettings]
-  );
-
-  return { settings: state, api };
+    },
+  };
 }
