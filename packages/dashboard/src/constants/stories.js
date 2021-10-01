@@ -101,14 +101,21 @@ export const STORY_SORT_MENU_ITEMS = [
   },
 ];
 
-export const STORY_STATUS = {
-  ALL: 'publish,draft,future,pending,private',
-  PUBLISHED_AND_FUTURE: 'publish,future',
+/**
+ * All possible story statuses.
+ */
+const BASE_STATUSES = {
   DRAFT: 'draft',
   FUTURE: 'future',
   PENDING: 'pending',
   PUBLISH: 'publish',
   PRIVATE: 'private',
+};
+
+export const STORY_STATUS = {
+  ALL: Object.values(BASE_STATUSES).join(','),
+  PUBLISHED_AND_FUTURE: [BASE_STATUSES.PUBLISH, BASE_STATUSES.FUTURE].join(','),
+  ...BASE_STATUSES,
 };
 
 export const DISPLAY_STATUS = {
