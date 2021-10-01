@@ -131,14 +131,12 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
   useEffect(() => {
     (async function () {
       const results = await addSearchResultsToCache(taxonomy, {
-        context: 'edit',
         orderby: 'count',
         order: 'desc',
         hide_empty: true,
       });
       setMostUsed(results);
     })();
-    // setMostUsed([]);
   }, [taxonomy, addSearchResultsToCache]);
 
   return (
