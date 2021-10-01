@@ -20,7 +20,8 @@
 import { default as dataAdapter } from './utils/wpAdapter';
 
 /**
- * Upload media ( Used on settings page )
+ * Upload media
+ * Used on settings page for upload button.
  *
  * @param {Object} files Uploaded files.
  * @param {string} apiPath String.
