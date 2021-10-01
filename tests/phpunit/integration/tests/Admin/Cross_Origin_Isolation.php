@@ -250,17 +250,17 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 		$result = $this->call_private_method( $this->instance, 'replace_in_dom', [ $html ] );
 		$this->assertStringContainsString( '<img crossorigin="anonymous" src="http://www.example.com/test1.jpg" />', $result );
 	}
-//
-//	/**
-//	 * @covers ::custom_print_media_templates
-//	 * @runInSeparateProcess
-//	 * @preserveGlobalState disabled
-//	 */
-//	public function test_custom_print_media_templates() {
-//		require_once ABSPATH . WPINC . '/media-template.php';
-//		$output = get_echo( [ $this->instance, 'custom_print_media_templates' ] );
-//		$this->assertStringContainsString( '<audio crossorigin="anonymous"', $output );
-//		$this->assertStringContainsString( '<img crossorigin="anonymous"', $output );
-//		$this->assertStringContainsString( '<video crossorigin="anonymous"', $output );
-//	}
+
+	/**
+	 * @covers ::custom_print_media_templates
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_custom_print_media_templates() {
+		require_once ABSPATH . WPINC . '/media-template.php';
+		$output = get_echo( [ $this->instance, 'custom_print_media_templates' ] );
+		$this->assertStringContainsString( '<audio crossorigin="anonymous"', $output );
+		$this->assertStringContainsString( '<img crossorigin="anonymous"', $output );
+		$this->assertStringContainsString( '<video crossorigin="anonymous"', $output );
+	}
 }
