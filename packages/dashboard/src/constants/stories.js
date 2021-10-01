@@ -111,6 +111,14 @@ export const STORY_STATUS = {
   PRIVATE: 'private',
 };
 
+export const DISPLAY_STATUS = {
+  [STORY_STATUS.PUBLISH]: __('Published', 'web-stories'),
+  [STORY_STATUS.PENDING]: __('Pending', 'web-stories'),
+  [STORY_STATUS.FUTURE]: __('Scheduled', 'web-stories'),
+  [STORY_STATUS.DRAFT]: __('Draft', 'web-stories'),
+  [STORY_STATUS.PRIVATE]: __('Private', 'web-stories'),
+};
+
 export const STORY_STATUSES = [
   {
     label: __('All Stories', 'web-stories'),
