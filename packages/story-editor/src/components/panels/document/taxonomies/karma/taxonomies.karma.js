@@ -195,7 +195,9 @@ describe('Categories & Tags Panel', () => {
     });
 
     describe('keyboard interactions', () => {
-      it('should add categories and remove categories', async () => {
+      // TODO(#9226): Fix flaky test.
+      // eslint-disable-next-line jasmine/no-disabled-tests
+      xit('should add categories and remove categories', async () => {
         await openCategoriesAndTagsPanel();
 
         const categoriesAndTags =
