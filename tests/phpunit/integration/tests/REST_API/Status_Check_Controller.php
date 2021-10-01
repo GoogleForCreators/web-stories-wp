@@ -72,9 +72,6 @@ class Status_Check_Controller extends Test_REST_TestCase {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/status-check', $routes );
-
-		$route = $routes['/web-stories/v1/status-check'];
-		$this->assertCount( 1, $route );
 	}
 
 	/**
