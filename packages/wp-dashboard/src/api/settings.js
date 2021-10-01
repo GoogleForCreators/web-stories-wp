@@ -19,9 +19,9 @@
 import { addQueryArgs } from '@web-stories-wp/design-system';
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { default as dataAdapter } from './utils/wpAdapter';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Fetch settings.
@@ -31,7 +31,9 @@ import { default as dataAdapter } from './utils/wpAdapter';
  * @return {Promise} Request promise.
  */
 export function fetchSettings(apiPath) {
-  return dataAdapter.get(addQueryArgs(apiPath)); // @todo Why addQueryArgs was originally used ?
+  return apiFetch({
+    path: apiPath,
+  });
 }
 
 /**
@@ -42,5 +44,10 @@ export function fetchSettings(apiPath) {
  * @return {Promise} Request promise.
  */
 export function updateSettings(query, apiPath) {
-  return dataAdapter.post(addQueryArgs(apiPath, query));
+  const path = addQueryArgs(apiPath, query);
+
+  return apiFetch({
+    path,
+    method: 'POST',
+  });
 }

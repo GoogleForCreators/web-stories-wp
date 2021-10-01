@@ -17,10 +17,11 @@
  * External dependencies
  */
 import { addQueryArgs } from '@web-stories-wp/design-system';
+
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { default as dataAdapter } from './utils/wpAdapter';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Search pages by search term.
@@ -31,13 +32,13 @@ import { default as dataAdapter } from './utils/wpAdapter';
  * @return {Promise} Request promise.
  */
 export function searchPages(searchTerm, apiPath) {
-  return dataAdapter.get(
-    addQueryArgs(apiPath, {
-      per_page: 100,
-      search: searchTerm,
-      _fields: ['id', 'title'],
-    })
-  );
+  const path = addQueryArgs(apiPath, {
+    per_page: 100,
+    search: searchTerm,
+    _fields: ['id', 'title'],
+  });
+
+  return apiFetch({ path });
 }
 
 /**
@@ -49,9 +50,9 @@ export function searchPages(searchTerm, apiPath) {
  * @return {Promise} Request promise.
  */
 export function getPageById(id, apiPath) {
-  return dataAdapter.get(
-    addQueryArgs(`${apiPath}${id}/`, {
-      _fields: ['title', 'link'],
-    })
-  );
+  const path = addQueryArgs(`${apiPath}${id}/`, {
+    _fields: ['title', 'link'],
+  });
+
+  return apiFetch({ path });
 }

@@ -20,9 +20,13 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
 import { ORDER_BY_SORT } from '@web-stories-wp/dashboard';
 
 /**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+
+/**
  * Internal dependencies
  */
-import { default as dataAdapter } from './utils/wpAdapter';
 import { STORY_FIELDS } from './constants';
 
 export function fetchStories(queryParams, apiPath) {
@@ -43,11 +47,18 @@ export function fetchStories(queryParams, apiPath) {
     _fields: STORY_FIELDS,
   };
 
-  return dataAdapter.get(addQueryArgs(apiPath, query));
+  return apiFetch({
+    path: addQueryArgs(apiPath, query),
+  });
 }
 
 export function trashStory(storyId, apiPath) {
-  return dataAdapter.deleteRequest(`${apiPath}${storyId}`);
+  const path = addQueryArgs(`${apiPath}${storyId}`, { _method: 'DELETE' });
+
+  return apiFetch({
+    path,
+    method: 'POST',
+  });
 }
 
 export function updateStory(story, apiPath) {
@@ -61,8 +72,10 @@ export function updateStory(story, apiPath) {
     title: story.title?.raw || story.title,
   };
 
-  return dataAdapter.post(path, {
+  return apiFetch({
+    path,
     data,
+    method: 'POST',
   });
 }
 
@@ -71,11 +84,13 @@ export function createStoryFromTemplate(storyData, storyPropsToSave, apiPath) {
     _fields: 'edit_link',
   });
 
-  return dataAdapter.post(path, {
+  return apiFetch({
+    path,
     data: {
       ...storyPropsToSave,
       story_data: storyData,
     },
+    method: 'POST',
   });
 }
 
@@ -89,10 +104,12 @@ export function duplicateStory(story, apiPath) {
     _fields: STORY_FIELDS,
   });
 
-  return dataAdapter.post(path, {
+  return apiFetch({
+    path,
     data: {
       original_id: id,
       status: 'draft',
     },
+    method: 'POST',
   });
 }

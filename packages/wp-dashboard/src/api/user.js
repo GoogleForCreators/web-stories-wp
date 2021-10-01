@@ -13,34 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { default as dataAdapter } from './utils/wpAdapter';
+import apiFetch from '@wordpress/api-fetch';
 
 export function getUser(apiPath) {
-  return dataAdapter.get(apiPath);
+  return apiFetch({
+    path: apiPath,
+  });
 }
 
 export function toggleWebStoriesMediaOptimization(currentUser, apiPath) {
-  return dataAdapter.post(apiPath, {
+  return apiFetch({
+    path: apiPath,
     data: {
       meta: {
         web_stories_media_optimization:
           !currentUser.meta.web_stories_media_optimization,
       },
     },
+    method: 'POST',
   });
 }
 
 export function toggleWebStoriesTrackingOptIn(currentUser, apiPath) {
-  return dataAdapter.post(apiPath, {
+  return apiFetch({
+    path: apiPath,
     data: {
       meta: {
         web_stories_tracking_optin:
           !currentUser.meta.web_stories_tracking_optin,
       },
     },
+    method: 'POST',
   });
 }

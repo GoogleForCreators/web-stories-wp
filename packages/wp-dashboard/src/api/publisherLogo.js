@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { default as dataAdapter } from './utils/wpAdapter';
+import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * External dependencies
+ */
+import { addQueryArgs } from '@web-stories-wp/design-system';
 
 /**
  * Fetch publisher logos.
@@ -26,7 +31,7 @@ import { default as dataAdapter } from './utils/wpAdapter';
  * @return {Promise} Request promise.
  */
 export function fetchPublisherLogos(apiPath) {
-  return dataAdapter.get(apiPath);
+  return apiFetch({ path: apiPath });
 }
 
 /**
@@ -37,7 +42,12 @@ export function fetchPublisherLogos(apiPath) {
  * @return {Promise} Request promise.
  */
 export function removePublisherLogo(logoId, apiPath) {
-  return dataAdapter.deleteRequest(`${apiPath}${logoId}/`);
+  const path = addQueryArgs(`${apiPath}${logoId}/`, { _method: 'DELETE' });
+
+  return apiFetch({
+    path,
+    method: 'POST',
+  });
 }
 
 /**
@@ -48,10 +58,12 @@ export function removePublisherLogo(logoId, apiPath) {
  * @return {Promise} Request promise.
  */
 export function addPublisherLogo(logoId, apiPath) {
-  return dataAdapter.post(apiPath, {
+  return apiFetch({
+    path: apiPath,
     data: {
       id: logoId,
     },
+    method: 'POST',
   });
 }
 
@@ -63,9 +75,11 @@ export function addPublisherLogo(logoId, apiPath) {
  * @return {Promise} Request promise.
  */
 export function setPublisherLogoAsDefault(logoId, apiPath) {
-  return dataAdapter.post(`${apiPath}${logoId}/`, {
+  return apiFetch({
+    path: `${apiPath}${logoId}/`,
     data: {
       active: true,
     },
+    method: 'POST',
   });
 }

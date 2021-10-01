@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { default as dataAdapter } from './utils/wpAdapter';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Upload media
@@ -34,8 +34,10 @@ export function uploadMedia(files, apiPath) {
 
       data.append('file', file, file.name || file.type.replace('/', '.'));
 
-      return dataAdapter.post(apiPath, {
+      return apiFetch({
+        path: apiPath,
         body: data,
+        method: 'POST',
       });
     })
   );
