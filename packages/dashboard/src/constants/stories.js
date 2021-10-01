@@ -102,10 +102,11 @@ export const STORY_SORT_MENU_ITEMS = [
 ];
 
 export const STORY_STATUS = {
-  ALL: 'publish,draft,future,private',
+  ALL: 'publish,draft,future,pending,private',
   PUBLISHED_AND_FUTURE: 'publish,future',
   DRAFT: 'draft',
   FUTURE: 'future',
+  PENDING: 'pending',
   PUBLISH: 'publish',
   PRIVATE: 'private',
 };
@@ -120,6 +121,11 @@ export const STORY_STATUSES = [
     label: __('Drafts', 'web-stories'),
     value: STORY_STATUS.DRAFT,
     status: STORY_STATUS.DRAFT,
+  },
+  {
+    label: __('Pending', 'web-stories'),
+    value: STORY_STATUS.PENDING,
+    status: STORY_STATUS.PENDING,
   },
   {
     label: __('Published', 'web-stories'),
@@ -178,6 +184,17 @@ export const STORY_VIEWING_LABELS = {
       _n(
         'Viewing <strong>%d</strong> scheduled story',
         'Viewing <strong>%d</strong> scheduled stories',
+        n,
+        'web-stories'
+      ),
+      n
+    ),
+  [STORY_STATUS.PENDING]: (n) =>
+    sprintf(
+      /* translators: %d: number of stories */
+      _n(
+        'Viewing <strong>%d</strong> pending story',
+        'Viewing <strong>%d</strong> pending stories',
         n,
         'web-stories'
       ),

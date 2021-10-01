@@ -107,6 +107,15 @@ class Stories_Controller extends Test_REST_TestCase {
 		$factory->post->create_many(
 			2,
 			[
+				'post_status' => 'pending',
+				'post_author' => self::$user3_id,
+				'post_type'   => $post_type,
+			]
+		);
+
+		$factory->post->create_many(
+			2,
+			[
 				'post_status' => 'publish',
 				'post_author' => self::$user3_id,
 				'post_type'   => $post_type,
@@ -161,12 +170,14 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
+		$this->assertArrayHasKey( 'pending', $statuses );
 		$this->assertArrayHasKey( 'draft', $statuses );
 		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayHasKey( 'private', $statuses );
 
 		$this->assertSame( 13, $statuses['all'] );
 		$this->assertSame( 7, $statuses['publish'] );
+		$this->assertSame( 2, $statuses['pending'] );
 		$this->assertSame( 3, $statuses['future'] );
 		$this->assertSame( 3, $statuses['draft'] );
 		$this->assertSame( 0, $statuses['private'] );
@@ -207,6 +218,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
+		$this->assertArrayHasKey( 'pending', $statuses );
 		$this->assertArrayHasKey( 'draft', $statuses );
 		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayNotHasKey( 'private', $statuses );
@@ -246,6 +258,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->assertSame( 10, $statuses['all'] );
 		$this->assertSame( 7, $statuses['publish'] );
+		$this->assertSame( 0, $statuses['pending'] );
 		$this->assertSame( 0, $statuses['future'] );
 		$this->assertSame( 0, $statuses['private'] );
 		$this->assertSame( 3, $statuses['draft'] );
