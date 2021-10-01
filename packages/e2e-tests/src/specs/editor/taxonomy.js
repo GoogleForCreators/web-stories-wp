@@ -72,13 +72,15 @@ async function addTag(name) {
   await page.type('input#web_story_tag-input', name);
   await page.keyboard.press('Enter');
 
-  // Todo find a way to validate these spans or the delete buttons
-  // await expect(page).toMatchElement(
-  //   'span[data-testid="flat-term-token"] span',
-  //   {
-  //     text: name,
-  //   }
-  // );
+  await page.focus('input#web_story_tag-input');
+
+  const tokens = await page.evaluate(() =>
+    Array.from(
+      document.querySelectorAll('[data-testid="flat-term-token"] > span'),
+      (element) => element.textContent
+    )
+  );
+  await expect(tokens).toContainValue(name);
 }
 
 describe('Taxonomy', () => {
@@ -89,12 +91,14 @@ describe('Taxonomy', () => {
     await createNewStory();
     await goToAndExpandTaxonomyPanel();
 
-    await addCategory('music genres');
-    await addCategory('rock', 'music genres');
+    await Promise.all([
+      await addCategory('music genres'),
+      await addCategory('rock', 'music genres'),
 
-    await addTag('adventure');
-    await addTag('sci-fi');
-    await addTag('comedy');
+      await addTag('adventure'),
+      await addTag('sci-fi'),
+      await addTag('comedy'),
+    ]);
 
     // No need to save/publish the story, as the new categories will have been
     // created in the background via the REST API already.
@@ -148,7 +152,25 @@ describe('Taxonomy', () => {
       // Find an existing tag and select it.
       await page.focus('input#web_story_tag-input');
       await page.type('input#web_story_tag-input', 'adven');
-      await expect(page).toClick('adventure');
+      await expect(page).toMatchElement(
+        'ul[data-testid="suggested_terms_list"]'
+      );
+      await expect(page).toMatchElement('li[role="option"]', {
+        text: 'adventure',
+      });
+      await expect(page).toClick('li[role="option"]', { text: 'adventure' });
+      await page.focus('input#web_story_tag-input');
+
+      const tokens = await page.evaluate(() =>
+        Array.from(
+          document.querySelectorAll('[data-testid="flat-term-token"] > span'),
+          (element) => element.textContent
+        )
+      );
+
+      await expect(tokens).toStrictEqual(
+        expect.arrayContaining(['noir', 'action', 'adventure'])
+      );
 
       await publishStory();
 
@@ -159,9 +181,17 @@ describe('Taxonomy', () => {
       await goToAndExpandTaxonomyPanel();
 
       // See that added tags persist.
-      await expect(page).toMatchElement('span[data-testid="flat-term-token"]', {
-        text: 'noir',
-      });
+      const tokens2 = await page.evaluate(() =>
+        Array.from(
+          document.querySelectorAll('[data-testid="flat-term-token"] > span'),
+          (element) => element.textContent
+        )
+      );
+
+      await expect(tokens2).toContainValue('adventure');
+      await expect(tokens2).toContainValue('noir');
+
+      await percySnapshot(page, 'Taxonomies - Tags - Admin');
     });
   });
 
@@ -201,8 +231,58 @@ describe('Taxonomy', () => {
       await percySnapshot(page, 'Taxonomies - Categories - Contributor');
     });
 
-    it.todo(
-      'should be able to add tags that already exist but not create new tags'
-    );
+    it('should be able to add tags that already exist but not create new tags', async () => {
+      await createNewStory();
+      await insertStoryTitle('Taxonomies - Tags - Contributor');
+
+      await goToAndExpandTaxonomyPanel();
+
+      // Add some new tags that won't stick on refresh
+      await addTag('rom-com');
+      await addTag('creature feature');
+
+      // Find an existing tag and select it.
+      await page.focus('input#web_story_tag-input');
+      await page.type('input#web_story_tag-input', 'adven');
+      await expect(page).toMatchElement(
+        'ul[data-testid="suggested_terms_list"]'
+      );
+      await expect(page).toMatchElement('li[role="option"]', {
+        text: 'adventure',
+      });
+      await expect(page).toClick('li[role="option"]', { text: 'adventure' });
+      await page.focus('input#web_story_tag-input');
+
+      const tokens = await page.evaluate(() =>
+        Array.from(
+          document.querySelectorAll('[data-testid="flat-term-token"] > span'),
+          (element) => element.textContent
+        )
+      );
+
+      await expect(tokens).toContainValue('adventure');
+
+      await publishStory();
+
+      // Refresh page to verify that the assignments persisted.
+      await page.reload();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+
+      await goToAndExpandTaxonomyPanel();
+
+      // See that added tags persist.
+      const tokens2 = await page.evaluate(() =>
+        Array.from(
+          document.querySelectorAll('[data-testid="flat-term-token"] > span'),
+          (element) => element.textContent
+        )
+      );
+
+      await expect(tokens2).toContainValue('adventure');
+      await expect(tokens2).not.toContainValue('rom-com');
+      await expect(tokens2).not.toContainValue('creature feature');
+
+      await percySnapshot(page, 'Taxonomies - Tags - Contributor');
+    });
   });
 });
