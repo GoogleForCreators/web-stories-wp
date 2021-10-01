@@ -34,6 +34,6 @@ class Stories_Taxonomies_Controller extends Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$links    = $response->get_links();
 		$this->assertArrayHasKey( 'https://api.w.org/items', $links );
-		$this->assertContains( 'web-stories/v1', $links['https://api.w.org/items'][0]['href'] );
+		$this->assertStringContainsString( 'web-stories/v1', $links['https://api.w.org/items'][0]['href'] );
 	}
 }

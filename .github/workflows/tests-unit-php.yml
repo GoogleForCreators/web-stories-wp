@@ -53,25 +53,34 @@ jobs:
     strategy:
       matrix:
         php: ['7.0', '8.0']
-        wp: ['latest']
+
+        # Using a branch instead instead of 'latest' or a specific version ensures we
+        # get the latest test utils from that branch that includes the PHPUnity polyfills.
+        # TODO: Switch to 'latest' once a new minor release is out.
+        wp: ['5.8']
         coverage: [false]
         include:
+          # Using PHP 7.4 for code coverage run as 8.0 throws errors.
           - php: '7.4'
-            wp: 'latest'
+            wp: '5.8'
             coverage: true
 
           - php: '7.0'
             wp: '5.5'
 
           - php: '8.0'
-            wp: 'latest'
+            wp: '5.8'
             random: true
             experimental: true
 
-    # TODO: Re-enable in https://github.com/google/web-stories-wp/pull/8607
-    #     - php: '8.0'
-    #       wp: 'trunk'
-    #       experimental: true
+          - php: '8.0'
+            wp: 'trunk'
+            experimental: true
+
+    # TODO(#8520): Enable 8.1 tests once compat improves.
+    #          - php: '8.1'
+    #            wp: 'trunk'
+    #            experimental: true
 
     steps:
       - name: Checkout
@@ -81,10 +90,10 @@ jobs:
       # So we temporarily switch PHP versions, do a full install and then remove the package.
       # Then switch back to the PHP version we want to test and delete the vendor directory.
 
-      - name: Setup PHP 7.4
+      - name: Setup PHP 8.0
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: '8.0'
           tools: composer
 
       - name: Install PHP dependencies
@@ -108,6 +117,20 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
 
+      # Installs PHPUnit 9.5+ for tests against trunk and PHPUnit 7.5.x for older versions,
+      # because WordPress 5.8 and below don't support newer PHPUnit versions.
+      # PHPUnit 7.5 does support PHP 7.0 though, so we don't run an update there.
+      - name: Update PHPUnit
+        run: |
+          if [[ $WP_VERSION == "trunk" ]]; then
+            composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
+          elif [[ $PHP_VERSION != "7.0" ]]; then
+            composer require --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit:^7.5 --with-dependencies
+          fi
+        env:
+          WP_VERSION: ${{ matrix.wp }}
+          PHP_VERSION: ${{ matrix.php }}
+
       - name: Composer dump autoload
         run: composer dump-autoload --no-interaction
 
@@ -122,15 +145,6 @@ jobs:
 
       - name: Set up tests
         run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${{ job.services.mysql.ports['3306'] }} ${{ matrix.wp }} true
-
-      # 1. Installs PHPUnit 7.5 and patches it to run on PHP 8.
-      # 2. Dumps autoloader so mcaskill/composer-plugin-exclude-files is triggered.
-      - name: Update PHPUnit
-        run: |
-          composer require --dev --ignore-platform-reqs --no-interaction --no-scripts --update-with-all-dependencies phpunit/phpunit:^7.5
-          git apply patches/composer.patch
-          composer dump-autoload --no-interaction
-        if: ${{ matrix.php == '8.0' }}
 
       - name: Set up problem matchers for PHPUnit
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"

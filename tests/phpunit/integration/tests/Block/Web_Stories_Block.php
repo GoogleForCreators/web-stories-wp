@@ -26,6 +26,12 @@ use WP_Block_Type_Registry;
  * @coversDefaultClass \Google\Web_Stories\Block\Web_Stories_Block
  */
 class Web_Stories_Block extends TestCase {
+	public function tear_down() {
+		unregister_block_type( 'web-stories/embed' );
+
+		parent::tear_down();
+	}
+
 	/**
 	 * @covers ::register
 	 * @covers ::register_block_type
@@ -55,7 +61,7 @@ class Web_Stories_Block extends TestCase {
 			''
 		);
 
-		$this->assertContains( '<amp-story-player', $actual );
+		$this->assertStringContainsString( '<amp-story-player', $actual );
 	}
 
 	/**
@@ -103,7 +109,7 @@ class Web_Stories_Block extends TestCase {
 			''
 		);
 
-		$this->assertContains( __( 'Web Story', 'web-stories' ), $actual );
+		$this->assertStringContainsString( __( 'Web Story', 'web-stories' ), $actual );
 	}
 
 	/**
@@ -126,8 +132,8 @@ class Web_Stories_Block extends TestCase {
 			''
 		);
 
-		$this->assertNotContains( '<amp-story-player', $actual );
-		$this->assertNotContains( '<img', $actual );
+		$this->assertStringNotContainsString( '<amp-story-player', $actual );
+		$this->assertStringNotContainsString( '<img', $actual );
 	}
 
 	/**
@@ -153,7 +159,7 @@ class Web_Stories_Block extends TestCase {
 			''
 		);
 
-		$this->assertNotContains( '<amp-story-player', $actual );
-		$this->assertContains( '<img', $actual );
+		$this->assertStringNotContainsString( '<amp-story-player', $actual );
+		$this->assertStringContainsString( '<img', $actual );
 	}
 }

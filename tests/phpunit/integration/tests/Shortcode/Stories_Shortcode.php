@@ -59,10 +59,10 @@ class Stories_Shortcode extends TestCase {
 	/**
 	 * Runs after all tests are run.
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		remove_shortcode( Testee::SHORTCODE_NAME );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
