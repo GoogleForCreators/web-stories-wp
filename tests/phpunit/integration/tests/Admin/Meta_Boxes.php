@@ -29,10 +29,15 @@ class Meta_Boxes extends TestCase {
 	 *
 	 * @var int
 	 */
-	protected static $story_id;
+	private $story_id;
 
-	public static function wpSetUpBeforeClass( $factory ) {
-		self::$story_id = $factory->post->create(
+	public function set_up() {
+		parent::set_up();
+
+		// Deliberately NOT created in wpSetUpBeforeClass() because this class contains running
+		// in separate processes, which means tearDownAfterClass() (which deletes all WP data)
+		// is run multiple times, causing the story not to be available anymore.
+		$this->story_id = self::factory()->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Meta Boxes Test Story',
