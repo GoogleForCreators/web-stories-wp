@@ -46,11 +46,6 @@ class Preferences extends TestCase {
 	 */
 	private $instance;
 
-	/**
-	 * @var Stories_Users_Controller
-	 */
-	private $users_controller;
-
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$admin_id = $factory->user->create(
 			[
@@ -68,19 +63,14 @@ class Preferences extends TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		/** @var WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
-
-		$this->instance         = new \Google\Web_Stories\User\Preferences();
-		$this->users_controller = new Stories_Users_Controller();
+		$this->instance = new \Google\Web_Stories\User\Preferences();
 	}
 
 	public function tear_down() {
-		/** @var WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
+		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
+		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
+		delete_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
+		delete_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
 
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY );
@@ -95,14 +85,13 @@ class Preferences extends TestCase {
 	 */
 	public function test_add_optin_field_to_rest_api() {
 		$this->instance->register();
-		$this->users_controller->register();
 
 		wp_set_current_user( self::$admin_id );
 
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/users/%d', self::$admin_id ) );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/wp/v2/users/%d', self::$admin_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
@@ -121,14 +110,13 @@ class Preferences extends TestCase {
 	 */
 	public function test_add_optin_field_to_rest_api_for_author_user() {
 		$this->instance->register();
-		$this->users_controller->register();
 
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/users/me' );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/wp/v2/users/me' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
@@ -147,14 +135,13 @@ class Preferences extends TestCase {
 	 */
 	public function test_enables_author_user_to_update_meta_field() {
 		$this->instance->register();
-		$this->users_controller->register();
 
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, false );
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
 
-		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/users/me' );
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/wp/v2/users/me' );
 		$request->set_body_params(
 			[
 				'meta' => [
@@ -185,14 +172,13 @@ class Preferences extends TestCase {
 	 */
 	public function test_permission_check_for_authors() {
 		$this->instance->register();
-		$this->users_controller->register();
 
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, false );
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
 
-		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/users/' . self::$admin_id );
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/wp/v2/users/' . self::$admin_id );
 		$request->set_body_params(
 			[
 				'meta' => [
@@ -222,14 +208,13 @@ class Preferences extends TestCase {
 	 */
 	public function test_enables_author_user_to_invalid_type() {
 		$this->instance->register();
-		$this->users_controller->register();
 
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, false );
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
 
-		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/users/me' );
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/wp/v2/users/me' );
 		$request->set_body_params(
 			[
 				'meta' => [
