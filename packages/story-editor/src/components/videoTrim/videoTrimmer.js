@@ -51,11 +51,11 @@ function VideoTrimmer() {
     setEndOffset,
     hasChanged,
     performTrim,
-    resetOffsets,
+    toggleTrimMode,
   } = useVideoTrim(
     ({
       state: { currentTime, startOffset, endOffset, maxOffset, hasChanged },
-      actions: { setStartOffset, setEndOffset, performTrim, resetOffsets },
+      actions: { setStartOffset, setEndOffset, performTrim, toggleTrimMode },
     }) => ({
       currentTime,
       startOffset,
@@ -65,7 +65,7 @@ function VideoTrimmer() {
       setEndOffset,
       hasChanged,
       performTrim,
-      resetOffsets,
+      toggleTrimMode,
     })
   );
   const { workspaceWidth, pageWidth } = useLayout(
@@ -90,18 +90,16 @@ function VideoTrimmer() {
 
   return (
     <Menu>
-      {hasChanged && (
-        <ButtonWrapper isStart>
-          <Button
-            variant={BUTTON_VARIANTS.RECTANGLE}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={resetOffsets}
-          >
-            {__('Cancel', 'web-stories')}
-          </Button>
-        </ButtonWrapper>
-      )}
+      <ButtonWrapper isStart>
+        <Button
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          type={BUTTON_TYPES.SECONDARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={toggleTrimMode}
+        >
+          {__('Cancel', 'web-stories')}
+        </Button>
+      </ButtonWrapper>
       <Wrapper pageWidth={railWidth}>
         <Scrim atStart width={(startOffset / maxOffset) * railWidth} />
         <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
@@ -127,18 +125,17 @@ function VideoTrimmer() {
           {...sliderProps}
         />
       </Wrapper>
-      {hasChanged && (
-        <ButtonWrapper>
-          <Button
-            variant={BUTTON_VARIANTS.RECTANGLE}
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={performTrim}
-          >
-            {__('Trim', 'web-stories')}
-          </Button>
-        </ButtonWrapper>
-      )}
+      <ButtonWrapper>
+        <Button
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          type={BUTTON_TYPES.PRIMARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={performTrim}
+          disabled={!hasChanged}
+        >
+          {__('Trim', 'web-stories')}
+        </Button>
+      </ButtonWrapper>
     </Menu>
   );
 }

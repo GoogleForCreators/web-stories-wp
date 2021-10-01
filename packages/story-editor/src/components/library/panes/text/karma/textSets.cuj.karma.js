@@ -22,7 +22,7 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../../../karma/fixture';
+import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
 
 describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => {
@@ -33,7 +33,6 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
-    fixture.setFlags({ enableSmartTextSetsColor: true });
     await fixture.render();
     await fixture.editor.library.textTab.click();
   });
@@ -161,7 +160,9 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
   });
 
   describe('Easier/smarter text set color', () => {
-    it('should add text color based on background', async () => {
+    // TODO(#9224): Fix flaky test.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should add text color based on background', async () => {
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput

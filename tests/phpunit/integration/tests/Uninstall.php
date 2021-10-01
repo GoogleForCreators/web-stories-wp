@@ -32,8 +32,8 @@ class Uninstall extends TestCase {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
 		$source_taxonomy      = ( new Media_Source_Taxonomy() )->get_taxonomy_slug();
 		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => $source_taxonomy ] );
@@ -43,7 +43,7 @@ class Uninstall extends TestCase {
 			wp_set_object_terms( $attachment_id, $terms_ids, $source_taxonomy );
 		}
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
-		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG ] );
+		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Page_Template_Post_Type::POST_TYPE_SLUG ] );
 		update_option( \Google\Web_Stories\Database_Upgrader::OPTION, '2.0.0' );
 		update_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.0.0' );
 		set_transient( 'web_stories_link_data_fdsf', 'hello' );
@@ -94,7 +94,7 @@ class Uninstall extends TestCase {
 				'suppress_filters' => false,
 				'post_type'        => [
 					\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-					\Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG,
+					\Google\Web_Stories\Page_Template_Post_Type::POST_TYPE_SLUG,
 				],
 				'posts_per_page'   => - 1,
 			]

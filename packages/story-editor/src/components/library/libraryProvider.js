@@ -50,9 +50,12 @@ function LibraryProvider({ children }) {
   const [savedTemplates, setSavedTemplates] = useState(null);
   // The first page of templates to fetch is 1.
   const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(1);
+  // If to use smart colors with text and text sets.
+  const [shouldUseSmartColor, setShouldUseSmartColor] = useState(false);
 
   const insertElement = useInsertElement();
-  const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
+  const { insertTextSet, insertTextSetByOffset } =
+    useInsertTextSet(shouldUseSmartColor);
 
   const { showElementsTab } = useFeatures();
   const { showMedia3p } = useConfig();
@@ -112,6 +115,7 @@ function LibraryProvider({ children }) {
         textSets,
         savedTemplates,
         nextTemplatesToFetch,
+        shouldUseSmartColor,
       },
       actions: {
         setTab,
@@ -120,6 +124,7 @@ function LibraryProvider({ children }) {
         insertTextSetByOffset,
         setSavedTemplates,
         setNextTemplatesToFetch,
+        setShouldUseSmartColor,
       },
       data: {
         tabs: tabs,
@@ -137,6 +142,7 @@ function LibraryProvider({ children }) {
       tabs,
       nextTemplatesToFetch,
       setNextTemplatesToFetch,
+      shouldUseSmartColor,
     ]
   );
   useEffect(() => {
