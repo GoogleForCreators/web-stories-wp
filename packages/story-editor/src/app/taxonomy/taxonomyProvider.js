@@ -149,7 +149,7 @@ function TaxonomyProvider(props) {
       let response = [];
       const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href;
       if (!termsEndpoint) {
-        throw new Error("no href present in taxonomy['_links']['wp:items']");
+        return [];
       }
       try {
         response = await getTaxonomyTerm(termsEndpoint, args);
