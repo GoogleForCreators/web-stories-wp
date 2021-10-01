@@ -142,6 +142,8 @@ class KSES extends Service_Base {
 			'-webkit-clip-path',
 			'pointer-events',
 			'will-change',
+			'--initial-opacity',
+			'--initial-transform',
 		];
 
 		array_push( $attr, ...$additional );
@@ -158,7 +160,6 @@ class KSES extends Service_Base {
 	 * A few more allowed attributes are added via the safe_style_css filter.
 	 *
 	 * @see safecss_filter_attr()
-	 * @todo Use safe_style_disallowed_chars filter once WP 5.5+ is required.
 	 *
 	 * @SuppressWarnings(PHPMD)
 	 *
@@ -168,7 +169,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return string Filtered string of CSS rules.
 	 */
-	public function safecss_filter_attr( $css ) {
+	public function safecss_filter_attr( $css ): string {
 		$css = wp_kses_no_null( $css );
 		$css = str_replace( [ "\n", "\r", "\t" ], '', $css );
 
@@ -289,6 +290,8 @@ class KSES extends Service_Base {
 				'overflow',
 				'vertical-align',
 				'list-style-type',
+
+				'z-index',
 			]
 		);
 
@@ -367,11 +370,13 @@ class KSES extends Service_Base {
 				$css_selector = trim( $parts[0] );
 
 				if ( in_array( $css_selector, $allowed_attr, true ) ) {
-					$found          = true;
-					$url_attr       = in_array( $css_selector, $css_url_data_types, true );
-					$gradient_attr  = in_array( $css_selector, $css_gradient_data_types, true );
-					$color_attr     = in_array( $css_selector, $css_color_data_types, true );
-					$transform_attr = 'transform' === $css_selector;
+					$found         = true;
+					$url_attr      = in_array( $css_selector, $css_url_data_types, true );
+					$gradient_attr = in_array( $css_selector, $css_gradient_data_types, true );
+					$color_attr    = in_array( $css_selector, $css_color_data_types, true );
+
+					// --initial-transform is a special custom property used by the story editor.
+					$transform_attr = 'transform' === $css_selector || '--initial-transform' === $css_selector;
 				}
 			}
 
@@ -431,19 +436,31 @@ class KSES extends Service_Base {
 
 			if ( $found && $transform_attr ) {
 				$css_value = trim( $parts[1] );
-				if ( preg_match( '/^((matrix|matrix3d|perspective|rotate|rotate3d|rotateX|rotateY|rotateZ|translate|translateX|translatY|translatZ|scale|scale3d|scalX|scaleY|scaleZ|skew|skewX|skeY)\(([^()])*\) ?)+$/', $css_value ) ) {
+				if ( preg_match( '/^((matrix|matrix3d|perspective|rotate|rotate3d|rotateX|rotateY|rotateZ|translate|translate3d|translateX|translatY|translatZ|scale|scale3d|scalX|scaleY|scaleZ|skew|skewX|skeY)\(([^()])*\) ?)+$/', $css_value ) ) {
 					// Remove the whole `gradient` bit that was matched above from the CSS.
 					$css_test_string = str_replace( $css_value, '', $css_test_string );
 				}
 			}
 
 			if ( $found ) {
+				// Allow CSS calc().
+				$css_test_string = preg_replace( '/calc\(((?:\([^()]*\)?|[^()])*)\)/', '', $css_test_string );
+				// Allow CSS var().
+				$css_test_string = preg_replace( '/\(?var\(--[a-zA-Z0-9_-]*\)/', '', $css_test_string );
+
+				// Check for any CSS containing \ ( & } = or comments,
+				// except for url(), calc(), or var() usage checked above.
+				$allow_css = ! preg_match( '%[\\\(&=}]|/\*%', $css_test_string );
+
 				/* This filter is documented in wp-includes/kses.php */
-				$disallowed_chars = apply_filters( 'safe_style_disallowed_chars', '%[\\\(&=}]|/\*%', $css_test_string );
-				if ( ! preg_match( $disallowed_chars, $css_test_string ) ) {
+				$allow_css = apply_filters( 'safecss_filter_attr_allow_css', $allow_css, $css_test_string );
+
+				// Only add the CSS part if it passes the regex check.
+				if ( $allow_css ) {
 					if ( '' !== $css ) {
 						$css .= ';';
 					}
+
 					$css .= $css_item;
 				}
 			}
@@ -613,17 +630,53 @@ class KSES extends Service_Base {
 				'width'         => true,
 			],
 			'svg'                       => [
-				'width'  => true,
-				'height' => true,
+				'width'   => true,
+				'height'  => true,
+				'viewbox' => true,
+				'fill'    => true,
+				'xmlns'   => true,
 			],
-			'defs'                      => [],
 			'clippath'                  => [
 				'transform'     => true,
 				'clippathunits' => true,
 				'path'          => true,
 			],
+			'defs'                      => [],
+			'feblend'                   => [
+				'in'     => true,
+				'in2'    => true,
+				'result' => true,
+			],
+			'fecolormatrix'             => [
+				'in'     => true,
+				'values' => true,
+			],
+			'feflood'                   => [
+				'flood-opacity' => true,
+				'result'        => true,
+			],
+			'fegaussianblur'            => [
+				'stddeviation' => true,
+			],
+			'feoffset'                  => [],
+			'filter'                    => [
+				'id'                          => true,
+				'x'                           => true,
+				'y'                           => true,
+				'width'                       => true,
+				'height'                      => true,
+				'filterunits'                 => true,
+				'color-interpolation-filters' => true,
+			],
+			'g'                         => [
+				'filter'  => true,
+				'opacity' => true,
+			],
 			'path'                      => [
-				'd' => true,
+				'd'         => true,
+				'fill-rule' => true,
+				'clip-rule' => true,
+				'fill'      => true,
 			],
 		];
 
