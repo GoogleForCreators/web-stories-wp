@@ -138,6 +138,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       });
       setMostUsed(results);
     })();
+    // setMostUsed([]);
   }, [taxonomy, addSearchResultsToCache]);
 
   return (
