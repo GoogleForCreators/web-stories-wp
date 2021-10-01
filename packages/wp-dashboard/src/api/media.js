@@ -25,7 +25,7 @@ import { default as dataAdapter } from './utils/wpAdapter';
  *
  * @param {Object} files Uploaded files.
  * @param {string} apiPath String.
- * @return {Promise}
+ * @return {Promise} Request promise.
  */
 export function uploadMedia(files, apiPath) {
   return Promise.all(

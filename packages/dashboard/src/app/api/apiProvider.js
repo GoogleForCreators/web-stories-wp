@@ -61,10 +61,7 @@ export default function ApiProvider({ children }) {
   const { api: pagesApi } = usePagesApi(api.pages);
 
   const { publisherLogos, api: publisherLogosApi } = usePublisherLogosApi(
-    dataAdapter,
-    {
-      globalPublisherLogosApi: api.publisherLogos,
-    }
+    api.publisherLogos
   );
 
   const value = useMemo(

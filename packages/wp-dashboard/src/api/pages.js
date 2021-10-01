@@ -28,7 +28,7 @@ import { default as dataAdapter } from './utils/wpAdapter';
  *
  * @param {string} searchTerm Search term.
  * @param {string} apiPath API path.
- * @return {Promise}
+ * @return {Promise} Request promise.
  */
 export function searchPages(searchTerm, apiPath) {
   return dataAdapter.get(
@@ -46,7 +46,7 @@ export function searchPages(searchTerm, apiPath) {
  *
  * @param {int} id page id.
  * @param {string} apiPath API Path.
- * @return {Promise}
+ * @return {Promise} Request promise.
  */
 export function getPageById(id, apiPath) {
   return dataAdapter.get(

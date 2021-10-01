@@ -13,10 +13,59 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export function fetchPublisherLogos() {}
+/**
+ * Internal dependencies
+ */
+import { default as dataAdapter } from './utils/wpAdapter';
 
-export function addPublisherLogo() {}
+/**
+ * Fetch publisher logos.
+ * Used for "Publisher Logo" field under editor settings page
+ *
+ * @param {string} apiPath API Path.
+ * @return {Promise} Request promise.
+ */
+export function fetchPublisherLogos(apiPath) {
+  return dataAdapter.get(apiPath);
+}
 
-export function removePublisherLogo() {}
+/**
+ * Remove publisher logo.
+ *
+ * @param {int} logoId Logo id.
+ * @param {string} apiPath API Path.
+ * @return {Promise} Request promise.
+ */
+export function removePublisherLogo(logoId, apiPath) {
+  return dataAdapter.deleteRequest(`${apiPath}${logoId}/`);
+}
 
-export function setPublisherLogoAsDefault() {}
+/**
+ * Add publisher logo.
+ *
+ * @param {int} logoId Logo id.
+ * @param {string} apiPath API Path.
+ * @return {Promise} Request promise.
+ */
+export function addPublisherLogo(logoId, apiPath) {
+  return dataAdapter.post(apiPath, {
+    data: {
+      id: logoId,
+    },
+  });
+}
+
+/**
+ * Set publisher logo as default.
+ *
+ * @param {int} logoId Logo id.
+ * @param {string} apiPath API Path.
+ * @return {Promise} Request promise.
+ */
+export function setPublisherLogoAsDefault(logoId, apiPath) {
+  return dataAdapter.post(`${apiPath}${logoId}/`, {
+    data: {
+      active: true,
+    },
+  });
+}

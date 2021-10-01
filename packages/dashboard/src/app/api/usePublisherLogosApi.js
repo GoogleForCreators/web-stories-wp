@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
+import { useCallback, useReducer } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -26,17 +26,22 @@ import publisherLogosReducer, {
   defaultPublisherLogosState,
   ACTION_TYPES,
 } from '../reducer/publisherLogos';
-
 import { ERRORS } from '../textContent';
+import { useConfig } from '../config';
 
-export default function usePublisherLogosApi(
-  dataAdapter,
-  { globalPublisherLogosApi }
-) {
+export default function usePublisherLogosApi(globalPublisherLogosApi) {
   const [state, dispatch] = useReducer(
     publisherLogosReducer,
     defaultPublisherLogosState
   );
+  const {
+    apiCallbacks: {
+      fetchPublisherLogos: fetchPublisherLogosCallback,
+      addPublisherLogo: addPublisherLogoCallback,
+      removePublisherLogo: removePublisherLogoCallback,
+      setPublisherLogoAsDefault: setPublisherLogoAsDefaultCallback,
+    },
+  } = useConfig();
 
   const fetchPublisherLogos = useCallback(async () => {
     dispatch({
@@ -44,7 +49,9 @@ export default function usePublisherLogosApi(
     });
 
     try {
-      const response = await dataAdapter.get(globalPublisherLogosApi);
+      const response = await fetchPublisherLogosCallback(
+        globalPublisherLogosApi
+      );
 
       if (!Array.isArray(response)) {
         dispatch({
@@ -69,7 +76,7 @@ export default function usePublisherLogosApi(
         },
       });
     }
-  }, [dataAdapter, globalPublisherLogosApi]);
+  }, [fetchPublisherLogosCallback, globalPublisherLogosApi]);
 
   const removePublisherLogo = useCallback(
     async (publisherLogoId) => {
@@ -78,8 +85,9 @@ export default function usePublisherLogosApi(
       });
 
       try {
-        await dataAdapter.deleteRequest(
-          `${globalPublisherLogosApi}${publisherLogoId}/`
+        await removePublisherLogoCallback(
+          publisherLogoId,
+          globalPublisherLogosApi
         );
 
         dispatch({
@@ -97,7 +105,7 @@ export default function usePublisherLogosApi(
         });
       }
     },
-    [dataAdapter, globalPublisherLogosApi]
+    [removePublisherLogoCallback, globalPublisherLogosApi]
   );
 
   const addPublisherLogo = useCallback(
@@ -107,11 +115,10 @@ export default function usePublisherLogosApi(
       });
 
       try {
-        const response = await dataAdapter.post(globalPublisherLogosApi, {
-          data: {
-            id: publisherLogoId,
-          },
-        });
+        const response = await addPublisherLogoCallback(
+          publisherLogoId,
+          globalPublisherLogosApi
+        );
 
         dispatch({
           type: ACTION_TYPES.ADD_SUCCESS,
@@ -128,7 +135,7 @@ export default function usePublisherLogosApi(
         });
       }
     },
-    [dataAdapter, globalPublisherLogosApi]
+    [addPublisherLogoCallback, globalPublisherLogosApi]
   );
 
   const setPublisherLogoAsDefault = useCallback(
@@ -138,13 +145,9 @@ export default function usePublisherLogosApi(
       });
 
       try {
-        const response = await dataAdapter.post(
-          `${globalPublisherLogosApi}${publisherLogoId}/`,
-          {
-            data: {
-              active: true,
-            },
-          }
+        const response = await setPublisherLogoAsDefaultCallback(
+          publisherLogoId,
+          globalPublisherLogosApi
         );
 
         dispatch({
@@ -162,23 +165,16 @@ export default function usePublisherLogosApi(
         });
       }
     },
-    [dataAdapter, globalPublisherLogosApi]
+    [setPublisherLogoAsDefaultCallback, globalPublisherLogosApi]
   );
 
-  const api = useMemo(
-    () => ({
+  return {
+    publisherLogos: state,
+    api: {
       fetchPublisherLogos,
       addPublisherLogo,
       removePublisherLogo,
       setPublisherLogoAsDefault,
-    }),
-    [
-      fetchPublisherLogos,
-      addPublisherLogo,
-      removePublisherLogo,
-      setPublisherLogoAsDefault,
-    ]
-  );
-
-  return { publisherLogos: state, api };
+    },
+  };
 }
