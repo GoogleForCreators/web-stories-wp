@@ -174,7 +174,7 @@ describe('Taxonomy', () => {
     });
   });
   describe('Custom Taxonomy', () => {
-    withPlugin('web-stories-test-plugin-meta-box');
+    withPlugin('web-stories-test-plugin-taxonomies');
     describe('Administrator', () => {
       it('should be see custom taxonomies', async () => {
         await createNewStory();
