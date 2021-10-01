@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-
 /**
  * Internal dependencies
  */
@@ -53,11 +48,11 @@ describe('getTemplate', () => {
     templates.forEach((template) => {
       template.pages.forEach((page) => {
         page.elements.forEach((element) => {
-          expect(element.resource?.src).not.toBe(
-            '__WEB_STORIES_TEMPLATE_BASE_URL__/'
+          expect(element.resource?.src).toStrictEqual(
+            expect.not.stringContaining('__WEB_STORIES_TEMPLATE_BASE_URL__/')
           );
-          expect(element.resource?.poster).not.toBe(
-            '__WEB_STORIES_TEMPLATE_BASE_URL__/'
+          expect(element.resource?.poster).toStrictEqual(
+            expect.not.stringContaining('__WEB_STORIES_TEMPLATE_BASE_URL__/')
           );
         });
       });
