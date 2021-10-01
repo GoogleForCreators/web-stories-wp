@@ -124,6 +124,7 @@ function DefaultTemplates({ pageSize }) {
       search_category: key,
     });
   }, []);
+
   return (
     <>
       <ChipGroup
