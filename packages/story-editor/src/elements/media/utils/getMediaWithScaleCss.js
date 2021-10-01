@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
-  // todo@: This is a complete duplication of `mediaWithScale` above. But
+  // todo@: This is a complete duplication of `mediaWithScale`. But
   // no other apparent way to execute interpolate `mediaWithScale` dynamically.
   return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
 }
