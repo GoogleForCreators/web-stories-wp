@@ -444,9 +444,9 @@ class KSES extends Service_Base {
 
 			if ( $found ) {
 				// Allow CSS calc().
-				$css_test_string = preg_replace( '/calc\(((?:\([^()]*\)?|[^()])*)\)/', '', $css_test_string );
+				$css_test_string = (string) preg_replace( '/calc\(((?:\([^()]*\)?|[^()])*)\)/', '', $css_test_string );
 				// Allow CSS var().
-				$css_test_string = preg_replace( '/\(?var\(--[a-zA-Z0-9_-]*\)/', '', $css_test_string );
+				$css_test_string = (string) preg_replace( '/\(?var\(--[a-zA-Z0-9_-]*\)/', '', $css_test_string );
 
 				// Check for any CSS containing \ ( & } = or comments,
 				// except for url(), calc(), or var() usage checked above.
