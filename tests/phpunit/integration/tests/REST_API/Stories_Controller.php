@@ -175,7 +175,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayHasKey( 'private', $statuses );
 
-		$this->assertSame( 13, $statuses['all'] );
+		$this->assertSame( 15, $statuses['all'] );
 		$this->assertSame( 7, $statuses['publish'] );
 		$this->assertSame( 2, $statuses['pending'] );
 		$this->assertSame( 3, $statuses['future'] );
