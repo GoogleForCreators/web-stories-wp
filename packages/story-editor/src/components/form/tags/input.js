@@ -105,9 +105,11 @@ function Input({
     offset: 0,
   });
 
+  // isInputFocused is used to update the styled state of the input area.
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
 
+  // inputRef is used to return focus to input after keydown actions to avoid focused state being hijacked.
   const inputRef = useRef();
   const menuRef = useRef();
   const containerRef = useRef();
