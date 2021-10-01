@@ -22,7 +22,7 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../../../karma/fixture';
+import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
 
 describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => {

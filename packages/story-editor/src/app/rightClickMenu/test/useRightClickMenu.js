@@ -36,6 +36,12 @@ jest.mock('../../story', () => ({
   useStory: jest.fn(),
 }));
 
+const mockVideoTrim = jest.fn();
+jest.mock(
+  '../../../components/videoTrim/useVideoTrim',
+  () => (cb) => mockVideoTrim(cb)
+);
+
 jest.mock('@web-stories-wp/design-system', () => ({
   ...jest.requireActual('@web-stories-wp/design-system'),
   isPlatformMacOS: jest.fn(),
@@ -54,6 +60,17 @@ const mockEvent = {
 const defaultCanvasContext = {
   actions: {
     setEditingElement: jest.fn(),
+  },
+};
+
+const defaultTrimContext = {
+  hasTrimMode: false,
+  toggleTrimMode: jest.fn(),
+  state: {
+    hasTrimMode: false,
+  },
+  actions: {
+    toggleTrimMode: jest.fn(),
   },
 };
 
@@ -92,6 +109,7 @@ describe('useRightClickMenu', () => {
     mockUseCanvas.mockReturnValue(defaultCanvasContext);
     mockUseSnackbar.mockReturnValue({ showSnackbar: mockShowSnackbar });
     mockIsPlatformMacOS.mockReturnValue(false);
+    mockVideoTrim.mockImplementation((cb) => cb(defaultTrimContext));
   });
 
   describe('context menu manipulation', () => {
@@ -151,7 +169,7 @@ describe('useRightClickMenu', () => {
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
-        RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
+        RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE,
         RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
@@ -246,7 +264,7 @@ describe('useRightClickMenu', () => {
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
-        RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
+        RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE,
         RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
@@ -256,7 +274,7 @@ describe('useRightClickMenu', () => {
     });
   });
 
-  describe('Foreground media elements (image, gif, video) right clicked', () => {
+  describe('Background video right clicked', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         ...defaultStoryContext,
@@ -264,6 +282,95 @@ describe('useRightClickMenu', () => {
           {
             id: '991199',
             type: 'video',
+            isBackground: true,
+          },
+        ],
+      });
+    });
+
+    it('should return the correct menu items', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const labels = result.current.menuItems.map((item) => item.label);
+      expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DETACH_VIDEO_FROM_BACKGROUND,
+        RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_VIDEO,
+        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
+        RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
+        RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
+        RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
+      ]);
+    });
+
+    describe('if video transcoding is possible', () => {
+      beforeEach(() => {
+        mockVideoTrim.mockImplementationOnce((cb) =>
+          cb({
+            ...defaultTrimContext,
+            state: {
+              hasTrimMode: true,
+            },
+          })
+        );
+      });
+
+      it('should contain enabled "trim video"', () => {
+        const { result } = renderHook(() => useRightClickMenu(), {
+          wrapper: RightClickMenuProvider,
+        });
+
+        expect(result.current.menuItems).toContainEqual(
+          expect.objectContaining({
+            label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
+            disabled: false,
+          })
+        );
+      });
+
+      describe('if video transcoding is ongoing', () => {
+        beforeEach(() => {
+          mockUseStory.mockReturnValue({
+            ...defaultStoryContext,
+            selectedElements: [
+              {
+                id: '991199',
+                type: 'video',
+                isBackground: true,
+                resource: {
+                  isTranscoding: true,
+                },
+              },
+            ],
+          });
+        });
+
+        it('should contain disabled "trim video"', () => {
+          const { result } = renderHook(() => useRightClickMenu(), {
+            wrapper: RightClickMenuProvider,
+          });
+
+          expect(result.current.menuItems).toContainEqual(
+            expect.objectContaining({
+              label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
+              disabled: true,
+            })
+          );
+        });
+      });
+    });
+  });
+
+  describe('Foreground image (or gif) right clicked', () => {
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '991199',
+            type: 'image',
             borderRadius: '4px',
           },
         ],
@@ -322,6 +429,147 @@ describe('useRightClickMenu', () => {
 
         const clear = result.current.menuItems.find(
           (item) => item.label === RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES
+        );
+        act(() => {
+          clear.onClick();
+        });
+
+        expect(mockShowSnackbar).toHaveBeenCalledWith(
+          expect.objectContaining({
+            actionLabel: 'Undo',
+            message: 'Cleared style.',
+          })
+        );
+      });
+    });
+  });
+
+  describe('Foreground video right clicked', () => {
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '991199',
+            type: 'video',
+            borderRadius: '4px',
+            resource: {
+              isTranscoding: false,
+            },
+          },
+        ],
+      });
+    });
+
+    it('should return the correct menu items', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const labels = result.current.menuItems.map((item) => item.label);
+      expect(labels).toStrictEqual([
+        ...expectedLayerActions,
+        RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
+        RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_VIDEO,
+        RIGHT_CLICK_MENU_LABELS.COPY_VIDEO_STYLES,
+        RIGHT_CLICK_MENU_LABELS.PASTE_VIDEO_STYLES,
+        RIGHT_CLICK_MENU_LABELS.CLEAR_VIDEO_STYLES,
+      ]);
+    });
+
+    describe('if video transcoding is possible', () => {
+      beforeEach(() => {
+        mockVideoTrim.mockImplementationOnce((cb) =>
+          cb({
+            ...defaultTrimContext,
+            state: {
+              hasTrimMode: true,
+            },
+          })
+        );
+      });
+
+      it('should contain enabled "trim video"', () => {
+        const { result } = renderHook(() => useRightClickMenu(), {
+          wrapper: RightClickMenuProvider,
+        });
+
+        expect(result.current.menuItems).toContainEqual(
+          expect.objectContaining({
+            label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
+            disabled: false,
+          })
+        );
+      });
+
+      describe('if video transcoding is ongoing', () => {
+        beforeEach(() => {
+          mockUseStory.mockReturnValue({
+            ...defaultStoryContext,
+            selectedElements: [
+              {
+                id: '991199',
+                type: 'video',
+                borderRadius: '4px',
+                resource: {
+                  isTranscoding: true,
+                },
+              },
+            ],
+          });
+        });
+
+        it('should contain disabled "trim video"', () => {
+          const { result } = renderHook(() => useRightClickMenu(), {
+            wrapper: RightClickMenuProvider,
+          });
+
+          expect(result.current.menuItems).toContainEqual(
+            expect.objectContaining({
+              label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
+              disabled: true,
+            })
+          );
+        });
+      });
+    });
+
+    describe('copying, pasting, and clearing styles', () => {
+      it('should show a snackbar when copying, pasting, and clearing styles', () => {
+        const { result } = renderHook(() => useRightClickMenu(), {
+          wrapper: RightClickMenuProvider,
+        });
+
+        const copy = result.current.menuItems.find(
+          (item) => item.label === RIGHT_CLICK_MENU_LABELS.COPY_VIDEO_STYLES
+        );
+        act(() => {
+          copy.onClick();
+        });
+
+        expect(mockShowSnackbar).toHaveBeenCalledWith(
+          expect.objectContaining({
+            actionLabel: 'Undo',
+            message: 'Copied style.',
+          })
+        );
+
+        const paste = result.current.menuItems.find(
+          (item) => item.label === RIGHT_CLICK_MENU_LABELS.PASTE_VIDEO_STYLES
+        );
+        act(() => {
+          paste.onClick();
+        });
+
+        expect(mockShowSnackbar).toHaveBeenCalledWith(
+          expect.objectContaining({
+            actionLabel: 'Undo',
+            message: 'Pasted style.',
+          })
+        );
+
+        const clear = result.current.menuItems.find(
+          (item) => item.label === RIGHT_CLICK_MENU_LABELS.CLEAR_VIDEO_STYLES
         );
         act(() => {
           clear.onClick();
