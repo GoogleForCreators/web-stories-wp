@@ -52,17 +52,13 @@ export default function ApiProvider({ children }) {
     storyApi: api.stories,
   });
 
-  const { media, api: mediaApi } = useMediaApi({
-    globalMediaApi: api.media,
-  });
+  const { media, api: mediaApi } = useMediaApi(api.media);
 
   const { settings, api: settingsApi } = useSettingsApi(dataAdapter, {
     globalSettingsApi: api.settings,
   });
 
-  const { api: pagesApi } = usePagesApi(dataAdapter, {
-    pagesApi: api.pages,
-  });
+  const { api: pagesApi } = usePagesApi(api.pages);
 
   const { publisherLogos, api: publisherLogosApi } = usePublisherLogosApi(
     dataAdapter,

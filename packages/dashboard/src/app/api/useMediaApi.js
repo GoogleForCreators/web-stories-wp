@@ -29,7 +29,7 @@ import mediaReducer, {
 import { ERRORS } from '../textContent';
 import { useConfig } from '../config';
 
-export default function useMediaApi({ globalMediaApi }) {
+export default function useMediaApi(globalMediaApi) {
   const [state, dispatch] = useReducer(mediaReducer, defaultMediaState);
   const {
     apiCallbacks: { uploadMedia: uploadMediaCallback },

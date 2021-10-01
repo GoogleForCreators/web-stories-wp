@@ -24,7 +24,7 @@ import { useCallback } from '@web-stories-wp/react';
  */
 import { useConfig } from '../config';
 
-export default function usePagesApi(dataAdapter, { pagesApi }) {
+export default function usePagesApi(pagesApi) {
   const {
     apiCallbacks: {
       getPageById: getPageByIdCallback,
