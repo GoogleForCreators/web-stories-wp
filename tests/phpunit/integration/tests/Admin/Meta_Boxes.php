@@ -71,7 +71,7 @@ class Meta_Boxes extends TestCase {
 	 */
 	public function test_get_meta_box_url() {
 		$meta_boxes = new \Google\Web_Stories\Admin\Meta_Boxes();
-		$url        = $meta_boxes->get_meta_box_url( self::$story_id );
+		$url        = $meta_boxes->get_meta_box_url( $this->story_id );
 
 		$this->assertStringContainsString( 'wp-admin/post.php', $url );
 		$this->assertStringContainsString( 'meta-box-loader=1', $url );
@@ -93,7 +93,7 @@ class Meta_Boxes extends TestCase {
 		add_action( 'add_meta_boxes', [ $this, 'register_test_meta_boxes' ] );
 
 		// Registers default meta boxes.
-		register_and_do_post_meta_boxes( get_post( self::$story_id ) );
+		register_and_do_post_meta_boxes( get_post( $this->story_id ) );
 
 		$registered_meta_boxes = [];
 
@@ -134,7 +134,7 @@ class Meta_Boxes extends TestCase {
 		add_action( 'add_meta_boxes', [ $this, 'register_test_meta_boxes' ] );
 
 		// Registers default meta boxes.
-		register_and_do_post_meta_boxes( get_post( self::$story_id ) );
+		register_and_do_post_meta_boxes( get_post( $this->story_id ) );
 
 		$meta_boxes = new \Google\Web_Stories\Admin\Meta_Boxes();
 		$actual     = $meta_boxes->get_meta_boxes_per_location();
