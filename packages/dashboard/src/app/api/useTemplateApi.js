@@ -29,10 +29,8 @@ import templateReducer, {
 } from '../reducer/templates';
 import { reshapeTemplateObject } from '../serializers';
 
-const useTemplateApi = (dataAdapter, config) => {
+const useTemplateApi = (cdnURL) => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
-
-  const { cdnURL } = config;
 
   const fetchExternalTemplates = useCallback(async () => {
     dispatch({

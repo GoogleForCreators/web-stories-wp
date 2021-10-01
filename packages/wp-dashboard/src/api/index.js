@@ -18,5 +18,4 @@ export * from './pages';
 export * from './publisherLogo';
 export * from './settings';
 export * from './story';
-export * from './template';
 export * from './user';

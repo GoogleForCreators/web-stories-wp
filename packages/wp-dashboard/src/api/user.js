@@ -13,4 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export function toggleWebStoriesMediaOptimization() {}
+
+/**
+ * Internal dependencies
+ */
+import { default as dataAdapter } from './utils/wpAdapter';
+
+export function getUser(apiPath) {
+  return dataAdapter.get(apiPath);
+}
+
+export function toggleWebStoriesMediaOptimization(currentUser, apiPath) {
+  return dataAdapter.post(apiPath, {
+    data: {
+      meta: {
+        web_stories_media_optimization:
+          !currentUser.meta.web_stories_media_optimization,
+      },
+    },
+  });
+}
+
+export function toggleWebStoriesTrackingOptIn(currentUser, apiPath) {
+  return dataAdapter.post(apiPath, {
+    data: {
+      meta: {
+        web_stories_tracking_optin:
+          !currentUser.meta.web_stories_tracking_optin,
+      },
+    },
+  });
+}
