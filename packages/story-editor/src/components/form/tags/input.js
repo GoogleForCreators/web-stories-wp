@@ -149,6 +149,9 @@ function Input({
               onUndo(e);
             }
           }
+          if (e.key === 'ArrowDown' && suggestedTerms.length > 0) {
+            menuRef?.current?.firstChild?.focus();
+          }
           if (['Comma', ',', 'Enter', 'Tab'].includes(e.key)) {
             dispatch({ type: ACTIONS.SUBMIT_VALUE });
           }
@@ -168,7 +171,7 @@ function Input({
           setIsInputFocused(false);
         },
       }),
-      [onUndo]
+      [onUndo, suggestedTerms]
     );
 
   const renderedTags = tagBuffer || tags;
@@ -262,14 +265,15 @@ function Input({
   );
 }
 Input.propTypes = {
+  initialTags: PropTypes.arrayOf(PropTypes.string),
+  name: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func,
+  onTagsChange: PropTypes.func,
+  onUndo: PropTypes.func,
   suggestedTerms: PropTypes.arrayOf(
     PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
   ),
-  name: PropTypes.string.isRequired,
-  initialTags: PropTypes.arrayOf(PropTypes.string),
-  onTagsChange: PropTypes.func,
-  onInputChange: PropTypes.func,
-  onUndo: PropTypes.func,
+  suggestedTermsLabel: PropTypes.string,
   tagDisplayTransformer: PropTypes.func,
   tokens: PropTypes.arrayOf(PropTypes.string),
 };
