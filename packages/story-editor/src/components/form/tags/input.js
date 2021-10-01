@@ -67,6 +67,8 @@ const TextInput = styled(BaseInput).attrs({ type: 'text' })`
 `;
 
 const SuggestionList = styled(List)`
+  max-height: 120px;
+  overflow-y: scroll;
   border-top: ${({ theme }) =>
     `1px solid ${theme.colors.border.defaultNormal}`};
   display: block;
@@ -75,14 +77,20 @@ const SuggestionList = styled(List)`
   padding: 6px 4px 4px;
   margin-top: 6px;
   li {
+    cursor: pointer;
     padding: 4px;
     width: 100%;
     ${themeHelpers.focusableOutlineCSS()}
     border-radius: ${({ theme }) => theme.borders.radius.small};
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.bg.tertiary};
+    }
   }
 `;
 function Input({
   suggestedTerms = [],
+  helpId,
   onTagsChange,
   onInputChange,
   suggestedTermsLabel,
@@ -99,6 +107,7 @@ function Input({
   });
 
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
 
   const inputRef = useRef();
   const menuRef = useRef();
@@ -107,6 +116,12 @@ function Input({
   useEffect(() => {
     dispatch({ type: ACTIONS.UPDATE_TAGS, payload: tokens });
   }, [tokens]);
+
+  const suggestionListId = uuidv4();
+  const totalSuggestions = suggestedTerms.length;
+  useEffect(() => {
+    setIsSuggestionsOpen(totalSuggestions > 0);
+  }, [totalSuggestions]);
 
   // Allow parents to pass onTagsChange callback
   // that updates as tags does.
@@ -152,7 +167,7 @@ function Input({
           if (e.key === 'ArrowDown' && suggestedTerms.length > 0) {
             menuRef?.current?.firstChild?.focus();
           }
-          if (['Comma', ',', 'Enter', 'Tab'].includes(e.key)) {
+          if (['Comma', ',', 'Enter'].includes(e.key)) {
             dispatch({ type: ACTIONS.SUBMIT_VALUE });
           }
         },
@@ -178,18 +193,17 @@ function Input({
 
   const handleTagSelectedFromSuggestions = useCallback((e, selectedValue) => {
     e.preventDefault();
+    setIsSuggestionsOpen(false);
     dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: selectedValue });
     inputRef?.current.focus();
   }, []);
-
-  const totalSuggestions = suggestedTerms.length - 1;
 
   const handleSuggestionKeyDown = useCallback(
     (e, index, name) => {
       const nextChild = index + 1;
       const previousChild = index - 1;
       if (e.key === 'ArrowDown') {
-        if (nextChild <= totalSuggestions) {
+        if (nextChild < totalSuggestions) {
           menuRef?.current?.children?.[nextChild]?.focus();
         }
       }
@@ -230,7 +244,11 @@ function Input({
                 onBlur={handleBlur}
                 size="4"
                 ref={inputRef}
-                autoComplete="off"
+                autoComplete={isSuggestionsOpen ? 'off' : 'on'}
+                aria-expanded={isSuggestionsOpen}
+                aria-describedby={helpId}
+                aria-autocomplete="list"
+                aria-owns={isSuggestionsOpen ? suggestionListId : null}
               />
             ) : (
               <Tag key={tag} onDismiss={removeTag(tag)}>
@@ -240,11 +258,12 @@ function Input({
           )
         }
       </InputWrapper>
-      {suggestedTerms.length > 0 && (
+      {isSuggestionsOpen && (
         <SuggestionList
           aria-label={suggestedTermsLabel}
           role="listbox"
           ref={menuRef}
+          id={suggestionListId}
           data-testid="suggested_terms_list"
         >
           {suggestedTerms.map(({ name, id }, index) => (
@@ -265,6 +284,7 @@ function Input({
   );
 }
 Input.propTypes = {
+  helpId: PropTypes.string,
   initialTags: PropTypes.arrayOf(PropTypes.string),
   name: PropTypes.string.isRequired,
   onInputChange: PropTypes.func,

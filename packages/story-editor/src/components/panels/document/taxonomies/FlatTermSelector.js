@@ -106,7 +106,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       per_page: 20,
     });
     setSearchResults(results);
-  }, 1000);
+  }, 300);
 
   const tokens = useMemo(() => {
     return (terms[taxonomy.restBase] || [])
@@ -143,6 +143,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
           onUndo={undo}
           suggestedTerms={searchResults}
           suggestedTermsLabel={taxonomy?.labels?.items_list}
+          helpId={`${taxonomy.slug}-description`}
         />
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separate_items_with_commas}
