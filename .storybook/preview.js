@@ -38,7 +38,7 @@ import {
 import {
   DashboardGlobalStyle,
   DashboardKeyboardOnlyOutline,
-  DashboardConfigProvider,
+  ConfigProvider as DashboardConfigProvider,
   ApiProvider,
 } from '@web-stories-wp/dashboard';
 

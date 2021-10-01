@@ -29,7 +29,6 @@ export const Menu = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.bg.primary};
   height: 40px;
   gap: 14px;
 `;

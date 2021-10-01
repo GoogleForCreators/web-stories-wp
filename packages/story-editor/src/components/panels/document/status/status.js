@@ -68,7 +68,7 @@ function StatusPanel() {
     },
   ];
 
-  if (capabilities?.hasPublishAction) {
+  if (capabilities?.publish) {
     visibilityOptions.push({
       value: 'publish',
       label: __('Public', 'web-stories'),

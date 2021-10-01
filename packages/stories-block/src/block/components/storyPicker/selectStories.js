@@ -64,10 +64,6 @@ const SORT_OPTIONS = [
   },
 ];
 
-const {
-  config: { maxNumOfStories },
-} = window.webStoriesBlockSettings;
-
 // ComboboxControl does not yet exist in WordPress 5.5.
 // TODO: Remove these once WordPress 5.5 is no longer required.
 
@@ -147,6 +143,7 @@ function SelectStories({
   hasAllStories,
   isLoading,
   fetchStories,
+  maxNumOfStories,
 }) {
   const [currentAuthor, setCurrentAuthor] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -251,17 +248,23 @@ function SelectStories({
 
   const addSelectedStory = useCallback(
     (newStory) => {
-      if (selectedStories.length >= maxNumOfStories) {
+      if (selectedStoryIds.includes(newStory.id)) {
         return;
       }
 
-      if (selectedStoryIds.includes(newStory.id)) {
+      // Special case for single story embeds to always change selection.
+      if (1 === maxNumOfStories) {
+        setSelectedStories([newStory]);
+        return;
+      }
+
+      if (selectedStories.length >= maxNumOfStories) {
         return;
       }
 
       setSelectedStories([...selectedStories, newStory]);
     },
-    [setSelectedStories, selectedStories, selectedStoryIds]
+    [setSelectedStories, selectedStories, selectedStoryIds, maxNumOfStories]
   );
 
   const removeSelectedStory = useCallback(
@@ -367,6 +370,7 @@ SelectStories.propTypes = {
   hasAllStories: PropTypes.bool,
   isLoading: PropTypes.bool,
   fetchStories: PropTypes.func,
+  maxNumOfStories: PropTypes.number,
 };
 
 export default SelectStories;

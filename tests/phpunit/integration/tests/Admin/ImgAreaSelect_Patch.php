@@ -58,9 +58,9 @@ class ImgAreaSelect_Patch extends TestCase {
 		$object->method( 'is_edit_screen' )->willReturn( true );
 		$tag     = '<script src="http://www.example.com/foo.js"></script>';
 		$results = $object->script_loader_tag( $tag, Testee::SCRIPT_HANDLE, 'http://www.example.com/foo.js' );
-		$this->assertContains( '9.9.9', $results );
-		$this->assertContains( 'http://www.google.com/foo.js', $results );
-		$this->assertNotContains( 'http://www.example.com/foo.js', $results );
+		$this->assertStringContainsString( '9.9.9', $results );
+		$this->assertStringContainsString( 'http://www.google.com/foo.js', $results );
+		$this->assertStringNotContainsString( 'http://www.example.com/foo.js', $results );
 	}
 
 	/**

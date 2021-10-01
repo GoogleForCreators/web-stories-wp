@@ -29,17 +29,12 @@ BypassFinals::enable();
 
 require_once dirname( __DIR__, 3 ) . '/vendor/yoast/wp-test-utils/src/WPIntegration/bootstrap-functions.php';
 
-// Yoast/wp-test-utils does not check for /tmp/wordpress-tests-lib by default, so let's set WP_TESTS_DIR to that if absent.
-// See https://github.com/Yoast/wp-test-utils/issues/12
-if ( ! getenv( 'WP_TESTS_DIR' ) && ! getenv( 'WP_DEVELOP_DIR' ) ) {
-	$_tests_dir = str_replace( '\\', '/', realpath( sys_get_temp_dir() . '/wordpress-tests-lib' ) );
-	putenv( "WP_TESTS_DIR=$_tests_dir" ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_putenv
-}
-
 $_tests_dir = Yoast\WPTestUtils\WPIntegration\get_path_to_wp_test_dir();
 
+define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', dirname( __DIR__, 2 ) . '/vendor/yoast/phpunit-polyfills' );
+
 // Give access to tests_add_filter() function.
-require_once $_tests_dir . 'includes/functions.php';
+require_once $_tests_dir . '/includes/functions.php';
 
 /**
  * Manually load the plugin being tested.

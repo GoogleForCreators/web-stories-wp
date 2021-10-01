@@ -44,6 +44,6 @@ class Locale extends TestCase {
 			],
 			array_keys( $actual )
 		);
-		$this->assertInternalType( 'int', $actual['weekStartsOn'] );
+		$this->assertIsInt( $actual['weekStartsOn'] );
 	}
 }

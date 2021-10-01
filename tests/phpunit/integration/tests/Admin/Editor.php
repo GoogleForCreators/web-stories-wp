@@ -79,19 +79,19 @@ class Editor extends TestCase {
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->add_caps_to_roles();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		$this->set_permalink_structure( '' );
 
 		delete_post_meta( self::$story_id, '_edit_lock' );
 
 		$this->remove_caps_from_roles();
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

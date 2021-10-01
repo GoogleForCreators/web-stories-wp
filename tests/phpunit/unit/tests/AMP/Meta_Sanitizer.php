@@ -37,7 +37,7 @@ class Meta_Sanitizer extends TestCase {
 
 		Monkey\Functions\stubs(
 			[
-				'wp_parse_url' => static function ( $url, $component = null ) {
+				'wp_parse_url' => static function ( $url, $component = -1 ) {
 					return parse_url( $url, $component ); // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
 				},
 			]

@@ -34,24 +34,40 @@ export const RIGHT_CLICK_MENU_LABELS = {
   BRING_TO_FRONT: __('Bring to Front', 'web-stories'),
   CLEAR_IMAGE_STYLES: __('Clear Image Styles', 'web-stories'),
   CLEAR_SHAPE_STYLES: __('Clear Shape Styles', 'web-stories'),
+  CLEAR_VIDEO_STYLES: __('Clear Video Styles', 'web-stories'),
   CLEAR_STYLE: __('Clear Style', 'web-stories'),
   COPY_IMAGE_STYLES: __('Copy Image Styles', 'web-stories'),
   COPY_SHAPE_STYLES: __('Copy Shape Styles', 'web-stories'),
+  COPY_VIDEO_STYLES: __('Copy Video Styles', 'web-stories'),
   COPY_STYLES: __('Copy Style', 'web-stories'),
   DELETE_PAGE: __('Delete Page', 'web-stories'),
   DETACH_IMAGE_FROM_BACKGROUND: __(
     'Detach Image From Background',
     'web-stories'
   ),
+  DETACH_VIDEO_FROM_BACKGROUND: __(
+    'Detach Video From Background',
+    'web-stories'
+  ),
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE_SHAPE_STYLES: __('Paste Shape Styles', 'web-stories'),
+  PASTE_VIDEO_STYLES: __('Paste Video Styles', 'web-stories'),
   PASTE_STYLES: __('Paste Style', 'web-stories'),
-  SCALE_AND_CROP_BACKGROUND: __('Scale & Crop Background Image', 'web-stories'),
+  SCALE_AND_CROP_BACKGROUND_IMAGE: __(
+    'Scale & Crop Background Image',
+    'web-stories'
+  ),
+  SCALE_AND_CROP_BACKGROUND_VIDEO: __(
+    'Scale & Crop Background Video',
+    'web-stories'
+  ),
   SCALE_AND_CROP_IMAGE: __('Scale & Crop Image', 'web-stories'),
+  SCALE_AND_CROP_VIDEO: __('Scale & Crop Video', 'web-stories'),
   SEND_BACKWARD: __('Send Backward', 'web-stories'),
   SEND_TO_BACK: __('Send to Back', 'web-stories'),
   SET_AS_PAGE_BACKGROUND: __('Set as Page Background', 'web-stories'),
+  TRIM_VIDEO: __('Trim Video', 'web-stories'),
 };
 
 const StyledKbd = styled(Text).attrs({

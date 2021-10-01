@@ -39,4 +39,10 @@ export default class Text extends Container {
   textSetFilter(name) {
     return this.getByRole('option', { name });
   }
+
+  get smartColorToggle() {
+    return this.getByRole('checkbox', {
+      name: 'Adaptive text colors',
+    });
+  }
 }
