@@ -63,6 +63,6 @@ class PluginActionLinks extends TestCase {
 		$instance  = new \Google\Web_Stories\Admin\PluginActionLinks();
 		$links     = $instance->action_links( $initial_meta );
 		$last_link = end( $links );
-		$this->assertContains( 'Settings', $last_link );
+		$this->assertStringContainsString( 'Settings', $last_link );
 	}
 }

@@ -19,7 +19,6 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
-use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
@@ -72,33 +71,6 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 				'display_name' => 'Andrea Adams',
 			]
 		);
-	}
-
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
-	}
-
-	public function setUp() {
-		parent::setUp();
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
-
-		$this->add_caps_to_roles();
-
-		$this->set_permalink_structure( '/%postname%/' );
-	}
-
-	public function tearDown() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
-		$this->remove_caps_from_roles();
-
-		parent::tearDown();
 	}
 
 	/**
@@ -288,7 +260,7 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'https://api.w.org/term', $links );
 		foreach ( $links['https://api.w.org/term'] as $taxonomy ) {
 			$this->assertArrayHasKey( 'href', $taxonomy );
-			$this->assertContains( 'web-stories/v1', $taxonomy['href'] );
+			$this->assertStringContainsString( 'web-stories/v1', $taxonomy['href'] );
 		}
 	}
 

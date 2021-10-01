@@ -23,10 +23,10 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * @coversDefaultClass \Google\Web_Stories\Shortcode\Embed_Shortcode
  */
 class Embed_Shortcode extends TestCase {
-	public function tearDown() {
+	public function tear_down() {
 		remove_shortcode( \Google\Web_Stories\Shortcode\Embed_Shortcode::SHORTCODE_NAME );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -61,7 +61,7 @@ class Embed_Shortcode extends TestCase {
 			''
 		);
 
-		$this->assertContains( '<amp-story-player', $actual );
+		$this->assertStringContainsString( '<amp-story-player', $actual );
 	}
 
 	/**
@@ -109,7 +109,7 @@ class Embed_Shortcode extends TestCase {
 			''
 		);
 
-		$this->assertContains( __( 'Web Story', 'web-stories' ), $actual );
+		$this->assertStringContainsString( __( 'Web Story', 'web-stories' ), $actual );
 	}
 
 	/**
@@ -132,8 +132,8 @@ class Embed_Shortcode extends TestCase {
 			''
 		);
 
-		$this->assertNotContains( '<amp-story-player', $actual );
-		$this->assertNotContains( '<img', $actual );
+		$this->assertStringNotContainsString( '<amp-story-player', $actual );
+		$this->assertStringNotContainsString( '<img', $actual );
 	}
 
 	/**
@@ -160,7 +160,7 @@ class Embed_Shortcode extends TestCase {
 			''
 		);
 
-		$this->assertNotContains( '<amp-story-player', $actual );
-		$this->assertContains( '<img', $actual );
+		$this->assertStringNotContainsString( '<amp-story-player', $actual );
+		$this->assertStringContainsString( '<img', $actual );
 	}
 }

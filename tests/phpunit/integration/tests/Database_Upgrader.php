@@ -27,8 +27,8 @@ use Google\Web_Stories\Infrastructure\Injector\SimpleInjector;
  *
  */
 class Database_Upgrader extends TestCase {
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		delete_option( \Google\Web_Stories\Database_Upgrader::OPTION );
 		delete_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION );
