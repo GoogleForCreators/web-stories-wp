@@ -27,6 +27,10 @@ jobs:
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
           cache: npm
+          cache-dependency-path: |
+            micro-site/package-lock.json
+            sitemap-generator/package-lock.json
+            web-stories-scraper/package-lock.json
 
       - name: Install dependencies
         run: |
