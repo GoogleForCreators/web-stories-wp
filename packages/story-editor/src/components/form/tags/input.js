@@ -246,8 +246,10 @@ function Input({
                 size="4"
                 ref={inputRef}
                 autoComplete={isSuggestionsOpen ? 'off' : 'on'}
+                aria-expanded={isSuggestionsOpen}
                 aria-autocomplete="list"
                 aria-owns={isSuggestionsOpen ? suggestionListId : null}
+                role="combobox"
               />
             ) : (
               <Tag key={tag} onDismiss={removeTag(tag)}>

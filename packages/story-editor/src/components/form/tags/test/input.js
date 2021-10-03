@@ -46,7 +46,7 @@ describe('Input', () => {
 
     renderWithProviders(<Input {...baseProps} onUndo={mockUndo} />);
 
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     fireEvent.focus(input);
     fireEvent.keyDown(input, { key: 'z', metaKey: true });
@@ -56,7 +56,7 @@ describe('Input', () => {
 
   it('should show suggestion list when suggestedTerms length is greater than 0', () => {
     renderWithProviders(<Input {...baseProps} />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
 
     const menu = screen.getByRole('listbox');
@@ -65,14 +65,14 @@ describe('Input', () => {
 
   it('should not render suggestion list when list is empty', () => {
     renderWithProviders(<Input {...baseProps} suggestedTerms={[]} />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   });
 
   it('should move focus through list with down and up arrows', () => {
     renderWithProviders(<Input {...baseProps} />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
     const menu = screen.getByRole('listbox');
     expect(menu).toBeInTheDocument();
@@ -89,7 +89,7 @@ describe('Input', () => {
 
   it('should return focus to input from suggestion list', () => {
     renderWithProviders(<Input {...baseProps} />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
     const listItems = screen.queryAllByRole('option');
     fireEvent.focus(input);
     fireEvent.keyDown(input, { key: 'ArrowDown', keyCode: 40 });
@@ -103,7 +103,7 @@ describe('Input', () => {
     renderWithProviders(
       <Input {...baseProps} onTagsChange={handleTagsChange} />
     );
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
     const listItems = screen.queryAllByRole('option');
     fireEvent.focus(input);
     fireEvent.keyDown(input, { key: 'ArrowDown', keyCode: 40 });
