@@ -377,6 +377,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Auto Analytics', 'web-stories' ),
 				'description' => __( 'Enable migration option to story auto analytics', 'web-stories' ),
 				'group'       => 'dashboard',
+				'default'     => true,
 			],
 		];
 	}
