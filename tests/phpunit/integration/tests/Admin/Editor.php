@@ -137,8 +137,6 @@ class Editor extends TestCase {
 	}
 
 	public function tear_down() {
-		$this->set_permalink_structure( '' );
-
 		delete_post_meta( self::$story_id, '_edit_lock' );
 
 		$this->remove_caps_from_roles();

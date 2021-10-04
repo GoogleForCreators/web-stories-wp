@@ -36,8 +36,26 @@ use Google\Web_Stories\Traits\Post_Type;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class KSES extends Service_Base implements HasRequirements {
+class KSES extends Service_Base {
 	use Post_Type;
+
+	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
+	 * KSES constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 */
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->story_post_type = $story_post_type;
+	}
 
 	/**
 	 * Initializes KSES filters for stories.
@@ -47,7 +65,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @return void
 	 */
 	public function register() {
-		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return;
 		}
 
@@ -70,19 +88,6 @@ class KSES extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 * Get the list of service IDs required for this service to be registered.
-	 *
-	 * @todo Inject post type instance via constructor instead.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return string[] List of required services.
-	 */
-	public static function get_requirements(): array {
-		return [ 'story_post_type' ];
-	}
-
-	/**
 	 * Filters slashed post data just before it is inserted into the database.
 	 *
 	 * Used to run story HTML markup through KSES on our own, but with some filters applied
@@ -101,11 +106,11 @@ class KSES extends Service_Base implements HasRequirements {
 	 */
 	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
 		if (
-			( Story_Post_Type::POST_TYPE_SLUG !== $data['post_type'] ) && !
+			( $this->story_post_type::POST_TYPE_SLUG !== $data['post_type'] ) && !
 			(
 				'revision' === $data['post_type'] &&
 				! empty( $data['post_parent'] ) &&
-				Story_Post_Type::POST_TYPE_SLUG === get_post_type( $data['post_parent'] )
+				$this->story_post_type::POST_TYPE_SLUG === get_post_type( $data['post_parent'] )
 			)
 		) {
 			return $data;

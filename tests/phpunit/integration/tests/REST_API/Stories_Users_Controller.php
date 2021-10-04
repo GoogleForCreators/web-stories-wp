@@ -68,12 +68,6 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 		$this->set_permalink_structure( '/%postname%/' );
 	}
 
-	public function tear_down() {
-		$this->set_permalink_structure( '' );
-
-		parent::tear_down();
-	}
-
 	/**
 	 * @covers ::register
 	 */

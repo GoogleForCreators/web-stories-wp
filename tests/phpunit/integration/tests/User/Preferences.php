@@ -18,6 +18,7 @@
 namespace Google\Web_Stories\Tests\Integration\User;
 
 use Google\Web_Stories\REST_API\Stories_Users_Controller;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\TestCase;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -26,7 +27,7 @@ use WP_REST_Server;
 /**
  * @coversDefaultClass \Google\Web_Stories\User\Preferences
  */
-class Preferences extends TestCase {
+class Preferences extends DependencyInjectedTestCase {
 	/**
 	 * Admin user for test.
 	 *
@@ -63,7 +64,7 @@ class Preferences extends TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->instance = new \Google\Web_Stories\User\Preferences();
+		$this->instance = $this->injector->make( \Google\Web_Stories\User\Preferences::class );
 	}
 
 	public function tear_down() {

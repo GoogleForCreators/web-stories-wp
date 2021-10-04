@@ -73,14 +73,11 @@ class Page_Template_Controller extends Test_REST_TestCase {
 			]
 		);
 
-		$post_type = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
-
 		$factory->post->create_many(
 			3,
 			[
 				'post_status' => 'publish',
 				'post_author' => self::$user_id,
-				'post_type'   => $post_type,
 			]
 		);
 
@@ -90,7 +87,6 @@ class Page_Template_Controller extends Test_REST_TestCase {
 				'post_status' => 'future',
 				'post_date'   => ( new DateTime( '+1day' ) )->format( 'Y-m-d H:i:s' ),
 				'post_author' => self::$user_id,
-				'post_type'   => $post_type,
 			]
 		);
 
@@ -99,7 +95,6 @@ class Page_Template_Controller extends Test_REST_TestCase {
 			[
 				'post_status' => 'publish',
 				'post_author' => self::$user2_id,
-				'post_type'   => $post_type,
 			]
 		);
 
@@ -108,7 +103,6 @@ class Page_Template_Controller extends Test_REST_TestCase {
 			[
 				'post_status' => 'publish',
 				'post_author' => self::$user3_id,
-				'post_type'   => $post_type,
 			]
 		);
 
@@ -117,7 +111,6 @@ class Page_Template_Controller extends Test_REST_TestCase {
 			[
 				'post_status' => 'draft',
 				'post_author' => self::$user_id,
-				'post_type'   => $post_type,
 			]
 		);
 	}
@@ -125,25 +118,28 @@ class Page_Template_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->controller = new \Google\Web_Stories\REST_API\Page_Template_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$this->controller = new \Google\Web_Stories\REST_API\Page_Template_Controller( 'post' );
 
 		$this->set_permalink_structure( '/%postname%/' );
 	}
 
-	public function tear_down() {
-		$this->set_permalink_structure( '' );
+	/**
+	 * @covers ::get_collection_params
+	 */
+	public function test_get_collection_params() {
+		$actual = $this->controller->get_collection_params();
 
-		parent::tear_down();
+		$this->assertArrayHasKey( '_web_stories_envelope', $actual );
 	}
 
 	/**
-	 * @covers ::register_routes
+	 * @covers ::get_item_schema
 	 */
-	public function test_register_routes() {
-		$routes = rest_get_server()->get_routes();
+	public function test_get_item_schema() {
+		$actual = $this->controller->get_item_schema();
 
-		$this->assertArrayHasKey( '/web-stories/v1/web-story', $routes );
-		$this->assertCount( 2, $routes['/web-stories/v1/web-story'] );
+		$this->assertArrayNotHasKey( 'permalink_template', $actual['properties'] );
+		$this->assertArrayNotHasKey( 'generated_slug', $actual['properties'] );
 	}
 
 	/**
@@ -154,12 +150,15 @@ class Page_Template_Controller extends Test_REST_TestCase {
 
 		wp_set_current_user( self::$user_id );
 
-		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/wp/v2/posts' );
 		$request->set_param( 'status', [ 'draft' ] );
 		$request->set_param( 'context', 'edit' );
+		$request->set_param( 'page', '1' );
 		$request->set_param( '_web_stories_envelope', true );
-		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
+
+		$response = $this->controller->get_items( $request );
+
+		$data = $response->get_data();
 
 		// Body of request.
 		$this->assertArrayHasKey( 'headers', $data );

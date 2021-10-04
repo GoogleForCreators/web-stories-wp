@@ -114,9 +114,9 @@ class Experiments extends DependencyInjectedTestCase {
 	 * @covers ::display_experiment_field
 	 */
 	public function test_display_experiment_field() {
-		$this->instance = $this->createPartialMock(
+		$this->instance = $this->createTestProxy(
 			\Google\Web_Stories\Experiments::class,
-			[ 'get_experiments', 'is_experiment_enabled' ]
+			[ $this->injector->make( \Google\Web_Stories\Settings::class ) ]
 		);
 		$this->instance->method( 'get_experiments' )
 					->willReturn(
@@ -148,10 +148,11 @@ class Experiments extends DependencyInjectedTestCase {
 	 * @covers ::display_experiment_field
 	 */
 	public function test_display_experiment_field_enabled() {
-		$this->instance = $this->createPartialMock(
-			\Google\Web_Stories\Experiments::class,
-			[ 'get_experiments', 'is_experiment_enabled' ]
-		);
+		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
+			->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
+			->setMethods( [ 'get_experiments', 'is_experiment_enabled' ] )
+			->getMock();
+
 		$this->instance->method( 'get_experiments' )
 					->willReturn(
 						[
@@ -181,10 +182,11 @@ class Experiments extends DependencyInjectedTestCase {
 	 * @covers ::display_experiment_field
 	 */
 	public function test_display_experiment_field_enabled_by_default() {
-		$this->instance = $this->createPartialMock(
-			\Google\Web_Stories\Experiments::class,
-			[ 'get_experiments' ]
-		);
+		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
+							   ->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
+							   ->setMethods( [ 'get_experiments' ] )
+							   ->getMock();
+
 		$this->instance->method( 'get_experiments' )
 					->willReturn(
 						[
@@ -266,10 +268,11 @@ class Experiments extends DependencyInjectedTestCase {
 	 * @covers ::get_experiment
 	 */
 	public function test_is_experiment_enabled_default_experiment() {
-		$this->instance = $this->createPartialMock(
-			\Google\Web_Stories\Experiments::class,
-			[ 'get_experiments' ]
-		);
+		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
+							->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
+							->setMethods( [ 'get_experiments' ] )
+							->getMock();
+
 		$this->instance->method( 'get_experiments' )
 					->willReturn(
 						[
@@ -306,10 +309,11 @@ class Experiments extends DependencyInjectedTestCase {
 	public function test_get_enabled_experiments() {
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'baz' => true ], false );
 
-		$this->instance = $this->createPartialMock(
-			\Google\Web_Stories\Experiments::class,
-			[ 'get_experiments', 'is_experiment_enabled' ]
-		);
+		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
+							->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
+							->setMethods( [ 'get_experiments', 'is_experiment_enabled' ] )
+							->getMock();
+
 		$this->instance->method( 'get_experiments' )
 					->willReturn(
 						[

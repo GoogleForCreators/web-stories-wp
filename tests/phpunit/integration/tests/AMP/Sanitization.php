@@ -30,6 +30,17 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * @coversDefaultClass \Google\Web_Stories\AMP\Sanitization
  */
 class Sanitization extends DependencyInjectedTestCase {
+	/**
+	 * @var \Google\Web_Stories\AMP\Sanitization
+	 */
+	private $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
+	}
+
 	public function tear_down() {
 		remove_all_filters( 'web_stories_amp_sanitizers' );
 		remove_all_filters( 'web_stories_amp_dev_mode_enabled' );
@@ -64,10 +75,8 @@ class Sanitization extends DependencyInjectedTestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
-
 		$document = Document::fromHtml( $original_html );
-		$sanitization->sanitize_document( $document );
+		$this->instance->sanitize_document( $document );
 
 		$scripts = $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' );
 		$this->assertSame( 2, $scripts->length );
@@ -100,10 +109,8 @@ class Sanitization extends DependencyInjectedTestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
-
 		$document = Document::fromHtml( $original_html );
-		$sanitization->sanitize_document( $document );
+		$this->instance->sanitize_document( $document );
 
 		/** @var DOMElement $script Script. */
 		$actual_script_srcs = [];
@@ -149,10 +156,8 @@ class Sanitization extends DependencyInjectedTestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
-
 		$document = Document::fromHtml( $original_html );
-		$sanitization->sanitize_document( $document );
+		$this->instance->sanitize_document( $document );
 
 		$script_srcs = [];
 
@@ -201,10 +206,8 @@ class Sanitization extends DependencyInjectedTestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
-
 		$document = Document::fromHtml( $original_html );
-		$sanitization->sanitize_document( $document );
+		$this->instance->sanitize_document( $document );
 
 		/** @var DOMElement $script Script. */
 		$actual_script_srcs = [];
@@ -228,8 +231,7 @@ class Sanitization extends DependencyInjectedTestCase {
 	 * @covers ::get_extension_sources
 	 */
 	public function test_get_extension_sources() {
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
-		$sources      = $this->call_private_method( $sanitization, 'get_extension_sources' );
+		$sources = $this->call_private_method( $this->instance, 'get_extension_sources' );
 
 		$actual = [];
 
@@ -387,13 +389,12 @@ class Sanitization extends DependencyInjectedTestCase {
 	 * @covers ::is_amp_dev_mode
 	 */
 	public function test_is_amp_dev_mode() {
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
 
-		$this->assertFalse( $this->call_private_method( $sanitization, 'is_amp_dev_mode' ) );
+		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
 		add_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
-		$this->assertTrue( $this->call_private_method( $sanitization, 'is_amp_dev_mode' ) );
+		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
 		remove_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
-		$this->assertFalse( $this->call_private_method( $sanitization, 'is_amp_dev_mode' ) );
+		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
 	}
 
 	/**
@@ -401,13 +402,13 @@ class Sanitization extends DependencyInjectedTestCase {
 	 * @covers ::is_amp_dev_mode
 	 */
 	public function test_is_amp_dev_mode_authenticated_user_admin_bar_showing() {
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
-
 		add_filter( 'show_admin_bar', '__return_true' );
+
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
+
 		$this->assertTrue( is_admin_bar_showing() );
 		$this->assertTrue( is_user_logged_in() );
-		$this->assertTrue( $this->call_private_method( $sanitization, 'is_amp_dev_mode' ) );
+		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
 	}
 
 	/**
@@ -415,15 +416,13 @@ class Sanitization extends DependencyInjectedTestCase {
 	 * @covers ::is_amp_dev_mode
 	 */
 	public function test_is_amp_dev_mode_unauthenticated_user_admin_bar_forced() {
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
-
 		// Test unauthenticated user with admin bar forced.
 		add_filter( 'show_admin_bar', '__return_true' );
 		wp_set_current_user( 0 );
 
 		$this->assertFalse( is_user_logged_in() );
 		$this->assertTrue( is_admin_bar_showing() );
-		$this->assertFalse( $this->call_private_method( $sanitization, 'is_amp_dev_mode' ) );
+		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
 	}
 
 	/**
@@ -440,8 +439,7 @@ class Sanitization extends DependencyInjectedTestCase {
 			}
 		);
 
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
-		$sanitizers   = $this->call_private_method( $sanitization, 'get_sanitizers' );
+		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
 
 		$ordered_sanitizers = array_keys( $sanitizers );
 		$this->assertEquals( 'Even_After_Validating_Sanitizer', $ordered_sanitizers[ count( $ordered_sanitizers ) - 5 ] );
@@ -456,10 +454,8 @@ class Sanitization extends DependencyInjectedTestCase {
 	 * @covers ::get_sanitizers
 	 */
 	public function test_get_sanitizers_with_dev_mode() {
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
-
 		$element_xpaths            = [ '//script[ @id = "hello-world" ]' ];
-		$validation_error_callback = [ $sanitization, 'validation_error_callback' ];
+		$validation_error_callback = [ $this->instance, 'validation_error_callback' ];
 		add_filter(
 			'web_stories_amp_dev_mode_element_xpaths',
 			function ( $xpaths ) use ( $element_xpaths ) {
@@ -468,15 +464,15 @@ class Sanitization extends DependencyInjectedTestCase {
 		);
 
 		// Check that AMP_Dev_Mode_Sanitizer is not registered if not in dev mode.
-		$sanitizers = $this->call_private_method( $sanitization, 'get_sanitizers' );
-		$this->assertFalse( $this->call_private_method( $sanitization, 'is_amp_dev_mode' ) );
+		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
+		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
 		$this->assertArrayNotHasKey( AMP_Dev_Mode_Sanitizer::class, $sanitizers );
 
 		// Check that AMP_Dev_Mode_Sanitizer is registered once in dev mode, but not with admin bar showing yet.
 		add_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
-		$sanitizers = $this->call_private_method( $sanitization, 'get_sanitizers' );
+		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
 		$this->assertFalse( is_admin_bar_showing() );
-		$this->assertTrue( $this->call_private_method( $sanitization, 'is_amp_dev_mode' ) );
+		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
 		$this->assertArrayHasKey( AMP_Dev_Mode_Sanitizer::class, $sanitizers );
 		$this->assertEquals( AMP_Dev_Mode_Sanitizer::class, current( array_keys( $sanitizers ) ) );
 		$this->assertEquals(
@@ -489,10 +485,10 @@ class Sanitization extends DependencyInjectedTestCase {
 		add_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
 		add_filter( 'show_admin_bar', '__return_true' );
 
-		$sanitizers = $this->call_private_method( $sanitization, 'get_sanitizers' );
+		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
 
 		$this->assertTrue( is_admin_bar_showing() );
-		$this->assertTrue( $this->call_private_method( $sanitization, 'is_amp_dev_mode' ) );
+		$this->assertTrue( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
 		$this->assertArrayHasKey( AMP_Dev_Mode_Sanitizer::class, $sanitizers );
 		$this->assertEqualSets(
 			array_merge(
@@ -531,10 +527,8 @@ class Sanitization extends DependencyInjectedTestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
-
 		$document = Document::fromHtml( $original_html );
-		$sanitization->sanitize_document( $document );
+		$this->instance->sanitize_document( $document );
 
 		$video_element = $document->body->getElementsByTagName( 'amp-video' )->item( 0 );
 		$this->assertInstanceOf( DOMElement::class, $video_element );
@@ -564,10 +558,8 @@ class Sanitization extends DependencyInjectedTestCase {
 		<?php
 		$original_html = ob_get_clean();
 
-		$sanitization = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
-
 		$document = Document::fromHtml( $original_html );
-		$sanitization->sanitize_document( $document );
+		$this->instance->sanitize_document( $document );
 
 		$video_element = $document->body->getElementsByTagName( 'amp-video' )->item( 0 );
 		$this->assertInstanceOf( DOMElement::class, $video_element );

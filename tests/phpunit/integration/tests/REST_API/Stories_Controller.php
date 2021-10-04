@@ -140,8 +140,6 @@ class Stories_Controller extends Test_REST_TestCase {
 	}
 
 	public function tear_down() {
-		$this->set_permalink_structure( '' );
-
 		$this->kses_remove_filters();
 
 		parent::tear_down();

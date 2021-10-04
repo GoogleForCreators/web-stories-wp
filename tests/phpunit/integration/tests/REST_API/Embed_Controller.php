@@ -276,7 +276,9 @@ class Embed_Controller extends Test_REST_TestCase {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
+
 		$this->set_permalink_structure( '' );
+
 		$response = $this->dispatch_request( get_permalink( self::$story_id ) );
 		$data     = $response->get_data();
 

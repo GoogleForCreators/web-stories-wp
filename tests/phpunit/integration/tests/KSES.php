@@ -20,7 +20,17 @@ namespace Google\Web_Stories\Tests\Integration;
 /**
  * @coversDefaultClass \Google\Web_Stories\KSES
  */
-class KSES extends TestCase {
+class KSES extends DependencyInjectedTestCase {
+	/**
+	 * @var \Google\Web_Stories\KSES
+	 */
+	private $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\KSES::class );
+	}
 
 	/**
 	 * Testing the safecss_filter_attr() function.
@@ -32,8 +42,7 @@ class KSES extends TestCase {
 	 * @param string $expected Expected string of CSS rules.
 	 */
 	public function test_safecss_filter_attr( $css, $expected ) {
-		$kses = new \Google\Web_Stories\KSES();
-		$this->assertSame( $expected, $kses->safecss_filter_attr( $css ) );
+		$this->assertSame( $expected, $this->instance->safecss_filter_attr( $css ) );
 	}
 
 	/**
@@ -47,10 +56,11 @@ class KSES extends TestCase {
 	 * @param string $expected Expected string of CSS rules.
 	 */
 	public function test_safecss_filter_attr_extended( $css, $expected ) {
-		$kses = new \Google\Web_Stories\KSES();
-		add_filter( 'safe_style_css', [ $kses, 'filter_safe_style_css' ] );
-		$this->assertSame( $expected, $kses->safecss_filter_attr( $css ) );
-		remove_filter( 'safe_style_css', [ $kses, 'filter_safe_style_css' ] );
+		add_filter( 'safe_style_css', [ $this->instance, 'filter_safe_style_css' ] );
+		$actual = $this->instance->safecss_filter_attr( $css );
+		remove_filter( 'safe_style_css', [ $this->instance, 'filter_safe_style_css' ] );
+
+		$this->assertSame( $expected, $actual );
 	}
 
 	/**
@@ -59,7 +69,6 @@ class KSES extends TestCase {
 	 * @covers ::array_merge_recursive_distinct
 	 */
 	public function test_array_merge_recursive_distinct() {
-		$kses         = new \Google\Web_Stories\KSES();
 		$input_array1 = [
 			'one' => [
 				'one-one' => [],
@@ -73,7 +82,7 @@ class KSES extends TestCase {
 		];
 
 		$output = $this->call_private_method(
-			$kses,
+			$this->instance,
 			'array_merge_recursive_distinct',
 			[
 				$input_array1,
@@ -338,11 +347,10 @@ class KSES extends TestCase {
 	 * @param string $expected Expected output.
 	 */
 	public function test_filter_kses_allowed_html( $html, $expected ) {
-		$kses = new \Google\Web_Stories\KSES();
-		add_filter( 'wp_kses_allowed_html', [ $kses, 'filter_kses_allowed_html' ] );
+				add_filter( 'wp_kses_allowed_html', [ $this->instance, 'filter_kses_allowed_html' ] );
 
 		$this->assertSame( $expected, wp_unslash( wp_filter_post_kses( $html ) ) );
-		remove_filter( 'wp_kses_allowed_html', [ $kses, 'filter_kses_allowed_html' ] );
+		remove_filter( 'wp_kses_allowed_html', [ $this->instance, 'filter_kses_allowed_html' ] );
 	}
 
 	/**
@@ -352,7 +360,6 @@ class KSES extends TestCase {
 	 * @covers ::array_merge_recursive_distinct
 	 */
 	public function test_filter_kses_allowed_html_uses_deep_merge() {
-		$kses         = new \Google\Web_Stories\KSES();
 		$allowed_tags = [
 			'img'     => [
 				'width' => true,
@@ -362,7 +369,7 @@ class KSES extends TestCase {
 			],
 		];
 
-		$result = $kses->filter_kses_allowed_html( $allowed_tags );
+		$result = $this->instance->filter_kses_allowed_html( $allowed_tags );
 
 		$this->assertArrayHasKey( 'img', $result );
 		$this->assertArrayHasKey( 'width', $result['img'] );

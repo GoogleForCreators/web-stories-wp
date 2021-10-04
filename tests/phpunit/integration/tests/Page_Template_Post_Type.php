@@ -24,14 +24,21 @@ class Page_Template_Post_Type extends DependencyInjectedTestCase {
 	use Capabilities_Setup;
 
 	/**
+	 * @var \Google\Web_Stories\Story_Post_Type
+	 */
+	private $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+	}
+
+	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$instance = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
-		$instance->register();
-
-		$ptpt = new \Google\Web_Stories\Page_Template_Post_Type();
-		$ptpt->register();
+		$this->instance->register();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Page_Template_Post_Type::POST_TYPE_SLUG );
 		$this->assertSame( 'edit_web-stories', $post_type_object->cap->edit_posts );

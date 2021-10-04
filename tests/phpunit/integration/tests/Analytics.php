@@ -24,13 +24,23 @@ use Google\Web_Stories\Settings;
  */
 class Analytics extends DependencyInjectedTestCase {
 	/**
+	 * @var \Google\Web_Stories\Analytics
+	 */
+	private $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Analytics::class );
+	}
+
+	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$analytics = $this->injector->make( \Google\Web_Stories\Analytics::class );
-		$analytics->register();
+		$this->instance->register();
 
-		$this->assertSame( 10, has_filter( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] ) );
+		$this->assertSame( 10, has_filter( 'web_stories_print_analytics', [ $this->instance, 'print_analytics_tag' ] ) );
 	}
 
 	/**
@@ -38,8 +48,8 @@ class Analytics extends DependencyInjectedTestCase {
 	 */
 	public function test_get_tracking_id_casts_to_string() {
 		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
-		$analytics = $this->injector->make( \Google\Web_Stories\Analytics::class );
-		$this->assertSame( '123456789', $analytics->get_tracking_id() );
+
+		$this->assertSame( '123456789', $this->instance->get_tracking_id() );
 	}
 
 	/**
@@ -47,8 +57,7 @@ class Analytics extends DependencyInjectedTestCase {
 	 */
 	public function test_get_default_configuration() {
 		$tracking_id = '123456789';
-		$analytics   = $this->injector->make( \Google\Web_Stories\Analytics::class );
-		$actual      = $analytics->get_default_configuration( $tracking_id );
+		$actual      = $this->instance->get_default_configuration( $tracking_id );
 		$this->assertArrayHasKey( 'vars', $actual );
 		$this->assertArrayHasKey( 'gtag_id', $actual['vars'] );
 		$this->assertSame( (string) $tracking_id, $actual['vars']['gtag_id'] );
@@ -77,13 +86,13 @@ class Analytics extends DependencyInjectedTestCase {
 		$experiments->method( 'is_experiment_enabled' )
 					->willReturn( true );
 
-		$analytics     = new \Google\Web_Stories\Analytics( $this->injector->make( Settings::class ), $experiments );
-		$actual_before = get_echo( [ $analytics, 'print_analytics_tag' ] );
+		$this->instance = new \Google\Web_Stories\Analytics( $this->injector->make( Settings::class ), $experiments );
+		$actual_before  = get_echo( [ $this->instance, 'print_analytics_tag' ] );
 
 		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
 		update_option( Settings::SETTING_NAME_USING_LEGACY_ANALYTICS, false );
 
-		$actual_after = get_echo( [ $analytics, 'print_analytics_tag' ] );
+		$actual_after = get_echo( [ $this->instance, 'print_analytics_tag' ] );
 
 		$this->assertEmpty( $actual_before );
 		$this->assertStringContainsString( '<amp-story-auto-analytics', $actual_after );
@@ -93,13 +102,12 @@ class Analytics extends DependencyInjectedTestCase {
 	 * @covers ::print_analytics_tag
 	 */
 	public function test_print_analytics_tag_legacy() {
-		$analytics     = $this->injector->make( \Google\Web_Stories\Analytics::class );
-		$actual_before = get_echo( [ $analytics, 'print_analytics_tag' ] );
+		$actual_before = get_echo( [ $this->instance, 'print_analytics_tag' ] );
 
 		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
 		update_option( Settings::SETTING_NAME_USING_LEGACY_ANALYTICS, true );
 
-		$actual_after = get_echo( [ $analytics, 'print_analytics_tag' ] );
+		$actual_after = get_echo( [ $this->instance, 'print_analytics_tag' ] );
 
 		$this->assertEmpty( $actual_before );
 		$this->assertStringContainsString( '<amp-analytics', $actual_after );

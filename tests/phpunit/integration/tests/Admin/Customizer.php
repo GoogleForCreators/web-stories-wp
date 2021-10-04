@@ -34,25 +34,18 @@ class Customizer extends DependencyInjectedTestCase {
 	use Theme_Support;
 
 	/**
-	 * Instance of WP_Customize_Manager which is reset for each test.
-	 *
-	 * @var WP_Customize_Manager
-	 */
-	public $wp_customize;
-
-	/**
-	 * Customizer mock object.
-	 *
-	 * @var \PHPUnit\Framework\MockObject\MockObject|\WP_Customize_Manager
-	 */
-	private $customizer_mock;
-
-	/**
-	 * Teste instance.
+	 * Test instance.
 	 *
 	 * @var \Google\Web_Stories\Admin\Customizer
 	 */
 	private $instance;
+
+	/**
+	 * Test instance.
+	 *
+	 * @var \WP_Customize_Manager
+	 */
+	private $wp_customize_mock;
 
 	public static function wpSetUpBeforeClass() {
 		require_once ABSPATH . WPINC . '/class-wp-customize-manager.php';
@@ -67,10 +60,9 @@ class Customizer extends DependencyInjectedTestCase {
 
 		global $wp_customize;
 
-		$this->instance      = $this->injector->make( \Google\Web_Stories\Admin\Customizer::class );
-		$this->wp_customize  = new \WP_Customize_Manager();
-		$wp_customize        = $this->wp_customize;
-		$this->instance_mock = $this->createMock( WP_Customize_Manager::class );
+		$wp_customize            = new \WP_Customize_Manager();
+		$this->wp_customize_mock = $this->createMock( WP_Customize_Manager::class );
+		$this->instance          = $this->injector->make( \Google\Web_Stories\Admin\Customizer::class );
 	}
 
 	/**
@@ -153,7 +145,7 @@ class Customizer extends DependencyInjectedTestCase {
 	public function test_customizer_web_stories_section_added() {
 		$this->add_web_stories_theme_support();
 
-		$this->instance_mock->expects( $this->once() )->method( 'add_section' )->with(
+		$this->wp_customize_mock->expects( $this->once() )->method( 'add_section' )->with(
 			TheCustomizer::SECTION_SLUG,
 			[
 				'title'          => 'Web Stories',
@@ -161,7 +153,7 @@ class Customizer extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->instance->register_customizer_settings( $this->instance_mock );
+		$this->instance->register_customizer_settings( $this->wp_customize_mock );
 	}
 
 	/**
@@ -169,8 +161,8 @@ class Customizer extends DependencyInjectedTestCase {
 	 */
 	public function test_customizer_settings_added() {
 		$this->add_web_stories_theme_support();
-		$this->instance_mock->expects( $this->exactly( 14 ) )->method( 'add_setting' );
-		$this->instance->register_customizer_settings( $this->instance_mock );
+		$this->wp_customize_mock->expects( $this->exactly( 14 ) )->method( 'add_setting' );
+		$this->instance->register_customizer_settings( $this->wp_customize_mock );
 	}
 
 	/**
@@ -178,7 +170,7 @@ class Customizer extends DependencyInjectedTestCase {
 	 */
 	public function test_customizer_show_stories_settings_added() {
 		$this->add_web_stories_theme_support();
-		$this->instance_mock->expects( $this->exactly( 14 ) )->
+		$this->wp_customize_mock->expects( $this->exactly( 14 ) )->
 		method( 'add_setting' )->
 		withConsecutive(
 			[
@@ -283,7 +275,7 @@ class Customizer extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->instance->register_customizer_settings( $this->instance_mock );
+		$this->instance->register_customizer_settings( $this->wp_customize_mock );
 	}
 
 	/**
