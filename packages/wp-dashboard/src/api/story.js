@@ -23,6 +23,7 @@ import {
   STORY_SORT_OPTIONS,
   STORY_STATUSES,
 } from '@web-stories-wp/dashboard';
+import { createSolidFromString } from '@web-stories-wp/patterns';
 
 /**
  * WordPress dependencies
@@ -96,10 +97,41 @@ export function updateStory(story, apiPath) {
   });
 }
 
-export function createStoryFromTemplate(storyData, storyPropsToSave, apiPath) {
+export const createStoryFromTemplate = async (template, apiPath) => {
   const path = addQueryArgs(apiPath, {
     _fields: 'edit_link',
   });
+
+  const { createdBy, pages, version, colors } = template;
+  const { getStoryPropsToSave } = await import(
+    /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@web-stories-wp/story-editor'
+  );
+  const storyPropsToSave = await getStoryPropsToSave({
+    story: {
+      status: 'auto-draft',
+      featuredMedia: {
+        id: 0,
+      },
+    },
+    pages,
+    metadata: {
+      publisher: createdBy,
+    },
+  });
+
+  const convertedColors = colors.map(({ color }) =>
+    createSolidFromString(color)
+  );
+
+  const storyData = {
+    pages,
+    version,
+    autoAdvance: true,
+    defaultPageDuration: 7,
+    currentStoryStyles: {
+      colors: convertedColors,
+    },
+  };
 
   return apiFetch({
     path,
@@ -109,7 +141,7 @@ export function createStoryFromTemplate(storyData, storyPropsToSave, apiPath) {
     },
     method: 'POST',
   });
-}
+};
 
 export function duplicateStory(story, apiPath) {
   const {

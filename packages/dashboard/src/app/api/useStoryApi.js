@@ -23,8 +23,6 @@ import {
   useReducer,
   useRef,
 } from '@web-stories-wp/react';
-import { useFeatures } from 'flagged';
-import { createSolidFromString } from '@web-stories-wp/patterns';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
@@ -42,7 +40,6 @@ const useStoryApi = (storyApi) => {
   const isInitialFetch = useRef(true);
   const initialFetchListeners = useMemo(() => new Map(), []);
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
-  const flags = useFeatures();
   const {
     apiCallbacks: {
       duplicateStory: duplicateStoryCallback,
@@ -130,7 +127,7 @@ const useStoryApi = (storyApi) => {
 
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
-          payload: reshapeStoryObject(response),
+          payload: reshapeStoryObject(response), // @todo Move reshapeStoryObject to wp-dashboard.
         });
       } catch (err) {
         dispatch({
@@ -180,41 +177,8 @@ const useStoryApi = (storyApi) => {
       });
 
       try {
-        const { createdBy, pages, version, colors } = template;
-        const { getStoryPropsToSave } = await import(
-          /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@web-stories-wp/story-editor'
-        );
-        const storyPropsToSave = await getStoryPropsToSave({
-          story: {
-            status: 'auto-draft',
-            featuredMedia: {
-              id: 0,
-            },
-          },
-          pages,
-          metadata: {
-            publisher: createdBy,
-          },
-          flags,
-        });
-
-        const convertedColors = colors.map(({ color }) =>
-          createSolidFromString(color)
-        );
-
-        const storyData = {
-          pages,
-          version,
-          autoAdvance: true,
-          defaultPageDuration: 7,
-          currentStoryStyles: {
-            colors: convertedColors,
-          },
-        };
-
         const response = await createStoryFromTemplateCallback(
-          storyData,
-          storyPropsToSave,
+          template,
           storyApi
         );
 
@@ -238,7 +202,7 @@ const useStoryApi = (storyApi) => {
         });
       }
     },
-    [createStoryFromTemplateCallback, storyApi, flags]
+    [createStoryFromTemplateCallback, storyApi]
   );
 
   const duplicateStory = useCallback(
