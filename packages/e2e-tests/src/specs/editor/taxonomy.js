@@ -52,6 +52,7 @@ async function addCategory(name, parent) {
 
   if (parent) {
     await expect(page).toClick('button[aria-label="Parent Category"]');
+    await page.waitForSelector('li[role="option"]');
     await expect(page).toMatchElement('li[role="option"]', { text: parent });
 
     await expect(page).toClick('li[role="option"]', { text: parent });
@@ -68,22 +69,36 @@ async function addCategory(name, parent) {
 }
 
 async function addTag(name) {
+  // get number of input children before we add the token
+  // so we have a metric to see when the new token renders
+  const numChildren = await page.$eval(
+    '#web_story_tag-input',
+    (el) => el.parentNode.children.length
+  );
+
+  // Add the new token
   await page.focus('input#web_story_tag-input');
   await page.type('input#web_story_tag-input', name);
   await page.keyboard.press('Enter');
 
-  await page.focus('input#web_story_tag-input');
-
-  const tokens = await page.evaluate(() =>
-    Array.from(
-      document.querySelectorAll('[data-testid="flat-term-token"] > span'),
-      (element) => element.textContent
-    )
+  // wait for token to render
+  await page.waitForFunction(
+    (originalNumChildren) =>
+      document.getElementById('web_story_tag-input').parentNode.children
+        .length > originalNumChildren,
+    {},
+    numChildren
   );
-  await expect(tokens).toContainValue(name);
+
+  const tokenNames = await page.$$eval(
+    '[data-testid="flat-term-token"]',
+    (nodes) => Array.from(nodes, (node) => node.innerText)
+  );
+
+  await expect(tokenNames).toContainValue(name);
 }
 
-describe('Taxonomy', () => {
+describe('taxonomy', () => {
   withExperimentalFeatures(['enableTaxonomiesSupport']);
 
   // Create some categories and tags before running all tests so that they are available there.
@@ -152,6 +167,7 @@ describe('Taxonomy', () => {
       // Find an existing tag and select it.
       await page.focus('input#web_story_tag-input');
       await page.type('input#web_story_tag-input', 'adven');
+      await page.waitForSelector('ul[data-testid="suggested_terms_list"]');
       await expect(page).toMatchElement(
         'ul[data-testid="suggested_terms_list"]'
       );
@@ -163,8 +179,8 @@ describe('Taxonomy', () => {
 
       const tokens = await page.evaluate(() =>
         Array.from(
-          document.querySelectorAll('[data-testid="flat-term-token"] > span'),
-          (element) => element.textContent
+          document.querySelectorAll('[data-testid="flat-term-token"]'),
+          (element) => element.innerText
         )
       );
 
