@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './media';
+export * from './media'; // @todo Remove all direct exports except story after moving settings fields.
 export * from './pages';
 export * from './publisherLogo';
 export * from './settings';

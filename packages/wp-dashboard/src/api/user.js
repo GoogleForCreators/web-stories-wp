@@ -18,12 +18,25 @@
  */
 import apiFetch from '@wordpress/api-fetch';
 
+/**
+ * Get user.
+ *
+ * @param {string} apiPath API path.
+ * @return {Promise} Request promise.
+ */
 export function getUser(apiPath) {
   return apiFetch({
     path: apiPath,
   });
 }
 
+/**
+ * Toggle web stories media optimization on settings page.
+ *
+ * @param {string} currentUser Current user.
+ * @param {string} apiPath API path.
+ * @return {Promise} Request promise.
+ */
 export function toggleWebStoriesMediaOptimization(currentUser, apiPath) {
   return apiFetch({
     path: apiPath,
@@ -37,6 +50,13 @@ export function toggleWebStoriesMediaOptimization(currentUser, apiPath) {
   });
 }
 
+/**
+ * Handles the toggle web stories tracking opt in on settings page.
+ *
+ * @param {Object} currentUser Current user object.
+ * @param {string} apiPath API path.
+ * @return {Promise} Request promise.
+ */
 export function toggleWebStoriesTrackingOptIn(currentUser, apiPath) {
   return apiFetch({
     path: apiPath,

@@ -35,6 +35,13 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import { STORY_FIELDS } from './constants';
 
+/**
+ * Fetch stories ( When dashboard link is clicked. )
+ *
+ * @param {Object} queryParams Query params.
+ * @param {string} apiPath API path.
+ * @return {Promise} Request promise.
+ */
 export function fetchStories(queryParams, apiPath) {
   const {
     status = STORY_STATUSES[0].value,
@@ -70,6 +77,13 @@ export function fetchStories(queryParams, apiPath) {
   }));
 }
 
+/**
+ * Trash stories.
+ *
+ * @param {int|string} storyId Story Id.
+ * @param {string} apiPath API Path.
+ * @return {Promise} Request promise.
+ */
 export function trashStory(storyId, apiPath) {
   const path = addQueryArgs(`${apiPath}${storyId}`, { _method: 'DELETE' });
 
@@ -79,6 +93,13 @@ export function trashStory(storyId, apiPath) {
   });
 }
 
+/**
+ * Update story.
+ *
+ * @param {Object} story Story object.
+ * @param {string} apiPath API Path.
+ * @return {Promise} Request promise.
+ */
 export function updateStory(story, apiPath) {
   const path = addQueryArgs(`${apiPath}${story.id}/`, {
     _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
@@ -97,6 +118,13 @@ export function updateStory(story, apiPath) {
   });
 }
 
+/**
+ * Create story from template
+ *
+ * @param {Object} template Template object.
+ * @param {string} apiPath API Path.
+ * @return {Promise} Request promise.
+ */
 export const createStoryFromTemplate = async (template, apiPath) => {
   const path = addQueryArgs(apiPath, {
     _fields: 'edit_link',
@@ -143,6 +171,13 @@ export const createStoryFromTemplate = async (template, apiPath) => {
   });
 };
 
+/**
+ * Duplicate story.
+ *
+ * @param {Object} story Story object.
+ * @param {string} apiPath API path.
+ * @return {Promise} Request promise.
+ */
 export function duplicateStory(story, apiPath) {
   const {
     originalStoryData: { id },
