@@ -61,8 +61,8 @@ class Customizer extends TestCase {
 	/**
 	 * Runs once before any test in the class run.
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		global $wp_customize;
 
@@ -463,7 +463,7 @@ class Customizer extends TestCase {
 
 		$this->assertNotEmpty( $output );
 
-		$this->assertContains( 'web-stories-list--customizer', $output );
+		$this->assertStringContainsString( 'web-stories-list--customizer', $output );
 
 	}
 
