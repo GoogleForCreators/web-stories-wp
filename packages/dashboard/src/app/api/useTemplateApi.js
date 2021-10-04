@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
+import { useCallback, useReducer } from '@web-stories-wp/react';
 import { compareDesc } from '@web-stories-wp/date';
 import getAllTemplates from '@web-stories-wp/templates';
 /**
@@ -79,15 +79,13 @@ const useTemplateApi = () => {
     [state]
   );
 
-  const api = useMemo(
-    () => ({
+  return {
+    templates: state,
+    api: {
       fetchExternalTemplates,
       fetchExternalTemplateById,
-    }),
-    [fetchExternalTemplateById, fetchExternalTemplates]
-  );
-
-  return { templates: state, api };
+    },
+  };
 };
 
 export default useTemplateApi;

@@ -243,26 +243,17 @@ const useStoryApi = () => {
     [initialFetchListeners]
   );
 
-  const api = useMemo(
-    () => ({
+  return {
+    stories: state,
+    api: {
       duplicateStory,
       fetchStories,
       createStoryFromTemplate,
       trashStory,
       updateStory,
       addInitialFetchListener,
-    }),
-    [
-      createStoryFromTemplate,
-      duplicateStory,
-      trashStory,
-      updateStory,
-      fetchStories,
-      addInitialFetchListener,
-    ]
-  );
-
-  return useMemo(() => ({ stories: state, api }), [state, api]);
+    },
+  };
 };
 
 export default useStoryApi;

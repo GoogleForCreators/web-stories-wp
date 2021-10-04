@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, createContext } from '@web-stories-wp/react';
+import { createContext } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -42,42 +42,25 @@ export default function ApiProvider({ children }) {
   const { api: pagesApi } = usePagesApi();
   const { publisherLogos, api: publisherLogosApi } = usePublisherLogosApi();
 
-  const value = useMemo(
-    () => ({
-      state: {
-        media,
-        settings,
-        stories,
-        templates,
-        currentUser,
-        publisherLogos,
-      },
-      actions: {
-        mediaApi,
-        settingsApi,
-        storyApi,
-        templateApi,
-        usersApi,
-        pagesApi,
-        publisherLogosApi,
-      },
-    }),
-    [
+  const value = {
+    state: {
       media,
       settings,
       stories,
       templates,
       currentUser,
+      publisherLogos,
+    },
+    actions: {
       mediaApi,
       settingsApi,
       storyApi,
       templateApi,
       usersApi,
       pagesApi,
-      publisherLogos,
       publisherLogosApi,
-    ]
-  );
+    },
+  };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 }

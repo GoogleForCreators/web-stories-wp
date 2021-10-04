@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
@@ -73,19 +68,14 @@ export default function useUserApi() {
     }
   }, [toggleWebStoriesMediaOptimizationCallback, currentUser, currentUserApi]);
 
-  return useMemo(
-    () => ({
-      api: {
-        toggleWebStoriesTrackingOptIn,
-        toggleWebStoriesMediaOptimization,
-      },
-      currentUser: { data: currentUser, isUpdating },
-    }),
-    [
+  return {
+    api: {
       toggleWebStoriesTrackingOptIn,
       toggleWebStoriesMediaOptimization,
-      currentUser,
+    },
+    currentUser: {
+      data: currentUser,
       isUpdating,
-    ]
-  );
+    },
+  };
 }
