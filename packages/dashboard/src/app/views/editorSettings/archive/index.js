@@ -32,6 +32,7 @@ import {
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -79,6 +80,10 @@ const OPTIONS = [
     value: ARCHIVE_TYPE.CUSTOM,
   },
 ];
+
+const SearchWrapper = styled.div`
+  padding-top: 12px;
+`;
 
 export default function ArchiveSettings({
   archive = ARCHIVE_TYPE.DEFAULT,
@@ -191,9 +196,7 @@ export default function ArchiveSettings({
           </TextInputHelperText>
         )}
         {ARCHIVE_TYPE.CUSTOM === archive && (
-          <TextInputHelperText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
+          <SearchWrapper>
             <Search
               placeholder={__('Select page', 'web-stories')}
               selectedValue={selectedPage}
@@ -202,7 +205,7 @@ export default function ArchiveSettings({
               emptyText={__('No pages available', 'web-stories')}
               onMenuItemClick={onChangeArchivePageId}
             />
-          </TextInputHelperText>
+          </SearchWrapper>
         )}
         {ARCHIVE_TYPE.DISABLED !== archive && (
           <TextInputHelperText

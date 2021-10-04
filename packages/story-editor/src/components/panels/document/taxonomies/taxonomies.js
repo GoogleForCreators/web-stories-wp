@@ -36,7 +36,7 @@ function TaxonomiesPanel(props) {
     taxonomies,
   }));
 
-  if (!taxonomies.length) {
+  if (!taxonomies?.length) {
     return null;
   }
 

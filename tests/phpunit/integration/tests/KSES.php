@@ -421,6 +421,14 @@ class KSES extends TestCase {
 				'<amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#0047FF" cta-image="https://example.com/32x32icon.jpg" cta-accent-element="background"><a href="https://www.google.com">Read More</a></amp-story-page-outlink>',
 				'<amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#0047FF" cta-image="https://example.com/32x32icon.jpg" cta-accent-element="background"><a href="https://www.google.com">Read More</a></amp-story-page-outlink>',
 			],
+			'Video Captions'                   => [
+				'<amp-story-captions id="video-123-captions" layout="fixed-height" height="100" />',
+				'<amp-story-captions id="video-123-captions" layout="fixed-height" height="100" />',
+			],
+			'Video with Captions ID'           => [
+				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo" captions-id="foo-captions"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
+				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo" captions-id="foo-captions"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
+			],
 		];
 	}
 }

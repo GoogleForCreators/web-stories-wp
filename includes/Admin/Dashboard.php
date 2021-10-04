@@ -372,8 +372,6 @@ class Dashboard extends Service_Base {
 			$max_upload_size = 0;
 		}
 
-		$templates_rest_base = $this->get_post_type_rest_base( Template_Post_Type::POST_TYPE_SLUG );
-
 		$settings = [
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
@@ -392,7 +390,6 @@ class Dashboard extends Service_Base {
 					'media'          => '/web-stories/v1/media/',
 					'currentUser'    => '/web-stories/v1/users/me/',
 					'users'          => '/web-stories/v1/users/',
-					'templates'      => sprintf( '/web-stories/v1/%s/', $templates_rest_base ),
 					'settings'       => '/web-stories/v1/settings/',
 					'pages'          => '/wp/v2/pages/',
 					'publisherLogos' => '/web-stories/v1/publisher-logos/',

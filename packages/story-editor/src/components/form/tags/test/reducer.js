@@ -345,4 +345,23 @@ describe('<Tags.Input /> Reducer', () => {
       expect(reducer(oldState, action)).toStrictEqual(expectedState);
     });
   });
+
+  describe('ACTIONS.RESET_VALUE', () => {
+    it('should reset value to empty string', () => {
+      const oldState = {
+        offset: 3,
+        value: 'tag4',
+        tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
+      };
+      const action = { type: ACTIONS.RESET_VALUE };
+      const expectedState = {
+        offset: 3,
+        value: '',
+        tags: ['tag1', 'tag2', 'tag3'],
+        tagBuffer: null,
+      };
+      expect(reducer(oldState, action)).toStrictEqual(expectedState);
+    });
+  });
 });
