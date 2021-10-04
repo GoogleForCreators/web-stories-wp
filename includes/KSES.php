@@ -65,14 +65,6 @@ class KSES extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
-			return;
-		}
-
-		if ( current_user_can( 'unfiltered_html' ) ) {
-			return;
-		}
-
 		add_filter( 'wp_insert_post_data', [ $this, 'filter_insert_post_data' ], 10, 3 );
 	}
 
@@ -105,6 +97,10 @@ class KSES extends Service_Base {
 	 * @return array|mixed Filtered post data.
 	 */
 	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
+		if ( current_user_can( 'unfiltered_html' ) ) {
+			return $data;
+		}
+
 		if (
 			( $this->story_post_type::POST_TYPE_SLUG !== $data['post_type'] ) && !
 			(
@@ -113,6 +109,10 @@ class KSES extends Service_Base {
 				get_post_type( $data['post_parent'] ) === $this->story_post_type::POST_TYPE_SLUG
 			)
 		) {
+			return $data;
+		}
+
+		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return $data;
 		}
 
