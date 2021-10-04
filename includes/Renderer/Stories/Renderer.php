@@ -261,6 +261,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$this->stories = array_filter( array_map( [ $this, 'prepare_stories' ], $this->query->get_stories() ) );
 
 		add_action( 'wp_footer', [ $this, 'render_stories_lightbox' ] );
+		add_action( 'amp_post_template_footer', [ $this, 'render_stories_lightbox' ] );
 	}
 
 	/**
