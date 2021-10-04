@@ -64,6 +64,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
   );
 
   const { undo } = useHistory(({ actions: { undo } }) => ({ undo }));
+  const [searchResults, setSearchResults] = useState([]);
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
@@ -100,16 +101,22 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     [canCreateTerms, terms, taxonomy, termCache, setTerms, createTerm]
   );
 
-  const handleFreeformInputChange = useDebouncedCallback((value) => {
+  const handleFreeformInputChange = useDebouncedCallback(async (value) => {
+    if (value.length === 0) {
+      setSearchResults([]);
+      return;
+    }
+
     if (value.length < 3) {
       return;
     }
-    addSearchResultsToCache(taxonomy, {
+    const results = await addSearchResultsToCache(taxonomy, {
       search: value,
       // This is the per_page value Gutenberg is using
       per_page: 20,
     });
-  }, 1000);
+    setSearchResults(results);
+  }, 300);
 
   const tokens = useMemo(() => {
     return (terms[taxonomy.restBase] || [])
@@ -155,6 +162,8 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
           tagDisplayTransformer={termDisplayTransformer}
           tokens={tokens}
           onUndo={undo}
+          suggestedTerms={searchResults}
+          suggestedTermsLabel={taxonomy?.labels?.items_list}
         />
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separate_items_with_commas}

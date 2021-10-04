@@ -154,7 +154,7 @@ function TaxonomyProvider(props) {
       try {
         response = await getTaxonomyTerm(termsEndpoint, args);
       } catch (e) {
-        // Do we wanna do anything here?
+        // TODO #9033
       }
 
       // Avoid update if we're not actually adding any terms here
@@ -166,6 +166,7 @@ function TaxonomyProvider(props) {
       const termResults = {
         [taxonomy.restBase]: dictionaryOnKey(response, 'slug'),
       };
+
       setTermCache((cache) => mergeNestedDictionaries(cache, termResults));
 
       if (addNameToSelection && args.search) {
