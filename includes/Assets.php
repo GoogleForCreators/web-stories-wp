@@ -156,8 +156,8 @@ class Assets {
 				$dynamic_chunk,
 				$base_script_path . $dynamic_chunk . '.js',
 				[],
-				$entry_version,
-				$in_footer
+				$entry_version, // Not actually used / relevant, since enqueueing is done by webpack.
+				$in_footer // Ditto.
 			);
 
 			wp_add_inline_script( $script_handle, (string) wp_scripts()->print_translations( $dynamic_chunk, false ) );
