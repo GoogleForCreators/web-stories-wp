@@ -35,11 +35,11 @@ export default function usePagesApi(pagesApi) {
   const getPageById = useCallback(
     async (id) => {
       try {
-        const response = await getPageByIdCallback(id, pagesApi);
+        const { title, link } = await getPageByIdCallback(id, pagesApi);
 
         return {
-          title: response.title.rendered,
-          link: response.link,
+          title: title.rendered,
+          link,
         };
       } catch (e) {
         return null;

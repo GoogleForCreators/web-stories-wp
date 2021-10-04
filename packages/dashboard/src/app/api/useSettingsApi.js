@@ -52,17 +52,7 @@ export default function useSettingsApi(globalSettingsApi) {
 
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
-        payload: {
-          googleAnalyticsId: response.web_stories_ga_tracking_id,
-          usingLegacyAnalytics: response.web_stories_using_legacy_analytics,
-          adSensePublisherId: response.web_stories_adsense_publisher_id,
-          adSenseSlotId: response.web_stories_adsense_slot_id,
-          adManagerSlotId: response.web_stories_ad_manager_slot_id,
-          adNetwork: response.web_stories_ad_network,
-          videoCache: response.web_stories_video_cache,
-          archive: response.web_stories_archive,
-          archivePageId: response.web_stories_archive_page_id,
-        },
+        payload: response,
       });
     } catch (err) {
       dispatch({
@@ -75,71 +65,17 @@ export default function useSettingsApi(globalSettingsApi) {
   }, [fetchSettingsCallback, globalSettingsApi]);
 
   const updateSettings = useCallback(
-    async ({
-      googleAnalyticsId,
-      usingLegacyAnalytics,
-      adSensePublisherId,
-      adSenseSlotId,
-      adManagerSlotId,
-      adNetwork,
-      videoCache,
-      archive,
-      archivePageId,
-    }) => {
+    async (queryParams) => {
       dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED });
       try {
-        const query = {};
-        if (googleAnalyticsId !== undefined) {
-          query.web_stories_ga_tracking_id = googleAnalyticsId;
-        }
-
-        if (usingLegacyAnalytics !== undefined) {
-          query.web_stories_using_legacy_analytics = usingLegacyAnalytics;
-        }
-
-        if (adSensePublisherId !== undefined) {
-          query.web_stories_adsense_publisher_id = adSensePublisherId;
-        }
-
-        if (adSenseSlotId !== undefined) {
-          query.web_stories_adsense_slot_id = adSenseSlotId;
-        }
-
-        if (adManagerSlotId !== undefined) {
-          query.web_stories_ad_manager_slot_id = adManagerSlotId;
-        }
-
-        if (adNetwork !== undefined) {
-          query.web_stories_ad_network = adNetwork;
-        }
-
-        if (videoCache !== undefined) {
-          query.web_stories_video_cache = Boolean(videoCache);
-        }
-
-        if (archive !== undefined) {
-          query.web_stories_archive = archive;
-        }
-
-        if (archivePageId !== undefined) {
-          query.web_stories_archive_page_id = archivePageId;
-        }
-
-        const response = await updateSettingsCallback(query, globalSettingsApi);
+        const response = await updateSettingsCallback(
+          queryParams,
+          globalSettingsApi
+        );
 
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
-          payload: {
-            googleAnalyticsId: response.web_stories_ga_tracking_id,
-            usingLegacyAnalytics: response.web_stories_using_legacy_analytics,
-            adSensePublisherId: response.web_stories_adsense_publisher_id,
-            adSenseSlotId: response.web_stories_adsense_slot_id,
-            adManagerSlotId: response.web_stories_ad_manager_slot_id,
-            adNetwork: response.web_stories_ad_network,
-            videoCache: response.web_stories_video_cache,
-            archive: response.web_stories_archive,
-            archivePageId: response.web_stories_archive_page_id,
-          },
+          payload: response,
         });
         dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED, payload: true });
       } catch (err) {
