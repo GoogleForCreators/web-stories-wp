@@ -62,6 +62,9 @@
       "ampproject/amp-wp/includes/bootstrap.php"
     ],
     "patches": {
+      "ampproject/amp-wp": {
+        "Add support for amp-story-captions": "patches/amp-wp-allow-amp-story-captions.patch"
+      },
       "phpunit/phpunit-mock-objects": {
         "Fix PHPUnit for PHP 7.4": "patches/phpunit-mock-objects.patch"
       }
