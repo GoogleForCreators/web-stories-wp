@@ -25,7 +25,54 @@ import {
   withPlugin,
   publishStory,
   getEditedPostContent,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
+
+describe('Contributor User', () => {
+  let stopRequestInterception;
+
+  beforeAll(async () => {
+    await page.setRequestInterception(true);
+    stopRequestInterception = addRequestInterception((request) => {
+      if (request.url().startsWith('https://cdn.ampproject.org/')) {
+        request.respond({
+          status: 200,
+          body: '',
+        });
+      } else {
+        request.continue();
+      }
+    });
+  });
+
+  afterAll(async () => {
+    await page.setRequestInterception(false);
+    stopRequestInterception();
+  });
+
+  // TODO: #6238 add this test into `Publishing Flow` describe block
+  withUser('contributor', 'password');
+  it('should not let me publish a story as a contributor', async () => {
+    await createNewStory();
+
+    await insertStoryTitle('Publishing Flow: Contributor');
+
+    const checklistToggle = await page.$(
+      'button[aria-owns="checklist_companion"]',
+      { text: 'Checklist' }
+    );
+
+    // verify no issues are present
+    await checklistToggle.click();
+
+    await expect(page).toMatchElement('p', {
+      text: 'You are all set for now. Return to this checklist as you build your Web Story for tips on how to improve it.',
+    });
+
+    // verify that publish button is disabled
+    await page.$('button:disabled', { text: 'Publish' });
+  });
+});
 
 // Disable for https://github.com/google/web-stories-wp/issues/6238
 // eslint-disable-next-line jest/no-disabled-tests
