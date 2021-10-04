@@ -110,10 +110,10 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
 
-		add_action( 'add_option_' . Settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
-		add_action( 'update_option_' . Settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
-		add_action( 'add_option_' . Settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
-		add_action( 'update_option_' . Settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
+		add_action( 'add_option_' . $this->settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
+		add_action( 'update_option_' . $this->settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
+		add_action( 'add_option_' . $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
+		add_action( 'update_option_' . $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
 
 		add_filter( 'display_post_states', [ $this, 'filter_display_post_states' ], 10, 2 );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
@@ -235,7 +235,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return void
 	 */
 	protected function register_meta() {
-		$active_publisher_logo_id = absint( $this->settings->get_setting( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0 ) );
+		$active_publisher_logo_id = absint( $this->settings->get_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0 ) );
 
 		register_post_meta(
 			self::POST_TYPE_SLUG,
@@ -378,8 +378,8 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return bool|string Whether the post type should have an archive, or archive slug.
 	 */
 	private function get_has_archive() {
-		$archive_page_option    = $this->settings->get_setting( Settings::SETTING_NAME_ARCHIVE );
-		$custom_archive_page_id = (int) $this->settings->get_setting( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		$archive_page_option    = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 		$has_archive            = true;
 
 		if ( 'disabled' === $archive_page_option ) {
@@ -419,7 +419,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 			return;
 		}
 
-		$custom_archive_page_id = (int) get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$query->set( 'page_id', $custom_archive_page_id );
 		$query->set( 'post_type', 'page' );
@@ -447,7 +447,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 			return $post_states;
 		}
 
-		$custom_archive_page_id = (int) get_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		if ( $post->ID === $custom_archive_page_id ) {
 			$post_states['web_stories_archive_page'] = __( 'Web Stories Archive Page', 'web-stories' );

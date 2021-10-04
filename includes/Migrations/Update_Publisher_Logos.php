@@ -65,13 +65,13 @@ class Update_Publisher_Logos extends Migrate_Base {
 	 */
 	public function migrate() {
 		$publisher_logo_id       = 0;
-		$publisher_logo_settings = (array) $this->settings->get_setting( Settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
+		$publisher_logo_settings = (array) $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
 
 		if ( ! empty( $publisher_logo_settings['active'] ) ) {
 			$publisher_logo_id = $publisher_logo_settings['active'];
 		}
 
-		update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $publisher_logo_id, false );
-		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, array_filter( [ $publisher_logo_id ] ), false );
+		$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $publisher_logo_id );
+		$this->settings->update_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, array_filter( [ $publisher_logo_id ] ) );
 	}
 }

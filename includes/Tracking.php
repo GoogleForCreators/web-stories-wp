@@ -186,7 +186,7 @@ class Tracking extends Service_Base {
 
 		$site_kit_status = $this->site_kit->get_plugin_status();
 		$active_plugins  = $site_kit_status['active'] ? 'google-site-kit' : '';
-		$analytics       = $site_kit_status['analyticsActive'] ? 'google-site-kit' : ! empty( $this->settings->get_setting( Settings::SETTING_NAME_TRACKING_ID ) );
+		$analytics       = $site_kit_status['analyticsActive'] ? 'google-site-kit' : ! empty( $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID ) );
 
 		return [
 			'siteLocale'         => get_locale(),
@@ -196,7 +196,7 @@ class Tracking extends Service_Base {
 			'wpVersion'          => get_bloginfo( 'version' ),
 			'phpVersion'         => PHP_VERSION,
 			'isMultisite'        => (int) is_multisite(),
-			'adNetwork'          => (string) $this->settings->get_setting( Settings::SETTING_NAME_AD_NETWORK, 'none' ),
+			'adNetwork'          => (string) $this->settings->get_setting( $this->settings::SETTING_NAME_AD_NETWORK, 'none' ),
 			'analytics'          => $analytics,
 			'activePlugins'      => $active_plugins,
 		];

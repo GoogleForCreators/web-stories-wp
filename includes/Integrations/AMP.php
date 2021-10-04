@@ -159,7 +159,7 @@ class AMP extends Service_Base {
 			return $sanitizers;
 		}
 
-		$video_cache_enabled = (bool) $this->settings->get_setting( Settings::SETTING_NAME_VIDEO_CACHE );
+		$video_cache_enabled = (bool) $this->settings->get_setting( $this->settings::SETTING_NAME_VIDEO_CACHE );
 
 		$story = new Story();
 		$story->load_from_post( $post );

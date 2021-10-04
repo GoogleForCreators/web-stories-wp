@@ -315,4 +315,17 @@ class Settings extends Service_Base {
 	public function get_setting( $key, $default = false ) {
 		return get_option( $key, $default );
 	}
+
+	/**
+	 * Updates the given setting with a new value.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string $key Setting key.
+	 * @param mixed  $value Setting value.
+	 * @return mixed Setting value.
+	 */
+	public function update_setting( $key, $value ) {
+		return update_option( $key, $value );
+	}
 }

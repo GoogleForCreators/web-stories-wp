@@ -424,7 +424,7 @@ class Sanitization {
 		$post = get_queried_object();
 
 		if ( $post instanceof \WP_Post && Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
-			$video_cache_enabled = (bool) $this->settings->get_setting( Settings::SETTING_NAME_VIDEO_CACHE );
+			$video_cache_enabled = (bool) $this->settings->get_setting( $this->settings::SETTING_NAME_VIDEO_CACHE );
 
 			$story = new Story();
 			$story->load_from_post( $post );

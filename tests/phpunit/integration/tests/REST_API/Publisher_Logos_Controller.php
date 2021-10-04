@@ -90,9 +90,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->controller = new \Google\Web_Stories\REST_API\Publisher_Logos_Controller();
+		$this->controller = new \Google\Web_Stories\REST_API\Publisher_Logos_Controller( new Settings() );
 	}
-
 
 	public function tear_down() {
 		delete_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
@@ -112,7 +111,6 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( '/web-stories/v1/publisher-logos', $routes );
 
 		$route = $routes['/web-stories/v1/publisher-logos'];
-		$this->assertCount( 2, $route );
 		$this->assertArrayHasKey( 'callback', $route[0] );
 		$this->assertArrayHasKey( 'permission_callback', $route[0] );
 		$this->assertArrayHasKey( 'methods', $route[0] );

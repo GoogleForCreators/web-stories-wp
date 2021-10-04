@@ -78,7 +78,7 @@ class Analytics extends Service_Base {
 	 * @return string Tracking ID.
 	 */
 	public function get_tracking_id(): string {
-		return (string) $this->settings->get_setting( Settings::SETTING_NAME_TRACKING_ID );
+		return (string) $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID );
 	}
 
 	/**
@@ -239,7 +239,7 @@ class Analytics extends Service_Base {
 		}
 
 		if (
-			(bool) $this->settings->get_setting( Settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) ||
+			(bool) $this->settings->get_setting( $this->settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) ||
 			! $this->experiments->is_experiment_enabled( 'enableAutoAnalyticsMigration' )
 		) {
 			$this->print_amp_analytics_tag( $tracking_id );
