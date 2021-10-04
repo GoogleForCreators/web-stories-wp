@@ -30,11 +30,6 @@ import { getTimeTracker } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import {
-  STORY_STATUSES,
-  STORY_SORT_OPTIONS,
-  STORIES_PER_REQUEST,
-} from '../../constants';
 import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
@@ -60,15 +55,6 @@ const useStoryApi = (storyApi) => {
 
   const fetchStories = useCallback(
     async (queryParams) => {
-      const {
-        status = STORY_STATUSES[0].value, // @todo Move these to wp-dashboard?
-        sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
-        sortDirection,
-        searchTerm,
-        page = 1,
-        perPage = STORIES_PER_REQUEST,
-      } = queryParams;
-
       dispatch({
         type: STORY_ACTION_TYPES.LOADING_STORIES,
         payload: true,
@@ -87,23 +73,14 @@ const useStoryApi = (storyApi) => {
       const trackTiming = getTimeTracker('load_stories');
 
       try {
-        const response = await fetchStoriesCallback(
-          {
-            status,
-            sortOption,
-            sortDirection,
-            searchTerm,
-            page,
-            perPage,
-          },
+        const { body, headers } = await fetchStoriesCallback(
+          queryParams,
           storyApi
         );
 
-        const totalPages =
-          response.headers && parseInt(response.headers['X-WP-TotalPages']); // @todo Rename from wp-dashboard.
+        const totalPages = headers && parseInt(headers['totalPages']);
         const totalStoriesByStatus =
-          response.headers &&
-          JSON.parse(response.headers['X-WP-TotalByStatus']); // @todo Rename from wp-dashboard.
+          headers && JSON.parse(headers['totalByStatus']);
 
         // Hook into first fetch of story statuses.
         if (isInitialFetch.current) {
@@ -111,9 +88,10 @@ const useStoryApi = (storyApi) => {
             listener(totalStoriesByStatus);
           });
         }
+
         isInitialFetch.current = false;
 
-        const stories = response.body;
+        const stories = body;
 
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
@@ -121,7 +99,7 @@ const useStoryApi = (storyApi) => {
             stories,
             totalPages,
             totalStoriesByStatus,
-            page,
+            page: queryParams.page,
           },
         });
       } catch (err) {

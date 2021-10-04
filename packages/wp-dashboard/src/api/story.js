@@ -17,7 +17,12 @@
  * External dependencies
  */
 import { addQueryArgs } from '@web-stories-wp/design-system';
-import { ORDER_BY_SORT } from '@web-stories-wp/dashboard';
+import {
+  ORDER_BY_SORT,
+  STORIES_PER_REQUEST,
+  STORY_SORT_OPTIONS,
+  STORY_STATUSES,
+} from '@web-stories-wp/dashboard';
 
 /**
  * WordPress dependencies
@@ -30,8 +35,14 @@ import apiFetch from '@wordpress/api-fetch';
 import { STORY_FIELDS } from './constants';
 
 export function fetchStories(queryParams, apiPath) {
-  const { status, sortOption, sortDirection, searchTerm, page, perPage } =
-    queryParams;
+  const {
+    status = STORY_STATUSES[0].value,
+    sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
+    sortDirection,
+    searchTerm,
+    page = 1,
+    perPage = STORIES_PER_REQUEST,
+  } = queryParams;
 
   // Important: Keep in sync with REST API preloading definition.
   const query = {
@@ -49,7 +60,13 @@ export function fetchStories(queryParams, apiPath) {
 
   return apiFetch({
     path: addQueryArgs(apiPath, query),
-  });
+  }).then(({ body, headers }) => ({
+    body,
+    headers: {
+      totalPages: headers['X-WP-TotalPages'],
+      totalByStatus: headers['X-WP-TotalByStatus'],
+    },
+  }));
 }
 
 export function trashStory(storyId, apiPath) {
