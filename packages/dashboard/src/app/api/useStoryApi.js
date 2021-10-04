@@ -76,9 +76,9 @@ const useStoryApi = () => {
           storyApi
         );
 
-        const totalPages = headers && parseInt(headers['totalPages']);
+        const totalPages = headers && parseInt(headers?.totalPages);
         const totalStoriesByStatus =
-          headers && JSON.parse(headers['totalByStatus']);
+          headers && JSON.parse(headers?.totalByStatus);
 
         // Hook into first fetch of story statuses.
         if (isInitialFetch.current) {
