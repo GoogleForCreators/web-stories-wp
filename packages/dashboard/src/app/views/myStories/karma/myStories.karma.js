@@ -291,7 +291,7 @@ describe('Grid view', () => {
       expect(numPublished).toBeGreaterThan(0);
 
       const publishedTabButton = fixture.screen.getByRole('button', {
-        name: new RegExp('^Filter stories by ' + STORY_STATUSES[2].label),
+        name: new RegExp('^Filter stories by ' + STORY_STATUSES[3].label),
       });
 
       expect(publishedTabButton).toBeTruthy();

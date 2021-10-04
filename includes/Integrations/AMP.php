@@ -164,6 +164,14 @@ class AMP extends Service_Base {
 		$story = new Story();
 		$story->load_from_post( $post );
 
+		if ( isset( $sanitizers['AMP_Style_Sanitizer'] ) ) {
+			if ( ! isset( $sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] ) ) {
+				$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] = [];
+			}
+
+			$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'][] = 'amp-story-captions';
+		}
+
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
 			'publisher_logo' => $story->get_publisher_logo_url(),
 			'publisher'      => $story->get_publisher_name(),

@@ -53,6 +53,6 @@ export class CategoriesAndTags extends Container {
   }
 
   get tagsInput() {
-    return this.getByRole('textbox', { name: /Add New Tag/ });
+    return this.getByRole('combobox', { name: /Add New Tag/ });
   }
 }
