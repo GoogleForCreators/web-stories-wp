@@ -47,7 +47,6 @@ namespace PHPSTORM_META {
 			'story_post_type'              => \Google\Web_Stories\Story_Post_Type::class,
 			'story_shortcode'              => \Google\Web_Stories\Shortcode\Stories_Shortcode::class,
 			'svg'                          => \Google\Web_Stories\Media\SVG::class,
-			'template_post_type'           => \Google\Web_Stories\Template_Post_Type::class,
 			'tracking'                     => \Google\Web_Stories\Tracking::class,
 			'tinymce'                      => \Google\Web_Stories\Admin\TinyMCE::class,
 			'register.widget'              => \Google\Web_Stories\Register_Widget::class,

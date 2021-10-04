@@ -459,6 +459,14 @@ class KSES extends TestCase {
 				$blue_rings_svg,
 				$blue_rings_svg,
 			],
+			'Video Captions'                   => [
+				'<amp-story-captions id="video-123-captions" layout="fixed-height" height="100" />',
+				'<amp-story-captions id="video-123-captions" layout="fixed-height" height="100" />',
+			],
+			'Video with Captions ID'           => [
+				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo" captions-id="foo-captions"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
+				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo" captions-id="foo-captions"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
+			],
 		];
 	}
 }

@@ -91,11 +91,6 @@ function useVideoNode() {
     [videoNode, startOffset, maxOffset]
   );
 
-  const resetOffsets = useCallback(() => {
-    rawSetStartOffset(originalStartOffset);
-    rawSetEndOffset(originalEndOffset);
-  }, [originalStartOffset, originalEndOffset]);
-
   const hasChanged = useMemo(
     () =>
       startOffset !== originalStartOffset || endOffset !== originalEndOffset,
@@ -111,7 +106,6 @@ function useVideoNode() {
     setStartOffset,
     setEndOffset,
     setVideoNode,
-    resetOffsets,
   };
 }
 

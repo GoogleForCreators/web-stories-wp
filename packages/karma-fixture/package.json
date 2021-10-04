@@ -11,6 +11,6 @@
         "@web-stories-wp/react": "*"
     },
     "devDependencies": {
-       "@testing-library/react": "^12.1.1"
+       "@testing-library/react": "^12.1.2"
     }
 }

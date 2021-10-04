@@ -53,28 +53,6 @@ describe('Video output', () => {
     box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
   };
 
-  it('should produce valid AMP output', async () => {
-    await expect(<VideoOutput {...baseProps} />).toBeValidAMPStoryElement();
-  });
-
-  it('should produce valid AMP output with track', async () => {
-    const props = {
-      ...baseProps,
-      tracks: [
-        {
-          track: 'https://example.com/track.vtt',
-          trackId: 123,
-          trackName: 'track.vtt',
-          id: 'rersd-fdfd-fdfd-fdfd',
-          srcLang: '',
-          label: '',
-          kind: 'caption',
-        },
-      ],
-    };
-    await expect(<VideoOutput {...props} />).toBeValidAMPStoryElement();
-  });
-
   it('an undefined alt tag in the element should fall back to the resource', async () => {
     const props = {
       ...baseProps,
@@ -134,5 +112,63 @@ describe('Video output', () => {
     await expect(output).not.toBeValidAMPStoryElement();
     const outputStr = renderToStaticMarkup(output);
     await expect(outputStr).not.toStrictEqual(expect.stringMatching('blob:'));
+  });
+
+  it('should add captions-id attribute if there are tracks', async () => {
+    const props = {
+      ...baseProps,
+      element: {
+        ...baseProps.element,
+        tracks: [
+          {
+            track: 'https://example.com/track.vtt',
+            trackId: 123,
+            trackName: 'track.vtt',
+            id: 'rersd-fdfd-fdfd-fdfd',
+            srcLang: '',
+            label: '',
+            kind: 'captions',
+          },
+        ],
+      },
+      args: {
+        enableBetterCaptions: true,
+      },
+    };
+
+    const output = <VideoOutput {...props} />;
+    const outputStr = renderToStaticMarkup(output);
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching('captions-id="el-123-captions"')
+    );
+  });
+
+  describe('AMP validation', () => {
+    it('should produce valid AMP output', async () => {
+      await expect(<VideoOutput {...baseProps} />).toBeValidAMPStoryElement();
+    });
+
+    // Disable reason: amp-story-captions is not stable yet.
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should produce valid AMP output with track', async () => {
+      const props = {
+        ...baseProps,
+        element: {
+          ...baseProps.element,
+          tracks: [
+            {
+              track: 'https://example.com/track.vtt',
+              trackId: 123,
+              trackName: 'track.vtt',
+              id: 'rersd-fdfd-fdfd-fdfd',
+              srcLang: '',
+              label: '',
+              kind: 'captions',
+            },
+          ],
+        },
+      };
+      await expect(<VideoOutput {...props} />).toBeValidAMPStoryElement();
+    });
   });
 });

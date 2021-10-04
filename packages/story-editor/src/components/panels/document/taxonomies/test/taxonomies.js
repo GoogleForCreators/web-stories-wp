@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { screen } from '@testing-library/react';
+import { screen, act } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -44,18 +44,24 @@ function arrange({ taxonomies, isCapable }) {
     },
     actions: {
       createTerm: jest.fn(),
-      addSearchResultsToCache: jest.fn(),
+      addSearchResultsToCache: jest.fn(() => new Promise((res) => res([]))),
       setSelectedTaxonomySlugs: jest.fn(),
     },
   };
 
-  return renderWithTheme(
-    <StoryContext.Provider value={storyContextValue}>
-      <TaxonomyContext.Provider value={taxonomyContextValue}>
-        <TaxonomiesPanel />
-      </TaxonomyContext.Provider>
-    </StoryContext.Provider>
-  );
+  let view;
+
+  act(() => {
+    view = renderWithTheme(
+      <StoryContext.Provider value={storyContextValue}>
+        <TaxonomyContext.Provider value={taxonomyContextValue}>
+          <TaxonomiesPanel />
+        </TaxonomyContext.Provider>
+      </StoryContext.Provider>
+    );
+  });
+
+  return view;
 }
 
 describe('TaxonomiesPanel', () => {
@@ -92,7 +98,7 @@ describe('TaxonomiesPanel', () => {
           slug: 'web_story_category',
           restBase: 'web_story_category',
           name: 'Categories',
-          labels: {},
+          labels: { not_found: '' },
           hierarchical: false,
         },
       ],
@@ -104,7 +110,7 @@ describe('TaxonomiesPanel', () => {
     expect(element).not.toBeInTheDocument();
   });
 
-  it('should render Taxonomies Panel', () => {
+  it('should render Taxonomies Panel', async () => {
     arrange({
       taxonomies: [
         {
@@ -124,6 +130,7 @@ describe('TaxonomiesPanel', () => {
           labels: {
             search_items: 'Story Categories',
             add_new_item: 'Add New',
+            not_found: '',
           },
           hierarchical: true,
           visibility: {
@@ -133,7 +140,9 @@ describe('TaxonomiesPanel', () => {
       ],
       isCapable: true,
     });
-    const element = screen.getByRole('button', { name: 'Categories and Tags' });
+    const element = await screen.findByRole('button', {
+      name: 'Categories and Tags',
+    });
     expect(element).toBeInTheDocument();
   });
 });

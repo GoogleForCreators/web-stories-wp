@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { ELEMENT_TYPES } from '../../../story';
+import { ELEMENT_TYPES } from '../../../../elements';
 import { RESET_PROPERTIES, RESET_DEFAULTS } from '../constants';
 
 function isBorderRadiusDefault(element) {

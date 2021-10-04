@@ -22,6 +22,7 @@ import {
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { canTranscodeResource } from '@web-stories-wp/media';
 import PropTypes from 'prop-types';
 import {
   useCallback,
@@ -38,18 +39,18 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { useStory } from '..';
-import { createPage, duplicatePage } from '../../elements';
+import { createPage, duplicatePage, ELEMENT_TYPES } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
 import useAddPreset from '../../components/panels/design/preset/useAddPreset';
 import useApplyStyle from '../../components/panels/design/preset/stylePreset/useApplyStyle';
 import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import { useCanvas } from '../canvas';
-import { ELEMENT_TYPES } from '../story';
 import { getTextPresets } from '../../components/panels/design/preset/utils';
 import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import { useHistory } from '../history';
 import useDeletePreset from '../../components/panels/design/preset/useDeletePreset';
 import { noop } from '../../utils/noop';
+import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUTS,
@@ -141,6 +142,13 @@ function RightClickMenuProvider({ children }) {
       selectedElements,
       setBackgroundElement,
       updateElementsById,
+    })
+  );
+
+  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
+    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
+      hasTrimMode,
+      toggleTrimMode,
     })
   );
 
@@ -781,20 +789,37 @@ function RightClickMenuProvider({ children }) {
 
   const pageItems = useMemo(() => {
     const disableBackgroundMediaActions = selectedElement?.isDefaultBackground;
+    const isVideo = selectedElement?.type === 'video';
+    const detachLabel = isVideo
+      ? RIGHT_CLICK_MENU_LABELS.DETACH_VIDEO_FROM_BACKGROUND
+      : RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND;
+    const scaleLabel = isVideo
+      ? RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_VIDEO
+      : RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE;
 
     return [
       {
-        label: RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
+        label: detachLabel,
         onClick: handleRemoveMediaFromBackground,
         disabled: disableBackgroundMediaActions,
         ...menuItemProps,
       },
       {
-        label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
+        label: scaleLabel,
         onClick: handleOpenScaleAndCrop,
         disabled: disableBackgroundMediaActions,
         ...menuItemProps,
       },
+      ...(isVideo && hasTrimMode
+        ? [
+            {
+              label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
+              onClick: toggleTrimMode,
+              disabled: !canTranscodeResource(selectedElement?.resource),
+              ...menuItemProps,
+            },
+          ]
+        : []),
       {
         label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         onClick: handleClearElementStyles,
@@ -808,9 +833,11 @@ function RightClickMenuProvider({ children }) {
     handleClearElementStyles,
     handleOpenScaleAndCrop,
     handleRemoveMediaFromBackground,
+    hasTrimMode,
     menuItemProps,
     pageManipulationItems,
-    selectedElement?.isDefaultBackground,
+    selectedElement,
+    toggleTrimMode,
   ]);
 
   const textItems = useMemo(
@@ -853,8 +880,22 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
-  const foregroundMediaItems = useMemo(
-    () => [
+  const foregroundMediaItems = useMemo(() => {
+    const isVideo = selectedElement?.type === 'video';
+    const scaleLabel = isVideo
+      ? RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_VIDEO
+      : RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE;
+    const copyLabel = isVideo
+      ? RIGHT_CLICK_MENU_LABELS.COPY_VIDEO_STYLES
+      : RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES;
+    const pasteLabel = isVideo
+      ? RIGHT_CLICK_MENU_LABELS.PASTE_VIDEO_STYLES
+      : RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES;
+    const clearLabel = isVideo
+      ? RIGHT_CLICK_MENU_LABELS.CLEAR_VIDEO_STYLES
+      : RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES;
+
+    return [
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
@@ -863,42 +904,53 @@ function RightClickMenuProvider({ children }) {
         ...menuItemProps,
       },
       {
-        label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
+        label: scaleLabel,
         onClick: handleOpenScaleAndCrop,
         ...menuItemProps,
       },
+      ...(isVideo && hasTrimMode
+        ? [
+            {
+              label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
+              onClick: toggleTrimMode,
+              disabled: !canTranscodeResource(selectedElement?.resource),
+              ...menuItemProps,
+            },
+          ]
+        : []),
       {
-        label: RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
+        label: copyLabel,
         separator: 'top',
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
         onClick: handleCopyStyles,
         ...menuItemProps,
       },
       {
-        label: RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
+        label: pasteLabel,
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         onClick: handlePasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
       },
       {
-        label: RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES,
+        label: clearLabel,
         onClick: handleClearElementStyles,
         ...menuItemProps,
       },
-    ],
-    [
-      copiedElement,
-      handleClearElementStyles,
-      handleCopyStyles,
-      handleOpenScaleAndCrop,
-      handlePasteStyles,
-      handleSetPageBackground,
-      layerItems,
-      menuItemProps,
-      selectedElement,
-    ]
-  );
+    ];
+  }, [
+    copiedElement,
+    handleClearElementStyles,
+    handleCopyStyles,
+    handleOpenScaleAndCrop,
+    handlePasteStyles,
+    handleSetPageBackground,
+    hasTrimMode,
+    layerItems,
+    menuItemProps,
+    selectedElement,
+    toggleTrimMode,
+  ]);
 
   const shapeItems = useMemo(
     () => [
