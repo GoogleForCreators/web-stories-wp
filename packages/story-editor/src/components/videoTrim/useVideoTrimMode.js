@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import { useCallback, useMemo } from '@web-stories-wp/react';
 
 /**
@@ -27,7 +26,6 @@ import { useCanvas, useStory } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
 function useVideoTrimMode() {
-  const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const { isEditing, isTrimMode, setEditingElementWithState, clearEditing } =
     useCanvas(
       ({
@@ -63,8 +61,8 @@ function useVideoTrimMode() {
       return false;
     }
     const { local, isExternal } = selectedElement.resource || {};
-    return isVideoTrimEnabled && isTranscodingEnabled && !isExternal && !local;
-  }, [selectedElement, isVideoTrimEnabled, isTranscodingEnabled]);
+    return isTranscodingEnabled && !isExternal && !local;
+  }, [selectedElement, isTranscodingEnabled]);
 
   return {
     isTrimMode: isEditing && isTrimMode,

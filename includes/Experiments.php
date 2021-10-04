@@ -345,18 +345,6 @@ class Experiments extends Service_Base {
 
 			/**
 			 * Author: @barklund
-			 * Issue: #8877
-			 * Creation date: 2021-09-01
-			 */
-			[
-				'name'        => 'enableVideoTrim',
-				'label'       => __( 'Video trimming', 'web-stories' ),
-				'description' => __( 'Enable video trimming', 'web-stories' ),
-				'group'       => 'editor',
-			],
-
-			/**
-			 * Author: @barklund
 			 * Issue: #8973
 			 * Creation date: 2021-09-07
 			 */
