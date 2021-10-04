@@ -40,7 +40,11 @@ expect.extend({
 /**
  * Environment variables
  */
-const { PUPPETEER_TIMEOUT, EXPECT_PUPPETEER_TIMEOUT } = process.env;
+const {
+  PUPPETEER_TIMEOUT,
+  EXPECT_PUPPETEER_TIMEOUT,
+  PUPPETEER_PRODUCT = 'chrome',
+} = process.env;
 
 /**
  * Set of console logging types observed to protect against unexpected yet
@@ -56,32 +60,11 @@ const OBSERVED_CONSOLE_MESSAGE_TYPES = {
 };
 
 /**
- * A list of "allowed" error message - or actually error message substrings.
- *
- * The list comes prepopulated with known messages,
- * but can be appended to by tests where relevant.
+ * A list of "allowed" error messages in Firefox.
  *
  * @type {Array<string>}
  */
-const ALLOWED_ERROR_MESSAGES = [
-  // As of WordPress 5.3.2 in Chrome 79, navigating to the block editor
-  // (Posts > Add New) will display a console warning about
-  // non - unique IDs.
-  // See: https://core.trac.wordpress.org/ticket/23165
-  'elements with non-unique id #_wpnonce',
-
-  // Ignore warning about isSecondary prop on button component as used by AMP plugin.
-  // The prop is only supported in newer versions of Gutenberg, and as such will trigger
-  // warnings on older WordPress versions (but not on newer ones).
-  'isSecondary',
-
-  // styled-components warns about dynamically created components.
-  // @todo Fix issues.
-  ' has been created dynamically.',
-
-  // WordPress still bundles jQuery Migrate, which logs to the console.
-  'JQMIGRATE',
-
+const ALLOWED_ERROR_MESSAGES_FIREFOX = [
   // Firefox warns about this issue in WordPress admin.
   'This page uses the non standard property “zoom”',
 
@@ -151,6 +134,45 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Firefox warning about scroll-linked effects, see https://firefox-source-docs.mozilla.org/performance/scroll-linked_effects.html.
   'This site appears to use a scroll-linked positioning effect. This may not work well with asynchronous panning',
+];
+
+/**
+ * A list of "allowed" error messages in Chrome.
+ *
+ * @type {Array<string>}
+ */
+const ALLOWED_ERROR_MESSAGES_CHROME = [
+  // As of WordPress 5.3.2 in Chrome 79, navigating to the block editor
+  // (Posts > Add New) will display a console warning about
+  // non - unique IDs.
+  // See: https://core.trac.wordpress.org/ticket/23165
+  'elements with non-unique id #_wpnonce',
+];
+
+/**
+ * A list of "allowed" error messages.
+ *
+ * The list comes pre-populated with known messages,
+ * but can be appended to by tests where relevant.
+ *
+ * @type {Array<string>}
+ */
+const ALLOWED_ERROR_MESSAGES = [
+  // Ignore warning about isSecondary prop on button component as used by AMP plugin.
+  // The prop is only supported in newer versions of Gutenberg, and as such will trigger
+  // warnings on older WordPress versions (but not on newer ones).
+  'isSecondary',
+
+  // styled-components warns about dynamically created components.
+  // @todo Fix issues.
+  ' has been created dynamically.',
+
+  // WordPress still bundles jQuery Migrate, which logs to the console.
+  'JQMIGRATE',
+
+  ...('chrome' === PUPPETEER_PRODUCT
+    ? ALLOWED_ERROR_MESSAGES_CHROME
+    : ALLOWED_ERROR_MESSAGES_FIREFOX),
 ];
 
 export function addAllowedErrorMessage(message) {
