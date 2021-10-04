@@ -123,7 +123,7 @@ class Assets {
 		$base_script_path = $this->get_base_url( 'assets/js/' );
 		$in_footer        = true;
 
-		$asset = $this->get_asset_metadata( $script_handle );
+		$asset         = $this->get_asset_metadata( $script_handle );
 		$entry_version = $asset['version'];
 		// Register any chunks of $script_handle first.
 		// `$asset['js']` are preloaded chunks, `$asset['chunks']` dynamically imported ones.
