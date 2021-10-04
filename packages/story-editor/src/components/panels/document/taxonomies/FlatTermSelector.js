@@ -22,7 +22,9 @@ import {
   useDebouncedCallback,
   useMemo,
   useState,
+  useEffect,
 } from '@web-stories-wp/react';
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -31,25 +33,33 @@ import Tags, { deepEquals } from '../../../form/tags';
 import cleanForSlug from '../../../../utils/cleanForSlug';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { useHistory } from '../../../../app';
-import { ContentHeading, TaxonomyPropType } from './shared';
+import { ContentHeading, TaxonomyPropType, WordCloud } from './shared';
 
 function FlatTermSelector({ taxonomy, canCreateTerms }) {
+  const [mostUsed, setMostUsed] = useState([]);
   const {
     createTerm,
     termCache,
     addSearchResultsToCache,
     terms = [],
     setTerms,
+    addTermToSelection,
   } = useTaxonomy(
     ({
       state: { termCache, terms },
-      actions: { createTerm, addSearchResultsToCache, setTerms },
+      actions: {
+        createTerm,
+        addSearchResultsToCache,
+        setTerms,
+        addTermToSelection,
+      },
     }) => ({
       termCache,
       createTerm,
       addSearchResultsToCache,
       terms,
       setTerms,
+      addTermToSelection,
     })
   );
 
@@ -125,6 +135,17 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
     [taxonomy, termCache]
   );
 
+  useEffect(() => {
+    (async function () {
+      const results = await addSearchResultsToCache(taxonomy, {
+        orderby: 'count',
+        order: 'desc',
+        hide_empty: true,
+      });
+      setMostUsed(results);
+    })();
+  }, [taxonomy, addSearchResultsToCache]);
+
   return (
     <>
       <ContentHeading>{taxonomy.labels.name}</ContentHeading>
@@ -147,6 +168,37 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separate_items_with_commas}
         </Tags.Description>
+        {mostUsed.length > 0 && (
+          <WordCloud.Wrapper data-testid={`${taxonomy.slug}-most-used`}>
+            <WordCloud.Heading>
+              {__('Most Used', 'web-stories')}
+            </WordCloud.Heading>
+            <WordCloud.List>
+              {mostUsed.map((term, i) => (
+                <WordCloud.ListItem key={term.id}>
+                  <WordCloud.Word
+                    onClick={() => {
+                      if (terms[taxonomy.restBase]?.includes(term.id)) {
+                        return;
+                      }
+                      addTermToSelection(taxonomy, term);
+                    }}
+                  >
+                    {term.name}
+
+                    {i < mostUsed.length - 1 &&
+                      /* translators: delimiter used in a list */
+                      __(',', 'web-stories')}
+                  </WordCloud.Word>
+                  {
+                    /* Browser only respects the white space in the li, not the button */
+                    i < mostUsed.length - 1 && ' '
+                  }
+                </WordCloud.ListItem>
+              ))}
+            </WordCloud.List>
+          </WordCloud.Wrapper>
+        )}
       </div>
     </>
   );

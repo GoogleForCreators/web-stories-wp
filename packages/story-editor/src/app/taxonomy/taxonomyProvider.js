@@ -149,7 +149,7 @@ function TaxonomyProvider(props) {
       let response = [];
       const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href;
       if (!termsEndpoint) {
-        return;
+        return [];
       }
       try {
         response = await getTaxonomyTerm(termsEndpoint, args);
@@ -159,7 +159,6 @@ function TaxonomyProvider(props) {
 
       // Avoid update if we're not actually adding any terms here
       if (response.length < 1) {
-        // eslint-disable-next-line consistent-return
         return response;
       }
 
@@ -181,7 +180,6 @@ function TaxonomyProvider(props) {
         }
       }
 
-      // eslint-disable-next-line consistent-return
       return response;
     },
     [getTaxonomyTerm, addTermToSelection]
@@ -247,7 +245,7 @@ function TaxonomyProvider(props) {
         (taxonomy) => taxonomy.hierarchical
       );
       hierarchicalTaxonomies.forEach((taxonomy) =>
-        addSearchResultsToCache(taxonomy, { perPage: -1 })
+        addSearchResultsToCache(taxonomy, { per_page: -1 })
       );
 
       setShouldRefetchCategories(false);
@@ -274,8 +272,8 @@ function TaxonomyProvider(props) {
       taxonomies,
       createTerm,
       addSearchResultsToCache,
-      addTermToSelection,
       setTerms,
+      addTermToSelection,
     ]
   );
 
