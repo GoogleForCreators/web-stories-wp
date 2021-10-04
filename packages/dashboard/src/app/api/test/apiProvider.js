@@ -30,9 +30,8 @@ jest.mock('../wpAdapter', () => ({
   get: () =>
     Promise.resolve({
       headers: {
-        'X-WP-Total': 1,
-        'X-WP-TotalPages': 1,
-        'X-WP-TotalByStatus': '{"all":1,"publish":1,"draft":0}',
+        totalPages: 1,
+        totalByStatus: '{"all":1,"publish":1,"draft":0}',
       },
       body: [
         {
@@ -102,11 +101,102 @@ jest.mock('../wpAdapter', () => ({
   },
 }));
 
+const fetchStories = () => {
+  return Promise.resolve({
+    headers: {
+      totalPages: 1,
+      totalByStatus: '{"all":1,"publish":1,"draft":0}',
+    },
+    body: [
+      {
+        id: 123,
+        status: 'publish',
+        author: 1,
+        link: 'https://www.story-link.com',
+        preview_link: 'https://www.story-link.com/?preview=true',
+        edit_link: 'https://www.story-link.com/wp-admin/post.php?id=123',
+        title: { raw: 'Carlos', rendered: 'Carlos' },
+        modified: '1970-01-01T00:00:00.000',
+        modified_gmt: '1970-01-01T00:00:00.000',
+        date: '1970-01-01T00:00:00.000',
+        date_gmt: '1970-01-01T00:00:00.000',
+        _embedded: {
+          author: [{ id: 1, name: 'admin' }],
+          'wp:featuredmedia': [
+            { id: 0, source_url: 'https://www.featured-media-123' },
+          ],
+        },
+      },
+    ],
+  });
+};
+
+const getUser = function () {
+  return Promise.resolve({
+    id: 1,
+    name: 'dev',
+    url: 'http://localhost:10003',
+    description: '',
+    link: 'http://localhost:10003/author/dev/',
+    slug: 'dev',
+    avatar_urls: {},
+    meta: {
+      web_stories_tracking_optin: false,
+      web_stories_media_optimization: true,
+      web_stories_onboarding: {
+        safeZone: true,
+      },
+    },
+  });
+};
+
+const updateStory = (story) => {
+  let title = '';
+  let id = story.id || 456;
+  if (story?.original_id) {
+    id = 456;
+    title = 'Carlos (Copy)';
+  } else {
+    title = typeof story.title === 'string' ? story.title : story.title.raw;
+  }
+
+  return Promise.resolve({
+    id,
+    status: 'publish',
+    title: { raw: title, rendered: title },
+    author: 1,
+    modified: '1970-01-01T00:00:00.000',
+    modified_gmt: '1970-01-01T00:00:00.000',
+    date: '1970-01-01T00:00:00.000',
+    date_gmt: '1970-01-01T00:00:00.000',
+    link: 'https://www.story-link.com',
+    preview_link: 'https://www.story-link.com/?preview=true',
+    edit_link: 'https://www.story-link.com/wp-admin/post.php?id=' + id,
+    _embedded: {
+      author: [{ id: 1, name: 'admin' }],
+      'wp:featuredmedia': [
+        { id: 0, source_url: `https://www.featured-media-${id}` },
+      ],
+    },
+  });
+};
+
+const duplicateStory = (story) => {
+  story.id = story.originalStoryData.id;
+
+  return updateStory(story);
+};
+
 describe('ApiProvider', () => {
   it('should return a story in state data when the API request is fired', async () => {
     const { result } = renderHook(() => useApi(), {
       wrapper: (props) => (
-        <ConfigProvider config={{ api: { stories: 'stories' } }}>
+        <ConfigProvider
+          config={{
+            api: { stories: 'stories' },
+            apiCallbacks: { fetchStories, getUser },
+          }}
+        >
           <ApiProvider {...props} />
         </ConfigProvider>
       ),
@@ -171,7 +261,12 @@ describe('ApiProvider', () => {
   it('should return an updated story in state data when the API request is fired', async () => {
     const { result } = renderHook(() => useApi(), {
       wrapper: (props) => (
-        <ConfigProvider config={{ api: { stories: 'stories' } }}>
+        <ConfigProvider
+          config={{
+            api: { stories: 'stories' },
+            apiCallbacks: { fetchStories, getUser, updateStory },
+          }}
+        >
           <ApiProvider {...props} />
         </ConfigProvider>
       ),
@@ -251,7 +346,12 @@ describe('ApiProvider', () => {
   it('should return a duplicated story in state data when the duplicate method is called.', async () => {
     const { result } = renderHook(() => useApi(), {
       wrapper: (props) => (
-        <ConfigProvider config={{ api: { stories: 'stories' } }}>
+        <ConfigProvider
+          config={{
+            api: { stories: 'stories' },
+            apiCallbacks: { fetchStories, getUser, duplicateStory },
+          }}
+        >
           <ApiProvider {...props} />
         </ConfigProvider>
       ),
