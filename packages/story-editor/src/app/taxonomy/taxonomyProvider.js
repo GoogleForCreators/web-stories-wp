@@ -145,32 +145,21 @@ function TaxonomyProvider(props) {
   );
 
   const addSearchResultsToCache = useCallback(
-    async (
-      taxonomy,
-      {
-        name,
-        // This is the per_page value Gutenberg is using
-        perPage = 20,
-      },
-      addNameToSelection = false
-    ) => {
+    async (taxonomy, args, addNameToSelection = false) => {
       let response = [];
       const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href;
       if (!termsEndpoint) {
-        return;
+        return [];
       }
       try {
-        response = await getTaxonomyTerm(termsEndpoint, {
-          search: name,
-          per_page: perPage,
-        });
+        response = await getTaxonomyTerm(termsEndpoint, args);
       } catch (e) {
         // Do we wanna do anything here?
       }
 
       // Avoid update if we're not actually adding any terms here
       if (response.length < 1) {
-        return;
+        return response;
       }
 
       // Format results to fit in our { [taxonomy]: { [slug]: term } } map
@@ -179,8 +168,8 @@ function TaxonomyProvider(props) {
       };
       setTermCache((cache) => mergeNestedDictionaries(cache, termResults));
 
-      if (addNameToSelection) {
-        const selectedTermSlug = cleanForSlug(name);
+      if (addNameToSelection && args.search) {
+        const selectedTermSlug = cleanForSlug(args.search);
         const selectedTerm = response.find(
           (term) => term.slug === selectedTermSlug
         );
@@ -189,6 +178,8 @@ function TaxonomyProvider(props) {
           addTermToSelection(taxonomy, selectedTerm);
         }
       }
+
+      return response;
     },
     [getTaxonomyTerm, addTermToSelection]
   );
@@ -234,7 +225,11 @@ function TaxonomyProvider(props) {
         // We could pull down only the exact term, but
         // we're modeling after Gutenberg.
         if (e.code === 'term_exists') {
-          addSearchResultsToCache(taxonomy, { name: termName }, addToSelection);
+          addSearchResultsToCache(
+            taxonomy,
+            { search: termName },
+            addToSelection
+          );
         }
       }
     },
@@ -249,7 +244,7 @@ function TaxonomyProvider(props) {
         (taxonomy) => taxonomy.hierarchical
       );
       hierarchicalTaxonomies.forEach((taxonomy) =>
-        addSearchResultsToCache(taxonomy, { perPage: -1 })
+        addSearchResultsToCache(taxonomy, { per_page: -1 })
       );
 
       setShouldRefetchCategories(false);
@@ -267,6 +262,7 @@ function TaxonomyProvider(props) {
         createTerm,
         addSearchResultsToCache,
         setTerms,
+        addTermToSelection,
       },
     }),
     [
@@ -276,6 +272,7 @@ function TaxonomyProvider(props) {
       createTerm,
       addSearchResultsToCache,
       setTerms,
+      addTermToSelection,
     ]
   );
 

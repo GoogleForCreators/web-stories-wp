@@ -175,7 +175,8 @@ describe('TaxonomyProvider', () => {
 
     act(() => {
       result.current.actions.addSearchResultsToCache(sampleTaxonomy, {
-        name: 'term',
+        per_page: 20,
+        search: 'term',
       });
     });
 
