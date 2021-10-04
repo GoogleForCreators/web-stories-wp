@@ -24,12 +24,13 @@ import { useCallback } from '@web-stories-wp/react';
  */
 import { useConfig } from '../config';
 
-export default function usePagesApi(pagesApi) {
+export default function usePagesApi() {
   const {
     apiCallbacks: {
       getPageById: getPageByIdCallback,
       searchPages: searchPagesCallback,
     },
+    api: { pages: pagesApi },
   } = useConfig();
 
   const getPageById = useCallback(

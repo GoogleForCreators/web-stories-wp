@@ -29,7 +29,7 @@ import publisherLogosReducer, {
 import { ERRORS } from '../textContent';
 import { useConfig } from '../config';
 
-export default function usePublisherLogosApi(globalPublisherLogosApi) {
+export default function usePublisherLogosApi() {
   const [state, dispatch] = useReducer(
     publisherLogosReducer,
     defaultPublisherLogosState
@@ -41,6 +41,7 @@ export default function usePublisherLogosApi(globalPublisherLogosApi) {
       removePublisherLogo: removePublisherLogoCallback,
       setPublisherLogoAsDefault: setPublisherLogoAsDefaultCallback,
     },
+    api: { publisherLogos: publisherLogosApi },
   } = useConfig();
 
   const fetchPublisherLogos = useCallback(async () => {
@@ -49,9 +50,7 @@ export default function usePublisherLogosApi(globalPublisherLogosApi) {
     });
 
     try {
-      const response = await fetchPublisherLogosCallback(
-        globalPublisherLogosApi
-      );
+      const response = await fetchPublisherLogosCallback(publisherLogosApi);
 
       if (!Array.isArray(response)) {
         dispatch({
@@ -76,7 +75,7 @@ export default function usePublisherLogosApi(globalPublisherLogosApi) {
         },
       });
     }
-  }, [fetchPublisherLogosCallback, globalPublisherLogosApi]);
+  }, [fetchPublisherLogosCallback, publisherLogosApi]);
 
   const removePublisherLogo = useCallback(
     async (publisherLogoId) => {
@@ -85,10 +84,7 @@ export default function usePublisherLogosApi(globalPublisherLogosApi) {
       });
 
       try {
-        await removePublisherLogoCallback(
-          publisherLogoId,
-          globalPublisherLogosApi
-        );
+        await removePublisherLogoCallback(publisherLogoId, publisherLogosApi);
 
         dispatch({
           type: ACTION_TYPES.REMOVE_SUCCESS,
@@ -105,7 +101,7 @@ export default function usePublisherLogosApi(globalPublisherLogosApi) {
         });
       }
     },
-    [removePublisherLogoCallback, globalPublisherLogosApi]
+    [removePublisherLogoCallback, publisherLogosApi]
   );
 
   const addPublisherLogo = useCallback(
@@ -117,7 +113,7 @@ export default function usePublisherLogosApi(globalPublisherLogosApi) {
       try {
         const response = await addPublisherLogoCallback(
           publisherLogoId,
-          globalPublisherLogosApi
+          publisherLogosApi
         );
 
         dispatch({
@@ -135,7 +131,7 @@ export default function usePublisherLogosApi(globalPublisherLogosApi) {
         });
       }
     },
-    [addPublisherLogoCallback, globalPublisherLogosApi]
+    [addPublisherLogoCallback, publisherLogosApi]
   );
 
   const setPublisherLogoAsDefault = useCallback(
@@ -147,7 +143,7 @@ export default function usePublisherLogosApi(globalPublisherLogosApi) {
       try {
         const response = await setPublisherLogoAsDefaultCallback(
           publisherLogoId,
-          globalPublisherLogosApi
+          publisherLogosApi
         );
 
         dispatch({
@@ -165,7 +161,7 @@ export default function usePublisherLogosApi(globalPublisherLogosApi) {
         });
       }
     },
-    [setPublisherLogoAsDefaultCallback, globalPublisherLogosApi]
+    [setPublisherLogoAsDefaultCallback, publisherLogosApi]
   );
 
   return {

@@ -28,9 +28,11 @@ import templateReducer, {
   ACTION_TYPES as TEMPLATE_ACTION_TYPES,
 } from '../reducer/templates';
 import { reshapeTemplateObject } from '../serializers';
+import { useConfig } from '../config';
 
-const useTemplateApi = (cdnURL) => {
+const useTemplateApi = () => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
+  const { cdnURL } = useConfig();
 
   const fetchExternalTemplates = useCallback(async () => {
     dispatch({

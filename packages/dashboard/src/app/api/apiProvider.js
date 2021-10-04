@@ -23,7 +23,6 @@ import { useMemo, createContext } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../config';
 import useMediaApi from './useMediaApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
@@ -35,17 +34,13 @@ import usePublisherLogosApi from './usePublisherLogosApi';
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
-  const { api, cdnURL } = useConfig();
-
-  const { currentUser, api: usersApi } = useUsersApi(api.currentUser);
-  const { templates, api: templateApi } = useTemplateApi(cdnURL);
-  const { stories, api: storyApi } = useStoryApi(api.stories);
-  const { media, api: mediaApi } = useMediaApi(api.media);
-  const { settings, api: settingsApi } = useSettingsApi(api.settings);
-  const { api: pagesApi } = usePagesApi(api.pages);
-  const { publisherLogos, api: publisherLogosApi } = usePublisherLogosApi(
-    api.publisherLogos
-  );
+  const { currentUser, api: usersApi } = useUsersApi();
+  const { templates, api: templateApi } = useTemplateApi();
+  const { stories, api: storyApi } = useStoryApi();
+  const { media, api: mediaApi } = useMediaApi();
+  const { settings, api: settingsApi } = useSettingsApi();
+  const { api: pagesApi } = usePagesApi();
+  const { publisherLogos, api: publisherLogosApi } = usePublisherLogosApi();
 
   const value = useMemo(
     () => ({

@@ -29,10 +29,11 @@ import mediaReducer, {
 import { ERRORS } from '../textContent';
 import { useConfig } from '../config';
 
-export default function useMediaApi(globalMediaApi) {
+export default function useMediaApi() {
   const [state, dispatch] = useReducer(mediaReducer, defaultMediaState);
   const {
     apiCallbacks: { uploadMedia: uploadMediaCallback },
+    api: { media: mediaApi },
   } = useConfig();
 
   const uploadMedia = useCallback(
@@ -43,7 +44,7 @@ export default function useMediaApi(globalMediaApi) {
 
       try {
         // each file needs to be uploaded separately
-        const mediaResponse = await uploadMediaCallback(files, globalMediaApi);
+        const mediaResponse = await uploadMediaCallback(files, mediaApi);
 
         dispatch({
           type: MEDIA_ACTION_TYPES.ADD_MEDIA_SUCCESS,
@@ -64,7 +65,7 @@ export default function useMediaApi(globalMediaApi) {
         });
       }
     },
-    [uploadMediaCallback, globalMediaApi]
+    [uploadMediaCallback, mediaApi]
   );
 
   return {

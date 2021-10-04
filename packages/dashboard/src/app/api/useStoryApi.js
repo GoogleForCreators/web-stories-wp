@@ -36,7 +36,7 @@ import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
 import { useConfig } from '../config';
 
-const useStoryApi = (storyApi) => {
+const useStoryApi = () => {
   const isInitialFetch = useRef(true);
   const initialFetchListeners = useMemo(() => new Map(), []);
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
@@ -48,6 +48,7 @@ const useStoryApi = (storyApi) => {
       updateStory: updateStoryCallback,
       createStoryFromTemplate: createStoryFromTemplateCallback,
     },
+    api: { stories: storyApi },
   } = useConfig();
 
   const fetchStories = useCallback(

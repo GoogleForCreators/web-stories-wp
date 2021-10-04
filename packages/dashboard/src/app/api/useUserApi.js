@@ -28,7 +28,7 @@ import {
  */
 import { useConfig } from '../config';
 
-export default function useUserApi(currentUserApi) {
+export default function useUserApi() {
   const [currentUser, setCurrentUser] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -39,6 +39,7 @@ export default function useUserApi(currentUserApi) {
       toggleWebStoriesMediaOptimization:
         toggleWebStoriesMediaOptimizationCallback,
     },
+    api: { currentUser: currentUserApi },
   } = useConfig();
 
   useEffect(() => {

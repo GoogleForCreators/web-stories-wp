@@ -29,17 +29,18 @@ import settingsReducer, {
 import { ERRORS } from '../textContent';
 import { useConfig } from '../config';
 
-export default function useSettingsApi(globalSettingsApi) {
+export default function useSettingsApi() {
   const [state, dispatch] = useReducer(settingsReducer, defaultSettingsState);
   const {
     apiCallbacks: {
       fetchSettings: fetchSettingsCallback,
       updateSettings: updateSettingsCallback,
     },
+    api: { settings: settingsApi },
   } = useConfig();
 
   const fetchSettings = useCallback(async () => {
-    if (!globalSettingsApi) {
+    if (!settingsApi) {
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_FAILURE,
         payload: {
@@ -48,7 +49,7 @@ export default function useSettingsApi(globalSettingsApi) {
       });
     }
     try {
-      const response = await fetchSettingsCallback(globalSettingsApi);
+      const response = await fetchSettingsCallback(settingsApi);
 
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
@@ -62,16 +63,13 @@ export default function useSettingsApi(globalSettingsApi) {
         },
       });
     }
-  }, [fetchSettingsCallback, globalSettingsApi]);
+  }, [fetchSettingsCallback, settingsApi]);
 
   const updateSettings = useCallback(
     async (queryParams) => {
       dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED });
       try {
-        const response = await updateSettingsCallback(
-          queryParams,
-          globalSettingsApi
-        );
+        const response = await updateSettingsCallback(queryParams, settingsApi);
 
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
@@ -87,7 +85,7 @@ export default function useSettingsApi(globalSettingsApi) {
         });
       }
     },
-    [updateSettingsCallback, globalSettingsApi]
+    [updateSettingsCallback, settingsApi]
   );
 
   return {
