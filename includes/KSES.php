@@ -110,7 +110,7 @@ class KSES extends Service_Base {
 			(
 				'revision' === $data['post_type'] &&
 				! empty( $data['post_parent'] ) &&
-				$this->story_post_type::POST_TYPE_SLUG === get_post_type( $data['post_parent'] )
+				get_post_type( $data['post_parent'] ) === $this->story_post_type::POST_TYPE_SLUG
 			)
 		) {
 			return $data;

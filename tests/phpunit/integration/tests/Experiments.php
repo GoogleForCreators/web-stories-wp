@@ -183,9 +183,9 @@ class Experiments extends DependencyInjectedTestCase {
 	 */
 	public function test_display_experiment_field_enabled_by_default() {
 		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
-							   ->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
-							   ->setMethods( [ 'get_experiments' ] )
-							   ->getMock();
+							->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
+							->setMethods( [ 'get_experiments' ] )
+							->getMock();
 
 		$this->instance->method( 'get_experiments' )
 					->willReturn(
