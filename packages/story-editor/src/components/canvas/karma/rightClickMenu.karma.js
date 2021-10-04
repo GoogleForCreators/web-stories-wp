@@ -98,6 +98,18 @@ describe('Right Click Menu integration', () => {
     });
   }
 
+  function scaleAndCropVideo() {
+    return fixture.screen.getByRole('button', {
+      name: /^Scale & Crop Video/i,
+    });
+  }
+
+  function scaleAndCropBackgroundVideo() {
+    return fixture.screen.getByRole('button', {
+      name: /^Scale & Crop Background Video/i,
+    });
+  }
+
   function duplicatePage() {
     const menu = rightClickMenu();
 
@@ -376,7 +388,44 @@ describe('Right Click Menu integration', () => {
       ).toBe(undefined);
     });
 
-    it('should let a user scale and crop media', async () => {
+    it('should let a user scale and crop image', async () => {
+      const earthImage = await addEarthImage();
+
+      // right click video
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
+      );
+
+      // foreground: click 'scale and crop image' button
+      await fixture.events.click(scaleAndCropImage());
+
+      // Verify element is being edited
+      expect(fixture.screen.getByTestId('edit-panel-slider')).toBeDefined();
+
+      // escape edit mode
+      await fixture.events.keyboard.press('Esc');
+
+      // right click video
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
+      );
+
+      // set video as page background
+      await fixture.events.click(setAsPageBackground());
+
+      // right click video
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
+      );
+
+      // background: click 'scale and crop image' button
+      await fixture.events.click(scaleAndCropBackgroundImage());
+
+      // Verify element is being edited
+      expect(fixture.screen.getByTestId('edit-panel-slider')).toBeDefined();
+    });
+
+    it('should let a user scale and crop video', async () => {
       const video = await addVideo();
 
       // right click video
@@ -384,8 +433,8 @@ describe('Right Click Menu integration', () => {
         fixture.editor.canvas.framesLayer.frame(video.id).node
       );
 
-      // foreground: click 'scale and crop image' button
-      await fixture.events.click(scaleAndCropImage());
+      // foreground: click 'scale and crop video' button
+      await fixture.events.click(scaleAndCropVideo());
 
       // Verify element is being edited
       expect(fixture.screen.getByTestId('edit-panel-slider')).toBeDefined();
@@ -406,8 +455,8 @@ describe('Right Click Menu integration', () => {
         fixture.editor.canvas.framesLayer.frame(video.id).node
       );
 
-      // background: click 'scale and crop image' button
-      await fixture.events.click(scaleAndCropBackgroundImage());
+      // background: click 'scale and crop video' button
+      await fixture.events.click(scaleAndCropBackgroundVideo());
 
       // Verify element is being edited
       expect(fixture.screen.getByTestId('edit-panel-slider')).toBeDefined();

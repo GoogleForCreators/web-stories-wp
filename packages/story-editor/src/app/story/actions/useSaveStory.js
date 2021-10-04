@@ -21,6 +21,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useState } from '@web-stories-wp/react';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@web-stories-wp/design-system';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -56,6 +57,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const { editLink } = story;
   const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
 
+  const enableBetterCaptions = useFeature('enableBetterCaptions');
+
   const saveStory = useCallback(
     (props) => {
       setIsSaving(true);
@@ -68,7 +71,12 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
 
       return saveStoryById({
         storyId,
-        ...getStoryPropsToSave({ story, pages, metadata }),
+        ...getStoryPropsToSave({
+          story,
+          pages,
+          metadata,
+          args: { enableBetterCaptions },
+        }),
         ...props,
       })
         .then((data) => {
@@ -120,6 +128,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       refreshPostEditURL,
       showSnackbar,
       resetNewChanges,
+      enableBetterCaptions,
     ]
   );
 

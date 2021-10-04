@@ -341,6 +341,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Taxonomies', 'web-stories' ),
 				'description' => __( 'Enable support of tags and categories for stories', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 
 			/**
@@ -377,6 +378,19 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Auto Analytics', 'web-stories' ),
 				'description' => __( 'Enable migration option to story auto analytics', 'web-stories' ),
 				'group'       => 'dashboard',
+				'default'     => true,
+			],
+
+			/**
+			 * Author: @swissspidy
+			 * Issue: #5315
+			 * Creation date: 2021-09-23
+			 */
+			[
+				'name'        => 'enableBetterCaptions',
+				'label'       => __( 'Video Captions', 'web-stories' ),
+				'description' => __( 'Improve video captions appearance when viewing stories', 'web-stories' ),
+				'group'       => 'general',
 			],
 		];
 	}
