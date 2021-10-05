@@ -144,8 +144,6 @@ class Stories_Controller extends Test_REST_TestCase {
 		parent::set_up();
 
 		$this->controller = new \Google\Web_Stories\REST_API\Stories_Controller( Story_Post_Type::POST_TYPE_SLUG );
-
-		$this->set_permalink_structure( '/%postname%/' );
 	}
 
 	public function tear_down() {

@@ -119,8 +119,6 @@ class Page_Template_Controller extends Test_REST_TestCase {
 		parent::set_up();
 
 		$this->controller = new \Google\Web_Stories\REST_API\Page_Template_Controller( 'post' );
-
-		$this->set_permalink_structure( '/%postname%/' );
 	}
 
 	/**

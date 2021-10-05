@@ -64,8 +64,6 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 		parent::set_up();
 
 		$this->controller = new \Google\Web_Stories\REST_API\Stories_Users_Controller();
-
-		$this->set_permalink_structure( '/%postname%/' );
 	}
 
 	/**
