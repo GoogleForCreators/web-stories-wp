@@ -64,6 +64,7 @@ export const TemplatePropType = PropTypes.shape({
     PropTypes.shape({
       webp: PropTypes.string,
       png: PropTypes.string,
+      type: PropTypes.string,
     })
   ),
 });
