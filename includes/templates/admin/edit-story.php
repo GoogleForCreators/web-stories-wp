@@ -76,7 +76,7 @@ $preload_paths = [
 	'/web-stories/v1/media/?' . build_query(
 		[
 			'context'               => 'edit',
-			'per_page'              => 100,
+			'per_page'              => 50,
 			'page'                  => 1,
 			'_web_stories_envelope' => 'true',
 			'_fields'               => rawurlencode(

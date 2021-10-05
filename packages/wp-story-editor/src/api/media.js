@@ -36,7 +36,7 @@ export function getMedia(
 ) {
   let apiPath = addQueryArgs(media, {
     context: 'edit',
-    per_page: 10,
+    per_page: 50,
     page: pagingNum,
     _web_stories_envelope: true,
     _fields: MEDIA_FIELDS,
