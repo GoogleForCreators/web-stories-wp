@@ -88,11 +88,11 @@ export const ButtonWrapper = styled.div`
   justify-content: ${({ isStart }) => (isStart ? 'flex-end' : 'flex-start')};
 `;
 
-export function Scrim({ width, atStart = false }) {
-  const floatStyle = atStart ? { left: '-1px' } : { right: '-1px' };
+export function Scrim({ width, isLeftAligned = false }) {
+  const floatStyle = isLeftAligned ? { left: '-1px' } : { right: '-1px' };
   // These paths appear to be a bit magic, but are exactly what's required to draw the
   // desired shape, which includes negative border radii and thus cannot be done in CSS only
-  const path = atStart
+  const path = isLeftAligned
     ? `M 4 0 h ${width} a 4 4 0 0 0 -4 4 v 28 a 4 4 0 0 0 4 4 h -${width} a 4 4 0 0 1 -4 -4 v -28 a 4 4 0 0 1 4 -4 Z`
     : `M 0 0 h ${width} a 4 4 0 0 1 4 4 v 28 a 4 4 0 0 1 -4 4 h -${width} a 4 4 0 0 0 4 -4 v -28 a 4 4 0 0 0 -4 -4 Z`;
 
@@ -108,5 +108,5 @@ export function Scrim({ width, atStart = false }) {
 
 Scrim.propTypes = {
   width: PropTypes.number.isRequired,
-  atStart: PropTypes.bool,
+  isLeftAligned: PropTypes.bool,
 };

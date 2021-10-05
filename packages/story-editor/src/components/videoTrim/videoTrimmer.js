@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { useRef, useCallback } from '@web-stories-wp/react';
 import {
   Button,
   BUTTON_SIZES,
@@ -29,6 +30,7 @@ import {
  * Internal dependencies
  */
 import useLayout from '../../app/layout/useLayout';
+import useFocusTrapping from '../../utils/useFocusTrapping';
 import useVideoTrim from './useVideoTrim';
 import {
   Menu,
@@ -75,8 +77,22 @@ function VideoTrimmer() {
     })
   );
 
+  const menu = useRef(null);
+
+  // Keep focus trapped within the menu
+  useFocusTrapping({ ref: menu });
+
+  // Auto-focus the cancel button on mount
+  const setCancelRef = useCallback((node) => {
+    if (node) {
+      node.focus();
+    }
+  }, []);
+
   if (!pageWidth || !maxOffset) {
-    return null;
+    // We still need a reffed element, or the focus trap will break,
+    // so just return an empty element
+    return <Menu ref={menu} />;
   }
 
   const railWidth = Math.min(pageWidth, workspaceWidth - 2 * BUTTON_SPACE);
@@ -89,19 +105,20 @@ function VideoTrimmer() {
   };
 
   return (
-    <Menu>
+    <Menu ref={menu}>
       <ButtonWrapper isStart>
         <Button
           variant={BUTTON_VARIANTS.RECTANGLE}
           type={BUTTON_TYPES.SECONDARY}
           size={BUTTON_SIZES.SMALL}
           onClick={toggleTrimMode}
+          ref={setCancelRef}
         >
           {__('Cancel', 'web-stories')}
         </Button>
       </ButtonWrapper>
       <Wrapper pageWidth={railWidth}>
-        <Scrim atStart width={(startOffset / maxOffset) * railWidth} />
+        <Scrim isLeftAligned width={(startOffset / maxOffset) * railWidth} />
         <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
         <CurrentTime
           railWidth={railWidth}
