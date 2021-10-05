@@ -26,81 +26,6 @@ import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 import useApi from '../useApi';
 
-jest.mock('../wpAdapter', () => ({
-  get: () =>
-    Promise.resolve({
-      headers: {
-        totalPages: 1,
-        totalByStatus: '{"all":1,"publish":1,"draft":0}',
-      },
-      body: [
-        {
-          id: 123,
-          status: 'publish',
-          author: 1,
-          link: 'https://www.story-link.com',
-          preview_link: 'https://www.story-link.com/?preview=true',
-          edit_link: 'https://www.story-link.com/wp-admin/post.php?id=123',
-          title: { raw: 'Carlos', rendered: 'Carlos' },
-          modified: '1970-01-01T00:00:00.000',
-          modified_gmt: '1970-01-01T00:00:00.000',
-          date: '1970-01-01T00:00:00.000',
-          date_gmt: '1970-01-01T00:00:00.000',
-          _embedded: {
-            author: [{ id: 1, name: 'admin' }],
-            'wp:featuredmedia': [
-              { id: 0, source_url: 'https://www.featured-media-123' },
-            ],
-          },
-        },
-      ],
-    }),
-  post: (path, { data }) => {
-    let title = '';
-    let id = data.id || 456;
-    if (data?.original_id) {
-      id = 456;
-      title = 'Carlos (Copy)';
-    } else {
-      title = typeof data.title === 'string' ? data.title : data.title.raw;
-    }
-    return Promise.resolve({
-      id,
-      status: 'publish',
-      title: { raw: title, rendered: title },
-      author: 1,
-      modified: '1970-01-01T00:00:00.000',
-      modified_gmt: '1970-01-01T00:00:00.000',
-      date: '1970-01-01T00:00:00.000',
-      date_gmt: '1970-01-01T00:00:00.000',
-      link: 'https://www.story-link.com',
-      preview_link: 'https://www.story-link.com/?preview=true',
-      edit_link: 'https://www.story-link.com/wp-admin/post.php?id=' + id,
-      _embedded: {
-        author: [{ id: 1, name: 'admin' }],
-        'wp:featuredmedia': [
-          { id: 0, source_url: `https://www.featured-media-${id}` },
-        ],
-      },
-    });
-  },
-  deleteRequest: (path) => {
-    const id = path.split('/')[1];
-    Promise.resolve({
-      id: id,
-      status: 'publish',
-      title: { raw: 'Carlos', rendered: 'Carlos' },
-      modified: '1970-01-01T00:00:00.000',
-      modified_gmt: '1970-01-01T00:00:00.000',
-      date: '1970-01-01T00:00:00.000',
-      date_gmt: '1970-01-01T00:00:00.000',
-      link: 'https://www.story-link.com',
-      preview_link: 'https://www.story-link.com/?preview=true',
-      edit_link: 'https://www.story-link.com/wp-admin/post.php?id=' + id,
-    });
-  },
-}));
-
 const fetchStories = () => {
   return Promise.resolve({
     headers: {
@@ -193,6 +118,21 @@ const duplicateStory = (story) => {
   story.original_id = id;
 
   return storyResponse(story);
+};
+
+const trashStory = ({ id }) => {
+  return Promise.resolve({
+    id: id,
+    status: 'publish',
+    title: { raw: 'Carlos', rendered: 'Carlos' },
+    modified: '1970-01-01T00:00:00.000',
+    modified_gmt: '1970-01-01T00:00:00.000',
+    date: '1970-01-01T00:00:00.000',
+    date_gmt: '1970-01-01T00:00:00.000',
+    link: 'https://www.story-link.com',
+    preview_link: 'https://www.story-link.com/?preview=true',
+    edit_link: 'https://www.story-link.com/wp-admin/post.php?id=' + id,
+  });
 };
 
 describe('ApiProvider', () => {
@@ -478,7 +418,12 @@ describe('ApiProvider', () => {
   it('should delete a story when the trash story method is called.', async () => {
     const { result } = renderHook(() => useApi(), {
       wrapper: (props) => (
-        <ConfigProvider config={{ api: { stories: 'stories' } }}>
+        <ConfigProvider
+          config={{
+            api: { stories: 'stories' },
+            apiCallbacks: { fetchStories, getUser, trashStory },
+          }}
+        >
           <ApiProvider {...props} />
         </ConfigProvider>
       ),
@@ -501,7 +446,12 @@ describe('ApiProvider', () => {
     const listenerMock = jest.fn();
     const { result } = renderHook(() => useApi(), {
       wrapper: (props) => (
-        <ConfigProvider config={{ api: { stories: 'stories' } }}>
+        <ConfigProvider
+          config={{
+            api: { stories: 'stories' },
+            apiCallbacks: { fetchStories, getUser },
+          }}
+        >
           <ApiProvider {...props} />
         </ConfigProvider>
       ),
