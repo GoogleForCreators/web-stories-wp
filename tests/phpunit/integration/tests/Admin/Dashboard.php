@@ -55,7 +55,6 @@ class Dashboard extends TestCase {
 	}
 
 	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
 		unregister_post_type( self::$cpt_no_archive );
 		unregister_post_type( self::$cpt_has_archive );
 	}

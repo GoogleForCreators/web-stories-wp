@@ -24,6 +24,8 @@ use Exception;
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionParameter;
+use function array_key_exists;
+use function array_map;
 
 /**
  * A simplified implementation of a dependency injector.
@@ -128,7 +130,7 @@ final class SimpleInjector implements Injector {
 			$object = $this->instantiator->instantiate( $class, $dependencies );
 		}
 
-		if ( \array_key_exists( $class, $this->shared_instances ) ) {
+		if ( array_key_exists( $class, $this->shared_instances ) ) {
 			$this->shared_instances[ $class ] = $object;
 		}
 
@@ -147,7 +149,7 @@ final class SimpleInjector implements Injector {
 	 * @param string $to   Interface or class that provides the implementation.
 	 * @return Injector
 	 */
-	public function bind( $from, $to ) {
+	public function bind( $from, $to ): Injector {
 		$this->mappings[ $from ] = $to;
 
 		return $this;
@@ -169,7 +171,7 @@ final class SimpleInjector implements Injector {
 		$interface_or_class,
 		$argument_name,
 		$value
-	) {
+	): Injector {
 		$this->argument_mappings[ $interface_or_class ][ $argument_name ] = $value;
 
 		return $this;
@@ -184,7 +186,7 @@ final class SimpleInjector implements Injector {
 	 * @param string $interface_or_class Interface or class to reuse.
 	 * @return Injector
 	 */
-	public function share( $interface_or_class ) {
+	public function share( $interface_or_class ): Injector {
 		$this->shared_instances[ $interface_or_class ] = null;
 
 		return $this;
@@ -200,7 +202,7 @@ final class SimpleInjector implements Injector {
 	 * @param callable $callable           Callable to use for instantiation.
 	 * @return Injector
 	 */
-	public function delegate( $interface_or_class, callable $callable ) {
+	public function delegate( $interface_or_class, callable $callable ): Injector {
 		$this->delegates[ $interface_or_class ] = $callable;
 
 		return $this;
@@ -247,7 +249,7 @@ final class SimpleInjector implements Injector {
 
 		$object = $this->instantiator->instantiate( $class, $dependencies );
 
-		if ( \array_key_exists( $class, $this->shared_instances ) ) {
+		if ( array_key_exists( $class, $this->shared_instances ) ) {
 			$this->shared_instances[ $class ] = $object;
 		}
 
@@ -268,7 +270,7 @@ final class SimpleInjector implements Injector {
 	private function resolve(
 		InjectionChain $injection_chain,
 		$interface_or_class
-	) {
+	): InjectionChain {
 		if ( $injection_chain->is_in_chain( $interface_or_class ) ) {
 			// Circular reference detected, aborting.
 			throw FailedToMakeInstance::for_circular_reference(
@@ -279,7 +281,7 @@ final class SimpleInjector implements Injector {
 
 		$injection_chain = $injection_chain->add_resolution( $interface_or_class );
 
-		if ( \array_key_exists( $interface_or_class, $this->mappings ) ) {
+		if ( array_key_exists( $interface_or_class, $this->mappings ) ) {
 			return $this->resolve(
 				$injection_chain,
 				$this->mappings[ $interface_or_class ]
@@ -307,7 +309,7 @@ final class SimpleInjector implements Injector {
 		InjectionChain $injection_chain,
 		ReflectionClass $reflection,
 		$arguments = []
-	) {
+	): array {
 		$constructor = $reflection->getConstructor();
 		$class       = $reflection->getName();
 
@@ -315,7 +317,7 @@ final class SimpleInjector implements Injector {
 			return [];
 		}
 
-		return \array_map(
+		return array_map(
 			function ( ReflectionParameter $parameter ) use ( $injection_chain, $class, $arguments ) {
 				return $this->resolve_argument(
 					$injection_chain,
@@ -383,7 +385,7 @@ final class SimpleInjector implements Injector {
 				);
 			}
 
-			$type = $type instanceof \ReflectionNamedType
+			$type = $type instanceof ReflectionNamedType
 				? $type->getName()
 				: (string) $type;
 		} else {
@@ -392,7 +394,7 @@ final class SimpleInjector implements Injector {
 			// support it.
 
 			$reflection_class = $parameter->getClass();
-			$type             = $reflection_class ? $reflection_class->name : null;
+			$type             = $reflection_class->name ?? null;
 
 			if ( null === $type ) {
 				return $this->resolve_argument_by_name(
@@ -426,13 +428,13 @@ final class SimpleInjector implements Injector {
 		$name = $parameter->getName();
 
 		// The argument was directly provided to the make() call.
-		if ( \array_key_exists( $name, $arguments ) ) {
+		if ( array_key_exists( $name, $arguments ) ) {
 			return $arguments[ $name ];
 		}
 
 		// Check if we have mapped this argument for the specific class.
-		if ( \array_key_exists( $class, $this->argument_mappings )
-			&& \array_key_exists( $name, $this->argument_mappings[ $class ] ) ) {
+		if ( array_key_exists( $class, $this->argument_mappings )
+			&& array_key_exists( $name, $this->argument_mappings[ $class ] ) ) {
 			$value = $this->argument_mappings[ $class ][ $name ];
 
 			// Closures are immediately resolved, to provide lazy resolution.
@@ -444,7 +446,7 @@ final class SimpleInjector implements Injector {
 		}
 
 		// No argument found for the class, check if we have a global value.
-		if ( \array_key_exists( $name, $this->argument_mappings[ self::GLOBAL_ARGUMENTS ] ) ) {
+		if ( array_key_exists( $name, $this->argument_mappings[ self::GLOBAL_ARGUMENTS ] ) ) {
 			return $this->argument_mappings[ self::GLOBAL_ARGUMENTS ][ $name ];
 		}
 
@@ -469,8 +471,8 @@ final class SimpleInjector implements Injector {
 	 * @param string $class Class to check for a shared instance.
 	 * @return bool Whether a shared instance exists.
 	 */
-	private function has_shared_instance( $class ) {
-		return \array_key_exists( $class, $this->shared_instances )
+	private function has_shared_instance( $class ): bool {
+		return array_key_exists( $class, $this->shared_instances )
 			&& null !== $this->shared_instances[ $class ];
 	}
 
@@ -500,8 +502,8 @@ final class SimpleInjector implements Injector {
 	 * @param string $class Class to check for a delegate.
 	 * @return bool Whether a delegate exists.
 	 */
-	private function has_delegate( $class ) {
-		return \array_key_exists( $class, $this->delegates );
+	private function has_delegate( $class ): bool {
+		return array_key_exists( $class, $this->delegates );
 	}
 
 	/**
@@ -513,7 +515,7 @@ final class SimpleInjector implements Injector {
 	 * @return callable Delegate.
 	 * @throws FailedToMakeInstance If an invalid delegate is requested.
 	 */
-	private function get_delegate( $class ) {
+	private function get_delegate( $class ): callable {
 		if ( ! $this->has_delegate( $class ) ) {
 			throw FailedToMakeInstance::for_invalid_delegate( $class );
 		}

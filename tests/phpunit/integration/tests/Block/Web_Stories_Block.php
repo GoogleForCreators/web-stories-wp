@@ -19,13 +19,25 @@ namespace Google\Web_Stories\Tests\Integration\Block;
 
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Block\Web_Stories_Block as Block;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_Block_Type_Registry;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Block\Web_Stories_Block
  */
-class Web_Stories_Block extends TestCase {
+class Web_Stories_Block extends DependencyInjectedTestCase {
+	/**
+	 * @var \Google\Web_Stories\Block\Web_Stories_Block
+	 */
+	private $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Block\Web_Stories_Block::class );
+	}
+
 	public function tear_down() {
 		unregister_block_type( 'web-stories/embed' );
 
@@ -47,18 +59,14 @@ class Web_Stories_Block extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_block() {
-		$assets      = new Assets();
-		$embed_block = new Block( $assets );
-
-		$actual = $embed_block->render_block(
+		$actual = $this->instance->render_block(
 			[
 				'url'    => 'https://example.com/story.html',
 				'title'  => 'Example Story',
 				'align'  => 'none',
 				'width'  => 360,
 				'height' => 600,
-			],
-			''
+			]
 		);
 
 		$this->assertStringContainsString( '<amp-story-player', $actual );
@@ -71,18 +79,14 @@ class Web_Stories_Block extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_block_missing_url() {
-		$assets      = new Assets();
-		$embed_block = new Block( $assets );
-
-		$actual = $embed_block->render_block(
+		$actual = $this->instance->render_block(
 			[
 				'url'    => '',
 				'title'  => 'Example Story',
 				'align'  => 'none',
 				'width'  => 360,
 				'height' => 600,
-			],
-			''
+			]
 		);
 
 		$this->assertEmpty( $actual );
@@ -95,18 +99,14 @@ class Web_Stories_Block extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_block_missing_title() {
-		$assets      = new Assets();
-		$embed_block = new Block( $assets );
-
-		$actual = $embed_block->render_block(
+		$actual = $this->instance->render_block(
 			[
 				'url'    => 'https://example.com/story.html',
 				'title'  => '',
 				'align'  => 'none',
 				'width'  => 360,
 				'height' => 600,
-			],
-			''
+			]
 		);
 
 		$this->assertStringContainsString( __( 'Web Story', 'web-stories' ), $actual );
@@ -119,17 +119,13 @@ class Web_Stories_Block extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_block_feed_no_poster() {
-		$assets      = new Assets();
-		$embed_block = new Block( $assets );
-
 		$this->go_to( '/?feed=rss2' );
 
-		$actual = $embed_block->render_block(
+		$actual = $this->instance->render_block(
 			[
 				'url'   => 'https://example.com/story.html',
 				'title' => 'Example Story',
-			],
-			''
+			]
 		);
 
 		$this->assertStringNotContainsString( '<amp-story-player', $actual );
@@ -143,20 +139,16 @@ class Web_Stories_Block extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_block_with_poster() {
-		$assets      = new Assets();
-		$embed_block = new Block( $assets );
-
 		$this->go_to( '/?feed=rss2' );
 
-		$actual = $embed_block->render_block(
+		$actual = $this->instance->render_block(
 			[
 				'url'    => 'https://example.com/story.html',
 				'title'  => 'Example Story',
 				'poster' => 'https://example.com/story.jpg',
 				'width'  => 360,
 				'height' => 600,
-			],
-			''
+			]
 		);
 
 		$this->assertStringNotContainsString( '<amp-story-player', $actual );

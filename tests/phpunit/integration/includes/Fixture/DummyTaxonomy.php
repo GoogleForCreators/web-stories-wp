@@ -6,13 +6,14 @@ use Google\Web_Stories\REST_API\Stories_Terms_Controller;
 use Google\Web_Stories\Taxonomy\Taxonomy_Base;
 
 /**
- *
+ * Dummy taxonomy.
  */
 class DummyTaxonomy extends Taxonomy_Base {
 	/**
 	 * @var string
 	 */
 	protected $taxonomy_slug = 'web-story-test-tax';
+
 	/**
 	 * @var string
 	 */
