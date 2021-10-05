@@ -25,6 +25,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 import useApi from '../useApi';
+import { ERRORS } from '../../textContent';
 
 const fetchStories = () => {
   return Promise.resolve({
@@ -474,5 +475,53 @@ describe('ApiProvider', () => {
     });
 
     expect(listenerMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('useSettingsApi', () => {
+  it('should return an error when fetching settings API request fails', async () => {
+    const { result } = renderHook(() => useApi(), {
+      wrapper: (props) => (
+        <ConfigProvider
+          config={{
+            api: { settings: 'wordpress' },
+            apiCallbacks: { fetchSettings: () => Promise.reject({}), getUser }, // eslint-disable-line prefer-promise-reject-errors
+          }}
+        >
+          <ApiProvider {...props} />
+        </ConfigProvider>
+      ),
+    });
+
+    await act(async () => {
+      await result.current.actions.settingsApi.fetchSettings();
+    });
+
+    expect(result.current.state.settings.error.message).toStrictEqual(
+      ERRORS.LOAD_SETTINGS.MESSAGE
+    );
+  });
+
+  it('should return an error when updating settings API request fails', async () => {
+    const { result } = renderHook(() => useApi(), {
+      wrapper: (props) => (
+        <ConfigProvider
+          config={{
+            api: { settings: 'wordpress' },
+            apiCallbacks: { updateSettings: () => Promise.reject({}), getUser }, // eslint-disable-line prefer-promise-reject-errors
+          }}
+        >
+          <ApiProvider {...props} />
+        </ConfigProvider>
+      ),
+    });
+
+    await act(async () => {
+      await result.current.actions.settingsApi.updateSettings('2738237892739');
+    });
+
+    expect(result.current.state.settings.error.message).toStrictEqual(
+      ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE
+    );
   });
 });
