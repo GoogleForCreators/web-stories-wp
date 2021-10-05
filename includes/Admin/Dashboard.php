@@ -243,13 +243,23 @@ class Dashboard extends Service_Base {
 			'/web-stories/v1/users/me/',
 			"/web-stories/v1/$rest_base/?" . build_query(
 				[
-					'_embed'                => rawurlencode( 'wp:lock,wp:lockuser,author,wp:featuredmedia' ),
+					'_embed'                => rawurlencode(
+						implode(
+							',',
+							[ 'wp:lock', 'wp:lockuser', 'author', 'wp:featuredmedia' ]
+						)
+					),
 					'context'               => 'edit',
 					'order'                 => 'desc',
 					'orderby'               => 'modified',
 					'page'                  => 1,
 					'per_page'              => 24,
-					'status'                => rawurlencode( 'publish,draft,future,private' ),
+					'status'                => rawurlencode(
+						implode(
+							',',
+							[ 'draft', 'future', 'pending', 'publish', 'private' ]
+						)
+					),
 					'_web_stories_envelope' => 'true',
 					'_fields'               => rawurlencode(
 						implode(
@@ -372,8 +382,6 @@ class Dashboard extends Service_Base {
 			$max_upload_size = 0;
 		}
 
-		$templates_rest_base = $this->get_post_type_rest_base( Template_Post_Type::POST_TYPE_SLUG );
-
 		$settings = [
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
@@ -392,7 +400,6 @@ class Dashboard extends Service_Base {
 					'media'          => '/web-stories/v1/media/',
 					'currentUser'    => '/web-stories/v1/users/me/',
 					'users'          => '/web-stories/v1/users/',
-					'templates'      => sprintf( '/web-stories/v1/%s/', $templates_rest_base ),
 					'settings'       => '/web-stories/v1/settings/',
 					'pages'          => '/wp/v2/pages/',
 					'publisherLogos' => '/web-stories/v1/publisher-logos/',

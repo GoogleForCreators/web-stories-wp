@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories\AMP;
 
-use DOMElement;
 use Exception;
 use Google\Web_Stories\Exception\SanitizationException;
 use Google\Web_Stories\Infrastructure\Conditional;

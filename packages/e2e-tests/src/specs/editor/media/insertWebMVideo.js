@@ -114,7 +114,7 @@ describe('Inserting WebM Video', () => {
 
     expect(poster).not.toBeNull();
     expect(poster).toStrictEqual(expect.any(String));
-    expect(poster).not.toStrictEqual('');
+    expect(poster).not.toBe('');
 
     await editorPage.bringToFront();
     await previewPage.close();

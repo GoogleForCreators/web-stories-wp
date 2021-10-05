@@ -41,6 +41,13 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	protected static $attachment_id_2;
 
 	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\REST_API\Publisher_Logos_Controller
+	 */
+	private $controller;
+
+	/**
 	 * Count of the number of requests attempted.
 	 *
 	 * @var int
@@ -80,9 +87,10 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$admin );
-		self::delete_user( self::$editor );
+	public function set_up() {
+		parent::set_up();
+
+		$this->controller = new \Google\Web_Stories\REST_API\Publisher_Logos_Controller( new Settings() );
 	}
 
 	public function tear_down() {
@@ -96,12 +104,13 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::register_routes
 	 */
 	public function test_register_routes() {
+		$this->controller->register_routes();
+
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/publisher-logos', $routes );
 
 		$route = $routes['/web-stories/v1/publisher-logos'];
-		$this->assertCount( 2, $route );
 		$this->assertArrayHasKey( 'callback', $route[0] );
 		$this->assertArrayHasKey( 'permission_callback', $route[0] );
 		$this->assertArrayHasKey( 'methods', $route[0] );
@@ -116,8 +125,7 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::get_item_schema
 	 */
 	public function test_get_item_schema() {
-		$controller = new \Google\Web_Stories\REST_API\Publisher_Logos_Controller();
-		$data       = $controller->get_item_schema();
+		$data = $this->controller->get_item_schema();
 
 		$properties = $data['properties'];
 		$this->assertArrayHasKey( 'id', $properties );
@@ -130,6 +138,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::permissions_check
 	 */
 	public function test_get_items_no_permission() {
+		$this->controller->register();
+
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/publisher-logos' );
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_forbidden', $response, 401 );
@@ -139,6 +149,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::get_items
 	 */
 	public function test_get_items_no_items() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$admin );
 
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/publisher-logos' );
@@ -152,6 +164,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::get_items
 	 */
 	public function test_get_items_editor() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/publisher-logos' );
@@ -165,6 +179,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::get_items
 	 */
 	public function test_get_items() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$admin );
 
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_2, 0, -1, PHP_INT_MAX, self::$attachment_id_1 ] );
@@ -188,6 +204,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::permissions_check
 	 */
 	public function test_create_item_no_permission() {
+		$this->controller->register();
+
 		$request = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/publisher-logos' );
 		$request->set_body_params(
 			[
@@ -203,6 +221,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::create_item
 	 */
 	public function test_create_item_editor() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 
 		$request = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/publisher-logos' );
@@ -229,6 +249,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::create_item
 	 */
 	public function test_create_item() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$admin );
 
 		$request = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/publisher-logos' );
@@ -261,6 +283,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::create_item
 	 */
 	public function test_create_item_existing_ones() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$admin );
 
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_1 ] );
@@ -296,6 +320,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::create_item
 	 */
 	public function test_create_item_updates_incorrect_active_publisher_logo() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$admin );
 
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_1 ] );
@@ -330,6 +356,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::permissions_check
 	 */
 	public function test_delete_item_no_permission() {
+		$this->controller->register();
+
 		$request  = new WP_REST_Request( WP_REST_Server::DELETABLE, '/web-stories/v1/publisher-logos/' . self::$attachment_id_1 );
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_forbidden', $response, 401 );
@@ -340,6 +368,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::delete_item
 	 */
 	public function test_delete_item_editor() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_1, self::$attachment_id_2 ] );
@@ -367,6 +397,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::delete_item
 	 */
 	public function test_delete_item() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$admin );
 
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_1, self::$attachment_id_2 ] );
@@ -400,6 +432,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::delete_item
 	 */
 	public function test_delete_item_incorrect_active_publisher_logo() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$admin );
 
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_1, self::$attachment_id_2 ] );
@@ -433,6 +467,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::delete_item
 	 */
 	public function test_delete_item_non_existent_logo() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$admin );
 
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_1 ] );
@@ -448,6 +484,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::permissions_check
 	 */
 	public function test_update_item_no_permission() {
+		$this->controller->register();
+
 		$request  = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/publisher-logos/' . self::$attachment_id_1 );
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_forbidden', $response, 401 );
@@ -458,6 +496,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::update_item
 	 */
 	public function test_update_item_editor() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_1, self::$attachment_id_2 ] );
@@ -482,6 +522,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::update_item
 	 */
 	public function test_update_item() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$admin );
 
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_1, self::$attachment_id_2 ] );
@@ -515,6 +557,8 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	 * @covers ::update_item
 	 */
 	public function test_update_item_non_existent_logo() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$admin );
 
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [ self::$attachment_id_1 ] );

@@ -23,4 +23,3 @@ export {
   useStoryTriggersDispatch,
   STORY_EVENTS,
 } from './storyTriggers';
-export { ELEMENT_TYPES } from './constants';

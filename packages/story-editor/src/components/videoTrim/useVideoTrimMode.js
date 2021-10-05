@@ -19,6 +19,7 @@
  */
 import { useFeature } from 'flagged';
 import { useCallback, useMemo } from '@web-stories-wp/react';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -54,6 +55,9 @@ function useVideoTrimMode() {
         showOverflow: false,
       });
     }
+    trackEvent('video_trim_mode_toggled', {
+      status: isEditing ? 'closed' : 'open',
+    });
   }, [isEditing, clearEditing, setEditingElementWithState, selectedElement]);
 
   const { isTranscodingEnabled } = useFFmpeg();

@@ -98,12 +98,12 @@ function VideoTrim({ box, element }) {
           showPlaceholder
           previewMode={false}
         >
+          {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- False positive. */}
           <Video
             poster={poster || resource.poster}
             style={style}
             {...videoProps}
             preload="metadata"
-            muted
             autoPlay
             tabIndex={0}
             ref={setRef}

@@ -53,7 +53,7 @@ final class InjectionChain {
 	 * @param string $class Class to add to injection chain.
 	 * @return self Modified injection chain.
 	 */
-	public function add_to_chain( $class ) {
+	public function add_to_chain( $class ): self {
 		$new_chain          = clone $this;
 		$new_chain->chain[] = $class;
 
@@ -68,7 +68,7 @@ final class InjectionChain {
 	 * @param string $resolution Resolution to add.
 	 * @return self Modified injection chain.
 	 */
-	public function add_resolution( $resolution ) {
+	public function add_resolution( $resolution ): self {
 		$new_chain                             = clone $this;
 		$new_chain->resolutions[ $resolution ] = true;
 
@@ -83,7 +83,7 @@ final class InjectionChain {
 	 * @return string Last class pushed to the injection chain.
 	 * @throws LogicException If the injection chain is accessed too early.
 	 */
-	public function get_class() {
+	public function get_class(): string {
 		if ( empty( $this->chain ) ) {
 			throw new LogicException(
 				'Access to injection chain before any resolution was made.'
@@ -100,7 +100,7 @@ final class InjectionChain {
 	 *
 	 * @return array Chain of injections.
 	 */
-	public function get_chain() {
+	public function get_chain(): array {
 		return \array_reverse( $this->chain );
 	}
 
@@ -112,7 +112,7 @@ final class InjectionChain {
 	 * @param string $resolution Resolution to check for.
 	 * @return bool Whether the resolution was found.
 	 */
-	public function has_resolution( $resolution ) {
+	public function has_resolution( $resolution ): bool {
 		return \array_key_exists( $resolution, $this->resolutions );
 	}
 
@@ -124,7 +124,7 @@ final class InjectionChain {
 	 * @param string $class Class to check.
 	 * @return bool Whether the given class is already part of the chain.
 	 */
-	public function is_in_chain( $class ) {
+	public function is_in_chain( $class ): bool {
 		return in_array( $class, $this->chain, true );
 	}
 }

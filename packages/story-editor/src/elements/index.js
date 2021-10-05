@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export * from './constants';
 export { default as elementTypes } from './elementTypes';
 export { default as getDefinitionForType } from './utils/getDefinitionForType';
 export { default as createNewElement } from './utils/createNewElement';

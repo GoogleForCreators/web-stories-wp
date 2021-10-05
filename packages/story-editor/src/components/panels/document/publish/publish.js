@@ -17,13 +17,19 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  forwardRef,
+} from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
-  MEDIA_VARIANTS,
+  Link,
   Text,
   THEME_CONSTANTS,
+  Icons,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -32,9 +38,11 @@ import {
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
 import { useHighlights, states, styles } from '../../../../app/highlights';
-import { Row, Media, Required } from '../../../form';
+import { Row, Media, Required, AdvancedDropDown } from '../../../form';
+import { Option } from '../../../form/advancedDropDown/list/styled';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
+import { useAPI } from '../../../../app';
 import PublishTime from './publishTime';
 import Author from './author';
 
@@ -63,9 +71,10 @@ const StyledMedia = styled(Media)`
   height: ${({ height }) => height}px;
 `;
 
-const HighlightRow = styled(Row)`
+const HighlightRow = styled(Row).attrs({
+  spaceBetween: false,
+})`
   position: relative;
-  justify-content: space-between;
   &::after {
     content: '';
     position: absolute;
@@ -82,10 +91,43 @@ const MediaInputWrapper = styled.div`
   height: 160px;
 `;
 
+const DropdownWrapper = styled.div`
+  position: relative;
+  width: 138px;
+  margin-left: 30px;
+  margin-top: 3px;
+`;
+
+const LogoImg = styled.img`
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  max-width: 96px;
+  max-height: 96px;
+`;
+
 function PublishPanel() {
   const {
     state: { users },
   } = useInspector();
+
+  const {
+    actions: { getPublisherLogos, addPublisherLogo },
+  } = useAPI();
+
+  const {
+    allowedImageMimeTypes,
+    allowedImageFileTypes,
+    dashboardSettingsLink,
+    capabilities: { hasUploadMediaAction, canManageSettings },
+    MediaUpload,
+  } = useConfig();
+
+  const [publisherLogos, setPublisherLogos] = useState([]);
+
+  useEffect(() => {
+    getPublisherLogos().then(setPublisherLogos);
+  }, [getPublisherLogos]);
 
   const { highlightPoster, highlightLogo, resetHighlight } = useHighlights(
     (state) => ({
@@ -116,73 +158,115 @@ function PublishPanel() {
     }
   );
 
-  const {
-    allowedImageMimeTypes,
-    allowedImageFileTypes,
-    capabilities: { hasUploadMediaAction },
-  } = useConfig();
-
-  // Used for onSelect prop in MediaUpload component.
   const handleChangePoster = useCallback(
-    (resource) =>
+    (image) =>
       updateStory({
         properties: {
           featuredMedia: {
-            id: resource.id,
-            height: resource.sizes?.full?.height || resource.height,
-            url: resource.sizes?.full?.source_url || resource.src,
-            width: resource.sizes?.full?.width || resource.width,
+            id: image.id,
+            height: image.sizes?.full?.height || image.height,
+            url: image.sizes?.full?.source_url || image.src,
+            width: image.sizes?.full?.width || image.width,
           },
         },
       }),
     [updateStory]
   );
 
-  // Used for onSelect prop in MediaUpload component.
-  // @todo Enforce square image while selecting in Media Library.
-  const handleChangePublisherLogo = useCallback(
-    (resource) => {
-      updateStory({
-        properties: {
-          publisherLogo: {
-            id: resource.id,
-            url: resource.sizes?.full?.source_url || resource.src,
-            width: resource.sizes?.full?.width || resource.width,
-            height: resource.sizes?.full?.height || resource.height,
-          },
+  const onNewPublisherLogoSelected = ({ id, src }) => {
+    const newLogo = { id, url: src };
+    addPublisherLogo(id);
+    setPublisherLogos((logos) => [...logos, newLogo]);
+    onPublisherLogoChange(newLogo);
+  };
+
+  const onPublisherLogoChange = (option) => {
+    updateStory({
+      properties: {
+        publisherLogo: {
+          id: option.id,
+          url: option.url,
         },
-      });
-    },
-    [updateStory]
+      },
+    });
+  };
+
+  const getErrorMessage = (message) => {
+    let returnedMessage = __(
+      'No file types are currently supported.',
+      'web-stories'
+    );
+
+    if (allowedImageFileTypes.length) {
+      returnedMessage = sprintf(
+        message,
+        translateToExclusiveList(allowedImageFileTypes)
+      );
+    }
+
+    return returnedMessage;
+  };
+
+  const publisherLogoErrorMessage = getErrorMessage(
+    /* translators: %s: list of allowed file types. */
+    __('Please choose only %s as publisher logo.', 'web-stories')
+  );
+  const posterErrorMessage = getErrorMessage(
+    /* translators: %s: list of allowed file types. */
+    __('Please choose only %s as a poster.', 'web-stories')
   );
 
-  const publisherLogoErrorMessage = useMemo(() => {
-    let message = __('No file types are currently supported.', 'web-stories');
-
-    if (allowedImageFileTypes.length) {
-      message = sprintf(
-        /* translators: %s: list of allowed file types. */
-        __('Please choose only %s as publisher logo.', 'web-stories'),
-        translateToExclusiveList(allowedImageFileTypes)
+  const publisherLogoOptionRenderer = forwardRef(
+    ({ option: option, ...rest }, ref) => {
+      if (option.props) {
+        return option;
+      }
+      return (
+        <Option value={option.id} ref={ref} {...rest}>
+          <LogoImg src={option.url} alt="" />
+        </Option>
       );
     }
+  );
+  const activeItemRenderer = () => {
+    const displayText = publisherLogos.length
+      ? __('Select logo', 'web-stories')
+      : __('No logo', 'web-stories');
+    return publisherLogo.id ? (
+      <LogoImg src={publisherLogo.url} alt="" />
+    ) : (
+      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {displayText}
+      </Text>
+    );
+  };
 
-    return message;
-  }, [allowedImageFileTypes]);
-
-  const posterErrorMessage = useMemo(() => {
-    let message = __('No file types are currently supported.', 'web-stories');
-
-    if (allowedImageFileTypes.length) {
-      message = sprintf(
-        /* translators: %s: list of allowed file types. */
-        __('Please choose only %s as a poster.', 'web-stories'),
-        translateToExclusiveList(allowedImageFileTypes)
-      );
-    }
-
-    return message;
-  }, [allowedImageFileTypes]);
+  const renderUploadButton = (open) => (
+    <Option onClick={open} aria-label={__('Add new', 'web-stories')}>
+      <Icons.ArrowCloud height={32} width={32} />
+      <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+        {__('Add new', 'web-stories')}
+      </Text>
+    </Option>
+  );
+  const publisherLogosWithUploadOption = [...publisherLogos];
+  if (hasUploadMediaAction) {
+    const cropParams = {
+      width: 96,
+      height: 96,
+    };
+    publisherLogosWithUploadOption.unshift(
+      <MediaUpload
+        onSelect={onNewPublisherLogoSelected}
+        onSelectErrorMessage={publisherLogoErrorMessage}
+        type={allowedImageMimeTypes}
+        render={renderUploadButton}
+        title={__('Select as publisher logo', 'web-stories')}
+        buttonInsertText={__('Select as publisher logo', 'web-stories')}
+        cropParams={cropParams}
+      />
+    );
+  }
 
   return (
     <Panel
@@ -234,15 +318,17 @@ function PublishPanel() {
               <Required />
             </LabelWrapper>
           </MediaInputWrapper>
-          <MediaInputWrapper>
+          <DropdownWrapper>
             <MediaWrapper>
-              <StyledMedia
-                width={72}
-                height={72}
-                cropParams={{
-                  width: 96,
-                  height: 96,
-                }}
+              <AdvancedDropDown
+                options={publisherLogosWithUploadOption}
+                primaryOptions={publisherLogosWithUploadOption}
+                onChange={onPublisherLogoChange}
+                aria-label={__('Publisher Logo', 'web-stories')}
+                renderer={publisherLogoOptionRenderer}
+                activeItemRenderer={activeItemRenderer}
+                selectedId={publisherLogo.id}
+                disabled={!publisherLogosWithUploadOption.length}
                 ref={(node) => {
                   if (
                     node &&
@@ -252,22 +338,25 @@ function PublishPanel() {
                     node.focus();
                   }
                 }}
-                value={publisherLogo.url}
-                onChange={handleChangePublisherLogo}
-                onChangeErrorText={publisherLogoErrorMessage}
-                title={__('Select as publisher logo', 'web-stories')}
-                buttonInsertText={__('Select as publisher logo', 'web-stories')}
-                type={allowedImageMimeTypes}
-                ariaLabel={__('Publisher Logo', 'web-stories')}
-                variant={MEDIA_VARIANTS.CIRCLE}
-                canUpload={hasUploadMediaAction}
               />
             </MediaWrapper>
             <LabelWrapper>
               <Label>{__('Publisher Logo', 'web-stories')}</Label>
-              <Required />
+              <Row>
+                <Required />
+                {canManageSettings && (
+                  <Link
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    href={dashboardSettingsLink}
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                  >
+                    {__('Manage', 'web-stories')}
+                  </Link>
+                )}
+              </Row>
             </LabelWrapper>
-          </MediaInputWrapper>
+          </DropdownWrapper>
         </HighlightRow>
       </PanelContent>
     </Panel>

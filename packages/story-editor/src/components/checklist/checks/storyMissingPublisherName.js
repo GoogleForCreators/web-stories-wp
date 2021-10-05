@@ -31,7 +31,7 @@ const StoryMissingPublisherName = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const { generalSettingsLink, publisherName } = useConfig(
     ({ metadata, generalSettingsLink }) => ({
-      publisherName: metadata.publisher?.name,
+      publisherName: metadata?.publisher,
       generalSettingsLink,
     })
   );

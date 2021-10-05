@@ -34,7 +34,7 @@ describe('literal', () => {
 describe('getGlobalSpace', () => {
   it('returns original transform if no element rotation present', () => {
     const global = getGlobalSpace({});
-    expect(global`translate(3px)`).toStrictEqual('translate(3px)');
+    expect(global`translate(3px)`).toBe('translate(3px)');
   });
 
   it('wraps the transform in a counter/original transform if rotation present on element', () => {
@@ -42,7 +42,7 @@ describe('getGlobalSpace', () => {
     const global = getGlobalSpace({
       rotationAngle,
     });
-    expect(global`translate(3px)`).toStrictEqual(
+    expect(global`translate(3px)`).toBe(
       'rotate(-34deg) translate(3px) rotate(34deg)'
     );
   });
