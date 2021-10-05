@@ -150,7 +150,7 @@ const getUser = function () {
   });
 };
 
-const updateStory = (story) => {
+const storyResponse = (story) => {
   let title = '';
   let id = story.id || 456;
   if (story?.original_id) {
@@ -181,10 +181,18 @@ const updateStory = (story) => {
   });
 };
 
-const duplicateStory = (story) => {
-  story.id = story.originalStoryData.id;
+const updateStory = (story) => {
+  return storyResponse(story);
+};
 
-  return updateStory(story);
+const duplicateStory = (story) => {
+  const {
+    originalStoryData: { id },
+  } = story;
+
+  story.original_id = id;
+
+  return storyResponse(story);
 };
 
 describe('ApiProvider', () => {
