@@ -90,7 +90,8 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Settings $settings Settings instance.
+	 * @param Settings    $settings     Settings instance.
+	 * @param Experiments $experiments  Experiments instance.
 	 *
 	 * @return void
 	 */
