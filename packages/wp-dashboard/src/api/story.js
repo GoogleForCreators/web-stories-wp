@@ -21,7 +21,7 @@ import {
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
   STORY_SORT_OPTIONS,
-  STORY_STATUSES,
+  STORY_STATUS,
 } from '@web-stories-wp/dashboard';
 import { createSolidFromString } from '@web-stories-wp/patterns';
 
@@ -44,7 +44,7 @@ import { STORY_FIELDS, STORY_EMBED } from './constants';
  */
 export function fetchStories(queryParams, apiPath) {
   const {
-    status = STORY_STATUSES[0].value,
+    status = STORY_STATUS.ALL,
     sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
     sortDirection,
     searchTerm,
