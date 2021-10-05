@@ -24,6 +24,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '@web-stories-wp/design-system';
+import { useDebouncedCallback } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -83,6 +84,11 @@ function VideoTrimmer() {
     })
   );
 
+  const debouncedNudge = useDebouncedCallback(
+    () => setIsDraggingHandles(false),
+    10000
+  );
+
   if (!pageWidth || !maxOffset) {
     return null;
   }
@@ -96,6 +102,10 @@ function VideoTrimmer() {
     minorStep: 10,
     onPointerDown: () => setIsDraggingHandles(true),
     onPointerUp: () => setIsDraggingHandles(false),
+    onNudge: () => {
+      setIsDraggingHandles(true);
+      debouncedNudge();
+    },
   };
 
   return (

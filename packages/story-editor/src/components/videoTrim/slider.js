@@ -37,6 +37,7 @@ function Slider({
   onChange = () => {},
   getValueText = null,
   onPointerDown = () => {},
+  onNudge = () => {},
   ...rest
 }) {
   const ref = useRef();
@@ -75,8 +76,11 @@ function Slider({
   );
 
   const handleNudge = useCallback(
-    (delta) => onChange(value + delta),
-    [onChange, value]
+    (delta) => {
+      onChange(value + delta);
+      onNudge?.();
+    },
+    [onChange, onNudge, value]
   );
 
   useKeyDownEffect(ref, 'left', () => handleNudge(-step), [handleNudge, step]);
@@ -117,6 +121,7 @@ Slider.propTypes = {
   onChange: PropTypes.func,
   getValueText: PropTypes.func,
   onPointerDown: PropTypes.func,
+  onNudge: PropTypes.func,
 };
 
 export default Slider;

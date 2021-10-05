@@ -69,7 +69,6 @@ function useVideoNode() {
       setCurrentTime(Math.min(currentOffset, endOffset));
       if (currentOffset >= endOffset) {
         videoNode.currentTime = startOffset / 1000;
-        videoNode.play();
       }
     }
     videoNode.addEventListener('timeupdate', onTimeUpdate);
