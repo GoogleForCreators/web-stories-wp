@@ -116,6 +116,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * New feature: ability to trim videos to make them shorter.
 * New feature: [improved analytics configuration](https://wp.stories.google/docs/seo/#Adding-Analytics) with opt-in on the settings page.
 * Template colors are now available in "Saved Colors" when creating a story from a template.
+* Improved management of publisher logos in the editor.
 * Bug fixes and performance improvements.
 
 = 1.11.0 =
@@ -140,7 +141,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.12.0 =
 
-Video trimming, improved analytics configuration, templates improvements, and various bug fixes.
+Video trimming, improved analytics configuration, publisher logos management, saved template colors, and various bug fixes.
 
 = 1.11.0 =
 
