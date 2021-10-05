@@ -23,6 +23,8 @@ import {
   useCallback,
   forwardRef,
   useFocusOut,
+  useEffect,
+  useRef,
 } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { _x, sprintf } from '@web-stories-wp/i18n';
@@ -87,12 +89,10 @@ PageTemplateTitle.propTypes = {
   isActive: PropTypes.bool.isRequired,
 };
 
-function PageTemplate(
-  { page, isActive, pageSize, columnWidth, handleDelete, ...rest },
-  ref
-) {
+function PageTemplate({ page, isActive, pageSize, columnWidth, ...rest }) {
   const [isHover, setIsHover] = useState(false);
   const isActivePage = isHover || isActive;
+  const ref = useRef();
 
   useFocusOut(ref, () => setIsHover(false), []);
 
@@ -104,16 +104,19 @@ function PageTemplate(
     setIsHover(false);
   }, []);
 
+  useEffect(() => {
+    if (isActive && ref.current) {
+      ref.current.focus();
+    }
+  });
+
   return (
     <PageTemplateWrapper
       columnWidth={columnWidth}
       role="listitem"
       ref={ref}
-      // Needed for custom keyboard navigation implementation.
-      tabIndex={0}
       onMouseEnter={handleSetHoverActive}
       onMouseLeave={handleSetHoverFalse}
-      // onClick={() => console.log('pageTemplateWrapper')}
       aria-label={page.title}
       isHighlighted={page.id === highlightedTemplate}
       {...rest}
