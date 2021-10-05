@@ -82,7 +82,7 @@ describe('restore', () => {
       current: '222',
     });
 
-    expect(result.current).toStrictEqual('111');
+    expect(result.current).toBe('111');
   });
 
   it('should restore to an empty state if no pages', () => {
