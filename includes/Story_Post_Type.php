@@ -372,8 +372,11 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 				return $bypass;
 			}
 
-			wp_safe_redirect( $redirect_url, 301 );
-			exit;
+			// Only exit if there was actually a location to redirect to.
+			// Allows filtering location in tests to verify behavior.
+			if ( wp_safe_redirect( $redirect_url, 301 ) ) {
+				exit;
+			}
 		}
 
 		return $bypass;

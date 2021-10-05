@@ -54,6 +54,11 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	protected static $archive_page_id;
 
 	/**
+	 * @var string
+	 */
+	protected $redirect_location;
+
+	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
 	public static function wpSetUpBeforeClass( $factory ) {
@@ -91,15 +96,25 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		$this->instance = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 
 		$this->add_caps_to_roles();
+
+		add_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
 	}
 
 	public function tear_down() {
 		$this->remove_caps_from_roles();
 
+		$this->redirect_location = null;
+		remove_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
+
 		delete_option( Settings::SETTING_NAME_ARCHIVE );
 		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		parent::tear_down();
+	}
+
+	public function filter_wp_redirect( $location ): bool {
+		$this->redirect_location = $location;
+		return false;
 	}
 
 	/**
@@ -390,54 +405,103 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		$this->assertSame( [], $actual );
 	}
 
-
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
-	public function test_redirect_post_type_archive_urls_true() {
+	public function test_redirect_post_type_archive_urls_experiment_disabled() {
 		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
 		$query  = new \WP_Query();
 		$result = $this->instance->redirect_post_type_archive_urls( true, $query );
-		$this->assertTrue( $result );
 
+		$this->assertTrue( $result );
+		$this->assertNull( $this->redirect_location );
 	}
 
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
-	public function test_redirect_post_type_archive_urls_no_permalink() {
+	public function test_redirect_post_type_archive_urls_bypass() {
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+
+		$this->instance = new \Google\Web_Stories\Story_Post_Type( new Settings(), $experiments );
+
 		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+
+		$query  = new \WP_Query();
+		$result = $this->instance->redirect_post_type_archive_urls( true, $query );
+
+		$this->assertTrue( $result );
+		$this->assertNull( $this->redirect_location );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_ugly_permalinks() {
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+
+		$this->instance = new \Google\Web_Stories\Story_Post_Type( new Settings(), $experiments );
+
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+
+		// Needed so that the archive page change takes effect.
+		$this->instance->register_post_type();
 
 		$query  = new \WP_Query();
 		$result = $this->instance->redirect_post_type_archive_urls( false, $query );
 
 		$this->assertFalse( $result );
+		$this->assertNull( $this->redirect_location );
 	}
 
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
-	public function test_redirect_post_type_archive_urls_permalinks() {
-		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+	public function test_redirect_post_type_archive_urls_pretty_permalinks() {
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+
 		$this->set_permalink_structure( '/%postname%/' );
 
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+
+		// Needed so that the archive page change takes effect.
+		$this->instance->register_post_type();
+
 		$query  = new \WP_Query();
 		$result = $this->instance->redirect_post_type_archive_urls( false, $query );
 
 		$this->assertFalse( $result );
+		$this->assertNull( $this->redirect_location );
 	}
 
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
 	public function test_redirect_post_type_archive_urls_page() {
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$this->instance = new \Google\Web_Stories\Story_Post_Type( new Settings(), $experiments );
+
 		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
-		$this->set_permalink_structure( '/%postname%/' );
+
+		// Needed so that the archive page change takes effect.
+		$this->instance->register_post_type();
 
 		$query                    = new \WP_Query();
 		$query->query['pagename'] = $this->instance::REWRITE_SLUG;
@@ -453,16 +517,26 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		remove_filter( 'post_type_archive_link', '__return_false' );
 
 		$this->assertFalse( $result );
+		$this->assertNull( $this->redirect_location );
 	}
 
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
 	public function test_redirect_post_type_archive_urls_pagename_set() {
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$this->instance = new \Google\Web_Stories\Story_Post_Type( new Settings(), $experiments );
+
 		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
-		$this->set_permalink_structure( '/%postname%/' );
+		// Needed so that the archive page change takes effect.
+		$this->instance->register_post_type();
 
 		$query                    = new \WP_Query();
 		$query->query['pagename'] = $this->instance::REWRITE_SLUG;
@@ -475,5 +549,34 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		remove_filter( 'post_type_archive_link', '__return_false' );
 
 		$this->assertFalse( $result );
+		$this->assertNull( $this->redirect_location );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_existing_custom_page() {
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$this->instance = new \Google\Web_Stories\Story_Post_Type( new Settings(), $experiments );
+
+		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+
+		// Needed so that the archive page change takes effect.
+		$this->instance->register_post_type();
+
+		$query                    = new \WP_Query();
+		$query->query['pagename'] = $this->instance::REWRITE_SLUG;
+		$query->set( 'pagename', $this->instance::REWRITE_SLUG );
+
+		$result = $this->instance->redirect_post_type_archive_urls( false, $query );
+
+		$this->assertFalse( $result );
+		$this->assertSame( get_permalink( self::$archive_page_id ), $this->redirect_location );
 	}
 }
