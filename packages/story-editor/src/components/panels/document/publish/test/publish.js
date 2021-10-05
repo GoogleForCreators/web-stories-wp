@@ -23,6 +23,7 @@ import MockDate from 'mockdate';
 /**
  * Internal dependencies
  */
+import ApiContext from '../../../../../app/api/context';
 import ConfigContext from '../../../../../app/config/context';
 import StoryContext from '../../../../../app/story/context';
 import { renderWithTheme } from '../../../../../testUtils';
@@ -58,6 +59,13 @@ function arrange(
     actions: { updateStory },
   };
 
+  const getPublisherLogos = jest.fn().mockResolvedValue([]);
+  const apiValue = {
+    actions: {
+      getPublisherLogos,
+    },
+  };
+
   const config = {
     capabilities,
     allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
@@ -80,11 +88,13 @@ function arrange(
 
   const view = renderWithTheme(
     <ConfigContext.Provider value={config}>
-      <StoryContext.Provider value={storyContextValue}>
-        <InspectorContext.Provider value={inspectorContextValue}>
-          <PublishPanel />
-        </InspectorContext.Provider>
-      </StoryContext.Provider>
+      <ApiContext.Provider value={apiValue}>
+        <StoryContext.Provider value={storyContextValue}>
+          <InspectorContext.Provider value={inspectorContextValue}>
+            <PublishPanel />
+          </InspectorContext.Provider>
+        </StoryContext.Provider>
+      </ApiContext.Provider>
     </ConfigContext.Provider>
   );
   return {
