@@ -46,7 +46,7 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 	 *
 	 * @return Service Service that was requested.
 	 */
-	public function get( $id );
+	public function get( $id ): Service;
 
 	/**
 	 * Check whether the container can return a service for the given

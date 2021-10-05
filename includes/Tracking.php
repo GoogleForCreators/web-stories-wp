@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\User\Preferences;
 
@@ -78,6 +79,20 @@ class Tracking extends Service_Base {
 	private $assets;
 
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Preferences instance.
+	 *
+	 * @var Preferences Preferences instance.
+	 */
+	private $preferences;
+
+	/**
 	 * Tracking constructor.
 	 *
 	 * @since 1.4.0
@@ -85,11 +100,21 @@ class Tracking extends Service_Base {
 	 * @param Experiments $experiments Experiments instance.
 	 * @param Site_Kit    $site_kit Site_Kit instance.
 	 * @param Assets      $assets Assets instance.
+	 * @param Settings    $settings Settings instance.
+	 * @param Preferences $preferences Preferences instance.
 	 */
-	public function __construct( Experiments $experiments, Site_Kit $site_kit, Assets $assets ) {
+	public function __construct(
+		Experiments $experiments,
+		Site_Kit $site_kit,
+		Assets $assets,
+		Settings $settings,
+		Preferences $preferences
+	) {
 		$this->assets      = $assets;
 		$this->experiments = $experiments;
 		$this->site_kit    = $site_kit;
+		$this->settings    = $settings;
+		$this->preferences = $preferences;
 	}
 
 	/**
@@ -161,7 +186,7 @@ class Tracking extends Service_Base {
 
 		$site_kit_status = $this->site_kit->get_plugin_status();
 		$active_plugins  = $site_kit_status['active'] ? 'google-site-kit' : '';
-		$analytics       = $site_kit_status['analyticsActive'] ? 'google-site-kit' : ! empty( get_option( Settings::SETTING_NAME_TRACKING_ID ) );
+		$analytics       = $site_kit_status['analyticsActive'] ? 'google-site-kit' : ! empty( $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID ) );
 
 		return [
 			'siteLocale'         => get_locale(),
@@ -171,7 +196,7 @@ class Tracking extends Service_Base {
 			'wpVersion'          => get_bloginfo( 'version' ),
 			'phpVersion'         => PHP_VERSION,
 			'isMultisite'        => (int) is_multisite(),
-			'adNetwork'          => (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ),
+			'adNetwork'          => (string) $this->settings->get_setting( $this->settings::SETTING_NAME_AD_NETWORK, 'none' ),
 			'analytics'          => $analytics,
 			'activePlugins'      => $active_plugins,
 		];
@@ -183,6 +208,6 @@ class Tracking extends Service_Base {
 	 * @return bool True if tracking enabled, and False if not.
 	 */
 	public function is_active(): bool {
-		return (bool) get_user_meta( get_current_user_id(), Preferences::OPTIN_META_KEY, true );
+		return (bool) $this->preferences->get_preference( get_current_user_id(), Preferences::OPTIN_META_KEY );
 	}
 }

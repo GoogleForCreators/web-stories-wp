@@ -47,6 +47,26 @@ class Experiments extends Service_Base {
 	private $hook_suffix;
 
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
+
+	/**
 	 * Initializes experiments
 	 *
 	 * @return void
@@ -165,7 +185,7 @@ class Experiments extends Service_Base {
 		<label for="<?php echo esc_attr( $args['id'] ); ?>">
 			<input
 				type="checkbox"
-				name="<?php echo esc_attr( sprintf( '%1$s[%2$s]', Settings::SETTING_NAME_EXPERIMENTS, $args['id'] ) ); ?>"
+				name="<?php echo esc_attr( sprintf( '%1$s[%2$s]', $this->settings::SETTING_NAME_EXPERIMENTS, $args['id'] ) ); ?>"
 				id="<?php echo esc_attr( $args['id'] ); ?>"
 				value="1"
 				<?php echo esc_attr( $disabled ); ?>
@@ -341,6 +361,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Taxonomies', 'web-stories' ),
 				'description' => __( 'Enable support of tags and categories for stories', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 
 			/**
@@ -378,6 +399,18 @@ class Experiments extends Service_Base {
 				'description' => __( 'Enable migration option to story auto analytics', 'web-stories' ),
 				'group'       => 'dashboard',
 				'default'     => true,
+			],
+
+			/**
+			 * Author: @swissspidy
+			 * Issue: #5315
+			 * Creation date: 2021-09-23
+			 */
+			[
+				'name'        => 'enableBetterCaptions',
+				'label'       => __( 'Video Captions', 'web-stories' ),
+				'description' => __( 'Improve video captions appearance when viewing stories', 'web-stories' ),
+				'group'       => 'general',
 			],
 		];
 	}
@@ -440,7 +473,7 @@ class Experiments extends Service_Base {
 			return (bool) $experiment['default'];
 		}
 
-		$experiments = get_option( Settings::SETTING_NAME_EXPERIMENTS );
+		$experiments = $this->settings->get_setting( $this->settings::SETTING_NAME_EXPERIMENTS, [] );
 		return ! empty( $experiments[ $name ] );
 	}
 
@@ -451,7 +484,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of all enabled experiments.
 	 */
-	public function get_enabled_experiments() {
+	public function get_enabled_experiments(): array {
 		$experiments = array_filter(
 			wp_list_pluck( $this->get_experiments(), 'name' ),
 			[ $this, 'is_experiment_enabled' ]
