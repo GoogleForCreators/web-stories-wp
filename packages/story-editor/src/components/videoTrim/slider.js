@@ -88,12 +88,14 @@ function Slider({
   ]);
 
   const ratio = (value - min) / (max - min);
+  const cssValue = `${(ratio * railWidth).toFixed(2)}px`;
+  const sliderStyle = { left: cssValue };
 
   return (
     <Thumb
       ref={ref}
       onPointerDown={handlePointerDown}
-      style={{ left: `${(ratio * railWidth).toFixed(2)}px` }}
+      style={sliderStyle}
       role="slider"
       aria-valuemin={min}
       aria-valuemax={max}
