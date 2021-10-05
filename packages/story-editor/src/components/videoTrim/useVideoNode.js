@@ -22,6 +22,7 @@ import {
   useState,
   useCallback,
   useMemo,
+  useRef,
 } from '@web-stories-wp/react';
 
 /**
@@ -38,9 +39,15 @@ function useVideoNode() {
   const [maxOffset, setMaxOffset] = useState(null);
   const [videoNode, setVideoNode] = useState(null);
   const [isDraggingHandles, setIsDraggingHandles] = useState(false);
+  // Video plays by default.
+  const isPausedTracker = useRef(false);
 
   useEffect(() => {
     if (!videoNode) {
+      return;
+    }
+    // If the video has been paused manually, skip playing.
+    if (isPausedTracker.current) {
       return;
     }
     if (isDraggingHandles) {
@@ -50,6 +57,16 @@ function useVideoNode() {
       videoNode.play();
     }
   }, [videoNode, isDraggingHandles, startOffset]);
+
+  const paused = videoNode ? videoNode.paused : null;
+  useEffect(() => {
+    // Don't change manual tracker while dragging.
+    if (isDraggingHandles) {
+      return;
+    }
+    // Update the tracker when the pause state changes while not dragging.
+    isPausedTracker.current = paused;
+  }, [paused, isDraggingHandles]);
 
   useEffect(() => {
     if (!videoNode) {
@@ -68,6 +85,14 @@ function useVideoNode() {
     function onTimeUpdate(evt) {
       const currentOffset = Math.floor(evt.target.currentTime * 1000);
       setCurrentTime(Math.min(currentOffset, endOffset));
+      // If we've reached the end of the video, start again.
+      // @todo This is not working properly with pausing end offset.
+      if (currentOffset >= endOffset) {
+        videoNode.currentTime = startOffset / 1000;
+        if (!isPausedTracker.current) {
+          videoNode.play();
+        }
+      }
     }
     videoNode.addEventListener('timeupdate', onTimeUpdate);
     videoNode.addEventListener('loadedmetadata', onLoadedMetadata);
