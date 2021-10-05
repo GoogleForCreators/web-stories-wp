@@ -36,6 +36,7 @@ function Slider({
   value = 0,
   onChange = () => {},
   getValueText = null,
+  onPointerDown = () => {},
   ...rest
 }) {
   const ref = useRef();
@@ -46,6 +47,8 @@ function Slider({
       downEvent.preventDefault();
       downEvent.stopPropagation();
       ref.current.focus();
+
+      onPointerDown?.();
 
       const handlePointerMove = function (event) {
         const deltaX = event.pageX - downEvent.pageX;
@@ -68,7 +71,7 @@ function Slider({
 
       return handlePointerUp;
     },
-    [value, max, min, onChange, railWidth]
+    [value, max, min, onChange, railWidth, onPointerDown]
   );
 
   const handleNudge = useCallback(
@@ -113,6 +116,7 @@ Slider.propTypes = {
   value: PropTypes.number,
   onChange: PropTypes.func,
   getValueText: PropTypes.func,
+  onPointerDown: PropTypes.func,
 };
 
 export default Slider;

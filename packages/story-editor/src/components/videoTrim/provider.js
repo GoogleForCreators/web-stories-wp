@@ -47,6 +47,7 @@ function VideoTrimProvider({ children }) {
     setEndOffset,
     setVideoNode,
     resetOffsets,
+    setIsDraggingHandles,
   } = useVideoNode();
 
   const performTrim = useCallback(() => {
@@ -90,6 +91,7 @@ function VideoTrimProvider({ children }) {
       setStartOffset,
       setEndOffset,
       resetOffsets,
+      setIsDraggingHandles,
     },
   };
 

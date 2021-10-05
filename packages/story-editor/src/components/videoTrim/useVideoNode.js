@@ -37,6 +37,18 @@ function useVideoNode() {
   const [originalEndOffset, setOriginalEndOffset] = useState(null);
   const [maxOffset, setMaxOffset] = useState(null);
   const [videoNode, setVideoNode] = useState(null);
+  const [isDraggingHandles, setIsDraggingHandles] = useState(false);
+
+  useEffect(() => {
+    if (!videoNode) {
+      return;
+    }
+    if (isDraggingHandles) {
+      videoNode.pause();
+    } else {
+      videoNode.play();
+    }
+  }, [videoNode, isDraggingHandles]);
 
   useEffect(() => {
     if (!videoNode) {
@@ -75,7 +87,7 @@ function useVideoNode() {
       offset = Math.min(endOffset - MEDIA_VIDEO_MINIMUM_DURATION, offset);
       offset = Math.max(0, offset);
       rawSetStartOffset(offset);
-      videoNode.currentTime = Math.max(videoNode.currentTime, offset / 1000);
+      videoNode.currentTime = offset / 1000;
     },
     [videoNode, endOffset]
   );
@@ -86,7 +98,7 @@ function useVideoNode() {
       offset = Math.max(startOffset + MEDIA_VIDEO_MINIMUM_DURATION, offset);
       offset = Math.min(maxOffset, offset);
       rawSetEndOffset(offset);
-      videoNode.currentTime = Math.min(videoNode.currentTime, offset / 1000);
+      videoNode.currentTime = offset / 1000;
     },
     [videoNode, startOffset, maxOffset]
   );
@@ -106,6 +118,7 @@ function useVideoNode() {
     setStartOffset,
     setEndOffset,
     setVideoNode,
+    setIsDraggingHandles,
   };
 }
 

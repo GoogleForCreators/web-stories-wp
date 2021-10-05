@@ -51,11 +51,18 @@ function VideoTrimmer() {
     setEndOffset,
     hasChanged,
     performTrim,
+    setIsDraggingHandles,
     toggleTrimMode,
   } = useVideoTrim(
     ({
       state: { currentTime, startOffset, endOffset, maxOffset, hasChanged },
-      actions: { setStartOffset, setEndOffset, performTrim, toggleTrimMode },
+      actions: {
+        setStartOffset,
+        setEndOffset,
+        performTrim,
+        toggleTrimMode,
+        setIsDraggingHandles,
+      },
     }) => ({
       currentTime,
       startOffset,
@@ -65,6 +72,7 @@ function VideoTrimmer() {
       setEndOffset,
       hasChanged,
       performTrim,
+      setIsDraggingHandles,
       toggleTrimMode,
     })
   );
@@ -86,6 +94,8 @@ function VideoTrimmer() {
     max: maxOffset,
     step: 100,
     minorStep: 10,
+    onPointerDown: () => setIsDraggingHandles(true),
+    onPointerUp: () => setIsDraggingHandles(false),
   };
 
   return (
