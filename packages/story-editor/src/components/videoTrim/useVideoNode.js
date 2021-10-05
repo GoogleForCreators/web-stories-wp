@@ -85,12 +85,10 @@ function useVideoNode() {
     function onTimeUpdate(evt) {
       const currentOffset = Math.floor(evt.target.currentTime * 1000);
       setCurrentTime(Math.min(currentOffset, endOffset));
-      // If we've reached the end of the video, start again.
-      if (currentOffset > endOffset) {
+      // If we've reached the end of the video, start again unless the user has paused the video.
+      if (currentOffset > endOffset && !isPausedTracker.current) {
         videoNode.currentTime = startOffset / 1000;
-        if (!isPausedTracker.current) {
-          videoNode.play();
-        }
+        videoNode.play();
       }
     }
     videoNode.addEventListener('timeupdate', onTimeUpdate);
