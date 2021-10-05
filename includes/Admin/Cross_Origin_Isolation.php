@@ -101,8 +101,10 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional, HasReq
 			return false;
 		}
 
+		$user_preferences = Services::get( 'user_preferences' );
+
 		return rest_sanitize_boolean(
-			Services::get( 'user_preferences' )->get_preference( $user_id, Preferences::MEDIA_OPTIMIZATION_META_KEY )
+			$user_preferences->get_preference( $user_id, $user_preferences::MEDIA_OPTIMIZATION_META_KEY )
 		);
 	}
 
