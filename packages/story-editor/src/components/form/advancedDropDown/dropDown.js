@@ -59,6 +59,7 @@ const Container = styled.div`
  * @param {string} props.priorityLabel Label to display in front of the priority options.
  * @param {string} props.searchResultsLabel Label to display in front of matching options when searching.
  * @param {Function} props.renderer Option renderer in case a custom renderer is required.
+ * @param {Function} props.activeItemRenderer Active item renderer in case a activeItemLabel is not enough.
  * @param {boolean} props.isInline If to display the selection list inline instead of as a separate popup modal.
  * @param {string} props.dropDownLabel The visible label of the dropdown select.
  * @return {*} Render.
@@ -78,6 +79,7 @@ const DropDown = forwardRef(function DropDown(
     priorityLabel,
     searchResultsLabel,
     renderer,
+    activeItemRenderer,
     isInline = false,
     dropDownLabel = '',
     highlightStylesOverride,
@@ -171,6 +173,7 @@ const DropDown = forwardRef(function DropDown(
           internalRef.current = node;
         }}
         activeItemLabel={selectedOption?.name}
+        activeItemRenderer={activeItemRenderer}
         dropDownLabel={dropDownLabel}
         onSelectClick={toggleDropDown}
         selectButtonStylesOverride={highlightStylesOverride || focusStyle}
@@ -202,6 +205,7 @@ DropDown.propTypes = {
   priorityLabel: PropTypes.string,
   searchResultsLabel: PropTypes.string,
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  activeItemRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   dropDownLabel: PropTypes.string,
   isInline: PropTypes.bool,
 };

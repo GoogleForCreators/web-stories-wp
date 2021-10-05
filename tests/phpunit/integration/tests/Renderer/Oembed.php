@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**

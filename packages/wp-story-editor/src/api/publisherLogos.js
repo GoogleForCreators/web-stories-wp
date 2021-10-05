@@ -1,6 +1,5 @@
-<?php
-/**
- * Copyright 2020 Google LLC
+/*
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +14,21 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration\Integrations;
-
-use Google\Web_Stories\Tests\Integration\TestCase;
-use Google\Web_Stories\Integrations\New_Relic as New_Relic_Integration;
-
 /**
- * @coversDefaultClass \Google\Web_Stories\Integrations\New_Relic
+ * WordPress dependencies
  */
-class New_Relic extends TestCase {
-	/**
-	 * @covers ::is_needed
-	 */
-	public function test_is_needed() {
-		$this->assertSame( function_exists( 'newrelic_disable_autorum' ), New_Relic_Integration::is_needed() );
-	}
+import apiFetch from '@wordpress/api-fetch';
+
+export function getPublisherLogos(path) {
+  return apiFetch({
+    path,
+  });
+}
+
+export function addPublisherLogo(path, id) {
+  return apiFetch({
+    path,
+    data: { id },
+    method: 'POST',
+  });
 }

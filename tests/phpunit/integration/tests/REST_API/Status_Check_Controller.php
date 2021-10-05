@@ -37,11 +37,11 @@ class Status_Check_Controller extends Test_REST_TestCase {
 	protected static $subscriber;
 
 	/**
-	 * Count of the number of requests attempted.
+	 * Test instance.
 	 *
-	 * @var int
+	 * @var \Google\Web_Stories\REST_API\Status_Check_Controller
 	 */
-	protected $request_count = 0;
+	private $controller;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$subscriber = $factory->user->create(
@@ -60,19 +60,32 @@ class Status_Check_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->request_count = 0;
+		$this->controller = new \Google\Web_Stories\REST_API\Status_Check_Controller();
 	}
 
 	/**
-	 * @covers ::register_routes
+	 * @covers ::register
 	 */
-	public function test_register_routes() {
+	public function test_register() {
+		$this->controller->register();
+
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/status-check', $routes );
+	}
 
-		$route = $routes['/web-stories/v1/status-check'];
-		$this->assertCount( 1, $route );
+	/**
+	 * @covers ::status_check_permissions_check
+	 * @covers ::status_check
+	 */
+	public function test_no_user() {
+		$this->controller->register();
+
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
+		$request->set_param( 'content', '<a href="#">Test</a>' );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertErrorResponse( 'rest_forbidden', $response, 401 );
 	}
 
 	/**
@@ -80,14 +93,8 @@ class Status_Check_Controller extends Test_REST_TestCase {
 	 * @covers ::status_check
 	 */
 	public function test_without_permission() {
-		// Test without a login.
-		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
-		$request->set_param( 'content', '<a href="#">Test</a>' );
-		$response = rest_get_server()->dispatch( $request );
+		$this->controller->register();
 
-		$this->assertErrorResponse( 'rest_forbidden', $response, 401 );
-
-		// Test with a user that does not have edit_posts capability.
 		wp_set_current_user( self::$subscriber );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
 		$request->set_param( 'content', '<a href="#">Test</a>' );
@@ -101,6 +108,8 @@ class Status_Check_Controller extends Test_REST_TestCase {
 	 * @covers ::status_check
 	 */
 	public function test_status_check() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
 		$request->set_param( 'content', '<a href="#">Test</a>' );

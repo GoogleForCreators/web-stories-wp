@@ -26,12 +26,23 @@ use WP_REST_Request;
  *
  * @package Google\Web_Stories\Tests\REST_API
  *
- * @coversDefaultClass \Google\Web_Stories\REST_API\Autosaves_Controller
+ * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Autosaves_Controller
  */
-class Autosaves_Controller extends Test_REST_TestCase {
-	protected $server;
+class Stories_Autosaves_Controller extends Test_REST_TestCase {
 
+	/**
+	 * Author user ID.
+	 *
+	 * @var int
+	 */
 	protected static $author_id;
+
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\REST_API\Stories_Autosaves_Controller
+	 */
+	private $controller;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$author_id = $factory->user->create(
@@ -41,7 +52,15 @@ class Autosaves_Controller extends Test_REST_TestCase {
 		);
 	}
 
+	public function set_up() {
+		parent::set_up();
+
+		$this->controller = new \Google\Web_Stories\REST_API\Stories_Autosaves_Controller();
+	}
+
 	public function test_create_item_as_author_should_not_strip_markup() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$author_id );
 
 		$this->kses_int();
@@ -66,6 +85,8 @@ class Autosaves_Controller extends Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
 
+		$this->assertArrayHasKey( 'content', $new_data );
+		$this->assertArrayHasKey( 'content', $new_data );
 		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
 

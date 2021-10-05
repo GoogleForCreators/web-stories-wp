@@ -201,7 +201,7 @@
     "test:karma:dashboard": "karma start karma-dashboard.config.cjs --single-run",
     "test:karma:dashboard:retry-failed": "karma start karma-dashboard.config.cjs --single-run --retry-failed",
     "test:karma:dashboard:watch": "karma start karma-dashboard.config.cjs --debug",
-    "test:php": "npm-run-all --parallel test:php:*",
+    "test:php": "npm-run-all test:php:*",
     "test:php:unit": "vendor/bin/phpunit",
     "test:php:integration": "npm-run-all test:php:integration:*",
     "test:php:integration:single": "vendor/bin/phpunit -c phpunit-integration.xml.dist",
