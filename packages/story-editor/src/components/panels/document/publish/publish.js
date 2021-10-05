@@ -165,7 +165,7 @@ function PublishPanel() {
           featuredMedia: {
             id: image.id,
             height: image.sizes?.full?.height || image.height,
-            url: image.sizes?.full?.url || image.url,
+            url: image.sizes?.full?.source_url || image.src,
             width: image.sizes?.full?.width || image.width,
           },
         },
