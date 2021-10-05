@@ -18,6 +18,7 @@
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use DateTime;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
@@ -39,6 +40,13 @@ class Stories_Controller extends Test_REST_TestCase {
 
 	protected static $author_id;
 	protected static $contributor_id;
+
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\REST_API\Stories_Controller
+	 */
+	private $controller;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
@@ -132,8 +140,13 @@ class Stories_Controller extends Test_REST_TestCase {
 		);
 	}
 
-	public function tear_down() {
+	public function set_up() {
+		parent::set_up();
 
+		$this->controller = new \Google\Web_Stories\REST_API\Stories_Controller( Story_Post_Type::POST_TYPE_SLUG );
+	}
+
+	public function tear_down() {
 		$this->kses_remove_filters();
 
 		parent::tear_down();
@@ -154,6 +167,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::add_response_headers
 	 */
 	public function test_get_items() {
+		$this->controller->register_routes();
+
 		wp_set_current_user( self::$user_id );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
 		$request->set_param( 'status', [ 'draft' ] );
@@ -189,7 +204,9 @@ class Stories_Controller extends Test_REST_TestCase {
 	/**
 	 * @covers ::get_items
 	 */
-	public function test_get_items_no_perm() {
+	public function test_get_items_no_permission() {
+		$this->controller->register_routes();
+
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
 		$response = rest_get_server()->dispatch( $request );
 		$headers  = $response->get_headers();
@@ -203,6 +220,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::add_response_headers
 	 */
 	public function test_get_items_contributor() {
+		$this->controller->register_routes();
+
 		wp_set_current_user( self::$contributor_id );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
 		$request->set_param( 'context', 'edit' );
@@ -271,6 +290,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::prepare_item_for_response
 	 */
 	public function test_get_item() {
+		$this->controller->register_routes();
+
 		wp_set_current_user( self::$user_id );
 		$story   = self::factory()->post->create(
 			[
@@ -298,6 +319,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::prepare_item_for_response
 	 */
 	public function test_get_item_no_user() {
+		$this->controller->register_routes();
+
 		$story = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
@@ -320,6 +343,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::prepare_item_for_response
 	 */
 	public function test_get_item_future() {
+		$this->controller->register_routes();
+
 		wp_set_current_user( self::$user_id );
 		$story   = self::factory()->post->create(
 			[
@@ -349,6 +374,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_links
 	 */
 	public function test_get_item_lock() {
+		$this->controller->register_routes();
+
 		wp_set_current_user( self::$user_id );
 
 		$story    = self::factory()->post->create(
@@ -374,6 +401,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::get_available_actions
 	 */
 	public function test_get_available_actions() {
+		$this->controller->register_routes();
+
 		wp_set_current_user( self::$user_id );
 
 		$story    = self::factory()->post->create(
@@ -399,6 +428,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::add_taxonomy_links
 	 */
 	public function test_get_add_taxonomy_links() {
+		$this->controller->register_routes();
+
 		$object = new DummyTaxonomy();
 		$this->set_private_property( $object, 'taxonomy_post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$object->register_taxonomy();
@@ -428,6 +459,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::add_response_headers
 	 */
 	public function test_get_items_format() {
+		$this->controller->register_routes();
+
 		wp_set_current_user( self::$user_id );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
 		$request->set_param( 'status', [ 'draft' ] );
@@ -458,20 +491,20 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::get_item_schema
 	 */
 	public function test_get_item_schema() {
-		$request  = new WP_REST_Request( 'OPTIONS', '/web-stories/v1/web-story' );
-		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
+		$this->controller->register_routes();
 
-		$this->assertNotEmpty( $data );
+		$data = $this->controller->get_item_schema();
 
-		$properties = $data['schema']['properties'];
-		$this->assertArrayHasKey( 'story_data', $properties );
+		$this->assertArrayHasKey( 'properties', $data );
+		$this->assertArrayHasKey( 'story_data', $data['properties'] );
 	}
 
 	/**
 	 * @covers ::filter_posts_clauses
 	 */
 	public function test_filter_posts_by_author_display_names() {
+		$this->controller->register_routes();
+
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
 		$request->set_param( 'order', 'asc' );
 		$request->set_param( 'orderby', 'story_author' );
@@ -519,6 +552,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::filter_posts_clauses
 	 */
 	public function test_filter_posts_clauses_irrelevant_query() {
+		$this->controller->register_routes();
+
 		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
 		$initial_clauses = [
@@ -545,6 +580,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::get_collection_params
 	 */
 	public function test_get_collection_params() {
+		$this->controller->register_routes();
+
 		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
 		$collection_params = $controller->get_collection_params();
@@ -559,6 +596,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::create_item
 	 */
 	public function test_create_item_as_author_should_not_strip_markup() {
+		$this->controller->register_routes();
+
 		wp_set_current_user( self::$author_id );
 
 		$this->kses_int();
@@ -584,6 +623,7 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::create_item
 	 */
 	public function test_create_item_duplicate_id() {
+		$this->controller->register_routes();
 
 		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
 		$unsanitized_story_data = wp_json_encode( [ 'pages' => [] ] );
@@ -632,6 +672,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::create_item
 	 */
 	public function test_create_item_duplicate_id_invalid_id() {
+		$this->controller->register_routes();
+
 		wp_set_current_user( self::$user_id );
 		$this->kses_int();
 
@@ -650,6 +692,7 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers ::create_item
 	 */
 	public function test_create_item_duplicate_id_permission() {
+		$this->controller->register_routes();
 
 		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
 		$unsanitized_story_data = wp_json_encode( [ 'pages' => [] ] );
@@ -687,6 +730,8 @@ class Stories_Controller extends Test_REST_TestCase {
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::update_item
 	 */
 	public function test_update_item_as_author_should_not_strip_markup() {
+		$this->controller->register_routes();
+
 		wp_set_current_user( self::$author_id );
 		$this->kses_int();
 

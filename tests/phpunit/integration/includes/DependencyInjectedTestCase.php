@@ -44,6 +44,16 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	public function set_up() {
 		parent::set_up();
 
+		// Needed because the block will exist already after hooking up the plugin
+		// on plugins_loaded. This avoids _doing_it_wrong messages
+		// due to registering the plugin (and thus the block) again.
+		// But only du so when the block is actually registered to avoid another
+		// _doing_it_wrong message being triggered.
+		// TODO: Figure out a better way.
+		if ( \WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) ) {
+			unregister_block_type( 'web-stories/embed' );
+		}
+
 		// We're intentionally avoiding the PluginFactory here as it uses a
 		// static instance, because its whole point is to allow reuse across consumers.
 		$this->plugin = new Plugin();

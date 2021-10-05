@@ -28,8 +28,6 @@
 
 namespace Google\Web_Stories\Interfaces;
 
-use Google\Web_Stories\Interfaces\FieldState;
-
 /**
  * Interface Renderer.
  *

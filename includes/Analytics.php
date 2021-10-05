@@ -31,6 +31,13 @@ namespace Google\Web_Stories;
  */
 class Analytics extends Service_Base {
 	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
 	 * Experiments instance.
 	 *
 	 * @var Experiments Experiments instance.
@@ -42,13 +49,16 @@ class Analytics extends Service_Base {
 	 *
 	 * @since 1.12.0
 	 *
+	 * @param Settings    $settings Settings instance.
 	 * @param Experiments $experiments Experiments instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Experiments $experiments ) {
+	public function __construct( Settings $settings, Experiments $experiments ) {
+		$this->settings    = $settings;
 		$this->experiments = $experiments;
 	}
+
 	/**
 	 * Initializes all hooks.
 	 *
@@ -68,7 +78,7 @@ class Analytics extends Service_Base {
 	 * @return string Tracking ID.
 	 */
 	public function get_tracking_id(): string {
-		return (string) get_option( Settings::SETTING_NAME_TRACKING_ID );
+		return (string) $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID );
 	}
 
 	/**
@@ -229,7 +239,7 @@ class Analytics extends Service_Base {
 		}
 
 		if (
-			(bool) get_option( Settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) ||
+			(bool) $this->settings->get_setting( $this->settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) ||
 			! $this->experiments->is_experiment_enabled( 'enableAutoAnalyticsMigration' )
 		) {
 			$this->print_amp_analytics_tag( $tracking_id );

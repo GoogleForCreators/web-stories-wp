@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration\Integrations;
+namespace Google\Web_Stories\Tests\Integration\Fixture;
 
-use Google\Web_Stories\Tests\Integration\TestCase;
-use Google\Web_Stories\Integrations\New_Relic as New_Relic_Integration;
+use Google\Web_Stories\Infrastructure\HasRequirements;
+use Google\Web_Stories\Infrastructure\Service;
 
-/**
- * @coversDefaultClass \Google\Web_Stories\Integrations\New_Relic
- */
-class New_Relic extends TestCase {
+class DummyServiceWithRequirements implements Service, HasRequirements {
+
 	/**
-	 * @covers ::is_needed
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * @return string[] List of required services.
 	 */
-	public function test_is_needed() {
-		$this->assertSame( function_exists( 'newrelic_disable_autorum' ), New_Relic_Integration::is_needed() );
+	public static function get_requirements(): array {
+		return [ 'service_a' ];
 	}
 }

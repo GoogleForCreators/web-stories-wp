@@ -66,7 +66,7 @@ trait Post_Type {
 	 *
 	 * @return bool
 	 */
-	protected function get_post_type_cap( string $slug, string $cap ) {
+	protected function get_post_type_cap( string $slug, string $cap ): bool {
 		$capability_name = $this->get_post_type_cap_name( $slug, $cap );
 		$capability      = false;
 		if ( $capability_name ) {

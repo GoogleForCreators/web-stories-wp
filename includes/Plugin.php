@@ -163,15 +163,19 @@ class Plugin extends ServiceBasedPlugin {
 	 */
 	protected function get_shared_instances(): array {
 		return [
-			Assets::class,
-			Experiments::class,
-			Admin\Meta_Boxes::class,
-			Locale::class,
 			Admin\Activation_Flag::class,
-			Integrations\Site_Kit::class,
-			Analytics::class,
-			Decoder::class,
+			Admin\Customizer::class,
 			Admin\Google_Fonts::class,
+			Admin\Meta_Boxes::class,
+			Analytics::class,
+			Assets::class,
+			Decoder::class,
+			Experiments::class,
+			Injector::class,
+			Integrations\Site_Kit::class,
+			Locale::class,
+			Settings::class,
+			User\Preferences::class,
 		];
 	}
 
