@@ -62,14 +62,12 @@ describe('Pre-Publish Checklist', () => {
 
       await insertStoryTitle('Publishing Flow: Contributor');
 
-      const checklistToggle = await page.$(
-        'button[aria-owns="checklist_companion"]',
-        { text: 'Checklist' }
+      await expect(page).toClick('button[aria-label="Checklist"]');
+      await expect(page).toMatchElement(
+        '#pre-publish-checklist[data-isexpanded="true"]'
       );
 
       // verify no issues are present
-      await checklistToggle.click();
-
       await expect(page).toMatchElement('p', {
         text: 'You are all set for now. Return to this checklist as you build your Web Story for tips on how to improve it.',
       });
