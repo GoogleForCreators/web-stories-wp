@@ -25,6 +25,8 @@ import visitDashboard from './visitDashboard';
 async function visitSettings() {
   await visitDashboard();
 
+  await page.waitForSelector('[aria-label="Main dashboard navigation"]');
+
   const dashboardNavigation = await expect(page).toMatchElement(
     '[aria-label="Main dashboard navigation"]'
   );
