@@ -101,13 +101,29 @@ export const STORY_SORT_MENU_ITEMS = [
   },
 ];
 
-export const STORY_STATUS = {
-  ALL: 'publish,draft,future,private',
-  PUBLISHED_AND_FUTURE: 'publish,future',
+/**
+ * All possible story statuses.
+ */
+const BASE_STATUSES = {
   DRAFT: 'draft',
   FUTURE: 'future',
+  PENDING: 'pending',
   PUBLISH: 'publish',
   PRIVATE: 'private',
+};
+
+export const STORY_STATUS = {
+  ALL: Object.values(BASE_STATUSES).join(','),
+  PUBLISHED_AND_FUTURE: [BASE_STATUSES.PUBLISH, BASE_STATUSES.FUTURE].join(','),
+  ...BASE_STATUSES,
+};
+
+export const DISPLAY_STATUS = {
+  [STORY_STATUS.PUBLISH]: __('Published', 'web-stories'),
+  [STORY_STATUS.PENDING]: __('Pending', 'web-stories'),
+  [STORY_STATUS.FUTURE]: __('Scheduled', 'web-stories'),
+  [STORY_STATUS.DRAFT]: __('Draft', 'web-stories'),
+  [STORY_STATUS.PRIVATE]: __('Private', 'web-stories'),
 };
 
 export const STORY_STATUSES = [
@@ -120,6 +136,11 @@ export const STORY_STATUSES = [
     label: __('Drafts', 'web-stories'),
     value: STORY_STATUS.DRAFT,
     status: STORY_STATUS.DRAFT,
+  },
+  {
+    label: __('Pending', 'web-stories'),
+    value: STORY_STATUS.PENDING,
+    status: STORY_STATUS.PENDING,
   },
   {
     label: __('Published', 'web-stories'),
@@ -178,6 +199,17 @@ export const STORY_VIEWING_LABELS = {
       _n(
         'Viewing <strong>%d</strong> scheduled story',
         'Viewing <strong>%d</strong> scheduled stories',
+        n,
+        'web-stories'
+      ),
+      n
+    ),
+  [STORY_STATUS.PENDING]: (n) =>
+    sprintf(
+      /* translators: %d: number of stories */
+      _n(
+        'Viewing <strong>%d</strong> pending story',
+        'Viewing <strong>%d</strong> pending stories',
         n,
         'web-stories'
       ),

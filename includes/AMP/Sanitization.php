@@ -393,8 +393,11 @@ class Sanitization {
 				 * @todo Enable by default and allow filtering once AMP_Style_Sanitizer does not call AMP_Options_Manager
 				 *       which in turn requires AMP__VERSION to be defined.
 				 */
-				'allow_transient_caching' => false,
-				'use_document_element'    => true,
+				'allow_transient_caching'   => false,
+				'use_document_element'      => true,
+				'dynamic_element_selectors' => [
+					'amp-story-captions',
+				],
 			],
 			Meta_Sanitizer::class                  => [],
 			AMP_Layout_Sanitizer::class            => [],
