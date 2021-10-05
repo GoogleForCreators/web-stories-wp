@@ -35,6 +35,13 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 	protected static $user_id;
 
 	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\REST_API\Stories_Media_Controller
+	 */
+	private $controller;
+
+	/**
 	 * @param $factory
 	 */
 	public static function wpSetUpBeforeClass( $factory ) {
@@ -73,10 +80,18 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 		);
 	}
 
+	public function set_up() {
+		parent::set_up();
+
+		$this->controller = new \Google\Web_Stories\REST_API\Stories_Media_Controller();
+	}
+
 	/**
 	 * @covers ::get_items
 	 */
 	public function test_get_items_format() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$user_id );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media' );
 		$request->set_param( 'context', 'edit' );
@@ -95,6 +110,8 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 	 * @covers ::prepare_items_query
 	 */
 	public function test_get_items_filter_mime() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$user_id );
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media' );
 		$response = rest_get_server()->dispatch( $request );
@@ -112,6 +129,8 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 	 * @covers ::get_media_types
 	 */
 	public function test_get_items_filter_video() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$user_id );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media' );
 		$request->set_param( 'media_type', 'video' );
@@ -129,6 +148,8 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 	 * @covers ::process_post
 	 */
 	public function test_create_item() {
+		$this->controller->register();
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -165,6 +186,8 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 	 * @covers ::process_post
 	 */
 	public function test_create_item_with_revision() {
+		$this->controller->register();
+
 		$revision_id = self::factory()->post->create_object(
 			[
 				'post_type'   => 'revision',
@@ -192,6 +215,8 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 	 * @covers ::process_post
 	 */
 	public function test_create_item_migrate_data() {
+		$this->controller->register();
+
 		$original_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -235,6 +260,8 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 	 * @covers ::add_taxonomy_links
 	 */
 	public function test_get_add_taxonomy_links() {
+		$this->controller->register();
+
 		$object = new DummyTaxonomy();
 		$this->set_private_property( $object, 'taxonomy_post_type', 'attachment' );
 		$object->register_taxonomy();
@@ -269,6 +296,8 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 	 * @covers ::process_post
 	 */
 	public function test_create_item_migrate_data_invalid() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$user_id );
 
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media' );
@@ -290,12 +319,16 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 	 * @covers ::get_item_schema
 	 */
 	public function test_get_item_schema() {
+		$this->controller->register();
+
 		$request  = new WP_REST_Request( 'OPTIONS', '/web-stories/v1/media' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
 		$this->assertNotEmpty( $data );
 
+		$this->assertArrayHasKey( 'schema', $data );
+		$this->assertArrayHasKey( 'properties', $data['schema'] );
 		$properties = $data['schema']['properties'];
 		$this->assertArrayNotHasKey( 'permalink_template', $properties );
 		$this->assertArrayNotHasKey( 'generated_slug', $properties );

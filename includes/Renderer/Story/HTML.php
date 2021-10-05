@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories\Renderer\Story;
 
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Settings;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Model\Story;
 

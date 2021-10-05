@@ -143,20 +143,16 @@ export const GridItemContainer = styled.div`
 export const GridItemButton = styled.button`
   display: block;
   background-color: transparent;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   width: 100%;
   height: 100%;
   border-radius: 4px;
-  border-width: 2px;
   padding: 0;
 
   ${themeHelpers.focusableOutlineCSS};
 `;
 
-export const Logo = styled.img.attrs({
-  height: 96,
-  width: 96,
-})`
+export const Logo = styled.img`
   object-fit: cover;
   width: 100%;
   height: 100%;
