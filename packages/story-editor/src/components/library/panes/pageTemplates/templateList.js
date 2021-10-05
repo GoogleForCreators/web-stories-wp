@@ -31,7 +31,7 @@ import { duplicatePage } from '../../../../elements';
 import { useStory } from '../../../../app/story';
 import PageTemplate from './pageTemplate';
 
-const WrapperGrid = styled.div`
+const WrapperGrid = styled.ul`
   display: grid;
   width: 100%;
   grid-column-gap: 4px;
@@ -41,6 +41,8 @@ const WrapperGrid = styled.div`
   grid-template-rows: ${({ rowHeight }) =>
     `repeat(minmax(${rowHeight}px, 1fr))`};
 `;
+
+const PageTemplateWrapper = styled.li``;
 function TemplateList({
   pages,
   parentRef,
@@ -75,14 +77,13 @@ function TemplateList({
 
   const handleKeyboardPageClick = useCallback(
     ({ code }, page) => {
-      // TODO: ?? IF isFocused
-      if (code === 'Enter') {
-        handlePageClick(page);
-      } else if (code === 'Space') {
-        handleDelete?.(page);
+      if (isGridFocused) {
+        if (code === 'Enter') {
+          handlePageClick(page);
+        }
       }
     },
-    [handlePageClick, handleDelete]
+    [isGridFocused, handlePageClick]
   );
 
   const handleGridFocus = useCallback(() => {
@@ -114,22 +115,21 @@ function TemplateList({
     >
       {pages.map((page) => {
         return (
-          <PageTemplate
-            key={uuidv4()}
-            data-testid={`page_template_${page.id}`}
-            ref={(el) => (pageRefs.current[page.id] = el)}
-            page={page}
-            pageSize={pageSize}
-            isActive={currentPageId === page.id}
-            onFocus={() => {
-              setCurrentPageId(page.id);
-            }}
-            onClick={() => handlePageClick(page.story)}
-            onKeyUp={(event) => handleKeyboardPageClick(event, page)}
-            handleDelete={handleDelete}
-            columnWidth={pageSize.width}
-            {...rest}
-          />
+          <PageTemplateWrapper key={uuidv4()}>
+            <PageTemplate
+              data-testid={`page_template_${page.id}`}
+              page={page}
+              pageSize={pageSize}
+              isActive={currentPageId === page.id}
+              onFocus={() => {
+                setCurrentPageId(page.id);
+              }}
+              onClick={() => handlePageClick(page.story)}
+              onKeyUp={(event) => handleKeyboardPageClick(event, page)}
+              columnWidth={pageSize.width}
+              {...rest}
+            />
+          </PageTemplateWrapper>
         );
       })}
     </WrapperGrid>
