@@ -29,3 +29,8 @@ export const STORY_FIELDS = [
   'status',
   'headers',
 ].join(',');
+
+export const SEARCH_PAGES_FIELDS = ['id', 'title'];
+export const GET_PAGE_FIELDS = ['title', 'link'];
+
+export const STORY_EMBED = 'wp:lock,wp:lockuser,author,wp:featuredmedia';

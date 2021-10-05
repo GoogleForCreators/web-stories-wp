@@ -24,6 +24,11 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
 import apiFetch from '@wordpress/api-fetch';
 
 /**
+ * Internal dependencies
+ */
+import { SEARCH_PAGES_FIELDS, GET_PAGE_FIELDS } from './constants';
+
+/**
  * Search pages by search term.
  * Used for "Stories Archive" custom page selection on settings page.
  *
@@ -35,7 +40,7 @@ export function searchPages(searchTerm, apiPath) {
   const path = addQueryArgs(apiPath, {
     per_page: 100,
     search: searchTerm,
-    _fields: ['id', 'title'],
+    _fields: SEARCH_PAGES_FIELDS,
   });
 
   return apiFetch({ path });
@@ -51,7 +56,7 @@ export function searchPages(searchTerm, apiPath) {
  */
 export function getPageById(id, apiPath) {
   const path = addQueryArgs(`${apiPath}${id}/`, {
-    _fields: ['title', 'link'],
+    _fields: GET_PAGE_FIELDS,
   });
 
   return apiFetch({ path });

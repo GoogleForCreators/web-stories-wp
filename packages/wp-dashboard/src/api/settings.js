@@ -24,6 +24,24 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
 import apiFetch from '@wordpress/api-fetch';
 
 /**
+ * Transform settings api response.
+ *
+ * @param {Object} response API response.
+ * @return {Object} Transformed object.
+ */
+const transformSettingResponse = (response) => ({
+  googleAnalyticsId: response.web_stories_ga_tracking_id,
+  usingLegacyAnalytics: response.web_stories_using_legacy_analytics,
+  adSensePublisherId: response.web_stories_adsense_publisher_id,
+  adSenseSlotId: response.web_stories_adsense_slot_id,
+  adManagerSlotId: response.web_stories_ad_manager_slot_id,
+  adNetwork: response.web_stories_ad_network,
+  videoCache: response.web_stories_video_cache,
+  archive: response.web_stories_archive,
+  archivePageId: response.web_stories_archive_page_id,
+});
+
+/**
  * Fetch settings.
  * Used on settings page.
  *
@@ -33,17 +51,7 @@ import apiFetch from '@wordpress/api-fetch';
 export function fetchSettings(apiPath) {
   return apiFetch({
     path: apiPath,
-  }).then((response) => ({
-    googleAnalyticsId: response.web_stories_ga_tracking_id,
-    usingLegacyAnalytics: response.web_stories_using_legacy_analytics,
-    adSensePublisherId: response.web_stories_adsense_publisher_id,
-    adSenseSlotId: response.web_stories_adsense_slot_id,
-    adManagerSlotId: response.web_stories_ad_manager_slot_id,
-    adNetwork: response.web_stories_ad_network,
-    videoCache: response.web_stories_video_cache,
-    archive: response.web_stories_archive,
-    archivePageId: response.web_stories_archive_page_id,
-  }));
+  }).then(transformSettingResponse);
 }
 
 /**
@@ -109,15 +117,5 @@ export function updateSettings(queryParams, apiPath) {
   return apiFetch({
     path,
     method: 'POST',
-  }).then((response) => ({
-    googleAnalyticsId: response.web_stories_ga_tracking_id,
-    usingLegacyAnalytics: response.web_stories_using_legacy_analytics,
-    adSensePublisherId: response.web_stories_adsense_publisher_id,
-    adSenseSlotId: response.web_stories_adsense_slot_id,
-    adManagerSlotId: response.web_stories_ad_manager_slot_id,
-    adNetwork: response.web_stories_ad_network,
-    videoCache: response.web_stories_video_cache,
-    archive: response.web_stories_archive,
-    archivePageId: response.web_stories_archive_page_id,
-  }));
+  }).then(transformSettingResponse);
 }

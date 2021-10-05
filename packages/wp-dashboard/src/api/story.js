@@ -33,7 +33,7 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import { STORY_FIELDS } from './constants';
+import { STORY_FIELDS, STORY_EMBED } from './constants';
 
 /**
  * Fetch stories ( When dashboard link is clicked. )
@@ -54,7 +54,7 @@ export function fetchStories(queryParams, apiPath) {
 
   // Important: Keep in sync with REST API preloading definition.
   const query = {
-    _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
+    _embed: STORY_EMBED,
     context: 'edit',
     _web_stories_envelope: true,
     search: searchTerm || undefined,
@@ -102,7 +102,7 @@ export function trashStory(storyId, apiPath) {
  */
 export function updateStory(story, apiPath) {
   const path = addQueryArgs(`${apiPath}${story.id}/`, {
-    _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
+    _embed: STORY_EMBED,
   });
 
   const data = {
@@ -184,7 +184,7 @@ export function duplicateStory(story, apiPath) {
   } = story;
 
   const path = addQueryArgs(apiPath, {
-    _embed: 'wp:lock,wp:lockuser,author,wp:featuredmedia',
+    _embed: STORY_EMBED,
     _fields: STORY_FIELDS,
   });
 
