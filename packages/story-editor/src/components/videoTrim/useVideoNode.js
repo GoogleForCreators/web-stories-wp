@@ -46,9 +46,10 @@ function useVideoNode() {
     if (isDraggingHandles) {
       videoNode.pause();
     } else {
+      videoNode.currentTime = startOffset / 1000;
       videoNode.play();
     }
-  }, [videoNode, isDraggingHandles]);
+  }, [videoNode, isDraggingHandles, startOffset]);
 
   useEffect(() => {
     if (!videoNode) {
@@ -67,9 +68,6 @@ function useVideoNode() {
     function onTimeUpdate(evt) {
       const currentOffset = Math.floor(evt.target.currentTime * 1000);
       setCurrentTime(Math.min(currentOffset, endOffset));
-      if (currentOffset >= endOffset) {
-        videoNode.currentTime = startOffset / 1000;
-      }
     }
     videoNode.addEventListener('timeupdate', onTimeUpdate);
     videoNode.addEventListener('loadedmetadata', onLoadedMetadata);

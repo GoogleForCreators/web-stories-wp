@@ -86,7 +86,7 @@ function VideoTrimmer() {
 
   const debouncedNudge = useDebouncedCallback(
     () => setIsDraggingHandles(false),
-    10000
+    1000
   );
 
   if (!pageWidth || !maxOffset) {
