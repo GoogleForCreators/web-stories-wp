@@ -56,7 +56,6 @@ $preload_paths = [
 						'status',
 						'slug',
 						'date',
-						'meta',
 						'modified',
 						'excerpt',
 						'link',
@@ -64,7 +63,6 @@ $preload_paths = [
 						'preview_link',
 						'edit_link',
 						'embed_post_link',
-						'publisher_logo_url',
 						'permalink_template',
 						'style_presets',
 						'password',
@@ -91,6 +89,7 @@ $preload_paths = [
 						'featured_media_src',
 						'alt_text',
 						'source_url',
+						'meta',
 						'media_source',
 						'is_muted',
 						// _web_stories_envelope will add these fields, we need them too.
@@ -111,7 +110,8 @@ $preload_paths = [
 	'/web-stories/v1/users/me/',
 	'/web-stories/v1/taxonomies/?' . build_query(
 		[
-			'type' => $post_type_object->name,
+			'context' => 'edit',
+			'type'    => $post_type_object->name,
 		]
 	),
 ];
