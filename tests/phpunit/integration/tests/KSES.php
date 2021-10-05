@@ -21,7 +21,6 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Google\Web_Stories\KSES
  */
 class KSES extends TestCase {
-
 	/**
 	 * Testing the safecss_filter_attr() function.
 	 *
@@ -289,6 +288,14 @@ class KSES extends TestCase {
 				'css'      => 'transform: perspective(500px) translate(10px, 0, 20px) rotateY(3deg);',
 				'expected' => 'transform: perspective(500px) translate(10px, 0, 20px) rotateY(3deg)',
 			],
+			[
+				'css'      => '--initial-opacity: 1;',
+				'expected' => '--initial-opacity: 1',
+			],
+			[
+				'css'      => '--initial-transform: rotate(4deg) translate3d(108.30768%, 0px, 0) rotate(-4deg);',
+				'expected' => '--initial-transform: rotate(4deg) translate3d(108.30768%, 0px, 0) rotate(-4deg)',
+			],
 			// Global values.
 			[
 				'css'      => 'transform: inherit;',
@@ -322,6 +329,31 @@ class KSES extends TestCase {
 			[
 				'css'      => 'will-change: transform',
 				'expected' => 'will-change: transform',
+			],
+			// CSS calc().
+			[
+				'width: calc(2em + 3px)',
+				'width: calc(2em + 3px)',
+			],
+			// CSS variable.
+			[
+				'padding: var(--wp-var1) var(--wp-var2)',
+				'padding: var(--wp-var1) var(--wp-var2)',
+			],
+			// CSS calc() with var() custom property.
+			[
+				'margin-top: calc(var(--wp-var1) * 3 + 2em)',
+				'margin-top: calc(var(--wp-var1) * 3 + 2em)',
+			],
+			// Malformed calc, no closing `)`.
+			[
+				'width: calc(3em + 10px',
+				'',
+			],
+			// Malformed var, no closing `)`.
+			[
+				'width: var(--wp-var1',
+				'',
 			],
 		];
 	}
@@ -372,6 +404,8 @@ class KSES extends TestCase {
 	}
 
 	public function data_test_filter_kses_allowed_html(): array {
+		$blue_rings_svg = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/multipleBlueRings.svg' );
+
 		return [
 			'Video Element'                    => [
 				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
@@ -420,6 +454,10 @@ class KSES extends TestCase {
 			'Page Outlink'                     => [
 				'<amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#0047FF" cta-image="https://example.com/32x32icon.jpg" cta-accent-element="background"><a href="https://www.google.com">Read More</a></amp-story-page-outlink>',
 				'<amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#0047FF" cta-image="https://example.com/32x32icon.jpg" cta-accent-element="background"><a href="https://www.google.com">Read More</a></amp-story-page-outlink>',
+			],
+			'Complex SVG'                      => [
+				$blue_rings_svg,
+				$blue_rings_svg,
 			],
 			'Video Captions'                   => [
 				'<amp-story-captions id="video-123-captions" layout="fixed-height" height="100" />',
