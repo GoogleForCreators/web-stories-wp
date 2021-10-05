@@ -28,8 +28,8 @@ namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Services;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
@@ -51,6 +51,26 @@ class AMP extends Service_Base {
 	 * @var string
 	 */
 	const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
+
+	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
 
 	/**
 	 * Initializes all hooks.
@@ -100,9 +120,9 @@ class AMP extends Service_Base {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param string[] $post_types Post types.
+	 * @param string[]|mixed $post_types Supportable post types.
 	 *
-	 * @return array Supportable post types.
+	 * @return array|mixed Supportable post types.
 	 */
 	public function filter_supportable_post_types( $post_types ) {
 		if ( ! is_array( $post_types ) ) {
@@ -139,10 +159,18 @@ class AMP extends Service_Base {
 			return $sanitizers;
 		}
 
-		$video_cache_enabled = (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
+		$video_cache_enabled = (bool) $this->settings->get_setting( $this->settings::SETTING_NAME_VIDEO_CACHE );
 
 		$story = new Story();
 		$story->load_from_post( $post );
+
+		if ( isset( $sanitizers['AMP_Style_Sanitizer'] ) ) {
+			if ( ! isset( $sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] ) ) {
+				$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] = [];
+			}
+
+			$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'][] = 'amp-story-captions';
+		}
 
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
 			'publisher_logo' => $story->get_publisher_logo_url(),

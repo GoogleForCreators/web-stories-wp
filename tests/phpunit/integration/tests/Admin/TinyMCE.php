@@ -17,36 +17,42 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
-use Google\Web_Stories\Assets;
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\TinyMCE
  */
-class TinyMCE extends TestCase {
+class TinyMCE extends DependencyInjectedTestCase {
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Admin\TinyMCE
+	 */
+	protected $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Admin\TinyMCE::class );
+	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$assets  = new \Google\Web_Stories\Assets();
-		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
+		$this->instance->register();
 
-		$tinymce->register();
-
-		$this->assertSame( 10, has_filter( 'mce_buttons', [ $tinymce, 'tinymce_web_stories_button' ] ) );
-		$this->assertSame( 10, has_filter( 'mce_external_plugins', [ $tinymce, 'web_stories_mce_plugin' ] ) );
-		$this->assertSame( 10, has_filter( 'admin_footer', [ $tinymce, 'web_stories_tinymce_root_element' ] ) );
-		$this->assertSame( 10, has_filter( 'script_loader_tag', [ $tinymce, 'script_loader_tag' ] ) );
+		$this->assertSame( 10, has_filter( 'mce_buttons', [ $this->instance, 'tinymce_web_stories_button' ] ) );
+		$this->assertSame( 10, has_filter( 'mce_external_plugins', [ $this->instance, 'web_stories_mce_plugin' ] ) );
+		$this->assertSame( 10, has_filter( 'admin_footer', [ $this->instance, 'web_stories_tinymce_root_element' ] ) );
+		$this->assertSame( 10, has_filter( 'script_loader_tag', [ $this->instance, 'script_loader_tag' ] ) );
 	}
 
 	/**
 	 * @covers ::register_assets
 	 */
 	public function test_register_assets() {
-		$assets  = new \Google\Web_Stories\Assets();
-		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
-		$tinymce->register_assets();
+		$this->instance->register_assets();
 
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Admin\TinyMCE::SCRIPT_HANDLE, 'registered' ) );
 	}
@@ -55,9 +61,7 @@ class TinyMCE extends TestCase {
 	 * @covers ::tinymce_web_stories_button
 	 */
 	public function test_tinymce_web_stories_button() {
-		$assets  = new \Google\Web_Stories\Assets();
-		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
-		$result  = $tinymce->tinymce_web_stories_button( [] );
+		$result = $this->instance->tinymce_web_stories_button( [] );
 
 		$this->assertContains( 'web_stories', $result );
 	}
@@ -66,9 +70,7 @@ class TinyMCE extends TestCase {
 	 * @covers ::web_stories_mce_plugin
 	 */
 	public function test_web_stories_mce_plugin() {
-		$assets  = new \Google\Web_Stories\Assets();
-		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
-		$result  = $tinymce->web_stories_mce_plugin( [] );
+		$result = $this->instance->web_stories_mce_plugin( [] );
 
 		$this->assertArrayHasKey( 'web_stories', $result );
 	}
@@ -77,10 +79,8 @@ class TinyMCE extends TestCase {
 	 * @covers ::web_stories_tinymce_root_element
 	 */
 	public function test_web_stories_tinymce_root_element() {
-		$assets  = new \Google\Web_Stories\Assets();
-		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
-		$result  = get_echo( [ $tinymce, 'web_stories_tinymce_root_element' ] );
-		$result  = trim( $result );
+		$result = get_echo( [ $this->instance, 'web_stories_tinymce_root_element' ] );
+		$result = trim( $result );
 
 		$this->assertSame( '<div id="web-stories-tinymce"></div>', $result );
 	}
@@ -89,9 +89,7 @@ class TinyMCE extends TestCase {
 	 * @covers ::script_loader_tag
 	 */
 	public function test_script_loader_tag() {
-		$assets  = new \Google\Web_Stories\Assets();
-		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
-		$result  = $tinymce->script_loader_tag( "<script src='http://www.example.com/test.js'></script>", \Google\Web_Stories\Admin\TinyMCE::SCRIPT_HANDLE, 'http://www.example.com/test.js' );
+		$result = $this->instance->script_loader_tag( "<script src='http://www.example.com/test.js'></script>", \Google\Web_Stories\Admin\TinyMCE::SCRIPT_HANDLE, 'http://www.example.com/test.js' );
 
 		$this->assertSame( '', $result );
 	}
@@ -101,9 +99,7 @@ class TinyMCE extends TestCase {
 	 * @covers \Google\Web_Stories\Traits\Screen::is_block_editor
 	 */
 	public function test_is_block_editor() {
-		$assets  = new \Google\Web_Stories\Assets();
-		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
-		$result  = $this->call_private_method( $tinymce, 'is_block_editor' );
+		$result = $this->call_private_method( $this->instance, 'is_block_editor' );
 
 		$this->assertFalse( $result );
 	}
