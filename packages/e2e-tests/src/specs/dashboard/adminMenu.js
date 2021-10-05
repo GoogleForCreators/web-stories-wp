@@ -27,9 +27,9 @@ describe('Admin Menu', () => {
 
     // Initial visit to `/` makes `Dashboard` link current in WP
     await page.hover('#menu-posts-web-story');
-    await expect(await page.$('#menu-posts-web-story .current a')).toMatch(
-      'Dashboard'
-    );
+    await await expect(
+      page.$('#menu-posts-web-story .current a')
+    ).resolves.toMatch('Dashboard');
     await page.hover('[aria-label="Main dashboard navigation"]');
 
     // Navigating through the application to a new page syncs the WP current page in Nav
@@ -42,9 +42,9 @@ describe('Admin Menu', () => {
     ]);
     await page.waitForTimeout(100);
     await page.hover('#menu-posts-web-story');
-    await expect(await page.$('#menu-posts-web-story .current a')).toMatch(
-      'Explore Templates'
-    );
+    await await expect(
+      page.$('#menu-posts-web-story .current a')
+    ).resolves.toMatch('Explore Templates');
     await page.hover('[aria-label="Main dashboard navigation"]');
 
     // Navigating through WP to a new page syncs the WP current page in Nav
@@ -57,9 +57,9 @@ describe('Admin Menu', () => {
       }),
     ]);
     await page.waitForTimeout(100);
-    await expect(await page.$('#menu-posts-web-story .current a')).toMatch(
-      'Settings'
-    );
+    await await expect(
+      page.$('#menu-posts-web-story .current a')
+    ).resolves.toMatch('Settings');
     // await page.hover('[aria-label="Main dashboard navigation"]');
 
     // Navigating through application back to My Story from another route
@@ -72,8 +72,8 @@ describe('Admin Menu', () => {
     ]);
     await page.waitForTimeout(100);
     await page.hover('#menu-posts-web-story');
-    await expect(await page.$('#menu-posts-web-story .current a')).toMatch(
-      'Dashboard'
-    );
+    await await expect(
+      page.$('#menu-posts-web-story .current a')
+    ).resolves.toMatch('Dashboard');
   });
 });

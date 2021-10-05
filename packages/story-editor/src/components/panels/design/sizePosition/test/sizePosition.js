@@ -199,7 +199,7 @@ describe('panels/SizePosition', () => {
       const input = screen.getByRole('textbox', { name: 'Height' });
       expect(input).toBeDisabled();
       expect(input).toHaveValue('');
-      expect(input.placeholder).toStrictEqual('Auto');
+      expect(input.placeholder).toBe('Auto');
     });
 
     it('should disable height without lock ratio for multi-selection with text', () => {
@@ -217,7 +217,7 @@ describe('panels/SizePosition', () => {
       const input = screen.getByRole('textbox', { name: 'Height' });
       expect(input).toBeDisabled();
       expect(input).toHaveValue('');
-      expect(input.placeholder).toStrictEqual('Auto');
+      expect(input.placeholder).toBe('Auto');
     });
 
     it('should not update width if empty value is submitted', () => {

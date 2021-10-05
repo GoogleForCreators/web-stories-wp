@@ -48,8 +48,8 @@ describe('Switch', () => {
     const offLabelEl = screen.getByText(offLabel);
     const offLabelRadio = screen.getByRole('radio', { name: offLabel });
 
-    expect(onLabelRadio.checked).toStrictEqual(true);
-    expect(offLabelRadio.checked).toStrictEqual(false);
+    expect(onLabelRadio.checked).toBe(true);
+    expect(offLabelRadio.checked).toBe(false);
 
     fireEvent.click(onLabelEl);
 

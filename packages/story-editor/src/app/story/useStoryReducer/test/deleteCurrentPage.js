@@ -33,12 +33,12 @@ describe('deleteCurrentPage', () => {
     const firstResult = deleteCurrentPage();
     const firstSetOfPageIds = firstResult.pages.map(({ id }) => id);
     expect(firstSetOfPageIds).toStrictEqual(['111', '222', '444']);
-    expect(firstResult.current).toStrictEqual('444');
+    expect(firstResult.current).toBe('444');
 
     // Now delete page 444 (last) and 222 becomes current
     const secondResult = deleteCurrentPage();
     const secondSetOfPageIds = secondResult.pages.map(({ id }) => id);
     expect(secondSetOfPageIds).toStrictEqual(['111', '222']);
-    expect(secondResult.current).toStrictEqual('222');
+    expect(secondResult.current).toBe('222');
   });
 });
