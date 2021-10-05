@@ -20,6 +20,7 @@
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { getBox } from '@web-stories-wp/units';
 import { StoryAnimation } from '@web-stories-wp/animation';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -36,7 +37,7 @@ import {
 } from '../utils/elementBorder';
 import { BACKGROUND_TEXT_MODE } from '../constants';
 
-function OutputElement({ element }) {
+function OutputElement({ element, args }) {
   const {
     id,
     opacity,
@@ -115,7 +116,7 @@ function OutputElement({ element }) {
               left: 0,
             }}
           >
-            <Output element={element} box={box} />
+            <Output element={element} box={box} args={args} />
           </WithLink>
           {overlay && (
             <div
@@ -131,6 +132,9 @@ function OutputElement({ element }) {
 
 OutputElement.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  args: PropTypes.shape({
+    enableBetterCaptions: PropTypes.bool,
+  }),
 };
 
 export default OutputElement;

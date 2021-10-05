@@ -19,7 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import {
+  Headline,
+  THEME_CONSTANTS,
+  themeHelpers,
+  Button,
+  BUTTON_VARIANTS,
+} from '@web-stories-wp/design-system';
 
 export const TaxonomyPropType = PropTypes.shape({
   capabilities: PropTypes.object,
@@ -42,3 +48,32 @@ export const ContentHeading = styled(Headline).attrs({
   margin: 4px 0 16px;
   font-weight: ${({ theme }) => theme.typography.weight.regular};
 `;
+
+export const LinkButton = styled(Button).attrs({
+  variant: BUTTON_VARIANTS.LINK,
+})`
+  ${themeHelpers.expandTextPreset(({ link }, { X_SMALL }) => link[X_SMALL])}
+  margin-bottom: 16px;
+  font-weight: 500;
+`;
+
+export const WordCloud = {
+  Heading: styled(ContentHeading)`
+    margin-bottom: 4px;
+  `,
+  Wrapper: styled.div`
+    padding: 18px 0px;
+  `,
+  List: styled.ul`
+    all: unset;
+    /* Only adding this here to prevent cursor flash between text/pointer when hovering*/
+    cursor: pointer;
+  `,
+  ListItem: styled.li`
+    all: unset;
+  `,
+  Word: styled(LinkButton)`
+    margin: 0;
+    display: revert;
+  `,
+};

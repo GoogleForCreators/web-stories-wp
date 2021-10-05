@@ -123,8 +123,8 @@ class Assets {
 		$base_script_path = $this->get_base_url( 'assets/js/' );
 		$in_footer        = true;
 
-		$asset = $this->get_asset_metadata( $script_handle );
-
+		$asset         = $this->get_asset_metadata( $script_handle );
+		$entry_version = $asset['version'];
 		// Register any chunks of $script_handle first.
 		// `$asset['js']` are preloaded chunks, `$asset['chunks']` dynamically imported ones.
 		foreach ( $asset['js'] as $chunk ) {
@@ -132,7 +132,7 @@ class Assets {
 				$chunk,
 				$base_script_path . $chunk . '.js',
 				[],
-				WEBSTORIES_VERSION,
+				$entry_version,
 				$in_footer
 			);
 		}
@@ -140,7 +140,6 @@ class Assets {
 		// Dynamically imported chunks MUST NOT be added as dependencies here.
 		$dependencies = array_merge( $asset['dependencies'], $script_dependencies, $asset['js'] );
 
-		$entry_version = $asset['version'];
 		$this->register_script(
 			$script_handle,
 			$base_script_path . $script_handle . '.js',
@@ -157,8 +156,8 @@ class Assets {
 				$dynamic_chunk,
 				$base_script_path . $dynamic_chunk . '.js',
 				[],
-				WEBSTORIES_VERSION,
-				$in_footer
+				$entry_version, // Not actually used / relevant, since enqueueing is done by webpack.
+				$in_footer // Ditto.
 			);
 
 			wp_add_inline_script( $script_handle, (string) wp_scripts()->print_translations( $dynamic_chunk, false ) );

@@ -100,9 +100,9 @@ class AMP extends Service_Base {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param string[] $post_types Post types.
+	 * @param string[]|mixed $post_types Post types.
 	 *
-	 * @return array Supportable post types.
+	 * @return array|mixed Supportable post types.
 	 */
 	public function filter_supportable_post_types( $post_types ) {
 		if ( ! is_array( $post_types ) ) {
@@ -143,6 +143,14 @@ class AMP extends Service_Base {
 
 		$story = new Story();
 		$story->load_from_post( $post );
+
+		if ( isset( $sanitizers['AMP_Style_Sanitizer'] ) ) {
+			if ( ! isset( $sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] ) ) {
+				$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] = [];
+			}
+
+			$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'][] = 'amp-story-captions';
+		}
 
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
 			'publisher_logo' => $story->get_publisher_logo_url(),

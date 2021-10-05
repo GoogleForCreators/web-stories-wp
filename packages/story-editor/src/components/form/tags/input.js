@@ -16,13 +16,19 @@
 /**
  * External dependencies
  */
-import { themeHelpers, BaseInput, noop } from '@web-stories-wp/design-system';
+import {
+  themeHelpers,
+  BaseInput,
+  List,
+  noop,
+} from '@web-stories-wp/design-system';
 import {
   useEffect,
   useMemo,
   useReducer,
   useRef,
   useState,
+  useCallback,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -43,9 +49,14 @@ const Border = styled.div`
     ${isInputFocused && themeHelpers.focusCSS};
   `}
   display: flex;
+  flex-direction: column;
+  margin-bottom: 6px;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
   flex-wrap: wrap;
   padding: 3px 6px;
-  margin-bottom: 6px;
 `;
 
 const TextInput = styled(BaseInput).attrs({ type: 'text' })`
@@ -55,9 +66,33 @@ const TextInput = styled(BaseInput).attrs({ type: 'text' })`
   margin: 3px 0;
 `;
 
+const SuggestionList = styled(List)`
+  max-height: 120px;
+  overflow-y: scroll;
+  border-top: ${({ theme }) =>
+    `1px solid ${theme.colors.border.defaultNormal}`};
+  display: block;
+  list-style-type: none;
+  width: 100%;
+  padding: 6px 4px 4px;
+  margin-top: 6px;
+  li {
+    cursor: pointer;
+    padding: 4px;
+    width: 100%;
+    ${themeHelpers.focusableOutlineCSS()}
+    border-radius: ${({ theme }) => theme.borders.radius.small};
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.bg.tertiary};
+    }
+  }
+`;
 function Input({
+  suggestedTerms = [],
   onTagsChange,
   onInputChange,
+  suggestedTermsLabel,
   tagDisplayTransformer,
   tokens = [],
   onUndo = noop,
@@ -69,11 +104,25 @@ function Input({
     tagBuffer: null,
     offset: 0,
   });
+
+  // isInputFocused is used to update the styled state of the input area.
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
+
+  // inputRef is used to return focus to input after keydown actions to avoid focused state being hijacked.
+  const inputRef = useRef();
+  const menuRef = useRef();
+  const containerRef = useRef();
 
   useEffect(() => {
     dispatch({ type: ACTIONS.UPDATE_TAGS, payload: tokens });
   }, [tokens]);
+
+  const suggestionListId = uuidv4();
+  const totalSuggestions = suggestedTerms.length;
+  useEffect(() => {
+    setIsSuggestionsOpen(totalSuggestions > 0);
+  }, [totalSuggestions]);
 
   // Allow parents to pass onTagsChange callback
   // that updates as tags does.
@@ -116,8 +165,10 @@ function Input({
               onUndo(e);
             }
           }
-
-          if (['Comma', 'Enter', 'Tab'].includes(e.key)) {
+          if (e.key === 'ArrowDown' && suggestedTerms.length > 0) {
+            menuRef?.current?.firstChild?.focus();
+          }
+          if (['Comma', ',', 'Enter'].includes(e.key)) {
             dispatch({ type: ACTIONS.SUBMIT_VALUE });
           }
         },
@@ -126,6 +177,7 @@ function Input({
         },
         removeTag: (tag) => () => {
           dispatch({ type: ACTIONS.REMOVE_TAG, payload: tag });
+          inputRef?.current.focus();
         },
         handleFocus: () => {
           setIsInputFocused(true);
@@ -135,48 +187,114 @@ function Input({
           setIsInputFocused(false);
         },
       }),
-      [onUndo]
+      [onUndo, suggestedTerms]
     );
 
   const renderedTags = tagBuffer || tags;
-  return (
-    <Border isInputFocused={isInputFocused}>
-      {
-        // Text input should move, relative to end, with offset
-        // this helps with natural tab order and visuals
-        // as you ArrowLeft or ArrowRight through tags
-        [
-          ...renderedTags.slice(0, renderedTags.length - offset),
-          INPUT_KEY,
-          ...renderedTags.slice(renderedTags.length - offset),
-        ].map((tag) =>
-          tag === INPUT_KEY ? (
-            <TextInput
-              {...props}
-              key={INPUT_KEY}
-              value={value}
-              onKeyDown={handleKeyDown}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              size="4"
-            />
-          ) : (
-            <Tag key={tag} onDismiss={removeTag(tag)}>
-              {tagDisplayTransformer(tag) || tag}
-            </Tag>
-          )
-        )
+
+  const handleTagSelectedFromSuggestions = useCallback((e, selectedValue) => {
+    e.preventDefault();
+    setIsSuggestionsOpen(false);
+    dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: selectedValue });
+    inputRef?.current.focus();
+  }, []);
+
+  const handleSuggestionKeyDown = useCallback(
+    (e, index, name) => {
+      const nextChild = index + 1;
+      const previousChild = index - 1;
+      if (e.key === 'ArrowDown') {
+        if (nextChild < totalSuggestions) {
+          menuRef?.current?.children?.[nextChild]?.focus();
+        }
       }
+      if (e.key === 'ArrowUp') {
+        if (previousChild < 0) {
+          inputRef?.current.focus();
+        } else {
+          menuRef?.current?.children?.[previousChild]?.focus();
+        }
+      }
+      if (e.key === 'Enter') {
+        handleTagSelectedFromSuggestions(e, name);
+      }
+    },
+    [handleTagSelectedFromSuggestions, totalSuggestions]
+  );
+
+  return (
+    <Border ref={containerRef} isInputFocused={isInputFocused}>
+      <InputWrapper>
+        {
+          // Text input should move, relative to end, with offset
+          // this helps with natural tab order and visuals
+          // as you ArrowLeft or ArrowRight through tags
+          [
+            ...renderedTags.slice(0, renderedTags.length - offset),
+            INPUT_KEY,
+            ...renderedTags.slice(renderedTags.length - offset),
+          ].map((tag) =>
+            tag === INPUT_KEY ? (
+              <TextInput
+                {...props}
+                key={INPUT_KEY}
+                value={value}
+                onKeyDown={handleKeyDown}
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                size="4"
+                ref={inputRef}
+                autoComplete={isSuggestionsOpen ? 'off' : 'on'}
+                aria-expanded={isSuggestionsOpen}
+                aria-autocomplete="list"
+                aria-owns={isSuggestionsOpen ? suggestionListId : null}
+                role="combobox"
+              />
+            ) : (
+              <Tag key={tag} onDismiss={removeTag(tag)}>
+                {tagDisplayTransformer(tag) || tag}
+              </Tag>
+            )
+          )
+        }
+      </InputWrapper>
+      {isSuggestionsOpen && (
+        <SuggestionList
+          aria-label={suggestedTermsLabel}
+          role="listbox"
+          ref={menuRef}
+          id={suggestionListId}
+          data-testid="suggested_terms_list"
+        >
+          {suggestedTerms.map(({ name, id }, index) => (
+            <li
+              key={id}
+              aria-selected={value === name}
+              role="option"
+              tabIndex={0}
+              onClick={(e) => handleTagSelectedFromSuggestions(e, name)}
+              onKeyDown={(e) => handleSuggestionKeyDown(e, index, name)}
+            >
+              {name}
+            </li>
+          ))}
+        </SuggestionList>
+      )}
     </Border>
   );
 }
 Input.propTypes = {
-  onTagsChange: PropTypes.func,
-  onInputChange: PropTypes.func,
-  onUndo: PropTypes.func,
-  tagDisplayTransformer: PropTypes.func,
   initialTags: PropTypes.arrayOf(PropTypes.string),
+  name: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func,
+  onTagsChange: PropTypes.func,
+  onUndo: PropTypes.func,
+  suggestedTerms: PropTypes.arrayOf(
+    PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
+  ),
+  suggestedTermsLabel: PropTypes.string,
+  tagDisplayTransformer: PropTypes.func,
   tokens: PropTypes.arrayOf(PropTypes.string),
 };
 export default Input;

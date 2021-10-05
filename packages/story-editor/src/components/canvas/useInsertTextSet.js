@@ -28,7 +28,8 @@ import {
  * Internal dependencies
  */
 import objectWithout from '../../utils/objectWithout';
-import { useStory, ELEMENT_TYPES } from '../../app/story';
+import { ELEMENT_TYPES } from '../../elements';
+import { useStory } from '../../app/story';
 import { getHTMLFormatters } from '../richText/htmlManipulation';
 import usePageAsCanvas from '../../utils/usePageAsCanvas';
 import useInsertElement from './useInsertElement';
