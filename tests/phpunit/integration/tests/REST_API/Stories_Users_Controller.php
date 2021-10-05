@@ -86,7 +86,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 	public function test_count_user_posts() {
 		$this->controller->register();
 		$settings  = new Settings();
-		$post_type = new \Google\Web_Stories\Story_Post_Type( $settings, new Experiments( $settings )  );
+		$post_type = new \Google\Web_Stories\Story_Post_Type( $settings, new Experiments( $settings ) );
 		$post_type->register();
 
 		$result1 = $this->call_private_method(
