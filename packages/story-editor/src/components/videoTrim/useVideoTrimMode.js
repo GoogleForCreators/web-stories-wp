@@ -48,19 +48,16 @@ function useVideoTrimMode() {
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {
       clearEditing();
-      trackEvent('video_trim', {
-        name: 'exited_video_trim_mode',
-      });
     } else {
       setEditingElementWithState(selectedElement.id, {
         isTrimMode: true,
         hasEditMenu: true,
         showOverflow: false,
       });
-      trackEvent('video_trim', {
-        name: 'entered_video_trim_mode',
-      });
     }
+    trackEvent('video_trim_mode_toggled', {
+      status: isEditing ? 'closed' : 'open',
+    });
   }, [isEditing, clearEditing, setEditingElementWithState, selectedElement]);
 
   const { isTranscodingEnabled } = useFFmpeg();

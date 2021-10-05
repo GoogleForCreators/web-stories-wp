@@ -66,7 +66,10 @@ function VideoTrimProvider({ children }) {
       end: formatMsToHMS(endOffset),
     });
     trackEvent('video_trim', {
-      name: 'started_video_trimming',
+      original_length: resource.length,
+      new_length: lengthInSeconds,
+      start_offset: startOffset,
+      end_offset: endOffset,
     });
     toggleTrimMode();
   }, [
