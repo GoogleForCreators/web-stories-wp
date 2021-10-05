@@ -366,6 +366,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Thumbnail Caching', 'web-stories' ),
 				'description' => __( 'Enable thumbnail caching', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 
 			/**
