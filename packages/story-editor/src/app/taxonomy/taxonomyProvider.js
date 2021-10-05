@@ -71,7 +71,9 @@ function TaxonomyProvider(props) {
         const result = await getTaxonomies();
         setTaxonomies(result);
       } catch (e) {
-        // Do we wanna do anything here?
+        // Log error
+        // eslint-disable-next-line no-console
+        console.error(e.message);
       }
     })();
   }, [hasTaxonomies, getTaxonomies]);
@@ -154,7 +156,9 @@ function TaxonomyProvider(props) {
       try {
         response = await getTaxonomyTerm(termsEndpoint, args);
       } catch (e) {
-        // TODO #9033
+        // Log error
+        // eslint-disable-next-line no-console
+        console.error(e.message);
       }
 
       // Avoid update if we're not actually adding any terms here
