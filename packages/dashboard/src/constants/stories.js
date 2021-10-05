@@ -19,8 +19,6 @@
  */
 import { __, sprintf, _n } from '@web-stories-wp/i18n';
 
-export const DEFAULT_STORY_PAGE_ADVANCE_DURATION = 2000;
-
 export const STORY_CONTEXT_MENU_ACTIONS = {
   OPEN_IN_EDITOR: 'open-in-editor-action',
   RENAME: 'rename-action',
