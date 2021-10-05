@@ -62,14 +62,8 @@ describe('getTemplate', () => {
           expect(element.resource?.src).toStrictEqual(
             expect.not.stringContaining('__WEB_STORIES_TEMPLATE_BASE_URL__/')
           );
-          expect(element.resource?.src).toStrictEqual(
-            expect.stringContaining('example.com/')
-          );
           expect(element.resource?.poster).toStrictEqual(
             expect.not.stringContaining('__WEB_STORIES_TEMPLATE_BASE_URL__/')
-          );
-          expect(element.resource?.poster).toStrictEqual(
-            expect.stringContaining('example.com/')
           );
         });
       });
