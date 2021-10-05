@@ -73,7 +73,7 @@ describe('Pre-Publish Checklist', () => {
       });
 
       // verify that publish button is disabled
-      await page.$('button:disabled', { text: 'Publish' });
+      await expect(page).toMatchElement('button:disabled', { text: 'Publish' });
     });
   });
 });
