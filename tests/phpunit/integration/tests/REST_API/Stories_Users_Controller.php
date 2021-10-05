@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 
@@ -84,8 +85,8 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 	 */
 	public function test_count_user_posts() {
 		$this->controller->register();
-
-		$post_type = new \Google\Web_Stories\Story_Post_Type( new Settings() );
+		$settings  = new Settings();
+		$post_type = new \Google\Web_Stories\Story_Post_Type( $settings, new Experiments( $settings )  );
 		$post_type->register();
 
 		$result1 = $this->call_private_method(
@@ -138,7 +139,8 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 		$this->controller->register();
 
 		$controller = new \Google\Web_Stories\REST_API\Stories_Users_Controller();
-		$post_type  = new \Google\Web_Stories\Story_Post_Type( new Settings() );
+		$settings   = new Settings();
+		$post_type  = new \Google\Web_Stories\Story_Post_Type( $settings, new Experiments( $settings ) );
 		$post_type->register();
 		$result1 = $this->call_private_method(
 			$controller,
