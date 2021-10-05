@@ -113,10 +113,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 **Release Date:** October 5, 2021.
 
-* New feature: ability to trim videos to make them shorter.
-* New feature: [improved analytics configuration](https://wp.stories.google/docs/seo/#Adding-Analytics) with opt-in on the settings page.
+* New feature: video trimming tool in the editor.
+* New feature: [improved analytics configuration](https://wp.stories.google/docs/seo/#Adding-Analytics) via opt-in on the settings page.
 * Template colors are now available in "Saved Colors" when creating a story from a template.
-* Improved management of publisher logos in the editor.
+* Easier selection of publisher logos in the editor.
 * Bug fixes and performance improvements.
 
 = 1.11.0 =
