@@ -95,7 +95,9 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 
 	public function tear_down() {
 		$this->remove_caps_from_roles();
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
+
+		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		parent::tear_down();
 	}
@@ -395,12 +397,11 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function test_redirect_post_type_archive_urls_true() {
 		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
-		$query           = new \WP_Query();
-		$result          = $story_post_type->redirect_post_type_archive_urls( true, $query );
+
+		$query  = new \WP_Query();
+		$result = $this->instance->redirect_post_type_archive_urls( true, $query );
 		$this->assertTrue( $result );
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
 	}
 
 	/**
@@ -409,12 +410,11 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function test_redirect_post_type_archive_urls_no_permalink() {
 		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
-		$query           = new \WP_Query();
-		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
+
+		$query  = new \WP_Query();
+		$result = $this->instance->redirect_post_type_archive_urls( false, $query );
+
 		$this->assertFalse( $result );
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 	}
 
 	/**
@@ -425,13 +425,10 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
-		$query           = new \WP_Query();
-		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
-		$this->assertFalse( $result );
+		$query  = new \WP_Query();
+		$result = $this->instance->redirect_post_type_archive_urls( false, $query );
 
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		$this->assertFalse( $result );
 	}
 
 	/**
@@ -442,22 +439,20 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
-
 		$query                    = new \WP_Query();
-		$query->query['pagename'] = $story_post_type::REWRITE_SLUG;
-		$query->set( 'name', $story_post_type::REWRITE_SLUG );
+		$query->query['pagename'] = $this->instance::REWRITE_SLUG;
+		$query->set( 'name', $this->instance::REWRITE_SLUG );
 		$query->set( 'page', self::$story_id );
 
 		add_filter( 'post_type_link', '__return_false' );
 		add_filter( 'post_type_archive_link', '__return_false' );
-		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
+
+		$result = $this->instance->redirect_post_type_archive_urls( false, $query );
+
 		remove_filter( 'post_type_link', '__return_false' );
 		remove_filter( 'post_type_archive_link', '__return_false' );
 
 		$this->assertFalse( $result );
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 	}
 
 	/**
@@ -469,19 +464,16 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
-
 		$query                    = new \WP_Query();
-		$query->query['pagename'] = $story_post_type::REWRITE_SLUG;
-		$query->set( 'pagename', $story_post_type::REWRITE_SLUG );
+		$query->query['pagename'] = $this->instance::REWRITE_SLUG;
+		$query->set( 'pagename', $this->instance::REWRITE_SLUG );
 
 		add_filter( 'post_type_archive_link', '__return_false' );
-		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
+
+		$result = $this->instance->redirect_post_type_archive_urls( false, $query );
+
 		remove_filter( 'post_type_archive_link', '__return_false' );
 
 		$this->assertFalse( $result );
-
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 	}
 }
