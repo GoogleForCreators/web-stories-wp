@@ -86,8 +86,7 @@ function useVideoNode() {
       const currentOffset = Math.floor(evt.target.currentTime * 1000);
       setCurrentTime(Math.min(currentOffset, endOffset));
       // If we've reached the end of the video, start again.
-      // @todo This is not working properly with pausing end offset.
-      if (currentOffset >= endOffset) {
+      if (currentOffset > endOffset) {
         videoNode.currentTime = startOffset / 1000;
         if (!isPausedTracker.current) {
           videoNode.play();
