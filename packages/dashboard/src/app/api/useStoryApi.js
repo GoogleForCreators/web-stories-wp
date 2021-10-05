@@ -32,7 +32,7 @@ import { getTimeTracker } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import {
-  STORY_STATUSES,
+  STORY_STATUS,
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
@@ -70,7 +70,7 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
 
   const fetchStories = useCallback(
     async ({
-      status = STORY_STATUSES[0].value,
+      status = STORY_STATUS.ALL,
       sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
       sortDirection,
       searchTerm,
