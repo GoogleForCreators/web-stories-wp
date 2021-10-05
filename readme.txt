@@ -109,6 +109,15 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.12.0 =
+
+**Release Date:** October 5, 2021.
+
+* New feature: ability to trim videos to make them shorter.
+* New feature: [improved analytics configuration](https://wp.stories.google/docs/seo/#Adding-Analytics) with opt-in on the settings page.
+* Template colors are now available in "Saved Colors" when creating a story from a template.
+* Bug fixes and performance improvements.
+
 = 1.11.0 =
 
 **Release Date:** September 7, 2021.
@@ -127,18 +136,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Fixes an issue with page attachments being removed on the frontend.
 * Fixes an issue with memory not being freed up after optimizing videos.
 
-= 1.10.0 =
-
-**Release Date:** August 10, 2021.
-
-* New feature: 29 new templates for creators to choose from.
-* New feature: color eyedropper.
-* New feature: extended list of stickers.
-* New feature: ability to serve videos from the Google cache.
-* New feature: remove audio tracks to mute videos.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.12.0 =
+
+Video trimming, improved analytics configuration, templates improvements, and various bug fixes.
 
 = 1.11.0 =
 
@@ -147,7 +149,3 @@ New templates, right-click menu, improved color picker, and background audio sup
 = 1.10.1 =
 
 Several bug fixes to address potential fatal errors and missing page attachments, as well as high memory consumption.
-
-= 1.10.0 =
-
-New templates, eyedropper, stickers, ability to mute videos, bug fixes and performance improvements.
