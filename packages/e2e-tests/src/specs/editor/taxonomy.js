@@ -173,10 +173,12 @@ describe('Taxonomy', () => {
       );
     });
   });
+
   describe('Custom Taxonomy', () => {
     withPlugin('web-stories-test-plugin-taxonomies');
+    
     describe('Administrator', () => {
-      it('should be see custom taxonomies', async () => {
+      it('should see custom taxonomies', async () => {
         await createNewStory();
         await goToAndExpandTaxonomyPanel();
 
@@ -188,9 +190,11 @@ describe('Taxonomy', () => {
         });
       });
     });
+
     describe('Contributor', () => {
       withUser('contributor', 'password');
-      it('should be see custom taxonomies', async () => {
+      
+      it('should see custom taxonomies', async () => {
         await createNewStory();
         await goToAndExpandTaxonomyPanel();
 
