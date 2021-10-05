@@ -19,8 +19,10 @@
  */
 import {
   createNewStory,
+  insertStoryTitle,
   publishStory,
   triggerHighPriorityChecklistSection,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
@@ -50,5 +52,30 @@ describe('Pre-Publish Checklist', () => {
     );
     await expect(page).toMatch('Add poster image');
     await percySnapshot(page, 'Prepublish checklist');
+  });
+
+  describe('Contributor User', () => {
+    withUser('contributor', 'password');
+
+    it('should not let me publish a story as a contributor', async () => {
+      await createNewStory();
+
+      await insertStoryTitle('Publishing Flow: Contributor');
+
+      const checklistToggle = await page.$(
+        'button[aria-owns="checklist_companion"]',
+        { text: 'Checklist' }
+      );
+
+      // verify no issues are present
+      await checklistToggle.click();
+
+      await expect(page).toMatchElement('p', {
+        text: 'You are all set for now. Return to this checklist as you build your Web Story for tips on how to improve it.',
+      });
+
+      // verify that publish button is disabled
+      await page.$('button:disabled', { text: 'Publish' });
+    });
   });
 });
