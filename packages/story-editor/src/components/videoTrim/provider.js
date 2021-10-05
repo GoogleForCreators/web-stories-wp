@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
 import { formatMsToHMS, getVideoLengthDisplay } from '@web-stories-wp/media';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -63,6 +64,9 @@ function VideoTrimProvider({ children }) {
       },
       start: formatMsToHMS(startOffset),
       end: formatMsToHMS(endOffset),
+    });
+    trackEvent('video_trim', {
+      name: 'started_video_trimming',
     });
     toggleTrimMode();
   }, [

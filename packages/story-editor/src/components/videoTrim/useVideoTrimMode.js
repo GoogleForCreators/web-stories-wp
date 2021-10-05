@@ -17,7 +17,9 @@
 /**
  * External dependencies
  */
+import { useFeature } from 'flagged';
 import { useCallback, useMemo } from '@web-stories-wp/react';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -26,6 +28,7 @@ import { useCanvas, useStory } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
 function useVideoTrimMode() {
+  const isVideoTrimEnabled = useFeature('enableVideoTrim');
   const { isEditing, isTrimMode, setEditingElementWithState, clearEditing } =
     useCanvas(
       ({
@@ -45,11 +48,17 @@ function useVideoTrimMode() {
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {
       clearEditing();
+      trackEvent('video_trim', {
+        name: 'exited_video_trim_mode',
+      });
     } else {
       setEditingElementWithState(selectedElement.id, {
         isTrimMode: true,
         hasEditMenu: true,
         showOverflow: false,
+      });
+      trackEvent('video_trim', {
+        name: 'entered_video_trim_mode',
       });
     }
   }, [isEditing, clearEditing, setEditingElementWithState, selectedElement]);
@@ -61,8 +70,8 @@ function useVideoTrimMode() {
       return false;
     }
     const { local, isExternal } = selectedElement.resource || {};
-    return isTranscodingEnabled && !isExternal && !local;
-  }, [selectedElement, isTranscodingEnabled]);
+    return isVideoTrimEnabled && isTranscodingEnabled && !isExternal && !local;
+  }, [selectedElement, isVideoTrimEnabled, isTranscodingEnabled]);
 
   return {
     isTrimMode: isEditing && isTrimMode,
