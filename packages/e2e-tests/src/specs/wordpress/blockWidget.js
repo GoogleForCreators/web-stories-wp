@@ -39,9 +39,7 @@ describe('Web Stories Widget Block', () => {
   describe('Regular Block', () => {
     minWPVersionRequired('5.8');
 
-    // TODO(#7748): Investigate flakey test.
-    //eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should insert a new Web Stories block', async () => {
+    it('should insert a new Web Stories block', async () => {
       await visitBlockWidgetScreen();
       await expect(page).toClick(
         '.edit-widgets-header-toolbar button[aria-label="Add block"]'
