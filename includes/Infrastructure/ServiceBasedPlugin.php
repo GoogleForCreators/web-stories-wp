@@ -275,7 +275,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		}
 
 		while ( null !== key( $services ) ) {
-			$id    = $this->maybe_resolve( key( $services ) );
+			$id    = key( $services );
 			$class = $this->maybe_resolve( current( $services ) );
 
 			// Delay registering the service until all requirements are met.
