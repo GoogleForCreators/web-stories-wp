@@ -341,7 +341,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Taxonomies', 'web-stories' ),
 				'description' => __( 'Enable support of tags and categories for stories', 'web-stories' ),
 				'group'       => 'editor',
-				'default'     => true,
+				'default'     => false,
 			],
 
 			/**
