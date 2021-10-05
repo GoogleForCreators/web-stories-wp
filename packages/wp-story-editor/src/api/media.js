@@ -27,7 +27,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { flattenFormData, getResourceFromAttachment } from './utils';
-import { MEDIA_FIELD } from './constants';
+import { MEDIA_FIELDS } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
 export function getMedia(
@@ -39,7 +39,7 @@ export function getMedia(
     per_page: 10,
     page: pagingNum,
     _web_stories_envelope: true,
-    _fields: MEDIA_FIELD,
+    _fields: MEDIA_FIELDS,
   });
 
   if (mediaType) {
