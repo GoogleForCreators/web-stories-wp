@@ -131,17 +131,6 @@ class Settings extends Service_Base {
 	const SETTING_NAME_ARCHIVE_PAGE_ID = 'web_stories_archive_page_id';
 
 	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority(): int {
-		return 5;
-	}
-
-	/**
 	 * Register settings.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -299,5 +288,44 @@ class Settings extends Service_Base {
 				],
 			]
 		);
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority(): int {
+		return 5;
+	}
+
+	/**
+	 * Returns the value for a given setting.
+	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string $key Setting key.
+	 * @param mixed  $default Optional. Default value to return if the option does not exist.
+	 * @return mixed Setting value.
+	 */
+	public function get_setting( $key, $default = false ) {
+		return get_option( $key, $default );
+	}
+
+	/**
+	 * Updates the given setting with a new value.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string $key Setting key.
+	 * @param mixed  $value Setting value.
+	 * @return mixed Setting value.
+	 */
+	public function update_setting( $key, $value ) {
+		return update_option( $key, $value );
 	}
 }

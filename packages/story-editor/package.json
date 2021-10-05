@@ -53,13 +53,13 @@
     "devDependencies": {
         "@storybook/addon-actions": "^6.3.6",
         "@storybook/addon-knobs": "^6.3.0",
-        "@testing-library/dom": "^8.6.0",
+        "@testing-library/dom": "^8.7.2",
         "@testing-library/jest-dom": "^5.14.1",
-        "@testing-library/react": "^12.1.1",
+        "@testing-library/react": "^12.1.2",
         "@testing-library/react-hooks": "^7.0.2",
         "@testing-library/user-event": "^13.2.1",
         "jest": "^27.2.2",
-        "jest-matcher-deep-close-to": "^2.0.1",
+        "jest-matcher-deep-close-to": "^3.0.0",
         "mockdate": "^3.0.5",
         "react": "^17.0.2",
         "stylis-plugin-rtl": "^1.0.0"

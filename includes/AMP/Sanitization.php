@@ -26,12 +26,10 @@
 
 namespace Google\Web_Stories\AMP;
 
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Services;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories_Dependencies\AMP_Allowed_Tags_Generated;
 use Google\Web_Stories_Dependencies\AMP_Content_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Dev_Mode_Sanitizer;
@@ -46,7 +44,6 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Extension;
 use Google\Web_Stories_Dependencies\AmpProject\Tag;
 use DOMElement;
-use WP_Post;
 
 /**
  * Sanitization class.
@@ -58,6 +55,26 @@ use WP_Post;
  * @see \AMP_Theme_Support
  */
 class Sanitization {
+	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
+
 	/**
 	 * Sanitizes a document.
 	 *
@@ -393,8 +410,11 @@ class Sanitization {
 				 * @todo Enable by default and allow filtering once AMP_Style_Sanitizer does not call AMP_Options_Manager
 				 *       which in turn requires AMP__VERSION to be defined.
 				 */
-				'allow_transient_caching' => false,
-				'use_document_element'    => true,
+				'allow_transient_caching'   => false,
+				'use_document_element'      => true,
+				'dynamic_element_selectors' => [
+					'amp-story-captions',
+				],
 			],
 			Meta_Sanitizer::class                  => [],
 			AMP_Layout_Sanitizer::class            => [],
@@ -407,7 +427,7 @@ class Sanitization {
 		$post = get_queried_object();
 
 		if ( $post instanceof \WP_Post && Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
-			$video_cache_enabled = (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
+			$video_cache_enabled = (bool) $this->settings->get_setting( $this->settings::SETTING_NAME_VIDEO_CACHE );
 
 			$story = new Story();
 			$story->load_from_post( $post );

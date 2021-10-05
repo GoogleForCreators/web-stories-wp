@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,21 @@
  * limitations under the License.
  */
 
-export * from './constants';
-export { default as elementTypes } from './elementTypes';
-export { default as getDefinitionForType } from './utils/getDefinitionForType';
-export { default as createNewElement } from './utils/createNewElement';
-export { default as createPage } from './utils/createPage';
-export { default as duplicatePage } from './utils/duplicatePage';
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+
+export function getPublisherLogos(path) {
+  return apiFetch({
+    path,
+  });
+}
+
+export function addPublisherLogo(path, id) {
+  return apiFetch({
+    path,
+    data: { id },
+    method: 'POST',
+  });
+}

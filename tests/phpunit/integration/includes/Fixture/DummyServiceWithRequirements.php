@@ -1,5 +1,6 @@
-/*
- * Copyright 2020 Google LLC
+<?php
+/**
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +15,19 @@
  * limitations under the License.
  */
 
-export * from './constants';
-export { default as elementTypes } from './elementTypes';
-export { default as getDefinitionForType } from './utils/getDefinitionForType';
-export { default as createNewElement } from './utils/createNewElement';
-export { default as createPage } from './utils/createPage';
-export { default as duplicatePage } from './utils/duplicatePage';
+namespace Google\Web_Stories\Tests\Integration\Fixture;
+
+use Google\Web_Stories\Infrastructure\HasRequirements;
+use Google\Web_Stories\Infrastructure\Service;
+
+class DummyServiceWithRequirements implements Service, HasRequirements {
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'service_a' ];
+	}
+}
