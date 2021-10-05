@@ -78,6 +78,13 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	private $settings;
 
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
@@ -86,8 +93,9 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 *
 	 * @return void
 	 */
-	public function __construct( Settings $settings ) {
-		$this->settings = $settings;
+	public function __construct( Settings $settings, Experiments $experiments ) {
+		$this->settings    = $settings;
+		$this->experiments = $experiments;
 	}
 
 	/**
@@ -341,12 +349,16 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param bool      $bypass Pass-through of the pre_handle_404 filter value.
-	 * @param \WP_Query $query The WP_Query object.
-	 * @return bool Whether to pass-through or not.
+	 * @param bool|mixed $bypass Pass-through of the pre_handle_404 filter value.
+	 * @param \WP_Query  $query The WP_Query object.
+	 * @return bool|mixed Whether to pass-through or not.
 	 */
 	public function redirect_post_type_archive_urls( $bypass, $query ) {
 		global $wp_rewrite;
+
+		if ( ! $this->experiments->is_experiment_enabled( 'archivePageCustomization' ) ) {
+			return $bypass;
+		}
 
 		if ( $bypass || ! is_string( $this->get_has_archive() ) || ( ! $wp_rewrite instanceof \WP_Rewrite || ! $wp_rewrite->using_permalinks() ) ) {
 			return $bypass;
@@ -410,6 +422,10 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @return bool|string Whether the post type should have an archive, or archive slug.
 	 */
 	private function get_has_archive() {
+		if ( ! $this->experiments->is_experiment_enabled( 'archivePageCustomization' ) ) {
+			return true;
+		}
+
 		$archive_page_option    = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
 		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 		$has_archive            = true;
