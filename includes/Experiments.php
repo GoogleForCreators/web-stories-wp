@@ -26,12 +26,14 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
+
 /**
  * Experiments class.
  *
  * Allows turning flags on/off via the admin UI.
  */
-class Experiments extends Service_Base {
+class Experiments extends Service_Base implements HasRequirements {
 	/**
 	 * Settings page name.
 	 *
@@ -79,14 +81,16 @@ class Experiments extends Service_Base {
 	}
 
 	/**
-	 * Get the action priority to use for registering the service.
+	 * Get the list of service IDs required for this service to be registered.
 	 *
-	 * @since 1.6.0
+	 * Needed because settings needs to be registered first.
 	 *
-	 * @return int Registration action priority to use.
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
 	 */
-	public static function get_registration_action_priority(): int {
-		return 7;
+	public static function get_requirements(): array {
+		return [ 'settings' ];
 	}
 
 	/**
