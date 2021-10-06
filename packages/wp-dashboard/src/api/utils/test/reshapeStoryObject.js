@@ -17,8 +17,11 @@
 /**
  * Internal dependencies
  */
-import reshapeStoryObject from '../stories';
-import { REST_LINKS } from '../../../constants';
+/**
+ * External dependencies
+ */
+import { REST_LINKS } from '@web-stories-wp/dashboard';
+import reshapeStoryObject from '../reshapeStoryObject';
 
 describe('reshapeStoryObject', () => {
   it('should return object', () => {

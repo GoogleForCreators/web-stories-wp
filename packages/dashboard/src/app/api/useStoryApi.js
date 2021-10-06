@@ -32,7 +32,6 @@ import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
-import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
 import { useConfig } from '../config';
 
@@ -71,14 +70,8 @@ const useStoryApi = () => {
       const trackTiming = getTimeTracker('load_stories');
 
       try {
-        const { body: stories, headers } = await fetchStoriesCallback(
-          queryParams,
-          storyApi
-        );
-
-        const totalPages = headers && parseInt(headers?.totalPages);
-        const totalStoriesByStatus =
-          headers && JSON.parse(headers?.totalByStatus);
+        const { stories, fetchedStoryIds, totalPages, totalStoriesByStatus } =
+          await fetchStoriesCallback(queryParams, storyApi);
 
         // Hook into first fetch of story statuses.
         if (isInitialFetch.current) {
@@ -89,23 +82,13 @@ const useStoryApi = () => {
 
         isInitialFetch.current = false;
 
-        const fetchedStoriesById = [];
-        const reshapedStories = stories.reduce((acc, current) => {
-          if (!current) {
-            return acc;
-          }
-          fetchedStoriesById.push(current.id);
-          acc[current.id] = reshapeStoryObject(current);
-          return acc;
-        }, {});
-
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
           payload: {
-            stories: reshapedStories,
+            stories,
             totalPages,
             totalStoriesByStatus,
-            fetchedStoriesById,
+            fetchedStoryIds,
             page: queryParams.page,
           },
         });
@@ -137,7 +120,7 @@ const useStoryApi = () => {
 
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
-          payload: reshapeStoryObject(response), // @todo Move reshapeStoryObject to wp-dashboard.
+          payload: response,
         });
       } catch (err) {
         dispatch({
@@ -224,7 +207,7 @@ const useStoryApi = () => {
 
         dispatch({
           type: STORY_ACTION_TYPES.DUPLICATE_STORY,
-          payload: reshapeStoryObject(response),
+          payload: response,
         });
       } catch (err) {
         dispatch({

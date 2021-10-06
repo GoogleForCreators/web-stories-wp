@@ -126,7 +126,7 @@ function storyReducer(state, action) {
 
     case ACTION_TYPES.FETCH_STORIES_SUCCESS: {
       const {
-        fetchedStoriesById,
+        fetchedStoryIds,
         totalStoriesByStatus,
         totalPages,
         page,
@@ -136,8 +136,8 @@ function storyReducer(state, action) {
 
       const combinedStoryIds =
         page === 1
-          ? fetchedStoriesById
-          : [...storiesOrderById, ...fetchedStoriesById];
+          ? fetchedStoryIds
+          : [...storiesOrderById, ...fetchedStoryIds];
       const uniqueStoryIds = [...new Set(combinedStoryIds)];
 
       return {
