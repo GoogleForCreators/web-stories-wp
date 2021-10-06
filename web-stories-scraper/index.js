@@ -207,6 +207,9 @@ class WebStoriesScraperPlugin {
           /<amp-story[^>]+publisher="([^"]+)"/
         )[1];
 
+        const hasMissingAnalyticsExtension = !fileContents.includes('v0/amp-analytics');
+        const hasMissingAutoAnalyticsExtension = !fileContents.includes('v0/amp-story-auto-analytics');
+
         fileContents = fileContents
           // Remove some clutter.
           .replace(
@@ -307,6 +310,24 @@ class WebStoriesScraperPlugin {
           .replace(
             /<title>(.*)<\/title>/,
             `<title>${existingTitle} - ${PUBLISHER_NAME}</title>`
+          )
+          .replace(
+            /<\/head>/,
+            () => {
+              let scripts = '';
+
+              if (hasMissingAnalyticsExtension) {
+                scripts += '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.mjs" async custom-element="amp-analytics" type="module" crossorigin="anonymous"></script>' +
+                  '<script async nomodule src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" crossorigin="anonymous" custom-element="amp-analytics"></script>';
+              }
+
+              if (hasMissingAutoAnalyticsExtension) {
+                scripts += '<script src="https://cdn.ampproject.org/v0/amp-story-auto-analytics-0.1.mjs" async custom-element="amp-story-auto-analytics" type="module" crossorigin="anonymous"></script>' +
+                  '<script async nomodule src="https://cdn.ampproject.org/v0/amp-story-auto-analytics-0.1.js" crossorigin="anonymous" custom-element="amp-story-auto-analytics"></script>';
+              }
+
+              return scripts + '</head>';
+            }
           )
           // Override publisher name.
           .replace(new RegExp(existingPublisher, 'g'), PUBLISHER_NAME);
