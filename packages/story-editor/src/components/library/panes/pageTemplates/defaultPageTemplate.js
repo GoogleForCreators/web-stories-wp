@@ -20,7 +20,6 @@
 import PropTypes from 'prop-types';
 import {
   useState,
-  useCallback,
   forwardRef,
   useFocusOut,
   useEffect,
@@ -103,11 +102,7 @@ function DefaultPageTemplate({
 
   const { highlightedTemplate } = rest;
 
-  const handleSetHoverActive = useCallback(() => setIsHover(true), []);
-
-  const handleSetHoverFalse = useCallback(() => {
-    setIsHover(false);
-  }, []);
+  const handleSetHover = () => setIsHover(!isHover);
 
   useEffect(() => {
     if (isActive && ref.current) {
@@ -118,10 +113,9 @@ function DefaultPageTemplate({
   return (
     <PageTemplateWrapper
       columnWidth={columnWidth}
-      role="listitem"
       ref={ref}
-      onMouseEnter={handleSetHoverActive}
-      onMouseLeave={handleSetHoverFalse}
+      onMouseEnter={handleSetHover}
+      onMouseLeave={handleSetHover}
       aria-label={page.title}
       isHighlighted={page.id === highlightedTemplate}
       {...rest}

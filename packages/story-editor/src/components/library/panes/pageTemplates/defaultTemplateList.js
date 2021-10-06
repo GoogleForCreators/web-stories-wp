@@ -29,20 +29,23 @@ import { useGridViewKeys, useSnackbar } from '@web-stories-wp/design-system';
 import { v4 as uuidv4 } from 'uuid';
 import { duplicatePage } from '../../../../elements';
 import { useStory } from '../../../../app/story';
+import { PANE_PADDING } from '../shared';
 import DefaultPageTemplate from './defaultPageTemplate';
 
 const WrapperGrid = styled.ul`
   display: grid;
   width: 100%;
-  grid-column-gap: 4px;
-  grid-row-gap: 4px;
+  margin-left: ${PANE_PADDING};
+  gap: 12px;
   grid-template-columns: ${({ columnWidth }) =>
     `repeat(auto-fit, ${columnWidth}px)`};
   grid-template-rows: ${({ rowHeight }) =>
     `repeat(minmax(${rowHeight}px, 1fr))`};
 `;
 
-const PageTemplateWrapper = styled.li``;
+const PageTemplateWrapper = styled.li`
+  margin-bottom: 0;
+`;
 
 function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
   const { addPage } = useStory(({ actions }) => ({
