@@ -110,7 +110,12 @@ function PageTemplatesPane(props) {
           setNextTemplatesToFetch(nextTemplatesToFetch + 1);
         }
       })
-      .catch(() => setNextTemplatesToFetch(false));
+      .catch(() => {
+        setNextTemplatesToFetch(false);
+        if (null === savedTemplates) {
+          setSavedTemplates([]);
+        }
+      });
   }, [
     getCustomPageTemplates,
     nextTemplatesToFetch,
