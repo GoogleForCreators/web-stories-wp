@@ -71,7 +71,7 @@ const useStoryApi = () => {
       const trackTiming = getTimeTracker('load_stories');
 
       try {
-        const { body, headers } = await fetchStoriesCallback(
+        const { body: stories, headers } = await fetchStoriesCallback(
           queryParams,
           storyApi
         );
@@ -89,14 +89,23 @@ const useStoryApi = () => {
 
         isInitialFetch.current = false;
 
-        const stories = body;
+        const fetchedStoriesById = [];
+        const reshapedStories = stories.reduce((acc, current) => {
+          if (!current) {
+            return acc;
+          }
+          fetchedStoriesById.push(current.id);
+          acc[current.id] = reshapeStoryObject(current);
+          return acc;
+        }, {});
 
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
           payload: {
-            stories,
+            stories: reshapedStories,
             totalPages,
             totalStoriesByStatus,
+            fetchedStoriesById,
             page: queryParams.page,
           },
         });
