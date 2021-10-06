@@ -17,32 +17,29 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useState } from '@web-stories-wp/react';
+import { useCallback, useMemo, useRef, useEffect } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import { useVirtual } from 'react-virtual';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useGridViewKeys, useSnackbar } from '@web-stories-wp/design-system';
+import { UnitsProvider } from '@web-stories-wp/units';
+import { useSnackbar } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { v4 as uuidv4 } from 'uuid';
+import { PANE_PADDING } from '../shared';
+import {
+  getVirtualizedItemIndex,
+  useVirtualizedGridNavigation,
+  VirtualizedContainer,
+  PANEL_GRID_ROW_GAP,
+  VirtualizedWrapper,
+} from '../shared/virtualizedPanelGrid';
 import { duplicatePage } from '../../../../elements';
 import { useStory } from '../../../../app/story';
 import PageTemplate from './pageTemplate';
 
-const WrapperGrid = styled.ul`
-  display: grid;
-  width: 100%;
-  grid-column-gap: 4px;
-  grid-row-gap: 4px;
-  grid-template-columns: ${({ columnWidth }) =>
-    `repeat(auto-fit, ${columnWidth}px)`};
-  grid-template-rows: ${({ rowHeight }) =>
-    `repeat(minmax(${rowHeight}px, 1fr))`};
-`;
-
-const PageTemplateWrapper = styled.li``;
+const THRESHOLD = 6;
 function TemplateList({
   pages,
   parentRef,
@@ -55,10 +52,11 @@ function TemplateList({
     addPage: actions.addPage,
   }));
   const { showSnackbar } = useSnackbar();
-  const [currentPageId, setCurrentPageId] = useState();
-  const [isGridFocused, setIsGridFocused] = useState(false);
+
   const containerRef = useRef();
   const pageRefs = useRef({});
+
+  const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
 
   const handlePageClick = useCallback(
     (page) => {
@@ -75,64 +73,120 @@ function TemplateList({
     [addPage, showSnackbar]
   );
 
+  const rowsTotal = useMemo(() => Math.ceil((pages || []).length / 2), [pages]);
+
+  const rowVirtualizer = useVirtual({
+    size: rowsTotal,
+    parentRef,
+    estimateSize: useCallback(
+      () => pageSize.containerHeight + PANEL_GRID_ROW_GAP,
+      [pageSize.containerHeight]
+    ),
+    overscan: 4,
+  });
+
+  useEffect(() => {
+    if (
+      rowVirtualizer.virtualItems.length &&
+      rowsTotal &&
+      rowsTotal - THRESHOLD <
+        rowVirtualizer.virtualItems[rowVirtualizer.virtualItems.length - 1]
+          .index
+    ) {
+      fetchTemplates?.();
+    }
+  }, [rowVirtualizer, rowsTotal, fetchTemplates]);
+
+  const columnVirtualizer = useVirtual({
+    horizontal: true,
+    size: 2,
+    parentRef,
+    estimateSize: useCallback(
+      () => pageSize.width + PANEL_GRID_ROW_GAP,
+      [pageSize.width]
+    ),
+    overscan: 0,
+  });
+
+  const {
+    activeGridItemId,
+    handleGridFocus,
+    handleGridItemFocus,
+    isGridFocused,
+  } = useVirtualizedGridNavigation({
+    rowVirtualizer,
+    containerRef,
+    gridItemRefs: pageRefs,
+    gridItemIds: pageIds,
+  });
+
   const handleKeyboardPageClick = useCallback(
     ({ code }, page) => {
       if (isGridFocused) {
         if (code === 'Enter') {
           handlePageClick(page);
+        } else if (code === 'Space') {
+          handleDelete?.(page);
         }
       }
     },
-    [isGridFocused, handlePageClick]
+    [isGridFocused, handlePageClick, handleDelete]
   );
 
-  const handleGridFocus = useCallback(() => {
-    if (!isGridFocused) {
-      const newGridItemId = pageRefs.current?.[currentPageId]
-        ? currentPageId
-        : pages.id?.[0];
-
-      setIsGridFocused(true);
-      pageRefs.current?.[newGridItemId]?.focus();
-    }
-  }, [currentPageId, isGridFocused, pages]);
-
-  useGridViewKeys({
-    containerRef: parentRef,
-    gridRef: containerRef,
-    itemRefs: pageRefs,
-    items: pages,
-    currentItemId: currentPageId,
-  });
-
   return (
-    <WrapperGrid
-      ref={containerRef}
-      columnWidth={pageSize.width}
-      rowHeight={pageSize.containerHeight}
-      onFocus={handleGridFocus}
-      {...rest}
+    <UnitsProvider
+      pageSize={{
+        width: pageSize.width,
+        height: pageSize.height,
+      }}
     >
-      {pages.map((page) => {
-        return (
-          <PageTemplateWrapper key={uuidv4()}>
-            <PageTemplate
-              data-testid={`page_template_${page.id}`}
-              page={page}
-              pageSize={pageSize}
-              isActive={currentPageId === page.id}
-              onFocus={() => {
-                setCurrentPageId(page.id);
-              }}
-              onClick={() => handlePageClick(page.story)}
-              onKeyUp={(event) => handleKeyboardPageClick(event, page)}
-              columnWidth={pageSize.width}
-              {...rest}
-            />
-          </PageTemplateWrapper>
-        );
-      })}
-    </WrapperGrid>
+      <VirtualizedWrapper height={rowVirtualizer.totalSize}>
+        <VirtualizedContainer
+          height={rowVirtualizer.totalSize}
+          ref={containerRef}
+          columnWidth={pageSize.width}
+          rowHeight={pageSize.containerHeight}
+          paneLeft={PANE_PADDING}
+          onFocus={handleGridFocus}
+          role="list"
+          aria-label={__('Page Template Options', 'web-stories')}
+        >
+          {rowVirtualizer.virtualItems.map((virtualRow) =>
+            columnVirtualizer.virtualItems.map((virtualColumn) => {
+              const pageIndex = getVirtualizedItemIndex({
+                columnIndex: virtualColumn.index,
+                rowIndex: virtualRow.index,
+              });
+
+              const page = pages[pageIndex];
+
+              if (!page) {
+                return null;
+              }
+              const isActive = activeGridItemId === page.id && isGridFocused;
+
+              return (
+                <PageTemplate
+                  key={pageIndex}
+                  data-testid={`page_template_${page.id}`}
+                  ref={(el) => (pageRefs.current[page.id] = el)}
+                  translateY={virtualRow.start}
+                  translateX={virtualColumn.start}
+                  page={page}
+                  pageSize={pageSize}
+                  isActive={isActive}
+                  onFocus={() => handleGridItemFocus(page.id)}
+                  onClick={() => handlePageClick(page)}
+                  onKeyUp={(event) => handleKeyboardPageClick(event, page)}
+                  handleDelete={handleDelete}
+                  {...rest}
+                />
+              );
+            })
+          )}
+        </VirtualizedContainer>
+      </VirtualizedWrapper>
+    </UnitsProvider>
   );
 }
 
