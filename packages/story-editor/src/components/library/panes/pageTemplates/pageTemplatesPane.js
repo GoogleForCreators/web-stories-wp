@@ -95,6 +95,12 @@ function PageTemplatesPane(props) {
   );
 
   const loadTemplates = useCallback(() => {
+    // if nextTemplatesToFetch is false, we must not perform an API call
+    // with page=false.
+    if (!nextTemplatesToFetch) {
+      return;
+    }
+
     getCustomPageTemplates(nextTemplatesToFetch)
       .then(({ templates, hasMore }) => {
         setSavedTemplates([...(savedTemplates || []), ...templates]);

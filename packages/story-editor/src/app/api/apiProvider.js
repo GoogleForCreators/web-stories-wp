@@ -170,7 +170,7 @@ function APIProvider({ children }) {
   );
 
   actions.getCustomPageTemplates = useCallback(
-    (page = 1) => getCustomPageTemplates(page, customPageTemplates),
+    (page) => getCustomPageTemplates(page, customPageTemplates),
     [customPageTemplates, getCustomPageTemplates]
   );
 
