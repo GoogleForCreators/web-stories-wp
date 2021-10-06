@@ -157,14 +157,12 @@ function PageTemplatesPane(props) {
     <StyledPane id={paneId} {...props}>
       <PaneInner>
         <>
-          {savedTemplates && (
-            <ButtonWrapper>
-              <TemplateSave
-                setShowDefaultTemplates={setShowDefaultTemplates}
-                updateList={updateTemplatesList}
-              />
-            </ButtonWrapper>
-          )}
+          <ButtonWrapper>
+            <TemplateSave
+              setShowDefaultTemplates={setShowDefaultTemplates}
+              updateList={updateTemplatesList}
+            />
+          </ButtonWrapper>
           <DropDownWrapper>
             <Select
               options={options}
