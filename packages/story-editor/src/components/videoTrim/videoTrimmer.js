@@ -18,14 +18,17 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useRef, useCallback } from '@web-stories-wp/react';
+import {
+  useRef,
+  useCallback,
+  useDebouncedCallback,
+} from '@web-stories-wp/react';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '@web-stories-wp/design-system';
-import { useDebouncedCallback } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
