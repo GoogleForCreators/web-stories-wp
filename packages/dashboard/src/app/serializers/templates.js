@@ -25,30 +25,17 @@ import { APP_ROUTES } from '../../constants';
 
 export default function reshapeTemplateObject(
   originalTemplateData,
-  cdnURL,
   isLocal = false
 ) {
-  const { id, slug, pages, modified, creationDate } = originalTemplateData;
+  const { id, slug, modified, creationDate } = originalTemplateData;
   if (!id || !slug) {
     return null;
   }
-
-  const postersByPage = pages.reduce((memo, _, i) => {
-    const srcPath = `${cdnURL}images/templates/${slug}/posters/${i + 1}`;
-    return {
-      ...memo,
-      [i]: {
-        webp: `${srcPath}.webp`,
-        png: `${srcPath}.png`,
-      },
-    };
-  }, {});
 
   return {
     ...originalTemplateData,
     id,
     slug,
-    postersByPage,
     centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
     creationDate: toDate(creationDate, getOptions()),
     status: 'template',

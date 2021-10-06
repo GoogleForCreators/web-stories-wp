@@ -28,6 +28,6 @@ describe('disableTracking', () => {
   it('should return a boolean', () => {
     config.trackingEnabled = true;
     disableTracking();
-    expect(config.trackingEnabled).toStrictEqual(false);
+    expect(config.trackingEnabled).toBe(false);
   });
 });

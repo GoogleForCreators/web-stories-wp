@@ -34,6 +34,7 @@ use Google\Web_Stories\Traits\Post_Type;
  */
 class Page_Template_Post_Type extends Service_Base {
 	use Post_Type;
+
 	/**
 	 * The slug of the page template post type.
 	 * Limited to web-story-page as web-story-page-template goes over character limit.
@@ -43,6 +44,24 @@ class Page_Template_Post_Type extends Service_Base {
 	const POST_TYPE_SLUG = 'web-story-page';
 
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
+	 * Page_Template_Post_Type constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 */
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->story_post_type = $story_post_type;
+	}
+
+	/**
 	 * Registers the post type for page templates.
 	 *
 	 * @since 1.6.0
@@ -50,8 +69,8 @@ class Page_Template_Post_Type extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		$edit_posts   = $this->get_post_type_cap_name( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' );
-		$delete_posts = $this->get_post_type_cap_name( Story_Post_Type::POST_TYPE_SLUG, 'delete_posts' );
+		$edit_posts   = $this->get_post_type_cap_name( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' );
+		$delete_posts = $this->get_post_type_cap_name( $this->story_post_type::POST_TYPE_SLUG, 'delete_posts' );
 		$capabilities = [
 			'edit_post'              => $edit_posts,
 			'read_post'              => $edit_posts,

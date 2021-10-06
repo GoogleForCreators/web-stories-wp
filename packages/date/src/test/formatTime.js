@@ -39,7 +39,7 @@ describe('date/formatTime', () => {
     const dateString = '2020-05-02T10:47:26';
     const formattedTime = formatTime(dateString);
 
-    expect(formattedTime).toStrictEqual('10:47 am');
+    expect(formattedTime).toBe('10:47 am');
   });
 
   it('should return 5:47 PM with g:i A formatting options', () => {
@@ -52,7 +52,7 @@ describe('date/formatTime', () => {
     const dateString = '2020-05-02T17:47:26';
     const formattedTime = formatTime(dateString);
 
-    expect(formattedTime).toStrictEqual('5:47 PM');
+    expect(formattedTime).toBe('5:47 PM');
   });
 
   it('should return 20:23 with H:i formatting options', () => {
@@ -66,6 +66,6 @@ describe('date/formatTime', () => {
     const dateString = '2020-05-02T20:23:39';
     const formattedTime = formatTime(dateString);
 
-    expect(formattedTime).toStrictEqual('20:23');
+    expect(formattedTime).toBe('20:23');
   });
 });

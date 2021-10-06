@@ -31,7 +31,7 @@ describe('base64Encode', () => {
   it('converts Unicode characters', () => {
     const string = 'Hello 🌍 - これはサンプルです。';
     const actual = base64Encode(string);
-    expect(actual).toStrictEqual(
+    expect(actual).toBe(
       '__WEB_STORIES_ENCODED__SGVsbG8lMjAlRjAlOUYlOEMlOEQlMjAtJTIwJUUzJTgxJTkzJUUzJTgyJThDJUUzJTgxJUFGJUUzJTgyJUI1JUUzJTgzJUIzJUUzJTgzJTk3JUUzJTgzJUFCJUUzJTgxJUE3JUUzJTgxJTk5JUUzJTgwJTgy'
     ); // Hello 🌍 - これはサンプルです。
     expect(base64Decode(actual)).toStrictEqual(string);
@@ -40,7 +40,7 @@ describe('base64Encode', () => {
   it('converts html', () => {
     const string = 'Hello <a href="#">world</a>';
     const actual = base64Encode(string);
-    expect(actual).toStrictEqual(
+    expect(actual).toBe(
       '__WEB_STORIES_ENCODED__SGVsbG8lMjAlM0NhJTIwaHJlZiUzRCUyMiUyMyUyMiUzRXdvcmxkJTNDJTJGYSUzRQ=='
     ); // Hello <a href="#">world</a>
     expect(base64Decode(actual)).toStrictEqual(string);
@@ -49,7 +49,7 @@ describe('base64Encode', () => {
   it('converts html characters', () => {
     const string = 'Hello &copy;&dollar;&pound;';
     const actual = base64Encode(string);
-    expect(actual).toStrictEqual(
+    expect(actual).toBe(
       '__WEB_STORIES_ENCODED__SGVsbG8lMjAlMjZjb3B5JTNCJTI2ZG9sbGFyJTNCJTI2cG91bmQlM0I='
     ); // Hello &copy;&dollar;&pound;
     expect(base64Decode(actual)).toStrictEqual(string);
@@ -58,7 +58,7 @@ describe('base64Encode', () => {
   it('converts UTF 16', () => {
     const string = 'Hello world - ØÙßæĄŒƕƜǄǆɷ';
     const actual = base64Encode(string);
-    expect(actual).toStrictEqual(
+    expect(actual).toBe(
       '__WEB_STORIES_ENCODED__SGVsbG8lMjB3b3JsZCUyMC0lMjAlQzMlOTglQzMlOTklQzMlOUYlQzMlQTYlQzQlODQlQzUlOTIlQzYlOTUlQzYlOUMlQzclODQlQzclODYlQzklQjc='
     ); // Hello world - ØÙßæĄŒƕƜǄǆɷ
     expect(base64Decode(actual)).toStrictEqual(string);

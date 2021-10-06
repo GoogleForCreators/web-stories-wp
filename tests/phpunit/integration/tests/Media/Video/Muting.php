@@ -17,27 +17,38 @@
 
 namespace Google\Web_Stories\Tests\Integration\Media\Video;
 
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use WP_REST_Request;
+use WP_REST_Server;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Media\Video\Muting
  */
-class Muting extends TestCase {
+class Muting extends DependencyInjectedTestCase {
+	/**
+	 * @var \Google\Web_Stories\Media\Video\Muting
+	 */
+	private $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Media\Video\Muting::class );
+	}
+
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$video_muting = new \Google\Web_Stories\Media\Video\Muting();
-		$video_muting->register();
+		$this->instance->register();
 
-		$this->assertSame( 10, has_action( 'rest_api_init', [ $video_muting, 'rest_api_init' ] ) );
+		$this->assertSame( 10, has_action( 'rest_api_init', [ $this->instance, 'rest_api_init' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
 				'wp_prepare_attachment_for_js',
 				[
-					$video_muting,
+					$this->instance,
 					'wp_prepare_attachment_for_js',
 				]
 			)
@@ -48,8 +59,7 @@ class Muting extends TestCase {
 	 * @covers ::register_meta
 	 */
 	public function test_register_meta() {
-		$video_muting = new \Google\Web_Stories\Media\Video\Muting();
-		$this->call_private_method( $video_muting, 'register_meta' );
+		$this->call_private_method( $this->instance, 'register_meta' );
 
 		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Video\Muting::IS_MUTED_POST_META_KEY, 'attachment' ) );
 		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Video\Muting::MUTED_ID_POST_META_KEY, 'attachment' ) );
@@ -80,15 +90,15 @@ class Muting extends TestCase {
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
-		$video_muting = new \Google\Web_Stories\Media\Video\Muting();
-		$image        = $video_muting->wp_prepare_attachment_for_js(
+
+		$image = $this->instance->wp_prepare_attachment_for_js(
 			[
 				'id'   => $poster_attachment_id,
 				'type' => 'image',
 				'url'  => wp_get_attachment_url( $poster_attachment_id ),
 			]
 		);
-		$video        = $video_muting->wp_prepare_attachment_for_js(
+		$video = $this->instance->wp_prepare_attachment_for_js(
 			[
 				'id'   => $video_attachment_id,
 				'type' => 'video',
@@ -106,6 +116,7 @@ class Muting extends TestCase {
 	 */
 	public function test_rest_api_init() {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
+
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -115,7 +126,7 @@ class Muting extends TestCase {
 			]
 		);
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/media/%d', $video_attachment_id ) );
+		$request  = new WP_REST_Request( WP_REST_Server::READABLE, sprintf( '/web-stories/v1/media/%d', $video_attachment_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
@@ -127,7 +138,6 @@ class Muting extends TestCase {
 	 * @covers ::get_callback_is_muted
 	 */
 	public function test_get_callback_is_muted() {
-		$video_muting        = new \Google\Web_Stories\Media\Video\Muting();
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -137,7 +147,7 @@ class Muting extends TestCase {
 			]
 		);
 		update_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Video\Muting::IS_MUTED_POST_META_KEY, '1' );
-		$result = $video_muting->get_callback_is_muted( [ 'id' => $video_attachment_id ] );
+		$result = $this->instance->get_callback_is_muted( [ 'id' => $video_attachment_id ] );
 		$this->assertTrue( $result );
 	}
 
@@ -146,7 +156,7 @@ class Muting extends TestCase {
 	 */
 	public function test_update_callback_is_muted() {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
-		$video_muting        = new \Google\Web_Stories\Media\Video\Muting();
+
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -156,9 +166,9 @@ class Muting extends TestCase {
 			]
 		);
 
-		$result = $video_muting->update_callback_is_muted( true, get_post( $video_attachment_id ) );
+		$result = $this->instance->update_callback_is_muted( true, get_post( $video_attachment_id ) );
 		$this->assertTrue( $result );
-		$result = $video_muting->update_callback_is_muted( true, get_post( $video_attachment_id ) );
+		$result = $this->instance->update_callback_is_muted( true, get_post( $video_attachment_id ) );
 		$this->assertFalse( $result );
 	}
 
@@ -166,7 +176,6 @@ class Muting extends TestCase {
 	 * @covers ::update_callback_is_muted
 	 */
 	public function test_update_callback_is_muted_error() {
-		$video_muting        = new \Google\Web_Stories\Media\Video\Muting();
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -176,7 +185,7 @@ class Muting extends TestCase {
 			]
 		);
 
-		$result = $video_muting->update_callback_is_muted( true, get_post( $video_attachment_id ) );
+		$result = $this->instance->update_callback_is_muted( true, get_post( $video_attachment_id ) );
 		$this->assertInstanceOf( 'WP_Error', $result );
 	}
 }

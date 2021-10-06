@@ -253,7 +253,7 @@ function OptionList({
               {group.options.map((option, j) => {
                 return (
                   <OptionRenderer
-                    key={option.id}
+                    key={option.id || ''}
                     role={'option'}
                     tabIndex="-1"
                     aria-selected={value === option.id}

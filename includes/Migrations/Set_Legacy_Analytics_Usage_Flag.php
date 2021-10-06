@@ -34,6 +34,25 @@ use Google\Web_Stories\Settings;
  * @package Google\Web_Stories\Migrations
  */
 class Set_Legacy_Analytics_Usage_Flag extends Migrate_Base {
+	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Migration constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
 
 	/**
 	 * Set legacy analytics usage flag.
@@ -43,6 +62,9 @@ class Set_Legacy_Analytics_Usage_Flag extends Migrate_Base {
 	 * @return void
 	 */
 	public function migrate() {
-		update_option( Settings::SETTING_NAME_USING_LEGACY_ANALYTICS, ! empty( get_option( Settings::SETTING_NAME_TRACKING_ID ) ) );
+		$this->settings->update_setting(
+			$this->settings::SETTING_NAME_USING_LEGACY_ANALYTICS,
+			! empty( $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID ) )
+		);
 	}
 }

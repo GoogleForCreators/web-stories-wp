@@ -23,6 +23,7 @@ import MockDate from 'mockdate';
 /**
  * Internal dependencies
  */
+import ApiContext from '../../../../../app/api/context';
 import ConfigContext from '../../../../../app/config/context';
 import StoryContext from '../../../../../app/story/context';
 import { renderWithTheme } from '../../../../../testUtils';
@@ -58,6 +59,13 @@ function arrange(
     actions: { updateStory },
   };
 
+  const getPublisherLogos = jest.fn().mockResolvedValue([]);
+  const apiValue = {
+    actions: {
+      getPublisherLogos,
+    },
+  };
+
   const config = {
     capabilities,
     allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
@@ -80,11 +88,13 @@ function arrange(
 
   const view = renderWithTheme(
     <ConfigContext.Provider value={config}>
-      <StoryContext.Provider value={storyContextValue}>
-        <InspectorContext.Provider value={inspectorContextValue}>
-          <PublishPanel />
-        </InspectorContext.Provider>
-      </StoryContext.Provider>
+      <ApiContext.Provider value={apiValue}>
+        <StoryContext.Provider value={storyContextValue}>
+          <InspectorContext.Provider value={inspectorContextValue}>
+            <PublishPanel />
+          </InspectorContext.Provider>
+        </StoryContext.Provider>
+      </ApiContext.Provider>
     </ConfigContext.Provider>
   );
   return {
@@ -135,9 +145,9 @@ describe('PublishPanel', () => {
     const element = screen.getByRole('button', { name: 'Story publish time' });
 
     fireEvent.click(element);
-    expect(
-      await screen.findByRole('button', { name: 'January 2020' })
-    ).toBeInTheDocument();
+    await expect(
+      screen.findByRole('button', { name: 'January 2020' })
+    ).resolves.toBeInTheDocument();
   });
 
   it('should update the story when choosing a date from the calendar', async () => {
@@ -154,9 +164,9 @@ describe('PublishPanel', () => {
     expect(updateStory).toHaveBeenCalledTimes(1);
     const calledArg = updateStory.mock.calls[0][0];
     const date = new Date(calledArg.properties.date);
-    expect(date.getMonth()).toStrictEqual(0);
-    expect(date.getDate()).toStrictEqual(1);
-    expect(date.getFullYear()).toStrictEqual(2020);
+    expect(date.getMonth()).toBe(0);
+    expect(date.getDate()).toBe(1);
+    expect(date.getFullYear()).toBe(2020);
   });
 
   it('should allow resetting the publish time', async () => {
@@ -202,14 +212,14 @@ describe('PublishPanel', () => {
 
     // The original date was using PM.
     const date1 = new Date(calledArgs[0][0].properties.date);
-    expect(date1.getHours()).toStrictEqual(21);
+    expect(date1.getHours()).toBe(21);
 
     const date2 = new Date(calledArgs[1][0].properties.date);
-    expect(date2.getMinutes()).toStrictEqual(59);
+    expect(date2.getMinutes()).toBe(59);
 
     // After choosing AM, the hours should be 9.
     const date3 = new Date(calledArgs[2][0].properties.date);
-    expect(date3.getHours()).toStrictEqual(9);
+    expect(date3.getHours()).toBe(9);
   });
 
   it('should not update the date with incorrect times', async () => {

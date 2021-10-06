@@ -58,13 +58,11 @@ describe('getCurrentVersionNumber', () => {
   });
 
   it('should read the plugin version from the file header', () => {
-    expect(getCurrentVersionNumber('/foo/plugin.php')).toStrictEqual(
-      '1.0.0-alpha'
-    );
+    expect(getCurrentVersionNumber('/foo/plugin.php')).toBe('1.0.0-alpha');
   });
 
   it('should read the plugin version from the WEBSTORIES_VERSION constant', () => {
-    expect(getCurrentVersionNumber('/foo/plugin.php', true)).toStrictEqual(
+    expect(getCurrentVersionNumber('/foo/plugin.php', true)).toBe(
       '1.0.0-alpha+1234567'
     );
   });

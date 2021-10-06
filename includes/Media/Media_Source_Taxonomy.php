@@ -31,7 +31,6 @@ use Google\Web_Stories\Taxonomy\Taxonomy_Base;
 use Google\Web_Stories\Traits\Screen;
 use WP_Query;
 use WP_Post;
-use WP_REST_Request;
 
 /**
  * Class Media_Source_Taxonomy
@@ -110,7 +109,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 
 				'get_callback'    => [ $this, 'get_callback_media_source' ],
 				'schema'          => [
-					'description' => __( 'Media source. ', 'web-stories' ),
+					'description' => __( 'Media source.', 'web-stories' ),
 					'type'        => 'string',
 					'enum'        => [
 						'editor',

@@ -36,7 +36,7 @@ export const STORY_FIELDS = [
 export const STORY_EMBED =
   'wp:featuredmedia,wp:lockuser,author,wp:publisherlogo,wp:term';
 
-export const MEDIA_FIELD = [
+export const MEDIA_FIELDS = [
   'id',
   'date_gmt',
   'media_details',

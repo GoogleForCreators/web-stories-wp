@@ -29,13 +29,10 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Traits\Post_Type;
-use WP_Error;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
 use WP_REST_Controller;
-use WP_REST_Posts_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -47,6 +44,7 @@ use WP_REST_Server;
  */
 abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller implements Service, Delayed, Registerable {
 	use Post_Type;
+
 	/**
 	 * Parent post controller.
 	 *
