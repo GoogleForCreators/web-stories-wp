@@ -130,7 +130,9 @@ export const BaseInput = styled.input(
         color: ${theme.colors.fg.disable};
       }
     }
-
+    :focus {
+      box-shadow: none;
+    }
     :active:enabled {
       color: ${theme.colors.fg.primary};
     }
