@@ -26,13 +26,13 @@ import { useGridViewKeys, useSnackbar } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { v4 as uuidv4 } from 'uuid';
 import { duplicatePage } from '../../../../elements';
 import { useStory } from '../../../../app/story';
 import { PANE_PADDING } from '../shared';
+import { useConfig } from '../../../../app/config';
 import DefaultPageTemplate from './defaultPageTemplate';
 
-const WrapperGrid = styled.ul`
+const WrapperGrid = styled.div`
   display: grid;
   width: 100%;
   margin-left: ${PANE_PADDING};
@@ -43,14 +43,11 @@ const WrapperGrid = styled.ul`
     `repeat(minmax(${rowHeight}px, 1fr))`};
 `;
 
-const PageTemplateWrapper = styled.li`
-  margin-bottom: 0;
-`;
-
 function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
   const { addPage } = useStory(({ actions }) => ({
     addPage: actions.addPage,
   }));
+  const { isRTL } = useConfig();
   const { showSnackbar } = useSnackbar();
   const [currentPageId, setCurrentPageId] = useState();
   const [isGridFocused, setIsGridFocused] = useState(false);
@@ -100,6 +97,7 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
     itemRefs: pageRefs,
     items: pages,
     currentItemId: currentPageId,
+    isRTL,
   });
 
   return (
@@ -112,21 +110,20 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
     >
       {pages.map((page) => {
         return (
-          <PageTemplateWrapper key={uuidv4()}>
-            <DefaultPageTemplate
-              data-testid={`page_template_${page.id}`}
-              page={page}
-              pageSize={pageSize}
-              isActive={currentPageId === page.id}
-              onFocus={() => {
-                setCurrentPageId(page.id);
-              }}
-              onClick={() => handlePageClick(page.story)}
-              onKeyUp={(event) => handleKeyboardPageClick(event, page)}
-              columnWidth={pageSize.width}
-              {...rest}
-            />
-          </PageTemplateWrapper>
+          <DefaultPageTemplate
+            ref={(el) => (pageRefs.current[page.id] = el)}
+            key={page.id}
+            data-testid={`page_template_${page.id}`}
+            page={page}
+            pageSize={pageSize}
+            $onFocus={() => {
+              setCurrentPageId(page.id);
+            }}
+            onClick={() => handlePageClick(page.story)}
+            onKeyUp={(event) => handleKeyboardPageClick(event, page)}
+            columnWidth={pageSize.width}
+            {...rest}
+          />
         );
       })}
     </WrapperGrid>

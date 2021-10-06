@@ -18,13 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  useState,
-  forwardRef,
-  useFocusOut,
-  useEffect,
-  useRef,
-} from '@web-stories-wp/react';
+import { useState, forwardRef, useFocusOut } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { _x, sprintf } from '@web-stories-wp/i18n';
 import {
@@ -85,59 +79,52 @@ PageTemplateTitle.propTypes = {
   isActive: PropTypes.bool.isRequired,
 };
 
-function DefaultPageTemplate({
-  page,
-  isActive,
-  pageSize,
-  columnWidth,
-  ...rest
-}) {
-  const [isHover, setIsHover] = useState(false);
-  const isActivePage = isHover || isActive;
-  const ref = useRef();
+const DefaultPageTemplate = forwardRef(
+  ({ page, pageSize, columnWidth, ...rest }, ref) => {
+    const [isActive, setIsActive] = useState(false);
+    const [isHover, setIsHover] = useState(false);
+    const isActivePage = isHover || isActive;
 
-  useFocusOut(ref, () => setIsHover(false), []);
+    useFocusOut(ref, () => setIsHover(false), []);
 
-  const { highlightedTemplate } = rest;
+    const { highlightedTemplate } = rest;
 
-  const handleSetHover = () => setIsHover(!isHover);
-
-  useEffect(() => {
-    if (isActive && ref.current) {
-      ref.current.focus();
-    }
-  });
-
-  return (
-    <PageTemplateWrapper
-      columnWidth={columnWidth}
-      ref={ref}
-      onMouseEnter={handleSetHover}
-      onMouseLeave={handleSetHover}
-      aria-label={page.title}
-      isHighlighted={page.id === highlightedTemplate}
-      {...rest}
-    >
-      <PosterWrapper>
-        {page.webp && (
-          <PosterImg src={page.png} alt={page.title} crossOrigin="anonymous" />
-        )}
-        {page.title && (
-          <PageTemplateTitle isActive={isActivePage}>
-            {sprintf(
-              /* translators: 1: template name. 2: page template
+    const handleSetHover = () => setIsHover(!isHover);
+    return (
+      <PageTemplateWrapper
+        columnWidth={columnWidth}
+        ref={ref}
+        onMouseEnter={handleSetHover}
+        onMouseLeave={handleSetHover}
+        onFocus={() => setIsActive(true)}
+        onBlur={() => setIsActive(false)}
+        aria-label={page.title}
+        isHighlighted={page.id === highlightedTemplate}
+        {...rest}
+      >
+        <PosterWrapper>
+          {page.webp && (
+            <PosterImg
+              src={page.png}
+              alt={page.title}
+              crossOrigin="anonymous"
+            />
+          )}
+          {page.title && (
+            <PageTemplateTitle isActive={isActivePage}>
+              {sprintf(
+                /* translators: 1: template name. 2: page template
             name. */ _x('%1$s %2$s', 'page template title', 'web-stories'),
-              page.title,
-              PAGE_TEMPLATE_TYPES[page.type].name
-            )}
-          </PageTemplateTitle>
-        )}
-      </PosterWrapper>
-    </PageTemplateWrapper>
-  );
-}
-
-const DefaultPageTemplateWithRef = forwardRef(DefaultPageTemplate);
+                page.title,
+                PAGE_TEMPLATE_TYPES[page.type].name
+              )}
+            </PageTemplateTitle>
+          )}
+        </PosterWrapper>
+      </PageTemplateWrapper>
+    );
+  }
+);
 
 DefaultPageTemplate.propTypes = {
   isActive: PropTypes.bool,
@@ -148,4 +135,4 @@ DefaultPageTemplate.propTypes = {
 
 DefaultPageTemplate.displayName = 'DefaultPageTemplate';
 
-export default DefaultPageTemplateWithRef;
+export default DefaultPageTemplate;
