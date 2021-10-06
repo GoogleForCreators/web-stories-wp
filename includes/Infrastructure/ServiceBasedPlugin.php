@@ -275,7 +275,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		}
 
 		while ( null !== key( $services ) ) {
-			$id    = key( $services );
+			$id    = $this->maybe_resolve( key( $services ) );
 			$class = $this->maybe_resolve( current( $services ) );
 
 			// Delay registering the service until all requirements are met.
@@ -775,7 +775,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @return mixed Resolved or unchanged value.
 	 */
 	protected function maybe_resolve( $value ) {
-		if ( is_callable( $value ) ) {
+		if ( is_callable( $value ) && ! ( is_string( $value ) && function_exists( $value ) ) ) {
 			$value = $value( $this->injector, $this->service_container );
 		}
 
