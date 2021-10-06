@@ -71,7 +71,7 @@ const SaveButton = styled.button`
   ${({ $isDisabled, theme }) =>
     $isDisabled &&
     `
-      cursor: default:
+      cursor: default;
       background-color: ${theme.colors.interactiveBg.disable};
       &:hover {
         background-color: ${theme.colors.interactiveBg.disable};
