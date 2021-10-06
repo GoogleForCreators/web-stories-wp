@@ -80,7 +80,7 @@ export function fetchStories(queryParams, apiPath) {
 /**
  * Trash stories.
  *
- * @param {int|string} storyId Story Id.
+ * @param {number|string} storyId Story Id.
  * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */

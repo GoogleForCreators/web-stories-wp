@@ -50,7 +50,7 @@ export function searchPages(searchTerm, apiPath) {
  * Get page by id.
  * Used for getting the custom page by id after selection is saved on settings page
  *
- * @param {int} id page id.
+ * @param {number} id page id.
  * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */

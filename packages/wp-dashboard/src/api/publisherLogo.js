@@ -37,7 +37,7 @@ export function fetchPublisherLogos(apiPath) {
 /**
  * Remove publisher logo.
  *
- * @param {int} logoId Logo id.
+ * @param {number|string} logoId Logo id.
  * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
@@ -53,7 +53,7 @@ export function removePublisherLogo(logoId, apiPath) {
 /**
  * Add publisher logo.
  *
- * @param {int} logoId Logo id.
+ * @param {number|string} logoId Logo id.
  * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
@@ -70,7 +70,7 @@ export function addPublisherLogo(logoId, apiPath) {
 /**
  * Set publisher logo as default.
  *
- * @param {int} logoId Logo id.
+ * @param {number|string} logoId Logo id.
  * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
