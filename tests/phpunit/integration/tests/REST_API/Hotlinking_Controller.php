@@ -92,7 +92,6 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
 	 * @param mixed  $r       HTTP request arguments.
 	 * @param string $url     The request URL.
-	 *
 	 * @return array|WP_Error Response data.
 	 */
 	public function mock_http_request( $preempt, $r, $url ) {
@@ -186,7 +185,6 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 */
 	public function test_validate_url_path() {
 		$result = $this->controller->validate_url( self::URL_PATH );
-    
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
 
@@ -195,7 +193,6 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 */
 	public function test_validate_url_invalid() {
 		$result = $this->controller->validate_url( '-1' );
-
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
 
@@ -204,7 +201,6 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	 */
 	public function test_validate_url_invalid2() {
 		$result = $this->controller->validate_url( 'wibble' );
-
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
 
