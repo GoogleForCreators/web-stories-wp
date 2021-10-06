@@ -57,8 +57,18 @@ export const LinkButton = styled(Button).attrs({
   font-weight: 500;
 `;
 
+export const SiblingBorder = styled.div`
+  padding-left: 16px;
+  padding-right: 16px;
+
+  & + & {
+    border-top: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
+    padding-top: 16px;
+  }
+`;
+
 export const WordCloud = {
-  Heading: styled(ContentHeading)`
+  Heading: styled(ContentHeading).attrs({ as: 'h4' })`
     margin-bottom: 4px;
   `,
   Wrapper: styled.div`

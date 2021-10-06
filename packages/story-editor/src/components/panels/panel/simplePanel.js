@@ -26,7 +26,7 @@ import Panel from './panel';
 import PanelTitle from './shared/title';
 import PanelContent from './shared/content';
 
-function SimplePanel({ children, name, ariaLabel, title, ...rest }) {
+function SimplePanel({ children, name, ariaLabel, title, className, ...rest }) {
   return (
     <Panel name={name} {...rest}>
       <PanelTitle
@@ -34,7 +34,7 @@ function SimplePanel({ children, name, ariaLabel, title, ...rest }) {
       >
         {title}
       </PanelTitle>
-      <PanelContent>{children}</PanelContent>
+      <PanelContent className={className}>{children}</PanelContent>
     </Panel>
   );
 }
@@ -44,6 +44,7 @@ SimplePanel.propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   ariaLabel: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default SimplePanel;

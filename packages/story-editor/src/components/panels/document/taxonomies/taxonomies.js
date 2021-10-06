@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -27,6 +28,11 @@ import { SimplePanel } from '../../panel';
 import { useStory } from '../../../../app';
 import HierarchicalTermSelector from './HierarchicalTermSelector';
 import FlatTermSelector from './FlatTermSelector';
+
+const StyledSimplePanel = styled(SimplePanel)`
+  padding-left: 0;
+  padding-right: 0;
+`;
 
 function TaxonomiesPanel(props) {
   const { capabilities } = useStory(({ state: { capabilities } }) => ({
@@ -55,7 +61,7 @@ function TaxonomiesPanel(props) {
   }
 
   return (
-    <SimplePanel
+    <StyledSimplePanel
       name="taxonomies"
       title={__('Categories and Tags', 'web-stories')}
       {...props}
@@ -80,7 +86,7 @@ function TaxonomiesPanel(props) {
           />
         );
       })}
-    </SimplePanel>
+    </StyledSimplePanel>
   );
 }
 
