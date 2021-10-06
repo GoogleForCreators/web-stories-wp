@@ -175,9 +175,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
         </Tags.Description>
         {mostUsed.length > 0 && (
           <WordCloud.Wrapper data-testid={`${taxonomy.slug}-most-used`}>
-            <WordCloud.Heading>
-              {__('Most Used', 'web-stories')}
-            </WordCloud.Heading>
+            <WordCloud.Heading>{taxonomy.labels.most_used}</WordCloud.Heading>
             <WordCloud.List>
               {mostUsed.map((term, i) => (
                 <WordCloud.ListItem key={term.id}>

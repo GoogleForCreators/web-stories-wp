@@ -26,7 +26,7 @@ import {
   THEME_CONSTANTS,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
-import { _n, sprintf } from '@web-stories-wp/i18n';
+import { _n, sprintf, __ } from '@web-stories-wp/i18n';
 import {
   useCallback,
   useDebouncedCallback,
@@ -202,6 +202,7 @@ const HierarchicalInput = ({
         onChange={handleInputChange}
         label={label}
         type="search"
+        placeholder={__('search', 'web-stories')}
         {...inputProps}
       />
       {showOptionArea && (
