@@ -53,6 +53,7 @@ const PageTemplateWrapper = styled.div`
   border-radius: ${({ theme }) => theme.borders.radius.small};
   transform: ${({ translateX, translateY }) =>
     `translateX(${translateX}px) translateY(${translateY}px)`};
+
   ${({ isHighlighted }) => isHighlighted && themeHelpers.focusCSS};
   ${focusStyle};
 `;
