@@ -60,7 +60,7 @@ describe('addPage', () => {
 
     const result = addPage({ page: { id: '123', elements: [{ id: '456' }] } });
 
-    expect(result.current).toStrictEqual('123');
+    expect(result.current).toBe('123');
   });
 
   it('should insert the new page just after current one', () => {

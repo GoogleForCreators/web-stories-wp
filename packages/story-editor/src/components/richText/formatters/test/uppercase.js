@@ -110,13 +110,13 @@ describe('Uppercase formatter', () => {
     it('should return false if no style matches', () => {
       const styles = [NONE];
       const result = setupFormatter(styles);
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
 
     it('should return true if only uppercase', () => {
       const styles = [UPPERCASE];
       const result = setupFormatter(styles);
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 

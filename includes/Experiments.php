@@ -374,6 +374,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Video trimming', 'web-stories' ),
 				'description' => __( 'Enable video trimming', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 
 			/**

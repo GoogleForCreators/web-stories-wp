@@ -32,7 +32,7 @@ describe('setCurrentPage', () => {
     // Update current page to 222
     const result = setCurrentPage({ pageId: '222' });
 
-    expect(result.current).toStrictEqual('222');
+    expect(result.current).toBe('222');
   });
 
   it('should ignore unknown pages', () => {
