@@ -26,13 +26,14 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\REST_API\Page_Template_Controller;
 use Google\Web_Stories\Traits\Post_Type;
 
 /**
  * Class Page_Template_Post_Type.
  */
-class Page_Template_Post_Type extends Service_Base {
+class Page_Template_Post_Type extends Service_Base implements HasRequirements {
 	use Post_Type;
 
 	/**
@@ -150,5 +151,18 @@ class Page_Template_Post_Type extends Service_Base {
 	 */
 	public static function get_registration_action_priority(): int {
 		return 11;
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
 	}
 }
