@@ -190,9 +190,16 @@ function TaxonomyProvider(props) {
   );
 
   const createTerm = useCallback(
-    async (taxonomy, termName, parentId, addToSelection = false) => {
+    async (taxonomy, termName, parent, addToSelection = false) => {
+      const data = { name: termName };
+      if (parent?.id) {
+        data.parent = parent.id;
+        data.slug = `${parent.slug}-${cleanForSlug(data.name)}`;
+      }
+
       // make sure the term doesn't already exist locally
-      const cachedTerm = termCache[taxonomy.restBase]?.[cleanForSlug(termName)];
+      const cachedTerm =
+        termCache[taxonomy.restBase]?.[data?.slug || cleanForSlug(termName)];
       if (cachedTerm) {
         if (addToSelection) {
           addTermToSelection(taxonomy, cachedTerm);
@@ -208,11 +215,6 @@ function TaxonomyProvider(props) {
 
       // create term and add to cache
       try {
-        const data = { name: termName };
-        if (parentId) {
-          data.parent = parentId;
-        }
-
         const newTerm = await createTaxonomyTerm(termsEndpoint, data);
         const incomingCache = {
           [taxonomy.restBase]: { [newTerm.slug]: newTerm },
