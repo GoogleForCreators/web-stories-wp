@@ -55,23 +55,22 @@ class Dashboard extends TestCase {
 	}
 
 	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
 		unregister_post_type( self::$cpt_no_archive );
 		unregister_post_type( self::$cpt_has_archive );
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->add_caps_to_roles();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		$this->remove_caps_from_roles();
 
 		wp_dequeue_script( \Google\Web_Stories\Admin\Dashboard::SCRIPT_HANDLE );
 		wp_dequeue_style( \Google\Web_Stories\Admin\Dashboard::SCRIPT_HANDLE );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

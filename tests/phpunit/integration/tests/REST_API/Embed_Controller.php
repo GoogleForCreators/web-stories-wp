@@ -17,9 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
-use Spy_REST_Server;
 use WP_REST_Request;
+use WP_REST_Response;
+use WP_REST_Server;
 
 /**
  * Class Embed_Controller
@@ -30,7 +33,7 @@ use WP_REST_Request;
  */
 class Embed_Controller extends Test_REST_TestCase {
 	/**
-	 * @var \WP_REST_Server
+	 * @var WP_REST_Server
 	 */
 	protected $server;
 
@@ -49,6 +52,13 @@ class Embed_Controller extends Test_REST_TestCase {
 	 * @var int
 	 */
 	protected $request_count = 0;
+
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\REST_API\Embed_Controller
+	 */
+	private $controller;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$subscriber = $factory->user->create(
@@ -74,7 +84,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		$story_content  = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Embed Controller Test Story',
 				'post_status'  => 'publish',
 				'post_content' => $story_content,
@@ -85,36 +95,19 @@ class Embed_Controller extends Test_REST_TestCase {
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$subscriber );
-		self::delete_user( self::$editor );
-		self::delete_user( self::$admin );
-	}
-
-	public function setUp() {
-		parent::setUp();
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
+	public function set_up() {
+		parent::set_up();
 
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
 
-		$this->add_caps_to_roles();
+		$this->controller = new \Google\Web_Stories\REST_API\Embed_Controller();
 	}
 
-	public function tearDown() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
+	public function tear_down() {
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 
-		$this->remove_caps_from_roles();
-
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -125,7 +118,7 @@ class Embed_Controller extends Test_REST_TestCase {
 	 * @param string $url     The request URL.
 	 * @return array Response data.
 	 */
-	public function mock_http_request( $preempt, $r, $url ) {
+	public function mock_http_request( $preempt, $r, $url ): array {
 		++ $this->request_count;
 
 		if ( false !== strpos( $url, self::VALID_URL_EMPTY_DOCUMENT ) ) {
@@ -153,7 +146,12 @@ class Embed_Controller extends Test_REST_TestCase {
 		];
 	}
 
+	/**
+	 * @covers ::register_routes
+	 */
 	public function test_register_routes() {
+		$this->controller->register_routes();
+
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/embed', $routes );
@@ -166,8 +164,8 @@ class Embed_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'args', $route[0] );
 	}
 
-	protected function dispatch_request( $url = null ) {
-		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/embed' );
+	protected function dispatch_request( $url = null ): WP_REST_Response {
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/embed' );
 		if ( null !== $url ) {
 			$request->set_param( 'url', $url );
 		}
@@ -175,18 +173,25 @@ class Embed_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_missing_param() {
+		$this->controller->register();
+
 		$response = $this->dispatch_request();
 
 		$this->assertErrorResponse( 'rest_missing_callback_param', $response, 400 );
 	}
 
 	public function test_not_logged_in() {
+		$this->controller->register();
+
+
 		$response = $this->dispatch_request( '' );
 
 		$this->assertErrorResponse( 'rest_forbidden', $response, 401 );
 	}
 
 	public function test_without_permission() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$subscriber );
 
 		$response = $this->dispatch_request( self::VALID_URL );
@@ -196,6 +201,8 @@ class Embed_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_url_empty_string() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 
 		$response = $this->dispatch_request( '' );
@@ -205,6 +212,8 @@ class Embed_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_invalid_url() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 
 		$response = $this->dispatch_request( self::INVALID_URL );
@@ -213,6 +222,8 @@ class Embed_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_empty_url() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 
 		$response = $this->dispatch_request( self::VALID_URL_EMPTY_DOCUMENT );
@@ -221,6 +232,8 @@ class Embed_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_valid_url() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$response = $this->dispatch_request( self::VALID_URL );
 		$data     = $response->get_data();
@@ -239,6 +252,8 @@ class Embed_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_removes_trailing_slashes() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
 		$response = $this->dispatch_request( self::VALID_URL );
 		$data     = $response->get_data();
@@ -248,7 +263,7 @@ class Embed_Controller extends Test_REST_TestCase {
 			'poster' => 'https://amp.dev/static/samples/img/story_dog2_portrait.jpg',
 		];
 
-		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/embed' );
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/embed' );
 		$request->set_param( 'url', self::VALID_URL . '/' );
 		rest_get_server()->dispatch( $request );
 		$this->assertEquals( 1, $this->request_count );
@@ -258,7 +273,11 @@ class Embed_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_local_url() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$editor );
+
+		$this->set_permalink_structure( '' );
 
 		$response = $this->dispatch_request( get_permalink( self::$story_id ) );
 		$data     = $response->get_data();
@@ -274,13 +293,15 @@ class Embed_Controller extends Test_REST_TestCase {
 	}
 
 	public function test_local_url_pretty_permalinks() {
+		$this->controller->register();
+
 		$this->set_permalink_structure( '/%postname%/' );
 
 		// Without (re-)registering the post type here there won't be any rewrite rules for it
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?)
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$story_post_type = new Story_Post_Type( new Settings() );
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );
@@ -304,13 +325,15 @@ class Embed_Controller extends Test_REST_TestCase {
 	 * @group ms-required
 	 */
 	public function test_local_url_pretty_permalinks_multisite() {
+		$this->controller->register();
+
 		$this->set_permalink_structure( '/%postname%/' );
 
 		// Without (re-)registering the post type here there won't be any rewrite rules for it
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?).
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$story_post_type = new Story_Post_Type( new Settings() );
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );

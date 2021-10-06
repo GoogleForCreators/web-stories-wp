@@ -41,8 +41,18 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	/**
 	 * Set up the service architecture before each test run.
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
+
+		// Needed because the block will exist already after hooking up the plugin
+		// on plugins_loaded. This avoids _doing_it_wrong messages
+		// due to registering the plugin (and thus the block) again.
+		// But only du so when the block is actually registered to avoid another
+		// _doing_it_wrong message being triggered.
+		// TODO: Figure out a better way.
+		if ( \WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) ) {
+			unregister_block_type( 'web-stories/embed' );
+		}
 
 		// We're intentionally avoiding the PluginFactory here as it uses a
 		// static instance, because its whole point is to allow reuse across consumers.
@@ -62,11 +72,11 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	/**
 	 * Clean up again after each test run.
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		$this->set_private_property( Services::class, 'plugin', null );
 		$this->set_private_property( Services::class, 'container', null );
 		$this->set_private_property( Services::class, 'injector', null );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 }

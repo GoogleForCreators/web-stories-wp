@@ -58,7 +58,7 @@ const sharedConfig = {
   output: {
     path: path.resolve(process.cwd(), 'assets', 'js'),
     filename: '[name].js',
-    chunkFilename: '[name]-[chunkhash].js',
+    chunkFilename: '[name].js?v=[chunkhash]',
     publicPath: '',
     /**
      * If multiple webpack runtimes (from different compilations) are used on the same webpage,
@@ -224,14 +224,14 @@ const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
   const js = htmlWebpackPlugin.files.js
     .map((pathname) => {
       const f = filenameOf(pathname);
-      return f.substring(0, f.length - '.js'.length);
+      return f.split('.js')[0];
     })
     .filter(omitPrimaryChunk);
 
   const css = htmlWebpackPlugin.files.css
     .map((pathname) => {
       const f = filenameOf(pathname);
-      return f.substring(0, f.length - '.css'.length);
+      return f.split('.css')[0];
     })
     .filter(omitPrimaryChunk);
 
@@ -258,9 +258,7 @@ const templateParameters = (compilation, assets, assetTags, options) => ({
     files: assets,
     options,
   },
-  chunkNames: compilation.chunks.map(({ files }) =>
-    files[0].substring(0, files[0].length - '.js'.length)
-  ),
+  chunkNames: compilation.chunks.map(({ name }) => name),
 });
 
 const editorAndDashboard = {

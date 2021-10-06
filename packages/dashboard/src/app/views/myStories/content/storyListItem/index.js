@@ -39,7 +39,7 @@ import {
   TableStatusCell,
 } from '../../../../../components';
 import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
-import { STORY_STATUS } from '../../../../../constants';
+import { DISPLAY_STATUS, STORY_STATUS } from '../../../../../constants';
 import {
   RenameStoryPropType,
   StoryMenuPropType,
@@ -62,13 +62,6 @@ function onFocusSelectAll(e) {
 function onBlurDeselectAll() {
   window.getSelection().removeAllRanges();
 }
-
-const DISPLAY_STATUS = {
-  [STORY_STATUS.PUBLISH]: __('Published', 'web-stories'),
-  [STORY_STATUS.FUTURE]: __('Scheduled', 'web-stories'),
-  [STORY_STATUS.DRAFT]: __('Draft', 'web-stories'),
-  [STORY_STATUS.PRIVATE]: __('Private', 'web-stories'),
-};
 
 export const StoryListItem = ({
   story,

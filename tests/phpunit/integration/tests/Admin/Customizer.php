@@ -19,6 +19,7 @@
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Admin\Customizer as TheCustomizer;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Traits\Theme_Support;
 use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_Customize_Manager;
@@ -29,29 +30,22 @@ use WP_Error;
  * @runInSeparateProcess
  * @preserveGlobalState disabled
  */
-class Customizer extends TestCase {
+class Customizer extends DependencyInjectedTestCase {
 	use Theme_Support;
 
 	/**
-	 * Instance of WP_Customize_Manager which is reset for each test.
-	 *
-	 * @var WP_Customize_Manager
-	 */
-	public $wp_customize;
-
-	/**
-	 * Customizer mock object.
-	 *
-	 * @var \PHPUnit\Framework\MockObject\MockObject|\WP_Customize_Manager
-	 */
-	private $customizer_mock;
-
-	/**
-	 * Testee instance.
+	 * Test instance.
 	 *
 	 * @var \Google\Web_Stories\Admin\Customizer
 	 */
-	private $customizer;
+	private $instance;
+
+	/**
+	 * Test instance.
+	 *
+	 * @var \WP_Customize_Manager
+	 */
+	private $wp_customize_mock;
 
 	public static function wpSetUpBeforeClass() {
 		require_once ABSPATH . WPINC . '/class-wp-customize-manager.php';
@@ -61,15 +55,14 @@ class Customizer extends TestCase {
 	/**
 	 * Runs once before any test in the class run.
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		global $wp_customize;
 
-		$this->customizer      = new \Google\Web_Stories\Admin\Customizer();
-		$this->wp_customize    = new \WP_Customize_Manager();
-		$wp_customize          = $this->wp_customize;
-		$this->customizer_mock = $this->createMock( WP_Customize_Manager::class );
+		$wp_customize            = new \WP_Customize_Manager();
+		$this->wp_customize_mock = $this->createMock( WP_Customize_Manager::class );
+		$this->instance          = $this->injector->make( \Google\Web_Stories\Admin\Customizer::class );
 	}
 
 	/**
@@ -133,13 +126,13 @@ class Customizer extends TestCase {
 	 */
 	public function test_register() {
 
-		$this->customizer->register();
+		$this->instance->register();
 		$this->assertSame(
 			10,
 			has_action(
 				'customize_register',
 				[
-					$this->customizer,
+					$this->instance,
 					'register_customizer_settings',
 				]
 			)
@@ -152,7 +145,7 @@ class Customizer extends TestCase {
 	public function test_customizer_web_stories_section_added() {
 		$this->add_web_stories_theme_support();
 
-		$this->customizer_mock->expects( $this->once() )->method( 'add_section' )->with(
+		$this->wp_customize_mock->expects( $this->once() )->method( 'add_section' )->with(
 			TheCustomizer::SECTION_SLUG,
 			[
 				'title'          => 'Web Stories',
@@ -160,7 +153,7 @@ class Customizer extends TestCase {
 			]
 		);
 
-		$this->customizer->register_customizer_settings( $this->customizer_mock );
+		$this->instance->register_customizer_settings( $this->wp_customize_mock );
 	}
 
 	/**
@@ -168,8 +161,8 @@ class Customizer extends TestCase {
 	 */
 	public function test_customizer_settings_added() {
 		$this->add_web_stories_theme_support();
-		$this->customizer_mock->expects( $this->exactly( 14 ) )->method( 'add_setting' );
-		$this->customizer->register_customizer_settings( $this->customizer_mock );
+		$this->wp_customize_mock->expects( $this->exactly( 14 ) )->method( 'add_setting' );
+		$this->instance->register_customizer_settings( $this->wp_customize_mock );
 	}
 
 	/**
@@ -177,7 +170,7 @@ class Customizer extends TestCase {
 	 */
 	public function test_customizer_show_stories_settings_added() {
 		$this->add_web_stories_theme_support();
-		$this->customizer_mock->expects( $this->exactly( 14 ) )->
+		$this->wp_customize_mock->expects( $this->exactly( 14 ) )->
 		method( 'add_setting' )->
 		withConsecutive(
 			[
@@ -199,7 +192,7 @@ class Customizer extends TestCase {
 				[
 					'default'           => 5,
 					'type'              => 'option',
-					'validate_callback' => [ $this->customizer, 'validate_number_of_stories' ],
+					'validate_callback' => [ $this->instance, 'validate_number_of_stories' ],
 				],
 			],
 			[
@@ -207,7 +200,7 @@ class Customizer extends TestCase {
 				[
 					'default'           => 4,
 					'type'              => 'option',
-					'validate_callback' => [ $this->customizer, 'validate_number_of_columns' ],
+					'validate_callback' => [ $this->instance, 'validate_number_of_columns' ],
 				],
 			],
 			[
@@ -282,23 +275,23 @@ class Customizer extends TestCase {
 			]
 		);
 
-		$this->customizer->register_customizer_settings( $this->customizer_mock );
+		$this->instance->register_customizer_settings( $this->wp_customize_mock );
 	}
 
 	/**
 	 * @covers ::validate_number_of_stories
 	 */
 	public function test_validate_number_of_stories() {
-		$output = $this->customizer->validate_number_of_stories( new WP_Error(), 20 );
+		$output = $this->instance->validate_number_of_stories( new WP_Error(), 20 );
 
 		$this->assertEmpty( $output->errors );
 
-		$output = $this->customizer->validate_number_of_stories( new WP_Error(), 30 );
+		$output = $this->instance->validate_number_of_stories( new WP_Error(), 30 );
 
 		$this->assertNotEmpty( $output->errors );
 		$this->assertNotEmpty( $output->errors['invalid_number'] );
 
-		$output = $this->customizer->validate_number_of_stories( new WP_Error(), 0 );
+		$output = $this->instance->validate_number_of_stories( new WP_Error(), 0 );
 
 		$this->assertNotEmpty( $output->errors );
 		$this->assertNotEmpty( $output->errors['invalid_number'] );
@@ -309,16 +302,16 @@ class Customizer extends TestCase {
 	 * @covers ::validate_number_of_columns
 	 */
 	public function test_validate_number_of_columns() {
-		$output = $this->customizer->validate_number_of_columns( new WP_Error(), 2 );
+		$output = $this->instance->validate_number_of_columns( new WP_Error(), 2 );
 
 		$this->assertEmpty( $output->errors );
 
-		$output = $this->customizer->validate_number_of_columns( new WP_Error(), 6 );
+		$output = $this->instance->validate_number_of_columns( new WP_Error(), 6 );
 
 		$this->assertNotEmpty( $output->errors );
 		$this->assertNotEmpty( $output->errors['invalid_number'] );
 
-		$output = $this->customizer->validate_number_of_columns( new WP_Error(), 0 );
+		$output = $this->instance->validate_number_of_columns( new WP_Error(), 0 );
 
 		$this->assertNotEmpty( $output->errors );
 		$this->assertNotEmpty( $output->errors['invalid_number'] );
@@ -447,7 +440,7 @@ class Customizer extends TestCase {
 			'show_stories' => true,
 		];
 
-		$output = $this->customizer->render_stories();
+		$output = $this->instance->render_stories();
 
 		$this->assertEmpty( $output );
 
@@ -459,12 +452,9 @@ class Customizer extends TestCase {
 			]
 		);
 
-		$output = $this->customizer->render_stories();
+		$output = $this->instance->render_stories();
 
 		$this->assertNotEmpty( $output );
-
-		$this->assertContains( 'web-stories-list--customizer', $output );
-
+		$this->assertStringContainsString( 'web-stories-list--customizer', $output );
 	}
-
 }

@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -79,9 +78,9 @@ class Archives extends TestCase {
 		$this->go_to( get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
 
 		$content = get_echo( 'the_content' );
-		$this->assertContains( '<amp-story-player', $content );
+		$this->assertStringContainsString( '<amp-story-player', $content );
 
 		$excerpt = get_echo( 'the_excerpt' );
-		$this->assertContains( '<amp-story-player', $excerpt );
+		$this->assertStringContainsString( '<amp-story-player', $excerpt );
 	}
 }

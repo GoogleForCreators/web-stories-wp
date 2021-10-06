@@ -55,16 +55,16 @@ describe('isInsideRange', () => {
   it('should function as expected', () => {
     const isSingleDigit = (number) => isInsideRange(number, 0, 9);
 
-    expect(isSingleDigit(0)).toStrictEqual(true);
-    expect(isSingleDigit(3.2)).toStrictEqual(true);
-    expect(isSingleDigit(9)).toStrictEqual(true);
+    expect(isSingleDigit(0)).toBe(true);
+    expect(isSingleDigit(3.2)).toBe(true);
+    expect(isSingleDigit(9)).toBe(true);
 
-    expect(isSingleDigit(-0.1)).toStrictEqual(false);
-    expect(isSingleDigit(10)).toStrictEqual(false);
+    expect(isSingleDigit(-0.1)).toBe(false);
+    expect(isSingleDigit(10)).toBe(false);
 
-    expect(isSingleDigit(Number.POSITIVE_INFINITY)).toStrictEqual(false);
-    expect(isSingleDigit(Number.NEGATIVE_INFINITY)).toStrictEqual(false);
-    expect(isSingleDigit(Number.NaN)).toStrictEqual(false);
+    expect(isSingleDigit(Number.POSITIVE_INFINITY)).toBe(false);
+    expect(isSingleDigit(Number.NEGATIVE_INFINITY)).toBe(false);
+    expect(isSingleDigit(Number.NaN)).toBe(false);
   });
 });
 
@@ -100,7 +100,7 @@ describe('getAbsolutePosition', () => {
       maxPosition: 20,
       desiredPosition: 11,
     });
-    expect(resultWithinLimits).toStrictEqual(11);
+    expect(resultWithinLimits).toBe(11);
 
     const resultBelowLimit = getAbsolutePosition({
       currentPosition: 10,
@@ -108,7 +108,7 @@ describe('getAbsolutePosition', () => {
       maxPosition: 20,
       desiredPosition: -3,
     });
-    expect(resultBelowLimit).toStrictEqual(0);
+    expect(resultBelowLimit).toBe(0);
 
     const resultAboveLimit = getAbsolutePosition({
       currentPosition: 10,
@@ -116,7 +116,7 @@ describe('getAbsolutePosition', () => {
       maxPosition: 20,
       desiredPosition: 33,
     });
-    expect(resultAboveLimit).toStrictEqual(20);
+    expect(resultAboveLimit).toBe(20);
   });
 
   it('should return top and bottom limit', () => {
@@ -126,7 +126,7 @@ describe('getAbsolutePosition', () => {
       maxPosition: 20,
       desiredPosition: LAYER_DIRECTIONS.BACK,
     });
-    expect(resultToBack).toStrictEqual(0);
+    expect(resultToBack).toBe(0);
 
     const resultToFront = getAbsolutePosition({
       currentPosition: 10,
@@ -134,7 +134,7 @@ describe('getAbsolutePosition', () => {
       maxPosition: 20,
       desiredPosition: LAYER_DIRECTIONS.FRONT,
     });
-    expect(resultToFront).toStrictEqual(20);
+    expect(resultToFront).toBe(20);
   });
 
   it('should return relative position', () => {
@@ -144,7 +144,7 @@ describe('getAbsolutePosition', () => {
       maxPosition: 20,
       desiredPosition: LAYER_DIRECTIONS.BACKWARD,
     });
-    expect(resultGoingBackward).toStrictEqual(9);
+    expect(resultGoingBackward).toBe(9);
 
     const resultGoingBelow = getAbsolutePosition({
       currentPosition: 0,
@@ -152,7 +152,7 @@ describe('getAbsolutePosition', () => {
       maxPosition: 20,
       desiredPosition: LAYER_DIRECTIONS.BACKWARD,
     });
-    expect(resultGoingBelow).toStrictEqual(0);
+    expect(resultGoingBelow).toBe(0);
 
     const resultGoingForward = getAbsolutePosition({
       currentPosition: 10,
@@ -160,7 +160,7 @@ describe('getAbsolutePosition', () => {
       maxPosition: 20,
       desiredPosition: LAYER_DIRECTIONS.FORWARD,
     });
-    expect(resultGoingForward).toStrictEqual(11);
+    expect(resultGoingForward).toBe(11);
 
     const resultGoingAbove = getAbsolutePosition({
       currentPosition: 20,
@@ -168,7 +168,7 @@ describe('getAbsolutePosition', () => {
       maxPosition: 20,
       desiredPosition: LAYER_DIRECTIONS.FORWARD,
     });
-    expect(resultGoingAbove).toStrictEqual(20);
+    expect(resultGoingAbove).toBe(20);
   });
 
   it('should ignore invalid input', () => {
@@ -178,7 +178,7 @@ describe('getAbsolutePosition', () => {
       maxPosition: 20,
       desiredPosition: 'OFF_THE_CHARTS',
     });
-    expect(resultGoingBackward).toStrictEqual(10);
+    expect(resultGoingBackward).toBe(10);
 
     const resultGoingForward = getAbsolutePosition({
       currentPosition: 10,
@@ -186,7 +186,7 @@ describe('getAbsolutePosition', () => {
       maxPosition: 20,
       desiredPosition: [15],
     });
-    expect(resultGoingForward).toStrictEqual(10);
+    expect(resultGoingForward).toBe(10);
   });
 });
 

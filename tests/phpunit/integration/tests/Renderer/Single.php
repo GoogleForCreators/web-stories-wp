@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -81,7 +80,7 @@ class Single extends TestCase {
 		$renderer = new \Google\Web_Stories\Renderer\Single();
 
 		$template_include = $renderer->filter_template_include( 'current' );
-		$this->assertContains( WEBSTORIES_PLUGIN_DIR_PATH, $template_include );
+		$this->assertStringContainsString( WEBSTORIES_PLUGIN_DIR_PATH, $template_include );
 	}
 
 	/**

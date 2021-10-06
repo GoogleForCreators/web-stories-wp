@@ -37,6 +37,7 @@ function APIProvider({ children }) {
       proxy,
       link,
       users,
+      publisherLogos,
       currentUser,
       pageTemplates: customPageTemplates,
       taxonomies,
@@ -59,6 +60,8 @@ function APIProvider({ children }) {
     deleteMedia,
     getLinkMetadata,
     getAuthors,
+    getPublisherLogos,
+    addPublisherLogo,
     getCurrentUser,
     updateCurrentUser,
     getCustomPageTemplates,
@@ -142,6 +145,16 @@ function APIProvider({ children }) {
   actions.getProxyUrl = useCallback(
     (url) => getProxyUrl(url, proxy, nonce),
     [proxy, getProxyUrl, nonce]
+  );
+  
+  actions.getPublisherLogos = useCallback(
+    () => getPublisherLogos(publisherLogos),
+    [getPublisherLogos, publisherLogos]
+  );
+
+  actions.addPublisherLogo = useCallback(
+    (id) => addPublisherLogo(publisherLogos, id),
+    [addPublisherLogo, publisherLogos]
   );
 
   actions.getLinkMetadata = useCallback(

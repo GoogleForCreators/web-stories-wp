@@ -20,18 +20,24 @@ namespace Google\Web_Stories\Tests\Integration;
 /**
  * @coversDefaultClass \Google\Web_Stories\AdSense
  */
-class AdSense extends TestCase {
+class AdSense extends DependencyInjectedTestCase {
+	/**
+	 * @var \Google\Web_Stories\AdSense
+	 */
+	private $instance;
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK, 'adsense' );
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_SLOT_ID, '123' );
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, '456' );
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\AdSense::class );
 	}
 
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK );
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_SLOT_ID );
@@ -42,18 +48,16 @@ class AdSense extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$adsense = new \Google\Web_Stories\AdSense();
-		$adsense->register();
+		$this->instance->register();
 
-		$this->assertSame( 10, has_action( 'web_stories_print_analytics', [ $adsense, 'print_adsense_tag' ] ) );
+		$this->assertSame( 10, has_action( 'web_stories_print_analytics', [ $this->instance, 'print_adsense_tag' ] ) );
 	}
 
 	/**
 	 * @covers ::get_publisher_id
 	 */
 	public function test_get_publisher_id() {
-		$adsense = new \Google\Web_Stories\AdSense();
-		$result  = $this->call_private_method( $adsense, 'get_publisher_id' );
+		$result = $this->call_private_method( $this->instance, 'get_publisher_id' );
 		$this->assertSame( '456', $result );
 	}
 
@@ -61,8 +65,7 @@ class AdSense extends TestCase {
 	 * @covers ::get_slot_id
 	 */
 	public function test_get_slot_id() {
-		$adsense = new \Google\Web_Stories\AdSense();
-		$result  = $this->call_private_method( $adsense, 'get_slot_id' );
+		$result = $this->call_private_method( $this->instance, 'get_slot_id' );
 		$this->assertSame( '123', $result );
 	}
 
@@ -70,8 +73,7 @@ class AdSense extends TestCase {
 	 * @covers ::is_enabled
 	 */
 	public function test_is_enabled() {
-		$adsense = new \Google\Web_Stories\AdSense();
-		$result  = $this->call_private_method( $adsense, 'is_enabled' );
+		$result = $this->call_private_method( $this->instance, 'is_enabled' );
 		$this->assertTrue( $result );
 	}
 
@@ -79,9 +81,7 @@ class AdSense extends TestCase {
 	 * @covers ::print_adsense_tag
 	 */
 	public function test_print_adsense_tag() {
-		$adsense = new \Google\Web_Stories\AdSense();
-
-		$output = get_echo( [ $adsense, 'print_adsense_tag' ] );
-		$this->assertContains( '<amp-story-auto-ads>', $output );
+		$output = get_echo( [ $this->instance, 'print_adsense_tag' ] );
+		$this->assertStringContainsString( '<amp-story-auto-ads>', $output );
 	}
 }

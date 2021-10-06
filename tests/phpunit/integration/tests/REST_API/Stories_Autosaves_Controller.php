@@ -19,7 +19,6 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
-use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
@@ -27,12 +26,23 @@ use WP_REST_Request;
  *
  * @package Google\Web_Stories\Tests\REST_API
  *
- * @coversDefaultClass \Google\Web_Stories\REST_API\Autosaves_Controller
+ * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Autosaves_Controller
  */
-class Autosaves_Controller extends Test_REST_TestCase {
-	protected $server;
+class Stories_Autosaves_Controller extends Test_REST_TestCase {
 
+	/**
+	 * Author user ID.
+	 *
+	 * @var int
+	 */
 	protected static $author_id;
+
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\REST_API\Stories_Autosaves_Controller
+	 */
+	private $controller;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$author_id = $factory->user->create(
@@ -42,32 +52,15 @@ class Autosaves_Controller extends Test_REST_TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$author_id );
-	}
+	public function set_up() {
+		parent::set_up();
 
-	public function setUp() {
-		parent::setUp();
-
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server();
-		do_action( 'rest_api_init', $wp_rest_server );
-
-		$this->add_caps_to_roles();
-	}
-
-	public function tearDown() {
-		/** @var \WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
-		$this->remove_caps_from_roles();
-
-		parent::tearDown();
+		$this->controller = new \Google\Web_Stories\REST_API\Stories_Autosaves_Controller();
 	}
 
 	public function test_create_item_as_author_should_not_strip_markup() {
+		$this->controller->register();
+
 		wp_set_current_user( self::$author_id );
 
 		$this->kses_int();
@@ -92,6 +85,8 @@ class Autosaves_Controller extends Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
 
+		$this->assertArrayHasKey( 'content', $new_data );
+		$this->assertArrayHasKey( 'content', $new_data );
 		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
 

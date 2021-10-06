@@ -17,13 +17,17 @@
 
 namespace Google\Web_Stories\Tests\Integration\User;
 
+use Google\Web_Stories\REST_API\Stories_Users_Controller;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use Spy_REST_Server;
 use WP_REST_Request;
+use WP_REST_Server;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\User\Preferences
  */
-class Preferences extends TestCase {
+class Preferences extends DependencyInjectedTestCase {
 	/**
 	 * Admin user for test.
 	 *
@@ -37,6 +41,11 @@ class Preferences extends TestCase {
 	 * @var int
 	 */
 	protected static $author_id;
+
+	/**
+	 * @var \Google\Web_Stories\User\Preferences
+	 */
+	private $instance;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$admin_id = $factory->user->create(
@@ -52,22 +61,23 @@ class Preferences extends TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$admin_id );
-		self::delete_user( self::$author_id );
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\User\Preferences::class );
 	}
 
-	public function setUp() {
-		$up = new \Google\Web_Stories\User\Preferences();
-		$up->register();
-		parent::setUp();
-	}
+	public function tear_down() {
+		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
+		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
+		delete_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
+		delete_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
 
-	public function tearDown() {
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY );
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
-		parent::tearDown();
+
+		parent::tear_down();
 	}
 
 	/**
@@ -75,12 +85,14 @@ class Preferences extends TestCase {
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_add_optin_field_to_rest_api() {
+		$this->instance->register();
+
 		wp_set_current_user( self::$admin_id );
 
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/users/%d', self::$admin_id ) );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/wp/v2/users/%d', self::$admin_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
@@ -98,12 +110,14 @@ class Preferences extends TestCase {
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_add_optin_field_to_rest_api_for_author_user() {
+		$this->instance->register();
+
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/users/me' );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/wp/v2/users/me' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
@@ -121,12 +135,14 @@ class Preferences extends TestCase {
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_enables_author_user_to_update_meta_field() {
+		$this->instance->register();
+
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, false );
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
 
-		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/users/me' );
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/wp/v2/users/me' );
 		$request->set_body_params(
 			[
 				'meta' => [
@@ -156,12 +172,14 @@ class Preferences extends TestCase {
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_permission_check_for_authors() {
+		$this->instance->register();
+
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, false );
 		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
 
-		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/users/' . self::$admin_id );
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/wp/v2/users/' . self::$admin_id );
 		$request->set_body_params(
 			[
 				'meta' => [
@@ -183,7 +201,6 @@ class Preferences extends TestCase {
 		$data = $response->get_error_data();
 		$this->assertArrayHasKey( 'status', $data );
 		$this->assertEquals( 403, $data['status'] );
-
 	}
 
 	/**
@@ -191,12 +208,14 @@ class Preferences extends TestCase {
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_enables_author_user_to_invalid_type() {
+		$this->instance->register();
+
 		wp_set_current_user( self::$author_id );
 
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, false );
 		add_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
 
-		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/users/me' );
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/wp/v2/users/me' );
 		$request->set_body_params(
 			[
 				'meta' => [
@@ -208,7 +227,7 @@ class Preferences extends TestCase {
 		);
 
 		$response = rest_get_server()->dispatch( $request );
-		if ( is_a( $response, 'WP_REST_Response' ) ) {
+		if ( $response instanceof \WP_REST_Response ) {
 			$response = $response->as_error();
 		}
 

@@ -25,7 +25,7 @@ abstract class TestCase extends PolyfilledTestCase {
 	/**
 	 * Clean up again after each test run.
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		// WordPress core fails to do this.
 		$GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
 
@@ -45,12 +45,10 @@ abstract class TestCase extends PolyfilledTestCase {
 			$_SERVER['HTTPS']
 		);
 
-		$this->clean_up_global_scope();
-
 		$this->set_permalink_structure( '' );
 
 		$_SERVER['REQUEST_URI'] = '';
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 }

@@ -21,7 +21,7 @@ import escapeHTML from '../escapeHTML';
 
 describe('escapeHTML', () => {
   it('should escape HTML', () => {
-    expect(escapeHTML('<div>Hello & World</div>')).toStrictEqual(
+    expect(escapeHTML('<div>Hello & World</div>')).toBe(
       '&lt;div&gt;Hello &amp; World&lt;/div&gt;'
     );
   });

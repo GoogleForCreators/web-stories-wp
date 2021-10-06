@@ -60,10 +60,7 @@ function publisherLogoReducer(state, action) {
         ...state,
         error: {},
         isLoading: false,
-        publisherLogos: [
-          ...state.publisherLogos,
-          ...action.payload.publisherLogos,
-        ],
+        publisherLogos: [...action.payload.publisherLogos],
       };
     }
 

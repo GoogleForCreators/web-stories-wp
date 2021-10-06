@@ -23,13 +23,13 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Google\Web_Stories\Assets
  */
 class Assets extends TestCase {
-	public function tearDown() {
+	public function tear_down() {
 		wp_deregister_script( 'test_script' );
 		wp_deregister_script( 'fake_js_chunk' );
 		wp_deregister_style( 'test_style' );
 		wp_deregister_style( 'fake_css_chunk' );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

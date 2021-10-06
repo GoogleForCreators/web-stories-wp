@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Decoder;
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Post_Type;
 use WP_REST_Server;
@@ -44,21 +42,11 @@ class Status_Check_Controller extends REST_Controller {
 	use Post_Type;
 
 	/**
-	 * Decoder instance.
-	 *
-	 * @var Decoder Decoder instance.
-	 */
-	private $decoder;
-
-	/**
 	 * Constructor.
-	 *
-	 * @param Decoder $decoder Decoder instance.
 	 */
-	public function __construct( Decoder $decoder ) {
+	public function __construct() {
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'status-check';
-		$this->decoder   = $decoder;
 	}
 
 	/**

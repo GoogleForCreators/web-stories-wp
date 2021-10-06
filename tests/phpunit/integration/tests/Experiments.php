@@ -20,12 +20,17 @@ namespace Google\Web_Stories\Tests\Integration;
 /**
  * @coversDefaultClass \Google\Web_Stories\Experiments
  */
-class Experiments extends TestCase {
+class Experiments extends DependencyInjectedTestCase {
 
 	/**
 	 * @var int
 	 */
 	protected static $user_id;
+
+	/**
+	 * @var \Google\Web_Stories\Experiments
+	 */
+	private $instance;
 
 	/**
 	 * @param $factory
@@ -39,30 +44,39 @@ class Experiments extends TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Experiments::class );
+	}
+
+	public function tear_down() {
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS );
+
+		parent::tear_down();
 	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$experiments = new \Google\Web_Stories\Experiments();
-		$experiments->register();
+		$this->instance->register();
 
 		// Because WEBSTORIES_DEV_MODE is false by default.
-		$this->assertFalse( has_action( 'admin_menu', [ $experiments, 'add_menu_page' ] ) );
-		$this->assertFalse( has_action( 'admin_init', [ $experiments, 'initialize_settings' ] ) );
+		$this->assertFalse( has_action( 'admin_menu', [ $this->instance, 'add_menu_page' ] ) );
+		$this->assertFalse( has_action( 'admin_init', [ $this->instance, 'initialize_settings' ] ) );
 	}
 
 	/**
 	 * @covers ::add_menu_page
 	 */
 	public function test_add_menu_page_no_capabilities() {
-		$experiments = new \Google\Web_Stories\Experiments();
-		$before      = $this->get_private_property( $experiments, 'hook_suffix' );
-		$experiments->add_menu_page();
-		$after = $this->get_private_property( $experiments, 'hook_suffix' );
+		$before = $this->get_private_property( $this->instance, 'hook_suffix' );
+
+		$this->instance->add_menu_page();
+
+		$after = $this->get_private_property( $this->instance, 'hook_suffix' );
+
 		$this->assertNull( $before );
 		$this->assertFalse( $after );
 	}
@@ -72,10 +86,13 @@ class Experiments extends TestCase {
 	 */
 	public function test_add_menu_page() {
 		wp_set_current_user( self::$user_id );
-		$experiments = new \Google\Web_Stories\Experiments();
-		$before      = $this->get_private_property( $experiments, 'hook_suffix' );
-		$experiments->add_menu_page();
-		$after = $this->get_private_property( $experiments, 'hook_suffix' );
+
+		$before = $this->get_private_property( $this->instance, 'hook_suffix' );
+
+		$this->instance->add_menu_page();
+
+		$after = $this->get_private_property( $this->instance, 'hook_suffix' );
+
 		$this->assertNull( $before );
 		$this->assertSame( 'admin_page_web-stories-experiments', $after );
 	}
@@ -84,22 +101,24 @@ class Experiments extends TestCase {
 	 * @covers ::initialize_settings
 	 */
 	public function test_initialize_settings() {
-		$experiments = new \Google\Web_Stories\Experiments();
-		$experiments->initialize_settings();
+		global $wp_settings_fields, $wp_settings_sections;
 
-		$options = get_registered_settings();
-		$this->assertArrayHasKey( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, $options );
+		$this->instance->initialize_settings();
+
+		$this->assertArrayHasKey( \Google\Web_Stories\Experiments::PAGE_NAME, $wp_settings_fields );
+		$this->assertArrayHasKey( \Google\Web_Stories\Experiments::PAGE_NAME, $wp_settings_sections );
+		$this->assertArrayHasKey( 'web_stories_experiments_section', $wp_settings_sections[ \Google\Web_Stories\Experiments::PAGE_NAME ] );
 	}
 
 	/**
 	 * @covers ::display_experiment_field
 	 */
 	public function test_display_experiment_field() {
-		$experiments = $this->createPartialMock(
+		$this->instance = $this->createTestProxy(
 			\Google\Web_Stories\Experiments::class,
-			[ 'get_experiments' ]
+			[ $this->injector->make( \Google\Web_Stories\Settings::class ) ]
 		);
-		$experiments->method( 'get_experiments' )
+		$this->instance->method( 'get_experiments' )
 					->willReturn(
 						[
 							[
@@ -109,9 +128,11 @@ class Experiments extends TestCase {
 							],
 						]
 					);
+		$this->instance->method( 'is_experiment_enabled' )
+					->willReturn( false );
 
 		$output = get_echo(
-			[ $experiments, 'display_experiment_field' ],
+			[ $this->instance, 'display_experiment_field' ],
 			[
 				[
 					'label' => 'Foo Label',
@@ -120,18 +141,19 @@ class Experiments extends TestCase {
 			]
 		);
 
-		$this->assertNotContains( "checked='checked'", $output );
+		$this->assertStringNotContainsString( "checked='checked'", $output );
 	}
 
 	/**
 	 * @covers ::display_experiment_field
 	 */
 	public function test_display_experiment_field_enabled() {
-		$experiments = $this->createPartialMock(
-			\Google\Web_Stories\Experiments::class,
-			[ 'get_experiments' ]
-		);
-		$experiments->method( 'get_experiments' )
+		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
+			->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
+			->setMethods( [ 'get_experiments', 'is_experiment_enabled' ] )
+			->getMock();
+
+		$this->instance->method( 'get_experiments' )
 					->willReturn(
 						[
 							[
@@ -141,11 +163,11 @@ class Experiments extends TestCase {
 							],
 						]
 					);
-
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'foo' => true ], false );
+		$this->instance->method( 'is_experiment_enabled' )
+					->willReturn( true );
 
 		$output = get_echo(
-			[ $experiments, 'display_experiment_field' ],
+			[ $this->instance, 'display_experiment_field' ],
 			[
 				[
 					'label' => 'Foo Label',
@@ -153,18 +175,19 @@ class Experiments extends TestCase {
 				],
 			]
 		);
-		$this->assertContains( "checked='checked'", $output );
+		$this->assertStringContainsString( "checked='checked'", $output );
 	}
 
 	/**
 	 * @covers ::display_experiment_field
 	 */
 	public function test_display_experiment_field_enabled_by_default() {
-		$experiments = $this->createPartialMock(
-			\Google\Web_Stories\Experiments::class,
-			[ 'get_experiments' ]
-		);
-		$experiments->method( 'get_experiments' )
+		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
+							->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
+							->setMethods( [ 'get_experiments' ] )
+							->getMock();
+
+		$this->instance->method( 'get_experiments' )
 					->willReturn(
 						[
 							[
@@ -176,7 +199,7 @@ class Experiments extends TestCase {
 					);
 
 		$output = get_echo(
-			[ $experiments, 'display_experiment_field' ],
+			[ $this->instance, 'display_experiment_field' ],
 			[
 				[
 					'label'   => 'Foo Label',
@@ -186,16 +209,15 @@ class Experiments extends TestCase {
 			]
 		);
 
-		$this->assertContains( "checked='checked'", $output );
-		$this->assertContains( 'disabled', $output );
+		$this->assertStringContainsString( "checked='checked'", $output );
+		$this->assertStringContainsString( 'disabled', $output );
 	}
 
 	/**
 	 * @covers ::get_experiment_groups
 	 */
 	public function test_get_experiment_groups() {
-		$experiments = new \Google\Web_Stories\Experiments();
-		$groups      = $experiments->get_experiment_groups();
+		$groups = $this->instance->get_experiment_groups();
 		$this->assertCount( 3, $groups );
 	}
 
@@ -203,9 +225,8 @@ class Experiments extends TestCase {
 	 * @covers ::get_experiments
 	 */
 	public function test_get_experiments() {
-		$experiments           = new \Google\Web_Stories\Experiments();
-		$all_experiments       = $experiments->get_experiments();
-		$all_experiment_groups = array_keys( $experiments->get_experiment_groups() );
+		$all_experiments       = $this->instance->get_experiments();
+		$all_experiment_groups = array_keys( $this->instance->get_experiment_groups() );
 
 		$experiment_names  = wp_list_pluck( $all_experiments, 'name' );
 		$experiment_groups = wp_list_pluck( $all_experiments, 'group' );
@@ -223,14 +244,13 @@ class Experiments extends TestCase {
 	 * @covers ::get_experiment_statuses
 	 */
 	public function test_get_experiment_statuses() {
-		$experiments = new \Google\Web_Stories\Experiments();
-		$this->assertEmpty( $experiments->get_experiment_statuses( 'foo-bar-baz' ) );
-		$this->assertNotEmpty( $experiments->get_experiment_statuses( 'dashboard' ) );
-		$this->assertNotEmpty( $experiments->get_experiment_statuses( 'editor' ) );
+		$this->assertEmpty( $this->instance->get_experiment_statuses( 'foo-bar-baz' ) );
+		$this->assertNotEmpty( $this->instance->get_experiment_statuses( 'dashboard' ) );
+		$this->assertNotEmpty( $this->instance->get_experiment_statuses( 'editor' ) );
 
-		foreach ( $experiments->get_experiment_statuses( 'editor' ) as $key => $status ) {
-			$this->assertInternalType( 'string', $key );
-			$this->assertInternalType( 'bool', $status );
+		foreach ( $this->instance->get_experiment_statuses( 'editor' ) as $key => $status ) {
+			$this->assertIsString( $key );
+			$this->assertIsBool( $status );
 		}
 	}
 
@@ -239,8 +259,8 @@ class Experiments extends TestCase {
 	 */
 	public function test_is_experiment_enabled() {
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'enableInProgressTemplateActions' => true ], false );
-		$experiments = new \Google\Web_Stories\Experiments();
-		$this->assertTrue( $experiments->is_experiment_enabled( 'enableInProgressTemplateActions' ) );
+
+		$this->assertTrue( $this->instance->is_experiment_enabled( 'enableInProgressTemplateActions' ) );
 	}
 
 	/**
@@ -248,17 +268,19 @@ class Experiments extends TestCase {
 	 * @covers ::get_experiment
 	 */
 	public function test_is_experiment_enabled_default_experiment() {
-		$experiments = $this->createPartialMock(
-			\Google\Web_Stories\Experiments::class,
-			[ 'get_experiments' ]
-		);
-		$experiments->method( 'get_experiments' )
+		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
+							->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
+							->setMethods( [ 'get_experiments' ] )
+							->getMock();
+
+		$this->instance->method( 'get_experiments' )
 					->willReturn(
 						[
 							[
 								'name'        => 'foo',
 								'label'       => 'Foo Label',
 								'description' => 'Foo Desc',
+								'default'     => false,
 							],
 							[
 								'name'        => 'bar',
@@ -269,9 +291,16 @@ class Experiments extends TestCase {
 						]
 					);
 
-		$this->assertFalse( $experiments->is_experiment_enabled( 'foo' ) );
-		$this->assertTrue( $experiments->is_experiment_enabled( 'bar' ) );
-		$this->assertFalse( $experiments->is_experiment_enabled( 'baz' ) );
+		$this->assertFalse( $this->instance->is_experiment_enabled( 'foo' ) );
+		$this->assertTrue( $this->instance->is_experiment_enabled( 'bar' ) );
+	}
+
+	/**
+	 * @covers ::is_experiment_enabled
+	 * @covers ::get_experiment
+	 */
+	public function test_is_experiment_enabled_unknown_experiment() {
+		$this->assertFalse( $this->instance->is_experiment_enabled( 'baz' ) );
 	}
 
 	/**
@@ -280,11 +309,12 @@ class Experiments extends TestCase {
 	public function test_get_enabled_experiments() {
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'baz' => true ], false );
 
-		$experiments = $this->createPartialMock(
-			\Google\Web_Stories\Experiments::class,
-			[ 'get_experiments' ]
-		);
-		$experiments->method( 'get_experiments' )
+		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
+							->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
+							->setMethods( [ 'get_experiments', 'is_experiment_enabled' ] )
+							->getMock();
+
+		$this->instance->method( 'get_experiments' )
 					->willReturn(
 						[
 							[
@@ -306,12 +336,20 @@ class Experiments extends TestCase {
 							],
 						]
 					);
+		$this->instance->method( 'is_experiment_enabled' )
+					->willReturnMap(
+						[
+							[ 'foo', false ],
+							[ 'bar', true ],
+							[ 'baz', true ],
+						]
+					);
 
 		$expected = [
 			'bar',
 			'baz',
 		];
 
-		$this->assertEqualSets( $expected, $experiments->get_enabled_experiments() );
+		$this->assertEqualSets( $expected, $this->instance->get_enabled_experiments() );
 	}
 }

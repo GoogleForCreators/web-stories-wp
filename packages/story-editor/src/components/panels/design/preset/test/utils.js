@@ -96,7 +96,7 @@ describe('Panels/StylePreset/utils', () => {
     };
     expect(
       findMatchingColor(TEST_COLOR, globalStoryStyles, true)
-    ).not.toBeDefined();
+    ).toBeUndefined();
   });
 
   it('should return matching text style preset', () => {
@@ -150,7 +150,7 @@ describe('Panels/StylePreset/utils', () => {
     };
     expect(
       findMatchingStylePreset(stylePreset, globalStoryStyles)
-    ).not.toBeDefined();
+    ).toBeUndefined();
   });
 
   it('should get correct text style presets from selected elements', () => {
@@ -447,14 +447,14 @@ describe('Panels/StylePreset/utils', () => {
         { color: { r: 25, g: 39, b: 13 } },
       ];
       // Three rows.
-      expect(getPanelInitialHeight(true, presets)).toStrictEqual(96);
+      expect(getPanelInitialHeight(true, presets)).toBe(96);
       // One row.
       expect(
         getPanelInitialHeight(true, [{ color: { r: 196, g: 196, b: 196 } }])
-      ).toStrictEqual(48);
+      ).toBe(48);
 
       // No rows.
-      expect(getPanelInitialHeight(true, [])).toStrictEqual(140);
+      expect(getPanelInitialHeight(true, [])).toBe(140);
     });
 
     it('should get the initial height correctly for style presets', () => {
@@ -468,9 +468,9 @@ describe('Panels/StylePreset/utils', () => {
         { fontSize: 7 },
       ];
       // Three rows.
-      expect(getPanelInitialHeight(false, presets)).toStrictEqual(256);
+      expect(getPanelInitialHeight(false, presets)).toBe(256);
       // One row.
-      expect(getPanelInitialHeight(false, [{ fontSize: 1 }])).toStrictEqual(96);
+      expect(getPanelInitialHeight(false, [{ fontSize: 1 }])).toBe(96);
     });
   });
 });

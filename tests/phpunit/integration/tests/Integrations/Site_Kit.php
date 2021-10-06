@@ -25,24 +25,6 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  */
 class Site_Kit extends TestCase {
 	/**
-	 * Story id.
-	 *
-	 * @var int
-	 */
-	protected static $story_id;
-
-	public static function wpSetUpBeforeClass( $factory ) {
-		self::$story_id = $factory->post->create(
-			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_title'   => 'Site Kit Test Story',
-				'post_status'  => 'publish',
-				'post_content' => 'Example content',
-			]
-		);
-	}
-
-	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
@@ -107,7 +89,16 @@ class Site_Kit extends TestCase {
 			'triggers' => [],
 		];
 
-		$this->go_to( get_permalink( self::$story_id ) );
+		$story_id = self::factory()->post->create(
+			[
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_title'   => 'Site Kit Test Story',
+				'post_status'  => 'publish',
+				'post_content' => 'Example content',
+			]
+		);
+
+		$this->go_to( get_permalink( $story_id ) );
 
 		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
 		$analytics->method( 'get_default_configuration' )

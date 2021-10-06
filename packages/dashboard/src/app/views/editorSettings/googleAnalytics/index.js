@@ -201,8 +201,7 @@ function GoogleAnalyticsSettings({
                 mapping={{
                   a: (
                     <InlineLink
-                      // TODO(#9054): Update documentation link.
-                      href="https://example.com"
+                      href="https://wp.stories.google/docs/seo/"
                       rel="noreferrer"
                       target="_blank"
                       size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}

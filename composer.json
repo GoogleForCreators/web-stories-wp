@@ -30,7 +30,7 @@
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "wp-coding-standards/wpcs": "^2.3",
-    "yoast/wp-test-utils": "^0.2.2"
+    "yoast/wp-test-utils": "^1.0.0"
   },
   "config": {
     "discard-changes": true,
@@ -54,7 +54,7 @@
       "phpstan": {
         "path": "vendor/bin/phpstan",
         "type": "phar",
-        "url": "https://github.com/phpstan/phpstan/releases/download/0.12.94/phpstan.phar"
+        "url": "https://github.com/phpstan/phpstan/releases/download/0.12.99/phpstan.phar"
       }
     },
     "enable-patching": true,
@@ -62,6 +62,9 @@
       "ampproject/amp-wp/includes/bootstrap.php"
     ],
     "patches": {
+      "ampproject/amp-wp": {
+        "Add support for amp-story-captions": "patches/amp-wp-allow-amp-story-captions.patch"
+      },
       "phpunit/phpunit-mock-objects": {
         "Fix PHPUnit for PHP 7.4": "patches/phpunit-mock-objects.patch"
       }

@@ -18,44 +18,46 @@
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
 use Google\Web_Stories\Admin\Customizer;
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Core_Themes_Support
  */
-class Core_Themes_Support extends TestCase {
+class Core_Themes_Support extends DependencyInjectedTestCase {
 	/**
-	 * Stub for the conditional tests.
+	 * Test instance.
 	 *
-	 * @var null
+	 * @var \Google\Web_Stories\Integrations\Core_Themes_Support
 	 */
-	protected $stub = null;
+	protected $instance;
 
 	/**
 	 * Current template.
 	 *
-	 * @var null
+	 * @var string
 	 */
-	protected $stylesheet = null;
+	protected $stylesheet;
 
 	/**
 	 * Runs prior to each test and sets up the testee object.
 	 */
-	public function setUp() {
+	public function set_up() {
+		parent::set_up();
+
 		$this->stylesheet = get_stylesheet();
 
 		// Set stylesheet from one of the supported themes.
 		update_option( 'stylesheet', 'twentytwentyone' );
 		update_option( Customizer::STORY_OPTION, [ 'show_stories' => true ] );
-		$assets     = new \Google\Web_Stories\Assets();
-		$this->stub = new \Google\Web_Stories\Integrations\Core_Themes_Support( $assets );
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Integrations\Core_Themes_Support::class );
 	}
 
 	/**
 	 * Runs after each test and resets the actions.
 	 */
-	public function tearDown() {
-		remove_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] );
+	public function tear_down() {
+		remove_action( 'wp_body_open', [ $this->instance, 'embed_web_stories' ] );
 
 		if ( get_theme_support( 'web-stories' ) ) {
 			remove_theme_support( 'web-stories' );
@@ -63,10 +65,7 @@ class Core_Themes_Support extends TestCase {
 
 		update_option( 'stylesheet', $this->stylesheet );
 
-		unset( $this->stub );
-		unset( $this->stylesheet );
-
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -75,10 +74,10 @@ class Core_Themes_Support extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$this->stub->register();
+		$this->instance->register();
 
-		$this->assertEquals( 10, has_filter( 'body_class', [ $this->stub, 'add_core_theme_classes' ] ) );
-		$this->assertEquals( 10, has_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] ) );
+		$this->assertEquals( 10, has_filter( 'body_class', [ $this->instance, 'add_core_theme_classes' ] ) );
+		$this->assertEquals( 10, has_action( 'wp_body_open', [ $this->instance, 'embed_web_stories' ] ) );
 	}
 
 	/**
@@ -89,9 +88,9 @@ class Core_Themes_Support extends TestCase {
 	public function test_register_non_core_theme() {
 		update_option( 'stylesheet', '' );
 
-		$this->stub->register();
+		$this->instance->register();
 
-		$this->assertFalse( has_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] ) );
+		$this->assertFalse( has_action( 'wp_body_open', [ $this->instance, 'embed_web_stories' ] ) );
 	}
 
 
@@ -111,7 +110,7 @@ class Core_Themes_Support extends TestCase {
 			'twentyten',
 		];
 
-		$actual = $this->get_static_private_property( $this->stub, 'supported_themes' );
+		$actual = $this->get_static_private_property( $this->instance, 'supported_themes' );
 
 		$this->assertEquals( $actual, $expected );
 	}
@@ -122,7 +121,7 @@ class Core_Themes_Support extends TestCase {
 	 * @covers ::extend_theme_support
 	 */
 	public function test_extend_theme_support() {
-		$this->stub->register();
+		$this->instance->register();
 
 		$this->assertTrue( get_theme_support( 'web-stories' ) );
 	}
@@ -134,7 +133,7 @@ class Core_Themes_Support extends TestCase {
 	 */
 	public function test_extend_theme_support_non_core_themes() {
 		update_option( 'stylesheet', '' );
-		$this->stub->register();
+		$this->instance->register();
 
 		$this->assertFalse( get_theme_support( 'web-stories' ) );
 	}
@@ -145,11 +144,11 @@ class Core_Themes_Support extends TestCase {
 	 */
 	public function embed_web_stories() {
 		ob_start();
-		$this->stub->embed_web_stories();
+		$this->instance->embed_web_stories();
 
 		$actual = ob_get_clean();
 
 		$this->assertTrue( wp_script_is( 'web-stories-theme-style-twentytwentyone' ) );
-		$this->assertContains( 'web-stories-theme-header-section', $actual );
+		$this->assertStringContainsString( 'web-stories-theme-header-section', $actual );
 	}
 }

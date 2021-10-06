@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integration\Widgets;
 
-use Google\Web_Stories\Widgets\Stories as Testee;
 use WP_Widget;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
@@ -28,50 +27,52 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  */
 class Stories extends TestCase {
 	/**
-	 * Object in test.
+	 * Test instance.
 	 *
-	 * @var Testee
+	 * @var \Google\Web_Stories\Widgets\Stories
 	 */
-	private static $testee;
+	private $instance;
 
 	/**
 	 * Runs before any method in class is run.
 	 *
 	 * @return void
 	 */
-	public static function setUpBeforeClass() {
-		$assets       = new \Google\Web_Stories\Assets();
-		self::$testee = new Testee( $assets );
+	public function set_up() {
+		parent::set_up();
+
+		$assets         = new \Google\Web_Stories\Assets();
+		$this->instance = new \Google\Web_Stories\Widgets\Stories( $assets );
 	}
 
 	/**
 	 * Test that object is instance of WP_Widget.
 	 */
 	public function test_instance() {
-		$this->assertInstanceOf( WP_Widget::class, self::$testee );
+		$this->assertInstanceOf( WP_Widget::class, $this->instance );
 	}
 
 	/**
 	 * Test ID Base is set.
 	 */
 	public function test_id_base() {
-		$this->assertEquals( 'string', gettype( self::$testee->id_base ) );
-		$this->assertNotEmpty( self::$testee->id_base );
+		$this->assertEquals( 'string', gettype( $this->instance->id_base ) );
+		$this->assertNotEmpty( $this->instance->id_base );
 	}
 
 	/**
 	 * Test name is set.
 	 */
 	public function test_name() {
-		$this->assertEquals( 'string', gettype( self::$testee->name ) );
-		$this->assertNotEmpty( self::$testee->name );
+		$this->assertEquals( 'string', gettype( $this->instance->name ) );
+		$this->assertNotEmpty( $this->instance->name );
 	}
 
 	/**
 	 * @covers ::enqueue_scripts
 	 */
 	public function test_enqueue_scripts() {
-		self::$testee->enqueue_scripts();
+		$this->instance->enqueue_scripts();
 		$this->assertTrue( wp_script_is( 'web-stories-widget' ) );
 	}
 
@@ -110,7 +111,7 @@ class Stories extends TestCase {
 			'order'              => 'DESC',
 		];
 
-		$instance = self::$testee->update( $new_instance, $old_instance );
+		$instance = $this->instance->update( $new_instance, $old_instance );
 
 		$this->assertEqualSetsWithIndex( $expected, $instance );
 	}
@@ -124,10 +125,10 @@ class Stories extends TestCase {
 
 		$old_instance = [];
 
-		$expected = $this->call_private_method( self::$testee, 'default_values' );
+		$expected = $this->call_private_method( $this->instance, 'default_values' );
 
 
-		$instance = self::$testee->update( $new_instance, $old_instance );
+		$instance = $this->instance->update( $new_instance, $old_instance );
 
 		$this->assertEqualSetsWithIndex( $expected, $instance );
 	}
@@ -142,14 +143,14 @@ class Stories extends TestCase {
 				'label' => 'Test input',
 				'value' => 3,
 			];
-			$this->call_private_method( self::$testee, 'input', [ $args ] );
+			$this->call_private_method( $this->instance, 'input', [ $args ] );
 		};
 
 		$dropdown = get_echo( $function );
 
-		$this->assertContains( 'Test input', $dropdown );
-		$this->assertContains( '<input', $dropdown );
-		$this->assertContains( '<label', $dropdown );
+		$this->assertStringContainsString( 'Test input', $dropdown );
+		$this->assertStringContainsString( '<input', $dropdown );
+		$this->assertStringContainsString( '<label', $dropdown );
 	}
 
 	/**
@@ -163,15 +164,15 @@ class Stories extends TestCase {
 				'options'  => range( 'A', 'Z' ),
 				'selected' => 3,
 			];
-			$this->call_private_method( self::$testee, 'dropdown', [ $args ] );
+			$this->call_private_method( $this->instance, 'dropdown', [ $args ] );
 		};
 
 		$dropdown = get_echo( $function );
 
-		$this->assertContains( 'Test input', $dropdown );
-		$this->assertContains( 'selected=', $dropdown );
-		$this->assertContains( '<select', $dropdown );
-		$this->assertContains( '<label', $dropdown );
+		$this->assertStringContainsString( 'Test input', $dropdown );
+		$this->assertStringContainsString( 'selected=', $dropdown );
+		$this->assertStringContainsString( '<select', $dropdown );
+		$this->assertStringContainsString( '<label', $dropdown );
 	}
 
 	/**
@@ -185,15 +186,15 @@ class Stories extends TestCase {
 				'options'  => range( 'A', 'Z' ),
 				'selected' => 3,
 			];
-			$this->call_private_method( self::$testee, 'radio', [ $args ] );
+			$this->call_private_method( $this->instance, 'radio', [ $args ] );
 		};
 
 		$radio = get_echo( $function );
 
-		$this->assertContains( 'Test input', $radio );
-		$this->assertContains( 'checked=', $radio );
-		$this->assertContains( '<input', $radio );
-		$this->assertContains( '<label', $radio );
+		$this->assertStringContainsString( 'Test input', $radio );
+		$this->assertStringContainsString( 'checked=', $radio );
+		$this->assertStringContainsString( '<input', $radio );
+		$this->assertStringContainsString( '<label', $radio );
 	}
 
 	/**
@@ -205,9 +206,9 @@ class Stories extends TestCase {
 			'id'    => '123',
 		];
 
-		$label = $this->call_private_method( self::$testee, 'label', [ $args ] );
+		$label = $this->call_private_method( $this->instance, 'label', [ $args ] );
 
-		$this->assertContains( 'Test input', $label );
-		$this->assertContains( '<label', $label );
+		$this->assertStringContainsString( 'Test input', $label );
+		$this->assertStringContainsString( '<label', $label );
 	}
 }

@@ -813,6 +813,8 @@ class APIProviderFixture {
         []
       );
 
+      const getPublisherLogos = useCallback(() => asyncResponse([]), []);
+
       const getAllStatuses = useCallback(
         () => jasmine.createSpy('getAllStatuses'),
         []
@@ -877,7 +879,38 @@ class APIProviderFixture {
       );
       const deletePageTemplate = useCallback(() => asyncResponse(), []);
 
-      const getTaxonomyTerm = useCallback(() => asyncResponse([]), []);
+      const getTaxonomyTerm = useCallback(
+        (_, args) =>
+          asyncResponse(
+            args.orderby
+              ? [
+                  {
+                    id: this._termAutoIncrementId++,
+                    count: 3,
+                    description: '',
+                    link: '',
+                    name: 'related slug 1',
+                    slug: 'related-slug-1',
+                    taxonomy: 'web_story_tag',
+                    meta: [],
+                    _links: {},
+                  },
+                  {
+                    id: this._termAutoIncrementId++,
+                    count: 2,
+                    description: '',
+                    link: '',
+                    name: 'related slug 2',
+                    slug: 'related-slug-2',
+                    taxonomy: 'web_story_tag',
+                    meta: [],
+                    _links: {},
+                  },
+                ]
+              : []
+          ),
+        []
+      );
 
       const createTaxonomyTerm = useCallback(
         (_endpoint, data) =>
@@ -912,6 +945,7 @@ class APIProviderFixture {
           getMedia,
           getLinkMetadata,
           getHotlinkInfo,
+          getPublisherLogos,
           saveStoryById,
           getAllStatuses,
           getAuthors,

@@ -179,7 +179,7 @@ describe('raw template files', () => {
             continue;
           }
 
-          expect(element?.resource?.isMuted).not.toBeUndefined();
+          expect(element?.resource?.isMuted).toBeDefined();
           expect(element?.resource?.isMuted).toBeBoolean();
         }
       }

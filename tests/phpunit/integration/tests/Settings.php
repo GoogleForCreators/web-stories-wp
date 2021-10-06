@@ -36,6 +36,7 @@ class Settings extends TestCase {
 		$this->assertArrayHasKey( $settings::SETTING_NAME_AD_MANAGER_SLOT_ID, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ADSENSE_SLOT_ID, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_EXPERIMENTS, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_PUBLISHER_LOGOS, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_VIDEO_CACHE, $options );

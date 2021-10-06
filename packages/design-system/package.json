@@ -30,7 +30,7 @@
   "devDependencies": {
     "@storybook/addon-actions": "^6.3.0",
     "@storybook/addon-knobs": "^6.3.0",
-    "@testing-library/react": "^12.1.1",
+    "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2"
   }
 }

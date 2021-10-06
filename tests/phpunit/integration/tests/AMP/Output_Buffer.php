@@ -20,18 +20,18 @@ namespace Google\Web_Stories\Tests\Integration\AMP;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\HTML;
-use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\AMP\Sanitization;
 use Google\Web_Stories\AMP\Optimization;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Output_Buffer
  */
-class Output_Buffer extends TestCase {
-	public function setUp() {
-		parent::setUp();
+class Output_Buffer extends DependencyInjectedTestCase {
+	public function set_up() {
+		parent::set_up();
 
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
@@ -39,15 +39,15 @@ class Output_Buffer extends TestCase {
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	protected function prepare_response( $post ): string {
-		$instance = new \Google\Web_Stories\AMP\Output_Buffer( new Sanitization( new Experiments() ), new Optimization() );
+		$instance = $this->injector->make( \Google\Web_Stories\AMP\Output_Buffer::class );
 		$story    = new Story();
 		$story->load_from_post( $post );
 
@@ -67,8 +67,8 @@ class Output_Buffer extends TestCase {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'transformed="self;v=1"', $actual );
-		$this->assertNotContains( 'AMP optimization could not be completed', $actual );
+		$this->assertStringContainsString( 'transformed="self;v=1"', $actual );
+		$this->assertStringNotContainsString( 'AMP optimization could not be completed', $actual );
 	}
 
 	/**
@@ -90,8 +90,8 @@ class Output_Buffer extends TestCase {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'publisher=', $actual );
-		$this->assertContains( $name, $actual );
+		$this->assertStringContainsString( 'publisher=', $actual );
+		$this->assertStringContainsString( $name, $actual );
 	}
 
 	/**
@@ -118,16 +118,16 @@ class Output_Buffer extends TestCase {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'publisher-logo-src="http', $actual );
-		$this->assertContains( $name, $actual );
-		$this->assertContains( $logo, $actual );
+		$this->assertStringContainsString( 'publisher-logo-src="http', $actual );
+		$this->assertStringContainsString( $name, $actual );
+		$this->assertStringContainsString( $logo, $actual );
 
 		delete_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY );
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'publisher-logo-src=""', $actual );
-		$this->assertContains( 'amp=', $actual );
+		$this->assertStringContainsString( 'publisher-logo-src=""', $actual );
+		$this->assertStringContainsString( 'amp=', $actual );
 	}
 
 	/**
@@ -147,8 +147,8 @@ class Output_Buffer extends TestCase {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'publisher-logo-src=""', $actual );
-		$this->assertContains( 'amp=', $actual );
+		$this->assertStringContainsString( 'publisher-logo-src=""', $actual );
+		$this->assertStringContainsString( 'amp=', $actual );
 	}
 
 	/**
@@ -170,7 +170,7 @@ class Output_Buffer extends TestCase {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'poster-portrait-src=', $actual );
+		$this->assertStringContainsString( 'poster-portrait-src=', $actual );
 	}
 
 	/**
@@ -192,10 +192,10 @@ class Output_Buffer extends TestCase {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertNotContains( 'https://example.com/poster.jpg', $actual );
-		$this->assertContains( 'poster-portrait-src=', $actual );
-		$this->assertContains( wp_get_attachment_url( $attachment_id ), $actual );
-		$this->assertNotContains( 'poster-portrait-src=""', $actual );
+		$this->assertStringNotContainsString( 'https://example.com/poster.jpg', $actual );
+		$this->assertStringContainsString( 'poster-portrait-src=', $actual );
+		$this->assertStringContainsString( wp_get_attachment_url( $attachment_id ), $actual );
+		$this->assertStringNotContainsString( 'poster-portrait-src=""', $actual );
 	}
 
 	/**
@@ -213,7 +213,7 @@ class Output_Buffer extends TestCase {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'poster-portrait-src=""', $actual );
+		$this->assertStringContainsString( 'poster-portrait-src=""', $actual );
 	}
 
 	/**
@@ -231,6 +231,6 @@ class Output_Buffer extends TestCase {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'amp=', $actual );
+		$this->assertStringContainsString( 'amp=', $actual );
 	}
 }

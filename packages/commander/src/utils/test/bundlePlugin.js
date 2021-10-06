@@ -53,7 +53,7 @@ describe('bundlePlugin', () => {
 
   it('should create ZIP file with automatically determined file name', () => {
     const result = bundlePlugin('/foo/web-stories', false, true);
-    expect(result).toStrictEqual('/foo/web-stories-foobar.zip');
+    expect(result).toBe('/foo/web-stories-foobar.zip');
     expect(generateZipFile).toHaveBeenCalledWith(
       '/foo/web-stories',
       'web-stories-foobar.zip'
@@ -62,7 +62,7 @@ describe('bundlePlugin', () => {
 
   it('should create ZIP file with automatically determined file name for composer build', () => {
     const result = bundlePlugin('/foo/web-stories', true, true);
-    expect(result).toStrictEqual('/foo/web-stories-foobar-composer.zip');
+    expect(result).toBe('/foo/web-stories-foobar-composer.zip');
     expect(generateZipFile).toHaveBeenCalledWith(
       '/foo/web-stories',
       'web-stories-foobar-composer.zip'
@@ -71,7 +71,7 @@ describe('bundlePlugin', () => {
 
   it('should create ZIP file with custom file name', () => {
     const result = bundlePlugin('/foo/web-stories', false, 'my-plugin.zip');
-    expect(result).toStrictEqual('/foo/my-plugin.zip');
+    expect(result).toBe('/foo/my-plugin.zip');
     expect(generateZipFile).toHaveBeenCalledWith(
       '/foo/web-stories',
       'my-plugin.zip'
