@@ -25,7 +25,7 @@ import {
   useCallback,
   useRef,
 } from '@web-stories-wp/react';
-import { Text } from '@web-stories-wp/design-system';
+import { Text, useKeyDownEffect } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useUnits } from '@web-stories-wp/units';
 
@@ -182,11 +182,17 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     );
   };
 
+  useKeyDownEffect(
+    buttonRef,
+    {
+      key: ['enter', 'space'],
+    },
+    onClick,
+    [onClick]
+  );
+
   return (
-    <Preview
-      ref={buttonRef}
-      onClick={(e) => e.target === buttonRef.current && onClick()}
-    >
+    <Preview ref={buttonRef}>
       {getTextDisplay()}
       <LibraryMoveable
         cloneElement={DragContainer}
