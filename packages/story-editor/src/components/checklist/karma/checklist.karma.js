@@ -235,7 +235,7 @@ describe('Checklist integration', () => {
     });
   });
 
-  describe('checkpoints', () => {
+  describe('Checkpoints', () => {
     it('empty story should begin in the empty state', async () => {
       await openChecklist();
 
