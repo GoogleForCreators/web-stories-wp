@@ -37,7 +37,7 @@ describe('useNumericInput', () => {
       })
     );
 
-    expect(result.current.currentValue).toStrictEqual(1);
+    expect(result.current.currentValue).toBe(1);
     expect(mockOnChange).not.toHaveBeenCalled();
     expect(result.current.inputRef.current).toBeNull();
   });
@@ -56,7 +56,7 @@ describe('useNumericInput', () => {
       act(() => {
         result.current.handleChange({ target: { value: '12' } });
       });
-      expect(result.current.currentValue).toStrictEqual('12');
+      expect(result.current.currentValue).toBe('12');
       expect(mockOnChange).not.toHaveBeenCalled();
     });
   });
@@ -300,7 +300,7 @@ describe('useNumericInput', () => {
 
       rerender();
 
-      expect(result.current.currentValue).toStrictEqual(6082);
+      expect(result.current.currentValue).toBe(6082);
     });
   });
 });

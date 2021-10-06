@@ -1,4 +1,5 @@
-/*
+<?php
+/**
  * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,20 +15,19 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import getVideoLengthDisplay from '../getVideoLengthDisplay';
+namespace Google\Web_Stories\Tests\Integration\Fixture;
 
-describe('getVideoLengthDisplay', () => {
-  it('should correctly format 0', () => {
-    expect(getVideoLengthDisplay(0, true)).toBe('0:00');
-  });
+use Google\Web_Stories\Infrastructure\HasRequirements;
+use Google\Web_Stories\Infrastructure\Service;
 
-  it('should return correct results', () => {
-    expect(getVideoLengthDisplay(1)).toBe('0:01');
-    expect(getVideoLengthDisplay(60)).toBe('1:00');
-    expect(getVideoLengthDisplay(610)).toBe('10:10');
-    expect(getVideoLengthDisplay(6000)).toBe('1:40:00');
-  });
-});
+class DummyServiceWithRequirements implements Service, HasRequirements {
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'service_a' ];
+	}
+}

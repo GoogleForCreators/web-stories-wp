@@ -17,12 +17,25 @@
 
 namespace Google\Web_Stories\Tests\Integration\Shortcode;
 
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Shortcode\Embed_Shortcode
  */
-class Embed_Shortcode extends TestCase {
+class Embed_Shortcode extends DependencyInjectedTestCase {
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Shortcode\Embed_Shortcode
+	 */
+	protected $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Shortcode\Embed_Shortcode::class );
+	}
+
 	public function tear_down() {
 		remove_shortcode( \Google\Web_Stories\Shortcode\Embed_Shortcode::SHORTCODE_NAME );
 
@@ -33,10 +46,7 @@ class Embed_Shortcode extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_registers_shortcode() {
-		$assets          = new \Google\Web_Stories\Assets();
-		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
-
-		$embed_shortcode->register();
+		$this->instance->register();
 		$this->assertTrue( shortcode_exists( \Google\Web_Stories\Shortcode\Embed_Shortcode::SHORTCODE_NAME ) );
 	}
 
@@ -47,10 +57,7 @@ class Embed_Shortcode extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_shortcode() {
-		$assets          = new \Google\Web_Stories\Assets();
-		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
-
-		$actual = $embed_shortcode->render_shortcode(
+		$actual = $this->instance->render_shortcode(
 			[
 				'url'    => 'https://example.com/story.html',
 				'title'  => 'Example Story',
@@ -71,10 +78,7 @@ class Embed_Shortcode extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_shortcode_missing_url() {
-		$assets          = new \Google\Web_Stories\Assets();
-		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
-
-		$actual = $embed_shortcode->render_shortcode(
+		$actual = $this->instance->render_shortcode(
 			[
 				'url'    => '',
 				'title'  => 'Example Story',
@@ -95,10 +99,7 @@ class Embed_Shortcode extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_shortcode_missing_title() {
-		$assets          = new \Google\Web_Stories\Assets();
-		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
-
-		$actual = $embed_shortcode->render_shortcode(
+		$actual = $this->instance->render_shortcode(
 			[
 				'url'    => 'https://example.com/story.html',
 				'title'  => '',
@@ -119,12 +120,9 @@ class Embed_Shortcode extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_shortcode_feed_no_poster() {
-		$assets          = new \Google\Web_Stories\Assets();
-		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
-
 		$this->go_to( '/?feed=rss2' );
 
-		$actual = $embed_shortcode->render_shortcode(
+		$actual = $this->instance->render_shortcode(
 			[
 				'url'   => 'https://example.com/story.html',
 				'title' => 'Example Story',
@@ -143,13 +141,11 @@ class Embed_Shortcode extends TestCase {
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_shortcode_with_poster() {
-		$assets          = new \Google\Web_Stories\Assets();
-		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets );
-		$embed_shortcode->register();
+		$this->instance->register();
 
 		$this->go_to( '/?feed=rss2' );
 
-		$actual = $embed_shortcode->render_shortcode(
+		$actual = $this->instance->render_shortcode(
 			[
 				'url'    => 'https://example.com/story.html',
 				'title'  => 'Example Story',

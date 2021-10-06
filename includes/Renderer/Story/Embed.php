@@ -28,7 +28,6 @@
 namespace Google\Web_Stories\Renderer\Story;
 
 use Google\Web_Stories\Assets;
-use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Traits\Amp;

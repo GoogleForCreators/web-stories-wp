@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Traits\Post_Type;
 
 /**
@@ -39,6 +40,24 @@ class KSES extends Service_Base {
 	use Post_Type;
 
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
+	 * KSES constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 */
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->story_post_type = $story_post_type;
+	}
+
+	/**
 	 * Initializes KSES filters for stories.
 	 *
 	 * @since 1.0.0
@@ -46,14 +65,6 @@ class KSES extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
-			return;
-		}
-
-		if ( current_user_can( 'unfiltered_html' ) ) {
-			return;
-		}
-
 		add_filter( 'wp_insert_post_data', [ $this, 'filter_insert_post_data' ], 10, 3 );
 	}
 
@@ -86,14 +97,22 @@ class KSES extends Service_Base {
 	 * @return array|mixed Filtered post data.
 	 */
 	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
+		if ( current_user_can( 'unfiltered_html' ) ) {
+			return $data;
+		}
+
 		if (
-			( Story_Post_Type::POST_TYPE_SLUG !== $data['post_type'] ) && !
+			( $this->story_post_type::POST_TYPE_SLUG !== $data['post_type'] ) && !
 			(
 				'revision' === $data['post_type'] &&
 				! empty( $data['post_parent'] ) &&
-				Story_Post_Type::POST_TYPE_SLUG === get_post_type( $data['post_parent'] )
+				get_post_type( $data['post_parent'] ) === $this->story_post_type::POST_TYPE_SLUG
 			)
 		) {
+			return $data;
+		}
+
+		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return $data;
 		}
 

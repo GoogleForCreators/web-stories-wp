@@ -110,13 +110,13 @@ describe('Underline formatter', () => {
     it('should return false if no style matches', () => {
       const styles = [NONE];
       const result = setupFormatter(styles);
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
 
     it('should return true if only underline', () => {
       const styles = [UNDERLINE];
       const result = setupFormatter(styles);
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 

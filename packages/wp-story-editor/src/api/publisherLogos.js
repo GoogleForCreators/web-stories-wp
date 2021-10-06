@@ -15,19 +15,20 @@
  */
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import getVideoLengthDisplay from '../getVideoLengthDisplay';
+import apiFetch from '@wordpress/api-fetch';
 
-describe('getVideoLengthDisplay', () => {
-  it('should correctly format 0', () => {
-    expect(getVideoLengthDisplay(0, true)).toBe('0:00');
+export function getPublisherLogos(path) {
+  return apiFetch({
+    path,
   });
+}
 
-  it('should return correct results', () => {
-    expect(getVideoLengthDisplay(1)).toBe('0:01');
-    expect(getVideoLengthDisplay(60)).toBe('1:00');
-    expect(getVideoLengthDisplay(610)).toBe('10:10');
-    expect(getVideoLengthDisplay(6000)).toBe('1:40:00');
+export function addPublisherLogo(path, id) {
+  return apiFetch({
+    path,
+    data: { id },
+    method: 'POST',
   });
-});
+}
