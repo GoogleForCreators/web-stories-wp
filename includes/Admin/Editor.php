@@ -321,7 +321,7 @@ class Editor extends Service_Base {
 					'stories'        => sprintf( '/web-stories/v1/%s/', $rest_base ),
 					'pageTemplates'  => sprintf( '/web-stories/v1/%s/', $page_templates_rest_base ),
 					'media'          => '/web-stories/v1/media/',
-					'hotlink'        => '/web-stories/v1/hotlink/',
+					'hotlink'        => '/web-stories/v1/hotlink/validate',
 					'publisherLogos' => '/web-stories/v1/publisher-logos',
 					'proxy'          => rest_url( '/web-stories/v1/hotlink/proxy' ),
 					'link'           => '/web-stories/v1/link/',

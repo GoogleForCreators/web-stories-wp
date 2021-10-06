@@ -147,7 +147,7 @@ class Hotlinking_Controller extends REST_Controller {
 	/**
 	 * Parses a URL to return proxied file.
 	 *
-	 * @since 1.12.0
+	 * @since 1.13.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 *
@@ -180,6 +180,8 @@ class Hotlinking_Controller extends REST_Controller {
 
 	/**
 	 * Get some basic information about a requested url.
+	 *
+	 * @since 1.13.0
 	 *
 	 * @param string $url URL to get data.
 	 *
@@ -251,7 +253,7 @@ class Hotlinking_Controller extends REST_Controller {
 	/**
 	 * Get request args.
 	 *
-	 * @since 1.12.0
+	 * @since 1.13.0
 	 *
 	 * @param string $url URL to be passed as filter.
 	 *

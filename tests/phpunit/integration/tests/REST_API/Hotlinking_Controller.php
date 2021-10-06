@@ -77,7 +77,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
 
-		$this->controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( new \Google\Web_Stories\Experiments() );
+		$this->controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( new \Google\Web_Stories\Experiments( new \Google\Web_Stories\Settings() ) );
 	}
 
 	public function tear_down() {
