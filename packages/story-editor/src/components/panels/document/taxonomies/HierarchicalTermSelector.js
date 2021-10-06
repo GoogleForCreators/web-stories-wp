@@ -112,6 +112,7 @@ function HierarchicalTermSelector({
         value: category.id,
         label: category.name,
         checked: terms[taxonomy.restBase]?.includes(category.id),
+        slug: category.slug,
       }));
     }
 

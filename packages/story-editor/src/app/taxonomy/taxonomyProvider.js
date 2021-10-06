@@ -198,8 +198,8 @@ function TaxonomyProvider(props) {
       }
 
       // make sure the term doesn't already exist locally
-      const cachedTerm =
-        termCache[taxonomy.restBase]?.[data?.slug || cleanForSlug(termName)];
+      const preEmptiveSlug = data?.slug || cleanForSlug(termName);
+      const cachedTerm = termCache[taxonomy.restBase]?.[preEmptiveSlug];
       if (cachedTerm) {
         if (addToSelection) {
           addTermToSelection(taxonomy, cachedTerm);
