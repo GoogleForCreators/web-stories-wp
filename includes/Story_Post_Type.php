@@ -349,7 +349,7 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	/**
 	 * Handles redirects to the post type archive.
 	 *
-	 * @since 1.12.0
+	 * @since 1.13.0
 	 *
 	 * @param bool|mixed $bypass Pass-through of the pre_handle_404 filter value.
 	 * @param \WP_Query  $query The WP_Query object.
