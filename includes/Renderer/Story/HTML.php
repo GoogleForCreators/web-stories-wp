@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Renderer\Story;
 
+use Google\Web_Stories\KSES;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Model\Story;
 
@@ -67,6 +68,7 @@ class HTML {
 	 */
 	public function render(): string {
 		$markup = $this->story->get_markup();
+		$markup = $this->fix_malformed_script_link_tags( $markup );
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->replace_url_scheme( $markup );
 		$markup = $this->print_analytics( $markup );
@@ -86,6 +88,63 @@ class HTML {
 		return [
 			'poster-portrait-src' => $this->story->get_poster_portrait(),
 		];
+	}
+
+	/**
+	 * Fix malformed <a> tags in the <head>.
+	 *
+	 * On certain environments like WordPress.com VIP, there is additional KSES
+	 * hardening that prevents saving `<script>` tags to the database, despite
+	 * this plugin allowing them ({@see KSES}).
+	 *
+	 * There, script tags somehow get transformed to `<a>` tags before saving
+	 * to the database.
+	 * This of course breaks the markup completely as `<a>` is not allowed in the `<head>`,
+	 * thus the  DOMDocument parser moves them to the `<body>`, breaking the DOM structure.
+	 *
+	 * Since we cannot prevent the broken `<a>`/`<script>` tags upon saving
+	 * and not during sanitization, this method is an attempt to fix them
+	 * *before* they're sanitized.
+	 *
+	 * Turns `<a href="https://cdn.ampproject.org/v0.js">https://cdn.ampproject.org/v0.js</a>`
+	 * into `<script async src="https://cdn.ampproject.org/v0.js"></script>`
+	 * and `<a href="https://cdn.ampproject.org/v0/amp-story-1.0.js">https://cdn.ampproject.org/v0/amp-story-1.0.js</a>`
+	 * into `<script async src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>`.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param string $content Story markup.
+	 * @return string Filtered content
+	 */
+	protected function fix_malformed_script_link_tags( string $content ): string {
+		$content = (string) preg_replace_callback(
+			'/(?P<link><a[^>]+href=\"(?P<href>.*?)\"[^>]*>(?P<content>.*?)<\/a>)/ms',
+			static function( $matches ) {
+				if ( $matches['href'] === $matches['content'] && 0 === strpos( $matches['href'], 'https://cdn.ampproject.org/' ) ) {
+					$script_url = $matches['href'];
+
+					// Turns `<a href="https://cdn.ampproject.org/v0.js">https://cdn.ampproject.org/v0.js</a>`
+					// into `<script async src="https://cdn.ampproject.org/v0.js"></script>`.
+					if ( 'https://cdn.ampproject.org/v0.js' === $script_url ) {
+						return "<script async src=\"$script_url\"></script>";
+					}
+
+					// Extract 'amp-story' from 'https://cdn.ampproject.org/v0/amp-story-1.0.js'.
+					$sub_matches = [];
+					preg_match( '/v0\/(?P<custom_element>[\w-]+)-[\d.]+\.js/', $script_url, $sub_matches );
+					$custom_element = $sub_matches['custom_element'];
+
+					// Turns `<a href="https://cdn.ampproject.org/v0/amp-story-1.0.js">https://cdn.ampproject.org/v0/amp-story-1.0.js</a>`
+					// into <script async src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>.
+					return "<script async src=\"$script_url\" custom-element=\"$custom_element\"></script>";
+				}
+
+				return '';
+			},
+			$content
+		);
+
+		return $content;
 	}
 
 	/**
