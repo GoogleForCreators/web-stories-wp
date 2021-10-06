@@ -323,7 +323,7 @@ class Editor extends Service_Base {
 					'media'          => '/web-stories/v1/media/',
 					'hotlink'        => '/web-stories/v1/hotlink/',
 					'publisherLogos' => '/web-stories/v1/publisher-logos',
-          'proxy'          => rest_url( '/web-stories/v1/hotlink/proxy' ),
+					'proxy'          => rest_url( '/web-stories/v1/hotlink/proxy' ),
 					'link'           => '/web-stories/v1/link/',
 					'statusCheck'    => '/web-stories/v1/status-check/',
 					'taxonomies'     => '/web-stories/v1/taxonomies/',
