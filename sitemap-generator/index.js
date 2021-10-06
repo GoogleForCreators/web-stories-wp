@@ -36,12 +36,12 @@ const stories = readdirSync(resolve(__dirname, '..', 'public', 'stories')).map(
 const links = [
   { url: '/' },
   { url: '/docs/' },
-  { url: '/docs/getting-started' },
-  { url: '/docs/how-to' },
-  { url: '/docs/best-practices' },
-  { url: '/docs/seo' },
-  { url: '/docs/faq' },
-  { url: '/docs/terms' },
+  { url: '/docs/getting-started/' },
+  { url: '/docs/how-to/' },
+  { url: '/docs/best-practices/' },
+  { url: '/docs/seo/' },
+  { url: '/docs/faq/' },
+  { url: '/docs/terms/' },
   ...stories,
 ];
 
