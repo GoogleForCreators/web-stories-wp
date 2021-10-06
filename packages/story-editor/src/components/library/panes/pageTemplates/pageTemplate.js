@@ -23,50 +23,63 @@ import {
   useCallback,
   forwardRef,
   useFocusOut,
-  useEffect,
-  useRef,
 } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { _x, sprintf } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 import {
   Button,
+  BUTTON_SIZES,
   BUTTON_TYPES,
+  BUTTON_VARIANTS,
   themeHelpers,
+  Icons,
 } from '@web-stories-wp/design-system';
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
 import { PageSizePropType } from '../../../../types';
+import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { focusStyle } from '../../../panels/shared';
-import { PAGE_TEMPLATE_TYPES } from './constants';
 
-const PageTemplateWrapper = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
-  position: relative;
+const PageTemplateWrapper = styled.div`
+  position: absolute;
   top: 0;
-  z-index: 1;
+  height: ${({ pageSize }) => pageSize.containerHeight}px;
+  width: ${({ pageSize }) => pageSize.width}px;
   display: flex;
   flex-direction: column;
-  height: auto;
-  width: ${({ columnWidth }) => columnWidth}px;
-  padding: 0;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
   cursor: pointer;
-
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  transform: ${({ translateX, translateY }) =>
+    `translateX(${translateX}px) translateY(${translateY}px)`};
   ${({ isHighlighted }) => isHighlighted && themeHelpers.focusCSS};
   ${focusStyle};
 `;
+PageTemplateWrapper.propTypes = {
+  pageSize: PageSizePropType.isRequired,
+  translateY: PropTypes.number.isRequired,
+  translateX: PropTypes.number.isRequired,
+};
 
-const PosterWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+const PreviewPageWrapper = styled.div`
+  height: ${({ pageSize }) => pageSize.containerHeight}px;
+  width: ${({ pageSize }) => pageSize.width}px;
   z-index: -1;
-`;
-
-const PosterImg = styled.img`
-  display: block;
-  width: 100%;
-  object-fit: cover;
+  background-color: ${({ theme }) => theme.colors.interactiveBg.secondary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
+  overflow: hidden;
+`;
+PreviewPageWrapper.propTypes = {
+  pageSize: PageSizePropType.isRequired,
+};
+
+const ButtonWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  padding: 8px;
 `;
 
 const PageTemplateTitle = styled.div`
@@ -77,7 +90,6 @@ const PageTemplateTitle = styled.div`
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
-
   padding: 8px;
   font-size: 12px;
   line-height: 22px;
@@ -89,10 +101,12 @@ PageTemplateTitle.propTypes = {
   isActive: PropTypes.bool.isRequired,
 };
 
-function PageTemplate({ page, isActive, pageSize, columnWidth, ...rest }) {
+function PageTemplate(
+  { page, pageSize, translateY, translateX, isActive, handleDelete, ...rest },
+  ref
+) {
   const [isHover, setIsHover] = useState(false);
   const isActivePage = isHover || isActive;
-  const ref = useRef();
 
   useFocusOut(ref, () => setIsHover(false), []);
 
@@ -104,38 +118,54 @@ function PageTemplate({ page, isActive, pageSize, columnWidth, ...rest }) {
     setIsHover(false);
   }, []);
 
-  useEffect(() => {
-    if (isActive && ref.current) {
-      ref.current.focus();
-    }
-  });
-
   return (
     <PageTemplateWrapper
-      columnWidth={columnWidth}
+      pageSize={pageSize}
       role="listitem"
       ref={ref}
+      // Needed for custom keyboard navigation implementation.
+      // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
+      tabIndex={0}
       onMouseEnter={handleSetHoverActive}
       onMouseLeave={handleSetHoverFalse}
       aria-label={page.title}
+      translateY={translateY}
+      translateX={translateX}
       isHighlighted={page.id === highlightedTemplate}
       {...rest}
     >
-      <PosterWrapper>
-        {page.webp && (
-          <PosterImg src={page.png} alt={page.title} crossOrigin="anonymous" />
+      <PreviewPageWrapper pageSize={pageSize}>
+        <PreviewErrorBoundary>
+          <PreviewPage
+            pageSize={pageSize}
+            page={page}
+            animationState={
+              isActivePage
+                ? STORY_ANIMATION_STATE.PLAYING
+                : STORY_ANIMATION_STATE.RESET
+            }
+          />
+        </PreviewErrorBoundary>
+        {isActivePage && handleDelete && (
+          <ButtonWrapper>
+            <Button
+              variant={BUTTON_VARIANTS.CIRCLE}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={(e) => handleDelete(page, e)}
+              aria-label={__('Delete Page Template', 'web-stories')}
+            >
+              <Icons.Trash />
+            </Button>
+          </ButtonWrapper>
         )}
-        {page.title && (
-          <PageTemplateTitle isActive={isActivePage}>
-            {sprintf(
-              /* translators: 1: template name. 2: page template
-            name. */ _x('%1$s %2$s', 'page template title', 'web-stories'),
-              page.title,
-              PAGE_TEMPLATE_TYPES[page.type].name
-            )}
-          </PageTemplateTitle>
-        )}
-      </PosterWrapper>
+      </PreviewPageWrapper>
+
+      {page.title && (
+        <PageTemplateTitle isActive={isActivePage}>
+          {page.title}
+        </PageTemplateTitle>
+      )}
     </PageTemplateWrapper>
   );
 }
@@ -146,7 +176,8 @@ PageTemplate.propTypes = {
   isActive: PropTypes.bool,
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
-  columnWidth: PropTypes.number.isRequired,
+  translateY: PropTypes.number.isRequired,
+  translateX: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
 };
 
