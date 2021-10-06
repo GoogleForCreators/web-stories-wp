@@ -146,7 +146,7 @@ function APIProvider({ children }) {
     (url) => getProxyUrl(url, proxy, nonce),
     [proxy, getProxyUrl, nonce]
   );
-  
+
   actions.getPublisherLogos = useCallback(
     () => getPublisherLogos(publisherLogos),
     [getPublisherLogos, publisherLogos]
