@@ -104,7 +104,8 @@ const ADDITIONAL_ANALYTICS_CONFIG = {
 const ADDITIONAL_ANALYTICS = `
 <amp-analytics type="gtag" data-credentials="include"><script type="application/json">${JSON.stringify(
   ADDITIONAL_ANALYTICS_CONFIG
-)}</script></amp-analytics>`;
+)}</script></amp-analytics>
+<amp-story-auto-analytics gtag-id="UA-168571240-2"></amp-story-auto-analytics>`;
 
 console.log(
   `Downloading story and saving to '${relative(__dirname, directory)}'`

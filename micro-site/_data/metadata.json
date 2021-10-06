@@ -4,7 +4,7 @@
   "domain": "wp.stories.google",
   "description": "Get ready to tell stories on WordPress! With Stories for WordPress, we're bringing first-class Web Stories support to WordPress.",
   "defaultLocale": "en",
-  "googleAnalyticsId": "UA-173172028-1",
+  "googleAnalyticsIds": ["UA-173172028-1", "UA-168571240-2"],
   "locales": [
     "en"
   ],

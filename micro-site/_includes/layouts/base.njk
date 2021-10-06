@@ -50,11 +50,11 @@
     <!-- css is inserted by optimize-html custom plugin -->
   </head>
   <body>
-  {% if googleanalytics %}
+  {% for propertyId in googleanalytics %}
   <amp-analytics  type="gtag" data-credentials="include">
-    <script type="application/json">{"vars": {"config": {"{{ googleanalytics }}": {"groups": "default"}}, "gtag_id": "{{ googleanalytics }}"}}</script>
+    <script type="application/json">{"vars": {"config": {"{{ propertyId }}": {"groups": "default"}}, "gtag_id": "{{ propertyId }}"}}</script>
   </amp-analytics>
-  {% endif %}
+  {% endfor %}
 
   {% include "header.njk" %}
 
