@@ -17,7 +17,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
@@ -34,7 +33,6 @@ import { PanelText, StyledTablistPanel } from '../styles';
 import VideoOptimizationToggle from '../videoOptimizationCheckbox';
 import { useIsChecklistMounted } from '../popupMountedContext';
 import { useConfig } from '../../../app';
-import { useChecklist } from '..';
 
 function AccessibilityPanel({
   children,
@@ -73,27 +71,15 @@ AccessibilityPanel.propTypes = {
 };
 
 export function AccessibilityChecks(props) {
-  const [isVisible, setIsVisible] = useState(false);
-
   const { hasUploadMediaAction } = useConfig(({ capabilities }) => ({
     hasUploadMediaAction: capabilities.hasUploadMediaAction,
   }));
-
-  const { openPanel } = useChecklist(({ state: { openPanel } }) => ({
-    openPanel,
-  }));
-
-  useEffect(() => {
-    if (openPanel === ISSUE_TYPES.ACCESSIBILITY) {
-      setIsVisible(true);
-    }
-  }, [openPanel, setIsVisible]);
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
       <AccessibilityPanel {...props}>
         <VideoOptimizationToggle />
-        <PageBackgroundTextLowContrast isVisible={isVisible} />
+        <PageBackgroundTextLowContrast />
         <TextElementFontSizeTooSmall />
         <VideoElementMissingDescription />
         {hasUploadMediaAction && <VideoElementMissingCaptions />}

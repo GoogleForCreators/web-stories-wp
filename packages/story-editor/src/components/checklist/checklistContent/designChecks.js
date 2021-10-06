@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useEffect, useState } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -33,7 +32,6 @@ import { ChecklistCategoryProvider } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useIsChecklistMounted } from '../popupMountedContext';
 import { useConfig } from '../../../app';
-import { useChecklist } from '..';
 
 function DesignPanel({
   badgeCount = 0,
@@ -71,29 +69,17 @@ DesignPanel.propTypes = {
 };
 
 export function DesignChecks(props) {
-  const [isVisible, setIsVisible] = useState(false);
-
   const { hasUploadMediaAction } = useConfig(({ capabilities }) => ({
     hasUploadMediaAction: capabilities.hasUploadMediaAction,
   }));
-
-  const { openPanel } = useChecklist(({ state: { openPanel } }) => ({
-    openPanel,
-  }));
-
-  useEffect(() => {
-    if (openPanel === ISSUE_TYPES.DESIGN) {
-      setIsVisible(true);
-    }
-  }, [openPanel, setIsVisible]);
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
       <DesignPanel {...props}>
         <StoryPagesCount />
-        <PageTooMuchText isVisible={isVisible} />
-        <PageTooLittleText isVisible={isVisible} />
-        <PageTooManyLinks isVisible={isVisible} />
+        <PageTooMuchText />
+        <PageTooLittleText />
+        <PageTooManyLinks />
         {hasUploadMediaAction && <VideoElementResolution />}
         {hasUploadMediaAction && <ImageElementResolution />}
       </DesignPanel>

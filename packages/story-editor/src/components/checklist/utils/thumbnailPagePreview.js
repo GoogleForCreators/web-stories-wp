@@ -26,9 +26,11 @@ export const ThumbnailPagePreview = ({ page }) => (
     width={THUMBNAIL_DIMENSIONS.WIDTH}
     height={THUMBNAIL_DIMENSIONS.HEIGHT}
     as="div"
+    help="checklist"
+    isActive
+    className="pagePreviewOverrides"
   />
 );
-
 ThumbnailPagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
 };
