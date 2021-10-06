@@ -41,7 +41,6 @@ import { PAGE_TEMPLATE_TYPES } from './constants';
 
 const PageTemplateWrapper = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
   position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   height: auto;
@@ -57,7 +56,6 @@ const PageTemplateWrapper = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
 const PosterWrapper = styled.div`
   width: 100%;
   height: 100%;
-  z-index: -1;
 `;
 
 const PosterImg = styled.img`
