@@ -69,17 +69,6 @@ class KSES extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority(): int {
-		return 11;
-	}
-
-	/**
 	 * Get the list of service IDs required for this service to be registered.
 	 *
 	 * Needed because the story post type needs to be registered first.
