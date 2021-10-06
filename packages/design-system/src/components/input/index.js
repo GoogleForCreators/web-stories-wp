@@ -106,6 +106,7 @@ export const BaseInput = styled.input(
     background-color: inherit;
     border: none;
     outline: none;
+    box-shadow: none;
     color: ${theme.colors.fg.primary};
 
     ${themeHelpers.expandPresetStyles({
