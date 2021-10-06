@@ -67,8 +67,6 @@ class Story_Archive extends Service_Base {
 	/**
 	 * Registers Filters and actions
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 *
 	 * @since 1.13.0
 	 *
 	 * @return void
