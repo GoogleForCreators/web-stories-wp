@@ -109,7 +109,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 
 				'get_callback'    => [ $this, 'get_callback_media_source' ],
 				'schema'          => [
-					'description' => __( 'Media source. ', 'web-stories' ),
+					'description' => __( 'Media source.', 'web-stories' ),
 					'type'        => 'string',
 					'enum'        => [
 						'editor',

@@ -31,6 +31,6 @@ describe('initializeTracking', () => {
     config.trackingId = '1234567';
     await initializeTracking('Foo App');
 
-    expect(config.appName).toStrictEqual('Foo App');
+    expect(config.appName).toBe('Foo App');
   });
 });

@@ -34,7 +34,7 @@ describe('TranslateWithMarkup component', () => {
       </TranslateWithMarkup>
     );
 
-    expect(result).toStrictEqual(
+    expect(result).toBe(
       'This is a <b>bold</b> move!<br/>Look at all these <em>line breaks</em>!'
     );
   });
@@ -46,7 +46,7 @@ describe('TranslateWithMarkup component', () => {
       </TranslateWithMarkup>
     );
 
-    expect(result).toStrictEqual('This is a string');
+    expect(result).toBe('This is a string');
   });
 
   it('returns same string when it contains a non-matching token', () => {
@@ -56,7 +56,7 @@ describe('TranslateWithMarkup component', () => {
       </TranslateWithMarkup>
     );
 
-    expect(result).toStrictEqual('This is a <span></span> string');
+    expect(result).toBe('This is a <span></span> string');
   });
 
   it('returns expected React element for component', () => {
@@ -67,9 +67,7 @@ describe('TranslateWithMarkup component', () => {
       </TranslateWithMarkup>
     );
 
-    expect(result).toStrictEqual(
-      'This is a <a href="https://example.com">link</a>!'
-    );
+    expect(result).toBe('This is a <a href="https://example.com">link</a>!');
   });
 
   it('returns expected React element for custom component', () => {
@@ -86,9 +84,7 @@ describe('TranslateWithMarkup component', () => {
       </TranslateWithMarkup>
     );
 
-    expect(result).toStrictEqual(
-      'This is a <a href="https://example.com">link</a>!'
-    );
+    expect(result).toBe('This is a <a href="https://example.com">link</a>!');
   });
 
   it('returns expected React element for multiple components', () => {
@@ -112,7 +108,7 @@ describe('TranslateWithMarkup component', () => {
       </TranslateWithMarkup>
     );
 
-    expect(result).toStrictEqual(
+    expect(result).toBe(
       'Read the<br/><a href="https://example.com" target="_blank" rel="noreferrer">Get Started story</a>, or <a href="https://example.org" target="_blank" rel="noreferrer">this blog post</a>!'
     );
   });
@@ -127,9 +123,7 @@ describe('TranslateWithMarkup component', () => {
       </TranslateWithMarkup>
     );
 
-    expect(result).toStrictEqual(
-      'This is a <a href="https://example.com">link</a>!'
-    );
+    expect(result).toBe('This is a <a href="https://example.com">link</a>!');
   });
 
   it('converts mapping keys to lowercase', () => {
@@ -142,9 +136,7 @@ describe('TranslateWithMarkup component', () => {
       </TranslateWithMarkup>
     );
 
-    expect(result).toStrictEqual(
-      'This is a <a href="https://example.com">link</a>!'
-    );
+    expect(result).toBe('This is a <a href="https://example.com">link</a>!');
   });
 
   it('throws error when accidentally using void elements', () => {

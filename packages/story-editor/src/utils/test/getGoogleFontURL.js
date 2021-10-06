@@ -74,41 +74,41 @@ describe('getGoogleFontURL', () => {
       ],
     };
 
-    expect(getGoogleFontURL([roboto_400])).toStrictEqual(
+    expect(getGoogleFontURL([roboto_400])).toBe(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto'
     );
-    expect(getGoogleFontURL([roboto_400_400i])).toStrictEqual(
+    expect(getGoogleFontURL([roboto_400_400i])).toBe(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Aital%400%3B1'
     );
-    expect(getGoogleFontURL([roboto_400_700])).toStrictEqual(
+    expect(getGoogleFontURL([roboto_400_700])).toBe(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Awght%40400%3B700'
     );
-    expect(getGoogleFontURL([roboto_100_400])).toStrictEqual(
+    expect(getGoogleFontURL([roboto_100_400])).toBe(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Awght%40100%3B400'
     );
-    expect(getGoogleFontURL([lato_300i_900i])).toStrictEqual(
+    expect(getGoogleFontURL([lato_300i_900i])).toBe(
       'https://fonts.googleapis.com/css2?display=swap&family=Lato%3Aital%2Cwght%401%2C300%3B1%2C900'
     );
-    expect(getGoogleFontURL([lato_900i_300i])).toStrictEqual(
+    expect(getGoogleFontURL([lato_900i_300i])).toBe(
       'https://fonts.googleapis.com/css2?display=swap&family=Lato%3Aital%2Cwght%401%2C300%3B1%2C900'
     );
-    expect(getGoogleFontURL([roboto_100_400, lato_300i_900i])).toStrictEqual(
+    expect(getGoogleFontURL([roboto_100_400, lato_300i_900i])).toBe(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Awght%40100%3B400&family=Lato%3Aital%2Cwght%401%2C300%3B1%2C900'
     );
-    expect(getGoogleFontURL([architects_daughter])).toStrictEqual(
+    expect(getGoogleFontURL([architects_daughter])).toBe(
       'https://fonts.googleapis.com/css2?display=swap&family=Architects+Daughter'
     );
-    expect(getGoogleFontURL([roboto_condensed_all])).toStrictEqual(
+    expect(getGoogleFontURL([roboto_condensed_all])).toBe(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto+Condensed%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C700%3B1%2C300%3B1%2C400%3B1%2C700'
     );
   });
 
   it('should use provided font-display parameter', () => {
     const roboto_400 = { family: 'Roboto', variants: [[0, 400]] };
-    expect(getGoogleFontURL([roboto_400])).toStrictEqual(
+    expect(getGoogleFontURL([roboto_400])).toBe(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto'
     );
-    expect(getGoogleFontURL([roboto_400], 'auto')).toStrictEqual(
+    expect(getGoogleFontURL([roboto_400], 'auto')).toBe(
       'https://fonts.googleapis.com/css2?display=auto&family=Roboto'
     );
   });

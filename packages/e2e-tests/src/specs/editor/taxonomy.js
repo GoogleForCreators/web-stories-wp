@@ -23,6 +23,7 @@ import {
   withUser,
   publishStory,
   insertStoryTitle,
+  withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
@@ -302,6 +303,40 @@ describe('taxonomy', () => {
       await expect(tokens2).not.toContainValue('creature feature');
 
       await percySnapshot(page, 'Taxonomies - Tags - Contributor');
+    });
+  });
+
+  describe('Custom Taxonomy', () => {
+    withPlugin('web-stories-test-plugin-taxonomies');
+
+    describe('Administrator', () => {
+      it('should see custom taxonomies', async () => {
+        await createNewStory();
+        await goToAndExpandTaxonomyPanel();
+
+        await expect(page).toMatch('Add New Color');
+        await expect(page).toMatch('Search Verticals');
+
+        await expect(page).toMatchElement('button', {
+          text: 'Add New Vertical',
+        });
+      });
+    });
+
+    describe('Contributor', () => {
+      withUser('contributor', 'password');
+
+      it('should see custom taxonomies', async () => {
+        await createNewStory();
+        await goToAndExpandTaxonomyPanel();
+
+        await expect(page).toMatch('Add New Color');
+        await expect(page).toMatch('Search Verticals');
+
+        await expect(page).not.toMatchElement('button', {
+          text: 'Add New Vertical',
+        });
+      });
     });
   });
 });
