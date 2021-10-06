@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use WP_REST_Request;
@@ -55,7 +56,9 @@ class Stories_Autosaves_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->controller = new \Google\Web_Stories\REST_API\Stories_Autosaves_Controller();
+		$this->controller = new \Google\Web_Stories\REST_API\Stories_Autosaves_Controller(
+			new Story_Post_Type( new Settings() )
+		);
 	}
 
 	public function test_create_item_as_author_should_not_strip_markup() {

@@ -615,6 +615,7 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
+		$this->assertArrayHasKey( 'content', $new_data );
 		$this->assertSame( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertSame( $unsanitized_story_data, $new_data['story_data'] );
 	}

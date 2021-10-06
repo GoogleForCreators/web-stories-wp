@@ -17,6 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -77,7 +79,9 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
 
-		$this->controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
+		$this->controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller(
+			new Story_Post_Type( new Settings() )
+		);
 	}
 
 	public function tear_down() {
