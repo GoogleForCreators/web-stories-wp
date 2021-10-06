@@ -78,6 +78,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 
 		$parent_controller = $this->get_post_type_parent_controller( $story_post_type::POST_TYPE_SLUG );
 
+		$this->parent_base       = $story_post_type::POST_TYPE_SLUG;
 		$this->parent_controller = $parent_controller;
 		$this->rest_namespace    = 'web-stories/v1';
 	}
