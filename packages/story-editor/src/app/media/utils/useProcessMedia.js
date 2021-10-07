@@ -78,7 +78,7 @@ function useProcessMedia({
   const updateOldTranscodedObject = useCallback(
     (oldId, newId, mediaSource) => {
       updateMedia(oldId, {
-        media_source: mediaSource,
+        web_stories_media_source: mediaSource,
         meta: {
           web_stories_optimized_id: newId,
         },
@@ -255,7 +255,7 @@ function useProcessMedia({
           additionalData: {
             is_muted: oldResource.isMuted,
             original_id: oldResource.id,
-            media_source: oldResource?.isOptimized
+            web_stories_media_source: oldResource?.isOptimized
               ? 'video-optimization'
               : 'editor',
           },
@@ -346,7 +346,7 @@ function useProcessMedia({
           onUploadProgress,
           additionalData: {
             original_id: oldResource.id,
-            media_source: oldResource?.isOptimized
+            web_stories_media_source: oldResource?.isOptimized
               ? 'video-optimization'
               : 'editor',
           },

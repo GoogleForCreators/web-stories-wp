@@ -85,7 +85,7 @@ function useMediaPicker({
       // Video poster generation for newly added videos is done in <MediaPane>.
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, {
-          media_source: 'editor',
+          web_stories_media_source: 'editor',
           alt_text: attributes.alt || attributes.title,
         });
       };
@@ -224,7 +224,10 @@ function useMediaPicker({
       fileFrame.once('cropped', (attachment) => {
         if (attachment?.id) {
           const alt_text = attachment.alt || attachment.title;
-          updateMedia(attachment.id, { media_source: 'editor', alt_text });
+          updateMedia(attachment.id, {
+            web_stories_media_source: 'editor',
+            alt_text,
+          });
           attachment.alt = alt_text;
         }
         onSelect(getResourceFromMediaPicker(attachment));
