@@ -199,7 +199,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 * @param int $post_id Supplied ID.
 	 * @return array|false Lock as string or default to false.
 	 */
-	protected function get_lock( $post_id ) {
+	protected function get_lock( int $post_id ) {
 		$lock = get_post_meta( $post_id, '_edit_lock', true );
 
 		if ( $lock ) {
