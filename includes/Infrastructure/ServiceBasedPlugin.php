@@ -284,7 +284,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 				&&
 				! $this->requirements_are_met( $id, $class, $services )
 			) {
-				next( $services );
 				continue;
 			}
 
@@ -292,6 +291,46 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 			next( $services );
 		}
+	}
+
+	/**
+	 * Returns the priority for a given service based on its requirements.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param HasRequirements|Delayed|class-string $class    Service FQCN of the service with requirements.
+	 * @param string[]                             $services List of services to be registered.
+	 *
+	 * @throws InvalidService If the required service is not recognized.
+	 *
+	 * @return int The registration action priority for the service.
+	 */
+	protected function get_registration_action_priority( $class, array &$services ): int {
+		$priority = 10;
+
+		if ( is_a( $class, Delayed::class, true ) ) {
+			$priority = $class::get_registration_action_priority();
+		}
+
+		if ( ! is_a( $class, HasRequirements::class, true ) ) {
+			return $priority;
+		}
+
+		$missing_requirements = $this->collect_missing_requirements( $class, $services );
+
+		foreach ( $missing_requirements as $missing_requirement ) {
+			if ( is_a( $missing_requirement, Delayed::class, true ) ) {
+				$action = $missing_requirement::get_registration_action();
+
+				if ( did_action( $action ) ) {
+					continue;
+				}
+
+				$priority = max( $priority + 1, $missing_requirement::get_registration_action_priority() );
+			}
+		}
+
+		return $priority;
 	}
 
 	/**
@@ -325,6 +364,30 @@ abstract class ServiceBasedPlugin implements Plugin {
 				}
 
 				/*
+				 * If this service (A) has priority 10 but depends on another service (B) with same priority,
+				 * which itself depends on service (C) also with priority 10, this will ensure correct
+				 * order of registration by increasing priority for each step.
+				 *
+				 * The result will be:
+				 *
+				 * C: priority 10
+				 * B: priority 11
+				 * A: priority 12
+				 */
+
+				$priority = 10;
+
+				if ( is_a( $class, Delayed::class, true ) ) {
+					$priority = $class::get_registration_action_priority();
+				}
+
+				$requirement_priority = $this->get_registration_action_priority( $missing_requirement, $services ) + 1;
+
+				if ( is_a( $class, Delayed::class, true ) ) {
+					$priority = max( $priority + 1, $requirement_priority );
+				}
+
+				/*
 				 * The current service depends on another service that is Delayed and hasn't been registered yet
 				 * and for which the registration action has not yet passed.
 				 *
@@ -346,9 +409,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 						$this->schedule_potential_service_registration( $id, $class );
 					},
-					PHP_INT_MAX
+					$priority
 				);
 
+				next( $services );
 				return false;
 			}
 		}
@@ -357,6 +421,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 		 * The registration actions from all of the requirements were already processed. This means that the missing
 		 * requirement(s) are about to be registered, they just weren't encountered yet while traversing the services
 		 * map. Therefore, we skip registration for now and move this particular service to the end of the service map.
+		 *
+		 * Note: Moving the service to the end of the service map advances the internal array pointer to the next service.
 		 */
 		unset( $services[ $id ] );
 		$services[ $id ] = $class;
@@ -475,16 +541,18 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 */
 	protected function schedule_potential_service_registration( $id, $class ) {
 		if ( is_a( $class, Delayed::class, true ) ) {
-			$registration_action = $class::get_registration_action();
+			$action   = $class::get_registration_action();
+			$priority = $class::get_registration_action_priority();
 
-			if ( did_action( $registration_action ) ) {
+			if ( did_action( $action ) ) {
 				$this->maybe_register_service( $id, $class );
 			} else {
 				add_action(
-					$registration_action,
+					$action,
 					function () use ( $id, $class ) {
 						$this->maybe_register_service( $id, $class );
-					}
+					},
+					$priority
 				);
 			}
 		} else {
