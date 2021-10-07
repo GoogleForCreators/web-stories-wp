@@ -25,19 +25,17 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { useLocalMedia, useStory } from '../../app';
+import { useLocalMedia } from '../../app';
 import VideoTrimContext from './videoTrimContext';
 import useVideoTrimMode from './useVideoTrimMode';
 import useVideoNode from './useVideoNode';
 
 function VideoTrimProvider({ children }) {
-  const { selectedElements } = useStory(({ state: { selectedElements } }) => ({
-    selectedElements,
-  }));
   const { trimExistingVideo } = useLocalMedia((state) => ({
     trimExistingVideo: state.actions.trimExistingVideo,
   }));
-  const { isTrimMode, hasTrimMode, toggleTrimMode } = useVideoTrimMode();
+  const { isTrimMode, hasTrimMode, toggleTrimMode, videoData } =
+    useVideoTrimMode();
   const {
     hasChanged,
     currentTime,
@@ -48,10 +46,10 @@ function VideoTrimProvider({ children }) {
     setEndOffset,
     setVideoNode,
     resetOffsets,
-  } = useVideoNode();
+  } = useVideoNode(videoData);
 
   const performTrim = useCallback(() => {
-    const { resource } = selectedElements[0];
+    const { resource } = videoData;
     if (!resource) {
       return;
     }
@@ -72,16 +70,11 @@ function VideoTrimProvider({ children }) {
       end_offset: endOffset,
     });
     toggleTrimMode();
-  }, [
-    endOffset,
-    startOffset,
-    trimExistingVideo,
-    selectedElements,
-    toggleTrimMode,
-  ]);
+  }, [endOffset, startOffset, trimExistingVideo, toggleTrimMode, videoData]);
 
   const value = {
     state: {
+      videoData,
       hasChanged,
       isTrimMode,
       hasTrimMode,
