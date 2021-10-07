@@ -19,24 +19,18 @@
  */
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-
 /**
  * Internal dependencies
  */
 import { useLayout, useStory } from '../../../../app';
 import { useHighlights } from '../../../../app/highlights';
-import PagePreview from '../../../carousel/pagepreview';
 import {
   CARD_TYPE,
   ChecklistCard,
   DefaultFooterText,
 } from '../../../checklistCard';
-import {
-  Thumbnail,
-  THUMBNAIL_DIMENSIONS,
-  THUMBNAIL_TYPES,
-} from '../../../thumbnail';
-import { getVisibleThumbnails } from '../../utils';
+import { Thumbnail, THUMBNAIL_TYPES } from '../../../thumbnail';
+import { getVisibleThumbnails, ThumbnailPagePreview } from '../../utils';
 import { ACCESSIBILITY_COPY } from '../../constants';
 import { useRegisterCheck } from '../../countContext';
 import { useIsChecklistMounted } from '../../popupMountedContext';
@@ -106,15 +100,7 @@ const PageBackgroundTextLowContrast = () => {
               key={page.id}
               onClick={() => handleClick(page.id)}
               type={THUMBNAIL_TYPES.PAGE}
-              displayBackground={
-                <PagePreview
-                  page={page}
-                  width={THUMBNAIL_DIMENSIONS.WIDTH}
-                  height={THUMBNAIL_DIMENSIONS.HEIGHT}
-                  as="div"
-                  label={__('The offending page', 'web-stories')}
-                />
-              }
+              displayBackground={<ThumbnailPagePreview page={page} />}
               aria-label={__('Go to offending page', 'web-stories')}
             />
           ))}

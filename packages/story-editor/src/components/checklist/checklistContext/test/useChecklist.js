@@ -47,4 +47,14 @@ describe('useChecklist', () => {
     act(() => result.current.actions.close());
     expect(result.current.state.isOpen).toBe(false);
   });
+
+  it('updates the `openPanel` value when `setOpenPanel` is called', () => {
+    const { result } = setup();
+
+    act(() => result.current.actions.setOpenPanel());
+    expect(result.current.state.openPanel).toBeUndefined();
+
+    act(() => result.current.actions.setOpenPanel('design'));
+    expect(result.current.state.openPanel).toBe('design');
+  });
 });
