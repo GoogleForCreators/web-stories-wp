@@ -286,10 +286,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		if ( is_readable( $path ) ) {
 			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
 
-			if ( $css ) {
-				wp_add_inline_style( self::STYLE_HANDLE, $css );
-			}
-
 			if ( defined( 'AMPFORWP_VERSION' ) ) {
 				add_action(
 					'amp_post_template_css',

@@ -80,10 +80,6 @@ abstract class Embed_Base extends Service_Base {
 		if ( is_readable( $path ) ) {
 			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
 
-			if ( $css ) {
-				wp_add_inline_style( self::SCRIPT_HANDLE, $css );
-			}
-
 			if ( defined( 'AMPFORWP_VERSION' ) ) {
 				add_action(
 					'amp_post_template_css',
