@@ -108,7 +108,6 @@ function Input({
 
   // isInputFocused is used to update the styled state of the input area.
   const [isInputFocused, setIsInputFocused] = useState(false);
-  const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
 
   // inputRef is used to return focus to input after keydown actions to avoid focused state being hijacked.
   const inputRef = useRef();
@@ -121,9 +120,7 @@ function Input({
 
   const suggestionListId = uuidv4();
   const totalSuggestions = suggestedTerms.length;
-  useEffect(() => {
-    setIsSuggestionsOpen(totalSuggestions > 0);
-  }, [totalSuggestions]);
+  const isSuggestionsOpen = totalSuggestions > 0;
 
   // Allow parents to pass onTagsChange callback
   // that updates as tags does.
@@ -195,7 +192,6 @@ function Input({
 
   const handleTagSelectedFromSuggestions = useCallback((e, selectedValue) => {
     e.preventDefault();
-    setIsSuggestionsOpen(false);
     dispatch({ type: ACTIONS.SUBMIT_VALUE, payload: selectedValue });
     inputRef?.current.focus();
   }, []);
@@ -222,7 +218,6 @@ function Input({
     },
     [handleTagSelectedFromSuggestions, totalSuggestions]
   );
-
   return (
     <Border ref={containerRef} isInputFocused={isInputFocused}>
       <InputWrapper>
