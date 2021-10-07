@@ -461,9 +461,12 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return string
 	 */
 	protected function get_single_story_classes(): string {
-
 		$single_story_classes   = [];
 		$single_story_classes[] = 'web-stories-list__story';
+
+		if ( $this->is_amp() ) {
+			$single_story_classes[] = 'web-stories-list__story--amp';
+		}
 
 		if ( ! empty( $this->attributes['image_alignment'] ) && ( 'right' === $this->attributes['image_alignment'] ) ) {
 			$single_story_classes[] = sprintf( 'image-align-right' );
