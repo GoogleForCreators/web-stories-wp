@@ -29,15 +29,11 @@ import Context from './context';
 import { removeImagesFromPageTemplates } from './utils';
 
 function APIProvider({ children }) {
-  const { apiCallbacks, cdnURL } = useConfig();
+  const { apiCallbacks: actions, cdnURL } = useConfig();
   const pageTemplates = useRef({
     base: [],
     withoutImages: [],
   });
-
-  const actions = {
-    ...apiCallbacks,
-  };
 
   actions.getPageTemplates = useCallback(
     async ({ showImages = false } = {}) => {
@@ -53,15 +49,6 @@ function APIProvider({ children }) {
     },
     [cdnURL]
   );
-
-  // If some api callbacks have not been provided via configuration
-  // set those actions as undefined, so we can stop them conditionally.
-  // @todo Handle undefined api callbacks where they have been used.
-  Object.keys(actions).forEach((name) => {
-    if ('getPageTemplates' !== name && !apiCallbacks[name]) {
-      actions[name] = undefined;
-    }
-  });
 
   return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
 }
