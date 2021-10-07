@@ -76,8 +76,8 @@ const transformGetStoryResponse = (post) => {
   return post;
 };
 
-export function getStoryById(storyId, isDemo = false) {
-  const path = addQueryArgs(`${this.api.stories}${storyId}/`, {
+export function getStoryById(apiPaths, storyId, isDemo = false) {
+  const path = addQueryArgs(`${apiPaths.stories}${storyId}/`, {
     context: 'edit',
     _embed: STORY_EMBED,
     web_stories_demo: isDemo,
@@ -131,16 +131,18 @@ const getStorySaveData = (
 /**
  * Fire REST API call to save story.
  *
+ * @param {Object} apiPaths API path.
+ * @param {boolean} encodeMarkup Encode markup or not.
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
  * @return {Promise} Return apiFetch promise.
  */
-export function saveStoryById(story) {
+export function saveStoryById(apiPaths, encodeMarkup, story) {
   const { storyId } = story;
-  const storySaveData = getStorySaveData(story, this.encodeMarkup);
+  const storySaveData = getStorySaveData(story, encodeMarkup);
 
   // Only require these fields in the response as used by useSaveStory()
   // to reduce response size.
-  const path = addQueryArgs(`${this.api.stories}${storyId}/`, {
+  const path = addQueryArgs(`${apiPaths.stories}${storyId}/`, {
     _fields: [
       'status',
       'slug',
@@ -173,15 +175,17 @@ export function saveStoryById(story) {
 /**
  * Fire REST API call to auto-save story.
  *
+ * @param {Object} apiPaths API path.
+ * @param {boolean} encodeMarkup Encode markup or not.
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
  * @return {Promise} Return apiFetch promise.
  */
-export function autoSaveById(story) {
+export function autoSaveById(apiPaths, encodeMarkup, story) {
   const { storyId } = story;
-  const storySaveData = getStorySaveData(story, this.encodeMarkup);
+  const storySaveData = getStorySaveData(story, encodeMarkup);
 
   return apiFetch({
-    path: `${this.api.stories}${storyId}/autosaves/`,
+    path: `${apiPaths.stories}${storyId}/autosaves/`,
     data: storySaveData,
     method: 'POST',
   });

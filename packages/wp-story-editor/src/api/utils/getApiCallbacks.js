@@ -22,11 +22,38 @@ import * as apiCallbacks from '..';
  * Get api callbacks.
  *
  * @param {Object} config Editor configuration.
+ * @param config.api
+ * @param config.encodeMarkup
+ * @param config.postType
  * @return {Object} api callbacks.
  */
-const getApiCallbacks = (config) => {
+const getApiCallbacks = ({ api, encodeMarkup, postType }) => {
   return Object.entries(apiCallbacks).reduce((callbacks, [name, callback]) => {
-    callbacks[name] = callback.bind(config);
+    let args = [];
+
+    switch (name) {
+      case 'saveStoryById':
+        args = [api, encodeMarkup];
+        break;
+      case 'autoSaveById':
+        args = [api, encodeMarkup];
+        break;
+      case 'getTaxonomies':
+        args = [api, postType];
+        break;
+      case 'getTaxonomyTerm':
+        args = [];
+        break;
+      case 'createTaxonomyTerm':
+        args = [];
+        break;
+      default:
+        args = [api];
+        break;
+    }
+
+    callbacks[name] = callback.bind(null, ...args);
+
     return callbacks;
   }, {});
 };

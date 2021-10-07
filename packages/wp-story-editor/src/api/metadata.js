@@ -27,11 +27,12 @@ import apiFetch from '@wordpress/api-fetch';
  * Gets metadata (title, favicon, etc.) from
  * a provided URL.
  *
+ * @param {string} apiPaths API paths.
  * @param  {string} url Url
  * @return {Promise} Result promise
  */
-export function getLinkMetadata(url) {
-  const path = addQueryArgs(this.api.link, { url });
+export function getLinkMetadata(apiPaths, url) {
+  const path = addQueryArgs(apiPaths.link, { url });
   return apiFetch({
     path,
   });

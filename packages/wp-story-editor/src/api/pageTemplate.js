@@ -22,9 +22,9 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  */
 import apiFetch from '@wordpress/api-fetch';
 
-export function getCustomPageTemplates(page = 1) {
+export function getCustomPageTemplates(apiPaths, page = 1) {
   const perPage = 100;
-  const path = addQueryArgs(this.api.pageTemplates, {
+  const path = addQueryArgs(apiPaths.pageTemplates, {
     context: 'edit',
     per_page: perPage,
     page,
@@ -42,9 +42,9 @@ export function getCustomPageTemplates(page = 1) {
   });
 }
 
-export function addPageTemplate(page) {
+export function addPageTemplate(apiPaths, page) {
   return apiFetch({
-    path: `${this.api.pageTemplates}/`,
+    path: `${apiPaths.pageTemplates}/`,
     data: {
       story_data: page,
       status: 'publish',
@@ -55,11 +55,11 @@ export function addPageTemplate(page) {
   });
 }
 
-export function deletePageTemplate(id) {
+export function deletePageTemplate(apiPaths, id) {
   // `?_method=DELETE` is an alternative solution to override the request method.
   // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
   return apiFetch({
-    path: addQueryArgs(`${this.api.pageTemplates}${id}/`, {
+    path: addQueryArgs(`${apiPaths.pageTemplates}${id}/`, {
       _method: 'DELETE',
     }),
     data: { force: true },
