@@ -140,6 +140,7 @@ function Title({
   secondaryAction,
   isResizable,
   canCollapse,
+  maxHeight: maxHeightOverride,
   ...props
 }) {
   const {
@@ -166,8 +167,9 @@ function Title({
 
   useEffect(confirmTitle, [confirmTitle]);
 
-  // Max panel height is set to 70% of full available height.
-  const maxHeight = Math.round(inspectorContentHeight * 0.7);
+  // Default max panel height is set to 70% of full available height.
+  const maxHeight =
+    maxHeightOverride || Math.round(inspectorContentHeight * 0.7);
 
   const handleHeightChange = useCallback(
     (deltaHeight) =>
@@ -241,6 +243,7 @@ Title.propTypes = {
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,
+  maxHeight: PropTypes.number,
   secondaryAction: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

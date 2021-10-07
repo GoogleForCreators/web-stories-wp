@@ -28,7 +28,7 @@ import panelContext from '../../panel/context';
 import useInspector from '../../../inspector/useInspector';
 import { PANEL_COLLAPSED_THRESHOLD } from '../../panel/panel';
 
-function Resize({ position }) {
+function Resize({ maxHeight: maxHeightOverride, position }) {
   const {
     state: { height },
     actions: { setHeight, setExpandToHeight, resetHeight },
@@ -38,8 +38,9 @@ function Resize({ position }) {
     state: { inspectorContentHeight },
   } = useInspector();
 
-  // Max panel height is set to 70% of full available height.
-  const maxHeight = Math.round(inspectorContentHeight * 0.7);
+  // Default max panel height is set to 70% of full available height.
+  const maxHeight =
+    maxHeightOverride || Math.round(inspectorContentHeight * 0.7);
 
   const handleHeightChange = useCallback(
     (deltaHeight) =>
@@ -69,6 +70,7 @@ function Resize({ position }) {
 }
 
 Resize.propTypes = {
+  maxHeight: PropTypes.number,
   position: PropTypes.oneOf(['top', 'bottom']),
 };
 

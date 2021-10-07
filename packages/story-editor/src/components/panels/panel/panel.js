@@ -80,6 +80,7 @@ function Panel({
         : null,
     [name, isPersistable]
   );
+
   const [isCollapsed, setIsCollapsed] = useState(() => {
     // If not persisted, always default to expanded.
     if (!isPersistable) {
