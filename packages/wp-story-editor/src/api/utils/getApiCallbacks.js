@@ -33,8 +33,6 @@ const getApiCallbacks = ({ api, encodeMarkup, postType }) => {
 
     switch (name) {
       case 'saveStoryById':
-        args = [api, encodeMarkup];
-        break;
       case 'autoSaveById':
         args = [api, encodeMarkup];
         break;
@@ -42,8 +40,6 @@ const getApiCallbacks = ({ api, encodeMarkup, postType }) => {
         args = [api, postType];
         break;
       case 'getTaxonomyTerm':
-        args = [];
-        break;
       case 'createTaxonomyTerm':
         args = [];
         break;
