@@ -277,6 +277,28 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		// Web Stories lightbox script.
 		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE ] );
+
+		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s.css', self::STYLE_HANDLE ) );
+		if ( is_rtl() ) {
+			$path = $this->assets->get_base_path( sprintf( 'assets/css/%s-rtl.css', self::STYLE_HANDLE ) );
+		}
+
+		if ( is_readable( $path ) ) {
+			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+
+			if ( $css ) {
+				wp_add_inline_style( self::STYLE_HANDLE, $css );
+			}
+
+			if ( defined( 'AMPFORWP_VERSION' ) ) {
+				add_action(
+					'amp_post_template_css',
+					static function() use ( $css ) {
+						echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					}
+				);
+			}
+		}
 	}
 
 	/**

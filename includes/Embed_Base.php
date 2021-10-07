@@ -34,7 +34,6 @@ use Google\Web_Stories\Renderer\Story\Embed;
  * Embed block class.
  */
 abstract class Embed_Base extends Service_Base {
-
 	/**
 	 * Script handle for frontend assets.
 	 *
@@ -83,6 +82,15 @@ abstract class Embed_Base extends Service_Base {
 
 			if ( $css ) {
 				wp_add_inline_style( self::SCRIPT_HANDLE, $css );
+			}
+
+			if ( defined( 'AMPFORWP_VERSION' ) ) {
+				add_action(
+					'amp_post_template_css',
+					static function() use ( $css ) {
+						echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					}
+				);
 			}
 		}
 
