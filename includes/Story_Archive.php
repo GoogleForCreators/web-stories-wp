@@ -119,26 +119,6 @@ class Story_Archive extends Service_Base {
 	}
 
 	/**
-	 * Invalid cache.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param int     $post_id Post ID.
-	 * @param WP_Post $post    Post object.
-	 *
-	 * @return void
-	 */
-	public function clear_user_posts_count( $post_id, $post ) {
-		if ( ! $post instanceof WP_Post || $this->story_post_type::POST_TYPE_SLUG !== $post->post_type ) {
-			return;
-		}
-
-		$cache_key   = "count_user_{$post->post_type}_{$post->post_author}";
-		$cache_group = 'user_posts_count';
-		wp_cache_delete( $cache_key, $cache_group );
-	}
-
-	/**
 	 * Clear rewrite rules on update on setting.
 	 *
 	 * @since 1.13.0
