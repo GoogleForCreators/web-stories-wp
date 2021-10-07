@@ -30,37 +30,14 @@ import { removeImagesFromPageTemplates } from './utils';
 
 function APIProvider({ children }) {
   const { apiCallbacks, cdnURL } = useConfig();
-
-  const {
-    getStoryById,
-    getDemoStoryById,
-    saveStoryById,
-    autoSaveById,
-    getMedia,
-    uploadMedia,
-    updateMedia,
-    deleteMedia,
-    getLinkMetadata,
-    getAuthors,
-    getPublisherLogos,
-    addPublisherLogo,
-    getCurrentUser,
-    updateCurrentUser,
-    getCustomPageTemplates,
-    addPageTemplate,
-    deletePageTemplate,
-    getHotlinkInfo,
-    getTaxonomies,
-    getTaxonomyTerm,
-    createTaxonomyTerm,
-  } = apiCallbacks;
-
   const pageTemplates = useRef({
     base: [],
     withoutImages: [],
   });
 
-  const actions = { getTaxonomyTerm, createTaxonomyTerm };
+  const actions = {
+    ...apiCallbacks,
+  };
 
   actions.getPageTemplates = useCallback(
     async ({ showImages = false } = {}) => {
@@ -76,99 +53,6 @@ function APIProvider({ children }) {
     },
     [cdnURL]
   );
-
-  actions.getStoryById = useCallback(
-    (storyId) => getStoryById(storyId),
-    [getStoryById]
-  );
-
-  actions.getDemoStoryById = useCallback(
-    (storyId) => getDemoStoryById(storyId),
-    [getDemoStoryById]
-  );
-
-  actions.saveStoryById = useCallback(
-    (story) => saveStoryById(story),
-    [saveStoryById]
-  );
-
-  actions.autoSaveById = useCallback(
-    (story) => autoSaveById(story),
-    [autoSaveById]
-  );
-
-  actions.getMedia = useCallback(
-    ({ mediaType, searchTerm, pagingNum, cacheBust }) =>
-      getMedia({ mediaType, searchTerm, pagingNum, cacheBust }),
-    [getMedia]
-  );
-
-  actions.uploadMedia = useCallback(
-    (file, additionalData) => uploadMedia(file, additionalData),
-    [uploadMedia]
-  );
-
-  actions.updateMedia = useCallback(
-    (mediaId, data) => updateMedia(mediaId, data),
-    [updateMedia]
-  );
-
-  actions.deleteMedia = useCallback(
-    (mediaId) => deleteMedia(mediaId),
-    [deleteMedia]
-  );
-
-  actions.getHotlinkInfo = useCallback(
-    (url) => getHotlinkInfo(url),
-    [getHotlinkInfo]
-  );
-
-  actions.getPublisherLogos = useCallback(
-    () => getPublisherLogos(),
-    [getPublisherLogos]
-  );
-
-  actions.addPublisherLogo = useCallback(
-    (id) => addPublisherLogo(id),
-    [addPublisherLogo]
-  );
-
-  actions.getLinkMetadata = useCallback(
-    (url) => getLinkMetadata(url),
-    [getLinkMetadata]
-  );
-
-  actions.getAuthors = useCallback(
-    (search = null) => getAuthors(search),
-    [getAuthors]
-  );
-
-  actions.getCurrentUser = useCallback(
-    () => getCurrentUser(),
-    [getCurrentUser]
-  );
-
-  actions.updateCurrentUser = useCallback(
-    (data) => updateCurrentUser(data),
-    [updateCurrentUser]
-  );
-
-  actions.getCustomPageTemplates = useCallback(
-    (page = 1) => getCustomPageTemplates(page),
-    [getCustomPageTemplates]
-  );
-
-  actions.addPageTemplate = useCallback(
-    (page) => addPageTemplate(page),
-    [addPageTemplate]
-  );
-
-  actions.deletePageTemplate = useCallback(
-    (id) => deletePageTemplate(id),
-    [deletePageTemplate]
-  );
-
-  actions.getTaxonomies = useCallback(() => getTaxonomies(), [getTaxonomies]);
 
   // If some api callbacks have not been provided via configuration
   // set those actions as undefined, so we can stop them conditionally.
