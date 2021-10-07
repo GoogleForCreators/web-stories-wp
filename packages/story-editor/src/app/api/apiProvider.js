@@ -29,23 +29,7 @@ import Context from './context';
 import { removeImagesFromPageTemplates } from './utils';
 
 function APIProvider({ children }) {
-  const {
-    api: {
-      stories,
-      media,
-      hotlink,
-      link,
-      users,
-      publisherLogos,
-      currentUser,
-      pageTemplates: customPageTemplates,
-      taxonomies,
-    },
-    apiCallbacks,
-    encodeMarkup,
-    cdnURL,
-    postType,
-  } = useConfig();
+  const { apiCallbacks, cdnURL } = useConfig();
 
   const {
     getStoryById,
@@ -94,100 +78,97 @@ function APIProvider({ children }) {
   );
 
   actions.getStoryById = useCallback(
-    (storyId) => getStoryById(storyId, stories),
-    [stories, getStoryById]
+    (storyId) => getStoryById(storyId),
+    [getStoryById]
   );
 
   actions.getDemoStoryById = useCallback(
-    (storyId) => getDemoStoryById(storyId, stories),
-    [stories, getDemoStoryById]
+    (storyId) => getDemoStoryById(storyId),
+    [getDemoStoryById]
   );
 
   actions.saveStoryById = useCallback(
-    (story) => saveStoryById(story, stories, encodeMarkup),
-    [stories, encodeMarkup, saveStoryById]
+    (story) => saveStoryById(story),
+    [saveStoryById]
   );
 
   actions.autoSaveById = useCallback(
-    (story) => autoSaveById(story, stories, encodeMarkup),
-    [stories, encodeMarkup, autoSaveById]
+    (story) => autoSaveById(story),
+    [autoSaveById]
   );
 
   actions.getMedia = useCallback(
     ({ mediaType, searchTerm, pagingNum, cacheBust }) =>
-      getMedia({ mediaType, searchTerm, pagingNum, cacheBust }, media),
-    [media, getMedia]
+      getMedia({ mediaType, searchTerm, pagingNum, cacheBust }),
+    [getMedia]
   );
 
   actions.uploadMedia = useCallback(
-    (file, additionalData) => uploadMedia(file, additionalData, media),
-    [media, uploadMedia]
+    (file, additionalData) => uploadMedia(file, additionalData),
+    [uploadMedia]
   );
 
   actions.updateMedia = useCallback(
-    (mediaId, data) => updateMedia(mediaId, data, media),
-    [media, updateMedia]
+    (mediaId, data) => updateMedia(mediaId, data),
+    [updateMedia]
   );
 
   actions.deleteMedia = useCallback(
-    (mediaId) => deleteMedia(mediaId, media),
-    [media, deleteMedia]
+    (mediaId) => deleteMedia(mediaId),
+    [deleteMedia]
   );
 
   actions.getHotlinkInfo = useCallback(
-    (url) => getHotlinkInfo(url, hotlink),
-    [hotlink, getHotlinkInfo]
+    (url) => getHotlinkInfo(url),
+    [getHotlinkInfo]
   );
 
   actions.getPublisherLogos = useCallback(
-    () => getPublisherLogos(publisherLogos),
-    [getPublisherLogos, publisherLogos]
+    () => getPublisherLogos(),
+    [getPublisherLogos]
   );
 
   actions.addPublisherLogo = useCallback(
-    (id) => addPublisherLogo(publisherLogos, id),
-    [addPublisherLogo, publisherLogos]
+    (id) => addPublisherLogo(id),
+    [addPublisherLogo]
   );
 
   actions.getLinkMetadata = useCallback(
-    (url) => getLinkMetadata(url, link),
-    [link, getLinkMetadata]
+    (url) => getLinkMetadata(url),
+    [getLinkMetadata]
   );
 
   actions.getAuthors = useCallback(
-    (search = null) => getAuthors(search, users),
-    [users, getAuthors]
+    (search = null) => getAuthors(search),
+    [getAuthors]
   );
 
   actions.getCurrentUser = useCallback(
-    () => getCurrentUser(currentUser),
-    [currentUser, getCurrentUser]
+    () => getCurrentUser(),
+    [getCurrentUser]
   );
 
   actions.updateCurrentUser = useCallback(
-    (data) => updateCurrentUser(data, currentUser),
-    [currentUser, updateCurrentUser]
+    (data) => updateCurrentUser(data),
+    [updateCurrentUser]
   );
 
   actions.getCustomPageTemplates = useCallback(
-    (page = 1) => getCustomPageTemplates(page, customPageTemplates),
-    [customPageTemplates, getCustomPageTemplates]
+    (page = 1) => getCustomPageTemplates(page),
+    [getCustomPageTemplates]
   );
 
   actions.addPageTemplate = useCallback(
-    (page) => addPageTemplate(page, customPageTemplates),
-    [customPageTemplates, addPageTemplate]
+    (page) => addPageTemplate(page),
+    [addPageTemplate]
   );
 
   actions.deletePageTemplate = useCallback(
-    (id) => deletePageTemplate(id, customPageTemplates),
-    [customPageTemplates, deletePageTemplate]
+    (id) => deletePageTemplate(id),
+    [deletePageTemplate]
   );
 
-  actions.getTaxonomies = useCallback(
-    () => getTaxonomies(postType, taxonomies),
-    [postType, taxonomies, getTaxonomies]
-  );
+  actions.getTaxonomies = useCallback(() => getTaxonomies(), [getTaxonomies]);
 
   // If some api callbacks have not been provided via configuration
   // set those actions as undefined, so we can stop them conditionally.

@@ -76,8 +76,8 @@ const transformGetStoryResponse = (post) => {
   return post;
 };
 
-export function getStoryById(storyId, stories, isDemo = false) {
-  const path = addQueryArgs(`${stories}${storyId}/`, {
+export function getStoryById(storyId, isDemo = false) {
+  const path = addQueryArgs(`${this.api.stories}${storyId}/`, {
     context: 'edit',
     _embed: STORY_EMBED,
     web_stories_demo: isDemo,
@@ -87,8 +87,8 @@ export function getStoryById(storyId, stories, isDemo = false) {
   return apiFetch({ path }).then(transformGetStoryResponse);
 }
 
-export function getDemoStoryById(storyId, stories) {
-  return getStoryById(storyId, stories, true);
+export function getDemoStoryById(storyId) {
+  return getStoryById(storyId, true);
 }
 
 const getStorySaveData = (
@@ -132,17 +132,15 @@ const getStorySaveData = (
  * Fire REST API call to save story.
  *
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
- * @param {Object} stories Stories
- * @param {boolean} encodeMarkup Encode markup.
  * @return {Promise} Return apiFetch promise.
  */
-export function saveStoryById(story, stories, encodeMarkup) {
+export function saveStoryById(story) {
   const { storyId } = story;
-  const storySaveData = getStorySaveData(story, encodeMarkup);
+  const storySaveData = getStorySaveData(story, this.encodeMarkup);
 
   // Only require these fields in the response as used by useSaveStory()
   // to reduce response size.
-  const path = addQueryArgs(`${stories}${storyId}/`, {
+  const path = addQueryArgs(`${this.api.stories}${storyId}/`, {
     _fields: [
       'status',
       'slug',
@@ -176,16 +174,14 @@ export function saveStoryById(story, stories, encodeMarkup) {
  * Fire REST API call to auto-save story.
  *
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
- * @param {Object} stories Stories
- * @param {boolean} encodeMarkup Encode markup.
  * @return {Promise} Return apiFetch promise.
  */
-export function autoSaveById(story, stories, encodeMarkup) {
+export function autoSaveById(story) {
   const { storyId } = story;
-  const storySaveData = getStorySaveData(story, encodeMarkup);
+  const storySaveData = getStorySaveData(story, this.encodeMarkup);
 
   return apiFetch({
-    path: `${stories}${storyId}/autosaves/`,
+    path: `${this.api.stories}${storyId}/autosaves/`,
     data: storySaveData,
     method: 'POST',
   });

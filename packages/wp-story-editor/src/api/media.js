@@ -30,11 +30,8 @@ import { flattenFormData, getResourceFromAttachment } from './utils';
 import { MEDIA_FIELDS } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
-export function getMedia(
-  { mediaType, searchTerm, pagingNum, cacheBust },
-  media
-) {
-  let apiPath = addQueryArgs(media, {
+export function getMedia({ mediaType, searchTerm, pagingNum, cacheBust }) {
+  let apiPath = addQueryArgs(this.api.media, {
     context: 'edit',
     per_page: 50,
     page: pagingNum,
@@ -74,10 +71,9 @@ export function getMedia(
  *
  * @param {File}    file           Media File to Save.
  * @param {?Object} additionalData Additional data to include in the request.
- * @param {Object}  media          Media object
  * @return {Promise} Media Object Promise.
  */
-export function uploadMedia(file, additionalData, media) {
+export function uploadMedia(file, additionalData) {
   // Create upload payload
   const data = new window.FormData();
   data.append('file', file, file.name || file.type.replace('/', '.'));
@@ -87,7 +83,7 @@ export function uploadMedia(file, additionalData, media) {
 
   // TODO: Intercept window.fetch here to support progressive upload indicator when uploading
   return apiFetch({
-    path: media,
+    path: this.api.media,
     body: data,
     method: 'POST',
   }).then((attachment) => getResourceFromAttachment(attachment));
@@ -97,12 +93,11 @@ export function uploadMedia(file, additionalData, media) {
  *
  * @param  {number} mediaId Media id
  * @param  {Object} data Object of properties to update on attachment.
- * @param  {Object} media Media object
  * @return {Promise} Media Object Promise.
  */
-export function updateMedia(mediaId, data, media) {
+export function updateMedia(mediaId, data) {
   return apiFetch({
-    path: `${media}${mediaId}/`,
+    path: `${this.api.media}${mediaId}/`,
     data,
     method: 'POST',
   });
@@ -112,17 +107,16 @@ export function updateMedia(mediaId, data, media) {
  * Delete existing media.
  *
  * @param  {number} mediaId Media id
- * @param  {Object} media Media object
  * @return {Promise} Media Object Promise.
  */
-export function deleteMedia(mediaId, media) {
+export function deleteMedia(mediaId) {
   // `apiFetch` by default turns `DELETE` requests into `POST` requests
   // with `X-HTTP-Method-Override: DELETE` headers.
   // However, some Web Application Firewall (WAF) solutions prevent this.
   // `?_method=DELETE` is an alternative solution to override the request method.
   // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
   return apiFetch({
-    path: addQueryArgs(`${media}${mediaId}/`, { _method: 'DELETE' }),
+    path: addQueryArgs(`${this.api.media}${mediaId}/`, { _method: 'DELETE' }),
     data: { force: true },
     method: 'POST',
   });

@@ -28,11 +28,10 @@ import apiFetch from '@wordpress/api-fetch';
  * a provided URL.
  *
  * @param  {string} url Url
- * @param {string} link Link
  * @return {Promise} Result promise
  */
-export function getLinkMetadata(url, link) {
-  const path = addQueryArgs(link, { url });
+export function getLinkMetadata(url) {
+  const path = addQueryArgs(this.api.link, { url });
   return apiFetch({
     path,
   });

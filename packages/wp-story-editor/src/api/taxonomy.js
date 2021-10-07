@@ -31,14 +31,12 @@ import { snakeCaseToCamelCase } from './utils';
 /**
  * Get all taxonomies.
  *
- * @param {string} postType Post type.
- * @param {string} path API path.
  * @return {Promise} Taxonomies promise.
  */
-export async function getTaxonomies(postType, path) {
+export async function getTaxonomies() {
   const result = await apiFetch({
-    path: addQueryArgs(path, {
-      type: postType,
+    path: addQueryArgs(this.api.taxonomies, {
+      type: this.postType,
       context: 'edit',
     }),
   });
