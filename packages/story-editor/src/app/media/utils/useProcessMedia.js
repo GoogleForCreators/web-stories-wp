@@ -59,17 +59,11 @@ function useProcessMedia({
   );
 
   const updateExistingElements = useCallback(
-    ({ oldResource }) => {
-      const { id } = oldResource;
+    ({ oldResource: resource }) => {
+      const { id } = resource;
       updateElementsByResourceId({
         id,
-        properties: () => {
-          return {
-            resource: {
-              ...oldResource,
-            },
-          };
-        },
+        properties: () => ({ resource }),
       });
     },
     [updateElementsByResourceId]
@@ -186,11 +180,11 @@ function useProcessMedia({
    * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
    */
   const trimExistingVideo = useCallback(
-    ({ resource: oldResource, start, end }) => {
+    ({ resource: oldResource, trimSourceId, start, end }) => {
       const { src: url, mimeType, poster } = oldResource;
 
       const trimData = {
-        original: oldResource.id,
+        original: trimSourceId,
         start,
         end,
       };

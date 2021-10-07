@@ -50,7 +50,7 @@ function VideoTrimProvider({ children }) {
   } = useVideoNode(videoData);
 
   const performTrim = useCallback(() => {
-    const { resource } = videoData;
+    const { resource, element } = videoData;
     if (!resource) {
       return;
     }
@@ -58,9 +58,13 @@ function VideoTrimProvider({ children }) {
     trimExistingVideo({
       resource: {
         ...resource,
+        // Preserve the id of the source resource even though we might be trimming from a third resource
+        id: element.resource.id,
         length: lengthInSeconds,
         lengthFormatted: getVideoLengthDisplay(lengthInSeconds),
       },
+      // However, also keep the trim source id available (it might be identical)
+      trimSourceId: resource.id,
       start: formatMsToHMS(startOffset),
       end: formatMsToHMS(endOffset),
     });
