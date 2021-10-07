@@ -40,6 +40,7 @@ import { useCheckpoint } from '../checkpointContext';
 import VideoOptimization from '../checks/videoOptimization';
 import StoryMissingPublisherName from '../checks/storyMissingPublisherName';
 import StoryAmpValidationErrors from '../checks/storyAmpValidationErrors';
+import PublisherLogoExistence from '../checks/publisherLogoExistence';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
 function PriorityPanel({
@@ -107,6 +108,7 @@ export function PriorityChecks(props) {
         <StoryMissingExcerpt />
         {hasUploadMediaAction && <StoryPosterAttached />}
         {hasUploadMediaAction && <StoryPosterSize />}
+        {hasUploadMediaAction && <PublisherLogoExistence />}
         {hasUploadMediaAction && <PublisherLogoSize />}
         {hasUploadMediaAction && <VideoElementMissingPoster />}
         {/* `isTranscodingEnabled` already checks for `hasUploadMediaAction` */}

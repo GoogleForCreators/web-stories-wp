@@ -25,19 +25,15 @@ import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { useStory } from '../../../app';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
-import { PRIORITY_COPY, PUBLISHER_LOGO_DIMENSION } from '../constants';
+import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
-export function publisherLogoSize(publisherLogo) {
-  return (
-    Boolean(publisherLogo?.id) &&
-    (publisherLogo?.height < PUBLISHER_LOGO_DIMENSION ||
-      publisherLogo?.width < PUBLISHER_LOGO_DIMENSION)
-  );
+export function publisherLogoExistence(publisherLogo) {
+  return !(publisherLogo?.id || publisherLogo?.url);
 }
 
-const PublisherLogoSize = () => {
+const PublisherLogoExistence = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const publisherLogo = useStory(({ state }) => state?.story?.publisherLogo);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
@@ -49,10 +45,10 @@ const PublisherLogoSize = () => {
     [setHighlights]
   );
 
-  const isRendered = publisherLogoSize(publisherLogo);
-  useRegisterCheck('PublisherLogoSize', isRendered);
+  const isRendered = publisherLogoExistence(publisherLogo);
+  useRegisterCheck('PublisherLogoExistence', isRendered);
 
-  const { footer, title } = PRIORITY_COPY.logoTooSmall;
+  const { footer, title } = PRIORITY_COPY.noPublisherLogo;
   return (
     isRendered &&
     isChecklistMounted && (
@@ -73,4 +69,4 @@ const PublisherLogoSize = () => {
   );
 };
 
-export default PublisherLogoSize;
+export default PublisherLogoExistence;
