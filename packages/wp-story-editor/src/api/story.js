@@ -76,8 +76,8 @@ const transformGetStoryResponse = (post) => {
   return post;
 };
 
-export function getStoryById(apiPaths, storyId, isDemo = false) {
-  const path = addQueryArgs(`${apiPaths.stories}${storyId}/`, {
+export function getStoryById(apiPath, storyId, isDemo = false) {
+  const path = addQueryArgs(`${apiPath}${storyId}/`, {
     context: 'edit',
     _embed: STORY_EMBED,
     web_stories_demo: isDemo,
@@ -131,18 +131,18 @@ const getStorySaveData = (
 /**
  * Fire REST API call to save story.
  *
- * @param {Object} apiPaths API path.
+ * @param {string} apiPath API path.
  * @param {boolean} encodeMarkup Encode markup or not.
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
  * @return {Promise} Return apiFetch promise.
  */
-export function saveStoryById(apiPaths, encodeMarkup, story) {
+export function saveStoryById(apiPath, encodeMarkup, story) {
   const { storyId } = story;
   const storySaveData = getStorySaveData(story, encodeMarkup);
 
   // Only require these fields in the response as used by useSaveStory()
   // to reduce response size.
-  const path = addQueryArgs(`${apiPaths.stories}${storyId}/`, {
+  const path = addQueryArgs(`${apiPath}${storyId}/`, {
     _fields: [
       'status',
       'slug',
@@ -175,17 +175,17 @@ export function saveStoryById(apiPaths, encodeMarkup, story) {
 /**
  * Fire REST API call to auto-save story.
  *
- * @param {Object} apiPaths API path.
+ * @param {string} apiPath API path.
  * @param {boolean} encodeMarkup Encode markup or not.
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
  * @return {Promise} Return apiFetch promise.
  */
-export function autoSaveById(apiPaths, encodeMarkup, story) {
+export function autoSaveById(apiPath, encodeMarkup, story) {
   const { storyId } = story;
   const storySaveData = getStorySaveData(story, encodeMarkup);
 
   return apiFetch({
-    path: `${apiPaths.stories}${storyId}/autosaves/`,
+    path: `${apiPath}${storyId}/autosaves/`,
     data: storySaveData,
     method: 'POST',
   });

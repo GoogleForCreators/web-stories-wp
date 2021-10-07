@@ -19,15 +19,15 @@
  */
 import apiFetch from '@wordpress/api-fetch';
 
-export function getPublisherLogos(apiPaths) {
+export function getPublisherLogos(apiPath) {
   return apiFetch({
-    path: apiPaths.publisherLogos,
+    path: apiPath,
   });
 }
 
-export function addPublisherLogo(apiPaths, id) {
+export function addPublisherLogo(apiPath, id) {
   return apiFetch({
-    path: apiPaths.publisherLogos,
+    path: apiPath,
     data: { id },
     method: 'POST',
   });

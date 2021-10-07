@@ -22,9 +22,9 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import { addQueryArgs } from '@web-stories-wp/design-system';
 
-export function getAuthors(apiPaths, search) {
+export function getAuthors(apiPath, search) {
   return apiFetch({
-    path: addQueryArgs(apiPaths.users, {
+    path: addQueryArgs(apiPath, {
       per_page: '100',
       who: 'authors',
       search,

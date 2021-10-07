@@ -31,10 +31,10 @@ import { MEDIA_FIELDS } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
 export function getMedia(
-  apiPaths,
+  apiPath,
   { mediaType, searchTerm, pagingNum, cacheBust }
 ) {
-  let apiPath = addQueryArgs(apiPaths.media, {
+  let path = addQueryArgs(apiPath, {
     context: 'edit',
     per_page: 50,
     page: pagingNum,
@@ -43,11 +43,11 @@ export function getMedia(
   });
 
   if (mediaType) {
-    apiPath = addQueryArgs(apiPath, { media_type: mediaType });
+    path = addQueryArgs(path, { media_type: mediaType });
   }
 
   if (searchTerm) {
-    apiPath = addQueryArgs(apiPath, { search: searchTerm });
+    path = addQueryArgs(path, { search: searchTerm });
   }
 
   // cacheBusting is due to the preloading logic preloading and caching
@@ -56,10 +56,10 @@ export function getMedia(
   // paths and hence skipping the cache. (cache_bust itself doesn't do
   // anything)
   if (cacheBust) {
-    apiPath = addQueryArgs(apiPath, { cache_bust: true });
+    path = addQueryArgs(path, { cache_bust: true });
   }
 
-  return apiFetch({ path: apiPath }).then(({ body: attachments, headers }) => ({
+  return apiFetch({ path }).then(({ body: attachments, headers }) => ({
     data: attachments.map(getResourceFromAttachment),
     headers: {
       ...headers,
@@ -72,12 +72,12 @@ export function getMedia(
 /**
  * Upload file to via REST API.
  *
- * @param {Object} apiPaths        API Paths.
+ * @param {string} apiPath        API Path.
  * @param {File}    file           Media File to Save.
  * @param {?Object} additionalData Additional data to include in the request.
  * @return {Promise} Media Object Promise.
  */
-export function uploadMedia(apiPaths, file, additionalData) {
+export function uploadMedia(apiPath, file, additionalData) {
   // Create upload payload
   const data = new window.FormData();
   data.append('file', file, file.name || file.type.replace('/', '.'));
@@ -87,7 +87,7 @@ export function uploadMedia(apiPaths, file, additionalData) {
 
   // TODO: Intercept window.fetch here to support progressive upload indicator when uploading
   return apiFetch({
-    path: apiPaths.media,
+    path: apiPath,
     body: data,
     method: 'POST',
   }).then((attachment) => getResourceFromAttachment(attachment));
@@ -95,14 +95,14 @@ export function uploadMedia(apiPaths, file, additionalData) {
 /**
  * Update Existing media.
  *
- * @param  {Object} apiPaths API paths.
+ * @param  {string} apiPath API path.
  * @param  {number} mediaId Media id
  * @param  {Object} data Object of properties to update on attachment.
  * @return {Promise} Media Object Promise.
  */
-export function updateMedia(apiPaths, mediaId, data) {
+export function updateMedia(apiPath, mediaId, data) {
   return apiFetch({
-    path: `${apiPaths.media}${mediaId}/`,
+    path: `${apiPath}${mediaId}/`,
     data,
     method: 'POST',
   });
@@ -111,18 +111,18 @@ export function updateMedia(apiPaths, mediaId, data) {
 /**
  * Delete existing media.
  *
- * @param {Object} apiPaths API paths.
+ * @param {string} apiPath API path.
  * @param  {number} mediaId Media id
  * @return {Promise} Media Object Promise.
  */
-export function deleteMedia(apiPaths, mediaId) {
+export function deleteMedia(apiPath, mediaId) {
   // `apiFetch` by default turns `DELETE` requests into `POST` requests
   // with `X-HTTP-Method-Override: DELETE` headers.
   // However, some Web Application Firewall (WAF) solutions prevent this.
   // `?_method=DELETE` is an alternative solution to override the request method.
   // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
   return apiFetch({
-    path: addQueryArgs(`${apiPaths.media}${mediaId}/`, { _method: 'DELETE' }),
+    path: addQueryArgs(`${apiPath}${mediaId}/`, { _method: 'DELETE' }),
     data: { force: true },
     method: 'POST',
   });
