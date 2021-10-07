@@ -21,7 +21,6 @@ import {
   createNewStory,
   insertStoryTitle,
   publishStory,
-  triggerHighPriorityChecklistSection,
   skipSuiteOnFirefox,
   withUser,
 } from '@web-stories-wp/e2e-test-utils';
