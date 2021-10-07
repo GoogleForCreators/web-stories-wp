@@ -53,7 +53,7 @@ function LayerPanel() {
   return (
     <Container>
       <Panel
-        name="layers"
+        name="layer"
         initialHeight={window.innerHeight / 4}
         resizeable
         collapsedByDefault={false}
