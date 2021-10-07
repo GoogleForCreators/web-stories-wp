@@ -148,11 +148,10 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
     <SaveButton
       aria-disabled={isDisabled}
       onClick={handleSaveTemplate}
-      aria-label={__('Save current page as template', 'web-stories')}
       $isDisabled={isDisabled}
     >
       <IconWrapper>
-        <Icon />
+        <Icon aria-hidden />
       </IconWrapper>
       <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__('Save current page as template', 'web-stories')}
