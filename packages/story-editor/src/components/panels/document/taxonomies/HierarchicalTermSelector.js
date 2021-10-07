@@ -123,10 +123,10 @@ function HierarchicalTermSelector({
       [
         {
           value: NO_PARENT_VALUE,
-          label: `-- ${taxonomy.labels?.parent_item} --`,
+          label: __('None', 'web-stories'),
         },
       ].concat(categories),
-    [categories, taxonomy]
+    [categories]
   );
 
   const [showAddNewCategory, setShowAddNewCategory] = useState(false);
