@@ -82,9 +82,7 @@ export function getMediaById(mediaId, media) {
     _fields: MEDIA_FIELDS,
   });
 
-  return apiFetch({ path }).then((attachment) =>
-    getResourceFromAttachment(attachment)
-  );
+  return apiFetch({ path }).then(getResourceFromAttachment);
 }
 
 /**

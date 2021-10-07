@@ -60,26 +60,36 @@ function useVideoTrimMode() {
         showOverflow: false,
       });
 
-      if (selectedElement.resource?.trimData?.original) {
+      const { resource } = selectedElement;
+      const { trimData } = resource;
+
+      const defaultVideoData = {
+        element: selectedElement,
+        resource,
+        start: 0,
+        end: null,
+      };
+
+      if (trimData?.original) {
         // First clear any existing data
         setVideoData(null);
-        // Load correct video resource and set original offsets
-        getMediaById(selectedElement.resource.trimData.original).then(
-          (originalResource) =>
-            setVideoData({
+        // Load correct video resource
+        getMediaById(trimData.original)
+          .then(
+            // If exists, use as resource with offsets
+            (originalResource) => ({
               element: selectedElement,
               resource: originalResource,
-              start: getMsFromHMS(selectedElement.resource.trimData.start),
-              end: getMsFromHMS(selectedElement.resource.trimData.end),
-            })
-        );
+              start: getMsFromHMS(trimData.start),
+              end: getMsFromHMS(trimData.end),
+            }),
+            // If load fails, pretend there's no original
+            () => defaultVideoData
+          )
+          // Regardless, set resulting data as video data
+          .then((data) => setVideoData(data));
       } else {
-        setVideoData({
-          element: selectedElement,
-          resource: selectedElement.resource,
-          start: 0,
-          end: null,
-        });
+        setVideoData(defaultVideoData);
       }
     }
     trackEvent('video_trim_mode_toggled', {
