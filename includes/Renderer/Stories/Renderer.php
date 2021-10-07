@@ -686,13 +686,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			on="lightboxClose:AMP.setState({<?php echo esc_attr( $lightbox_state ); ?>: false})"
 		>
 			<div class="web-stories-list__lightbox show">
-				<div
+				<button type="button"
 					class="story-lightbox__close-button"
 					on="tap:<?php echo esc_attr( $lightbox_id ); ?>.close"
 				>
 					<span class="story-lightbox__close-button--stick"></span>
 					<span class="story-lightbox__close-button--stick"></span>
-				</div>
+				</button>
 				<amp-story-player
 					width="3.6"
 					height="6"

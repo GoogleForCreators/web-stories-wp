@@ -44,6 +44,9 @@
   height: 40px;
   width: 40px;
   z-index: 1;
+  border: none;
+  background: none;
+  border-radius: 0;
 }
 
 .story-lightbox__close-button--stick {
