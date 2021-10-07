@@ -149,7 +149,7 @@ function TaxonomyProvider(props) {
   const addSearchResultsToCache = useCallback(
     async (taxonomy, args, addNameToSelection = false) => {
       let response = [];
-      const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href; // @todo Should be handled from wp-story-editor.
+      const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href;
       if (!termsEndpoint) {
         return [];
       }
