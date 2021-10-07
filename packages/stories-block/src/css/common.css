@@ -37,10 +37,13 @@
   position: relative;
 }
 
-/* Screen reader text */
-.web-stories-list__story-poster
-  .web-stories-list__story-poster-placeholder
-  span {
+/*
+  We want the placeholder to be clickable but hidden from screen readers.
+  This improves the no-js experience.
+  In the block edit component, placeholders are not links.
+*/
+.web-stories-list__story-poster .web-stories-list__story-poster-placeholder span,
+.web-stories-list__story-poster .web-stories-list__story-poster-placeholder a {
   border: 0;
   clip: rect(1px, 1px, 1px, 1px);
   -webkit-clip-path: inset(50%);
