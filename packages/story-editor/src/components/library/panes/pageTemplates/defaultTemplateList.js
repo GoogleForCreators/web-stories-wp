@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useState } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useRef,
+  useState,
+  useEffect,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
@@ -51,6 +56,7 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
   const { showSnackbar } = useSnackbar();
   const [currentPageId, setCurrentPageId] = useState();
   const [isGridFocused, setIsGridFocused] = useState(false);
+  const [tabIndex, setTabIndex] = useState('0');
   const containerRef = useRef();
   const pageRefs = useRef({});
 
@@ -81,6 +87,33 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
     }
   }, [currentPageId, isGridFocused, pages]);
 
+  // Allow user to "tab" to get out of focus
+  const handleFocusOut = (evt) => {
+    if (evt.keyCode === 9) {
+      setTabIndex('-1');
+      setIsGridFocused(false);
+    }
+  };
+  // reset tabIndex onBlur so that we can use the keyboard to get back into templates
+  const handleBlur = () => {
+    if (tabIndex === '-1') {
+      setTabIndex('0');
+    }
+  };
+
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) {
+      return undefined;
+    }
+
+    node.addEventListener('keydown', handleFocusOut);
+
+    return () => {
+      node.removeEventListener('keydown', handleFocusOut);
+    };
+  }, [containerRef]);
+
   useGridViewKeys({
     containerRef: parentRef,
     gridRef: containerRef,
@@ -109,9 +142,11 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
             onFocus={() => {
               setCurrentPageId(page.id);
             }}
+            onBlur={handleBlur}
             isActive={currentPageId === page.id}
             onClick={() => handlePageClick(page.story)}
             columnWidth={pageSize.width}
+            tabIndex={tabIndex}
             {...rest}
           />
         );
