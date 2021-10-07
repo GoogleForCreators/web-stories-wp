@@ -21,11 +21,7 @@ import PropTypes from 'prop-types';
 import { useState, forwardRef, useFocusOut } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { _x, sprintf } from '@web-stories-wp/i18n';
-import {
-  Button,
-  BUTTON_TYPES,
-  themeHelpers,
-} from '@web-stories-wp/design-system';
+import { Button, BUTTON_TYPES } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -43,7 +39,6 @@ const PageTemplateWrapper = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
   border-radius: ${({ theme }) => theme.borders.radius.small};
   cursor: pointer;
 
-  ${({ isHighlighted }) => isHighlighted && themeHelpers.focusCSS};
   ${focusStyle};
 `;
 
@@ -80,26 +75,21 @@ PageTemplateTitle.propTypes = {
 };
 
 const DefaultPageTemplate = forwardRef(
-  ({ page, pageSize, columnWidth, ...rest }, ref) => {
-    const [isActive, setIsActive] = useState(false);
+  ({ page, pageSize, columnWidth, isActive, ...rest }, ref) => {
     const [isHover, setIsHover] = useState(false);
     const isActivePage = isHover || isActive;
 
     useFocusOut(ref, () => setIsHover(false), []);
 
-    const { highlightedTemplate } = rest;
-
     const handleSetHover = () => setIsHover(!isHover);
+
     return (
       <PageTemplateWrapper
         columnWidth={columnWidth}
         ref={ref}
         onMouseEnter={handleSetHover}
         onMouseLeave={handleSetHover}
-        onFocus={() => setIsActive(true)}
-        onBlur={() => setIsActive(false)}
         aria-label={page.title}
-        isHighlighted={page.id === highlightedTemplate}
         {...rest}
       >
         <PosterWrapper>

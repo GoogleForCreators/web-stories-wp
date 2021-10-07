@@ -69,23 +69,13 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
     [addPage, showSnackbar]
   );
 
-  const handleKeyboardPageClick = useCallback(
-    ({ code }, page) => {
-      if (isGridFocused) {
-        if (code === 'Enter') {
-          handlePageClick(page);
-        }
-      }
-    },
-    [isGridFocused, handlePageClick]
-  );
-
   const handleGridFocus = useCallback(() => {
     if (!isGridFocused) {
       const newGridItemId = pageRefs.current?.[currentPageId]
         ? currentPageId
-        : pages.id?.[0];
+        : pages[0].id;
 
+      !currentPageId && setCurrentPageId(newGridItemId);
       setIsGridFocused(true);
       pageRefs.current?.[newGridItemId]?.focus();
     }
@@ -116,11 +106,11 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
             data-testid={`page_template_${page.id}`}
             page={page}
             pageSize={pageSize}
-            $onFocus={() => {
+            onFocus={() => {
               setCurrentPageId(page.id);
             }}
+            isActive={currentPageId === page.id}
             onClick={() => handlePageClick(page.story)}
-            onKeyUp={(event) => handleKeyboardPageClick(event, page)}
             columnWidth={pageSize.width}
             {...rest}
           />
