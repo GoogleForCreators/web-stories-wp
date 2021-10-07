@@ -197,10 +197,16 @@ class Jetpack extends TestCase {
 		$allowed_mime_types[] = $jetpack::VIDEOPRESS_MIME_TYPE;
 		$args                 = [ 'post_mime_type' => $allowed_mime_types ];
 		$jetpack->filter_ajax_query_attachments_args( $args );
-		$this->assertSame( 15, has_filter( 'wp_prepare_attachment_for_js', [
-			$jetpack,
-			'filter_admin_ajax_response'
-		] ) );
+		$this->assertSame(
+			15,
+			has_filter(
+				'wp_prepare_attachment_for_js',
+				[
+					$jetpack,
+					'filter_admin_ajax_response',
+				] 
+			) 
+		);
 	}
 
 	/**
