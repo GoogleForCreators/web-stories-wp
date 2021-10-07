@@ -13,10 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { hasNoFeaturedMedia } from './hasNoFeaturedMedia';
-export { characterCountForPage } from './characterCountForPage';
-export { filterStoryPages } from './filterStoryPages';
-export { filterStoryElements } from './filterStoryElements';
-export { getVisibleThumbnails } from './getVisibleThumbnails';
-export { getSpansFromContent } from './getSpansFromContent';
-export { ThumbnailPagePreview } from './thumbnailPagePreview';
+/**
+ * Internal dependencies
+ */
+import StoryPropTypes from '../../../types';
+import PagePreview from '../../carousel/pagepreview';
+import { THUMBNAIL_DIMENSIONS } from '../../thumbnail';
+
+export const ThumbnailPagePreview = ({ page }) => (
+  <PagePreview
+    page={page}
+    width={THUMBNAIL_DIMENSIONS.WIDTH}
+    height={THUMBNAIL_DIMENSIONS.HEIGHT}
+    as="div"
+    help="checklist"
+    isActive
+    className="pagePreviewOverrides"
+  />
+);
+ThumbnailPagePreview.propTypes = {
+  page: StoryPropTypes.page.isRequired,
+};

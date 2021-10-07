@@ -118,8 +118,8 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		$this->assertArrayHasKey( 'media_source', $data );
-		$this->assertEquals( 'editor', $data['media_source'] );
+		$this->assertArrayHasKey( $this->instance::MEDIA_SOURCE_KEY, $data );
+		$this->assertEquals( 'editor', $data[ $this->instance::MEDIA_SOURCE_KEY ] );
 	}
 
 	/**
@@ -165,17 +165,17 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 
 		$this->assertEqualSets(
 			[
-				'type'         => 'image',
-				'media_source' => '',
-				'id'           => $poster_attachment_id,
-				'url'          => wp_get_attachment_url( $poster_attachment_id ),
+				'type'                     => 'image',
+				'web_stories_media_source' => '',
+				'id'                       => $poster_attachment_id,
+				'url'                      => wp_get_attachment_url( $poster_attachment_id ),
 
 			],
 			$image
 		);
 
-		$this->assertArrayHasKey( 'media_source', $image );
-		$this->assertArrayHasKey( 'media_source', $video );
+		$this->assertArrayHasKey( $this->instance::MEDIA_SOURCE_KEY, $image );
+		$this->assertArrayHasKey( $this->instance::MEDIA_SOURCE_KEY, $video );
 	}
 
 	/**
