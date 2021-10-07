@@ -82,7 +82,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 * @return string[] List of required services.
 	 */
 	public static function get_requirements(): array {
-		return [ 'story_post_type' ];
+		return [ 'settings', 'story_post_type' ];
 	}
 
 	/**
