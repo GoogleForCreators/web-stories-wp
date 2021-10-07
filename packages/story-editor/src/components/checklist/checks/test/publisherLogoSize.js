@@ -25,15 +25,18 @@ describe('publisherLogoSize', () => {
       id: 0,
     };
     const testHeightPublisherLogo = {
+      id: 1,
       height: 1,
       width: 96,
     };
     const testWidthPublisherLogo = {
+      id: 1,
       width: 1,
       height: 96,
     };
-    const testPublisherLogo = { height: 1, width: 1 };
+    const testPublisherLogo = { id: 1, height: 1, width: 1 };
     const testHappy = publisherLogoSize({
+      id: 1,
       height: 96,
       width: 96,
     });
