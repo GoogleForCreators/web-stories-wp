@@ -19,12 +19,12 @@
 import * as apiCallbacks from '..';
 
 /**
- * Get api callbacks.
+ * Bind configuration arguments and get all api callbacks.
  *
  * @param {Object} config Editor configuration.
- * @param config.api
- * @param config.encodeMarkup
- * @param config.postType
+ * @param {Object} config.api API paths.
+ * @param {boolean} config.encodeMarkup Encode markup or not.
+ * @param {string} config.postType Post type.
  * @return {Object} api callbacks.
  */
 const getApiCallbacks = ({ api, encodeMarkup, postType }) => {
