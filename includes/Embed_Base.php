@@ -67,6 +67,10 @@ abstract class Embed_Base extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
+		if ( wp_style_is( self::SCRIPT_HANDLE, 'registered' ) ) {
+			return;
+		}
+
 		$this->assets->register_style_asset( self::SCRIPT_HANDLE );
 		// Set a style without a `src` allows us to just use the inline style below
 		// without needing an external stylesheet.

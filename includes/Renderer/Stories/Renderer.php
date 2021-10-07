@@ -272,6 +272,10 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function load_assets() {
+		if ( wp_style_is( self::STYLE_HANDLE, 'registered' ) ) {
+			return;
+		}
+
 		// Web Stories styles for AMP and non-AMP pages.
 		$this->assets->register_style_asset( self::STYLE_HANDLE );
 
