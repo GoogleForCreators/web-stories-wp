@@ -28,28 +28,31 @@ import * as apiCallbacks from '..';
  * @return {Object} api callbacks.
  */
 const getApiCallbacks = ({ api, encodeMarkup, postType }) => {
+  const args = {
+    getStoryById: [api],
+    saveStoryById: [api, encodeMarkup],
+    autoSaveById: [api, encodeMarkup],
+    getMedia: [api],
+    uploadMedia: [api],
+    updateMedia: [api],
+    deleteMedia: [api],
+    getLinkMetadata: [api],
+    getAuthors: [api],
+    getPublisherLogos: [api],
+    addPublisherLogo: [api],
+    getCurrentUser: [api],
+    updateCurrentUser: [api],
+    getCustomPageTemplates: [api],
+    addPageTemplate: [api],
+    deletePageTemplate: [api],
+    getHotlinkInfo: [api],
+    getTaxonomies: [api, postType],
+  };
+
   return Object.entries(apiCallbacks).reduce((callbacks, [name, callback]) => {
-    let args = [];
-
-    switch (name) {
-      case 'saveStoryById':
-      case 'autoSaveById':
-        args = [api, encodeMarkup];
-        break;
-      case 'getTaxonomies':
-        args = [api, postType];
-        break;
-      case 'getTaxonomyTerm':
-      case 'createTaxonomyTerm':
-        args = [];
-        break;
-      default:
-        args = [api];
-        break;
-    }
-
-    callbacks[name] = callback.bind(null, ...args);
-
+    callbacks[name] = args[name]
+      ? callback.bind(null, ...args[name])
+      : callback;
     return callbacks;
   }, {});
 };
