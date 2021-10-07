@@ -91,6 +91,7 @@ const PageTemplateTitle = styled.div`
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
+
   padding: 8px;
   font-size: 12px;
   line-height: 22px;
