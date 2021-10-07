@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -28,9 +28,11 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
+  useLiveRegion,
 } from '@web-stories-wp/design-system';
 import {
   useCallback,
+  useDebouncedCallback,
   useEffect,
   useMemo,
   useRef,
@@ -130,6 +132,8 @@ function HierarchicalTermSelector({
   const [searchText, setSearchText] = useState('');
 
   const handleInputChange = useCallback((value) => setSearchText(value), []);
+  const speak = useLiveRegion('assertive');
+  const debouncedSpeak = useDebouncedCallback(speak, 500, { leading: true });
 
   const resetInputs = useCallback(() => {
     setNewCategoryName('');
@@ -190,9 +194,17 @@ function HierarchicalTermSelector({
       setShowAddNewCategory(false);
       resetInputs();
       setToggleFocus(showAddNewCategory);
+      debouncedSpeak(
+        sprintf(
+          /* Translators: %s: Taxonomy label name. */
+          __('%s added.', 'web-stories'),
+          taxonomy.labels.singular_name
+        )
+      );
     },
     [
       createTerm,
+      debouncedSpeak,
       newCategoryName,
       noParentId,
       resetInputs,
@@ -202,7 +214,6 @@ function HierarchicalTermSelector({
       selectedParentSlug,
     ]
   );
-
   const handleParentSelect = useCallback(
     (_evt, menuItem) => setSelectedParent(menuItem),
     []
