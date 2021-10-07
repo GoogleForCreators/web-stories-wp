@@ -88,7 +88,7 @@ function PageTemplatesPane(props) {
 
   const updateTemplatesList = useCallback(
     (page) => {
-      setSavedTemplates([page, ...savedTemplates]);
+      setSavedTemplates([page, ...(savedTemplates || [])]);
       setHighlightedTemplate(page.id);
     },
     [setSavedTemplates, savedTemplates]
