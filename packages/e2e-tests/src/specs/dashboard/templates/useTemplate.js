@@ -40,8 +40,6 @@ describe('Template', () => {
       '[data-testid="template-grid-item-1"]'
     );
 
-    await percySnapshot(page, 'Explore Templates');
-
     await expect(firstTemplate).toClick('a', { text: 'See details' });
     // Get count of template colors to compare to 'saved colors' in the editor.
     const templateDetailsColors = await page.evaluate(() => {
