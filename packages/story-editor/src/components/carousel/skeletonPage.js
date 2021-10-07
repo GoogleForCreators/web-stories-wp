@@ -73,6 +73,7 @@ function SkeletonPage({ pageId, index }) {
         marginRight: `${pageThumbMargin}px`,
         ...generatePatternStyles(bgColor),
       }}
+      data-testid={`carousel-page-preview-skeleton-${pageId}`}
     />
   );
 }
