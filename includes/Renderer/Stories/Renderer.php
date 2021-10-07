@@ -684,11 +684,14 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			[open]="<?php echo esc_attr( $lightbox_state ); ?>"
 			layout="nodisplay"
 			on="lightboxClose:AMP.setState({<?php echo esc_attr( $lightbox_state ); ?>: false})"
+			role="button"
+			tabindex="0"
 		>
 			<div class="web-stories-list__lightbox show">
 				<button type="button"
 					class="story-lightbox__close-button"
 					on="tap:<?php echo esc_attr( $lightbox_id ); ?>.close"
+					tabindex="0"
 					aria-label="<?php esc_attr_e( 'Close', 'web-stories' ); ?>"
 				>
 					<span class="story-lightbox__close-button--stick"></span>
