@@ -58,13 +58,12 @@ function VideoTrimProvider({ children }) {
     trimExistingVideo({
       resource: {
         ...resource,
-        // Preserve the id of the source resource even though we might be trimming from a third resource
-        id: element.resource.id,
         length: lengthInSeconds,
         lengthFormatted: getVideoLengthDisplay(lengthInSeconds),
       },
-      // However, also keep the trim source id available (it might be identical)
-      trimSourceId: resource.id,
+      // This is the ID of the resource, that's currently on canvas and needs to be cloned.
+      // It's only different from the above resource, if the canvas resource is a trim of the other.
+      canvasResourceId: element.resource.id,
       start: formatMsToHMS(startOffset),
       end: formatMsToHMS(endOffset),
     });

@@ -180,11 +180,13 @@ function useProcessMedia({
    * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
    */
   const trimExistingVideo = useCallback(
-    ({ resource: oldResource, trimSourceId, start, end }) => {
-      const { src: url, mimeType, poster } = oldResource;
+    ({ resource: oldResource, canvasResourceId, start, end }) => {
+      const { id, src: url, mimeType, poster } = oldResource;
+
+      const canvasResource = { ...oldResource, id: canvasResourceId };
 
       const trimData = {
-        original: trimSourceId,
+        original: id,
         start,
         end,
       };
@@ -192,7 +194,7 @@ function useProcessMedia({
       const onUploadStart = () => {
         updateExistingElements({
           oldResource: {
-            ...oldResource,
+            ...canvasResource,
             trimData,
             isTrimming: true,
           },
@@ -201,7 +203,10 @@ function useProcessMedia({
 
       const onUploadError = () => {
         updateExistingElements({
-          oldResource: { ...oldResource, isTrimming: false },
+          oldResource: {
+            ...canvasResource,
+            isTrimming: false,
+          },
         });
       };
 
@@ -218,9 +223,9 @@ function useProcessMedia({
       };
 
       const onUploadProgress = ({ resource }) => {
-        const oldResourceWithId = { ...resource, id: oldResource.id };
+        const newResourceWithCanvasId = { ...resource, id: canvasResourceId };
         updateExistingElements({
-          oldResource: oldResourceWithId,
+          oldResource: newResourceWithCanvasId,
         });
       };
 
