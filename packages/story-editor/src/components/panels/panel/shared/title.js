@@ -242,7 +242,7 @@ function Title({
           <StyledNotificationBubble
             data-testid="panel-badge"
             notificationCount={count}
-            variant={BUBBLE_VARIANTS}
+            variant={BUBBLE_VARIANTS.PRIMARY}
             isSmall
           />
         )}

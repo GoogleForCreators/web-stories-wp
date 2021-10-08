@@ -68,7 +68,8 @@ const Inner = styled.span`
     themeHelpers.expandTextPreset(
       ({ paragraph }, sizes) => paragraph[isSmall ? sizes.X_SMALL : sizes.SMALL]
     )({ theme })};
-  color: ${({ theme }) => theme.colors.bg.primary};
+  color: ${({ invertColor, theme }) =>
+    invertColor ? theme.colors.inverted.fg.primary : theme.colors.fg.primary};
   user-select: none;
 `;
 
@@ -76,6 +77,7 @@ export const NotificationBubble = ({
   notificationCount,
   isSmall,
   variant = BUBBLE_VARIANTS.ACCENT,
+  invertTextColor,
   ...props
 }) => (
   <Bubble
@@ -84,11 +86,14 @@ export const NotificationBubble = ({
     digitLen={notificationCount?.toString().length || 1}
     {...props}
   >
-    <Inner isSmall={isSmall}>{notificationCount}</Inner>
+    <Inner invertColor={invertTextColor} isSmall={isSmall}>
+      {notificationCount}
+    </Inner>
   </Bubble>
 );
 NotificationBubble.propTypes = {
   notificationCount: PropTypes.number,
+  invertTextColor: PropTypes.bool,
   isSmall: PropTypes.bool,
   variant: PropTypes.oneOf(Object.values(BUBBLE_VARIANTS)),
 };

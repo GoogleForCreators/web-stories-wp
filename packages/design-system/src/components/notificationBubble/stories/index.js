@@ -64,6 +64,7 @@ export const _default = () => {
             <NotificationBubble
               key={variant}
               isSmall={boolean('Is Small', false)}
+              invertTextColor={boolean('Invert Text Color', false)}
               notificationCount={number('Notification Count', 6)}
               variant={variant}
             />
@@ -76,6 +77,7 @@ export const _default = () => {
             {VARIANT_OPTIONS.map((variant) => (
               <NotificationBubble
                 key={variant}
+                invertTextColor={boolean('Invert Text Color', false)}
                 isSmall={boolean('Is Small', false)}
                 notificationCount={number('Notification Count', 6)}
                 variant={variant}
