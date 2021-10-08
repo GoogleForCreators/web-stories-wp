@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { useMemo } from '@web-stories-wp/react';
 import styled from 'styled-components';
 
 /**
@@ -55,11 +56,13 @@ const Divider = styled.div`
 function LayerPanel() {
   const layers = useLayers();
 
+  const initialHeight = useMemo(() => Math.round(window.innerHeight / 4), []);
+
   return (
     <Container>
       <Panel
         name="layer-panel"
-        initialHeight={window.innerHeight / 4}
+        initialHeight={initialHeight}
         resizeable
         collapsedByDefault={false}
       >
