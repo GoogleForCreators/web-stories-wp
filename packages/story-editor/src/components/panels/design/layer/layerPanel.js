@@ -23,7 +23,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Panel, PanelTitle, PanelContent } from '../../panel';
+import {
+  MAX_HEIGHT_DEFAULT,
+  Panel,
+  PanelTitle,
+  PanelContent,
+} from '../../panel';
 import LayerList from './layerList';
 import useLayers from './useLayers';
 
@@ -58,7 +63,11 @@ function LayerPanel() {
         resizeable
         collapsedByDefault={false}
       >
-        <StyledPanelTitle isSecondary isResizable maxHeight={9999999999999}>
+        <StyledPanelTitle
+          isSecondary
+          isResizable
+          maxHeight={MAX_HEIGHT_DEFAULT}
+        >
           {__('Layers', 'web-stories')}
         </StyledPanelTitle>
 

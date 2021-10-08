@@ -32,6 +32,10 @@ export class Layers extends AbstractPanel {
     super(node, path);
   }
 
+  get panelCollapseButton() {
+    return this.getByRole('button', { name: /^Layers$/ });
+  }
+
   get layersList() {
     return getByLabelText(this.node.ownerDocument, /layers list/i);
   }
