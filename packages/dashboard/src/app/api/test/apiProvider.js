@@ -46,7 +46,7 @@ const fetchStories = () => {
         modified_gmt: '1970-01-01T00:00:00.000',
         date: '1970-01-01T00:00:00.000',
         date_gmt: '1970-01-01T00:00:00.000',
-        _embedded: {
+        _embedded: { // @todo Cleanup WordPress specific fields.
           author: [{ id: 1, name: 'admin' }],
           'wp:featuredmedia': [
             { id: 0, source_url: 'https://www.featured-media-123' },

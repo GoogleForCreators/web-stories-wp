@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { REST_LINKS } from '@web-stories-wp/dashboard';
+/**
+ * Internal dependencies
+ */
+import { REST_LINKS } from '../../constants';
 
 /**
  * Internal dependencies
