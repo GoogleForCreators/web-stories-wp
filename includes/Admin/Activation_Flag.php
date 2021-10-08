@@ -26,25 +26,38 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\PluginActivationAware;
+use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
 use Google\Web_Stories\Infrastructure\Service;
 
 /**
  * Class Activation_Flag.
  */
-class Activation_Flag implements Service, Registerable {
+class Activation_Flag implements Service, PluginActivationAware, PluginDeactivationAware {
 	const OPTION_SHOW_ACTIVATION_NOTICE = 'web_stories_show_activation_notice';
 
 	/**
-	 * Registers functionality through WordPress hooks.
+	 * Act on plugin activation.
 	 *
-	 * @since 1.0.0
+	 * @since 1.13.0
 	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function register() {
-		add_action( 'web_stories_activation', [ $this, 'set_activation_flag' ] );
-		add_action( 'web_stories_deactivation', [ $this, 'delete_activation_flag' ] );
+	public function on_plugin_activation( $network_wide ){
+		$this->set_activation_flag( $network_wide );
+	}
+
+	/**
+	 * Act on plugin deactivation.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param bool $network_wide Whether the deactivation was done network-wide.
+	 * @return void
+	 */
+	public function on_plugin_deactivation( $network_wide ){
+		$this->delete_activation_flag( $network_wide );
 	}
 
 	/**
