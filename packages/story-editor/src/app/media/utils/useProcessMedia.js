@@ -160,7 +160,7 @@ function useProcessMedia({
           onUploadProgress,
           additionalData: {
             original_id: oldResource.id,
-            is_muted: oldResource.isMuted,
+            web_stories_is_muted: oldResource.isMuted,
           },
         });
       };
@@ -245,7 +245,7 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            is_muted: oldResource.isMuted,
+            web_stories_is_muted: oldResource.isMuted,
             original_id: oldResource.id,
             web_stories_media_source: oldResource?.isOptimized
               ? 'video-optimization'
