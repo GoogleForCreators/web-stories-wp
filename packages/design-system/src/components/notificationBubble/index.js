@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  */
 import { themeHelpers } from '../../theme';
 
-export const BADGE_VARIANTS = {
+export const BUBBLE_VARIANTS = {
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
   TERTIARY: 'tertiary',
@@ -35,6 +35,11 @@ export const BADGE_VARIANTS = {
 };
 
 const BUBBLE_DIAMETER = 24;
+const SMALL_BUBBLE_DIAMETER = 20;
+
+function getBubbleWidth(numDigits) {
+  return 9 * (numDigits - 1);
+}
 
 const Bubble = styled.div`
   ${({ theme, variant }) => css`
@@ -45,14 +50,14 @@ const Bubble = styled.div`
     border-radius: ${theme.borders.radius.round};
   `}
   position: relative;
-  height: 24px;
-  width: ${({ digitLen }) => BUBBLE_DIAMETER + 9 * (digitLen - 1)}px;
+  height: ${BUBBLE_DIAMETER}px;
+  width: ${({ digitLen }) => BUBBLE_DIAMETER + getBubbleWidth(digitLen)}px;
 
-  ${({ isSmall }) =>
+  ${({ digitLen, isSmall }) =>
     isSmall &&
     css`
-      height: 20px;
-      width: 20px;
+      height: ${SMALL_BUBBLE_DIAMETER}px;
+      width: ${SMALL_BUBBLE_DIAMETER + getBubbleWidth(digitLen)}px;
     `};
 `;
 
@@ -70,7 +75,7 @@ const Inner = styled.span`
 export const NotificationBubble = ({
   notificationCount,
   isSmall,
-  variant = BADGE_VARIANTS.ACCENT,
+  variant = BUBBLE_VARIANTS.ACCENT,
   ...props
 }) => (
   <Bubble
@@ -85,5 +90,5 @@ export const NotificationBubble = ({
 NotificationBubble.propTypes = {
   notificationCount: PropTypes.number,
   isSmall: PropTypes.bool,
-  variant: PropTypes.oneOf(Object.values(BADGE_VARIANTS)),
+  variant: PropTypes.oneOf(Object.values(BUBBLE_VARIANTS)),
 };

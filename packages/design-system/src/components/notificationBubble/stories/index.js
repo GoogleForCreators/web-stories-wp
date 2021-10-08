@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { number } from '@storybook/addon-knobs';
+import { boolean, number } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
@@ -25,14 +25,14 @@ import styled from 'styled-components';
  */
 import { Headline } from '../../typography';
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { NotificationBubble, BADGE_VARIANTS } from '..';
+import { NotificationBubble, BUBBLE_VARIANTS } from '..';
 
 export default {
   title: 'DesignSystem/Components/NotificationBubble',
   component: NotificationBubble,
 };
 
-const VARIANT_OPTIONS = Object.values(BADGE_VARIANTS);
+const VARIANT_OPTIONS = Object.values(BUBBLE_VARIANTS);
 
 const Container = styled.div`
   display: grid;
@@ -63,6 +63,7 @@ export const _default = () => {
           {VARIANT_OPTIONS.map((variant) => (
             <NotificationBubble
               key={variant}
+              isSmall={boolean('Is Small', false)}
               notificationCount={number('Notification Count', 6)}
               variant={variant}
             />
@@ -75,6 +76,7 @@ export const _default = () => {
             {VARIANT_OPTIONS.map((variant) => (
               <NotificationBubble
                 key={variant}
+                isSmall={boolean('Is Small', false)}
                 notificationCount={number('Notification Count', 6)}
                 variant={variant}
               />
