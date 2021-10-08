@@ -72,7 +72,7 @@ jobs:
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Run integration tests
-        run: npm run test:karma:edit-story -- --headless --snapshots --viewport=1600:1000 --coverage --reporters dots || npm run test:karma:edit-story:retry-failed -- --headless --snapshots --viewport=1600:1000 --reporters dots
+        run: npm run test:karma:edit-story -- --headless --snapshots --viewport=1600:1000 --coverage || npm run test:karma:edit-story:retry-failed -- --headless --snapshots --viewport=1600:1000
         env:
           CI: true
           DISABLE_ERROR_BOUNDARIES: true
