@@ -35,7 +35,7 @@ export { default as FontContext } from './app/font/context';
 export { default as useLoadFontFiles } from './app/font/actions/useLoadFontFiles';
 export { default as StoryPropTypes } from './types';
 export { GlobalStyle } from './theme';
-export { default as theme } from './theme'; // @todo To be refactored at some point.
+export { default as theme } from './theme'; // @todo To be refactored.
 export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 export { default as CircularProgress } from './components/circularProgress';
 export { default as InterfaceSkeleton } from './components/layout';
