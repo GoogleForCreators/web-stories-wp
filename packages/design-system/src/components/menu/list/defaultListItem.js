@@ -40,7 +40,6 @@ const ActiveIcon = styled(CheckmarkSmall)`
 const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
   <ListItem
     {...rest}
-    {...option}
     ref={ref}
     isSelected={isSelected}
     disabled={option.disabled}

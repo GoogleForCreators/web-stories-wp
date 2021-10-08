@@ -126,7 +126,14 @@ function HierarchicalTermSelector({
           value: NO_PARENT_VALUE,
           label: __('None', 'web-stories'),
         },
-      ].concat(makeFlatOptionTree(categories)),
+      ]
+        .concat(makeFlatOptionTree(categories))
+        .map(({ $level, label, ...opt }) => ({
+          ...opt,
+          label: `${Array.from({ length: $level }, () => '— ').join(
+            ''
+          )} ${label}`,
+        })),
     [categories]
   );
 
