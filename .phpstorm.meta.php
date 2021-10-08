@@ -7,7 +7,6 @@ namespace PHPSTORM_META {
 
 		// TODO: I'd like to use Plugin::SERVICES directly here but it doesn't seem to work.
 		map( [
-			'activation_flag'              => \Google\Web_Stories\Admin\Activation_Flag::class,
 			'activation_notice'            => \Google\Web_Stories\Admin\Activation_Notice::class,
 			'admin.google_fonts'           => \Google\Web_Stories\Admin\Google_Fonts::class,
 			'amp_output_buffer'            => \Google\Web_Stories\AMP\Output_Buffer::class,
