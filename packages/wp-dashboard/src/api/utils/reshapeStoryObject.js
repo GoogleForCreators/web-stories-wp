@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { REST_LINKS } from '../../constants';
+import { REST_LINKS } from '@web-stories-wp/dashboard';
 
 export default function reshapeStoryObject(originalStoryData) {
   const {
