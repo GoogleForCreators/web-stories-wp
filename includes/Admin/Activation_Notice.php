@@ -110,7 +110,6 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 		$this->delete_activation_flag( $network_wide );
 	}
 
-
 	/**
 	 * Enqueues assets for the plugin activation notice.
 	 *
