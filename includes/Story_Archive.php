@@ -175,8 +175,8 @@ class Story_Archive extends Service_Base {
 	 *
 	 * @return string[]|mixed Filtered post display states.
 	 */
-	public function filter_display_post_states( $post_states, WP_Post $post ) {
-		if ( ! is_array( $post_states ) ) {
+	public function filter_display_post_states( $post_states, $post ) {
+		if ( ! is_array( $post_states ) || ! $post ) {
 			return $post_states;
 		}
 
