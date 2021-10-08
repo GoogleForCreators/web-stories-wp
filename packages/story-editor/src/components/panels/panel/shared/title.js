@@ -216,6 +216,8 @@ function Title({
     <Icons.ChevronDownSmall />
   );
 
+  const hasCount = count === 0 || Boolean(count);
+
   return (
     <Header
       isPrimary={isPrimary}
@@ -252,7 +254,7 @@ function Title({
         >
           {children}
         </Heading>
-        {count !== undefined && (
+        {hasCount && (
           <Badge data-testid="panel-badge" digitLen={count.toString().length}>
             <Text as="span">{count}</Text>
           </Badge>
