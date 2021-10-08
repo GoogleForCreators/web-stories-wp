@@ -29,11 +29,11 @@ import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
-export function publisherLogoExistence(publisherLogo) {
+export function publisherLogoMissing(publisherLogo) {
   return !publisherLogo?.id;
 }
 
-const PublisherLogoExistence = () => {
+const PublisherLogoMissing = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const publisherLogo = useStory(({ state }) => state?.story?.publisherLogo);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
@@ -45,8 +45,8 @@ const PublisherLogoExistence = () => {
     [setHighlights]
   );
 
-  const isRendered = publisherLogoExistence(publisherLogo);
-  useRegisterCheck('PublisherLogoExistence', isRendered);
+  const isRendered = publisherLogoMissing(publisherLogo);
+  useRegisterCheck('PublisherLogoMissing', isRendered);
 
   const { footer, title } = PRIORITY_COPY.noPublisherLogo;
   return (
@@ -69,4 +69,4 @@ const PublisherLogoExistence = () => {
   );
 };
 
-export default PublisherLogoExistence;
+export default PublisherLogoMissing;

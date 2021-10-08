@@ -17,9 +17,9 @@
 /**
  * Internal dependencies
  */
-import { publisherLogoExistence } from '../publisherLogoExistence';
+import { publisherLogoMissing } from '../publisherLogoMissing';
 
-describe('publisherLogoExistence', () => {
+describe('publisherLogoMissing', () => {
   it("should return true if the story's publisher logo does not exist", () => {
     const noPublisherLogo = {
       height: 0,
@@ -27,6 +27,7 @@ describe('publisherLogoExistence', () => {
       url: '',
       width: 0,
     };
+
     const publisherLogo = {
       height: 100,
       id: 1,
@@ -34,9 +35,7 @@ describe('publisherLogoExistence', () => {
       width: 200,
     };
 
-    const testNoPublisherLogo = publisherLogoExistence(noPublisherLogo);
-    const testPublisherLogo = publisherLogoExistence(publisherLogo);
-    expect(testNoPublisherLogo).toBe(true);
-    expect(testPublisherLogo).toBe(false);
+    expect(publisherLogoMissing(noPublisherLogo)).toBe(true);
+    expect(publisherLogoMissing(publisherLogo)).toBe(false);
   });
 });
