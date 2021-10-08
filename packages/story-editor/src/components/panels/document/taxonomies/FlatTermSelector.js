@@ -33,12 +33,7 @@ import Tags, { deepEquals } from '../../../form/tags';
 import cleanForSlug from '../../../../utils/cleanForSlug';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { useHistory } from '../../../../app';
-import {
-  ContentHeading,
-  TaxonomyPropType,
-  WordCloud,
-  SiblingBorder,
-} from './shared';
+import { ContentHeading, TaxonomyPropType, WordCloud } from './shared';
 
 function FlatTermSelector({ taxonomy, canCreateTerms }) {
   const [mostUsed, setMostUsed] = useState([]);
@@ -152,7 +147,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
   }, [taxonomy, addSearchResultsToCache]);
 
   return (
-    <SiblingBorder>
+    <>
       <ContentHeading>{taxonomy.labels.name}</ContentHeading>
       <div key={taxonomy.slug}>
         <Tags.Label htmlFor={`${taxonomy.slug}-input`}>
@@ -203,7 +198,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
           </WordCloud.Wrapper>
         )}
       </div>
-    </SiblingBorder>
+    </>
   );
 }
 

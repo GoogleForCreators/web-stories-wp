@@ -64,6 +64,7 @@ export const SiblingBorder = styled.div`
   & + & {
     border-top: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
     padding-top: 16px;
+    padding-bottom: 8px;
   }
 `;
 
