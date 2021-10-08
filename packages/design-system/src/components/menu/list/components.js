@@ -41,17 +41,21 @@ export const ListItemLabel = styled.li`
   align-items: center;
 `;
 
-export const ListItem = styled.li(
-  ({ disabled, theme }) => css`
-    position: relative;
-    display: grid;
-    grid-template-columns: 32px 1fr;
-    padding: 6px 8px;
-    margin: 4px 8px;
+export const ListItem = styled.li`
+  position: relative;
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  padding: 6px 8px;
+  margin: 4px 8px;
+  align-items: center;
+  & > span:before {
+    color: ${({ theme }) => theme.colors.fg.tertiary};
+    content: ${({ $level }) =>
+      `'${Array.from({ length: $level }, () => '— ').join('')}'`};
+  }
+  ${({ disabled, theme }) => css`
     border-radius: ${theme.borders.radius.small};
-    align-items: center;
     cursor: ${disabled ? 'default' : 'pointer'};
-
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
     &:hover {
@@ -74,8 +78,8 @@ export const ListItem = styled.li(
     & > span {
       grid-column-start: 2;
     }
-  `
-);
+  `}
+`;
 
 export const ListItemDisplayText = styled(Text)(
   ({ theme }) => css`

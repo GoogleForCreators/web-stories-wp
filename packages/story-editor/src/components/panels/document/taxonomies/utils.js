@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import { buildOptionsTree } from '../../../form/hierarchical/utils';
 
-export { Menu } from './menu';
-export { DefaultListItem } from './list';
-export {
-  DROP_DOWN_ITEM,
-  DROP_DOWN_ITEMS,
-  NESTED_DROP_DOWN_ITEMS,
-  MENU_OPTIONS,
-} from './types';
-export { default as useDropDownMenu } from './useDropDownMenu';
+function flattenOptionTree(optionTree = [], level = 0) {
+  return optionTree.flatMap(({ options, ...option }) => [
+    {
+      ...option,
+      $level: level,
+    },
+    ...flattenOptionTree(options, level + 1),
+  ]);
+}
+
+export function makeFlatOptionTree(categories) {
+  const optionTree = buildOptionsTree(categories);
+  return flattenOptionTree(optionTree);
+}
