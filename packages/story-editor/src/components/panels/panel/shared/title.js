@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useContext } from '@web-stories-wp/react';
 import {
@@ -25,6 +25,7 @@ import {
   Icons,
   THEME_CONSTANTS,
   Headline,
+  Text,
   themeHelpers,
   ThemeGlobals,
 } from '@web-stories-wp/design-system';
@@ -37,6 +38,8 @@ import panelContext from '../context';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { focusStyle } from '../../shared';
 import DragHandle from './handle';
+
+const BADGE_DIAMETER = 22;
 
 // If the header is collapsed, we're leaving 8px less padding to apply that from the content.
 const Header = styled(Headline).attrs({
@@ -61,7 +64,6 @@ const Header = styled(Headline).attrs({
 const Heading = styled.span`
   color: ${({ theme, isCollapsed }) =>
     isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
-  width: 100%;
   display: flex;
   align-items: space-between;
   ${({ theme }) =>
@@ -73,6 +75,25 @@ const Heading = styled.span`
       theme,
     })};
 `;
+
+const Badge = styled.span(
+  ({ digitLen, theme }) => css`
+    position: relative;
+    height: ${BADGE_DIAMETER}px;
+    width: ${BADGE_DIAMETER + 8 * (digitLen - 1)}px;
+    margin-left: 12px;
+    border-radius: ${theme.borders.radius.round};
+    background-color: ${theme.colors.bg.primary};
+
+    * {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      line-height: 20px;
+    }
+  `
+);
 
 const HeaderActions = styled.div`
   display: flex;
@@ -97,6 +118,7 @@ const Collapse = styled.button`
   display: flex; /* removes implicit line-height padding from child element */
   padding: 0 4px 0 0;
   align-items: center;
+  justify-content: flex-start;
   cursor: pointer;
   margin-left: -12px;
   transition: ${BUTTON_TRANSITION_TIMING};
@@ -140,6 +162,7 @@ function Title({
   secondaryAction,
   isResizable,
   canCollapse,
+  count,
   ...props
 }) {
   const {
@@ -229,6 +252,11 @@ function Title({
         >
           {children}
         </Heading>
+        {count !== undefined && (
+          <Badge digitLen={count.toString().length}>
+            <Text as="span">{count}</Text>
+          </Badge>
+        )}
       </Toggle>
       {secondaryAction && <HeaderActions>{secondaryAction}</HeaderActions>}
     </Header>
@@ -246,6 +274,7 @@ Title.propTypes = {
     PropTypes.node,
   ]),
   canCollapse: PropTypes.bool,
+  count: PropTypes.number,
 };
 
 Title.defaultProps = {
