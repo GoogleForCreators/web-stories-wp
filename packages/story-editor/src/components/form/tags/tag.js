@@ -59,8 +59,8 @@ const Token = styled.span`
   display: flex;
   align-items: center;
   padding: 2px;
-  margin: 2px 4px;
-  max-width: calc(100% - 8px);
+  margin: 2px;
+  max-width: calc(100% - 4px);
   height: 32px;
 `;
 
