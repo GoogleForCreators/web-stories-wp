@@ -172,8 +172,6 @@ function useMediaUploadQueue() {
           ...newResource,
           poster: poster || newResource.poster || resource.poster,
           posterId,
-          isMuted: resource.isMuted,
-          isOptimized: resource.isOptimized,
         };
 
         if (resource.mimeType === 'image/gif') {
