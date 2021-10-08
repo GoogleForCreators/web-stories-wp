@@ -259,9 +259,6 @@ function useMediaUploadQueue() {
             }
           }
 
-          // Transcode/Optimize videos before upload.
-          // TODO: Only transcode & optimize video if needed (criteria TBD).
-          // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
           if (isTranscodingEnabled && canTranscodeFile(file)) {
             if (trimData) {
               startTrimming({ id });
@@ -294,6 +291,10 @@ function useMediaUploadQueue() {
                 return;
               }
             } else {
+              // Transcode/Optimize videos before upload.
+              // TODO: Only transcode & optimize video if needed (criteria TBD).
+              // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
+
               startTranscoding({ id });
 
               try {
