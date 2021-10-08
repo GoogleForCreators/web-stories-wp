@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useContext } from '@web-stories-wp/react';
 import {
@@ -25,9 +25,10 @@ import {
   Icons,
   THEME_CONSTANTS,
   Headline,
-  Text,
   themeHelpers,
   ThemeGlobals,
+  NotificationBubble,
+  BUBBLE_VARIANTS,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -38,8 +39,6 @@ import panelContext from '../context';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { focusStyle } from '../../shared';
 import DragHandle from './handle';
-
-const BADGE_DIAMETER = 22;
 
 // If the header is collapsed, we're leaving 8px less padding to apply that from the content.
 const Header = styled(Headline).attrs({
@@ -76,24 +75,9 @@ const Heading = styled.span`
     })};
 `;
 
-const Badge = styled.span(
-  ({ digitLen, theme }) => css`
-    position: relative;
-    height: ${BADGE_DIAMETER}px;
-    width: ${BADGE_DIAMETER + 8 * (digitLen - 1)}px;
-    margin-left: 12px;
-    border-radius: ${theme.borders.radius.round};
-    background-color: ${theme.colors.bg.primary};
-
-    * {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      line-height: 20px;
-    }
-  `
-);
+const StyledNotificationBubble = styled(NotificationBubble)`
+  margin-left: 12px;
+`;
 
 const HeaderActions = styled.div`
   display: flex;
@@ -255,9 +239,12 @@ function Title({
           {children}
         </Heading>
         {hasCount && (
-          <Badge data-testid="panel-badge" digitLen={count.toString().length}>
-            <Text as="span">{count}</Text>
-          </Badge>
+          <StyledNotificationBubble
+            data-testid="panel-badge"
+            notificationCount={count}
+            variant={BUBBLE_VARIANTS}
+            isSmall
+          />
         )}
       </Toggle>
       {secondaryAction && <HeaderActions>{secondaryAction}</HeaderActions>}
