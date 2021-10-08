@@ -31,9 +31,9 @@ describe('Page Templates', () => {
     await page.keyboard.press('ArrowLeft');
     await page.keyboard.press('Enter');
 
-    await expect(page).toMatchElement(
-      'button[aria-label="Save current page as template"][aria-disabled="true"]'
-    );
+    await expect(page).toMatchElement('button[aria-disabled="true"]', {
+      text: 'Save current page as template',
+    });
     await expect(page).toMatchElement(
       'button[aria-label="Select templates type"]'
     );
@@ -41,13 +41,13 @@ describe('Page Templates', () => {
 
     await addTextElement();
 
-    await expect(page).toMatchElement(
-      'button[aria-label="Save current page as template"][aria-disabled="false"]'
-    );
+    await expect(page).toMatchElement('button[aria-disabled="false"]', {
+      text: 'Save current page as template',
+    });
 
-    await expect(page).toClick(
-      'button[aria-label="Save current page as template"]'
-    );
+    await expect(page).toClick('button', {
+      text: 'Save current page as template',
+    });
 
     // Adding a custom page template automatically switches to the "Saved Templates" view.
 
