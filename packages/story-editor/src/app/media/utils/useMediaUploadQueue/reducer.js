@@ -268,6 +268,7 @@ export function finishMuting(state, { payload: { id, file } }) {
             resource: {
               ...item.resource,
               isMuting: false,
+              isMuted: true,
             },
           }
         : item

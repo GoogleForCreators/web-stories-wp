@@ -297,6 +297,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               foo: 'bar',
               isMuting: false,
+              isMuted: true,
             },
             state: 'MUTED',
           },
