@@ -461,6 +461,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               foo: 'bar',
               isTranscoding: false,
+              isOptimized: true,
             },
             state: 'TRANSCODED',
           },

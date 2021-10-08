@@ -211,6 +211,7 @@ export function finishTranscoding(state, { payload: { id, file } }) {
             resource: {
               ...item.resource,
               isTranscoding: false,
+              isOptimized: true,
             },
           }
         : item
