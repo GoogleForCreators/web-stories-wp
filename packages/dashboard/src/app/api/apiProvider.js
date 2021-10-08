@@ -18,13 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, createContext } from '@web-stories-wp/react';
+import { createContext } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import { useConfig } from '../config';
-import dataAdapter from './wpAdapter';
 import useMediaApi from './useMediaApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
@@ -36,77 +34,33 @@ import usePublisherLogosApi from './usePublisherLogosApi';
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
-  const { api, cdnURL, encodeMarkup } = useConfig();
+  const { currentUser, api: usersApi } = useUsersApi();
+  const { templates, api: templateApi } = useTemplateApi();
+  const { stories, api: storyApi } = useStoryApi();
+  const { media, api: mediaApi } = useMediaApi();
+  const { settings, api: settingsApi } = useSettingsApi();
+  const { api: pagesApi } = usePagesApi();
+  const { publisherLogos, api: publisherLogosApi } = usePublisherLogosApi();
 
-  const { currentUser, api: usersApi } = useUsersApi(dataAdapter, {
-    currentUserApi: api.currentUser,
-  });
-
-  const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
-    cdnURL,
-    templateApi: api.templates,
-    encodeMarkup,
-  });
-
-  const { stories, api: storyApi } = useStoryApi(dataAdapter, {
-    storyApi: api.stories,
-  });
-
-  const { media, api: mediaApi } = useMediaApi(dataAdapter, {
-    globalMediaApi: api.media,
-  });
-
-  const { settings, api: settingsApi } = useSettingsApi(dataAdapter, {
-    globalSettingsApi: api.settings,
-  });
-
-  const { api: pagesApi } = usePagesApi(dataAdapter, {
-    pagesApi: api.pages,
-  });
-
-  const { publisherLogos, api: publisherLogosApi } = usePublisherLogosApi(
-    dataAdapter,
-    {
-      globalPublisherLogosApi: api.publisherLogos,
-    }
-  );
-
-  const value = useMemo(
-    () => ({
-      state: {
-        media,
-        settings,
-        stories,
-        templates,
-        currentUser,
-        publisherLogos,
-      },
-      actions: {
-        mediaApi,
-        settingsApi,
-        storyApi,
-        templateApi,
-        usersApi,
-        pagesApi,
-        publisherLogosApi,
-      },
-    }),
-    [
+  const value = {
+    state: {
       media,
       settings,
       stories,
       templates,
       currentUser,
+      publisherLogos,
+    },
+    actions: {
       mediaApi,
       settingsApi,
       storyApi,
       templateApi,
       usersApi,
       pagesApi,
-      publisherLogos,
       publisherLogosApi,
-    ]
-  );
+    },
+  };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 }

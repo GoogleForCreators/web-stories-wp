@@ -59,6 +59,17 @@ async function loadTemplate(title, imageBaseUrl) {
         return elem;
       }),
     })),
+
+    postersByPage: data.default.pages.map((page, i) => {
+      const srcPath = `${imageBaseUrl}images/templates/${
+        data.default.slug
+      }/posters/${i + 1}`;
+      return {
+        webp: `${srcPath}.webp`,
+        png: `${srcPath}.png`,
+        type: data.default.pages[i].pageTemplateType,
+      };
+    }),
   };
 
   return {

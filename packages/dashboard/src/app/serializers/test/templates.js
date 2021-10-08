@@ -32,27 +32,14 @@ describe('reshapeTemplateObject', () => {
       pages: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
       creationDate: '2020-03-26T20:57:24',
       modified: '2020-03-26T20:57:24',
+      status: 'template',
     };
 
-    const reshapedObj = reshapeTemplateObject(responseObj, 'example.com/');
+    const reshapedObj = reshapeTemplateObject(responseObj, false);
 
     expect(reshapedObj).toMatchObject({
       id: 1,
       slug: 'template-1-slug',
-      postersByPage: {
-        0: {
-          webp: 'example.com/images/templates/template-1-slug/posters/1.webp',
-          png: 'example.com/images/templates/template-1-slug/posters/1.png',
-        },
-        1: {
-          webp: 'example.com/images/templates/template-1-slug/posters/2.webp',
-          png: 'example.com/images/templates/template-1-slug/posters/2.png',
-        },
-        2: {
-          webp: 'example.com/images/templates/template-1-slug/posters/3.webp',
-          png: 'example.com/images/templates/template-1-slug/posters/3.png',
-        },
-      },
       centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=1&isLocal=false`,
       creationDate: toDate('2020-03-26T20:57:24.000Z'),
       status: 'template',
@@ -66,7 +53,7 @@ describe('reshapeTemplateObject', () => {
         pages: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
         creationDate: '2020-03-26T20:57:24',
       },
-      'example.com/'
+      true
     );
 
     expect(reshapedObj).toBeNull();

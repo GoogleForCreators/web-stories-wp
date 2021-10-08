@@ -19,19 +19,13 @@
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
-
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
 import { useHighlights } from '../../../app/highlights';
 import { DESIGN_COPY, MAX_PAGE_CHARACTER_COUNT } from '../constants';
-import {
-  Thumbnail,
-  THUMBNAIL_TYPES,
-  THUMBNAIL_DIMENSIONS,
-} from '../../thumbnail';
-import PagePreview from '../../carousel/pagepreview';
+import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import {
   ChecklistCard,
   CARD_TYPE,
@@ -41,6 +35,7 @@ import {
   characterCountForPage,
   filterStoryPages,
   getVisibleThumbnails,
+  ThumbnailPagePreview,
 } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
@@ -112,15 +107,7 @@ const PageTooMuchText = () => {
                   })
                 }
                 type={THUMBNAIL_TYPES.PAGE}
-                displayBackground={
-                  <PagePreview
-                    page={page}
-                    width={THUMBNAIL_DIMENSIONS.WIDTH}
-                    height={THUMBNAIL_DIMENSIONS.HEIGHT}
-                    as="div"
-                    label={__('The offending page', 'web-stories')}
-                  />
-                }
+                displayBackground={<ThumbnailPagePreview page={page} />}
                 aria-label={__('Go to offending page', 'web-stories')}
               />
             ))}

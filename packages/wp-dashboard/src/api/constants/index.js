@@ -13,10 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { hasNoFeaturedMedia } from './hasNoFeaturedMedia';
-export { characterCountForPage } from './characterCountForPage';
-export { filterStoryPages } from './filterStoryPages';
-export { filterStoryElements } from './filterStoryElements';
-export { getVisibleThumbnails } from './getVisibleThumbnails';
-export { getSpansFromContent } from './getSpansFromContent';
-export { ThumbnailPagePreview } from './thumbnailPagePreview';
+export const STORY_FIELDS = [
+  'id',
+  'title',
+  'status',
+  'date',
+  'date_gmt',
+  'modified',
+  'modified_gmt',
+  'link',
+  'preview_link',
+  'edit_link',
+  // _web_stories_envelope will add these fields, we need them too.
+  'body',
+  'status',
+  'headers',
+].join(',');
+
+export const SEARCH_PAGES_FIELDS = ['id', 'title'];
+export const GET_PAGE_FIELDS = ['title', 'link'];
+
+export const STORY_EMBED = 'wp:lock,wp:lockuser,author,wp:featuredmedia';

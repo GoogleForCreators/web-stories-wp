@@ -117,7 +117,10 @@ function CarouselPage({ pageId, index }) {
   }
 
   return (
-    <ItemContainer ref={(el) => setPageRef(page, el)}>
+    <ItemContainer
+      ref={(el) => setPageRef(page, el)}
+      data-testid={`carousel-page-preview-${pageId}`}
+    >
       {index === 0 && (
         <PageSeparator
           position={0}

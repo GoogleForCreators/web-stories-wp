@@ -105,8 +105,8 @@ class Jetpack extends TestCase {
 		$this->assertArrayHasKey( 'mime_type', $data );
 		$this->assertSame( $data['mime_type'], 'video/mp4' );
 
-		$this->assertArrayHasKey( 'media_source', $data );
-		$this->assertSame( $data['media_source'], 'video-optimization' );
+		$this->assertArrayHasKey( $media_source::MEDIA_SOURCE_KEY, $data );
+		$this->assertSame( $data[ $media_source::MEDIA_SOURCE_KEY ], 'video-optimization' );
 
 		$this->assertArrayHasKey( 'source_url', $data );
 		$this->assertSame( $data['source_url'], self::ATTACHMENT_URL );
@@ -171,8 +171,8 @@ class Jetpack extends TestCase {
 		$this->assertArrayHasKey( 'subtype', $data );
 		$this->assertSame( $data['subtype'], 'mp4' );
 
-		$this->assertArrayHasKey( 'media_source', $data );
-		$this->assertSame( $data['media_source'], 'video-optimization' );
+		$this->assertArrayHasKey( $media_source::MEDIA_SOURCE_KEY, $data );
+		$this->assertSame( $data[ $media_source::MEDIA_SOURCE_KEY ], 'video-optimization' );
 
 		$this->assertArrayHasKey( 'url', $data );
 		$this->assertSame( $data['url'], self::ATTACHMENT_URL );
@@ -197,7 +197,16 @@ class Jetpack extends TestCase {
 		$allowed_mime_types[] = $jetpack::VIDEOPRESS_MIME_TYPE;
 		$args                 = [ 'post_mime_type' => $allowed_mime_types ];
 		$jetpack->filter_ajax_query_attachments_args( $args );
-		$this->assertSame( 15, has_filter( 'wp_prepare_attachment_for_js', [ $jetpack, 'filter_admin_ajax_response' ] ) );
+		$this->assertSame(
+			15,
+			has_filter(
+				'wp_prepare_attachment_for_js',
+				[
+					$jetpack,
+					'filter_admin_ajax_response',
+				] 
+			) 
+		);
 	}
 
 	/**

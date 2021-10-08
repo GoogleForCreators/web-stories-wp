@@ -241,7 +241,7 @@ class Jetpack extends Service_Base {
 	 */
 	protected function add_extra_data( array $data, $videopress_key ): array {
 		// Make video as optimized.
-		$data['media_source'] = 'video-optimization';
+		$data[ $this->media_source_taxonomy::MEDIA_SOURCE_KEY ] = 'video-optimization';
 
 		if ( isset( $data['media_details']['videopress'] ) ) {
 			$videopress = $data['media_details']['videopress'];
