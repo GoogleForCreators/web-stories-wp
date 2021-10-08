@@ -51,7 +51,6 @@ module.exports = function (config) {
       'karma-coverage-istanbul-reporter',
       require('@web-stories-wp/karma-puppeteer-launcher'),
       require('@web-stories-wp/karma-puppeteer-client'),
-      require('@web-stories-wp/karma-cuj-reporter'),
       require('@web-stories-wp/karma-failed-tests-reporter'),
     ],
 
@@ -104,7 +103,6 @@ module.exports = function (config) {
     reporters: [
       'spec',
       '@web-stories-wp/karma-failed-tests-reporter',
-      config.coverage && '@web-stories-wp/karma-cuj-reporter',
       config.coverage && 'coverage-istanbul',
     ].filter(Boolean),
 
@@ -151,10 +149,6 @@ module.exports = function (config) {
     coverageIstanbulReporter: {
       dir: 'build/logs/karma-coverage/edit-story',
       reports: ['text-summary', 'lcovonly'],
-    },
-
-    cujReporter: {
-      outputFile: 'build/cuj-coverage-edit-story.md',
     },
 
     failedTestsReporter: {

@@ -62,7 +62,6 @@
     "@web-stories-wp/design-system": "*",
     "@web-stories-wp/e2e-tests": "*",
     "@web-stories-wp/jest-amp": "*",
-    "@web-stories-wp/karma-cuj-reporter": "*",
     "@web-stories-wp/karma-failed-tests-reporter": "*",
     "@web-stories-wp/karma-puppeteer-client": "*",
     "@web-stories-wp/karma-puppeteer-launcher": "*",
