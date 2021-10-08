@@ -103,6 +103,9 @@ addDecorator((story, context) => {
           config={{
             api: { stories: 'stories' },
             editStoryURL: 'editStory',
+            apiCallbacks: {
+              getUser: () => Promise.resolve({ id: 1 }),
+            },
             isRTL,
           }}
         >
