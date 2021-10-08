@@ -14,8 +14,11 @@
         "@web-stories-wp/dashboard": "*",
         "@web-stories-wp/date": "*",
         "@web-stories-wp/design-system": "*",
+        "@web-stories-wp/patterns": "*",
         "@web-stories-wp/react": "*",
+        "@web-stories-wp/story-editor": "*",
         "@web-stories-wp/tracking": "*",
+        "@wordpress/api-fetch": "^5.2.1",
         "flagged": "^2.0.1"
     },
     "devDependencies": {}
