@@ -24,15 +24,29 @@ import PropTypes from 'prop-types';
  */
 import { themeHelpers } from '../../theme';
 
+export const BADGE_VARIANTS = {
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
+  TERTIARY: 'tertiary',
+  QUATERNARY: 'quaternary',
+  POSITIVE: 'positive',
+  NEGATIVE: 'negative',
+  ACCENT: 'accent',
+};
+
+const BUBBLE_DIAMETER = 24;
+
 const Bubble = styled.div`
-  ${({ theme }) => css`
+  ${({ theme, variant }) => css`
     color: ${theme.colors.fg.primary};
-    background-color: ${theme.colors.accent.primary};
+    background-color: ${variant === 'accent'
+      ? theme.colors.accent.primary
+      : theme.colors.bg[variant]};
     border-radius: ${theme.borders.radius.round};
   `}
   position: relative;
   height: 24px;
-  width: 24px;
+  width: ${({ digitLen }) => BUBBLE_DIAMETER + 9 * (digitLen - 1)}px;
 
   ${({ isSmall }) =>
     isSmall &&
@@ -56,13 +70,20 @@ const Inner = styled.span`
 export const NotificationBubble = ({
   notificationCount,
   isSmall,
+  variant = BADGE_VARIANTS.ACCENT,
   ...props
 }) => (
-  <Bubble isSmall={isSmall} {...props}>
+  <Bubble
+    variant={variant}
+    isSmall={isSmall}
+    digitLen={notificationCount?.toString().length || 1}
+    {...props}
+  >
     <Inner isSmall={isSmall}>{notificationCount}</Inner>
   </Bubble>
 );
 NotificationBubble.propTypes = {
   notificationCount: PropTypes.number,
   isSmall: PropTypes.bool,
+  variant: PropTypes.oneOf(Object.values(BADGE_VARIANTS)),
 };
