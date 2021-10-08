@@ -189,7 +189,7 @@ class Muting extends Service_Base {
 		$meta_key  = self::IS_MUTED_POST_META_KEY;
 		$meta_type = 'post';
 
-		if ( ! current_user_can( "edit_{$meta_type}_meta", $object_id, $meta_key ) ) {
+		if ( ! current_user_can( 'edit_post_meta', $object_id, $meta_key ) ) {
 			return new WP_Error(
 				'rest_cannot_update',
 				/* translators: %s: Custom field key.**/
@@ -201,6 +201,10 @@ class Muting extends Service_Base {
 			);
 		}
 
-		return (bool) update_metadata( $meta_type, $object_id, $meta_key, (int) $value );
+		$value = rest_sanitize_boolean( $value );
+
+		update_post_meta( $object_id, $meta_key, $value );
+
+		return true;
 	}
 }
