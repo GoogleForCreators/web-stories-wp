@@ -30,7 +30,7 @@ import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function publisherLogoExistence(publisherLogo) {
-  return !(publisherLogo?.id || publisherLogo?.url);
+  return !publisherLogo?.url && !publisherLogo?.height && !publisherLogo?.width;
 }
 
 const PublisherLogoExistence = () => {

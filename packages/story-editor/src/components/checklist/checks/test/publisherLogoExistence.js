@@ -28,10 +28,10 @@ describe('publisherLogoExistence', () => {
       width: 0,
     };
     const publisherLogo = {
-      height: 0,
+      height: 100,
       id: 1,
       url: 'test',
-      width: 0,
+      width: 200,
     };
 
     const testNoPublisherLogo = publisherLogoExistence(noPublisherLogo);
