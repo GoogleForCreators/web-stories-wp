@@ -253,7 +253,7 @@ function Title({
           {children}
         </Heading>
         {count !== undefined && (
-          <Badge digitLen={count.toString().length}>
+          <Badge data-testid="panel-badge" digitLen={count.toString().length}>
             <Text as="span">{count}</Text>
           </Badge>
         )}
