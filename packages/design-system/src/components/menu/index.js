@@ -15,7 +15,6 @@
  */
 
 export { Menu } from './menu';
-export { DefaultListItem } from './list';
 export {
   DROP_DOWN_ITEM,
   DROP_DOWN_ITEMS,
