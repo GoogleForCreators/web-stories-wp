@@ -48,11 +48,13 @@ export const ListItem = styled.li`
   padding: 6px 8px;
   margin: 4px 8px;
   align-items: center;
+
   & > span:before {
     color: ${({ theme }) => theme.colors.fg.tertiary};
     content: ${({ $level }) =>
       `'${Array.from({ length: $level }, () => '— ').join('')}'`};
   }
+
   ${({ disabled, theme }) => css`
     border-radius: ${theme.borders.radius.small};
     cursor: ${disabled ? 'default' : 'pointer'};
