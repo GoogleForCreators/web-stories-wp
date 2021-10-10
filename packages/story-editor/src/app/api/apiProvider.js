@@ -53,6 +53,7 @@ function APIProvider({ children }) {
     saveStoryById,
     autoSaveById,
     getMedia,
+    getMediaById,
     uploadMedia,
     updateMedia,
     deleteMedia,
@@ -117,6 +118,11 @@ function APIProvider({ children }) {
     ({ mediaType, searchTerm, pagingNum, cacheBust }) =>
       getMedia({ mediaType, searchTerm, pagingNum, cacheBust }, media),
     [media, getMedia]
+  );
+
+  actions.getMediaById = useCallback(
+    (mediaId) => getMediaById(mediaId, media),
+    [getMediaById, media]
   );
 
   actions.uploadMedia = useCallback(
