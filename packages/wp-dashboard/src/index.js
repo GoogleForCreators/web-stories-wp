@@ -35,6 +35,11 @@ import { setLocaleData } from '@web-stories-wp/i18n';
 import { FlagsProvider } from 'flagged';
 
 /**
+ * Internal dependencies
+ */
+import * as apiCallbacks from './api';
+
+/**
  * Initializes the Web Stories dashboard screen.
  *
  * @param {string} id       ID of the root element to render the screen in.
@@ -56,10 +61,15 @@ const initialize = async (id, config, flags) => {
   // Already tracking screen views in AppContent, no need to send page views as well.
   await initializeTracking('Dashboard', false);
 
+  const dashboardConfig = {
+    ...config,
+    apiCallbacks,
+  };
+
   render(
     <FlagsProvider features={flags}>
       <StrictMode>
-        <Dashboard config={config}>
+        <Dashboard config={dashboardConfig}>
           <InterfaceSkeleton />
         </Dashboard>
       </StrictMode>

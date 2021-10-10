@@ -22,7 +22,7 @@ import { MASKS } from '../constants';
 describe('Masks', () => {
   it('every path should end with a closepath function', () => {
     Object.values(MASKS).map((mask) =>
-      expect(mask.path.toUpperCase().endsWith('Z')).toStrictEqual(true)
+      expect(mask.path.toUpperCase().endsWith('Z')).toBe(true)
     );
   });
 });

@@ -241,7 +241,7 @@ function useMediaUploadQueue() {
             try {
               newFile = await convertGifToVideo(file);
               finishTranscoding({ id, file: newFile });
-              additionalData.media_source = 'gif-conversion';
+              additionalData.web_stories_media_source = 'gif-conversion';
               additionalData.is_muted = true;
             } catch (error) {
               // Cancel uploading if there were any errors.
@@ -299,7 +299,7 @@ function useMediaUploadQueue() {
               try {
                 newFile = await transcodeVideo(file);
                 finishTranscoding({ id, file: newFile });
-                additionalData.media_source = 'video-optimization';
+                additionalData.web_stories_media_source = 'video-optimization';
               } catch (error) {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });

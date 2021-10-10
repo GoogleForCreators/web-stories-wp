@@ -36,6 +36,14 @@ describe('Get Started Story', () => {
       await page.waitForSelector('[data-testid="mediaElement-image"]');
       await page.waitForSelector('[data-testid="frameElement"]');
 
+      // Wait for skeleton thumbnails in the carousel to render before taking a screenshot.
+      await page.waitForFunction(
+        () =>
+          !document.querySelector(
+            'li[data-testid^="carousel-page-preview-skeleton"]'
+          ),
+        { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
+      );
       await percySnapshot(page, 'Get Started Story');
     });
   });
@@ -49,6 +57,14 @@ describe('Get Started Story', () => {
         'post_type=web-story&web-stories-demo=1'
       );
 
+      // Wait for skeleton thumbnails in the carousel to render before taking a screenshot.
+      await page.waitForFunction(
+        () =>
+          !document.querySelector(
+            'li[data-testid^="carousel-page-preview-skeleton"]'
+          ),
+        { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
+      );
       await percySnapshot(page, 'Get Started Story (Author)');
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');

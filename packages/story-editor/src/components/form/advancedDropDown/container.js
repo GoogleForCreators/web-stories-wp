@@ -40,7 +40,7 @@ const Container = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  min-width: 160px;
+  min-width: 120px;
   z-index: 2;
   background-color: ${({ theme }) => theme.colors.bg.primary};
   border-radius: ${({ theme }) => theme.borders.radius.small};

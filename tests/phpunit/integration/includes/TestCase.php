@@ -45,8 +45,6 @@ abstract class TestCase extends PolyfilledTestCase {
 			$_SERVER['HTTPS']
 		);
 
-		$this->clean_up_global_scope();
-
 		$this->set_permalink_structure( '' );
 
 		$_SERVER['REQUEST_URI'] = '';

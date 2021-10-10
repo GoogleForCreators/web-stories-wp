@@ -36,6 +36,8 @@ function Slider({
   value = 0,
   onChange = () => {},
   getValueText = null,
+  onPointerDown = () => {},
+  onNudge = () => {},
   ...rest
 }) {
   const ref = useRef();
@@ -46,6 +48,8 @@ function Slider({
       downEvent.preventDefault();
       downEvent.stopPropagation();
       ref.current.focus();
+
+      onPointerDown?.();
 
       const handlePointerMove = function (event) {
         const deltaX = event.pageX - downEvent.pageX;
@@ -68,12 +72,15 @@ function Slider({
 
       return handlePointerUp;
     },
-    [value, max, min, onChange, railWidth]
+    [value, max, min, onChange, railWidth, onPointerDown]
   );
 
   const handleNudge = useCallback(
-    (delta) => onChange(value + delta),
-    [onChange, value]
+    (delta) => {
+      onChange(value + delta);
+      onNudge?.();
+    },
+    [onChange, onNudge, value]
   );
 
   useKeyDownEffect(ref, 'left', () => handleNudge(-step), [handleNudge, step]);
@@ -88,12 +95,14 @@ function Slider({
   ]);
 
   const ratio = (value - min) / (max - min);
+  const cssValue = `${(ratio * railWidth).toFixed(2)}px`;
+  const sliderStyle = { left: cssValue };
 
   return (
     <Thumb
       ref={ref}
       onPointerDown={handlePointerDown}
-      style={{ left: `${(ratio * railWidth).toFixed(2)}px` }}
+      style={sliderStyle}
       role="slider"
       aria-valuemin={min}
       aria-valuemax={max}
@@ -113,6 +122,8 @@ Slider.propTypes = {
   value: PropTypes.number,
   onChange: PropTypes.func,
   getValueText: PropTypes.func,
+  onPointerDown: PropTypes.func,
+  onNudge: PropTypes.func,
 };
 
 export default Slider;

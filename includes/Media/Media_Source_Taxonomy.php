@@ -31,7 +31,6 @@ use Google\Web_Stories\Taxonomy\Taxonomy_Base;
 use Google\Web_Stories\Traits\Screen;
 use WP_Query;
 use WP_Post;
-use WP_REST_Request;
 
 /**
  * Class Media_Source_Taxonomy
@@ -54,6 +53,13 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @var string
 	 */
 	protected $taxonomy_post_type = 'attachment';
+
+	/**
+	 * Media Source key.
+	 *
+	 * @var string
+	 */
+	const MEDIA_SOURCE_KEY = 'web_stories_media_source';
 
 	/**
 	 * Init.
@@ -105,12 +111,12 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		// Custom field, as built in term update require term id and not slug.
 		register_rest_field(
 			$this->taxonomy_post_type,
-			'media_source',
+			self::MEDIA_SOURCE_KEY,
 			[
 
 				'get_callback'    => [ $this, 'get_callback_media_source' ],
 				'schema'          => [
-					'description' => __( 'Media source. ', 'web-stories' ),
+					'description' => __( 'Media source.', 'web-stories' ),
 					'type'        => 'string',
 					'enum'        => [
 						'editor',
@@ -141,7 +147,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		if ( ! is_array( $response ) ) {
 			return $response;
 		}
-		$response['media_source'] = $this->get_callback_media_source( $response );
+		$response[ self::MEDIA_SOURCE_KEY ] = $this->get_callback_media_source( $response );
 
 		return $response;
 	}

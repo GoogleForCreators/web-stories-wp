@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Media;
 
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_Query;
 use WP_REST_Request;
@@ -24,43 +25,54 @@ use WP_REST_Request;
 /**
  * @coversDefaultClass \Google\Web_Stories\Media\Media_Source_Taxonomy
  */
-class Media_Source_Taxonomy extends TestCase {
+class Media_Source_Taxonomy extends DependencyInjectedTestCase {
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Media\Media_Source_Taxonomy
+	 */
+	private $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Media\Media_Source_Taxonomy::class );
+	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$media_source->register();
+		$this->instance->register();
 
-		$this->assertSame( 10, has_action( 'rest_api_init', [ $media_source, 'rest_api_init' ] ) );
+		$this->assertSame( 10, has_action( 'rest_api_init', [ $this->instance, 'rest_api_init' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
 				'wp_prepare_attachment_for_js',
 				[
-					$media_source,
+					$this->instance,
 					'wp_prepare_attachment_for_js',
-				] 
-			) 
+				]
+			)
 		);
 		$this->assertSame(
 			10,
 			has_filter(
 				'ajax_query_attachments_args',
 				[
-					$media_source,
+					$this->instance,
 					'filter_ajax_query_attachments_args',
-				] 
-			) 
+				]
+			)
 		);
-		$this->assertSame( 10, has_filter( 'pre_get_posts', [ $media_source, 'filter_generated_media_attachments' ] ) );
+		$this->assertSame( 10, has_filter( 'pre_get_posts', [ $this->instance, 'filter_generated_media_attachments' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
 				'web_stories_rest_attachment_query',
 				[
-					$media_source,
+					$this->instance,
 					'filter_rest_generated_media_attachments',
 				]
 			)
@@ -71,19 +83,17 @@ class Media_Source_Taxonomy extends TestCase {
 	 * @covers ::register_taxonomy
 	 */
 	public function test_register_taxonomy() {
-		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$this->call_private_method( $media_source, 'register_taxonomy' );
+		$this->call_private_method( $this->instance, 'register_taxonomy' );
 
-		$this->assertTrue( taxonomy_exists( $media_source->get_taxonomy_slug() ) );
+		$this->assertTrue( taxonomy_exists( $this->instance->get_taxonomy_slug() ) );
 	}
 
 	/**
 	 * @covers ::rest_api_init
 	 */
 	public function test_rest_api_init() {
-		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -102,14 +112,14 @@ class Media_Source_Taxonomy extends TestCase {
 		);
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		wp_set_object_terms( $video_attachment_id, 'editor', $media_source->get_taxonomy_slug() );
+		wp_set_object_terms( $video_attachment_id, 'editor', $this->instance->get_taxonomy_slug() );
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/media/%d', $video_attachment_id ) );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/wp/v2/media/%d', $video_attachment_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		$this->assertArrayHasKey( 'media_source', $data );
-		$this->assertEquals( 'editor', $data['media_source'] );
+		$this->assertArrayHasKey( $this->instance::MEDIA_SOURCE_KEY, $data );
+		$this->assertEquals( 'editor', $data[ $this->instance::MEDIA_SOURCE_KEY ] );
 	}
 
 	/**
@@ -136,8 +146,7 @@ class Media_Source_Taxonomy extends TestCase {
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
-		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$image        = $media_source->wp_prepare_attachment_for_js(
+		$image = $this->instance->wp_prepare_attachment_for_js(
 			[
 				'id'   => $poster_attachment_id,
 				'type' => 'image',
@@ -145,7 +154,7 @@ class Media_Source_Taxonomy extends TestCase {
 			],
 			get_post( $poster_attachment_id )
 		);
-		$video        = $media_source->wp_prepare_attachment_for_js(
+		$video = $this->instance->wp_prepare_attachment_for_js(
 			[
 				'id'   => $video_attachment_id,
 				'type' => 'video',
@@ -156,17 +165,17 @@ class Media_Source_Taxonomy extends TestCase {
 
 		$this->assertEqualSets(
 			[
-				'type'         => 'image',
-				'media_source' => '',
-				'id'           => $poster_attachment_id,
-				'url'          => wp_get_attachment_url( $poster_attachment_id ),
+				'type'                     => 'image',
+				'web_stories_media_source' => '',
+				'id'                       => $poster_attachment_id,
+				'url'                      => wp_get_attachment_url( $poster_attachment_id ),
 
 			],
 			$image
 		);
 
-		$this->assertArrayHasKey( 'media_source', $image );
-		$this->assertArrayHasKey( 'media_source', $video );
+		$this->assertArrayHasKey( $this->instance::MEDIA_SOURCE_KEY, $image );
+		$this->assertArrayHasKey( $this->instance::MEDIA_SOURCE_KEY, $video );
 	}
 
 	/**
@@ -174,8 +183,7 @@ class Media_Source_Taxonomy extends TestCase {
 	 * @covers ::get_exclude_tax_query
 	 */
 	public function test_filter_ajax_query_attachments_args() {
-		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$tax_slug     = $media_source->get_taxonomy_slug();
+		$tax_slug = $this->instance->get_taxonomy_slug();
 
 		$expected = [
 			'tax_query' => [
@@ -189,7 +197,7 @@ class Media_Source_Taxonomy extends TestCase {
 		];
 
 
-		$actual = $media_source->filter_ajax_query_attachments_args( [] );
+		$actual = $this->instance->filter_ajax_query_attachments_args( [] );
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
@@ -199,9 +207,9 @@ class Media_Source_Taxonomy extends TestCase {
 	 * @covers ::get_exclude_tax_query
 	 */
 	public function test_filter_ajax_query_attachments_args_existing_tax_query() {
-		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$tax_slug     = $media_source->get_taxonomy_slug();
-		$expected     = [
+		$tax_slug = $this->instance->get_taxonomy_slug();
+
+		$expected = [
 			'tax_query' => [
 				[
 					'taxonomy' => $tax_slug,
@@ -221,7 +229,7 @@ class Media_Source_Taxonomy extends TestCase {
 		];
 
 
-		$actual = $media_source->filter_ajax_query_attachments_args(
+		$actual = $this->instance->filter_ajax_query_attachments_args(
 			[
 				'tax_query' => [
 					[
@@ -244,8 +252,7 @@ class Media_Source_Taxonomy extends TestCase {
 		$query    = new WP_Query();
 		$expected = $query->get( 'tax_query' );
 
-		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$media_source->filter_generated_media_attachments( $query );
+		$this->instance->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
 		$this->assertSame( $expected, $actual );
@@ -260,8 +267,8 @@ class Media_Source_Taxonomy extends TestCase {
 		$query    = new WP_Query();
 		$expected = $query->get( 'tax_query' );
 
-		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$media_source->filter_generated_media_attachments( $query );
+
+		$this->instance->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
 		$this->assertSame( $expected, $actual );
@@ -277,8 +284,7 @@ class Media_Source_Taxonomy extends TestCase {
 		$GLOBALS['wp_the_query'] = $query;
 		$expected                = $query->get( 'tax_query' );
 
-		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$media_source->filter_generated_media_attachments( $query );
+		$this->instance->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
 		$this->assertSame( $expected, $actual );
@@ -288,10 +294,10 @@ class Media_Source_Taxonomy extends TestCase {
 	 * @covers ::filter_generated_media_attachments
 	 */
 	public function test_filter_generated_media_attachmentss() {
-		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$expected     = [
+
+		$expected = [
 			[
-				'taxonomy' => $media_source->get_taxonomy_slug(),
+				'taxonomy' => $this->instance->get_taxonomy_slug(),
 				'field'    => 'slug',
 				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 				'operator' => 'NOT IN',
@@ -322,7 +328,7 @@ class Media_Source_Taxonomy extends TestCase {
 			]
 		);
 
-		$media_source->filter_generated_media_attachments( $query );
+		$this->instance->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
@@ -332,9 +338,9 @@ class Media_Source_Taxonomy extends TestCase {
 	 * @covers ::filter_rest_generated_media_attachments
 	 */
 	public function test_filter_rest_generated_media_attachments() {
-		$media_source = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$tax_slug     = $media_source->get_taxonomy_slug();
-		$expected     = [
+		$tax_slug = $this->instance->get_taxonomy_slug();
+
+		$expected = [
 			'tax_query' => [
 				[
 					'taxonomy' => $tax_slug,
@@ -345,7 +351,7 @@ class Media_Source_Taxonomy extends TestCase {
 			],
 		];
 
-		$actual = $media_source->filter_rest_generated_media_attachments( [] );
+		$actual = $this->instance->filter_rest_generated_media_attachments( [] );
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}

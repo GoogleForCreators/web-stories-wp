@@ -48,6 +48,7 @@ describe('Hierarchical', () => {
         label="Categories"
         options={OPTIONS_WITH_NO_CHILDREN}
         onChange={noop}
+        noOptionsText="no options found"
       />
     );
     const input = screen.getByRole('searchbox');
@@ -68,7 +69,12 @@ describe('Hierarchical', () => {
 
   it('typing in the list should filter nested options', () => {
     renderWithProviders(
-      <Hierarchical label="Categories" options={OPTIONS} onChange={noop} />
+      <Hierarchical
+        label="Categories"
+        options={OPTIONS}
+        onChange={noop}
+        noOptionsText="no options found"
+      />
     );
     const input = screen.getByRole('searchbox');
 
@@ -91,7 +97,12 @@ describe('Hierarchical', () => {
     const onChange = jest.fn();
 
     renderWithProviders(
-      <Hierarchical label="Categories" options={OPTIONS} onChange={onChange} />
+      <Hierarchical
+        label="Categories"
+        options={OPTIONS}
+        onChange={onChange}
+        noOptionsText="no options found"
+      />
     );
 
     const initialCheckboxLength = screen.getAllByRole('checkbox').length;
@@ -138,7 +149,12 @@ describe('Hierarchical', () => {
     const onChange = jest.fn();
 
     renderWithProviders(
-      <Hierarchical label="Categories" options={OPTIONS} onChange={onChange} />
+      <Hierarchical
+        label="Categories"
+        options={OPTIONS}
+        onChange={onChange}
+        noOptionsText="no options found"
+      />
     );
 
     const input = screen.getByRole('searchbox');

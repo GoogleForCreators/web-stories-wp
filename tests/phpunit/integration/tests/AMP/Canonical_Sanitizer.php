@@ -34,9 +34,6 @@ class Canonical_Sanitizer extends TestCase {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
-	}
 	/**
 	 * @covers ::sanitize
 	 */

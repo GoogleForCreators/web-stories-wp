@@ -36,6 +36,7 @@ function APIProvider({ children }) {
       hotlink,
       link,
       users,
+      publisherLogos,
       currentUser,
       pageTemplates: customPageTemplates,
       taxonomies,
@@ -52,11 +53,14 @@ function APIProvider({ children }) {
     saveStoryById,
     autoSaveById,
     getMedia,
+    getMediaById,
     uploadMedia,
     updateMedia,
     deleteMedia,
     getLinkMetadata,
     getAuthors,
+    getPublisherLogos,
+    addPublisherLogo,
     getCurrentUser,
     updateCurrentUser,
     getCustomPageTemplates,
@@ -116,6 +120,11 @@ function APIProvider({ children }) {
     [media, getMedia]
   );
 
+  actions.getMediaById = useCallback(
+    (mediaId) => getMediaById(mediaId, media),
+    [getMediaById, media]
+  );
+
   actions.uploadMedia = useCallback(
     (file, additionalData) => uploadMedia(file, additionalData, media),
     [media, uploadMedia]
@@ -134,6 +143,16 @@ function APIProvider({ children }) {
   actions.getHotlinkInfo = useCallback(
     (url) => getHotlinkInfo(url, hotlink),
     [hotlink, getHotlinkInfo]
+  );
+
+  actions.getPublisherLogos = useCallback(
+    () => getPublisherLogos(publisherLogos),
+    [getPublisherLogos, publisherLogos]
+  );
+
+  actions.addPublisherLogo = useCallback(
+    (id) => addPublisherLogo(publisherLogos, id),
+    [addPublisherLogo, publisherLogos]
   );
 
   actions.getLinkMetadata = useCallback(

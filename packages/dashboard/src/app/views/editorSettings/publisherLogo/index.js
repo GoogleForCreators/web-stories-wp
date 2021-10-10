@@ -56,6 +56,10 @@ export const TEXT = {
     'Click on logo to set as default if you want that logo to be used on default logo for all your stories.',
     'web-stories'
   ),
+  REMOVAL: __(
+    "Removing a logo from your settings won't remove it from any stories using that logo.",
+    'web-stories'
+  ),
   INSTRUCTIONS: __(
     'Avoid vector files, such as svg or eps. Logos should be at least 96x96 pixels and a perfect square. The background should not be transparent.',
     'web-stories'
@@ -167,6 +171,9 @@ function PublisherLogoSettings({
         </SettingSubheading>
         <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
           {TEXT.CLICK_CONTEXT}
+        </SettingSubheading>
+        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {TEXT.REMOVAL}
         </SettingSubheading>
       </div>
       <div ref={containerRef} data-testid="publisher-logos-container">

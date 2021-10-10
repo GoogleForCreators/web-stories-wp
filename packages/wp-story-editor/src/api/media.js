@@ -27,7 +27,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { flattenFormData, getResourceFromAttachment } from './utils';
-import { MEDIA_FIELD } from './constants';
+import { MEDIA_FIELDS } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
 export function getMedia(
@@ -36,10 +36,10 @@ export function getMedia(
 ) {
   let apiPath = addQueryArgs(media, {
     context: 'edit',
-    per_page: 10,
+    per_page: 50,
     page: pagingNum,
     _web_stories_envelope: true,
-    _fields: MEDIA_FIELD,
+    _fields: MEDIA_FIELDS,
   });
 
   if (mediaType) {
@@ -67,6 +67,22 @@ export function getMedia(
       totalPages: headers['X-WP-TotalPages'],
     },
   }));
+}
+
+/**
+ * Get media by ID.
+ *
+ * @param {number} mediaId Media ID.
+ * @param {Object} media   Media object.
+ * @return {Promise} Media object promise.
+ */
+export function getMediaById(mediaId, media) {
+  const path = addQueryArgs(`${media}${mediaId}/`, {
+    context: 'edit',
+    _fields: MEDIA_FIELDS,
+  });
+
+  return apiFetch({ path }).then(getResourceFromAttachment);
 }
 
 /**

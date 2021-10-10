@@ -26,8 +26,8 @@ describe('getInsertedElementSize', () => {
       y: 10,
       content: 'Hello, Stories',
     });
-    expect(width).toStrictEqual(100);
-    expect(height).toStrictEqual(100);
+    expect(width).toBe(100);
+    expect(height).toBe(100);
   });
 
   it('should generate size if not set', () => {

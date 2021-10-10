@@ -279,7 +279,7 @@ describe('StoryAnimation.Provider', () => {
       expect(play).toHaveBeenCalledTimes(numCalls);
       expect(pause).toHaveBeenCalledTimes(numCalls);
       animations.forEach((animation) => {
-        expect(animation.currentTime).toStrictEqual(200);
+        expect(animation.currentTime).toBe(200);
       });
     });
 

@@ -27,6 +27,7 @@ import { getMediaSizePositionProps } from '@web-stories-wp/media';
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
+import CircularProgress from '../../components/circularProgress';
 import PlayPauseButton from './playPauseButton';
 import { getBackgroundStyle, videoWithScale } from './util';
 
@@ -43,10 +44,18 @@ const Wrapper = styled.div`
   position: absolute;
 `;
 
+const Spinner = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 function VideoTrim({ box, element }) {
   const { width, height } = box;
-  const { poster, resource, tracks, isBackground, scale, focalX, focalY } =
-    element;
+  const { poster, tracks, isBackground, scale, focalX, focalY } = element;
   const wrapperRef = useRef();
   const videoRef = useRef();
   let style = {};
@@ -56,6 +65,39 @@ function VideoTrim({ box, element }) {
       ...style,
       ...styleProps,
     };
+  }
+
+  const { resource, setVideoNode } = useVideoTrim(
+    ({ state: { videoData }, actions: { setVideoNode } }) => ({
+      setVideoNode,
+      resource: videoData?.resource,
+    })
+  );
+
+  const boxAtOrigin = useMemo(
+    () => ({
+      ...box,
+      x: 0,
+      y: 0,
+    }),
+    [box]
+  );
+  const setRef = useCallback(
+    (node) => {
+      videoRef.current = node;
+      setVideoNode(node);
+    },
+    [setVideoNode]
+  );
+
+  if (!resource) {
+    return (
+      <Wrapper>
+        <Spinner>
+          <CircularProgress />
+        </Spinner>
+      </Wrapper>
+    );
   }
 
   const videoProps = getMediaSizePositionProps(
@@ -69,26 +111,6 @@ function VideoTrim({ box, element }) {
 
   videoProps.crossOrigin = 'anonymous';
 
-  const boxAtOrigin = useMemo(
-    () => ({
-      ...box,
-      x: 0,
-      y: 0,
-    }),
-    [box]
-  );
-
-  const { setVideoNode } = useVideoTrim(({ actions: { setVideoNode } }) => ({
-    setVideoNode,
-  }));
-  const setRef = useCallback(
-    (node) => {
-      videoRef.current = node;
-      setVideoNode(node);
-    },
-    [setVideoNode]
-  );
-
   return (
     <>
       <Wrapper ref={wrapperRef}>
@@ -98,12 +120,12 @@ function VideoTrim({ box, element }) {
           showPlaceholder
           previewMode={false}
         >
+          {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- False positive. */}
           <Video
             poster={poster || resource.poster}
             style={style}
             {...videoProps}
             preload="metadata"
-            muted
             autoPlay
             tabIndex={0}
             ref={setRef}

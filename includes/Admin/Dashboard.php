@@ -243,13 +243,23 @@ class Dashboard extends Service_Base {
 			'/web-stories/v1/users/me/',
 			"/web-stories/v1/$rest_base/?" . build_query(
 				[
-					'_embed'                => rawurlencode( 'wp:lock,wp:lockuser,author,wp:featuredmedia' ),
+					'_embed'                => rawurlencode(
+						implode(
+							',',
+							[ 'wp:lock', 'wp:lockuser', 'author', 'wp:featuredmedia' ]
+						)
+					),
 					'context'               => 'edit',
 					'order'                 => 'desc',
 					'orderby'               => 'modified',
 					'page'                  => 1,
 					'per_page'              => 24,
-					'status'                => rawurlencode( 'publish,draft,future,private' ),
+					'status'                => rawurlencode(
+						implode(
+							',',
+							[ 'draft', 'future', 'pending', 'publish', 'private' ]
+						)
+					),
 					'_web_stories_envelope' => 'true',
 					'_fields'               => rawurlencode(
 						implode(

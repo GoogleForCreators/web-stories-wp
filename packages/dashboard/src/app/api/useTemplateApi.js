@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
+import { useCallback, useReducer } from '@web-stories-wp/react';
 import { compareDesc } from '@web-stories-wp/date';
 import getAllTemplates from '@web-stories-wp/templates';
 /**
@@ -28,11 +28,11 @@ import templateReducer, {
   ACTION_TYPES as TEMPLATE_ACTION_TYPES,
 } from '../reducer/templates';
 import { reshapeTemplateObject } from '../serializers';
+import { useConfig } from '../config';
 
-const useTemplateApi = (dataAdapter, config) => {
+const useTemplateApi = () => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
-
-  const { cdnURL } = config;
+  const { cdnURL } = useConfig();
 
   const fetchExternalTemplates = useCallback(async () => {
     dispatch({
@@ -44,7 +44,7 @@ const useTemplateApi = (dataAdapter, config) => {
 
     const reshapedTemplates = (await getAllTemplates({ cdnURL }))
       .map((template) => {
-        const reshapedTemplate = reshapeTemplateObject(template, cdnURL);
+        const reshapedTemplate = reshapeTemplateObject(template);
 
         reshapedTemplate.tags.forEach((tag) => {
           if (templatesByTag[tag]) {
@@ -79,15 +79,13 @@ const useTemplateApi = (dataAdapter, config) => {
     [state]
   );
 
-  const api = useMemo(
-    () => ({
+  return {
+    templates: state,
+    api: {
       fetchExternalTemplates,
       fetchExternalTemplateById,
-    }),
-    [fetchExternalTemplateById, fetchExternalTemplates]
-  );
-
-  return { templates: state, api };
+    },
+  };
 };
 
 export default useTemplateApi;
