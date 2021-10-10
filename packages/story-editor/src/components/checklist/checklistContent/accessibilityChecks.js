@@ -46,7 +46,7 @@ function AccessibilityPanel({
   return isChecklistMounted ? (
     <StyledTablistPanel
       badgeCount={badgeCount}
-      isExpanded={badgeCount && isOpen}
+      isExpanded={Boolean(badgeCount) && isOpen}
       onClick={onClick}
       maxHeight={maxHeight}
       title={title}
