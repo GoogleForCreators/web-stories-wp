@@ -202,7 +202,7 @@ const HierarchicalInput = ({
         onChange={handleInputChange}
         label={label}
         type="search"
-        placeholder={__('search', 'web-stories')}
+        placeholder={__('Search', 'web-stories')}
         {...inputProps}
       />
       {showOptionArea && (
