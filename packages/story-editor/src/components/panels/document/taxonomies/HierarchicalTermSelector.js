@@ -46,6 +46,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { HierarchicalInput } from '../../../form';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { ContentHeading, TaxonomyPropType, LinkButton } from './shared';
+import { makeFlatOptionTree } from './utils';
 
 const NO_PARENT_VALUE = 'NO_PARENT_VALUE';
 
@@ -125,7 +126,14 @@ function HierarchicalTermSelector({
           value: NO_PARENT_VALUE,
           label: __('None', 'web-stories'),
         },
-      ].concat(categories),
+      ]
+        .concat(makeFlatOptionTree(categories))
+        .map(({ $level, label, ...opt }) => ({
+          ...opt,
+          label: `${Array.from({ length: $level }, () => '— ').join(
+            ''
+          )} ${label}`,
+        })),
     [categories]
   );
 
