@@ -113,6 +113,7 @@ function HierarchicalTermSelector({
         value: category.id,
         label: category.name,
         checked: terms[taxonomy.restBase]?.includes(category.id),
+        slug: category.slug,
       }));
     }
 
@@ -188,11 +189,19 @@ function HierarchicalTermSelector({
     setNewCategoryName(evt.target.value);
   }, []);
 
+  const selectedParentSlug = useMemo(
+    () => categories.find((category) => category.id === selectedParent)?.slug,
+    [selectedParent, categories]
+  );
+
   const handleSubmit = useCallback(
     (evt) => {
       evt.preventDefault();
 
-      const parentValue = selectedParent === noParentId ? 0 : selectedParent;
+      const parentValue = {
+        id: selectedParent === noParentId ? 0 : selectedParent,
+        slug: selectedParentSlug,
+      };
       createTerm(taxonomy, newCategoryName, parentValue, true);
       setShowAddNewCategory(false);
       resetInputs();
@@ -206,6 +215,7 @@ function HierarchicalTermSelector({
       selectedParent,
       showAddNewCategory,
       taxonomy,
+      selectedParentSlug,
     ]
   );
 
