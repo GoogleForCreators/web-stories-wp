@@ -18,13 +18,14 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { getMsFromHMS } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
-import { useCanvas, useStory } from '../../app';
+import { useCanvas, useStory, useAPI } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
 function useVideoTrimMode() {
@@ -44,6 +45,10 @@ function useVideoTrimMode() {
   const { selectedElement } = useStory(({ state: { selectedElements } }) => ({
     selectedElement: selectedElements.length === 1 ? selectedElements[0] : null,
   }));
+  const {
+    actions: { getMediaById },
+  } = useAPI();
+  const [videoData, setVideoData] = useState(null);
 
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {
@@ -54,11 +59,49 @@ function useVideoTrimMode() {
         hasEditMenu: true,
         showOverflow: false,
       });
+
+      const { resource } = selectedElement;
+      const { trimData } = resource;
+
+      const defaultVideoData = {
+        element: selectedElement,
+        resource,
+        start: 0,
+        end: null,
+      };
+
+      if (trimData?.original) {
+        // First clear any existing data
+        setVideoData(null);
+        // Load correct video resource
+        getMediaById(trimData.original)
+          .then(
+            // If exists, use as resource with offsets
+            (originalResource) => ({
+              element: selectedElement,
+              resource: originalResource,
+              start: getMsFromHMS(trimData.start),
+              end: getMsFromHMS(trimData.end),
+            }),
+            // If load fails, pretend there's no original
+            () => defaultVideoData
+          )
+          // Regardless, set resulting data as video data
+          .then((data) => setVideoData(data));
+      } else {
+        setVideoData(defaultVideoData);
+      }
     }
     trackEvent('video_trim_mode_toggled', {
       status: isEditing ? 'closed' : 'open',
     });
-  }, [isEditing, clearEditing, setEditingElementWithState, selectedElement]);
+  }, [
+    isEditing,
+    clearEditing,
+    setEditingElementWithState,
+    selectedElement,
+    getMediaById,
+  ]);
 
   const { isTranscodingEnabled } = useFFmpeg();
 
@@ -74,6 +117,7 @@ function useVideoTrimMode() {
     isTrimMode: isEditing && isTrimMode,
     hasTrimMode,
     toggleTrimMode,
+    videoData,
   };
 }
 

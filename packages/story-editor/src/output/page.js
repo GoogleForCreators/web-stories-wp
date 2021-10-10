@@ -135,7 +135,7 @@ function OutputPage({
       {hasPageAttachment && (
         <amp-story-page-outlink
           layout="nodisplay"
-          cta-image={page.pageAttachment.icon}
+          cta-image={page.pageAttachment.icon || undefined}
           theme={page.pageAttachment.theme}
         >
           <a href={page.pageAttachment.url}>

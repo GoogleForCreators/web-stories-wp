@@ -185,7 +185,7 @@ function useProcessMedia({
    * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
    */
   const trimExistingVideo = useCallback(
-    ({ resource: oldResource, start, end }) => {
+    ({ resource: oldResource, canvasResourceId, start, end }) => {
       const { id: resourceId, src: url, mimeType, poster } = oldResource;
 
       const trimData = {
@@ -216,9 +216,9 @@ function useProcessMedia({
       };
 
       const onUploadProgress = ({ resource }) => {
-        const oldResourceWithId = { ...resource, id: oldResource.id };
+        const newResourceWithCanvasId = { ...resource, id: canvasResourceId };
         updateExistingElements(resourceId, {
-          ...oldResourceWithId,
+          ...newResourceWithCanvasId,
         });
       };
 
