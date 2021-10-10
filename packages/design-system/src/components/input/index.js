@@ -106,6 +106,7 @@ export const BaseInput = styled.input(
     background-color: inherit;
     border: none;
     outline: none;
+    box-shadow: none;
     color: ${theme.colors.fg.primary};
 
     ${themeHelpers.expandPresetStyles({
@@ -129,7 +130,9 @@ export const BaseInput = styled.input(
         color: ${theme.colors.fg.disable};
       }
     }
-
+    :focus {
+      box-shadow: none;
+    }
     :active:enabled {
       color: ${theme.colors.fg.primary};
     }
