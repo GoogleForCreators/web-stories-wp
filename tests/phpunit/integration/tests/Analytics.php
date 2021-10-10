@@ -82,12 +82,7 @@ class Analytics extends DependencyInjectedTestCase {
 	 * @covers ::print_analytics_tag
 	 */
 	public function test_print_analytics_tag() {
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$experiments->method( 'is_experiment_enabled' )
-					->willReturn( true );
-
-		$this->instance = new \Google\Web_Stories\Analytics( $this->injector->make( Settings::class ), $experiments );
-		$actual_before  = get_echo( [ $this->instance, 'print_analytics_tag' ] );
+		$actual_before = get_echo( [ $this->instance, 'print_analytics_tag' ] );
 
 		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
 		update_option( Settings::SETTING_NAME_USING_LEGACY_ANALYTICS, false );

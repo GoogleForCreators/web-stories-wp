@@ -54,7 +54,7 @@ class Experiments extends Service_Base {
 	private $settings;
 
 	/**
-	 * Analytics constructor.
+	 * Experiments constructor.
 	 *
 	 * @since 1.12.0
 	 *
@@ -387,18 +387,6 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Thumbnail Caching', 'web-stories' ),
 				'description' => __( 'Enable thumbnail caching', 'web-stories' ),
 				'group'       => 'editor',
-			],
-
-			/**
-			 * Author: @swissspidy
-			 * Issue: #7739
-			 * Creation date: 2021-09-17
-			 */
-			[
-				'name'        => 'enableAutoAnalyticsMigration',
-				'label'       => __( 'Auto Analytics', 'web-stories' ),
-				'description' => __( 'Enable migration option to story auto analytics', 'web-stories' ),
-				'group'       => 'dashboard',
 				'default'     => true,
 			],
 

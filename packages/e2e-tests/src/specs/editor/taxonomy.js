@@ -26,7 +26,6 @@ import {
   withPlugin,
   skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 async function goToAndExpandTaxonomyPanel() {
   await expect(page).toClick('li[role="tab"]', { text: 'Document' });
@@ -157,8 +156,6 @@ describe('Taxonomies', () => {
         await expect(page).toMatchElement(
           'input[name="hierarchical_term_jazz"][checked]'
         );
-
-        await percySnapshot(page, 'Taxonomies - Categories - Admin');
       });
 
       it('should be able to add new tags and existing tags', async () => {
@@ -214,8 +211,6 @@ describe('Taxonomies', () => {
         await expect(tokens2).toStrictEqual(
           expect.arrayContaining(['noir', 'action', 'adventure'])
         );
-
-        await percySnapshot(page, 'Taxonomies - Tags - Admin');
       });
     });
 
@@ -253,8 +248,6 @@ describe('Taxonomies', () => {
         await expect(page).toMatchElement(
           'input[name="hierarchical_term_rock"][checked]'
         );
-
-        await percySnapshot(page, 'Taxonomies - Categories - Contributor');
       });
 
       it('should be able to add new tags and existing tags', async () => {
@@ -313,8 +306,6 @@ describe('Taxonomies', () => {
         await expect(tokens2).toStrictEqual(
           expect.arrayContaining(['rom-com', 'creature feature', 'adventure'])
         );
-
-        await percySnapshot(page, 'Taxonomies - Tags - Contributor');
       });
     });
 

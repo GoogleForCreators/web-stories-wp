@@ -170,6 +170,11 @@ const ALLOWED_ERROR_MESSAGES = [
   // WordPress still bundles jQuery Migrate, which logs to the console.
   'JQMIGRATE',
 
+  // @todo Fix issues, see https://github.com/google/web-stories-wp/issues/9327
+  'Error inlining remote css file SecurityError',
+  'Error loading remote stylesheet SecurityError',
+  'Error while reading CSS rules from https://fonts.googleapis.com',
+
   ...('chrome' === PUPPETEER_PRODUCT
     ? ALLOWED_ERROR_MESSAGES_CHROME
     : ALLOWED_ERROR_MESSAGES_FIREFOX),

@@ -97,8 +97,6 @@ describe('Story Editor', () => {
     await previewPage.waitForSelector('amp-story-player');
     await expect(previewPage).toMatchElement('amp-story-player');
 
-    await percySnapshot(previewPage, 'Preview with development mode');
-
     await editorPage.bringToFront();
     await previewPage.close();
   });
