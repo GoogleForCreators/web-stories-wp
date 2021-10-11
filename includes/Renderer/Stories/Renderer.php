@@ -272,11 +272,35 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function load_assets() {
+		if ( wp_style_is( self::STYLE_HANDLE, 'registered' ) ) {
+			return;
+		}
+
 		// Web Stories styles for AMP and non-AMP pages.
 		$this->assets->register_style_asset( self::STYLE_HANDLE );
 
 		// Web Stories lightbox script.
 		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE ] );
+
+		if ( defined( 'AMPFORWP_VERSION' ) ) {
+			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
+		}
+	}
+
+	/**
+	 * Prints required inline CSS when using the AMP for WP plugin.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return void
+	 */
+	public function add_amp_post_template_css() {
+		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s%s.css', self::STYLE_HANDLE, is_rtl() ? '-rtl' : '' ) );
+
+		if ( is_readable( $path ) ) {
+			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+			echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
 	}
 
 	/**
@@ -439,9 +463,12 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return string
 	 */
 	protected function get_single_story_classes(): string {
-
 		$single_story_classes   = [];
 		$single_story_classes[] = 'web-stories-list__story';
+
+		if ( $this->is_amp() ) {
+			$single_story_classes[] = 'web-stories-list__story--amp';
+		}
 
 		if ( ! empty( $this->attributes['image_alignment'] ) && ( 'right' === $this->attributes['image_alignment'] ) ) {
 			$single_story_classes[] = sprintf( 'image-align-right' );
@@ -509,6 +536,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			<div
 				class="<?php echo esc_attr( $single_story_classes ); ?>"
 				on="<?php echo esc_attr( sprintf( 'tap:AMP.setState({%1$s: ! %1$s})', $lightbox_state ) ); ?>"
+				tabindex="0"
+				role="button"
 			>
 				<?php $this->render_story_with_poster(); ?>
 			</div>
@@ -518,7 +547,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
-			<div class="<?php echo esc_attr( $single_story_classes ); ?>" data-story-url="<?php echo esc_url( $story->get_url() ); ?>">
+			<div class="<?php echo esc_attr( $single_story_classes ); ?>">
 				<?php $this->render_story_with_poster(); ?>
 			</div>
 			<?php
@@ -543,39 +572,40 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$poster_url = $story->get_poster_portrait();
 
 		if ( ! $poster_url ) {
-
 			?>
 			<div class="web-stories-list__story-poster">
 				<div class="web-stories-list__story-poster-placeholder">
-					<span>
+					<a href="<?php echo esc_url( $story->get_url() ); ?>">
 						<?php echo esc_html( $story->get_title() ); ?>
-					</span>
+					</a>
 				</div>
 			</div>
 			<?php
 		} else {
 			?>
 			<div class="web-stories-list__story-poster">
-				<?php
-				if ( $this->is_amp() ) {
-					// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
-					?>
-					<amp-img
-						src="<?php echo esc_url( $poster_url ); ?>"
-						layout="responsive"
-						width="0"
-						height="0"
-						alt="<?php echo esc_attr( $story->get_title() ); ?>"
-					>
-					</amp-img>
-<?php } else { ?>
-					<img
-						src="<?php echo esc_url( $poster_url ); ?>"
-						alt="<?php echo esc_attr( $story->get_title() ); ?>"
-						width="<?php echo absint( $this->width ); ?>"
-						height="<?php echo absint( $this->height ); ?>"
-					>
-				<?php } ?>
+				<a href="<?php echo esc_url( $story->get_url() ); ?>">
+					<?php
+					if ( $this->is_amp() ) {
+						// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
+						?>
+						<amp-img
+							src="<?php echo esc_url( $poster_url ); ?>"
+							layout="responsive"
+							width="0"
+							height="0"
+							alt="<?php echo esc_attr( $story->get_title() ); ?>"
+						>
+						</amp-img>
+	<?php } else { ?>
+						<img
+							src="<?php echo esc_url( $poster_url ); ?>"
+							alt="<?php echo esc_attr( $story->get_title() ); ?>"
+							width="<?php echo absint( $this->width ); ?>"
+							height="<?php echo absint( $this->height ); ?>"
+						>
+					<?php } ?>
+				</a>
 			</div>
 			<?php
 		}
@@ -681,15 +711,18 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			[open]="<?php echo esc_attr( $lightbox_state ); ?>"
 			layout="nodisplay"
 			on="lightboxClose:AMP.setState({<?php echo esc_attr( $lightbox_state ); ?>: false})"
+			role="button"
+			tabindex="0"
 		>
 			<div class="web-stories-list__lightbox show">
-				<div
+				<button type="button"
 					class="story-lightbox__close-button"
 					on="tap:<?php echo esc_attr( $lightbox_id ); ?>.close"
+					aria-label="<?php esc_attr_e( 'Close', 'web-stories' ); ?>"
 				>
 					<span class="story-lightbox__close-button--stick"></span>
 					<span class="story-lightbox__close-button--stick"></span>
-				</div>
+				</button>
 				<amp-story-player
 					width="3.6"
 					height="6"

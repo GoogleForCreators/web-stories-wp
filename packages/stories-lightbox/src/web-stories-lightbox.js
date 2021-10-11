@@ -74,7 +74,7 @@ class Lightbox {
       card.addEventListener('click', (event) => {
         event.preventDefault();
         const storyObject = this.stories.find(
-          (story) => story.href === card.dataset.storyUrl
+          (story) => story.href === card.querySelector('a').href
         );
         this.player.show(storyObject.href);
         this.player.play();
