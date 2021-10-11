@@ -36,7 +36,7 @@ import { initializeTracking } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import * as apiCallbacks from './api';
+import getApiCallbacks from './api/utils/getApiCallbacks';
 
 /**
  * Initializes the Web Stories dashboard screen.
@@ -58,7 +58,7 @@ const initialize = async (id, config, flags) => {
 
   const dashboardConfig = {
     ...config,
-    apiCallbacks,
+    apiCallbacks: getApiCallbacks( config ),
   };
 
   render(
