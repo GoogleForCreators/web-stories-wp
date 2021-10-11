@@ -59,9 +59,17 @@ function VideoTrimmer() {
     performTrim,
     setIsDraggingHandles,
     toggleTrimMode,
+    videoData,
   } = useVideoTrim(
     ({
-      state: { currentTime, startOffset, endOffset, maxOffset, hasChanged },
+      state: {
+        currentTime,
+        startOffset,
+        endOffset,
+        maxOffset,
+        hasChanged,
+        videoData,
+      },
       actions: {
         setStartOffset,
         setEndOffset,
@@ -80,6 +88,7 @@ function VideoTrimmer() {
       performTrim,
       setIsDraggingHandles,
       toggleTrimMode,
+      videoData,
     })
   );
   const { workspaceWidth, pageWidth } = useLayout(
@@ -106,7 +115,7 @@ function VideoTrimmer() {
     }
   }, []);
 
-  if (!pageWidth || !maxOffset) {
+  if (!pageWidth || !maxOffset || !videoData) {
     // We still need a reffed element, or the focus trap will break,
     // so just return an empty element
     return <Menu ref={menu} />;

@@ -30,6 +30,7 @@ export { default as getFileNameWithExt } from './getFileNameWithExt';
 export { default as getExtensionFromMimeType } from './getExtensionFromMimeType';
 export { default as getFirstFrameOfVideo } from './getFirstFrameOfVideo';
 export { default as getImageDimensions } from './getImageDimensions';
+export { default as getMsFromHMS } from './getMsFromHMS';
 export { default as getVideoDimensions } from './getVideoDimensions';
 export { default as getVideoLength } from './getVideoLength';
 export { default as getVideoLengthDisplay } from './getVideoLengthDisplay';

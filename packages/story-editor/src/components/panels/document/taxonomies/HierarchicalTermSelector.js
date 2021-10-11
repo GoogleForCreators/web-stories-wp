@@ -46,6 +46,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { HierarchicalInput } from '../../../form';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { ContentHeading, TaxonomyPropType, LinkButton } from './shared';
+import { makeFlatOptionTree } from './utils';
 
 const NO_PARENT_VALUE = 'NO_PARENT_VALUE';
 
@@ -112,6 +113,7 @@ function HierarchicalTermSelector({
         value: category.id,
         label: category.name,
         checked: terms[taxonomy.restBase]?.includes(category.id),
+        slug: category.slug,
       }));
     }
 
@@ -125,7 +127,14 @@ function HierarchicalTermSelector({
           value: NO_PARENT_VALUE,
           label: __('None', 'web-stories'),
         },
-      ].concat(categories),
+      ]
+        .concat(makeFlatOptionTree(categories))
+        .map(({ $level, label, ...opt }) => ({
+          ...opt,
+          label: `${Array.from({ length: $level }, () => '— ').join(
+            ''
+          )} ${label}`,
+        })),
     [categories]
   );
 
@@ -180,11 +189,19 @@ function HierarchicalTermSelector({
     setNewCategoryName(evt.target.value);
   }, []);
 
+  const selectedParentSlug = useMemo(
+    () => categories.find((category) => category.id === selectedParent)?.slug,
+    [selectedParent, categories]
+  );
+
   const handleSubmit = useCallback(
     (evt) => {
       evt.preventDefault();
 
-      const parentValue = selectedParent === noParentId ? 0 : selectedParent;
+      const parentValue = {
+        id: selectedParent === noParentId ? 0 : selectedParent,
+        slug: selectedParentSlug,
+      };
       createTerm(taxonomy, newCategoryName, parentValue, true);
       setShowAddNewCategory(false);
       resetInputs();
@@ -198,6 +215,7 @@ function HierarchicalTermSelector({
       selectedParent,
       showAddNewCategory,
       taxonomy,
+      selectedParentSlug,
     ]
   );
 
