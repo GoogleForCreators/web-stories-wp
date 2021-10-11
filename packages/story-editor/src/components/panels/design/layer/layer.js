@@ -145,7 +145,6 @@ const IconWrapper = styled.div`
 
 const LayerContentContainer = styled.div`
   margin-right: 8px;
-  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 `;
