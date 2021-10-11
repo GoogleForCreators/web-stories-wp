@@ -35,16 +35,16 @@ const Dismiss = styled.button`
   cursor: pointer;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   ${themeHelpers.focusableOutlineCSS};
-  width: 32px;
-  min-width: 32px;
-  height: 32px;
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
 
   svg {
-    height: 16px;
-    width: 16px;
+    height: 20px;
+    width: 20px;
     margin: auto;
   }
 `;
@@ -58,16 +58,17 @@ const Token = styled.span`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 3px 2px;
-  margin: 3px 5px 3px 0;
-  max-width: calc(100% - 16px);
+  padding: 2px;
+  margin: 2px;
+  max-width: calc(100% - 4px);
+  height: 32px;
 `;
 
 const TokenText = styled(Text).attrs({
   forwardedAs: 'span',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
-  padding-left: 11px;
+  padding-left: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
