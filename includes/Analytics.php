@@ -38,25 +38,16 @@ class Analytics extends Service_Base {
 	private $settings;
 
 	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Settings    $settings Settings instance.
-	 * @param Experiments $experiments Experiments instance.
+	 * @param Settings $settings Settings instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Settings $settings, Experiments $experiments ) {
-		$this->settings    = $settings;
-		$this->experiments = $experiments;
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
 	}
 
 	/**
@@ -238,10 +229,7 @@ class Analytics extends Service_Base {
 			return;
 		}
 
-		if (
-			(bool) $this->settings->get_setting( $this->settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) ||
-			! $this->experiments->is_experiment_enabled( 'enableAutoAnalyticsMigration' )
-		) {
+		if ( (bool) $this->settings->get_setting( $this->settings::SETTING_NAME_USING_LEGACY_ANALYTICS ) ) {
 			$this->print_amp_analytics_tag( $tracking_id );
 		} else {
 			$this->print_amp_story_auto_analytics_tag( $tracking_id );

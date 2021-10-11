@@ -385,4 +385,22 @@ class Story_Sanitizer extends TestCase {
 
 		$this->assertStringContainsString( 'srcset="https://example.com/image.jpg 1000w, https://example.com/image-768x1024.jpg 768w, https://example.com/image-225x300.jpg 225w, https://example.com/image-150x200.jpg 150w"', $actual );
 	}
+
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_amp_story_page_outlink
+	 */
+	public function test_sanitize_amp_story_page_outlink() {
+		$source = '<html><head></head><body><amp-story-page-outlink layout="nodisplay" cta-image=""><a href="https://www.bonappeteach.com/smoked-apple-cider/" target="_blank" rel="noreferrer">Get The Recipe!</a></amp-story-page-outlink></body></html>';
+
+		$args = [
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertStringContainsString( '<amp-story-page-outlink layout="nodisplay">', $actual );
+	}
 }

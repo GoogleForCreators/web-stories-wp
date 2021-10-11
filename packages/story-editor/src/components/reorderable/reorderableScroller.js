@@ -24,6 +24,7 @@ import {
   useState,
   useCallback,
   useContext,
+  memo,
 } from '@web-stories-wp/react';
 
 /**
@@ -120,4 +121,4 @@ ReorderableScroller.propTypes = {
   size: PropTypes.number.isRequired,
 };
 
-export default ReorderableScroller;
+export default memo(ReorderableScroller);
