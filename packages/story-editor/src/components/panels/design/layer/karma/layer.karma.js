@@ -67,7 +67,7 @@ describe('Layer Panel', () => {
     );
 
     expect(layerPanel.layers.length).toBe(3);
-    expect(layerPanel.panelBadge.textContent).toBe('3 ');
+    expect(layerPanel.panelBadge.textContent).toBe('3');
   });
 
   it('should show ellipsis for overflowing text', async () => {
