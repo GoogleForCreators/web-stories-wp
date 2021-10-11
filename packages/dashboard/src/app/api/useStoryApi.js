@@ -70,6 +70,9 @@ const useStoryApi = () => {
       const trackTiming = getTimeTracker('load_stories');
 
       try {
+        // Maybe not making a lot of sense to expect fetchedStoryIds from the api callbacks response.
+        // However the order of ids get changed if we try to create that array here
+        // which may ( or may not ) cause some regression. @todo Reflect on fetchedStoryIds again in next phase.
         const { stories, fetchedStoryIds, totalPages, totalStoriesByStatus } =
           await fetchStoriesCallback(queryParams, storyApi);
 

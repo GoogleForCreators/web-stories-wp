@@ -118,9 +118,9 @@ const storyResponse = (story) => {
   }
 
   return Promise.resolve({
-    id: id,
+    id,
     status: 'publish',
-    title: title,
+    title,
     created: '1970-01-01T00:00:00.000',
     created_gmt: '1970-01-01T00:00:00.000Z',
     modified: '1970-01-01T00:00:00.000',
@@ -182,7 +182,7 @@ const duplicateStory = (story) => {
 
 const trashStory = ({ id }) => {
   return Promise.resolve({
-    id: id,
+    id,
     status: 'publish',
     title: { raw: 'Carlos', rendered: 'Carlos' },
     modified: '1970-01-01T00:00:00.000',
