@@ -76,22 +76,8 @@ abstract class Embed_Base extends Service_Base {
 		// without needing an external stylesheet.
 		wp_styles()->registered[ self::SCRIPT_HANDLE ]->src = false;
 
-		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s.css', self::SCRIPT_HANDLE ) );
-		if ( is_rtl() ) {
-			$path = $this->assets->get_base_path( sprintf( 'assets/css/%s-rtl.css', self::SCRIPT_HANDLE ) );
-		}
-
-		if ( is_readable( $path ) ) {
-			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
-
-			if ( defined( 'AMPFORWP_VERSION' ) ) {
-				add_action(
-					'amp_post_template_css',
-					static function() use ( $css ) {
-						echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					}
-				);
-			}
+		if ( defined( 'AMPFORWP_VERSION' ) ) {
+			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
 		}
 
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
@@ -106,6 +92,22 @@ abstract class Embed_Base extends Service_Base {
 	 */
 	public static function get_registration_action_priority(): int {
 		return 11;
+	}
+
+	/**
+	 * Prints required inline CSS when using the AMP for WP plugin.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return void
+	 */
+	public function add_amp_post_template_css() {
+		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s%s.css', self::SCRIPT_HANDLE, is_rtl() ? '-rtl' : '' ) );
+
+		if ( is_readable( $path ) ) {
+			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+			echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
 	}
 
 	/**

@@ -282,22 +282,24 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// Web Stories lightbox script.
 		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE ] );
 
-		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s.css', self::STYLE_HANDLE ) );
-		if ( is_rtl() ) {
-			$path = $this->assets->get_base_path( sprintf( 'assets/css/%s-rtl.css', self::STYLE_HANDLE ) );
+		if ( defined( 'AMPFORWP_VERSION' ) ) {
+			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
 		}
+	}
+
+	/**
+	 * Prints required inline CSS when using the AMP for WP plugin.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return void
+	 */
+	public function add_amp_post_template_css() {
+		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s%s.css', self::STYLE_HANDLE, is_rtl() ? '-rtl' : '' ) );
 
 		if ( is_readable( $path ) ) {
 			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
-
-			if ( defined( 'AMPFORWP_VERSION' ) ) {
-				add_action(
-					'amp_post_template_css',
-					static function() use ( $css ) {
-						echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					}
-				);
-			}
+			echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
