@@ -30,7 +30,7 @@ import {
  */
 import { MEDIA_VIDEO_MINIMUM_DURATION } from '../../constants';
 
-function useVideoNode() {
+function useVideoNode(videoData) {
   const [currentTime, setCurrentTime] = useState(null);
   const [startOffset, rawSetStartOffset] = useState(null);
   const [originalStartOffset, setOriginalStartOffset] = useState(null);
@@ -69,26 +69,31 @@ function useVideoNode() {
   }, [paused, isDraggingHandles]);
 
   useEffect(() => {
-    if (!videoNode) {
+    if (!videoNode || !videoData) {
       return undefined;
+    }
+
+    function restart(at) {
+      videoNode.currentTime = at / 1000;
+      videoNode.play();
     }
 
     function onLoadedMetadata(evt) {
       const duration = Math.floor(evt.target.duration * 1000);
-      rawSetStartOffset(0);
-      setOriginalStartOffset(0);
-      setCurrentTime(0);
-      rawSetEndOffset(duration);
-      setOriginalEndOffset(duration);
+      rawSetStartOffset(videoData.start);
+      setOriginalStartOffset(videoData.start);
+      setCurrentTime(videoData.start);
+      rawSetEndOffset(videoData.end ?? duration);
+      setOriginalEndOffset(videoData.end ?? duration);
       setMaxOffset(duration);
+      restart(videoData.start);
     }
     function onTimeUpdate(evt) {
       const currentOffset = Math.floor(evt.target.currentTime * 1000);
       setCurrentTime(Math.min(currentOffset, endOffset));
       // If we've reached the end of the video, start again unless the user has paused the video.
       if (currentOffset > endOffset && !isPausedTracker.current) {
-        videoNode.currentTime = startOffset / 1000;
-        videoNode.play();
+        restart(startOffset);
       }
     }
     videoNode.addEventListener('timeupdate', onTimeUpdate);
@@ -98,7 +103,7 @@ function useVideoNode() {
       videoNode.removeEventListener('timeupdate', onTimeUpdate);
       videoNode.removeEventListener('loadedmetadata', onLoadedMetadata);
     };
-  }, [startOffset, endOffset, videoNode]);
+  }, [startOffset, endOffset, videoData, videoNode]);
 
   const setStartOffset = useCallback(
     (offset) => {
