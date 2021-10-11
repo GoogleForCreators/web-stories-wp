@@ -87,7 +87,7 @@ export function getStoryById(config, storyId, isDemo = false) {
   return apiFetch({ path }).then(transformGetStoryResponse);
 }
 
-export function getDemoStoryById(storyId) {
+export function getDemoStoryById(config, storyId) {
   return getStoryById(storyId, true);
 }
 
@@ -141,7 +141,7 @@ export function saveStoryById(config, story) {
 
   // Only require these fields in the response as used by useSaveStory()
   // to reduce response size.
-  const path = addQueryArgs(`${config}${storyId}/`, {
+  const path = addQueryArgs(`${config.api.stories}${storyId}/`, {
     _fields: [
       'status',
       'slug',
