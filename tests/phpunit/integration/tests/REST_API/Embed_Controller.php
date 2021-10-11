@@ -101,7 +101,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
 
-		$this->controller = new \Google\Web_Stories\REST_API\Embed_Controller();
+		$this->controller = new \Google\Web_Stories\REST_API\Embed_Controller( new Story_Post_Type( new Settings() ) );
 	}
 
 	public function tear_down() {

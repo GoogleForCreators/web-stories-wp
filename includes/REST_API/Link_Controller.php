@@ -28,6 +28,7 @@ namespace Google\Web_Stories\REST_API;
 
 use DOMElement;
 use DOMNodeList;
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Document_Parser;
 use Google\Web_Stories\Traits\Post_Type;
@@ -42,15 +43,39 @@ use WP_REST_Server;
  *
  * Class Link_Controller
  */
-class Link_Controller extends REST_Controller {
+class Link_Controller extends REST_Controller implements HasRequirements {
 	use Document_Parser, Post_Type;
 
 	/**
-	 * Constructor.
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	public function __construct() {
+	private $story_post_type;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 */
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->story_post_type = $story_post_type;
+
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'link';
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
 	}
 
 	/**
@@ -320,7 +345,7 @@ class Link_Controller extends REST_Controller {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function parse_link_permissions_check() {
-		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to process links.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 

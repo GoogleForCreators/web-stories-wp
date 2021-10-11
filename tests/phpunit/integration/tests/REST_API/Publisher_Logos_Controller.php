@@ -3,6 +3,7 @@
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Settings;
+use Google\Web_Stories\Tests\Integration\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -90,7 +91,11 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->controller = new \Google\Web_Stories\REST_API\Publisher_Logos_Controller( new Settings() );
+		$settings         = new Settings();
+		$this->controller = new \Google\Web_Stories\REST_API\Publisher_Logos_Controller(
+			$settings,
+			new \Google\Web_Stories\Story_Post_Type( $settings )
+		);
 	}
 
 	public function tear_down() {
