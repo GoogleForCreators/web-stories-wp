@@ -20,6 +20,8 @@
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { Button, BUTTON_TYPES, Icons } from '@web-stories-wp/design-system';
+import { rgba } from 'polished';
+
 /**
  * Internal dependencies
  */
@@ -30,6 +32,15 @@ import { LayerText } from '../../../../elements/shared/layerText';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
+function layerButtonBackground(color) {
+  return css`
+    background: ${color};
+    ::after {
+      background: linear-gradient(to right, ${rgba(color, 0)}, ${color});
+    }
+  `;
+}
+
 const LayerButton = styled(Button).attrs({
   type: BUTTON_TYPES.PLAIN,
   tabIndex: -1,
@@ -37,6 +48,7 @@ const LayerButton = styled(Button).attrs({
   // Because the layer panel is aria-hidden, we need something else to select by
   'data-testid': 'layer-option',
 })`
+  position: relative;
   display: grid;
   grid-template-columns: 42px 1fr;
 
@@ -50,21 +62,31 @@ const LayerButton = styled(Button).attrs({
   user-select: none;
   border-radius: 0;
   padding-left: 8px;
-  transition: background-color 0.3s;
+  ${({ theme }) =>
+    layerButtonBackground(theme.colors.interactiveBg.secondaryNormal)};
+
+  ::after {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 37%;
+    content: '';
+    pointer-events: none;
+  }
 
   :hover {
-    background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
+    ${({ theme }) =>
+      layerButtonBackground(theme.colors.interactiveBg.secondaryHover)}
   }
 
   :active {
-    background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
+    ${({ theme }) =>
+      layerButtonBackground(theme.colors.interactiveBg.secondaryPress)}
   }
 
   ${({ isSelected, theme }) =>
     isSelected &&
-    css`
-      background: ${theme.colors.interactiveBg.secondaryPress};
-    `}
+    layerButtonBackground(theme.colors.interactiveBg.secondaryPress)}
 `;
 
 const LayerIconWrapper = styled.div`
@@ -98,7 +120,6 @@ const IconWrapper = styled.div`
 
 const LayerContentContainer = styled.div`
   margin-right: 8px;
-  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 `;
