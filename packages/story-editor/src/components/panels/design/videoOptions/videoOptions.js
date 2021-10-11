@@ -96,7 +96,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
-  const handleHandleMuteVideo = useCallback(() => {
+  const handleMuteVideo = useCallback(() => {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
@@ -184,7 +184,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
-              onClick={handleHandleMuteVideo}
+              onClick={handleMuteVideo}
             >
               {muteButtonText}
             </StyledButton>
