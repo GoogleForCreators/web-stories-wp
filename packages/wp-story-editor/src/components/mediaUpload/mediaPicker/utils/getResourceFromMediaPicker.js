@@ -47,8 +47,8 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
       length_formatted: lengthFormatted,
       sizes,
     },
-    media_source: mediaSource,
-    is_muted: isMuted,
+    web_stories_media_source: mediaSource,
+    web_stories_is_muted: isMuted,
     trim_data: trimData,
   } = mediaPickerEl;
 

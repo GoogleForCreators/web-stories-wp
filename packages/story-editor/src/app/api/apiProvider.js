@@ -55,6 +55,7 @@ function APIProvider({ children }) {
     saveStoryById,
     autoSaveById,
     getMedia,
+    getMediaById,
     uploadMedia,
     updateMedia,
     deleteMedia,
@@ -122,6 +123,11 @@ function APIProvider({ children }) {
     [media, getMedia]
   );
 
+  actions.getMediaById = useCallback(
+    (mediaId) => getMediaById(mediaId, media),
+    [getMediaById, media]
+  );
+
   actions.uploadMedia = useCallback(
     (file, additionalData) => uploadMedia(file, additionalData, media),
     [media, uploadMedia]
@@ -178,7 +184,7 @@ function APIProvider({ children }) {
   );
 
   actions.getCustomPageTemplates = useCallback(
-    (page = 1) => getCustomPageTemplates(page, customPageTemplates),
+    (page) => getCustomPageTemplates(page, customPageTemplates),
     [customPageTemplates, getCustomPageTemplates]
   );
 

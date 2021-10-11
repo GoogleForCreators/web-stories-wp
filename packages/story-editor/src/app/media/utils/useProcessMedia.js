@@ -59,14 +59,14 @@ function useProcessMedia({
   );
 
   const updateExistingElements = useCallback(
-    ({ oldResource }) => {
-      const { id } = oldResource;
+    (resourceId, resource) => {
       updateElementsByResourceId({
-        id,
-        properties: () => {
+        id: resourceId,
+        properties: (element) => {
           return {
             resource: {
-              ...oldResource,
+              ...element.resource,
+              ...resource,
             },
           };
         },
@@ -78,7 +78,7 @@ function useProcessMedia({
   const updateOldTranscodedObject = useCallback(
     (oldId, newId, mediaSource) => {
       updateMedia(oldId, {
-        media_source: mediaSource,
+        web_stories_media_source: mediaSource,
         meta: {
           web_stories_optimized_id: newId,
         },
@@ -105,24 +105,22 @@ function useProcessMedia({
    */
   const optimizeVideo = useCallback(
     ({ resource: oldResource }) => {
-      const { src: url, mimeType } = oldResource;
+      const { id: resourceId, src: url, mimeType } = oldResource;
 
-      const onUploadStart = () => {
-        updateExistingElements({
-          oldResource: { ...oldResource, isOptimized: true },
-        });
-      };
+      // TODO: Already covered by onUploadProgress?
+      const onUploadStart = () =>
+        updateExistingElements(resourceId, { isTranscoding: true });
 
-      const onUploadError = () => {
-        updateExistingElements({
-          oldResource: { ...oldResource, isOptimized: false },
+      const onUploadError = () =>
+        updateExistingElements(resourceId, {
+          isTranscoding: false,
+          isOptimized: false,
         });
-      };
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
-        updateOldTranscodedObject(oldResource.id, resource.id, 'source-video');
-        deleteMediaElement({ id: oldResource.id });
+        updateOldTranscodedObject(resourceId, resource.id, 'source-video');
+        deleteMediaElement({ id: resourceId });
         if (
           ['video', 'gif'].includes(resource.type) &&
           !resource.local &&
@@ -139,10 +137,11 @@ function useProcessMedia({
         }
       };
 
+      // TODO: Confirm which properties exactly need to be updated.
       const onUploadProgress = ({ resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
-        updateExistingElements({
-          oldResource: oldResourceWithId,
+        updateExistingElements(resourceId, {
+          ...oldResourceWithId,
         });
       };
 
@@ -161,7 +160,7 @@ function useProcessMedia({
           onUploadProgress,
           additionalData: {
             original_id: oldResource.id,
-            is_muted: oldResource.isMuted,
+            web_stories_is_muted: oldResource.isMuted,
           },
         });
       };
@@ -186,30 +185,23 @@ function useProcessMedia({
    * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
    */
   const trimExistingVideo = useCallback(
-    ({ resource: oldResource, start, end }) => {
-      const { src: url, mimeType, poster } = oldResource;
+    ({ resource: oldResource, canvasResourceId, start, end }) => {
+      const { id: resourceId, src: url, mimeType, poster } = oldResource;
 
       const trimData = {
-        original: oldResource.id,
+        original: resourceId,
         start,
         end,
       };
 
-      const onUploadStart = () => {
-        updateExistingElements({
-          oldResource: {
-            ...oldResource,
-            trimData,
-            isTrimming: true,
-          },
+      const onUploadStart = () =>
+        updateExistingElements(resourceId, {
+          trimData,
+          isTrimming: true,
         });
-      };
 
-      const onUploadError = () => {
-        updateExistingElements({
-          oldResource: { ...oldResource, isTrimming: false },
-        });
-      };
+      const onUploadError = () =>
+        updateExistingElements(resourceId, { isTrimming: false });
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
@@ -224,9 +216,9 @@ function useProcessMedia({
       };
 
       const onUploadProgress = ({ resource }) => {
-        const oldResourceWithId = { ...resource, id: oldResource.id };
-        updateExistingElements({
-          oldResource: oldResourceWithId,
+        const newResourceWithCanvasId = { ...resource, id: canvasResourceId };
+        updateExistingElements(resourceId, {
+          ...newResourceWithCanvasId,
         });
       };
 
@@ -253,9 +245,9 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            is_muted: oldResource.isMuted,
+            web_stories_is_muted: oldResource.isMuted,
             original_id: oldResource.id,
-            media_source: oldResource?.isOptimized
+            web_stories_media_source: oldResource?.isOptimized
               ? 'video-optimization'
               : 'editor',
           },
@@ -285,21 +277,19 @@ function useProcessMedia({
    */
   const muteExistingVideo = useCallback(
     ({ resource: oldResource }) => {
-      const { src: url, mimeType, poster } = oldResource;
+      const { id: resourceId, src: url, mimeType, poster } = oldResource;
 
+      // TODO: Already covered by onUploadProgress?
       const onUploadStart = () => {
-        updateExistingElements({
-          oldResource: {
-            ...oldResource,
-            isMuted: true,
-            isMuting: true,
-          },
+        updateExistingElements(resourceId, {
+          isMuting: true,
         });
       };
 
       const onUploadError = () => {
-        updateExistingElements({
-          oldResource: { ...oldResource, isMuting: false },
+        updateExistingElements(resourceId, {
+          isMuting: false,
+          isMuted: false,
         });
       };
 
@@ -315,10 +305,11 @@ function useProcessMedia({
         }
       };
 
+      // TODO: Confirm which properties exactly need to be updated.
       const onUploadProgress = ({ resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
-        updateExistingElements({
-          oldResource: oldResourceWithId,
+        updateExistingElements(resourceId, {
+          ...oldResourceWithId,
         });
       };
 
@@ -346,7 +337,7 @@ function useProcessMedia({
           onUploadProgress,
           additionalData: {
             original_id: oldResource.id,
-            media_source: oldResource?.isOptimized
+            web_stories_media_source: oldResource?.isOptimized
               ? 'video-optimization'
               : 'editor',
           },
@@ -376,7 +367,7 @@ function useProcessMedia({
    */
   const optimizeGif = useCallback(
     ({ resource: oldResource }) => {
-      const { src: url, mimeType } = oldResource;
+      const { id: resourceId, src: url, mimeType } = oldResource;
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
@@ -392,10 +383,11 @@ function useProcessMedia({
         }
       };
 
+      // TODO: Confirm which properties exactly need to be updated.
       const onUploadProgress = ({ resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
-        updateExistingElements({
-          oldResource: oldResourceWithId,
+        updateExistingElements(resourceId, {
+          ...oldResourceWithId,
         });
       };
 

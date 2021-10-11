@@ -19,7 +19,6 @@
  */
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-
 /**
  * Internal dependencies
  */
@@ -31,13 +30,12 @@ import {
   ChecklistCard,
   DefaultFooterText,
 } from '../../checklistCard';
-import { filterStoryPages, getVisibleThumbnails } from '../utils';
+import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import {
-  Thumbnail,
-  THUMBNAIL_TYPES,
-  THUMBNAIL_DIMENSIONS,
-} from '../../thumbnail';
-import PagePreview from '../../carousel/pagepreview';
+  filterStoryPages,
+  getVisibleThumbnails,
+  ThumbnailPagePreview,
+} from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
@@ -87,15 +85,7 @@ const PageTooManyLinks = () => {
                 key={page.id}
                 onClick={() => handleClick(page.id)}
                 type={THUMBNAIL_TYPES.PAGE}
-                displayBackground={
-                  <PagePreview
-                    page={page}
-                    width={THUMBNAIL_DIMENSIONS.WIDTH}
-                    height={THUMBNAIL_DIMENSIONS.HEIGHT}
-                    as="div"
-                    label={__('The offending page', 'web-stories')}
-                  />
-                }
+                displayBackground={<ThumbnailPagePreview page={page} />}
                 aria-label={__('Go to offending page', 'web-stories')}
               />
             ))}

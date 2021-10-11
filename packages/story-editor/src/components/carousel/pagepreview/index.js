@@ -94,6 +94,7 @@ const Image = styled.img`
   width: 100%;
 `;
 
+// PagePreview is used in the editor's Carousel as well as in the Checklist and GridView
 function PagePreview({ page, label, ...props }) {
   const { backgroundColor } = page;
   const { width, height, isActive } = props;
@@ -168,7 +169,7 @@ function PagePreview({ page, label, ...props }) {
 
 PagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   pageImageData: PropTypes.string,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,

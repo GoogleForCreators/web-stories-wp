@@ -56,7 +56,7 @@ function TemplateList({
   const containerRef = useRef();
   const pageRefs = useRef({});
 
-  const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
+  const pageIds = pages?.map((page) => page.id) || [];
 
   const handlePageClick = useCallback(
     (page) => {

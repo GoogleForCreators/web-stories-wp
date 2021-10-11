@@ -73,12 +73,16 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   } = useConfig();
 
   const handleChangePoster = useCallback(
-    (image) => {
-      const newPoster = image?.sizes?.full?.source_url || image?.src;
-      if (newPoster === rawPoster) {
+    /**
+     * Handle video poster change.
+     *
+     * @param {import('@web-stories-wp/media').Resource} [newPoster] The new image. Or null if reset.
+     */
+    (newPoster) => {
+      if (newPoster?.src === rawPoster) {
         return;
       }
-      pushUpdate({ poster: newPoster }, true);
+      pushUpdate({ poster: newPoster?.src }, true);
     },
     [pushUpdate, rawPoster]
   );

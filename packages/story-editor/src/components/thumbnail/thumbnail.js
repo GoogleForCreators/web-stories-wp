@@ -92,7 +92,7 @@ Thumbnail.propTypes = {
   displayBackground: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
-  ]).isRequired,
+  ]),
   type: PropTypes.oneOf(Object.values(THUMBNAIL_TYPES)).isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

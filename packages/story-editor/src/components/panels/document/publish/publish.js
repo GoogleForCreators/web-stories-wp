@@ -159,17 +159,24 @@ function PublishPanel() {
   );
 
   const handleChangePoster = useCallback(
-    (image) =>
-      updateStory({
+    /**
+     * Handle story poster change.
+     *
+     * @param {import('@web-stories-wp/media').Resource} newPoster The new image.
+     * @return {void}
+     */
+    (newPoster) => {
+      return updateStory({
         properties: {
           featuredMedia: {
-            id: image.id,
-            height: image.sizes?.full?.height || image.height,
-            url: image.sizes?.full?.source_url || image.src,
-            width: image.sizes?.full?.width || image.width,
+            id: newPoster.id,
+            url: newPoster.src,
+            height: newPoster.height,
+            width: newPoster.width,
           },
         },
-      }),
+      });
+    },
     [updateStory]
   );
 

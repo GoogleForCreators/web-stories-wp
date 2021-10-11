@@ -153,7 +153,7 @@ function useUploader() {
       const _additionalData = {
         post: storyId,
         alt_text: getFileName(file),
-        media_source: 'editor',
+        web_stories_media_source: 'editor',
         ...additionalData,
       };
 

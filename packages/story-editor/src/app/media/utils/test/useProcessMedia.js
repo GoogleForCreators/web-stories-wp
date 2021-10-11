@@ -143,7 +143,7 @@ describe('useProcessMedia', () => {
           'http://www.google.com/foo.gif'
         );
         expect(updateMedia).toHaveBeenCalledWith(123, {
-          media_source: 'source-video',
+          web_stories_media_source: 'source-video',
           meta: {
             web_stories_optimized_id: 2,
           },
@@ -267,7 +267,7 @@ describe('useProcessMedia', () => {
           'http://www.google.com/foo.gif'
         );
         expect(updateMedia).toHaveBeenCalledWith(123, {
-          media_source: 'source-image',
+          web_stories_media_source: 'source-image',
           meta: {
             web_stories_optimized_id: 2,
           },

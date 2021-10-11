@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use Google\Web_Stories\REST_API\Stories_Controller;
@@ -39,7 +40,7 @@ use WP_Site;
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class Story_Post_Type extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
+class Story_Post_Type extends Service_Base implements PluginDeactivationAware, SiteInitializationAware, HasRequirements {
 	use Post_Type;
 
 	/**
@@ -117,6 +118,19 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 
 		add_filter( 'display_post_states', [ $this, 'filter_display_post_states' ], 10, 2 );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because settings needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'settings' ];
 	}
 
 	/**
@@ -435,11 +449,11 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 * @since 1.12.0
 	 *
 	 * @param string[]|mixed $post_states An array of post display states.
-	 * @param WP_Post        $post        The current post object.
+	 * @param WP_Post|null   $post        The current post object.
 	 * @return string[]|mixed Filtered post display states.
 	 */
-	public function filter_display_post_states( $post_states, WP_Post $post ) {
-		if ( ! is_array( $post_states ) ) {
+	public function filter_display_post_states( $post_states, $post ) {
+		if ( ! is_array( $post_states ) || ! $post ) {
 			return $post_states;
 		}
 
