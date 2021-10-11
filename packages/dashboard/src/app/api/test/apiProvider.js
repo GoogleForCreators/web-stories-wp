@@ -84,9 +84,6 @@ const fetchStories = () => {
       all: 1,
       publish: 1,
       draft: 0,
-      future: 0,
-      pending: 0,
-      private: 0,
     },
   });
 };
@@ -121,22 +118,50 @@ const storyResponse = (story) => {
   }
 
   return Promise.resolve({
-    id,
+    id: id,
     status: 'publish',
-    title: { raw: title, rendered: title },
-    author: 1,
+    title: title,
+    created: '1970-01-01T00:00:00.000',
+    created_gmt: '1970-01-01T00:00:00.000Z',
     modified: '1970-01-01T00:00:00.000',
-    modified_gmt: '1970-01-01T00:00:00.000',
-    date: '1970-01-01T00:00:00.000',
-    date_gmt: '1970-01-01T00:00:00.000',
+    modified_gmt: '1970-01-01T00:00:00.000Z',
+    author: 'admin',
+    locked: false,
+    lockUser: {
+      id: 0,
+      name: '',
+      avatar: null,
+    },
+    bottomTargetAction: `https://www.story-link.com/wp-admin/post.php?id=${id}`,
+    featuredMediaUrl: `https://www.featured-media-${id}`,
+    editStoryLink: `https://www.story-link.com/wp-admin/post.php?id=${id}`,
+    previewLink: 'https://www.story-link.com/?preview=true',
     link: 'https://www.story-link.com',
-    preview_link: 'https://www.story-link.com/?preview=true',
-    edit_link: 'https://www.story-link.com/wp-admin/post.php?id=' + id,
-    _embedded: {
-      author: [{ id: 1, name: 'admin' }],
-      'wp:featuredmedia': [
-        { id: 0, source_url: `https://www.featured-media-${id}` },
-      ],
+    originalStoryData: {
+      id: id,
+      date: '1970-01-01T00:00:00.000',
+      date_gmt: '1970-01-01T00:00:00.000',
+      modified: '1970-01-01T00:00:00.000',
+      modified_gmt: '1970-01-01T00:00:00.000',
+      status: 'publish',
+      link: 'https://www.story-link.com',
+      title: {
+        raw: title,
+        rendered: title,
+      },
+      author: 1,
+      preview_link: 'https://www.story-link.com/?preview=true',
+      edit_link: `https://www.story-link.com/wp-admin/post.php?id=${id}`,
+      _embedded: {
+        author: [{ id: 1, name: 'admin' }],
+        'wp:featuredmedia': [
+          { id: 0, source_url: `https://www.featured-media-${id}` },
+        ],
+      },
+    },
+    capabilities: {
+      hasEditAction: false,
+      hasDeleteAction: false,
     },
   });
 };
@@ -381,7 +406,6 @@ describe('ApiProvider', () => {
           date: '1970-01-01T00:00:00.000',
           date_gmt: '1970-01-01T00:00:00.000',
           status: 'publish',
-          author: 1,
           link: 'https://www.story-link.com',
           title: {
             raw: 'Carlos',
