@@ -22,7 +22,7 @@ import { Icons } from '@web-stories-wp/design-system';
 
 const IconContainer = styled.div`
   height: auto;
-  width: 28px;
+  width: 21px;
   overflow: hidden;
   /* icon is bigger than icon container, so we need to center manually. */
   margin-left: -1px;
@@ -31,7 +31,7 @@ const IconContainer = styled.div`
 function TextIcon() {
   return (
     <IconContainer>
-      <Icons.LetterT height="30px" width="30px" />
+      <Icons.LetterT height="21px" width="21px" />
     </IconContainer>
   );
 }
