@@ -28,7 +28,7 @@ import apiFetch from '@wordpress/api-fetch';
  * a provided URL.
  *
  * @param {Object} config API path.
- * @param  {string} url Url
+ * @param {string} url Url
  * @return {Promise} Result promise
  */
 export function getLinkMetadata(config, url) {
