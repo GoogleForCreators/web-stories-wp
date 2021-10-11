@@ -76,8 +76,8 @@ const transformGetStoryResponse = (post) => {
   return post;
 };
 
-export function getStoryById(apiPath, storyId, isDemo = false) {
-  const path = addQueryArgs(`${apiPath}${storyId}/`, {
+export function getStoryById(config, storyId, isDemo = false) {
+  const path = addQueryArgs(`${config.api.stories}${storyId}/`, {
     context: 'edit',
     _embed: STORY_EMBED,
     web_stories_demo: isDemo,
@@ -131,18 +131,17 @@ const getStorySaveData = (
 /**
  * Fire REST API call to save story.
  *
- * @param {string} apiPath API path.
- * @param {boolean} encodeMarkup Encode markup or not.
+ * @param {Object} config Configuration object.
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
  * @return {Promise} Return apiFetch promise.
  */
-export function saveStoryById(apiPath, encodeMarkup, story) {
+export function saveStoryById(config, story) {
   const { storyId } = story;
-  const storySaveData = getStorySaveData(story, encodeMarkup);
+  const storySaveData = getStorySaveData(story, config.encodeMarkup);
 
   // Only require these fields in the response as used by useSaveStory()
   // to reduce response size.
-  const path = addQueryArgs(`${apiPath}${storyId}/`, {
+  const path = addQueryArgs(`${config}${storyId}/`, {
     _fields: [
       'status',
       'slug',
@@ -175,17 +174,16 @@ export function saveStoryById(apiPath, encodeMarkup, story) {
 /**
  * Fire REST API call to auto-save story.
  *
- * @param {string} apiPath API path.
- * @param {boolean} encodeMarkup Encode markup or not.
+ * @param {Object} config API path.
  * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
  * @return {Promise} Return apiFetch promise.
  */
-export function autoSaveById(apiPath, encodeMarkup, story) {
+export function autoSaveById(config, story) {
   const { storyId } = story;
-  const storySaveData = getStorySaveData(story, encodeMarkup);
+  const storySaveData = getStorySaveData(story, config.encodeMarkup);
 
   return apiFetch({
-    path: `${apiPath}${storyId}/autosaves/`,
+    path: `${config.api.stories}${storyId}/autosaves/`,
     data: storySaveData,
     method: 'POST',
   });

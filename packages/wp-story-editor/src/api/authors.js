@@ -17,14 +17,15 @@
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+
 /**
  * External dependencies
  */
 import { addQueryArgs } from '@web-stories-wp/design-system';
 
-export function getAuthors(apiPath, search) {
+export function getAuthors(config, search) {
   return apiFetch({
-    path: addQueryArgs(apiPath, {
+    path: addQueryArgs(config.api.users, {
       per_page: '100',
       who: 'authors',
       search,

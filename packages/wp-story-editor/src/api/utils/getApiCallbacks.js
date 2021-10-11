@@ -19,40 +19,14 @@
 import * as apiCallbacks from '..';
 
 /**
- * Bind configuration arguments and get all api callbacks.
+ * Bind config object as the first argument and get all api callbacks used in the core editor only.
  *
- * @param {Object} config Editor configuration.
- * @param {Object} config.api API paths.
- * @param {boolean} config.encodeMarkup Encode markup or not.
- * @param {string} config.postType Post type.
+ * @param {Object} config Configuration object.
  * @return {Object} api callbacks.
  */
-const getApiCallbacks = ({ api, encodeMarkup, postType }) => {
-  const args = {
-    getStoryById: [api.stories],
-    saveStoryById: [api.stories, encodeMarkup],
-    autoSaveById: [api.stories, encodeMarkup],
-    getMedia: [api.media],
-    uploadMedia: [api.media],
-    updateMedia: [api.media],
-    deleteMedia: [api.media],
-    getLinkMetadata: [api.link],
-    getAuthors: [api.users],
-    getPublisherLogos: [api.publisherLogos],
-    addPublisherLogo: [api.publisherLogos],
-    getCurrentUser: [api.currentUser],
-    updateCurrentUser: [api.currentUser],
-    getCustomPageTemplates: [api.pageTemplates],
-    addPageTemplate: [api.pageTemplates],
-    deletePageTemplate: [api.pageTemplates],
-    getHotlinkInfo: [api.hotlink],
-    getTaxonomies: [api.taxonomies, postType],
-  };
-
+const getApiCallbacks = (config) => {
   return Object.entries(apiCallbacks).reduce((callbacks, [name, callback]) => {
-    callbacks[name] = args[name]
-      ? callback.bind(null, ...args[name])
-      : callback;
+    callbacks[name] = callback.bind(null, config);
     return callbacks;
   }, {});
 };

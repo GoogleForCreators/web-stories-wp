@@ -22,8 +22,8 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  */
 import apiFetch from '@wordpress/api-fetch';
 
-export function getHotlinkInfo(apiPath, url) {
-  const path = addQueryArgs(apiPath, { url });
+export function getHotlinkInfo(config, url) {
+  const path = addQueryArgs(config.api.hotlink, { url });
   return apiFetch({
     path,
   });
