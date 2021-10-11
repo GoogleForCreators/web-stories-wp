@@ -177,7 +177,7 @@ class Dashboard extends Service_Base {
 	 * @return void
 	 */
 	public function add_menu_page() {
-		$parent = 'edit.php?post_type=' . $this->story_post_type::POST_TYPE_SLUG;
+		$parent = 'edit.php?post_type=' . $this->story_post_type->get_slug();
 
 		$this->hook_suffix['stories-dashboard'] = add_submenu_page(
 			$parent,
@@ -232,7 +232,7 @@ class Dashboard extends Service_Base {
 			wp_safe_redirect(
 				add_query_arg(
 					[
-						'post_type' => $this->story_post_type::POST_TYPE_SLUG,
+						'post_type' => $this->story_post_type->get_slug(),
 						'page'      => 'stories-dashboard',
 					],
 					admin_url( 'edit.php' )
@@ -252,7 +252,7 @@ class Dashboard extends Service_Base {
 	 * @return void
 	 */
 	public function load_stories_dashboard() {
-		$rest_base = $this->get_post_type_rest_base( $this->story_post_type::POST_TYPE_SLUG );
+		$rest_base = $this->story_post_type->get_rest_base();
 
 		$preload_paths = [
 			'/web-stories/v1/settings/',
@@ -374,11 +374,11 @@ class Dashboard extends Service_Base {
 	 * @return array
 	 */
 	public function get_dashboard_settings(): array {
-		$rest_base     = $this->get_post_type_rest_base( $this->story_post_type::POST_TYPE_SLUG );
+		$rest_base     = $this->story_post_type->get_rest_base();
 		$new_story_url = admin_url(
 			add_query_arg(
 				[
-					'post_type' => $this->story_post_type::POST_TYPE_SLUG,
+					'post_type' => $this->story_post_type->get_slug(),
 				],
 				'post-new.php'
 			)
@@ -407,7 +407,7 @@ class Dashboard extends Service_Base {
 				'locale'                => $this->locale->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
 				'wpListURL'             => $classic_wp_list_url,
-				'archiveURL'            => $this->get_post_type_archive_link( $this->story_post_type::POST_TYPE_SLUG ),
+				'archiveURL'            => $this->story_post_type->get_archive_link(),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
 				'version'               => WEBSTORIES_VERSION,
@@ -469,7 +469,7 @@ class Dashboard extends Service_Base {
 
 		$dashboard_url = add_query_arg(
 			[
-				'post_type' => $this->story_post_type::POST_TYPE_SLUG,
+				'post_type' => $this->story_post_type->get_slug(),
 				'page'      => 'stories-dashboard',
 			],
 			admin_url( 'edit.php' )

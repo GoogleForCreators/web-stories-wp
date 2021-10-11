@@ -41,7 +41,6 @@ use WP_Error;
  * @package Google\Web_Stories\REST_API
  */
 class Stories_Lock_Controller extends REST_Controller implements HasRequirements {
-	use Post_Type;
 
 	/**
 	 * Story_Post_Type instance.
@@ -67,8 +66,8 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	public function __construct( Story_Post_Type $story_post_type ) {
 		$this->story_post_type = $story_post_type;
 
-		$rest_base         = $this->get_post_type_rest_base( $story_post_type::POST_TYPE_SLUG );
-		$parent_controller = $this->get_post_type_parent_controller( $story_post_type::POST_TYPE_SLUG );
+		$rest_base         = $story_post_type->get_rest_base();
+		$parent_controller = $story_post_type->get_parent_controller();
 
 		$this->parent_controller = $parent_controller;
 		$this->rest_base         = $rest_base;
@@ -310,7 +309,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 			$response->add_links( $this->prepare_links( $lock, $request['id'] ) );
 		}
 
-		$post_type = $this->story_post_type::POST_TYPE_SLUG;
+		$post_type = $this->story_post_type->get_slug();
 
 		/**
 		 * Filters the lock data for a response.
