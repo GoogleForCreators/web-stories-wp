@@ -415,6 +415,27 @@ export const PRIORITY_COPY = {
       </>
     ),
   },
+  noPublisherLogo: {
+    title: __('Add a publisher logo to your story', 'web-stories'),
+    footer: (
+      <>
+        <li>
+          {sprintf(
+            /* translators: %s: image dimensions. */
+            __("Use an image that's at least %s", 'web-stories'),
+            `${PUBLISHER_LOGO_DIMENSION}x${PUBLISHER_LOGO_DIMENSION}px`
+          )}
+        </li>
+        <li>
+          {sprintf(
+            /* translators: %s: aspect ratio.  */
+            __('Maintain a %s aspect ratio', 'web-stories'),
+            `${PUBLISHER_LOGO_RATIO}x${PUBLISHER_LOGO_RATIO}px`
+          )}
+        </li>
+      </>
+    ),
+  },
   storyPosterSize: {
     title: sprintf(
       /* translators: %s: image dimensions.  */

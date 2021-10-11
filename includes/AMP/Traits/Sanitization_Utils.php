@@ -98,6 +98,31 @@ trait Sanitization_Utils {
 	}
 
 	/**
+	 * Sanitizes <amp-story-page-outlink> elements to ensure they're always valid.
+	 *
+	 * Removes empty `cta-image` attributes.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @return void
+	 */
+	private function sanitize_amp_story_page_outlink( &$document ) {
+		$outlink_elements = $document->getElementsByTagName( 'amp-story-page-outlink' );
+
+		/**
+		 * The <amp-story-page-outlink> element
+		 *
+		 * @var DOMElement $element The <amp-story-page-outlink> element
+		 */
+		foreach ( $outlink_elements as $element ) {
+			if ( ! $element->getAttribute( 'cta-image' ) ) {
+				$element->removeAttribute( 'cta-image' );
+			}
+		}
+	}
+
+	/**
 	 * Replaces the placeholder of publisher logo in the content.
 	 *
 	 * @since 1.1.0

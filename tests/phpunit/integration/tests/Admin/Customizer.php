@@ -65,6 +65,12 @@ class Customizer extends DependencyInjectedTestCase {
 		$this->instance          = $this->injector->make( \Google\Web_Stories\Admin\Customizer::class );
 	}
 
+	public function tear_down() {
+		remove_theme_support( 'web-stories' );
+
+		parent::tear_down();
+	}
+
 	/**
 	 * Add theme support for web stories.
 	 */

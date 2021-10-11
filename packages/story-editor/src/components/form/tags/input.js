@@ -56,14 +56,15 @@ const Border = styled.div`
 const InputWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 3px 6px;
+  padding: 0;
 `;
 
 const TextInput = styled(BaseInput).attrs({ type: 'text' })`
   width: auto;
   flex-grow: 1;
-  height: 38px;
-  margin: 3px 0;
+  height: 32px;
+  margin: 2px 0;
+  padding-left: 4px;
 `;
 
 const SuggestionList = styled(List)`
