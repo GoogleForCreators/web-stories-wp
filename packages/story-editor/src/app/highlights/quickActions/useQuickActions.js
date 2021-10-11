@@ -38,6 +38,7 @@ import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
 const {
   Bucket,
+  ColorBucket,
   CircleSpeed,
   Eraser,
   LetterTLargeLetterTSmall,
@@ -443,6 +444,19 @@ const useQuickActions = () => {
 
           trackEvent('quick_action', {
             name: ACTIONS.CHANGE_FONT.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        ...actionMenuProps,
+      },
+      {
+        Icon: ColorBucket,
+        label: ACTIONS.AUTO_STYLE_TEXT.text,
+        onClick: () => {
+          // @todo Add auto-style event.
+
+          trackEvent('quick_action', {
+            name: ACTIONS.AUTO_STYLE_TEXT.trackingEventName,
             element: selectedElement?.type,
           });
         },

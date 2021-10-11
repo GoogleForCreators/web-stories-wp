@@ -67,6 +67,7 @@ export { ReactComponent as ChevronRightSmall } from './chevron_right_small.svg';
 export { ReactComponent as ChevronUp } from './chevron_up.svg';
 export { ReactComponent as ChevronUpSmall } from './chevron_up_small.svg';
 export { ReactComponent as CircleSpeed } from './circle_speed.svg';
+export { ReactComponent as ColorBucket } from './color_bucket.svg';
 export { ReactComponent as Cross } from './cross.svg';
 export { ReactComponent as CrossLarge } from './cross_large.svg';
 export { ReactComponent as CrossSmall } from './cross_small.svg';
