@@ -200,8 +200,6 @@ class Muting extends Service_Base {
 			);
 		}
 
-		$value = rest_sanitize_boolean( $value );
-
 		update_post_meta( $object_id, $meta_key, $value );
 
 		return true;
