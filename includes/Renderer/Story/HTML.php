@@ -126,7 +126,7 @@ class HTML {
 					// Turns `<a href="https://cdn.ampproject.org/v0.js">https://cdn.ampproject.org/v0.js</a>`
 					// into `<script async src="https://cdn.ampproject.org/v0.js"></script>`.
 					if ( 'https://cdn.ampproject.org/v0.js' === $script_url ) {
-						return "<script async src=\"$script_url\"></script>";
+						return "<script async src=\"$script_url\"></script>"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 					}
 
 					// Extract 'amp-story' from 'https://cdn.ampproject.org/v0/amp-story-1.0.js'.
@@ -136,7 +136,7 @@ class HTML {
 
 					// Turns `<a href="https://cdn.ampproject.org/v0/amp-story-1.0.js">https://cdn.ampproject.org/v0/amp-story-1.0.js</a>`
 					// into <script async src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>.
-					return "<script async src=\"$script_url\" custom-element=\"$custom_element\"></script>";
+					return "<script async src=\"$script_url\" custom-element=\"$custom_element\"></script>"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 				}
 
 				return '';
