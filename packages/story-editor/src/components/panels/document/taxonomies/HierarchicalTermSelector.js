@@ -32,7 +32,6 @@ import {
 } from '@web-stories-wp/design-system';
 import {
   useCallback,
-  useDebouncedCallback,
   useEffect,
   useMemo,
   useRef,
@@ -133,7 +132,6 @@ function HierarchicalTermSelector({
 
   const handleInputChange = useCallback((value) => setSearchText(value), []);
   const speak = useLiveRegion('assertive');
-  const debouncedSpeak = useDebouncedCallback(speak, 500, { leading: true });
 
   const resetInputs = useCallback(() => {
     setNewCategoryName('');
@@ -191,20 +189,20 @@ function HierarchicalTermSelector({
         slug: selectedParentSlug,
       };
       createTerm(taxonomy, newCategoryName, parentValue, true);
-      setShowAddNewCategory(false);
-      resetInputs();
-      setToggleFocus(showAddNewCategory);
-      debouncedSpeak(
+      speak(
         sprintf(
           /* Translators: %s: Taxonomy label name. */
           __('%s added.', 'web-stories'),
           taxonomy.labels.singular_name
         )
       );
+      setShowAddNewCategory(false);
+      resetInputs();
+      setToggleFocus(showAddNewCategory);
     },
     [
       createTerm,
-      debouncedSpeak,
+      speak,
       newCategoryName,
       noParentId,
       resetInputs,

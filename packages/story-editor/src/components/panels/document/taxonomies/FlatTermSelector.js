@@ -67,7 +67,6 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
   const { undo } = useHistory(({ actions: { undo } }) => ({ undo }));
   const [searchResults, setSearchResults] = useState([]);
   const speak = useLiveRegion('assertive');
-  const debouncedSpeak = useDebouncedCallback(speak, 500, { leading: true });
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
@@ -126,7 +125,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       _n('%d result found.', '%d results found.', 'web-stories', 'web-stories'),
       count
     );
-    debouncedSpeak(message);
+    speak(message);
   }, 300);
 
   const tokens = useMemo(() => {
