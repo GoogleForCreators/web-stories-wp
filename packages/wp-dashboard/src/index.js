@@ -58,7 +58,7 @@ const initialize = async (id, config, flags) => {
 
   const dashboardConfig = {
     ...config,
-    apiCallbacks: getApiCallbacks( config ),
+    apiCallbacks: getApiCallbacks(config),
   };
 
   render(
