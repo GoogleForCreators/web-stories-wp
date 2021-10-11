@@ -17,6 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use WP_REST_Request;
 
@@ -63,7 +65,9 @@ class Stories_Lock_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->controller = new \Google\Web_Stories\REST_API\Stories_Lock_Controller();
+		$this->controller = new \Google\Web_Stories\REST_API\Stories_Lock_Controller(
+			new Story_Post_Type( new Settings() )
+		);
 	}
 
 	/**
@@ -320,17 +324,17 @@ class Stories_Lock_Controller extends Test_REST_TestCase {
 	public function test_get_lock() {
 		$this->controller->register();
 
-		$controller = new \Google\Web_Stories\REST_API\Stories_Lock_Controller();
-		$story      = self::factory()->post->create(
+		$story    = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
 		);
-		$new_lock   = ( time() - 100 ) . ':' . self::$author_id;
+		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
+
 		update_post_meta( $story, '_edit_lock', $new_lock );
-		$data = $this->call_private_method( $controller, 'get_lock', [ $story ] );
+		$data = $this->call_private_method( $this->controller, 'get_lock', [ $story ] );
 		$this->assertArrayHasKey( 'time', $data );
 		$this->assertArrayHasKey( 'user', $data );
 		$this->assertEquals( $data['user'], self::$author_id );
