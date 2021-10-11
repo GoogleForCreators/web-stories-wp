@@ -20,7 +20,6 @@
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { Button, BUTTON_TYPES, Icons } from '@web-stories-wp/design-system';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -32,14 +31,35 @@ import { LayerText } from '../../../../elements/shared/layerText';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
-function layerButtonBackground(color) {
-  return css`
-    background: ${color};
-    ::after {
-      background: linear-gradient(to right, ${rgba(color, 0)}, ${color});
-    }
-  `;
-}
+const ActionsContainer = styled.div`
+  position: absolute;
+  display: none;
+  align-items: center;
+  height: 100%;
+  top: 0;
+  right: 0;
+  padding-right: 6px;
+
+  /* 
+   * using currentColor technique here so you can just set the color
+   * of the element and it will apply to both the shadow/scrim and the
+   * element.
+   */
+  color: ${({ theme }) => theme.colors.interactiveBg.secondaryNormal};
+  background-color: currentColor;
+  box-shadow: 0px 0px 15px 20px currentColor;
+`;
+
+const LayerContainer = styled.div`
+  position: relative;
+  height: ${LAYER_HEIGHT}px;
+  width: 100%;
+  overflow: hidden;
+
+  :is(:hover, :focus-within) ${ActionsContainer} {
+    display: inline-flex;
+  }
+`;
 
 const LayerButton = styled(Button).attrs({
   type: BUTTON_TYPES.PLAIN,
@@ -55,38 +75,37 @@ const LayerButton = styled(Button).attrs({
   border: 0;
   padding: 0;
   background: transparent;
-  height: ${LAYER_HEIGHT}px;
+  height: 100%;
   width: 100%;
   overflow: hidden;
   align-items: center;
   user-select: none;
   border-radius: 0;
   padding-left: 8px;
-  ${({ theme }) =>
-    layerButtonBackground(theme.colors.interactiveBg.secondaryNormal)};
-
-  ::after {
-    position: absolute;
-    right: 0;
-    height: 100%;
-    width: 37%;
-    content: '';
-    pointer-events: none;
-  }
-
-  :hover {
-    ${({ theme }) =>
-      layerButtonBackground(theme.colors.interactiveBg.secondaryHover)}
-  }
-
-  :active {
-    ${({ theme }) =>
-      layerButtonBackground(theme.colors.interactiveBg.secondaryPress)}
-  }
+  transition: revert;
 
   ${({ isSelected, theme }) =>
     isSelected &&
-    layerButtonBackground(theme.colors.interactiveBg.secondaryPress)}
+    css`
+      background: ${theme.colors.interactiveBg.secondaryPress};
+      + * {
+        color: ${theme.colors.interactiveBg.secondaryPress};
+      }
+    `}
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
+  }
+  :hover + * {
+    color: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
+  }
+
+  :active {
+    background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
+  }
+  :active + * {
+    color: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
+  }
 `;
 
 const LayerIconWrapper = styled.div`
@@ -110,18 +129,72 @@ const LayerDescription = styled.div`
 
 const IconWrapper = styled.div`
   position: absolute;
-  right: -2px;
+  right: 0px;
   width: 32px;
+  aspect-ratio: 1;
+
+  /*
+   * have to manually center this because this element is taller
+   * than its parent causing flex to not properly center it.
+   */
+  top: 50%;
+  transform: translateY(-50%);
 
   svg {
+    display: block;
     color: ${({ theme }) => theme.colors.fg.secondary};
   }
 `;
 
 const LayerContentContainer = styled.div`
   margin-right: 8px;
+  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+`;
+
+const LayerAction = styled(Button).attrs({
+  type: BUTTON_TYPES.PLAIN,
+})`
+  position: relative;
+  aspect-ratio: 1;
+  width: 20px;
+  padding: 0;
+
+  /*
+   * all of our Icons right now have an embedded padding,
+   * however the new designs just disregard this embedded
+   * padding, so to accomodate, we'll make the icon its
+   * intended size and manually center it within the button.
+   */
+  svg {
+    position: absolute;
+    width: 32px;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /*
+   * override base button colors so we can recieve the 
+   * proper background color from the parent.
+   */
+  && {
+    transition: revert;
+    color: currentColor;
+    background: currentColor;
+  }
+
+  /*
+   * apply foreground color variants to children.
+   */
+  * {
+    color: ${({ theme }) => theme.colors.fg.primary};
+  }
+  :disabled * {
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
 `;
 
 function Layer({ layer }) {
@@ -133,29 +206,43 @@ function Layer({ layer }) {
   const isBackground = currentPage.elements[0].id === layer.id;
 
   return (
-    <LayerButton
-      id={`layer-${layer.id}`}
-      isSelected={isSelected}
-      onClick={handleClick}
-    >
-      <LayerIconWrapper>
-        <LayerIcon element={layer} currentPage={currentPage} />
-      </LayerIconWrapper>
-      <LayerDescription>
-        <LayerContentContainer>
-          {isBackground ? (
-            <LayerText>{__('Background', 'web-stories')}</LayerText>
-          ) : (
-            <LayerContent element={layer} />
+    <LayerContainer>
+      <LayerButton
+        id={`layer-${layer.id}`}
+        onClick={handleClick}
+        isSelected={isSelected}
+      >
+        <LayerIconWrapper>
+          <LayerIcon element={layer} currentPage={currentPage} />
+        </LayerIconWrapper>
+        <LayerDescription>
+          <LayerContentContainer>
+            {isBackground ? (
+              <LayerText>{__('Background', 'web-stories')}</LayerText>
+            ) : (
+              <LayerContent element={layer} />
+            )}
+          </LayerContentContainer>
+          {isBackground && (
+            <IconWrapper>
+              <Icons.LockClosed />
+            </IconWrapper>
           )}
-        </LayerContentContainer>
+        </LayerDescription>
+      </LayerButton>
+      <ActionsContainer>
+        {/*
+         *@TODO add layer actions here. only reason we conditionally
+         * render right now is to maintain visual continuity until
+         * the actual actions are present.
+         */}
         {isBackground && (
-          <IconWrapper>
+          <LayerAction disabled>
             <Icons.LockClosed />
-          </IconWrapper>
+          </LayerAction>
         )}
-      </LayerDescription>
-    </LayerButton>
+      </ActionsContainer>
+    </LayerContainer>
   );
 }
 
