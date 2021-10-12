@@ -88,7 +88,7 @@ export function getStoryById(config, storyId, isDemo = false) {
 }
 
 export function getDemoStoryById(config, storyId) {
-  return getStoryById(storyId, true);
+  return getStoryById(config, storyId, true);
 }
 
 const getStorySaveData = (
