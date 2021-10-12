@@ -101,6 +101,7 @@ describe('Inserting 3P Media', () => {
   });
 
   describe('Disabled', () => {
+    // eslint-disable-next-line jest/require-hook
     withPlugin('e2e-tests-disable-3p-media');
 
     it('should not render 3p media tab', async () => {

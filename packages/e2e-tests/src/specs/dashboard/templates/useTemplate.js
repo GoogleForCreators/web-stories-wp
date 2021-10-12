@@ -40,8 +40,6 @@ describe('Template', () => {
       '[data-testid="template-grid-item-1"]'
     );
 
-    await percySnapshot(page, 'Explore Templates');
-
     await expect(firstTemplate).toClick('a', { text: 'See details' });
     // Get count of template colors to compare to 'saved colors' in the editor.
     const templateDetailsColors = await page.evaluate(() => {
@@ -65,6 +63,14 @@ describe('Template', () => {
     await expect(page).toMatchElement('input[placeholder="Add title"]');
     await expect(page).toMatchElement('[data-element-id]');
 
+    // Wait for skeleton thumbnails in the carousel to render before taking a screenshot.
+    await page.waitForFunction(
+      () =>
+        !document.querySelector(
+          'li[data-testid^="carousel-page-preview-skeleton"]'
+        ),
+      { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
+    );
     await percySnapshot(page, 'Story From Template');
 
     // Select a text layer so 'Saved Colors' panel is present

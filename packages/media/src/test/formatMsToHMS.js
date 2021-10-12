@@ -21,12 +21,12 @@ import formatMsToHMS from '../formatMsToHMS';
 
 describe('formatMsToHMS', () => {
   it('should correctly format 0', () => {
-    expect(formatMsToHMS(0)).toStrictEqual('00:00:00');
+    expect(formatMsToHMS(0)).toBe('00:00:00');
   });
 
   it('should return correct results', () => {
-    expect(formatMsToHMS(1000)).toStrictEqual('00:00:01');
-    expect(formatMsToHMS(60000)).toStrictEqual('00:01:00');
-    expect(formatMsToHMS(10500)).toStrictEqual('00:00:10.5');
+    expect(formatMsToHMS(1000)).toBe('00:00:01');
+    expect(formatMsToHMS(60000)).toBe('00:01:00');
+    expect(formatMsToHMS(10500)).toBe('00:00:10.5');
   });
 });

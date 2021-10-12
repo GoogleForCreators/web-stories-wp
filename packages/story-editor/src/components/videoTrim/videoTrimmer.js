@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useRef, useCallback } from '@web-stories-wp/react';
+import {
+  useRef,
+  useCallback,
+  useDebouncedCallback,
+} from '@web-stories-wp/react';
 import {
   Button,
   BUTTON_SIZES,
@@ -53,11 +57,26 @@ function VideoTrimmer() {
     setEndOffset,
     hasChanged,
     performTrim,
+    setIsDraggingHandles,
     toggleTrimMode,
+    videoData,
   } = useVideoTrim(
     ({
-      state: { currentTime, startOffset, endOffset, maxOffset, hasChanged },
-      actions: { setStartOffset, setEndOffset, performTrim, toggleTrimMode },
+      state: {
+        currentTime,
+        startOffset,
+        endOffset,
+        maxOffset,
+        hasChanged,
+        videoData,
+      },
+      actions: {
+        setStartOffset,
+        setEndOffset,
+        performTrim,
+        toggleTrimMode,
+        setIsDraggingHandles,
+      },
     }) => ({
       currentTime,
       startOffset,
@@ -67,7 +86,9 @@ function VideoTrimmer() {
       setEndOffset,
       hasChanged,
       performTrim,
+      setIsDraggingHandles,
       toggleTrimMode,
+      videoData,
     })
   );
   const { workspaceWidth, pageWidth } = useLayout(
@@ -75,6 +96,11 @@ function VideoTrimmer() {
       workspaceWidth,
       pageWidth,
     })
+  );
+
+  const debouncedNudge = useDebouncedCallback(
+    () => setIsDraggingHandles(false),
+    1000
   );
 
   const menu = useRef(null);
@@ -89,7 +115,7 @@ function VideoTrimmer() {
     }
   }, []);
 
-  if (!pageWidth || !maxOffset) {
+  if (!pageWidth || !maxOffset || !videoData) {
     // We still need a reffed element, or the focus trap will break,
     // so just return an empty element
     return <Menu ref={menu} />;
@@ -102,6 +128,12 @@ function VideoTrimmer() {
     max: maxOffset,
     step: 100,
     minorStep: 10,
+    onPointerDown: () => setIsDraggingHandles(true),
+    onPointerUp: () => setIsDraggingHandles(false),
+    onNudge: () => {
+      setIsDraggingHandles(true);
+      debouncedNudge();
+    },
   };
 
   return (

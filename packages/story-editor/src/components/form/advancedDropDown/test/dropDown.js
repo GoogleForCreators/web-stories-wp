@@ -70,12 +70,15 @@ function arrange(options) {
   );
 }
 
+const scrollTo = jest.fn();
+
 describe('DropDown: Font Picker', () => {
-  // Mock scrollTo
-  const scrollTo = jest.fn();
-  Object.defineProperty(window.Element.prototype, 'scrollTo', {
-    writable: true,
-    value: scrollTo,
+  beforeAll(() => {
+    // Mock scrollTo
+    Object.defineProperty(window.Element.prototype, 'scrollTo', {
+      writable: true,
+      value: scrollTo,
+    });
   });
 
   it('should render font picker title and clicking the button should open the font picker', () => {

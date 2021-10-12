@@ -46,11 +46,11 @@ export const GET_MEDIA_RESPONSE_BODY = [
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
     },
-    is_muted: false,
+    web_stories_is_muted: false,
     web_story_media_source: [2],
     permalink_template: 'http://wp.local/?attachment_id=274',
     generated_slug: 'IMAGE',
-    media_source: 'editor',
+    web_stories_media_source: 'editor',
     featured_media_src: [],
     description: {
       raw: '',

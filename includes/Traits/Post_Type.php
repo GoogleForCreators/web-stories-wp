@@ -153,7 +153,7 @@ trait Post_Type {
 	 *
 	 * @return WP_REST_Posts_Controller|WP_REST_Controller
 	 */
-	protected function get_post_type_parent_controller( string $slug ) {
+	protected function get_post_type_parent_controller( string $slug ): WP_REST_Controller {
 		$post_type_obj     = get_post_type_object( $slug );
 		$parent_controller = null;
 

@@ -17,72 +17,60 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 
-export default function useUserApi(dataAdapter, { currentUserApi }) {
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../config';
+
+export default function useUserApi() {
   const [currentUser, setCurrentUser] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
 
+  const {
+    apiCallbacks: {
+      getUser,
+      toggleWebStoriesTrackingOptIn: toggleWebStoriesTrackingOptInCallback,
+      toggleWebStoriesMediaOptimization:
+        toggleWebStoriesMediaOptimizationCallback,
+    },
+  } = useConfig();
+
   useEffect(() => {
     if (!Object.keys(currentUser).length) {
-      dataAdapter.get(currentUserApi).then(setCurrentUser);
+      getUser().then(setCurrentUser);
     }
-  }, [currentUser, currentUserApi, dataAdapter]);
+  }, [currentUser, getUser]);
 
   const toggleWebStoriesTrackingOptIn = useCallback(async () => {
     setIsUpdating(true);
     try {
-      setCurrentUser(
-        await dataAdapter.post(currentUserApi, {
-          data: {
-            meta: {
-              web_stories_tracking_optin:
-                !currentUser.meta.web_stories_tracking_optin,
-            },
-          },
-        })
-      );
+      setCurrentUser(await toggleWebStoriesTrackingOptInCallback(currentUser));
     } finally {
       setIsUpdating(false);
     }
-  }, [dataAdapter, currentUser, currentUserApi]);
+  }, [toggleWebStoriesTrackingOptInCallback, currentUser]);
 
   const toggleWebStoriesMediaOptimization = useCallback(async () => {
     setIsUpdating(true);
     try {
       setCurrentUser(
-        await dataAdapter.post(currentUserApi, {
-          data: {
-            meta: {
-              web_stories_media_optimization:
-                !currentUser.meta.web_stories_media_optimization,
-            },
-          },
-        })
+        await toggleWebStoriesMediaOptimizationCallback(currentUser)
       );
     } finally {
       setIsUpdating(false);
     }
-  }, [dataAdapter, currentUser, currentUserApi]);
+  }, [toggleWebStoriesMediaOptimizationCallback, currentUser]);
 
-  return useMemo(
-    () => ({
-      api: {
-        toggleWebStoriesTrackingOptIn,
-        toggleWebStoriesMediaOptimization,
-      },
-      currentUser: { data: currentUser, isUpdating },
-    }),
-    [
+  return {
+    api: {
       toggleWebStoriesTrackingOptIn,
       toggleWebStoriesMediaOptimization,
-      currentUser,
+    },
+    currentUser: {
+      data: currentUser,
       isUpdating,
-    ]
-  );
+    },
+  };
 }

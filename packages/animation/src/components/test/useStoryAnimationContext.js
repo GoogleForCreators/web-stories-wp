@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-jest.mock('flagged');
 import { renderHook } from '@testing-library/react-hooks';
 import { useFeature } from 'flagged';
 
@@ -26,8 +25,12 @@ import { useFeature } from 'flagged';
  */
 import { StoryAnimation, useStoryAnimationContext } from '..';
 
+jest.mock('flagged');
+
 describe('useStoryAnimationContext()', () => {
-  useFeature.mockImplementation(() => true);
+  beforeAll(() => {
+    useFeature.mockImplementation(() => true);
+  });
 
   it('should throw an error if used oustide StroyAnimation.Provider', () => {
     expect(() => {

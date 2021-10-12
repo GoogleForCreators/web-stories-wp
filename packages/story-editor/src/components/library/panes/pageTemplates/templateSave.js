@@ -68,9 +68,10 @@ const SaveButton = styled.button`
       theme.colors.interactiveBg.secondaryHover};
   }
 
-  ${({ isDisabled, theme }) =>
-    isDisabled &&
+  ${({ $isDisabled, theme }) =>
+    $isDisabled &&
     `
+      cursor: default;
       background-color: ${theme.colors.interactiveBg.disable};
       &:hover {
         background-color: ${theme.colors.interactiveBg.disable};
@@ -143,21 +144,16 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
     ]
   );
 
-  const textId = useMemo(() => `template_save_btn_${uuidv4()}`, []);
   return (
     <SaveButton
       aria-disabled={isDisabled}
       onClick={handleSaveTemplate}
-      aria-labelledby={textId}
-      isDisabled={isDisabled}
+      $isDisabled={isDisabled}
     >
       <IconWrapper>
-        <Icon />
+        <Icon aria-hidden />
       </IconWrapper>
-      <StyledText
-        id={textId}
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-      >
+      <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__('Save current page as template', 'web-stories')}
       </StyledText>
     </SaveButton>

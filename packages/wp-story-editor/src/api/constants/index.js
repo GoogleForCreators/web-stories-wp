@@ -46,8 +46,8 @@ export const MEDIA_FIELDS = [
   'alt_text',
   'source_url',
   'meta',
-  'media_source',
-  'is_muted',
+  'web_stories_media_source',
+  'web_stories_is_muted',
   // _web_stories_envelope will add these fields, we need them too.
   'body',
   'status',

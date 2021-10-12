@@ -23,8 +23,8 @@ import {
   withUser,
   publishStory,
   insertStoryTitle,
+  withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 async function goToAndExpandTaxonomyPanel() {
   await expect(page).toClick('li[role="tab"]', { text: 'Document' });
@@ -99,6 +99,7 @@ async function addTag(name) {
 }
 
 describe('taxonomy', () => {
+  // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enableTaxonomiesSupport']);
 
   // Create some categories and tags before running all tests so that they are available there.
@@ -150,8 +151,6 @@ describe('taxonomy', () => {
       await expect(page).toMatchElement(
         'input[name="hierarchical_term_jazz"][checked]'
       );
-
-      await percySnapshot(page, 'Taxonomies - Categories - Admin');
     });
 
     it('should be able to add new tags and existing tags', async () => {
@@ -199,19 +198,19 @@ describe('taxonomy', () => {
       // See that added tags persist.
       const tokens2 = await page.evaluate(() =>
         Array.from(
-          document.querySelectorAll('[data-testid="flat-term-token"] > span'),
-          (element) => element.textContent
+          document.querySelectorAll('[data-testid="flat-term-token"]'),
+          (element) => element.innerText
         )
       );
 
-      await expect(tokens2).toContainValue('adventure');
-      await expect(tokens2).toContainValue('noir');
-
-      await percySnapshot(page, 'Taxonomies - Tags - Admin');
+      await expect(tokens2).toStrictEqual(
+        expect.arrayContaining(['noir', 'action', 'adventure'])
+      );
     });
   });
 
   describe('Contributor', () => {
+    // eslint-disable-next-line jest/require-hook
     withUser('contributor', 'password');
 
     it('should be able to manage categories but not add new ones', async () => {
@@ -243,14 +242,9 @@ describe('taxonomy', () => {
       await expect(page).toMatchElement(
         'input[name="hierarchical_term_rock"][checked]'
       );
-
-      await percySnapshot(page, 'Taxonomies - Categories - Contributor');
     });
 
-    // Disable reason: capabilities not met, right now contributor users are granted the ability to `create-web_story_tag` which makes this test fail.
-    // https://github.com/google/web-stories-wp/issues/9236
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should be able to add tags that already exist but not create new tags', async () => {
+    it('should be able to add new tags and existing tags', async () => {
       await createNewStory();
       await insertStoryTitle('Taxonomies - Tags - Contributor');
 
@@ -263,6 +257,7 @@ describe('taxonomy', () => {
       // Find an existing tag and select it.
       await page.focus('input#web_story_tag-input');
       await page.type('input#web_story_tag-input', 'adven');
+      await page.waitForSelector('ul[data-testid="suggested_terms_list"]');
       await expect(page).toMatchElement(
         'ul[data-testid="suggested_terms_list"]'
       );
@@ -274,14 +269,19 @@ describe('taxonomy', () => {
 
       const tokens = await page.evaluate(() =>
         Array.from(
-          document.querySelectorAll('[data-testid="flat-term-token"] > span'),
-          (element) => element.textContent
+          document.querySelectorAll('[data-testid="flat-term-token"]'),
+          (element) => element.innerText
         )
       );
 
-      await expect(tokens).toContainValue('adventure');
+      await expect(tokens).toStrictEqual(
+        expect.arrayContaining(['rom-com', 'creature feature', 'adventure'])
+      );
 
-      await publishStory();
+      await expect(page).toClick('button[aria-label="Save draft"]');
+      await page.waitForSelector(
+        'button[aria-label="Preview"]:not([disabled])'
+      );
 
       // Refresh page to verify that the assignments persisted.
       await page.reload();
@@ -292,16 +292,50 @@ describe('taxonomy', () => {
       // See that added tags persist.
       const tokens2 = await page.evaluate(() =>
         Array.from(
-          document.querySelectorAll('[data-testid="flat-term-token"] > span'),
-          (element) => element.textContent
+          document.querySelectorAll('[data-testid="flat-term-token"]'),
+          (element) => element.innerText
         )
       );
 
-      await expect(tokens2).toContainValue('adventure');
-      await expect(tokens2).not.toContainValue('rom-com');
-      await expect(tokens2).not.toContainValue('creature feature');
+      await expect(tokens2).toStrictEqual(
+        expect.arrayContaining(['rom-com', 'creature feature', 'adventure'])
+      );
+    });
+  });
 
-      await percySnapshot(page, 'Taxonomies - Tags - Contributor');
+  describe('Custom Taxonomy', () => {
+    // eslint-disable-next-line jest/require-hook
+    withPlugin('web-stories-test-plugin-taxonomies');
+
+    describe('Administrator', () => {
+      it('should see custom taxonomies', async () => {
+        await createNewStory();
+        await goToAndExpandTaxonomyPanel();
+
+        await expect(page).toMatch('Add New Color');
+        await expect(page).toMatch('Search Verticals');
+
+        await expect(page).toMatchElement('button', {
+          text: 'Add New Vertical',
+        });
+      });
+    });
+
+    describe('Contributor', () => {
+      // eslint-disable-next-line jest/require-hook
+      withUser('contributor', 'password');
+
+      it('should see custom taxonomies', async () => {
+        await createNewStory();
+        await goToAndExpandTaxonomyPanel();
+
+        await expect(page).toMatch('Add New Color');
+        await expect(page).toMatch('Search Verticals');
+
+        await expect(page).not.toMatchElement('button', {
+          text: 'Add New Vertical',
+        });
+      });
     });
   });
 });

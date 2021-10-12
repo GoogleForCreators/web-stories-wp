@@ -40,8 +40,8 @@ describe('Element', () => {
         height: 100,
       };
       const textElement = createNewElement('text', atts);
-      expect(textElement.rotationAngle).toStrictEqual(0);
-      expect(textElement.width).toStrictEqual(100);
+      expect(textElement.rotationAngle).toBe(0);
+      expect(textElement.width).toBe(100);
       expect(textElement.font).toMatchObject(TEXT_ELEMENT_DEFAULT_FONT);
     });
 

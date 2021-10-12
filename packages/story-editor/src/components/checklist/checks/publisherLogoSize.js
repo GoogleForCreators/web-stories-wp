@@ -31,8 +31,9 @@ import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function publisherLogoSize(publisherLogo) {
   return (
-    publisherLogo?.height < PUBLISHER_LOGO_DIMENSION ||
-    publisherLogo?.width < PUBLISHER_LOGO_DIMENSION
+    Boolean(publisherLogo?.id) &&
+    (publisherLogo?.height < PUBLISHER_LOGO_DIMENSION ||
+      publisherLogo?.width < PUBLISHER_LOGO_DIMENSION)
   );
 }
 

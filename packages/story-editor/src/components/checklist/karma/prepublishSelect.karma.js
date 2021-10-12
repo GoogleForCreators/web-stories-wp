@@ -380,12 +380,15 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       await addPages(4);
       await openChecklist();
       // high priority should auto expand
+      // tab to card
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
+
+      // press enter on video preview in card
       await fixture.events.keyboard.press('Enter');
 
       const mediaButton = await fixture.editor.inspector.designPanel

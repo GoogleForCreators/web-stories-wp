@@ -109,6 +109,28 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.13.0 =
+
+**Release Date:** October 12, 2021.
+
+* New feature: tags and categories management in the editor.
+* Performance improvements for page thumbnails in the editor.
+* Improves AMP compatibility of the Web Stories embed block.
+* Fixes an AMP validation issue related to link icons.
+* Fixes an issue with setting link icons in the editor.
+* Fixes an issue with custom page templates that caused the editor to crash.
+* Bug fixes and performance improvements.
+
+= 1.12.0 =
+
+**Release Date:** October 5, 2021.
+
+* New feature: video trimming tool in the editor.
+* New feature: [improved analytics configuration](https://wp.stories.google/docs/seo/#Adding-Analytics) via opt-in on the settings page.
+* Template colors are now available in "Saved Colors" when creating a story from a template.
+* Easier selection of publisher logos in the editor.
+* Bug fixes and performance improvements.
+
 = 1.11.0 =
 
 **Release Date:** September 7, 2021.
@@ -119,35 +141,16 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * New color swatches in color picker.
 * Bug fixes and performance improvements.
 
-= 1.10.1 =
-
-**Release Date:** August 25, 2021.
-
-* Fixes an issue with potential fatal errors on the frontend.
-* Fixes an issue with page attachments being removed on the frontend.
-* Fixes an issue with memory not being freed up after optimizing videos.
-
-= 1.10.0 =
-
-**Release Date:** August 10, 2021.
-
-* New feature: 29 new templates for creators to choose from.
-* New feature: color eyedropper.
-* New feature: extended list of stickers.
-* New feature: ability to serve videos from the Google cache.
-* New feature: remove audio tracks to mute videos.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.13.0 =
+
+Categories and tags support, improved performance in the editor, and several bug fixes.
+
+= 1.12.0 =
+
+Video trimming, improved analytics configuration, publisher logos management, saved template colors, and various bug fixes.
 
 = 1.11.0 =
 
 New templates, right-click menu, improved color picker, and background audio support.
-
-= 1.10.1 =
-
-Several bug fixes to address potential fatal errors and missing page attachments, as well as high memory consumption.
-
-= 1.10.0 =
-
-New templates, eyedropper, stickers, ability to mute videos, bug fixes and performance improvements.

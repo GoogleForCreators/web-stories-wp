@@ -241,8 +241,8 @@ function useMediaUploadQueue() {
             try {
               newFile = await convertGifToVideo(file);
               finishTranscoding({ id, file: newFile });
-              additionalData.media_source = 'gif-conversion';
-              additionalData.is_muted = true;
+              additionalData.web_stories_media_source = 'gif-conversion';
+              additionalData.web_stories_is_muted = true;
             } catch (error) {
               // Cancel uploading if there were any errors.
               cancelUploading({ id, error });
@@ -259,9 +259,6 @@ function useMediaUploadQueue() {
             }
           }
 
-          // Transcode/Optimize videos before upload.
-          // TODO: Only transcode & optimize video if needed (criteria TBD).
-          // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
           if (isTranscodingEnabled && canTranscodeFile(file)) {
             if (trimData) {
               startTrimming({ id });
@@ -284,7 +281,7 @@ function useMediaUploadQueue() {
               try {
                 newFile = await stripAudioFromVideo(file);
                 finishMuting({ id, file: newFile });
-                additionalData.is_muted = true;
+                additionalData.web_stories_is_muted = true;
               } catch (error) {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });
@@ -294,12 +291,16 @@ function useMediaUploadQueue() {
                 return;
               }
             } else {
+              // Transcode/Optimize videos before upload.
+              // TODO: Only transcode & optimize video if needed (criteria TBD).
+              // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
+
               startTranscoding({ id });
 
               try {
                 newFile = await transcodeVideo(file);
                 finishTranscoding({ id, file: newFile });
-                additionalData.media_source = 'video-optimization';
+                additionalData.web_stories_media_source = 'video-optimization';
               } catch (error) {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });

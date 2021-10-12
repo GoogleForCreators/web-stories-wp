@@ -43,7 +43,7 @@ import {
  * @property {number} featured_media ID of the media item's poster ID.
  * @property {string} alt_text Alt text.
  * @property {string} source_url Media URL.
- * @property {string} media_source Media source.
+ * @property {string} web_stories_media_source Media source.
  * @property {MediaDetails} media_details Media details.
  */
 
@@ -84,10 +84,10 @@ function getVideoResourceFromAttachment(attachment) {
       height: posterHeight,
       generated: posterGenerated,
     },
-    is_muted: isMuted,
+    web_stories_is_muted: isMuted,
     alt_text: alt,
     source_url: src,
-    media_source: mediaSource,
+    web_stories_media_source: mediaSource,
     meta: { web_stories_trim_data: trimData },
   } = attachment;
 
@@ -166,7 +166,8 @@ function getGifResourceFromAttachment(attachment) {
  * @return {import('./createResource').Resource} Resource object.
  */
 function getResourceFromAttachment(attachment) {
-  const { mime_type: mimeType, media_source: mediaSource } = attachment;
+  const { mime_type: mimeType, web_stories_media_source: mediaSource } =
+    attachment;
 
   if ('gif-conversion' === mediaSource) {
     return getGifResourceFromAttachment(attachment);

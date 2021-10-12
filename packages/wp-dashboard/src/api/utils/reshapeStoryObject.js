@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { REST_LINKS } from '../../constants';
+import { REST_LINKS } from '../constants';
 
 export default function reshapeStoryObject(originalStoryData) {
   const {

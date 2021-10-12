@@ -21,11 +21,12 @@
 // That's why the public path assignment is in its own dedicated module and imported here at the very top.
 // See https://webpack.js.org/guides/public-path/#on-the-fly
 import './publicPath';
+import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
 
 /**
  * External dependencies
  */
-import Dashboard, { InterfaceSkeleton } from '@web-stories-wp/dashboard';
+import Dashboard from '@web-stories-wp/dashboard';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
 import { FlagsProvider } from 'flagged';
@@ -35,7 +36,8 @@ import { initializeTracking } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
+import getApiCallbacks from './api/utils/getApiCallbacks';
+import { Layout } from './components';
 
 /**
  * Initializes the Web Stories dashboard screen.
@@ -55,11 +57,16 @@ const initialize = async (id, config, flags) => {
   // Already tracking screen views in AppContent, no need to send page views as well.
   await initializeTracking('Dashboard', false);
 
+  const dashboardConfig = {
+    ...config,
+    apiCallbacks: getApiCallbacks(config),
+  };
+
   render(
     <FlagsProvider features={flags}>
       <StrictMode>
-        <Dashboard config={config}>
-          <InterfaceSkeleton />
+        <Dashboard config={dashboardConfig}>
+          <Layout />
         </Dashboard>
       </StrictMode>
     </FlagsProvider>,

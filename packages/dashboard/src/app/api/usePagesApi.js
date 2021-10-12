@@ -17,40 +17,41 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { useCallback } from '@web-stories-wp/react';
 
-export default function usePagesApi(dataAdapter, { pagesApi }) {
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../config';
+
+export default function usePagesApi() {
+  const {
+    apiCallbacks: {
+      getPageById: getPageByIdCallback,
+      searchPages: searchPagesCallback,
+    },
+  } = useConfig();
+
   const getPageById = useCallback(
     async (id) => {
       try {
-        const response = await dataAdapter.get(
-          addQueryArgs(`${pagesApi}${id}/`, {
-            _fields: ['title', 'link'],
-          })
-        );
+        const { title, link } = await getPageByIdCallback(id);
 
         return {
-          title: response.title.rendered,
-          link: response.link,
+          title: title.rendered,
+          link,
         };
       } catch (e) {
         return null;
       }
     },
-    [dataAdapter, pagesApi]
+    [getPageByIdCallback]
   );
 
   const searchPages = useCallback(
     async (searchTerm) => {
       try {
-        const response = await dataAdapter.get(
-          addQueryArgs(pagesApi, {
-            per_page: 100,
-            search: searchTerm,
-            _fields: ['id', 'title'],
-          })
-        );
+        const response = await searchPagesCallback(searchTerm);
 
         return response.map(({ id, title }) => ({
           value: id,
@@ -60,13 +61,10 @@ export default function usePagesApi(dataAdapter, { pagesApi }) {
         return [];
       }
     },
-    [dataAdapter, pagesApi]
+    [searchPagesCallback]
   );
 
-  return useMemo(
-    () => ({
-      api: { searchPages, getPageById },
-    }),
-    [searchPages, getPageById]
-  );
+  return {
+    api: { searchPages, getPageById },
+  };
 }

@@ -67,7 +67,6 @@ class Plugin extends ServiceBasedPlugin {
 	 * @var string[]
 	 */
 	const SERVICES = [
-		'activation_flag'              => Admin\Activation_Flag::class,
 		'activation_notice'            => Admin\Activation_Notice::class,
 		'admin.google_fonts'           => Admin\Google_Fonts::class,
 		'amp_output_buffer'            => Output_Buffer::class,
@@ -164,7 +163,6 @@ class Plugin extends ServiceBasedPlugin {
 	 */
 	protected function get_shared_instances(): array {
 		return [
-			Admin\Activation_Flag::class,
 			Admin\Customizer::class,
 			Admin\Google_Fonts::class,
 			Admin\Meta_Boxes::class,

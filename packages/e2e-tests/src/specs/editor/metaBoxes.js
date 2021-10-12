@@ -36,6 +36,7 @@ describe('Custom Meta Boxes', () => {
   });
 
   describe('Available', () => {
+    // eslint-disable-next-line jest/require-hook
     withPlugin('web-stories-test-plugin-meta-box');
 
     it('should display meta boxes and save their content', async () => {
@@ -103,7 +104,7 @@ describe('Custom Meta Boxes', () => {
       const metaBoxValue = await page.evaluate(
         () => document.getElementById('web_stories_test_meta_box_field').value
       );
-      await expect(metaBoxValue).toStrictEqual('Meta Box Test Value');
+      await expect(metaBoxValue).toBe('Meta Box Test Value');
     });
   });
 });

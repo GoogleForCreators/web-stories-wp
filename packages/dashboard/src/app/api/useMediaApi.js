@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
+import { useCallback, useReducer } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -27,9 +27,13 @@ import mediaReducer, {
   ACTION_TYPES as MEDIA_ACTION_TYPES,
 } from '../reducer/media';
 import { ERRORS } from '../textContent';
+import { useConfig } from '../config';
 
-export default function useMediaApi(dataAdapter, { globalMediaApi }) {
+export default function useMediaApi() {
   const [state, dispatch] = useReducer(mediaReducer, defaultMediaState);
+  const {
+    apiCallbacks: { uploadMedia: uploadMediaCallback },
+  } = useConfig();
 
   const uploadMedia = useCallback(
     async (files) => {
@@ -39,15 +43,7 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
 
       try {
         // each file needs to be uploaded separately
-        const mediaResponse = await Promise.all(
-          Object.values(files).map((file) => {
-            const data = new window.FormData();
-            data.append('file', file, file.name || file.type.replace('/', '.'));
-            return dataAdapter.post(globalMediaApi, {
-              body: data,
-            });
-          })
-        );
+        const mediaResponse = await uploadMediaCallback(files);
 
         dispatch({
           type: MEDIA_ACTION_TYPES.ADD_MEDIA_SUCCESS,
@@ -68,15 +64,13 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
         });
       }
     },
-    [dataAdapter, globalMediaApi]
+    [uploadMediaCallback]
   );
 
-  const api = useMemo(
-    () => ({
+  return {
+    media: state,
+    api: {
       uploadMedia,
-    }),
-    [uploadMedia]
-  );
-
-  return { media: state, api };
+    },
+  };
 }

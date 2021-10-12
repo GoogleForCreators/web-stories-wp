@@ -20,23 +20,22 @@
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
 import { formatMsToHMS, getVideoLengthDisplay } from '@web-stories-wp/media';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { useLocalMedia, useStory } from '../../app';
+import { useLocalMedia } from '../../app';
 import VideoTrimContext from './videoTrimContext';
 import useVideoTrimMode from './useVideoTrimMode';
 import useVideoNode from './useVideoNode';
 
 function VideoTrimProvider({ children }) {
-  const { selectedElements } = useStory(({ state: { selectedElements } }) => ({
-    selectedElements,
-  }));
   const { trimExistingVideo } = useLocalMedia((state) => ({
     trimExistingVideo: state.actions.trimExistingVideo,
   }));
-  const { isTrimMode, hasTrimMode, toggleTrimMode } = useVideoTrimMode();
+  const { isTrimMode, hasTrimMode, toggleTrimMode, videoData } =
+    useVideoTrimMode();
   const {
     hasChanged,
     currentTime,
@@ -47,10 +46,11 @@ function VideoTrimProvider({ children }) {
     setEndOffset,
     setVideoNode,
     resetOffsets,
-  } = useVideoNode();
+    setIsDraggingHandles,
+  } = useVideoNode(videoData);
 
   const performTrim = useCallback(() => {
-    const { resource } = selectedElements[0];
+    const { resource, element } = videoData;
     if (!resource) {
       return;
     }
@@ -61,20 +61,24 @@ function VideoTrimProvider({ children }) {
         length: lengthInSeconds,
         lengthFormatted: getVideoLengthDisplay(lengthInSeconds),
       },
+      // This is the ID of the resource that's currently on canvas and needs to be cloned.
+      // It's only different from the above resource, if the canvas resource is a trim of the other.
+      canvasResourceId: element.resource.id,
       start: formatMsToHMS(startOffset),
       end: formatMsToHMS(endOffset),
     });
+    trackEvent('video_trim', {
+      original_length: resource.length,
+      new_length: lengthInSeconds,
+      start_offset: startOffset,
+      end_offset: endOffset,
+    });
     toggleTrimMode();
-  }, [
-    endOffset,
-    startOffset,
-    trimExistingVideo,
-    selectedElements,
-    toggleTrimMode,
-  ]);
+  }, [endOffset, startOffset, trimExistingVideo, toggleTrimMode, videoData]);
 
   const value = {
     state: {
+      videoData,
       hasChanged,
       isTrimMode,
       hasTrimMode,
@@ -90,6 +94,7 @@ function VideoTrimProvider({ children }) {
       setStartOffset,
       setEndOffset,
       resetOffsets,
+      setIsDraggingHandles,
     },
   };
 

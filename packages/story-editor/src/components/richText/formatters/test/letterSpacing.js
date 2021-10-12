@@ -33,15 +33,17 @@ jest.mock('../../styleManipulation', () => {
   };
 });
 
-getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
 describe('Color formatter', () => {
+  beforeAll(() => {
+    getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+  });
+
   beforeEach(() => {
     togglePrefixStyle.mockClear();
     getPrefixStylesInSelection.mockClear();
   });
-
-  const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
   describe('elementToStyle', () => {
     function setupFormatter(element) {
@@ -126,13 +128,13 @@ describe('Color formatter', () => {
     it('should return default 0 if no style matches', () => {
       const styles = [NONE];
       const result = setupFormatter(styles);
-      expect(result).toStrictEqual(0);
+      expect(result).toBe(0);
     });
 
     it('should return parsed letter spacing if exactly one style matches', () => {
       const styles = [`${LETTERSPACING}-34`];
       const result = setupFormatter(styles);
-      expect(result).toStrictEqual(34);
+      expect(result).toBe(34);
     });
   });
 

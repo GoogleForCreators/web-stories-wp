@@ -27,7 +27,7 @@ import { transformNode } from '../translateWithMarkup';
 describe('transformNode', () => {
   it('returns text content for text node', () => {
     const actual = transformNode(document.createTextNode('Hello World'));
-    expect(actual).toStrictEqual('Hello World');
+    expect(actual).toBe('Hello World');
   });
 
   it('does not preserve node attributes', () => {
@@ -36,7 +36,7 @@ describe('transformNode', () => {
     node.setAttribute('class', 'bar');
     node.textContent = 'Hello World';
     const actual = renderToStaticMarkup(transformNode(node));
-    expect(actual).toStrictEqual('<div>Hello World</div>');
+    expect(actual).toBe('<div>Hello World</div>');
   });
 
   it('does transform children recursively', () => {
@@ -48,7 +48,7 @@ describe('transformNode', () => {
     node.appendChild(p);
 
     const actual = renderToStaticMarkup(transformNode(node));
-    expect(actual).toStrictEqual('<div><p><span>Hello World</span></p></div>');
+    expect(actual).toBe('<div><p><span>Hello World</span></p></div>');
   });
 
   it('replaces node with mapped component', () => {
@@ -71,7 +71,7 @@ describe('transformNode', () => {
     };
 
     const actual = renderToStaticMarkup(transformNode(node, mapping));
-    expect(actual).toStrictEqual('<div id="bar" class="baz">Hello World</div>');
+    expect(actual).toBe('<div id="bar" class="baz">Hello World</div>');
   });
 
   it('replaces nested node with mapped component', () => {
@@ -96,7 +96,7 @@ describe('transformNode', () => {
     };
 
     const actual = renderToStaticMarkup(transformNode(node, mapping));
-    expect(actual).toStrictEqual(
+    expect(actual).toBe(
       '<div><p><span id="bar" class="baz"><em>Hello World</em></span></p></div>'
     );
   });

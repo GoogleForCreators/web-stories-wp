@@ -23,7 +23,12 @@ use Google\Web_Stories\Settings;
 /**
  * @coversDefaultClass \Google\Web_Stories\Discovery
  */
-class Discovery extends TestCase {
+class Discovery extends DependencyInjectedTestCase {
+
+	/**
+	 * @var \Google\Web_Stories\Discovery
+	 */
+	private $instance;
 
 	/**
 	 * User ID.
@@ -98,6 +103,8 @@ class Discovery extends TestCase {
 	public function set_up() {
 		parent::set_up();
 
+		$this->instance = $this->injector->make( \Google\Web_Stories\Discovery::class );
+
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 	}
@@ -106,13 +113,12 @@ class Discovery extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$object = new \Google\Web_Stories\Discovery();
-		$object->register();
-		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_metadata' ] ) );
-		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_schemaorg_metadata' ] ) );
-		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_open_graph_metadata' ] ) );
-		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_twitter_metadata' ] ) );
-		$this->assertSame( 4, has_action( 'web_stories_story_head', [ $object, 'print_feed_link' ] ) );
+		$this->instance->register();
+		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_metadata' ] ) );
+		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_schemaorg_metadata' ] ) );
+		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_open_graph_metadata' ] ) );
+		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_twitter_metadata' ] ) );
+		$this->assertSame( 4, has_action( 'web_stories_story_head', [ $this->instance, 'print_feed_link' ] ) );
 
 	}
 
@@ -120,8 +126,7 @@ class Discovery extends TestCase {
 	 * @covers ::print_metadata
 	 */
 	public function test_print_metadata() {
-		$object = new \Google\Web_Stories\Discovery();
-		$output = get_echo( [ $object, 'print_metadata' ] );
+		$output = get_echo( [ $this->instance, 'print_metadata' ] );
 		$this->assertStringContainsString( '<title>', $output );
 	}
 
@@ -129,8 +134,7 @@ class Discovery extends TestCase {
 	 * @covers ::print_schemaorg_metadata
 	 */
 	public function test_print_schemaorg_metadata() {
-		$object = new \Google\Web_Stories\Discovery();
-		$output = get_echo( [ $object, 'print_schemaorg_metadata' ] );
+		$output = get_echo( [ $this->instance, 'print_schemaorg_metadata' ] );
 		$this->assertStringContainsString( 'application/ld+json', $output );
 	}
 
@@ -138,8 +142,7 @@ class Discovery extends TestCase {
 	 * @covers ::get_schemaorg_metadata
 	 */
 	public function test_get_schemaorg_metadata() {
-		$object = new \Google\Web_Stories\Discovery();
-		$result = $this->call_private_method( $object, 'get_schemaorg_metadata' );
+		$result = $this->call_private_method( $this->instance, 'get_schemaorg_metadata' );
 		$this->assertArrayHasKey( 'mainEntityOfPage', $result );
 		$this->assertArrayHasKey( 'headline', $result );
 		$this->assertArrayHasKey( 'datePublished', $result );
@@ -152,8 +155,7 @@ class Discovery extends TestCase {
 	 * @covers ::print_open_graph_metadata
 	 */
 	public function test_print_open_graph_metadata() {
-		$object = new \Google\Web_Stories\Discovery();
-		$output = get_echo( [ $object, 'print_open_graph_metadata' ] );
+		$output = get_echo( [ $this->instance, 'print_open_graph_metadata' ] );
 		$this->assertStringContainsString( 'og:locale', $output );
 		$this->assertStringContainsString( 'og:type', $output );
 		$this->assertStringContainsString( 'og:description', $output );
@@ -166,8 +168,7 @@ class Discovery extends TestCase {
 	 * @covers ::get_open_graph_metadata
 	 */
 	public function test_get_open_graph_metadata() {
-		$object = new \Google\Web_Stories\Discovery();
-		$result = $this->call_private_method( $object, 'get_open_graph_metadata' );
+		$result = $this->call_private_method( $this->instance, 'get_open_graph_metadata' );
 		$this->assertArrayHasKey( 'og:locale', $result );
 		$this->assertArrayHasKey( 'og:type', $result );
 		$this->assertArrayHasKey( 'og:description', $result );
@@ -180,8 +181,7 @@ class Discovery extends TestCase {
 	 * @covers ::print_feed_link
 	 */
 	public function test_print_feed_link() {
-		$object = new \Google\Web_Stories\Discovery();
-		$output = get_echo( [ $object, 'print_feed_link' ] );
+		$output = get_echo( [ $this->instance, 'print_feed_link' ] );
 		$this->assertStringContainsString( '<link rel="alternate"', $output );
 		$this->assertStringContainsString( get_bloginfo( 'name' ), $output );
 	}
@@ -193,8 +193,7 @@ class Discovery extends TestCase {
 		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
-		$object = new \Google\Web_Stories\Discovery();
-		$output = get_echo( [ $object, 'print_feed_link' ] );
+		$output = get_echo( [ $this->instance, 'print_feed_link' ] );
 
 		delete_option( Settings::SETTING_NAME_ARCHIVE );
 		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
@@ -208,8 +207,7 @@ class Discovery extends TestCase {
 	 * @covers ::print_twitter_metadata
 	 */
 	public function test_print_twitter_metadata() {
-		$object = new \Google\Web_Stories\Discovery();
-		$output = get_echo( [ $object, 'print_twitter_metadata' ] );
+		$output = get_echo( [ $this->instance, 'print_twitter_metadata' ] );
 		$this->assertStringContainsString( 'twitter:card', $output );
 		$this->assertStringContainsString( 'twitter:image', $output );
 		$this->assertStringContainsString( 'twitter:image:alt', $output );
@@ -220,8 +218,7 @@ class Discovery extends TestCase {
 	 * @covers ::get_twitter_metadata
 	 */
 	public function test_get_twitter_metadata() {
-		$object = new \Google\Web_Stories\Discovery();
-		$result = $this->call_private_method( $object, 'get_twitter_metadata' );
+		$result = $this->call_private_method( $this->instance, 'get_twitter_metadata' );
 		$this->assertArrayHasKey( 'twitter:card', $result );
 		$this->assertArrayHasKey( 'twitter:image', $result );
 		$this->assertArrayHasKey( 'twitter:image:alt', $result );
@@ -232,8 +229,7 @@ class Discovery extends TestCase {
 	 * @covers ::get_poster
 	 */
 	public function test_get_poster() {
-		$object = new \Google\Web_Stories\Discovery();
-		$result = $this->call_private_method( $object, 'get_poster', [ self::$story_id ] );
+		$result = $this->call_private_method( $this->instance, 'get_poster', [ self::$story_id ] );
 		$this->assertArrayHasKey( 'src', $result );
 		$this->assertArrayHasKey( 'height', $result );
 		$this->assertArrayHasKey( 'width', $result );
@@ -243,8 +239,7 @@ class Discovery extends TestCase {
 	 * @covers ::get_poster
 	 */
 	public function test_get_poster_no() {
-		$object = new \Google\Web_Stories\Discovery();
-		$result = $this->call_private_method( $object, 'get_poster', [ -99 ] );
+		$result = $this->call_private_method( $this->instance, 'get_poster', [ -99 ] );
 		$this->assertFalse( $result );
 	}
 }

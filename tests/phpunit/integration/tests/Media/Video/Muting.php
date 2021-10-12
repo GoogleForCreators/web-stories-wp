@@ -106,8 +106,8 @@ class Muting extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->assertArrayNotHasKey( \Google\Web_Stories\Media\Video\Muting::IS_MUTED_KEY, $image );
-		$this->assertArrayHasKey( \Google\Web_Stories\Media\Video\Muting::IS_MUTED_KEY, $video );
+		$this->assertArrayNotHasKey( \Google\Web_Stories\Media\Video\Muting::IS_MUTED_REST_API_KEY, $image );
+		$this->assertArrayHasKey( \Google\Web_Stories\Media\Video\Muting::IS_MUTED_REST_API_KEY, $video );
 	}
 
 	/**
@@ -130,8 +130,8 @@ class Muting extends DependencyInjectedTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		$this->assertArrayHasKey( \Google\Web_Stories\Media\Video\Muting::IS_MUTED_KEY, $data );
-		$this->assertNull( $data[ \Google\Web_Stories\Media\Video\Muting::IS_MUTED_KEY ] );
+		$this->assertArrayHasKey( \Google\Web_Stories\Media\Video\Muting::IS_MUTED_REST_API_KEY, $data );
+		$this->assertNull( $data[ \Google\Web_Stories\Media\Video\Muting::IS_MUTED_REST_API_KEY ] );
 	}
 
 	/**
@@ -166,10 +166,8 @@ class Muting extends DependencyInjectedTestCase {
 			]
 		);
 
-		$result = $this->instance->update_callback_is_muted( true, get_post( $video_attachment_id ) );
-		$this->assertTrue( $result );
-		$result = $this->instance->update_callback_is_muted( true, get_post( $video_attachment_id ) );
-		$this->assertFalse( $result );
+		$actual = $this->instance->update_callback_is_muted( true, get_post( $video_attachment_id ) );
+		$this->assertTrue( $actual );
 	}
 
 	/**
