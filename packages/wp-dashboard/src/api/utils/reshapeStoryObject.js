@@ -15,9 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-/**
  * Internal dependencies
  */
 import { REST_LINKS } from '../constants';

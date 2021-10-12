@@ -15,16 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-/**
  * Internal dependencies
  */
 import { REST_LINKS } from '../../constants';
-
-/**
- * Internal dependencies
- */
 import reshapeStoryObject from '../reshapeStoryObject';
 
 describe('reshapeStoryObject', () => {
