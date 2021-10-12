@@ -13,32 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import apiFetch from '@wordpress/api-fetch';
+import * as apiCallbacks from '..';
 
 /**
- * Upload media
- * Used on settings page for upload button.
+ * Bind config object as the first argument and get all api callbacks used in the core dashboard only.
  *
  * @param {Object} config Configuration object.
- * @param {Object} files Uploaded files.
- * @return {Promise} Request promise.
+ * @return {Object} api callbacks.
  */
-export function uploadMedia(config, files) {
-  return Promise.all(
-    Object.values(files).map((file) => {
-      const data = new window.FormData();
+const getApiCallbacks = (config) => {
+  return Object.entries(apiCallbacks).reduce((callbacks, [name, callback]) => {
+    callbacks[name] = callback.bind(null, config);
+    return callbacks;
+  }, {});
+};
 
-      data.append('file', file, file.name || file.type.replace('/', '.'));
-
-      return apiFetch({
-        path: config.api.media,
-        body: data,
-        method: 'POST',
-      });
-    })
-  );
-}
+export default getApiCallbacks;

@@ -21,7 +21,7 @@
 /* amp-lightbox needs to have z-index to render on top of other elements in the page. */
 .web-stories-list__lightbox-wrapper amp-lightbox,
 .web-stories-list__lightbox.show {
-  z-index: 9999999;
+  z-index: 999999999;
 }
 
 .web-stories-list__lightbox.show {
@@ -44,6 +44,9 @@
   height: 40px;
   width: 40px;
   z-index: 1;
+  border: none;
+  background: none;
+  border-radius: 0;
 }
 
 .story-lightbox__close-button--stick {

@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Traits\Post_Type;
@@ -37,8 +38,38 @@ use WP_Post;
 /**
  * Discovery class.
  */
-class Discovery extends Service_Base {
+class Discovery extends Service_Base implements HasRequirements {
 	use Post_Type;
+
+	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 */
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->story_post_type = $story_post_type;
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
+	}
+
 	/**
 	 * Initialize discovery functionality.
 	 *
@@ -361,12 +392,12 @@ class Discovery extends Service_Base {
 			return;
 		}
 
-		$name = $this->get_post_type_label( Story_Post_Type::POST_TYPE_SLUG, 'name' );
+		$name = $this->get_post_type_label( $this->story_post_type::POST_TYPE_SLUG, 'name' );
 		if ( ! $name ) {
 			return;
 		}
 
-		$feed = get_post_type_archive_feed_link( Story_Post_Type::POST_TYPE_SLUG );
+		$feed = get_post_type_archive_feed_link( $this->story_post_type::POST_TYPE_SLUG );
 		if ( ! $feed ) {
 			return;
 		}

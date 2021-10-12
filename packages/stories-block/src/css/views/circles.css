@@ -25,7 +25,11 @@
 .web-stories-list.is-view-type-circles
   .web-stories-list__story-poster
   .web-stories-list__story-poster-placeholder,
-.web-stories-list.is-view-type-circles .web-stories-list__story-poster img {
+.web-stories-list.is-view-type-circles .web-stories-list__story-poster a > img,
+.web-stories-list.is-view-type-circles
+  .web-stories-list__story-poster
+  a
+  > amp-img {
   position: absolute;
   top: 0;
   left: 0;
@@ -36,6 +40,10 @@
   background-clip: content-box;
   border: 2px solid var(--ws-circle-border-color);
   padding: 2px;
+}
+
+.web-stories-list.is-view-type-circles .web-stories-list__story-poster a > img {
+  border-radius: 50%;
 }
 
 .web-stories-list.is-view-type-circles .web-stories-list__story-poster::after {

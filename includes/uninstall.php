@@ -181,9 +181,11 @@ function delete_posts() {
 function delete_terms() {
 	$taxonomies = [];
 
+	$post_type = new Story_Post_Type( new Settings() );
+
 	$taxonomies[] = ( new Media_Source_Taxonomy() )->get_taxonomy_slug();
-	$taxonomies[] = ( new Category_Taxonomy() )->get_taxonomy_slug();
-	$taxonomies[] = ( new Tag_Taxonomy() )->get_taxonomy_slug();
+	$taxonomies[] = ( new Category_Taxonomy( $post_type ) )->get_taxonomy_slug();
+	$taxonomies[] = ( new Tag_Taxonomy( $post_type ) )->get_taxonomy_slug();
 
 	$term_query = new WP_Term_Query();
 	$terms      = $term_query->query(
