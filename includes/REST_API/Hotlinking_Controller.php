@@ -285,7 +285,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 */
 	protected function get_request_args( string $url ) : array {
 		return [
-			'limit_response_size' => 15728640, // 15MB.
+			'limit_response_size' => 15728640, // 15MB. @todo Remove this, when streaming is implemented. 
 			'timeout'             => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 			/** This filter is documented in wp-includes/class-http.php */
 			'redirection'         => apply_filters( 'http_request_redirection_count', 5, $url ),
