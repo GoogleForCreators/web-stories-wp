@@ -117,6 +117,19 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	}
 
 	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because settings needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'settings' ];
+	}
+
+	/**
 	 * Act on site initialization.
 	 *
 	 * @since 1.11.0
