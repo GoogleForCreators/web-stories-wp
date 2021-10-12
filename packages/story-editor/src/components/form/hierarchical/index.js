@@ -21,9 +21,11 @@ import styled from 'styled-components';
 import {
   Checkbox,
   Input,
+  KEYS,
   Text,
   themeHelpers,
   THEME_CONSTANTS,
+  useKeyDownEffect,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
 import { _n, sprintf, __ } from '@web-stories-wp/i18n';
@@ -33,6 +35,7 @@ import {
   useEffect,
   useMemo,
   usePrevious,
+  useRef,
   useState,
 } from '@web-stories-wp/react';
 
@@ -44,6 +47,7 @@ import {
   buildOptionsTree,
   getOptionCount,
   filterOptionsByLabelText,
+  flattenOptionsTree,
 } from './utils';
 
 const Container = styled.div`
@@ -60,19 +64,30 @@ const Label = styled(Text).attrs({
 
 const Border = styled.div`
   padding-top: 4px;
-  margin-top: -4px;
+  margin-top: -4px; /* Run side borders into the search border  */
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   border-top: none;
   border-radius: ${({ theme }) =>
     `0 0 ${theme.borders.radius.small} ${theme.borders.radius.small}`};
 `;
 
+const SiblingGroup = styled.div.attrs({ role: 'group' })``;
+
 const CheckboxArea = styled.div`
   max-height: 175px;
   padding: 12px 12px 0 12px;
   overflow-y: scroll;
+  margin-top: 4px;
 
   ${themeHelpers.scrollbarCSS};
+
+  :focus-within {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
 `;
 
 const StepContainer = styled.div`
@@ -95,9 +110,10 @@ const NoResultsText = styled(Text)`
  * Renders a checkbox and all children of the checkbox.
  *
  * @param {Object} option The option to render.
+ * @param {Object} option.optionRefs Ref used to store refs to checkboxes
  * @return {Node} The rendered option and children
  */
-const Option = (option) => {
+const Option = ({ optionRefs = { current: {} }, ...option }) => {
   const { id, label, options, onChange, checked, value } = option;
 
   const optionId = `hierarchical_term_option_${id}`;
@@ -107,19 +123,28 @@ const Option = (option) => {
     <>
       <CheckboxContainer>
         <Checkbox
+          tabIndex={-1}
           id={optionId}
+          ref={(node) => {
+            optionRefs.current[id] = node;
+          }}
           value={value}
           checked={checked}
+          aria-selected={value}
           name={optionName}
           onChange={(evt) => onChange(evt, option)}
         />
         <Label htmlFor={optionId}>{label}</Label>
       </CheckboxContainer>
-      {options?.map((child) => (
-        <StepContainer key={child.id}>
-          <Option onChange={onChange} {...child} />
-        </StepContainer>
-      ))}
+      {Boolean(options?.length) && (
+        <SiblingGroup>
+          {options.map((child) => (
+            <StepContainer key={child.id}>
+              <Option onChange={onChange} optionRefs={optionRefs} {...child} />
+            </StepContainer>
+          ))}
+        </SiblingGroup>
+      )}
     </>
   );
 };
@@ -127,6 +152,11 @@ const OptionPropType = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   checked: PropTypes.bool,
   label: PropTypes.string.isRequired,
+  optionRefs: PropTypes.shape({
+    current: PropTypes.shape({
+      [PropTypes.string.isRequired]: PropTypes.node,
+    }),
+  }),
   options: PropTypes.array,
 };
 Option.propTypes = OptionPropType;
@@ -142,15 +172,78 @@ const HierarchicalInput = ({
   const [inputText, setInputText] = useState('');
   const speak = useLiveRegion('assertive');
   const debouncedSpeak = useDebouncedCallback(speak, 500);
+  const checkboxListRef = useRef(null);
+
+  // Focus handling
+  const [focusedCheckboxId, setFocusedCheckboxId] = useState(-1);
+  const optionRefs = useRef({});
 
   const filteredOptionTree = useMemo(
     () => buildOptionsTree(options),
     [options]
   );
 
-  const filteredOptions = filterOptionsByLabelText(
-    filteredOptionTree,
-    inputText
+  const filteredOptions = useMemo(
+    () => filterOptionsByLabelText(filteredOptionTree, inputText),
+    [filteredOptionTree, inputText]
+  );
+
+  const flattenedOrderedOptions = useMemo(
+    () => flattenOptionsTree(filteredOptions),
+    [filteredOptions]
+  );
+
+  /**
+   * Handles listbox and checkbox focus.
+   *
+   * When listbox receives focus:
+   * - If none of the options are selected before the listbox receives focus, focus is set on the first option.
+   * - If one or more options are selected before the listbox receives focus, focus is set on the first option in the list that is selected.
+   */
+  const handleListboxFocus = useCallback(() => {
+    if (document.activeElement === checkboxListRef.current) {
+      if (!flattenedOrderedOptions.length) {
+        return;
+      }
+
+      const selectedId = flattenedOrderedOptions.find(
+        (option) => option.checked
+      )?.id;
+
+      setFocusedCheckboxId(selectedId || selectedId === 0 ? selectedId : -1);
+    }
+  }, [flattenedOrderedOptions]);
+
+  /**
+   * Handle keyboard interactions.
+   */
+  const handleKeyDown = useCallback(
+    (evt) => {
+      const currentSelectedIndex = flattenedOrderedOptions.findIndex(
+        (option) => option.id === focusedCheckboxId
+      );
+
+      switch (evt.key) {
+        case KEYS.UP:
+          if (currentSelectedIndex > 0) {
+            setFocusedCheckboxId(
+              flattenedOrderedOptions[currentSelectedIndex - 1].id
+            );
+          }
+          break;
+        case KEYS.DOWN:
+          if (currentSelectedIndex < flattenedOrderedOptions.length - 1) {
+            setFocusedCheckboxId(
+              flattenedOrderedOptions[currentSelectedIndex + 1].id
+            );
+          }
+          break;
+        default:
+          evt.propagate();
+          break;
+      }
+    },
+    [flattenedOrderedOptions, focusedCheckboxId]
   );
 
   /**
@@ -192,6 +285,20 @@ const HierarchicalInput = ({
     }
   }, [debouncedSpeak, filteredOptions, inputText, previousInput]);
 
+  useKeyDownEffect(
+    checkboxListRef,
+    { key: ['up', 'down', 'shift+up', 'shift+down'] },
+    handleKeyDown,
+    [handleKeyDown]
+  );
+
+  /**
+   * Focus checkbox when 'focusedCheckboxId' changes
+   */
+  useEffect(() => {
+    optionRefs.current[focusedCheckboxId]?.focus();
+  }, [focusedCheckboxId]);
+
   const showOptionArea =
     Boolean(filteredOptions.length) || Boolean(inputText.length);
 
@@ -208,15 +315,24 @@ const HierarchicalInput = ({
       {showOptionArea && (
         <Border>
           <DirectionAware>
-            <CheckboxArea role="group">
+            <CheckboxArea
+              ref={checkboxListRef}
+              tabIndex={0}
+              onFocus={handleListboxFocus}
+              role="listbox"
+              aria-multiselectable
+            >
               {filteredOptions.length ? (
-                filteredOptions.map((option) => (
-                  <Option
-                    key={option.id}
-                    {...option}
-                    onChange={handleCheckboxChange}
-                  />
-                ))
+                <SiblingGroup>
+                  {filteredOptions.map((option) => (
+                    <Option
+                      key={option.id}
+                      {...option}
+                      onChange={handleCheckboxChange}
+                      optionRefs={optionRefs}
+                    />
+                  ))}
+                </SiblingGroup>
               ) : (
                 <NoResultsText
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}

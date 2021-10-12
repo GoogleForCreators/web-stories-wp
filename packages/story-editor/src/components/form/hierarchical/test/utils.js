@@ -17,7 +17,11 @@
 /**
  * Internal dependencies
  */
-import { filterOptionsByLabelText, getOptionCount } from '../utils';
+import {
+  filterOptionsByLabelText,
+  flattenOptionsTree,
+  getOptionCount,
+} from '../utils';
 
 const OPTIONS = [
   {
@@ -117,5 +121,23 @@ describe('getOptionCount', () => {
     ${OPTIONS}   | ${11}
   `('should count the number of nested options', ({ options, result }) => {
     expect(getOptionCount(options)).toStrictEqual(result);
+  });
+});
+
+describe('flattenOptionsTree', () => {
+  it('should flatten the options as expected', () => {
+    expect(flattenOptionsTree(OPTIONS)).toStrictEqual([
+      { checked: false, id: 1, label: 'apple' },
+      { checked: true, id: 'fitty', label: 'corgi' },
+      { checked: true, id: 'sixty', label: 'morgi' },
+      { checked: true, id: 'gritty', label: 'borky' },
+      { checked: false, id: 2, label: 'banana' },
+      { checked: true, id: 3, label: 'cantaloupe' },
+      { checked: false, id: 4, label: 'papaya' },
+      { checked: true, id: '100', label: 'trees' },
+      { checked: true, id: '1001', label: 'porgi' },
+      { checked: true, id: '10011', label: 'hal' },
+      { checked: true, id: 5, label: 'zebra fish' },
+    ]);
   });
 });

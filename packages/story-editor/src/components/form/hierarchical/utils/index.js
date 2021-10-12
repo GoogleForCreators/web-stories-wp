@@ -152,3 +152,28 @@ const countOptions = (option) => {
  */
 export const getOptionCount = (tree = []) =>
   tree.reduce((count, option) => count + countOptions(option), 0);
+
+/**
+ * Flattens a tree of options in order.
+ *
+ * @param {Array.<Object>} tree The tree of options
+ * @return {Array.<Object>} The flattened tree
+ */
+export const flattenOptionsTree = (tree = []) => {
+  let result = [];
+
+  for (let i = 0; i < tree.length; i++) {
+    // remove children
+
+    const { options, ...option } = tree[i];
+    // add option to result
+    result.push(option);
+
+    // add children to result
+    if (Array.isArray(options) && options.length) {
+      result = result.concat(flattenOptionsTree(options));
+    }
+  }
+
+  return result;
+};
