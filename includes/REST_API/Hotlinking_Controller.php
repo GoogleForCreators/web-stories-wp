@@ -186,7 +186,10 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			return $data;
 		}
 
-		$args          = $this->get_request_args( $url );
+		$args = [
+			'limit_response_size' => 15728640, // 15MB. @todo Remove this, when streaming is implemented.
+			'timeout'             => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
+		];
 		$proxy_request = wp_safe_remote_get( $url, $args );
 		if ( is_wp_error( $proxy_request ) ) {
 			return $proxy_request;
@@ -219,8 +222,14 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			return json_decode( $data, true );
 		}
 
-		$args     = $this->get_request_args( $url );
-		$response = wp_safe_remote_head( $url, $args );
+		$response = wp_safe_remote_head(
+			$url,
+			[
+				/** This filter is documented in wp-includes/class-http.php */
+				'redirection' => apply_filters( 'http_request_redirection_count', 5, $url ),
+			]
+		);
+
 		if ( is_wp_error( $response ) && 'http_request_failed' === $response->get_error_code() ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
@@ -272,24 +281,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 
 		return $data;
-	}
-
-	/**
-	 * Get request args.
-	 *
-	 * @since 1.13.0
-	 *
-	 * @param string $url URL to be passed as filter.
-	 *
-	 * @return array
-	 */
-	protected function get_request_args( string $url ) : array {
-		return [
-			'limit_response_size' => 15728640, // 15MB. @todo Remove this, when streaming is implemented. 
-			'timeout'             => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
-			/** This filter is documented in wp-includes/class-http.php */
-			'redirection'         => apply_filters( 'http_request_redirection_count', 5, $url ),
-		];
 	}
 
 	/**
