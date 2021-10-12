@@ -49,14 +49,23 @@ abstract class Embed_Base extends Service_Base {
 	protected $assets;
 
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	protected $story_post_type;
+
+	/**
 	 * Embed Base constructor.
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param Assets $assets            Assets instance.
+	 * @param Assets          $assets            Assets instance.
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
-	public function __construct( Assets $assets ) {
-		$this->assets = $assets;
+	public function __construct( Assets $assets, Story_Post_Type $story_post_type ) {
+		$this->assets          = $assets;
+		$this->story_post_type = $story_post_type;
 	}
 
 	/**

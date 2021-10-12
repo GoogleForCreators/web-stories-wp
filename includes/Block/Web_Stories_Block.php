@@ -38,7 +38,7 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  * Latest Stories block class.
  */
 class Web_Stories_Block extends Embed_Base {
-	use Stories_Script_Data, Post_Type;
+	use Stories_Script_Data;
 
 	/**
 	 * Script handle.
@@ -182,13 +182,13 @@ class Web_Stories_Block extends Embed_Base {
 	 * @return array Script settings.
 	 */
 	private function get_script_settings(): array {
-		$rest_base = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
+		$rest_base = $this->story_post_type->get_rest_base();
 
 		$settings = [
 			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 			'config'     => [
 				'maxNumOfStories' => self::MAX_NUM_OF_STORIES,
-				'archiveURL'      => get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ),
+				'archiveURL'      => get_post_type_archive_link( $this->story_post_type->get_slug() ),
 				'api'             => [
 					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'users'   => '/web-stories/v1/users/',
@@ -304,7 +304,7 @@ class Web_Stories_Block extends Embed_Base {
 		$attributes = $this->block_attributes;
 
 		$query_args = [
-			'post_type'        => Story_Post_Type::POST_TYPE_SLUG,
+			'post_type'        => $this->story_post_type->get_slug(),
 			'post_status'      => 'publish',
 			'suppress_filters' => false,
 			'no_found_rows'    => true,

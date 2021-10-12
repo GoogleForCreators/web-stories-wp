@@ -17,13 +17,13 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Editor
  */
-class Editor extends TestCase {
+class Editor extends DependencyInjectedTestCase {
 	use Capabilities_Setup;
 
 	/**
@@ -78,6 +78,16 @@ class Editor extends TestCase {
 	private $locale;
 
 	/**
+	 * @var \Google\Web_Stories\Story_Post_Type
+	 */
+	private $spt;
+
+	/**
+	 * @var \Google\Web_Stories\Page_Template_Post_Type
+	 */
+	private $ptpt;
+
+	/**
 	 * @var \Google\Web_Stories\Admin\Editor
 	 */
 	private $instance;
@@ -117,14 +127,16 @@ class Editor extends TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->add_caps_to_roles();
+
 
 		$this->experiments  = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$this->meta_boxes   = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
-		$this->decoder      = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$this->locale       = $this->createMock( \Google\Web_Stories\Locale::class );
-		$this->google_fonts = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
+		$this->meta_boxes   = $this->injector->make( \Google\Web_Stories\Admin\Meta_Boxes::class );
+		$this->decoder      = $this->injector->make( \Google\Web_Stories\Decoder::class );
+		$this->locale       = $this->injector->make( \Google\Web_Stories\Locale::class );
+		$this->google_fonts = $this->injector->make( \Google\Web_Stories\Admin\Google_Fonts::class );
 		$this->assets       = $this->createMock( \Google\Web_Stories\Assets::class );
+		$this->spt          = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$this->ptpt         = $this->injector->make( \Google\Web_Stories\Page_Template_Post_Type::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Editor(
 			$this->experiments,
@@ -132,8 +144,12 @@ class Editor extends TestCase {
 			$this->decoder,
 			$this->locale,
 			$this->google_fonts,
-			$this->assets
+			$this->assets,
+			$this->spt,
+			$this->ptpt
 		);
+
+		$this->add_caps_to_roles();
 	}
 
 	public function tear_down() {

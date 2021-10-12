@@ -45,7 +45,7 @@ use Google\Web_Stories\Traits\Types;
  * Dashboard class.
  */
 class Dashboard extends Service_Base {
-	use Types, Screen, Post_Type;
+	use Types, Screen;
 
 	/**
 	 * Script handle.

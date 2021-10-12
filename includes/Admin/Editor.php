@@ -28,6 +28,7 @@ namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Model\Story;
@@ -45,8 +46,8 @@ use WP_Post;
  *
  * @package Google\Web_Stories\Admin
  */
-class Editor extends Service_Base {
-	use Types, Screen, Post_Type;
+class Editor extends Service_Base implements HasRequirements {
+	use Types, Screen;
 
 	/**
 	 * Web Stories editor script handle.
@@ -105,24 +106,51 @@ class Editor extends Service_Base {
 	private $assets;
 
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
+	 * Page_Template_Post_Type instance.
+	 *
+	 * @var Page_Template_Post_Type Page_Template_Post_Type instance.
+	 */
+	private $page_template_post_type;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments  $experiments   Experiments instance.
-	 * @param Meta_Boxes   $meta_boxes    Meta_Boxes instance.
-	 * @param Decoder      $decoder       Decoder instance.
-	 * @param Locale       $locale        Locale instance.
-	 * @param Google_Fonts $google_fonts  Google_Fonts instance.
-	 * @param Assets       $assets        Assets instance.
+	 * @param Experiments             $experiments     Experiments instance.
+	 * @param Meta_Boxes              $meta_boxes      Meta_Boxes instance.
+	 * @param Decoder                 $decoder         Decoder instance.
+	 * @param Locale                  $locale          Locale instance.
+	 * @param Google_Fonts            $google_fonts    Google_Fonts instance.
+	 * @param Assets                  $assets          Assets instance.
+	 * @param Story_Post_Type         $story_post_type Story_Post_Type instance.
+	 * @param Page_Template_Post_Type $page_template_post_type Page_Template_Post_Type instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale, Google_Fonts $google_fonts, Assets $assets ) {
-		$this->experiments  = $experiments;
-		$this->meta_boxes   = $meta_boxes;
-		$this->decoder      = $decoder;
-		$this->locale       = $locale;
-		$this->google_fonts = $google_fonts;
-		$this->assets       = $assets;
+	public function __construct(
+		Experiments $experiments,
+		Meta_Boxes $meta_boxes,
+		Decoder $decoder,
+		Locale $locale,
+		Google_Fonts $google_fonts,
+		Assets $assets,
+		Story_Post_Type $story_post_type,
+		Page_Template_Post_Type $page_template_post_type
+	) {
+		$this->experiments             = $experiments;
+		$this->meta_boxes              = $meta_boxes;
+		$this->decoder                 = $decoder;
+		$this->locale                  = $locale;
+		$this->google_fonts            = $google_fonts;
+		$this->assets                  = $assets;
+		$this->story_post_type         = $story_post_type;
+		$this->page_template_post_type = $page_template_post_type;
 	}
 
 	/**
@@ -139,6 +167,19 @@ class Editor extends Service_Base {
 	}
 
 	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
+	}
+
+	/**
 	 * Replace default post editor with our own implementation.
 	 *
 	 * @codeCoverageIgnore
@@ -151,7 +192,7 @@ class Editor extends Service_Base {
 	 * @return bool|mixed Whether the editor has been replaced.
 	 */
 	public function replace_editor( $replace, $post ) {
-		if ( Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
+		if ( $this->story_post_type->get_slug() === get_post_type( $post ) ) {
 
 			// Since the 'replace_editor' filter can be run multiple times, only load the
 			// custom editor after the 'current_screen' action and when we can be certain the
@@ -180,7 +221,7 @@ class Editor extends Service_Base {
 	 * @return false|mixed Whether to use the block editor.
 	 */
 	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
-		if ( Story_Post_Type::POST_TYPE_SLUG === $post_type ) {
+		if ( $this->story_post_type::POST_TYPE_SLUG === $post_type ) {
 			return false;
 		}
 
@@ -245,7 +286,7 @@ class Editor extends Service_Base {
 	public function get_editor_settings(): array {
 		$post                 = get_post();
 		$story_id             = $post->ID ?? null;
-		$rest_base            = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
+		$rest_base            = $this->story_post_type->get_rest_base();
 		$general_settings_url = admin_url( 'options-general.php' );
 
 		if ( $story_id ) {
@@ -261,7 +302,7 @@ class Editor extends Service_Base {
 		$is_demo       = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$dashboard_url = add_query_arg(
 			[
-				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'post_type' => $this->story_post_type->get_slug(),
 				'page'      => 'stories-dashboard',
 			],
 			admin_url( 'edit.php' )
@@ -269,7 +310,7 @@ class Editor extends Service_Base {
 
 		$dashboard_settings_url = add_query_arg(
 			[
-				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'post_type' => $this->story_post_type->get_slug(),
 				'page'      => 'stories-dashboard#/editor-settings',
 			],
 			admin_url( 'edit.php' )
@@ -285,7 +326,7 @@ class Editor extends Service_Base {
 		$mime_types               = $this->get_allowed_mime_types();
 		$image_mime_types         = $this->get_allowed_image_mime_types();
 		$audio_mime_types         = $this->get_allowed_audio_mime_types();
-		$page_templates_rest_base = $this->get_post_type_rest_base( Page_Template_Post_Type::POST_TYPE_SLUG );
+		$page_templates_rest_base = $this->page_template_post_type->get_rest_base();
 
 		$story = new Story();
 		$story->load_from_post( $post );
@@ -303,7 +344,7 @@ class Editor extends Service_Base {
 				'allowedAudioFileTypes'        => $this->get_file_type_exts( $audio_mime_types ),
 				'allowedAudioMimeTypes'        => $audio_mime_types,
 				'allowedMimeTypes'             => $mime_types,
-				'postType'                     => Story_Post_Type::POST_TYPE_SLUG,
+				'postType'                     => $this->story_post_type->get_slug(),
 				'storyId'                      => $story_id,
 				'dashboardLink'                => $dashboard_url,
 				'dashboardSettingsLink'        => $dashboard_settings_url,
@@ -374,7 +415,7 @@ class Editor extends Service_Base {
 			return;
 		}
 
-		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->get_cap( 'edit_posts' ) ) {
 			return;
 		}
 

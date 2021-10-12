@@ -44,7 +44,7 @@ use WP_REST_Server;
  * Class Link_Controller
  */
 class Link_Controller extends REST_Controller implements HasRequirements {
-	use Document_Parser, Post_Type;
+	use Document_Parser;
 
 	/**
 	 * Story_Post_Type instance.
