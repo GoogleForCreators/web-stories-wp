@@ -40,21 +40,10 @@ const ActionsContainer = styled.div`
   right: 0;
   padding-right: 6px;
 
-<<<<<<< HEAD
   --background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};
   background-color: var(--background-color);
   box-shadow: 0px 0px 15px 20px var(--background-color);
-=======
-  /* 
-   * using currentColor technique here so you can just set the color
-   * of the element and it will apply to both the shadow/scrim and the
-   * element.
-   */
-  color: ${({ theme }) => theme.colors.interactiveBg.secondaryNormal};
-  background-color: currentColor;
-  box-shadow: 0px 0px 15px 20px currentColor;
->>>>>>> b2a46a2bb (update approach to be more accomodating to future tickets)
 `;
 
 const LayerContainer = styled.div`
@@ -96,11 +85,7 @@ const LayerButton = styled(Button).attrs({
     css`
       background: ${theme.colors.interactiveBg.secondaryPress};
       + * {
-<<<<<<< HEAD
         --background-color: ${theme.colors.interactiveBg.secondaryPress};
-=======
-        color: ${theme.colors.interactiveBg.secondaryPress};
->>>>>>> b2a46a2bb (update approach to be more accomodating to future tickets)
       }
     `}
 
@@ -108,24 +93,16 @@ const LayerButton = styled(Button).attrs({
     background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
   }
   :hover + * {
-<<<<<<< HEAD
     --background-color: ${({ theme }) =>
       theme.colors.interactiveBg.secondaryHover};
-=======
-    color: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
->>>>>>> b2a46a2bb (update approach to be more accomodating to future tickets)
   }
 
   :active {
     background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
   }
   :active + * {
-<<<<<<< HEAD
     --background-color: ${({ theme }) =>
       theme.colors.interactiveBg.secondaryPress};
-=======
-    color: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
->>>>>>> b2a46a2bb (update approach to be more accomodating to future tickets)
   }
 `;
 
