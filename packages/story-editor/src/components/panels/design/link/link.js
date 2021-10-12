@@ -176,7 +176,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
      * @param {import('@web-stories-wp/media').Resource} resource The new image.
      */
     (resource) => {
-      handleChange({ icon: resource.src }, true);
+      handleChange({ icon: resource?.src }, true);
     },
     [handleChange]
   );
