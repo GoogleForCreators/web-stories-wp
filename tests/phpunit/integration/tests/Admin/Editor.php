@@ -80,12 +80,12 @@ class Editor extends DependencyInjectedTestCase {
 	/**
 	 * @var \Google\Web_Stories\Story_Post_Type
 	 */
-	private $spt;
+	private $story_post_type;
 
 	/**
 	 * @var \Google\Web_Stories\Page_Template_Post_Type
 	 */
-	private $ptpt;
+	private $page_template_post_type;
 
 	/**
 	 * @var \Google\Web_Stories\Admin\Editor
@@ -126,17 +126,15 @@ class Editor extends DependencyInjectedTestCase {
 
 	public function set_up() {
 		parent::set_up();
-
-
-
-		$this->experiments  = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$this->meta_boxes   = $this->injector->make( \Google\Web_Stories\Admin\Meta_Boxes::class );
-		$this->decoder      = $this->injector->make( \Google\Web_Stories\Decoder::class );
-		$this->locale       = $this->injector->make( \Google\Web_Stories\Locale::class );
-		$this->google_fonts = $this->injector->make( \Google\Web_Stories\Admin\Google_Fonts::class );
-		$this->assets       = $this->createMock( \Google\Web_Stories\Assets::class );
-		$this->spt          = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
-		$this->ptpt         = $this->injector->make( \Google\Web_Stories\Page_Template_Post_Type::class );
+		
+		$this->experiments             = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$this->meta_boxes              = $this->injector->make( \Google\Web_Stories\Admin\Meta_Boxes::class );
+		$this->decoder                 = $this->injector->make( \Google\Web_Stories\Decoder::class );
+		$this->locale                  = $this->injector->make( \Google\Web_Stories\Locale::class );
+		$this->google_fonts            = $this->injector->make( \Google\Web_Stories\Admin\Google_Fonts::class );
+		$this->assets                  = $this->createMock( \Google\Web_Stories\Assets::class );
+		$this->story_post_type         = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$this->page_template_post_type = $this->injector->make( \Google\Web_Stories\Page_Template_Post_Type::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Editor(
 			$this->experiments,
@@ -145,8 +143,8 @@ class Editor extends DependencyInjectedTestCase {
 			$this->locale,
 			$this->google_fonts,
 			$this->assets,
-			$this->spt,
-			$this->ptpt
+			$this->story_post_type,
+			$this->page_template_post_type
 		);
 
 		$this->add_caps_to_roles();
