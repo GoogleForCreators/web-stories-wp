@@ -34,6 +34,7 @@ import {
 } from '@web-stories-wp/design-system';
 import Tooltip from '../../../tooltip';
 import { Color, Row } from '../../../form';
+import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
 import useRichTextFormatting from './useRichTextFormatting';
 
 const AutoStyleButton = styled(Button).attrs({
@@ -41,7 +42,7 @@ const AutoStyleButton = styled(Button).attrs({
   type: BUTTON_TYPES.TERTIARY,
   size: BUTTON_SIZES.SMALL,
 })`
-  margin-right: 10px;
+  margin-right: 4px;
   ${({ theme }) =>
     themeHelpers.focusableOutlineCSS(theme.colors.border.focus, '#1d1f20')};
 `;
@@ -52,12 +53,18 @@ function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
     handlers: { handleSetColor },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
+  const applyTextAutoStyle = useApplyTextAutoStyle(
+    selectedElements[0],
+    (props) => pushUpdate(props, true)
+  );
+
   return (
     <Row>
       <Tooltip title={__('Adaptive text colors', 'web-stories')}>
         <AutoStyleButton
           aria-label={__('Adaptive text colors', 'web-stories')}
-          onClick={() => {}}
+          onClick={applyTextAutoStyle}
+          disabled={selectedElements?.length > 1}
         >
           <Icons.ColorBucket />
         </AutoStyleButton>

@@ -34,7 +34,7 @@ export const ACTIONS = {
   },
   AUTO_STYLE_TEXT: {
     trackingEventName: 'auto_style_text',
-    text: __('Auto-style text', 'web-stories'),
+    text: __('Apply adaptive text colors', 'web-stories'),
   },
   CHANGE_BACKGROUND_COLOR: {
     trackingEventName: 'change_background_color',

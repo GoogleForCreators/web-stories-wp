@@ -33,6 +33,7 @@ import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { ELEMENT_TYPES } from '../../../elements';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
+import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
@@ -421,6 +422,12 @@ const useQuickActions = () => {
     ]
   );
 
+  const applyTextAutoStyle = useApplyTextAutoStyle(selectedElement, (props) => {
+    updateElementsById({
+      elementIds: [selectedElement?.id],
+      properties: props,
+    });
+  });
   const textActions = useMemo(
     () => [
       {
@@ -453,8 +460,7 @@ const useQuickActions = () => {
         Icon: ColorBucket,
         label: ACTIONS.AUTO_STYLE_TEXT.text,
         onClick: () => {
-          // @todo Add auto-style event.
-
+          applyTextAutoStyle();
           trackEvent('quick_action', {
             name: ACTIONS.AUTO_STYLE_TEXT.trackingEventName,
             element: selectedElement?.type,
@@ -465,6 +471,7 @@ const useQuickActions = () => {
       ...foregroundCommonActions,
     ],
     [
+      applyTextAutoStyle,
       foregroundCommonActions,
       actionMenuProps,
       handleFocusTextColor,
