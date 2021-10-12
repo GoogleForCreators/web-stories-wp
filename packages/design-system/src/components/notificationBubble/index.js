@@ -44,9 +44,7 @@ function getBubbleWidth(numDigits) {
 const Bubble = styled.div`
   ${({ theme, variant }) => css`
     color: ${theme.colors.fg.primary};
-    background-color: ${variant === BUBBLE_VARIANTS.ACCENT
-      ? theme.colors.accent.primary
-      : theme.colors.bg[variant]};
+    background-color: ${theme.colors.bg[variant]};
     border-radius: ${theme.borders.radius.round};
   `}
   position: relative;
