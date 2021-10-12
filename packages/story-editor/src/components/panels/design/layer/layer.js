@@ -40,14 +40,10 @@ const ActionsContainer = styled.div`
   right: 0;
   padding-right: 6px;
 
-  /* 
-   * using currentColor technique here so you can just set the color
-   * of the element and it will apply to both the shadow/scrim and the
-   * element.
-   */
-  color: ${({ theme }) => theme.colors.interactiveBg.secondaryNormal};
-  background-color: currentColor;
-  box-shadow: 0px 0px 15px 20px currentColor;
+  --background-color: ${({ theme }) =>
+    theme.colors.interactiveBg.secondaryNormal};
+  background-color: var(--background-color);
+  box-shadow: 0px 0px 15px 20px var(--background-color);
 `;
 
 const LayerContainer = styled.div`
@@ -89,7 +85,7 @@ const LayerButton = styled(Button).attrs({
     css`
       background: ${theme.colors.interactiveBg.secondaryPress};
       + * {
-        color: ${theme.colors.interactiveBg.secondaryPress};
+        --background-color: ${theme.colors.interactiveBg.secondaryPress};
       }
     `}
 
@@ -97,14 +93,16 @@ const LayerButton = styled(Button).attrs({
     background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
   }
   :hover + * {
-    color: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryHover};
   }
 
   :active {
     background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
   }
   :active + * {
-    color: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryPress};
   }
 `;
 
@@ -177,13 +175,12 @@ const LayerAction = styled(Button).attrs({
   }
 
   /*
-   * override base button colors so we can recieve the 
+   * override base button background color so we can recieve the 
    * proper background color from the parent.
    */
   && {
     transition: revert;
-    color: currentColor;
-    background: currentColor;
+    background: var(--background-color);
   }
 
   /*
