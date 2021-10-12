@@ -28,9 +28,6 @@ import {
   trashAllTerms,
 } from '@web-stories-wp/e2e-test-utils';
 
-// Extend Jest matchers.
-import 'jest-extended';
-
 expect.extend({
   toBeValidAMP,
 });
