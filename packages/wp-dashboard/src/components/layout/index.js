@@ -13,29 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const STORY_FIELDS = [
-  'id',
-  'title',
-  'status',
-  'date',
-  'date_gmt',
-  'modified',
-  'modified_gmt',
-  'link',
-  'preview_link',
-  'edit_link',
-  // _web_stories_envelope will add these fields, we need them too.
-  'body',
-  'status',
-  'headers',
-].join(',');
+/**
+ * External dependencies
+ */
+import { InterfaceSkeleton } from '@web-stories-wp/dashboard';
 
-export const SEARCH_PAGES_FIELDS = ['id', 'title'];
-export const GET_PAGE_FIELDS = ['title', 'link'];
+/**
+ * Internal dependencies
+ */
+import { useAdminSubMenu } from '../../effects';
 
-export const STORY_EMBED = 'wp:lock,wp:lockuser,author,wp:featuredmedia';
+function Layout() {
+  useAdminSubMenu();
 
-export const REST_LINKS = {
-  EDIT: 'wp:action-edit',
-  DELETE: 'wp:action-delete',
-};
+  return <InterfaceSkeleton />;
+}
+
+export default Layout;

@@ -26,7 +26,7 @@ import './style.css'; // This way the general dashboard styles are loaded before
 /**
  * External dependencies
  */
-import Dashboard, { InterfaceSkeleton } from '@web-stories-wp/dashboard';
+import Dashboard from '@web-stories-wp/dashboard';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
 import { FlagsProvider } from 'flagged';
@@ -39,6 +39,7 @@ import { initializeTracking } from '@web-stories-wp/tracking';
 import getApiCallbacks from './api/utils/getApiCallbacks';
 import { GlobalStyle } from './theme';
 import { LEFT_RAIL_SECONDARY_NAVIGATION } from './constants';
+import { Layout } from './components';
 
 /**
  * Initializes the Web Stories dashboard screen.
@@ -69,7 +70,7 @@ const initialize = async (id, config, flags) => {
       <StrictMode>
         <Dashboard config={dashboardConfig}>
           <GlobalStyle />
-          <InterfaceSkeleton />
+          <Layout />
         </Dashboard>
       </StrictMode>
     </FlagsProvider>,
