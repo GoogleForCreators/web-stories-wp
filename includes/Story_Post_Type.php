@@ -222,7 +222,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 				'feeds'      => true,
 			],
 			'public'                => true,
-			'has_archive'           => (bool) $this->get_has_archive(),
+			'has_archive'           => $this->get_has_archive(),
 			'exclude_from_search'   => true,
 			'show_ui'               => true,
 			'show_in_rest'          => true,

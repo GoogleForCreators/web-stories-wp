@@ -139,8 +139,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 				[
 					$this->instance,
 					'filter_revision_fields',
-				] 
-			) 
+				]
+			)
 		);
 		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $this->instance, 'change_default_title' ] ) );
 		$this->assertSame(
@@ -150,8 +150,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 				[
 					$this->instance,
 					'bulk_post_updated_messages',
-				] 
-			) 
+				]
+			)
 		);
 		$this->assertSame( 10, has_filter( 'pre_handle_404', [ $this->instance, 'redirect_post_type_archive_urls' ] ) );
 
@@ -162,8 +162,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 				[
 					$this->instance,
 					'update_archive_setting',
-				] 
-			) 
+				]
+			)
 		);
 		$this->assertSame(
 			10,
@@ -172,8 +172,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 				[
 					$this->instance,
 					'update_archive_setting',
-				] 
-			) 
+				]
+			)
 		);
 	}
 
@@ -368,7 +368,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 
 		$this->instance->register_post_type();
 
-		$archive_link = get_post_type_archive_link( $this->instance->get_slug() );
+		$archive_link = get_post_type_archive_link( $this->instance::POST_TYPE_SLUG );
 
 		$this->go_to( $archive_link );
 
@@ -419,7 +419,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 			[
 				[],
 				get_post( self::$archive_page_id ),
-			] 
+			]
 		);
 
 		$this->assertSame( [], $actual );
@@ -438,7 +438,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 			[
 				[],
 				get_post( self::$archive_page_id ),
-			] 
+			]
 		);
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
@@ -472,7 +472,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 			[
 				[],
 				get_post( self::$archive_page_id ),
-			] 
+			]
 		);
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
