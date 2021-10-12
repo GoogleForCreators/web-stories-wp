@@ -44,7 +44,7 @@ import { differenceInDays, getOptions, toDate } from '@web-stories-wp/date';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { useNavContext } from '../navProvider';
 import { useConfig } from '../../app';
-import { APP_ROUTES, PRIMARY_PATHS, SECONDARY_PATHS } from '../../constants';
+import { APP_ROUTES, PRIMARY_PATHS } from '../../constants';
 import {
   AppInfo,
   Content,
@@ -86,7 +86,11 @@ function getNewTemplatesMetaData(metaDataEntries, days) {
 
 function LeftRail() {
   const { state } = useRouteHistory();
-  const { newStoryURL, version } = useConfig();
+  const {
+    newStoryURL,
+    version,
+    leftRailSecondaryNavigation = [],
+  } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
 
@@ -238,7 +242,7 @@ function LeftRail() {
       </div>
       <Content>
         <NavList>
-          {SECONDARY_PATHS.map((path) => (
+          {leftRailSecondaryNavigation.map((path) => (
             <NavListItem key={path.value}>
               <NavLink
                 active={path.value === state.currentPath}

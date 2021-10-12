@@ -38,6 +38,7 @@ import { initializeTracking } from '@web-stories-wp/tracking';
  */
 import * as apiCallbacks from './api';
 import { GlobalStyle } from './theme';
+import { LEFT_RAIL_SECONDARY_NAVIGATION } from './constants';
 
 /**
  * Initializes the Web Stories dashboard screen.
@@ -60,6 +61,7 @@ const initialize = async (id, config, flags) => {
   const dashboardConfig = {
     ...config,
     apiCallbacks,
+    leftRailSecondaryNavigation: LEFT_RAIL_SECONDARY_NAVIGATION,
   };
 
   render(
