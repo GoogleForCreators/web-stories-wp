@@ -32,7 +32,6 @@ import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
-import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
 import { useConfig } from '../config';
 
@@ -60,11 +59,11 @@ const useStoryApi = () => {
       const trackTiming = getTimeTracker('load_stories');
 
       try {
-        const { body, headers } = await fetchStoriesCallback(queryParams);
-
-        const totalPages = headers && parseInt(headers?.totalPages);
-        const totalStoriesByStatus =
-          headers && JSON.parse(headers?.totalByStatus);
+        // Maybe not making a lot of sense to expect fetchedStoryIds from the api callbacks response.
+        // However the order of ids get changed if we try to create that array here
+        // which may ( or may not ) cause some regression. @todo Reflect on fetchedStoryIds again in next phase.
+        const { stories, fetchedStoryIds, totalPages, totalStoriesByStatus } =
+          await fetchStoriesCallback(queryParams);
 
         // Hook into first fetch of story statuses.
         if (isInitialFetch.current) {
@@ -75,14 +74,13 @@ const useStoryApi = () => {
 
         isInitialFetch.current = false;
 
-        const stories = body;
-
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
           payload: {
             stories,
             totalPages,
             totalStoriesByStatus,
+            fetchedStoryIds,
             page: queryParams.page,
           },
         });
@@ -114,7 +112,7 @@ const useStoryApi = () => {
 
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
-          payload: reshapeStoryObject(response), // @todo Move reshapeStoryObject to wp-dashboard.
+          payload: response,
         });
       } catch (err) {
         dispatch({
@@ -198,7 +196,7 @@ const useStoryApi = () => {
 
         dispatch({
           type: STORY_ACTION_TYPES.DUPLICATE_STORY,
-          payload: reshapeStoryObject(response),
+          payload: response,
         });
       } catch (err) {
         dispatch({

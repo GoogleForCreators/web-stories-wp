@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import reshapeStoryObject from '../stories';
-import { REST_LINKS } from '../../../constants';
+import { REST_LINKS } from '../../constants';
+import reshapeStoryObject from '../reshapeStoryObject';
 
 describe('reshapeStoryObject', () => {
   it('should return object', () => {

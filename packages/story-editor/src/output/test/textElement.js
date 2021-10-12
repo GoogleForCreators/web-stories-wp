@@ -98,12 +98,14 @@ const TEXT_WITH_ROTATION = {
 };
 
 describe('Text Element output', () => {
-  useFeature.mockImplementation((feature) => {
-    const config = {
-      enableAnimation: false,
-    };
+  beforeAll(() => {
+    useFeature.mockImplementation((feature) => {
+      const config = {
+        enableAnimation: false,
+      };
 
-    return config[feature];
+      return config[feature];
+    });
   });
 
   it('should render text with color', () => {

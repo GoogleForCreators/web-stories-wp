@@ -34,12 +34,14 @@ jest.mock('flagged');
 /* eslint-disable testing-library/no-node-access, testing-library/no-container */
 
 describe('Page output', () => {
-  useFeature.mockImplementation((feature) => {
-    const config = {
-      enableAnimation: true,
-    };
+  beforeAll(() => {
+    useFeature.mockImplementation((feature) => {
+      const config = {
+        enableAnimation: true,
+      };
 
-    return config[feature];
+      return config[feature];
+    });
   });
 
   describe('aspect-ratio markup', () => {

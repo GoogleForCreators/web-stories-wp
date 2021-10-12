@@ -13,29 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const STORY_FIELDS = [
-  'id',
-  'title',
-  'status',
-  'date',
-  'date_gmt',
-  'modified',
-  'modified_gmt',
-  'link',
-  'preview_link',
-  'edit_link',
-  // _web_stories_envelope will add these fields, we need them too.
-  'body',
-  'status',
-  'headers',
-].join(',');
+/**
+ * Internal dependencies
+ */
+import * as apiCallbacks from '..';
 
-export const SEARCH_PAGES_FIELDS = ['id', 'title'];
-export const GET_PAGE_FIELDS = ['title', 'link'];
-
-export const STORY_EMBED = 'wp:lock,wp:lockuser,author,wp:featuredmedia';
-
-export const REST_LINKS = {
-  EDIT: 'wp:action-edit',
-  DELETE: 'wp:action-delete',
+/**
+ * Bind config object as the first argument and get all api callbacks used in the core editor only.
+ *
+ * @param {Object} config Configuration object.
+ * @return {Object} api callbacks.
+ */
+const getApiCallbacks = (config) => {
+  return Object.entries(apiCallbacks).reduce((callbacks, [name, callback]) => {
+    callbacks[name] = callback.bind(null, config);
+    return callbacks;
+  }, {});
 };
+
+export default getApiCallbacks;

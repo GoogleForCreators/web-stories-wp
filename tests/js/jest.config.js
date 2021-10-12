@@ -41,7 +41,7 @@ export default {
     '**/test/**/*.[jt]s',
     '**/?(*.)test.[jt]s',
   ],
-  setupFilesAfterEnv: ['<rootDir>/tests/js/jest.setup'],
+  setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/build',

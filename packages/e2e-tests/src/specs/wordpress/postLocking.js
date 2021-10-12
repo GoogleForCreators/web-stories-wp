@@ -34,6 +34,7 @@ const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 const storyTitle = 'Test post lock';
 
 describe('Post Locking', () => {
+  // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enablePostLocking']);
 
   beforeAll(async () => {
