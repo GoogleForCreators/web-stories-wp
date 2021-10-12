@@ -229,7 +229,7 @@ function Layer({ layer }) {
       </LayerButton>
       <ActionsContainer>
         {/*
-         *@TODO add layer actions here. only reason we conditionally
+         *@TODO #9137 #9138 add layer actions here. only reason we conditionally
          * render right now is to maintain visual continuity until
          * the actual actions are present.
          */}
