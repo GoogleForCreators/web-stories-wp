@@ -139,7 +139,7 @@ class HTML {
 					return "<script async src=\"$script_url\" custom-element=\"$custom_element\"></script>"; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 				}
 
-				return '';
+				return $matches[0];
 			},
 			$content
 		);
