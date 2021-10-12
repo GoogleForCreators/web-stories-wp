@@ -36,7 +36,7 @@ import { initializeTracking } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import * as apiCallbacks from './api';
+import getApiCallbacks from './api/utils/getApiCallbacks';
 import { GlobalStyle } from './theme';
 import { LEFT_RAIL_SECONDARY_NAVIGATION } from './constants';
 
@@ -60,7 +60,7 @@ const initialize = async (id, config, flags) => {
 
   const dashboardConfig = {
     ...config,
-    apiCallbacks,
+    apiCallbacks: getApiCallbacks(config),
     leftRailSecondaryNavigation: LEFT_RAIL_SECONDARY_NAVIGATION,
   };
 
