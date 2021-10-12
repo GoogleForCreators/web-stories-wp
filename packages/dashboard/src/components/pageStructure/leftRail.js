@@ -86,11 +86,7 @@ function getNewTemplatesMetaData(metaDataEntries, days) {
 
 function LeftRail() {
   const { state } = useRouteHistory();
-  const {
-    newStoryURL,
-    version,
-    leftRailSecondaryNavigation = [],
-  } = useConfig();
+  const { newStoryURL, version, leftRailSecondaryNavigation } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
 
@@ -241,39 +237,41 @@ function LeftRail() {
         </Content>
       </div>
       <Content>
-        <NavList>
-          {leftRailSecondaryNavigation.map((path) => (
-            <NavListItem key={path.value}>
-              <NavLink
-                active={path.value === state.currentPath}
-                href={resolveRoute(path.value)}
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                aria-label={
-                  path.value === state.currentPath
-                    ? sprintf(
-                        /* translators: %s: the current page, for example "Dashboard". */
-                        __('%s (active view)', 'web-stories'),
-                        path.label
-                      )
-                    : path.label
-                }
-                {...(path.isExternal && {
-                  rel: 'noreferrer',
-                  target: '_blank',
-                  onClick: (evt) => onExternalLinkClick(evt, path),
-                })}
-              >
-                <Text
-                  as="span"
+        {leftRailSecondaryNavigation && (
+          <NavList>
+            {leftRailSecondaryNavigation.map((path) => (
+              <NavListItem key={path.value}>
+                <NavLink
+                  active={path.value === state.currentPath}
+                  href={resolveRoute(path.value)}
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  isBold
+                  aria-label={
+                    path.value === state.currentPath
+                      ? sprintf(
+                          /* translators: %s: the current page, for example "Dashboard". */
+                          __('%s (active view)', 'web-stories'),
+                          path.label
+                        )
+                      : path.label
+                  }
+                  {...(path.isExternal && {
+                    rel: 'noreferrer',
+                    target: '_blank',
+                    onClick: (evt) => onExternalLinkClick(evt, path),
+                  })}
                 >
-                  {path.label}
-                </Text>
-              </NavLink>
-            </NavListItem>
-          ))}
-        </NavList>
+                  <Text
+                    as="span"
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    isBold
+                  >
+                    {path.label}
+                  </Text>
+                </NavLink>
+              </NavListItem>
+            ))}
+          </NavList>
+        )}
         <AppInfo size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
           {sprintf(
             /* translators: 1: Current Year, 2: App Version */
