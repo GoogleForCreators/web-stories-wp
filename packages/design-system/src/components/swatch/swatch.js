@@ -61,6 +61,7 @@ const SwatchButton = styled.button`
     css`
       opacity: 0.4;
       cursor: default;
+      /* pointer-events none here fixes an edge case in Safari when swatch is within a tooltip #9188 */
       pointer-events: none;
     `}
   ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
@@ -68,6 +69,7 @@ const SwatchButton = styled.button`
   ::after {
     content: '';
     position: absolute;
+    /* pointer-events none here fixes an edge case in Safari when swatch is within a tooltip #9188 */
     pointer-events: none;
     left: 0;
     top: 0;
