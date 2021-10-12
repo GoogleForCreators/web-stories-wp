@@ -106,6 +106,9 @@ const NoResultsText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
+const buildOptionId = (id) => `hierarchical_term_option_${id}`;
+const buildOptionName = (name) => `hierarchical_term_${name}`;
+
 /**
  * Renders a checkbox and all children of the checkbox.
  *
@@ -116,23 +119,23 @@ const NoResultsText = styled(Text)`
 const Option = ({ optionRefs = { current: {} }, ...option }) => {
   const { id, label, options, onChange, checked, value } = option;
 
-  const optionId = `hierarchical_term_option_${id}`;
-  const optionName = `hierarchical_term_${label}`;
+  const optionId = buildOptionId(id);
+  const optionName = buildOptionName(label);
 
   return (
     <>
       <CheckboxContainer>
         <Checkbox
-          tabIndex={-1}
           id={optionId}
           ref={(node) => {
             optionRefs.current[id] = node;
           }}
           value={value}
           checked={checked}
-          aria-selected={value}
           name={optionName}
           onChange={(evt) => onChange(evt, option)}
+          tabIndex={-1}
+          role="option"
         />
         <Label htmlFor={optionId}>{label}</Label>
       </CheckboxContainer>
@@ -310,12 +313,21 @@ const HierarchicalInput = ({
         label={label}
         type="search"
         placeholder={__('Search', 'web-stories')}
+        role="combobox"
+        aria-expanded
+        aria-owns="checkbox_list"
+        aria-activedescendant={
+          focusedCheckboxId !== -1
+            ? buildOptionId(focusedCheckboxId)
+            : undefined
+        }
         {...inputProps}
       />
       {showOptionArea && (
         <Border>
           <DirectionAware>
             <CheckboxArea
+              id="checkbox_list"
               ref={checkboxListRef}
               tabIndex={0}
               onFocus={handleListboxFocus}
