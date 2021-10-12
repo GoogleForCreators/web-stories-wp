@@ -1,6 +1,8 @@
 <?php
 /**
- * class Post_Type
+ * Class Post_Type_Base
+ *
+ * Base class for registering and handling post types.
  *
  * @package   Google\Web_Stories\classs
  * @copyright 2021 Google LLC
@@ -38,13 +40,10 @@ use WP_Error;
 
 /**
  * Class Post_Type_Base.
+ *
+ * @package Google\Web_Stories
  */
 abstract class Post_Type_Base extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
-
-	/**
-	 * @var string
-	 */
-	protected $slug = '';
 
 	/**
 	 * Registers the post type.
