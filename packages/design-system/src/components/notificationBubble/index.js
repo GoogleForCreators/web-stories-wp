@@ -67,6 +67,7 @@ const Inner = styled.span`
       ({ paragraph }, sizes) =>
         paragraph[$isSmall ? sizes.X_SMALL : sizes.SMALL]
     )({ theme })};
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   color: ${({ $invertColor, theme }) =>
     $invertColor ? theme.colors.inverted.fg.primary : theme.colors.fg.primary};
   user-select: none;
