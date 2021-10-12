@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
@@ -34,39 +35,33 @@ export default function useUserApi() {
       toggleWebStoriesMediaOptimization:
         toggleWebStoriesMediaOptimizationCallback,
     },
-    api: { currentUser: currentUserApi },
   } = useConfig();
 
   useEffect(() => {
     if (!Object.keys(currentUser).length) {
-      getUser(currentUserApi).then(setCurrentUser);
+      getUser().then(setCurrentUser);
     }
-  }, [currentUser, currentUserApi, getUser]);
+  }, [currentUser, getUser]);
 
   const toggleWebStoriesTrackingOptIn = useCallback(async () => {
     setIsUpdating(true);
     try {
-      setCurrentUser(
-        await toggleWebStoriesTrackingOptInCallback(currentUser, currentUserApi)
-      );
+      setCurrentUser(await toggleWebStoriesTrackingOptInCallback(currentUser));
     } finally {
       setIsUpdating(false);
     }
-  }, [toggleWebStoriesTrackingOptInCallback, currentUser, currentUserApi]);
+  }, [toggleWebStoriesTrackingOptInCallback, currentUser]);
 
   const toggleWebStoriesMediaOptimization = useCallback(async () => {
     setIsUpdating(true);
     try {
       setCurrentUser(
-        await toggleWebStoriesMediaOptimizationCallback(
-          currentUser,
-          currentUserApi
-        )
+        await toggleWebStoriesMediaOptimizationCallback(currentUser)
       );
     } finally {
       setIsUpdating(false);
     }
-  }, [toggleWebStoriesMediaOptimizationCallback, currentUser, currentUserApi]);
+  }, [toggleWebStoriesMediaOptimizationCallback, currentUser]);
 
   return {
     api: {

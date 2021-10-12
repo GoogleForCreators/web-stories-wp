@@ -26,7 +26,6 @@ export const SUCCESS = {
 };
 export const ERRORS = {
   LOAD_STORIES: {
-    DEFAULT_MESSAGE: __('Cannot connect to data source', 'web-stories'),
     MESSAGE: __('Unable to load stories', 'web-stories'),
   },
   UPDATE_STORY: {
@@ -59,7 +58,6 @@ export const ERRORS = {
     MESSAGE: __('Unable to load publisher logos', 'web-stories'),
   },
   LOAD_SETTINGS: {
-    DEFAULT_MESSAGE: __('Cannot connect to data source', 'web-stories'),
     MESSAGE: __('Unable to load settings', 'web-stories'),
   },
   UPDATE_EDITOR_SETTINGS: {

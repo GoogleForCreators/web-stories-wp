@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import * as apiCallbacks from '..';
 
 /**
- * External dependencies
+ * Bind config object as the first argument and get all api callbacks used in the core dashboard only.
+ *
+ * @param {Object} config Configuration object.
+ * @return {Object} api callbacks.
  */
-import { enableFetchMocks } from 'jest-fetch-mock';
+const getApiCallbacks = (config) => {
+  return Object.entries(apiCallbacks).reduce((callbacks, [name, callback]) => {
+    callbacks[name] = callback.bind(null, config);
+    return callbacks;
+  }, {});
+};
 
-// eslint-disable-next-line jest/require-hook
-enableFetchMocks();
-
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useLayoutEffect: jest.requireActual('react').useEffect,
-}));
+export default getApiCallbacks;

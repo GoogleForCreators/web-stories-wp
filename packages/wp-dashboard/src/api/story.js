@@ -38,11 +38,11 @@ import { STORY_FIELDS, STORY_EMBED } from './constants';
 /**
  * Fetch stories ( When dashboard link is clicked. )
  *
+ * @param {Object} config Configuration object.
  * @param {Object} queryParams Query params.
- * @param {string} apiPath API path.
  * @return {Promise} Request promise.
  */
-export function fetchStories(queryParams, apiPath) {
+export function fetchStories(config, queryParams) {
   const {
     status = STORY_STATUS.ALL,
     sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
@@ -67,7 +67,7 @@ export function fetchStories(queryParams, apiPath) {
   };
 
   return apiFetch({
-    path: addQueryArgs(apiPath, query),
+    path: addQueryArgs(config.api.stories, query),
   }).then(({ body, headers }) => ({
     body,
     headers: {
@@ -80,12 +80,14 @@ export function fetchStories(queryParams, apiPath) {
 /**
  * Trash stories.
  *
+ * @param {Object} config Configuration object.
  * @param {number|string} storyId Story Id.
- * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
-export function trashStory(storyId, apiPath) {
-  const path = addQueryArgs(`${apiPath}${storyId}`, { _method: 'DELETE' });
+export function trashStory(config, storyId) {
+  const path = addQueryArgs(`${config.api.stories}${storyId}`, {
+    _method: 'DELETE',
+  });
 
   return apiFetch({
     path,
@@ -96,12 +98,12 @@ export function trashStory(storyId, apiPath) {
 /**
  * Update story.
  *
+ * @param {Object} config Configuration object.
  * @param {Object} story Story object.
- * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
-export function updateStory(story, apiPath) {
-  const path = addQueryArgs(`${apiPath}${story.id}/`, {
+export function updateStory(config, story) {
+  const path = addQueryArgs(`${config.api.stories}${story.id}/`, {
     _embed: STORY_EMBED,
   });
 
@@ -121,12 +123,12 @@ export function updateStory(story, apiPath) {
 /**
  * Create story from template
  *
+ * @param {Object} config Configuration object.
  * @param {Object} template Template object.
- * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
-export const createStoryFromTemplate = async (template, apiPath) => {
-  const path = addQueryArgs(apiPath, {
+export const createStoryFromTemplate = async (config, template) => {
+  const path = addQueryArgs(config.api.stories, {
     _fields: 'edit_link',
   });
 
@@ -174,16 +176,16 @@ export const createStoryFromTemplate = async (template, apiPath) => {
 /**
  * Duplicate story.
  *
+ * @param {Object} config Configuration object.
  * @param {Object} story Story object.
- * @param {string} apiPath API path.
  * @return {Promise} Request promise.
  */
-export function duplicateStory(story, apiPath) {
+export function duplicateStory(config, story) {
   const {
     originalStoryData: { id },
   } = story;
 
-  const path = addQueryArgs(apiPath, {
+  const path = addQueryArgs(config.api.stories, {
     _embed: STORY_EMBED,
     _fields: STORY_FIELDS,
   });

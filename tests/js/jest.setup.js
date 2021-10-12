@@ -33,6 +33,7 @@ import {
   toBeValidAMPStoryPage,
 } from '@web-stories-wp/jest-amp';
 
+// eslint-disable-next-line jest/require-hook
 expect.extend({
   toBeValidAMP,
   toBeValidAMPStoryElement,
