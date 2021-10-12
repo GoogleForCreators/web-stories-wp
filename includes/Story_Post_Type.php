@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use Google\Web_Stories\REST_API\Stories_Controller;
@@ -37,7 +38,7 @@ use WP_Site;
 /**
  * Class Story_Post_Type.
  */
-class Story_Post_Type extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
+class Story_Post_Type extends Service_Base implements PluginDeactivationAware, SiteInitializationAware, HasRequirements {
 	use Post_Type;
 
 	/**
