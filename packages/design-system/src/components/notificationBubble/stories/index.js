@@ -56,7 +56,7 @@ const Row = styled.div`
 export const _default = () => {
   return (
     <>
-      <Headline as="h1">{'Notification Bubble'}</Headline>
+      <Headline>{'Notification Bubble'}</Headline>
       <br />
       <Container>
         <Row>

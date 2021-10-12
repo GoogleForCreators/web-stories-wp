@@ -44,7 +44,7 @@ function getBubbleWidth(numDigits) {
 const Bubble = styled.div`
   ${({ theme, variant }) => css`
     color: ${theme.colors.fg.primary};
-    background-color: ${variant === 'accent'
+    background-color: ${variant === BUBBLE_VARIANTS.ACCENT
       ? theme.colors.accent.primary
       : theme.colors.bg[variant]};
     border-radius: ${theme.borders.radius.round};
@@ -53,8 +53,8 @@ const Bubble = styled.div`
   height: ${BUBBLE_DIAMETER}px;
   width: ${({ digitLen }) => BUBBLE_DIAMETER + getBubbleWidth(digitLen)}px;
 
-  ${({ digitLen, isSmall }) =>
-    isSmall &&
+  ${({ digitLen, $isSmall }) =>
+    $isSmall &&
     css`
       height: ${SMALL_BUBBLE_DIAMETER}px;
       width: ${SMALL_BUBBLE_DIAMETER + getBubbleWidth(digitLen)}px;
@@ -64,12 +64,13 @@ const Bubble = styled.div`
 const Inner = styled.span`
   ${themeHelpers.fullSizeAbsolute}
   ${themeHelpers.centerContent}
-  ${({ isSmall, theme }) =>
+  ${({ $isSmall, theme }) =>
     themeHelpers.expandTextPreset(
-      ({ paragraph }, sizes) => paragraph[isSmall ? sizes.X_SMALL : sizes.SMALL]
+      ({ paragraph }, sizes) =>
+        paragraph[$isSmall ? sizes.X_SMALL : sizes.SMALL]
     )({ theme })};
-  color: ${({ invertColor, theme }) =>
-    invertColor ? theme.colors.inverted.fg.primary : theme.colors.fg.primary};
+  color: ${({ $invertColor, theme }) =>
+    $invertColor ? theme.colors.inverted.fg.primary : theme.colors.fg.primary};
   user-select: none;
 `;
 
@@ -82,11 +83,11 @@ export const NotificationBubble = ({
 }) => (
   <Bubble
     variant={variant}
-    isSmall={isSmall}
+    $isSmall={isSmall}
     digitLen={notificationCount?.toString().length || 1}
     {...props}
   >
-    <Inner invertColor={invertTextColor} isSmall={isSmall}>
+    <Inner $invertColor={invertTextColor} $isSmall={isSmall}>
       {notificationCount}
     </Inner>
   </Bubble>

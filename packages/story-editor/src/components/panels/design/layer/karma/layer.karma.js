@@ -40,7 +40,9 @@ describe('Layer Panel', () => {
 
   it('should show the number of layers', async () => {
     expect(layerPanel.layers.length).toBe(1);
-    expect(layerPanel.panelBadge.textContent).toBe('1');
+    expect(layerPanel.panelBadge.textContent).toBe(
+      layerPanel.layers.length.toString()
+    );
 
     await fixture.act(() =>
       insertElement('text', {
@@ -54,7 +56,9 @@ describe('Layer Panel', () => {
     );
 
     expect(layerPanel.layers.length).toBe(2);
-    expect(layerPanel.panelBadge.textContent).toBe('2');
+    expect(layerPanel.panelBadge.textContent).toBe(
+      layerPanel.layers.length.toString()
+    );
 
     await fixture.act(() =>
       insertElement('text', {
@@ -67,7 +71,9 @@ describe('Layer Panel', () => {
     );
 
     expect(layerPanel.layers.length).toBe(3);
-    expect(layerPanel.panelBadge.textContent).toBe('3');
+    expect(layerPanel.panelBadge.textContent).toBe(
+      layerPanel.layers.length.toString()
+    );
   });
 
   it('should show ellipsis for overflowing text', async () => {
