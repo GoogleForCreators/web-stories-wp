@@ -37,6 +37,7 @@ import { initializeTracking } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import * as apiCallbacks from './api';
+import { GlobalStyle } from './theme';
 
 /**
  * Initializes the Web Stories dashboard screen.
@@ -65,6 +66,7 @@ const initialize = async (id, config, flags) => {
     <FlagsProvider features={flags}>
       <StrictMode>
         <Dashboard config={dashboardConfig}>
+          <GlobalStyle />
           <InterfaceSkeleton />
         </Dashboard>
       </StrictMode>
