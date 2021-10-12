@@ -19,6 +19,7 @@
  */
 import { enableFetchMocks } from 'jest-fetch-mock';
 
+// eslint-disable-next-line jest/require-hook
 enableFetchMocks();
 
 jest.mock('react', () => ({

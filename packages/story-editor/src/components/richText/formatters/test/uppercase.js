@@ -32,7 +32,7 @@ jest.mock('../../styleManipulation', () => {
   };
 });
 
-  const { elementToStyle, stylesToCSS, getters, setters } = formatter;
+const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
 describe('Uppercase formatter', () => {
   beforeAll(() => {

@@ -28,6 +28,7 @@ import {
 
 describe('Site Kit plugin integration', () => {
   describe('Google Analytics', () => {
+    // eslint-disable-next-line jest/require-hook
     withPlugin('e2e-tests-site-kit-analytics-mock');
 
     describe('Dashboard', () => {

@@ -30,10 +30,10 @@ describe('Search <Search />', () => {
   beforeAll(() => {
     // Mock scrollTo
     const scrollTo = jest.fn();
-    Object.defineProperty( window.Element.prototype, 'scrollTo', {
+    Object.defineProperty(window.Element.prototype, 'scrollTo', {
       writable: true,
       value: scrollTo,
-    } );
+    });
 
     jest.useFakeTimers();
   });

@@ -136,7 +136,7 @@ const pointerEventTypes = [
   'lostPointerCapture',
 ];
 
-//eslint-disable-next-line jest/require-hook -- False positive since this is not a test file.
+// eslint-disable-next-line jest/require-hook -- False positive since this is not a test file.
 pointerEventTypes.forEach((type) => {
   firePointerEvent[type] = (node, properties) =>
     firePointerEvent(node, type.toLowerCase(), {

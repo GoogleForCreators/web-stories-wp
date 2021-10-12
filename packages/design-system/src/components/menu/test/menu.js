@@ -37,10 +37,10 @@ describe('<Menu />', () => {
   beforeAll(() => {
     // Mock scrollTo
     const scrollTo = jest.fn();
-    Object.defineProperty( window.Element.prototype, 'scrollTo', {
+    Object.defineProperty(window.Element.prototype, 'scrollTo', {
       writable: true,
       value: scrollTo,
-    } );
+    });
   });
 
   it('should render a <Menu /> list with 12 items', () => {
