@@ -321,18 +321,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @merapi
-			 * Issue: #262
-			 * Creation date: 2021-07-08
-			 */
-			[
-				'name'        => 'enableEyedropper',
-				'label'       => __( 'Eyedropper', 'web-stories' ),
-				'description' => __( 'Enable choosing color using an eyedropper', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @spacedmonkey
 			 * Issue: #8811
 			 * Creation date: 2021-09-06
