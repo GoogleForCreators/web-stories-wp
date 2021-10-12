@@ -14,26 +14,21 @@
  * limitations under the License.
  */
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import * as apiCallbacks from '..';
 
 /**
- * WordPress dependencies
- */
-import apiFetch from '@wordpress/api-fetch';
-
-/**
- * Gets metadata (title, favicon, etc.) from
- * a provided URL.
+ * Bind config object as the first argument and get all api callbacks used in the core editor only.
  *
- * @param {Object} config API path.
- * @param {string} url Url
- * @return {Promise} Result promise
+ * @param {Object} config Configuration object.
+ * @return {Object} api callbacks.
  */
-export function getLinkMetadata(config, url) {
-  const path = addQueryArgs(config.api.link, { url });
-  return apiFetch({
-    path,
-  });
-}
+const getApiCallbacks = (config) => {
+  return Object.entries(apiCallbacks).reduce((callbacks, [name, callback]) => {
+    callbacks[name] = callback.bind(null, config);
+    return callbacks;
+  }, {});
+};
+
+export default getApiCallbacks;
