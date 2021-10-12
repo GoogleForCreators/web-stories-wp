@@ -48,14 +48,16 @@ describe('Text Style Panel', () => {
     fixture = new Fixture();
     localStorage.clear();
     await fixture.render();
-    await addText();
   });
 
   afterEach(() => {
     fixture.restore();
   });
-
   describe('Panel state', () => {
+    beforeEach(async () => {
+      await addText();
+    });
+
     it('should have the style panel always expanded', async () => {
       await fixture.snapshot('Default panels state with only style panel open');
       await fixture.events.click(
@@ -77,7 +79,55 @@ describe('Text Style Panel', () => {
     });
   });
 
+  fdescribe('Adaptive text color', () => {
+    it('should change the text color to white on black background', async () => {
+      // Assign black color.
+      const safezone = fixture.querySelector('[data-testid="safezone"]');
+      await fixture.events.click(safezone);
+      const hexInput =
+        fixture.editor.inspector.designPanel.pageBackground.backgroundColor.hex;
+      await fixture.events.click(hexInput);
+      // Select all the text
+      hexInput.select();
+      // Then type hex combo
+      await fixture.events.keyboard.type('000');
+      await fixture.events.keyboard.press('Tab');
+
+      // Add text element.
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStyle.adaptiveColor
+      );
+
+      // @todo This does not wait at all and just continues with the selector result being null.
+      await waitFor(
+        () =>
+          expect(
+            fixture.querySelector('span[style="color: #fff"]')
+          ).toBeDefined(),
+        {
+          timeout: 9000,
+        }
+      );
+
+      await waitFor(async () => {
+        const {
+          state: {
+            currentPage: { elements },
+          },
+        } = await fixture.renderHook(() => useStory());
+        expect(elements[1].content).toBe(
+          '<span style="color: #fff">Fill in some text</span>'
+        );
+      });
+    });
+  });
+
   describe('Font controls', () => {
+    beforeEach(async () => {
+      await addText();
+    });
+
     it('should allow whole number font sizes', async () => {
       const { fontSize } = fixture.editor.inspector.designPanel.textStyle;
 
