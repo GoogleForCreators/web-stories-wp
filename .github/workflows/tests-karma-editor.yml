@@ -98,4 +98,3 @@ jobs:
           github.event.pull_request.draft == false &&
           github.event.pull_request.head.repo.fork == false &&
           github.event.pull_request.user.login != 'dependabot[bot]'
-

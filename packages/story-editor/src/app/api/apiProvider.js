@@ -29,55 +29,11 @@ import Context from './context';
 import { removeImagesFromPageTemplates } from './utils';
 
 function APIProvider({ children }) {
-  const {
-    api: {
-      stories,
-      media,
-      hotlink,
-      link,
-      users,
-      publisherLogos,
-      currentUser,
-      pageTemplates: customPageTemplates,
-      taxonomies,
-    },
-    apiCallbacks,
-    encodeMarkup,
-    cdnURL,
-    postType,
-  } = useConfig();
-
-  const {
-    getStoryById,
-    getDemoStoryById,
-    saveStoryById,
-    autoSaveById,
-    getMedia,
-    getMediaById,
-    uploadMedia,
-    updateMedia,
-    deleteMedia,
-    getLinkMetadata,
-    getAuthors,
-    getPublisherLogos,
-    addPublisherLogo,
-    getCurrentUser,
-    updateCurrentUser,
-    getCustomPageTemplates,
-    addPageTemplate,
-    deletePageTemplate,
-    getHotlinkInfo,
-    getTaxonomies,
-    getTaxonomyTerm,
-    createTaxonomyTerm,
-  } = apiCallbacks;
-
+  const { apiCallbacks: actions, cdnURL } = useConfig();
   const pageTemplates = useRef({
     base: [],
     withoutImages: [],
   });
-
-  const actions = { getTaxonomyTerm, createTaxonomyTerm };
 
   actions.getPageTemplates = useCallback(
     async ({ showImages = false } = {}) => {
@@ -93,116 +49,6 @@ function APIProvider({ children }) {
     },
     [cdnURL]
   );
-
-  actions.getStoryById = useCallback(
-    (storyId) => getStoryById(storyId, stories),
-    [stories, getStoryById]
-  );
-
-  actions.getDemoStoryById = useCallback(
-    (storyId) => getDemoStoryById(storyId, stories),
-    [stories, getDemoStoryById]
-  );
-
-  actions.saveStoryById = useCallback(
-    (story) => saveStoryById(story, stories, encodeMarkup),
-    [stories, encodeMarkup, saveStoryById]
-  );
-
-  actions.autoSaveById = useCallback(
-    (story) => autoSaveById(story, stories, encodeMarkup),
-    [stories, encodeMarkup, autoSaveById]
-  );
-
-  actions.getMedia = useCallback(
-    ({ mediaType, searchTerm, pagingNum, cacheBust }) =>
-      getMedia({ mediaType, searchTerm, pagingNum, cacheBust }, media),
-    [media, getMedia]
-  );
-
-  actions.getMediaById = useCallback(
-    (mediaId) => getMediaById(mediaId, media),
-    [getMediaById, media]
-  );
-
-  actions.uploadMedia = useCallback(
-    (file, additionalData) => uploadMedia(file, additionalData, media),
-    [media, uploadMedia]
-  );
-
-  actions.updateMedia = useCallback(
-    (mediaId, data) => updateMedia(mediaId, data, media),
-    [media, updateMedia]
-  );
-
-  actions.deleteMedia = useCallback(
-    (mediaId) => deleteMedia(mediaId, media),
-    [media, deleteMedia]
-  );
-
-  actions.getHotlinkInfo = useCallback(
-    (url) => getHotlinkInfo(url, hotlink),
-    [hotlink, getHotlinkInfo]
-  );
-
-  actions.getPublisherLogos = useCallback(
-    () => getPublisherLogos(publisherLogos),
-    [getPublisherLogos, publisherLogos]
-  );
-
-  actions.addPublisherLogo = useCallback(
-    (id) => addPublisherLogo(publisherLogos, id),
-    [addPublisherLogo, publisherLogos]
-  );
-
-  actions.getLinkMetadata = useCallback(
-    (url) => getLinkMetadata(url, link),
-    [link, getLinkMetadata]
-  );
-
-  actions.getAuthors = useCallback(
-    (search = null) => getAuthors(search, users),
-    [users, getAuthors]
-  );
-
-  actions.getCurrentUser = useCallback(
-    () => getCurrentUser(currentUser),
-    [currentUser, getCurrentUser]
-  );
-
-  actions.updateCurrentUser = useCallback(
-    (data) => updateCurrentUser(data, currentUser),
-    [currentUser, updateCurrentUser]
-  );
-
-  actions.getCustomPageTemplates = useCallback(
-    (page) => getCustomPageTemplates(page, customPageTemplates),
-    [customPageTemplates, getCustomPageTemplates]
-  );
-
-  actions.addPageTemplate = useCallback(
-    (page) => addPageTemplate(page, customPageTemplates),
-    [customPageTemplates, addPageTemplate]
-  );
-
-  actions.deletePageTemplate = useCallback(
-    (id) => deletePageTemplate(id, customPageTemplates),
-    [customPageTemplates, deletePageTemplate]
-  );
-
-  actions.getTaxonomies = useCallback(
-    () => getTaxonomies(postType, taxonomies),
-    [postType, taxonomies, getTaxonomies]
-  );
-
-  // If some api callbacks have not been provided via configuration
-  // set those actions as undefined, so we can stop them conditionally.
-  // @todo Handle undefined api callbacks where they have been used.
-  Object.keys(actions).forEach((name) => {
-    if ('getPageTemplates' !== name && !apiCallbacks[name]) {
-      actions[name] = undefined;
-    }
-  });
 
   return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
 }

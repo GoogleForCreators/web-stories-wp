@@ -55,6 +55,7 @@ describe('Pre-Publish Checklist', () => {
   });
 
   describe('Contributor User', () => {
+    // eslint-disable-next-line jest/require-hook
     withUser('contributor', 'password');
 
     it('should not let me publish a story as a contributor', async () => {

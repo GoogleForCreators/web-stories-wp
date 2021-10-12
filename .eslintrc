@@ -285,15 +285,15 @@
         "jest-dom"
       ],
       "rules": {
-        "jest/lowercase-name": [
+        "jest/no-hooks": "off",
+        "jest/prefer-expect-assertions": "off",
+        "jest/prefer-inline-snapshots": "off",
+        "jest/prefer-lowercase-title": [
           "error",
           {
             "ignore": ["describe"]
           }
         ],
-        "jest/no-hooks": "off",
-        "jest/prefer-expect-assertions": "off",
-        "jest/prefer-inline-snapshots": "off",
         "jsdoc/require-jsdoc": "off",
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debug": "error",
@@ -361,15 +361,15 @@
         "plugin:jest/all"
       ],
       "rules": {
-        "jest/lowercase-name": [
+        "jest/no-hooks": "off",
+        "jest/prefer-expect-assertions": "off",
+        "jest/prefer-inline-snapshots": "off",
+        "jest/prefer-lowercase-title": [
           "error",
           {
             "ignore": ["describe"]
           }
-        ],
-        "jest/no-hooks": "off",
-        "jest/prefer-expect-assertions": "off",
-        "jest/prefer-inline-snapshots": "off"
+        ]
       },
       "globals": {
         "browser": "readonly",

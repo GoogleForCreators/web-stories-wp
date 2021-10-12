@@ -34,8 +34,6 @@ jest.mock('../generateZipFile');
 jest.mock('../getCurrentVersionNumber');
 jest.mock('../deleteExistingZipFiles');
 
-getCurrentVersionNumber.mockImplementation(() => 'foobar');
-
 describe('bundlePlugin', () => {
   const MOCK_FILE_INFO = {
     '/foo/web-stories/plugin.php': '',
@@ -44,6 +42,8 @@ describe('bundlePlugin', () => {
   };
 
   beforeEach(() => {
+    getCurrentVersionNumber.mockImplementation(() => 'foobar');
+
     __setMockFiles(MOCK_FILE_INFO);
   });
 
