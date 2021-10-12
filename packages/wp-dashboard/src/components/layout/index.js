@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { InterfaceSkeleton } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
-import Dashboard from './dashboard';
+import { useAdminSubMenu } from '../../effects';
 
-export * from './app';
-export * from './app/router';
-export * from './constants';
-export { GlobalStyle as DashboardGlobalStyle } from './theme';
-export { default as DashboardKeyboardOnlyOutline } from './utils/keyboardOnlyOutline';
-export { default as InterfaceSkeleton } from './components/interfaceSkeleton';
+function Layout() {
+  useAdminSubMenu();
 
-export default Dashboard;
+  return <InterfaceSkeleton />;
+}
+
+export default Layout;
