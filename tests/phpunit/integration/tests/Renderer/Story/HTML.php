@@ -26,7 +26,6 @@ use WP_Post;
  * @coversDefaultClass \Google\Web_Stories\Renderer\Story\HTML
  */
 class HTML extends TestCase {
-
 	public function set_up() {
 		parent::set_up();
 
@@ -216,10 +215,26 @@ class HTML extends TestCase {
 
 		$actual = $this->call_private_method( $renderer, 'print_social_share', [ $source ] );
 
+		remove_filter( 'web_stories_share_providers', '__return_empty_array' );
+
 		$this->assertStringNotContainsString( '<amp-story-social-share layout="nodisplay"><script type="application/json">', $actual );
 		$this->assertSame( $source, $actual );
+	}
 
-		remove_filter( 'web_stories_share_providers', '__return_empty_array' );
+	/**
+	 * @covers ::fix_malformed_script_link_tags
+	 */
+	public function test_fix_malformed_script_link_tags() {
+		$source = '<html><head><a href="https://cdn.ampproject.org/v0.js">https://cdn.ampproject.org/v0.js</a><a href="https://cdn.ampproject.org/v0/amp-story-1.0.js">https://cdn.ampproject.org/v0/amp-story-1.0.js</a><link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Roboto%3Awght%40700" rel="stylesheet" /></head><body><amp-story></amp-story></body></html>';
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
+
+		$actual = $this->call_private_method( $renderer, 'fix_malformed_script_link_tags', [ $source ] );
+
+		$this->assertStringNotContainsString( '<a ', $actual );
+		$this->assertStringContainsString( '<script async src="https://cdn.ampproject.org/v0.js">', $actual );
+		$this->assertStringContainsString( '<script async src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>', $actual );
 	}
 
 	/**

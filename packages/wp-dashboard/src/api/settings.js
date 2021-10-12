@@ -45,23 +45,23 @@ const transformSettingResponse = (response) => ({
  * Fetch settings.
  * Used on settings page.
  *
- * @param {string} apiPath API path.
+ * @param {Object} config Configuration object.
  * @return {Promise} Request promise.
  */
-export function fetchSettings(apiPath) {
+export function fetchSettings(config) {
   return apiFetch({
-    path: apiPath,
+    path: config.api.settings,
   }).then(transformSettingResponse);
 }
 
 /**
  * Update settings.
  *
+ * @param {Object} config Configuration object.
  * @param {Object} queryParams Query parameters to apply to URL.
- * @param {string} apiPath API path.
  * @return {Promise} Request promise.
  */
-export function updateSettings(queryParams, apiPath) {
+export function updateSettings(config, queryParams) {
   const {
     googleAnalyticsId,
     usingLegacyAnalytics,
@@ -112,7 +112,7 @@ export function updateSettings(queryParams, apiPath) {
     query.web_stories_archive_page_id = archivePageId;
   }
 
-  const path = addQueryArgs(apiPath, query);
+  const path = addQueryArgs(config.api.settings, query);
 
   return apiFetch({
     path,
