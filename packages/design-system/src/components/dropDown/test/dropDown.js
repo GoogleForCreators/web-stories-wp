@@ -27,14 +27,16 @@ import { basicDropDownOptions } from '../../../testUtils/sampleData';
 import { DropDown } from '..';
 
 describe('DropDown <DropDown />', () => {
-  // Mock scrollTo
-  const scrollTo = jest.fn();
-  Object.defineProperty(window.Element.prototype, 'scrollTo', {
-    writable: true,
-    value: scrollTo,
-  });
+  beforeAll(() => {
+    // Mock scrollTo
+    const scrollTo = jest.fn();
+    Object.defineProperty(window.Element.prototype, 'scrollTo', {
+      writable: true,
+      value: scrollTo,
+    });
 
-  jest.useFakeTimers();
+    jest.useFakeTimers();
+  });
 
   it('should render a closed <DropDown /> menu with a select button on default', () => {
     renderWithProviders(

@@ -27,14 +27,16 @@ import { basicDropDownOptions } from '../../../testUtils/sampleData';
 import { Search } from '..';
 
 describe('Search <Search />', () => {
-  // Mock scrollTo
-  const scrollTo = jest.fn();
-  Object.defineProperty(window.Element.prototype, 'scrollTo', {
-    writable: true,
-    value: scrollTo,
-  });
+  beforeAll(() => {
+    // Mock scrollTo
+    const scrollTo = jest.fn();
+    Object.defineProperty( window.Element.prototype, 'scrollTo', {
+      writable: true,
+      value: scrollTo,
+    } );
 
-  jest.useFakeTimers();
+    jest.useFakeTimers();
+  });
 
   it('should render a closed <Search /> menu with an input field on default', () => {
     renderWithProviders(

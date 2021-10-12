@@ -31,6 +31,7 @@ import {
 // Extend Jest matchers.
 import 'jest-extended';
 
+// eslint-disable-next-line jest/require-hook
 expect.extend({
   toBeValidAMP,
 });
