@@ -26,10 +26,11 @@ import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { basicDropDownOptions } from '../../../testUtils/sampleData';
 import { Search } from '..';
 
+const scrollTo = jest.fn();
+
 describe('Search <Search />', () => {
   beforeAll(() => {
     // Mock scrollTo
-    const scrollTo = jest.fn();
     Object.defineProperty(window.Element.prototype, 'scrollTo', {
       writable: true,
       value: scrollTo,

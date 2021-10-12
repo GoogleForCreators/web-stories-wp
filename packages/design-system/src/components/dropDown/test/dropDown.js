@@ -26,10 +26,11 @@ import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { basicDropDownOptions } from '../../../testUtils/sampleData';
 import { DropDown } from '..';
 
+const scrollTo = jest.fn();
+
 describe('DropDown <DropDown />', () => {
   beforeAll(() => {
     // Mock scrollTo
-    const scrollTo = jest.fn();
     Object.defineProperty(window.Element.prototype, 'scrollTo', {
       writable: true,
       value: scrollTo,
@@ -150,6 +151,7 @@ describe('DropDown <DropDown />', () => {
     const menu = screen.getByRole('listbox');
     expect(menu).toBeInTheDocument();
   });
+
   it('should show an active icon on list item that is active', () => {
     renderWithProviders(
       <DropDown

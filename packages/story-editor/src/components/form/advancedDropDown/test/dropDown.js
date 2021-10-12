@@ -70,10 +70,11 @@ function arrange(options) {
   );
 }
 
+const scrollTo = jest.fn();
+
 describe('DropDown: Font Picker', () => {
   beforeAll(() => {
     // Mock scrollTo
-    const scrollTo = jest.fn();
     Object.defineProperty(window.Element.prototype, 'scrollTo', {
       writable: true,
       value: scrollTo,
