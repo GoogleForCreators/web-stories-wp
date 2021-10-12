@@ -42,8 +42,9 @@ import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
 import { shouldDisplayBorder } from '../../utils/elementBorder';
+import useCORSProxy from '../../utils/useCORSProxy';
 import EditCropMoveable from './editCropMoveable';
-import { mediaWithScale, useProxyUrl } from './utils';
+import { mediaWithScale } from './util';
 import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
 import { MEDIA_MASK_OPACITY } from './constants';
@@ -117,7 +118,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
   const elementRef = useRef();
-  const { getProxiedUrl } = useProxyUrl();
+  const { getProxiedUrl } = useCORSProxy();
 
   const isUpdatedLocally = useRef(false);
   const lastLocalProperties = useRef({ scale });

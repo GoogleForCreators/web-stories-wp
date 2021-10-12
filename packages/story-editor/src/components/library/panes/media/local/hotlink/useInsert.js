@@ -33,7 +33,7 @@ import {
 } from '../../../../../../app/media/utils';
 import { useConfig } from '../../../../../../app/config';
 import { useAPI } from '../../../../../../app/api';
-import { useProxyUrl } from '../../../../../../elements/media/utils';
+import useCORSProxy from '../../../../../../utils/useCORSProxy';
 
 function getErrorMessage(code, description) {
   switch (code) {
@@ -67,7 +67,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   } = useAPI();
 
   const { uploadVideoPoster } = useUploadVideoFrame({});
-  const { getProxiedUrl } = useProxyUrl();
+  const { getProxiedUrl } = useCORSProxy();
 
   const insertMedia = useCallback(
     async (hotlinkData) => {

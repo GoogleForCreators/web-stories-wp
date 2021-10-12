@@ -26,7 +26,7 @@ import { getMediaSizePositionProps } from '@web-stories-wp/media';
  */
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
-import { useProxyUrl } from '../media/utils';
+import useCORSProxy from '../../utils/useCORSProxy';
 import { getBackgroundStyle, videoWithScale } from './util';
 
 const Video = styled.video`
@@ -59,7 +59,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     loop,
   } = element;
   const ref = useRef();
-  const { getProxiedUrl } = useProxyUrl();
+  const { getProxiedUrl } = useCORSProxy();
 
   let style = {};
   if (isBackground) {

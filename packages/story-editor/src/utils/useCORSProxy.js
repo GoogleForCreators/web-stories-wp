@@ -13,16 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { css } from 'styled-components';
+import { useCallback } from '@web-stories-wp/react';
+import { useFeature } from 'flagged';
 
-const mediaWithScale = css`
-  width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
-  left: ${({ offsetX }) => `${-offsetX}px`};
-  top: ${({ offsetY }) => `${-offsetY}px`};
-`;
+/**
+ * Internal dependencies
+ */
+import { useAPI } from '../app';
 
-export default mediaWithScale;
+function useCORSProxy() {
+  const {
+    actions: { getProxyUrl },
+  } = useAPI();
+  const enableCORSProxy = useFeature('enableCORSProxy');
+  const getProxiedUrl = useCallback(
+    (resource, src) => {
+      const { isExternal, id } = resource;
+      if (enableCORSProxy && !id && isExternal) {
+        return getProxyUrl(src);
+      }
+      return src;
+    },
+    [getProxyUrl, enableCORSProxy]
+  );
+
+  return {
+    getProxiedUrl,
+  };
+}
+export default useCORSProxy;
