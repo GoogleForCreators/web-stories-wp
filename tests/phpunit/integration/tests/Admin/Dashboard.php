@@ -18,6 +18,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
@@ -188,7 +189,7 @@ class Dashboard extends DependencyInjectedTestCase {
 			$this->createMock( \Google\Web_Stories\Locale::class ),
 			( new \Google\Web_Stories\Admin\Google_Fonts() ),
 			$assets,
-			new Story_Post_Type( new Settings() )
+			new Story_Post_Type( new Settings(), $experiments )
 		);
 
 		$this->instance->add_menu_page();
