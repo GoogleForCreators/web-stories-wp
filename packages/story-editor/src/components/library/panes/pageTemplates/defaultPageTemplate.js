@@ -43,7 +43,7 @@ const PageTemplateButton = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
 const PageTemplateTitle = styled.div`
   position: absolute;
   bottom: 0;
-  background-color: ${({ theme }) => theme.colors.opacity.overlayDark};
+  background-color: ${({ theme }) => theme.colors.opacity.black64};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   border-top-right-radius: 0;
   border-top-left-radius: 0;
