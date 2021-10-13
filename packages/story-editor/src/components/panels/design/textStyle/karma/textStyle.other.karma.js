@@ -99,27 +99,26 @@ describe('Text Style Panel', () => {
         fixture.editor.inspector.designPanel.textStyle.adaptiveColor
       );
 
-      // @todo This does not wait at all and just continues with the selector result being null.
       await waitFor(
-        () =>
-          expect(
-            fixture.querySelector('span[style="color: #fff"]')
-          ).toBeDefined(),
+        async () => {
+          const texts = fixture.screen.getAllByText('Fill in some text');
+          const whiteTexts = texts.filter((text) => text.outerHTML.includes('color: #fff'));
+          //expect(texts[0]).toContain('color: #fff');
+          const html = whiteTexts[0].outerHTML;
+          expect(html).toContain('color: #fff');
+          const {
+            state: {
+              currentPage: { elements },
+            },
+          } = await fixture.renderHook(() => useStory());
+          expect(elements[1].content).toBe(
+            '<span style="color: #fff">Fill in some text</span>'
+          );
+        },
         {
           timeout: 9000,
         }
       );
-
-      await waitFor(async () => {
-        const {
-          state: {
-            currentPage: { elements },
-          },
-        } = await fixture.renderHook(() => useStory());
-        expect(elements[1].content).toBe(
-          '<span style="color: #fff">Fill in some text</span>'
-        );
-      });
     });
   });
 
