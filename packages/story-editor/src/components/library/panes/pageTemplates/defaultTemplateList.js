@@ -102,17 +102,10 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
   };
 
   useEffect(() => {
-    const node = containerRef.current;
-    if (!node) {
-      return undefined;
+    if (pages.length > 0 && !currentPageId) {
+      setCurrentPageId(pages[0].id);
     }
-
-    node.addEventListener('keydown', handleFocusOut);
-
-    return () => {
-      node.removeEventListener('keydown', handleFocusOut);
-    };
-  }, [containerRef]);
+  }, [currentPageId, pages]);
 
   useGridViewKeys({
     containerRef: parentRef,
