@@ -20,7 +20,6 @@
 import styled, { StyleSheetManager } from 'styled-components';
 import { memo, useRef, useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 
 /**
@@ -56,8 +55,6 @@ function CanvasLayout({ header }) {
     setCanvasContainer: state.actions.setCanvasContainer,
   }));
 
-  const enableEyedropper = useFeature('enableEyedropper');
-
   const backgroundRef = useRef(null);
 
   const setBackgroundRef = useCallback(
@@ -87,7 +84,7 @@ function CanvasLayout({ header }) {
                 <NavLayer header={header} />
               </SelectionCanvas>
               <EditLayer />
-              {enableEyedropper && <EyedropperLayer />}
+              <EyedropperLayer />
             </CanvasElementDropzone>
           </CanvasUploadDropTarget>
         </Background>
