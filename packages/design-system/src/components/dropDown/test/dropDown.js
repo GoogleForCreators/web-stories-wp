@@ -26,15 +26,18 @@ import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { basicDropDownOptions } from '../../../testUtils/sampleData';
 import { DropDown } from '..';
 
-describe('DropDown <DropDown />', () => {
-  // Mock scrollTo
-  const scrollTo = jest.fn();
-  Object.defineProperty(window.Element.prototype, 'scrollTo', {
-    writable: true,
-    value: scrollTo,
-  });
+const scrollTo = jest.fn();
 
-  jest.useFakeTimers();
+describe('DropDown <DropDown />', () => {
+  beforeAll(() => {
+    // Mock scrollTo
+    Object.defineProperty(window.Element.prototype, 'scrollTo', {
+      writable: true,
+      value: scrollTo,
+    });
+
+    jest.useFakeTimers();
+  });
 
   it('should render a closed <DropDown /> menu with a select button on default', () => {
     renderWithProviders(
@@ -148,6 +151,7 @@ describe('DropDown <DropDown />', () => {
     const menu = screen.getByRole('listbox');
     expect(menu).toBeInTheDocument();
   });
+
   it('should show an active icon on list item that is active', () => {
     renderWithProviders(
       <DropDown

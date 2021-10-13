@@ -80,7 +80,9 @@ describe('Canvas Keyboard Shortcuts', () => {
     return storyContext.state.selectedElementIds;
   }
 
-  it('should have the last element selected by default', async () => {
+  // TODO(#9382): Fix flaky test.
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should have the last element selected by default', async () => {
     await fixture.events.focus(fullbleed);
     await fixture.events.keyboard.shortcut('mod+a');
     expect(await getSelection()).toEqual([

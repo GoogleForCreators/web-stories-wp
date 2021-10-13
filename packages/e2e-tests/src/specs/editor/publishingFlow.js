@@ -112,6 +112,7 @@ describe.skip('Publishing Flow', () => {
   });
 
   describe('Classic Editor', () => {
+    // eslint-disable-next-line jest/require-hook
     withPlugin('classic-editor');
 
     it('should guide me towards creating a new post to embed my story', async () => {

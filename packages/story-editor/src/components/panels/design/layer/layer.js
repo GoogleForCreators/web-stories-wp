@@ -107,7 +107,6 @@ const LayerButton = styled(Button).attrs({
 `;
 
 const LayerIconWrapper = styled.div`
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: flex-start;

@@ -36,20 +36,11 @@ export default function useSettingsApi() {
       fetchSettings: fetchSettingsCallback,
       updateSettings: updateSettingsCallback,
     },
-    api: { settings: settingsApi },
   } = useConfig();
 
   const fetchSettings = useCallback(async () => {
-    if (!settingsApi) {
-      dispatch({
-        type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_FAILURE,
-        payload: {
-          message: ERRORS.LOAD_SETTINGS.DEFAULT_MESSAGE,
-        },
-      });
-    }
     try {
-      const response = await fetchSettingsCallback(settingsApi);
+      const response = await fetchSettingsCallback();
 
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
@@ -63,13 +54,13 @@ export default function useSettingsApi() {
         },
       });
     }
-  }, [fetchSettingsCallback, settingsApi]);
+  }, [fetchSettingsCallback]);
 
   const updateSettings = useCallback(
     async (queryParams) => {
       dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED });
       try {
-        const response = await updateSettingsCallback(queryParams, settingsApi);
+        const response = await updateSettingsCallback(queryParams);
 
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
@@ -85,7 +76,7 @@ export default function useSettingsApi() {
         });
       }
     },
-    [updateSettingsCallback, settingsApi]
+    [updateSettingsCallback]
   );
 
   return {

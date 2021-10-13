@@ -23,11 +23,11 @@ import apiFetch from '@wordpress/api-fetch';
  * Upload media
  * Used on settings page for upload button.
  *
+ * @param {Object} config Configuration object.
  * @param {Object} files Uploaded files.
- * @param {string} apiPath String.
  * @return {Promise} Request promise.
  */
-export function uploadMedia(files, apiPath) {
+export function uploadMedia(config, files) {
   return Promise.all(
     Object.values(files).map((file) => {
       const data = new window.FormData();
@@ -35,7 +35,7 @@ export function uploadMedia(files, apiPath) {
       data.append('file', file, file.name || file.type.replace('/', '.'));
 
       return apiFetch({
-        path: apiPath,
+        path: config.api.media,
         body: data,
         method: 'POST',
       });

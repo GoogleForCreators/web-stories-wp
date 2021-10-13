@@ -27,22 +27,24 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  * Fetch publisher logos.
  * Used for "Publisher Logo" field under editor settings page
  *
- * @param {string} apiPath API Path.
+ * @param {Object} config Configuration object.
  * @return {Promise} Request promise.
  */
-export function fetchPublisherLogos(apiPath) {
-  return apiFetch({ path: apiPath });
+export function fetchPublisherLogos(config) {
+  return apiFetch({ path: config.api.publisherLogos });
 }
 
 /**
  * Remove publisher logo.
  *
+ * @param {Object} config Configuration object.
  * @param {number|string} logoId Logo id.
- * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
-export function removePublisherLogo(logoId, apiPath) {
-  const path = addQueryArgs(`${apiPath}${logoId}/`, { _method: 'DELETE' });
+export function removePublisherLogo(config, logoId) {
+  const path = addQueryArgs(`${config.api.publisherLogos}${logoId}/`, {
+    _method: 'DELETE',
+  });
 
   return apiFetch({
     path,
@@ -53,13 +55,13 @@ export function removePublisherLogo(logoId, apiPath) {
 /**
  * Add publisher logo.
  *
+ * @param {Object} config Configuration object.
  * @param {number|string} logoId Logo id.
- * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
-export function addPublisherLogo(logoId, apiPath) {
+export function addPublisherLogo(config, logoId) {
   return apiFetch({
-    path: apiPath,
+    path: config.api.publisherLogos,
     data: {
       id: logoId,
     },
@@ -70,13 +72,13 @@ export function addPublisherLogo(logoId, apiPath) {
 /**
  * Set publisher logo as default.
  *
+ * @param {Object} config Configuration object.
  * @param {number|string} logoId Logo id.
- * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
-export function setPublisherLogoAsDefault(logoId, apiPath) {
+export function setPublisherLogoAsDefault(config, logoId) {
   return apiFetch({
-    path: `${apiPath}${logoId}/`,
+    path: `${config.api.publisherLogos}${logoId}/`,
     data: {
       active: true,
     },

@@ -3,7 +3,7 @@
     "private": true,
     "engines": {
       "node": ">= 16",
-      "npm": "~7"
+      "npm": ">= 7.3"
     },
     "exports": {
         "default": "./src/index.js"
@@ -37,8 +37,8 @@
         "@storybook/addon-knobs": "^6.3.0",
         "@testing-library/react": "^12.1.2",
         "@testing-library/react-hooks": "^7.0.2",
-        "@testing-library/user-event": "^13.2.1",
-        "jest": "^27.2.2",
+        "@testing-library/user-event": "^13.3.0",
+        "jest": "^27.2.5",
         "react": "^17.0.2",
         "stylis-plugin-rtl": "^1.0.0"
     }
