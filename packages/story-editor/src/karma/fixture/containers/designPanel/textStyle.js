@@ -96,7 +96,7 @@ export class TextStyle extends AbstractPanel {
   }
 
   get adaptiveColor() {
-    return this.getByRole('button', { name: /Apply adaptive text colors/ });
+    return this.getByRole('button', { name: /Adaptive text colors/ });
   }
 
   // @todo: add remaining input options:

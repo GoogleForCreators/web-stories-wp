@@ -79,7 +79,25 @@ describe('Text Style Panel', () => {
     });
   });
 
-  fdescribe('Adaptive text color', () => {
+  describe('Adaptive text color', () => {
+    it('should not allow triggering adaptive text color for multi-selection', async () => {
+      // Add 2 text elements.
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+      await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
+
+      // Select first text as well (the second is selected by default).
+      await fixture.events.keyboard.down('Shift');
+      await fixture.events.click(
+        fixture.editor.canvas.framesLayer.frames[1].node
+      );
+      await fixture.events.keyboard.up('Shift');
+
+      expect(
+        fixture.editor.inspector.designPanel.textStyle.adaptiveColor.disabled
+      ).toBeTrue();
+    });
+
     it('should change the text color to white on black background', async () => {
       // Assign black color.
       const safezone = fixture.querySelector('[data-testid="safezone"]');
@@ -102,8 +120,9 @@ describe('Text Style Panel', () => {
       await waitFor(
         async () => {
           const texts = fixture.screen.getAllByText('Fill in some text');
-          const whiteTexts = texts.filter((text) => text.outerHTML.includes('color: #fff'));
-          //expect(texts[0]).toContain('color: #fff');
+          const whiteTexts = texts.filter((text) =>
+            text.outerHTML.includes('color: #fff')
+          );
           const html = whiteTexts[0].outerHTML;
           expect(html).toContain('color: #fff');
           const {

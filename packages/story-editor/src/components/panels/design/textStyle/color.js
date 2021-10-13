@@ -60,9 +60,9 @@ function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
 
   return (
     <Row>
-      <Tooltip title={__('Apply adaptive text colors', 'web-stories')}>
+      <Tooltip title={__('Adaptive text colors', 'web-stories')}>
         <AutoStyleButton
-          aria-label={__('Apply adaptive text colors', 'web-stories')}
+          aria-label={__('Adaptive text colors', 'web-stories')}
           onClick={applyTextAutoStyle}
           disabled={selectedElements?.length > 1}
         >
