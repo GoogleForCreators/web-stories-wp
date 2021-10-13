@@ -19,10 +19,7 @@
 export function focusOnPage(page) {
   // grab the first focusable element available.
   // currently can be a button or an anchor.
-  const button =
-    page.tagName === 'BUTTON'
-      ? page
-      : page?.querySelectorAll(['button', 'a'])?.[0];
+  const button = page?.querySelectorAll(['button', 'a'])?.[0];
   if (button) {
     button.focus();
   }
