@@ -40,6 +40,7 @@ import Dashboard from '../dashboard';
 import ApiProvider from '../app/api/apiProvider';
 import { AppFrame } from '../components';
 import InterfaceSkeleton from '../components/interfaceSkeleton';
+import { APP_ROUTES, ROUTE_TITLES } from '../constants';
 import ApiProviderFixture from './apiProviderFixture';
 
 if ('true' === process.env.CI) {
@@ -90,6 +91,12 @@ const defaultConfig = {
     pages: '/wp/v2/pages',
     publisherLogos: '/web-stories/v1/publisher-logos',
   },
+  leftRailSecondaryNavigation: [
+    {
+      value: APP_ROUTES.EDITOR_SETTINGS,
+      label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
+    },
+  ],
 };
 
 export default class Fixture {
