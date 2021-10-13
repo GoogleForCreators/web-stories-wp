@@ -22,7 +22,6 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app/story';
 import { Fixture } from '../../../karma';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { initHelpers } from './_utils';
@@ -369,11 +368,14 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
   describe('CUJ: Creator Can Style Text: Apply B, Set line height', () => {
     it('should apply global formats (here line height) even when a selection is present', async () => {
-      const getElements = async () => {
-        const storyContext = await data.fixture.renderHook(() => useStory());
-        return storyContext.state.currentPage.elements;
+      const getDisplayTextStyles = () => {
+        const displayNode = data.fixture.editor.canvas.displayLayer.display(
+          data.textId
+        ).node;
+        const paragraph = displayNode.querySelector('p');
+        return window.getComputedStyle(paragraph);
       };
-      const initialLineHeight = (await getElements())[1]?.lineHeight;
+      const initialLineHeight = parseFloat(getDisplayTextStyles().lineHeight);
 
       const { lineHeight } =
         data.fixture.editor.inspector.designPanel.textStyle;
@@ -397,8 +399,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(getTextContent()).toBe('Fill in some text');
 
       // Expect line height to have changed
-      const newLineHeight = (await getElements())[1]?.lineHeight;
-      expect(newLineHeight).not.toBe(initialLineHeight);
+      expect(getDisplayTextStyles().lineHeight).not.toBe(initialLineHeight);
     });
   });
 
