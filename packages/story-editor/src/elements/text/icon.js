@@ -29,7 +29,7 @@ const IconContainer = styled.div`
 function TextIcon() {
   return (
     <IconContainer>
-      <Icons.LetterT height="21px" width="21px" />
+      <Icons.LetterT height={21} width={21} />
     </IconContainer>
   );
 }
