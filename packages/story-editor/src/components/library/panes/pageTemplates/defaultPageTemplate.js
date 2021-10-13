@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, forwardRef, useFocusOut } from '@web-stories-wp/react';
+import { forwardRef } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { _x, sprintf } from '@web-stories-wp/i18n';
 import { Button, BUTTON_TYPES } from '@web-stories-wp/design-system';
@@ -26,10 +26,11 @@ import { Button, BUTTON_TYPES } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { PageSizePropType } from '../../../../types';
-import { focusStyle } from '../../../panels/shared';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 
-const PageTemplateWrapper = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
+const PageTemplateWrapper = styled.div``;
+
+const PageTemplateButton = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -38,8 +39,26 @@ const PageTemplateWrapper = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
   padding: 0;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   cursor: pointer;
+`;
 
-  ${focusStyle};
+const PageTemplateTitle = styled.div`
+  position: absolute;
+  bottom: 0;
+  background-color: ${({ theme }) => theme.colors.opacity.overlayDark};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  padding: 8px;
+  font-size: 12px;
+  line-height: 22px;
+  width: 100%;
+  align-self: flex-end;
+  opacity: 0;
+
+  ${PageTemplateButton}:hover &,
+  ${PageTemplateButton}:focus & {
+    opacity: 1;
+  }
 `;
 
 const PosterWrapper = styled.div`
@@ -54,63 +73,39 @@ const PosterImg = styled.img`
   border-radius: ${({ theme }) => theme.borders.radius.small};
 `;
 
-const PageTemplateTitle = styled.div`
-  position: absolute;
-  bottom: 0;
-  background-color: ${({ theme }) => theme.colors.opacity.overlayDark};
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
-
-  padding: 8px;
-  font-size: 12px;
-  line-height: 22px;
-  width: 100%;
-  align-self: flex-end;
-`;
-
 PageTemplateTitle.propTypes = {
   isActive: PropTypes.bool.isRequired,
 };
 
 const DefaultPageTemplate = forwardRef(
-  ({ page, pageSize, columnWidth, isActive, ...rest }, ref) => {
-    const [isHover, setIsHover] = useState(false);
-    const isActivePage = isHover || isActive;
-
-    useFocusOut(ref, () => setIsHover(false), []);
-
-    const handleSetHover = () => setIsHover(!isHover);
-
+  ({ page, columnWidth, isActive }, ref) => {
     return (
-      <PageTemplateWrapper
-        columnWidth={columnWidth}
-        ref={ref}
-        onMouseEnter={handleSetHover}
-        onMouseLeave={handleSetHover}
-        aria-label={page.title}
-        {...rest}
-      >
-        <PosterWrapper>
-          {page.webp && (
-            <PosterImg
-              src={page.png}
-              alt={page.title}
-              crossOrigin="anonymous"
-            />
-          )}
+      <PageTemplateWrapper ref={ref}>
+        <PageTemplateButton
+          columnWidth={columnWidth}
+          aria-label={page.title}
+          tabIndex={isActive ? 0 : -1}
+        >
+          <PosterWrapper>
+            {page.webp && (
+              <PosterImg
+                src={page.png}
+                alt={page.title}
+                crossOrigin="anonymous"
+              />
+            )}
+          </PosterWrapper>
           {page.title && (
-            <PageTemplateTitle isActive={isActivePage}>
+            <PageTemplateTitle>
               {sprintf(
-                /* translators: 1: template name. 2: page template
-            name. */ _x('%1$s %2$s', 'page template title', 'web-stories'),
+                /* translators: 1: template name. 2: page template name. */
+                _x('%1$s %2$s', 'page template title', 'web-stories'),
                 page.title,
                 PAGE_TEMPLATE_TYPES[page.type].name
               )}
             </PageTemplateTitle>
           )}
-        </PosterWrapper>
+        </PageTemplateButton>
       </PageTemplateWrapper>
     );
   }
