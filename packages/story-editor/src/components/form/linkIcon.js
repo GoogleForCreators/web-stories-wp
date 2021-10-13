@@ -63,8 +63,8 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
     <StyledMedia
       value={icon || ''}
       cropParams={{
-        width: 32,
-        height: 32,
+        width: 96,
+        height: 96,
       }}
       onChange={handleChange}
       onChangeErrorText={iconErrorMessage}
