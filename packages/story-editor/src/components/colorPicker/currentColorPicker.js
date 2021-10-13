@@ -28,7 +28,6 @@ import {
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { useFeature } from 'flagged';
 
 const Saturation = lazy(() =>
   import(
@@ -158,8 +157,6 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
     [rgb, onChange]
   );
 
-  const enableEyedropper = useFeature('enableEyedropper');
-
   const { initEyedropper } = useEyedropper({
     onChange,
   });
@@ -214,18 +211,16 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         </Suspense>
       </Body>
       <Footer>
-        {enableEyedropper && (
-          <Button
-            variant={BUTTON_VARIANTS.SQUARE}
-            type={BUTTON_TYPES.QUATERNARY}
-            size={BUTTON_SIZES.SMALL}
-            aria-label={__('Pick a color from canvas', 'web-stories')}
-            onClick={initEyedropper()}
-            onPointerEnter={initEyedropper(false)}
-          >
-            <Icons.Pipette />
-          </Button>
-        )}
+        <Button
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.QUATERNARY}
+          size={BUTTON_SIZES.SMALL}
+          aria-label={__('Pick a color from canvas', 'web-stories')}
+          onClick={initEyedropper()}
+          onPointerEnter={initEyedropper(false)}
+        >
+          <Icons.Pipette />
+        </Button>
         <HexValue>
           <EditablePreview
             label={__('Edit hex value', 'web-stories')}

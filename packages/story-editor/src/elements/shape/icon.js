@@ -33,8 +33,8 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 28px;
-  width: 28px;
+  height: 21px;
+  width: 21px;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   background-color: ${({ theme }) => theme.colors.opacity.black10};
 `;

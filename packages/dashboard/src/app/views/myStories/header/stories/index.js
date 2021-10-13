@@ -70,7 +70,6 @@ const defaultProps = {
   stories: formattedStoriesArray,
   sort,
   totalStoriesByStatus,
-  wpListURL: 'fakeurltoWordPressList.com',
 };
 
 export const _default = () => (

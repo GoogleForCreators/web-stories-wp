@@ -30,7 +30,6 @@ describe('Eyedropper', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableEyedropper: true });
     await fixture.render();
   });
 
