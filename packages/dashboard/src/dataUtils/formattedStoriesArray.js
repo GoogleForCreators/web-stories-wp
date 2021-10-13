@@ -82,11 +82,6 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
-      _embedded: {
-        'wp:featuredmedia': [{ id: 0, source_url: '' }],
-        'wp:publisherlogo': [{ id: 0, source_url: '' }],
-        author: [{ id: 3, name: 'Jango Fett' }],
-      },
     },
   },
   {
@@ -144,11 +139,6 @@ const formattedStoriesArray = [
       style_presets: {
         colors: [],
         textStyles: [],
-      },
-      _embedded: {
-        'wp:featuredmedia': [{ id: 0, source_url: '' }],
-        'wp:publisherlogo': [{ id: 0, source_url: '' }],
-        author: [{ id: 21, name: 'Chewbacca' }],
       },
     },
   },
@@ -208,11 +198,6 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
-      _embedded: {
-        'wp:featuredmedia': [{ id: 0, source_url: '' }],
-        'wp:publisherlogo': [{ id: 0, source_url: '' }],
-        author: [{ id: 4, name: 'Luke Skywalker' }],
-      },
     },
   },
   {
@@ -270,11 +255,6 @@ const formattedStoriesArray = [
       style_presets: {
         colors: [],
         textStyles: [],
-      },
-      _embedded: {
-        'wp:featuredmedia': [{ id: 0, source_url: '' }],
-        'wp:publisherlogo': [{ id: 0, source_url: '' }],
-        author: [{ id: 2, name: 'Lando-Calrissian' }],
       },
     },
   },

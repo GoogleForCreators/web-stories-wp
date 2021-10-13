@@ -65,12 +65,6 @@ const fetchStories = () => {
           },
           preview_link: 'https://www.story-link.com/?preview=true',
           edit_link: 'https://www.story-link.com/wp-admin/post.php?id=123',
-          _embedded: {
-            author: [{ id: 1, name: 'admin' }],
-            'wp:featuredmedia': [
-              { id: 0, source_url: 'https://www.featured-media-123' },
-            ],
-          },
         },
         capabilities: {
           hasEditAction: false,
@@ -152,12 +146,6 @@ const storyResponse = (story) => {
       author: 1,
       preview_link: 'https://www.story-link.com/?preview=true',
       edit_link: `https://www.story-link.com/wp-admin/post.php?id=${id}`,
-      _embedded: {
-        author: [{ id: 1, name: 'admin' }],
-        'wp:featuredmedia': [
-          { id: 0, source_url: `https://www.featured-media-${id}` },
-        ],
-      },
     },
     capabilities: {
       hasEditAction: false,
@@ -251,12 +239,6 @@ describe('ApiProvider', () => {
             raw: 'Carlos',
             rendered: 'Carlos',
           },
-          _embedded: {
-            author: [{ id: 1, name: 'admin' }],
-            'wp:featuredmedia': [
-              { id: 0, source_url: 'https://www.featured-media-123' },
-            ],
-          },
         },
         previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
@@ -336,12 +318,6 @@ describe('ApiProvider', () => {
             raw: 'New Title',
             rendered: 'New Title',
           },
-          _embedded: {
-            author: [{ id: 1, name: 'admin' }],
-            'wp:featuredmedia': [
-              { id: 0, source_url: 'https://www.featured-media-123' },
-            ],
-          },
         },
         previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
@@ -411,12 +387,6 @@ describe('ApiProvider', () => {
             raw: 'Carlos',
             rendered: 'Carlos',
           },
-          _embedded: {
-            author: [{ id: 1, name: 'admin' }],
-            'wp:featuredmedia': [
-              { id: 0, source_url: 'https://www.featured-media-123' },
-            ],
-          },
         },
         previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
@@ -458,12 +428,6 @@ describe('ApiProvider', () => {
           title: {
             raw: 'Carlos (Copy)',
             rendered: 'Carlos (Copy)',
-          },
-          _embedded: {
-            author: [{ id: 1, name: 'admin' }],
-            'wp:featuredmedia': [
-              { id: 0, source_url: 'https://www.featured-media-456' },
-            ],
           },
         },
         previewLink: 'https://www.story-link.com/?preview=true',
