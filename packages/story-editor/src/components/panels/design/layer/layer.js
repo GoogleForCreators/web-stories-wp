@@ -19,7 +19,12 @@
  */
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { Button, BUTTON_TYPES, Icons } from '@web-stories-wp/design-system';
+import {
+  Button,
+  BUTTON_TYPES,
+  Icons,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -182,32 +187,41 @@ const LayerAction = styled(Button).attrs({
     background: var(--background-color);
   }
 
-  /*
-   * apply foreground color variants to children.
-   */
-  * {
-    color: ${({ theme }) => theme.colors.fg.primary};
-  }
-  :disabled * {
+  :disabled,
+  :hover {
     color: ${({ theme }) => theme.colors.fg.secondary};
+  }
+
+  & + & {
+    margin-left: 4px;
+  }
+
+  * {
+    pointer-events: none;
+  }
+
+  :focus {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        'var(--background-color)'
+      )}
   }
 `;
 
 function Layer({ layer }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(layer.type);
   const { isSelected, handleClick } = useLayerSelection(layer);
-  const { currentPage } = useStory((state) => ({
+  const { currentPage, deleteElementById } = useStory((state) => ({
     currentPage: state.state.currentPage,
+    deleteElementById: state.actions.deleteElementById,
   }));
   const isBackground = currentPage.elements[0].id === layer.id;
+  const layerId = `layer-${layer.id}`;
 
   return (
     <LayerContainer>
-      <LayerButton
-        id={`layer-${layer.id}`}
-        onClick={handleClick}
-        isSelected={isSelected}
-      >
+      <LayerButton id={layerId} onClick={handleClick} isSelected={isSelected}>
         <LayerIconWrapper>
           <LayerIcon element={layer} currentPage={currentPage} />
         </LayerIconWrapper>
@@ -227,14 +241,21 @@ function Layer({ layer }) {
         </LayerDescription>
       </LayerButton>
       <ActionsContainer>
-        {/*
-         *@TODO #9137 #9138 add layer actions here. only reason we conditionally
-         * render right now is to maintain visual continuity until
-         * the actual actions are present.
-         */}
-        {isBackground && (
-          <LayerAction disabled>
+        {isBackground ? (
+          <LayerAction
+            aria-label={__('Locked', 'web-stories')}
+            aria-describedby={layerId}
+            disabled
+          >
             <Icons.LockClosed />
+          </LayerAction>
+        ) : (
+          <LayerAction
+            aria-label={__('Delete', 'web-stories')}
+            aria-describedby={layerId}
+            onClick={() => deleteElementById({ elementId: layer.id })}
+          >
+            <Icons.Trash />
           </LayerAction>
         )}
       </ActionsContainer>
