@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -55,7 +56,10 @@ function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
 
   const applyTextAutoStyle = useApplyTextAutoStyle(
     selectedElements[0],
-    (props) => pushUpdate(props, true)
+    (props) => {
+      pushUpdate(props, true);
+      trackEvent('auto_style_text');
+    }
   );
 
   return (
