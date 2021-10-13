@@ -182,6 +182,4 @@ describe('Hierarchical', () => {
 
     expect(screen.getAllByRole('checkbox')).toHaveLength(initialCheckboxLength);
   });
-
-  it.todo('should be keyboard accessible');
 });
