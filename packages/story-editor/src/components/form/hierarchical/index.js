@@ -30,6 +30,7 @@ import {
 } from '@web-stories-wp/design-system';
 import { _n, sprintf, __ } from '@web-stories-wp/i18n';
 import {
+  Fragment,
   useCallback,
   useDebouncedCallback,
   useEffect,
@@ -71,13 +72,12 @@ const Border = styled.div`
     `0 0 ${theme.borders.radius.small} ${theme.borders.radius.small}`};
 `;
 
-const SiblingGroup = styled.div.attrs({ role: 'group' })``;
-
-const CheckboxArea = styled.div`
+const CheckboxArea = styled.ul`
   max-height: 175px;
   padding: 12px 12px 0 12px;
   overflow-y: scroll;
   margin-top: 4px;
+  margin-bottom: 0;
 
   ${themeHelpers.scrollbarCSS};
 
@@ -90,15 +90,11 @@ const CheckboxArea = styled.div`
   }
 `;
 
-const StepContainer = styled.div`
-  margin-top: 4px;
-  margin-left: 20px;
-`;
-
-const CheckboxContainer = styled.div`
+const CheckboxContainer = styled.li`
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+  margin-left: ${({ $level }) => 20 * $level}px;
 `;
 
 const NoResultsText = styled(Text)`
@@ -113,41 +109,44 @@ const buildOptionName = (name) => `hierarchical_term_${name}`;
  * Renders a checkbox and all children of the checkbox.
  *
  * @param {Object} option The option to render.
- * @param {Object} option.optionRefs Ref used to store refs to checkboxes
- * @return {Node} The rendered option and children
+ * @param {Object} option.optionRefs Ref used to store refs to checkboxes.
+ * @param {number} option.level The indentation level.
+ * @return {Node} The rendered option and children.
  */
-const Option = ({ optionRefs = { current: {} }, ...option }) => {
+const Option = ({ optionRefs = { current: {} }, level = 0, ...option }) => {
   const { id, label, options, onChange, checked, value } = option;
 
   const optionId = buildOptionId(id);
   const optionName = buildOptionName(label);
 
+  const hasChildren = Boolean(options?.length);
+
   return (
     <>
-      <CheckboxContainer>
+      <CheckboxContainer aria-selected={checked} role="treeitem" $level={level}>
         <Checkbox
           id={optionId}
-          ref={(node) => {
-            optionRefs.current[id] = node;
-          }}
           value={value}
           checked={checked}
           name={optionName}
           onChange={(evt) => onChange(evt, option)}
           tabIndex={-1}
-          role="option"
+          ref={(node) => {
+            optionRefs.current[id] = node;
+          }}
         />
         <Label htmlFor={optionId}>{label}</Label>
       </CheckboxContainer>
-      {Boolean(options?.length) && (
-        <SiblingGroup>
-          {options.map((child) => (
-            <StepContainer key={child.id}>
-              <Option onChange={onChange} optionRefs={optionRefs} {...child} />
-            </StepContainer>
-          ))}
-        </SiblingGroup>
-      )}
+      {hasChildren &&
+        options.map((child) => (
+          <Option
+            key={child.id}
+            level={level + 1}
+            onChange={onChange}
+            optionRefs={optionRefs}
+            {...child}
+          />
+        ))}
     </>
   );
 };
@@ -155,6 +154,7 @@ const OptionPropType = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   checked: PropTypes.bool,
   label: PropTypes.string.isRequired,
+  level: PropTypes.number,
   optionRefs: PropTypes.shape({
     current: PropTypes.shape({
       [PropTypes.string.isRequired]: PropTypes.node,
@@ -313,14 +313,6 @@ const HierarchicalInput = ({
         label={label}
         type="search"
         placeholder={__('Search', 'web-stories')}
-        role="combobox"
-        aria-expanded
-        aria-owns="checkbox_list"
-        aria-activedescendant={
-          focusedCheckboxId !== -1
-            ? buildOptionId(focusedCheckboxId)
-            : undefined
-        }
         {...inputProps}
       />
       {showOptionArea && (
@@ -331,22 +323,26 @@ const HierarchicalInput = ({
               ref={checkboxListRef}
               tabIndex={0}
               onFocus={handleListboxFocus}
-              role="listbox"
+              role="tree"
+              aria-activedescendant={
+                focusedCheckboxId !== -1
+                  ? buildOptionId(focusedCheckboxId)
+                  : undefined
+              }
               aria-multiselectable
             >
               {filteredOptions.length ? (
-                <SiblingGroup>
-                  {filteredOptions.map((option) => (
-                    <Option
-                      key={option.id}
-                      {...option}
-                      onChange={handleCheckboxChange}
-                      optionRefs={optionRefs}
-                    />
-                  ))}
-                </SiblingGroup>
+                filteredOptions.map((option) => (
+                  <Option
+                    key={option.id}
+                    {...option}
+                    onChange={handleCheckboxChange}
+                    optionRefs={optionRefs}
+                  />
+                ))
               ) : (
                 <NoResultsText
+                  role="treeitem"
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 >
                   {noOptionsText}
