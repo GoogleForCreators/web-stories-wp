@@ -25,7 +25,6 @@ import { Button, BUTTON_TYPES } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { PageSizePropType } from '../../../../types';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 
 const PageTemplateWrapper = styled.div``;
@@ -74,17 +73,18 @@ const PosterImg = styled.img`
 `;
 
 PageTemplateTitle.propTypes = {
-  isActive: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool,
 };
 
 const DefaultPageTemplate = forwardRef(
-  ({ page, columnWidth, isActive }, ref) => {
+  ({ page, columnWidth, isActive, ...rest }, ref) => {
     return (
       <PageTemplateWrapper ref={ref}>
         <PageTemplateButton
           columnWidth={columnWidth}
           aria-label={page.title}
           tabIndex={isActive ? 0 : -1}
+          {...rest}
         >
           <PosterWrapper>
             {page.webp && (
@@ -114,7 +114,6 @@ const DefaultPageTemplate = forwardRef(
 DefaultPageTemplate.propTypes = {
   isActive: PropTypes.bool,
   page: PropTypes.object.isRequired,
-  pageSize: PageSizePropType.isRequired,
   columnWidth: PropTypes.number.isRequired,
 };
 
