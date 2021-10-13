@@ -17,17 +17,10 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
-import { trackClick } from '@web-stories-wp/tracking';
-import {
-  Text,
-  THEME_CONSTANTS,
-  DropDown,
-  Link,
-} from '@web-stories-wp/design-system';
+import { TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { Text, THEME_CONSTANTS, DropDown } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -55,10 +48,6 @@ const ControlsContainer = styled.div`
   align-items: center;
 `;
 
-const StyledLink = styled(Link)`
-  margin-right: 24px;
-`;
-
 const StyledDropDown = styled(DropDown)`
   width: 210px;
 `;
@@ -74,12 +63,7 @@ export default function BodyViewOptions({
   showGridToggle,
   showSortDropdown,
   sortDropdownAriaLabel,
-  wpListURL,
 }) {
-  const handleClassicListViewClick = useCallback((evt) => {
-    trackClick(evt, 'open_classic_list_view');
-  }, []);
-
   return (
     <StandardViewContentGutter>
       <TelemetryBanner />
@@ -102,15 +86,6 @@ export default function BodyViewOptions({
             )}
             {showGridToggle && (
               <ControlsContainer>
-                {layoutStyle === VIEW_STYLE.LIST && wpListURL && (
-                  <StyledLink
-                    href={wpListURL}
-                    onClick={handleClassicListViewClick}
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  >
-                    {__('See classic WP list view', 'web-stories')}
-                  </StyledLink>
-                )}
                 <ViewStyleBar
                   layoutStyle={layoutStyle}
                   onPress={handleLayoutSelect}
@@ -131,7 +106,6 @@ BodyViewOptions.propTypes = {
   isLoading: PropTypes.bool,
   layoutStyle: PropTypes.string.isRequired,
   resultsLabel: PropTypes.string.isRequired,
-  wpListURL: PropTypes.string,
   pageSortOptions: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
