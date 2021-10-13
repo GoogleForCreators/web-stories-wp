@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -78,5 +82,33 @@ describe('Layer Panel', () => {
       up(),
     ]);
     expect(section.clientHeight).toBe(initialHeight);
+  });
+
+  it('should be able to delete elements with delete action', async () => {
+    const insertElement = await fixture.renderHook(() => useInsertElement());
+    await fixture.act(() => {
+      insertElement('text', {
+        font: TEXT_ELEMENT_DEFAULT_FONT,
+        content: 'element_a',
+        x: 40,
+        y: 40,
+        width: 250,
+      });
+
+      insertElement('text', {
+        font: TEXT_ELEMENT_DEFAULT_FONT,
+        content: 'element_b',
+        x: 40,
+        y: 40,
+        width: 250,
+      });
+    });
+
+    expect(layerPanel.layers.length).toBe(3);
+    const elementALayer = layerPanel.getLayerByInnerText('element_a');
+    await fixture.events.hover(elementALayer);
+    const deleteElementAButton = within(elementALayer).getByLabelText('Delete');
+    await fixture.events.click(deleteElementAButton);
+    expect(layerPanel.layers.length).toBe(2);
   });
 });

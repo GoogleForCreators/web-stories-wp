@@ -51,7 +51,10 @@ const ActionsContainer = styled.div`
   box-shadow: 0px 0px 15px 20px var(--background-color);
 `;
 
-const LayerContainer = styled.div`
+const LayerContainer = styled.div.attrs({
+  // Because the layer panel is aria-hidden, we need something else to select by
+  'data-testid': 'layer-option',
+})`
   position: relative;
   height: ${LAYER_HEIGHT}px;
   width: 100%;
@@ -66,8 +69,6 @@ const LayerButton = styled(Button).attrs({
   type: BUTTON_TYPES.PLAIN,
   tabIndex: -1,
   role: 'option',
-  // Because the layer panel is aria-hidden, we need something else to select by
-  'data-testid': 'layer-option',
 })`
   position: relative;
   display: grid;
