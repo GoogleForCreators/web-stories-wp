@@ -55,8 +55,6 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
   const { isRTL } = useConfig();
   const { showSnackbar } = useSnackbar();
   const [currentPageId, setCurrentPageId] = useState();
-  const [isGridFocused, setIsGridFocused] = useState(false);
-  const [tabIndex, setTabIndex] = useState('0');
   const containerRef = useRef();
   const pageRefs = useRef({});
 
@@ -75,44 +73,11 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
     [addPage, showSnackbar]
   );
 
-  const handleGridFocus = useCallback(() => {
-    if (!isGridFocused) {
-      const newGridItemId = pageRefs.current?.[currentPageId]
-        ? currentPageId
-        : pages[0].id;
-
-      !currentPageId && setCurrentPageId(newGridItemId);
-      setIsGridFocused(true);
-      pageRefs.current?.[newGridItemId]?.focus();
-    }
-  }, [currentPageId, isGridFocused, pages]);
-
-  // Allow user to "tab" to get out of focus
-  const handleFocusOut = (evt) => {
-    if (evt.keyCode === 9) {
-      setTabIndex('-1');
-      setIsGridFocused(false);
-    }
-  };
-  // reset tabIndex onBlur so that we can use the keyboard to get back into templates
-  const handleBlur = () => {
-    if (tabIndex === '-1') {
-      setTabIndex('0');
-    }
-  };
-
   useEffect(() => {
-    const node = containerRef.current;
-    if (!node) {
-      return undefined;
+    if (pages.length > 0 && !currentPageId) {
+      setCurrentPageId(pages[0].id);
     }
-
-    node.addEventListener('keydown', handleFocusOut);
-
-    return () => {
-      node.removeEventListener('keydown', handleFocusOut);
-    };
-  }, [containerRef]);
+  }, [currentPageId, pages]);
 
   useGridViewKeys({
     containerRef: parentRef,
@@ -128,7 +93,6 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
       ref={containerRef}
       columnWidth={pageSize.width}
       rowHeight={pageSize.containerHeight}
-      onFocus={handleGridFocus}
       {...rest}
     >
       {pages.map((page) => {
@@ -142,12 +106,9 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
             onFocus={() => {
               setCurrentPageId(page.id);
             }}
-            onBlur={handleBlur}
             isActive={currentPageId === page.id}
             onClick={() => handlePageClick(page.story)}
             columnWidth={pageSize.width}
-            tabIndex={tabIndex}
-            {...rest}
           />
         );
       })}
