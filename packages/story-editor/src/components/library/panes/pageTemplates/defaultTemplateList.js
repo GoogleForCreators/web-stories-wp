@@ -93,7 +93,6 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
       ref={containerRef}
       columnWidth={pageSize.width}
       rowHeight={pageSize.containerHeight}
-      {...rest}
     >
       {pages.map((page) => {
         return (
@@ -109,6 +108,7 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
             isActive={currentPageId === page.id}
             onClick={() => handlePageClick(page.story)}
             columnWidth={pageSize.width}
+            {...rest}
           />
         );
       })}
