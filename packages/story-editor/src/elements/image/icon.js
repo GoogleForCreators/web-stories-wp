@@ -31,7 +31,7 @@ function ImageLayerIcon({
   },
 }) {
   const src = getSmallestUrlForWidth(0, resource);
-  return <VisibleImage src={src} alt={alt} height="20" />;
+  return <VisibleImage src={src} alt={alt} height={21} width={21} />;
 }
 
 ImageLayerIcon.propTypes = {
