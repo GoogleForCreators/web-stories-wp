@@ -98,7 +98,9 @@ function PageTemplatesPane(props) {
   const loadTemplates = useCallback(() => {
     // if nextTemplatesToFetch is false, we must not perform an API call
     // with page=false.
+    setIsLoading(true);
     if (!nextTemplatesToFetch) {
+      setIsLoading(false);
       return;
     }
 

@@ -74,7 +74,6 @@ function DefaultTemplates({ pageSize }) {
     }
 
     loadPageTemplates();
-    setIsLoading(false);
   }, [getPageTemplates, setPageTemplates]);
 
   const pageTemplatesParentRef = useRef();
