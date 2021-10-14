@@ -32,9 +32,6 @@ use WP_Post;
 
 /**
  * Class Story_Post_Type.
- *
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 
