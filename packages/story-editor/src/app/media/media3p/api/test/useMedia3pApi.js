@@ -37,81 +37,83 @@ const REGISTER_USAGE_URL =
 /* eslint-disable testing-library/no-node-access */
 
 describe('useMedia3pApi', () => {
-  apiFetcherMock.listMedia.mockImplementation(() =>
-    Promise.resolve({
-      media: [
-        {
-          name: 'media/unsplash:1234',
-          provider: 'UNSPLASH',
-          author: {
-            displayName: 'Maria',
-            url: 'http://maria.com',
+  beforeAll(() => {
+    apiFetcherMock.listMedia.mockImplementation(() =>
+      Promise.resolve({
+        media: [
+          {
+            name: 'media/unsplash:1234',
+            provider: 'UNSPLASH',
+            author: {
+              displayName: 'Maria',
+              url: 'http://maria.com',
+            },
+            registerUsageUrl: REGISTER_USAGE_URL,
+            imageUrls: [
+              {
+                url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=340&h=227&fit=max',
+                mimeType: 'image/jpeg',
+                width: 340,
+                height: 227,
+              },
+              {
+                url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=1060&h=707&fit=max',
+                mimeType: 'image/jpeg',
+                width: 1060,
+                height: 707,
+              },
+              {
+                url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=2121&h=1414&fit=max',
+                mimeType: 'image/jpeg',
+                width: 2121,
+                height: 1414,
+              },
+              {
+                url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=3182&h=2121&fit=max',
+                mimeType: 'image/jpeg',
+                width: 3182,
+                height: 2121,
+              },
+              {
+                url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=4243&h=2829&fit=max',
+                mimeType: 'image/jpeg',
+                width: 4243,
+                height: 2829,
+              },
+              {
+                url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=5304&h=3536&fit=max',
+                mimeType: 'image/jpeg',
+                width: 5304,
+                height: 3536,
+              },
+            ],
+            description: 'A cat',
+            type: 'IMAGE',
+            createTime: '1234',
+            updateTime: '5678',
           },
-          registerUsageUrl: REGISTER_USAGE_URL,
-          imageUrls: [
-            {
-              url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=340&h=227&fit=max',
-              mimeType: 'image/jpeg',
-              width: 340,
-              height: 227,
-            },
-            {
-              url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=1060&h=707&fit=max',
-              mimeType: 'image/jpeg',
-              width: 1060,
-              height: 707,
-            },
-            {
-              url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=2121&h=1414&fit=max',
-              mimeType: 'image/jpeg',
-              width: 2121,
-              height: 1414,
-            },
-            {
-              url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=3182&h=2121&fit=max',
-              mimeType: 'image/jpeg',
-              width: 3182,
-              height: 2121,
-            },
-            {
-              url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=4243&h=2829&fit=max',
-              mimeType: 'image/jpeg',
-              width: 4243,
-              height: 2829,
-            },
-            {
-              url: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=5304&h=3536&fit=max',
-              mimeType: 'image/jpeg',
-              width: 5304,
-              height: 3536,
-            },
-          ],
-          description: 'A cat',
-          type: 'IMAGE',
-          createTime: '1234',
-          updateTime: '5678',
-        },
-      ],
-      nextPageToken: 'lala',
-    })
-  );
-  apiFetcherMock.listCategories.mockImplementation(() =>
-    Promise.resolve({
-      categories: [
-        {
-          name: 'categories/unsplash:1',
-          displayName: 'Covid-19',
-        },
-        {
-          name: 'categories/unsplash:2',
-          displayName: 'Mountains',
-        },
-      ],
-    })
-  );
-  apiFetcherMock.registerUsage.mockImplementation(() =>
-    Promise.resolve(undefined)
-  );
+        ],
+        nextPageToken: 'lala',
+      })
+    );
+    apiFetcherMock.listCategories.mockImplementation(() =>
+      Promise.resolve({
+        categories: [
+          {
+            name: 'categories/unsplash:1',
+            displayName: 'Covid-19',
+          },
+          {
+            name: 'categories/unsplash:2',
+            displayName: 'Mountains',
+          },
+        ],
+      })
+    );
+    apiFetcherMock.registerUsage.mockImplementation(() =>
+      Promise.resolve(undefined)
+    );
+  });
 
   it('should properly call listMedia and map the results', async () => {
     const wrapper = (params) => (

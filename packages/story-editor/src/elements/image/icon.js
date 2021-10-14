@@ -34,7 +34,7 @@ function ImageLayerIcon({
   const url = getSmallestUrlForWidth(0, resource);
   const { getProxiedUrl } = useCORSProxy();
   const src = getProxiedUrl(resource, url);
-  return <VisibleImage src={src} alt={alt} height="20" />;
+  return <VisibleImage src={src} alt={alt} height={21} width={21} />;
 }
 
 ImageLayerIcon.propTypes = {

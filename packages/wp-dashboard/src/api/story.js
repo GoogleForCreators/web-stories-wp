@@ -34,6 +34,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_FIELDS, STORY_EMBED } from './constants';
+import { reshapeStoryObject } from './utils';
 
 /**
  * Fetch stories ( When dashboard link is clicked. )
@@ -68,13 +69,28 @@ export function fetchStories(config, queryParams) {
 
   return apiFetch({
     path: addQueryArgs(config.api.stories, query),
-  }).then(({ body, headers }) => ({
-    body,
-    headers: {
-      totalPages: headers['X-WP-TotalPages'],
-      totalByStatus: headers['X-WP-TotalByStatus'],
-    },
-  }));
+  }).then(({ body: stories, headers }) => {
+    const totalPages = headers && parseInt(headers['X-WP-TotalPages']);
+    const totalStoriesByStatus =
+      headers && JSON.parse(headers['X-WP-TotalByStatus']);
+
+    const fetchedStoryIds = [];
+    const reshapedStories = stories.reduce((acc, current) => {
+      if (!current) {
+        return acc;
+      }
+      fetchedStoryIds.push(current.id);
+      acc[current.id] = reshapeStoryObject(current);
+      return acc;
+    }, {});
+
+    return {
+      stories: reshapedStories,
+      fetchedStoryIds,
+      totalPages,
+      totalStoriesByStatus,
+    };
+  });
 }
 
 /**
@@ -117,7 +133,7 @@ export function updateStory(config, story) {
     path,
     data,
     method: 'POST',
-  });
+  }).then(reshapeStoryObject);
 }
 
 /**
@@ -197,5 +213,5 @@ export function duplicateStory(config, story) {
       status: 'draft',
     },
     method: 'POST',
-  });
+  }).then(reshapeStoryObject);
 }

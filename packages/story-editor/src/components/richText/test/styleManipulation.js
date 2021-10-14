@@ -28,6 +28,7 @@ import {
   togglePrefixStyle,
 } from '../styleManipulation';
 
+// eslint-disable-next-line jest/require-hook
 expect.extend({
   toHaveStyleAtCursor(received, style) {
     const styles = received.getCurrentInlineStyle().toArray();

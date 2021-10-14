@@ -17,8 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
-use Google\Web_Stories\Settings;
-
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
  */
@@ -47,11 +45,21 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	protected $instance;
 
 	/**
+	 * @var \Google\Web_Stories\Settings
+	 */
+	private $settings;
+
+	/**
 	 * Archive page ID.
 	 *
 	 * @var int
 	 */
 	protected static $archive_page_id;
+
+	/**
+	 * @var string
+	 */
+	protected $redirect_location;
 
 	/**
 	 * @param \WP_UnitTest_Factory $factory
@@ -88,14 +96,18 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->instance = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+
+		$this->settings = $this->injector->make( \Google\Web_Stories\Settings::class );
+		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
 
 		$this->add_caps_to_roles();
 	}
 
 	public function tear_down() {
 		$this->remove_caps_from_roles();
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE );
 
 		parent::tear_down();
 	}
@@ -106,12 +118,27 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function test_register() {
 		$this->instance->register();
 
-		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $this->instance, 'filter_revision_fields' ] ) );
+		$this->assertSame(
+			10,
+			has_filter(
+				'_wp_post_revision_fields',
+				[
+					$this->instance,
+					'filter_revision_fields',
+				]
+			)
+		);
 		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $this->instance, 'change_default_title' ] ) );
-		$this->assertSame( 10, has_filter( 'bulk_post_updated_messages', [ $this->instance, 'bulk_post_updated_messages' ] ) );
-
-		$this->assertSame( 10, has_action( 'add_option_' . \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, [ $this->instance, 'update_archive_setting' ] ) );
-		$this->assertSame( 10, has_action( 'update_option_' . \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, [ $this->instance, 'update_archive_setting' ] ) );
+		$this->assertSame(
+			10,
+			has_filter(
+				'bulk_post_updated_messages',
+				[
+					$this->instance,
+					'bulk_post_updated_messages',
+				]
+			)
+		);
 	}
 
 	/**
@@ -126,6 +153,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::register_post_type
 	 */
 	public function test_register_post_type() {
+
 		$post_type = $this->instance->register_post_type();
 		$this->assertTrue( $post_type->has_archive );
 	}
@@ -134,7 +162,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::register_post_type
 	 */
 	public function test_register_post_type_disabled() {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'disabled' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'disabled' );
 		$post_type = $this->instance->register_post_type();
 		$this->assertFalse( $post_type->has_archive );
 	}
@@ -143,7 +171,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::register_post_type
 	 */
 	public function test_register_post_type_default() {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ARCHIVE, 'default' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'default' );
 		$post_type = $this->instance->register_post_type();
 		$this->assertTrue( $post_type->has_archive );
 	}
@@ -177,7 +205,18 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_default() {
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
+		$this->assertTrue( $actual );
+	}
+
+	/**
+	 * @covers ::get_has_archive
+	 */
+	public function test_get_has_archive_disabled_experiments() {
+		$experiments    = new \Google\Web_Stories\Experiments( $this->settings );
+		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
+
+		$actual = $this->instance->get_has_archive();
 		$this->assertTrue( $actual );
 	}
 
@@ -185,11 +224,11 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_disabled() {
-		update_option( Settings::SETTING_NAME_ARCHIVE, 'disabled' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'disabled' );
 
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 
 		$this->assertFalse( $actual );
 	}
@@ -198,11 +237,11 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom_but_no_page() {
-		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 
 		$this->assertTrue( $actual );
 	}
@@ -211,13 +250,13 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom_but_invalid_page() {
-		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$this->assertTrue( $actual );
 	}
@@ -226,13 +265,13 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom() {
-		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		$this->assertIsString( $actual );
 		$this->assertSame( urldecode( get_page_uri( self::$archive_page_id ) ), $actual );
@@ -242,8 +281,8 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_custom_not_published() {
-		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
 		wp_update_post(
 			[
@@ -252,10 +291,10 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 			]
 		);
 
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		wp_update_post(
 			[
@@ -265,125 +304,5 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		);
 
 		$this->assertTrue( $actual );
-	}
-
-	/**
-	 * @covers ::pre_get_posts
-	 */
-	public function test_pre_get_posts_default_archive() {
-		update_option( Settings::SETTING_NAME_ARCHIVE, 'default' );
-
-		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-
-		$this->go_to( $archive_link );
-
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-
-		$this->assertQueryTrue( 'is_archive', 'is_post_type_archive' );
-	}
-
-	/**
-	 * @covers ::pre_get_posts
-	 */
-	public function test_pre_get_posts_custom_archive() {
-		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
-
-		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-
-		$this->go_to( $archive_link );
-
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
-
-		$this->assertQueryTrue( 'is_page', 'is_singular' );
-	}
-
-	/**
-	 * @covers ::pre_get_posts
-	 */
-	public function test_pre_get_posts_custom_archive_not_published() {
-		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
-
-		wp_update_post(
-			[
-				'ID'          => self::$archive_page_id,
-				'post_status' => 'draft',
-			]
-		);
-
-		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-
-		$this->go_to( $archive_link );
-
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
-
-		wp_update_post(
-			[
-				'ID'          => self::$archive_page_id,
-				'post_status' => 'publish',
-			]
-		);
-
-		$this->assertQueryTrue( 'is_archive', 'is_post_type_archive' );
-	}
-
-	/**
-	 * @covers ::filter_display_post_states
-	 */
-	public function test_filter_display_post_states() {
-		$actual = $this->call_private_method( $this->instance, 'filter_display_post_states', [ [], get_post( self::$archive_page_id ) ] );
-
-		$this->assertSame( [], $actual );
-	}
-
-	/**
-	 * @covers ::filter_display_post_states
-	 */
-	public function test_filter_display_post_states_custom_archive() {
-		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
-
-		$actual = $this->call_private_method( $this->instance, 'filter_display_post_states', [ [], get_post( self::$archive_page_id ) ] );
-
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
-
-		$this->assertEqualSetsWithIndex(
-			[
-				'web_stories_archive_page' => __( 'Web Stories Archive Page', 'web-stories' ),
-			],
-			$actual
-		);
-	}
-	/**
-	 * @covers ::filter_display_post_states
-	 */
-	public function test_filter_display_post_states_custom_archive_not_published() {
-		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
-		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
-
-		wp_update_post(
-			[
-				'ID'          => self::$archive_page_id,
-				'post_status' => 'draft',
-			]
-		);
-
-		$actual = $this->call_private_method( $this->instance, 'filter_display_post_states', [ [], get_post( self::$archive_page_id ) ] );
-
-		delete_option( Settings::SETTING_NAME_ARCHIVE );
-		delete_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID );
-
-		wp_update_post(
-			[
-				'ID'          => self::$archive_page_id,
-				'post_status' => 'publish',
-			]
-		);
-
-		$this->assertSame( [], $actual );
 	}
 }

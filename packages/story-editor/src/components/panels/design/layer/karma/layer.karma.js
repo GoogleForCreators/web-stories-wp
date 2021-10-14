@@ -61,10 +61,10 @@ describe('Layer Panel', () => {
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(layerPanel.resizeHandle, 3, 3),
       down(),
-      moveBy(0, 30, { steps: 6 }),
+      moveBy(0, 20, { steps: 6 }),
       up(),
     ]);
-    expect(section.clientHeight).toBe(initialHeight - 30);
+    expect(section.clientHeight).toBe(initialHeight - 20);
   });
 
   it('should not allow increasing the height of the layer panel past the max height', async () => {

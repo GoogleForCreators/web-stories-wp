@@ -28,6 +28,7 @@ const ERROR_TEXT =
   'Sorry, this file type is not supported. Only jpg, png, and static gifs are supported for publisher logos.';
 
 describe('Publisher logo', () => {
+  // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enableSVG']);
 
   let uploadedFiles = [];

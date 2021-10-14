@@ -25,7 +25,6 @@ import { useEffect, useMemo } from '@web-stories-wp/react';
 import { ScrollToTop, Layout } from '../../../components';
 import { STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
-import { useConfig } from '../../config';
 import useApi from '../../api/useApi';
 import Content from './content';
 import Header from './header';
@@ -78,8 +77,6 @@ function MyStories() {
       totalPages,
     });
 
-  const { wpListURL } = useConfig();
-
   useEffect(() => {
     fetchStories({
       page: page.value,
@@ -113,7 +110,6 @@ function MyStories() {
         stories={orderedStories}
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
-        wpListURL={wpListURL}
       />
 
       <Content

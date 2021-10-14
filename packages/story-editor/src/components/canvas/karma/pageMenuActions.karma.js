@@ -83,7 +83,9 @@ describe('PageMenu integration', () => {
         expect(await getSelection()).toEqual([]);
       });
 
-      it('using page menu', async () => {
+      // TODO(#9387): Fix flaky test.
+      // eslint-disable-next-line jasmine/no-disabled-tests
+      xit('using page menu', async () => {
         // Delete.
         await fixture.events.keyboard.shortcut('del');
         expect(getFrame()).toBeNull();

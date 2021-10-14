@@ -19,11 +19,7 @@
  */
 import { toUTCDate } from '@web-stories-wp/date';
 
-/**
- * Internal dependencies
- */
-import { REST_LINKS } from '../constants';
-
+// @todo Remove WordPress specific and unused fields.
 const formattedStoriesArray = [
   {
     locked: true,
@@ -147,12 +143,12 @@ const formattedStoriesArray = [
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
-        [REST_LINKS.EDIT]: [
+        'wp:action-edit': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
-        [REST_LINKS.DELETE]: [
+        'wp:action-delete': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
@@ -314,12 +310,12 @@ const formattedStoriesArray = [
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
-        [REST_LINKS.EDIT]: [
+        'wp:action-edit': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
-        [REST_LINKS.DELETE]: [
+        'wp:action-delete': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
@@ -481,12 +477,12 @@ const formattedStoriesArray = [
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
-        [REST_LINKS.EDIT]: [
+        'wp:action-edit': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
-        [REST_LINKS.DELETE]: [
+        'wp:action-delete': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
@@ -643,12 +639,12 @@ const formattedStoriesArray = [
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
-        [REST_LINKS.EDIT]: [
+        'wp:action-edit': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
-        [REST_LINKS.DELETE]: [
+        'wp:action-delete': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },

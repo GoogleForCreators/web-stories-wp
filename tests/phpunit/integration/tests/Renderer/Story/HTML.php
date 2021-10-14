@@ -238,6 +238,20 @@ class HTML extends TestCase {
 	}
 
 	/**
+	 * @covers ::fix_malformed_script_link_tags
+	 */
+	public function test_fix_malformed_script_link_tags_keeps_other_links() {
+		$source = '<html><head></head><body><amp-story><amp-story-page><amp-story-page-outlink layout="nodisplay"><a href="https://example.com">Learn more</a></amp-story-page-outlink></amp-story-page></amp-story></body></html>';
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
+
+		$actual = $this->call_private_method( $renderer, 'fix_malformed_script_link_tags', [ $source ] );
+
+		$this->assertStringContainsString( '<amp-story-page-outlink layout="nodisplay"><a href="https://example.com">Learn more</a></amp-story-page-outlink>', $actual );
+	}
+
+	/**
 	 * Helper to setup renderer.
 	 *
 	 * @param WP_Post $post Post Object.

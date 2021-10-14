@@ -41,10 +41,6 @@ export const APP_ROUTES = {
   TEMPLATE_DETAIL: 'template-detail',
 
   EDITOR_SETTINGS: '/editor-settings',
-  SUPPORT: __(
-    'https://wordpress.org/support/plugin/web-stories/',
-    'web-stories'
-  ),
 };
 
 export const NESTED_APP_ROUTES = {
@@ -61,7 +57,6 @@ export const ROUTE_TITLES = {
     'web-stories'
   ),
   [APP_ROUTES.EDITOR_SETTINGS]: __('Settings', 'web-stories'),
-  [APP_ROUTES.SUPPORT]: __('Support', 'web-stories'),
   DEFAULT: __('Dashboard', 'web-stories'),
 };
 
@@ -75,19 +70,6 @@ export const PRIMARY_PATHS = [
     value: APP_ROUTES.TEMPLATES_GALLERY,
     label: ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY],
     Icon: Compass,
-  },
-];
-
-export const SECONDARY_PATHS = [
-  {
-    value: APP_ROUTES.EDITOR_SETTINGS,
-    label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
-  },
-  {
-    value: APP_ROUTES.SUPPORT,
-    label: ROUTE_TITLES[APP_ROUTES.SUPPORT],
-    isExternal: true,
-    trackingEvent: 'click_support_page',
   },
 ];
 

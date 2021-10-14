@@ -82,8 +82,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 
 		$settings         = new Settings();
 		$this->controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller(
-			new Story_Post_Type( $settings ),
-			new Experiments( $settings )
+			new Story_Post_Type( $settings, new Experiments( $settings ) )
 		);
 	}
 

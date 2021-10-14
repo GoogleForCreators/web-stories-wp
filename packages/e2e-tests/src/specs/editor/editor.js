@@ -35,6 +35,7 @@ describe('Story Editor', () => {
   });
 
   describe('RTL', () => {
+    // eslint-disable-next-line jest/require-hook
     withRTL();
 
     it('should be able to create a blank story on RTL', async () => {
