@@ -173,7 +173,6 @@ const HierarchicalInput = ({
   onChange,
   ...inputProps
 }) => {
-  // const [inputText, setInputText] = useState('');
   const speak = useLiveRegion('assertive');
   const debouncedSpeak = useDebouncedCallback(speak, 500);
   const checkboxListRef = useRef(null);
@@ -222,7 +221,6 @@ const HierarchicalInput = ({
           }
           break;
         default:
-          evt.propagate();
           break;
       }
     },
