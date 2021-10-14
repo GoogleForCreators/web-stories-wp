@@ -29,7 +29,6 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post;
-use WP_Query;
 
 /**
  * Class Story_Post_Type.
@@ -100,8 +99,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 	 * Registers the post type for stories.
 	 *
 	 * @todo  refactor
-	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @since 1.0.0
 	 *
