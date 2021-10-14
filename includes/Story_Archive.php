@@ -126,9 +126,10 @@ class Story_Archive extends Service_Base {
 	 * @return void
 	 */
 	public function update_archive_setting() {
+		$this->story_post_type->unregister_post_type();
+		$this->story_post_type->register_post_type();
+			
 		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-			$this->story_post_type->unregister_post_type();
-			$this->story_post_type->register_post_type();
 			flush_rewrite_rules( false );
 		}
 	}
