@@ -99,7 +99,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function on_plugin_activation( $network_wide ){
+	public function on_plugin_activation( $network_wide ) {
 		$this->register_post_type();
 	}
 
@@ -140,7 +140,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @return WP_Post_Type|null
 	 */
-	protected function get_object(){
+	protected function get_object() {
 		return get_post_type_object( $this->get_slug() );
 	}
 
