@@ -19,6 +19,10 @@ const GB_IN_BYTES = 1024 * 1024 * 1024;
 export const MEDIA_TRANSCODING_MAX_FILE_SIZE = 2 * GB_IN_BYTES;
 
 export const MEDIA_POSTER_IMAGE_FILE_TYPE = 'jpeg';
+export const MEDIA_POSTER_IMAGE_MIME_TYPE = 'image/jpeg';
+
+export const MEDIA_TRANSCODED_MIME_TYPE = 'video/mp4';
+export const MEDIA_TRANSCODED_FILE_TYPE = 'mp4';
 
 // Minimum duration time in milliseconds for a video
 export const MEDIA_VIDEO_MINIMUM_DURATION = 100;
