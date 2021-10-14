@@ -67,7 +67,6 @@ function DefaultTemplates({ pageSize }) {
   useEffect(() => {
     async function loadPageTemplates() {
       setIsLoading(true);
-
       const trackTiming = getTimeTracker('load_page_templates');
       setPageTemplates(await getPageTemplates());
       setIsLoading(false);
@@ -75,6 +74,7 @@ function DefaultTemplates({ pageSize }) {
     }
 
     loadPageTemplates();
+    setIsLoading(false);
   }, [getPageTemplates, setPageTemplates]);
 
   const pageTemplatesParentRef = useRef();
