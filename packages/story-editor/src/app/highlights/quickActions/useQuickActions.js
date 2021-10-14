@@ -422,12 +422,14 @@ const useQuickActions = () => {
     ]
   );
 
-  const applyTextAutoStyle = useApplyTextAutoStyle(selectedElement, (props) => {
-    updateElementsById({
-      elementIds: [selectedElement?.id],
-      properties: props,
-    });
-  });
+  const applyTextAutoStyle = useApplyTextAutoStyle(
+    selectedElement,
+    (properties) =>
+      updateElementsById({
+        elementIds: [selectedElement?.id],
+        properties,
+      })
+  );
   const textActions = useMemo(
     () => [
       {
