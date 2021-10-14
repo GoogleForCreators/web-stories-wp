@@ -384,15 +384,6 @@ class Dashboard extends Service_Base {
 			)
 		);
 
-		$classic_wp_list_url = admin_url(
-			add_query_arg(
-				[
-					'post_type' => $this->story_post_type->get_slug(),
-				],
-				'edit.php'
-			)
-		);
-
 		// Media settings.
 		$max_upload_size = wp_max_upload_size();
 		if ( ! $max_upload_size ) {
@@ -406,7 +397,6 @@ class Dashboard extends Service_Base {
 				'userId'                => get_current_user_id(),
 				'locale'                => $this->locale->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
-				'wpListURL'             => $classic_wp_list_url,
 				'archiveURL'            => $this->story_post_type->get_archive_link(),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
