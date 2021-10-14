@@ -37,9 +37,6 @@ use WP_Site;
 
 /**
  * Class Story_Post_Type.
- *
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Story_Post_Type extends Service_Base implements PluginDeactivationAware, SiteInitializationAware, HasRequirements {
 	use Post_Type;
@@ -106,8 +103,6 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	 *
 	 * @todo refactor
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
@@ -120,15 +115,6 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
-		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
-
-		add_action( 'add_option_' . $this->settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
-		add_action( 'update_option_' . $this->settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
-		add_action( 'add_option_' . $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
-		add_action( 'update_option_' . $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this, 'update_archive_setting' ] );
-
-		add_filter( 'display_post_states', [ $this, 'filter_display_post_states' ], 10, 2 );
-		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
 	}
 
 	/**
@@ -361,44 +347,6 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	}
 
 	/**
-	 * Handles redirects to the post type archive.
-	 *
-	 * @since 1.13.0
-	 *
-	 * @param bool|mixed $bypass Pass-through of the pre_handle_404 filter value.
-	 * @param \WP_Query  $query The WP_Query object.
-	 * @return bool|mixed Whether to pass-through or not.
-	 */
-	public function redirect_post_type_archive_urls( $bypass, $query ) {
-		global $wp_rewrite;
-
-		if ( ! $this->experiments->is_experiment_enabled( 'archivePageCustomization' ) ) {
-			return $bypass;
-		}
-
-		if ( $bypass || ! is_string( $this->get_has_archive() ) || ( ! $wp_rewrite instanceof \WP_Rewrite || ! $wp_rewrite->using_permalinks() ) ) {
-			return $bypass;
-		}
-
-		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
-		if ( self::REWRITE_SLUG === $query->get( 'pagename' ) || self::REWRITE_SLUG === $query->get( 'name' ) ) {
-			$redirect_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
-
-			if ( ! $redirect_url ) {
-				return $bypass;
-			}
-
-			// Only exit if there was actually a location to redirect to.
-			// Allows filtering location in tests to verify behavior.
-			if ( wp_safe_redirect( $redirect_url, 301 ) ) {
-				exit;
-			}
-		}
-
-		return $bypass;
-	}
-
-	/**
 	 * Invalid cache.
 	 *
 	 * @since 1.10.0
@@ -419,28 +367,13 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 	}
 
 	/**
-	 * Clear rewrite rules on update on setting.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @return void
-	 */
-	public function update_archive_setting() {
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-			$this->unregister_post_type();
-			$this->register_post_type();
-			flush_rewrite_rules( false );
-		}
-	}
-
-	/**
 	 * Determines whether the post type should have an archive or not.
 	 *
 	 * @since 1.12.0
 	 *
 	 * @return bool|string Whether the post type should have an archive, or archive slug.
 	 */
-	private function get_has_archive() {
+	public function get_has_archive() {
 		if ( ! $this->experiments->is_experiment_enabled( 'archivePageCustomization' ) ) {
 			return true;
 		}
@@ -463,63 +396,5 @@ class Story_Post_Type extends Service_Base implements PluginDeactivationAware, S
 		}
 
 		return $has_archive;
-	}
-
-	/**
-	 * Modifies the current query to set up the custom archive page.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param WP_Query $query Current query instance, passed by reference.
-	 * @return void
-	 */
-	public function pre_get_posts( WP_Query $query ) {
-		if ( ! is_string( $this->get_has_archive() ) ) {
-			return;
-		}
-
-		if ( $query->is_admin || ! $query->is_main_query() ) {
-			return;
-		}
-
-		if ( ! $query->is_post_type_archive( self::POST_TYPE_SLUG ) ) {
-			return;
-		}
-
-		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
-
-		$query->set( 'page_id', $custom_archive_page_id );
-		$query->set( 'post_type', 'page' );
-		$query->is_post_type_archive = false;
-		$query->is_archive           = false;
-		$query->is_singular          = true;
-		$query->is_page              = true;
-	}
-
-	/**
-	 * Filters the default post display states used in the posts list table.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param string[]|mixed $post_states An array of post display states.
-	 * @param WP_Post|null   $post        The current post object.
-	 * @return string[]|mixed Filtered post display states.
-	 */
-	public function filter_display_post_states( $post_states, $post ) {
-		if ( ! is_array( $post_states ) || ! $post ) {
-			return $post_states;
-		}
-
-		if ( ! is_string( $this->get_has_archive() ) ) {
-			return $post_states;
-		}
-
-		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
-
-		if ( $post->ID === $custom_archive_page_id ) {
-			$post_states['web_stories_archive_page'] = __( 'Web Stories Archive Page', 'web-stories' );
-		}
-
-		return $post_states;
 	}
 }
