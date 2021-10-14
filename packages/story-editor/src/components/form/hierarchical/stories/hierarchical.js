@@ -58,6 +58,8 @@ export const _default = () => {
     [options, searchText]
   );
 
+  const handleInputChange = useCallback((val) => setSearchText(val), []);
+
   const handleChange = useCallback((evt, { id, checked }) => {
     setOptions((currentOptions) => {
       const index = currentOptions.findIndex((option) => option.id === id);
@@ -74,7 +76,7 @@ export const _default = () => {
     <Wrapper>
       <Hierarchical
         inputValue={searchText}
-        onInputChange={(val) => setSearchText(val)}
+        onInputChange={handleInputChange}
         label="Categories"
         placeholder="Start Typing"
         noOptionsText="No results found"
