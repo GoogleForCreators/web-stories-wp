@@ -18,7 +18,6 @@
  */
 import { addQueryArgs } from '@web-stories-wp/design-system';
 
-export function getProxyUrl(url, proxy, nonce) {
-  const path = addQueryArgs(proxy, { url, _wpnonce: nonce });
-  return path;
+export function getProxyUrl(config, url) {
+  return addQueryArgs(config.api.proxy, { url, _wpnonce: config.nonce });
 }
