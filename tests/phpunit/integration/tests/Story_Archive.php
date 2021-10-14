@@ -18,7 +18,7 @@
 namespace Google\Web_Stories\Tests\Integration;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
+ * @coversDefaultClass \Google\Web_Stories\Story_Archive
  */
 class Story_Archive extends DependencyInjectedTestCase {
 	use Capabilities_Setup;
@@ -141,26 +141,13 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 		$this->assertSame( 10, has_filter( 'pre_handle_404', [ $this->instance, 'redirect_post_type_archive_urls' ] ) );
 
-		$this->assertSame(
-			10,
-			has_action(
-				'add_option_' . $this->settings::SETTING_NAME_ARCHIVE,
-				[
-					$this->instance,
-					'update_archive_setting',
-				]
-			)
-		);
-		$this->assertSame(
-			10,
-			has_action(
-				'update_option_' . $this->settings::SETTING_NAME_ARCHIVE,
-				[
-					$this->instance,
-					'update_archive_setting',
-				]
-			)
-		);
+		$this->assertSame( 10, has_action( 'add_option_' . $this->settings::SETTING_NAME_ARCHIVE, [ $this->instance, 'update_archive_setting' ] ) );
+		$this->assertSame( 10, has_action( 'update_option_' . $this->settings::SETTING_NAME_ARCHIVE, [ $this->instance, 'update_archive_setting' ] ) );
+		$this->assertSame( 10, has_action( 'add_option_' . $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this->instance, 'update_archive_setting' ] ) );
+		$this->assertSame( 10, has_action( 'update_option_' . $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this->instance, 'update_archive_setting' ] ) );
+
+		$this->assertSame( 10, has_filter( 'display_post_states', [ $this->instance, 'filter_display_post_states' ] ) );
+		$this->assertSame( 10, has_action( 'pre_get_posts', [ $this->instance, 'pre_get_posts' ] ) );
 	}
 
 
