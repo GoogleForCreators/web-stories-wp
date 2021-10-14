@@ -28,12 +28,12 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Demo_Content;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Services;
 use WP_Query;
 use WP_Error;
 use WP_Post;
 use WP_REST_Request;
 use WP_REST_Response;
+use WP_Post_Type;
 
 /**
  * Stories_Controller class.
@@ -403,20 +403,24 @@ class Stories_Controller extends Stories_Base_Controller {
 			'publish' => 'publish',
 		];
 
-		$story_post_type = Services::get( 'story_post_type' );
+		$post_type = get_post_type_object( $this->post_type );
 
-		if ( $story_post_type->get_cap( 'edit_posts' ) ) {
+		if ( ! ( $post_type instanceof WP_Post_Type ) ) {
+			return $response;
+		}
+
+		if ( current_user_can( $post_type->cap->edit_posts ) ) {
 			$statuses['draft']   = 'draft';
 			$statuses['future']  = 'future';
 			$statuses['pending'] = 'pending';
 		}
 
-		if ( $story_post_type->get_cap( 'publish_posts' ) ) {
+		if ( current_user_can( $post_type->cap->publish_posts ) ) {
 			$statuses['private'] = 'private';
 		}
 
-		$edit_others_posts  = $story_post_type->get_cap( 'edit_others_posts' );
-		$edit_private_posts = $story_post_type->get_cap( 'edit_private_posts' );
+		$edit_others_posts  = current_user_can( $post_type->cap->edit_others_posts );
+		$edit_private_posts = current_user_can( $post_type->cap->edit_private_posts );
 
 		$statuses_count = [ 'all' => 0 ];
 		$total_posts    = 0;
