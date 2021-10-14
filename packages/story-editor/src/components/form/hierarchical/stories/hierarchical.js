@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useMemo, useState } from '@web-stories-wp/react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -58,7 +58,7 @@ export const _default = () => {
     [options, searchText]
   );
 
-  const handleChange = (evt, { id, checked }) => {
+  const handleChange = useCallback((evt, { id, checked }) => {
     setOptions((currentOptions) => {
       const index = currentOptions.findIndex((option) => option.id === id);
 
@@ -68,7 +68,7 @@ export const _default = () => {
         ...currentOptions.slice(index + 1),
       ];
     });
-  };
+  }, []);
 
   return (
     <Wrapper>
