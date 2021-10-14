@@ -33,7 +33,6 @@ import {
   useCallback,
   useDebouncedCallback,
   useEffect,
-  useMemo,
   usePrevious,
   useRef,
   useState,
@@ -43,12 +42,9 @@ import {
  * Internal dependencies
  */
 import DirectionAware from '../../directionAware';
-import {
-  buildOptionsTree,
-  getOptionCount,
-  filterOptionsByLabelText,
-  flattenOptionsTree,
-} from './utils';
+import { makeFlatOptionTree } from './utils';
+
+export { makeFlatOptionTree };
 
 const Container = styled.div`
   margin-bottom: 8px;
@@ -108,70 +104,76 @@ const buildOptionName = (name) => `hierarchical_term_${name}`;
  * Renders a checkbox and all children of the checkbox.
  *
  * @param {Object} option The option to render.
+ * @param {string} option.id the option id
+ * @param {string} option.label The label of the checkbox
+ * @param {Function} option.onChange Change event handler
+ * @param {boolean} option.checked The value of the checkbox
  * @param {Object} option.optionRefs Ref used to store refs to checkboxes.
- * @param {number} option.level The indentation level.
+ * @param {number} option.$level The indentation level.
  * @return {Node} The rendered option and children.
  */
-const Option = ({ optionRefs = { current: {} }, level = 0, ...option }) => {
-  const { id, label, options, onChange, checked, value } = option;
+const Option = ({ optionRefs = { current: {} }, $level = 0, ...option }) => {
+  const { id, label, onBlur, onChange, onFocus, checked, value } = option;
 
-  const optionId = buildOptionId(id);
-  const optionName = buildOptionName(label);
-
-  const hasChildren = Boolean(options?.length);
+  const optionId = buildOptionId(option.id);
+  const optionName = buildOptionName(option.label);
 
   return (
-    <>
-      <CheckboxContainer aria-selected={checked} role="treeitem" $level={level}>
-        <Checkbox
-          id={optionId}
-          value={value}
-          checked={checked}
-          name={optionName}
-          onChange={(evt) => onChange(evt, option)}
-          tabIndex={-1}
-          ref={(node) => {
-            optionRefs.current[id] = node;
-          }}
-        />
-        <Label htmlFor={optionId}>{label}</Label>
-      </CheckboxContainer>
-      {hasChildren &&
-        options.map((child) => (
-          <Option
-            key={child.id}
-            level={level + 1}
-            onChange={onChange}
-            optionRefs={optionRefs}
-            {...child}
-          />
-        ))}
-    </>
+    <CheckboxContainer aria-selected={checked} role="treeitem" $level={$level}>
+      <Checkbox
+        id={optionId}
+        ref={(node) => {
+          optionRefs.current[id] = node;
+        }}
+        value={value}
+        checked={checked}
+        name={optionName}
+        onChange={(evt) => onChange(evt, option)}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        tabIndex={-1}
+      />
+      <Label htmlFor={optionId}>{label}</Label>
+    </CheckboxContainer>
   );
 };
 const OptionPropType = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   checked: PropTypes.bool,
   label: PropTypes.string.isRequired,
-  level: PropTypes.number,
+  $level: PropTypes.number,
   optionRefs: PropTypes.shape({
     current: PropTypes.shape({
       [PropTypes.string.isRequired]: PropTypes.node,
     }),
   }),
-  options: PropTypes.array,
 };
 Option.propTypes = OptionPropType;
 
+/**
+ * Hierarchical input
+ *
+ * @param {Object} props props
+ * @param {string} props.className Class name to add to outer container
+ * @param {string} props.inputValue The value of the input
+ * @param {Function} props.onInputChange The change event handler of the input
+ * @param {string} props.label Input label
+ * @param {string} props.noOptionsText Text to display no options are found
+ * @param {Array} props.options Array of options
+ * @param {Function} props.onChange Change event handler. Passed to checkboxes.
+ * @return {Node} The input
+ */
 const HierarchicalInput = ({
   className,
+  inputValue,
+  onInputChange,
   label,
   noOptionsText,
   options,
   onChange,
   ...inputProps
 }) => {
-  const [inputText, setInputText] = useState('');
+  // const [inputText, setInputText] = useState('');
   const speak = useLiveRegion('assertive');
   const debouncedSpeak = useDebouncedCallback(speak, 500);
   const checkboxListRef = useRef(null);
@@ -179,21 +181,6 @@ const HierarchicalInput = ({
   // Focus handling
   const [focusedCheckboxId, setFocusedCheckboxId] = useState(-1);
   const optionRefs = useRef({});
-
-  const filteredOptionTree = useMemo(
-    () => buildOptionsTree(options),
-    [options]
-  );
-
-  const filteredOptions = useMemo(
-    () => filterOptionsByLabelText(filteredOptionTree, inputText),
-    [filteredOptionTree, inputText]
-  );
-
-  const flattenedOrderedOptions = useMemo(
-    () => flattenOptionsTree(filteredOptions),
-    [filteredOptions]
-  );
 
   /**
    * Handles listbox and checkbox focus.
@@ -204,40 +191,34 @@ const HierarchicalInput = ({
    */
   const handleListboxFocus = useCallback(() => {
     if (document.activeElement === checkboxListRef.current) {
-      if (!flattenedOrderedOptions.length) {
+      if (!options.length) {
         return;
       }
 
-      const selectedId = flattenedOrderedOptions.find(
-        (option) => option.checked
-      )?.id;
+      const selectedId = options.find((option) => option.checked)?.id;
 
       setFocusedCheckboxId(selectedId || selectedId === 0 ? selectedId : -1);
     }
-  }, [flattenedOrderedOptions]);
+  }, [options]);
 
   /**
    * Handle keyboard interactions.
    */
   const handleKeyDown = useCallback(
     (evt) => {
-      const currentSelectedIndex = flattenedOrderedOptions.findIndex(
+      const currentSelectedIndex = options.findIndex(
         (option) => option.id === focusedCheckboxId
       );
 
       switch (evt.key) {
         case KEYS.UP:
           if (currentSelectedIndex > 0) {
-            setFocusedCheckboxId(
-              flattenedOrderedOptions[currentSelectedIndex - 1].id
-            );
+            setFocusedCheckboxId(options[currentSelectedIndex - 1].id);
           }
           break;
         case KEYS.DOWN:
-          if (currentSelectedIndex < flattenedOrderedOptions.length - 1) {
-            setFocusedCheckboxId(
-              flattenedOrderedOptions[currentSelectedIndex + 1].id
-            );
+          if (currentSelectedIndex < options.length - 1) {
+            setFocusedCheckboxId(options[currentSelectedIndex + 1].id);
           }
           break;
         default:
@@ -245,15 +226,18 @@ const HierarchicalInput = ({
           break;
       }
     },
-    [flattenedOrderedOptions, focusedCheckboxId]
+    [options, focusedCheckboxId]
   );
 
   /**
    * Sets the value that filters the displayed items.
    */
-  const handleInputChange = useCallback((evt) => {
-    setInputText(evt.target.value);
-  }, []);
+  const handleInputChange = useCallback(
+    (evt) => {
+      onInputChange(evt.target.value);
+    },
+    [onInputChange]
+  );
 
   /**
    * Callback that is called when a checkbox is clicked.
@@ -266,11 +250,11 @@ const HierarchicalInput = ({
   );
 
   /* Announce count of results found */
-  const previousInput = usePrevious(inputText);
+  const previousInput = usePrevious(inputValue);
   useEffect(() => {
     // only run effect when input changes. Ignore when options change.
-    if (previousInput !== inputText) {
-      const count = getOptionCount(filteredOptions);
+    if (previousInput !== inputValue) {
+      const count = options.length;
 
       const message = sprintf(
         /* Translators: %d: Number of results. */
@@ -285,7 +269,7 @@ const HierarchicalInput = ({
 
       debouncedSpeak(message);
     }
-  }, [debouncedSpeak, filteredOptions, inputText, previousInput]);
+  }, [debouncedSpeak, options, inputValue, previousInput]);
 
   useKeyDownEffect(
     checkboxListRef,
@@ -301,13 +285,12 @@ const HierarchicalInput = ({
     optionRefs.current[focusedCheckboxId]?.focus();
   }, [focusedCheckboxId]);
 
-  const showOptionArea =
-    Boolean(filteredOptions.length) || Boolean(inputText.length);
+  const showOptionArea = Boolean(options.length) || Boolean(inputValue.length);
 
   return (
     <Container className={className}>
       <Input
-        value={inputText}
+        value={inputValue}
         onChange={handleInputChange}
         label={label}
         type="search"
@@ -330,8 +313,8 @@ const HierarchicalInput = ({
               }
               aria-multiselectable
             >
-              {filteredOptions.length ? (
-                filteredOptions.map((option) => (
+              {options.length ? (
+                options.map((option) => (
                   <Option
                     key={option.id}
                     {...option}
@@ -357,14 +340,11 @@ const HierarchicalInput = ({
 HierarchicalInput.propTypes = {
   className: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  inputValue: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   noOptionsText: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      ...OptionPropType,
-      parent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    })
-  ).isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape(OptionPropType)).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

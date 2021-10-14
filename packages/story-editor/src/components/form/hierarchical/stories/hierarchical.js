@@ -17,12 +17,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState } from '@web-stories-wp/react';
+import { useMemo, useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import Hierarchical from '..';
+import { makeFlatOptionTree } from '../utils';
 
 export default {
   title: 'Stories Editor/Components/Form/Hierarchical',
@@ -50,6 +51,12 @@ const OPTIONS = [
 
 export const _default = () => {
   const [options, setOptions] = useState(OPTIONS);
+  const [searchText, setSearchText] = useState('');
+
+  const filteredOptions = useMemo(
+    () => makeFlatOptionTree(options, searchText),
+    [options, searchText]
+  );
 
   const handleChange = (evt, { id, checked }) => {
     setOptions((currentOptions) => {
@@ -66,9 +73,12 @@ export const _default = () => {
   return (
     <Wrapper>
       <Hierarchical
+        inputValue={searchText}
+        onInputChange={(val) => setSearchText(val)}
         label="Categories"
         placeholder="Start Typing"
-        options={options}
+        noOptionsText="No results found"
+        options={filteredOptions}
         onChange={handleChange}
       />
     </Wrapper>
