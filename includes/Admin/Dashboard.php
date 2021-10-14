@@ -387,7 +387,7 @@ class Dashboard extends Service_Base {
 		$classic_wp_list_url = admin_url(
 			add_query_arg(
 				[
-					'post_type' => 'web-story',
+					'post_type' => $this->story_post_type->get_slug(),
 				],
 				'edit.php'
 			)
