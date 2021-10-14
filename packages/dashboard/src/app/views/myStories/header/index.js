@@ -69,7 +69,6 @@ function Header({
   stories,
   totalStoriesByStatus,
   view,
-  wpListURL,
 }) {
   const {
     actions: { scrollToTop },
@@ -178,7 +177,6 @@ function Header({
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={onSortChange}
-        wpListURL={wpListURL}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
@@ -196,7 +194,6 @@ Header.propTypes = {
   stories: StoriesPropType,
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
-  wpListURL: PropTypes.string,
 };
 
 export default memo(Header);

@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { Button, BUTTON_TYPES, Icons } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -68,7 +69,6 @@ const LayerButton = styled(Button).attrs({
 `;
 
 const LayerIconWrapper = styled.div`
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -86,10 +86,12 @@ const LayerDescription = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-const IconWrapper = styled.div`
+const LockIconWrapper = styled.div`
   position: absolute;
-  right: -2px;
-  width: 32px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 
   svg {
     color: ${({ theme }) => theme.colors.fg.secondary};
@@ -129,9 +131,9 @@ function Layer({ layer }) {
           )}
         </LayerContentContainer>
         {isBackground && (
-          <IconWrapper>
-            <Icons.LockClosed />
-          </IconWrapper>
+          <LockIconWrapper>
+            <Icons.LockClosed width={35} height={35} />
+          </LockIconWrapper>
         )}
       </LayerDescription>
     </LayerButton>

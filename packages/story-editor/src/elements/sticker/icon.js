@@ -26,8 +26,8 @@ import StoryPropTypes from '../../types';
 
 const style = {
   display: 'block',
-  height: 20,
-  width: 'auto',
+  height: 21,
+  width: 21,
 };
 
 const Noop = () => null;

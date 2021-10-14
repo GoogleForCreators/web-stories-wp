@@ -14,5 +14,14 @@
  * limitations under the License.
  */
 
-export const DEFAULT_LAYERS_VISIBLE = 6;
-export const LAYER_HEIGHT = 35;
+/**
+ * External dependencies
+ */
+import { createGlobalStyle } from 'styled-components';
+import { themeHelpers } from '@web-stories-wp/design-system';
+
+export const GlobalStyle = createGlobalStyle`
+  body.web-story_page_stories-dashboard #wpbody {
+    ${themeHelpers.scrollbarCSS};
+  }
+`;

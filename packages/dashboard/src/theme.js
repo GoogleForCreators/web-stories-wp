@@ -18,14 +18,9 @@
  * External dependencies
  */
 import { createGlobalStyle } from 'styled-components';
-import { themeHelpers } from '@web-stories-wp/design-system';
 
 export const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6, p, a {
     margin: 0;
-  }
-
-  body.web-story_page_stories-dashboard #wpbody {
-    ${themeHelpers.scrollbarCSS};
   }
 `;
