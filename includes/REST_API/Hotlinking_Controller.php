@@ -241,7 +241,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	public function proxy_url( $request ) {
 		$url = untrailingslashit( $request['url'] );
 
-		$args = [
+		$args          = [
 			'limit_response_size' => 15728640, // 15MB. @todo Remove this, when streaming is implemented.
 			'timeout'             => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 		];
@@ -265,7 +265,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 
 		$file_size = (int) $headers['content-length'];
 
-		$body      = wp_remote_retrieve_body( $proxy_request );
+		$body = wp_remote_retrieve_body( $proxy_request );
 
 		header( 'Content-Type: ' . $mime_type );
 		header( 'Content-Length: ' . $file_size );
