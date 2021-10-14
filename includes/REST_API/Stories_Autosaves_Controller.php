@@ -73,7 +73,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
 	public function __construct( Story_Post_Type $story_post_type ) {
-		parent::__construct( $story_post_type::POST_TYPE_SLUG );
+		parent::__construct( $story_post_type->get_slug() );
 
 		$parent_controller = $story_post_type->get_parent_controller();
 

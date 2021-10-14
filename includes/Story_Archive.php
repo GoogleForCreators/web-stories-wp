@@ -102,7 +102,7 @@ class Story_Archive extends Service_Base {
 
 		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
 		if ( $this->story_post_type::REWRITE_SLUG === $query->get( 'pagename' ) || $this->story_post_type::REWRITE_SLUG === $query->get( 'name' ) ) {
-			$redirect_url = get_post_type_archive_link( $this->story_post_type::POST_TYPE_SLUG );
+			$redirect_url = get_post_type_archive_link( $this->story_post_type->get_slug() );
 
 			if ( ! $redirect_url ) {
 				return $bypass;
@@ -128,7 +128,7 @@ class Story_Archive extends Service_Base {
 	public function update_archive_setting() {
 		$this->story_post_type->unregister_post_type();
 		$this->story_post_type->register_post_type();
-			
+
 		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
@@ -152,7 +152,7 @@ class Story_Archive extends Service_Base {
 			return;
 		}
 
-		if ( ! $query->is_post_type_archive( $this->story_post_type::POST_TYPE_SLUG ) ) {
+		if ( ! $query->is_post_type_archive( $this->story_post_type->get_slug() ) ) {
 			return;
 		}
 

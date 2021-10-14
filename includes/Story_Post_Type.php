@@ -222,7 +222,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 		$active_publisher_logo_id = absint( $this->settings->get_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0 ) );
 
 		register_post_meta(
-			self::POST_TYPE_SLUG,
+			$this->get_slug(),
 			self::PUBLISHER_LOGO_META_KEY,
 			[
 				'sanitize_callback' => 'absint',
@@ -261,7 +261,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 			return $fields;
 		}
 
-		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
+		if ( $this->get_slug() === $story['post_type'] ) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
 
@@ -284,7 +284,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 		if ( ! is_array( $bulk_messages ) ) {
 			return $bulk_messages;
 		}
-		$bulk_messages[ self::POST_TYPE_SLUG ] = [
+		$bulk_messages[ $this->get_slug() ] = [
 			/* translators: %s: Number of stories. */
 			'updated'   => _n( '%s story updated.', '%s stories updated.', $bulk_counts['updated'], 'web-stories' ),
 			'locked'    => ( 1 === $bulk_counts['locked'] ) ? __( 'Story not updated, somebody is editing it.', 'web-stories' ) :
@@ -314,7 +314,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 		if ( ! is_array( $data ) ) {
 			return $data;
 		}
-		if ( self::POST_TYPE_SLUG === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
+		if ( $this->get_slug() === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
 			$data['post_title'] = '';
 		}
 
@@ -332,7 +332,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 	 * @return void
 	 */
 	public function clear_user_posts_count( $post_id, $post ) {
-		if ( ! $post instanceof WP_Post || self::POST_TYPE_SLUG !== $post->post_type ) {
+		if ( ! $post instanceof WP_Post || $this->get_slug() !== $post->post_type ) {
 			return;
 		}
 
