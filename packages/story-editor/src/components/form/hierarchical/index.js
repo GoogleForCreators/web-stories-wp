@@ -176,6 +176,7 @@ const HierarchicalInput = ({
   const speak = useLiveRegion('assertive');
   const debouncedSpeak = useDebouncedCallback(speak, 500);
   const checkboxListRef = useRef(null);
+  const inputRef = useRef(null);
 
   // Focus handling
   const [focusedCheckboxId, setFocusedCheckboxId] = useState(-1);
@@ -188,17 +189,35 @@ const HierarchicalInput = ({
    * - If none of the options are selected before the listbox receives focus, focus is set on the first option.
    * - If one or more options are selected before the listbox receives focus, focus is set on the first option in the list that is selected.
    */
-  const handleListboxFocus = useCallback(() => {
-    if (document.activeElement === checkboxListRef.current) {
-      if (!options.length) {
-        return;
+  const handleListboxFocus = useCallback(
+    (evt) => {
+      if (document.activeElement === checkboxListRef.current) {
+        if (!options.length) {
+          return;
+        }
+
+        // If the focus came from inside the list, focus input
+        // only happens when tabbing backwards
+        if (checkboxListRef.current.contains(evt.relatedTarget)) {
+          inputRef.current?.focus();
+          return;
+        }
+
+        // if there wasn't an option focused, find first selected
+        if (focusedCheckboxId === -1) {
+          const firstCheckedOption = options.find(
+            (option) => option.checked
+          )?.id;
+
+          setFocusedCheckboxId(firstCheckedOption ? firstCheckedOption : 0);
+        } else {
+          // else focus the previously focused option
+          optionRefs.current[focusedCheckboxId]?.focus();
+        }
       }
-
-      const selectedId = options.find((option) => option.checked)?.id;
-
-      setFocusedCheckboxId(selectedId || selectedId === 0 ? selectedId : -1);
-    }
-  }, [options]);
+    },
+    [focusedCheckboxId, options]
+  );
 
   /**
    * Handle keyboard interactions.
@@ -280,7 +299,10 @@ const HierarchicalInput = ({
    * Focus checkbox when 'focusedCheckboxId' changes
    */
   useEffect(() => {
-    optionRefs.current[focusedCheckboxId]?.focus();
+    // only focus checkbox if focus is in the list
+    if (checkboxListRef.current.contains(document.activeElement)) {
+      optionRefs.current[focusedCheckboxId]?.focus();
+    }
   }, [focusedCheckboxId]);
 
   const showOptionArea = Boolean(options.length) || Boolean(inputValue.length);
@@ -288,6 +310,7 @@ const HierarchicalInput = ({
   return (
     <Container className={className}>
       <Input
+        ref={inputRef}
         value={inputValue}
         onChange={handleInputChange}
         label={label}
