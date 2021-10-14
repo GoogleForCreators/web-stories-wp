@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use WP_Post_Type;
@@ -43,7 +44,7 @@ use WP_Error;
  *
  * @package Google\Web_Stories
  */
-abstract class Post_Type_Base extends Service_Base implements PluginDeactivationAware, SiteInitializationAware {
+abstract class Post_Type_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware {
 
 	/**
 	 * Registers the post type.
@@ -91,6 +92,18 @@ abstract class Post_Type_Base extends Service_Base implements PluginDeactivation
 	}
 
 	/**
+	 * Act on plugin activation.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 * @return void
+	 */
+	public function on_plugin_activation( $network_wide ){
+		$this->register_post_type();
+	}
+
+	/**
 	 * Act on plugin deactivation.
 	 *
 	 * @since 1.14.0
@@ -121,6 +134,17 @@ abstract class Post_Type_Base extends Service_Base implements PluginDeactivation
 	abstract protected function get_args() : array;
 
 	/**
+	 * Get post type object.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return WP_Post_Type|null
+	 */
+	protected function get_object(){
+		return get_post_type_object( $this->get_slug() );
+	}
+
+	/**
 	 * Get REST base name based on the post type slug.
 	 *
 	 * @since 1.14.0
@@ -128,7 +152,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginDeactivation
 	 * @return string REST base.
 	 */
 	public function get_rest_base(): string {
-		$post_type_obj = get_post_type_object( $this->get_slug() );
+		$post_type_obj = $this->get_object();
 		$rest_base     = $this->get_slug();
 		if ( $post_type_obj instanceof WP_Post_Type ) {
 			$rest_base = ( ! empty( $post_type_obj->rest_base ) && is_string( $post_type_obj->rest_base ) ) ? $post_type_obj->rest_base : $post_type_obj->name;
@@ -166,7 +190,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginDeactivation
 	 * @return string|false
 	 */
 	public function get_cap_name( string $cap ) {
-		$post_type_obj   = get_post_type_object( $this->get_slug() );
+		$post_type_obj   = $this->get_object();
 		$capability_name = false;
 
 		if ( ! $post_type_obj instanceof WP_Post_Type ) {
@@ -190,7 +214,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginDeactivation
 	 * @return string
 	 */
 	public function get_label( string $label ): string {
-		$post_type_obj = get_post_type_object( $this->get_slug() );
+		$post_type_obj = $this->get_object();
 		$name          = '';
 
 		if ( ! $post_type_obj instanceof WP_Post_Type ) {
@@ -212,7 +236,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginDeactivation
 	 * @return WP_REST_Posts_Controller|WP_REST_Controller
 	 */
 	public function get_parent_controller(): WP_REST_Controller {
-		$post_type_obj     = get_post_type_object( $this->get_slug() );
+		$post_type_obj     = $this->get_object();
 		$parent_controller = null;
 
 		if ( $post_type_obj instanceof WP_Post_Type ) {
@@ -242,7 +266,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginDeactivation
 	public function get_archive_link() {
 		global $wp_rewrite;
 
-		$post_type_obj = get_post_type_object( $this->get_slug() );
+		$post_type_obj = $this->get_object();
 		if ( ! $post_type_obj instanceof WP_Post_Type ) {
 			return false;
 		}
