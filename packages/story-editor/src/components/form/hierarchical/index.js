@@ -300,7 +300,7 @@ const HierarchicalInput = ({
    */
   useEffect(() => {
     // only focus checkbox if focus is in the list
-    if (checkboxListRef.current.contains(document.activeElement)) {
+    if (checkboxListRef.current?.contains(document.activeElement)) {
       optionRefs.current[focusedCheckboxId]?.focus();
     }
   }, [focusedCheckboxId]);
