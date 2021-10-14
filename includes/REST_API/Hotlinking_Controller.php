@@ -148,6 +148,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Parses a URL to return some metadata for inserting external media.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.11.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
@@ -157,69 +159,22 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	public function parse_url( $request ) {
 		$url = untrailingslashit( $request['url'] );
 
-		$data = $this->get_data( $url );
-
-		if ( is_wp_error( $data ) ) {
-			return $data;
-		}
-
-		$response = $this->prepare_item_for_response( $data, $request );
-
-		return rest_ensure_response( $response );
-	}
-
-	/**
-	 * Parses a URL to return proxied file.
-	 *
-	 * @since 1.13.0
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 *
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	public function proxy_url( $request ) {
-		$url = untrailingslashit( $request['url'] );
-
-		$data = $this->get_data( $url );
-
-		if ( is_wp_error( $data ) ) {
-			return $data;
-		}
-
-		$args          = [
-			'limit_response_size' => 15728640, // 15MB. @todo Remove this, when streaming is implemented.
-			'timeout'             => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
-		];
-		$proxy_request = wp_safe_remote_get( $url, $args );
-		if ( is_wp_error( $proxy_request ) ) {
-			return $proxy_request;
-		}
-
-		$body = wp_remote_retrieve_body( $proxy_request );
-
-		header( 'Content-Type: ' . $data['mime_type'] );
-		header( 'Content-Length: ' . $data['file_size'] );
-
-		echo $body; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
-		exit;
-	}
-
-	/**
-	 * Get some basic information about a requested url.
-	 *
-	 * @since 1.13.0
-	 *
-	 * @param string $url URL to get data.
-	 *
-	 * @return array|WP_Error
-	 */
-	protected function get_data( string $url ) {
+		/**
+		 * Filters the hotlinking data TTL value.
+		 *
+		 * @since 1.11.0
+		 *
+		 * @param int $time Time to live (in seconds). Default is 1 day.
+		 * @param string $url The attempted URL.
+		 */
+		$cache_ttl = apply_filters( 'web_stories_hotlinking_url_data_cache_ttl', DAY_IN_SECONDS, $url );
 		$cache_key = 'web_stories_url_data_' . md5( $url );
 
 		$data = get_transient( $cache_key );
 		if ( ! empty( $data ) ) {
-			return json_decode( $data, true );
+			$response = $this->prepare_item_for_response( json_decode( $data, true ), $request );
+
+			return rest_ensure_response( $response );
 		}
 
 		$response = wp_safe_remote_head(
@@ -229,7 +184,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 				'redirection' => apply_filters( 'http_request_redirection_count', 5, $url ),
 			]
 		);
-
 		if ( is_wp_error( $response ) && 'http_request_failed' === $response->get_error_code() ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
@@ -268,19 +222,57 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			'type'      => $type,
 		];
 
-		/**
-		 * Filters the hotlinking data TTL value.
-		 *
-		 * @since 1.11.0
-		 *
-		 * @param int $time Time to live (in seconds). Default is 1 day.
-		 * @param string $url The attempted URL.
-		 */
-		$cache_ttl = apply_filters( 'web_stories_hotlinking_url_data_cache_ttl', DAY_IN_SECONDS, $url );
-
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 
-		return $data;
+		$response = $this->prepare_item_for_response( $data, $request );
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Parses a URL to return proxied file.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 *
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function proxy_url( $request ) {
+		$url = untrailingslashit( $request['url'] );
+
+		$args = [
+			'limit_response_size' => 15728640, // 15MB. @todo Remove this, when streaming is implemented.
+			'timeout'             => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
+		];
+		$proxy_request = wp_safe_remote_get( $url, $args );
+		if ( is_wp_error( $proxy_request ) ) {
+			$proxy_request->add_data( [ 'status' => 404 ] );
+			return $proxy_request;
+		}
+
+		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $proxy_request ) ) {
+			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+		}
+
+		$headers            = wp_remote_retrieve_headers( $proxy_request );
+		$mime_type          = $headers['content-type'];
+		$allowed_mime_types = $this->get_allowed_mime_types();
+		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
+		if ( ! in_array( $mime_type, $allowed_mime_types, true ) ) {
+			return new WP_Error( 'rest_invalid_mime_type', __( 'Invalid Mime Type', 'web-stories' ), [ 'status' => 400 ] );
+		}
+
+		$file_size = (int) $headers['content-length'];
+
+		$body      = wp_remote_retrieve_body( $proxy_request );
+
+		header( 'Content-Type: ' . $mime_type );
+		header( 'Content-Length: ' . $file_size );
+
+		echo $body; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		exit;
 	}
 
 	/**
