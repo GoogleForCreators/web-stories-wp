@@ -57,11 +57,6 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	protected static $archive_page_id;
 
 	/**
-	 * @var string
-	 */
-	protected $redirect_location;
-
-	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
 	public static function wpSetUpBeforeClass( $factory ) {
@@ -100,30 +95,19 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		$experiments->method( 'is_experiment_enabled' )
 					->willReturn( true );
 
-		$this->settings = new \Google\Web_Stories\Settings();
+		$this->settings = $this->injector->make( \Google\Web_Stories\Settings::class );
 		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
 
 		$this->add_caps_to_roles();
-
-		add_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
 	}
 
 	public function tear_down() {
 		$this->remove_caps_from_roles();
 
-		$this->redirect_location = null;
-		remove_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
-
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		parent::tear_down();
-	}
-
-	public function filter_wp_redirect( $location ): bool {
-		$this->redirect_location = $location;
-
-		return false;
 	}
 
 	/**
@@ -219,7 +203,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::get_has_archive
 	 */
 	public function test_get_has_archive_default() {
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 		$this->assertTrue( $actual );
 	}
 
@@ -230,7 +214,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		$experiments    = new \Google\Web_Stories\Experiments( $this->settings );
 		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
 
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 		$this->assertTrue( $actual );
 	}
 
@@ -240,7 +224,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function test_get_has_archive_disabled() {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'disabled' );
 
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 
@@ -253,7 +237,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function test_get_has_archive_custom_but_no_page() {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 
@@ -267,7 +251,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
@@ -282,7 +266,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
@@ -305,7 +289,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 			]
 		);
 
-		$actual = $this->call_private_method( $this->instance, 'get_has_archive' );
+		$actual = $this->instance->get_has_archive();
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
