@@ -21,7 +21,12 @@ import PropTypes from 'prop-types';
 import { forwardRef } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { _x, sprintf } from '@web-stories-wp/i18n';
-import { Button, BUTTON_TYPES } from '@web-stories-wp/design-system';
+import {
+  Button,
+  BUTTON_TYPES,
+  THEME_CONSTANTS,
+  Text,
+} from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -31,27 +36,18 @@ const PageTemplateWrapper = styled.div``;
 
 const PageTemplateButton = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
   position: relative;
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  width: ${({ columnWidth }) => columnWidth}px;
+  display: block;
   padding: 0;
   border-radius: ${({ theme }) => theme.borders.radius.small};
-  cursor: pointer;
+  overflow: hidden;
 `;
 
-const PageTemplateTitle = styled.div`
+const PageTemplateTitleContainer = styled.div`
   position: absolute;
   bottom: 0;
-  background-color: ${({ theme }) => theme.colors.opacity.black64};
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-  padding: 8px;
-  font-size: 12px;
-  line-height: 22px;
   width: 100%;
-  align-self: flex-end;
+  padding: 8px;
+  background-color: ${({ theme }) => theme.colors.opacity.black64};
   opacity: 0;
 
   ${PageTemplateButton}:hover &,
@@ -60,19 +56,12 @@ const PageTemplateTitle = styled.div`
   }
 `;
 
-const PosterWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
 const PosterImg = styled.img`
   display: block;
   width: 100%;
-  object-fit: cover;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
 `;
 
-PageTemplateTitle.propTypes = {
+PageTemplateTitleContainer.propTypes = {
   isActive: PropTypes.bool,
 };
 
@@ -86,24 +75,28 @@ const DefaultPageTemplate = forwardRef(
           tabIndex={isActive ? 0 : -1}
           {...rest}
         >
-          <PosterWrapper>
-            {page.webp && (
-              <PosterImg
-                src={page.png}
-                alt={page.title}
-                crossOrigin="anonymous"
-              />
-            )}
-          </PosterWrapper>
+          {page.webp && (
+            <PosterImg
+              src={page.png}
+              alt={page.title}
+              crossOrigin="anonymous"
+              draggable={false}
+            />
+          )}
           {page.title && (
-            <PageTemplateTitle>
-              {sprintf(
-                /* translators: 1: template name. 2: page template name. */
-                _x('%1$s %2$s', 'page template title', 'web-stories'),
-                page.title,
-                PAGE_TEMPLATE_TYPES[page.type].name
-              )}
-            </PageTemplateTitle>
+            <PageTemplateTitleContainer>
+              <Text
+                as="span"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              >
+                {sprintf(
+                  /* translators: 1: template name. 2: page template name. */
+                  _x('%1$s %2$s', 'page template title', 'web-stories'),
+                  page.title,
+                  PAGE_TEMPLATE_TYPES[page.type].name
+                )}
+              </Text>
+            </PageTemplateTitleContainer>
           )}
         </PageTemplateButton>
       </PageTemplateWrapper>
