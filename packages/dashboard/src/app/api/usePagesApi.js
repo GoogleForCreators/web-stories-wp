@@ -30,13 +30,12 @@ export default function usePagesApi() {
       getPageById: getPageByIdCallback,
       searchPages: searchPagesCallback,
     },
-    api: { pages: pagesApi },
   } = useConfig();
 
   const getPageById = useCallback(
     async (id) => {
       try {
-        const { title, link } = await getPageByIdCallback(id, pagesApi);
+        const { title, link } = await getPageByIdCallback(id);
 
         return {
           title: title.rendered,
@@ -46,13 +45,13 @@ export default function usePagesApi() {
         return null;
       }
     },
-    [getPageByIdCallback, pagesApi]
+    [getPageByIdCallback]
   );
 
   const searchPages = useCallback(
     async (searchTerm) => {
       try {
-        const response = await searchPagesCallback(searchTerm, pagesApi);
+        const response = await searchPagesCallback(searchTerm);
 
         return response.map(({ id, title }) => ({
           value: id,
@@ -62,7 +61,7 @@ export default function usePagesApi() {
         return [];
       }
     },
-    [searchPagesCallback, pagesApi]
+    [searchPagesCallback]
   );
 
   return {

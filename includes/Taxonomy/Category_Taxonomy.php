@@ -41,11 +41,26 @@ class Category_Taxonomy extends Taxonomy_Base {
 	protected $taxonomy_slug = 'web_story_category';
 
 	/**
-	 * Post type.
+	 * Constructor.
 	 *
-	 * @var string
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
-	protected $taxonomy_post_type = Story_Post_Type::POST_TYPE_SLUG;
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->taxonomy_post_type = $story_post_type::POST_TYPE_SLUG;
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
+	}
 
 	/**
 	 * Category args.

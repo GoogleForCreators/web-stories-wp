@@ -28,6 +28,7 @@ import {
 const MODAL = '.media-modal';
 
 describe('SVG', () => {
+  // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enableSVG']);
 
   it('should insert an existing SVG from media dialog', async () => {

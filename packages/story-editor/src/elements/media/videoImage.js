@@ -22,8 +22,8 @@ import PropTypes from 'prop-types';
 
 const Video = styled.video`
   display: block;
-  height: 28px;
-  width: 28px;
+  height: 21px;
+  width: 21px;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   object-fit: cover;
 `;

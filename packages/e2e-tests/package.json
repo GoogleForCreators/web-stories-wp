@@ -3,7 +3,7 @@
   "private": true,
   "engines": {
     "node": ">= 16",
-    "npm": "~7"
+    "npm": ">= 7.3"
   },
   "type": "module",
   "devDependencies": {
@@ -13,9 +13,9 @@
     "@web-stories-wp/jest-puppeteer-amp": "*",
     "@wordpress/jest-console": "^4.1.0",
     "@wordpress/jest-puppeteer-axe": "^3.1.0",
-    "babel-jest": "^27.2.2",
+    "babel-jest": "^27.2.5",
     "expect-puppeteer": "^6.0.0",
-    "jest-extended": "^0.11.5",
+    "jest-extended": "^1.0.0",
     "jest-puppeteer": "^6.0.0",
     "puppeteer": "^10.4.0"
   }

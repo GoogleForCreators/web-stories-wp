@@ -20,7 +20,6 @@
 
 // Extend Jest matchers.
 // See https://github.com/testing-library/jest-dom.
-import 'jest-extended';
 import '@testing-library/jest-dom';
 import 'jest-axe/extend-expect';
 
@@ -34,6 +33,7 @@ import {
   toBeValidAMPStoryPage,
 } from '@web-stories-wp/jest-amp';
 
+// eslint-disable-next-line jest/require-hook
 expect.extend({
   toBeValidAMP,
   toBeValidAMPStoryElement,

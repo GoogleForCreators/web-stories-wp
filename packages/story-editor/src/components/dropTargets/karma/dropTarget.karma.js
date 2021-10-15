@@ -38,7 +38,9 @@ describe('Drop-Target integration', () => {
   };
 
   describe('when there is nothing on the canvas', () => {
-    it('should by default have transparent background', async () => {
+    // TODO(#9381): Fix flaky test.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should by default have transparent background', async () => {
       const backgroundId = (await getElements(fixture))[0].id;
       const bgElement =
         fixture.editor.canvas.displayLayer.display(backgroundId).element;
