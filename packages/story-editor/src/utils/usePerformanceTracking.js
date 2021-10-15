@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useRef } from '@web-stories-wp/react';
+import { trackTiming } from '@web-stories-wp/tracking';
 
 function usePerformanceTracking({ element, eventId }) {
   const tracesTracker = useRef({});
@@ -43,8 +44,7 @@ function usePerformanceTracking({ element, eventId }) {
           ['click'].includes(entry.name) &&
           traces[entry.startTime]?.id === eventId
         ) {
-          traces[entry.startTime].duration = entry.duration;
-          // @todo Actually report the performance via GA, too, for this specific entry.
+          trackTiming(eventId, entry.duration);
         }
       }
     });
