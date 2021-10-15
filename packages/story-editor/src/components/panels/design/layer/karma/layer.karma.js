@@ -85,30 +85,19 @@ describe('Layer Panel', () => {
   });
 
   it('should be able to delete elements with delete action', async () => {
-    const insertElement = await fixture.renderHook(() => useInsertElement());
-    await fixture.act(() => {
-      insertElement('text', {
-        font: TEXT_ELEMENT_DEFAULT_FONT,
-        content: 'element_a',
-        x: 40,
-        y: 40,
-        width: 250,
-      });
-
-      insertElement('text', {
-        font: TEXT_ELEMENT_DEFAULT_FONT,
-        content: 'element_b',
-        x: 40,
-        y: 40,
-        width: 250,
-      });
-    });
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
 
     expect(layerPanel.layers.length).toBe(3);
-    const elementALayer = layerPanel.getLayerByInnerText('element_a');
+    const elementALayer = layerPanel.getLayerByInnerText('Title 1');
     await fixture.events.hover(elementALayer);
     const deleteElementAButton = within(elementALayer).getByLabelText('Delete');
     await fixture.events.click(deleteElementAButton);
+
     expect(layerPanel.layers.length).toBe(2);
+    expect(
+      layerPanel.layers.every((layer) => layer.innerText !== 'Title 1')
+    ).toBeTrue();
   });
 });
