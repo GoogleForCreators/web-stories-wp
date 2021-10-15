@@ -22,7 +22,7 @@ import { applyHiddenPadding } from '../components/panels/design/textBox/utils';
 import { getHTMLFormatters } from '../components/richText/htmlManipulation';
 import usePageAsCanvas from './usePageAsCanvas';
 
-function useApplyTextAutoStyle(element, onApply) {
+function useApplyTextAutoStyle(element, updater) {
   const htmlFormatters = getHTMLFormatters();
   const { setColor } = htmlFormatters;
   const { calculateAccessibleTextColors } = usePageAsCanvas();
@@ -41,7 +41,7 @@ function useApplyTextAutoStyle(element, onApply) {
       const content = fgColor
         ? setColor(element.content, { color: fgColor })
         : element.content;
-      onApply({ ...highlightProps, content });
+      updater({ ...highlightProps, content });
     }
   };
 
