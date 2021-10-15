@@ -40,7 +40,6 @@ import { Layer, MenuArea, NavNextArea, NavPrevArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import PageNav from './pagenav';
-import RightClickMenu from './rightClickMenu';
 
 const FramesPageArea = styled(PageArea)`
   pointer-events: initial;
@@ -139,7 +138,6 @@ function FramesLayer() {
           />
         </FramesPageArea>
       )}
-      <RightClickMenu />
       <MenuArea
         pointerEvents="initial"
         // Make its own stacking context.

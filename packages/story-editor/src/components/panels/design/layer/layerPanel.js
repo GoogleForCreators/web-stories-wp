@@ -86,7 +86,6 @@ function LayerPanel() {
         <PanelContent isSecondary padding={'0'}>
           <LayerList layers={layers} />
         </PanelContent>
-        <RightClickMenu />
       </Panel>
     </Container>
   );

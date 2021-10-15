@@ -72,7 +72,6 @@ function CanvasLayout({ header }) {
   // with Moveable and left-right direction, for this subtree, we are not using any plugin.
   // See also https://styled-components.com/docs/api#stylesheetmanager for general usage.
   return (
-    // <RightClickMenuProvider>
     <StyleSheetManager stylisPlugins={[]}>
       <Background ref={setBackgroundRef} style={layoutParamsCss}>
         <CanvasUploadDropTarget>
@@ -88,7 +87,6 @@ function CanvasLayout({ header }) {
         </CanvasUploadDropTarget>
       </Background>
     </StyleSheetManager>
-    // </RightClickMenuProvider>
   );
 }
 
