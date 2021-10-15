@@ -30,6 +30,8 @@ import {
   PanelTitle,
   PanelContent,
 } from '../../panel';
+import RightClickMenu from '../../../canvas/rightClickMenu';
+import { Panel, PanelTitle, PanelContent } from '../../panel';
 import LayerList from './layerList';
 import useLayers from './useLayers';
 
@@ -84,6 +86,7 @@ function LayerPanel() {
         <PanelContent isSecondary padding={'0'}>
           <LayerList layers={layers} />
         </PanelContent>
+        <RightClickMenu />
       </Panel>
     </Container>
   );

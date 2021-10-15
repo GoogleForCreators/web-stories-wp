@@ -19,12 +19,13 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useContext } from '@web-stories-wp/react';
+import { useContext, useEffect, useRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import panelContext from '../context';
+import { useRightClickMenu } from '../../../../app/rightClickMenu';
 
 const Container = styled.div`
   padding: ${({ padding }) => padding || '8px 16px 8px'};
@@ -37,14 +38,36 @@ function Content({ children, ...rest }) {
   const {
     state: { isCollapsed, height, resizable, panelContentId },
   } = useContext(panelContext);
+  const { onOpenMenu } = useRightClickMenu();
+
+  const rightClickAreaRef = useRef(null);
 
   const formStyle = {
     height: resizable ? `${height}px` : 'auto',
   };
 
+  // Override the browser's context menu within this node
+  useEffect(() => {
+    const node = rightClickAreaRef.current;
+    if (!node) {
+      return undefined;
+    }
+
+    node.addEventListener('contextmenu', onOpenMenu);
+
+    return () => {
+      node.removeEventListener('contextmenu', onOpenMenu);
+    };
+  }, [onOpenMenu]);
+
   // Don't render panel content/children when collapsed.
   return isCollapsed ? null : (
-    <Container style={formStyle} {...rest} id={panelContentId}>
+    <Container
+      ref={rightClickAreaRef}
+      style={formStyle}
+      {...rest}
+      id={panelContentId}
+    >
       {children}
     </Container>
   );

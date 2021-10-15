@@ -26,7 +26,6 @@ import { canTranscodeResource } from '@web-stories-wp/media';
 import PropTypes from 'prop-types';
 import {
   useCallback,
-  useEffect,
   useMemo,
   useReducer,
   useRef,
@@ -151,9 +150,6 @@ function RightClickMenuProvider({ children }) {
       toggleTrimMode,
     })
   );
-
-  // Ref for attaching the context menu
-  const rightClickAreaRef = useRef();
 
   // Needed to not pass stale refs of `undo` to snackbar
   const undoRef = useRef(undo);
@@ -1022,21 +1018,6 @@ function RightClickMenuProvider({ children }) {
     textItems,
   ]);
 
-  // Override the browser's context menu if the
-  // rightClickAreaRef is set
-  useEffect(() => {
-    const node = rightClickAreaRef.current;
-    if (!node) {
-      return undefined;
-    }
-
-    node.addEventListener('contextmenu', handleOpenMenu);
-
-    return () => {
-      node.removeEventListener('contextmenu', handleOpenMenu);
-    };
-  }, [handleOpenMenu]);
-
   useGlobalKeyDownEffect(
     { key: ['mod+alt+o'] },
     (evt) => {
@@ -1062,7 +1043,6 @@ function RightClickMenuProvider({ children }) {
       menuPosition,
       onCloseMenu: handleCloseMenu,
       onOpenMenu: handleOpenMenu,
-      rightClickAreaRef,
     }),
     [handleCloseMenu, handleOpenMenu, isMenuOpen, menuItems, menuPosition]
   );

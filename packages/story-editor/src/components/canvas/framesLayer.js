@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useRef, useCallback } from '@web-stories-wp/react';
+import { memo, useRef, useCallback, useEffect } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { PAGE_WIDTH } from '@web-stories-wp/units';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
@@ -66,14 +66,16 @@ function FramesLayer() {
       setDesignSpaceGuideline,
     })
   );
-  const { rightClickAreaRef } = useRightClickMenu();
 
   const { isAnythingTransforming } = useTransform((state) => ({
     isAnythingTransforming: state.state.isAnythingTransforming,
   }));
 
-  const ref = useRef(null);
-  useCanvasKeys(ref);
+  const framesLayerRef = useRef(null);
+  useCanvasKeys(framesLayerRef);
+
+  const rightClickAreaRef = useRef(null);
+  const { onOpenMenu } = useRightClickMenu();
 
   const { setScrollOffset } = useLayout(({ actions: { setScrollOffset } }) => ({
     setScrollOffset,
@@ -95,9 +97,23 @@ function FramesLayer() {
 
   const isEditingWithMenu = isEditing && hasEditMenu;
 
+  // Override the browser's context menu within this node
+  useEffect(() => {
+    const node = rightClickAreaRef.current;
+    if (!node) {
+      return undefined;
+    }
+
+    node.addEventListener('contextmenu', onOpenMenu);
+
+    return () => {
+      node.removeEventListener('contextmenu', onOpenMenu);
+    };
+  }, [onOpenMenu]);
+
   return (
     <Layer
-      ref={ref}
+      ref={framesLayerRef}
       data-testid="FramesLayer"
       pointerEvents="initial"
       // Use `-1` to ensure that there's a default target to focus if
