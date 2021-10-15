@@ -131,17 +131,13 @@ const LayerDescription = styled.div`
 `;
 
 const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   position: absolute;
-  right: 0px;
+  right: 0;
   width: 32px;
   aspect-ratio: 1;
-
-  /*
-   * have to manually center this because this element is taller
-   * than its parent causing flex to not properly center it.
-   */
-  top: 50%;
-  transform: translateY(-50%);
 
   svg {
     display: block;
