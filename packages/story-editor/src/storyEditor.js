@@ -48,6 +48,7 @@ import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
+import { PerformanceObserverProvider } from './components/performanceObserver';
 
 function StoryEditor({ config, children }) {
   const { storyId, isRTL } = config;
@@ -70,14 +71,16 @@ function StoryEditor({ config, children }) {
                                 <TransformProvider>
                                   <DropTargetsProvider>
                                     <HelpCenterProvider>
-                                      <GlobalStyle />
-                                      <DevTools />
-                                      <DefaultMoveableGlobalStyle />
-                                      <CropMoveableGlobalStyle />
-                                      <ModalGlobalStyle />
-                                      <CalendarStyle />
-                                      <KeyboardOnlyOutlines />
-                                      {children}
+                                      <PerformanceObserverProvider>
+                                        <GlobalStyle />
+                                        <DevTools />
+                                        <DefaultMoveableGlobalStyle />
+                                        <CropMoveableGlobalStyle />
+                                        <ModalGlobalStyle />
+                                        <CalendarStyle />
+                                        <KeyboardOnlyOutlines />
+                                        {children}
+                                      </PerformanceObserverProvider>
                                     </HelpCenterProvider>
                                   </DropTargetsProvider>
                                 </TransformProvider>

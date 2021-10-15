@@ -17,17 +17,22 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from '@web-stories-wp/react';
-import { trackTiming } from '@web-stories-wp/tracking';
+import { useEffect } from '@web-stories-wp/react';
+
+/**
+ * Internal dependencies
+ */
+import usePerformanceObserver from '../components/performanceObserver/usePerformanceObserver';
 
 function usePerformanceTracking({ element, eventId }) {
-  const tracesTracker = useRef({});
+  const { traces } = usePerformanceObserver(({ state: { traces } }) => ({
+    traces,
+  }));
   useEffect(() => {
     if (!element) {
       return undefined;
     }
     const el = element;
-    const traces = tracesTracker.current;
     const traceClick = (e) => {
       if (!traces[e.timeStamp]) {
         traces[e.timeStamp] = {};
@@ -37,20 +42,8 @@ function usePerformanceTracking({ element, eventId }) {
     // @todo Support other events, too.
     el.addEventListener('click', traceClick);
 
-    const performanceObserver = new PerformanceObserver((entries) => {
-      for (const entry of entries.getEntries()) {
-        if (
-          ['click'].includes(entry.name) &&
-          traces[entry.startTime]?.id === eventId
-        ) {
-          trackTiming(eventId, entry.duration);
-        }
-      }
-    });
-    performanceObserver.observe({ entryTypes: ['event'] });
     return () => {
       el.removeEventListener('click', traceClick);
-      performanceObserver.disconnect();
     };
   });
 }
