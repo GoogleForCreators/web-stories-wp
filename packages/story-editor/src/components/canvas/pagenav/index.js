@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useRef, useEffect } from '@web-stories-wp/react';
+import { useCallback, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   Button,
@@ -33,6 +33,7 @@ import {
  * Internal dependencies
  */
 import { useConfig, useStory, useLayout } from '../../../app';
+import usePerformanceTracking from '../../../utils/usePerformanceTracking';
 
 const Wrapper = styled.div`
   display: flex;
@@ -58,7 +59,6 @@ function PageNav({ isNext = true }) {
   );
   const { isRTL } = useConfig();
   const buttonRef = useRef(null);
-  const tracesTracker = useRef({});
 
   // Cancel lasso on mouse down
   const cancelMouseDown = useCallback((evt) => evt.stopPropagation(), []);
@@ -77,33 +77,8 @@ function PageNav({ isNext = true }) {
     })
   );
 
-  useEffect(() => {
-    if (!buttonRef.current) {
-      return undefined;
-    }
-    const el = buttonRef.current;
-    const traces = tracesTracker.current;
-    const traceClick = (e) => {
-      if (!traces[e.timeStamp]) {
-        traces[e.timeStamp] = {};
-      }
-      traces[e.timeStamp] = { id: 'pageChange', time: e.timeStamp };
-    };
-    el.addEventListener('click', traceClick);
-
-    const performanceObserver = new PerformanceObserver((entries) => {
-      for (const entry of entries.getEntries()) {
-        if (['click'].includes(entry.name) && traces[entry.startTime]?.id) {
-          traces[entry.startTime].duration = entry.duration;
-        }
-      }
-    });
-    performanceObserver.observe({ entryTypes: ['event'] });
-    return () => {
-      el.removeEventListener('click', traceClick);
-      performanceObserver.disconnect();
-    };
-  });
+  // @todo Better naming.
+  usePerformanceTracking({ element: buttonRef.current, eventId: 'pageChange' });
 
   // Buttons are completely missing if there's no room for them
   if (!hasPageNavigation) {
