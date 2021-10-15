@@ -30,6 +30,7 @@ export { default as deleteElementsByResourceId } from './deleteElementsByResourc
 export { default as setBackgroundElement } from './setBackgroundElement';
 export { default as arrangeElement } from './arrangeElement';
 export { default as combineElements } from './combineElements';
+export { default as duplicateElementById } from './duplicateElementById';
 
 // Manipulate current page.
 export { default as setCurrentPage } from './setCurrentPage';
