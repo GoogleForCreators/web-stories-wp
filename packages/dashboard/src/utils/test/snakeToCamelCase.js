@@ -16,7 +16,10 @@
 /**
  * Internal dependencies
  */
-import { snakeToCamelCase } from '../snakeToCamelCase';
+import {
+  snakeToCamelCase,
+  snakeToCamelCaseObjectKeys,
+} from '../snakeToCamelCase';
 
 describe('snakeToCamelCase', () => {
   it.each`
@@ -30,5 +33,50 @@ describe('snakeToCamelCase', () => {
     ${'a_l'}       | ${'aL'}
   `('should return the expected string for $key', ({ key, result }) => {
     expect(snakeToCamelCase(key)).toStrictEqual(result);
+  });
+});
+
+describe('snakeToCamelCaseObjectKeys', () => {
+  it.each`
+    key                    | result
+    ${{}}                  | ${{}}
+    ${[1, 2]}              | ${[1, 2]}
+    ${undefined}           | ${undefined}
+    ${''}                  | ${''}
+    ${{ item_one: 'two' }} | ${{ itemOne: 'two' }}
+  `('should return the expected value for $key', ({ key, result }) => {
+    expect(snakeToCamelCaseObjectKeys(key)).toStrictEqual(result);
+  });
+
+  it('should return camelcase keys for nested objects', () => {
+    const transformedObject = snakeToCamelCaseObjectKeys({
+      item_one: 'string',
+      itemTwo: 'string',
+      item_three: {
+        level_one_item_one: {
+          level_two_item_one: {
+            level_three_item_one: 22,
+          },
+          leveTwoItemTwo: 'string',
+        },
+        random: 'string',
+      },
+    });
+
+    const expectedResult = {
+      itemOne: 'string',
+      itemTwo: 'string',
+      itemThree: {
+        levelOneItemOne: {
+          levelTwoItemOne: {
+            levelThreeItemOne: 22,
+          },
+          leveTwoItemTwo: 'string',
+        },
+        random: 'string',
+      },
+    };
+
+    expect(transformedObject).toStrictEqual(expectedResult);
   });
 });

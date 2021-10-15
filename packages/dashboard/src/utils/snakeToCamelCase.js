@@ -33,6 +33,12 @@ export function snakeToCamelCase(string = '') {
     );
 }
 
+/**
+ * Transform a given object keys from snake case to camel case recursively.
+ *
+ * @param {Object} obj Object to be transformed.
+ * @return {any} Transformed object.
+ */
 export function snakeToCamelCaseObjectKeys(obj) {
   const isObject = (val) =>
     val && 'object' === typeof val && !Array.isArray(val);
