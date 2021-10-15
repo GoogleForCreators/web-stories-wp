@@ -37,7 +37,6 @@ function usePerformanceTracking({ element, eventId }) {
     // @todo Support other events, too.
     el.addEventListener('click', traceClick);
 
-    // @todo Have just one global observer in a provider?
     const performanceObserver = new PerformanceObserver((entries) => {
       for (const entry of entries.getEntries()) {
         if (
