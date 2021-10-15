@@ -112,6 +112,40 @@ describe('useRightClickMenu', () => {
   });
 
   describe('context menu manipulation', () => {
+    it('should not open the menu if multiple elements are selected', () => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '1',
+            type: 'text',
+            isDefaultBackground: false,
+          },
+
+          {
+            id: '2',
+            type: 'shape',
+            isDefaultBackground: false,
+          },
+
+          {
+            id: '3',
+            type: 'text',
+            isDefaultBackground: false,
+          },
+        ],
+      });
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      act(() => {
+        result.current.onOpenMenu(mockEvent);
+      });
+
+      expect(result.current.isMenuOpen).toBe(false);
+    });
+
     it('should open the menu at the specified position', () => {
       const { result } = renderHook(() => useRightClickMenu(), {
         wrapper: RightClickMenuProvider,
@@ -153,7 +187,7 @@ describe('useRightClickMenu', () => {
         selectedElements: [
           {
             id: '1',
-            type: 'text',
+            type: 'image',
             isDefaultBackground: true,
           },
         ],

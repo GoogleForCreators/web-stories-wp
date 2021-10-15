@@ -174,22 +174,29 @@ function RightClickMenuProvider({ children }) {
    *
    * @param {Event} evt The triggering event
    */
-  const handleOpenMenu = useCallback((evt) => {
-    evt.preventDefault();
-    evt.stopPropagation();
+  const handleOpenMenu = useCallback(
+    (evt) => {
+      if (selectedElements.length > 1) {
+        return;
+      }
 
-    dispatch({
-      type: ACTION_TYPES.OPEN_MENU,
-      payload: {
-        x: evt?.x,
-        y: evt?.y,
-      },
-    });
+      evt.preventDefault();
+      evt.stopPropagation();
 
-    trackEvent('context_menu_action', {
-      name: 'context_menu_opened',
-    });
-  }, []);
+      dispatch({
+        type: ACTION_TYPES.OPEN_MENU,
+        payload: {
+          x: evt?.x,
+          y: evt?.y,
+        },
+      });
+
+      trackEvent('context_menu_action', {
+        name: 'context_menu_opened',
+      });
+    },
+    [selectedElements]
+  );
 
   /**
    * Close the menu and reset the tracked position.
