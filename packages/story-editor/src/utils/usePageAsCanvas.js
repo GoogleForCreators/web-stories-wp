@@ -92,7 +92,7 @@ function usePageAsCanvas() {
           setPageCanvasPromise(null);
         };
         // If we haven't started the generation yet, create a promise.
-        if (!pageCanvasPromise) {
+        if (!pageCanvasPromise && fullbleedContainer) {
           import(/* webpackChunkName: "chunk-html-to-image" */ 'html-to-image')
             .then((htmlToImage) => {
               const promise = htmlToImage.toCanvas(fullbleedContainer, {
