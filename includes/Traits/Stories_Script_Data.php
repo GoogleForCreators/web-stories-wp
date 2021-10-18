@@ -90,7 +90,7 @@ trait Stories_Script_Data {
 		];
 
 		$field_states = [];
-		$injector = Services::get_injector();
+		$injector     = Services::get_injector();
 		if ( ! method_exists( $injector, 'make' ) ) {
 			return $field_states;
 		}
