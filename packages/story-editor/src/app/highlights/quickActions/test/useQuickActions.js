@@ -398,7 +398,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('background image element is selected', () => {
+  describe('background image element is selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
