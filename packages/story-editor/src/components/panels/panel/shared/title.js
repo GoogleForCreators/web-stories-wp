@@ -154,7 +154,7 @@ function Title({
     state: {
       isCollapsed,
       height,
-      resizeable,
+      resizable,
       panelContentId,
       panelTitleId,
       ariaHidden,
@@ -180,19 +180,19 @@ function Title({
 
   const handleHeightChange = useCallback(
     (deltaHeight) =>
-      resizeable
+      resizable
         ? setHeight((value) =>
             Math.max(0, Math.min(maxHeight, value + deltaHeight))
           )
         : null,
-    [resizeable, setHeight, maxHeight]
+    [resizable, setHeight, maxHeight]
   );
 
   const handleExpandToHeightChange = useCallback(() => {
-    if (resizeable && height >= PANEL_COLLAPSED_THRESHOLD) {
+    if (resizable && height >= PANEL_COLLAPSED_THRESHOLD) {
       setExpandToHeight(height);
     }
-  }, [setExpandToHeight, height, resizeable]);
+  }, [setExpandToHeight, height, resizable]);
 
   const toggle = isCollapsed ? expand : collapse;
 

@@ -63,7 +63,7 @@ function LayerPanel() {
       <Panel
         name="layer-panel"
         initialHeight={initialHeight}
-        resizeable
+        resizable
         ariaHidden
         collapsedByDefault={false}
       >
