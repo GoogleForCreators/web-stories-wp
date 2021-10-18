@@ -25,6 +25,5 @@ export const TRACKING_EVENTS = {
   SELECT_ELEMENT: {
     id: 'selectElement',
     category: 'click',
-    label: '' /* Dynamically assigned element type */,
   },
 };

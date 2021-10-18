@@ -33,7 +33,12 @@ function PerformanceObserverProvider({ children }) {
     const performanceObserver = new PerformanceObserver((entries) => {
       for (const entry of entries.getEntries()) {
         if (['click'].includes(entry.name) && traces[entry.startTime]?.id) {
-          trackTiming(traces[entry.startTime].id, entry.duration);
+          trackTiming(
+            traces[entry.startTime].id,
+            entry.duration,
+            entry.category,
+            entry.label
+          );
         }
       }
     });

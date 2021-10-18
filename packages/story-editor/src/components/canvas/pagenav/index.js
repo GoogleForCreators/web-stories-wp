@@ -34,6 +34,7 @@ import {
  */
 import { useConfig, useStory, useLayout } from '../../../app';
 import usePerformanceTracking from '../../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 
 const Wrapper = styled.div`
   display: flex;
@@ -77,8 +78,10 @@ function PageNav({ isNext = true }) {
     })
   );
 
-  // @todo Better naming.
-  usePerformanceTracking({ element: buttonRef.current, eventId: 'pageChange' });
+  usePerformanceTracking({
+    element: buttonRef.current,
+    eventData: TRACKING_EVENTS.PAGE_NAVIGATION,
+  });
 
   // Buttons are completely missing if there's no room for them
   if (!hasPageNavigation) {

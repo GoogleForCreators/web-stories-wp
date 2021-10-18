@@ -24,10 +24,11 @@ import { useEffect } from '@web-stories-wp/react';
  */
 import usePerformanceObserver from '../components/performanceObserver/usePerformanceObserver';
 
-function usePerformanceTracking({ element, eventId }) {
+function usePerformanceTracking({ element, eventData }) {
   const { traces } = usePerformanceObserver(({ state: { traces } }) => ({
     traces,
   }));
+  const { id, label, category } = eventData;
   useEffect(() => {
     if (!element) {
       return undefined;
@@ -37,7 +38,10 @@ function usePerformanceTracking({ element, eventId }) {
       if (!traces[e.timeStamp]) {
         traces[e.timeStamp] = {};
       }
-      traces[e.timeStamp] = { id: eventId, time: e.timeStamp };
+      traces[e.timeStamp] = { id, time: e.timeStamp, category };
+      if (label) {
+        traces[e.timeStamp].label = label;
+      }
     };
     // @todo Support other events, too.
     el.addEventListener('click', traceClick);
