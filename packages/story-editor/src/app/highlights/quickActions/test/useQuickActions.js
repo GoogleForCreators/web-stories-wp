@@ -443,7 +443,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('background third party image element is selected with animation', () => {
+  describe('background third party image element is selected with animation', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
