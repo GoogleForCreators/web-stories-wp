@@ -245,6 +245,7 @@ function Title({
             data-testid="panel-badge"
             notificationCount={count}
             variant={BUBBLE_VARIANTS.PRIMARY}
+            aria-hidden
           />
         )}
       </Toggle>
