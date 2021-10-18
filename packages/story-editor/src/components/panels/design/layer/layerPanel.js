@@ -64,8 +64,8 @@ function LayerPanel() {
         name="layer-panel"
         initialHeight={initialHeight}
         resizeable
-        collapsedByDefault={false}
         aria-hidden
+        collapsedByDefault={false}
       >
         <StyledPanelTitle
           isSecondary
