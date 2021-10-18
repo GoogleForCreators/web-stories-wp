@@ -70,10 +70,6 @@ jest.mock('../../useHighlights', () => ({
   default: jest.fn(),
 }));
 
-jest.mock('../../../../utils/useApplyTextAutoStyle', () => ({
-  applyTextAutoStyle: jest.fn(),
-}));
-
 jest.mock('@web-stories-wp/design-system', () => ({
   ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: () => ({ showSnackbar: jest.fn() }),
