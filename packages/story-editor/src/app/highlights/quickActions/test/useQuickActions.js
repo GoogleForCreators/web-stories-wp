@@ -357,7 +357,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('empty background element selected', () => {
+  describe('empty background element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -398,7 +398,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('background image element is selected', () => {
+  describe('background image element is selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -443,7 +443,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('background third party image element is selected with animation', () => {
+  describe('background third party image element is selected with animation', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
