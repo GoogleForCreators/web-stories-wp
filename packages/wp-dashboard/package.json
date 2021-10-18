@@ -23,5 +23,7 @@
         "flagged": "^2.0.1",
         "styled-components": "^5.3.1"
     },
-    "devDependencies": {}
+    "devDependencies": {
+	    "@testing-library/react": "^12.1.2"
+    }
 }

@@ -19,18 +19,42 @@
  */
 import { fireEvent, within, screen } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
+import {
+  renderWithProviders,
+  AD_NETWORK_TYPE,
+} from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
-import { rawPublisherLogos } from '../../../../dataUtils/formattedPublisherLogos';
-import { renderWithProviders } from '../../../../testUtils';
-import { TEXT as AD_NETWORK_TEXT } from '../adManagement';
-import { TEXT as GA_TEXT } from '../googleAnalytics';
-import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
-
 import EditorSettings from '..';
-import { AD_NETWORK_TYPE } from '../../../../constants';
+
+const rawPublisherLogos = [
+  {
+    id: 577,
+    src: 'https://picsum.photos/96',
+    title: 'dummy image 1',
+    active: true,
+  },
+  {
+    id: 584,
+    src: 'https://picsum.photos/97',
+    title: 'dummy image 2',
+    active: false,
+  },
+  {
+    id: 582,
+    src: 'https://picsum.photos/98',
+    title: 'dummy image 3',
+    active: false,
+  },
+  {
+    id: 581,
+    src: 'https://picsum.photos/99',
+    title: 'dummy image 4',
+    active: false,
+  },
+];
 
 const mockFetchSettings = jest.fn();
 const mockUploadMedia = jest.fn();
@@ -137,7 +161,7 @@ describe('Editor Settings: <Editor Settings />', function () {
     );
     setAppElement(container);
 
-    const googleAnalyticsHeading = screen.getByText(GA_TEXT.SECTION_HEADING);
+    const googleAnalyticsHeading = screen.getByText('Google Analytics');
     expect(googleAnalyticsHeading).toBeInTheDocument();
 
     const input = screen.getByRole('textbox');
@@ -145,15 +169,11 @@ describe('Editor Settings: <Editor Settings />', function () {
 
     expect(input).toHaveValue('UA-098909-05');
 
-    expect(
-      screen.getByText(PUBLISHER_LOGO_TEXT.SECTION_HEADING)
-    ).toBeInTheDocument();
+    expect(screen.getByText('Publisher Logo')).toBeInTheDocument();
     expect(screen.getByTestId('upload-file-input')).toBeInTheDocument();
     expect(mockFetchSettings).toHaveBeenCalledTimes(1);
 
-    expect(
-      screen.getByText(AD_NETWORK_TEXT.SECTION_HEADING)
-    ).toBeInTheDocument();
+    expect(screen.getByText('Monetization')).toBeInTheDocument();
   });
 
   it('should render settings page with publisher logos', function () {
