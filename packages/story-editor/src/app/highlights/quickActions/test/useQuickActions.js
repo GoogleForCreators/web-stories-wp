@@ -478,7 +478,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('background video element is selected', () => {
+  describe('background video element is selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
