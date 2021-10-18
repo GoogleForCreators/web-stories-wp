@@ -34,6 +34,7 @@ const {
   Bucket,
   Captions,
   CircleSpeed,
+  ColorBucket,
   Eraser,
   LetterTLargeLetterTSmall,
   LetterTPlus,
@@ -222,6 +223,11 @@ const textQuickActions = [
     label: ACTIONS.ADD_LINK.text,
     onClick: expect.any(Function),
     Icon: Link,
+  }),
+  expect.objectContaining({
+    label: ACTIONS.AUTO_STYLE_TEXT.text,
+    onClick: expect.any(Function),
+    Icon: ColorBucket,
   }),
 ];
 const textQuickActionsWithClear = [...textQuickActions, resetElementAction];
