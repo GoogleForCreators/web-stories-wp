@@ -19,25 +19,40 @@
  */
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
-import useApi from '../../api/useApi';
-import { Layout } from '../../../components';
-import { MIN_IMG_WIDTH, MIN_IMG_HEIGHT } from '../../../constants';
-import { useConfig } from '../../config';
-import { PageHeading } from '../shared';
-import useTelemetryOptIn from '../shared/useTelemetryOptIn';
-import useMediaOptimization from '../shared/useMediaOptimization';
-import GoogleAnalyticsSettings from './googleAnalytics';
-import { Main, Wrapper } from './components';
-import AdManagement from './adManagement';
-import PublisherLogoSettings from './publisherLogo';
-import TelemetrySettings from './telemetry';
-import MediaOptimizationSettings from './mediaOptimization';
-import VideoCacheSettings from './videoCache';
-import ArchiveSettings from './archive';
+import {
+  AdManagement,
+  PublisherLogoSettings,
+  TelemetrySettings,
+  MediaOptimizationSettings,
+  VideoCacheSettings,
+  ArchiveSettings,
+  GoogleAnalyticsSettings,
+  useTelemetryOptIn,
+  useMediaOptimization,
+  StandardViewContentGutter,
+  Layout,
+  PageHeading,
+  MIN_IMG_WIDTH,
+  MIN_IMG_HEIGHT,
+  useConfig,
+  useApi,
+} from '@web-stories-wp/dashboard';
+
+const Wrapper = styled.div``;
+
+const Main = styled(StandardViewContentGutter)`
+  display: flex;
+  flex-direction: column;
+  padding-top: 36px;
+  margin-top: 20px;
+  margin-bottom: 56px;
+  max-width: 945px;
+`;
 
 function EditorSettings() {
   const {
