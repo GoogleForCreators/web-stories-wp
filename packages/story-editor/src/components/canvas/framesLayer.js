@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useRef, useCallback, useEffect } from '@web-stories-wp/react';
+import { memo, useRef, useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { PAGE_WIDTH } from '@web-stories-wp/units';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
@@ -78,7 +78,6 @@ function FramesLayer() {
   const framesLayerRef = useRef(null);
   useCanvasKeys(framesLayerRef);
 
-  const rightClickAreaRef = useRef(null);
   const { onOpenMenu } = useRightClickMenu();
 
   const { setScrollOffset } = useLayout(({ actions: { setScrollOffset } }) => ({
@@ -101,20 +100,6 @@ function FramesLayer() {
 
   const isEditingWithMenu = isEditing && hasEditMenu;
 
-  // Override the browser's context menu within this node
-  useEffect(() => {
-    const node = rightClickAreaRef.current;
-    if (!node) {
-      return undefined;
-    }
-
-    node.addEventListener('contextmenu', onOpenMenu);
-
-    return () => {
-      node.removeEventListener('contextmenu', onOpenMenu);
-    };
-  }, [onOpenMenu]);
-
   return (
     <Layer
       ref={framesLayerRef}
@@ -127,7 +112,7 @@ function FramesLayer() {
       aria-label={__('Frames layer', 'web-stories')}
     >
       {!isAnimating && (
-        <FramesPageArea ref={rightClickAreaRef} onScroll={onScroll}>
+        <FramesPageArea onContextMenu={onOpenMenu} onScroll={onScroll}>
           {currentPage &&
             currentPage.elements.map((element) => {
               return <FrameElement key={element.id} element={element} />;

@@ -53,8 +53,8 @@ jest.mock('@web-stories-wp/tracking');
 const mockEvent = {
   preventDefault: jest.fn(),
   stopPropagation: jest.fn(),
-  x: 500,
-  y: -1230,
+  clientX: 500,
+  clientY: -1230,
 };
 
 const defaultCanvasContext = {
@@ -156,7 +156,10 @@ describe('useRightClickMenu', () => {
       });
 
       expect(result.current.isMenuOpen).toBe(true);
-      expect(result.current.menuPosition).toStrictEqual({ x: 500, y: -1230 });
+      expect(result.current.menuPosition).toStrictEqual({
+        x: 500,
+        y: -1230,
+      });
     });
 
     it('should close the menu and reset the position', () => {
@@ -169,7 +172,10 @@ describe('useRightClickMenu', () => {
       });
 
       expect(result.current.isMenuOpen).toBe(true);
-      expect(result.current.menuPosition).toStrictEqual({ x: 500, y: -1230 });
+      expect(result.current.menuPosition).toStrictEqual({
+        x: 500,
+        y: -1230,
+      });
 
       act(() => {
         result.current.onCloseMenu();

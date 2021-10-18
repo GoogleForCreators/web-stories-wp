@@ -18,12 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import {
-  Fragment,
-  useCallback,
-  useEffect,
-  useRef,
-} from '@web-stories-wp/react';
+import { Fragment, useCallback } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -64,7 +59,6 @@ function LayerPanel({ layers }) {
     setSelectedElementsById: state.actions.setSelectedElementsById,
   }));
 
-  const rightClickAreaRef = useRef(null);
   const { onOpenMenu } = useRightClickMenu();
 
   const numLayers = layers && layers.length;
@@ -78,29 +72,13 @@ function LayerPanel({ layers }) {
     [setSelectedElementsById, focusCanvas]
   );
 
-  // Override the browser's context menu within this node
-  useEffect(() => {
-    const node = rightClickAreaRef.current;
-    if (!node) {
-      return undefined;
-    }
-
-    node.addEventListener('contextmenu', onOpenMenu);
-
-    return () => {
-      node.removeEventListener('contextmenu', onOpenMenu);
-    };
-    // On initial load there are no layers. Ref update won't trigger effect.
-    // So re-run when layers are fully updated.
-  }, [numLayers, onOpenMenu]);
-
   if (!numLayers) {
     return null;
   }
 
   return (
     <LayerList
-      ref={rightClickAreaRef}
+      onContextMenu={onOpenMenu}
       onPositionChange={(oldPos, newPos) =>
         arrangeElement({
           elementId: layers.find((layer) => layer.position === oldPos).id,

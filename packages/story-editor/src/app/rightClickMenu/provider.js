@@ -186,8 +186,8 @@ function RightClickMenuProvider({ children }) {
       dispatch({
         type: ACTION_TYPES.OPEN_MENU,
         payload: {
-          x: evt?.x,
-          y: evt?.y,
+          x: evt?.clientX,
+          y: evt?.clientY,
         },
       });
 
