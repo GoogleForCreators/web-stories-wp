@@ -28,20 +28,60 @@ import { useInsertElement } from '../../../../canvas';
 describe('Layer Panel', () => {
   let fixture;
   let layerPanel;
+  let insertElement;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
     layerPanel = fixture.editor.inspector.designPanel.layerPanel;
+
+    insertElement = await fixture.renderHook(() => useInsertElement());
   });
 
   afterEach(() => {
     fixture.restore();
   });
 
+  it('should show the number of layers', async () => {
+    expect(layerPanel.layers.length).toBe(1);
+    expect(layerPanel.panelBadge.textContent).toBe(
+      layerPanel.layers.length.toString()
+    );
+
+    await fixture.act(() =>
+      insertElement('text', {
+        font: TEXT_ELEMENT_DEFAULT_FONT,
+        content:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tincidunt egestas velit quis tincidunt.',
+        x: 40,
+        y: 40,
+        width: 250,
+      })
+    );
+
+    expect(layerPanel.layers.length).toBe(2);
+    expect(layerPanel.panelBadge.textContent).toBe(
+      layerPanel.layers.length.toString()
+    );
+
+    await fixture.act(() =>
+      insertElement('text', {
+        font: TEXT_ELEMENT_DEFAULT_FONT,
+        content: 'Doo doo doo',
+        x: 40,
+        y: 40,
+        width: 250,
+      })
+    );
+
+    expect(layerPanel.layers.length).toBe(3);
+    expect(layerPanel.panelBadge.textContent).toBe(
+      layerPanel.layers.length.toString()
+    );
+  });
+
   it('should show ellipsis for overflowing text', async () => {
     expect(layerPanel.layers.length).toBe(1);
-    const insertElement = await fixture.renderHook(() => useInsertElement());
     await fixture.act(() =>
       insertElement('text', {
         font: TEXT_ELEMENT_DEFAULT_FONT,

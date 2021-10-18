@@ -67,7 +67,7 @@ function LayerPanel() {
         ariaHidden
         collapsedByDefault={false}
       >
-        <StyledPanelTitle isSecondary isResizable>
+        <StyledPanelTitle isSecondary isResizable count={layers?.length}>
           {__('Layers', 'web-stories')}
         </StyledPanelTitle>
 
