@@ -234,24 +234,23 @@ export const DESIGN_COPY = {
     ),
   },
   imageResolutionTooLow: {
-    title: sprintf(
-      /* translators: %s: minimum image size width x minimum image size height. */
-      __('Upload a higher resolution image to at least %s', 'web-stories'),
-      `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
-    ),
+    title: __('Increase image resolution', 'web-stories'),
     footer: (
       <>
         <li>
-          {sprintf(
-            /* translators: %s: minimum image size width x minimum image size height. */
-            __('Use %s for a full-screen image', 'web-stories'),
-            `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
+          {__(
+            'Use larger resolution (2x or 3x) images for best appearance on screens with high pixel density',
+            'web-stories'
           )}
         </li>
         <li>
-          {__(
-            'Consider similar pixel density for cropped images',
-            'web-stories'
+          {sprintf(
+            /* translators: %s: minimum image size width x minimum image size height. */
+            __(
+              'For full-screen images, use a resolution of at least %s',
+              'web-stories'
+            ),
+            `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
           )}
         </li>
       </>
@@ -277,14 +276,13 @@ export const DESIGN_COPY = {
   videoResolutionTooLow: {
     title: __('Increase video resolution', 'web-stories'),
     footer: sprintf(
-      /* translators: 1: minimum video resolution. 2: minimum video width. 3: minimum video height. */
+      /* translators: 1: minimum video resolution. 2: minimum video width x minimum video height in pixels. */
       __(
-        'Consider using a minimum resolution of %1$dp (%2$d×%3$dpx) to represent portrait videos.',
+        'Consider using a minimum resolution of %1$d (%2$d) to represent portrait videos',
         'web-stories'
       ),
-      MIN_VIDEO_RESOLUTION,
-      MIN_VIDEO_WIDTH,
-      MIN_VIDEO_HEIGHT
+      `${MIN_VIDEO_RESOLUTION}p`,
+      `${MIN_VIDEO_WIDTH}x${MIN_VIDEO_HEIGHT}px`
     ),
   },
   videoTooLong: {
