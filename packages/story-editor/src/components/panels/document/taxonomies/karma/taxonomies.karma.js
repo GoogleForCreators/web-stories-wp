@@ -131,10 +131,7 @@ describe('Categories & Tags Panel', () => {
         // TODO: 9058 - validate new category exists on story once category is checked when added.
       });
 
-      // TODO: #9063
-      // disable reason: dropdown doesn't close unless the tests are slowed down
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should add a new category as a child of an existing category', async () => {
+      it('should add a new category as a child of an existing category', async () => {
         await openCategoriesAndTagsPanel();
         const categoriesAndTags =
           fixture.editor.inspector.documentPanel.categoriesAndTags;
@@ -152,28 +149,17 @@ describe('Categories & Tags Panel', () => {
         await fixture.events.keyboard.type('deer');
         await fixture.events.click(categoriesAndTags.parentDropdownButton);
 
-        await waitFor(() =>
-          fixture.screen.getByRole('option', {
-            name: 'hierarchical_term_Booger',
-          })
-        );
         await fixture.events.click(
           fixture.screen.getByRole('option', {
-            name: 'hierarchical_term_Booger',
+            name: 'Booger',
           })
         );
-        await waitFor(() =>
-          fixture.screen
-            .queryByRole('option', {
-              name: 'hierarchical_term_Booger',
-            })
-            .toBeNull()
-        );
+
         await fixture.events.click(categoriesAndTags.addNewCategoryButton);
         // validate new checkbox was added
         const finalCategories = categoriesAndTags.categories;
         initialCategories.map((checkbox) =>
-          expect(checkbox.name).not.toBe('hierarchical_term_deer')
+          expect(checkbox.name).not.toBe('deer')
         );
         expect(finalCategories.length).toBe(initialCategories.length + 1);
         expect(
