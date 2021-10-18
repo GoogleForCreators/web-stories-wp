@@ -162,13 +162,13 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	}
 
 	/**
-	 * Get post type capability on the post type slug and name.
+	 * Determines whether the current user has a specific capability for this post type.
 	 *
 	 * @since 1.14.0
 	 *
 	 * @param string $cap Capability name.
 	 *
-	 * @return bool
+	 * @return bool Whether the user has the capability.
 	 */
 	public function get_cap( string $cap ): bool {
 		$capability_name = $this->get_cap_name( $cap );
@@ -181,13 +181,13 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	}
 
 	/**
-	 * Get post type capability name on the post type slug and name.
+	 * Returns a specific post type capability name.
 	 *
 	 * @since 1.14.0
 	 *
 	 * @param string $cap Capability name.
 	 *
-	 * @return string|false
+	 * @return string|false Capability name if found, false otherwise.
 	 */
 	public function get_cap_name( string $cap ) {
 		$post_type_obj   = $this->get_object();

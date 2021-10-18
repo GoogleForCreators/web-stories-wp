@@ -168,7 +168,7 @@ class Editor extends Service_Base implements HasRequirements {
 	/**
 	 * Get the list of service IDs required for this service to be registered.
 	 *
-	 * Needed because the story post type needs to be registered first.
+	 * Needed because the story and page template post types need to be registered first.
 	 *
 	 * @since 1.14.0
 	 *
