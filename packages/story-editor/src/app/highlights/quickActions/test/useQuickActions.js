@@ -529,7 +529,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('foreground image element selected', () => {
+  describe('foreground image element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
