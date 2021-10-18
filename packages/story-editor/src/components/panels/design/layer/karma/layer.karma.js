@@ -107,16 +107,42 @@ describe('Layer Panel', () => {
     expect(section.clientHeight).toBe(initialHeight - 20);
   });
 
-  it('should not allow increasing the height of the layer panel past the max height', async () => {
-    expect(layerPanel.resizeHandle).toBeTruthy();
-    const section = layerPanel.resizeHandle.closest('section');
+  it('should not change the layer panel height when changing page', async () => {
+    // resize the panel
+    let section = layerPanel.resizeHandle.closest('section');
     const initialHeight = section.clientHeight;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(layerPanel.resizeHandle, 3, 3),
       down(),
-      moveBy(0, -30, { steps: 6 }),
+      moveBy(0, 30, { steps: 6 }),
       up(),
     ]);
-    expect(section.clientHeight).toBe(initialHeight);
+    expect(section.clientHeight).toBe(initialHeight - 30);
+
+    // change page
+    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+
+    // verify panel height did not change
+    section = layerPanel.resizeHandle.closest('section');
+    expect(section.clientHeight).toBe(initialHeight - 30);
+  });
+
+  it('should not open the layer panel if the panel is collapsed when changing page', async () => {
+    // close the panel
+    expect(layerPanel.panelCollapseButton.getAttribute('aria-expanded')).toBe(
+      'true'
+    );
+    await fixture.events.click(layerPanel.panelCollapseButton);
+    expect(layerPanel.panelCollapseButton.getAttribute('aria-expanded')).toBe(
+      'false'
+    );
+
+    // change page
+    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+
+    // verify panel remains closed
+    expect(layerPanel.panelCollapseButton.getAttribute('aria-expanded')).toBe(
+      'false'
+    );
   });
 });

@@ -39,7 +39,7 @@ import { useStory } from '../../../app/story';
 import panelContext from './context';
 
 export const PANEL_COLLAPSED_THRESHOLD = 10;
-const MAX_HEIGHT_DEFAULT = 999999999;
+export const MAX_HEIGHT_DEFAULT = 999999999;
 
 const Wrapper = styled.section`
   display: flex;
@@ -80,6 +80,7 @@ function Panel({
         : null,
     [name, isPersistable]
   );
+
   const [isCollapsed, setIsCollapsed] = useState(() => {
     // If not persisted, always default to expanded.
     if (!isPersistable) {
