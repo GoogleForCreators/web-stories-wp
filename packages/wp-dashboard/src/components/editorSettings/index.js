@@ -314,24 +314,24 @@ function EditorSettings() {
         <Layout.Scrollable>
           <Main>
             {canManageSettings && (
-              <GoogleAnalyticsSettings
-                googleAnalyticsId={googleAnalyticsId}
-                handleUpdateAnalyticsId={handleUpdateGoogleAnalyticsId}
-                usingLegacyAnalytics={usingLegacyAnalytics}
-                handleMigrateLegacyAnalytics={handleMigrateLegacyAnalytics}
-                siteKitStatus={siteKitStatus}
-              />
-            )}
-            {canManageSettings && (
-              <PublisherLogoSettings
-                onAddLogos={handleAddLogos}
-                onRemoveLogo={handleRemoveLogo}
-                onUpdateDefaultLogo={handleUpdateDefaultLogo}
-                publisherLogos={publisherLogos}
-                canUploadFiles={canUploadFiles}
-                isLoading={isMediaLoading}
-                uploadError={mediaError}
-              />
+              <>
+                <GoogleAnalyticsSettings
+                  googleAnalyticsId={googleAnalyticsId}
+                  handleUpdateAnalyticsId={handleUpdateGoogleAnalyticsId}
+                  usingLegacyAnalytics={usingLegacyAnalytics}
+                  handleMigrateLegacyAnalytics={handleMigrateLegacyAnalytics}
+                  siteKitStatus={siteKitStatus}
+                />
+                <PublisherLogoSettings
+                  onAddLogos={handleAddLogos}
+                  onRemoveLogo={handleRemoveLogo}
+                  onUpdateDefaultLogo={handleUpdateDefaultLogo}
+                  publisherLogos={publisherLogos}
+                  canUploadFiles={canUploadFiles}
+                  isLoading={isMediaLoading}
+                  uploadError={mediaError}
+                />
+              </>
             )}
             <TelemetrySettings
               disabled={disableOptedIn}
@@ -346,30 +346,28 @@ function EditorSettings() {
               />
             )}
             {canManageSettings && (
-              <VideoCacheSettings
-                isEnabled={videoCache}
-                updateSettings={updateSettings}
-              />
-            )}
-            {canManageSettings && (
-              <ArchiveSettings
-                archive={archive}
-                archiveURL={archiveURL}
-                updateSettings={updateSettings}
-                searchPages={searchPages}
-                archivePageId={archivePageId}
-                getPageById={getPageById}
-              />
-            )}
-            {canManageSettings && (
-              <AdManagement
-                updateSettings={updateSettings}
-                adNetwork={adNetwork}
-                publisherId={adSensePublisherId}
-                adSenseSlotId={adSenseSlotId}
-                adManagerSlotId={adManagerSlotId}
-                siteKitStatus={siteKitStatus}
-              />
+              <>
+                <VideoCacheSettings
+                  isEnabled={videoCache}
+                  updateSettings={updateSettings}
+                />
+                <ArchiveSettings
+                  archive={archive}
+                  archiveURL={archiveURL}
+                  updateSettings={updateSettings}
+                  searchPages={searchPages}
+                  archivePageId={archivePageId}
+                  getPageById={getPageById}
+                />
+                <AdManagement
+                  updateSettings={updateSettings}
+                  adNetwork={adNetwork}
+                  publisherId={adSensePublisherId}
+                  adSenseSlotId={adSenseSlotId}
+                  adManagerSlotId={adManagerSlotId}
+                  siteKitStatus={siteKitStatus}
+                />
+              </>
             )}
           </Main>
         </Layout.Scrollable>
