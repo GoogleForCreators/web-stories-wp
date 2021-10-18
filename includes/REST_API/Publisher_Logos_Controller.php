@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Post_Type;
@@ -40,7 +41,7 @@ use WP_REST_Server;
  *
  * @since 1.12.0
  */
-class Publisher_Logos_Controller extends REST_Controller {
+class Publisher_Logos_Controller extends REST_Controller implements HasRequirements {
 	use Post_Type;
 
 	/**
@@ -51,15 +52,37 @@ class Publisher_Logos_Controller extends REST_Controller {
 	private $settings;
 
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param Settings $settings Settings instance.
+	 * @param Settings        $settings Settings instance.
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
-	public function __construct( Settings $settings ) {
-		$this->settings = $settings;
+	public function __construct( Settings $settings, Story_Post_Type $story_post_type ) {
+		$this->settings        = $settings;
+		$this->story_post_type = $story_post_type;
 
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'publisher-logos';
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'settings', 'story_post_type' ];
 	}
 
 	/**
@@ -124,7 +147,7 @@ class Publisher_Logos_Controller extends REST_Controller {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function permissions_check() {
-		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return new WP_Error(
 				'rest_forbidden',
 				__( 'Sorry, you are not allowed to manage publisher logos.', 'web-stories' ),

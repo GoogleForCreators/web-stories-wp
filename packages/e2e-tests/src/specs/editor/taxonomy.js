@@ -99,6 +99,7 @@ async function addTag(name) {
 }
 
 describe('taxonomy', () => {
+  // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enableTaxonomiesSupport']);
 
   // Create some categories and tags before running all tests so that they are available there.
@@ -209,6 +210,7 @@ describe('taxonomy', () => {
   });
 
   describe('Contributor', () => {
+    // eslint-disable-next-line jest/require-hook
     withUser('contributor', 'password');
 
     it('should be able to manage categories but not add new ones', async () => {
@@ -302,6 +304,7 @@ describe('taxonomy', () => {
   });
 
   describe('Custom Taxonomy', () => {
+    // eslint-disable-next-line jest/require-hook
     withPlugin('web-stories-test-plugin-taxonomies');
 
     describe('Administrator', () => {
@@ -319,6 +322,7 @@ describe('taxonomy', () => {
     });
 
     describe('Contributor', () => {
+      // eslint-disable-next-line jest/require-hook
       withUser('contributor', 'password');
 
       it('should see custom taxonomies', async () => {

@@ -18,14 +18,14 @@
  */
 import apiFetch from '@wordpress/api-fetch';
 
-export function getCurrentUser(currentUser) {
+export function getCurrentUser(config) {
   return apiFetch({
-    path: currentUser,
+    path: config.api.currentUser,
   });
 }
-export function updateCurrentUser(data, currentUser) {
+export function updateCurrentUser(config, data) {
   return apiFetch({
-    path: currentUser,
+    path: config.api.currentUser,
     method: 'POST',
     data,
   });

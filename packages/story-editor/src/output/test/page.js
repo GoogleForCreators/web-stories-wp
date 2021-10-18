@@ -19,7 +19,6 @@
  */
 import { renderToStaticMarkup } from '@web-stories-wp/react';
 import { render } from '@testing-library/react';
-jest.mock('flagged');
 import { useFeature } from 'flagged';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '@web-stories-wp/units';
 
@@ -30,15 +29,19 @@ import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 import { MaskTypes } from '../../masks/constants';
 
+jest.mock('flagged');
+
 /* eslint-disable testing-library/no-node-access, testing-library/no-container */
 
 describe('Page output', () => {
-  useFeature.mockImplementation((feature) => {
-    const config = {
-      enableAnimation: true,
-    };
+  beforeAll(() => {
+    useFeature.mockImplementation((feature) => {
+      const config = {
+        enableAnimation: true,
+      };
 
-    return config[feature];
+      return config[feature];
+    });
   });
 
   describe('aspect-ratio markup', () => {
@@ -576,6 +579,31 @@ describe('Page output', () => {
       const { container } = render(<PageOutput {...props} />);
       const pageOutlink = container.querySelector('amp-story-page-outlink');
       await expect(pageOutlink).not.toBeInTheDocument();
+    });
+
+    it('should not output cta-image if empty', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+          pageAttachment: {
+            url: 'https://example.test',
+            ctaText: 'Click me!',
+            theme: 'dark',
+            icon: '',
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const pageOutlink = container.querySelector('amp-story-page-outlink');
+      await expect(pageOutlink).toHaveTextContent('Click me!');
+      await expect(pageOutlink).not.toHaveAttribute('cta-image');
+      await expect(pageOutlink).toBeInTheDocument();
     });
 
     it('should not output a link in page attachment area', () => {

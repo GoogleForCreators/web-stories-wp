@@ -3,7 +3,7 @@
   "private": true,
   "engines": {
     "node": ">= 16",
-    "npm": "~7"
+    "npm": ">= 7.3"
   },
   "exports": {
     "default": "./src/index.js"

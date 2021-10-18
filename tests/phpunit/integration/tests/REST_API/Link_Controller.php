@@ -2,6 +2,9 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 use WP_Error;
 use WP_REST_Request;
@@ -62,10 +65,13 @@ class Link_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );        
+		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
 
-		$this->controller = new \Google\Web_Stories\REST_API\Link_Controller();
+		$settings         = new Settings();
+		$this->controller = new \Google\Web_Stories\REST_API\Link_Controller(
+			new Story_Post_Type( $settings, new Experiments( $settings ) ) 
+		);
 
 	}
 

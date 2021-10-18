@@ -211,6 +211,7 @@ export function finishTranscoding(state, { payload: { id, file } }) {
             resource: {
               ...item.resource,
               isTranscoding: false,
+              isOptimized: true,
             },
           }
         : item
@@ -267,6 +268,7 @@ export function finishMuting(state, { payload: { id, file } }) {
             resource: {
               ...item.resource,
               isMuting: false,
+              isMuted: true,
             },
           }
         : item

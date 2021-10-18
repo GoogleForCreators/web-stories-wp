@@ -17,6 +17,9 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use WP_REST_Request;
 use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 
@@ -60,7 +63,10 @@ class Status_Check_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->controller = new \Google\Web_Stories\REST_API\Status_Check_Controller();
+		$settings         = new Settings();
+		$this->controller = new \Google\Web_Stories\REST_API\Status_Check_Controller(
+			new Story_Post_Type( $settings, new Experiments( $settings ) )
+		);
 	}
 
 	/**

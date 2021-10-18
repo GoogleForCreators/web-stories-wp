@@ -175,11 +175,13 @@ function PageAttachmentPanel() {
   );
 
   const handleChangeIcon = useCallback(
-    (image) => {
-      updatePageAttachment(
-        { icon: image?.sizes?.full?.url || image?.url },
-        true
-      );
+    /**
+     * Handle page attachment icon change.
+     *
+     * @param {import('@web-stories-wp/media').Resource} resource The new image.
+     */
+    (resource) => {
+      updatePageAttachment({ icon: resource?.src }, true);
     },
     [updatePageAttachment]
   );

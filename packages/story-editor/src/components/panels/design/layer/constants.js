@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export const LAYER_HEIGHT = 44;
+export const LAYER_HEIGHT = 35;

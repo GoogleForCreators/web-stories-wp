@@ -36,7 +36,7 @@ use Google\Web_Stories\Traits\Post_Type;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class KSES extends Service_Base {
+class KSES extends Service_Base implements HasRequirements {
 	use Post_Type;
 
 	/**
@@ -69,14 +69,16 @@ class KSES extends Service_Base {
 	}
 
 	/**
-	 * Get the action priority to use for registering the service.
+	 * Get the list of service IDs required for this service to be registered.
 	 *
-	 * @since 1.6.0
+	 * Needed because the story post type needs to be registered first.
 	 *
-	 * @return int Registration action priority to use.
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
 	 */
-	public static function get_registration_action_priority(): int {
-		return 11;
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
 	}
 
 	/**

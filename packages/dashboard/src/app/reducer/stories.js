@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import { STORY_STATUS } from '../../constants';
-import reshapeStoryObject from '../serializers/stories';
 
 export const ACTION_TYPES = {
   CREATING_STORY_FROM_TEMPLATE: 'creating_story_from_template',
@@ -126,36 +125,33 @@ function storyReducer(state, action) {
       };
 
     case ACTION_TYPES.FETCH_STORIES_SUCCESS: {
-      const fetchedStoriesById = [];
-      const reshapedStories = action.payload.stories.reduce((acc, current) => {
-        if (!current) {
-          return acc;
-        }
-        fetchedStoriesById.push(current.id);
-        acc[current.id] = reshapeStoryObject(current);
-        return acc;
-      }, {});
+      const {
+        fetchedStoryIds,
+        totalStoriesByStatus,
+        totalPages,
+        page,
+        stories: payloadStories,
+      } = action.payload;
+      const { storiesOrderById, stories } = state;
 
       const combinedStoryIds =
-        action.payload.page === 1
-          ? fetchedStoriesById
-          : [...state.storiesOrderById, ...fetchedStoriesById];
+        page === 1
+          ? fetchedStoryIds
+          : [...storiesOrderById, ...fetchedStoryIds];
 
       const uniqueStoryIds = [...new Set(combinedStoryIds)];
-
-      const stories = {
-        ...state.stories,
-        ...reshapedStories,
-      };
 
       return {
         ...state,
         error: {},
         storiesOrderById: uniqueStoryIds,
-        stories,
-        totalPages: action.payload.totalPages,
-        totalStoriesByStatus: action.payload.totalStoriesByStatus,
-        allPagesFetched: action.payload.page >= action.payload.totalPages,
+        stories: {
+          ...stories,
+          ...payloadStories,
+        },
+        totalPages: totalPages,
+        totalStoriesByStatus: totalStoriesByStatus,
+        allPagesFetched: page >= totalPages,
       };
     }
 

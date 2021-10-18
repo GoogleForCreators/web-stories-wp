@@ -21,25 +21,25 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Get user.
  *
- * @param {string} apiPath API path.
+ * @param {Object} config Configuration object.
  * @return {Promise} Request promise.
  */
-export function getUser(apiPath) {
+export function getUser(config) {
   return apiFetch({
-    path: apiPath,
+    path: config.api.currentUser,
   });
 }
 
 /**
  * Toggle web stories media optimization on settings page.
  *
+ * @param {Object} config Configuration object.
  * @param {string} currentUser Current user.
- * @param {string} apiPath API path.
  * @return {Promise} Request promise.
  */
-export function toggleWebStoriesMediaOptimization(currentUser, apiPath) {
+export function toggleWebStoriesMediaOptimization(config, currentUser) {
   return apiFetch({
-    path: apiPath,
+    path: config.api.currentUser,
     data: {
       meta: {
         web_stories_media_optimization:
@@ -53,13 +53,13 @@ export function toggleWebStoriesMediaOptimization(currentUser, apiPath) {
 /**
  * Handles the toggle web stories tracking opt in on settings page.
  *
+ * @param {Object} config Configuration object.
  * @param {Object} currentUser Current user object.
- * @param {string} apiPath API path.
  * @return {Promise} Request promise.
  */
-export function toggleWebStoriesTrackingOptIn(currentUser, apiPath) {
+export function toggleWebStoriesTrackingOptIn(config, currentUser) {
   return apiFetch({
-    path: apiPath,
+    path: config.api.currentUser,
     data: {
       meta: {
         web_stories_tracking_optin:

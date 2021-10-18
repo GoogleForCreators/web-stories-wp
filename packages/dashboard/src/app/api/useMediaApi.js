@@ -33,7 +33,6 @@ export default function useMediaApi() {
   const [state, dispatch] = useReducer(mediaReducer, defaultMediaState);
   const {
     apiCallbacks: { uploadMedia: uploadMediaCallback },
-    api: { media: mediaApi },
   } = useConfig();
 
   const uploadMedia = useCallback(
@@ -44,7 +43,7 @@ export default function useMediaApi() {
 
       try {
         // each file needs to be uploaded separately
-        const mediaResponse = await uploadMediaCallback(files, mediaApi);
+        const mediaResponse = await uploadMediaCallback(files);
 
         dispatch({
           type: MEDIA_ACTION_TYPES.ADD_MEDIA_SUCCESS,
@@ -65,7 +64,7 @@ export default function useMediaApi() {
         });
       }
     },
-    [uploadMediaCallback, mediaApi]
+    [uploadMediaCallback]
   );
 
   return {

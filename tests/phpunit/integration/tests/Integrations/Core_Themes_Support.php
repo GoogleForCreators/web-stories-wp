@@ -59,10 +59,9 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 	public function tear_down() {
 		remove_action( 'wp_body_open', [ $this->instance, 'embed_web_stories' ] );
 
-		if ( get_theme_support( 'web-stories' ) ) {
-			remove_theme_support( 'web-stories' );
-		}
+		remove_theme_support( 'web-stories' );
 
+		delete_option( Customizer::STORY_OPTION );
 		update_option( 'stylesheet', $this->stylesheet );
 
 		parent::tear_down();
@@ -92,7 +91,6 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 
 		$this->assertFalse( has_action( 'wp_body_open', [ $this->instance, 'embed_web_stories' ] ) );
 	}
-
 
 	public function test_get_supported_themes() {
 
@@ -133,6 +131,7 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 	 */
 	public function test_extend_theme_support_non_core_themes() {
 		update_option( 'stylesheet', '' );
+
 		$this->instance->register();
 
 		$this->assertFalse( get_theme_support( 'web-stories' ) );

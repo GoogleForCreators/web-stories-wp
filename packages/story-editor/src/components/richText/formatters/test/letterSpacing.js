@@ -33,15 +33,17 @@ jest.mock('../../styleManipulation', () => {
   };
 });
 
-getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
 describe('Color formatter', () => {
+  beforeAll(() => {
+    getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+  });
+
   beforeEach(() => {
     togglePrefixStyle.mockClear();
     getPrefixStylesInSelection.mockClear();
   });
-
-  const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
   describe('elementToStyle', () => {
     function setupFormatter(element) {
