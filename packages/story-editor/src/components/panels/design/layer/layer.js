@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
 import {
   Button,
@@ -48,8 +49,25 @@ const ActionsContainer = styled.div`
 
   --background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};
+  --background-color-opaque: ${({ theme }) =>
+    rgba(theme.colors.interactiveBg.secondaryNormal, 0)};
   background-color: var(--background-color);
-  box-shadow: 0px 0px 15px 20px var(--background-color);
+
+  ::before {
+    position: absolute;
+    content: '';
+    width: 32px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      to right,
+      var(--background-color-opaque),
+      var(--background-color)
+    );
+    pointer-events: none;
+  }
 `;
 
 const LayerContainer = styled.div.attrs({
@@ -93,6 +111,10 @@ const LayerButton = styled(Button).attrs({
       background: ${theme.colors.interactiveBg.secondaryPress};
       + * {
         --background-color: ${theme.colors.interactiveBg.secondaryPress};
+        --background-color-opaque: ${rgba(
+          theme.colors.interactiveBg.secondaryPress,
+          0
+        )};
         --selected-hover-color: ${theme.colors.interactiveFg.brandHover};
       }
     `}
@@ -103,6 +125,8 @@ const LayerButton = styled(Button).attrs({
   :hover + * {
     --background-color: ${({ theme }) =>
       theme.colors.interactiveBg.secondaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.secondaryHover, 0)};
   }
 
   :active {
@@ -111,6 +135,8 @@ const LayerButton = styled(Button).attrs({
   :active + * {
     --background-color: ${({ theme }) =>
       theme.colors.interactiveBg.secondaryPress};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.secondaryPress, 0)};
   }
 `;
 
@@ -142,7 +168,9 @@ const IconWrapper = styled.div`
   aspect-ratio: 1;
 
   svg {
+    position: relative;
     display: block;
+    width: 100%;
     color: ${({ theme }) => theme.colors.fg.secondary};
   }
 `;
