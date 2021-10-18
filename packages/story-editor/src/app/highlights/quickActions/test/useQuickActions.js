@@ -70,6 +70,10 @@ jest.mock('../../useHighlights', () => ({
   default: jest.fn(),
 }));
 
+jest.mock('../../../../utils/useApplyTextAutoStyle', () => ({
+  applyTextAutoStyle: jest.fn(),
+}));
+
 jest.mock('@web-stories-wp/design-system', () => ({
   ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: () => ({ showSnackbar: jest.fn() }),
@@ -289,7 +293,7 @@ describe('useQuickActions', () => {
     useStoryTriggersDispatch.mockReturnValue(mockDispatchStoryEvent);
   });
 
-  xdescribe('multiple elements selected', () => {
+  describe('multiple elements selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -308,7 +312,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('no element selected', () => {
+  describe('no element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -349,7 +353,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('empty background element selected', () => {
+  describe('empty background element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -390,7 +394,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('background image element is selected', () => {
+  describe('background image element is selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
