@@ -260,7 +260,7 @@ const videoQuickActions = [
 
 const videoQuickActionsWithClear = [...videoQuickActions, resetElementAction];
 
-xdescribe('useQuickActions', () => {
+describe('useQuickActions', () => {
   let highlight;
   const mockUseHighlights = useHighlights;
   const mockUseStory = useStory;
@@ -289,7 +289,7 @@ xdescribe('useQuickActions', () => {
     useStoryTriggersDispatch.mockReturnValue(mockDispatchStoryEvent);
   });
 
-  describe('multiple elements selected', () => {
+  xdescribe('multiple elements selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -308,7 +308,7 @@ xdescribe('useQuickActions', () => {
     });
   });
 
-  describe('no element selected', () => {
+  xdescribe('no element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -349,7 +349,7 @@ xdescribe('useQuickActions', () => {
     });
   });
 
-  describe('empty background element selected', () => {
+  xdescribe('empty background element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -390,7 +390,7 @@ xdescribe('useQuickActions', () => {
     });
   });
 
-  describe('background image element is selected', () => {
+  xdescribe('background image element is selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -435,7 +435,7 @@ xdescribe('useQuickActions', () => {
     });
   });
 
-  describe('background third party image element is selected with animation', () => {
+  xdescribe('background third party image element is selected with animation', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -470,7 +470,7 @@ xdescribe('useQuickActions', () => {
     });
   });
 
-  describe('background video element is selected', () => {
+  xdescribe('background video element is selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -521,7 +521,7 @@ xdescribe('useQuickActions', () => {
     });
   });
 
-  describe('foreground image element selected', () => {
+  xdescribe('foreground image element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -603,7 +603,7 @@ xdescribe('useQuickActions', () => {
     });
   });
 
-  describe('shape element selected', () => {
+  xdescribe('shape element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -672,7 +672,7 @@ xdescribe('useQuickActions', () => {
     });
   });
 
-  describe('text selected', () => {
+  xdescribe('text selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -756,7 +756,7 @@ xdescribe('useQuickActions', () => {
     });
   });
 
-  describe('video element selected', () => {
+  xdescribe('video element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
