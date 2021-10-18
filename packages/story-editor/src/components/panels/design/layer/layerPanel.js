@@ -64,7 +64,7 @@ function LayerPanel() {
         name="layer-panel"
         initialHeight={initialHeight}
         resizeable
-        aria-hidden
+        ariaHidden
         collapsedByDefault={false}
       >
         <StyledPanelTitle
