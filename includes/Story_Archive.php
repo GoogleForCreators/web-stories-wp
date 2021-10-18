@@ -81,6 +81,7 @@ class Story_Archive extends Service_Base {
 
 		add_filter( 'display_post_states', [ $this, 'filter_display_post_states' ], 10, 2 );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
+		add_action( 'transition_post_status', [ $this, 'on_delete_page' ], 10, 3 );
 	}
 
 	/**
@@ -128,7 +129,7 @@ class Story_Archive extends Service_Base {
 	public function update_archive_setting() {
 		$this->story_post_type->unregister_post_type();
 		$this->story_post_type->register_post_type();
-			
+
 		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
@@ -164,6 +165,32 @@ class Story_Archive extends Service_Base {
 		$query->is_archive           = false;
 		$query->is_singular          = true;
 		$query->is_page              = true;
+	}
+
+	/**
+	 * When the custom page is trash, reset the archive.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param string  $new_status New post status.
+	 * @param string  $old_status Old post status.
+	 * @param WP_Post $post       Post object.
+	 *
+	 * @return void
+	 */
+	public function on_delete_page( $new_status, $old_status, $post ) {
+		if ( $old_status === $new_status || 'page' !== $post->post_type || 'trash' !== $new_status ) {
+			return;
+		}
+
+		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		if ( $custom_archive_page_id !== $post->ID ) {
+			return;
+		}
+
+		$this->settings->update_setting( $this->settings::SETTING_NAME_ARCHIVE, 'default' );
+		$this->settings->update_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, 0 );
 	}
 
 	/**
