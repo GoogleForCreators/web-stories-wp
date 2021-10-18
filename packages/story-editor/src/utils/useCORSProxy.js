@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,34 +17,32 @@
 /**
  * External dependencies
  */
-import { getByLabelText, getAllByTestId } from '@testing-library/react';
+import { useCallback } from '@web-stories-wp/react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { AbstractPanel } from './abstractPanel';
+import { useAPI } from '../app';
 
-/**
- * The layers panel.
- */
-export class Layers extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
+function useCORSProxy() {
+  const {
+    actions: { getProxyUrl },
+  } = useAPI();
+  const enableCORSProxy = useFeature('enableCORSProxy');
+  const getProxiedUrl = useCallback(
+    (resource, src) => {
+      const { isExternal, id } = resource;
+      if (enableCORSProxy && !id && isExternal) {
+        return getProxyUrl(src);
+      }
+      return src;
+    },
+    [getProxyUrl, enableCORSProxy]
+  );
 
-  get panelBadge() {
-    return this.getByTestId('panel-badge');
-  }
-
-  get layersList() {
-    return getByLabelText(this.node.ownerDocument, /layers list/i);
-  }
-
-  get layers() {
-    return getAllByTestId(this.layersList, 'layer-option');
-  }
-
-  get resizeHandle() {
-    return getByLabelText(this.node, /Set panel height/i);
-  }
+  return {
+    getProxiedUrl,
+  };
 }
+export default useCORSProxy;

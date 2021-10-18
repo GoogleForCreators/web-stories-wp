@@ -26,6 +26,7 @@ import {
 /**
  * Internal dependencies
  */
+import useAPI from '../../api/useAPI';
 import useStory from '../../story/useStory';
 
 function useProcessMedia({
@@ -35,6 +36,9 @@ function useProcessMedia({
   updateMedia,
   deleteMediaElement,
 }) {
+  const {
+    actions: { getOptimizedMediaById },
+  } = useAPI();
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
@@ -145,7 +149,15 @@ function useProcessMedia({
         });
       };
 
-      const process = async () => {
+      (async () => {
+        const optimizedResource = await getOptimizedMediaById(resourceId);
+
+        // This video was optimized before, no need to optimize it again.
+        if (optimizedResource) {
+          updateExistingElements(resourceId, optimizedResource);
+          return;
+        }
+
         let file = false;
         try {
           file = await fetchRemoteFile(url, mimeType);
@@ -163,11 +175,11 @@ function useProcessMedia({
             web_stories_is_muted: oldResource.isMuted,
           },
         });
-      };
-      return process();
+      })();
     },
     [
       copyResourceData,
+      getOptimizedMediaById,
       uploadMedia,
       uploadVideoPoster,
       updateVideoIsMuted,

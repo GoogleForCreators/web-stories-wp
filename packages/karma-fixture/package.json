@@ -1,16 +1,16 @@
 {
-    "name": "@web-stories-wp/karma-fixture",
-    "private": true,
-    "engines": {
-        "node": ">= 16",
-        "npm": ">= 7.3"
-    },
-    "main": "./src/index.js",
-    "type": "module",
-    "dependencies": {
-        "@web-stories-wp/react": "*"
-    },
-    "devDependencies": {
-       "@testing-library/react": "^12.1.2"
-    }
+  "name": "@web-stories-wp/karma-fixture",
+  "private": true,
+  "engines": {
+    "node": ">= 16",
+    "npm": ">= 7.3"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "dependencies": {
+    "@web-stories-wp/react": "*"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^12.1.2"
+  }
 }

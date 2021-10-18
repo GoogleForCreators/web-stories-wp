@@ -19,7 +19,6 @@
  */
 import {
   createResource,
-  getFileNameFromUrl,
   getImageDimensions,
   getVideoDimensions,
   getVideoLength,
@@ -37,7 +36,6 @@ async function getResourceFromUrl(value, type) {
 
   // Add necessary data for video.
   const videoData = {};
-  const originalFileName = getFileNameFromUrl(value);
   if (isVideo) {
     const hasAudio = await hasVideoGotAudio(value);
     videoData.isMuted = !hasAudio;
@@ -48,7 +46,6 @@ async function getResourceFromUrl(value, type) {
   }
 
   return createResource({
-    alt: originalFileName,
     type,
     width,
     height,
