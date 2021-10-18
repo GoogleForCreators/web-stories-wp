@@ -24,6 +24,7 @@ import {
   BUTTON_TYPES,
   Icons,
   themeHelpers,
+  Tooltip,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -92,6 +93,7 @@ const LayerButton = styled(Button).attrs({
       background: ${theme.colors.interactiveBg.secondaryPress};
       + * {
         --background-color: ${theme.colors.interactiveBg.secondaryPress};
+        --selected-hover-color: ${theme.colors.interactiveFg.brandHover};
       }
     `}
 
@@ -154,6 +156,7 @@ const LayerContentContainer = styled.div`
 
 const LayerAction = styled(Button).attrs({
   type: BUTTON_TYPES.PLAIN,
+  tabIndex: -1,
 })`
   position: relative;
   aspect-ratio: 1;
@@ -184,9 +187,15 @@ const LayerAction = styled(Button).attrs({
     background: var(--background-color);
   }
 
-  :disabled,
-  :hover {
+  :disabled {
     color: ${({ theme }) => theme.colors.fg.secondary};
+  }
+
+  :hover {
+    color: var(
+      --selected-hover-color,
+      ${({ theme }) => theme.colors.fg.secondary}
+    );
   }
 
   & + & {
@@ -247,13 +256,15 @@ function Layer({ layer }) {
             <Icons.LockClosed />
           </LayerAction>
         ) : (
-          <LayerAction
-            aria-label={__('Delete', 'web-stories')}
-            aria-describedby={layerId}
-            onClick={() => deleteElementById({ elementId: layer.id })}
-          >
-            <Icons.Trash />
-          </LayerAction>
+          <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
+            <LayerAction
+              aria-label={__('Delete', 'web-stories')}
+              aria-describedby={layerId}
+              onClick={() => deleteElementById({ elementId: layer.id })}
+            >
+              <Icons.Trash />
+            </LayerAction>
+          </Tooltip>
         )}
       </ActionsContainer>
     </LayerContainer>
