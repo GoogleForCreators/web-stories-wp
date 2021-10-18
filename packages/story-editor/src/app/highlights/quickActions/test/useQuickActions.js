@@ -260,7 +260,7 @@ const videoQuickActions = [
 
 const videoQuickActionsWithClear = [...videoQuickActions, resetElementAction];
 
-describe('useQuickActions', () => {
+xdescribe('useQuickActions', () => {
   let highlight;
   const mockUseHighlights = useHighlights;
   const mockUseStory = useStory;
@@ -672,7 +672,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('text selected', () => {
+  describe('text selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
