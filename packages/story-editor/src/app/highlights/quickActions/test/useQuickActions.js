@@ -353,7 +353,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  describe('empty background element selected', () => {
+  xdescribe('empty background element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -394,7 +394,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  describe('background image element is selected', () => {
+  xdescribe('background image element is selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
