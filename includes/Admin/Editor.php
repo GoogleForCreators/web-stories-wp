@@ -175,7 +175,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @return string[] List of required services.
 	 */
 	public static function get_requirements(): array {
-		return [ 'page_template_post_type', 'story_post_type' ];
+		return [ 'story_post_type' ];
 	}
 
 	/**

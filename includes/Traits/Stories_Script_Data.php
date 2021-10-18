@@ -29,6 +29,7 @@
 namespace Google\Web_Stories\Traits;
 
 use Google\Web_Stories\Renderer\Stories\FieldStateFactory\Factory;
+use Google\Web_Stories\Services;
 
 /**
  * Trait Stories_Script_Data.
@@ -89,7 +90,11 @@ trait Stories_Script_Data {
 		];
 
 		$field_states = [];
-		$factory      = new Factory();
+		$injector = Services::get_injector();
+		if ( ! method_exists( $injector, 'make' ) ) {
+			return $field_states;
+		}
+		$factory = $injector->make( Factory::class );
 
 		foreach ( array_keys( $views ) as $view_type ) {
 			$field_state = $factory->get_field( (string) $view_type );

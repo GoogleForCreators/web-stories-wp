@@ -27,11 +27,27 @@ use Google\Web_Stories\Services;
 use Google\Web_Stories\Interfaces\Field;
 use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
 use Google\Web_Stories\Interfaces\FieldState;
+use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class BaseFieldState.
  */
 class BaseFieldState implements FieldState {
+
+	/**
+	 * @var bool|string
+	 */
+	protected $has_archive = false;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 */
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->has_archive = (bool) $story_post_type->get_has_archive();
+	}
+
 	/**
 	 * Image alignment FieldState.
 	 *
@@ -108,14 +124,11 @@ class BaseFieldState implements FieldState {
 	 * @return Field
 	 */
 	public function archive_link() {
-		$story_post_type = Services::get( 'story_post_type' );
-
-		$has_archive = (bool) $story_post_type->get_has_archive();
 		return new BaseField(
 			[
 				'label'  => __( 'Display Archive Link', 'web-stories' ),
-				'show'   => $has_archive,
-				'hidden' => ! $has_archive,
+				'show'   => $this->has_archive,
+				'hidden' => ! $this->has_archive,
 			]
 		);
 	}
