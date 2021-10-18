@@ -30,7 +30,7 @@ import useKeyboardHandlers from '../useKeyboardHandlers';
 
 const HEIGHT = 8;
 
-const DragArea = styled.div`
+const Handle = styled.div`
   border: 0;
   padding: 0;
   height: ${HEIGHT}px;
@@ -53,7 +53,7 @@ const DragArea = styled.div`
   }
 `;
 
-const Handle = styled.div`
+const DragBar = styled.div`
   position: absolute;
   width: 35px;
   height: 2px;
@@ -71,6 +71,7 @@ function DragHandle({
   handleExpandToHeightChange,
   handleDoubleClick,
   position,
+  showDragHandle,
   ...rest
 }) {
   const handle = useRef();
@@ -80,7 +81,7 @@ function DragHandle({
   return (
     // Disable reason: handled via useKeyboardHandlers.
     // eslint-disable-next-line styled-components-a11y/click-events-have-key-events
-    <DragArea
+    <Handle
       ref={handle}
       onClick={(e) => e.stopPropagation()}
       onDoubleClick={handleDoubleClick}
@@ -94,8 +95,8 @@ function DragHandle({
       aria-label={__('Set panel height', 'web-stories')}
       {...rest}
     >
-      <Handle />
-    </DragArea>
+      {showDragHandle && <DragBar />}
+    </Handle>
   );
 }
 
@@ -107,6 +108,7 @@ DragHandle.propTypes = {
   minHeight: PropTypes.number.isRequired,
   maxHeight: PropTypes.number.isRequired,
   position: PropTypes.oneOf(['top', 'bottom']),
+  showDragHandle: PropTypes.bool,
 };
 
 DragHandle.defaultProps = {

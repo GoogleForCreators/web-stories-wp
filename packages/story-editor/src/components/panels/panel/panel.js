@@ -53,6 +53,7 @@ function Panel({
   name,
   children,
   resizable = false,
+  showDragHandle,
   canCollapse = true,
   collapsedByDefault = true,
   initialHeight = null,
@@ -249,6 +250,7 @@ function Panel({
     state: {
       height,
       resizable,
+      showDragHandle,
       isCollapsed,
       panelContentId,
       panelTitleId,
@@ -288,6 +290,7 @@ Panel.propTypes = {
   initialHeight: PropTypes.number,
   maxHeight: PropTypes.number,
   resizable: PropTypes.bool,
+  showDragHandle: PropTypes.bool,
   canCollapse: PropTypes.bool,
   collapsedByDefault: PropTypes.bool,
   ariaLabel: PropTypes.string,

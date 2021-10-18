@@ -182,6 +182,7 @@ function Title({
       isCollapsed,
       height,
       resizable,
+      showDragHandle,
       panelContentId,
       panelTitleId,
       ariaHidden,
@@ -242,6 +243,7 @@ function Title({
           handleExpandToHeightChange={handleExpandToHeightChange}
           handleDoubleClick={resetHeight}
           tabIndex={ariaHidden ? -1 : 0}
+          showDragHandle={showDragHandle}
         />
       )}
       <Toggle
