@@ -703,13 +703,13 @@ describe('useQuickActions', () => {
         highlight: states.FONT,
       });
 
-      result.current[2].onClick(mockClickEvent);
+      result.current[3].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: TEXT_ELEMENT.id,
         highlight: states.ANIMATION,
       });
 
-      result.current[3].onClick(mockClickEvent);
+      result.current[4].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: TEXT_ELEMENT.id,
         highlight: states.LINK,
