@@ -33,7 +33,7 @@ export class Layers extends AbstractPanel {
   }
 
   get panelCollapseButton() {
-    return this.getByRole('button', { name: /^Layers$/ });
+    return this.getByRole('button', { name: /^Layers$/, hidden: true });
   }
 
   get panelBadge() {
