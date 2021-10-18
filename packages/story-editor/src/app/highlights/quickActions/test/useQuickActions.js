@@ -215,6 +215,11 @@ const textQuickActions = [
     Icon: LetterTLargeLetterTSmall,
   }),
   expect.objectContaining({
+    label: ACTIONS.AUTO_STYLE_TEXT.text,
+    onClick: expect.any(Function),
+    Icon: ColorBucket,
+  }),
+  expect.objectContaining({
     label: ACTIONS.ADD_ANIMATION.text,
     onClick: expect.any(Function),
     Icon: CircleSpeed,
@@ -223,11 +228,6 @@ const textQuickActions = [
     label: ACTIONS.ADD_LINK.text,
     onClick: expect.any(Function),
     Icon: Link,
-  }),
-  expect.objectContaining({
-    label: ACTIONS.AUTO_STYLE_TEXT.text,
-    onClick: expect.any(Function),
-    Icon: ColorBucket,
   }),
 ];
 const textQuickActionsWithClear = [...textQuickActions, resetElementAction];
@@ -728,7 +728,7 @@ describe('useQuickActions', () => {
 
       const { result } = renderHook(() => useQuickActions());
 
-      expect(result.current[4]).toBeUndefined();
+      expect(result.current[5]).toBeUndefined();
     });
 
     it('clicking `reset element` should update the element', () => {
@@ -748,7 +748,7 @@ describe('useQuickActions', () => {
       const { result } = renderHook(() => useQuickActions());
       expect(result.current).toStrictEqual(textQuickActionsWithClear);
 
-      result.current[4].onClick(mockClickEvent);
+      result.current[5].onClick(mockClickEvent);
       expect(mockUpdateElementsById).toHaveBeenCalledWith({
         elementIds: [TEXT_ELEMENT.id],
         properties: expect.any(Function),
