@@ -101,7 +101,7 @@ export async function getOptimizedMediaById(config, mediaId) {
   const result = await apiFetch({ path });
 
   if (result?.meta?.web_stories_optimized_id) {
-    return getMediaById(config, result?.meta?.web_stories_optimized_id);
+    return getMediaById(config, result.meta.web_stories_optimized_id);
   }
 
   return null;
