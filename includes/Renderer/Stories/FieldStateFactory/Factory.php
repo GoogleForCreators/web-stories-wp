@@ -45,7 +45,7 @@ class Factory implements FieldStateFactory {
 	/**
 	 * Injector instance.
 	 *
-	 * @var Injector|Service Locale instance.
+	 * @var Injector Locale instance.
 	 */
 	private $injector;
 
@@ -65,7 +65,7 @@ class Factory implements FieldStateFactory {
 	 *
 	 * @param string $view View Type.
 	 *
-	 * @return FieldState
+	 * @return FieldState|object
 	 */
 	public function get_field( $view = 'grid' ) {
 		switch ( $view ) {

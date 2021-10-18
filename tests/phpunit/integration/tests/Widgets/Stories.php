@@ -41,9 +41,10 @@ class Stories extends DependencyInjectedTestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$assets         = $this->injector->make( \Google\Web_Stories\Assets::class );
-		$story          = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
-		$this->instance = new \Google\Web_Stories\Widgets\Stories( $assets, $story );
+		$assets              = $this->injector->make( \Google\Web_Stories\Assets::class );
+		$story               = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$stories_script_data = $this->injector->make( \Google\Web_Stories\Stories_Script_Data::class );
+		$this->instance      = new \Google\Web_Stories\Widgets\Stories( $assets, $story, $stories_script_data );
 	}
 
 	/**

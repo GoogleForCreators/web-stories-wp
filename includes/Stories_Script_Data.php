@@ -26,18 +26,34 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Traits;
+namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Renderer\Stories\FieldStateFactory\Factory;
-use Google\Web_Stories\Services;
 
 /**
- * Trait Stories_Script_Data.
+ * class Stories_Script_Data.
  *
  * @package Google\Web_Stories
  */
-trait Stories_Script_Data {
-	use Layout;
+class Stories_Script_Data {
+
+	/**
+	 * Injector instance.
+	 *
+	 * @var Injector Locale instance.
+	 */
+	private $injector;
+
+	/**
+	 * Factory constructor.
+	 *
+	 * @param Injector $injector Injector instance.
+	 */
+	public function __construct( Injector $injector ) {
+		$this->injector = $injector;
+	}
+
 	/**
 	 * Returns data array for use in inline script.
 	 *
@@ -45,7 +61,7 @@ trait Stories_Script_Data {
 	 *
 	 * @return array
 	 */
-	private function get_script_data() : array {
+	public function get_script_data() : array {
 		$views      = $this->get_layouts();
 		$view_types = [];
 
@@ -74,7 +90,13 @@ trait Stories_Script_Data {
 	 *
 	 * @return array
 	 */
-	protected function fields_states() : array {
+	public function fields_states() : array {
+		$field_states = [];
+		$factory      = $this->injector->make( Factory::class );
+		if ( ! ( $factory instanceof Factory ) ) {
+			return $field_states;
+		}
+
 		$views = $this->get_layouts();
 
 		$fields = [
@@ -89,13 +111,6 @@ trait Stories_Script_Data {
 			'number_of_columns',
 		];
 
-		$field_states = [];
-		$injector     = Services::get_injector();
-		if ( ! method_exists( $injector, 'make' ) ) {
-			return $field_states;
-		}
-		$factory = $injector->make( Factory::class );
-
 		foreach ( array_keys( $views ) as $view_type ) {
 			$field_state = $factory->get_field( (string) $view_type );
 			foreach ( $fields as $field ) {
@@ -108,5 +123,21 @@ trait Stories_Script_Data {
 		}
 
 		return $field_states;
+	}
+
+	/**
+	 * Get supported layouts for web stories.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return mixed|void
+	 */
+	public function get_layouts() {
+		return [
+			'carousel' => __( 'Box Carousel', 'web-stories' ),
+			'circles'  => __( 'Circle Carousel', 'web-stories' ),
+			'grid'     => __( 'Grid', 'web-stories' ),
+			'list'     => __( 'List', 'web-stories' ),
+		];
 	}
 }

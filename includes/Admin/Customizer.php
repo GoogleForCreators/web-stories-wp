@@ -27,10 +27,10 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Settings;
+use Google\Web_Stories\Stories_Script_Data;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Traits\Layout;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
 use WP_Error;
@@ -43,7 +43,6 @@ use WP_Error;
  * @package Google\Web_Stories
  */
 class Customizer extends Service_Base {
-	use Layout;
 
 	/**
 	 * Customizer section slug.
@@ -87,21 +86,31 @@ class Customizer extends Service_Base {
 	private $story_post_type;
 
 	/**
+	 * Stories_Script_Data instance.
+	 *
+	 * @var Stories_Script_Data Stories_Script_Data instance.
+	 */
+	protected $stories_script_data;
+
+	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Settings        $settings        Settings instance.
-	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Settings            $settings            Settings instance.
+	 * @param Story_Post_Type     $story_post_type     Story_Post_Type instance.
+	 * @param Stories_Script_Data $stories_script_data Stories_Script_Data instance.
 	 *
 	 * @return void
 	 */
 	public function __construct(
 		Settings $settings,
-		Story_Post_Type $story_post_type
+		Story_Post_Type $story_post_type,
+		Stories_Script_Data $stories_script_data
 	) {
-		$this->settings        = $settings;
-		$this->story_post_type = $story_post_type;
+		$this->settings            = $settings;
+		$this->story_post_type     = $story_post_type;
+		$this->stories_script_data = $stories_script_data;
 	}
 
 	/**
@@ -483,7 +492,7 @@ class Customizer extends Service_Base {
 	 * @return array An array of view type choices.
 	 */
 	private function get_view_type_choices( array $view_type ) : array {
-		$view_type_choices = $this->get_layouts();
+		$view_type_choices = $this->stories_script_data->get_layouts();
 
 		if ( empty( $view_type ) ) {
 			return $view_type_choices;
