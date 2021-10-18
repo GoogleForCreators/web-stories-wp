@@ -29,6 +29,7 @@ import useHighlights from '../../useHighlights';
 import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
 import { useStory, useStoryTriggersDispatch } from '../../../story';
 import { ACTIONS } from '../constants';
+import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
 
 const {
   Bucket,
@@ -69,6 +70,8 @@ jest.mock('../../useHighlights', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
+
+jest.mock('../../../../utils/useApplyTextAutoStyle');
 
 jest.mock('@web-stories-wp/design-system', () => ({
   ...jest.requireActual('@web-stories-wp/design-system'),
@@ -266,6 +269,7 @@ describe('useQuickActions', () => {
   const mockUseStory = useStory;
   const mockDispatchStoryEvent = jest.fn();
   const mockUpdateElementsById = jest.fn();
+  const mockUseApplyTextAutoStyle = useApplyTextAutoStyle;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -275,6 +279,10 @@ describe('useQuickActions', () => {
       setHighlights: (value) => {
         highlight = value;
       },
+    }));
+
+    mockUseApplyTextAutoStyle.mockImplementation(() => ({
+      applyTextAutoStyle: jest.fn(),
     }));
 
     mockUseStory.mockReturnValue({
