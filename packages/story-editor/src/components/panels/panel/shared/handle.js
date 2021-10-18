@@ -28,10 +28,12 @@ import { __ } from '@web-stories-wp/i18n';
 import useDragHandlers from '../useDragHandlers';
 import useKeyboardHandlers from '../useKeyboardHandlers';
 
-const Handle = styled.div`
+const HEIGHT = 8;
+
+const DragArea = styled.div`
   border: 0;
   padding: 0;
-  height: 6px;
+  height: ${HEIGHT}px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,11 +46,21 @@ const Handle = styled.div`
   left: 0;
   right: 0;
   width: 100%;
+  border-bottom: 1px solid transparent;
 
   &:focus {
-    height: 5px;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.border.focus};
+    border-color: ${({ theme }) => theme.colors.border.focus};
   }
+`;
+
+const Handle = styled.div`
+  position: absolute;
+  width: 35px;
+  height: 2px;
+  top: ${HEIGHT - 4}px;
+  background: ${({ theme }) => theme.colors.bg.quaternary};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  cursor: inherit;
 `;
 
 function DragHandle({
@@ -68,7 +80,7 @@ function DragHandle({
   return (
     // Disable reason: handled via useKeyboardHandlers.
     // eslint-disable-next-line styled-components-a11y/click-events-have-key-events
-    <Handle
+    <DragArea
       ref={handle}
       onClick={(e) => e.stopPropagation()}
       onDoubleClick={handleDoubleClick}
@@ -81,7 +93,9 @@ function DragHandle({
       aria-valuemax={maxHeight}
       aria-label={__('Set panel height', 'web-stories')}
       {...rest}
-    />
+    >
+      <Handle />
+    </DragArea>
   );
 }
 
