@@ -680,7 +680,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('text selected', () => {
+  describe('text selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
