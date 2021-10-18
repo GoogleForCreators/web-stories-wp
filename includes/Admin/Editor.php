@@ -38,7 +38,6 @@ use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
-use Google\Web_Stories\Traits\Post_Type;
 use WP_Post;
 
 /**

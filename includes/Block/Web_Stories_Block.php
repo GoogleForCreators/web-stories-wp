@@ -30,8 +30,6 @@ use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Stories_Script_Data;
 
 /**

@@ -27,7 +27,6 @@ use WP_Widget;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Assets;
-use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Stories_Script_Data;
 
 /**

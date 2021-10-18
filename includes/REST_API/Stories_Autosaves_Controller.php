@@ -31,7 +31,6 @@ use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Post_Type;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
 use WP_REST_Controller;
