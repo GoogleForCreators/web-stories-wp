@@ -20,10 +20,6 @@
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies.
- */
 import {
   AdManagement,
   PublisherLogoSettings,
