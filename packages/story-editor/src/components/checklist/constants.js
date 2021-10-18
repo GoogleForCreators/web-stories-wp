@@ -42,6 +42,8 @@ const MIN_TAP_REGION_WIDTH = 48;
 export const MAX_LINKS_PER_PAGE = 3;
 const MAX_VIDEO_RESOLUTION = 720;
 const MIN_VIDEO_RESOLUTION = 480;
+export const MIN_VIDEO_HEIGHT = 480;
+export const MIN_VIDEO_WIDTH = 852;
 const MIN_VIDEO_FPS = 24;
 export const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
 export const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
@@ -273,15 +275,16 @@ export const DESIGN_COPY = {
     ),
   },
   videoResolutionTooLow: {
-    title: sprintf(
-      /* translators: %s: minimum video resolution. */
-      __('Increase video resolution to at least %s', 'web-stories'),
-      `${MIN_VIDEO_RESOLUTION}p`
-    ),
+    title: __('Increase video resolution', 'web-stories'),
     footer: sprintf(
-      /* translators: %s: minimum video resolution. */
-      __('Ensure your video has a minimum resolution of %s', 'web-stories'),
-      `${MIN_VIDEO_RESOLUTION}p`
+      /* translators: 1: minimum video resolution. 2: minimum video width. 3: minimum video height. */
+      __(
+        'Consider using a minimum resolution of %1$dp (%2$d×%3$dpx) to represent portrait videos.',
+        'web-stories'
+      ),
+      MIN_VIDEO_RESOLUTION,
+      MIN_VIDEO_WIDTH,
+      MIN_VIDEO_HEIGHT
     ),
   },
   videoTooLong: {
