@@ -74,7 +74,7 @@ export function getMedia(
  *
  * @param {Object} config Configuration object.
  * @param {number} mediaId Media ID.
- * @return {Promise} Media object promise.
+ * @return {Promise<import('@web-stories-wp/media').Resource>} Media object promise.
  */
 export function getMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
@@ -86,12 +86,34 @@ export function getMediaById(config, mediaId) {
 }
 
 /**
+ * Get the optimized variant of a given media resource.
+ *
+ * @param {Object} config Configuration object.
+ * @param {number} mediaId Media ID.
+ * @return {Promise<import('@web-stories-wp/media').Resource>} Media resource if found, null otherwise.
+ */
+export async function getOptimizedMediaById(config, mediaId) {
+  const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
+    context: 'edit',
+    _fields: 'meta.web_stories_optimized_id',
+  });
+
+  const result = await apiFetch({ path });
+
+  if (result?.meta?.web_stories_optimized_id) {
+    return getMediaById(config, result.meta.web_stories_optimized_id);
+  }
+
+  return null;
+}
+
+/**
  * Upload file to via REST API.
  *
  * @param {Object} config Configuration object.
  * @param {File} file Media File to Save.
  * @param {?Object} additionalData Additional data to include in the request.
- * @return {Promise} Media Object Promise.
+ * @return {Promise<import('@web-stories-wp/media').Resource>} Media resource.
  */
 export function uploadMedia(config, file, additionalData) {
   // Create upload payload
