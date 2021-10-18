@@ -611,7 +611,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('shape element selected', () => {
+  describe('shape element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
@@ -764,7 +764,7 @@ describe('useQuickActions', () => {
     });
   });
 
-  xdescribe('video element selected', () => {
+  describe('video element selected', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
