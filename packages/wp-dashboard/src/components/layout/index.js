@@ -22,11 +22,12 @@ import { InterfaceSkeleton } from '@web-stories-wp/dashboard';
  * Internal dependencies
  */
 import { useAdminSubMenu } from '../../effects';
+import EditorSettings from '../editorSettings';
 
 function Layout() {
   useAdminSubMenu();
 
-  return <InterfaceSkeleton />;
+  return <InterfaceSkeleton editorSettings={<EditorSettings />} />;
 }
 
 export default Layout;

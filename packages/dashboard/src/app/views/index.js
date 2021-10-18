@@ -15,6 +15,5 @@
  */
 
 export { default as MyStoriesView } from './myStories';
-export { EditorSettings as EditorSettingsView } from './editorSettings';
 export { default as ExploreTemplatesView } from './exploreTemplates';
 export { default as TemplateDetailsView } from './templateDetails';
