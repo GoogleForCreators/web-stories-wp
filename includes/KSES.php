@@ -112,7 +112,7 @@ class KSES extends Service_Base implements HasRequirements {
 			return $data;
 		}
 
-		if ( ! $this->story_post_type->get_cap( 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return $data;
 		}
 

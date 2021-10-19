@@ -145,7 +145,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function permissions_check() {
-		if ( ! $this->story_post_type->get_cap( 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new WP_Error(
 				'rest_forbidden',
 				__( 'Sorry, you are not allowed to manage publisher logos.', 'web-stories' ),

@@ -170,7 +170,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @return bool Whether the user has the capability.
 	 */
-	public function get_cap( string $cap ): bool {
+	public function has_cap( string $cap ): bool {
 		$capability_name = $this->get_cap_name( $cap );
 		$capability      = false;
 		if ( $capability_name ) {

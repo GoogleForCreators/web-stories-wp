@@ -415,7 +415,7 @@ class Editor extends Service_Base implements HasRequirements {
 			return;
 		}
 
-		if ( ! $this->story_post_type->get_cap( 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return;
 		}
 

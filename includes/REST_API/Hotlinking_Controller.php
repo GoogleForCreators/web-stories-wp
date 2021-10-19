@@ -381,7 +381,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function parse_url_permissions_check() {
-		if ( ! $this->story_post_type->get_cap( 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to insert external media.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 
