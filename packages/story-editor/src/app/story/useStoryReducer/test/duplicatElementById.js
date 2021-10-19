@@ -29,9 +29,9 @@ describe('duplicateElementById', () => {
           id: '111',
           animations: [],
           elements: [
-            { id: '123', isBackground: true },
-            { id: '456', x: 0, y: 0 },
-            { id: '789', x: 0, y: 0 },
+            { id: '123', isBackground: true, type: 'shape' },
+            { id: '456', x: 0, y: 0, type: 'shape' },
+            { id: '789', x: 0, y: 0, type: 'shape' },
           ],
         },
       ],
@@ -48,14 +48,19 @@ describe('duplicateElementById', () => {
           id: '111',
           animations: [],
           elements: [
-            { id: '123', isBackground: true },
-            { id: '456', x: 0, y: 0 },
-            {
+            expect.objectContaining({
+              id: '123',
+              isBackground: true,
+              type: 'shape',
+            }),
+            expect.objectContaining({ id: '456', x: 0, y: 0, type: 'shape' }),
+            expect.objectContaining({
               id: expect.any(String),
               x: expect.any(Number),
               y: expect.any(Number),
-            },
-            { id: '789', x: 0, y: 0 },
+              type: 'shape',
+            }),
+            expect.objectContaining({ id: '789', x: 0, y: 0, type: 'shape' }),
           ],
         },
       ],
@@ -72,9 +77,9 @@ describe('duplicateElementById', () => {
           id: '111',
           animations: [],
           elements: [
-            { id: '123', isBackground: true },
-            { id: '456', x: 0, y: 0 },
-            { id: '789', x: 0, y: 0 },
+            { id: '123', isBackground: true, type: 'shape' },
+            { id: '456', x: 0, y: 0, type: 'shape' },
+            { id: '789', x: 0, y: 0, type: 'shape' },
           ],
         },
       ],
@@ -94,11 +99,13 @@ describe('duplicateElementById', () => {
       pages: [
         {
           id: '111',
-          animations: [{ id: '1', targets: ['456'] }],
+          animations: [
+            { id: '1', targets: ['456'], type: 'wild_wacky_animation' },
+          ],
           elements: [
-            { id: '123', isBackground: true },
-            { id: '456', x: 0, y: 0 },
-            { id: '789', x: 0, y: 0 },
+            { id: '123', isBackground: true, type: 'shape' },
+            { id: '456', x: 0, y: 0, type: 'shape' },
+            { id: '789', x: 0, y: 0, type: 'shape' },
           ],
         },
       ],
@@ -124,14 +131,19 @@ describe('duplicateElementById', () => {
             },
           ],
           elements: [
-            { id: '123', isBackground: true },
-            { id: '456', x: 0, y: 0 },
-            {
+            expect.objectContaining({
+              id: '123',
+              isBackground: true,
+              type: 'shape',
+            }),
+            expect.objectContaining({ id: '456', x: 0, y: 0, type: 'shape' }),
+            expect.objectContaining({
               id: expect.any(String),
               x: expect.any(Number),
               y: expect.any(Number),
-            },
-            { id: '789', x: 0, y: 0 },
+              type: 'shape',
+            }),
+            expect.objectContaining({ id: '789', x: 0, y: 0, type: 'shape' }),
           ],
         },
       ],
@@ -147,9 +159,9 @@ describe('duplicateElementById', () => {
         {
           id: '111',
           elements: [
-            { id: '123', isBackground: true },
-            { id: '456', x: 0, y: 0 },
-            { id: '789', x: 0, y: 0 },
+            { id: '123', isBackground: true, type: 'shape' },
+            { id: '456', x: 0, y: 0, type: 'shape' },
+            { id: '789', x: 0, y: 0, type: 'shape' },
           ],
         },
       ],
@@ -157,13 +169,14 @@ describe('duplicateElementById', () => {
       selection: ['789', '456'],
     });
 
-    const result = duplicateElementById('456');
+    const result = duplicateElementById({ elementId: '456' });
     const initalElement = initialState.pages[0].elements.find(
       (el) => el.id === '456'
     );
     const newElement = result.pages[0].elements.find(
       (el) => !initialState.pages[0].elements.includes(el)
     );
+    expect(result.pages[0].elements).toHaveLength(4);
     expect(initalElement.x).not.toBe(newElement.x);
     expect(initalElement.y).not.toBe(newElement.y);
   });

@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { getPastedCoordinates } from '../../../../utils/copyPaste';
+import { duplicateElement } from '../../../../elements';
 
 function duplicateElementById(state, { elementId }) {
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
@@ -39,27 +35,19 @@ function duplicateElementById(state, { elementId }) {
     return state;
   }
 
-  const duplicatedElement = {
-    ...elementToDuplicate,
-    ...getPastedCoordinates(elementToDuplicate.x, elementToDuplicate.y),
-    id: uuidv4(),
-  };
-
-  const duplicatedAnimations = (state.animations || [])
-    .filter((animation) => animation.targets.includes(elementToDuplicate.id))
-    .map((animation) => ({
-      ...animation,
-      targets: [duplicatedElement.id],
-      id: uuidv4(),
-    }));
+  const { element, elementAnimations } = duplicateElement({
+    element: elementToDuplicate,
+    animations: oldPage.animations,
+    existingElements: oldPage.elements,
+  });
 
   const newPage = {
     ...oldPage,
-    animations: [...(oldPage.animations || []), ...duplicatedAnimations],
+    animations: [...(oldPage.animations || []), ...elementAnimations],
     elements: [
       ...oldPage.elements.slice(0, elementIndex),
       elementToDuplicate,
-      duplicatedElement,
+      element,
       ...oldPage.elements.slice(elementIndex + 1),
     ],
   };
