@@ -43,8 +43,8 @@ import { useTransformHandler } from '../transform';
 import { getElementMask } from '../../masks';
 import { MaskTypes } from '../../masks/constants';
 import useDoubleClick from '../../utils/useDoubleClick';
-import usePerformanceTracking from "../../utils/usePerformanceTracking";
-import {TRACKING_EVENTS} from "../../constants/performanceTrackingEvents";
+import usePerformanceTracking from '../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../constants/performanceTrackingEvents';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -167,7 +167,10 @@ function FrameElement({ element }) {
 
   usePerformanceTracking({
     node: maskDisabled ? elementRef.current : null,
-    eventData: TRACKING_EVENTS.SELECT_ELEMENT,
+    eventData: {
+      ...TRACKING_EVENTS.SELECT_ELEMENT,
+      label: element.type,
+    },
     eventType: 'mousedown',
   });
 

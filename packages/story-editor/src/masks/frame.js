@@ -174,7 +174,10 @@ export default function WithMask({
   const ref = useRef(null);
   usePerformanceTracking({
     node: ref.current,
-    eventData: TRACKING_EVENTS.SELECT_ELEMENT,
+    eventData: {
+      ...TRACKING_EVENTS.SELECT_ELEMENT,
+      label: element.type,
+    },
     eventType: 'mousedown',
   });
 
