@@ -33,15 +33,17 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+import {
+  useLayoutContext,
+  resolveRoute,
+  APP_ROUTES,
+} from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
-import bannerBg from '../../../images/analytics-banner-bg.png';
-import { useLayoutContext } from '../../../components';
-import { APP_ROUTES } from '../../../constants';
-import { resolveRoute } from '../../router';
-import useTelemetryOptIn from './useTelemetryOptIn';
+import bannerBg from '../../images/analytics-banner-bg.png';
+import useTelemetryOptIn from '../../effects/useTelemetryOptIn';
 
 const Label = styled.label.attrs({ htmlFor: 'telemetry-banner-opt-in' })`
   display: flex;

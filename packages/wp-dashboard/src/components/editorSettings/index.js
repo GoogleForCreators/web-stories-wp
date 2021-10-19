@@ -26,13 +26,12 @@ import {
   MIN_IMG_HEIGHT,
   useConfig,
   useApi,
-  useTelemetryOptIn,
-  useMediaOptimization,
 } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
+import { useTelemetryOptIn, useMediaOptimization } from '../../effects';
 import AdManagement from './adManagement';
 import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';

@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import { useCallback, useState, useEffect } from '@web-stories-wp/react';
 import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
 import { useSnackbar, localStore } from '@web-stories-wp/design-system';
+import { useApi, useRouteHistory, APP_ROUTES } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
-import useApi from '../../api/useApi';
-import { useRouteHistory } from '../../router';
-import { APP_ROUTES } from '../../../constants';
-import { SUCCESS } from '../../textContent';
+import { SUCCESS } from '../constants';
 
 // The value associated with this key indicates if the user has interacted with
 // the banner previously. If they have, we do not show the banner again.

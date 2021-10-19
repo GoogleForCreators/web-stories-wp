@@ -20,12 +20,12 @@
 import { useCallback } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@web-stories-wp/design-system';
+import { useApi } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
-import useApi from '../../api/useApi';
-import { SUCCESS } from '../../textContent';
+import { SUCCESS } from '../constants';
 
 export default function useMediaOptimization() {
   const { showSnackbar } = useSnackbar();

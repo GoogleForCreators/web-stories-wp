@@ -23,7 +23,6 @@ export * from './app';
 export * from './app/router';
 export * from './constants';
 export * from './components';
-export * from './app/views/editorSettings';
 export * from './app/views/shared';
 export * from './testUtils';
 export { GlobalStyle as DashboardGlobalStyle } from './theme';

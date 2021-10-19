@@ -22,7 +22,7 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import { TelemetryOptInBanner } from '../telemetryBanner';
+import { TelemetryOptInBanner } from '..';
 
 export default {
   title: 'Dashboard/Views/Shared/TelemetryBanner',

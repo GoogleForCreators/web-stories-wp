@@ -20,12 +20,12 @@
 import { useState } from '@web-stories-wp/react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { renderWithProviders } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
-import { TelemetryOptInBanner } from '../telemetryBanner';
-import { renderWithProviders } from '../../../../testUtils';
+import { TelemetryOptInBanner } from '..';
 
 function TelemetryBannerTestContainer(props) {
   const [state, setState] = useState({

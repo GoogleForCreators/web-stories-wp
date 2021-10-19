@@ -27,6 +27,7 @@ import EditorSettings from '../editorSettings';
 function Layout() {
   useAdminSubMenu();
 
+  // @todo create a provider for telemetryBannerOpen.
   return <InterfaceSkeleton editorSettings={<EditorSettings />} />;
 }
 

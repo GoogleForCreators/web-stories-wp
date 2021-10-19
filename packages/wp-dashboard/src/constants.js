@@ -34,3 +34,9 @@ export const LEFT_RAIL_SECONDARY_NAVIGATION = [
     trackingEvent: 'click_support_page',
   },
 ];
+
+export const SUCCESS = {
+  SETTINGS: {
+    UPDATED: __('Setting saved.', 'web-stories'),
+  },
+};
