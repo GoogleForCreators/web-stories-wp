@@ -394,7 +394,10 @@ trait Sanitization_Utils {
 
 			$entries_by_widths = [];
 
-			$entries = explode( ',', $srcset );
+			$matches = [];
+			preg_match_all( '/((?<entry>[^ ]+ [\d]+w),?)/', $srcset, $matches );
+
+			$entries = $matches['entry'] ?? [];
 
 			foreach ( $entries as $entry ) {
 				$entry_data = explode( ' ', $entry );
