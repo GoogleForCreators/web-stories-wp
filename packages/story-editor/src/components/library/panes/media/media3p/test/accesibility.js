@@ -69,7 +69,7 @@ describe('automated accessibility tests', () => {
     expect(results).toHaveNoViolations();
   });
 
-  it('should render XXXXXx without accessibility violations', async () => {
+  it('should render ProviderTab without accessibility violations', async () => {
     const { container } = renderWithTheme(
       <ProviderTab name="jane of ark" isActive />
     );
