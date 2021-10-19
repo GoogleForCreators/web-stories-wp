@@ -45,7 +45,7 @@ class Factory implements FieldStateFactory {
 	/**
 	 * Injector instance.
 	 *
-	 * @var Injector Locale instance.
+	 * @var Injector Injector instance.
 	 */
 	private $injector;
 
