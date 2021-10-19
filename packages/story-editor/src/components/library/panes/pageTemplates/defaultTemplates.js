@@ -42,12 +42,12 @@ import DefaultTemplateList from './defaultTemplateList';
 const ActionRow = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 8px 16px 22px 16px;
+  margin: 0px 16px 22px 16px;
 `;
 
 const PageTemplatesParentContainer = styled.div`
   ${virtualPaneContainer};
-  margin-top: 18px;
+  margin-top: 26px;
   overflow-x: hidden;
   overflow-y: scroll;
 `;
@@ -124,7 +124,6 @@ function DefaultTemplates({ pageSize }) {
       search_category: key,
     });
   }, []);
-
   return (
     <>
       <ChipGroup
