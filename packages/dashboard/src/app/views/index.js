@@ -16,3 +16,4 @@
 
 export { default as MyStoriesView } from './myStories';
 export { default as TemplateDetailsView } from './templateDetails';
+export { default as ExploreTemplatesView } from './exploreTemplates';
