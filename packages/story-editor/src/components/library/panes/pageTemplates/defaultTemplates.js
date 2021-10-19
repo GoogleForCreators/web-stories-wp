@@ -88,13 +88,14 @@ function DefaultTemplates({ pageSize }) {
     () =>
       pageTemplates.reduce((pages, template) => {
         const templatePosters = Object.values(template.postersByPage).map(
-          (poster, index) => ({
-            id: `${template.slug}_${index}`,
-            title: template.title,
-            story: template.pages[index],
-            type: poster.type,
-            ...poster,
-          })
+          (poster, index) => {
+            return {
+              id: `${template.slug}_${index}`,
+              title: template.title,
+              story: template.pages[index],
+              ...poster,
+            };
+          }
         );
 
         const templatePages = templatePosters.reduce((acc, posterByPage) => {

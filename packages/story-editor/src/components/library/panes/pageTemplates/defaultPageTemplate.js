@@ -61,10 +61,6 @@ const PosterImg = styled.img`
   width: 100%;
 `;
 
-PageTemplateTitleContainer.propTypes = {
-  isActive: PropTypes.bool,
-};
-
 const DefaultPageTemplate = forwardRef(
   ({ page, columnWidth, isActive, ...rest }, ref) => {
     return (
@@ -75,7 +71,7 @@ const DefaultPageTemplate = forwardRef(
           tabIndex={isActive ? 0 : -1}
           {...rest}
         >
-          {page.webp && (
+          {page.png && (
             <PosterImg
               src={page.png}
               alt={page.title}
