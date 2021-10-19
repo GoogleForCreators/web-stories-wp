@@ -228,16 +228,18 @@ export function TelemetryBannerContainer(props) {
 }
 
 export default function TelemetryBanner() {
-  const { state } = useRouteHistory();
+  const { currentPath } = useRouteHistory(({ state }) => ({
+    currentPath: state.currentPath,
+  }));
   const headerEl = useRef(null);
-  const [showBanner, setBannerVisibility] = useState(false);
+  const [, forceUpdate] = useState(false);
 
   useEffect(() => {
-    headerEl.current = document.getElementById('#body-view-options-header');
-    setBannerVisibility(Boolean(headerEl.current));
-  }, [state.currentPath, setBannerVisibility]);
+    headerEl.current = document.getElementById('body-view-options-header');
+    forceUpdate((value) => !value);
+  }, [currentPath, forceUpdate]);
 
-  return showBanner
+  return headerEl.current
     ? createPortal(<TelemetryBannerContainer />, headerEl.current)
     : null;
 }
