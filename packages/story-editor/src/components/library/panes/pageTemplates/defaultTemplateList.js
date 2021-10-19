@@ -73,13 +73,17 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
     [addPage, showSnackbar]
   );
 
-  const handleFocus = useCallback(({ id }) => {
+  const handleFocus = useCallback((id) => {
     setCurrentPageId(id);
   }, []);
 
   useEffect(() => {
-    if (pages.length > 0 && !currentPageId) {
-      setCurrentPageId(pages[0].id);
+    if (pages.length > 0) {
+      // Set `currentPageId` to first item during initial load, or if we have filtered pages by type
+      // since the previous `currentPageId` may no longer be present.
+      if (!currentPageId || !pages.some((page) => page.id === currentPageId)) {
+        setCurrentPageId(pages[0].id);
+      }
     }
   }, [currentPageId, pages]);
 
@@ -106,7 +110,7 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
             data-testid={`page_template_${page.id}`}
             page={page}
             pageSize={pageSize}
-            onFocus={handleFocus}
+            onFocus={() => handleFocus(page.id)}
             isActive={currentPageId === page.id}
             onClick={() => handlePageClick(page.story)}
             columnWidth={pageSize.width}
