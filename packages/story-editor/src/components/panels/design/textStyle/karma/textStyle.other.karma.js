@@ -22,27 +22,11 @@ import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import useInsertElement from '../../../../canvas/useInsertElement';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 import { useStory } from '../../../../../app/story';
 import { Fixture } from '../../../../../karma/fixture';
 
 describe('Text Style Panel', () => {
   let fixture;
-
-  const addText = async (extraProps = null) => {
-    const insertElement = await fixture.renderHook(() => useInsertElement());
-    await fixture.act(() =>
-      insertElement('text', {
-        font: TEXT_ELEMENT_DEFAULT_FONT,
-        content: 'hello world!',
-        x: 40,
-        y: 40,
-        width: 250,
-        ...extraProps,
-      })
-    );
-  };
 
   beforeEach(async () => {
     fixture = new Fixture();
@@ -53,9 +37,10 @@ describe('Text Style Panel', () => {
   afterEach(() => {
     fixture.restore();
   });
+
   describe('Panel state', () => {
     beforeEach(async () => {
-      await addText();
+      await fixture.events.click(fixture.editor.library.textAdd);
     });
 
     it('should have the style panel always expanded', async () => {
@@ -143,7 +128,7 @@ describe('Text Style Panel', () => {
 
   describe('Font controls', () => {
     beforeEach(async () => {
-      await addText();
+      await fixture.events.click(fixture.editor.library.textAdd);
     });
 
     it('should allow whole number font sizes', async () => {
@@ -182,6 +167,9 @@ describe('Text Style Panel', () => {
   });
 
   describe('Font picker', () => {
+    beforeEach(async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+    });
     const getOptions = () => {
       return fixture.screen
         .getByRole('listbox', {
