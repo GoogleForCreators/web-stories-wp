@@ -146,7 +146,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`clicking the \`${ACTIONS.REPLACE_MEDIA.text}\` button should select select the media tab and focus the media tab`, async () => {
+    it(`clicking the \`${ACTIONS.REPLACE_MEDIA.text}\` button should select the media tab and focus the media tab`, async () => {
       // hide 3p modal before we click the quick action
       await fixture.events.click(fixture.editor.library.media3pTab);
       // tab to dismiss button and press enter
@@ -498,7 +498,7 @@ describe('Quick Actions integration', () => {
       await fixture.events.click(canvasElementWrapperId);
     });
 
-    it(`clicking the \`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` button should select select the media tab and focus the media tab`, async () => {
+    it(`clicking the \`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` button should select the media tab and focus the media tab`, async () => {
       // The "Replace background media" quick action also triggers a help center tip which steals focus.
       // Open the tip now to avoid the focus stealing after the quick menu button is clicked.
       const { actions } = await fixture.renderHook(() => useHelpCenter());
