@@ -314,7 +314,7 @@ describe('Right Click Menu integration', () => {
     pages[0].elements.map((elem, index) => {
       // ids won't match
       const { id, ...originalElement } = elem;
-      const { id: newId, ...newElement } = pages[1].elements[index];
+      const { id: newId, basedOn, ...newElement } = pages[1].elements[index];
 
       expect(originalElement).toEqual(newElement);
     });
