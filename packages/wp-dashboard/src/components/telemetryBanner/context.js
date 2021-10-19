@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { InterfaceSkeleton } from '@web-stories-wp/dashboard';
+import { createContext } from '@web-stories-wp/react';
 
-/**
- * Internal dependencies
- */
-import { useAdminSubMenu } from '../../effects';
-import EditorSettings from '../editorSettings';
-import TelemetryProvider from '../telemetryBanner/telemetryProvider';
-
-function Layout() {
-  useAdminSubMenu();
-
-  return (
-    <TelemetryProvider>
-      <InterfaceSkeleton editorSettings={<EditorSettings />} />
-    </TelemetryProvider>
-  );
-}
-
-export default Layout;
+export default createContext({ state: {}, actions: {} });

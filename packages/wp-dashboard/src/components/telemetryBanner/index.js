@@ -33,17 +33,14 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
-import {
-  useLayoutContext,
-  resolveRoute,
-  APP_ROUTES,
-} from '@web-stories-wp/dashboard';
+import { resolveRoute, APP_ROUTES } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import bannerBg from '../../images/analytics-banner-bg.png';
 import useTelemetryOptIn from '../../effects/useTelemetryOptIn';
+import useTelemetry from './useTelemetry';
 
 const Label = styled.label.attrs({ htmlFor: 'telemetry-banner-opt-in' })`
   display: flex;
@@ -193,7 +190,7 @@ export default function TelemetryBannerContainer(props) {
 
   const {
     actions: { setTelemetryBannerOpen },
-  } = useLayoutContext();
+  } = useTelemetry();
 
   const previousBannerVisible = useRef(bannerVisible);
 
