@@ -48,7 +48,6 @@ abstract class Embed_Base extends Service_Base {
 	 */
 	protected $assets;
 
-
 	/**
 	 * Embed Base constructor.
 	 *
