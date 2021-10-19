@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 export { default as MyStoriesView } from './myStories';
-export { default as TemplateDetailsView } from './templateDetails';
 export { default as ExploreTemplatesView } from './exploreTemplates';
+export { default as TemplateDetailsView } from './templateDetails';

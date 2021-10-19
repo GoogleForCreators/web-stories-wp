@@ -19,17 +19,15 @@
  */
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import styled from 'styled-components';
 import {
-  useTelemetryOptIn,
-  useMediaOptimization,
-  StandardViewContentGutter,
-  Layout,
   PageHeading,
+  Layout,
   MIN_IMG_WIDTH,
   MIN_IMG_HEIGHT,
   useConfig,
   useApi,
+  useTelemetryOptIn,
+  useMediaOptimization,
 } from '@web-stories-wp/dashboard';
 
 /**
@@ -42,17 +40,7 @@ import MediaOptimizationSettings from './mediaOptimization';
 import VideoCacheSettings from './videoCache';
 import ArchiveSettings from './archive';
 import GoogleAnalyticsSettings from './googleAnalytics';
-
-const Wrapper = styled.div``;
-
-const Main = styled(StandardViewContentGutter)`
-  display: flex;
-  flex-direction: column;
-  padding-top: 36px;
-  margin-top: 20px;
-  margin-bottom: 56px;
-  max-width: 945px;
-`;
+import { Wrapper, Main } from './components';
 
 function EditorSettings() {
   const {

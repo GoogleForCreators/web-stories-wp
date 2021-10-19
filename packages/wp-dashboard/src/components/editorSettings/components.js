@@ -30,6 +30,18 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
 } from '@web-stories-wp/design-system';
+import { StandardViewContentGutter } from '@web-stories-wp/dashboard';
+
+export const Wrapper = styled.div``;
+
+export const Main = styled(StandardViewContentGutter)`
+  display: flex;
+  flex-direction: column;
+  padding-top: 36px;
+  margin-top: 20px;
+  margin-bottom: 56px;
+  max-width: 945px;
+`;
 
 export const SettingForm = styled.form`
   display: grid;
