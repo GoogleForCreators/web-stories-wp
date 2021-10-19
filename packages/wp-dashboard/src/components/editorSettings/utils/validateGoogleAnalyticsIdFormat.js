@@ -14,5 +14,10 @@
  * limitations under the License.
  */
 
-export { default as MyStoriesView } from './myStories';
-export { default as TemplateDetailsView } from './templateDetails';
+// GA4 measurement ID format is not yet supported in AMP.
+// See https://github.com/google/web-stories-wp/issues/6479
+const idFormatRegex = /^ua-\d+-\d+$/;
+
+export default function validateGoogleAnalyticsIdFormat(value = '') {
+  return Boolean(value.toLowerCase().match(idFormatRegex));
+}

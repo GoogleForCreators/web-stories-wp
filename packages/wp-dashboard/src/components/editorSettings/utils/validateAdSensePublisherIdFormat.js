@@ -14,5 +14,8 @@
  * limitations under the License.
  */
 
-export { default as MyStoriesView } from './myStories';
-export { default as TemplateDetailsView } from './templateDetails';
+const adSensePublisherIdFormatRegex = /^(ca-)?pub-\d{16}$/;
+
+export default function validateAdSensePublisherIdFormat(value = '') {
+  return Boolean(value.toLowerCase().match(adSensePublisherIdFormatRegex));
+}

@@ -21,13 +21,6 @@ import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import {
-  AdManagement,
-  PublisherLogoSettings,
-  TelemetrySettings,
-  MediaOptimizationSettings,
-  VideoCacheSettings,
-  ArchiveSettings,
-  GoogleAnalyticsSettings,
   useTelemetryOptIn,
   useMediaOptimization,
   StandardViewContentGutter,
@@ -38,6 +31,17 @@ import {
   useConfig,
   useApi,
 } from '@web-stories-wp/dashboard';
+
+/**
+ * Internal dependencies
+ */
+import AdManagement from './adManagement';
+import PublisherLogoSettings from './publisherLogo';
+import TelemetrySettings from './telemetry';
+import MediaOptimizationSettings from './mediaOptimization';
+import VideoCacheSettings from './videoCache';
+import ArchiveSettings from './archive';
+import GoogleAnalyticsSettings from './googleAnalytics';
 
 const Wrapper = styled.div``;
 

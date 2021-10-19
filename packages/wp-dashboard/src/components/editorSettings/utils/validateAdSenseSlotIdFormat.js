@@ -14,5 +14,8 @@
  * limitations under the License.
  */
 
-export { default as MyStoriesView } from './myStories';
-export { default as TemplateDetailsView } from './templateDetails';
+const adSenseSlotIdFormatRegex = /^\d{10}$/;
+
+export default function validateAdSenseSlotIdFormat(value = '') {
+  return Boolean(value.toLowerCase().match(adSenseSlotIdFormatRegex));
+}

@@ -14,5 +14,9 @@
  * limitations under the License.
  */
 
-export { default as MyStoriesView } from './myStories';
-export { default as TemplateDetailsView } from './templateDetails';
+// /123456789/a4a/amp_story_dfp_example
+const adManagerSlotIdFormatRegex = /^\/\d+(,\d+)?(\/[\w_-]+)*$/;
+
+export default function validateAdManagerSlotIdFormat(value = '') {
+  return Boolean(value.toLowerCase().match(adManagerSlotIdFormatRegex));
+}
