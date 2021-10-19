@@ -23,7 +23,6 @@
 
 namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
-use Google\Web_Stories\Services;
 use Google\Web_Stories\Interfaces\Field;
 use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
 use Google\Web_Stories\Interfaces\FieldState;
@@ -35,7 +34,9 @@ use Google\Web_Stories\Story_Post_Type;
 class BaseFieldState implements FieldState {
 
 	/**
-	 * @var bool|string
+	 * Post type has archive.
+	 *
+	 * @var bool
 	 */
 	protected $has_archive = false;
 

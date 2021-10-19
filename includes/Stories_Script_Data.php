@@ -32,7 +32,7 @@ use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Renderer\Stories\FieldStateFactory\Factory;
 
 /**
- * class Stories_Script_Data.
+ * Class Stories_Script_Data.
  *
  * @package Google\Web_Stories
  */
@@ -41,7 +41,7 @@ class Stories_Script_Data {
 	/**
 	 * Injector instance.
 	 *
-	 * @var Injector Locale instance.
+	 * @var Injector Injector instance.
 	 */
 	private $injector;
 
