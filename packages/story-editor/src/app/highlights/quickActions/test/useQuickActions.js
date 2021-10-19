@@ -29,11 +29,13 @@ import useHighlights from '../../useHighlights';
 import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
 import { useStory, useStoryTriggersDispatch } from '../../../story';
 import { ACTIONS } from '../constants';
+import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
 
 const {
   Bucket,
   Captions,
   CircleSpeed,
+  ColorBucket,
   Eraser,
   LetterTLargeLetterTSmall,
   LetterTPlus,
@@ -68,6 +70,8 @@ jest.mock('../../useHighlights', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
+
+jest.mock('../../../../utils/useApplyTextAutoStyle');
 
 jest.mock('@web-stories-wp/design-system', () => ({
   ...jest.requireActual('@web-stories-wp/design-system'),
@@ -214,6 +218,11 @@ const textQuickActions = [
     Icon: LetterTLargeLetterTSmall,
   }),
   expect.objectContaining({
+    label: ACTIONS.AUTO_STYLE_TEXT.text,
+    onClick: expect.any(Function),
+    Icon: ColorBucket,
+  }),
+  expect.objectContaining({
     label: ACTIONS.ADD_ANIMATION.text,
     onClick: expect.any(Function),
     Icon: CircleSpeed,
@@ -260,6 +269,7 @@ describe('useQuickActions', () => {
   const mockUseStory = useStory;
   const mockDispatchStoryEvent = jest.fn();
   const mockUpdateElementsById = jest.fn();
+  const mockUseApplyTextAutoStyle = useApplyTextAutoStyle;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -269,6 +279,10 @@ describe('useQuickActions', () => {
       setHighlights: (value) => {
         highlight = value;
       },
+    }));
+
+    mockUseApplyTextAutoStyle.mockImplementation(() => ({
+      applyTextAutoStyle: jest.fn(),
     }));
 
     mockUseStory.mockReturnValue({
@@ -697,13 +711,13 @@ describe('useQuickActions', () => {
         highlight: states.FONT,
       });
 
-      result.current[2].onClick(mockClickEvent);
+      result.current[3].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: TEXT_ELEMENT.id,
         highlight: states.ANIMATION,
       });
 
-      result.current[3].onClick(mockClickEvent);
+      result.current[4].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: TEXT_ELEMENT.id,
         highlight: states.LINK,
@@ -722,7 +736,7 @@ describe('useQuickActions', () => {
 
       const { result } = renderHook(() => useQuickActions());
 
-      expect(result.current[4]).toBeUndefined();
+      expect(result.current[5]).toBeUndefined();
     });
 
     it('clicking `reset element` should update the element', () => {
@@ -742,7 +756,7 @@ describe('useQuickActions', () => {
       const { result } = renderHook(() => useQuickActions());
       expect(result.current).toStrictEqual(textQuickActionsWithClear);
 
-      result.current[4].onClick(mockClickEvent);
+      result.current[5].onClick(mockClickEvent);
       expect(mockUpdateElementsById).toHaveBeenCalledWith({
         elementIds: [TEXT_ELEMENT.id],
         properties: expect.any(Function),
