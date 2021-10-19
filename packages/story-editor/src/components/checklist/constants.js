@@ -278,7 +278,7 @@ export const DESIGN_COPY = {
     footer: sprintf(
       /* translators: 1: minimum video resolution. 2: minimum video width x minimum video height in pixels. */
       __(
-        'Consider using a minimum resolution of %1$d (%2$d) to represent portrait videos',
+        'Consider using a minimum resolution of %1$s (%2$s) to represent portrait videos',
         'web-stories'
       ),
       `${MIN_VIDEO_RESOLUTION}p`,
