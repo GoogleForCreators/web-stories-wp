@@ -220,7 +220,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @return false|mixed Whether to use the block editor.
 	 */
 	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
-		if ( $this->story_post_type::POST_TYPE_SLUG === $post_type ) {
+		if ( $this->story_post_type->get_slug() === $post_type ) {
 			return false;
 		}
 

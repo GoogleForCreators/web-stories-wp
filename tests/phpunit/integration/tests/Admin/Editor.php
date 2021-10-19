@@ -126,7 +126,7 @@ class Editor extends DependencyInjectedTestCase {
 
 	public function set_up() {
 		parent::set_up();
-		
+
 		$this->experiments             = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$this->meta_boxes              = $this->injector->make( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$this->decoder                 = $this->injector->make( \Google\Web_Stories\Decoder::class );
@@ -167,7 +167,7 @@ class Editor extends DependencyInjectedTestCase {
 		);
 		$this->assets->expects( $this->once() )->method( 'remove_admin_style' )->with( [ 'forms' ] );
 
-		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$GLOBALS['current_screen'] = convert_to_screen( $this->story_post_type->get_slug() );
 
 		$this->instance->admin_enqueue_scripts( 'post.php' );
 	}
@@ -250,7 +250,7 @@ class Editor extends DependencyInjectedTestCase {
 	public function test_filter_use_block_editor_for_post_type() {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
-		$use_block_editor = $this->instance->filter_use_block_editor_for_post_type( true, \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$use_block_editor = $this->instance->filter_use_block_editor_for_post_type( true, $this->story_post_type->get_slug() );
 		$this->assertFalse( $use_block_editor );
 	}
 
