@@ -228,18 +228,14 @@ export function TelemetryBannerContainer(props) {
 }
 
 export default function TelemetryBanner() {
-  const { currentPath } = useRouteHistory(({ state }) => ({
-    currentPath: state.currentPath,
-  }));
+  const { currentPath } = useRouteHistory( ( { state } ) => ( { currentPath: state.currentPath } ));
   const headerEl = useRef(null);
   const [, forceUpdate] = useState(false);
 
   useEffect(() => {
     headerEl.current = document.getElementById('body-view-options-header');
-    forceUpdate((value) => !value);
+    forceUpdate( value => ! value );
   }, [currentPath, forceUpdate]);
 
-  return headerEl.current
-    ? createPortal(<TelemetryBannerContainer />, headerEl.current)
-    : null;
+  return headerEl.current ? createPortal(<TelemetryBannerContainer />, headerEl.current) : null;
 }
