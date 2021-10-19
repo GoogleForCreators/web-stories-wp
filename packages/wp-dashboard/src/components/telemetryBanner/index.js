@@ -23,6 +23,8 @@ import {
   useRef,
   forwardRef,
   useEffect,
+  createPortal,
+  useState,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
@@ -33,7 +35,11 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
-import { resolveRoute, APP_ROUTES } from '@web-stories-wp/dashboard';
+import {
+  resolveRoute,
+  APP_ROUTES,
+  useRouteHistory,
+} from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
@@ -178,7 +184,7 @@ TelemetryOptInBanner.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function TelemetryBannerContainer(props) {
+export function TelemetryBannerContainer(props) {
   const {
     bannerVisible,
     closeBanner,
@@ -219,4 +225,19 @@ export default function TelemetryBannerContainer(props) {
       {...props}
     />
   );
+}
+
+export default function TelemetryBanner() {
+  const { state } = useRouteHistory();
+  const headerEl = useRef(null);
+  const [showBanner, setBannerVisibility] = useState(false);
+
+  useEffect(() => {
+    headerEl.current = document.getElementById('#body-view-options-header');
+    setBannerVisibility(Boolean(headerEl.current));
+  }, [state.currentPath, setBannerVisibility]);
+
+  return showBanner
+    ? createPortal(<TelemetryBannerContainer />, headerEl.current)
+    : null;
 }

@@ -24,6 +24,7 @@ import { InterfaceSkeleton } from '@web-stories-wp/dashboard';
 import { useAdminSubMenu } from '../../effects';
 import EditorSettings from '../editorSettings';
 import TelemetryProvider from '../telemetryBanner/telemetryProvider';
+import TelemetryBanner from '../telemetryBanner';
 
 function Layout() {
   useAdminSubMenu();
@@ -31,6 +32,7 @@ function Layout() {
   return (
     <TelemetryProvider>
       <InterfaceSkeleton editorSettings={<EditorSettings />} />
+      <TelemetryBanner />
     </TelemetryProvider>
   );
 }
