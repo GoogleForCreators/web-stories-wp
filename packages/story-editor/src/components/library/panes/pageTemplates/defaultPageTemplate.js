@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { forwardRef } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { _x, sprintf } from '@web-stories-wp/i18n';
+import { _x, sprintf, __ } from '@web-stories-wp/i18n';
 import {
   Button,
   BUTTON_TYPES,
@@ -63,18 +63,29 @@ const PosterImg = styled.img`
 
 const DefaultPageTemplate = forwardRef(
   ({ page, columnWidth, isActive, ...rest }, ref) => {
+    const templateTitle = sprintf(
+      /* translators: 1: template name. 2: page template name. */
+      _x('%1$s %2$s', 'page template title', 'web-stories'),
+      page.title,
+      PAGE_TEMPLATE_TYPES[page.type].name
+    );
+
     return (
-      <PageTemplateWrapper ref={ref}>
+      <PageTemplateWrapper ref={ref} role="listitem">
         <PageTemplateButton
           columnWidth={columnWidth}
-          aria-label={page.title}
           tabIndex={isActive ? 0 : -1}
+          aria-label={templateTitle}
           {...rest}
         >
           {page.png && (
             <PosterImg
               src={page.png}
-              alt={page.title}
+              alt={sprintf(
+                /* translators: 1: page title */
+                __('Snapshot of page template for %1$s', 'web-stories'),
+                page.title
+              )}
               crossOrigin="anonymous"
               draggable={false}
             />
@@ -85,12 +96,7 @@ const DefaultPageTemplate = forwardRef(
                 as="span"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
               >
-                {sprintf(
-                  /* translators: 1: template name. 2: page template name. */
-                  _x('%1$s %2$s', 'page template title', 'web-stories'),
-                  page.title,
-                  PAGE_TEMPLATE_TYPES[page.type].name
-                )}
+                {templateTitle}
               </Text>
             </PageTemplateTitleContainer>
           )}
