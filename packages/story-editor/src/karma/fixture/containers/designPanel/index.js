@@ -124,7 +124,7 @@ export class DesignPanel extends Container {
 
   get layerStyle() {
     return this._get(
-      this.getByRole('region', { name: /Layer/i }),
+      this.getByRole('region', { name: /Layer$/i }),
       'layerStyle',
       LayerStyle
     );

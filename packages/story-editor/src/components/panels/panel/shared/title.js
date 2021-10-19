@@ -27,6 +27,8 @@ import {
   Headline,
   themeHelpers,
   ThemeGlobals,
+  NotificationBubble,
+  BUBBLE_VARIANTS,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -61,7 +63,6 @@ const Header = styled(Headline).attrs({
 const Heading = styled.span`
   color: ${({ theme, isCollapsed }) =>
     isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
-  width: 100%;
   display: flex;
   align-items: space-between;
   ${({ theme }) =>
@@ -72,6 +73,10 @@ const Heading = styled.span`
         ],
       theme,
     })};
+`;
+
+const StyledNotificationBubble = styled(NotificationBubble)`
+  margin-left: 12px;
 `;
 
 const HeaderActions = styled.div`
@@ -97,6 +102,7 @@ const Collapse = styled.button`
   display: flex; /* removes implicit line-height padding from child element */
   padding: 0 4px 0 0;
   align-items: center;
+  justify-content: flex-start;
   cursor: pointer;
   margin-left: -12px;
   transition: ${BUTTON_TRANSITION_TIMING};
@@ -140,6 +146,8 @@ function Title({
   secondaryAction,
   isResizable,
   canCollapse,
+  maxHeight: maxHeightOverride,
+  count,
   ...props
 }) {
   const {
@@ -166,8 +174,9 @@ function Title({
 
   useEffect(confirmTitle, [confirmTitle]);
 
-  // Max panel height is set to 70% of full available height.
-  const maxHeight = Math.round(inspectorContentHeight * 0.7);
+  // Default max panel height is set to 70% of full available height.
+  const maxHeight =
+    maxHeightOverride || Math.round(inspectorContentHeight * 0.7);
 
   const handleHeightChange = useCallback(
     (deltaHeight) =>
@@ -192,6 +201,8 @@ function Title({
   ) : (
     <Icons.ChevronDownSmall />
   );
+
+  const hasCount = count === 0 || Boolean(count);
 
   return (
     <Header
@@ -229,6 +240,14 @@ function Title({
         >
           {children}
         </Heading>
+        {hasCount && (
+          <StyledNotificationBubble
+            data-testid="panel-badge"
+            notificationCount={count}
+            variant={BUBBLE_VARIANTS.PRIMARY}
+            aria-hidden
+          />
+        )}
       </Toggle>
       {secondaryAction && <HeaderActions>{secondaryAction}</HeaderActions>}
     </Header>
@@ -241,11 +260,13 @@ Title.propTypes = {
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,
+  maxHeight: PropTypes.number,
   secondaryAction: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
   canCollapse: PropTypes.bool,
+  count: PropTypes.number,
 };
 
 Title.defaultProps = {
