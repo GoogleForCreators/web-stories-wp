@@ -27,6 +27,8 @@ import { useRef, useEffect, useState } from '@web-stories-wp/react';
 import StoryPropTypes from '../types';
 import { useDropTargets } from '../app';
 import getTransformFlip from '../elements/shared/getTransformFlip';
+import { TRACKING_EVENTS } from '../constants/performanceTrackingEvents';
+import usePerformanceTracking from '../utils/usePerformanceTracking';
 import { MaskTypes } from './constants';
 import { getElementMask } from '.';
 
@@ -169,6 +171,12 @@ export default function WithMask({
 }) {
   const [hover, setHover] = useState(false);
   const { isBackground } = element;
+  const ref = useRef(null);
+  usePerformanceTracking({
+    node: ref.current,
+    eventData: TRACKING_EVENTS.SELECT_ELEMENT,
+    eventType: 'mousedown',
+  });
 
   const mask = getElementMask(element);
   const flipStyle = flip ? { transform: getTransformFlip(flip) } : null;
@@ -194,6 +202,7 @@ export default function WithMask({
 
   return (
     <div
+      ref={ref}
       style={{
         ...(fill ? FILL_STYLE : {}),
         ...style,

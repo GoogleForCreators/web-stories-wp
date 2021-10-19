@@ -26,13 +26,19 @@ import { useEffect, useRef } from '@web-stories-wp/react';
 import { trackTiming } from '@web-stories-wp/tracking';
 import PerformanceObserverContext from './performanceObserverContext';
 
+const OBSERVED_EVENTS = ['click', 'mousedown'];
+
 function PerformanceObserverProvider({ children }) {
   const tracesObserver = useRef({});
   useEffect(() => {
     const traces = tracesObserver.current;
     const performanceObserver = new PerformanceObserver((entries) => {
       for (const entry of entries.getEntries()) {
-        if (['click'].includes(entry.name) && traces[entry.startTime]?.id) {
+        if (
+          OBSERVED_EVENTS.includes(entry.name) &&
+          traces[entry.startTime]?.id
+        ) {
+          console.log(traces[entry.startTime]?.id);
           trackTiming(
             traces[entry.startTime].id,
             entry.duration,

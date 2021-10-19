@@ -141,7 +141,7 @@ function PagePreview({ page, label, ...props }) {
   }, [enableThumbnailCaching, isActive, pageNode, imageBlob, page]);
 
   usePerformanceTracking({
-    element: pageNode,
+    node: pageNode,
     eventData: TRACKING_EVENTS.PAGE_PREVIEW_CLICK,
   });
 

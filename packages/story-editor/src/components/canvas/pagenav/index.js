@@ -79,7 +79,7 @@ function PageNav({ isNext = true }) {
   );
 
   usePerformanceTracking({
-    element: buttonRef.current,
+    node: buttonRef.current,
     eventData: TRACKING_EVENTS.PAGE_NAVIGATION,
   });
 

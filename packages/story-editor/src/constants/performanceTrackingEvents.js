@@ -22,8 +22,28 @@ export const TRACKING_EVENTS = {
     id: 'pagePreviewClick',
     category: 'click',
   },
+  PAGE_ADD: {
+    id: 'pageAdd',
+    category: 'click',
+    label: 'pageMenu',
+  },
+  PAGE_DELETE: {
+    id: 'pageDelete',
+    category: 'click',
+    label: 'pageMenu',
+  },
   SELECT_ELEMENT: {
     id: 'selectElement',
+    category: 'mousedown',
+  },
+  TAB_CLICK_MEDIA: {
+    id: 'tabClick',
     category: 'click',
+    label: 'media',
+  },
+  TAB_CLICK_MEDIA3P: {
+    id: 'tabClick',
+    category: 'click',
+    label: 'media3p',
   },
 };
