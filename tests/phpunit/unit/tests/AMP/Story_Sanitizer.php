@@ -387,6 +387,24 @@ class Story_Sanitizer extends TestCase {
 	}
 
 	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_srcset
+	 */
+	public function test_sanitize_srcset_commas() {
+		$source = '<html><head></head><body><amp-story><amp-img src="https://example.com/image.jpg" width="100" height="100" srcset="https://example.com/image/1000,1000/image.jpg 1000w,https://example.com/image/768,1024/image-768x1024.jpg 768w,https://example.com/image/225,300/image-225x300.jpg 225w,https://example.com/image/150,200/image-150x200.jpg 150w"></amp-img></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertStringContainsString( 'srcset="https://example.com/image/1000,1000/image.jpg 1000w, https://example.com/image/768,1024/image-768x1024.jpg 768w, https://example.com/image/225,300/image-225x300.jpg 225w, https://example.com/image/150,200/image-150x200.jpg 150w"', $actual );
+	}
+
+	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_amp_story_page_outlink
 	 */
 	public function test_sanitize_amp_story_page_outlink() {
