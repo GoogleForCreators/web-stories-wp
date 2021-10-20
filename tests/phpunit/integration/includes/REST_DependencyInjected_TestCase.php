@@ -33,7 +33,7 @@ namespace Google\Web_Stories\Tests\Integration;
  *
  * @package Google\Web_Stories\Tests
  */
-abstract class Test_REST_TestCase extends TestCase {
+abstract class REST_DependencyInjected_TestCase extends DependencyInjectedTestCase {
 	use REST_TestCase;
 
 	public function set_up() {
