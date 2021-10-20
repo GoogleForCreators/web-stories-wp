@@ -51,14 +51,14 @@ describe('Author User', () => {
     await enableCheckbox(videoOptimizationCheckboxSelector);
   });
 
-  it('should give me the ability to upload publisher logos', async () => {
+  it('should let me upload publisher logos', async () => {
     // verify no publisher logos are shown
     await expect(page).not.toMatchElement(
       '[data-testid="publisher-logos-container"]'
     );
   });
 
-  it('should give me the ability to see and update the telemetry checkbox', async () => {
+  it('should let me see and update the telemetry checkbox', async () => {
     await disableCheckbox(telemetryCheckboxSelector);
 
     await expect(page).toMatchElement(
@@ -66,7 +66,7 @@ describe('Author User', () => {
     );
   });
 
-  it('should give me the ability to see and update the video optimization checkbox', async () => {
+  it('should let me see and update the video optimization checkbox', async () => {
     await disableCheckbox(videoOptimizationCheckboxSelector);
 
     await expect(page).toMatchElement(
@@ -74,7 +74,7 @@ describe('Author User', () => {
     );
   });
 
-  it('should not give me the ability to see other settings', async () => {
+  it('should not let me see other settings', async () => {
     await expect(page).not.toMatchElement(videoCacheCheckboxSelector);
   });
 });

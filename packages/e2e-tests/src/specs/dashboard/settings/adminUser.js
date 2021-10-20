@@ -18,6 +18,7 @@
  * External dependencies
  */
 import {
+  clickButton,
   disableCheckbox,
   enableCheckbox,
   visitSettings,
@@ -49,9 +50,7 @@ describe('Admin User', () => {
     await enableCheckbox(videoCacheCheckboxSelector);
   });
 
-  it('should give me the ability to see and update the telemetry checkbox', async () => {
-    await visitSettings();
-
+  it('should let me see and update the telemetry checkbox', async () => {
     await disableCheckbox(telemetryCheckboxSelector);
 
     await expect(page).toMatchElement(
@@ -59,9 +58,7 @@ describe('Admin User', () => {
     );
   });
 
-  it('should give me the ability to see and update the video optimization checkbox', async () => {
-    await visitSettings();
-
+  it('should let me see and update the video optimization checkbox', async () => {
     await disableCheckbox(videoOptimizationCheckboxSelector);
 
     await expect(page).toMatchElement(
@@ -69,13 +66,24 @@ describe('Admin User', () => {
     );
   });
 
-  it('should give me the ability to see and update the video cache checkbox', async () => {
-    await visitSettings();
-
+  it('should let me see and update the video cache checkbox', async () => {
     await disableCheckbox(videoCacheCheckboxSelector);
 
     await expect(page).toMatchElement(
       `${videoCacheCheckboxSelector}:not(:checked)`
+    );
+  });
+
+  it('should let me see and update the monetization settings', async () => {
+    await clickButton('button[aria-label="Monetization type"]', {
+      text: 'None',
+    });
+
+    await expect(page).toClick('button', { text: 'Google AdSense' });
+
+    await expect(page).toMatchElement(
+      'button[aria-label="Monetization type"]',
+      { text: 'Google AdSense' }
     );
   });
 });
