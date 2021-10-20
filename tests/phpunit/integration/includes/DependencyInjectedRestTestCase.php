@@ -1,8 +1,6 @@
 <?php
 /**
- * Test_Class class.
- *
- * Basic test that designed to replace WP_Test_REST_TestCase.
+ * DependencyInjectedRestTestCase class.
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -29,12 +27,12 @@
 namespace Google\Web_Stories\Tests\Integration;
 
 /**
- * Class TestCaseREST
+ * Class DependencyInjectedRestTestCase
  *
  * @package Google\Web_Stories\Tests
  */
 abstract class DependencyInjectedRestTestCase extends DependencyInjectedTestCase {
-	use REST_TestCase;
+	use REST_Setup;
 
 	public function set_up() {
 		parent::set_up();

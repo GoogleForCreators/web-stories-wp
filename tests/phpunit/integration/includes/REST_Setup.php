@@ -1,6 +1,6 @@
 <?php
 /**
- * REST_TestCase trait.
+ * REST_Setup trait.
  *
  * Add method assertErrorResponse to any test class.
  *
@@ -33,11 +33,11 @@ use WP_REST_Response;
 use Spy_REST_Server;
 
 /**
- * trait REST_TestCase
+ * trait REST_Setup
  *
  * @package Google\Web_Stories\Tests
  */
-trait REST_TestCase {
+trait REST_Setup {
 	use Capabilities_Setup, Kses_Setup;
 
 	protected function set_up_rest() {

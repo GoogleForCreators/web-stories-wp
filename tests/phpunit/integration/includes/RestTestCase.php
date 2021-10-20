@@ -1,6 +1,6 @@
 <?php
 /**
- * Test_Class class.
+ * TestClassREST class.
  *
  * Basic test that designed to replace WP_Test_REST_TestCase.
  *
@@ -29,12 +29,12 @@
 namespace Google\Web_Stories\Tests\Integration;
 
 /**
- * Class TestCaseREST
+ * Class RestTestCase
  *
  * @package Google\Web_Stories\Tests
  */
-abstract class TestCaseREST extends TestCase {
-	use REST_TestCase;
+abstract class RestTestCase extends TestCase {
+	use REST_Setup;
 
 	public function set_up() {
 		parent::set_up();
