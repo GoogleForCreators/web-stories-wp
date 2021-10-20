@@ -22,6 +22,7 @@ import {
   uploadPublisherLogo,
   visitSettings,
   withExperimentalFeatures,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 const ERROR_TEXT =
@@ -111,5 +112,56 @@ describe('Publisher logo', () => {
 
     uploadedFiles.push(logoOneName);
     uploadedFiles.push(logoTwoName);
+  });
+
+  it('should give me the ability to upload publisher logos', async () => {
+    await visitSettings();
+
+    // verify no publisher logos are shown
+    await expect(page).toMatchElement(
+      '[data-testid="publisher-logos-container"]'
+    );
+  });
+
+  describe('editor user', () => {
+    // eslint-disable-next-line jest/require-hook
+    withUser('editor', 'password');
+
+    it('should not give me the ability to upload publisher logos', async () => {
+      await visitSettings();
+
+      // verify no publisher logos are shown
+      await expect(page).not.toMatchElement(
+        '[data-testid="publisher-logos-container"]'
+      );
+    });
+  });
+
+  describe('author user', () => {
+    // eslint-disable-next-line jest/require-hook
+    withUser('author', 'password');
+
+    it('should not give me the ability to upload publisher logos', async () => {
+      await visitSettings();
+
+      // verify no publisher logos are shown
+      await expect(page).not.toMatchElement(
+        '[data-testid="publisher-logos-container"]'
+      );
+    });
+  });
+
+  describe('contributor user', () => {
+    // eslint-disable-next-line jest/require-hook
+    withUser('author', 'password');
+
+    it('should not give me the ability to upload publisher logos', async () => {
+      await visitSettings();
+
+      // verify no publisher logos are shown
+      await expect(page).not.toMatchElement(
+        '[data-testid="publisher-logos-container"]'
+      );
+    });
   });
 });
