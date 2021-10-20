@@ -118,7 +118,7 @@
     "karma-jasmine": "^4.0.1",
     "karma-sourcemap-loader": "^0.3.8",
     "karma-webpack": "^4.0.2",
-    "lerna-changelog": "^2.1.0",
+    "lerna-changelog": "^2.2.0",
     "lint-staged": "^11.2.3",
     "markdownlint-cli": "^0.29.0",
     "mini-css-extract-plugin": "^1.6.2",
