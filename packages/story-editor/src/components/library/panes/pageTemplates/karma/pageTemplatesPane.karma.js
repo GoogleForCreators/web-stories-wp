@@ -31,9 +31,9 @@ const expectPageTemplateEqual = (currentPage, template) => {
   expect(currentPage.id).not.toEqual(template.id);
   expect(currentPage.elements.length).toEqual(template.elements.length);
   template.elements.forEach((element, index) => {
-    expect(objectWithout(currentPage.elements[index], ['id'])).toEqual(
-      objectWithout(element, ['id'])
-    );
+    expect(
+      objectWithout(currentPage.elements[index], ['id', 'basedOn'])
+    ).toEqual(objectWithout(element, ['id', 'basedOn']));
   });
   expect(currentPage.animations.length).toEqual(
     (template.animations || []).length
