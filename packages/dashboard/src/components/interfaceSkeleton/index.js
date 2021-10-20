@@ -47,7 +47,7 @@ import { AppFrame, LeftRail, PageContent } from '../pageStructure';
 import useApiAlerts from '../../app/api/useApiAlerts';
 import useApi from '../../app/api/useApi';
 
-const InterfaceSkeleton = ({ editorSettings }) => {
+const InterfaceSkeleton = ({ additionalRoutes }) => {
   const {
     state: {
       currentPath,
@@ -163,12 +163,10 @@ const InterfaceSkeleton = ({ editorSettings }) => {
             path={NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL}
             component={<TemplateDetailsView />}
           />
-          {editorSettings && (
-            <Route
-              path={APP_ROUTES.EDITOR_SETTINGS}
-              component={editorSettings}
-            />
-          )}
+          {additionalRoutes &&
+            additionalRoutes.map((routeProps) => (
+              <Route key={routeProps.path} {...routeProps} />
+            ))}
         </PageContent>
       </AppFrame>
       <Snackbar.Container
@@ -182,7 +180,7 @@ const InterfaceSkeleton = ({ editorSettings }) => {
 };
 
 InterfaceSkeleton.propTypes = {
-  editorSettings: PropTypes.node,
+  additionalRoutes: PropTypes.object,
 };
 
 export default InterfaceSkeleton;

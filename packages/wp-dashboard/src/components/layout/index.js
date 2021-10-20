@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { InterfaceSkeleton } from '@web-stories-wp/dashboard';
+import { APP_ROUTES, InterfaceSkeleton } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
@@ -30,7 +30,14 @@ function Layout() {
 
   return (
     <>
-      <InterfaceSkeleton editorSettings={<EditorSettings />} />
+      <InterfaceSkeleton
+        additionalRoutes={[
+          {
+            path: APP_ROUTES.EDITOR_SETTINGS,
+            component: <EditorSettings />,
+          },
+        ]}
+      />
       <TelemetryBanner />
     </>
   );
