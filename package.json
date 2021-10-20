@@ -73,7 +73,7 @@
     "babel-jest": "^27.2.5",
     "babel-loader": "^8.2.2",
     "babel-plugin-inline-json-import": "^0.3.2",
-    "babel-plugin-styled-components": "^1.13.2",
+    "babel-plugin-styled-components": "^1.13.3",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "browserslist": "^4.17.4",
     "commander": "^8.2.0",
