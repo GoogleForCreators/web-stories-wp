@@ -18,7 +18,7 @@
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
-use Google\Web_Stories\Tests\Integration\REST_DependencyInjected_TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 
 /**
@@ -28,7 +28,7 @@ use WP_REST_Request;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Media_Controller
  */
-class Stories_Media_Controller extends REST_DependencyInjected_TestCase {
+class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @var int
 	 */

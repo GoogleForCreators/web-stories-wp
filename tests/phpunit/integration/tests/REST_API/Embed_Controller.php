@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Tests\Integration\REST_DependencyInjected_TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -29,7 +29,7 @@ use WP_REST_Server;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Embed_Controller
  */
-class Embed_Controller extends REST_DependencyInjected_TestCase {
+class Embed_Controller extends DependencyInjectedRestTestCase {
 
 	protected static $story_id;
 	protected static $subscriber;

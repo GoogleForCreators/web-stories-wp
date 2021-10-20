@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Tests\Integration\REST_DependencyInjected_TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -29,7 +29,7 @@ use WP_REST_Server;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Hotlinking_Controller
  */
-class Hotlinking_Controller extends REST_DependencyInjected_TestCase {
+class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	protected static $subscriber;
 	protected static $editor;
 

@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Tests\Integration\REST_DependencyInjected_TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 
 /**
@@ -27,7 +27,7 @@ use WP_REST_Request;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Autosaves_Controller
  */
-class Stories_Autosaves_Controller extends REST_DependencyInjected_TestCase {
+class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 
 	/**
 	 * Author user ID.

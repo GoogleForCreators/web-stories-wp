@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Tests\Integration\REST_DependencyInjected_TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 
 /**
  * Class Stories_Users_Controller
@@ -26,7 +26,7 @@ use Google\Web_Stories\Tests\Integration\REST_DependencyInjected_TestCase;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Users_Controller
  */
-class Stories_Users_Controller extends REST_DependencyInjected_TestCase {
+class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 
 	protected static $user_id;
 
