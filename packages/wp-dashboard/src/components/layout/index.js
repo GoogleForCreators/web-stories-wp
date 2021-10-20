@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { APP_ROUTES, InterfaceSkeleton } from '@web-stories-wp/dashboard';
+import { InterfaceSkeleton } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
@@ -24,6 +24,7 @@ import { APP_ROUTES, InterfaceSkeleton } from '@web-stories-wp/dashboard';
 import { useAdminSubMenu } from '../../effects';
 import EditorSettings from '../editorSettings';
 import TelemetryBanner from '../telemetryBanner';
+import { EDITOR_SETTINGS_ROUTE } from '../../constants';
 
 function Layout() {
   useAdminSubMenu();
@@ -33,7 +34,7 @@ function Layout() {
       <InterfaceSkeleton
         additionalRoutes={[
           {
-            path: APP_ROUTES.EDITOR_SETTINGS,
+            path: EDITOR_SETTINGS_ROUTE,
             component: <EditorSettings />,
           },
         ]}

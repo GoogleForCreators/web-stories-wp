@@ -40,7 +40,7 @@ export const APP_ROUTES = {
   TEMPLATES_GALLERY: '/templates-gallery',
   TEMPLATE_DETAIL: 'template-detail',
 
-  EDITOR_SETTINGS: '/editor-settings',
+  EDITOR_SETTINGS: '/editor-settings', // @todo Remove from here.
 };
 
 export const NESTED_APP_ROUTES = {

@@ -16,13 +16,14 @@
 /**
  * External dependencies
  */
-import { APP_ROUTES, ROUTE_TITLES } from '@web-stories-wp/dashboard';
 import { __ } from '@web-stories-wp/i18n';
+
+export const EDITOR_SETTINGS_ROUTE = '/editor-settings';
 
 export const LEFT_RAIL_SECONDARY_NAVIGATION = [
   {
-    value: APP_ROUTES.EDITOR_SETTINGS,
-    label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
+    value: EDITOR_SETTINGS_ROUTE,
+    label: __('Settings', 'web-stories'),
   },
   {
     value: __(

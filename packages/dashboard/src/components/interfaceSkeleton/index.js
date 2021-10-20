@@ -180,7 +180,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
 };
 
 InterfaceSkeleton.propTypes = {
-  additionalRoutes: PropTypes.object,
+  additionalRoutes: PropTypes.array,
 };
 
 export default InterfaceSkeleton;
