@@ -109,7 +109,7 @@ describe('Zoom selector', () => {
     expect(scrollContainer).not.toBeVerticallyScrollable();
     expect(scrollContainer).not.toBeHorizontallyScrollable();
 
-    expect(fullbleed).toHaveSize(408, 726);
+    expect(fullbleed).toHaveSize(408, 725);
 
     await fixture.snapshot();
   });
