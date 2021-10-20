@@ -21,7 +21,6 @@ import {
   disableCheckbox,
   enableCheckbox,
   visitSettings,
-  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
@@ -33,15 +32,13 @@ import {
   videoOptimizationCheckboxSelector,
 } from '../../../utils';
 
-describe('Author User', () => {
-  // eslint-disable-next-line jest/require-hook
-  withUser('author', 'password');
-
+describe('Admin User', () => {
   beforeEach(async () => {
     await visitSettings();
 
     await enableCheckbox(telemetryCheckboxSelector);
     await enableCheckbox(videoOptimizationCheckboxSelector);
+    await enableCheckbox(videoCacheCheckboxSelector);
   });
 
   afterEach(async () => {
@@ -49,16 +46,12 @@ describe('Author User', () => {
 
     await enableCheckbox(telemetryCheckboxSelector);
     await enableCheckbox(videoOptimizationCheckboxSelector);
-  });
-
-  it('should give me the ability to upload publisher logos', async () => {
-    // verify no publisher logos are shown
-    await expect(page).not.toMatchElement(
-      '[data-testid="publisher-logos-container"]'
-    );
+    await enableCheckbox(videoCacheCheckboxSelector);
   });
 
   it('should give me the ability to see and update the telemetry checkbox', async () => {
+    await visitSettings();
+
     await disableCheckbox(telemetryCheckboxSelector);
 
     await expect(page).toMatchElement(
@@ -67,6 +60,8 @@ describe('Author User', () => {
   });
 
   it('should give me the ability to see and update the video optimization checkbox', async () => {
+    await visitSettings();
+
     await disableCheckbox(videoOptimizationCheckboxSelector);
 
     await expect(page).toMatchElement(
@@ -74,7 +69,13 @@ describe('Author User', () => {
     );
   });
 
-  it('should not give me the ability to see other settings', async () => {
-    await expect(page).not.toMatchElement(videoCacheCheckboxSelector);
+  it('should give me the ability to see and update the video cache checkbox', async () => {
+    await visitSettings();
+
+    await disableCheckbox(videoCacheCheckboxSelector);
+
+    await expect(page).toMatchElement(
+      `${videoCacheCheckboxSelector}:not(:checked)`
+    );
   });
 });

@@ -29,6 +29,7 @@ import {
  */
 import {
   telemetryCheckboxSelector,
+  videoCacheCheckboxSelector,
   videoOptimizationCheckboxSelector,
 } from '../../../utils';
 
@@ -39,7 +40,7 @@ describe('Contributor User', () => {
   beforeEach(async () => {
     await visitSettings();
 
-    await disableCheckbox(telemetryCheckboxSelector);
+    await enableCheckbox(telemetryCheckboxSelector);
   });
 
   afterEach(async () => {
@@ -63,7 +64,8 @@ describe('Contributor User', () => {
     );
   });
 
-  it('should give me the ability to see and update the video optimization checkbox', async () => {
+  it('should not give me the ability to see other settings', async () => {
     await expect(page).not.toMatchElement(videoOptimizationCheckboxSelector);
+    await expect(page).not.toMatchElement(videoCacheCheckboxSelector);
   });
 });
