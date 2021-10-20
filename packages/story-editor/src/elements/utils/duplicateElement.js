@@ -57,7 +57,10 @@ export function getOffsetCoordinates(originX, originY) {
  */
 function duplicateElement({ element, animations = [], existingElements = [] }) {
   const { type, ...attrs } = element;
-  const duplicatedElement = createNewElement(type, attrs);
+  const duplicatedElement = {
+    ...element,
+    ...createNewElement(type, attrs),
+  };
   duplicatedElement.basedOn = element.id;
 
   existingElements.forEach((existingElement) => {
