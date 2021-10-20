@@ -23,12 +23,15 @@ import { config } from './shared';
 /**
  * Track event timing for performance measuring.
  *
- * @param {string} eventName Event name.
- * @param {number} time Duration in milliseconds.
  * @param {string} category Category for categorizing the user timing variables into groups.
+ * @param {number} time Duration in milliseconds.
  * @param {string} label Label that allows extra flexibility in reports.
+ * @param {string} eventName Event name, e.g. click or mousedown.
  */
-function trackTiming(eventName, time, category = 'click', label = '') {
+function trackTiming(category, time, label = '', eventName = 'click') {
+  if (!category) {
+    return;
+  }
   // @todo Figure out most useful category and label for the reports.
   // Universal Analytics has a special `timing_complete` event which
   // does not exist in GA4.

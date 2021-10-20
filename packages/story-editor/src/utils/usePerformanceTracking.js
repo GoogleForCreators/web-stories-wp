@@ -28,7 +28,7 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
   const { traces } = usePerformanceObserver(({ state: { traces } }) => ({
     traces,
   }));
-  const { id, label, category } = eventData;
+  const { label, category } = eventData;
   useEffect(() => {
     if (!node) {
       return undefined;
@@ -38,7 +38,7 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
       if (!traces[e.timeStamp]) {
         traces[e.timeStamp] = {};
       }
-      traces[e.timeStamp] = { id, time: e.timeStamp, category };
+      traces[e.timeStamp] = { category, time: e.timeStamp };
       if (label) {
         traces[e.timeStamp].label = label;
       }

@@ -15,35 +15,28 @@
  */
 export const TRACKING_EVENTS = {
   PAGE_NAVIGATION: {
-    id: 'pageNavigation',
-    category: 'click',
+    category: 'page',
+    label: 'arrow_navigate',
   },
   PAGE_PREVIEW_CLICK: {
-    id: 'pagePreviewClick',
-    category: 'click',
+    category: 'page',
+    label: 'carousel_navigate',
   },
   PAGE_ADD: {
-    id: 'pageAdd',
-    category: 'click',
-    label: 'pageMenu',
+    category: 'page',
+    label: 'add_new',
   },
   PAGE_DELETE: {
-    id: 'pageDelete',
-    category: 'click',
-    label: 'pageMenu',
+    category: 'page',
+    label: 'delete',
   },
   SELECT_ELEMENT: {
-    id: 'selectElement',
-    category: 'mousedown',
+    category: 'select_element',
   },
-  TAB_CLICK_MEDIA: {
-    id: 'tabClick',
-    category: 'click',
-    label: 'media',
+  LIBRARY_PANEL_CLICK: {
+    category: 'library_panel',
   },
-  TAB_CLICK_MEDIA3P: {
-    id: 'tabClick',
-    category: 'click',
-    label: 'media3p',
+  DESIGN_PANEL_CLICK: {
+    category: 'design_panel',
   },
 };

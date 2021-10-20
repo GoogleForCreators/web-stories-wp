@@ -36,15 +36,10 @@ function PerformanceObserverProvider({ children }) {
       for (const entry of entries.getEntries()) {
         if (
           OBSERVED_EVENTS.includes(entry.name) &&
-          traces[entry.startTime]?.id
+          traces[entry.startTime]?.category
         ) {
-          console.log(traces[entry.startTime]?.id);
-          trackTiming(
-            traces[entry.startTime].id,
-            entry.duration,
-            entry.category,
-            entry.label
-          );
+          console.log(traces[entry.startTime]?.category);
+          trackTiming(entry.category, entry.duration, entry.label, entry.name);
         }
       }
     });
