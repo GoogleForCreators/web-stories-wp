@@ -18,13 +18,18 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { useMemo } from '@web-stories-wp/react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Panel, PanelTitle, PanelContent } from '../../panel';
-import { LAYER_HEIGHT, DEFAULT_LAYERS_VISIBLE } from './constants';
+import {
+  MAX_HEIGHT_DEFAULT,
+  Panel,
+  PanelTitle,
+  PanelContent,
+} from '../../panel';
 import LayerList from './layerList';
 import useLayers from './useLayers';
 
@@ -50,24 +55,24 @@ const Divider = styled.div`
 
 function LayerPanel() {
   const layers = useLayers();
-  const numLayersVisible = layers?.length
-    ? Math.min(layers.length, DEFAULT_LAYERS_VISIBLE)
-    : DEFAULT_LAYERS_VISIBLE;
+
+  const initialHeight = useMemo(() => Math.round(window.innerHeight / 4), []);
 
   return (
     <Container>
       <Panel
-        name="layers"
-        initialHeight={Math.min(
-          numLayersVisible * LAYER_HEIGHT,
-          window.innerHeight / 3
-        )}
-        maxHeight={layers?.length * LAYER_HEIGHT}
+        name="layer-panel"
+        initialHeight={initialHeight}
         resizeable
         ariaHidden
         collapsedByDefault={false}
       >
-        <StyledPanelTitle isSecondary isResizable>
+        <StyledPanelTitle
+          isSecondary
+          isResizable
+          count={layers?.length}
+          maxHeight={MAX_HEIGHT_DEFAULT}
+        >
           {__('Layers', 'web-stories')}
         </StyledPanelTitle>
 

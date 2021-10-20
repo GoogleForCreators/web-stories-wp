@@ -19,9 +19,11 @@
  */
 import { act, renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
+import APIContext from '../../../api/context';
 import StoryContext from '../../../story/context';
 import useProcessMedia from '../useProcessMedia';
 
@@ -86,14 +88,23 @@ const uploadMedia = (
   }
 };
 
+const getOptimizedMediaById = jest.fn();
+
 function setup() {
+  const apiContextValue = {
+    actions: {
+      getOptimizedMediaById,
+    },
+  };
   const storyContextValue = {
     actions: { updateElementsByResourceId },
   };
   const wrapper = ({ children }) => (
-    <StoryContext.Provider value={storyContextValue}>
-      {children}
-    </StoryContext.Provider>
+    <APIContext.Provider value={apiContextValue}>
+      <StoryContext.Provider value={storyContextValue}>
+        {children}
+      </StoryContext.Provider>
+    </APIContext.Provider>
   );
 
   const uploadVideoPoster = jest.fn();
@@ -126,6 +137,29 @@ function setup() {
 
 describe('useProcessMedia', () => {
   describe('optimizeVideo', () => {
+    it('should reuse already existing optimized video', async () => {
+      getOptimizedMediaById.mockImplementationOnce(() => ({
+        id: 456,
+        src: 'http://www.google.com/foo-optimized.mp4',
+      }));
+
+      const { optimizeVideo, uploadVideoPoster, updateMedia } = setup();
+      act(() => {
+        optimizeVideo({
+          resource: {
+            src: 'http://www.google.com/foo.mov',
+            id: 123,
+            mimeType: 'video/quicktime',
+          },
+        });
+      });
+      await waitFor(() => {
+        expect(getOptimizedMediaById).toHaveBeenCalledWith(123);
+        expect(uploadVideoPoster).not.toHaveBeenCalled();
+        expect(updateMedia).not.toHaveBeenCalled();
+      });
+    });
+
     it('should process video file', async () => {
       const { optimizeVideo, uploadVideoPoster, updateMedia } = setup();
       act(() => {
