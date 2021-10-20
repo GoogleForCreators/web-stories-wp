@@ -101,23 +101,23 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
       ref={containerRef}
       columnWidth={pageSize.width}
       rowHeight={pageSize.containerHeight}
+      role="list"
+      aria-label={__('Page Template Options', 'web-stories')}
     >
-      {pages.map((page) => {
-        return (
-          <DefaultPageTemplate
-            ref={(el) => (pageRefs.current[page.id] = el)}
-            key={page.id}
-            data-testid={`page_template_${page.id}`}
-            page={page}
-            pageSize={pageSize}
-            onFocus={() => handleFocus(page.id)}
-            isActive={currentPageId === page.id}
-            onClick={() => handlePageClick(page.story)}
-            columnWidth={pageSize.width}
-            {...rest}
-          />
-        );
-      })}
+      {pages.map((page) => (
+        <DefaultPageTemplate
+          ref={(el) => (pageRefs.current[page.id] = el)}
+          key={page.id}
+          data-testid={`page_template_${page.id}`}
+          page={page}
+          pageSize={pageSize}
+          onFocus={() => handleFocus(page.id)}
+          isActive={currentPageId === page.id}
+          onClick={() => handlePageClick(page.story)}
+          columnWidth={pageSize.width}
+          {...rest}
+        />
+      ))}
     </WrapperGrid>
   );
 }
