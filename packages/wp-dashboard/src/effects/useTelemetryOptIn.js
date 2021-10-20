@@ -19,12 +19,12 @@
 import { useCallback, useState, useEffect } from '@web-stories-wp/react';
 import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
 import { useSnackbar, localStore } from '@web-stories-wp/design-system';
-import { useApi, useRouteHistory, APP_ROUTES } from '@web-stories-wp/dashboard';
+import { useApi, useRouteHistory } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
-import { SUCCESS } from '../constants';
+import { SUCCESS, EDITOR_SETTINGS_ROUTE } from '../constants';
 
 // The value associated with this key indicates if the user has interacted with
 // the banner previously. If they have, we do not show the banner again.
@@ -84,7 +84,7 @@ export default function useTelemetryOptIn() {
 
   if (
     bannerPreviouslyClosed || // The banner has been closed before
-    currentPath === APP_ROUTES.EDITOR_SETTINGS || // The user is on the settings page
+    currentPath === EDITOR_SETTINGS_ROUTE || // The user is on the settings page
     !dataIsLoaded || // currentUser is not loaded yet
     (!optInCheckboxClicked && optedIn) // currentUser is loaded and optedIn is true but the user has not checked the opt in checkbox
   ) {

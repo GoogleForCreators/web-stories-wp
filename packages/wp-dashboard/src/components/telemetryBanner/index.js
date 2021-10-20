@@ -46,6 +46,7 @@ import {
  */
 import bannerBg from '../../images/analytics-banner-bg.png';
 import useTelemetryOptIn from '../../effects/useTelemetryOptIn';
+import { EDITOR_SETTINGS_ROUTE } from '../../constants';
 
 const Label = styled.label.attrs({ htmlFor: 'telemetry-banner-opt-in' })`
   display: flex;
@@ -156,7 +157,7 @@ export const TelemetryOptInBanner = forwardRef(
               a: (
                 <NavLink
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                  href={resolveRoute(APP_ROUTES.EDITOR_SETTINGS)}
+                  href={resolveRoute(EDITOR_SETTINGS_ROUTE)}
                   aria-label={__('Settings', 'web-stories')}
                 />
               ),
