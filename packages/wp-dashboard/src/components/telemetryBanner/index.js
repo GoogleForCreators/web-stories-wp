@@ -46,7 +46,6 @@ import {
  */
 import bannerBg from '../../images/analytics-banner-bg.png';
 import useTelemetryOptIn from '../../effects/useTelemetryOptIn';
-import useTelemetry from './useTelemetry';
 
 const Label = styled.label.attrs({ htmlFor: 'telemetry-banner-opt-in' })`
   display: flex;
@@ -194,10 +193,6 @@ export function TelemetryBannerContainer(props) {
   } = useTelemetryOptIn();
   const ref = useRef();
 
-  const {
-    actions: { setTelemetryBannerOpen },
-  } = useTelemetry();
-
   const previousBannerVisible = useRef(bannerVisible);
 
   useLayoutEffect(() => {
@@ -206,13 +201,11 @@ export function TelemetryBannerContainer(props) {
       previousBannerVisible.current === false &&
       ref.current
     ) {
-      setTelemetryBannerOpen(true);
       previousBannerVisible.current = true;
     } else if (!bannerVisible && previousBannerVisible.current) {
-      setTelemetryBannerOpen(false);
       previousBannerVisible.current = false;
     }
-  }, [bannerVisible, setTelemetryBannerOpen]);
+  }, [bannerVisible]);
 
   return (
     <TelemetryOptInBanner
