@@ -127,13 +127,13 @@ function PresetPanel({ presetType, title, pushUpdate }) {
     setToDelete(preset);
   };
 
-  const resizeable = hasPresets;
+  const resizable = hasPresets;
   const canCollapse = !isEditMode && (hasPresets || isColor);
   return (
     <Panel
       name={`stylepreset-${presetType}`}
       initialHeight={getPanelInitialHeight(isColor, globalPresets)}
-      resizeable={resizeable}
+      resizable={resizable}
       canCollapse={canCollapse}
     >
       <PresetsHeader
@@ -160,7 +160,7 @@ function PresetPanel({ presetType, title, pushUpdate }) {
           />
         )}
       </PanelContent>
-      {resizeable && <Resize position="bottom" />}
+      {resizable && <Resize position="bottom" />}
       {showDialog && (
         <ConfirmationDialog
           presetType={presetType}
