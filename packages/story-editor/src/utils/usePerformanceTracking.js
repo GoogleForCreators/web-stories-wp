@@ -35,9 +35,6 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
     }
     const el = node;
     const traceEvent = (e) => {
-      if (!traces[e.timeStamp]) {
-        traces[e.timeStamp] = {};
-      }
       traces[e.timeStamp] = { category, time: e.timeStamp };
       if (label) {
         traces[e.timeStamp].label = label;

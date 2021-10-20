@@ -38,8 +38,12 @@ function PerformanceObserverProvider({ children }) {
           OBSERVED_EVENTS.includes(entry.name) &&
           traces[entry.startTime]?.category
         ) {
-          console.log(traces[entry.startTime]?.category);
-          trackTiming(entry.category, entry.duration, entry.label, entry.name);
+          trackTiming(
+            traces[entry.startTime].category,
+            entry.duration,
+            traces[entry.startTime].label,
+            entry.name
+          );
         }
       }
     });
