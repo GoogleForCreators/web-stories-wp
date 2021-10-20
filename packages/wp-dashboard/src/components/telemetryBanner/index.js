@@ -235,8 +235,12 @@ export default function TelemetryBanner() {
   const [, forceUpdate] = useState(false);
 
   useEffect(() => {
-    headerEl.current = document.getElementById('body-view-options-header');
-    forceUpdate((value) => !value);
+    if (
+      [APP_ROUTES.DASHBOARD, APP_ROUTES.TEMPLATES_GALLERY].includes(currentPath)
+    ) {
+      headerEl.current = document.getElementById('body-view-options-header');
+      forceUpdate((value) => !value);
+    }
   }, [currentPath, forceUpdate]);
 
   return headerEl.current
