@@ -153,7 +153,7 @@ describe('Publisher logo', () => {
 
   describe('contributor user', () => {
     // eslint-disable-next-line jest/require-hook
-    withUser('author', 'password');
+    withUser('contributor', 'password');
 
     it('should not give me the ability to upload publisher logos', async () => {
       await visitSettings();
