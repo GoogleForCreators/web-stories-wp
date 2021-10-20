@@ -106,7 +106,7 @@
     "jest": "^27.2.5",
     "jest-axe": "^5.0.1",
     "jest-canvas-mock": "^2.3.1",
-    "jest-environment-jsdom": "^27.3.0",
+    "jest-environment-jsdom": "^27.3.1",
     "jest-extended": "^1.0.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-matcher-deep-close-to": "^3.0.2",
