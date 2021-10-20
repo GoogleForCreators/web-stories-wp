@@ -20,18 +20,23 @@
 import { useCallback } from '@web-stories-wp/react';
 import { useConfig } from '@web-stories-wp/dashboard';
 
+/**
+ * Internal dependencies
+ */
+import {
+  getPageById as getPageByIdCallback,
+  searchPages as searchPagesCallback,
+} from '../pages';
+
 export default function usePagesApi() {
   const {
-    apiCallbacks: {
-      getPageById: getPageByIdCallback,
-      searchPages: searchPagesCallback,
-    },
+    api: { pages: pagesApiPath },
   } = useConfig();
 
   const getPageById = useCallback(
     async (id) => {
       try {
-        const { title, link } = await getPageByIdCallback(id);
+        const { title, link } = await getPageByIdCallback(pagesApiPath, id);
 
         return {
           title: title.rendered,
@@ -41,13 +46,13 @@ export default function usePagesApi() {
         return null;
       }
     },
-    [getPageByIdCallback]
+    [pagesApiPath]
   );
 
   const searchPages = useCallback(
     async (searchTerm) => {
       try {
-        const response = await searchPagesCallback(searchTerm);
+        const response = await searchPagesCallback(pagesApiPath, searchTerm);
 
         return response.map(({ id, title }) => ({
           value: id,
@@ -57,7 +62,7 @@ export default function usePagesApi() {
         return [];
       }
     },
-    [searchPagesCallback]
+    [pagesApiPath]
   );
 
   return {

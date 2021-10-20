@@ -28,19 +28,20 @@ import settingsReducer, {
   ACTION_TYPES as SETTINGS_ACTION_TYPES,
 } from '../reducers/settings';
 import { ERRORS } from '../../constants';
+import {
+  fetchSettings as fetchSettingsCallback,
+  updateSettings as updateSettingsCallback,
+} from '../settings';
 
 export default function useSettingsApi() {
   const [state, dispatch] = useReducer(settingsReducer, defaultSettingsState);
   const {
-    apiCallbacks: {
-      fetchSettings: fetchSettingsCallback,
-      updateSettings: updateSettingsCallback,
-    },
+    api: { settings: settingsApiPath },
   } = useConfig();
 
   const fetchSettings = useCallback(async () => {
     try {
-      const response = await fetchSettingsCallback();
+      const response = await fetchSettingsCallback(settingsApiPath);
 
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
@@ -54,13 +55,16 @@ export default function useSettingsApi() {
         },
       });
     }
-  }, [fetchSettingsCallback]);
+  }, [settingsApiPath]);
 
   const updateSettings = useCallback(
     async (queryParams) => {
       dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED });
       try {
-        const response = await updateSettingsCallback(queryParams);
+        const response = await updateSettingsCallback(
+          settingsApiPath,
+          queryParams
+        );
 
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
@@ -76,7 +80,7 @@ export default function useSettingsApi() {
         });
       }
     },
-    [updateSettingsCallback]
+    [settingsApiPath]
   );
 
   return {

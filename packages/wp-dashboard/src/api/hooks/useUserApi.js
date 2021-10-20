@@ -20,44 +20,56 @@
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { useConfig } from '@web-stories-wp/dashboard';
 
+/**
+ * Internal dependencies
+ */
+import {
+  getUser,
+  toggleWebStoriesTrackingOptIn as toggleWebStoriesTrackingOptInCallback,
+  toggleWebStoriesMediaOptimization as toggleWebStoriesMediaOptimizationCallback,
+} from '../user';
+
 export default function useUserApi() {
   const [currentUser, setCurrentUser] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
 
   const {
-    apiCallbacks: {
-      getUser,
-      toggleWebStoriesTrackingOptIn: toggleWebStoriesTrackingOptInCallback,
-      toggleWebStoriesMediaOptimization:
-        toggleWebStoriesMediaOptimizationCallback,
-    },
+    api: { currentUser: currentUserApiPath },
   } = useConfig();
 
   useEffect(() => {
     if (!Object.keys(currentUser).length) {
-      getUser().then(setCurrentUser);
+      getUser(currentUserApiPath).then(setCurrentUser);
     }
-  }, [currentUser, getUser]);
+  }, [currentUserApiPath, currentUser]);
 
   const toggleWebStoriesTrackingOptIn = useCallback(async () => {
     setIsUpdating(true);
     try {
-      setCurrentUser(await toggleWebStoriesTrackingOptInCallback(currentUser));
+      setCurrentUser(
+        await toggleWebStoriesTrackingOptInCallback(
+          currentUserApiPath,
+          currentUser
+        )
+      );
     } finally {
       setIsUpdating(false);
     }
-  }, [toggleWebStoriesTrackingOptInCallback, currentUser]);
+  }, [currentUserApiPath, currentUser]);
 
   const toggleWebStoriesMediaOptimization = useCallback(async () => {
     setIsUpdating(true);
     try {
       setCurrentUser(
-        await toggleWebStoriesMediaOptimizationCallback(currentUser)
+        await toggleWebStoriesMediaOptimizationCallback(
+          currentUserApiPath,
+          currentUser
+        )
       );
     } finally {
       setIsUpdating(false);
     }
-  }, [toggleWebStoriesMediaOptimizationCallback, currentUser]);
+  }, [currentUserApiPath, currentUser]);
 
   return {
     api: {

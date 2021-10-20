@@ -28,11 +28,12 @@ import mediaReducer, {
   ACTION_TYPES as MEDIA_ACTION_TYPES,
 } from '../reducers/media';
 import { ERRORS } from '../../constants';
+import { uploadMedia as uploadMediaCallback } from '../media';
 
 export default function useMediaApi() {
   const [state, dispatch] = useReducer(mediaReducer, defaultMediaState);
   const {
-    apiCallbacks: { uploadMedia: uploadMediaCallback },
+    api: { media: mediaApiPath },
   } = useConfig();
 
   const uploadMedia = useCallback(
@@ -43,7 +44,7 @@ export default function useMediaApi() {
 
       try {
         // each file needs to be uploaded separately
-        const mediaResponse = await uploadMediaCallback(files);
+        const mediaResponse = await uploadMediaCallback(mediaApiPath, files);
 
         dispatch({
           type: MEDIA_ACTION_TYPES.ADD_MEDIA_SUCCESS,
@@ -64,7 +65,7 @@ export default function useMediaApi() {
         });
       }
     },
-    [uploadMediaCallback]
+    [mediaApiPath]
   );
 
   return {
