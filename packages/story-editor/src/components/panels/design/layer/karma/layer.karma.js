@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -144,5 +148,22 @@ describe('Layer Panel', () => {
     expect(layerPanel.panelCollapseButton.getAttribute('aria-expanded')).toBe(
       'false'
     );
+  });
+
+  it('should be able to delete elements with delete action', async () => {
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
+
+    expect(layerPanel.layers.length).toBe(3);
+    const elementALayer = layerPanel.getLayerByInnerText('Title 1');
+    await fixture.events.hover(elementALayer);
+    const deleteElementAButton = within(elementALayer).getByLabelText('Delete');
+    await fixture.events.click(deleteElementAButton);
+
+    expect(layerPanel.layers.length).toBe(2);
+    expect(
+      layerPanel.layers.every((layer) => layer.innerText !== 'Title 1')
+    ).toBeTrue();
   });
 });

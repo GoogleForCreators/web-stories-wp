@@ -18,8 +18,15 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
-import { Button, BUTTON_TYPES, Icons } from '@web-stories-wp/design-system';
+import {
+  Button,
+  BUTTON_TYPES,
+  Icons,
+  themeHelpers,
+  Tooltip,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -42,11 +49,31 @@ const ActionsContainer = styled.div`
 
   --background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};
+  --background-color-opaque: ${({ theme }) =>
+    rgba(theme.colors.interactiveBg.secondaryNormal, 0)};
   background-color: var(--background-color);
-  box-shadow: 0px 0px 15px 20px var(--background-color);
+
+  ::before {
+    position: absolute;
+    content: '';
+    width: 32px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      to right,
+      var(--background-color-opaque),
+      var(--background-color)
+    );
+    pointer-events: none;
+  }
 `;
 
-const LayerContainer = styled.div`
+const LayerContainer = styled.div.attrs({
+  // Because the layer panel is aria-hidden, we need something else to select by
+  'data-testid': 'layer-option',
+})`
   position: relative;
   height: ${LAYER_HEIGHT}px;
   width: 100%;
@@ -61,8 +88,6 @@ const LayerButton = styled(Button).attrs({
   type: BUTTON_TYPES.PLAIN,
   tabIndex: -1,
   role: 'option',
-  // Because the layer panel is aria-hidden, we need something else to select by
-  'data-testid': 'layer-option',
 })`
   position: relative;
   display: grid;
@@ -86,6 +111,11 @@ const LayerButton = styled(Button).attrs({
       background: ${theme.colors.interactiveBg.secondaryPress};
       + * {
         --background-color: ${theme.colors.interactiveBg.secondaryPress};
+        --background-color-opaque: ${rgba(
+          theme.colors.interactiveBg.secondaryPress,
+          0
+        )};
+        --selected-hover-color: ${theme.colors.interactiveFg.brandHover};
       }
     `}
 
@@ -95,6 +125,8 @@ const LayerButton = styled(Button).attrs({
   :hover + * {
     --background-color: ${({ theme }) =>
       theme.colors.interactiveBg.secondaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.secondaryHover, 0)};
   }
 
   :active {
@@ -103,6 +135,8 @@ const LayerButton = styled(Button).attrs({
   :active + * {
     --background-color: ${({ theme }) =>
       theme.colors.interactiveBg.secondaryPress};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.secondaryPress, 0)};
   }
 `;
 
@@ -125,20 +159,18 @@ const LayerDescription = styled.div`
 `;
 
 const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   position: absolute;
-  right: 0px;
+  right: 0;
   width: 32px;
   aspect-ratio: 1;
 
-  /*
-   * have to manually center this because this element is taller
-   * than its parent causing flex to not properly center it.
-   */
-  top: 50%;
-  transform: translateY(-50%);
-
   svg {
+    position: relative;
     display: block;
+    width: 100%;
     color: ${({ theme }) => theme.colors.fg.secondary};
   }
 `;
@@ -152,6 +184,7 @@ const LayerContentContainer = styled.div`
 
 const LayerAction = styled(Button).attrs({
   type: BUTTON_TYPES.PLAIN,
+  tabIndex: -1,
 })`
   position: relative;
   aspect-ratio: 1;
@@ -174,7 +207,7 @@ const LayerAction = styled(Button).attrs({
   }
 
   /*
-   * override base button background color so we can recieve the 
+   * override base button background color so we can receive the 
    * proper background color from the parent.
    */
   && {
@@ -182,32 +215,47 @@ const LayerAction = styled(Button).attrs({
     background: var(--background-color);
   }
 
-  /*
-   * apply foreground color variants to children.
-   */
-  * {
-    color: ${({ theme }) => theme.colors.fg.primary};
-  }
-  :disabled * {
+  :disabled {
     color: ${({ theme }) => theme.colors.fg.secondary};
+  }
+
+  :hover {
+    color: var(
+      --selected-hover-color,
+      ${({ theme }) => theme.colors.fg.secondary}
+    );
+  }
+
+  & + & {
+    margin-left: 4px;
+  }
+
+  * {
+    pointer-events: none;
+  }
+
+  :focus {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        'var(--background-color)'
+      )}
   }
 `;
 
 function Layer({ layer }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(layer.type);
   const { isSelected, handleClick } = useLayerSelection(layer);
-  const { currentPage } = useStory((state) => ({
+  const { currentPage, deleteElementById } = useStory((state) => ({
     currentPage: state.state.currentPage,
+    deleteElementById: state.actions.deleteElementById,
   }));
   const isBackground = currentPage.elements[0].id === layer.id;
+  const layerId = `layer-${layer.id}`;
 
   return (
     <LayerContainer>
-      <LayerButton
-        id={`layer-${layer.id}`}
-        onClick={handleClick}
-        isSelected={isSelected}
-      >
+      <LayerButton id={layerId} onClick={handleClick} isSelected={isSelected}>
         <LayerIconWrapper>
           <LayerIcon element={layer} currentPage={currentPage} />
         </LayerIconWrapper>
@@ -227,15 +275,24 @@ function Layer({ layer }) {
         </LayerDescription>
       </LayerButton>
       <ActionsContainer>
-        {/*
-         *@TODO #9137 #9138 add layer actions here. only reason we conditionally
-         * render right now is to maintain visual continuity until
-         * the actual actions are present.
-         */}
-        {isBackground && (
-          <LayerAction disabled>
+        {isBackground ? (
+          <LayerAction
+            aria-label={__('Locked', 'web-stories')}
+            aria-describedby={layerId}
+            disabled
+          >
             <Icons.LockClosed />
           </LayerAction>
+        ) : (
+          <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
+            <LayerAction
+              aria-label={__('Delete', 'web-stories')}
+              aria-describedby={layerId}
+              onClick={() => deleteElementById({ elementId: layer.id })}
+            >
+              <Icons.Trash />
+            </LayerAction>
+          </Tooltip>
         )}
       </ActionsContainer>
     </LayerContainer>
