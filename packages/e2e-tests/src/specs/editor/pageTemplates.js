@@ -21,7 +21,9 @@ import percySnapshot from '@percy/puppeteer';
 import { addTextElement, createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 describe('Page Templates', () => {
-  it('should be able to load an create custom page templates', async () => {
+  // Skipped for https://github.com/google/web-stories-wp/issues/9484
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should be able to load an create custom page templates', async () => {
     await createNewStory();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
@@ -56,6 +58,6 @@ describe('Page Templates', () => {
       '[aria-label="Page Template Options"] [role="listitem"]'
     );
 
-    await percySnapshot(page, 'Custom Page Templates');
+    await percySnapshot(page, 'Page Templates');
   });
 });

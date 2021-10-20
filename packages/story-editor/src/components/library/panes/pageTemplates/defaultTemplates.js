@@ -135,7 +135,7 @@ function DefaultTemplates({ pageSize }) {
       <PageTemplatesParentContainer ref={pageTemplatesParentRef}>
         <ActionRow>
           <Headline
-            as="h3"
+            as="h2"
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
           >
             {__('Templates', 'web-stories')}
