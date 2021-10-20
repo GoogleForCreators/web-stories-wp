@@ -27,7 +27,7 @@ import {
 /**
  * Internal dependencies
  */
-import EditorSettings from '..';
+import EditorSettings from '../editorSettings';
 import { rawPublisherLogos } from '../dataUtils/formattedPublisherLogos';
 import { TEXT as AD_NETWORK_TEXT } from '../adManagement';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
