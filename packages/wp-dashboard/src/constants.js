@@ -41,3 +41,25 @@ export const SUCCESS = {
     UPDATED: __('Setting saved.', 'web-stories'),
   },
 };
+
+export const ERRORS = {
+  UPLOAD_PUBLISHER_LOGO: {
+    MESSAGE: __('Unable to add publisher logo', 'web-stories'),
+    MESSAGE_PLURAL: __('Unable to add publisher logos', 'web-stories'),
+  },
+  REMOVE_PUBLISHER_LOGO: {
+    MESSAGE: __('Unable to remove publisher logo', 'web-stories'),
+  },
+  UPDATE_PUBLISHER_LOGO: {
+    MESSAGE: __('Unable to update publisher logo', 'web-stories'),
+  },
+  LOAD_PUBLISHER_LOGOS: {
+    MESSAGE: __('Unable to load publisher logos', 'web-stories'),
+  },
+  LOAD_SETTINGS: {
+    MESSAGE: __('Unable to load settings', 'web-stories'),
+  },
+  UPDATE_EDITOR_SETTINGS: {
+    MESSAGE: __('Unable to update settings data', 'web-stories'),
+  },
+};

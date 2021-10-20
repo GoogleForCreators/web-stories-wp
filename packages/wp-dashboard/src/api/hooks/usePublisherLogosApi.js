@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useReducer } from '@web-stories-wp/react';
+import { useConfig } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
@@ -25,9 +26,8 @@ import { useCallback, useReducer } from '@web-stories-wp/react';
 import publisherLogosReducer, {
   defaultPublisherLogosState,
   ACTION_TYPES,
-} from '../reducer/publisherLogos';
-import { ERRORS } from '../textContent';
-import { useConfig } from '../config';
+} from '../reducers/publisherLogos';
+import { ERRORS } from '../../constants';
 
 export default function usePublisherLogosApi() {
   const [state, dispatch] = useReducer(

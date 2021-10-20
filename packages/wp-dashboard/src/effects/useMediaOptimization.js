@@ -20,17 +20,17 @@
 import { useCallback } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@web-stories-wp/design-system';
-import { useApi } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import { SUCCESS } from '../constants';
+import { useEditorSettings } from '../components/editorSettings';
 
 export default function useMediaOptimization() {
   const { showSnackbar } = useSnackbar();
 
-  const { currentUser, toggleWebStoriesMediaOptimization } = useApi(
+  const { currentUser, toggleWebStoriesMediaOptimization } = useEditorSettings(
     ({
       state: { currentUser },
       actions: {

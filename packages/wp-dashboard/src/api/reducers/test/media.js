@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { ERRORS } from '../../textContent';
+import { ERRORS } from '../../../constants';
 import mediaReducer, { ACTION_TYPES } from '../media';
 
 describe('mediaReducer', () => {

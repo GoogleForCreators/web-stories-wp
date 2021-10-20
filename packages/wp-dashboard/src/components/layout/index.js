@@ -22,7 +22,7 @@ import { InterfaceSkeleton } from '@web-stories-wp/dashboard';
  * Internal dependencies
  */
 import { useAdminSubMenu } from '../../effects';
-import EditorSettings from '../editorSettings';
+import { EditorSettingsProvider, EditorSettings } from '../editorSettings';
 import TelemetryBanner from '../telemetryBanner';
 import { EDITOR_SETTINGS_ROUTE } from '../../constants';
 
@@ -30,7 +30,7 @@ function Layout() {
   useAdminSubMenu();
 
   return (
-    <>
+    <EditorSettingsProvider>
       <InterfaceSkeleton
         additionalRoutes={[
           {
@@ -40,7 +40,7 @@ function Layout() {
         ]}
       />
       <TelemetryBanner />
-    </>
+    </EditorSettingsProvider>
   );
 }
 

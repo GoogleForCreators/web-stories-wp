@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
-
-/**
- * Internal dependencies
- */
-import { useConfig } from '../config';
+import { useConfig } from '@web-stories-wp/dashboard';
 
 export default function useUserApi() {
   const [currentUser, setCurrentUser] = useState({});

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { ERRORS } from '../../textContent';
+import { ERRORS } from '../../../constants';
 import settingsReducer, {
   ACTION_TYPES,
   defaultSettingsState as initialState,

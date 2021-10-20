@@ -19,7 +19,11 @@
 import { useCallback, useState, useEffect } from '@web-stories-wp/react';
 import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
 import { useSnackbar, localStore } from '@web-stories-wp/design-system';
-import { useApi, useRouteHistory } from '@web-stories-wp/dashboard';
+import { useRouteHistory } from '@web-stories-wp/dashboard';
+/**
+ * Internal dependencies
+ */
+import { useEditorSettings } from '../components/editorSettings';
 
 /**
  * Internal dependencies
@@ -43,7 +47,7 @@ export default function useTelemetryOptIn() {
     setInitialBannerPreviouslyClosed
   );
   const [optInCheckboxClicked, setOptInCheckboxClicked] = useState(false);
-  const { currentUser, toggleWebStoriesTrackingOptIn } = useApi(
+  const { currentUser, toggleWebStoriesTrackingOptIn } = useEditorSettings(
     ({
       state: { currentUser },
       actions: {

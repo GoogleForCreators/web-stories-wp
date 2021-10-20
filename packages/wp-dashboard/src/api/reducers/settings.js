@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { AD_NETWORK_TYPE, ARCHIVE_TYPE } from '../../constants';
+import { AD_NETWORK_TYPE, ARCHIVE_TYPE } from '@web-stories-wp/dashboard';
 
 export const ACTION_TYPES = {
   UPDATE_SETTINGS_SUCCESS: 'update_settings_success',

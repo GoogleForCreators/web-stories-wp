@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useReducer } from '@web-stories-wp/react';
+import { useConfig } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
@@ -25,9 +26,8 @@ import { useCallback, useReducer } from '@web-stories-wp/react';
 import settingsReducer, {
   defaultSettingsState,
   ACTION_TYPES as SETTINGS_ACTION_TYPES,
-} from '../reducer/settings';
-import { ERRORS } from '../textContent';
-import { useConfig } from '../config';
+} from '../reducers/settings';
+import { ERRORS } from '../../constants';
 
 export default function useSettingsApi() {
   const [state, dispatch] = useReducer(settingsReducer, defaultSettingsState);

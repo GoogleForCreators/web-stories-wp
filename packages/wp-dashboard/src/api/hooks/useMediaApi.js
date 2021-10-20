@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useReducer } from '@web-stories-wp/react';
+import { useConfig } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
@@ -25,9 +26,8 @@ import { useCallback, useReducer } from '@web-stories-wp/react';
 import mediaReducer, {
   defaultMediaState,
   ACTION_TYPES as MEDIA_ACTION_TYPES,
-} from '../reducer/media';
-import { ERRORS } from '../textContent';
-import { useConfig } from '../config';
+} from '../reducers/media';
+import { ERRORS } from '../../constants';
 
 export default function useMediaApi() {
   const [state, dispatch] = useReducer(mediaReducer, defaultMediaState);

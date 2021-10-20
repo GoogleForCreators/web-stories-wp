@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { ERRORS } from '../../textContent';
+import { ERRORS } from '../../../constants';
 import publisherLogoReducer, { ACTION_TYPES } from '../publisherLogos';
 
 describe('publisherLogoReducer', () => {
