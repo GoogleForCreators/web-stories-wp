@@ -224,9 +224,9 @@ class WebStoriesScraperPlugin {
           .replace(/<meta name="robots" content="noindex, ?nofollow">/, '')
           // Full URLs for twitter and Open Graph images.
           .replace(
-            /<meta property="twitter:image" content="([^>]+)">/gm,
+            /<meta name="twitter:image" content="([^>]+)">/gm,
             (match, p1) =>
-              `<meta property="twitter:image" content="${WEBSITE_LOCATION}${storySlug}/${p1}">`
+              `<meta name="twitter:image" content="${WEBSITE_LOCATION}${storySlug}/${p1}">`
           )
           .replace(
             /<meta property="og:image" content="([^>]+)">/gm,
@@ -356,7 +356,12 @@ const options = {
     { selector: 'amp-video > source', attr: 'src' },
     { selector: 'meta[property="og:url"]', attr: 'content' },
     { selector: 'meta[property="og:image"]', attr: 'content' },
-    { selector: 'meta[property="twitter:image"]', attr: 'content' },
+    { selector: 'meta[name="twitter:image"]', attr: 'content' },
+    // So as to not fetch preloaded amp-story-1.0.js.
+    { selector: 'link[rel="preload"][as="audio"]', attr: 'href' },
+    { selector: 'link[rel="preload"][as="image"]', attr: 'href' },
+    { selector: 'link[rel="preload"][as="track"]', attr: 'href' },
+    { selector: 'link[rel="preload"][as="video"]', attr: 'href' },
     { selector: 'link[rel="canonical"]', attr: 'href' },
     { selector: 'track', attr: 'src' },
   ],
