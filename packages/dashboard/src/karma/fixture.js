@@ -84,11 +84,6 @@ const defaultConfig = {
   archiveURL: 'https://example.com/',
   api: {
     stories: '/web-stories/v1/web-story',
-    users: '/wp/v2/users',
-    currentUser: '/wp/v2/users/me',
-    settings: '/wp/v2/settings',
-    pages: '/wp/v2/pages',
-    publisherLogos: '/web-stories/v1/publisher-logos',
   },
 };
 
