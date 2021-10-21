@@ -134,8 +134,6 @@ function createProviderValues({
           newlyCreatedMediaIds: [],
           error: {},
         },
-        stories: { error: {} },
-        templates: { error: {} },
         currentUser: {
           isUpdating: false,
           data: {
@@ -174,23 +172,27 @@ function createProviderValues({
   };
 }
 
+const renderEditorSettings = (values) => {
+  return renderWithProviders(
+    <EditorSettings />,
+    createProviderValues(values),
+    {},
+    ({ children }) => children,
+    MockEditorProvider
+  );
+};
+
 describe('Editor Settings: <Editor Settings />', function () {
   it('should render settings page with google analytics and publisher logo sections', function () {
-    const { container } = renderWithProviders(
-      <EditorSettings />,
-      createProviderValues({
-        googleAnalyticsId: 'UA-098909-05',
-        usingLegacyAnalytics: false,
-        canUploadFiles: true,
-        canManageSettings: true,
-        isLoading: false,
-        logoIds: [],
-        publisherLogos: [],
-      }),
-      {},
-      ({ children }) => children,
-      MockEditorProvider
-    );
+    const { container } = renderEditorSettings({
+      googleAnalyticsId: 'UA-098909-05',
+      usingLegacyAnalytics: false,
+      canUploadFiles: true,
+      canManageSettings: true,
+      isLoading: false,
+      logoIds: [],
+      publisherLogos: [],
+    });
 
     setAppElement(container);
 
@@ -214,20 +216,15 @@ describe('Editor Settings: <Editor Settings />', function () {
   });
 
   it('should render settings page with publisher logos', function () {
-    const { container } = renderWithProviders(
-      <EditorSettings />,
-      createProviderValues({
-        googleAnalyticsId: 'UA-098909-05',
-        usingLegacyAnalytics: false,
-        canUploadFiles: true,
-        canManageSettings: true,
-        isLoading: false,
-        publisherLogos: rawPublisherLogos,
-      }),
-      {},
-      ({ children }) => children,
-      MockEditorProvider
-    );
+    const { container } = renderEditorSettings({
+      googleAnalyticsId: 'UA-098909-05',
+      usingLegacyAnalytics: false,
+      canUploadFiles: true,
+      canManageSettings: true,
+      isLoading: false,
+      publisherLogos: rawPublisherLogos,
+    });
+
     setAppElement(container);
 
     expect(screen.queryAllByTestId(/^uploaded-publisher-logo-/)).toHaveLength(
@@ -236,20 +233,14 @@ describe('Editor Settings: <Editor Settings />', function () {
   });
 
   it('should call mockRemovePublisherLogo when a logo is removed', function () {
-    renderWithProviders(
-      <EditorSettings />,
-      createProviderValues({
-        googleAnalyticsId: 'UA-098909-05',
-        usingLegacyAnalytics: false,
-        canUploadFiles: true,
-        canManageSettings: true,
-        isLoading: false,
-        publisherLogos: rawPublisherLogos,
-      }),
-      {},
-      ({ children }) => children,
-      MockEditorProvider
-    );
+    renderEditorSettings({
+      googleAnalyticsId: 'UA-098909-05',
+      usingLegacyAnalytics: false,
+      canUploadFiles: true,
+      canManageSettings: true,
+      isLoading: false,
+      publisherLogos: rawPublisherLogos,
+    });
 
     const ContextMenuButton = screen.getByTestId(
       'publisher-logo-context-menu-button-1'
@@ -269,44 +260,33 @@ describe('Editor Settings: <Editor Settings />', function () {
   });
 
   it('should render settings page without file upload section when canUploadFiles is false', function () {
-    const { container } = renderWithProviders(
-      <EditorSettings />,
-      createProviderValues({
-        googleAnalyticsId: 'UA-098909-05',
-        usingLegacyAnalytics: false,
-        canUploadFiles: false,
-        canManageSettings: true,
-        isLoading: false,
-        publisherLogos: [],
-      }),
-      {},
-      ({ children }) => children,
-      MockEditorProvider
-    );
+    const { container } = renderEditorSettings({
+      googleAnalyticsId: 'UA-098909-05',
+      usingLegacyAnalytics: false,
+      canUploadFiles: false,
+      canManageSettings: true,
+      isLoading: false,
+      publisherLogos: [],
+    });
     setAppElement(container);
 
     expect(screen.queryByTestId('upload-file-input')).not.toBeInTheDocument();
   });
 
   it('should render settings page with AdSense', function () {
-    const { container } = renderWithProviders(
-      <EditorSettings />,
-      createProviderValues({
-        googleAnalyticsId: 'UA-098909-05',
-        usingLegacyAnalytics: false,
-        canUploadFiles: true,
-        canManageSettings: true,
-        isLoading: false,
-        adSensePublisherId: '123',
-        adSenseSlotId: '456',
-        adManagerSlotId: '',
-        adNetwork: AD_NETWORK_TYPE.ADSENSE,
-        publisherLogos: [],
-      }),
-      {},
-      ({ children }) => children,
-      MockEditorProvider
-    );
+    const { container } = renderEditorSettings({
+      googleAnalyticsId: 'UA-098909-05',
+      usingLegacyAnalytics: false,
+      canUploadFiles: true,
+      canManageSettings: true,
+      isLoading: false,
+      adSensePublisherId: '123',
+      adSenseSlotId: '456',
+      adManagerSlotId: '',
+      adNetwork: AD_NETWORK_TYPE.ADSENSE,
+      publisherLogos: [],
+    });
+
     setAppElement(container);
 
     const helperLink = screen.getByText(
