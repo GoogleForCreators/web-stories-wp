@@ -26,7 +26,7 @@ let performanceObserver;
 
 function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
   // Start observing all events if not doing so already.
-  if (!performanceObserver && PerformanceObserver) {
+  if (!performanceObserver && typeof PerformanceObserver !== 'undefined') {
     performanceObserver = new PerformanceObserver((entries) => {
       for (const entry of entries.getEntries()) {
         if (
