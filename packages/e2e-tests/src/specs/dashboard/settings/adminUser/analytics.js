@@ -19,7 +19,7 @@
  */
 import { visitSettings } from '@web-stories-wp/e2e-test-utils';
 
-const inputSelector = '[aria-label="Enter your Google Analytics Tracking ID"]';
+const INPUT_SELECTOR = '[aria-label="Enter your Google Analytics Tracking ID"]';
 
 describe('Analytics', () => {
   beforeEach(async () => {
@@ -33,10 +33,10 @@ describe('Analytics', () => {
     await expect(page).toMatchElement('h2', { text: 'Settings' });
   });
 
-  it('should update the tracking id when pressing Enter and display snackbar confirmation', async () => {
-    await page.click(inputSelector);
+  it('should update the tracking id when pressing enter and display snackbar confirmation', async () => {
+    await page.click(INPUT_SELECTOR);
 
-    const inputLength = await page.$eval(inputSelector, (el) => {
+    const inputLength = await page.$eval(INPUT_SELECTOR, (el) => {
       return el.value.length;
     });
 
@@ -54,10 +54,10 @@ describe('Analytics', () => {
   });
 
   it('should update the tracking id by clicking the save button and display snackbar confirmation', async () => {
-    await page.hover(inputSelector);
-    await page.click(inputSelector);
+    await page.hover(INPUT_SELECTOR);
+    await page.click(INPUT_SELECTOR);
 
-    const inputLength = await page.$eval(inputSelector, (el) => {
+    const inputLength = await page.$eval(INPUT_SELECTOR, (el) => {
       return el.value.length;
     });
 
@@ -74,9 +74,9 @@ describe('Analytics', () => {
     await expect(page).toMatch('Setting saved.');
   });
 
-  it('should allow the analytics id to saved as an empty string and display snackbar confirmation', async () => {
-    await page.click(inputSelector);
-    const inputLength = await page.$eval(inputSelector, (el) => {
+  it('should allow the analytics id to be saved as an empty string and display snackbar confirmation', async () => {
+    await page.click(INPUT_SELECTOR);
+    const inputLength = await page.$eval(INPUT_SELECTOR, (el) => {
       return el.value.length;
     });
 
@@ -92,9 +92,9 @@ describe('Analytics', () => {
     await expect(page).toMatch('Setting saved.');
   });
 
-  it('should not allow an invalid analytics id to saved', async () => {
-    await page.click(inputSelector);
-    const inputLength = await page.$eval(inputSelector, (el) => {
+  it('should not allow an invalid analytics id to be saved', async () => {
+    await page.click(INPUT_SELECTOR);
+    const inputLength = await page.$eval(INPUT_SELECTOR, (el) => {
       return el.value.length;
     });
 
@@ -112,9 +112,9 @@ describe('Analytics', () => {
   });
 
   it("should not allow an update of google analytics id when id format doesn't match required format", async () => {
-    await page.click(inputSelector);
+    await page.click(INPUT_SELECTOR);
 
-    const inputLength = await page.$eval(inputSelector, (el) => {
+    const inputLength = await page.$eval(INPUT_SELECTOR, (el) => {
       return el.value.length;
     });
 

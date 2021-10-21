@@ -64,14 +64,14 @@ describe('Telemetry Banner', () => {
     await checkbox.focus();
     await page.keyboard.press('Space');
     const optedIn = await page.evaluate(() => {
-      const ele = document.querySelector('#telemetry-banner-opt-in');
+      const ele = document.getElementById('telemetry-banner-opt-in');
       return document.activeElement === ele;
     });
     expect(optedIn).toBeFalse();
     await page.keyboard.press('Space');
 
     const updatedOptedIn = await page.evaluate(() => {
-      const ele = document.querySelector('#telemetry-banner-opt-in');
+      const ele = document.getElementById('telemetry-banner-opt-in');
       return document.activeElement === ele;
     });
     expect(updatedOptedIn).toBeTrue();

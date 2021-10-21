@@ -22,10 +22,10 @@ import {
   uploadPublisherLogo,
 } from '@web-stories-wp/e2e-test-utils';
 
-const settingsSelector = '[data-testid="editor-settings"]';
-const publisherLogosContainerSelector =
+const SETTINGS_SELECTOR = '[data-testid="editor-settings"]';
+const PUBLISHER_LOGOS_CONTAINER_SELECTOR =
   '[data-testid="publisher-logos-container"]';
-const contextMenuButtonSelector =
+const CONTEXT_MENU_BUTTON_SELECTOR =
   '[data-testid="publisher-logo-context-menu-button-1"]';
 
 async function focusOnPublisherLogos(page) {
@@ -58,27 +58,30 @@ describe('Publisher Logo', () => {
     await uploadPublisherLogo('yay-fox.gif');
     await uploadPublisherLogo('its-a-walk-off.gif');
   });
+
   beforeEach(async () => {
     await visitSettings();
   });
 
   it('should update the default a publisher logo on click and display snackbar confirmation', async () => {
-    const settingsView = await page.$(settingsSelector);
+    const settingsView = await page.$(SETTINGS_SELECTOR);
     const publisherLogosContainer = await settingsView.$(
-      publisherLogosContainerSelector
+      PUBLISHER_LOGOS_CONTAINER_SELECTOR
     );
     const publisherLogos = await publisherLogosContainer.$$(
       '[role="listitem"]'
     );
     const initialDefault = publisherLogos[0];
+
     expect(initialDefault).toBeTruthy();
     expect(initialDefault).toMatchElement('p', { text: 'Default' });
 
     const logoToMakeDefault = publisherLogos[1];
+
     expect(logoToMakeDefault).toBeTruthy();
     expect(logoToMakeDefault).not.toMatchElement('p', { text: 'Default' });
 
-    await expect(page).toClick(contextMenuButtonSelector);
+    await expect(page).toClick(CONTEXT_MENU_BUTTON_SELECTOR);
 
     await page.waitForTimeout(300);
 
@@ -95,9 +98,9 @@ describe('Publisher Logo', () => {
   });
 
   it('should update the default logo on keydown and display snackbar confirmation', async () => {
-    const settingsView = await page.$(settingsSelector);
+    const settingsView = await page.$(SETTINGS_SELECTOR);
     const publisherLogosContainer = await settingsView.$(
-      publisherLogosContainerSelector
+      PUBLISHER_LOGOS_CONTAINER_SELECTOR
     );
     const publisherLogos = await publisherLogosContainer.$$(
       '[role="listitem"]'
@@ -127,10 +130,10 @@ describe('Publisher Logo', () => {
   });
 
   it('should remove a publisher logo on click and display snackbar confirmation', async () => {
-    const settingsView = await page.$(settingsSelector);
+    const settingsView = await page.$(SETTINGS_SELECTOR);
 
     const publisherLogosContainer = await settingsView.$(
-      publisherLogosContainerSelector
+      PUBLISHER_LOGOS_CONTAINER_SELECTOR
     );
 
     const publisherLogos = await publisherLogosContainer.$$(
@@ -139,7 +142,7 @@ describe('Publisher Logo', () => {
     const logoToDelete = publisherLogos[1];
     const initialPublisherLogosLength = publisherLogos.length;
 
-    await expect(page).toClick(contextMenuButtonSelector);
+    await expect(page).toClick(CONTEXT_MENU_BUTTON_SELECTOR);
 
     await page.waitForTimeout(300);
 
@@ -159,10 +162,10 @@ describe('Publisher Logo', () => {
   });
 
   it('should remove a publisher logo on keydown enter and display snackbar confirmation', async () => {
-    const settingsView = await page.$(settingsSelector);
+    const settingsView = await page.$(SETTINGS_SELECTOR);
 
     const publisherLogosContainer = await settingsView.$(
-      publisherLogosContainerSelector
+      PUBLISHER_LOGOS_CONTAINER_SELECTOR
     );
 
     expect(publisherLogosContainer).toBeTruthy();
