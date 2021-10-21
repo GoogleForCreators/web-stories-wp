@@ -44,7 +44,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	const URL_DOMAIN  = 'http://google.com';
 	const URL_PATH    = '/test.jpg';
 
-	const REST_URL = '/web-stories/v1/hotlink';
+	const REST_URL = '/web-stories/v1/hotlink/validate';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -81,9 +81,9 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 		$this->request_count = 0;
 
 		$settings         = new Settings();
-		$this->controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller(
-			new Story_Post_Type( $settings, new Experiments( $settings ) )
-		);
+		$experiments      = new Experiments( $settings );
+		$story_post_type  = new Story_Post_Type( $settings, $experiments );
+		$this->controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( $story_post_type, $experiments );
 	}
 
 	public function tear_down() {
@@ -159,7 +159,6 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( self::REST_URL, $routes );
-		$this->assertCount( 1, $routes[ self::REST_URL ] );
 	}
 
 	/**

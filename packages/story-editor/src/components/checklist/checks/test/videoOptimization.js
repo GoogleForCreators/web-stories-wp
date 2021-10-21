@@ -36,6 +36,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     const result = videoElementsNotOptimized(largeUnoptimizedVideo);
     expect(result).toBe(true);
   });
+
   it('should return true if the video element is larger than 1080x1920 and not optimized', () => {
     const largeUnoptimizedVideo = {
       id: 202,
@@ -92,5 +93,31 @@ describe('videoOptimization (pre-publish checklist card)', () => {
 
     expect(videoElementsNotOptimized(smallUnoptimizedVideo)).toBe(false);
     expect(videoElementsNotOptimized(smallOptimizedVideo)).toBe(false);
+  });
+
+  it('should return false if the video element is exactly 1280x720', () => {
+    const landscapeVideo = {
+      id: 202,
+      type: 'video',
+      resource: {
+        isOptimized: false,
+        height: 720,
+        width: 1280,
+        local: false,
+      },
+    };
+    const portraitVideo = {
+      id: 202,
+      type: 'video',
+      resource: {
+        isOptimized: false,
+        height: 1280,
+        width: 720,
+        local: false,
+      },
+    };
+
+    expect(videoElementsNotOptimized(landscapeVideo)).toBe(false);
+    expect(videoElementsNotOptimized(portraitVideo)).toBe(false);
   });
 });
