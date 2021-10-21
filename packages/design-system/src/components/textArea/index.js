@@ -45,6 +45,14 @@ const CounterText = styled(Text).attrs({
 
 const Label = styled(Text)`
   margin-bottom: 12px;
+  ${({ isSmall, theme }) =>
+    isSmall &&
+    `
+    font-size: 12px;
+    color: ${theme.colors.fg['tertiary']};
+    display: inline-block;
+    margin-bottom: 6px;
+  `}
 `;
 
 const Hint = styled(Text)`
@@ -131,6 +139,7 @@ export const TextArea = forwardRef(
       hint,
       id,
       label,
+      isLabelSmall = false,
       onBlur,
       onFocus,
       value,
@@ -158,7 +167,12 @@ export const TextArea = forwardRef(
     return (
       <Container className={className}>
         {label && (
-          <Label htmlFor={textAreaId} forwardedAs="label" disabled={disabled}>
+          <Label
+            isSmall={isLabelSmall}
+            htmlFor={textAreaId}
+            forwardedAs="label"
+            disabled={disabled}
+          >
             {label}
           </Label>
         )}

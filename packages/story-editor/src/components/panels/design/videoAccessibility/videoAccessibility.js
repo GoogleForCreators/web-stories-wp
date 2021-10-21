@@ -168,15 +168,13 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
                 node.focus();
               }
             }}
-            placeholder={
-              alt === MULTIPLE_VALUE
-                ? MULTIPLE_DISPLAY_VALUE
-                : __(
-                    'Add assistive text for visually impaired users',
-                    'web-stories'
-                  )
-            }
+            placeholder={alt === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''}
             value={alt || ''}
+            label={__(
+              'Add assistive text for visually impaired users',
+              'web-stories'
+            )}
+            isLabelSmall
             onChange={(evt) =>
               pushUpdate(
                 {
@@ -185,7 +183,6 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
                 true
               )
             }
-            aria-label={__('Assistive text', 'web-stories')}
             maxLength={MIN_MAX.ALT_TEXT.MAX}
             rows={2}
             isIndeterminate={alt === MULTIPLE_VALUE}

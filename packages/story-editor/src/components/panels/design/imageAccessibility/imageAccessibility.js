@@ -68,19 +68,16 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
               node.focus();
             }
           }}
-          placeholder={
-            alt === MULTIPLE_VALUE
-              ? MULTIPLE_DISPLAY_VALUE
-              : __(
-                  'Add assistive text for visually impaired users',
-                  'web-stories'
-                )
-          }
+          placeholder={alt === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''}
+          label={__(
+            'Add assistive text for visually impaired users',
+            'web-stories'
+          )}
+          isLabelSmall
           value={alt || ''}
           onChange={(evt) =>
             pushUpdate({ alt: evt?.target?.value?.trim() || null }, true)
           }
-          aria-label={__('Assistive text', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
           rows={2}
           isIndeterminate={alt === MULTIPLE_VALUE}

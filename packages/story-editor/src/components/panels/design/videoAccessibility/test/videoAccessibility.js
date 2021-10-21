@@ -79,7 +79,7 @@ describe('Panels/VideoAccessibility', () => {
 
   it('should trim video description to maximum allowed length if exceeding', () => {
     arrange([defaultElement]);
-    const input = screen.getByPlaceholderText(
+    const input = screen.getByLabelText(
       'Add assistive text for visually impaired users'
     );
     expect(input.maxLength).toBe(MIN_MAX.ALT_TEXT.MAX);
@@ -96,7 +96,9 @@ describe('Panels/VideoAccessibility', () => {
         },
       },
     ]);
-    const description = screen.getByRole('textbox', { name: 'Assistive text' });
+    const description = screen.getByLabelText(
+      'Add assistive text for visually impaired users'
+    );
     expect(description.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(description).toHaveValue('');
   });

@@ -48,7 +48,9 @@ describe('Panels/ImageAccessibility', () => {
 
   it('should render <ImageAccessibility /> panel', () => {
     arrange([defaultElement]);
-    const input = screen.getByRole('textbox', { name: 'Assistive text' });
+    const input = screen.getByLabelText(
+      'Add assistive text for visually impaired users'
+    );
     expect(input).toBeInTheDocument();
   });
 
@@ -60,7 +62,9 @@ describe('Panels/ImageAccessibility', () => {
         resource: { alt: 'Hello!', src: '2' },
       },
     ]);
-    const input = screen.getByRole('textbox', { name: 'Assistive text' });
+    const input = screen.getByLabelText(
+      'Add assistive text for visually impaired users'
+    );
     expect(input.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(input).toHaveValue('');
   });
