@@ -17,26 +17,27 @@
 /**
  * External dependencies
  */
-import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import {
+  disableCheckbox,
+  visitDashboard,
+  visitSettings,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Telemetry Banner', () => {
+  beforeAll(async () => {
+    await visitSettings();
+    await disableCheckbox('[data-testid="telemetry-settings-checkbox"]');
+    await page.evaluate(() => {
+      localStorage.removeItem('web_stories_tracking_optin_banner_closed');
+    });
+  });
+
   beforeEach(async () => {
     await visitDashboard();
-    await page.click('[aria-label="Settings"] ');
-    const telemetrySettingsCheckbox = await page.$(
-      '[data-testid="telemetry-settings-checkbox"]'
-    );
+  });
 
-    const checkboxStatus = await telemetrySettingsCheckbox.evaluate((el) => {
-      return el.checked;
-    });
-
-    if (checkboxStatus) {
-      await page.click('[data-testid="telemetry-settings-checkbox"]');
-    }
-
+  afterEach(async () => {
     await page.evaluate(() => {
-      window.location.hash = '#';
       localStorage.removeItem('web_stories_tracking_optin_banner_closed');
     });
   });
@@ -66,7 +67,7 @@ describe('Telemetry Banner', () => {
       const ele = document.querySelector('#telemetry-banner-opt-in');
       return document.activeElement === ele;
     });
-    expect(optedIn).toBeTrue();
+    expect(optedIn).toBeFalse();
     await page.keyboard.press('Space');
 
     const updatedOptedIn = await page.evaluate(() => {
