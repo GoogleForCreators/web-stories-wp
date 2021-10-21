@@ -92,7 +92,11 @@ class Embed {
 		$title  = $this->story->get_title();
 		$poster = ! empty( $this->story->get_poster_portrait() ) ? esc_url_raw( $this->story->get_poster_portrait() ) : '';
 
-		$poster_style  = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
+		$amp_player_inner = esc_html( $title );
+		if ( $poster ) {
+			$amp_player_inner = sprintf( '<img src="%s" width="%d" height="%d" alt="%s" loading="lazy" data-amp-story-player-poster-img />', $poster, (int) $args['width'], (int) $args['height'], esc_attr( $title ) );
+		}
+
 		$wrapper_style = sprintf(
 			'--aspect-ratio: %F; --width: %dpx; --height: %dpx',
 			0 !== $args['width'] ? $args['height'] / $args['width'] : 1,
@@ -112,10 +116,8 @@ class Embed {
 						width="<?php echo esc_attr( $args['width'] ); ?>"
 						height="<?php echo esc_attr( $args['height'] ); ?>"
 						layout="intrinsic">
-						<a
-							href="<?php echo esc_url( $url ); ?>"
-							style="<?php echo esc_attr( $poster_style ); ?>">
-							<?php echo esc_html( $title ); ?>
+						<a href="<?php echo esc_url( $url ); ?>">
+							<?php echo $amp_player_inner; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</a>
 					</amp-story-player>
 				</div>
@@ -132,10 +134,8 @@ class Embed {
 		<div class="<?php echo esc_attr( "$class web-stories-embed $align" ); ?>">
 			<div class="wp-block-embed__wrapper" style="<?php echo esc_attr( $wrapper_style ); ?>">
 				<amp-story-player>
-					<a
-						href="<?php echo esc_url( $url ); ?>"
-						style="<?php echo esc_attr( $poster_style ); ?>">
-						<?php echo esc_html( $title ); ?>
+					<a href="<?php echo esc_url( $url ); ?>">
+						<?php echo $amp_player_inner; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</a>
 				</amp-story-player>
 			</div>
