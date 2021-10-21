@@ -159,7 +159,7 @@ function UnreffedTab(
     node: tabRefs[refId]?.current,
     eventData: {
       ...eventData,
-      label: refId,
+      label: `${refId}_tab`,
     },
   });
   const tab = (
