@@ -18,16 +18,34 @@
  * External dependencies
  */
 import { useEffect } from '@web-stories-wp/react';
+import { trackTiming } from '@web-stories-wp/tracking';
 
-/**
- * Internal dependencies
- */
-import usePerformanceObserver from '../components/performanceObserver/usePerformanceObserver';
+const TRACES = {};
+const OBSERVED_EVENTS = ['click', 'mousedown'];
+let performanceObserver;
 
 function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
-  const { traces } = usePerformanceObserver(({ state: { traces } }) => ({
-    traces,
-  }));
+  // Start observing all events if not doing so already.
+  if (!performanceObserver) {
+    performanceObserver = new PerformanceObserver((entries) => {
+      for (const entry of entries.getEntries()) {
+        if (
+          OBSERVED_EVENTS.includes(entry.name) &&
+          TRACES[entry.startTime]?.category
+        ) {
+          console.log(TRACES[entry.startTime].category, TRACES[entry.startTime].label);
+          trackTiming(
+            TRACES[entry.startTime].category,
+            entry.duration,
+            TRACES[entry.startTime].label,
+            entry.name
+          );
+        }
+      }
+    });
+    performanceObserver.observe({ entryTypes: ['event'] });
+  }
+
   const { label, category } = eventData;
   useEffect(() => {
     if (!node) {
@@ -35,9 +53,9 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
     }
     const el = node;
     const traceEvent = (e) => {
-      traces[e.timeStamp] = { category, time: e.timeStamp };
+      TRACES[e.timeStamp] = { category, time: e.timeStamp };
       if (label) {
-        traces[e.timeStamp].label = label;
+        TRACES[e.timeStamp].label = label;
       }
     };
     el.addEventListener(eventType, traceEvent);
