@@ -34,12 +34,15 @@ import {
 } from '../../../../constants';
 import useApi from '../../../api/useApi';
 
-describe('Grid view', () => {
+describe('CUJ: Creator can view their stories in grid view', () => {
   let fixture;
-
+  let dashboardGridItems = [];
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    dashboardGridItems = await fixture.screen.getAllByTestId(
+      /^story-grid-item/
+    );
   });
 
   afterEach(() => {
@@ -111,152 +114,112 @@ describe('Grid view', () => {
     return contextMenuItem;
   }
 
-  it('should render', async () => {
-    const { storiesOrderById } = await getStoriesState();
-    const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-    expect(stories.length).toEqual(storiesOrderById.length);
+  describe('Creator should see dashboard and be able to navigate', () => {
+    it('should render without aXe violations', async () => {
+      const { storiesOrderById } = await getStoriesState();
+      await expect(fixture.screen).toHaveNoViolations();
+
+      expect(dashboardGridItems.length).toEqual(storiesOrderById.length);
+    });
+
+    it('should navigate to Explore Templates', async () => {
+      const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
+        name: /^Explore Templates/,
+      });
+      expect(exploreTemplatesMenuItem).toBeTruthy();
+
+      await fixture.events.click(exploreTemplatesMenuItem);
+      const templatesGridEl = await waitFor(() =>
+        fixture.screen.queryByText('Viewing all templates')
+      );
+
+      expect(templatesGridEl).toBeTruthy();
+    });
   });
 
-  it('should navigate to Explore Templates', async () => {
-    const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: /^Explore Templates/,
+  describe('Creator should be able to perform basic updates to stories from dashboard', () => {
+    let utils;
+    let moreOptionsButton;
+
+    beforeEach(async () => {
+      const firstStory = dashboardGridItems[0];
+      await fixture.events.hover(firstStory);
+
+      utils = within(firstStory);
+      moreOptionsButton = utils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
     });
-    expect(exploreTemplatesMenuItem).toBeTruthy();
 
-    await fixture.events.click(exploreTemplatesMenuItem);
-    const templatesGridEl = await waitFor(() =>
-      fixture.screen.queryByText('Viewing all templates')
-    );
+    it('should Rename a story', async () => {
+      const rename = utils.getByText(/^Rename/);
+      await fixture.events.click(rename);
 
-    expect(templatesGridEl).toBeTruthy();
+      const input = fixture.screen.getByRole('textbox');
+      const inputLength = input.value.length;
+
+      for (let iter = 0; iter < inputLength; iter++) {
+        // disable eslint to prevent overlapping .act calls
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('Backspace');
+      }
+
+      await fixture.events.keyboard.type('A New Title');
+
+      await fixture.events.keyboard.press('Enter');
+
+      expect(
+        utils.getByRole('heading', { level: 3, name: 'A New Title' })
+      ).toBeTruthy();
+    });
+
+    it('should Duplicate a story', async () => {
+      const duplicate = utils.getByText(/^Duplicate/);
+      await fixture.events.click(duplicate);
+
+      const updatedStories = await fixture.screen.getAllByTestId(
+        /^story-grid-item/
+      );
+      const copiedStory = within(updatedStories[0]).getByRole('heading', {
+        level: 3,
+      });
+      expect(copiedStory.innerText).toContain('(Copy)');
+    });
+
+    it('should Delete a story', async () => {
+      const deleteStory = utils.getByText(/^Delete/);
+      await fixture.events.click(deleteStory);
+
+      const confirmDeleteButton = fixture.screen.getByRole('button', {
+        name: /^Confirm deleting story/,
+      });
+
+      await fixture.events.click(confirmDeleteButton);
+
+      expect(fixture.screen.getAllByTestId(/^story-grid-item/).length).toEqual(
+        dashboardGridItems.length - 1
+      );
+    });
+
+    it('should not Delete a story if Cancel is clicked in the confirmation modal', async () => {
+      const deleteStory = utils.getByText(/^Delete/);
+      await fixture.events.click(deleteStory);
+
+      const cancel = fixture.screen.getByRole('button', {
+        name: /^Cancel deleting story/,
+      });
+
+      await fixture.events.click(cancel);
+
+      expect(fixture.screen.getAllByTestId(/^story-grid-item/).length).toEqual(
+        dashboardGridItems.length
+      );
+    });
   });
 
-  it('should Rename a story', async () => {
-    const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-    const firstStory = stories[0];
-
-    await fixture.events.hover(firstStory);
-
-    const { getByRole, getByText } = within(firstStory);
-
-    const moreOptionsButton = getByRole('button', {
-      name: /^Context menu for/,
-    });
-
-    await fixture.events.click(moreOptionsButton);
-
-    const rename = getByText(/^Rename/);
-
-    await fixture.events.click(rename);
-
-    const input = fixture.screen.getByRole('textbox');
-    const inputLength = input.value.length;
-
-    for (let iter = 0; iter < inputLength; iter++) {
-      // disable eslint to prevent overlapping .act calls
-      // eslint-disable-next-line no-await-in-loop
-      await fixture.events.keyboard.press('Backspace');
-    }
-
-    await fixture.events.keyboard.type('A New Title');
-
-    await fixture.events.keyboard.press('Enter');
-
-    expect(
-      getByRole('heading', { level: 3, name: 'A New Title' })
-    ).toBeTruthy();
-  });
-
-  it('should Duplicate a story', async () => {
-    let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-    let firstStory = stories[0];
-
-    await fixture.events.hover(firstStory);
-
-    let utils = within(firstStory);
-
-    const moreOptionsButton = utils.getByRole('button', {
-      name: /^Context menu for/,
-    });
-
-    await fixture.events.click(moreOptionsButton);
-
-    const duplicate = utils.getByText(/^Duplicate/);
-
-    await fixture.events.click(duplicate);
-
-    stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-
-    firstStory = stories[0];
-
-    utils = within(firstStory);
-
-    const copiedStory = utils.getByRole('heading', { level: 3 });
-    expect(copiedStory.innerText).toContain('(Copy)');
-  });
-
-  it('should Delete a story', async () => {
-    let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-    const initialNumStories = stories.length;
-
-    const firstStory = stories[0];
-
-    await fixture.events.hover(firstStory);
-
-    const utils = within(firstStory);
-
-    const moreOptionsButton = utils.getByRole('button', {
-      name: /^Context menu for/,
-    });
-
-    await fixture.events.click(moreOptionsButton);
-
-    const deleteStory = utils.getByText(/^Delete/);
-
-    await fixture.events.click(deleteStory);
-
-    const confirmDeleteButton = fixture.screen.getByRole('button', {
-      name: /^Confirm deleting story/,
-    });
-
-    await fixture.events.click(confirmDeleteButton);
-
-    stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-
-    expect(stories.length).toEqual(initialNumStories - 1);
-  });
-
-  it('should not Delete a story if Cancel is clicked in the confirmation modal', async () => {
-    let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-    const initialNumStories = stories.length;
-    const firstStory = stories[0];
-
-    await fixture.events.hover(firstStory);
-
-    const utils = within(firstStory);
-
-    const moreOptionsButton = utils.getByRole('button', {
-      name: /^Context menu for/,
-    });
-
-    await fixture.events.click(moreOptionsButton);
-
-    const deleteStory = utils.getByText(/^Delete/);
-
-    await fixture.events.click(deleteStory);
-
-    const cancel = fixture.screen.getByRole('button', {
-      name: /^Cancel deleting story/,
-    });
-
-    await fixture.events.click(cancel);
-
-    stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-
-    expect(stories.length).toEqual(initialNumStories);
-  });
-
-  describe('CUJ: Creator can view their stories in grid view: Filter their stories by All stories and Drafts and Published', () => {
+  describe('Creator can filter their stories by status', () => {
     it('should switch to the Drafts Tab', async () => {
       const { stories } = await getStoriesState();
       const numDrafts = Object.values(stories).filter(
@@ -310,8 +273,8 @@ describe('Grid view', () => {
     });
   });
 
-  describe('CUJ: Creator can view their stories in grid view: Sort their stories (last modified / date created / author / title)', () => {
-    it('should search/filter using the Search Stories search input', async () => {
+  describe('Creator can search dashboard stories by story names', () => {
+    it('should filter stories using the search input', async () => {
       const { stories } = await getStoriesState();
 
       const firstStoryTitle = Object.values(stories)[0].title;
@@ -393,12 +356,29 @@ describe('Grid view', () => {
         ).length
       );
     });
+  });
 
-    it('should sort by Date Created', async () => {
-      const sortDropdown = fixture.screen.getByLabelText(
+  describe('Creator can sort their stories', () => {
+    let sortDropdown;
+    beforeEach(async () => {
+      sortDropdown = await fixture.screen.getByLabelText(
         'Choose sort option for display'
       );
+    });
 
+    const getRenderedStoriesById = async () => {
+      const storyElements = await fixture.screen.getAllByTestId(
+        /^story-grid-item/
+      );
+      const renderedStoriesById = storyElements.map(({ dataset }) =>
+        Number(dataset['testid'].split('-').slice(-1)[0])
+      );
+      return renderedStoriesById;
+    };
+
+    const getStoriesOrderById = () => getStoriesState();
+
+    it('should sort by Date Created', async () => {
       expect(sortDropdown).toBeTruthy();
 
       await fixture.events.click(sortDropdown);
@@ -411,34 +391,20 @@ describe('Grid view', () => {
 
       await fixture.events.click(dateCreated);
 
-      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
-
-      const renderedStoriesById = storyElements.map(({ dataset }) =>
-        Number(dataset['testid'].split('-').slice(-1)[0])
-      );
-
-      const { storiesOrderById } = await getStoriesState();
+      const renderedStoriesById = await getRenderedStoriesById();
+      const { storiesOrderById } = await getStoriesOrderById();
 
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
 
-    it('should sort by Last Modified', async () => {
-      const { storiesOrderById } = await getStoriesState();
-      // last modified desc is the default sort
-      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
-
-      const renderedStoriesById = storyElements.map(({ dataset }) =>
-        Number(dataset['testid'].split('-').slice(-1)[0])
-      );
+    it('should sort by Last Modified by default', async () => {
+      const { storiesOrderById } = await getStoriesOrderById();
+      const renderedStoriesById = await getRenderedStoriesById();
 
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
 
     it('should sort by Name', async () => {
-      const sortDropdown = fixture.screen.getByLabelText(
-        'Choose sort option for display'
-      );
-
       expect(sortDropdown).toBeTruthy();
 
       await fixture.events.click(sortDropdown);
@@ -451,22 +417,12 @@ describe('Grid view', () => {
 
       await fixture.events.click(name);
 
-      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
-
-      const renderedStoriesById = storyElements.map(({ dataset }) =>
-        Number(dataset['testid'].split('-').slice(-1)[0])
-      );
-
-      const { storiesOrderById } = await getStoriesState();
-
+      const renderedStoriesById = await getRenderedStoriesById();
+      const { storiesOrderById } = await getStoriesOrderById();
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
 
     it('should sort by Created By', async () => {
-      const sortDropdown = fixture.screen.getByLabelText(
-        'Choose sort option for display'
-      );
-
       expect(sortDropdown).toBeTruthy();
 
       await fixture.events.click(sortDropdown);
@@ -479,23 +435,21 @@ describe('Grid view', () => {
 
       await fixture.events.click(createdBy);
 
-      const { storiesOrderById } = await getStoriesState();
-
-      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
-
-      const renderedStoriesById = storyElements.map(({ dataset }) =>
-        Number(dataset['testid'].split('-').slice(-1)[0])
-      );
-
+      const renderedStoriesById = await getRenderedStoriesById();
+      const { storiesOrderById } = await getStoriesOrderById();
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
   });
 
-  describe('Dashboard keyboard navigation and focus logic', () => {
-    it('should navigate the grid via keyboard', async () => {
-      const storyCards = fixture.screen.getAllByTestId(/story-context-button-/);
-      await focusOnGridByKeyboard();
+  describe('Creator can navigate and use the Dashboard via keyboard', () => {
+    let storyCards = [];
 
+    beforeEach(async () => {
+      storyCards = await fixture.screen.getAllByTestId(/story-context-button-/);
+      await focusOnGridByKeyboard();
+    });
+
+    it('should navigate the grid via keyboard', async () => {
       for (let i = 0; i < storyCards.length; i++) {
         const expectedStory = storyCards[i];
         // eslint-disable-next-line no-await-in-loop
@@ -507,9 +461,7 @@ describe('Grid view', () => {
     });
 
     it('should focus on context menu items via keyboard', async () => {
-      const storyCards = fixture.screen.getAllByTestId(/story-context-button-/);
       const [selectedStory] = storyCards;
-      await focusOnGridByKeyboard();
       await fixture.events.keyboard.press('right');
       await fixture.events.keyboard.press('tab');
       // we should have focused the first story menu in the grid
@@ -546,8 +498,7 @@ describe('Grid view', () => {
       await fixture.events.keyboard.press('Backspace');
       await fixture.events.keyboard.type('A New Title');
       await fixture.events.keyboard.press('Enter');
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item-/);
-      const firstStory = stories[0];
+      const firstStory = dashboardGridItems[0];
       const { getByRole } = within(firstStory);
       expect(
         getByRole('heading', { level: 3, name: 'A New Title' })
@@ -586,10 +537,8 @@ describe('Grid view', () => {
     });
 
     it('should duplicate a story via keyboard', async () => {
-      let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-
       // count the initial number of stories
-      const initialNumStories = stories.length;
+      const initialNumStories = dashboardGridItems.length;
 
       //focus the duplicate item of the context menu of the first story
       await getContextMenuItem('Duplicate');
@@ -599,11 +548,11 @@ describe('Grid view', () => {
       await fixture.events.keyboard.press('Enter');
 
       // count the new number of stories
-      stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-      expect(stories.length).toEqual(initialNumStories + 1);
+      const updatedStories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      expect(updatedStories.length).toEqual(initialNumStories + 1);
 
       // the copied story is now the first story and contains (Copy)
-      const firstStory = stories[0];
+      const firstStory = updatedStories[0];
       const utils = within(firstStory);
 
       const copiedStory = utils.getByRole('heading', { level: 3 });
@@ -611,9 +560,11 @@ describe('Grid view', () => {
     });
 
     it('should retain focus on menu close', async () => {
+      const allItemGridLinks =
+        fixture.screen.getAllByTestId(/edit-story-grid-link/);
+
       const storyIndex = 1;
-      const storyCards = fixture.screen.getAllByTestId(/edit-story-grid-link/);
-      const selectedStory = storyCards[storyIndex];
+      const selectedStory = allItemGridLinks[storyIndex];
       // focus the delete context menu item of the first story with the keyboard
       // test cancelling deletion of the second story (not the default first story)
       // to make sure focus is retained
@@ -642,13 +593,14 @@ describe('Grid view', () => {
     });
 
     it('should exit the grid and re-focus the first item', async () => {
-      const storyCards = fixture.screen.getAllByTestId(/edit-story-grid-link/);
-      const firstStory = storyCards[0];
-      const lastStory = storyCards[storyCards.length - 1];
-      await focusOnGridByKeyboard();
+      const allItemGridLinks =
+        fixture.screen.getAllByTestId(/edit-story-grid-link/);
 
-      for (let i = 0; i < storyCards.length; i++) {
-        const expectedStory = storyCards[i];
+      const firstStory = allItemGridLinks[0];
+      const lastStory = allItemGridLinks[allItemGridLinks.length - 1];
+
+      for (let i = 0; i < allItemGridLinks.length; i++) {
+        const expectedStory = allItemGridLinks[i];
         // eslint-disable-next-line no-await-in-loop
         await fixture.events.keyboard.press('right');
         expect(expectedStory).toEqual(document.activeElement);
@@ -666,7 +618,7 @@ describe('Grid view', () => {
   });
 });
 
-describe('List view', () => {
+describe('CUJ: Creator can view their stories in list view: ', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -721,7 +673,6 @@ describe('List view', () => {
       const listViewTable = fixture.screen.getByTestId('story-list-view');
 
       expect(listViewTable).toBeTruthy();
-
       const gridViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.LIST]}$`)
       );
@@ -929,7 +880,7 @@ describe('List view', () => {
     });
   });
 
-  describe('CUJ: Creator can view their stories in list view: Sort their stories (last modified / date created / author / title)', () => {
+  describe('Creator can sort their stories (last modified / date created / author / title)', () => {
     it('should sort by Title in List View', async () => {
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
@@ -1262,7 +1213,7 @@ describe('List view', () => {
     });
   });
 
-  describe('CUJ: Creator can navigate list view using keyboard: Tab through each story in the list', () => {
+  describe('Creator can navigate list view using keyboard: Tab through each story in the list', () => {
     let storiesSortedByModified = [];
 
     beforeEach(async () => {
