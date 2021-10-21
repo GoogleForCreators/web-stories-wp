@@ -121,9 +121,11 @@ class Embed {
 									loading="lazy"
 									data-amp-story-player-poster-img
 								/>
-							<?php } else {
+								<?php 
+							} else {
 								echo esc_html( $title );
-							} ?>
+							} 
+							?>
 						</a>
 					</amp-story-player>
 				</div>
@@ -150,9 +152,11 @@ class Embed {
 								loading="lazy"
 								data-amp-story-player-poster-img
 							/>
-						<?php } else {
+							<?php 
+						} else {
 							echo esc_html( $title );
-						} ?>
+						} 
+						?>
 					</a>
 				</amp-story-player>
 			</div>
