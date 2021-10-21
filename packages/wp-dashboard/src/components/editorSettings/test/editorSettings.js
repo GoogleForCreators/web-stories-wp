@@ -34,35 +34,27 @@ import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
 import MockEditorProvider from '../../../testUtils/mockEditorProvider';
 
-const mockFetchSettings = jest.fn();
-const mockUploadMedia = jest.fn();
-const mockUpdateSettings = jest.fn();
-const mockSearch = jest.fn();
-const mockGetPageById = jest.fn();
-const mockFetchPublisherLogos = jest.fn();
-const mockAddPublisherLogo = jest.fn();
-const mockRemovePublisherLogo = jest.fn();
-const mockSetPublisherLogoAsDefault = jest.fn();
+const mockedPromise = Promise.resolve({});
 
 jest.mock('../../../api/settings', () => ({
-  fetchSettings: () => Promise.resolve({}),
-  updateSettings: () => Promise.resolve({}),
+  fetchSettings: () => mockedPromise,
+  updateSettings: () => mockedPromise,
 }));
 
 jest.mock('../../../api/media', () => ({
-  uploadMedia: () => Promise.resolve({}),
+  uploadMedia: () => mockedPromise,
 }));
 
 jest.mock('../../../api/pages', () => ({
-  searchPages: () => Promise.resolve({}),
-  getPageById: () => Promise.resolve({}),
+  searchPages: () => mockedPromise,
+  getPageById: () => mockedPromise,
 }));
 
 jest.mock('../../../api/publisherLogo', () => ({
-  fetchPublisherLogos: () => Promise.resolve({}),
-  removePublisherLogo: () => Promise.resolve({}),
-  addPublisherLogo: () => Promise.resolve({}),
-  setPublisherLogoAsDefault: () => Promise.resolve({}),
+  fetchPublisherLogos: () => mockedPromise,
+  removePublisherLogo: () => mockedPromise,
+  addPublisherLogo: () => mockedPromise,
+  setPublisherLogoAsDefault: () => mockedPromise,
 }));
 
 jest.mock('../../../api/user', () => ({
@@ -85,6 +77,16 @@ jest.mock('../../../api/user', () => ({
     });
   },
 }));
+
+const mockFetchSettings = jest.fn();
+const mockUploadMedia = jest.fn();
+const mockUpdateSettings = jest.fn();
+const mockSearch = jest.fn();
+const mockGetPageById = jest.fn();
+const mockFetchPublisherLogos = jest.fn();
+const mockAddPublisherLogo = jest.fn();
+const mockRemovePublisherLogo = jest.fn();
+const mockSetPublisherLogoAsDefault = jest.fn();
 
 function createProviderValues({
   canUploadFiles,
