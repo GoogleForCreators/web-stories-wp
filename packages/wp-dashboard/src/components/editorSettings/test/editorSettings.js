@@ -19,10 +19,7 @@
  */
 import { fireEvent, within, screen } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
-import {
-  renderWithProviders,
-  AD_NETWORK_TYPE,
-} from '@web-stories-wp/dashboard';
+import { renderWithProviders } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
@@ -33,6 +30,7 @@ import { TEXT as AD_NETWORK_TEXT } from '../adManagement';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
 import MockEditorProvider from '../../../testUtils/mockEditorProvider';
+import { AD_NETWORK_TYPE } from '../../../constants';
 
 const mockedPromise = Promise.resolve({});
 
