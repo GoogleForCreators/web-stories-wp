@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { AD_NETWORK_TYPE, ARCHIVE_TYPE } from '@web-stories-wp/dashboard';
+import { AD_NETWORK_TYPE, ARCHIVE_TYPE } from '../../constants';
 
 export const ACTION_TYPES = {
   UPDATE_SETTINGS_SUCCESS: 'update_settings_success',

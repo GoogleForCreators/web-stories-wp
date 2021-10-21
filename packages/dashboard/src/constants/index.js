@@ -99,6 +99,5 @@ export const MIN_IMG_WIDTH = 96;
 
 export * from './components';
 export * from './pageStructure';
-export * from './settings';
 export * from './stories';
 export * from './templates';

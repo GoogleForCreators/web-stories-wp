@@ -20,12 +20,12 @@
 import { action } from '@storybook/addon-actions';
 import { select } from '@storybook/addon-knobs';
 import { FlagsProvider } from 'flagged';
-import { ARCHIVE_TYPE } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import ArchiveSettings from '..';
+import { ARCHIVE_TYPE } from '../../../../constants';
 
 export default {
   title: 'Dashboard/Views/EditorSettings/Archive',

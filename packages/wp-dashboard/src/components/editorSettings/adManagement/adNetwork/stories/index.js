@@ -18,12 +18,12 @@
  */
 import { action } from '@storybook/addon-actions';
 import { select } from '@storybook/addon-knobs';
-import { AD_NETWORK_TYPE } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import AdNetwork from '..';
+import { AD_NETWORK_TYPE } from '../../../../../constants';
 
 export default {
   title: 'Dashboard/Views/EditorSettings/AdManagement/AdNetwork',

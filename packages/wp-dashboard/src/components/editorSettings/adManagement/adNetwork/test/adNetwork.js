@@ -18,15 +18,13 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import {
-  renderWithProviders,
-  AD_NETWORK_TYPE,
-} from '@web-stories-wp/dashboard';
+import { renderWithProviders } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import AdNetworkSettings from '..';
+import { AD_NETWORK_TYPE } from '../../../../../constants';
 
 describe('Editor Settings: Ad network settings <AdNetworkSettings />', function () {
   let adNetwork;

@@ -18,15 +18,13 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import {
-  renderWithProviders,
-  AD_NETWORK_TYPE,
-} from '@web-stories-wp/dashboard';
+import { renderWithProviders } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import AdManagement, { TEXT } from '..';
+import { AD_NETWORK_TYPE } from '../../../../constants';
 
 describe('Editor Settings: Ad Management group settings <AdManagement />', function () {
   let adNetwork;

@@ -27,12 +27,12 @@ import PropTypes from 'prop-types';
 import { __, _x, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 import { THEME_CONSTANTS, DropDown } from '@web-stories-wp/design-system';
-import { AD_NETWORK_TYPE } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import { InlineLink, TextInputHelperText } from '../../components';
+import { AD_NETWORK_TYPE } from '../../../../constants';
 
 export const TEXT = {
   SLOT_ID_LABEL: __('Monetization type', 'web-stories'),

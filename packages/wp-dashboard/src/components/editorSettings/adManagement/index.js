@@ -21,7 +21,6 @@ import { useCallback, useMemo } from '@web-stories-wp/react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
-import { AD_NETWORK_TYPE } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
@@ -33,6 +32,7 @@ import {
   SettingSubheading,
   TextInputHelperText,
 } from '../components';
+import { AD_NETWORK_TYPE } from '../../../constants';
 import AdNetworkSettings from './adNetwork';
 import GoogleAdManagerSettings from './googleAdManager';
 import GoogleAdSenseSettings from './googleAdSense';

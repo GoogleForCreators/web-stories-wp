@@ -33,7 +33,7 @@ import {
 } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
-import { ARCHIVE_TYPE, TEXT_INPUT_DEBOUNCE } from '@web-stories-wp/dashboard';
+import { TEXT_INPUT_DEBOUNCE } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
@@ -44,6 +44,7 @@ import {
   SettingHeading,
   TextInputHelperText,
 } from '../components';
+import { ARCHIVE_TYPE } from '../../../constants';
 
 export const TEXT = {
   LABEL: __('Stories Archives', 'web-stories'),
