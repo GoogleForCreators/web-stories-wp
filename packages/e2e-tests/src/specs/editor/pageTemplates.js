@@ -50,7 +50,7 @@ describe('Page Templates', () => {
     });
 
     // Adding a custom page template automatically switches to the "Saved Templates" view.
-
+    await expect(page).toMatch('Page Template saved.');
     await expect(page).toMatch('Saved templates');
     await expect(page).toMatchElement(
       '[aria-label="Page Template Options"] [role="listitem"]'

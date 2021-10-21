@@ -392,9 +392,16 @@ trait Sanitization_Utils {
 				continue;
 			}
 
-			$entries_by_widths = [];
+			$matches = [];
 
-			$entries = explode( ',', $srcset );
+			// Matches every srcset entry (consisting of a URL and a width descriptor) within `srcset=""`.
+			// Not using explode(',') to not break with URLs containing commas.
+			// Given "foo1,2/image.png 123w, foo2,3/image.png 456w", the named capture group "entry"
+			// will contain "foo1,2/image.png 123w" and "foo2,3/image.png 456w", without the trailing commas.
+			preg_match_all( '/((?<entry>[^ ]+ [\d]+w),?)/', $srcset, $matches );
+
+			$entries           = $matches['entry'] ?? [];
+			$entries_by_widths = [];
 
 			foreach ( $entries as $entry ) {
 				$entry_data = explode( ' ', $entry );

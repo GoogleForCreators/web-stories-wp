@@ -62,11 +62,13 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
 
       await waitFor(() =>
         expect(
-          fixture.editor.library.pageTemplatesPane.pageTemplates.length
+          fixture.editor.library.pageTemplatesPane.pageTemplateButtons.length
         ).toBeTruthy()
       );
       await fixture.events.click(
-        fixture.editor.library.pageTemplatesPane.pageTemplate('Cooking Cover')
+        fixture.editor.library.pageTemplatesPane.pageTemplateButton(
+          'Cooking Cover'
+        )
       );
 
       // check that all elements have been applied
@@ -96,22 +98,21 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
 
       await waitFor(() =>
         expect(
-          fixture.editor.library.pageTemplatesPane.pageTemplates.length
+          fixture.editor.library.pageTemplatesPane.pageTemplateButtons.length
         ).toBeTruthy()
       );
 
-      const { pageTemplates } = fixture.editor.library.pageTemplatesPane;
-      await fixture.events.focus(
-        fixture.editor.library.pageTemplatesPane.pageTemplates[0]
-      );
+      const { pageTemplateButtons } = fixture.editor.library.pageTemplatesPane;
+
+      await fixture.events.focus(pageTemplateButtons[0]);
 
       await fixture.events.keyboard.press('right');
 
-      await fixture.events.keyboard.press('down');
+      await fixture.events.keyboard.press('right');
 
-      const activeTextSetId = pageTemplates[3].getAttribute('data-testid');
+      const activeTextSetId =
+        pageTemplateButtons[2].getAttribute('data-testid');
       const documentTestId = document.activeElement.getAttribute('data-testid');
-
       expect(activeTextSetId).toBe(documentTestId);
       await fixture.events.keyboard.press('Enter');
 
