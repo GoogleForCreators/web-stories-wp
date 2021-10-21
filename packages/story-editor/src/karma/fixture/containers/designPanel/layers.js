@@ -51,4 +51,10 @@ export class Layers extends AbstractPanel {
   get resizeHandle() {
     return getByLabelText(this.node, /Set panel height/i);
   }
+
+  getLayerByInnerText(text) {
+    return getAllByTestId(this.layersList, 'layer-option').find(
+      (option) => option.innerText === text
+    );
+  }
 }

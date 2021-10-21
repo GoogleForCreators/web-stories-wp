@@ -33,11 +33,13 @@ import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { ELEMENT_TYPES } from '../../../elements';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
+import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
 const {
   Bucket,
+  ColorBucket,
   CircleSpeed,
   Eraser,
   LetterTLargeLetterTSmall,
@@ -420,6 +422,14 @@ const useQuickActions = () => {
     ]
   );
 
+  const applyTextAutoStyle = useApplyTextAutoStyle(
+    selectedElement,
+    (properties) =>
+      updateElementsById({
+        elementIds: [selectedElement?.id],
+        properties,
+      })
+  );
   const textActions = useMemo(
     () => [
       {
@@ -448,9 +458,22 @@ const useQuickActions = () => {
         },
         ...actionMenuProps,
       },
+      {
+        Icon: ColorBucket,
+        label: ACTIONS.AUTO_STYLE_TEXT.text,
+        onClick: () => {
+          applyTextAutoStyle();
+          trackEvent('quick_action', {
+            name: ACTIONS.AUTO_STYLE_TEXT.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        ...actionMenuProps,
+      },
       ...foregroundCommonActions,
     ],
     [
+      applyTextAutoStyle,
       foregroundCommonActions,
       actionMenuProps,
       handleFocusTextColor,
