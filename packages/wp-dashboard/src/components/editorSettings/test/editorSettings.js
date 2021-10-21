@@ -32,6 +32,7 @@ import { rawPublisherLogos } from '../dataUtils/formattedPublisherLogos';
 import { TEXT as AD_NETWORK_TEXT } from '../adManagement';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
+import MockEditorProvider from '../../../testUtils/mockEditorProvider';
 
 const mockFetchSettings = jest.fn();
 const mockUploadMedia = jest.fn();
@@ -42,6 +43,48 @@ const mockFetchPublisherLogos = jest.fn();
 const mockAddPublisherLogo = jest.fn();
 const mockRemovePublisherLogo = jest.fn();
 const mockSetPublisherLogoAsDefault = jest.fn();
+
+jest.mock('../../../api/settings', () => ({
+  fetchSettings: () => Promise.resolve({}),
+  updateSettings: () => Promise.resolve({}),
+}));
+
+jest.mock('../../../api/media', () => ({
+  uploadMedia: () => Promise.resolve({}),
+}));
+
+jest.mock('../../../api/pages', () => ({
+  searchPages: () => Promise.resolve({}),
+  getPageById: () => Promise.resolve({}),
+}));
+
+jest.mock('../../../api/publisherLogo', () => ({
+  fetchPublisherLogos: () => Promise.resolve({}),
+  removePublisherLogo: () => Promise.resolve({}),
+  addPublisherLogo: () => Promise.resolve({}),
+  setPublisherLogoAsDefault: () => Promise.resolve({}),
+}));
+
+jest.mock('../../../api/user', () => ({
+  getUser: () => {
+    return Promise.resolve({
+      id: 1,
+      name: 'dev',
+      url: 'https://www.story-link.com',
+      description: '',
+      link: 'https://www.story-link.com/author/dev/',
+      slug: 'dev',
+      avatar_urls: {},
+      meta: {
+        web_stories_tracking_optin: false,
+        web_stories_media_optimization: true,
+        web_stories_onboarding: {
+          safeZone: true,
+        },
+      },
+    });
+  },
+}));
 
 function createProviderValues({
   canUploadFiles,
@@ -64,6 +107,13 @@ function createProviderValues({
       maxUpload: 104857600,
       maxUploadFormatted: '100 MB',
       archiveURL: 'https://example.com/archive',
+      api: {
+        currentUser: '/web-stories/v1/users/me/',
+        users: '/web-stories/v1/users/',
+        settings: '/web-stories/v1/settings/',
+        pages: '/wp/v2/pages/',
+        publisherLogos: '/web-stories/v1/publisher-logos/',
+      },
     },
     api: {
       state: {
@@ -134,8 +184,12 @@ describe('Editor Settings: <Editor Settings />', function () {
         isLoading: false,
         logoIds: [],
         publisherLogos: [],
-      })
+      }),
+      {},
+      ({ children }) => children,
+      MockEditorProvider
     );
+
     setAppElement(container);
 
     const googleAnalyticsHeading = screen.getByText(GA_TEXT.SECTION_HEADING);
@@ -167,7 +221,10 @@ describe('Editor Settings: <Editor Settings />', function () {
         canManageSettings: true,
         isLoading: false,
         publisherLogos: rawPublisherLogos,
-      })
+      }),
+      {},
+      ({ children }) => children,
+      MockEditorProvider
     );
     setAppElement(container);
 
@@ -186,7 +243,10 @@ describe('Editor Settings: <Editor Settings />', function () {
         canManageSettings: true,
         isLoading: false,
         publisherLogos: rawPublisherLogos,
-      })
+      }),
+      {},
+      ({ children }) => children,
+      MockEditorProvider
     );
 
     const ContextMenuButton = screen.getByTestId(
@@ -216,7 +276,10 @@ describe('Editor Settings: <Editor Settings />', function () {
         canManageSettings: true,
         isLoading: false,
         publisherLogos: [],
-      })
+      }),
+      {},
+      ({ children }) => children,
+      MockEditorProvider
     );
     setAppElement(container);
 
@@ -237,7 +300,10 @@ describe('Editor Settings: <Editor Settings />', function () {
         adManagerSlotId: '',
         adNetwork: AD_NETWORK_TYPE.ADSENSE,
         publisherLogos: [],
-      })
+      }),
+      {},
+      ({ children }) => children,
+      MockEditorProvider
     );
     setAppElement(container);
 

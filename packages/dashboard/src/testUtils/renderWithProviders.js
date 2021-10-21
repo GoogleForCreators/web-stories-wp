@@ -51,11 +51,13 @@ export const renderWithProviders = (
   ui,
   providerValues = {},
   renderOptions = {},
-  wrapper = DefaultWrapper
+  wrapper = DefaultWrapper,
+  apiProvider = MockApiProvider
 ) => {
   const mergedProviderValues = { ...defaultProviderValues, ...providerValues };
 
   const ProvidedWrapper = wrapper;
+  const ApiProvider = apiProvider;
 
   // eslint-disable-next-line react/prop-types
   const Wrapper = ({ children }) => (
@@ -63,11 +65,11 @@ export const renderWithProviders = (
       <FlagsProvider features={mergedProviderValues.features}>
         <ThemeProvider theme={mergedProviderValues.theme}>
           <ConfigProvider config={mergedProviderValues.config}>
-            <MockApiProvider value={mergedProviderValues.api}>
+            <ApiProvider value={mergedProviderValues.api}>
               <SnackbarProvider value={mergedProviderValues.snackbar}>
                 {children}
               </SnackbarProvider>
-            </MockApiProvider>
+            </ApiProvider>
           </ConfigProvider>
         </ThemeProvider>
       </FlagsProvider>
