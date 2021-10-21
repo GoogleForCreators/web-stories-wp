@@ -22,59 +22,60 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import getApiCallbacks from '../utils/getApiCallbacks';
-import { GET_USER_OBJECT } from './_utils';
+import {
+  toggleWebStoriesTrackingOptIn,
+  toggleWebStoriesMediaOptimization,
+} from '../user';
 
 jest.mock('@wordpress/api-fetch');
 
 describe('User API Callbacks', () => {
-  const meta = {
-    web_stories_tracking_optin: true,
-    web_stories_media_optimization: false,
-  };
-
-  const currentUser = GET_USER_OBJECT({
-    meta,
-  });
-
   const currentUserPath = '/web-stories/v1/users/me';
-
-  const { toggleWebStoriesTrackingOptIn, toggleWebStoriesMediaOptimization } =
-    getApiCallbacks({
-      api: {
-        currentUser: currentUserPath,
-      },
-    });
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  // Payload `__PAYLOAD_DATA__.meta.web_stories_tracking_optin` must be opposite of `meta.web_stories_tracking_optin`
+  const config = {
+    api: {
+      currentUser: currentUserPath,
+    },
+  };
+
+  // Payload `__PAYLOAD_DATA__.meta.web_stories_tracking_optin` must be flipped value
   it('toggleWebStoriesTrackingOptIn: validate request payload & path', () => {
-    toggleWebStoriesTrackingOptIn(currentUser);
+    const currentUser = {
+      meta: {
+        web_stories_media_optimization: false,
+      },
+    };
+    toggleWebStoriesTrackingOptIn(config, currentUser);
     expect(apiFetch).toHaveBeenCalledWith(
       expect.objectContaining({
         path: currentUserPath,
         data: {
           meta: {
-            web_stories_tracking_optin: !meta.web_stories_tracking_optin,
+            web_stories_tracking_optin: true,
           },
         },
       })
     );
   });
 
-  // Payload `__PAYLOAD_DATA__.meta.web_stories_media_optimization` must be opposite of `meta.web_stories_media_optimization`
+  // Payload `__PAYLOAD_DATA__.meta.web_stories_media_optimization` must be flipped value
   it('toggleWebStoriesMediaOptimization: validate request payload & path', () => {
-    toggleWebStoriesMediaOptimization(currentUser);
+    const currentUser = {
+      meta: {
+        web_stories_media_optimization: false,
+      },
+    };
+    toggleWebStoriesMediaOptimization(config, currentUser);
     expect(apiFetch).toHaveBeenCalledWith(
       expect.objectContaining({
         path: currentUserPath,
         data: {
           meta: {
-            web_stories_media_optimization:
-              !meta.web_stories_media_optimization,
+            web_stories_media_optimization: true,
           },
         },
       })
