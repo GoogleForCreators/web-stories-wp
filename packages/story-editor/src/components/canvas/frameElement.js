@@ -171,7 +171,7 @@ function FrameElement({ element }) {
       ...TRACKING_EVENTS.SELECT_ELEMENT,
       label: element.type,
     },
-    eventType: 'mousedown',
+    eventType: 'pointerdown',
   });
 
   return (

@@ -178,7 +178,7 @@ export default function WithMask({
       ...TRACKING_EVENTS.SELECT_ELEMENT,
       label: element.type,
     },
-    eventType: 'mousedown',
+    eventType: 'pointerdown',
   });
 
   const mask = getElementMask(element);
