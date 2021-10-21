@@ -28,13 +28,17 @@ import { _x, __ } from '@web-stories-wp/i18n';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import {
+  Headline,
+  LoadingSpinner,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import { ChipGroup } from '../shared';
+import { ChipGroup, LoadingContainer } from '../shared';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 import DefaultTemplateList from './defaultTemplateList';
@@ -57,12 +61,16 @@ function DefaultTemplates({ pageSize }) {
     actions: { getPageTemplates },
   } = useAPI();
   const [pageTemplates, setPageTemplates] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // load and process pageTemplates
   useEffect(() => {
     async function loadPageTemplates() {
+      setIsLoading(true);
+
       const trackTiming = getTimeTracker('load_page_templates');
       setPageTemplates(await getPageTemplates());
+      setIsLoading(false);
       trackTiming();
     }
 
@@ -142,12 +150,16 @@ function DefaultTemplates({ pageSize }) {
             {__('Templates', 'web-stories')}
           </Headline>
         </ActionRow>
-        {pageTemplatesParentRef.current && (
+        {!isLoading && pageTemplatesParentRef.current ? (
           <DefaultTemplateList
             pageSize={pageSize}
             parentRef={pageTemplatesParentRef}
             pages={filteredPages}
           />
+        ) : (
+          <LoadingContainer>
+            <LoadingSpinner animationSize={64} numCircles={8} />
+          </LoadingContainer>
         )}
       </PageTemplatesParentContainer>
     </>
