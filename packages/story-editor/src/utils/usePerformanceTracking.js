@@ -21,7 +21,7 @@ import { useEffect } from '@web-stories-wp/react';
 import { trackTiming } from '@web-stories-wp/tracking';
 
 const TRACES = {};
-const OBSERVED_EVENTS = ['click', 'mousedown'];
+const OBSERVED_EVENTS = ['click', 'pointerdown', 'pointerup'];
 let performanceObserver;
 
 function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
@@ -31,9 +31,11 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
       for (const entry of entries.getEntries()) {
         if (
           OBSERVED_EVENTS.includes(entry.name) &&
-          TRACES[entry.startTime]?.category
+          TRACES[entry.startTime]?.category &&
+          !TRACES[entry.startTime]?.isReported
         ) {
-          console.log(TRACES[entry.startTime].category, TRACES[entry.startTime].label);
+          console.log(TRACES[entry.startTime].category, TRACES[entry.startTime].label, entry.duration);
+          TRACES[entry.startTime].isReported = true;
           trackTiming(
             TRACES[entry.startTime].category,
             entry.duration,
@@ -63,7 +65,7 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
     return () => {
       el.removeEventListener(eventType, traceEvent);
     };
-  });
+  }, [category, label, node, eventType]);
 }
 
 export default usePerformanceTracking;

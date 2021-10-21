@@ -39,4 +39,7 @@ export const TRACKING_EVENTS = {
   DESIGN_PANEL_CLICK: {
     category: 'design_panel',
   },
+  INSERT_ELEMENT: {
+    category: 'insert_element',
+  },
 };
