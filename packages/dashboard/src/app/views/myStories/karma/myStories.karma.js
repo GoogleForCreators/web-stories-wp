@@ -1262,22 +1262,6 @@ describe('List view', () => {
     });
   });
 
-  describe('CUJ: Creator can view their stories in list view: Go to WP list view to do any action', () => {
-    it('should add a link to the classic WordPress list view', async () => {
-      const listViewButton = fixture.screen.getByLabelText(
-        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
-      );
-
-      await fixture.events.click(listViewButton);
-
-      const wpListViewLink = fixture.screen.getByRole('link', {
-        name: /^See classic WP list view$/,
-      });
-
-      expect(wpListViewLink).toBeTruthy();
-    });
-  });
-
   describe('CUJ: Creator can navigate list view using keyboard: Tab through each story in the list', () => {
     let storiesSortedByModified = [];
 

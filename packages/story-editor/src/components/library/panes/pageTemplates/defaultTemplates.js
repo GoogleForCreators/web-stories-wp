@@ -24,17 +24,11 @@ import {
   useCallback,
   useRef,
 } from '@web-stories-wp/react';
-import { _x, sprintf, __ } from '@web-stories-wp/i18n';
+import { _x, __ } from '@web-stories-wp/i18n';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
-import {
-  Headline,
-  THEME_CONSTANTS,
-  Text,
-  Toggle,
-} from '@web-stories-wp/design-system';
+import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -43,27 +37,17 @@ import { useAPI } from '../../../../app/api';
 import { ChipGroup } from '../shared';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
 import { PAGE_TEMPLATE_TYPES } from './constants';
-import TemplateList from './templateList';
+import DefaultTemplateList from './defaultTemplateList';
 
 const ActionRow = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 8px 16px 22px 16px;
-`;
-
-const TemplatesToggle = styled.div`
-  display: flex;
-
-  label {
-    cursor: pointer;
-    margin: auto 12px;
-    color: ${({ theme }) => theme.colors.fg.secondary};
-  }
+  margin: 0px 16px 22px 16px;
 `;
 
 const PageTemplatesParentContainer = styled.div`
   ${virtualPaneContainer};
-  margin-top: 18px;
+  margin-top: 26px;
   overflow-x: hidden;
   overflow-y: scroll;
 `;
@@ -73,22 +57,17 @@ function DefaultTemplates({ pageSize }) {
     actions: { getPageTemplates },
   } = useAPI();
   const [pageTemplates, setPageTemplates] = useState([]);
-  const [showTemplateImages, setShowTemplateImages] = useState(false);
-
-  const toggleId = useMemo(() => `toggle_page_templates_${uuidv4()}`, []);
 
   // load and process pageTemplates
   useEffect(() => {
     async function loadPageTemplates() {
       const trackTiming = getTimeTracker('load_page_templates');
-      setPageTemplates(
-        await getPageTemplates({ showImages: showTemplateImages })
-      );
+      setPageTemplates(await getPageTemplates());
       trackTiming();
     }
 
     loadPageTemplates();
-  }, [getPageTemplates, showTemplateImages, setPageTemplates]);
+  }, [getPageTemplates, setPageTemplates]);
 
   const pageTemplatesParentRef = useRef();
   const [selectedPageTemplateType, setSelectedPageTemplateType] =
@@ -108,30 +87,28 @@ function DefaultTemplates({ pageSize }) {
   const filteredPages = useMemo(
     () =>
       pageTemplates.reduce((pages, template) => {
-        const templatePages = template.pages.reduce((acc, page) => {
+        const templatePosters = Object.values(template.postersByPage).map(
+          (poster, index) => {
+            return {
+              id: `${template.slug}_${index}`,
+              title: template.title,
+              story: template.pages[index],
+              ...poster,
+            };
+          }
+        );
+
+        const templatePages = templatePosters.reduce((acc, posterByPage) => {
           // skip unselected page template types if not matching
           if (
-            !page.pageTemplateType ||
+            !posterByPage.type ||
             (selectedPageTemplateType &&
-              page.pageTemplateType !== selectedPageTemplateType)
+              posterByPage.type !== selectedPageTemplateType)
           ) {
             return acc;
           }
 
-          const pageTemplateName =
-            PAGE_TEMPLATE_TYPES[page.pageTemplateType].name;
-          return [
-            ...acc,
-            {
-              ...page,
-              title: sprintf(
-                /* translators: 1: template name. 2: page template name. */
-                _x('%1$s %2$s', 'page template title', 'web-stories'),
-                template.title,
-                pageTemplateName
-              ),
-            },
-          ];
+          return [...acc, posterByPage];
         }, []);
 
         return [...pages, ...templatePages];
@@ -147,11 +124,6 @@ function DefaultTemplates({ pageSize }) {
       search_category: key,
     });
   }, []);
-
-  const handleToggleClick = useCallback(() => {
-    setShowTemplateImages((currentValue) => !currentValue);
-  }, []);
-
   return (
     <>
       <ChipGroup
@@ -163,29 +135,14 @@ function DefaultTemplates({ pageSize }) {
       <PageTemplatesParentContainer ref={pageTemplatesParentRef}>
         <ActionRow>
           <Headline
-            as="h3"
+            as="h2"
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
           >
             {__('Templates', 'web-stories')}
           </Headline>
-          <TemplatesToggle>
-            <Text
-              as="label"
-              htmlFor={toggleId}
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
-              {__('Show Images', 'web-stories')}
-            </Text>
-            <Toggle
-              id={toggleId}
-              name={toggleId}
-              checked={showTemplateImages}
-              onChange={handleToggleClick}
-            />
-          </TemplatesToggle>
         </ActionRow>
         {pageTemplatesParentRef.current && (
-          <TemplateList
+          <DefaultTemplateList
             pageSize={pageSize}
             parentRef={pageTemplatesParentRef}
             pages={filteredPages}

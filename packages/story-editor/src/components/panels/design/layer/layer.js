@@ -18,8 +18,15 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
-import { Button, BUTTON_TYPES, Icons } from '@web-stories-wp/design-system';
+import {
+  Button,
+  BUTTON_TYPES,
+  Icons,
+  themeHelpers,
+  Tooltip,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -31,41 +38,106 @@ import { LayerText } from '../../../../elements/shared/layerText';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
+const ActionsContainer = styled.div`
+  position: absolute;
+  display: none;
+  align-items: center;
+  height: 100%;
+  top: 0;
+  right: 0;
+  padding-right: 6px;
+
+  --background-color: ${({ theme }) =>
+    theme.colors.interactiveBg.secondaryNormal};
+  --background-color-opaque: ${({ theme }) =>
+    rgba(theme.colors.interactiveBg.secondaryNormal, 0)};
+  background-color: var(--background-color);
+
+  ::before {
+    position: absolute;
+    content: '';
+    width: 32px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      to right,
+      var(--background-color-opaque),
+      var(--background-color)
+    );
+    pointer-events: none;
+  }
+`;
+
+const LayerContainer = styled.div.attrs({
+  // Because the layer panel is aria-hidden, we need something else to select by
+  'data-testid': 'layer-option',
+})`
+  position: relative;
+  height: ${LAYER_HEIGHT}px;
+  width: 100%;
+  overflow: hidden;
+
+  :is(:hover, :focus-within) ${ActionsContainer} {
+    display: inline-flex;
+  }
+`;
+
 const LayerButton = styled(Button).attrs({
   type: BUTTON_TYPES.PLAIN,
   tabIndex: -1,
   role: 'option',
-  // Because the layer panel is aria-hidden, we need something else to select by
-  'data-testid': 'layer-option',
 })`
+  position: relative;
   display: grid;
-  grid-template-columns: 42px 1fr;
+  grid-template-columns: 36px 1fr;
 
   border: 0;
   padding: 0;
   background: transparent;
-  height: ${LAYER_HEIGHT}px;
+  height: 100%;
   width: 100%;
   overflow: hidden;
   align-items: center;
   user-select: none;
   border-radius: 0;
-  padding-left: 8px;
-  transition: background-color 0.3s;
-
-  :hover {
-    background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
-  }
-
-  :active {
-    background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
-  }
+  padding-left: 12px;
+  transition: revert;
 
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
       background: ${theme.colors.interactiveBg.secondaryPress};
+      + * {
+        --background-color: ${theme.colors.interactiveBg.secondaryPress};
+        --background-color-opaque: ${rgba(
+          theme.colors.interactiveBg.secondaryPress,
+          0
+        )};
+        --selected-hover-color: ${theme.colors.interactiveFg.brandHover};
+      }
     `}
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
+  }
+  :hover + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.secondaryHover, 0)};
+  }
+
+  :active {
+    background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
+  }
+  :active + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryPress};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.secondaryPress, 0)};
+  }
 `;
 
 const LayerIconWrapper = styled.div`
@@ -86,14 +158,19 @@ const LayerDescription = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-const LockIconWrapper = styled.div`
-  position: absolute;
-  right: 0;
+const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  position: absolute;
+  right: 0;
+  width: 32px;
+  aspect-ratio: 1;
 
   svg {
+    position: relative;
+    display: block;
+    width: 100%;
     color: ${({ theme }) => theme.colors.fg.secondary};
   }
 `;
@@ -105,38 +182,120 @@ const LayerContentContainer = styled.div`
   overflow: hidden;
 `;
 
+const LayerAction = styled(Button).attrs({
+  type: BUTTON_TYPES.PLAIN,
+  tabIndex: -1,
+})`
+  position: relative;
+  aspect-ratio: 1;
+  width: 20px;
+  padding: 0;
+
+  /*
+   * all of our Icons right now have an embedded padding,
+   * however the new designs just disregard this embedded
+   * padding, so to accomodate, we'll make the icon its
+   * intended size and manually center it within the button.
+   */
+  svg {
+    position: absolute;
+    width: 32px;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /*
+   * override base button background color so we can receive the 
+   * proper background color from the parent.
+   */
+  && {
+    transition: revert;
+    background: var(--background-color);
+  }
+
+  :disabled {
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
+
+  :hover {
+    color: var(
+      --selected-hover-color,
+      ${({ theme }) => theme.colors.fg.secondary}
+    );
+  }
+
+  & + & {
+    margin-left: 4px;
+  }
+
+  * {
+    pointer-events: none;
+  }
+
+  :focus {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        'var(--background-color)'
+      )}
+  }
+`;
+
 function Layer({ layer }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(layer.type);
   const { isSelected, handleClick } = useLayerSelection(layer);
-  const { currentPage } = useStory((state) => ({
+  const { currentPage, deleteElementById } = useStory((state) => ({
     currentPage: state.state.currentPage,
+    deleteElementById: state.actions.deleteElementById,
   }));
   const isBackground = currentPage.elements[0].id === layer.id;
+  const layerId = `layer-${layer.id}`;
 
   return (
-    <LayerButton
-      id={`layer-${layer.id}`}
-      isSelected={isSelected}
-      onClick={handleClick}
-    >
-      <LayerIconWrapper>
-        <LayerIcon element={layer} currentPage={currentPage} />
-      </LayerIconWrapper>
-      <LayerDescription>
-        <LayerContentContainer>
-          {isBackground ? (
-            <LayerText>{__('Background', 'web-stories')}</LayerText>
-          ) : (
-            <LayerContent element={layer} />
+    <LayerContainer>
+      <LayerButton id={layerId} onClick={handleClick} isSelected={isSelected}>
+        <LayerIconWrapper>
+          <LayerIcon element={layer} currentPage={currentPage} />
+        </LayerIconWrapper>
+        <LayerDescription>
+          <LayerContentContainer>
+            {isBackground ? (
+              <LayerText>{__('Background', 'web-stories')}</LayerText>
+            ) : (
+              <LayerContent element={layer} />
+            )}
+          </LayerContentContainer>
+          {isBackground && (
+            <IconWrapper>
+              <Icons.LockClosed />
+            </IconWrapper>
           )}
-        </LayerContentContainer>
-        {isBackground && (
-          <LockIconWrapper>
-            <Icons.LockClosed width={35} height={35} />
-          </LockIconWrapper>
+        </LayerDescription>
+      </LayerButton>
+      <ActionsContainer>
+        {isBackground ? (
+          <LayerAction
+            aria-label={__('Locked', 'web-stories')}
+            aria-describedby={layerId}
+            disabled
+          >
+            <Icons.LockClosed />
+          </LayerAction>
+        ) : (
+          <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
+            <LayerAction
+              aria-label={__('Delete', 'web-stories')}
+              aria-describedby={layerId}
+              onClick={() => deleteElementById({ elementId: layer.id })}
+            >
+              <Icons.Trash />
+            </LayerAction>
+          </Tooltip>
         )}
-      </LayerDescription>
-    </LayerButton>
+      </ActionsContainer>
+    </LayerContainer>
   );
 }
 

@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { buildOptionsTree } from '../../../form/hierarchical/utils';
+import { APP_ROUTES, ROUTE_TITLES } from '@web-stories-wp/dashboard';
+import { __ } from '@web-stories-wp/i18n';
 
-function flattenOptionTree(optionTree = [], level = 0) {
-  return optionTree.flatMap(({ options, ...option }) => [
-    {
-      ...option,
-      $level: level,
-    },
-    ...flattenOptionTree(options, level + 1),
-  ]);
-}
-
-export function makeFlatOptionTree(categories) {
-  const optionTree = buildOptionsTree(categories);
-  return flattenOptionTree(optionTree);
-}
+export const LEFT_RAIL_SECONDARY_NAVIGATION = [
+  {
+    value: APP_ROUTES.EDITOR_SETTINGS,
+    label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
+  },
+  {
+    value: __(
+      'https://wordpress.org/support/plugin/web-stories/',
+      'web-stories'
+    ),
+    label: __('Support', 'web-stories'),
+    isExternal: true,
+    trackingEvent: 'click_support_page',
+  },
+];
