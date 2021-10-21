@@ -41,6 +41,7 @@ import useLibrary from '../../useLibrary';
 import TemplateList from './templateList';
 
 const Wrapper = styled.div`
+  height: 100%;
   padding-top: 5px;
   overflow-y: scroll;
   overflow-x: hidden;
