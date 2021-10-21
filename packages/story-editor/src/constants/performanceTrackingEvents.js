@@ -42,4 +42,11 @@ export const TRACKING_EVENTS = {
   INSERT_ELEMENT: {
     category: 'insert_element',
   },
+  DELETE_ELEMENT: {
+    category: 'delete_element',
+  },
+  SET_BACKGROUND_MEDIA: {
+    category: 'background',
+    label: 'set_media_as',
+  },
 };

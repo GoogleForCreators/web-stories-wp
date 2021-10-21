@@ -34,7 +34,6 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
           TRACES[entry.startTime]?.category &&
           !TRACES[entry.startTime]?.isReported
         ) {
-          console.log(TRACES[entry.startTime].category, TRACES[entry.startTime].label, entry.duration);
           TRACES[entry.startTime].isReported = true;
           trackTiming(
             TRACES[entry.startTime].category,

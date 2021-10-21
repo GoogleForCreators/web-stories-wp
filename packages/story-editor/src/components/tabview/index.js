@@ -109,6 +109,7 @@ const TabElement = styled.li.attrs(({ isActive }) => ({
     transition: transform 0.3s ease, color 0.2s ease;
     color: ${({ theme }) => theme.colors.fg.tertiary};
     border-radius: ${({ theme }) => theme.borders.radius.small};
+    pointer-events: none;
   }
 
   svg.alert {
