@@ -28,6 +28,7 @@ import {
  * Internal dependencies
  */
 import {
+  monetizationDropdownSelector,
   telemetryCheckboxSelector,
   videoCacheCheckboxSelector,
   videoOptimizationCheckboxSelector,
@@ -50,40 +51,37 @@ describe('Admin User', () => {
     await enableCheckbox(videoCacheCheckboxSelector);
   });
 
-  it('should let me see and update the telemetry checkbox', async () => {
+  it('should let me see and update all settings', async () => {
+    // verify that the telemetry checkbox can be changed
+    await expect(page).toMatchElement(`${telemetryCheckboxSelector}:checked`);
     await disableCheckbox(telemetryCheckboxSelector);
-
     await expect(page).toMatchElement(
       `${telemetryCheckboxSelector}:not(:checked)`
     );
-  });
 
-  it('should let me see and update the video optimization checkbox', async () => {
+    // verify that the video optimization checkbox can be changed
+    await expect(page).toMatchElement(
+      `${videoOptimizationCheckboxSelector}:checked`
+    );
     await disableCheckbox(videoOptimizationCheckboxSelector);
-
     await expect(page).toMatchElement(
       `${videoOptimizationCheckboxSelector}:not(:checked)`
     );
-  });
 
-  it('should let me see and update the video cache checkbox', async () => {
+    // verify that the video cache checkbox can be changed
+    await expect(page).toMatchElement(`${videoCacheCheckboxSelector}:checked`);
     await disableCheckbox(videoCacheCheckboxSelector);
-
     await expect(page).toMatchElement(
       `${videoCacheCheckboxSelector}:not(:checked)`
     );
-  });
 
-  it('should let me see and update the monetization settings', async () => {
-    await clickButton('button[aria-label="Monetization type"]', {
+    // verify that the monetization settings can be changed
+    await clickButton(monetizationDropdownSelector, {
       text: 'None',
     });
-
     await expect(page).toClick('button', { text: 'Google AdSense' });
-
-    await expect(page).toMatchElement(
-      'button[aria-label="Monetization type"]',
-      { text: 'Google AdSense' }
-    );
+    await expect(page).toMatchElement(monetizationDropdownSelector, {
+      text: 'Google AdSense',
+    });
   });
 });

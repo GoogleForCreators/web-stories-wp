@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
+export const monetizationDropdownSelector =
+  'button[aria-label="Monetization type"]';
+
 export const telemetryCheckboxSelector =
   'input[data-testid="telemetry-settings-checkbox"]';
+
 export const videoOptimizationCheckboxSelector =
   'input[data-testid="media-optimization-settings-checkbox"]';
+
 export const videoCacheCheckboxSelector =
   'input[data-testid="video-cache-settings-checkbox"]';

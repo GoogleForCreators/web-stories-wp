@@ -28,6 +28,7 @@ import {
  * Internal dependencies
  */
 import {
+  monetizationDropdownSelector,
   telemetryCheckboxSelector,
   videoCacheCheckboxSelector,
   videoOptimizationCheckboxSelector,
@@ -49,22 +50,19 @@ describe('Contributor User', () => {
     await enableCheckbox(telemetryCheckboxSelector);
   });
 
-  it('should let me upload publisher logos', async () => {
-    // verify no publisher logos are shown
-    await expect(page).not.toMatchElement(
-      '[data-testid="publisher-logos-container"]'
-    );
-  });
-
-  it('should let me see and update the telemetry checkbox', async () => {
+  it('should only let me see and update the telemetry setting', async () => {
+    // verify that the telemetry checkbox can be changed
+    await expect(page).toMatchElement(`${telemetryCheckboxSelector}:checked`);
     await disableCheckbox(telemetryCheckboxSelector);
-
     await expect(page).toMatchElement(
       `${telemetryCheckboxSelector}:not(:checked)`
     );
-  });
 
-  it('should not let me see other settings', async () => {
+    // verify no other settings are showing
+    await expect(page).not.toMatchElement(
+      '[data-testid="publisher-logos-container"]'
+    );
+    await expect(page).not.toMatchElement(monetizationDropdownSelector);
     await expect(page).not.toMatchElement(videoOptimizationCheckboxSelector);
     await expect(page).not.toMatchElement(videoCacheCheckboxSelector);
   });

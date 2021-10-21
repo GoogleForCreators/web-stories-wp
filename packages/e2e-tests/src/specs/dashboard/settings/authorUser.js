@@ -28,6 +28,7 @@ import {
  * Internal dependencies
  */
 import {
+  monetizationDropdownSelector,
   telemetryCheckboxSelector,
   videoCacheCheckboxSelector,
   videoOptimizationCheckboxSelector,
@@ -51,30 +52,28 @@ describe('Author User', () => {
     await enableCheckbox(videoOptimizationCheckboxSelector);
   });
 
-  it('should let me upload publisher logos', async () => {
-    // verify no publisher logos are shown
-    await expect(page).not.toMatchElement(
-      '[data-testid="publisher-logos-container"]'
-    );
-  });
-
-  it('should let me see and update the telemetry checkbox', async () => {
+  it('should only let me see and update the telemetry and video optimization settings', async () => {
+    // verify that the telemetry checkbox can be changed
+    await expect(page).toMatchElement(`${telemetryCheckboxSelector}:checked`);
     await disableCheckbox(telemetryCheckboxSelector);
-
     await expect(page).toMatchElement(
       `${telemetryCheckboxSelector}:not(:checked)`
     );
-  });
 
-  it('should let me see and update the video optimization checkbox', async () => {
+    // verify that the video optimization checkbox can be changed
+    await expect(page).toMatchElement(
+      `${videoOptimizationCheckboxSelector}:checked`
+    );
     await disableCheckbox(videoOptimizationCheckboxSelector);
-
     await expect(page).toMatchElement(
       `${videoOptimizationCheckboxSelector}:not(:checked)`
     );
-  });
 
-  it('should not let me see other settings', async () => {
+    // verify no other settings are showing
+    await expect(page).not.toMatchElement(
+      '[data-testid="publisher-logos-container"]'
+    );
+    await expect(page).not.toMatchElement(monetizationDropdownSelector);
     await expect(page).not.toMatchElement(videoCacheCheckboxSelector);
   });
 });
