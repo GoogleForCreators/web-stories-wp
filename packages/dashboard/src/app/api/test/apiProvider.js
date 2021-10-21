@@ -87,25 +87,6 @@ const fetchStories = () => {
   });
 };
 
-const getUser = function () {
-  return Promise.resolve({
-    id: 1,
-    name: 'dev',
-    url: 'https://www.story-link.com',
-    description: '',
-    link: 'https://www.story-link.com/author/dev/',
-    slug: 'dev',
-    avatar_urls: {},
-    meta: {
-      web_stories_tracking_optin: false,
-      web_stories_media_optimization: true,
-      web_stories_onboarding: {
-        safeZone: true,
-      },
-    },
-  });
-};
-
 const storyResponse = (story) => {
   let title = '';
   let id = story.id || 456;
@@ -201,7 +182,7 @@ describe('ApiProvider', () => {
         <ConfigProvider
           config={{
             api: { stories: 'stories' },
-            apiCallbacks: { fetchStories, getUser },
+            apiCallbacks: { fetchStories },
           }}
         >
           <ApiProvider {...props} />
@@ -270,7 +251,7 @@ describe('ApiProvider', () => {
         <ConfigProvider
           config={{
             api: { stories: 'stories' },
-            apiCallbacks: { fetchStories, getUser, updateStory },
+            apiCallbacks: { fetchStories, updateStory },
           }}
         >
           <ApiProvider {...props} />
@@ -355,7 +336,7 @@ describe('ApiProvider', () => {
         <ConfigProvider
           config={{
             api: { stories: 'stories' },
-            apiCallbacks: { fetchStories, getUser, duplicateStory },
+            apiCallbacks: { fetchStories, duplicateStory },
           }}
         >
           <ApiProvider {...props} />
@@ -478,7 +459,7 @@ describe('ApiProvider', () => {
         <ConfigProvider
           config={{
             api: { stories: 'stories' },
-            apiCallbacks: { fetchStories, getUser, trashStory },
+            apiCallbacks: { fetchStories, trashStory },
           }}
         >
           <ApiProvider {...props} />
@@ -506,7 +487,7 @@ describe('ApiProvider', () => {
         <ConfigProvider
           config={{
             api: { stories: 'stories' },
-            apiCallbacks: { fetchStories, getUser },
+            apiCallbacks: { fetchStories },
           }}
         >
           <ApiProvider {...props} />
