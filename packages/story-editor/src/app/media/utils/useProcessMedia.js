@@ -371,12 +371,12 @@ function useProcessMedia({
       })();
     },
     [
-      updateExistingElements,
       copyResourceData,
-      updateOldMutedObject,
-      uploadVideoPoster,
       getMutedMediaById,
+      updateExistingElements,
+      updateOldMutedObject,
       uploadMedia,
+      uploadVideoPoster,
     ]
   );
 
