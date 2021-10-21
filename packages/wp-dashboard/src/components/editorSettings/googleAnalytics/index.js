@@ -33,7 +33,6 @@ import {
   NotificationBubble,
 } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -89,9 +88,6 @@ function GoogleAnalyticsSettings({
   handleMigrateLegacyAnalytics,
   siteKitStatus = {},
 }) {
-  const isAutoAnalyticsMigrationEnabled = useFeature(
-    'enableAutoAnalyticsMigration'
-  );
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
@@ -185,14 +181,14 @@ function GoogleAnalyticsSettings({
       <div>
         <SettingHeading htmlFor="gaTrackingID" as="h3">
           {TEXT.SECTION_HEADING}
-          {usingLegacyAnalytics && isAutoAnalyticsMigrationEnabled && (
+          {usingLegacyAnalytics && (
             <StyledNotificationBubble notificationCount={1} isSmall />
           )}
         </SettingHeading>
         <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
           {siteKitDisplayText}
         </SettingSubheading>
-        {usingLegacyAnalytics && isAutoAnalyticsMigrationEnabled && (
+        {usingLegacyAnalytics && (
           <>
             <SettingSubheading
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
