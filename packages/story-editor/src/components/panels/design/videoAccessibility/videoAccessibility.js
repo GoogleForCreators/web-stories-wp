@@ -25,6 +25,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { Media, Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
@@ -53,6 +54,11 @@ const StyledMedia = styled(Media)`
 const InputsWrapper = styled.div`
   align-self: flex-start;
   margin-left: 16px;
+`;
+
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+  margin-bottom: 12px;
 `;
 
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
@@ -159,6 +165,12 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           canUpload={hasUploadMediaAction}
         />
         <InputsWrapper>
+          <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            {__(
+              'Add assistive text for visually impaired users',
+              'web-stories'
+            )}
+          </StyledText>
           <TextArea
             ref={(node) => {
               if (node && highlightInput?.focus && highlightInput?.showEffect) {
@@ -170,11 +182,6 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
             }}
             placeholder={alt === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''}
             value={alt || ''}
-            label={__(
-              'Add assistive text for visually impaired users',
-              'web-stories'
-            )}
-            isLabelSmall
             onChange={(evt) =>
               pushUpdate(
                 {
@@ -183,6 +190,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
                 true
               )
             }
+            aria-label={__('Assistive text', 'web-stories')}
             maxLength={MIN_MAX.ALT_TEXT.MAX}
             rows={2}
             isIndeterminate={alt === MULTIPLE_VALUE}
