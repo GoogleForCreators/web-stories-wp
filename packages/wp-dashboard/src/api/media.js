@@ -18,6 +18,10 @@
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+/**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './utils';
 
 /**
  * Upload media
@@ -38,7 +42,7 @@ export function uploadMedia(config, files) {
         path: config.api.media,
         body: data,
         method: 'POST',
-      });
+      }).then(snakeToCamelCaseObjectKeys);
     })
   );
 }

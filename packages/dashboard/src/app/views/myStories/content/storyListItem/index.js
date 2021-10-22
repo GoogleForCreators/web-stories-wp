@@ -178,7 +178,7 @@ export const StoryListItem = ({
       </TableCell>
       <TableCell>
         <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {getRelativeDisplayDate(story.modified_gmt)}
+          {getRelativeDisplayDate(story.modifiedGmt)}
         </Text>
       </TableCell>
       {storyStatus !== STORY_STATUS.DRAFT && (

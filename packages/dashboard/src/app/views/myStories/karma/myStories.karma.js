@@ -1070,7 +1070,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified_gmt)
+        getRelativeDisplayDate(stories[id].modifiedGmt)
       );
 
       // Last Modified is the fifth column
@@ -1238,7 +1238,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified_gmt)
+        getRelativeDisplayDate(stories[id].modifiedGmt)
       );
 
       // Last Modified is the fifth column
