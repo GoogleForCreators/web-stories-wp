@@ -55,6 +55,24 @@ function StatusPanel() {
   );
   const [password, setPassword] = useState(savedPassword);
 
+  const passwordProtected = 'protected';
+  const getStatusValue = useCallback(
+    (value) => {
+      // Always display protected visibility, independent of the status.
+      if (password && password.length) {
+        return passwordProtected;
+      }
+      // Display as public even if scheduled for future, private post can't be scheduled.
+      if ('future' === value) {
+        return 'publish';
+      }
+      return value;
+    },
+    [password]
+  );
+
+  const [currentStatus, setCurrentStatus] = useState(getStatusValue(status));
+
   useEffect(() => {
     // updated displayed password when stored password is updated
     setPassword(savedPassword);
@@ -79,15 +97,12 @@ function StatusPanel() {
       label: __('Private', 'web-stories'),
       helper: __('Visible to site admins & editors only', 'web-stories'),
     });
+    visibilityOptions.push({
+      label: __('Password Protected', 'web-stories'),
+      value: passwordProtected,
+      helper: __('Need password to view', 'web-stories'),
+    });
   }
-
-  const passwordProtected = 'protected';
-  // @todo Add this back once we have FE implementation, too.
-  /*visibilityOptions.push({
-    label: __('Password Protected', 'web-stories'),
-    value: passwordProtected,
-    helper: __('Need password to view', 'web-stories'),
-  });*/
 
   const handleChangePassword = useCallback((evt) => {
     setPassword(evt.target.value);
@@ -95,10 +110,10 @@ function StatusPanel() {
 
   // @todo this should still allow showing the moment where the warning is red, currently just doesn't allow adding more.
   const handleUpdatePassword = useCallback(
-    (value) => {
-      if (isValidPassword(value)) {
+    (evt) => {
+      if (isValidPassword(evt.target.value)) {
         updateStory({
-          properties: { password: value },
+          properties: { password: evt.target.value },
         });
       }
     },
@@ -111,37 +126,16 @@ function StatusPanel() {
 
   const handleChangeVisibility = useCallback(
     (evt) => {
-      // If password protected but no password, do nothing.
-      if (
-        evt.target.value === passwordProtected &&
-        !isValidPassword(password)
-      ) {
-        return;
-      }
-      // If password protected, keep the previous status.
       const properties =
-        passwordProtected === status
-          ? { password }
-          : {
-              status: evt.target.value,
-              password: '',
-            };
-      updateStory({ properties });
-    },
-    [password, status, updateStory]
-  );
+        passwordProtected === evt.target.value
+          ? { status: 'publish', password }
+          : { status: evt.target.value, password: '' };
 
-  const getStatusValue = (value) => {
-    // Always display protected visibility, independent of the status.
-    if (password && password.length) {
-      return passwordProtected;
-    }
-    // Display as public even if scheduled for future, private post can't be scheduled.
-    if ('future' === value) {
-      return 'publish';
-    }
-    return value;
-  };
+      updateStory({ properties });
+      setCurrentStatus(evt.target.value);
+    },
+    [password, updateStory]
+  );
 
   return (
     <SimplePanel
@@ -161,10 +155,10 @@ function StatusPanel() {
             name="radio-group-visibility"
             options={visibilityOptions}
             onChange={handleChangeVisibility}
-            value={getStatusValue(status)}
+            value={currentStatus}
           />
         </Row>
-        {passwordProtected === status && (
+        {passwordProtected === currentStatus && (
           <InputRow>
             <Input
               aria-label={__('Password', 'web-stories')}
