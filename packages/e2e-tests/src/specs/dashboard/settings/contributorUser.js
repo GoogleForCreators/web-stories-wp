@@ -54,9 +54,6 @@ describe('Contributor User', () => {
     // verify that the telemetry checkbox can be changed
     await expect(page).toMatchElement(`${telemetryCheckboxSelector}:checked`);
     await disableCheckbox(telemetryCheckboxSelector);
-    await expect(page).toMatchElement(
-      `${telemetryCheckboxSelector}:not(:checked)`
-    );
 
     // verify no other settings are showing
     await expect(page).not.toMatchElement(

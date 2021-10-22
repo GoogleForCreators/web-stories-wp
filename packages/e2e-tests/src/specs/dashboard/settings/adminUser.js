@@ -55,25 +55,16 @@ describe('Admin User', () => {
     // verify that the telemetry checkbox can be changed
     await expect(page).toMatchElement(`${telemetryCheckboxSelector}:checked`);
     await disableCheckbox(telemetryCheckboxSelector);
-    await expect(page).toMatchElement(
-      `${telemetryCheckboxSelector}:not(:checked)`
-    );
 
     // verify that the video optimization checkbox can be changed
     await expect(page).toMatchElement(
       `${videoOptimizationCheckboxSelector}:checked`
     );
     await disableCheckbox(videoOptimizationCheckboxSelector);
-    await expect(page).toMatchElement(
-      `${videoOptimizationCheckboxSelector}:not(:checked)`
-    );
 
     // verify that the video cache checkbox can be changed
     await expect(page).toMatchElement(`${videoCacheCheckboxSelector}:checked`);
     await disableCheckbox(videoCacheCheckboxSelector);
-    await expect(page).toMatchElement(
-      `${videoCacheCheckboxSelector}:not(:checked)`
-    );
 
     // verify that the monetization settings can be changed
     await clickButton(monetizationDropdownSelector, {

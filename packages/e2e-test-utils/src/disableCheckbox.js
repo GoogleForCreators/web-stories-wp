@@ -22,5 +22,5 @@ export default async function disableCheckbox(selector) {
     }
   }, selector);
 
-  await expect(page).not.toMatchElement(`${selector}:checked`);
+  await expect(page).toMatchElement(`${selector}:not(:checked)`);
 }
