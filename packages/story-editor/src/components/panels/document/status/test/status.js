@@ -29,13 +29,14 @@ import StatusPanel from '../status';
 function arrange(
   capabilities = {
     publish: true,
-  }
+  },
+  password = ''
 ) {
   const updateStory = jest.fn();
 
   const storyContextValue = {
     state: {
-      story: { status: 'draft', password: '' },
+      story: { status: 'draft', password },
       capabilities,
     },
     actions: { updateStory },
@@ -51,7 +52,7 @@ function arrange(
   };
 }
 
-describe('StatusPanel', () => {
+describe('statusPanel', () => {
   beforeAll(() => {
     localStorage.setItem(
       'web_stories_ui_panel_settings:status',
@@ -71,7 +72,7 @@ describe('StatusPanel', () => {
     expect(element).toBeInTheDocument();
 
     const radioOptions = screen.getAllByRole('radio');
-    expect(radioOptions).toHaveLength(3);
+    expect(radioOptions).toHaveLength(4);
   });
 
   it('should not render the status option without correct permissions', () => {
@@ -89,6 +90,52 @@ describe('StatusPanel', () => {
       properties: {
         status: 'publish',
         password: '',
+      },
+    });
+  });
+
+  it('should display password field', () => {
+    arrange(
+      {
+        publish: true,
+      },
+      'test'
+    );
+    expect(screen.queryByLabelText('Password')).toBeInTheDocument();
+  });
+
+  it('should hide password field on change status', () => {
+    const { updateStory } = arrange(
+      {
+        publish: true,
+      },
+      'test'
+    );
+    expect(screen.queryByLabelText('Password')).toBeInTheDocument();
+    const publishOption = screen.getByText('Public');
+    fireEvent.click(publishOption);
+    expect(updateStory).toHaveBeenCalledWith({
+      properties: {
+        status: 'publish',
+        password: '',
+      },
+    });
+    expect(screen.queryByLabelText('Password')).not.toBeInTheDocument();
+  });
+
+  it('should update password field on blur', () => {
+    const { updateStory } = arrange(
+      {
+        publish: false,
+      },
+      'test'
+    );
+    const passwordInput = screen.queryByLabelText('Password');
+    expect(passwordInput).toBeInTheDocument();
+    fireEvent.blur(passwordInput);
+    expect(updateStory).toHaveBeenCalledWith({
+      properties: {
+        password: 'test',
       },
     });
   });
