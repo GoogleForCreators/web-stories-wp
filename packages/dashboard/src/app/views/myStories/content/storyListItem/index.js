@@ -173,7 +173,7 @@ export const StoryListItem = ({
       </TableCell>
       <TableCell>
         <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {getRelativeDisplayDate(story.created_gmt)}
+          {getRelativeDisplayDate(story.createdGmt)}
         </Text>
       </TableCell>
       <TableCell>

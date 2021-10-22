@@ -1030,7 +1030,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created_gmt)
+        getRelativeDisplayDate(stories[id].createdGmt)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -1197,7 +1197,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created_gmt)
+        getRelativeDisplayDate(stories[id].createdGmt)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);

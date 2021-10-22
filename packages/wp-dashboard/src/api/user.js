@@ -47,7 +47,7 @@ export function toggleWebStoriesMediaOptimization(config, currentUser) {
     path: config.api.currentUser,
     data: {
       meta: {
-        webStoriesMediaOptimization:
+        web_stories_media_optimization:
           !currentUser.meta.webStoriesMediaOptimization,
       },
     },
@@ -67,7 +67,7 @@ export function toggleWebStoriesTrackingOptIn(config, currentUser) {
     path: config.api.currentUser,
     data: {
       meta: {
-        webStoriesTrackingOptin: !currentUser.meta.webStoriesTrackingOptin,
+        web_stories_tracking_optin: !currentUser.meta.webStoriesTrackingOptin,
       },
     },
     method: 'POST',

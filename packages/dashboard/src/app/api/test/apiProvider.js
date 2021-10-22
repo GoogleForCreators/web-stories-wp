@@ -35,7 +35,7 @@ const fetchStories = () => {
         status: 'publish',
         title: 'Carlos',
         created: '1970-01-01T00:00:00.000',
-        created_gmt: '1970-01-01T00:00:00.000Z',
+        createdGmt: '1970-01-01T00:00:00.000Z',
         modified: '1970-01-01T00:00:00.000',
         modifiedGmt: '1970-01-01T00:00:00.000Z',
         author: 'admin',
@@ -116,7 +116,7 @@ const storyResponse = (story) => {
     status: 'publish',
     title,
     created: '1970-01-01T00:00:00.000',
-    created_gmt: '1970-01-01T00:00:00.000Z',
+    createdGmt: '1970-01-01T00:00:00.000Z',
     modified: '1970-01-01T00:00:00.000',
     modifiedGmt: '1970-01-01T00:00:00.000Z',
     author: 'admin',
@@ -216,7 +216,7 @@ describe('ApiProvider', () => {
         modifiedGmt: '1970-01-01T00:00:00.000Z',
         featuredMediaUrl: 'https://www.featured-media-123',
         created: '1970-01-01T00:00:00.000',
-        created_gmt: '1970-01-01T00:00:00.000Z',
+        createdGmt: '1970-01-01T00:00:00.000Z',
         author: 'admin',
         link: 'https://www.story-link.com',
         lockUser: {
@@ -294,7 +294,7 @@ describe('ApiProvider', () => {
         modified: '1970-01-01T00:00:00.000',
         modifiedGmt: '1970-01-01T00:00:00.000Z',
         created: '1970-01-01T00:00:00.000',
-        created_gmt: '1970-01-01T00:00:00.000Z',
+        createdGmt: '1970-01-01T00:00:00.000Z',
         author: 'admin',
         link: 'https://www.story-link.com',
         lockUser: {
@@ -364,7 +364,7 @@ describe('ApiProvider', () => {
         modified: '1970-01-01T00:00:00.000',
         modifiedGmt: '1970-01-01T00:00:00.000Z',
         created: '1970-01-01T00:00:00.000',
-        created_gmt: '1970-01-01T00:00:00.000Z',
+        createdGmt: '1970-01-01T00:00:00.000Z',
         author: 'admin',
         link: 'https://www.story-link.com',
         lockUser: {
@@ -405,7 +405,7 @@ describe('ApiProvider', () => {
         modified: '1970-01-01T00:00:00.000',
         modifiedGmt: '1970-01-01T00:00:00.000Z',
         created: '1970-01-01T00:00:00.000',
-        created_gmt: '1970-01-01T00:00:00.000Z',
+        createdGmt: '1970-01-01T00:00:00.000Z',
         author: 'admin',
         link: 'https://www.story-link.com',
         lockUser: {

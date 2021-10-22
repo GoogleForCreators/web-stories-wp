@@ -56,9 +56,9 @@ export default function reshapeStoryObject(originalStoryData) {
     status,
     title: title.raw,
     created: date,
-    created_gmt: `${date_gmt}Z`,
+    createdGmt: `${date_gmt}Z`,
     modified,
-    modified_gmt: `${modified_gmt}Z`,
+    modifiedGmt: `${modified_gmt}Z`,
     author: author[0].name,
     locked: lock[0]?.locked,
     lockUser: {
