@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { filterOptionsByLabelText, getOptionCount } from '../utils';
+import { filterOptionsByLabelText, makeFlatOptionTree } from '../utils';
 
 const OPTIONS = [
   {
@@ -108,14 +108,156 @@ describe('filterOptionsByLabelText', () => {
   });
 });
 
-describe('getOptionCount', () => {
-  it.each`
-    options      | result
-    ${[]}        | ${0}
-    ${undefined} | ${0}
-    ${[{}]}      | ${1}
-    ${OPTIONS}   | ${11}
-  `('should count the number of nested options', ({ options, result }) => {
-    expect(getOptionCount(options)).toStrictEqual(result);
+describe('makeFlatOptionTree', () => {
+  it('appends $level prop if tree is flat', () => {
+    const flatOptionTree = makeFlatOptionTree([
+      {
+        id: 'something',
+        label: 'something',
+        parent: 0,
+      },
+      {
+        id: 'something-else',
+        label: 'something-else',
+        parent: 0,
+      },
+    ]);
+
+    expect(flatOptionTree).toStrictEqual([
+      {
+        id: 'something',
+        label: 'something',
+        parent: 0,
+        $level: 0,
+      },
+      {
+        id: 'something-else',
+        label: 'something-else',
+        parent: 0,
+        $level: 0,
+      },
+    ]);
+  });
+
+  it('adds proper $level to children options', () => {
+    const flatOptionTree = makeFlatOptionTree([
+      {
+        id: 'a',
+        label: 'a',
+        parent: 0,
+      },
+      {
+        id: 'b',
+        label: 'b',
+        parent: 0,
+      },
+      {
+        id: 'aa',
+        label: 'aa',
+        parent: 'a',
+      },
+      {
+        id: 'bb',
+        label: 'bb',
+        parent: 'b',
+      },
+      {
+        id: 'ab',
+        label: 'ab',
+        parent: 'a',
+      },
+      {
+        id: 'bbb',
+        label: 'bbb',
+        parent: 'bb',
+      },
+    ]);
+
+    expect(flatOptionTree).toStrictEqual([
+      {
+        id: 'a',
+        label: 'a',
+        parent: 0,
+        $level: 0,
+      },
+      {
+        id: 'aa',
+        label: 'aa',
+        parent: 'a',
+        $level: 1,
+      },
+      {
+        id: 'ab',
+        label: 'ab',
+        parent: 'a',
+        $level: 1,
+      },
+      {
+        id: 'b',
+        label: 'b',
+        parent: 0,
+        $level: 0,
+      },
+      {
+        id: 'bb',
+        label: 'bb',
+        parent: 'b',
+        $level: 1,
+      },
+      {
+        id: 'bbb',
+        label: 'bbb',
+        parent: 'bb',
+        $level: 2,
+      },
+    ]);
+  });
+
+  it('orders children beneath root entries', () => {
+    const findOpt = (id) => (opt) => opt.id === id;
+
+    const flatOptionTree = makeFlatOptionTree([
+      {
+        id: 'a',
+        label: 'a',
+        parent: 0,
+      },
+      {
+        id: 'b',
+        label: 'b',
+        parent: 0,
+      },
+      {
+        id: 'aa',
+        label: 'aa',
+        parent: 'a',
+      },
+      {
+        id: 'bb',
+        label: 'bb',
+        parent: 'b',
+      },
+      {
+        id: 'ab',
+        label: 'ab',
+        parent: 'a',
+      },
+      {
+        id: 'bbb',
+        label: 'bbb',
+        parent: 'bb',
+      },
+    ]);
+
+    const getIndex = (id) => flatOptionTree.findIndex(findOpt(id));
+    const isInOrder = (...args) =>
+      args.every(
+        (el, i, _args) => i === 0 || getIndex(_args[i - 1]) < getIndex(el)
+      );
+
+    // sibling order doesn't matter, so that's why we dont
+    // test aa vs ab
+    expect(isInOrder('a', 'aa', 'b', 'bb', 'bbb')).toBeTrue();
+    expect(isInOrder('a', 'ab', 'b', 'bb', 'bbb')).toBeTrue();
   });
 });

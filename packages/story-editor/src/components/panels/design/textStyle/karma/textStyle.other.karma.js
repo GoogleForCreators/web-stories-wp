@@ -22,33 +22,16 @@ import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import useInsertElement from '../../../../canvas/useInsertElement';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 import { useStory } from '../../../../../app/story';
 import { Fixture } from '../../../../../karma/fixture';
 
 describe('Text Style Panel', () => {
   let fixture;
 
-  const addText = async (extraProps = null) => {
-    const insertElement = await fixture.renderHook(() => useInsertElement());
-    await fixture.act(() =>
-      insertElement('text', {
-        font: TEXT_ELEMENT_DEFAULT_FONT,
-        content: 'hello world!',
-        x: 40,
-        y: 40,
-        width: 250,
-        ...extraProps,
-      })
-    );
-  };
-
   beforeEach(async () => {
     fixture = new Fixture();
     localStorage.clear();
     await fixture.render();
-    await addText();
   });
 
   afterEach(() => {
@@ -56,6 +39,10 @@ describe('Text Style Panel', () => {
   });
 
   describe('Panel state', () => {
+    beforeEach(async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+    });
+
     it('should have the style panel always expanded', async () => {
       await fixture.snapshot('Default panels state with only style panel open');
       await fixture.events.click(
@@ -77,7 +64,73 @@ describe('Text Style Panel', () => {
     });
   });
 
+  describe('Adaptive text color', () => {
+    it('should not allow triggering adaptive text color for multi-selection', async () => {
+      // Add 2 text elements.
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+      await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
+
+      // Select first text as well (the second is selected by default).
+      await fixture.events.keyboard.down('Shift');
+      await fixture.events.click(
+        fixture.editor.canvas.framesLayer.frames[1].node
+      );
+      await fixture.events.keyboard.up('Shift');
+
+      expect(
+        fixture.editor.inspector.designPanel.textStyle.adaptiveColor.disabled
+      ).toBeTrue();
+    });
+
+    it('should change the text color to white on black background', async () => {
+      // Assign black color.
+      const safezone = fixture.querySelector('[data-testid="safezone"]');
+      await fixture.events.click(safezone);
+      const hexInput =
+        fixture.editor.inspector.designPanel.pageBackground.backgroundColor.hex;
+      await fixture.events.click(hexInput);
+      // Select all the text
+      hexInput.select();
+      // Then type hex combo
+      await fixture.events.keyboard.type('000');
+      await fixture.events.keyboard.press('Tab');
+
+      // Add text element.
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStyle.adaptiveColor
+      );
+
+      await waitFor(
+        async () => {
+          const texts = fixture.screen.getAllByText('Fill in some text');
+          const whiteTexts = texts.filter((text) =>
+            text.outerHTML.includes('color: #fff')
+          );
+          const html = whiteTexts[0].outerHTML;
+          expect(html).toContain('color: #fff');
+          const {
+            state: {
+              currentPage: { elements },
+            },
+          } = await fixture.renderHook(() => useStory());
+          expect(elements[1].content).toBe(
+            '<span style="color: #fff">Fill in some text</span>'
+          );
+        },
+        {
+          timeout: 9000,
+        }
+      );
+    });
+  });
+
   describe('Font controls', () => {
+    beforeEach(async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+    });
+
     it('should allow whole number font sizes', async () => {
       const { fontSize } = fixture.editor.inspector.designPanel.textStyle;
 
@@ -114,6 +167,9 @@ describe('Text Style Panel', () => {
   });
 
   describe('Font picker', () => {
+    beforeEach(async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+    });
     const getOptions = () => {
       return fixture.screen
         .getByRole('listbox', {
