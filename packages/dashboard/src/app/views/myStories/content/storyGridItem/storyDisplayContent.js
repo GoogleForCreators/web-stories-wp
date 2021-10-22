@@ -135,7 +135,7 @@ const StoryDisplayContent = ({
           {status === STORY_STATUS.PENDING && (
             <DetailCopy isBold>{__('Pending', 'web-stories')}</DetailCopy>
           )}
-          {author.name && <DetailCopy>{author.name}</DetailCopy>}
+          {author?.name && <DetailCopy>{author?.name}</DetailCopy>}
           <DetailCopy className="dashboard-grid-item-date">
             {displayDateText}
           </DetailCopy>

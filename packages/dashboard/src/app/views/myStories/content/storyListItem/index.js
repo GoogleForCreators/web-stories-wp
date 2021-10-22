@@ -168,7 +168,7 @@ export const StoryListItem = ({
       </TableCell>
       <TableCell>
         <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {story.author.name || '—'}
+          {story.author?.name || '—'}
         </Text>
       </TableCell>
       <TableCell>
