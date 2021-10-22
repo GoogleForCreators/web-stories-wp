@@ -25,12 +25,7 @@ import {
   lightMode,
   SnackbarProvider,
 } from '@web-stories-wp/design-system';
-
-/**
- * Internal dependencies
- */
-import { ConfigProvider } from '../app/config';
-import MockApiProvider from './mockApiProvider';
+import { ConfigProvider } from '@web-stories-wp/dashboard';
 
 const defaultProviderValues = {
   features: {},
@@ -51,11 +46,13 @@ export const renderWithProviders = (
   ui,
   providerValues = {},
   renderOptions = {},
-  wrapper = DefaultWrapper
+  wrapper = DefaultWrapper,
+  apiProvider
 ) => {
   const mergedProviderValues = { ...defaultProviderValues, ...providerValues };
 
   const ProvidedWrapper = wrapper;
+  const ApiProvider = apiProvider;
 
   // eslint-disable-next-line react/prop-types
   const Wrapper = ({ children }) => (
@@ -63,11 +60,11 @@ export const renderWithProviders = (
       <FlagsProvider features={mergedProviderValues.features}>
         <ThemeProvider theme={mergedProviderValues.theme}>
           <ConfigProvider config={mergedProviderValues.config}>
-            <MockApiProvider value={mergedProviderValues.api}>
+            <ApiProvider value={mergedProviderValues.api}>
               <SnackbarProvider value={mergedProviderValues.snackbar}>
                 {children}
               </SnackbarProvider>
-            </MockApiProvider>
+            </ApiProvider>
           </ConfigProvider>
         </ThemeProvider>
       </FlagsProvider>

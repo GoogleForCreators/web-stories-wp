@@ -19,7 +19,6 @@
  */
 import { fireEvent, within, screen } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
-import { renderWithProviders } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
@@ -31,6 +30,7 @@ import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
 import MockEditorProvider from '../../../testUtils/mockEditorProvider';
 import { AD_NETWORK_TYPE } from '../../../constants';
+import { renderWithProviders } from '../../../testUtils';
 
 const mockedPromise = Promise.resolve({});
 

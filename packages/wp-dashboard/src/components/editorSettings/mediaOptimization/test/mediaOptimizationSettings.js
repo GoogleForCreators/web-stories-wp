@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { renderWithProviders } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import MediaOptimizationSettings from '..';
+import { renderWithProviders } from '../../../../testUtils';
 
 describe('Editor Settings: <MediaOptimizationSettings />', function () {
   it('should render the media optimization as checked when selected is true.', function () {

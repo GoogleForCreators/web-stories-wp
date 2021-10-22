@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { renderWithProviders } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import TelemetrySettings from '..';
+import { renderWithProviders } from '../../../../testUtils';
 
 describe('Editor Settings: <TelemetrySettings />', function () {
   it('should render the telemetry as checked when selected is true.', function () {

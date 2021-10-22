@@ -17,12 +17,12 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { renderWithProviders } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import GoogleAdSenseSettings, { TEXT } from '..';
+import { renderWithProviders } from '../../../../../testUtils';
 
 describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
   let publisherId;

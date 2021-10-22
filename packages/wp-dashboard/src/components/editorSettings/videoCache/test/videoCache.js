@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { renderWithProviders } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import VideoCache from '..';
+import { renderWithProviders } from '../../../../testUtils';
 
 describe('Editor Settings: <VideoCache />', function () {
   it('should render the video cache setting as checked when isEnabled', function () {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
-import Dashboard from './dashboard';
-
-export * from './app';
-export * from './app/router';
-export * from './constants';
-export * from './components';
-export * from './app/views/shared';
-export { GlobalStyle as DashboardGlobalStyle } from './theme';
-export { default as DashboardKeyboardOnlyOutline } from './utils/keyboardOnlyOutline';
-export { default as InterfaceSkeleton } from './components/interfaceSkeleton';
-
-export default Dashboard;
+export { default as renderWithProviders } from './renderWithProviders';

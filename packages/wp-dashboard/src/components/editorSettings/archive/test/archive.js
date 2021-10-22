@@ -19,13 +19,13 @@
  */
 import { screen } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
-import { renderWithProviders } from '@web-stories-wp/dashboard';
 
 /**
  * Internal dependencies
  */
 import ArchiveSetting, { TEXT } from '..';
 import { ARCHIVE_TYPE } from '../../../../constants';
+import { renderWithProviders } from '../../../../testUtils';
 
 describe('Editor Settings: Archive page settings <ArchiveSetting />', function () {
   let archive;
