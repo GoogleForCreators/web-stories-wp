@@ -34,7 +34,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_FIELDS, STORY_EMBED } from './constants';
-import { reshapeStoryObject } from './utils';
+import { reshapeStoryObject, snakeToCamelCaseObjectKeys } from './utils';
 
 /**
  * Fetch stories ( When dashboard link is clicked. )
@@ -186,7 +186,7 @@ export const createStoryFromTemplate = async (config, template) => {
       story_data: storyData,
     },
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 };
 
 /**

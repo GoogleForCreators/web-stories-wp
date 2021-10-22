@@ -149,8 +149,7 @@ const trashStory = ({ id }) => {
     date: '1970-01-01T00:00:00.000',
     dateGmt: '1970-01-01T00:00:00.000',
     link: 'https://www.story-link.com',
-    preview_link: 'https://www.story-link.com/?preview=true',
-    edit_link: 'https://www.story-link.com/wp-admin/post.php?id=' + id,
+    editLink: 'https://www.story-link.com/wp-admin/post.php?id=' + id,
   });
 };
 
@@ -231,8 +230,7 @@ describe('ApiProvider', () => {
         status: 'publish',
         title: { raw: 'New Title' },
         link: 'https://www.story-link.com',
-        preview_link: 'https://www.story-link.com/?preview=true',
-        edit_link: 'https://www.story-link.com/wp-admin/post.php?id=123',
+        editLink: 'https://www.story-link.com/wp-admin/post.php?id=123',
       });
     });
 
