@@ -161,4 +161,15 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	public static function get_requirements(): array {
 		return [ 'story_post_type' ];
 	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority(): int {
+		return 11;
+	}
 }
