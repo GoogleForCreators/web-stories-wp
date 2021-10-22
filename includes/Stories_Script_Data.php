@@ -92,10 +92,12 @@ class Stories_Script_Data {
 	 */
 	public function fields_states() : array {
 		$field_states = [];
-		$factory      = $this->injector->make( Factory::class );
-		if ( ! ( $factory instanceof Factory ) ) {
-			return $field_states;
-		}
+		/**
+		 * Factory instance.
+		 *
+		 * @var Factory
+		 */
+		$factory = $this->injector->make( Factory::class );
 
 		$views = $this->get_layouts();
 

@@ -65,19 +65,48 @@ class Factory implements FieldStateFactory {
 	 *
 	 * @param string $view View Type.
 	 *
-	 * @return FieldState|object
+	 * @return FieldState
 	 */
 	public function get_field( $view = 'grid' ) {
 		switch ( $view ) {
 			case 'grid':
-				return $this->injector->make( GridView::class );
+				/**
+				 * GridView instance.
+				 *
+				 * @var FieldState
+				 */
+				$field_state = $this->injector->make( GridView::class );
+				break;
 			case 'list':
-				return $this->injector->make( ListView::class );
+				/**
+				 * ListView instance.
+				 *
+				 * @var FieldState
+				 */
+				$field_state = $this->injector->make( ListView::class );
+				break;
 			case 'circles':
-				return $this->injector->make( CircleView::class );
+				/**
+				 * CircleView instance.
+				 *
+				 * @var FieldState
+				 */
+				$field_state = $this->injector->make( CircleView::class );
+				break;
 			case 'carousel':
-				return $this->injector->make( CarouselView::class );
+				/**
+				 * CarouselView instance.
+				 *
+				 * @var FieldState
+				 */
+				$field_state = $this->injector->make( CarouselView::class );
+				break;
 			default:
+				/**
+				 * CircleView instance.
+				 *
+				 * @var FieldState $default_field_state
+				 */
 				$default_field_state = $this->injector->make( CircleView::class );
 
 				/**
@@ -91,7 +120,9 @@ class Factory implements FieldStateFactory {
 				 */
 				$field_state = apply_filters( 'web_stories_default_field_state', $default_field_state );
 
-				return $field_state instanceof FieldState ? $field_state : $default_field_state;
+				$field_state = $field_state instanceof FieldState ? $field_state : $default_field_state;
 		}
+
+		return $field_state;
 	}
 }
