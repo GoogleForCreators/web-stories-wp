@@ -29,6 +29,7 @@ namespace Google\Web_Stories\Integrations;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Amp;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_REST_Response;
@@ -37,7 +38,7 @@ use WP_REST_Response;
  * Class Jetpack.
  */
 class Jetpack extends Service_Base {
-	use Types;
+	use Types, Amp;
 	/**
 	 * VideoPress Mime type.
 	 *
@@ -315,7 +316,7 @@ class Jetpack extends Service_Base {
 	 * @return bool Whether the current request is an AMP request.
 	 */
 	public function force_amp_request( $is_amp_request ): bool {
-		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+		if ( ! $this->is_web_story() ) {
 			return (bool) $is_amp_request;
 		}
 		return true;

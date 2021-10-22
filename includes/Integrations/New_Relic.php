@@ -28,7 +28,7 @@ namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Amp;
 
 /**
  * New Relic integration class.
@@ -36,6 +36,7 @@ use Google\Web_Stories\Story_Post_Type;
  * @since 1.10.0
  */
 class New_Relic extends Service_Base implements Conditional {
+	use Amp;
 	/**
 	 * Runs on instantiation.
 	 *
@@ -98,7 +99,7 @@ class New_Relic extends Service_Base implements Conditional {
 	 * @return void
 	 */
 	public function disable_autorum() {
-		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+		if ( ! $this->is_web_story() ) {
 			return;
 		}
 
