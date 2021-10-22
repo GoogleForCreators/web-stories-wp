@@ -1,6 +1,6 @@
 <?php
 /**
- * TestClassREST class.
+ * RestTestCase class.
  *
  * Basic test that designed to replace WP_Test_REST_TestCase.
  *
