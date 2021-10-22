@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useContext } from '@web-stories-wp/react';
 import {
@@ -86,8 +86,14 @@ const HeaderActions = styled.div`
 
 // Keeps the space for the icon even if it's not displayed.
 const IconWrapper = styled.div`
+  position: relative;
   width: 32px;
   height: 32px;
+
+  svg {
+    position: relative;
+    z-index: 1;
+  }
 `;
 
 // -12px margin-left comes from 16px panel padding - 4px that it actually should be.
@@ -116,16 +122,36 @@ const Collapse = styled.button`
   svg {
     width: 32px;
     height: 32px;
+
+    ${({ $isCollapsed, theme }) =>
+      $isCollapsed &&
+      css`
+        color: ${theme.colors.fg.secondary};
+        transform: rotate(-90deg);
+      `};
+  }
+
+  :hover ${IconWrapper}:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 16px;
+    width: 16px;
+    border-radius: ${({ theme }) => theme.borders.radius.round};
+    background: ${({ theme }) => theme.colors.bg.quaternary};
   }
 `;
 
-function Toggle({ children, toggle, ...rest }) {
+function Toggle({ children, isCollapsed, toggle, ...rest }) {
   return (
     <Collapse
       onClick={(evt) => {
         evt.stopPropagation();
         toggle();
       }}
+      $isCollapsed={isCollapsed}
       {...rest}
     >
       {children}
@@ -135,6 +161,7 @@ function Toggle({ children, toggle, ...rest }) {
 
 Toggle.propTypes = {
   children: PropTypes.node.isRequired,
+  isCollapsed: PropTypes.bool,
   toggle: PropTypes.func.isRequired,
 };
 
@@ -146,6 +173,7 @@ function Title({
   secondaryAction,
   isResizable,
   canCollapse,
+  maxHeight: maxHeightOverride,
   count,
   ...props
 }) {
@@ -153,7 +181,8 @@ function Title({
     state: {
       isCollapsed,
       height,
-      resizeable,
+      resizable,
+      showDragHandle,
       panelContentId,
       panelTitleId,
       ariaHidden,
@@ -173,32 +202,27 @@ function Title({
 
   useEffect(confirmTitle, [confirmTitle]);
 
-  // Max panel height is set to 70% of full available height.
-  const maxHeight = Math.round(inspectorContentHeight * 0.7);
+  // Default max panel height is set to 70% of full available height.
+  const maxHeight =
+    maxHeightOverride || Math.round(inspectorContentHeight * 0.7);
 
   const handleHeightChange = useCallback(
     (deltaHeight) =>
-      resizeable
+      resizable
         ? setHeight((value) =>
             Math.max(0, Math.min(maxHeight, value + deltaHeight))
           )
         : null,
-    [resizeable, setHeight, maxHeight]
+    [resizable, setHeight, maxHeight]
   );
 
   const handleExpandToHeightChange = useCallback(() => {
-    if (resizeable && height >= PANEL_COLLAPSED_THRESHOLD) {
+    if (resizable && height >= PANEL_COLLAPSED_THRESHOLD) {
       setExpandToHeight(height);
     }
-  }, [setExpandToHeight, height, resizeable]);
+  }, [setExpandToHeight, height, resizable]);
 
   const toggle = isCollapsed ? expand : collapse;
-
-  const toggleIcon = isCollapsed ? (
-    <Icons.ChevronRightSmall />
-  ) : (
-    <Icons.ChevronDownSmall />
-  );
 
   const hasCount = count === 0 || Boolean(count);
 
@@ -219,6 +243,7 @@ function Title({
           handleExpandToHeightChange={handleExpandToHeightChange}
           handleDoubleClick={resetHeight}
           tabIndex={ariaHidden ? -1 : 0}
+          showDragHandle={showDragHandle}
         />
       )}
       <Toggle
@@ -230,7 +255,7 @@ function Title({
         aria-controls={panelContentId}
         isCollapsed={isCollapsed}
       >
-        <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
+        <IconWrapper>{canCollapse && <Icons.ChevronDownSmall />}</IconWrapper>
         <Heading
           isCollapsed={isCollapsed}
           id={panelTitleId}
@@ -243,6 +268,7 @@ function Title({
             data-testid="panel-badge"
             notificationCount={count}
             variant={BUBBLE_VARIANTS.PRIMARY}
+            aria-hidden
           />
         )}
       </Toggle>
@@ -257,6 +283,7 @@ Title.propTypes = {
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,
+  maxHeight: PropTypes.number,
   secondaryAction: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

@@ -20,5 +20,6 @@ export * from './metadata';
 export * from './pageTemplate';
 export * from './user';
 export * from './hotlinkInfo';
+export * from './proxy';
 export * from './publisherLogos';
 export * from './taxonomy';

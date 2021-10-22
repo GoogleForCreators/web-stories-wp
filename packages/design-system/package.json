@@ -23,7 +23,7 @@
     "prop-types": "^15.7.2",
     "react-modal": "^3.14.3",
     "react-transition-group": "^4.4.2",
-    "styled-components": "^5.3.1",
+    "styled-components": "^5.3.3",
     "uuid": "^8.3.2",
     "valid-url": "^1.0.9"
   },

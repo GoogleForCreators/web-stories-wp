@@ -64,7 +64,7 @@ function TaxonomiesPanel(props) {
   return (
     <StyledSimplePanel
       name="taxonomies"
-      title={__('Categories and Tags', 'web-stories')}
+      title={__('Taxonomies', 'web-stories')}
       {...props}
     >
       {availableTaxonomies.map((taxonomy) => {
