@@ -97,6 +97,7 @@ const BaseCheckbox = ({ checked, disabled, className = '', ...props }, ref) => (
       ref={ref}
       checked={checked}
       disabled={disabled}
+      aria-checked={checked}
       {...props}
     />
     {checked && <StyledCheckmark data-testid="checkbox-checkmark" />}

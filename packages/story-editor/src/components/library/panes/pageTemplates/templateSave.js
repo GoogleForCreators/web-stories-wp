@@ -153,7 +153,10 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       <IconWrapper>
         <Icon aria-hidden />
       </IconWrapper>
-      <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <StyledText
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        forwardedAs="span"
+      >
         {__('Save current page as template', 'web-stories')}
       </StyledText>
     </SaveButton>

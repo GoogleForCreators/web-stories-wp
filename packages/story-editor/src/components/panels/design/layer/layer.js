@@ -91,7 +91,7 @@ const LayerButton = styled(Button).attrs({
 })`
   position: relative;
   display: grid;
-  grid-template-columns: 42px 1fr;
+  grid-template-columns: 36px 1fr;
 
   border: 0;
   padding: 0;
@@ -102,7 +102,7 @@ const LayerButton = styled(Button).attrs({
   align-items: center;
   user-select: none;
   border-radius: 0;
-  padding-left: 8px;
+  padding-left: 12px;
   transition: revert;
 
   ${({ isSelected, theme }) =>

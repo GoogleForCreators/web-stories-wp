@@ -52,7 +52,8 @@ const Wrapper = styled.section`
 function Panel({
   name,
   children,
-  resizeable = false,
+  resizable = false,
+  showDragHandle,
   canCollapse = true,
   collapsedByDefault = true,
   initialHeight = null,
@@ -121,7 +122,7 @@ function Panel({
     }
     setIsCollapsed(true);
     setManuallyChanged(true);
-    if (resizeable) {
+    if (resizable) {
       setHeight(0);
     }
 
@@ -129,13 +130,13 @@ function Panel({
       name: name,
       status: 'collapsed',
     });
-  }, [resizeable, canCollapse, name, setHeight]);
+  }, [resizable, canCollapse, name, setHeight]);
 
   const expand = useCallback(
     (restoreHeight = true) => {
       setIsCollapsed(false);
       setManuallyChanged(true);
-      if (restoreHeight && resizeable) {
+      if (restoreHeight && resizable) {
         setHeight(expandToHeight);
       }
 
@@ -144,7 +145,7 @@ function Panel({
         status: 'expanded',
       });
     },
-    [resizeable, expandToHeight, name, setHeight]
+    [resizable, expandToHeight, name, setHeight]
   );
 
   // Expand panel on first mount/on selection change if it can't be persisted.
@@ -156,17 +157,17 @@ function Panel({
 
   // Collapse panel if height is lower than threshold
   useEffect(() => {
-    if (resizeable && height <= PANEL_COLLAPSED_THRESHOLD && !isCollapsed) {
+    if (resizable && height <= PANEL_COLLAPSED_THRESHOLD && !isCollapsed) {
       collapse();
     }
-  }, [collapse, height, resizeable, isCollapsed]);
+  }, [collapse, height, resizable, isCollapsed]);
 
   // Automatically set height of panel. Only happens when:
   // 1. `manuallyChanged` is false
   // 2. Nothing exists in local storage
   // 3. `resizable` is true
   useEffect(() => {
-    if (manuallyChanged || persisted || !resizeable) {
+    if (manuallyChanged || persisted || !resizable) {
       return;
     }
     setHeight(initialHeight);
@@ -174,7 +175,7 @@ function Panel({
   }, [
     manuallyChanged,
     initialHeight,
-    resizeable,
+    resizable,
     persisted,
     name,
     setExpandToHeight,
@@ -214,7 +215,7 @@ function Panel({
 
   const manuallySetHeight = useCallback(
     (h) => {
-      if (!resizeable) {
+      if (!resizable) {
         return;
       }
       setManuallyChanged(true);
@@ -228,7 +229,7 @@ function Panel({
       height,
       isCollapsed,
       maxHeight,
-      resizeable,
+      resizable,
       setHeight,
       setManuallyChanged,
     ]
@@ -248,7 +249,8 @@ function Panel({
   const contextValue = {
     state: {
       height,
-      resizeable,
+      resizable,
+      showDragHandle,
       isCollapsed,
       panelContentId,
       panelTitleId,
@@ -287,7 +289,8 @@ Panel.propTypes = {
   children: PropTypes.node,
   initialHeight: PropTypes.number,
   maxHeight: PropTypes.number,
-  resizeable: PropTypes.bool,
+  resizable: PropTypes.bool,
+  showDragHandle: PropTypes.bool,
   canCollapse: PropTypes.bool,
   collapsedByDefault: PropTypes.bool,
   ariaLabel: PropTypes.string,

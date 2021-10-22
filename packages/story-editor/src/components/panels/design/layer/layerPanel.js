@@ -63,7 +63,8 @@ function LayerPanel() {
       <Panel
         name="layer-panel"
         initialHeight={initialHeight}
-        resizeable
+        resizable
+        showDragHandle
         ariaHidden
         collapsedByDefault={false}
       >
