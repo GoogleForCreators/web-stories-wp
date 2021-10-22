@@ -990,7 +990,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => stories[id].author
+        (id) => stories[id].author.name
       );
 
       // author is the third column
@@ -1155,7 +1155,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => stories[id].author
+        (id) => stories[id].author.name
       );
 
       // author is the third column

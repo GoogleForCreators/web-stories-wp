@@ -64,7 +64,7 @@ export const _default = () => {
         {tableData.map((data) => (
           <TableRow key={data.id}>
             <TableCell>{data.title}</TableCell>
-            <TableCell>{data.author}</TableCell>
+            <TableCell>{data.author.name}</TableCell>
             <TableCell>{data.date}</TableCell>
           </TableRow>
         ))}

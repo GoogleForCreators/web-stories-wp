@@ -47,42 +47,6 @@ const formattedStoriesArray = [
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
     previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
-    originalStoryData: {
-      id: 167,
-      date: '2020-05-21T23:25:51',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=167',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=167',
-      },
-      modified: '2020-05-21T23:25:51',
-      password: '',
-      slug: 'orange-shapes',
-      status: 'publish',
-      type: 'web-story',
-      link: 'http://localhost:8899/web-stories/orange-shapes',
-      preview_link: 'http://localhost:8899/web-stories/orange-shapes',
-      edit_link: 'https://www.story-link.com/wp-admin/post.php?id=167',
-      title: {
-        raw: 'ORANGE SHAPES',
-        rendered: 'ORANGE SHAPES',
-      },
-      excerpt: {
-        raw: '',
-        rendered: '',
-        protected: false,
-      },
-      author: 'Jango Fett',
-      featuredMedia: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      permalink_template: 'http://localhost:8899/web-stories/%pagename%',
-      generated_slug: 'orange-shapes',
-      style_presets: {
-        colors: [],
-        textStyles: [],
-      },
-    },
   },
   {
     id: 165,
@@ -95,7 +59,10 @@ const formattedStoriesArray = [
     featuredMediaUrl: 'http://placekitten.com/640/853',
     tags: [],
     categories: [],
-    author: 'Chewbacca',
+    author: {
+      name: 'Chewbacca',
+      id: '',
+    },
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
     capabilities: {
@@ -105,42 +72,6 @@ const formattedStoriesArray = [
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
     previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
-    originalStoryData: {
-      id: 165,
-      date: '2020-05-21T23:25:22',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=165',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=165',
-      },
-      modified: '2020-05-21T23:25:22',
-      password: '',
-      slug: 'green-shapes',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=165',
-      preview_link: 'http://localhost:8899/?post_type=web-story&p=165',
-      edit_link: 'https://www.story-link.com/wp-admin/post.php?id=165',
-      title: {
-        raw: 'GREEN SHAPES',
-        rendered: 'GREEN SHAPES',
-      },
-      excerpt: {
-        raw: '',
-        rendered: '',
-        protected: false,
-      },
-      author: 'Chewbacca',
-      featuredMedia: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      permalink_template: 'http://localhost:8899/web-stories/%pagename%',
-      generated_slug: 'green-shapes',
-      style_presets: {
-        colors: [],
-        textStyles: [],
-      },
-    },
   },
   {
     id: 163,
@@ -163,42 +94,6 @@ const formattedStoriesArray = [
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
     previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
-    originalStoryData: {
-      id: 163,
-      date: '2020-05-21T23:24:47',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=163',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=163',
-      },
-      modified: '2020-05-21T23:24:47',
-      password: '',
-      slug: 'red-shapes',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=163',
-      preview_link: 'http://localhost:8899/?post_type=web-story&p=163',
-      edit_link: 'https://www.story-link.com/wp-admin/post.php?id=163',
-      title: {
-        raw: 'RED SHAPES',
-        rendered: 'RED SHAPES',
-      },
-      excerpt: {
-        raw: '',
-        rendered: '',
-        protected: false,
-      },
-      author: 'Luke Skywalker',
-      featuredMedia: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      permalink_template: 'http://localhost:8899/web-stories/%pagename%',
-      generated_slug: 'red-shapes',
-      style_presets: {
-        colors: [],
-        textStyles: [],
-      },
-    },
   },
   {
     id: 161,
@@ -221,42 +116,6 @@ const formattedStoriesArray = [
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
     previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
-    originalStoryData: {
-      id: 161,
-      date: '2020-05-21T23:24:06',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=161',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=161',
-      },
-      modified: '2020-05-21T23:24:06',
-      password: '',
-      slug: 'blue-shapes',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=161',
-      preview_link: 'http://localhost:8899/?post_type=web-story&p=161',
-      edit_link: 'https://www.story-link.com/wp-admin/post.php?id=161',
-      title: {
-        raw: 'BLUE SHAPES',
-        rendered: 'BLUE SHAPES',
-      },
-      excerpt: {
-        raw: '',
-        rendered: '',
-        protected: false,
-      },
-      author: 'Lando-Calrissian',
-      featuredMedia: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      permalink_template: 'http://localhost:8899/web-stories/%pagename%',
-      generated_slug: 'blue-shapes',
-      style_presets: {
-        colors: [],
-        textStyles: [],
-      },
-    },
   },
 ];
 

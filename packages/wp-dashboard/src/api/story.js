@@ -125,7 +125,7 @@ export function updateStory(config, story) {
 
   const data = {
     id: story.id,
-    author: story.originalStoryData.author,
+    author: story.author.id,
     title: story.title?.raw || story.title,
   };
 
@@ -197,10 +197,6 @@ export const createStoryFromTemplate = async (config, template) => {
  * @return {Promise} Request promise.
  */
 export function duplicateStory(config, story) {
-  const {
-    originalStoryData: { id },
-  } = story;
-
   const path = addQueryArgs(config.api.stories, {
     _embed: STORY_EMBED,
     _fields: STORY_FIELDS,
@@ -209,7 +205,7 @@ export function duplicateStory(config, story) {
   return apiFetch({
     path,
     data: {
-      original_id: id,
+      original_id: story.id,
       status: 'draft',
     },
     method: 'POST',
