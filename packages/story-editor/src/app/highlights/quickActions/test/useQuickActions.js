@@ -217,6 +217,11 @@ const textQuickActions = [
     onClick: expect.any(Function),
     Icon: LetterTLargeLetterTSmall,
   }),
+  expect.objectContaining({
+    label: ACTIONS.AUTO_STYLE_TEXT.text,
+    onClick: expect.any(Function),
+    Icon: ColorBucket,
+  }),
   ...foregroundCommonActions,
 ];
 const textQuickActionsWithClear = [...textQuickActions, resetElementAction];
