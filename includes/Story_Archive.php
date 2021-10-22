@@ -81,7 +81,8 @@ class Story_Archive extends Service_Base {
 
 		add_filter( 'display_post_states', [ $this, 'filter_display_post_states' ], 10, 2 );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
-		add_action( 'transition_post_status', [ $this, 'on_delete_page' ], 10, 3 );
+		add_action( 'wp_trash_post', [ $this, 'on_remove_archive_page' ], 10, 3 );
+		add_action( 'delete_post', [ $this, 'on_remove_archive_page' ], 10, 3 );
 	}
 
 	/**
@@ -172,20 +173,18 @@ class Story_Archive extends Service_Base {
 	 *
 	 * @since 1.14.0
 	 *
-	 * @param string  $new_status New post status.
-	 * @param string  $old_status Old post status.
-	 * @param WP_Post $post       Post object.
+	 * @param int $postid Post ID.
 	 *
 	 * @return void
 	 */
-	public function on_delete_page( $new_status, $old_status, $post ) {
-		if ( $old_status === $new_status || 'page' !== $post->post_type || 'trash' !== $new_status ) {
+	public function on_remove_archive_page( $postid ) {
+		if ( 'page' !== get_post_type( $postid ) ) {
 			return;
 		}
 
 		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
-		if ( $custom_archive_page_id !== $post->ID ) {
+		if ( $custom_archive_page_id !== $postid ) {
 			return;
 		}
 

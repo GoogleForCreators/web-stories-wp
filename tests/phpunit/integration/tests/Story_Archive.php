@@ -140,7 +140,8 @@ class Story_Archive extends DependencyInjectedTestCase {
 
 
 		$this->assertSame( 10, has_filter( 'pre_handle_404', [ $this->instance, 'redirect_post_type_archive_urls' ] ) );
-		$this->assertSame( 10, has_action( 'transition_post_status', [ $this->instance, 'on_delete_page' ] ) );
+		$this->assertSame( 10, has_action( 'wp_trash_post', [ $this->instance, 'on_remove_archive_page' ] ) );
+		$this->assertSame( 10, has_action( 'delete_post', [ $this->instance, 'on_remove_archive_page' ] ) );
 
 		$this->assertSame(
 			10,
@@ -202,15 +203,33 @@ class Story_Archive extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @covers ::on_delete_page
+	 * @covers ::on_remove_archive_page
 	 */
-	public function test_on_delete_page() {
+	public function test_on_remove_archive_page_trash() {
 		$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, $archive_page_id );
 
 		wp_delete_post( $archive_page_id );
+
+		$archive         = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
+		$archive_page_id = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		$this->assertSame( 'default', $archive );
+		$this->assertSame( 0, $archive_page_id );
+	}
+
+	/**
+	 * @covers ::on_remove_archive_page
+	 */
+	public function test_on_remove_archive_page_delete() {
+		$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
+
+		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
+		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, $archive_page_id );
+
+		wp_delete_post( $archive_page_id, true );
 
 		$archive         = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
 		$archive_page_id = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
