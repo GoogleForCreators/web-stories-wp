@@ -37,7 +37,10 @@ const formattedStoriesArray = [
     featuredMediaUrl: 'http://placekitten.com/640/853',
     tags: [],
     categories: [],
-    author: 'Jango Fett',
+    author: {
+      name: 'Jango Fett',
+      id: 1,
+    },
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
     capabilities: {
@@ -106,7 +109,10 @@ const formattedStoriesArray = [
     featuredMediaUrl: 'http://placekitten.com/640/853',
     tags: [],
     categories: [],
-    author: 'Lando-Calrissian',
+    author: {
+      name: 'Lando-Calrissian',
+      id: 1,
+    },
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
     capabilities: {

@@ -27,7 +27,10 @@ import {
   toggleWebStoriesMediaOptimization,
 } from '../user';
 
-jest.mock('@wordpress/api-fetch');
+jest.mock('@wordpress/api-fetch', () => ({
+  __esModule: true,
+  default: jest.fn(() => Promise.resolve({})),
+}));
 
 describe('User API Callbacks', () => {
   const currentUserPath = '/web-stories/v1/users/me';
@@ -55,7 +58,7 @@ describe('User API Callbacks', () => {
         path: currentUserPath,
         data: {
           meta: {
-            webStoriesTrackingOptin: true,
+            web_stories_tracking_optin: true,
           },
         },
       })
@@ -75,7 +78,7 @@ describe('User API Callbacks', () => {
         path: currentUserPath,
         data: {
           meta: {
-            webStoriesMediaOptimization: true,
+            web_stories_media_optimization: true,
           },
         },
       })

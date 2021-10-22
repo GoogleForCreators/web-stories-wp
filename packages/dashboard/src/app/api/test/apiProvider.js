@@ -38,7 +38,10 @@ const fetchStories = () => {
         createdGmt: '1970-01-01T00:00:00.000Z',
         modified: '1970-01-01T00:00:00.000',
         modifiedGmt: '1970-01-01T00:00:00.000Z',
-        author: 'admin',
+        author: {
+          name: 'admin',
+          id: 1,
+        },
         locked: false,
         lockUser: {
           id: 0,
@@ -104,7 +107,10 @@ const storyResponse = (story) => {
     createdGmt: '1970-01-01T00:00:00.000Z',
     modified: '1970-01-01T00:00:00.000',
     modifiedGmt: '1970-01-01T00:00:00.000Z',
-    author: 'admin',
+    author: {
+      name: 'admin',
+      id: 1,
+    },
     locked: false,
     lockUser: {
       id: 0,
@@ -182,7 +188,10 @@ describe('ApiProvider', () => {
         featuredMediaUrl: 'https://www.featured-media-123',
         created: '1970-01-01T00:00:00.000',
         createdGmt: '1970-01-01T00:00:00.000Z',
-        author: 'admin',
+        author: {
+          name: 'admin',
+          id: 1,
+        },
         link: 'https://www.story-link.com',
         lockUser: {
           avatar: null,
@@ -242,7 +251,10 @@ describe('ApiProvider', () => {
         modifiedGmt: '1970-01-01T00:00:00.000Z',
         created: '1970-01-01T00:00:00.000',
         createdGmt: '1970-01-01T00:00:00.000Z',
-        author: 'admin',
+        author: {
+          name: 'admin',
+          id: 1,
+        },
         link: 'https://www.story-link.com',
         lockUser: {
           avatar: null,
@@ -296,7 +308,10 @@ describe('ApiProvider', () => {
         modifiedGmt: '1970-01-01T00:00:00.000Z',
         created: '1970-01-01T00:00:00.000',
         createdGmt: '1970-01-01T00:00:00.000Z',
-        author: 'admin',
+        author: {
+          name: 'admin',
+          id: 1,
+        },
         link: 'https://www.story-link.com',
         lockUser: {
           avatar: null,
@@ -322,7 +337,10 @@ describe('ApiProvider', () => {
         modifiedGmt: '1970-01-01T00:00:00.000Z',
         created: '1970-01-01T00:00:00.000',
         createdGmt: '1970-01-01T00:00:00.000Z',
-        author: 'admin',
+        author: {
+          name: 'admin',
+          id: 1,
+        },
         link: 'https://www.story-link.com',
         lockUser: {
           avatar: null,
