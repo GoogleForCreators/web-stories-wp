@@ -37,6 +37,17 @@ use Google\Web_Stories\Story_Post_Type;
 trait Amp {
 
 	/**
+	 * Determine whether the current response is a web story.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
+	 */
+	public function is_web_story() {
+		return is_singular( Story_Post_Type::POST_TYPE_SLUG ) && ! is_embed() && ! post_password_required();
+	}
+
+	/**
 	 * Determine whether the current response being served as AMP.
 	 *
 	 * @since 1.5.0
@@ -44,7 +55,7 @@ trait Amp {
 	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
 	 */
 	public function is_amp() {
-		if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+		if ( $this->is_web_story() ) {
 			return true;
 		}
 
