@@ -81,8 +81,8 @@ class Story_Archive extends Service_Base {
 
 		add_filter( 'display_post_states', [ $this, 'filter_display_post_states' ], 10, 2 );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
-		add_action( 'wp_trash_post', [ $this, 'on_remove_archive_page' ], 10, 3 );
-		add_action( 'delete_post', [ $this, 'on_remove_archive_page' ], 10, 3 );
+		add_action( 'wp_trash_post', [ $this, 'on_remove_archive_page' ] );
+		add_action( 'delete_post', [ $this, 'on_remove_archive_page' ] );
 	}
 
 	/**
