@@ -56,11 +56,6 @@ const arrangePage =
   ({ pageId, position }) =>
     dispatch({ type: types.ARRANGE_PAGE, payload: { pageId, position } });
 
-const replaceCurrentPage =
-  (dispatch) =>
-  ({ page }) =>
-    dispatch({ type: types.REPLACE_CURRENT_PAGE, payload: { page } });
-
 const setCurrentPage =
   (dispatch) =>
   ({ pageId }) =>
@@ -216,7 +211,6 @@ export const exposedActions = {
   updatePageProperties,
   updateCurrentPageProperties,
   arrangePage,
-  replaceCurrentPage,
   setCurrentPage,
   addElements,
   addElement,

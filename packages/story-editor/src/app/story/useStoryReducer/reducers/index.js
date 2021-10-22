@@ -19,7 +19,6 @@ export { default as addPage } from './addPage';
 export { default as deletePage } from './deletePage';
 export { default as updatePage } from './updatePage';
 export { default as arrangePage } from './arrangePage';
-export { default as replaceCurrentPage } from './replaceCurrentPage';
 
 // Manipulate elements on a page.
 export { default as addElements } from './addElements';
