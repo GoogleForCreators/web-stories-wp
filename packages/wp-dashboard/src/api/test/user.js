@@ -36,12 +36,6 @@ describe('User API Callbacks', () => {
     jest.clearAllMocks();
   });
 
-  const config = {
-    api: {
-      currentUser: currentUserPath,
-    },
-  };
-
   // Payload `__PAYLOAD_DATA__.meta.web_stories_tracking_optin` must be flipped value
   it('toggleWebStoriesTrackingOptIn: validate request payload & path', () => {
     const currentUser = {
@@ -49,7 +43,7 @@ describe('User API Callbacks', () => {
         web_stories_media_optimization: false,
       },
     };
-    toggleWebStoriesTrackingOptIn(config, currentUser);
+    toggleWebStoriesTrackingOptIn(currentUserPath, currentUser);
     expect(apiFetch).toHaveBeenCalledWith(
       expect.objectContaining({
         path: currentUserPath,
@@ -69,7 +63,7 @@ describe('User API Callbacks', () => {
         web_stories_media_optimization: false,
       },
     };
-    toggleWebStoriesMediaOptimization(config, currentUser);
+    toggleWebStoriesMediaOptimization(currentUserPath, currentUser);
     expect(apiFetch).toHaveBeenCalledWith(
       expect.objectContaining({
         path: currentUserPath,
