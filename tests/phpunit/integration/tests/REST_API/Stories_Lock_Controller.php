@@ -17,10 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Settings;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 
 /**
@@ -30,9 +27,7 @@ use WP_REST_Request;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Lock_Controller
  */
-class Stories_Lock_Controller extends Test_REST_TestCase {
-	protected $server;
-
+class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	protected static $author_id;
 	protected static $subscriber;
 	protected static $editor;
@@ -66,18 +61,13 @@ class Stories_Lock_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$settings         = new Settings();
-		$this->controller = new \Google\Web_Stories\REST_API\Stories_Lock_Controller(
-			new Story_Post_Type( $settings, new Experiments( $settings ) )
-		);
+		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Stories_Lock_Controller::class );
 	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$this->controller->register();
-
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/web-story/(?P<id>[\d]+)/lock', $routes );
