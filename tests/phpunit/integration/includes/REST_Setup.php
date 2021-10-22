@@ -70,7 +70,7 @@ trait REST_Setup {
 	 *
 	 * @return void
 	 */
-	protected function assertErrorResponse( $code, $response, $status = null ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
+	protected function assertErrorResponse( $code, $response, $status = null ) {
 
 		if ( $response instanceof WP_REST_Response ) {
 			$response = $response->as_error();
