@@ -86,7 +86,7 @@ export function getMediaById(config, mediaId) {
 }
 
 /**
- * Get the Muted variant of a given media resource.
+ * Get the muted variant of a given media resource.
  *
  * @param {Object} config Configuration object.
  * @param {number} mediaId Media ID.

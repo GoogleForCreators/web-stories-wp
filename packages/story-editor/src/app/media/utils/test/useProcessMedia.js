@@ -212,7 +212,7 @@ describe('useProcessMedia', () => {
   });
 
   describe('muteExistingVideo', () => {
-    it('should reuse already existing mute video', async () => {
+    it('should reuse already existing muted video', async () => {
       getMutedMediaById.mockImplementationOnce(() => ({
         id: 456,
         src: 'http://www.google.com/foo-optimized.mp4',
@@ -234,6 +234,7 @@ describe('useProcessMedia', () => {
         expect(updateMedia).not.toHaveBeenCalled();
       });
     });
+
     it('should mute video file', async () => {
       const { muteExistingVideo, uploadVideoPoster, updateMedia } = setup();
       act(() => {
