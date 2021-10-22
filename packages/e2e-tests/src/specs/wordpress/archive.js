@@ -52,10 +52,11 @@ const changeStoriesArchivesType = async (option) => {
   });
 };
 
-describe('archive', () => {
+describe('Stories Archive', () => {
   // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['archivePageCustomization']);
-  describe('custom', () => {
+
+  describe('Custom Page', () => {
     beforeAll(async () => {
       await createNewPost({
         showWelcomeGuide: false,
@@ -98,7 +99,7 @@ describe('archive', () => {
     });
   });
 
-  describe('disabled', () => {
+  describe('Disabled', () => {
     beforeAll(async () => {
       await changeStoriesArchivesType('Disabled');
     });
@@ -106,7 +107,7 @@ describe('archive', () => {
       await changeStoriesArchivesType('Default');
     });
 
-    describe('block', () => {
+    describe('Block', () => {
       it('should insert a new web stories block', async () => {
         await createNewPost({
           showWelcomeGuide: false,
@@ -122,7 +123,7 @@ describe('archive', () => {
       });
     });
 
-    describe('widget Block', () => {
+    describe('Widget Block', () => {
       // eslint-disable-next-line jest/require-hook
       minWPVersionRequired('5.8');
       it('should insert a new web stories block', async () => {
@@ -142,9 +143,10 @@ describe('archive', () => {
       });
     });
 
-    describe('widget', () => {
+    describe('Widget', () => {
       // eslint-disable-next-line jest/require-hook
       withPlugin('classic-widgets');
+
       it('should be able to add widget', async () => {
         await visitAdminPage('widgets.php');
 

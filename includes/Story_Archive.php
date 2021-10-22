@@ -168,7 +168,7 @@ class Story_Archive extends Service_Base {
 	}
 
 	/**
-	 * When the custom page is trash, reset the archive.
+	 * Resets archive settings when the custom archive page is trashed.
 	 *
 	 * @since 1.14.0
 	 *
