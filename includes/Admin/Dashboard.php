@@ -250,13 +250,13 @@ class Dashboard extends Service_Base {
 	 * @return void
 	 */
 	public function load_stories_dashboard() {
-		$rest_base = $this->story_post_type->get_rest_base();
+		$rest_url = $this->story_post_type->get_rest_url();
 
 		$preload_paths = [
 			'/web-stories/v1/settings/',
 			'/web-stories/v1/publisher-logos/',
 			'/web-stories/v1/users/me/',
-			"/web-stories/v1/$rest_base/?" . build_query(
+			$rest_url . "/?" . build_query(
 				[
 					'_embed'                => rawurlencode(
 						implode(
@@ -372,7 +372,6 @@ class Dashboard extends Service_Base {
 	 * @return array
 	 */
 	public function get_dashboard_settings(): array {
-		$rest_base     = $this->story_post_type->get_rest_base();
 		$new_story_url = admin_url(
 			add_query_arg(
 				[
@@ -401,7 +400,7 @@ class Dashboard extends Service_Base {
 				'version'               => WEBSTORIES_VERSION,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),
 				'api'                   => [
-					'stories'        => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'stories'        => $this->story_post_type->get_rest_url(),
 					'media'          => '/web-stories/v1/media/',
 					'currentUser'    => '/web-stories/v1/users/me/',
 					'users'          => '/web-stories/v1/users/',

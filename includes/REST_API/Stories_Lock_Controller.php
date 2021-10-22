@@ -70,7 +70,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 
 		$this->parent_controller = $parent_controller;
 		$this->rest_base         = $rest_base;
-		$this->namespace         = (string) $parent_controller->namespace;
+		$this->namespace         = $story_post_type->get_rest_namespace();
 	}
 
 	/**

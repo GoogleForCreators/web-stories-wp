@@ -285,7 +285,6 @@ class Editor extends Service_Base implements HasRequirements {
 	public function get_editor_settings(): array {
 		$post                 = get_post();
 		$story_id             = $post->ID ?? null;
-		$rest_base            = $this->story_post_type->get_rest_base();
 		$general_settings_url = admin_url( 'options-general.php' );
 
 		if ( $story_id ) {
@@ -325,7 +324,6 @@ class Editor extends Service_Base implements HasRequirements {
 		$mime_types               = $this->get_allowed_mime_types();
 		$image_mime_types         = $this->get_allowed_image_mime_types();
 		$audio_mime_types         = $this->get_allowed_audio_mime_types();
-		$page_templates_rest_base = $this->page_template_post_type->get_rest_base();
 
 		$story = new Story();
 		$story->load_from_post( $post );
@@ -358,8 +356,8 @@ class Editor extends Service_Base implements HasRequirements {
 				'api'                          => [
 					'users'          => '/web-stories/v1/users/',
 					'currentUser'    => '/web-stories/v1/users/me/',
-					'stories'        => sprintf( '/web-stories/v1/%s/', $rest_base ),
-					'pageTemplates'  => sprintf( '/web-stories/v1/%s/', $page_templates_rest_base ),
+					'stories'        => $this->story_post_type->get_rest_url(),
+					'pageTemplates'  => $this->page_template_post_type->get_rest_url(),
 					'media'          => '/web-stories/v1/media/',
 					'hotlink'        => '/web-stories/v1/hotlink/validate',
 					'publisherLogos' => '/web-stories/v1/publisher-logos',
@@ -368,7 +366,7 @@ class Editor extends Service_Base implements HasRequirements {
 					'statusCheck'    => '/web-stories/v1/status-check/',
 					'taxonomies'     => '/web-stories/v1/taxonomies/',
 					'metaBoxes'      => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
-					'storyLocking'   => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
+					'storyLocking'   => rest_url( sprintf( '%s/%s/lock', $this->story_post_type->get_rest_url(), $story_id ) ),
 				],
 				'metadata'                     => [
 					'publisher' => $story->get_publisher_name(),

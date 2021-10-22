@@ -210,15 +210,13 @@ class Web_Stories_Block extends Embed_Base {
 	 * @return array Script settings.
 	 */
 	private function get_script_settings(): array {
-		$rest_base = $this->story_post_type->get_rest_base();
-
 		$settings = [
 			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 			'config'     => [
 				'maxNumOfStories' => self::MAX_NUM_OF_STORIES,
 				'archiveURL'      => get_post_type_archive_link( $this->story_post_type->get_slug() ),
 				'api'             => [
-					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
+					'stories' => $this->story_post_type->get_rest_url(),
 					'users'   => '/web-stories/v1/users/',
 				],
 				'fieldStates'     => $this->stories_script_data->fields_states(),

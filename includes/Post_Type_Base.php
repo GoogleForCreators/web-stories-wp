@@ -145,7 +145,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	}
 
 	/**
-	 * Get REST base name based on the post type slug.
+	 * Get REST base name based on the post type.
 	 *
 	 * @since 1.14.0
 	 *
@@ -159,6 +159,28 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		}
 
 		return (string) $rest_base;
+	}
+
+	/**
+	 * Get REST namespace on the post type.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return string REST base.
+	 */
+	public function get_rest_namespace(): string {
+		return 'web-stories/v1';
+	}
+
+	/**
+	 * Get REST url for post type.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return string REST base.
+	 */
+	public function get_rest_url(): string {
+		return sprintf( '/%s/%s', $this->get_rest_namespace(), $this->get_rest_base() );
 	}
 
 	/**
