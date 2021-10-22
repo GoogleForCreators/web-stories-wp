@@ -319,11 +319,11 @@ class Editor extends Service_Base implements HasRequirements {
 		$user        = wp_get_current_user();
 
 		/** This filter is documented in wp-admin/includes/post.php */
-		$show_locked_dialog       = apply_filters( 'show_post_locked_dialog', true, $post, $user );
-		$nonce                    = wp_create_nonce( 'wp_rest' );
-		$mime_types               = $this->get_allowed_mime_types();
-		$image_mime_types         = $this->get_allowed_image_mime_types();
-		$audio_mime_types         = $this->get_allowed_audio_mime_types();
+		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
+		$nonce              = wp_create_nonce( 'wp_rest' );
+		$mime_types         = $this->get_allowed_mime_types();
+		$image_mime_types   = $this->get_allowed_image_mime_types();
+		$audio_mime_types   = $this->get_allowed_audio_mime_types();
 
 		$story = new Story();
 		$story->load_from_post( $post );
