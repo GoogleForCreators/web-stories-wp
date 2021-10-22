@@ -84,8 +84,6 @@ describe('CUJ: Page Templates: Default Page Templates', () => {
         'Steps',
       ];
 
-      expect(filterOptions.length).toBe(8);
-
       filterOptions.map((option, index) =>
         expect(option).toHaveTextContent(expectedFilterOptions[index])
       );
