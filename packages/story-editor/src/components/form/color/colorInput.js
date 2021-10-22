@@ -39,6 +39,12 @@ import {
   THEME_CONSTANTS,
   Swatch,
   PLACEMENT,
+  Icons,
+  Button,
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+  BUTTON_TYPES,
+  themeHelpers,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -51,6 +57,12 @@ import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { useCanvas } from '../../../app';
+import FromRow from '../row';
+import useEyedropper from '../../colorPicker/eyedropper';
+
+const Row = styled(FromRow)`
+  margin-bottom: 0;
+`;
 
 const Preview = styled.div`
   height: 36px;
@@ -123,6 +135,16 @@ const TextualPreview = styled.div`
   height: 32px;
 `;
 
+const EyeDropperButton = styled(Button).attrs({
+  variant: BUTTON_VARIANTS.SQUARE,
+  type: BUTTON_TYPES.TERTIARY,
+  size: BUTTON_SIZES.SMALL,
+})`
+  margin-right: 4px;
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(theme.colors.border.focus, '#1d1f20')};
+`;
+
 const StyledSwatch = styled(Swatch)`
   ${focusStyle};
 `;
@@ -139,6 +161,7 @@ const ColorInput = forwardRef(function ColorInput(
     value = null,
     label = null,
     changedStyle,
+    hasEyedropper = false,
   },
   ref
 ) {
@@ -181,48 +204,77 @@ const ColorInput = forwardRef(function ColorInput(
   const spacing = useMemo(() => ({ x: 20 }), []);
 
   const tooltip = __('Open color picker', 'web-stories');
+
+  const { initEyedropper } = useEyedropper({
+    onChange: (color) => onChange({ color }),
+  });
+
+  const withEyedropper = (children) => {
+    const eyedropperTooltip = __('Pick a color from canvas', 'web-stories');
+    if (hasEyedropper) {
+      return (
+        <Row>
+          <Tooltip title={eyedropperTooltip} hasTail>
+            <EyeDropperButton
+              aria-label={eyedropperTooltip}
+              onClick={initEyedropper()}
+              onPointerEnter={initEyedropper(false)}
+            >
+              <Icons.Pipette />
+            </EyeDropperButton>
+          </Tooltip>
+          {children}
+        </Row>
+      );
+    }
+    return children;
+  };
+
   return (
     <>
-      {isEditable ? (
-        // If editable, only the visual preview component is a button
-        // And the text is an input field
-        <Preview ref={previewRef}>
-          <Input
-            ref={ref}
-            aria-label={label}
-            value={isMixed ? null : value}
-            onChange={onChange}
-            isIndeterminate={isMixed}
-            placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
-            containerStyleOverride={inputContainerStyleOverride}
-          />
-          <ColorPreview>
-            <Tooltip title={tooltip} hasTail>
-              <StyledSwatch isSmall pattern={previewPattern} {...buttonProps} />
-            </Tooltip>
-          </ColorPreview>
-        </Preview>
-      ) : (
-        // If not editable, the whole component is a button
-        <Tooltip title={tooltip} hasTail>
-          <ColorButton ref={previewRef} {...buttonProps}>
-            <ColorPreview>
-              <Swatch
-                isSmall
-                isPreview
-                role="status"
-                tabIndex="-1"
-                pattern={previewPattern}
+      {isEditable
+        ? withEyedropper(
+            <Preview ref={previewRef}>
+              <Input
+                ref={ref}
+                aria-label={label}
+                value={isMixed ? null : value}
+                onChange={onChange}
+                isIndeterminate={isMixed}
+                placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
+                containerStyleOverride={inputContainerStyleOverride}
               />
-            </ColorPreview>
-            <TextualPreview>
-              <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-                {previewText}
-              </Text>
-            </TextualPreview>
-          </ColorButton>
-        </Tooltip>
-      )}
+              <ColorPreview>
+                <Tooltip title={tooltip} hasTail>
+                  <StyledSwatch
+                    isSmall
+                    pattern={previewPattern}
+                    {...buttonProps}
+                  />
+                </Tooltip>
+              </ColorPreview>
+            </Preview>
+          )
+        : withEyedropper(
+            <Tooltip title={tooltip} hasTail>
+              <ColorButton ref={previewRef} {...buttonProps}>
+                <ColorPreview>
+                  <Swatch
+                    isSmall
+                    isPreview
+                    role="status"
+                    tabIndex="-1"
+                    pattern={previewPattern}
+                  />
+                </ColorPreview>
+                <TextualPreview>
+                  <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                    {previewText}
+                  </Text>
+                </TextualPreview>
+              </ColorButton>
+            </Tooltip>
+          )}
       <Popup
         anchor={previewRef}
         dock={inspector}
@@ -256,6 +308,7 @@ ColorInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
   changedStyle: PropTypes.string,
+  hasEyedropper: PropTypes.bool,
 };
 
 export default ColorInput;

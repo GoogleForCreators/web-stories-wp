@@ -27,6 +27,7 @@ import { getPreviewText, PatternPropType } from '@web-stories-wp/patterns';
  * Internal dependencies
  */
 import { MULTIPLE_VALUE } from '../../../constants';
+import { OverlayType } from '../../../utils/overlay';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
@@ -44,9 +45,9 @@ const Space = styled.div`
   background-color: ${({ theme }) => theme.colors.divider.primary};
 `;
 
-// 10px comes from divider
+// -10px comes from divider, and +24px for adjusting eyedropper width
 const InputWrapper = styled.div`
-  width: calc(50% - 10px);
+  width: ${({ isWide }) => (isWide ? 'calc(50% + 24px)' : 'calc(50% - 10px)')};
 `;
 
 const Color = forwardRef(function Color(
@@ -58,6 +59,7 @@ const Color = forwardRef(function Color(
     value = null,
     label = null,
     changedStyle = null,
+    hasEyedropper = false,
   },
   ref
 ) {
@@ -75,9 +77,15 @@ const Color = forwardRef(function Color(
   const displayOpacity =
     value !== MULTIPLE_VALUE && Boolean(getPreviewText(value));
 
+  // should be wide when it's not a gradient input and hasEyedropper = true
+  const isWideInput =
+    value?.type !== OverlayType.RADIAL &&
+    value?.type !== OverlayType.LINEAR &&
+    hasEyedropper;
+
   return (
     <Container aria-label={containerLabel}>
-      <InputWrapper>
+      <InputWrapper isWide={isWideInput}>
         <ColorInput
           ref={ref}
           onChange={onChange}
@@ -87,6 +95,7 @@ const Color = forwardRef(function Color(
           label={label}
           allowsSavedColors={allowsSavedColors}
           changedStyle={changedStyle}
+          hasEyedropper={hasEyedropper}
         />
       </InputWrapper>
       {allowsOpacity && displayOpacity && (
@@ -109,6 +118,7 @@ Color.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   changedStyle: PropTypes.string,
+  hasEyedropper: PropTypes.bool,
 };
 
 export default Color;
