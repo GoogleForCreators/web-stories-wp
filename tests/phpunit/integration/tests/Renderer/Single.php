@@ -86,7 +86,7 @@ class Single extends TestCase {
 	/**
 	 * @covers ::filter_template_include
 	 */
-	public function test_filter_template_include_password() {
+	public function test_filter_template_include_with_password() {
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 
