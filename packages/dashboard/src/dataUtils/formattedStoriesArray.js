@@ -87,7 +87,10 @@ const formattedStoriesArray = [
     featuredMediaUrl: 'http://placekitten.com/640/853',
     tags: [],
     categories: [],
-    author: 'Luke Skywalker',
+    author: {
+      name: 'Luke Skywalker',
+      id: 1,
+    },
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
     capabilities: {
