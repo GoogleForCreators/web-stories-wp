@@ -88,7 +88,7 @@ const TablistPanel = ({
           </Badge>
         </TabButton>
       </TabButtonWrapper>
-      <ScrollableContent maxHeight={maxHeight}>
+      <ScrollableContent aria-hidden={!isExpanded} maxHeight={maxHeight}>
         <TabPanel
           id={panelId}
           aria-labelledby={`${title}-${panelId}`}
