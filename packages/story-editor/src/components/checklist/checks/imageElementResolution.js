@@ -37,13 +37,17 @@ import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
-// TODO: This does not seem to accommodate for scaling.
 export function imageElementResolution(element) {
-  const imageResolutionLow =
-    element.resource?.height < 2 * element.height ||
-    element.resource?.width < 2 * element.width;
+  if (!['image', 'gif'].includes(element.type)) {
+    return false;
+  }
 
-  return ['image', 'gif'].includes(element.type) && imageResolutionLow;
+  const scale = (element.scale || 100) / 100;
+  const imageResolutionLow =
+    element.resource?.height < 2 * (element.height * scale) ||
+    element.resource?.width < 2 * (element.width * scale);
+
+  return imageResolutionLow;
 }
 
 const ImageElementResolution = () => {
