@@ -90,11 +90,11 @@ const getUser = function () {
     description: '',
     link: 'https://www.story-link.com/author/dev/',
     slug: 'dev',
-    avatar_urls: {},
+    avatarUrls: {},
     meta: {
-      web_stories_tracking_optin: false,
-      web_stories_media_optimization: true,
-      web_stories_onboarding: {
+      webStoriesTrackingOptin: false,
+      webStoriesMediaOptimization: true,
+      webStoriesOnboarding: {
         safeZone: true,
       },
     },

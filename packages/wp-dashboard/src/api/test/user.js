@@ -42,11 +42,11 @@ describe('User API Callbacks', () => {
     },
   };
 
-  // Payload `__PAYLOAD_DATA__.meta.web_stories_tracking_optin` must be flipped value
+  // Payload `__PAYLOAD_DATA__.meta.webStoriesTrackingOptin` must be flipped value
   it('toggleWebStoriesTrackingOptIn: validate request payload & path', () => {
     const currentUser = {
       meta: {
-        web_stories_media_optimization: false,
+        webStoriesMediaOptimization: false,
       },
     };
     toggleWebStoriesTrackingOptIn(config, currentUser);
@@ -55,18 +55,18 @@ describe('User API Callbacks', () => {
         path: currentUserPath,
         data: {
           meta: {
-            web_stories_tracking_optin: true,
+            webStoriesTrackingOptin: true,
           },
         },
       })
     );
   });
 
-  // Payload `__PAYLOAD_DATA__.meta.web_stories_media_optimization` must be flipped value
+  // Payload `__PAYLOAD_DATA__.meta.webStoriesMediaOptimization` must be flipped value
   it('toggleWebStoriesMediaOptimization: validate request payload & path', () => {
     const currentUser = {
       meta: {
-        web_stories_media_optimization: false,
+        webStoriesMediaOptimization: false,
       },
     };
     toggleWebStoriesMediaOptimization(config, currentUser);
@@ -75,7 +75,7 @@ describe('User API Callbacks', () => {
         path: currentUserPath,
         data: {
           meta: {
-            web_stories_media_optimization: true,
+            webStoriesMediaOptimization: true,
           },
         },
       })

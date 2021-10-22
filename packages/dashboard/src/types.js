@@ -88,7 +88,7 @@ export const UserPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
-  avatar_urls: PropTypes.object,
+  avatarUrls: PropTypes.object,
 });
 
 export const StoriesPropType = PropTypes.arrayOf(StoryPropType);
