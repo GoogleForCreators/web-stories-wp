@@ -74,7 +74,7 @@ describe('Template', () => {
     await percySnapshot(page, 'Story From Template');
 
     // Select a text layer so 'Saved Colors' panel is present
-    await expect(page).toClick('button[data-testid="layer-option"]', {
+    await expect(page).toClick('div[data-testid="layer-option"] button', {
       text: 'Fresh',
     });
 

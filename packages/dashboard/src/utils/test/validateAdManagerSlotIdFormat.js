@@ -19,18 +19,26 @@
  */
 import { validateAdManagerSlotIdFormat } from '..';
 
+const one_hundred_chars = 'abcde'.repeat(20);
+
 const idsToValidate = [
+  ['123456789/amp_story_dfp_example', false],
   ['/123456789/amp_story_dfp_example', true],
   ['/123456789/a4a/amp_story_dfp_example', true],
   ['/123456789/a4a/trailing-slash/', false],
   ['/not/numeric/start', false],
   ['clearly wrong', false],
   ['/1234567,1234/Travel', true],
+  ['/123456789/post.mobileamp/webstory', true],
+  ['/123456789/abc_123-.*/\\![:()', true],
+  [`/123456789/${one_hundred_chars}/${one_hundred_chars}`, true],
+  [`/123456789/${one_hundred_chars}f/${one_hundred_chars}`, false],
+  [`/123456789/${one_hundred_chars}/${one_hundred_chars}a`, false],
 ];
 
 describe('validateAdManagerSlotIdFormat', () => {
   it.each(idsToValidate)(
-    'should take " %s " and return as %p Ad Manager slot id format',
+    'should take "%s" and return as %p Ad Manager slot id format',
     (slotId, expected) => {
       const bool = validateAdManagerSlotIdFormat(slotId);
       expect(bool).toBe(expected);

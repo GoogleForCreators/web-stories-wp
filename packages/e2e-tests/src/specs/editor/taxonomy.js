@@ -28,11 +28,9 @@ import {
 
 async function goToAndExpandTaxonomyPanel() {
   await expect(page).toClick('li[role="tab"]', { text: 'Document' });
-  await expect(page).toMatch('Categories and Tags');
+  await expect(page).toMatch('Taxonomies');
 
-  const taxonomyPanel = await page.$(
-    'button[aria-label="Categories and Tags"]'
-  );
+  const taxonomyPanel = await page.$('button[aria-label="Taxonomies"]');
 
   const isCollapsed = await page.evaluate(
     (button) => button.getAttribute('aria-expanded') === 'false',

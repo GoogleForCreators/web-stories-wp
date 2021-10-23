@@ -144,6 +144,7 @@ const darkTheme = {
     positive: brand.green[90],
     negative: brand.red[90],
     storyPreview: '#202125',
+    accent: accent.primary,
   },
   interactiveFg: {
     active: brand.gray[5],
@@ -230,6 +231,7 @@ const lightTheme = {
     positive: brand.green[10],
     negative: brand.red[10],
     storyPreview: '#202125',
+    accent: accent.primary,
   },
   interactiveFg: {
     active: brand.gray[90],

@@ -1018,4 +1018,167 @@ describe('Quick Actions integration', () => {
       ).toBeDefined();
     });
   });
+
+  describe('sticker selected', () => {
+    beforeEach(async () => {
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      const sticker = await fixture.act(() =>
+        insertElement('sticker', {
+          border: null,
+          borderRadius: null,
+          flip: { vertical: false, horizontal: false },
+          focalX: 50,
+          focalY: 50,
+          height: 137,
+          id: '41262f75-7671-4ff2-92ef-5bbafc7b616a',
+          lockAspectRatio: true,
+          opacity: 100,
+          rotationAngle: 0,
+          scale: 100,
+          sticker: { type: 'diyInstagramIcon' },
+          type: 'sticker',
+          width: 137,
+          x: 227,
+          y: 0,
+        })
+      );
+
+      await clickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(sticker.id).node
+      );
+    });
+
+    it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addAnimationButton
+      );
+
+      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.animation.effectChooser
+      );
+    });
+
+    it(`clicking the \`${ACTIONS.ADD_LINK.text}\` button should select the link panel and focus the input`, async () => {
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addLinkButton
+      );
+
+      expect(fixture.editor.inspector.designPanel.link).not.toBeNull();
+
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.link.address
+      );
+    });
+
+    it(`Clicking the \`${ACTIONS.RESET_ELEMENT.text}\` button should clear the animations and filters, then click Undo and reapply the animations and filters.`, async () => {
+      // quick action should not be present if there are no animations yet
+      expect(
+        fixture.editor.canvas.quickActionMenu.resetElementButton
+      ).toBeNull();
+
+      // add animation to image
+      const effectChooserToggle =
+        fixture.editor.inspector.designPanel.animation.effectChooser;
+
+      await fixture.events.click(effectChooserToggle, { clickCount: 1 });
+
+      // animation
+      const animation = fixture.screen.getByRole('option', {
+        name: '"Pulse" Effect',
+      });
+
+      // apply animation to element
+      await fixture.events.click(animation, { clickCount: 1 });
+
+      // the bot clicks the clear button too fast
+      // the animation does not get removed if it is clicked before it stops playing
+      // click "stop playing" and test the animations have been applied
+      await waitFor(
+        async () => {
+          await fixture.events.click(
+            fixture.screen.getByRole('button', { name: 'Stop Page Animations' })
+          );
+        },
+        { timeout: 4000 }
+      );
+
+      // apply opacity
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.layerStyle.opacity
+      );
+      await fixture.events.keyboard.type('40');
+      await fixture.events.keyboard.press('Enter');
+
+      // verify the animations and styles were added
+      let originalAnimations = [];
+      let originalSelectedElement = null;
+      await waitFor(async () => {
+        const story = await fixture.renderHook(() =>
+          useStory(({ state }) => ({
+            animations: state.pages[0].animations,
+            selectedElement: state.selectedElements[0],
+          }))
+        );
+        ({
+          animations: originalAnimations,
+          selectedElement: originalSelectedElement,
+        } = story);
+
+        expect(originalSelectedElement.opacity).toBe(40);
+        expect(originalAnimations.length).toEqual(1);
+      });
+
+      // reset the element
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.resetElementButton
+      );
+
+      // verify that element has no animations or styles
+      const { animations, selectedElement } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+          selectedElement: state.selectedElements[0],
+        }))
+      );
+      expect(animations.length).toBe(0);
+      expect(selectedElement.opacity).toBe(100);
+      expect(
+        fixture.editor.canvas.quickActionMenu.resetElementButton
+      ).toBeNull();
+
+      // wait for the undo button to appear
+      await waitFor(
+        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        { timeout: 4000 }
+      );
+
+      // click `undo` button on snackbar
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: /^Undo$/ })
+      );
+
+      // Verify that new animations and styles match original animation
+      const {
+        animations: revertedAnimations,
+        selectedElement: revertedSelectedElement,
+      } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+          selectedElement: state.selectedElements[0],
+        }))
+      );
+      expect(revertedAnimations.length).toBe(1);
+      expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
+      expect(revertedSelectedElement.opacity).toEqual(
+        originalSelectedElement.opacity
+      );
+      expect(
+        fixture.editor.canvas.quickActionMenu.resetElementButton
+      ).toBeDefined();
+    });
+  });
 });

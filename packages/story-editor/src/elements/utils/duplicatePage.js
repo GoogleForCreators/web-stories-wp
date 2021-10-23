@@ -15,15 +15,11 @@
  */
 
 /**
- * External dependencies
- */
-import { v4 as uuidv4 } from 'uuid';
-
-/**
  * Internal dependencies
  */
 import objectWithout from '../../utils/objectWithout';
 import createNewElement from './createNewElement';
+import duplicateElement from './duplicateElement';
 
 const duplicatePage = (oldPage) => {
   // Remove title and postId for inserting the page.
@@ -38,23 +34,22 @@ const duplicatePage = (oldPage) => {
   // Remove title and templateId for inserting the page.
   const cleanPage = objectWithout(rest, ['postId', 'title']);
 
-  // Ensure all existing elements get new ids
-  const elementIdTransferMap = {};
-  const elements = oldElements.map(({ type, ...attrs }) => {
-    const newElement = createNewElement(type, attrs);
-    elementIdTransferMap[attrs.id] = newElement.id;
-    return newElement;
-  });
-  const animations = (oldAnimations || [])
-    .map((animation) => ({
-      ...animation,
-      id: uuidv4(),
-      targets: animation.targets
-        .map((target) => elementIdTransferMap[target])
-        .filter((v) => v),
-    }))
-    // This is just a safety measure to remove animations with no targets from schema.
-    .filter((animation) => animation.targets.length);
+  const { elements, animations } = oldElements.reduce(
+    ({ elements, animations }, oldElement) => {
+      const { element, elementAnimations } = duplicateElement({
+        element: oldElement,
+        animations: oldAnimations,
+      });
+      return {
+        elements: [...elements, element],
+        animations: [...animations, ...elementAnimations],
+      };
+    },
+    {
+      elements: [],
+      animations: [],
+    }
+  );
 
   const newAttributes = {
     elements,

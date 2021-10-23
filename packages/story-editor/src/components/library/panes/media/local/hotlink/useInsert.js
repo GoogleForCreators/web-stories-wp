@@ -33,6 +33,7 @@ import {
 } from '../../../../../../app/media/utils';
 import { useConfig } from '../../../../../../app/config';
 import { useAPI } from '../../../../../../app/api';
+import useCORSProxy from '../../../../../../utils/useCORSProxy';
 
 function getErrorMessage(code, description) {
   switch (code) {
@@ -66,6 +67,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   } = useAPI();
 
   const { uploadVideoPoster } = useUploadVideoFrame({});
+  const { getProxiedUrl } = useCORSProxy();
 
   const insertMedia = useCallback(
     async (hotlinkData) => {
@@ -77,18 +79,22 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       } = hotlinkData;
 
       try {
-        const resource = await getResourceFromUrl(link, type);
+        const proxiedUrl = getProxiedUrl({ isExternal: true }, link);
+        const resource = await getResourceFromUrl(proxiedUrl, type);
+        resource.alt = originalFileName;
+        resource.src = link;
         resource.mimeType = mimeType;
         if ('video' === type && hasUploadMediaAction) {
           // Remove the extension from the filename for poster.
           const fileName = getPosterName(
             originalFileName.replace(`.${ext}`, '')
           );
-          const posterFile = await getFirstFrameOfVideo(link);
+          const posterFile = await getFirstFrameOfVideo(proxiedUrl);
           const posterData = await uploadVideoPoster(0, fileName, posterFile);
           resource.poster = posterData.poster;
           resource.posterId = posterData.posterId;
         }
+
         insertElement(type, {
           resource,
         });
@@ -107,6 +113,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       setErrorMsg,
       setLink,
       uploadVideoPoster,
+      getProxiedUrl,
     ]
   );
 

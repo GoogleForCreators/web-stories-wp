@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-// /123456789/a4a/amp_story_dfp_example
-const adManagerSlotIdFormatRegex = /^\/\d+(,\d+)?(\/[\w_-]+)*$/;
+// Example: /123456789/a4a/amp_story_dfp_example
+// Ad unit codes  (the "amp_story_dfp_example" part) can be up to 100 characters in length.
+// Only letters, numbers, underscores, hyphens, periods, asterisks, forward slashes, backslashes, exclamations, left angle brackets, colons and parentheses are allowed.
+const adManagerSlotIdFormatRegex =
+  /^\/\d+(,\d+)?(\/[\w\-.*/\\![:()]{1,99}[^/])*$/;
 
 export default function validateAdManagerSlotIdFormat(value = '') {
   return Boolean(value.toLowerCase().match(adManagerSlotIdFormatRegex));

@@ -21,13 +21,13 @@ import { Container } from '../container';
 /**
  * The taxonomies panel containing taxonomy and metadata about the story.
  */
-export class CategoriesAndTags extends Container {
+export class Taxonomies extends Container {
   constructor(node, path) {
     super(node, path);
   }
 
-  get categoriesAndTagsButton() {
-    return this.getByRole('button', { name: /Categories and Tags/ });
+  get taxonomiesButton() {
+    return this.getByRole('button', { name: /Taxonomies/ });
   }
 
   get categories() {

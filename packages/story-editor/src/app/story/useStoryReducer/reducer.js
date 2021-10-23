@@ -39,10 +39,6 @@ function reducer(state, { type, payload }) {
       return reducers.arrangePage(state, payload);
     }
 
-    case types.REPLACE_CURRENT_PAGE: {
-      return reducers.replaceCurrentPage(state, payload);
-    }
-
     case types.SET_CURRENT_PAGE: {
       return reducers.setCurrentPage(state, payload);
     }
@@ -93,6 +89,10 @@ function reducer(state, { type, payload }) {
 
     case types.TOGGLE_ELEMENT_IN_SELECTION: {
       return reducers.toggleElement(state, payload);
+    }
+
+    case types.DUPLICATE_ELEMENT_BY_ID: {
+      return reducers.duplicateElementById(state, payload);
     }
 
     case types.UPDATE_STORY: {

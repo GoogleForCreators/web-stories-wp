@@ -14,21 +14,10 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { buildOptionsTree } from '../../../form/hierarchical/utils';
+import { addQueryArgs } from '@web-stories-wp/design-system';
 
-function flattenOptionTree(optionTree = [], level = 0) {
-  return optionTree.flatMap(({ options, ...option }) => [
-    {
-      ...option,
-      $level: level,
-    },
-    ...flattenOptionTree(options, level + 1),
-  ]);
-}
-
-export function makeFlatOptionTree(categories) {
-  const optionTree = buildOptionsTree(categories);
-  return flattenOptionTree(optionTree);
+export function getProxyUrl(config, url) {
+  return addQueryArgs(config.api.proxy, { url, _wpnonce: config.nonce });
 }
