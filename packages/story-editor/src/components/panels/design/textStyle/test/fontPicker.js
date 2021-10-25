@@ -19,13 +19,16 @@
  */
 import { act, fireEvent, waitFor, screen } from '@testing-library/react';
 import { curatedFontNames } from '@web-stories-wp/fonts';
+import { AdvancedDropDown } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import FontContext from '../../../../app/font/context';
-import { renderWithTheme } from '../../../../testUtils';
-import DropDown from '..';
+/**
+ * Internal dependencies
+ */
+import FontContext from '../../../../../app/font/context';
+import { renderWithTheme } from '../../../../../testUtils';
 import fontsListResponse from './fontsResponse';
 
 jest.mock(
@@ -65,7 +68,7 @@ function arrange(options) {
 
   return renderWithTheme(
     <FontContext.Provider value={fontContextValues}>
-      <DropDown {...props} />
+      <AdvancedDropDown.DropDown {...props} />
     </FontContext.Provider>
   );
 }

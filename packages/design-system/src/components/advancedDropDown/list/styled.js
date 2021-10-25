@@ -17,12 +17,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import {
-  Icons,
-  themeHelpers,
-  THEME_CONSTANTS,
-  Text,
-} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
+import { themeHelpers, THEME_CONSTANTS } from '../../../theme';
+import { Checkmark } from '../../../icons';
+import { Text } from '../../typography';
 
 export const List = styled.div`
   width: 100%;
@@ -80,7 +80,7 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   }
 `;
 
-export const Selected = styled(Icons.Checkmark)`
+export const Selected = styled(Checkmark)`
   width: 16px;
   height: auto;
   margin-right: 4px;

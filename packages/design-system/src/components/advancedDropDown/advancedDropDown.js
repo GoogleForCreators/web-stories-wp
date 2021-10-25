@@ -24,17 +24,25 @@ import {
   forwardRef,
   useDebouncedCallback,
 } from '@web-stories-wp/react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { DropDownSelect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import Popup from '../../popup';
-import { focusStyle } from '../../panels/shared';
+import { themeHelpers } from '../../theme';
+import { DropDownSelect } from '../dropDown';
+import { Popup } from '../popup';
 import OptionsContainer from './container';
 import List from './list';
+
+const focusStyle = css`
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+`;
 
 const DEFAULT_WIDTH = 240;
 
@@ -64,7 +72,7 @@ const Container = styled.div`
  * @param {string} props.dropDownLabel The visible label of the dropdown select.
  * @return {*} Render.
  */
-const DropDown = forwardRef(function DropDown(
+const AdvancedDropDown = forwardRef(function AdvancedDropDown(
   {
     onChange,
     disabled = false,
@@ -189,7 +197,7 @@ const DropDown = forwardRef(function DropDown(
   );
 });
 
-DropDown.propTypes = {
+AdvancedDropDown.propTypes = {
   selectedId: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
@@ -210,4 +218,4 @@ DropDown.propTypes = {
   isInline: PropTypes.bool,
 };
 
-export default DropDown;
+export default AdvancedDropDown;

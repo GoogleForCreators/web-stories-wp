@@ -17,4 +17,10 @@
 /**
  * Internal dependencies
  */
-export { default } from './dropDown';
+import { default as DropDown } from './advancedDropDown';
+import * as styles from './list/styled';
+
+export default {
+  DropDown,
+  ...styles,
+};

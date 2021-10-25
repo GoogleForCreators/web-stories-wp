@@ -34,7 +34,7 @@ export default function useUserApi() {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const {
-    api: { currentUser: currentUserApiPath },
+    api: { currentUser: currentUserApiPath, users: usersApiPath },
   } = useConfig();
 
   useEffect(() => {
@@ -71,8 +71,17 @@ export default function useUserApi() {
     }
   }, [currentUserApiPath, currentUser]);
 
+  const getAuthors = useCallback(
+    async (search) => {
+      const authors = await getAuthors(usersApiPath, search);
+      return authors;
+    },
+    [usersApiPath]
+  );
+
   return {
     api: {
+      getAuthors,
       toggleWebStoriesTrackingOptIn,
       toggleWebStoriesMediaOptimization,
     },
