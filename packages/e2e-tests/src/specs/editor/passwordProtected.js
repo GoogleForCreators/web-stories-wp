@@ -23,8 +23,8 @@ import {
   previewStory,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('password Protected', () => {
-  it('should be show password protected field', async () => {
+describe('Password protected stories', () => {
+  it('should display password form on frontend', async () => {
     await createNewStory();
 
     await insertStoryTitle('Password protected story');
@@ -43,6 +43,14 @@ describe('password Protected', () => {
     const previewPage = await previewStory(editorPage, false);
 
     await expect(previewPage).toMatch('Protected: Password protected story');
+
+    await expect(previewPage).toFill('input[name="post_password"]', 'password');
+
+    // Submitting the form will cause the page to be reloaded.
+    await Promise.all([
+      page.waitForNavigation(),
+      page.keyboard.press('Enter'),
+    ]);
 
     await editorPage.bringToFront();
     await previewPage.close();
