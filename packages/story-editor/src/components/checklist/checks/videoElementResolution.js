@@ -24,14 +24,11 @@ import { useMemo, useCallback } from '@web-stories-wp/react';
  */
 import { useStory } from '../../../app';
 import { useHighlights } from '../../../app/highlights';
-import { DESIGN_COPY } from '../constants';
+import { DESIGN_COPY, MIN_VIDEO_HEIGHT, MIN_VIDEO_WIDTH } from '../constants';
 import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 import VideoChecklistCard from './shared/videoChecklistCard';
-
-const MIN_VIDEO_HEIGHT = 480;
-const MIN_VIDEO_WIDTH = 852;
 
 export function videoElementResolution(element) {
   if (element.type !== 'video') {
