@@ -369,9 +369,6 @@ function SizePositionPanel(props) {
             containerStyleOverride={inputContainerStyleOverride}
           />
         </Area>
-        <Area area={canFlip ? 'o' : 'f'}>
-          <OpacityControls {...props} />
-        </Area>
         {canFlip && (
           <Area area="f">
             <FlipControls
@@ -382,6 +379,9 @@ function SizePositionPanel(props) {
             />
           </Area>
         )}
+        <Area area={canFlip ? 'o' : 'f'}>
+          <OpacityControls {...props} />
+        </Area>
       </Grid>
     </SimplePanel>
   );

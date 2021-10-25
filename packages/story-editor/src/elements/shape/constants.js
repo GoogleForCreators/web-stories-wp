@@ -59,7 +59,6 @@ export const panels = [
   PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
   PanelTypes.BORDER,
-  PanelTypes.LAYER_STYLE,
   PanelTypes.LINK,
   PanelTypes.SHAPE_STYLE,
   PanelTypes.BORDER_RADIUS,

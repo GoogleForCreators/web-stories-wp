@@ -207,7 +207,6 @@ export class Fixture {
       'colorPresets',
       'filter',
       'imageAccessibility',
-      'layerStyle',
       'link',
       'pageAttachment',
       'pageBackground',
