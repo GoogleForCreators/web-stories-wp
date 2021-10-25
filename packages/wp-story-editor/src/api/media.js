@@ -86,6 +86,28 @@ export function getMediaById(config, mediaId) {
 }
 
 /**
+ * Get the muted variant of a given media resource.
+ *
+ * @param {Object} config Configuration object.
+ * @param {number} mediaId Media ID.
+ * @return {Promise<import('@web-stories-wp/media').Resource>} Media resource if found, null otherwise.
+ */
+export async function getMutedMediaById(config, mediaId) {
+  const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
+    context: 'edit',
+    _fields: 'meta.web_stories_muted_id',
+  });
+
+  const result = await apiFetch({ path });
+
+  if (result?.meta?.web_stories_muted_id) {
+    return getMediaById(config, result.meta.web_stories_muted_id);
+  }
+
+  return null;
+}
+
+/**
  * Get the optimized variant of a given media resource.
  *
  * @param {Object} config Configuration object.

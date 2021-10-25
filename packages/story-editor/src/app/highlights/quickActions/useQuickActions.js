@@ -656,6 +656,8 @@ const useQuickActions = () => {
       return textActions;
     case ELEMENT_TYPES.VIDEO:
       return videoActions;
+    case ELEMENT_TYPES.STICKER:
+      return foregroundCommonActions;
     default:
       return [];
   }

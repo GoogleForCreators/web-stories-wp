@@ -28,4 +28,7 @@ export { default as DateTime } from './dateTime';
 export { default as Required } from './required';
 export { default as RadioGroup } from './radioGroup';
 export { default as Select } from './select';
-export { default as HierarchicalInput } from './hierarchical';
+export {
+  default as HierarchicalInput,
+  makeFlatOptionTree,
+} from './hierarchical';

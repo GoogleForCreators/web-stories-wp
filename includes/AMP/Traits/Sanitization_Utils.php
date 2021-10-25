@@ -101,6 +101,7 @@ trait Sanitization_Utils {
 	 * Sanitizes <amp-story-page-outlink> elements to ensure they're always valid.
 	 *
 	 * Removes empty `cta-image` attributes.
+	 * Ensures the element is always the last child of <amp-story-page>.
 	 *
 	 * @since 1.13.0
 	 *
@@ -118,6 +119,13 @@ trait Sanitization_Utils {
 		foreach ( $outlink_elements as $element ) {
 			if ( ! $element->getAttribute( 'cta-image' ) ) {
 				$element->removeAttribute( 'cta-image' );
+			}
+
+			$amp_story_page = $element->parentNode;
+
+			if ( $amp_story_page && $element !== $amp_story_page->lastChild ) {
+				$amp_story_page->removeChild( $element );
+				$amp_story_page->appendChild( $element );
 			}
 		}
 	}
@@ -392,9 +400,16 @@ trait Sanitization_Utils {
 				continue;
 			}
 
-			$entries_by_widths = [];
+			$matches = [];
 
-			$entries = explode( ',', $srcset );
+			// Matches every srcset entry (consisting of a URL and a width descriptor) within `srcset=""`.
+			// Not using explode(',') to not break with URLs containing commas.
+			// Given "foo1,2/image.png 123w, foo2,3/image.png 456w", the named capture group "entry"
+			// will contain "foo1,2/image.png 123w" and "foo2,3/image.png 456w", without the trailing commas.
+			preg_match_all( '/((?<entry>[^ ]+ [\d]+w),?)/', $srcset, $matches );
+
+			$entries           = $matches['entry'] ?? [];
+			$entries_by_widths = [];
 
 			foreach ( $entries as $entry ) {
 				$entry_data = explode( ' ', $entry );

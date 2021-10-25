@@ -691,6 +691,68 @@ describe('Page output', () => {
       expect(content).toContain('Hello, link');
       expect(content).toContain('http://shouldoutput.com');
     });
+
+    it('should print page attachment as the last child element', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          pageAttachment: {
+            url: 'http://example.com',
+            ctaText: 'Click me!',
+          },
+          animations: [],
+          elements: [
+            {
+              id: 'baz',
+              type: 'video',
+              mimeType: 'video/mp4',
+              scale: 1,
+              origRatio: 9 / 16,
+              x: 50,
+              y: 100,
+              height: 1920,
+              width: 1080,
+              rotationAngle: 0,
+              loop: false,
+              resource: {
+                type: 'video',
+                mimeType: 'video/mp4',
+                id: 123,
+                src: 'https://example.com/video.mp4',
+                poster: 'https://example.com/poster.png',
+                height: 1920,
+                width: 1080,
+                length: 99,
+              },
+              tracks: [
+                {
+                  track: 'https://example.com/track.vtt',
+                  trackId: 123,
+                  trackName: 'track.vtt',
+                  id: 'rersd-fdfd-fdfd-fdfd',
+                  srcLang: '',
+                  label: '',
+                  kind: 'captions',
+                },
+              ],
+            },
+          ],
+        },
+        autoAdvance: true,
+        defaultPageDuration: 11,
+        args: {
+          enableBetterCaptions: true,
+        },
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const page = container.querySelector('amp-story-page');
+      const pageOutlink = container.querySelector('amp-story-page-outlink');
+      expect(pageOutlink).toBeInTheDocument();
+      expect(page.lastChild).toBe(pageOutlink);
+    });
   });
 
   describe('background color', () => {

@@ -20,7 +20,7 @@
     "@wordpress/api-fetch": "^5.2.1",
     "@wordpress/block-editor": "^7.0.3",
     "@wordpress/blocks": "^11.0.0",
-    "@wordpress/components": "^17.0.0",
+    "@wordpress/components": "^18.0.0",
     "@wordpress/compose": "^5.0.0",
     "@wordpress/data": "^6.0.1",
     "@wordpress/date": "^4.2.2",
@@ -28,7 +28,7 @@
     "@wordpress/i18n": "^4.2.2",
     "@wordpress/url": "^3.2.1",
     "@wordpress/viewport": "^4.0.3",
-    "@wordpress/icons": "^5.0.2",
+    "@wordpress/icons": "^6.0.0",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2"
