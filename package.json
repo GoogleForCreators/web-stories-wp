@@ -75,7 +75,7 @@
     "babel-plugin-inline-json-import": "^0.3.2",
     "babel-plugin-styled-components": "^1.13.3",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "browserslist": "^4.17.4",
+    "browserslist": "^4.17.5",
     "commander": "^8.2.0",
     "core-js": "^3.18.3",
     "css-loader": "^5.2.7",
