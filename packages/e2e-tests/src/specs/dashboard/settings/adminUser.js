@@ -70,9 +70,18 @@ describe('Admin User', () => {
     await clickButton(monetizationDropdownSelector, {
       text: 'None',
     });
-    await expect(page).toClick('button', { text: 'Google AdSense' });
+    await expect(page).toClick('li', { text: 'Google AdSense' });
     await expect(page).toMatchElement(monetizationDropdownSelector, {
       text: 'Google AdSense',
+    });
+
+    // reset monetization setting
+    await clickButton(monetizationDropdownSelector, {
+      text: 'Google AdSense',
+    });
+    await expect(page).toClick('li', { text: 'None' });
+    await expect(page).toMatchElement(monetizationDropdownSelector, {
+      text: 'None',
     });
   });
 });
