@@ -57,11 +57,6 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	protected static $archive_page_id;
 
 	/**
-	 * @var string
-	 */
-	protected $redirect_location;
-
-	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
 	public static function wpSetUpBeforeClass( $factory ) {
@@ -108,6 +103,9 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 
 	public function tear_down() {
 		$this->remove_caps_from_roles();
+
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
+		delete_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
 
 		parent::tear_down();
 	}
@@ -182,7 +180,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function test_register_meta() {
 		$this->call_private_method( $this->instance, 'register_meta' );
 
-		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::PUBLISHER_LOGO_META_KEY, $this->instance::POST_TYPE_SLUG ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::PUBLISHER_LOGO_META_KEY, $this->instance->get_slug() ) );
 	}
 
 	/**
@@ -191,7 +189,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	public function test_change_default_title() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => $this->instance->get_slug(),
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 				'post_status'  => 'auto-draft',
 				'post_title'   => 'Auto draft',

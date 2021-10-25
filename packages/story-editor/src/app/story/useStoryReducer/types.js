@@ -19,7 +19,6 @@ export const ADD_PAGE = 'ADD_PAGE';
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const DELETE_PAGE = 'DELETE_PAGE';
 export const ARRANGE_PAGE = 'ARRANGE_PAGE';
-export const REPLACE_CURRENT_PAGE = 'REPLACE_CURRENT_PAGE';
 
 // Manipulate elements on a page.
 export const DELETE_ELEMENTS = 'DELETE_ELEMENTS';
@@ -30,6 +29,7 @@ export const DELETE_ELEMENTS_BY_RESOURCE_ID = 'DELETE_ELEMENTS_BY_RESOURCE_ID';
 export const SET_BACKGROUND_ELEMENT = 'SET_BACKGROUND_ELEMENT';
 export const ARRANGE_ELEMENT = 'ARRANGE_ELEMENT';
 export const COMBINE_ELEMENTS = 'COMBINE_ELEMENTS';
+export const DUPLICATE_ELEMENT_BY_ID = 'DUPLICATE_ELEMENT_BY_ID';
 
 // Manipulate current page.
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';

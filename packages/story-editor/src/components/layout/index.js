@@ -42,6 +42,8 @@ import { CanvasProvider } from '../../app/canvas';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
 import { ChecklistCheckpointProvider } from '../checklist';
+import { RightClickMenuProvider } from '../../app/rightClickMenu';
+import RightClickMenu from '../canvas/rightClickMenu';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
@@ -86,10 +88,13 @@ function Layout({ header, children }) {
           <HighlightsProvider>
             <Editor zIndex={3}>
               <CanvasProvider>
-                <Area area="lib">
-                  <Library />
-                </Area>
-                <Workspace header={header} />
+                <RightClickMenuProvider>
+                  <Area area="lib">
+                    <Library />
+                  </Area>
+                  <Workspace header={header} />
+                  <RightClickMenu />
+                </RightClickMenuProvider>
               </CanvasProvider>
               {children}
             </Editor>

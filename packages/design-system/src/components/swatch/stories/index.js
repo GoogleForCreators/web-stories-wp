@@ -18,11 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { boolean } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
+import { Tooltip } from '../../tooltip';
 import { Text } from '../../typography';
 import { Cross, Pipette } from '../../../icons';
 import { Swatch } from '../swatch';
@@ -178,6 +180,25 @@ function _default() {
                   {Icon && <Icon />}
                 </Swatch>
               </Cell>
+            ))}
+          </Row>
+        ))}
+        <hr />
+        {DEMO_COLORS.map(({ label, pattern }) => (
+          <Row key={`${label}_tooltip`}>
+            <Text>{`${label} + tooltips`}</Text>
+            {VARIANTS.map(({ variant, Icon, ...props }) => (
+              <Tooltip title={variant} key={variant}>
+                <Cell>
+                  <Swatch
+                    pattern={pattern}
+                    isDisabled={boolean('tooltip variant disable state', false)}
+                    {...props}
+                  >
+                    {Icon && <Icon />}
+                  </Swatch>
+                </Cell>
+              </Tooltip>
             ))}
           </Row>
         ))}

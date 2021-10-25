@@ -27,7 +27,6 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
-use Google\Web_Stories\Traits\Post_Type;
 
 /**
  * KSES class.
@@ -37,7 +36,6 @@ use Google\Web_Stories\Traits\Post_Type;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class KSES extends Service_Base implements HasRequirements {
-	use Post_Type;
 
 	/**
 	 * Story_Post_Type instance.
@@ -104,17 +102,17 @@ class KSES extends Service_Base implements HasRequirements {
 		}
 
 		if (
-			( $this->story_post_type::POST_TYPE_SLUG !== $data['post_type'] ) && !
+			( $this->story_post_type->get_slug() !== $data['post_type'] ) && !
 			(
 				'revision' === $data['post_type'] &&
 				! empty( $data['post_parent'] ) &&
-				get_post_type( $data['post_parent'] ) === $this->story_post_type::POST_TYPE_SLUG
+				get_post_type( $data['post_parent'] ) === $this->story_post_type->get_slug()
 			)
 		) {
 			return $data;
 		}
 
-		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return $data;
 		}
 

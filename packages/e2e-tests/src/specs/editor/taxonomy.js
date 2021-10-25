@@ -19,7 +19,6 @@
  */
 import {
   createNewStory,
-  withExperimentalFeatures,
   withUser,
   publishStory,
   insertStoryTitle,
@@ -97,9 +96,6 @@ async function addTag(name) {
 }
 
 describe('taxonomy', () => {
-  // eslint-disable-next-line jest/require-hook
-  withExperimentalFeatures(['enableTaxonomiesSupport']);
-
   // Create some categories and tags before running all tests so that they are available there.
   beforeAll(async () => {
     await createNewStory();

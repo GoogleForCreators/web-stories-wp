@@ -101,6 +101,7 @@ trait Sanitization_Utils {
 	 * Sanitizes <amp-story-page-outlink> elements to ensure they're always valid.
 	 *
 	 * Removes empty `cta-image` attributes.
+	 * Ensures the element is always the last child of <amp-story-page>.
 	 *
 	 * @since 1.13.0
 	 *
@@ -118,6 +119,13 @@ trait Sanitization_Utils {
 		foreach ( $outlink_elements as $element ) {
 			if ( ! $element->getAttribute( 'cta-image' ) ) {
 				$element->removeAttribute( 'cta-image' );
+			}
+
+			$amp_story_page = $element->parentNode;
+
+			if ( $amp_story_page && $element !== $amp_story_page->lastChild ) {
+				$amp_story_page->removeChild( $element );
+				$amp_story_page->appendChild( $element );
 			}
 		}
 	}
