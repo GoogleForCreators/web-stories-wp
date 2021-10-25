@@ -221,20 +221,13 @@ async function runAxeTestsForStoriesEditor() {
   await expect(page).toPassAxeTests({
     // Temporary disabled rules to enable initial integration.
     disabledRules: [
-      'aria-allowed-role',
       'aria-input-field-name',
       'aria-required-parent',
-      'button-name',
       'color-contrast',
       // Because of multiple #_wpnonce elements.
       'duplicate-id',
-      'label',
-      'landmark-banner-is-top-level',
-      'landmark-no-duplicate-banner',
       'landmark-unique',
-      'page-has-heading-one',
       'region',
-      'scrollable-region-focusable',
       'aria-allowed-attr',
       'nested-interactive',
     ],

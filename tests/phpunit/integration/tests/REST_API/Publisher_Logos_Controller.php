@@ -2,10 +2,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Settings;
-use Google\Web_Stories\Tests\Integration\Story_Post_Type;
-use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 use WP_REST_Server;
 
@@ -16,7 +14,7 @@ use WP_REST_Server;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Publisher_Logos_Controller
  */
-class Publisher_Logos_Controller extends Test_REST_TestCase {
+class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @var WP_REST_Server
 	 */
@@ -92,11 +90,7 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$settings         = new Settings();
-		$this->controller = new \Google\Web_Stories\REST_API\Publisher_Logos_Controller(
-			$settings,
-			new \Google\Web_Stories\Story_Post_Type( $settings, new Experiments( $settings ) )
-		);
+		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Publisher_Logos_Controller::class );
 	}
 
 	public function tear_down() {

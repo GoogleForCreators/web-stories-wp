@@ -17,9 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Settings;
-use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 
 /**
  * Class Stories_Users_Controller
@@ -28,9 +26,7 @@ use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Users_Controller
  */
-class Stories_Users_Controller extends Test_REST_TestCase {
-
-	protected $server;
+class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 
 	protected static $user_id;
 
@@ -64,15 +60,13 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->controller = new \Google\Web_Stories\REST_API\Stories_Users_Controller();
+		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Stories_Users_Controller::class );
 	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$this->controller->register();
-
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/users', $routes );
@@ -85,8 +79,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 	 */
 	public function test_count_user_posts() {
 		$this->controller->register();
-		$settings  = new Settings();
-		$post_type = new \Google\Web_Stories\Story_Post_Type( $settings, new Experiments( $settings ) );
+		$post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$post_type->register();
 
 		$result1 = $this->call_private_method(
@@ -138,12 +131,10 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 	public function test_count_user_posts_invalid() {
 		$this->controller->register();
 
-		$controller = new \Google\Web_Stories\REST_API\Stories_Users_Controller();
-		$settings   = new Settings();
-		$post_type  = new \Google\Web_Stories\Story_Post_Type( $settings, new Experiments( $settings ) );
+		$post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$post_type->register();
 		$result1 = $this->call_private_method(
-			$controller,
+			$this->controller,
 			'user_posts_count_public',
 			[
 				-1,
@@ -153,7 +144,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 		$this->assertEquals( 0, $result1 );
 
 		$result1 = $this->call_private_method(
-			$controller,
+			$this->controller,
 			'user_posts_count_public',
 			[
 				self::$user_id,

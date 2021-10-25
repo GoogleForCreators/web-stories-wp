@@ -19,7 +19,6 @@
  */
 import {
   createNewStory,
-  withExperimentalFeatures,
   withUser,
   publishStory,
   insertStoryTitle,
@@ -28,11 +27,9 @@ import {
 
 async function goToAndExpandTaxonomyPanel() {
   await expect(page).toClick('li[role="tab"]', { text: 'Document' });
-  await expect(page).toMatch('Categories and Tags');
+  await expect(page).toMatch('Taxonomies');
 
-  const taxonomyPanel = await page.$(
-    'button[aria-label="Categories and Tags"]'
-  );
+  const taxonomyPanel = await page.$('button[aria-label="Taxonomies"]');
 
   const isCollapsed = await page.evaluate(
     (button) => button.getAttribute('aria-expanded') === 'false',
@@ -99,9 +96,6 @@ async function addTag(name) {
 }
 
 describe('taxonomy', () => {
-  // eslint-disable-next-line jest/require-hook
-  withExperimentalFeatures(['enableTaxonomiesSupport']);
-
   // Create some categories and tags before running all tests so that they are available there.
   beforeAll(async () => {
     await createNewStory();

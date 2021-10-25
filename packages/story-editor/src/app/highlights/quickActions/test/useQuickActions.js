@@ -139,6 +139,11 @@ const VIDEO_ELEMENT = {
   type: 'video',
 };
 
+const STICKER_ELEMENT = {
+  id: 'sticker-element-id',
+  type: 'sticker',
+};
+
 const resetElementAction = expect.objectContaining({
   label: ACTIONS.RESET_ELEMENT.text,
   onClick: expect.any(Function),
@@ -163,12 +168,7 @@ const defaultQuickActions = [
   }),
 ];
 
-const foregroundImageQuickActions = [
-  expect.objectContaining({
-    label: ACTIONS.REPLACE_MEDIA.text,
-    onClick: expect.any(Function),
-    Icon: PictureSwap,
-  }),
+const foregroundCommonActions = [
   expect.objectContaining({
     label: ACTIONS.ADD_ANIMATION.text,
     onClick: expect.any(Function),
@@ -179,6 +179,15 @@ const foregroundImageQuickActions = [
     onClick: expect.any(Function),
     Icon: Link,
   }),
+];
+
+const foregroundImageQuickActions = [
+  expect.objectContaining({
+    label: ACTIONS.REPLACE_MEDIA.text,
+    onClick: expect.any(Function),
+    Icon: PictureSwap,
+  }),
+  ...foregroundCommonActions,
 ];
 
 const foregroundImageQuickActionsWithClear = [
@@ -192,16 +201,7 @@ const shapeQuickActions = [
     onClick: expect.any(Function),
     Icon: Bucket,
   }),
-  expect.objectContaining({
-    label: ACTIONS.ADD_ANIMATION.text,
-    onClick: expect.any(Function),
-    Icon: CircleSpeed,
-  }),
-  expect.objectContaining({
-    label: ACTIONS.ADD_LINK.text,
-    onClick: expect.any(Function),
-    Icon: Link,
-  }),
+  ...foregroundCommonActions,
 ];
 
 const shapeQuickActionsWithClear = [...shapeQuickActions, resetElementAction];
@@ -222,16 +222,7 @@ const textQuickActions = [
     onClick: expect.any(Function),
     Icon: ColorBucket,
   }),
-  expect.objectContaining({
-    label: ACTIONS.ADD_ANIMATION.text,
-    onClick: expect.any(Function),
-    Icon: CircleSpeed,
-  }),
-  expect.objectContaining({
-    label: ACTIONS.ADD_LINK.text,
-    onClick: expect.any(Function),
-    Icon: Link,
-  }),
+  ...foregroundCommonActions,
 ];
 const textQuickActionsWithClear = [...textQuickActions, resetElementAction];
 
@@ -262,6 +253,13 @@ const videoQuickActions = [
 ];
 
 const videoQuickActionsWithClear = [...videoQuickActions, resetElementAction];
+
+const stickerQuickActions = [...foregroundCommonActions];
+
+const stickerQuickActionsWithClear = [
+  ...stickerQuickActions,
+  resetElementAction,
+];
 
 describe('useQuickActions', () => {
   let highlight;
@@ -834,6 +832,70 @@ describe('useQuickActions', () => {
       result.current[4].onClick(mockClickEvent);
       expect(mockUpdateElementsById).toHaveBeenCalledWith({
         elementIds: [VIDEO_ELEMENT.id],
+        properties: expect.any(Function),
+      });
+    });
+  });
+
+  describe('sticker element selected', () => {
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, STICKER_ELEMENT],
+        },
+        selectedElementAnimations: [
+          {
+            target: [STICKER_ELEMENT.id],
+          },
+        ],
+        selectedElements: [STICKER_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
+      });
+    });
+
+    it('should return the quick actions', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current).toStrictEqual(stickerQuickActionsWithClear);
+    });
+
+    it('should set the correct highlight', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: STICKER_ELEMENT.id,
+        highlight: states.ANIMATION,
+      });
+
+      result.current[1].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: STICKER_ELEMENT.id,
+        highlight: states.LINK,
+      });
+    });
+
+    it(`\`${ACTIONS.RESET_ELEMENT.text}\` action should not be present if element has no animations`, () => {
+      mockUseStory.mockReturnValue({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, STICKER_ELEMENT],
+        },
+        selectedElementAnimations: [],
+        selectedElements: [STICKER_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
+      });
+
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current[3]).toBeUndefined();
+    });
+
+    it('clicking `reset element` should update the element', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[2].onClick(mockClickEvent);
+      expect(mockUpdateElementsById).toHaveBeenCalledWith({
+        elementIds: [STICKER_ELEMENT.id],
         properties: expect.any(Function),
       });
     });
