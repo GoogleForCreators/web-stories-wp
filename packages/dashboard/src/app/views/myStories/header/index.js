@@ -170,6 +170,7 @@ function Header({
       <BodyViewOptions
         showGridToggle
         showSortDropdown
+        showAuthorDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         isLoading={isLoading}

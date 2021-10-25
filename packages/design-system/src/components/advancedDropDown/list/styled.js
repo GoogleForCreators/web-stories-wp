@@ -58,7 +58,6 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   padding: 8px 16px;
   margin: 6px 0 0 0;
   ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
-  white-space: nowrap;
   line-height: 1;
   cursor: pointer;
   background-clip: padding-box;
@@ -95,4 +94,10 @@ export const NoResult = styled(Text).attrs(() => ({
   margin: 0;
   text-align: center;
   color: ${({ theme }) => theme.colors.fg.secondary};
+`;
+
+export const OverflowEllipses = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

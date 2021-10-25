@@ -25,7 +25,7 @@ import {
   useFocusOut,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -46,15 +46,22 @@ const Container = styled.div`
   border-radius: ${({ theme }) => theme.borders.radius.small};
   padding: 5px;
   margin-top: 16px;
+
   ${({ isInline }) =>
     isInline &&
-    `
+    css`
       position: absolute;
       margin-top: 0;
       padding: 0;
-      min-width initial;
+      min-width: initial;
       width: initial;
-  `}
+    `}
+
+  ${({ theme, hasDropDownBorder }) =>
+    hasDropDownBorder &&
+    css`
+      border: 1px solid ${theme.colors.divider.primary};
+    `}
 `;
 
 function OptionsContainer({
@@ -64,6 +71,7 @@ function OptionsContainer({
   hasSearch,
   renderContents,
   isInline,
+  hasDropDownBorder = false,
 }) {
   const ref = useRef();
   const inputRef = useRef();
@@ -99,7 +107,12 @@ function OptionsContainer({
 
   const listId = `list-${uuidv4()}`;
   return (
-    <Container role="dialog" ref={ref} isInline={isInline}>
+    <Container
+      role="dialog"
+      ref={ref}
+      isInline={isInline}
+      hasDropDownBorder={hasDropDownBorder}
+    >
       {hasSearch && (
         <SearchInput
           ref={inputRef}
@@ -129,6 +142,7 @@ OptionsContainer.propTypes = {
   hasSearch: PropTypes.bool,
   renderContents: PropTypes.func.isRequired,
   isInline: PropTypes.bool,
+  hasDropDownBorder: PropTypes.bool,
 };
 
 export default OptionsContainer;

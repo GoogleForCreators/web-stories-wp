@@ -91,6 +91,7 @@ const AdvancedDropDown = forwardRef(function AdvancedDropDown(
     isInline = false,
     dropDownLabel = '',
     highlightStylesOverride,
+    hasDropDownBorder = false,
     ...rest
   },
   ref
@@ -135,6 +136,7 @@ const AdvancedDropDown = forwardRef(function AdvancedDropDown(
       getOptionsByQuery={getOptionsByQuery}
       hasSearch={hasSearch}
       isInline={isInline}
+      hasDropDownBorder={hasDropDownBorder}
       renderContents={({
         searchKeyword,
         setIsExpanded,
@@ -216,6 +218,7 @@ AdvancedDropDown.propTypes = {
   activeItemRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   dropDownLabel: PropTypes.string,
   isInline: PropTypes.bool,
+  hasDropDownBorder: PropTypes.bool,
 };
 
 export default AdvancedDropDown;

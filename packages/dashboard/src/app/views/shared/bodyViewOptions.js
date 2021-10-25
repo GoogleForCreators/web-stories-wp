@@ -17,14 +17,21 @@
 /**
  * External dependencies
  */
+import { useState, useCallback, useEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { TranslateWithMarkup } from '@web-stories-wp/i18n';
-import { Text, THEME_CONSTANTS, DropDown } from '@web-stories-wp/design-system';
+import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
+import {
+  Text,
+  THEME_CONSTANTS,
+  DropDown,
+  AdvancedDropDown,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
+import useApi from '../../api/useApi';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 
@@ -52,6 +59,9 @@ const StyledDropDown = styled(DropDown)`
 `;
 
 const BodyViewOptionsHeader = styled.div``;
+const StyledAdvancedDropDown = styled(AdvancedDropDown.DropDown)`
+  width: 150px;
+`;
 
 export default function BodyViewOptions({
   currentSort,
@@ -64,7 +74,47 @@ export default function BodyViewOptions({
   showGridToggle,
   showSortDropdown,
   sortDropdownAriaLabel,
+  showAuthorDropdown = false,
 }) {
+  const getAuthors = useApi((v) => v.actions.usersApi.getAuthors);
+  const [selectedAuthorId, setSelectedAuthorId] = useState(null);
+  const [queriedUsers, setQueriedUsers] = useState([]);
+
+  const getAuthorsBySearch = useCallback(
+    (search) => {
+      return getAuthors(search).then((data) => {
+        const userData = data.map(({ id, name }) => ({
+          id,
+          name,
+        }));
+        setQueriedUsers((exisitingUsers) => {
+          const newUsers = userData.filter(
+            (newUser) => !exisitingUsers.includes(newUser)
+          );
+          return [...exisitingUsers, ...newUsers];
+        });
+      });
+    },
+    [getAuthors]
+  );
+
+  useEffect(() => {
+    getAuthorsBySearch();
+  }, [getAuthorsBySearch]);
+
+  const handleChangeAuthor = useCallback(({ id }) => {
+    setSelectedAuthorId((v) => (v === id ? null : id));
+  }, []);
+
+  const dropDownParams = {
+    hasSearch: true,
+    onChange: handleChangeAuthor,
+    getOptionsByQuery: getAuthorsBySearch,
+    selectedId: selectedAuthorId,
+    placeholder: __('Author', 'web-stories'),
+    primaryOptions: queriedUsers,
+  };
+
   return (
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />
@@ -74,6 +124,17 @@ export default function BodyViewOptions({
             <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
           </Text>
           <ControlsContainer>
+            {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
+              <StorySortDropdownContainer>
+                <StyledAdvancedDropDown
+                  hasDropDownBorder
+                  options={queriedUsers}
+                  searchResultsLabel={__('Search results', 'web-stories')}
+                  aria-label={__('Author', 'web-stories')}
+                  {...dropDownParams}
+                />
+              </StorySortDropdownContainer>
+            )}
             {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
               <StorySortDropdownContainer>
                 <StyledDropDown
@@ -116,4 +177,5 @@ BodyViewOptions.propTypes = {
   showGridToggle: PropTypes.bool,
   showSortDropdown: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
+  showAuthorDropdown: PropTypes.bool,
 };
