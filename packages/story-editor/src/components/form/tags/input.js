@@ -121,6 +121,8 @@ function Input({
 
   const suggestionListId = uuidv4();
   const totalSuggestions = suggestedTerms.length;
+  // suggestedTerms is returned from a debounced callback,
+  // we want to update isSuggestionsOpen via a useEffect to prevent sluggish closing.
   useEffect(() => {
     setIsSuggestionsOpen(totalSuggestions > 0);
   }, [totalSuggestions]);
@@ -222,7 +224,6 @@ function Input({
     },
     [handleTagSelectedFromSuggestions, totalSuggestions]
   );
-
   return (
     <Border ref={containerRef} isInputFocused={isInputFocused}>
       <InputWrapper>

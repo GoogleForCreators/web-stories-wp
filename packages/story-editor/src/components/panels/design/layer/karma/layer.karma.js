@@ -166,4 +166,22 @@ describe('Layer Panel', () => {
       layerPanel.layers.every((layer) => layer.innerText !== 'Title 1')
     ).toBeTrue();
   });
+
+  it('should be able to duplicate elements with duplicate action', async () => {
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
+
+    expect(layerPanel.layers.length).toBe(3);
+    const elementALayer = layerPanel.getLayerByInnerText('Title 1');
+    await fixture.events.hover(elementALayer);
+    const duplicateElementAButton =
+      within(elementALayer).getByLabelText('Duplicate');
+    await fixture.events.click(duplicateElementAButton);
+
+    expect(layerPanel.layers.length).toBe(4);
+    expect(
+      layerPanel.layers.filter((layer) => layer.innerText === 'Title 1')?.length
+    ).toBe(2);
+  });
 });

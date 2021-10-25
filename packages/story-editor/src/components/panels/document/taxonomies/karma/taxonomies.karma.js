@@ -30,7 +30,6 @@ describe('Taxonomies Panel', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableTaxonomiesSupport: true });
     await fixture.render();
   });
 
