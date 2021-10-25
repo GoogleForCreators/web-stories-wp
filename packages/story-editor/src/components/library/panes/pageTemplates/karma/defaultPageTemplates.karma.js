@@ -40,7 +40,7 @@ const expectPageTemplateEqual = (currentPage, template) => {
   );
 };
 
-describe('CUJ: Page Templates: Default Page Templates', () => {
+describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () => {
   let fixture;
   let originalTimeout;
 
