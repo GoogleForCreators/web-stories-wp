@@ -78,13 +78,15 @@ function FilterPanel({ selectedElements, pushUpdate }) {
         </Row>
       )}
       {overlayType !== OverlayType.NONE && (
-        <Color
-          label={__('Color', 'web-stories')}
-          value={overlay}
-          onChange={updateOverlay}
-          allowsGradient
-          hasEyedropper
-        />
+        <Row>
+          <Color
+            label={__('Color', 'web-stories')}
+            value={overlay}
+            onChange={updateOverlay}
+            allowsGradient
+            hasEyedropper
+          />
+        </Row>
       )}
     </SimplePanel>
   );

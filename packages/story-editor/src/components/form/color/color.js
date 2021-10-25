@@ -28,15 +28,16 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-  themeHelpers,
 } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { MULTIPLE_VALUE } from '../../../constants';
-import useEyedropper from '../../colorPicker/eyedropper';
-import DefaultTooltip from '../../tooltip';
+import useEyedropper from '../../eyedropper';
+import Tooltip from '../../tooltip';
+import { focusStyle } from '../../panels/shared';
+import { OverlayType } from '../../../utils/overlay';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
@@ -54,13 +55,23 @@ const Space = styled.div`
   background-color: ${({ theme }) => theme.colors.divider.primary};
 `;
 
-// 10px comes from divider,
-// extra 2% width to fit color input when eyedropper is enabled
+// color input requires 106px of minimum width to display hex value (try: #000000)
+// 10px comes from divider / 2
+const inputSize = 106;
 const InputWrapper = styled.div`
-  width: calc(52% - 10px);
+  ${({ isEyedropper }) =>
+    isEyedropper
+      ? `
+      flex-grow: 1;
+      flex-basis: ${inputSize}px;
+      `
+      : 'flex-basis: calc(50% - 10px);'}
 `;
+
+// 20px & 10px comes from divider & divider / 2
 const OpacityWrapper = styled.div`
-  width: calc(48% - 10px);
+  flex-basis: ${({ isEyedropper }) =>
+    isEyedropper ? `calc(100% - ${inputSize}px - 20px);` : 'calc(50% - 10px);'};
 `;
 
 const EyeDropperButton = styled(Button).attrs({
@@ -69,13 +80,7 @@ const EyeDropperButton = styled(Button).attrs({
   size: BUTTON_SIZES.SMALL,
 })`
   margin-right: 4px;
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(theme.colors.border.focus, '#1d1f20')};
-`;
-
-const Tooltip = styled(DefaultTooltip)`
-  width: 100%;
-  height: 100%;
+  ${focusStyle};
 `;
 
 const Color = forwardRef(function Color(
@@ -110,8 +115,15 @@ const Color = forwardRef(function Color(
   });
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
+  // Enable eyedropper only for solid colors
+  // https://github.com/google/web-stories-wp/pull/9488#issuecomment-950679465
+  const shouldShowEyedropper =
+    hasEyedropper &&
+    value.type !== OverlayType.RADIAL &&
+    value.type !== OverlayType.LINEAR;
+
   const withEyedropper = (children) => {
-    if (hasEyedropper) {
+    if (shouldShowEyedropper) {
       return (
         <Container>
           <Tooltip title={tooltip} hasTail>
@@ -133,7 +145,7 @@ const Color = forwardRef(function Color(
 
   return withEyedropper(
     <Container aria-label={containerLabel}>
-      <InputWrapper>
+      <InputWrapper isEyedropper={shouldShowEyedropper}>
         <ColorInput
           ref={ref}
           onChange={onChange}
@@ -148,7 +160,7 @@ const Color = forwardRef(function Color(
       {allowsOpacity && displayOpacity && (
         <>
           <Space />
-          <OpacityWrapper>
+          <OpacityWrapper isEyedropper={shouldShowEyedropper}>
             <OpacityInput value={value} onChange={handleOpacityChange} />
           </OpacityWrapper>
         </>
