@@ -156,6 +156,7 @@ function OutputPage({
           </div>
         </amp-story-grid-layer>
       )}
+      {/* <amp-story-page-outlink> needs to be the last child element */}
       {hasPageAttachment && (
         <amp-story-page-outlink
           layout="nodisplay"
