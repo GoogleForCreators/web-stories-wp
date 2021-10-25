@@ -19,27 +19,39 @@ namespace Google\Web_Stories\Tests\Integration\Integrations;
 
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\TestCase;
 use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Jetpack
  */
-class Jetpack extends TestCase {
+class Jetpack extends DependencyInjectedTestCase {
 
 	const ATTACHMENT_URL = 'http://www.example.com/test.mp4';
+
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Integrations\Jetpack
+	 */
+	protected $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Integrations\Jetpack::class );
+	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$media_source = new Media_Source_Taxonomy();
-		$jetpack      = new Jetpack_Integration( $media_source );
-		$jetpack->register();
+		$this->instance->register();
 
-		$this->assertFalse( has_filter( 'wpcom_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
-		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
-		$this->assertSame( 10, has_filter( 'jetpack_is_amp_request', [ $jetpack, 'force_amp_request' ] ) );
+		$this->assertFalse( has_filter( 'wpcom_sitemap_post_types', [ $this->instance, 'add_to_jetpack_sitemap' ] ) );
+		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $this->instance, 'add_to_jetpack_sitemap' ] ) );
+		$this->assertSame( 10, has_filter( 'jetpack_is_amp_request', [ $this->instance, 'force_amp_request' ] ) );
 
 		remove_all_filters( 'jetpack_sitemap_post_types' );
 	}
@@ -52,12 +64,10 @@ class Jetpack extends TestCase {
 	public function test_register_is_wpcom() {
 		define( 'IS_WPCOM', true );
 
-		$media_source = new Media_Source_Taxonomy();
-		$jetpack      = new Jetpack_Integration( $media_source );
-		$jetpack->register();
+		$this->instance->register();
 
-		$this->assertSame( 10, has_filter( 'wpcom_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
-		$this->assertFalse( has_filter( 'jetpack_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
+		$this->assertSame( 10, has_filter( 'wpcom_sitemap_post_types', [ $this->instance, 'add_to_jetpack_sitemap' ] ) );
+		$this->assertFalse( has_filter( 'jetpack_sitemap_post_types', [ $this->instance, 'add_to_jetpack_sitemap' ] ) );
 
 		remove_all_filters( 'wpcom_sitemap_post_types' );
 	}
@@ -66,9 +76,7 @@ class Jetpack extends TestCase {
 	 * @covers ::add_to_jetpack_sitemap
 	 */
 	public function test_add_to_jetpack_sitemap() {
-		$media_source = new Media_Source_Taxonomy();
-		$jetpack      = new Jetpack_Integration( $media_source );
-		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $jetpack->add_to_jetpack_sitemap( [] ) );
+		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $this->instance->add_to_jetpack_sitemap( [] ) );
 	}
 
 	/**
@@ -86,8 +94,6 @@ class Jetpack extends TestCase {
 		);
 		$attachment          = get_post( $video_attachment_id );
 
-		$media_source = new Media_Source_Taxonomy();
-		$jetpack      = new Jetpack_Integration( $media_source );
 		// wp_prepare_attachment_for_js doesn't exactly match the output of media REST API, but it good enough for these tests.
 		$original_data = wp_prepare_attachment_for_js( $attachment );
 
@@ -99,14 +105,14 @@ class Jetpack extends TestCase {
 
 		$response = rest_ensure_response( $original_data );
 
-		$results = $jetpack->filter_api_response( $response, $attachment );
+		$results = $this->instance->filter_api_response( $response, $attachment );
 		$data    = $results->get_data();
 
 		$this->assertArrayHasKey( 'mime_type', $data );
 		$this->assertSame( $data['mime_type'], 'video/mp4' );
 
-		$this->assertArrayHasKey( $media_source::MEDIA_SOURCE_KEY, $data );
-		$this->assertSame( $data[ $media_source::MEDIA_SOURCE_KEY ], 'video-optimization' );
+		$this->assertArrayHasKey( $this->container->get( 'media.media_source' )::MEDIA_SOURCE_KEY, $data );
+		$this->assertSame( $data[ $this->container->get( 'media.media_source' )::MEDIA_SOURCE_KEY ], 'video-optimization' );
 
 		$this->assertArrayHasKey( 'source_url', $data );
 		$this->assertSame( $data['source_url'], self::ATTACHMENT_URL );
@@ -122,7 +128,7 @@ class Jetpack extends TestCase {
 	 * @covers ::add_term
 	 */
 	public function test_add_term() {
-		$media_source = new Media_Source_Taxonomy();
+		$this->instance->register();
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
@@ -132,12 +138,10 @@ class Jetpack extends TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		$jetpack              = new Jetpack_Integration( $media_source );
-		$jetpack->register();
 
 		add_post_meta( $poster_attachment_id, Jetpack_Integration::VIDEOPRESS_POSTER_META_KEY, 'hello world' );
 
-		$terms = wp_get_post_terms( $poster_attachment_id, $media_source->get_taxonomy_slug() );
+		$terms = wp_get_post_terms( $poster_attachment_id, $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertCount( 1, $terms );
 		$this->assertEqualSets( [ 'poster-generation' ], $slugs );
@@ -158,12 +162,10 @@ class Jetpack extends TestCase {
 		);
 		$attachment          = get_post( $video_attachment_id );
 
-		$media_source = new Media_Source_Taxonomy();
-		$jetpack      = new Jetpack_Integration( $media_source );
 		add_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ], 10, 3 );
 		$response = wp_prepare_attachment_for_js( $attachment );
 
-		$data = $jetpack->filter_admin_ajax_response( $response, $attachment );
+		$data = $this->instance->filter_admin_ajax_response( $response, $attachment );
 
 		$this->assertArrayHasKey( 'mime', $data );
 		$this->assertSame( $data['mime'], 'video/mp4' );
@@ -171,8 +173,8 @@ class Jetpack extends TestCase {
 		$this->assertArrayHasKey( 'subtype', $data );
 		$this->assertSame( $data['subtype'], 'mp4' );
 
-		$this->assertArrayHasKey( $media_source::MEDIA_SOURCE_KEY, $data );
-		$this->assertSame( $data[ $media_source::MEDIA_SOURCE_KEY ], 'video-optimization' );
+		$this->assertArrayHasKey( $this->container->get( 'media.media_source' )::MEDIA_SOURCE_KEY, $data );
+		$this->assertSame( $data[ $this->container->get( 'media.media_source' )::MEDIA_SOURCE_KEY ], 'video-optimization' );
 
 		$this->assertArrayHasKey( 'url', $data );
 		$this->assertSame( $data['url'], self::ATTACHMENT_URL );
@@ -190,46 +192,41 @@ class Jetpack extends TestCase {
 	 * @covers ::filter_ajax_query_attachments_args
 	 */
 	public function test_filter_ajax_query_attachments_args() {
-		$media_source         = new Media_Source_Taxonomy();
-		$jetpack              = new Jetpack_Integration( $media_source );
-		$allowed_mime_types   = $jetpack->get_allowed_mime_types();
+		$allowed_mime_types   = $this->instance->get_allowed_mime_types();
 		$allowed_mime_types   = array_merge( ...array_values( $allowed_mime_types ) );
-		$allowed_mime_types[] = $jetpack::VIDEOPRESS_MIME_TYPE;
+		$allowed_mime_types[] = $this->instance::VIDEOPRESS_MIME_TYPE;
 		$args                 = [ 'post_mime_type' => $allowed_mime_types ];
-		$jetpack->filter_ajax_query_attachments_args( $args );
+		$this->instance->filter_ajax_query_attachments_args( $args );
 		$this->assertSame(
 			15,
 			has_filter(
 				'wp_prepare_attachment_for_js',
 				[
-					$jetpack,
+					$this->instance,
 					'filter_admin_ajax_response',
-				] 
-			) 
+				]
+			)
 		);
 	}
 
 	/**
-	 * @dataProvider get_sample_data
+	 * @dataProvider get_format_milliseconds_data
 	 *
 	 * @param string $milliseconds
 	 * @param string $string
 	 * @covers ::format_milliseconds
 	 */
 	public function test_format_milliseconds( $milliseconds, $string ) {
-
-		$media_source = new Media_Source_Taxonomy();
-		$jetpack      = new Jetpack_Integration( $media_source );
-		$result       = $this->call_private_method( $jetpack, 'format_milliseconds', [ $milliseconds ] );
+		$result = $this->call_private_method( $this->instance, 'format_milliseconds', [ $milliseconds ] );
 		$this->assertSame( $result, $string );
 	}
 
 	/**
-	 * @param $value
+	 * @param mixed $value
 	 * @param $object_id
 	 * @param $meta_key
 	 *
-	 * @return \array[][]
+	 * @return \array[][]|mixed
 	 */
 	public function filter_wp_get_attachment_metadata( $value, $object_id, $meta_key ) {
 		if ( '_wp_attachment_metadata' !== $meta_key ) {
@@ -252,7 +249,7 @@ class Jetpack extends TestCase {
 	/**
 	 * @return array[]
 	 */
-	public function get_sample_data() {
+	public function get_format_milliseconds_data(): array {
 		return [
 			'5000'      => [
 				5000,

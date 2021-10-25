@@ -28,13 +28,12 @@ namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Traits\Amp as Amp_Trait;
-use Google\Web_Stories\Traits\Screen;
 use WP_Post;
 use WP_Screen;
 
@@ -44,8 +43,6 @@ use WP_Screen;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class AMP extends Service_Base implements HasRequirements {
-	use Screen, Amp_Trait;
-
 	/**
 	 * Slug of the AMP validated URL post type.
 	 *
@@ -68,18 +65,27 @@ class AMP extends Service_Base implements HasRequirements {
 	private $story_post_type;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
 	 *
 	 * @param Settings        $settings        Settings instance.
 	 * @param Story_Post_Type $story_post_type Experiments instance.
+	 * @param Context         $context Context instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Settings $settings, Story_Post_Type $story_post_type ) {
+	public function __construct( Settings $settings, Story_Post_Type $story_post_type, Context $context ) {
 		$this->settings        = $settings;
 		$this->story_post_type = $story_post_type;
+		$this->context         = $context;
 	}
 
 	/**
@@ -169,7 +175,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @return array|mixed Sanitizers.
 	 */
 	public function add_amp_content_sanitizers( $sanitizers ) {
-		if ( ! $this->is_web_story() ) {
+		if ( ! $this->context->is_web_story() ) {
 			return $sanitizers;
 		}
 
@@ -333,7 +339,7 @@ class AMP extends Service_Base implements HasRequirements {
 			return $this->get_validated_url_post_type( (int) $_GET['post'] );
 		}
 
-		$current_screen = $this->get_current_screen();
+		$current_screen = get_current_screen();
 
 		if ( $current_screen instanceof WP_Screen ) {
 			$current_post = get_post();

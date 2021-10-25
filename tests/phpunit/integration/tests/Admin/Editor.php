@@ -93,6 +93,11 @@ class Editor extends DependencyInjectedTestCase {
 	private $instance;
 
 	/**
+	 * @var \Google\Web_Stories\Context
+	 */
+	private $context;
+
+	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
 	public static function wpSetUpBeforeClass( $factory ) {
@@ -135,6 +140,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->assets                  = $this->createMock( \Google\Web_Stories\Assets::class );
 		$this->story_post_type         = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$this->page_template_post_type = $this->injector->make( \Google\Web_Stories\Page_Template_Post_Type::class );
+		$this->context                 = $this->injector->make( \Google\Web_Stories\Context::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Editor(
 			$this->experiments,
@@ -144,7 +150,8 @@ class Editor extends DependencyInjectedTestCase {
 			$this->google_fonts,
 			$this->assets,
 			$this->story_post_type,
-			$this->page_template_post_type
+			$this->page_template_post_type,
+			$this->context
 		);
 
 		$this->add_caps_to_roles();

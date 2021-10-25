@@ -26,9 +26,9 @@
 
 namespace Google\Web_Stories\Integrations;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Traits\Amp;
 
 /**
  * New Relic integration class.
@@ -36,7 +36,22 @@ use Google\Web_Stories\Traits\Amp;
  * @since 1.10.0
  */
 class New_Relic extends Service_Base implements Conditional {
-	use Amp;
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
+	 * Single constructor.
+	 *
+	 * @param Context $context Context instance.
+	 */
+	public function __construct( Context $context ) {
+		$this->context = $context;
+	}
+
 	/**
 	 * Runs on instantiation.
 	 *
@@ -99,7 +114,7 @@ class New_Relic extends Service_Base implements Conditional {
 	 * @return void
 	 */
 	public function disable_autorum() {
-		if ( ! $this->is_web_story() ) {
+		if ( ! $this->context->is_web_story() ) {
 			return;
 		}
 

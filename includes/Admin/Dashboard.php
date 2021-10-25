@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Locale;
@@ -36,14 +37,13 @@ use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Assets;
-use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
 
 /**
  * Dashboard class.
  */
 class Dashboard extends Service_Base {
-	use Types, Screen;
+	use Types;
 
 	/**
 	 * Script handle.
@@ -109,17 +109,25 @@ class Dashboard extends Service_Base {
 	private $story_post_type;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments     $experiments   Experiments instance.
-	 * @param Site_Kit        $site_kit      Site_Kit instance.
-	 * @param Decoder         $decoder       Decoder instance.
-	 * @param Locale          $locale        Locale instance.
-	 * @param Google_Fonts    $google_fonts  Google_Fonts instance.
-	 * @param Assets          $assets        Assets instance.
+	 * @param Experiments     $experiments     Experiments instance.
+	 * @param Site_Kit        $site_kit        Site_Kit instance.
+	 * @param Decoder         $decoder         Decoder instance.
+	 * @param Locale          $locale          Locale instance.
+	 * @param Google_Fonts    $google_fonts    Google_Fonts instance.
+	 * @param Assets          $assets          Assets instance.
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Context         $context         Context instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -128,7 +136,8 @@ class Dashboard extends Service_Base {
 		Locale $locale,
 		Google_Fonts $google_fonts,
 		Assets $assets,
-		Story_Post_Type $story_post_type
+		Story_Post_Type $story_post_type,
+		Context $context
 	) {
 		$this->experiments     = $experiments;
 		$this->decoder         = $decoder;
@@ -137,6 +146,7 @@ class Dashboard extends Service_Base {
 		$this->google_fonts    = $google_fonts;
 		$this->assets          = $assets;
 		$this->story_post_type = $story_post_type;
+		$this->context         = $context;
 	}
 
 	/**
@@ -441,16 +451,11 @@ class Dashboard extends Service_Base {
 	 * @return void
 	 */
 	public function display_link_to_dashboard() {
-		$screen = $this->get_current_screen();
-		if ( ! $screen ) {
+		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}
 
-		if ( ! $this->is_edit_screen( $screen ) ) {
-			return;
-		}
-
-		if ( 'edit' !== $screen->base ) {
+		if ( 'edit' !== $this->context->get_screen_base() ) {
 			return;
 		}
 

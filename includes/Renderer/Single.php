@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories\Renderer;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Traits\Amp;
 
 /**
  * Class Single
@@ -35,7 +35,22 @@ use Google\Web_Stories\Traits\Amp;
  * @package Google\Web_Stories\Single
  */
 class Single extends Service_Base {
-	use Amp;
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
+	 * Single constructor.
+	 *
+	 * @param Context $context Context instance.
+	 */
+	public function __construct( Context $context ) {
+		$this->context = $context;
+	}
+
 	/**
 	 * Initializes the Single logic.
 	 *
@@ -60,7 +75,7 @@ class Single extends Service_Base {
 	 * @return string|mixed Template.
 	 */
 	public function filter_template_include( $template ) {
-		if ( $this->is_web_story() ) {
+		if ( $this->context->is_web_story() ) {
 			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/single-web-story.php';
 		}
 
@@ -77,7 +92,7 @@ class Single extends Service_Base {
 	 * @return bool|mixed
 	 */
 	public function show_admin_bar( $show ) {
-		if ( $this->is_web_story() ) {
+		if ( $this->context->is_web_story() ) {
 			$show = false;
 		}
 

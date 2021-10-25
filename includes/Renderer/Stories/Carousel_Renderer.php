@@ -116,7 +116,7 @@ class Carousel_Renderer extends Renderer {
 		<div class="<?php echo esc_attr( $container_classes ); ?>" data-id="<?php echo esc_attr( (string) $this->instance_id ); ?>">
 			<div class="web-stories-list__inner-wrapper <?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>" style="<?php echo esc_attr( $container_styles ); ?>">
 				<?php
-				if ( ! $this->is_amp() ) {
+				if ( ! $this->context->is_amp() ) {
 					$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE );
 					$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
 					?>

@@ -27,14 +27,13 @@
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Analytics;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Traits\Amp;
 
 /**
  * Class Site_Kit.
  */
 class Site_Kit extends Service_Base {
-	use Amp;
 	/**
 	 * Analytics instance.
 	 *
@@ -43,12 +42,21 @@ class Site_Kit extends Service_Base {
 	protected $analytics;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Analytics $analytics Analytics instance.
+	 * @param Context   $context   Context instance.
 	 */
-	public function __construct( Analytics $analytics ) {
+	public function __construct( Analytics $analytics, Context $context ) {
 		$this->analytics = $analytics;
+		$this->context   = $context;
 	}
 
 	/**
@@ -120,7 +128,7 @@ class Site_Kit extends Service_Base {
 	 * @return array|mixed Modified configuration options.
 	 */
 	public function filter_site_kit_gtag_opt( $gtag_opt ) {
-		if ( ! $this->is_web_story() ) {
+		if ( ! $this->context->is_web_story() ) {
 			return $gtag_opt;
 		}
 
