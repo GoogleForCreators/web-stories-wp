@@ -47,12 +47,17 @@ export default function useStoryView({
   const [sortDirection, _setSortDirection] = useState(SORT_DIRECTION.DESC);
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
+  const [authorFilterId, _setAuthor] = useState(null);
   const showStoriesWhileLoading = useRef(false);
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
     isGrid: viewStyle === VIEW_STYLE.GRID,
   });
+
+  const toggleAuthorFilterId = useCallback(({ id }) => {
+    _setAuthor((v) => (v === id ? null : id));
+  }, []);
 
   const setPageClamped = useCallback(
     (newPage) => {
@@ -121,11 +126,12 @@ export default function useStoryView({
       search_type: 'dashboard_stories',
       search_term: searchKeyword,
       search_filter: filter,
+      search_author_filter: authorFilterId,
       search_order: sortDirection,
       search_orderby: sort,
       search_view: viewStyle,
     });
-  }, [searchKeyword, filter, sortDirection, sort, viewStyle]);
+  }, [searchKeyword, filter, sortDirection, sort, viewStyle, authorFilterId]);
 
   useEffect(() => {
     // reset ref state after request is finished
@@ -160,6 +166,10 @@ export default function useStoryView({
         keyword: searchKeyword,
         setKeyword: setSearchKeyword,
       },
+      author: {
+        filterId: authorFilterId,
+        toggleFilterId: toggleAuthorFilterId,
+      },
       showStoriesWhileLoading,
     }),
     [
@@ -176,6 +186,8 @@ export default function useStoryView({
       requestNextPage,
       searchKeyword,
       setSearchKeyword,
+      authorFilterId,
+      toggleAuthorFilterId,
     ]
   );
 }
@@ -184,6 +196,11 @@ export const ViewPropTypes = PropTypes.shape({
   style: PropTypes.oneOf(Object.values(VIEW_STYLE)),
   toggleStyle: PropTypes.func,
   pageSize: PageSizePropType,
+});
+
+export const AuthorPropTypes = PropTypes.shape({
+  filterId: PropTypes.number,
+  toggleFilterId: PropTypes.func,
 });
 
 export const FilterPropTypes = PropTypes.shape({

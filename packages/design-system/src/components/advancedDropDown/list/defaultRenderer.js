@@ -42,7 +42,7 @@ const DefaultRenderer = forwardRef(function DefaultRenderer(
 
 DefaultRenderer.propTypes = {
   option: PropTypes.object.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any,
 };
 
 export default DefaultRenderer;

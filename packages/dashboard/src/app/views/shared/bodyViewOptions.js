@@ -26,6 +26,7 @@ import {
   THEME_CONSTANTS,
   DropDown,
   AdvancedDropDown,
+  noop,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -75,9 +76,10 @@ export default function BodyViewOptions({
   showSortDropdown,
   sortDropdownAriaLabel,
   showAuthorDropdown = false,
+  authorFilterId = null,
+  handleToggleAuthorId = noop,
 }) {
   const getAuthors = useApi((v) => v.actions.usersApi.getAuthors);
-  const [selectedAuthorId, setSelectedAuthorId] = useState(null);
   const [queriedUsers, setQueriedUsers] = useState([]);
 
   const getAuthorsBySearch = useCallback(
@@ -102,15 +104,11 @@ export default function BodyViewOptions({
     getAuthorsBySearch();
   }, [getAuthorsBySearch]);
 
-  const handleChangeAuthor = useCallback(({ id }) => {
-    setSelectedAuthorId((v) => (v === id ? null : id));
-  }, []);
-
   const dropDownParams = {
     hasSearch: true,
-    onChange: handleChangeAuthor,
+    onChange: handleToggleAuthorId,
     getOptionsByQuery: getAuthorsBySearch,
-    selectedId: selectedAuthorId,
+    selectedId: authorFilterId,
     placeholder: __('Author', 'web-stories'),
     primaryOptions: queriedUsers,
   };
@@ -178,4 +176,6 @@ BodyViewOptions.propTypes = {
   showSortDropdown: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
   showAuthorDropdown: PropTypes.bool,
+  authorFilterId: PropTypes.number,
+  handleToggleAuthorId: PropTypes.func,
 };

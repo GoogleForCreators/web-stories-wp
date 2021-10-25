@@ -70,7 +70,7 @@ function MyStories() {
     })
   );
 
-  const { filter, page, search, sort, view, showStoriesWhileLoading } =
+  const { filter, page, search, sort, view, showStoriesWhileLoading, author } =
     useStoryView({
       filters: STORY_STATUSES,
       isLoading,
@@ -84,6 +84,7 @@ function MyStories() {
       sortDirection: sort.direction,
       sortOption: sort.value,
       status: filter.value,
+      author: author.filterId,
     });
   }, [
     fetchStories,
@@ -92,6 +93,7 @@ function MyStories() {
     search.keyword,
     sort.direction,
     sort.value,
+    author.filterId,
   ]);
 
   const orderedStories = useMemo(() => {
@@ -110,6 +112,7 @@ function MyStories() {
         stories={orderedStories}
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
+        author={author}
       />
 
       <Content
