@@ -692,7 +692,7 @@ describe('Page output', () => {
       expect(content).toContain('http://shouldoutput.com');
     });
 
-    it('should print page attachment as the last child element', async () => {
+    it('should print page attachment as the last child element', () => {
       const props = {
         id: '123',
         backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
