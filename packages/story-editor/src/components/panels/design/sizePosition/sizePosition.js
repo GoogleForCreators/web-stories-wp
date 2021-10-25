@@ -55,6 +55,7 @@ import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
+import OpacityControls from './opacity';
 
 const StyledLockToggle = styled(LockToggle)`
   ${focusStyle};
@@ -70,9 +71,10 @@ const Grid = styled.div`
     ${({ isSingleMedia }) => (isSingleMedia ? `'b b b b b . .'` : null)}
     'x . . . y . .'
     'w . d . h . l'
-    'r . . . f . .';
+    'r . . . f . .'
+    'o . . . c . .';
   grid-template-columns: 1fr 4px 8px 4px 1fr 4px 32px;
-  grid-template-rows: repeat(3, 36px);
+  grid-template-rows: repeat(4, 36px);
   row-gap: 16px;
   align-items: center;
   justify-items: start;
@@ -96,12 +98,14 @@ const StyledButton = styled(Button)`
   ${focusStyle};
 `;
 
-function SizePositionPanel({
-  selectedElements,
-  submittedSelectedElements,
-  pushUpdate,
-  pushUpdateForObject,
-}) {
+function SizePositionPanel(props) {
+  const {
+    selectedElements,
+    submittedSelectedElements,
+    pushUpdate,
+    pushUpdateForObject,
+  } = props;
+
   const x = getCommonValue(selectedElements, 'x');
   const y = getCommonValue(selectedElements, 'y');
   const width = getCommonValue(selectedElements, 'width');
@@ -364,6 +368,9 @@ function SizePositionPanel({
             {...getMixedValueProps(rotationAngle)}
             containerStyleOverride={inputContainerStyleOverride}
           />
+        </Area>
+        <Area area={canFlip ? 'o' : 'f'}>
+          <OpacityControls {...props} />
         </Area>
         {canFlip && (
           <Area area="f">

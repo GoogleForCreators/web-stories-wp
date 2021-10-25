@@ -39,7 +39,6 @@ import { VideoPoster } from './videoPoster';
 import { Captions } from './captions';
 import { TextBox } from './textBox';
 import { ShapeStyle } from './shapeStyle';
-import { LayerStyle } from './layerStyle';
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
@@ -120,14 +119,6 @@ export class DesignPanel extends Container {
   get imageAccessibility() {
     // @todo: implement
     return null;
-  }
-
-  get layerStyle() {
-    return this._get(
-      this.getByRole('region', { name: /Layer$/i }),
-      'layerStyle',
-      LayerStyle
-    );
   }
 
   get shapeStyle() {

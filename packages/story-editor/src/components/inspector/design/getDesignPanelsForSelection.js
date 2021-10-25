@@ -26,7 +26,6 @@ import {
   FilterPanel,
   ImageAccessibilityPanel,
   LinkPanel,
-  LayerStylePanel,
   PageAttachmentPanel,
   PageBackgroundPanel,
   ShapeStylePanel,
@@ -126,8 +125,6 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: ColorPresetPanel };
         case PanelTypes.STYLE_PRESETS:
           return { type, Panel: StylePresetPanel };
-        case PanelTypes.LAYER_STYLE:
-          return { type, Panel: LayerStylePanel };
         case PanelTypes.FILTER:
           return { type, Panel: FilterPanel };
         case PanelTypes.SIZE_POSITION:

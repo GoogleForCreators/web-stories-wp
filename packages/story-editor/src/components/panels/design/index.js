@@ -23,7 +23,6 @@ export { default as ElementAlignmentPanel } from './alignment';
 export { default as FilterPanel } from './filter';
 export { default as ImageAccessibilityPanel } from './imageAccessibility';
 export { default as LayerPanel } from './layer';
-export { default as LayerStylePanel } from './layerStyle';
 export { default as LinkPanel } from './link';
 export { default as PageAttachmentPanel } from './pageAttachment';
 export { default as PageBackgroundPanel } from './pageBackground';

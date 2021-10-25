@@ -691,7 +691,7 @@ describe('Right Click Menu integration', () => {
 
         // add opacity
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.layerStyle.opacity
+          fixture.editor.inspector.designPanel.sizePosition.opacity
         );
         await fixture.events.keyboard.type('40');
 
@@ -757,7 +757,7 @@ describe('Right Click Menu integration', () => {
 
         // add opacity
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.layerStyle.opacity
+          fixture.editor.inspector.designPanel.sizePosition.opacity
         );
         await fixture.events.keyboard.type('40');
 

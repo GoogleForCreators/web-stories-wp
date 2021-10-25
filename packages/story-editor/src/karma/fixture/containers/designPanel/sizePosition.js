@@ -51,4 +51,8 @@ export class SizePosition extends AbstractPanel {
   get flipHorizontal() {
     return this.getByRole('button', { name: /Flip horizontally/i });
   }
+
+  get opacity() {
+    return this.getByRole('textbox', { name: /Opacity in percent/i });
+  }
 }
