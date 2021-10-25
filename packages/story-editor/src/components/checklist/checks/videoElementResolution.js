@@ -34,11 +34,15 @@ const MIN_VIDEO_HEIGHT = 480;
 const MIN_VIDEO_WIDTH = 852;
 
 export function videoElementResolution(element) {
+  if (element.type !== 'video') {
+    return false;
+  }
+
   const videoResolutionLow =
     element.resource?.height <= MIN_VIDEO_HEIGHT &&
     element.resource?.width <= MIN_VIDEO_WIDTH;
 
-  return element.type === 'video' && videoResolutionLow;
+  return videoResolutionLow;
 }
 
 const VideoElementResolution = () => {
