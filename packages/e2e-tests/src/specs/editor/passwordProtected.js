@@ -47,10 +47,7 @@ describe('Password protected stories', () => {
     await expect(previewPage).toFill('input[name="post_password"]', 'password');
 
     // Submitting the form will cause the page to be reloaded.
-    await Promise.all([
-      page.waitForNavigation(),
-      page.keyboard.press('Enter'),
-    ]);
+    await Promise.all([page.waitForNavigation(), page.keyboard.press('Enter')]);
 
     await editorPage.bringToFront();
     await previewPage.close();
