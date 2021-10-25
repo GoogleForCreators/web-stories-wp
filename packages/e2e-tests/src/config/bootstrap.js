@@ -89,11 +89,6 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Another Firefox warning.
   'Layout was forced before the page was fully loaded',
-
-  // @todo Fix issues, see https://github.com/google/web-stories-wp/issues/9327
-  'Error inlining remote css file SecurityError',
-  'Error loading remote stylesheet SecurityError',
-  'Error while reading CSS rules from https://fonts.googleapis.com',
 ];
 
 export function addAllowedErrorMessage(message) {
