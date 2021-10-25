@@ -232,7 +232,7 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
       await moveElementToBottom(frame, 100);
 
-      await closePanel('Size & Position');
+      await closePanel('Selection');
       await closePanel('Saved Colors');
       await closePanel('Layer');
 

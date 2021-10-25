@@ -221,7 +221,7 @@ function SizePositionPanel({
     };
   }, []);
   return (
-    <SimplePanel name="size" title={__('Size & Position', 'web-stories')}>
+    <SimplePanel name="size" title={__('Selection', 'web-stories')}>
       <Grid isSingleMedia={isMedia && isSingleElement}>
         {isMedia && isSingleElement && (
           <Area area="b">
