@@ -132,17 +132,6 @@ function OutputPage({
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {hasPageAttachment && (
-        <amp-story-page-outlink
-          layout="nodisplay"
-          cta-image={page.pageAttachment.icon || undefined}
-          theme={page.pageAttachment.theme}
-        >
-          <a href={page.pageAttachment.url}>
-            {page.pageAttachment.ctaText || __('Learn more', 'web-stories')}
-          </a>
-        </amp-story-page-outlink>
-      )}
       {args.enableBetterCaptions && videoCaptions.length > 0 && (
         <amp-story-grid-layer
           template="vertical"
@@ -166,6 +155,17 @@ function OutputPage({
             </div>
           </div>
         </amp-story-grid-layer>
+      )}
+      {hasPageAttachment && (
+        <amp-story-page-outlink
+          layout="nodisplay"
+          cta-image={page.pageAttachment.icon || undefined}
+          theme={page.pageAttachment.theme}
+        >
+          <a href={page.pageAttachment.url}>
+            {page.pageAttachment.ctaText || __('Learn more', 'web-stories')}
+          </a>
+        </amp-story-page-outlink>
       )}
     </amp-story-page>
   );
