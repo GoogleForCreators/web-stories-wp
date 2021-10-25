@@ -55,23 +55,13 @@ const Space = styled.div`
   background-color: ${({ theme }) => theme.colors.divider.primary};
 `;
 
-// color input requires 106px of minimum width to display hex value (try: #000000)
 // 10px comes from divider / 2
-const inputSize = 106;
 const InputWrapper = styled.div`
-  ${({ isEyedropper }) =>
-    isEyedropper
-      ? `
-      flex-grow: 1;
-      flex-basis: ${inputSize}px;
-      `
-      : 'flex-basis: calc(50% - 10px);'}
+  width: calc(53% - 10px);
 `;
 
-// 20px & 10px comes from divider & divider / 2
 const OpacityWrapper = styled.div`
-  flex-basis: ${({ isEyedropper }) =>
-    isEyedropper ? `calc(100% - ${inputSize}px - 20px);` : 'calc(50% - 10px);'};
+  width: calc(47% - 10px);
 `;
 
 const EyeDropperButton = styled(Button).attrs({
@@ -145,7 +135,7 @@ const Color = forwardRef(function Color(
 
   return withEyedropper(
     <Container aria-label={containerLabel}>
-      <InputWrapper isEyedropper={shouldShowEyedropper}>
+      <InputWrapper>
         <ColorInput
           ref={ref}
           onChange={onChange}
@@ -160,7 +150,7 @@ const Color = forwardRef(function Color(
       {allowsOpacity && displayOpacity && (
         <>
           <Space />
-          <OpacityWrapper isEyedropper={shouldShowEyedropper}>
+          <OpacityWrapper>
             <OpacityInput value={value} onChange={handleOpacityChange} />
           </OpacityWrapper>
         </>
