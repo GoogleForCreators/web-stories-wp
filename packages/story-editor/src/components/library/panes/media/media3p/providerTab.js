@@ -44,8 +44,8 @@ const Tab = styled.button`
   border-radius: ${({ theme }) => theme.borders.radius.x_large};
   ${focusStyle};
 
-  ${({ isActive, theme }) =>
-    isActive &&
+  ${({ $isActive, theme }) =>
+    $isActive &&
     css`
       ::after {
         content: '';
@@ -62,7 +62,7 @@ const Tab = styled.button`
 
 function ProviderTab({ name, isActive, ...rest }) {
   return (
-    <Tab isActive={isActive} {...rest}>
+    <Tab $isActive={isActive} {...rest}>
       <StyledText
         forwardedAs="span"
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
@@ -75,7 +75,7 @@ function ProviderTab({ name, isActive, ...rest }) {
 
 ProviderTab.propTypes = {
   name: PropTypes.string.isRequired,
-  isActive: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool,
 };
 
 export default ProviderTab;
