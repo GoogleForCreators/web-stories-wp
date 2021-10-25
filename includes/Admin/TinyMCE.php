@@ -31,7 +31,7 @@ namespace Google\Web_Stories\Admin;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Traits\Screen;
-use Google\Web_Stories\Traits\Stories_Script_Data;
+use Google\Web_Stories\Stories_Script_Data;
 
 /**
  * Class TinyMCE
@@ -39,7 +39,7 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  * @package Google\Web_Stories
  */
 class TinyMCE extends Service_Base {
-	use Stories_Script_Data, Screen;
+	use Screen;
 
 	/**
 	 * Web Stories tinymce script handle.
@@ -56,14 +56,23 @@ class TinyMCE extends Service_Base {
 	private $assets;
 
 	/**
+	 * Stories_Script_Data instance.
+	 *
+	 * @var Stories_Script_Data Stories_Script_Data instance.
+	 */
+	protected $stories_script_data;
+
+	/**
 	 * Tinymce constructor.
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param Assets $assets Assets instance.
+	 * @param Assets              $assets Assets instance.
+	 * @param Stories_Script_Data $stories_script_data Stories_Script_Data instance.
 	 */
-	public function __construct( Assets $assets ) {
-		$this->assets = $assets;
+	public function __construct( Assets $assets, Stories_Script_Data $stories_script_data ) {
+		$this->assets              = $assets;
+		$this->stories_script_data = $stories_script_data;
 	}
 
 	/**
@@ -148,7 +157,7 @@ class TinyMCE extends Service_Base {
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
 			'webStoriesData',
-			$this->get_script_data()
+			$this->stories_script_data->get_script_data()
 		);
 	}
 

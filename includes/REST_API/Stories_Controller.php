@@ -28,12 +28,12 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Demo_Content;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Post_Type;
 use WP_Query;
 use WP_Error;
 use WP_Post;
 use WP_REST_Request;
 use WP_REST_Response;
+use WP_Post_Type;
 
 /**
  * Stories_Controller class.
@@ -41,7 +41,6 @@ use WP_REST_Response;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories_Controller extends Stories_Base_Controller {
-	use Post_Type;
 
 	/**
 	 * Query args.
@@ -404,18 +403,24 @@ class Stories_Controller extends Stories_Base_Controller {
 			'publish' => 'publish',
 		];
 
-		if ( $this->get_post_type_cap( $this->post_type, 'edit_posts' ) ) {
+		$post_type = get_post_type_object( $this->post_type );
+
+		if ( ! ( $post_type instanceof WP_Post_Type ) ) {
+			return $response;
+		}
+
+		if ( current_user_can( $post_type->cap->edit_posts ) ) {
 			$statuses['draft']   = 'draft';
 			$statuses['future']  = 'future';
 			$statuses['pending'] = 'pending';
 		}
 
-		if ( $this->get_post_type_cap( $this->post_type, 'publish_posts' ) ) {
+		if ( current_user_can( $post_type->cap->publish_posts ) ) {
 			$statuses['private'] = 'private';
 		}
 
-		$edit_others_posts  = $this->get_post_type_cap( $this->post_type, 'edit_others_posts' );
-		$edit_private_posts = $this->get_post_type_cap( $this->post_type, 'edit_private_posts' );
+		$edit_others_posts  = current_user_can( $post_type->cap->edit_others_posts );
+		$edit_private_posts = current_user_can( $post_type->cap->edit_private_posts );
 
 		$statuses_count = [ 'all' => 0 ];
 		$total_posts    = 0;
@@ -480,9 +485,9 @@ class Stories_Controller extends Stories_Base_Controller {
 		// Workaround so that WP_REST_Posts_Controller::prepare_links() does not call wp_get_post_revisions(),
 		// avoiding a currently unneeded database query.
 		// TODO(#85): Remove if proper revisions support is ever needed.
-		remove_post_type_support( Story_Post_Type::POST_TYPE_SLUG, 'revisions' );
+		remove_post_type_support( $this->post_type, 'revisions' );
 		$links = parent::prepare_links( $post );
-		add_post_type_support( Story_Post_Type::POST_TYPE_SLUG, 'revisions' );
+		add_post_type_support( $this->post_type, 'revisions' );
 
 		$links = $this->add_post_locking_link( $links, $post );
 		$links = $this->add_publisher_logo_link( $links, $post );

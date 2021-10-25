@@ -143,26 +143,13 @@ class Story_Archive extends DependencyInjectedTestCase {
 		$this->assertSame( 10, has_action( 'wp_trash_post', [ $this->instance, 'on_remove_archive_page' ] ) );
 		$this->assertSame( 10, has_action( 'delete_post', [ $this->instance, 'on_remove_archive_page' ] ) );
 
-		$this->assertSame(
-			10,
-			has_action(
-				'add_option_' . $this->settings::SETTING_NAME_ARCHIVE,
-				[
-					$this->instance,
-					'update_archive_setting',
-				]
-			)
-		);
-		$this->assertSame(
-			10,
-			has_action(
-				'update_option_' . $this->settings::SETTING_NAME_ARCHIVE,
-				[
-					$this->instance,
-					'update_archive_setting',
-				]
-			)
-		);
+		$this->assertSame( 10, has_action( 'add_option_' . $this->settings::SETTING_NAME_ARCHIVE, [ $this->instance, 'update_archive_setting' ] ) );
+		$this->assertSame( 10, has_action( 'update_option_' . $this->settings::SETTING_NAME_ARCHIVE, [ $this->instance, 'update_archive_setting' ] ) );
+		$this->assertSame( 10, has_action( 'add_option_' . $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this->instance, 'update_archive_setting' ] ) );
+		$this->assertSame( 10, has_action( 'update_option_' . $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, [ $this->instance, 'update_archive_setting' ] ) );
+
+		$this->assertSame( 10, has_filter( 'display_post_states', [ $this->instance, 'filter_display_post_states' ] ) );
+		$this->assertSame( 10, has_action( 'pre_get_posts', [ $this->instance, 'pre_get_posts' ] ) );
 	}
 
 

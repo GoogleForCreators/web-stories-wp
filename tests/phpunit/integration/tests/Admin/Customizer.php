@@ -20,8 +20,6 @@ namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Admin\Customizer as TheCustomizer;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Traits\Theme_Support;
-use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_Customize_Manager;
 use WP_Error;
 
@@ -31,7 +29,6 @@ use WP_Error;
  * @preserveGlobalState disabled
  */
 class Customizer extends DependencyInjectedTestCase {
-	use Theme_Support;
 
 	/**
 	 * Test instance.
@@ -382,7 +379,7 @@ class Customizer extends DependencyInjectedTestCase {
 			],
 		];
 
-		$output = $this->get_stories_theme_support();
+		$output = $this->instance->get_stories_theme_support();
 
 		$this->assertEquals( $expected, $output );
 	}

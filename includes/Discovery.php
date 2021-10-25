@@ -31,7 +31,6 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Traits\Post_Type;
 
 use WP_Post;
 
@@ -39,7 +38,6 @@ use WP_Post;
  * Discovery class.
  */
 class Discovery extends Service_Base implements HasRequirements {
-	use Post_Type;
 
 	/**
 	 * Story_Post_Type instance.
@@ -392,12 +390,12 @@ class Discovery extends Service_Base implements HasRequirements {
 			return;
 		}
 
-		$name = $this->get_post_type_label( $this->story_post_type::POST_TYPE_SLUG, 'name' );
+		$name = $this->story_post_type->get_label( 'name' );
 		if ( ! $name ) {
 			return;
 		}
 
-		$feed = get_post_type_archive_feed_link( $this->story_post_type::POST_TYPE_SLUG );
+		$feed = get_post_type_archive_feed_link( $this->story_post_type->get_slug() );
 		if ( ! $feed ) {
 			return;
 		}
