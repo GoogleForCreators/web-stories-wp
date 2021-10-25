@@ -123,7 +123,7 @@ trait Sanitization_Utils {
 
 			$amp_story_page = $element->parentNode;
 
-			if ( $element !== $amp_story_page->lastChild ) {
+			if ( $amp_story_page && $element !== $amp_story_page->lastChild ) {
 				$amp_story_page->removeChild( $element );
 				$amp_story_page->appendChild( $element );
 			}
