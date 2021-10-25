@@ -1268,8 +1268,12 @@ const formattedTemplatesArray = [
     ],
     postersByPage: [
       { png: 'http://placekitten.com/158/237', type: 'cover' },
-      { png: 'http://placekitten.com/158/237', type: 'list' },
+      { png: 'http://placekitten.com/158/237', type: 'section' },
       { png: 'http://placekitten.com/158/237', type: 'quote' },
+      { png: 'http://placekitten.com/158/237', type: 'editorial' },
+      { png: 'http://placekitten.com/158/237', type: 'list' },
+      { png: 'http://placekitten.com/158/237', type: 'table' },
+      { png: 'http://placekitten.com/158/237', type: 'steps' },
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
@@ -1470,11 +1474,7 @@ const formattedTemplatesArray = [
         pageTemplateType: 'cover',
       },
     ],
-    postersByPage: [
-      { png: 'http://placekitten.com/158/237', type: 'cover' },
-      { png: 'http://placekitten.com/158/237', type: 'list' },
-      { png: 'http://placekitten.com/158/237', type: 'quote' },
-    ],
+    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'cover' }],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -1674,11 +1674,7 @@ const formattedTemplatesArray = [
         pageTemplateType: 'section',
       },
     ],
-    postersByPage: [
-      { png: 'http://placekitten.com/158/237', type: 'cover' },
-      { png: 'http://placekitten.com/158/237', type: 'list' },
-      { png: 'http://placekitten.com/158/237', type: 'quote' },
-    ],
+    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'section' }],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -1879,9 +1875,7 @@ const formattedTemplatesArray = [
       },
     ],
     postersByPage: [
-      { png: 'http://placekitten.com/158/237', type: 'cover' },
-      { png: 'http://placekitten.com/158/237', type: 'list' },
-      { png: 'http://placekitten.com/158/237', type: 'quote' },
+      { png: 'http://placekitten.com/158/237', type: 'editorial' },
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
@@ -2082,11 +2076,7 @@ const formattedTemplatesArray = [
         pageTemplateType: 'steps',
       },
     ],
-    postersByPage: [
-      { png: 'http://placekitten.com/158/237', type: 'cover' },
-      { png: 'http://placekitten.com/158/237', type: 'list' },
-      { png: 'http://placekitten.com/158/237', type: 'quote' },
-    ],
+    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'steps' }],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -2286,11 +2276,7 @@ const formattedTemplatesArray = [
         pageTemplateType: 'cover',
       },
     ],
-    postersByPage: [
-      { png: 'http://placekitten.com/158/237', type: 'cover' },
-      { png: 'http://placekitten.com/158/237', type: 'list' },
-      { png: 'http://placekitten.com/158/237', type: 'quote' },
-    ],
+    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'cover' }],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -2490,11 +2476,7 @@ const formattedTemplatesArray = [
         pageTemplateType: 'section',
       },
     ],
-    postersByPage: [
-      { png: 'http://placekitten.com/158/237', type: 'cover' },
-      { png: 'http://placekitten.com/158/237', type: 'list' },
-      { png: 'http://placekitten.com/158/237', type: 'quote' },
-    ],
+    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'section' }],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -2695,9 +2677,7 @@ const formattedTemplatesArray = [
       },
     ],
     postersByPage: [
-      { png: 'http://placekitten.com/158/237', type: 'cover' },
-      { png: 'http://placekitten.com/158/237', type: 'list' },
-      { png: 'http://placekitten.com/158/237', type: 'quote' },
+      { png: 'http://placekitten.com/158/237', type: 'editorial' },
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],

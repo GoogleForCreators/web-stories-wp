@@ -25,6 +25,7 @@ import { PAGE_WIDTH } from '@web-stories-wp/units';
 import { addElementsToClipboard, processPastedElements } from '../copyPaste';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../../elements/shared/constants';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
+import { getDefinitionForType } from '../../elements';
 import { MEDIA_DEFAULT_ATTRIBUTES } from '../../elements/media/constants';
 
 describe('copyPaste utils', () => {
@@ -32,6 +33,7 @@ describe('copyPaste utils', () => {
     backgroundColor: createSolid(255, 0, 0),
   };
   const TEXT_ELEMENT = {
+    ...getDefinitionForType('text').defaultAttributes,
     ...SHARED_DEFAULT_ATTRIBUTES,
     font: TEXT_ELEMENT_DEFAULT_FONT,
     padding: {
@@ -48,6 +50,7 @@ describe('copyPaste utils', () => {
     color: createSolid(0, 0, 0),
   };
   const IMAGE_ELEMENT = {
+    ...getDefinitionForType('image').defaultAttributes,
     ...SHARED_DEFAULT_ATTRIBUTES,
     ...MEDIA_DEFAULT_ATTRIBUTES,
     type: 'image',
@@ -66,6 +69,7 @@ describe('copyPaste utils', () => {
   };
 
   const SHAPE_ELEMENT = {
+    ...getDefinitionForType('shape').defaultAttributes,
     ...SHARED_DEFAULT_ATTRIBUTES,
     type: 'shape',
     x: 10,

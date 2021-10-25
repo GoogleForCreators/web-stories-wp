@@ -36650,6 +36650,56 @@
     }
   },
   {
+    "family": "Zen Antique",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1160,
+      "des": -288,
+      "tAsc": 880,
+      "tDes": -120,
+      "tLGap": 0,
+      "wAsc": 1160,
+      "wDes": 288,
+      "xH": 473,
+      "capH": 726,
+      "yMin": -283,
+      "yMax": 965,
+      "hAsc": 1160,
+      "hDes": -288,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Zen Antique Soft",
+    "fallbacks": ["serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1160,
+      "des": -288,
+      "tAsc": 880,
+      "tDes": -120,
+      "tLGap": 0,
+      "wAsc": 1160,
+      "wDes": 288,
+      "xH": 473,
+      "capH": 726,
+      "yMin": -283,
+      "yMax": 965,
+      "hAsc": 1160,
+      "hDes": -288,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Zen Dots",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -36671,6 +36721,93 @@
       "yMax": 960,
       "hAsc": 930,
       "hDes": -270,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Zen Kaku Gothic Antique",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 500, 700, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 700],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1160,
+      "des": -288,
+      "tAsc": 880,
+      "tDes": -120,
+      "tLGap": 0,
+      "wAsc": 1160,
+      "wDes": 288,
+      "xH": 479,
+      "capH": 700,
+      "yMin": -216,
+      "yMax": 960,
+      "hAsc": 1160,
+      "hDes": -288,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Zen Kaku Gothic New",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 500, 700, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 700],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1160,
+      "des": -288,
+      "tAsc": 880,
+      "tDes": -120,
+      "tLGap": 0,
+      "wAsc": 1160,
+      "wDes": 288,
+      "xH": 479,
+      "capH": 700,
+      "yMin": -216,
+      "yMax": 960,
+      "hAsc": 1160,
+      "hDes": -288,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Zen Kurenaido",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1160,
+      "des": -288,
+      "tAsc": 880,
+      "tDes": -120,
+      "tLGap": 0,
+      "wAsc": 1160,
+      "wDes": 288,
+      "xH": 406,
+      "capH": 700,
+      "yMin": -253,
+      "yMax": 959,
+      "hAsc": 1160,
+      "hDes": -288,
       "lGap": 0
     }
   },
@@ -36699,6 +36836,66 @@
       "yMax": 835,
       "hAsc": 850,
       "hDes": -275,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Zen Maru Gothic",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 500, 700, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 700],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1160,
+      "des": -288,
+      "tAsc": 880,
+      "tDes": -120,
+      "tLGap": 0,
+      "wAsc": 1160,
+      "wDes": 288,
+      "xH": 479,
+      "capH": 700,
+      "yMin": -216,
+      "yMax": 960,
+      "hAsc": 1160,
+      "hDes": -288,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Zen Old Mincho",
+    "fallbacks": ["serif"],
+    "weights": [400, 700, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 700],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1160,
+      "des": -288,
+      "tAsc": 880,
+      "tDes": -120,
+      "tLGap": 0,
+      "wAsc": 1160,
+      "wDes": 288,
+      "xH": 430,
+      "capH": 726,
+      "yMin": -303,
+      "yMax": 965,
+      "hAsc": 1160,
+      "hDes": -288,
       "lGap": 0
     }
   },

@@ -31,9 +31,9 @@ const expectPageTemplateEqual = (currentPage, template) => {
   expect(currentPage.id).not.toEqual(template.id);
   expect(currentPage.elements.length).toEqual(template.elements.length);
   template.elements.forEach((element, index) => {
-    expect(objectWithout(currentPage.elements[index], ['id'])).toEqual(
-      objectWithout(element, ['id'])
-    );
+    expect(
+      objectWithout(currentPage.elements[index], ['id', 'basedOn'])
+    ).toEqual(objectWithout(element, ['id', 'basedOn']));
   });
   expect(currentPage.animations.length).toEqual(
     (template.animations || []).length
@@ -54,6 +54,94 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
   afterEach(() => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     fixture.restore();
+  });
+
+  describe('Page templates Panel', () => {
+    it('should navigate templates via keyboard', async () => {
+      // Click templates layout icon
+      await fixture.editor.library.pageTemplatesTab.click();
+
+      await waitFor(() =>
+        expect(
+          fixture.editor.library.pageTemplatesPane.pageTemplateButtons.length
+        ).toBeTruthy()
+      );
+
+      // tab to "Save current page as template" button
+      await fixture.events.keyboard.press('tab');
+      expect(fixture.editor.library.pageTemplatesPane.saveTemplateBtn).toBe(
+        document.activeElement
+      );
+
+      // tab to default templates dropdown button
+      await fixture.events.keyboard.press('tab');
+      expect(fixture.editor.library.pageTemplatesPane.dropDown).toBe(
+        document.activeElement
+      );
+
+      // tab to filtering buttons
+      await fixture.events.keyboard.press('tab');
+      // filter templates by "section"
+      await fixture.events.keyboard.press('right');
+      await fixture.events.keyboard.press('right');
+      await fixture.events.keyboard.press('Enter');
+      // expect templates titles to not contain "cover", there will still be one filter button containing "cover"
+      await waitFor(() => {
+        expect(fixture.screen.getAllByText(/cover/i).length).toBe(1);
+      });
+      // navigate to and add "Fresh & Bright" template
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('Enter');
+
+      // check that all elements have been applied
+      const { pages, currentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => {
+          return {
+            currentPage: state.currentPage,
+            pages: state.pages,
+          };
+        })
+      );
+
+      expect(pages.length).toEqual(2);
+      const cookingTemplate = formattedTemplatesArray.find(
+        (t) => t.title === 'Cooking'
+      );
+      const sectionPage = cookingTemplate.pages.find(
+        (p) => p.pageTemplateType === 'section'
+      );
+
+      expectPageTemplateEqual(currentPage, sectionPage);
+
+      // make next template "Entertainment Section" active before leaving template list
+      await fixture.events.keyboard.press('right');
+      await fixture.events.keyboard.press('tab');
+      // expect focus to leave templates
+      expect(
+        fixture.editor.library.pageTemplatesPane.pageTemplates[1]
+      ).not.toBe(document.activeElement);
+
+      // return to template list
+      await fixture.events.keyboard.shortcut('shift+tab');
+      // expect focus to be on last focused element
+      expect(
+        fixture.screen.getByRole('button', { name: 'Entertainment Section' })
+      ).toBe(document.activeElement);
+
+      // return to filters
+      await fixture.events.keyboard.shortcut('shift+tab');
+      await fixture.events.keyboard.shortcut('shift+tab');
+
+      // filter by all
+      await fixture.events.keyboard.press('left');
+      await fixture.events.keyboard.press('left');
+      await fixture.events.keyboard.press('Enter');
+      // expect template titles to contain "cover"
+      expect(
+        fixture.screen.getAllByText(/cover/i).length
+      ).toBeGreaterThanOrEqual(1);
+    });
   });
 
   describe('Default page templates', () => {
