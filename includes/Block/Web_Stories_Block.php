@@ -216,7 +216,7 @@ class Web_Stories_Block extends Embed_Base {
 				'maxNumOfStories' => self::MAX_NUM_OF_STORIES,
 				'archiveURL'      => get_post_type_archive_link( $this->story_post_type->get_slug() ),
 				'api'             => [
-					'stories' => $this->story_post_type->get_rest_url(),
+					'stories' => trailingslashit( $this->story_post_type->get_rest_url() ),
 					'users'   => '/web-stories/v1/users/',
 				],
 				'fieldStates'     => $this->stories_script_data->fields_states(),
