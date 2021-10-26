@@ -87,7 +87,8 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
     });
 
     it('should filter templates by type', async () => {
-      await fixture.editor.library.pageTemplatesTab.click();
+      await fixture.events.click(fixture.editor.library.pageTemplatesTab);
+
       await waitFor(() => expectAllTemplatesLoaded);
 
       const filteringList = fixture.screen.getByRole('listbox', {
@@ -121,7 +122,7 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
 
   describe('Creator can apply a template', () => {
     it('should add a new page when applying a template', async () => {
-      await fixture.editor.library.pageTemplatesTab.click();
+      await fixture.events.click(fixture.editor.library.pageTemplatesTab);
 
       await waitFor(() => expectAllTemplatesLoaded);
 
@@ -154,7 +155,7 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
     });
 
     it('should apply page template to an empty page using keyboard', async () => {
-      await fixture.editor.library.pageTemplatesTab.click();
+      await fixture.events.click(fixture.editor.library.pageTemplatesTab);
 
       await waitFor(() => expectAllTemplatesLoaded);
 
@@ -189,7 +190,7 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
   describe('Keyboard Navigation', () => {
     it('should navigate templates via keyboard', async () => {
       // Click templates layout icon
-      await fixture.editor.library.pageTemplatesTab.click();
+      await fixture.events.click(fixture.editor.library.pageTemplatesTab);
 
       await waitFor(() => expectAllTemplatesLoaded);
 

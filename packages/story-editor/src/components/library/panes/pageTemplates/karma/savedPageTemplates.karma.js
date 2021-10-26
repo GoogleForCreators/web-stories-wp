@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -91,10 +91,8 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       ).toBe(1);
 
       // Hover the added template to reveal the delete button.
-      await fixture.events.mouse.moveRel(
-        fixture.editor.library.pageTemplatesPane.pageTemplates[0],
-        40,
-        40
+      await fixture.events.hover(
+        fixture.editor.library.pageTemplatesPane.pageTemplates[0]
       );
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.deleteTemplateBtn
