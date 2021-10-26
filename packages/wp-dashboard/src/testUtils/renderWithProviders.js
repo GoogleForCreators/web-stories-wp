@@ -27,6 +27,11 @@ import {
 } from '@web-stories-wp/design-system';
 import { ConfigProvider } from '@web-stories-wp/dashboard';
 
+/**
+ * Internal dependencies
+ */
+import MockEditorProvider from './mockEditorProvider';
+
 const defaultProviderValues = {
   features: {},
   theme: {
@@ -46,13 +51,11 @@ export const renderWithProviders = (
   ui,
   providerValues = {},
   renderOptions = {},
-  wrapper = DefaultWrapper,
-  apiProvider
+  wrapper = DefaultWrapper
 ) => {
   const mergedProviderValues = { ...defaultProviderValues, ...providerValues };
 
   const ProvidedWrapper = wrapper;
-  const ApiProvider = apiProvider;
 
   // eslint-disable-next-line react/prop-types
   const Wrapper = ({ children }) => (
@@ -60,11 +63,11 @@ export const renderWithProviders = (
       <FlagsProvider features={mergedProviderValues.features}>
         <ThemeProvider theme={mergedProviderValues.theme}>
           <ConfigProvider config={mergedProviderValues.config}>
-            <ApiProvider value={mergedProviderValues.api}>
+            <MockEditorProvider value={mergedProviderValues.api}>
               <SnackbarProvider value={mergedProviderValues.snackbar}>
                 {children}
               </SnackbarProvider>
-            </ApiProvider>
+            </MockEditorProvider>
           </ConfigProvider>
         </ThemeProvider>
       </FlagsProvider>
