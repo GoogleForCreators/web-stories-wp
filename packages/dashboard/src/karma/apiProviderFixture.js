@@ -68,7 +68,7 @@ export default function ApiProviderFixture({ children }) {
       getAuthors: () =>
         Promise.resolve(
           formattedStoriesArray.flatMap(
-            ({ originalStoryData }) => originalStoryData._embedded.author
+            ({ originalStoryData }) => originalStoryData?._embedded.author
           )
         ),
     }),
@@ -133,10 +133,12 @@ function fetchStories(
         statuses.includes(storyStatus) &&
         title.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    .filter((story) =>
-      story.originalStoryData._embedded.author
-        .map(({ id }) => id)
-        .includes(author)
+    .filter(
+      (story) =>
+        typeof author !== 'number' ||
+        story.originalStoryData?._embedded.author
+          .map(({ id }) => id)
+          .includes(author)
     )
     .sort((a, b) => {
       let value;
