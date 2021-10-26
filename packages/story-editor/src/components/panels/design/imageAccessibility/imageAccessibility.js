@@ -67,7 +67,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
       title={__('Accessibility', 'web-stories')}
       isPersistable={!highlight}
     >
-      <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+      <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__('Add a brief description of the image.', 'web-stories')}
       </StyledText>
       <Row>

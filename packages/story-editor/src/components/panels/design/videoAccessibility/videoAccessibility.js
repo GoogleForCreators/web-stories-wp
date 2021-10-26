@@ -165,7 +165,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           canUpload={hasUploadMediaAction}
         />
         <InputsWrapper>
-          <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+          <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {__('Add a brief description of the video.', 'web-stories')}
           </StyledText>
           <TextArea
