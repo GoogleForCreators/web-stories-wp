@@ -193,7 +193,7 @@ export const Search = ({
   );
 
   const handleEndSearch = useCallback(() => {
-    if (!isMenuHidden || inputState.value?.trim().length === 0) {
+    if (isMenuHidden || inputState.value?.trim().length === 0) {
       isMenuFocused.set(false);
       isOpen.set(false);
     }
