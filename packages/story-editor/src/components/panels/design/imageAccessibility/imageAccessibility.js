@@ -32,8 +32,8 @@ import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { useHighlights, states, styles } from '../../../../app/highlights';
 
 const StyledText = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.tertiary};
-  margin-bottom: 12px;
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  margin-bottom: 10px;
 `;
 
 const DEFAULT_RESOURCE = { alt: null };

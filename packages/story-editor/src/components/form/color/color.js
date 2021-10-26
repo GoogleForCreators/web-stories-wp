@@ -37,7 +37,6 @@ import { MULTIPLE_VALUE } from '../../../constants';
 import useEyedropper from '../../eyedropper';
 import Tooltip from '../../tooltip';
 import { focusStyle } from '../../panels/shared';
-import { OverlayType } from '../../../utils/overlay';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
@@ -55,13 +54,21 @@ const Space = styled.div`
   background-color: ${({ theme }) => theme.colors.divider.primary};
 `;
 
+// ( 32px eyedropper button + 8px margin ) / 2
+const eyedropperSpacing = '20px';
 // 10px comes from divider / 2
 const InputWrapper = styled.div`
-  width: calc(53% - 10px);
+  width: ${({ hasEyedropper }) =>
+    hasEyedropper
+      ? `calc(53% - ${eyedropperSpacing} - 10px)`
+      : 'calc(53% - 10px)'};
 `;
 
 const OpacityWrapper = styled.div`
-  width: calc(47% - 10px);
+  width: ${({ hasEyedropper }) =>
+    hasEyedropper
+      ? `calc(47% - ${eyedropperSpacing} - 10px)`
+      : 'calc(47% - 10px)'};
 `;
 
 const EyeDropperButton = styled(Button).attrs({
@@ -69,7 +76,7 @@ const EyeDropperButton = styled(Button).attrs({
   type: BUTTON_TYPES.TERTIARY,
   size: BUTTON_SIZES.SMALL,
 })`
-  margin-right: 4px;
+  margin-right: 8px;
   ${focusStyle};
 `;
 
@@ -105,37 +112,21 @@ const Color = forwardRef(function Color(
   });
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
-  // Enable eyedropper only for solid colors
-  // https://github.com/google/web-stories-wp/pull/9488#issuecomment-950679465
-  const shouldShowEyedropper =
-    hasEyedropper &&
-    value.type !== OverlayType.RADIAL &&
-    value.type !== OverlayType.LINEAR;
-
-  const withEyedropper = (children) => {
-    if (shouldShowEyedropper) {
-      return (
-        <Container>
-          <Tooltip title={tooltip} hasTail>
-            <EyeDropperButton
-              aria-label={tooltip}
-              onClick={initEyedropper()}
-              onPointerEnter={initEyedropper(false)}
-            >
-              <Icons.Pipette />
-            </EyeDropperButton>
-          </Tooltip>
-          {children}
-        </Container>
-      );
-    }
-
-    return children;
-  };
-
-  return withEyedropper(
+  return (
     <Container aria-label={containerLabel}>
-      <InputWrapper>
+      {hasEyedropper && (
+        <Tooltip title={tooltip} hasTail>
+          <EyeDropperButton
+            aria-label={tooltip}
+            onClick={initEyedropper()}
+            onPointerEnter={initEyedropper(false)}
+          >
+            <Icons.Pipette />
+          </EyeDropperButton>
+        </Tooltip>
+      )}
+
+      <InputWrapper hasEyedropper={hasEyedropper}>
         <ColorInput
           ref={ref}
           onChange={onChange}
@@ -150,7 +141,7 @@ const Color = forwardRef(function Color(
       {allowsOpacity && displayOpacity && (
         <>
           <Space />
-          <OpacityWrapper>
+          <OpacityWrapper hasEyedropper={hasEyedropper}>
             <OpacityInput value={value} onChange={handleOpacityChange} />
           </OpacityWrapper>
         </>

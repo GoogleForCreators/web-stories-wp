@@ -57,8 +57,8 @@ const InputsWrapper = styled.div`
 `;
 
 const StyledText = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.tertiary};
-  margin-bottom: 12px;
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  margin-bottom: 10px;
 `;
 
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
