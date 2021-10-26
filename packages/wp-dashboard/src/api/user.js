@@ -19,6 +19,11 @@
 import apiFetch from '@wordpress/api-fetch';
 
 /**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './utils';
+
+/**
  * Get user.
  *
  * @param {Object} config Configuration object.
@@ -27,7 +32,7 @@ import apiFetch from '@wordpress/api-fetch';
 export function getUser(config) {
   return apiFetch({
     path: config.api.currentUser,
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }
 
 /**
@@ -43,11 +48,11 @@ export function toggleWebStoriesMediaOptimization(config, currentUser) {
     data: {
       meta: {
         web_stories_media_optimization:
-          !currentUser.meta.web_stories_media_optimization,
+          !currentUser.meta.webStoriesMediaOptimization,
       },
     },
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }
 
 /**
@@ -62,10 +67,9 @@ export function toggleWebStoriesTrackingOptIn(config, currentUser) {
     path: config.api.currentUser,
     data: {
       meta: {
-        web_stories_tracking_optin:
-          !currentUser.meta.web_stories_tracking_optin,
+        web_stories_tracking_optin: !currentUser.meta.webStoriesTrackingOptin,
       },
     },
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }

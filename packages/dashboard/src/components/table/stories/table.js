@@ -37,10 +37,25 @@ export default {
 };
 
 const tableData = [
-  { id: 1, title: 'Fashion', author: 'Carlos', date: 'July 13' },
-  { id: 2, title: 'Sports', author: 'Max', date: 'April 12' },
-  { id: 3, title: 'Music & Vinyl', author: 'Brittany', date: 'March 27' },
-  { id: 4, title: 'Arts & Culture', author: 'Mariano', date: 'September 5' },
+  {
+    id: 1,
+    title: 'Fashion',
+    author: { name: 'Carlos', id: 1 },
+    date: 'July 13',
+  },
+  { id: 2, title: 'Sports', author: { name: 'Max', id: 1 }, date: 'April 12' },
+  {
+    id: 3,
+    title: 'Music & Vinyl',
+    author: { name: 'Brittany', id: 1 },
+    date: 'March 27',
+  },
+  {
+    id: 4,
+    title: 'Arts & Culture',
+    author: { name: 'Mariano', id: 1 },
+    date: 'September 5',
+  },
 ];
 
 export const _default = () => {
@@ -64,7 +79,7 @@ export const _default = () => {
         {tableData.map((data) => (
           <TableRow key={data.id}>
             <TableCell>{data.title}</TableCell>
-            <TableCell>{data.author}</TableCell>
+            <TableCell>{data.author.name}</TableCell>
             <TableCell>{data.date}</TableCell>
           </TableRow>
         ))}

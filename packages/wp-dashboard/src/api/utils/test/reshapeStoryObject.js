@@ -70,10 +70,13 @@ describe('reshapeStoryObject', () => {
 
     const reshapedObj = reshapeStoryObject(responseObj);
     expect(reshapedObj).toMatchObject({
-      author: 'admin',
+      author: {
+        name: 'admin',
+        id: 1,
+      },
       bottomTargetAction: 'http://localhost:8899/edit/27',
       created: '2020-03-26T20:57:24',
-      created_gmt: 'undefinedZ',
+      createdGmt: 'undefinedZ',
       editStoryLink: 'http://localhost:8899/edit/27',
       featuredMediaUrl: 'http://localhost:8899/wp-content/uploads/poster.jpg',
       id: 27,
@@ -86,35 +89,7 @@ describe('reshapeStoryObject', () => {
       },
       locked: true,
       modified: '2020-03-26T21:42:14',
-      modified_gmt: 'undefinedZ',
-      originalStoryData: {
-        _embedded: {
-          author: [{ id: 1, name: 'admin' }],
-          'wp:featuredmedia': [
-            {
-              id: 33,
-              source_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
-            },
-          ],
-        },
-        author: 1,
-        categories: [],
-        date: '2020-03-26T20:57:24',
-        excerpt: { protected: false, rendered: '' },
-        featured_media: 0,
-        guid: {
-          rendered: 'http://localhost:8899/?post_type=web-story&#038;p=27',
-        },
-        id: 27,
-        link: 'http://localhost:8899/?post_type=web-story&p=27',
-        modified: '2020-03-26T21:42:14',
-        slug: '',
-        status: 'draft',
-        tags: [],
-        template: '',
-        title: { raw: 'Carlos Draft' },
-        type: 'web-story',
-      },
+      modifiedGmt: 'undefinedZ',
       previewLink: 'http://localhost:8899/preview/27',
       status: 'draft',
       title: 'Carlos Draft',
@@ -165,10 +140,13 @@ describe('reshapeStoryObject', () => {
 
     const reshapedObj = reshapeStoryObject(responseObj);
     expect(reshapedObj).toMatchObject({
-      author: 'admin',
+      author: {
+        name: 'admin',
+        id: 1,
+      },
       bottomTargetAction: 'http://localhost:8899/edit/27',
       created: '2020-03-26T20:57:24',
-      created_gmt: 'undefinedZ',
+      createdGmt: 'undefinedZ',
       editStoryLink: 'http://localhost:8899/edit/27',
       featuredMediaUrl: 'http://localhost:8899/wp-content/uploads/poster.jpg',
       id: 27,
@@ -180,35 +158,7 @@ describe('reshapeStoryObject', () => {
       },
       locked: true,
       modified: '2020-03-26T21:42:14',
-      modified_gmt: 'undefinedZ',
-      originalStoryData: {
-        _embedded: {
-          author: [{ id: 1, name: 'admin' }],
-          'wp:featuredmedia': [
-            {
-              id: 33,
-              source_url: 'http://localhost:8899/wp-content/uploads/poster.jpg',
-            },
-          ],
-        },
-        author: 1,
-        categories: [],
-        date: '2020-03-26T20:57:24',
-        excerpt: { protected: false, rendered: '' },
-        featured_media: 0,
-        guid: {
-          rendered: 'http://localhost:8899/?post_type=web-story&#038;p=27',
-        },
-        id: 27,
-        link: 'http://localhost:8899/?post_type=web-story&p=27',
-        modified: '2020-03-26T21:42:14',
-        slug: '',
-        status: 'draft',
-        tags: [],
-        template: '',
-        title: { raw: 'Carlos Draft' },
-        type: 'web-story',
-      },
+      modifiedGmt: 'undefinedZ',
       previewLink: 'http://localhost:8899/preview/27',
       status: 'draft',
       title: 'Carlos Draft',
