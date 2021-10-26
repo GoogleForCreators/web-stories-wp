@@ -43,7 +43,7 @@ export default function useMediaOptimization() {
   );
 
   const mediaOptimization = Boolean(
-    currentUser.data.meta?.web_stories_media_optimization
+    currentUser.data.meta?.webStoriesMediaOptimization
   );
 
   const _toggleWebStoriesMediaOptimization = useCallback(() => {
