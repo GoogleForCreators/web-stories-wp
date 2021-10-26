@@ -42,6 +42,14 @@ describe('Telemetry Banner', () => {
     });
   });
 
+  afterAll(async () => {
+    await visitSettings();
+    await disableCheckbox('[data-testid="telemetry-settings-checkbox"]');
+    await page.evaluate(() => {
+      localStorage.removeItem('web_stories_tracking_optin_banner_closed');
+    });
+  });
+
   it('should render the telemetry opt in banner', async () => {
     await expect(page).toMatch('Help improve the editor!');
   });
