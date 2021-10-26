@@ -167,7 +167,7 @@ export const Search = ({
    */
   const handleInputChange = useCallback(
     ({ target }) => {
-      inputState.set(target.value.trim());
+      inputState.set(target.value);
 
       if (target.value.length > 0 && !isOpen.value) {
         isOpen.set(!isOpen.value);
