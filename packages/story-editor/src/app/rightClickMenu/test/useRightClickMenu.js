@@ -53,8 +53,8 @@ jest.mock('@web-stories-wp/tracking');
 const mockEvent = {
   preventDefault: jest.fn(),
   stopPropagation: jest.fn(),
-  x: 500,
-  y: -1230,
+  clientX: 500,
+  clientY: -1230,
 };
 
 const defaultCanvasContext = {
@@ -112,6 +112,40 @@ describe('useRightClickMenu', () => {
   });
 
   describe('context menu manipulation', () => {
+    it('should not open the menu if multiple elements are selected', () => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '1',
+            type: 'text',
+            isDefaultBackground: false,
+          },
+
+          {
+            id: '2',
+            type: 'shape',
+            isDefaultBackground: false,
+          },
+
+          {
+            id: '3',
+            type: 'text',
+            isDefaultBackground: false,
+          },
+        ],
+      });
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      act(() => {
+        result.current.onOpenMenu(mockEvent);
+      });
+
+      expect(result.current.isMenuOpen).toBe(false);
+    });
+
     it('should open the menu at the specified position', () => {
       const { result } = renderHook(() => useRightClickMenu(), {
         wrapper: RightClickMenuProvider,
@@ -122,7 +156,10 @@ describe('useRightClickMenu', () => {
       });
 
       expect(result.current.isMenuOpen).toBe(true);
-      expect(result.current.menuPosition).toStrictEqual({ x: 500, y: -1230 });
+      expect(result.current.menuPosition).toStrictEqual({
+        x: 500,
+        y: -1230,
+      });
     });
 
     it('should close the menu and reset the position', () => {
@@ -135,7 +172,10 @@ describe('useRightClickMenu', () => {
       });
 
       expect(result.current.isMenuOpen).toBe(true);
-      expect(result.current.menuPosition).toStrictEqual({ x: 500, y: -1230 });
+      expect(result.current.menuPosition).toStrictEqual({
+        x: 500,
+        y: -1230,
+      });
 
       act(() => {
         result.current.onCloseMenu();
@@ -153,7 +193,7 @@ describe('useRightClickMenu', () => {
         selectedElements: [
           {
             id: '1',
-            type: 'text',
+            type: 'image',
             isDefaultBackground: true,
           },
         ],

@@ -28,7 +28,6 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Post_Type;
 use WP_REST_Server;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -40,7 +39,6 @@ use WP_Error;
  * Class Status_Check_Controller
  */
 class Status_Check_Controller extends REST_Controller implements HasRequirements {
-	use Post_Type;
 
 	/**
 	 * Story_Post_Type instance.
@@ -185,7 +183,7 @@ class Status_Check_Controller extends REST_Controller implements HasRequirements
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function status_check_permissions_check() {
-		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed run status check.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 

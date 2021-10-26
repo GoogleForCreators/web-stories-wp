@@ -674,16 +674,16 @@
     "packages-dev": [
         {
             "name": "antecedent/patchwork",
-            "version": "2.1.15",
+            "version": "2.1.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/antecedent/patchwork.git",
-                "reference": "0430ceaac7f447f1778c199ec19d7e4362a6f961"
+                "reference": "df5aba175a44c2996ced4edf8ec9f9081b5348c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/antecedent/patchwork/zipball/0430ceaac7f447f1778c199ec19d7e4362a6f961",
-                "reference": "0430ceaac7f447f1778c199ec19d7e4362a6f961",
+                "url": "https://api.github.com/repos/antecedent/patchwork/zipball/df5aba175a44c2996ced4edf8ec9f9081b5348c0",
+                "reference": "df5aba175a44c2996ced4edf8ec9f9081b5348c0",
                 "shasum": ""
             },
             "require": {
@@ -716,9 +716,9 @@
             ],
             "support": {
                 "issues": "https://github.com/antecedent/patchwork/issues",
-                "source": "https://github.com/antecedent/patchwork/tree/2.1.15"
+                "source": "https://github.com/antecedent/patchwork/tree/2.1.17"
             },
-            "time": "2021-08-22T08:00:13+00:00"
+            "time": "2021-10-21T14:22:43+00:00"
         },
         {
             "name": "automattic/vipwpcs",
@@ -1257,16 +1257,16 @@
         },
         {
             "name": "pdepend/pdepend",
-            "version": "2.10.0",
+            "version": "2.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "1fd30f4352b630ad53fec3fd5e8b8ba760f85596"
+                "reference": "30452fdabb3dfca89f4bf977abc44adc5391e062"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/1fd30f4352b630ad53fec3fd5e8b8ba760f85596",
-                "reference": "1fd30f4352b630ad53fec3fd5e8b8ba760f85596",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/30452fdabb3dfca89f4bf977abc44adc5391e062",
+                "reference": "30452fdabb3dfca89f4bf977abc44adc5391e062",
                 "shasum": ""
             },
             "require": {
@@ -1302,7 +1302,7 @@
             "description": "Official version of pdepend to be handled with Composer",
             "support": {
                 "issues": "https://github.com/pdepend/pdepend/issues",
-                "source": "https://github.com/pdepend/pdepend/tree/2.10.0"
+                "source": "https://github.com/pdepend/pdepend/tree/2.10.1"
             },
             "funding": [
                 {
@@ -1310,7 +1310,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-20T09:56:09+00:00"
+            "time": "2021-10-11T12:15:18+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -2483,12 +2483,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "25ba9c9c3fe3c26cc041f93602bf146abba74db4"
+                "reference": "0488e161600117fc3a0d72397dad154729002f54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/25ba9c9c3fe3c26cc041f93602bf146abba74db4",
-                "reference": "25ba9c9c3fe3c26cc041f93602bf146abba74db4",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0488e161600117fc3a0d72397dad154729002f54",
+                "reference": "0488e161600117fc3a0d72397dad154729002f54",
                 "shasum": ""
             },
             "conflict": {
@@ -2589,6 +2589,7 @@
                 "getgrav/grav": "<1.7.21",
                 "getkirby/cms": "<=3.5.6",
                 "getkirby/panel": "<2.5.14",
+                "gilacms/gila": "<=1.11.4",
                 "gos/web-socket-bundle": "<1.10.4|>=2,<2.6.1|>=3,<3.3",
                 "gree/jose": "<=2.2",
                 "gregwar/rst": "<1.0.3",
@@ -2783,6 +2784,7 @@
                 "theonedemon/phpwhois": "<=4.2.5",
                 "titon/framework": ">=0,<9.9.99",
                 "topthink/think": "<=6.0.9",
+                "topthink/thinkphp": "<=3.2.3",
                 "tribalsystems/zenario": "<8.8.53370",
                 "truckersmp/phpwhois": "<=4.3.1",
                 "twig/twig": "<1.38|>=2,<2.7",
@@ -2879,7 +2881,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-29T18:03:48+00:00"
+            "time": "2021-09-30T18:03:50+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -3569,16 +3571,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.6.0",
+            "version": "3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "ffced0d2c8fa8e6cdc4d695a743271fab6c38625"
+                "reference": "f268ca40d54617c6e06757f83f699775c9b3ff2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/ffced0d2c8fa8e6cdc4d695a743271fab6c38625",
-                "reference": "ffced0d2c8fa8e6cdc4d695a743271fab6c38625",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/f268ca40d54617c6e06757f83f699775c9b3ff2e",
+                "reference": "f268ca40d54617c6e06757f83f699775c9b3ff2e",
                 "shasum": ""
             },
             "require": {
@@ -3621,7 +3623,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2021-04-09T00:54:41+00:00"
+            "time": "2021-10-11T04:00:11+00:00"
         },
         {
             "name": "symfony/config",
@@ -4073,16 +4075,16 @@
         },
         {
             "name": "yoast/phpunit-polyfills",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Yoast/PHPUnit-Polyfills.git",
-                "reference": "f014fb21c2b0038fd329515d59025af42fb98715"
+                "reference": "1a582ab1d91e86aa450340c4d35631a85314ff9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Yoast/PHPUnit-Polyfills/zipball/f014fb21c2b0038fd329515d59025af42fb98715",
-                "reference": "f014fb21c2b0038fd329515d59025af42fb98715",
+                "url": "https://api.github.com/repos/Yoast/PHPUnit-Polyfills/zipball/1a582ab1d91e86aa450340c4d35631a85314ff9f",
+                "reference": "1a582ab1d91e86aa450340c4d35631a85314ff9f",
                 "shasum": ""
             },
             "require": {
@@ -4090,9 +4092,7 @@
                 "phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.0 || ^7.0 || ^8.0 || ^9.0"
             },
             "require-dev": {
-                "php-parallel-lint/php-console-highlighter": "^0.5",
-                "php-parallel-lint/php-parallel-lint": "^1.3.0",
-                "yoast/yoastcs": "^2.1.0"
+                "yoast/yoastcs": "^2.2.0"
             },
             "type": "library",
             "extra": {
@@ -4132,7 +4132,7 @@
                 "issues": "https://github.com/Yoast/PHPUnit-Polyfills/issues",
                 "source": "https://github.com/Yoast/PHPUnit-Polyfills"
             },
-            "time": "2021-08-09T16:28:08+00:00"
+            "time": "2021-10-03T08:40:26+00:00"
         },
         {
             "name": "yoast/wp-test-utils",

@@ -81,6 +81,8 @@ class Story_Archive extends Service_Base {
 
 		add_filter( 'display_post_states', [ $this, 'filter_display_post_states' ], 10, 2 );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
+		add_action( 'wp_trash_post', [ $this, 'on_remove_archive_page' ] );
+		add_action( 'delete_post', [ $this, 'on_remove_archive_page' ] );
 	}
 
 	/**
@@ -102,7 +104,7 @@ class Story_Archive extends Service_Base {
 
 		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
 		if ( $this->story_post_type::REWRITE_SLUG === $query->get( 'pagename' ) || $this->story_post_type::REWRITE_SLUG === $query->get( 'name' ) ) {
-			$redirect_url = get_post_type_archive_link( $this->story_post_type::POST_TYPE_SLUG );
+			$redirect_url = get_post_type_archive_link( $this->story_post_type->get_slug() );
 
 			if ( ! $redirect_url ) {
 				return $bypass;
@@ -128,7 +130,7 @@ class Story_Archive extends Service_Base {
 	public function update_archive_setting() {
 		$this->story_post_type->unregister_post_type();
 		$this->story_post_type->register_post_type();
-			
+
 		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
@@ -152,7 +154,7 @@ class Story_Archive extends Service_Base {
 			return;
 		}
 
-		if ( ! $query->is_post_type_archive( $this->story_post_type::POST_TYPE_SLUG ) ) {
+		if ( ! $query->is_post_type_archive( $this->story_post_type->get_slug() ) ) {
 			return;
 		}
 
@@ -164,6 +166,30 @@ class Story_Archive extends Service_Base {
 		$query->is_archive           = false;
 		$query->is_singular          = true;
 		$query->is_page              = true;
+	}
+
+	/**
+	 * Resets archive settings when the custom archive page is trashed.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param int $postid Post ID.
+	 *
+	 * @return void
+	 */
+	public function on_remove_archive_page( $postid ) {
+		if ( 'page' !== get_post_type( $postid ) ) {
+			return;
+		}
+
+		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
+
+		if ( $custom_archive_page_id !== $postid ) {
+			return;
+		}
+
+		$this->settings->update_setting( $this->settings::SETTING_NAME_ARCHIVE, 'default' );
+		$this->settings->update_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, 0 );
 	}
 
 	/**

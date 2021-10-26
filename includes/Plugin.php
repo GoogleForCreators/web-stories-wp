@@ -170,10 +170,12 @@ class Plugin extends ServiceBasedPlugin {
 			Assets::class,
 			Decoder::class,
 			Experiments::class,
+			Story_Post_Type::class,
 			Injector::class,
 			Integrations\Site_Kit::class,
 			Locale::class,
 			Settings::class,
+			Stories_Script_Data::class,
 			User\Preferences::class,
 		];
 	}

@@ -59,4 +59,5 @@ export {
   enablePageDialogAccept,
   setBrowserViewport,
   insertBlock,
+  createURL,
 } from '@wordpress/e2e-test-utils';

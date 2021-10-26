@@ -26,7 +26,6 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useCanvas } from '../../app';
-import { RightClickMenuProvider } from '../../app/rightClickMenu';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -73,23 +72,21 @@ function CanvasLayout({ header }) {
   // with Moveable and left-right direction, for this subtree, we are not using any plugin.
   // See also https://styled-components.com/docs/api#stylesheetmanager for general usage.
   return (
-    <RightClickMenuProvider>
-      <StyleSheetManager stylisPlugins={[]}>
-        <Background ref={setBackgroundRef} style={layoutParamsCss}>
-          <CanvasUploadDropTarget>
-            <CanvasElementDropzone>
-              <SelectionCanvas>
-                <DisplayLayer />
-                <FramesLayer />
-                <NavLayer header={header} />
-              </SelectionCanvas>
-              <EditLayer />
-              <EyedropperLayer />
-            </CanvasElementDropzone>
-          </CanvasUploadDropTarget>
-        </Background>
-      </StyleSheetManager>
-    </RightClickMenuProvider>
+    <StyleSheetManager stylisPlugins={[]}>
+      <Background ref={setBackgroundRef} style={layoutParamsCss}>
+        <CanvasUploadDropTarget>
+          <CanvasElementDropzone>
+            <SelectionCanvas>
+              <DisplayLayer />
+              <FramesLayer />
+              <NavLayer header={header} />
+            </SelectionCanvas>
+            <EditLayer />
+            <EyedropperLayer />
+          </CanvasElementDropzone>
+        </CanvasUploadDropTarget>
+      </Background>
+    </StyleSheetManager>
   );
 }
 
