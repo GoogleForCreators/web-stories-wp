@@ -35,6 +35,10 @@ import { duplicatePage } from '../../../../elements';
 import { useStory } from '../../../../app/story';
 import { PANE_PADDING } from '../shared';
 import { useConfig } from '../../../../app/config';
+import { useHelpCenter } from '../../../../app';
+import { KEYS } from '../../../helpCenter/constants';
+
+import { noop } from '../../../../utils/noop';
 import DefaultPageTemplate from './defaultPageTemplate';
 
 const WrapperGrid = styled.div`
@@ -57,6 +61,10 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
   const [currentPageId, setCurrentPageId] = useState();
   const containerRef = useRef();
   const pageRefs = useRef({});
+  const {
+    state: { readTips },
+    actions: { openToUnreadTip = noop },
+  } = useHelpCenter();
 
   const handlePageClick = useCallback(
     (page) => {
@@ -69,8 +77,12 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
         message: __('Page Template added.', 'web-stories'),
         dismissable: true,
       });
+
+      if (!readTips?.addBackgroundMedia) {
+        openToUnreadTip(KEYS.ADD_BACKGROUND_MEDIA);
+      }
     },
-    [addPage, showSnackbar]
+    [addPage, openToUnreadTip, readTips, showSnackbar]
   );
 
   const handleFocus = useCallback((id) => {
