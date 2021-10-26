@@ -47,7 +47,7 @@ describe('Admin User', () => {
     await visitSettings();
 
     await disableCheckbox(telemetryCheckboxSelector);
-    await disableCheckbox(videoOptimizationCheckboxSelector);
+    await enableCheckbox(videoOptimizationCheckboxSelector);
     await disableCheckbox(videoCacheCheckboxSelector);
   });
 

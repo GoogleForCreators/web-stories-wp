@@ -49,7 +49,7 @@ describe('Author User', () => {
     await visitSettings();
 
     await disableCheckbox(telemetryCheckboxSelector);
-    await disableCheckbox(videoOptimizationCheckboxSelector);
+    await enableCheckbox(videoOptimizationCheckboxSelector);
   });
 
   it('should only let me see and update the telemetry and video optimization settings', async () => {
