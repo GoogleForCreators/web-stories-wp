@@ -31,6 +31,14 @@ describe('Telemetry Banner', () => {
     });
   });
 
+  afterAll(async () => {
+    await visitSettings();
+    await disableCheckbox('[data-testid="telemetry-settings-checkbox"]');
+    await page.evaluate(() => {
+      localStorage.removeItem('web_stories_tracking_optin_banner_closed');
+    });
+  });
+
   it('should render the telemetry settings checkbox', async () => {
     const settingsView = await page.$('[data-testid="editor-settings"]');
     expect(settingsView).toBeTruthy();
