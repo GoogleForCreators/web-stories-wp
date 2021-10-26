@@ -35,9 +35,6 @@ const expectPageTemplateEqual = (currentPage, template) => {
       objectWithout(currentPage.elements[index], ['id', 'basedOn'])
     ).toEqual(objectWithout(element, ['id', 'basedOn']));
   });
-  expect(currentPage.animations.length).toEqual(
-    (template.animations || []).length
-  );
 };
 
 describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () => {
@@ -93,15 +90,16 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
       await fixture.editor.library.pageTemplatesTab.click();
       await waitFor(() => expectAllTemplatesLoaded);
 
-      const filteringList =
-        fixture.editor.library.pageTemplatesPane.filteringOptions;
+      const filteringList = fixture.screen.getByRole('listbox', {
+        name: 'List of filtering options',
+      });
+
+      const editorialChip = within(filteringList).getByRole('option', {
+        name: 'Editorial',
+      });
 
       // filter by editorial
-      await fixture.events.click(
-        within(filteringList).getByRole('option', {
-          name: 'Editorial',
-        })
-      );
+      await fixture.events.click(editorialChip);
 
       const editorialTemplates = formattedTemplatesArray.flatMap((template) => {
         return template.pages.filter((page) => {
@@ -109,15 +107,13 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
         });
       });
 
-      expect(fixture.screen.getAllByRole('listitem').length).toBe(
-        editorialTemplates.length
-      );
+      await waitFor(() => {
+        expect(fixture.screen.getAllByRole('listitem').length).toBe(
+          editorialTemplates.length
+        );
+      });
       // filter back to all by clicking 'editorial' again
-      await fixture.events.click(
-        within(filteringList).getByRole('option', {
-          name: 'Editorial',
-        })
-      );
+      await fixture.events.click(editorialChip);
 
       await waitFor(() => expectAllTemplatesLoaded);
     });
