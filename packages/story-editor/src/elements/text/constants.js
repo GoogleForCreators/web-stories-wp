@@ -74,7 +74,6 @@ export const panels = [
   PanelTypes.SIZE_POSITION,
   PanelTypes.TEXT_STYLE,
   PanelTypes.TEXT_BOX,
-  PanelTypes.BORDER_RADIUS,
   PanelTypes.BORDER,
   PanelTypes.LINK,
   PanelTypes.ANIMATION,

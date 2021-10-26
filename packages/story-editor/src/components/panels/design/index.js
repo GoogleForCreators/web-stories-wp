@@ -15,7 +15,6 @@
  */
 
 export { default as AnimationPanel } from './animation';
-export { default as BorderRadiusPanel } from './borderRadius';
 export { default as BorderStylePanel } from './border';
 export { default as CaptionsPanel } from './captions';
 export { default as ColorPresetPanel } from './preset/colorPreset';

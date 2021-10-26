@@ -200,7 +200,6 @@ export class Fixture {
 
     const panels = [
       'animation',
-      'borderRadius',
       'borderStyle',
       'captions',
       'globalStoryStyles',

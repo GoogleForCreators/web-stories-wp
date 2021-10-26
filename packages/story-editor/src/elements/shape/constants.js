@@ -61,6 +61,5 @@ export const panels = [
   PanelTypes.BORDER,
   PanelTypes.LINK,
   PanelTypes.SHAPE_STYLE,
-  PanelTypes.BORDER_RADIUS,
   PanelTypes.ANIMATION,
 ];

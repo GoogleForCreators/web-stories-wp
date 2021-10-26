@@ -55,4 +55,16 @@ export class SizePosition extends AbstractPanel {
   get opacity() {
     return this.getByRole('textbox', { name: /Opacity in percent/i });
   }
+
+  radius(corner = null) {
+    return this.getByRole('textbox', {
+      name: corner ? `${corner} corner radius` : 'Corner Radius',
+    });
+  }
+
+  get lockBorderRadius() {
+    return this.getByRole('button', {
+      name: /Toggle consistent corner radius/,
+    });
+  }
 }

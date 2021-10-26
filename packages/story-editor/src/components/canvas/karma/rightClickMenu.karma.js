@@ -680,7 +680,7 @@ describe('Right Click Menu integration', () => {
 
         // add border radius
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.borderRadius.radius()
+          fixture.editor.inspector.designPanel.sizePosition.radius()
         );
         await fixture.events.keyboard.type('50');
 
@@ -746,7 +746,7 @@ describe('Right Click Menu integration', () => {
 
         // add border radius
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.borderRadius.radius()
+          fixture.editor.inspector.designPanel.sizePosition.radius()
         );
         await fixture.events.keyboard.type('50');
 

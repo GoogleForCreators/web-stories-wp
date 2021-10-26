@@ -133,7 +133,7 @@ function SizePositionPanel(props) {
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
   const flip = useCommonObjectValue(selectedElements, 'flip', DEFAULT_FLIP);
   const borderRadius = useCommonObjectValue(selectedElements, 'borderRadius', {
-    locked: true
+    locked: true,
   });
 
   const origRatio = useMemo(() => {

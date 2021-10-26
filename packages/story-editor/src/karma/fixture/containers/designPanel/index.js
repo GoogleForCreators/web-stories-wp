@@ -27,7 +27,6 @@ import { Alignment } from './alignment';
 import { Animation } from './animationPanel';
 import { Filter } from './filter';
 import { Border } from './border';
-import { BorderRadius } from './borderRadius';
 import { ColorPreset } from './colorPreset';
 import { Layers } from './layers';
 import { Link } from './link';
@@ -105,14 +104,6 @@ export class DesignPanel extends Container {
       this.getByRole('region', { name: /Saved Colors/i }),
       'colorPreset',
       ColorPreset
-    );
-  }
-
-  get borderRadius() {
-    return this._get(
-      this.getByRole('region', { name: /Corner Radius/i }),
-      'borderRadius',
-      BorderRadius
     );
   }
 

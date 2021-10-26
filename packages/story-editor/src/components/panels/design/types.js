@@ -15,7 +15,6 @@
  */
 
 const ANIMATION = 'animation';
-const BORDER_RADIUS = 'borderRadius';
 const BORDER = 'borderStyle';
 const CAPTIONS = 'captions';
 const STYLE_PRESETS = 'stylePresets';
@@ -47,7 +46,6 @@ const PanelTypes = {
   FILTER,
   SHAPE_STYLE,
   BORDER,
-  BORDER_RADIUS,
   ANIMATION,
   VIDEO_OPTIONS,
   CAPTIONS,
