@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { __, _x } from '@web-stories-wp/i18n';
 import stickers from '@web-stories-wp/stickers';
@@ -56,6 +56,7 @@ import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
 import OpacityControls from './opacity';
+import RadiusControls from './radius';
 
 const StyledLockToggle = styled(LockToggle)`
   ${focusStyle};
@@ -65,14 +66,33 @@ function getStickerAspectRatio(element) {
   return stickers?.[element?.sticker?.type].aspectRatio || 1;
 }
 
+const gridWithoutFlip = `
+  'x . . . y . .'
+  'w . d . h . l'
+  'r . . . o . .'
+  'c c c c c c c';
+`;
+
+const gridWithFlip = css`
+  'x . . . y . .'
+  'w . d . h . l'
+  'r . . . f . .'
+  ${({ unlockedRadius }) =>
+    unlockedRadius
+      ? `
+  'o . . . . . .'
+  'c c c c c c c';
+  `
+      : `
+  'o . . . c c c';
+  `}
+`;
+
 const Grid = styled.div`
   display: grid;
   grid-template-areas:
     ${({ isSingleMedia }) => (isSingleMedia ? `'b b b b b . .'` : null)}
-    'x . . . y . .'
-    'w . d . h . l'
-    'r . . . f . .'
-    'o . . . c . .';
+    ${({ canFlip }) => (canFlip ? gridWithFlip : gridWithoutFlip)}
   grid-template-columns: 1fr 4px 8px 4px 1fr 4px 32px;
   grid-template-rows: repeat(4, 36px);
   row-gap: 16px;
@@ -112,6 +132,9 @@ function SizePositionPanel(props) {
   const height = getCommonValue(selectedElements, 'height');
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
   const flip = useCommonObjectValue(selectedElements, 'flip', DEFAULT_FLIP);
+  const borderRadius = useCommonObjectValue(selectedElements, 'borderRadius', {
+    locked: true
+  });
 
   const origRatio = useMemo(() => {
     const origWidth = getCommonValue(submittedSelectedElements, 'width');
@@ -226,7 +249,11 @@ function SizePositionPanel(props) {
   }, []);
   return (
     <SimplePanel name="size" title={__('Selection', 'web-stories')}>
-      <Grid isSingleMedia={isMedia && isSingleElement}>
+      <Grid
+        isSingleMedia={isMedia && isSingleElement}
+        canFlip={canFlip}
+        unlockedRadius={!borderRadius.locked}
+      >
         {isMedia && isSingleElement && (
           <Area area="b">
             <StyledButton
@@ -379,8 +406,11 @@ function SizePositionPanel(props) {
             />
           </Area>
         )}
-        <Area area={canFlip ? 'o' : 'f'}>
+        <Area area="o">
           <OpacityControls {...props} />
+        </Area>
+        <Area area="c">
+          <RadiusControls {...props} />
         </Area>
       </Grid>
     </SimplePanel>

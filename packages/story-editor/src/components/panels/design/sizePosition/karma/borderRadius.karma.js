@@ -23,7 +23,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
 
-describe('Border Radius Panel', () => {
+describe('Border Radius', () => {
   let fixture;
 
   beforeEach(async () => {
