@@ -28,7 +28,6 @@ export * from './app/api';
 export * from './components/header';
 export * from './app/currentUser';
 export * from './output';
-export * from './testUtils';
 
 export { default as getStoryPropsToSave } from './app/story/utils/getStoryPropsToSave';
 export { default as FontContext } from './app/font/context';
