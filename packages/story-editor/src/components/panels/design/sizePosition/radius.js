@@ -21,13 +21,12 @@ import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { Icons, LockToggle, NumericInput } from '@web-stories-wp/design-system';
+import { LockToggle, NumericInput } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { canMaskHaveBorder } from '../../../../masks';
-import { Row } from '../../../form';
 import Tooltip from '../../../tooltip';
 import {
   useCommonObjectValue,
@@ -36,8 +35,6 @@ import {
 } from '../../shared';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
-const TOGGLE_WIDTH = 32;
-const ROW_HEIGHT = 32;
 const DEFAULT_BORDER_RADIUS = {
   topLeft: 0,
   topRight: 0,
@@ -56,8 +53,8 @@ const LockContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  width: 32px;
   margin-left: 8px;
-  margin-bottom: 16px;
 `;
 
 const StyledLockToggle = styled(LockToggle)`
@@ -65,23 +62,7 @@ const StyledLockToggle = styled(LockToggle)`
 `;
 
 const BoxedNumericInput = styled(NumericInput)`
-  width: 100px;
-  max-width: 128px;
-`;
-
-const Space = styled.div`
-  flex: 0 0 ${({ space }) => (space ? space : TOGGLE_WIDTH)}px;
-`;
-
-const Icon = styled.div`
-  flex: 0 0 32px;
-  opacity: 0.24;
-  text-align: center;
-  height: ${ROW_HEIGHT}px;
-  margin-bottom: -${ROW_HEIGHT * 2}px;
-  svg {
-    width: 24px;
-  }
+  width: 25%;
 `;
 
 function RadiusControls({ selectedElements, pushUpdateForObject }) {
@@ -152,49 +133,38 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
   return (
     <FlexContainer>
       <InputContainer>
-        <Row>
-          <BoxedNumericInput
-            value={
-              borderRadius.topLeft === MULTIPLE_VALUE
-                ? ''
-                : borderRadius.topLeft
-            }
-            aria-label={firstInputLabel}
-            onChange={(_, value) => handleChange('topLeft', value)}
-            placeholder={
-              borderRadius.topLeft === MULTIPLE_VALUE
-                ? MULTIPLE_DISPLAY_VALUE
-                : ''
-            }
-            isIndeterminate={borderRadius.topLeft === MULTIPLE_VALUE}
-            containerStyleOverride={inputContainerStyleOverride}
-          />
-          {!lockRadius && (
-            <>
-              <Icon>
-                <Icons.Union />
-              </Icon>
-              <BoxedNumericInput
-                value={
-                  borderRadius.topRight === MULTIPLE_VALUE
-                    ? ''
-                    : borderRadius.topRight
-                }
-                aria-label={__('Top right corner radius', 'web-stories')}
-                onChange={(_, value) => handleChange('topRight', value)}
-                placeholder={
-                  borderRadius.topRight === MULTIPLE_VALUE
-                    ? MULTIPLE_DISPLAY_VALUE
-                    : ''
-                }
-                isIndeterminate={borderRadius.topRight === MULTIPLE_VALUE}
-                containerStyleOverride={inputContainerStyleOverride}
-              />
-            </>
-          )}
-        </Row>
+        <BoxedNumericInput
+          value={
+            borderRadius.topLeft === MULTIPLE_VALUE ? '' : borderRadius.topLeft
+          }
+          aria-label={firstInputLabel}
+          onChange={(_, value) => handleChange('topLeft', value)}
+          placeholder={
+            borderRadius.topLeft === MULTIPLE_VALUE
+              ? MULTIPLE_DISPLAY_VALUE
+              : ''
+          }
+          isIndeterminate={borderRadius.topLeft === MULTIPLE_VALUE}
+          containerStyleOverride={inputContainerStyleOverride}
+        />
         {!lockRadius && (
-          <Row>
+          <>
+            <BoxedNumericInput
+              value={
+                borderRadius.topRight === MULTIPLE_VALUE
+                  ? ''
+                  : borderRadius.topRight
+              }
+              aria-label={__('Top right corner radius', 'web-stories')}
+              onChange={(_, value) => handleChange('topRight', value)}
+              placeholder={
+                borderRadius.topRight === MULTIPLE_VALUE
+                  ? MULTIPLE_DISPLAY_VALUE
+                  : ''
+              }
+              isIndeterminate={borderRadius.topRight === MULTIPLE_VALUE}
+              containerStyleOverride={inputContainerStyleOverride}
+            />
             <BoxedNumericInput
               value={
                 borderRadius.bottomLeft === MULTIPLE_VALUE
@@ -211,7 +181,6 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
               isIndeterminate={borderRadius.bottomLeft === MULTIPLE_VALUE}
               containerStyleOverride={inputContainerStyleOverride}
             />
-            <Space space={32} />
             <BoxedNumericInput
               value={
                 borderRadius.bottomRight === MULTIPLE_VALUE
@@ -228,10 +197,9 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
               isIndeterminate={borderRadius.bottomRight === MULTIPLE_VALUE}
               containerStyleOverride={inputContainerStyleOverride}
             />
-          </Row>
+          </>
         )}
       </InputContainer>
-
       <LockContainer>
         <Tooltip title={__('Toggle consistent corner radius', 'web-stories')}>
           <StyledLockToggle
