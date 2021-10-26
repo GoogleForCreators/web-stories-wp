@@ -41,18 +41,18 @@ import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
 
-const ContainerStyles = css`
+const containerCss = css`
   display: flex;
   align-items: center;
   width: 100%;
 `;
 
 const Container = styled.section`
-  ${ContainerStyles}
+  ${containerCss}
 `;
 
 const ColorInputsWrapper = styled.div`
-  ${ContainerStyles}
+  ${containerCss}
 `;
 
 const Space = styled.div`

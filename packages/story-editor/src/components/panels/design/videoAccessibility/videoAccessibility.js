@@ -166,10 +166,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
         />
         <InputsWrapper>
           <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__(
-              'Add assistive text for visually impaired users',
-              'web-stories'
-            )}
+            {__('Add a brief description of the video.', 'web-stories')}
           </StyledText>
           <TextArea
             ref={(node) => {
