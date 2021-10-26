@@ -117,7 +117,7 @@ export default function ArchiveSettings({
     (_, newArchivePage) => {
       const newValue = Number(newArchivePage.value);
       if (newValue !== archivePageId) {
-        setSelectedPage({ value: newValue });
+        setSelectedPage(newValue ? { value: newValue } : undefined);
         updateSettings({ archivePageId: newValue });
       }
     },
