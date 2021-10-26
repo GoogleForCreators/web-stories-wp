@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { forwardRef, useCallback } from '@web-stories-wp/react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { getPreviewText, PatternPropType } from '@web-stories-wp/patterns';
@@ -41,10 +41,18 @@ import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
 
-const Container = styled.section`
+const ContainerStyles = css`
   display: flex;
   align-items: center;
   width: 100%;
+`;
+
+const Container = styled.section`
+  ${ContainerStyles}
+`;
+
+const ColorInputsWrapper = styled.div`
+  ${ContainerStyles}
 `;
 
 const Space = styled.div`
@@ -103,10 +111,6 @@ const Color = forwardRef(function Color(
     onChange: (color) => onChange({ color }),
   });
   const tooltip = __('Pick a color from canvas', 'web-stories');
-
-  // eslint-disable-next-line react/prop-types
-  const ColorInputsWrapper = ({ children }) =>
-    hasEyedropper ? <Container>{children}</Container> : children;
 
   return (
     <Container aria-label={containerLabel}>
