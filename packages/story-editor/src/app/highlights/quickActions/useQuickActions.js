@@ -692,21 +692,6 @@ const useQuickActions = () => {
   const backgroundElementMediaActions = useMemo(() => {
     const baseActions = [
       {
-        Icon: PictureSwap,
-        label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
-        onClick: (ev) => {
-          dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
-          handleFocusMediaPanel()(ev);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
-            element: selectedElement?.type,
-            isBackground: true,
-          });
-        },
-        ...actionMenuProps,
-      },
-      {
         Icon: CircleSpeed,
         label: ACTIONS.ADD_ANIMATION.text,
         onClick: (evt) => {
@@ -721,6 +706,24 @@ const useQuickActions = () => {
         ...actionMenuProps,
       },
     ];
+
+    if (hasUploadMediaAction) {
+      baseActions.unshift({
+        Icon: PictureSwap,
+        label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
+        onClick: (ev) => {
+          dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
+          openMediaPicker(ev);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
+            element: selectedElement?.type,
+            isBackground: true,
+          });
+        },
+        ...actionMenuProps,
+      });
+    }
 
     const clearAction = {
       Icon: Eraser,
@@ -748,7 +751,8 @@ const useQuickActions = () => {
     dispatchStoryEvent,
     handleElementReset,
     handleFocusAnimationPanel,
-    handleFocusMediaPanel,
+    hasUploadMediaAction,
+    openMediaPicker,
     resetProperties,
     selectedElement,
     showClearAction,

@@ -441,14 +441,16 @@ describe('useQuickActions', () => {
       expect(result.current).toStrictEqual(backgroundMediaQuickActions);
     });
 
-    it('should set the correct highlight', () => {
+    it(`\`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` action should open the media picker`, () => {
       const { result } = renderHook(() => useQuickActions());
 
       result.current[0].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: BACKGROUND_IMAGE_ELEMENT.id,
-        highlight: states.MEDIA,
-      });
+
+      expect(mockOpenMediaPicker).toHaveBeenCalledTimes(1);
+    });
+
+    it('should set the correct highlight', () => {
+      const { result } = renderHook(() => useQuickActions());
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
@@ -486,14 +488,16 @@ describe('useQuickActions', () => {
       expect(result.current).toStrictEqual(backgroundMediaQuickActions);
     });
 
-    it('should set the correct highlight', () => {
+    it(`\`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` action should open the media picker`, () => {
       const { result } = renderHook(() => useQuickActions());
 
       result.current[0].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: BACKGROUND_IMAGE_MEDIA3P_ELEMENT.id,
-        highlight: states.MEDIA3P,
-      });
+
+      expect(mockOpenMediaPicker).toHaveBeenCalledTimes(1);
+    });
+
+    it('should set the correct highlight', () => {
+      const { result } = renderHook(() => useQuickActions());
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
@@ -527,14 +531,16 @@ describe('useQuickActions', () => {
       );
     });
 
-    it('should set the correct highlight', () => {
+    it(`\`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` action should open the media picker`, () => {
       const { result } = renderHook(() => useQuickActions());
 
       result.current[0].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: BACKGROUND_VIDEO_ELEMENT.id,
-        highlight: states.MEDIA,
-      });
+
+      expect(mockOpenMediaPicker).toHaveBeenCalledTimes(1);
+    });
+
+    it('should set the correct highlight', () => {
+      const { result } = renderHook(() => useQuickActions());
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
@@ -578,6 +584,14 @@ describe('useQuickActions', () => {
       );
     });
 
+    it(`\`${ACTIONS.REPLACE_MEDIA.text}\` action should open the media picker`, () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+
+      expect(mockOpenMediaPicker).toHaveBeenCalledTimes(1);
+    });
+
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
 
@@ -592,14 +606,6 @@ describe('useQuickActions', () => {
         elementId: IMAGE_ELEMENT.id,
         highlight: states.LINK,
       });
-    });
-
-    it(`\`${ACTIONS.REPLACE_MEDIA.text}\` action should open the media picker`, () => {
-      const { result } = renderHook(() => useQuickActions());
-
-      result.current[0].onClick(mockClickEvent);
-
-      expect(mockOpenMediaPicker).toHaveBeenCalledTimes(1);
     });
 
     it(`\`${ACTIONS.RESET_ELEMENT.text}\` action should not be present if element has no animations`, () => {
@@ -812,6 +818,14 @@ describe('useQuickActions', () => {
       expect(result.current).toStrictEqual(videoQuickActionsWithClear);
     });
 
+    it(`\`${ACTIONS.REPLACE_MEDIA.text}\` action should open the media picker`, () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+
+      expect(mockOpenMediaPicker).toHaveBeenCalledTimes(1);
+    });
+
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
 
@@ -832,14 +846,6 @@ describe('useQuickActions', () => {
         elementId: VIDEO_ELEMENT.id,
         highlight: states.CAPTIONS,
       });
-    });
-
-    it(`\`${ACTIONS.REPLACE_MEDIA.text}\` action should open the media picker`, () => {
-      const { result } = renderHook(() => useQuickActions());
-
-      result.current[0].onClick(mockClickEvent);
-
-      expect(mockOpenMediaPicker).toHaveBeenCalledTimes(1);
     });
 
     it(`should not show \`${ACTIONS.RESET_ELEMENT.text}\` action if element has no animations`, () => {
