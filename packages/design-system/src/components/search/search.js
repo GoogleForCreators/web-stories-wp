@@ -108,7 +108,7 @@ export const Search = ({
   });
 
   const isMenuHidden = useMemo(
-    () => Boolean(disabled || !inputState?.value?.length === 0),
+    () => Boolean(disabled || inputState?.value?.length === 0),
     [disabled, inputState]
   );
 
