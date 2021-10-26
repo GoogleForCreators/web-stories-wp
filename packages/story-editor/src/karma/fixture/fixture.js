@@ -66,11 +66,19 @@ export const MEDIA_PER_PAGE = 20;
 
 function MediaUpload({ render: _render, onSelect }) {
   const open = () => {
-    const image = { src: 'media1' };
+    const image = { src: 'https://www.example.com/media1' };
     onSelect(image);
   };
 
   return _render(open);
+}
+
+function useMediaPicker({ onSelect }) {
+  const open = () => {
+    onSelect({ src: 'https://www.example.com/media1' });
+  };
+
+  return open;
 }
 
 const DEFAULT_CONFIG = {
@@ -124,6 +132,7 @@ const DEFAULT_CONFIG = {
   },
   flags: {},
   MediaUpload,
+  useMediaPicker,
 };
 
 /**

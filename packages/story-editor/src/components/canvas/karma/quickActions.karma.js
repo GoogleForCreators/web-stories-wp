@@ -20,11 +20,10 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { useHelpCenter, useStory } from '../../../app';
+import { useStory } from '../../../app';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { ACTIONS } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
-import { KEYS } from '../../helpCenter/constants';
 import useInsertElement from '../useInsertElement';
 
 describe('Quick Actions integration', () => {
@@ -146,22 +145,35 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`clicking the \`${ACTIONS.REPLACE_MEDIA.text}\` button should select the media tab and focus the media tab`, async () => {
-      // hide 3p modal before we click the quick action
-      await fixture.events.click(fixture.editor.library.media3pTab);
-      // tab to dismiss button and press enter
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('Enter');
+    it(`should replace the media using the \`${ACTIONS.REPLACE_MEDIA.text}\` quick action`, async () => {
+      // track initial media
+      const { initialCurrentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          initialCurrentPage: state.currentPage,
+        }))
+      );
+
+      const { resource: initialResource, ...initialElement } =
+        initialCurrentPage.elements.find((element) => !element.isBackground);
 
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.replaceMediaButton
       );
 
-      expect(fixture.editor.library.media).not.toBeNull();
+      // verify that media was replaced
+      const { currentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          currentPage: state.currentPage,
+        }))
+      );
 
-      expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
+      const { resource: finalResource, ...finalElement } =
+        currentPage.elements.find((element) => !element.isBackground);
+
+      // everything should be the same except the resource
+      expect(initialElement).toEqual(finalElement);
+      expect(initialResource).not.toEqual(finalResource);
     });
 
     it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
@@ -498,30 +510,35 @@ describe('Quick Actions integration', () => {
       await fixture.events.click(canvasElementWrapperId);
     });
 
-    it(`clicking the \`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` button should select the media tab and focus the media tab`, async () => {
-      // The "Replace background media" quick action also triggers a help center tip which steals focus.
-      // Open the tip now to avoid the focus stealing after the quick menu button is clicked.
-      const { actions } = await fixture.renderHook(() => useHelpCenter());
-      actions.openToUnreadTip(KEYS.ADD_BACKGROUND_MEDIA);
+    it(`should replace the background media when clicking the \`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` action`, async () => {
+      // track initial media
+      const { initialCurrentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          initialCurrentPage: state.currentPage,
+        }))
+      );
 
-      // change tab to make sure tab isn't selected before quick action
-      // hide 3p modal before we click the quick action
-      await fixture.events.click(fixture.editor.library.mediaTab);
-      // tab to dismiss button and press enter
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('Enter');
-
-      const bgMediaButton =
-        fixture.editor.canvas.quickActionMenu.replaceBackgroundMediaButton;
-      expect(bgMediaButton).toBeDefined();
+      const { resource: initialResource, ...initialElement } =
+        initialCurrentPage.elements.find((element) => element.isBackground);
 
       // click quick menu button
-      await fixture.events.click(bgMediaButton);
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.replaceBackgroundMediaButton
+      );
 
-      expect(fixture.editor.library.media).not.toBeNull();
+      // verify that media was replaced
+      const { currentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          currentPage: state.currentPage,
+        }))
+      );
 
-      expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
+      const { resource: finalResource, ...finalElement } =
+        currentPage.elements.find((element) => element.isBackground);
+
+      // everything should be the same except the resource
+      expect(initialElement).toEqual(finalElement);
+      expect(initialResource).not.toEqual(finalResource);
     });
 
     it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
@@ -860,22 +877,35 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should click the \`${ACTIONS.REPLACE_MEDIA.text}\` button and open the media panel`, async () => {
-      // hide 3p modal before we click the quick action
-      await fixture.events.click(fixture.editor.library.media3pTab);
-      // tab to dismiss button and press enter
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('Enter');
+    it(`should replace the media using the \`${ACTIONS.REPLACE_MEDIA.text}\` quick action`, async () => {
+      // track initial media
+      const { initialCurrentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          initialCurrentPage: state.currentPage,
+        }))
+      );
+
+      const { resource: initialResource, ...initialElement } =
+        initialCurrentPage.elements.find((element) => !element.isBackground);
 
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.replaceMediaButton
       );
 
-      expect(fixture.editor.library.media).not.toBeNull();
+      // verify that media was replaced
+      const { currentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          currentPage: state.currentPage,
+        }))
+      );
 
-      expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
+      const { resource: finalResource, ...finalElement } =
+        currentPage.elements.find((element) => !element.isBackground);
+
+      // everything should be the same except the resource
+      expect(initialElement).toEqual(finalElement);
+      expect(initialResource).not.toEqual(finalResource);
     });
 
     it(`should click the \`${ACTIONS.ADD_ANIMATION.text}\` button and open the animation panel and focus the animation dropdown`, async () => {
