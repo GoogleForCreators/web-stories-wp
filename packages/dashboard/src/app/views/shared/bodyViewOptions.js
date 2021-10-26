@@ -99,7 +99,7 @@ export default function BodyViewOptions({
                   hasSearch
                   hasDropDownBorder
                   searchResultsLabel={__('Search results', 'web-stories')}
-                  aria-label={__('Author', 'web-stories')}
+                  aria-label={__('Filter stories by author', 'web-stories')}
                   onChange={author.toggleFilterId}
                   getOptionsByQuery={author.queryAuthorsBySearch}
                   selectedId={author.filterId}

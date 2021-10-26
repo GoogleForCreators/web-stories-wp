@@ -63,6 +63,18 @@ export default function ApiProviderFixture({ children }) {
     [templates]
   );
 
+  const usersApi = useMemo(
+    () => ({
+      getAuthors: () =>
+        Promise.resolve(
+          formattedStoriesArray.flatMap(
+            ({ originalStoryData }) => originalStoryData._embedded.author
+          )
+        ),
+    }),
+    []
+  );
+
   const value = useMemo(
     () => ({
       state: {
@@ -72,9 +84,10 @@ export default function ApiProviderFixture({ children }) {
       actions: {
         storyApi,
         templateApi,
+        usersApi,
       },
     }),
-    [stories, templates, storyApi, templateApi]
+    [stories, templates, storyApi, templateApi, usersApi]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
@@ -107,6 +120,7 @@ function fetchStories(
     searchTerm = '',
     sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
     sortDirection,
+    author,
   },
   currentState
 ) {
@@ -118,6 +132,11 @@ function fetchStories(
       ({ status: storyStatus, title }) =>
         statuses.includes(storyStatus) &&
         title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter((story) =>
+      story.originalStoryData._embedded.author
+        .map(({ id }) => id)
+        .includes(author)
     )
     .sort((a, b) => {
       let value;
