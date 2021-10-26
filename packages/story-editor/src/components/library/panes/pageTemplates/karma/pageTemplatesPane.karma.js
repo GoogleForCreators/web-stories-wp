@@ -114,33 +114,10 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
 
       expectPageTemplateEqual(currentPage, sectionPage);
 
-      // make next template "Entertainment Section" active before leaving template list
-      await fixture.events.keyboard.press('right');
-      await fixture.events.keyboard.press('tab');
       // expect focus to leave templates
       expect(
         fixture.editor.library.pageTemplatesPane.pageTemplates[1]
       ).not.toBe(document.activeElement);
-
-      // return to template list
-      await fixture.events.keyboard.shortcut('shift+tab');
-      // expect focus to be on last focused element
-      expect(
-        fixture.screen.getByRole('button', { name: 'Entertainment Section' })
-      ).toBe(document.activeElement);
-
-      // return to filters
-      await fixture.events.keyboard.shortcut('shift+tab');
-      await fixture.events.keyboard.shortcut('shift+tab');
-
-      // filter by all
-      await fixture.events.keyboard.press('left');
-      await fixture.events.keyboard.press('left');
-      await fixture.events.keyboard.press('Enter');
-      // expect template titles to contain "cover"
-      expect(
-        fixture.screen.getAllByText(/cover/i).length
-      ).toBeGreaterThanOrEqual(1);
     });
   });
 

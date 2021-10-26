@@ -38,7 +38,6 @@ import { useConfig } from '../../../../app/config';
 import { useHelpCenter } from '../../../../app';
 import { KEYS } from '../../../helpCenter/constants';
 
-import { noop } from '../../../../utils/noop';
 import DefaultPageTemplate from './defaultPageTemplate';
 
 const WrapperGrid = styled.div`
@@ -63,7 +62,7 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
   const pageRefs = useRef({});
   const {
     state: { readTips },
-    actions: { openToUnreadTip = noop },
+    actions: { openToUnreadTip },
   } = useHelpCenter();
 
   const handlePageClick = useCallback(
@@ -78,7 +77,7 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
         dismissable: true,
       });
 
-      if (!readTips?.addBackgroundMedia) {
+      if (!readTips.addBackgroundMedia) {
         openToUnreadTip(KEYS.ADD_BACKGROUND_MEDIA);
       }
     },
