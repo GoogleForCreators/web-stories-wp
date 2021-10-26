@@ -54,21 +54,13 @@ const Space = styled.div`
   background-color: ${({ theme }) => theme.colors.divider.primary};
 `;
 
-// ( 32px eyedropper button + 8px margin ) / 2
-const eyedropperSpacing = '20px';
 // 10px comes from divider / 2
 const InputWrapper = styled.div`
-  width: ${({ hasEyedropper }) =>
-    hasEyedropper
-      ? `calc(53% - ${eyedropperSpacing} - 10px)`
-      : 'calc(53% - 10px)'};
+  width: calc(53% - 10px);
 `;
 
 const OpacityWrapper = styled.div`
-  width: ${({ hasEyedropper }) =>
-    hasEyedropper
-      ? `calc(47% - ${eyedropperSpacing} - 10px)`
-      : 'calc(47% - 10px)'};
+  width: calc(47% - 10px);
 `;
 
 const EyeDropperButton = styled(Button).attrs({
@@ -112,6 +104,10 @@ const Color = forwardRef(function Color(
   });
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
+  // eslint-disable-next-line react/prop-types
+  const ColorInputsWrapper = ({ children }) =>
+    hasEyedropper ? <Container>{children}</Container> : children;
+
   return (
     <Container aria-label={containerLabel}>
       {hasEyedropper && (
@@ -126,26 +122,28 @@ const Color = forwardRef(function Color(
         </Tooltip>
       )}
 
-      <InputWrapper hasEyedropper={hasEyedropper}>
-        <ColorInput
-          ref={ref}
-          onChange={onChange}
-          allowsGradient={allowsGradient}
-          allowsOpacity={allowsOpacity}
-          value={value}
-          label={label}
-          allowsSavedColors={allowsSavedColors}
-          changedStyle={changedStyle}
-        />
-      </InputWrapper>
-      {allowsOpacity && displayOpacity && (
-        <>
-          <Space />
-          <OpacityWrapper hasEyedropper={hasEyedropper}>
-            <OpacityInput value={value} onChange={handleOpacityChange} />
-          </OpacityWrapper>
-        </>
-      )}
+      <ColorInputsWrapper>
+        <InputWrapper>
+          <ColorInput
+            ref={ref}
+            onChange={onChange}
+            allowsGradient={allowsGradient}
+            allowsOpacity={allowsOpacity}
+            value={value}
+            label={label}
+            allowsSavedColors={allowsSavedColors}
+            changedStyle={changedStyle}
+          />
+        </InputWrapper>
+        {allowsOpacity && displayOpacity && (
+          <>
+            <Space />
+            <OpacityWrapper>
+              <OpacityInput value={value} onChange={handleOpacityChange} />
+            </OpacityWrapper>
+          </>
+        )}
+      </ColorInputsWrapper>
     </Container>
   );
 });
