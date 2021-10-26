@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
@@ -32,7 +31,7 @@ import {
 /**
  * Internal dependencies
  */
-import useApi from '../../api/useApi';
+import { AuthorPropTypes } from '../../../utils/useStoryView.js';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 
@@ -64,6 +63,13 @@ const StyledAdvancedDropDown = styled(AdvancedDropDown.DropDown)`
   width: 150px;
 `;
 
+const defaultAuthor = {
+  filterId: null,
+  toggleFilterId: noop,
+  queriedAuthors: [],
+  queryAuthorsBySearch: noop,
+};
+
 export default function BodyViewOptions({
   currentSort,
   handleLayoutSelect,
@@ -76,43 +82,8 @@ export default function BodyViewOptions({
   showSortDropdown,
   sortDropdownAriaLabel,
   showAuthorDropdown = false,
-  authorFilterId = null,
-  handleToggleAuthorId = noop,
+  author = defaultAuthor,
 }) {
-  const getAuthors = useApi((v) => v.actions.usersApi.getAuthors);
-  const [queriedUsers, setQueriedUsers] = useState([]);
-
-  const getAuthorsBySearch = useCallback(
-    (search) => {
-      return getAuthors(search).then((data) => {
-        const userData = data.map(({ id, name }) => ({
-          id,
-          name,
-        }));
-        setQueriedUsers((exisitingUsers) => {
-          const newUsers = userData.filter(
-            (newUser) => !exisitingUsers.includes(newUser)
-          );
-          return [...exisitingUsers, ...newUsers];
-        });
-      });
-    },
-    [getAuthors]
-  );
-
-  useEffect(() => {
-    getAuthorsBySearch();
-  }, [getAuthorsBySearch]);
-
-  const dropDownParams = {
-    hasSearch: true,
-    onChange: handleToggleAuthorId,
-    getOptionsByQuery: getAuthorsBySearch,
-    selectedId: authorFilterId,
-    placeholder: __('Author', 'web-stories'),
-    primaryOptions: queriedUsers,
-  };
-
   return (
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />
@@ -125,11 +96,16 @@ export default function BodyViewOptions({
             {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
               <StorySortDropdownContainer>
                 <StyledAdvancedDropDown
+                  hasSearch
                   hasDropDownBorder
-                  options={queriedUsers}
                   searchResultsLabel={__('Search results', 'web-stories')}
                   aria-label={__('Author', 'web-stories')}
-                  {...dropDownParams}
+                  onChange={author.toggleFilterId}
+                  getOptionsByQuery={author.queryAuthorsBySearch}
+                  selectedId={author.filterId}
+                  placeholder={__('Author', 'web-stories')}
+                  primaryOptions={author.queriedAuthors}
+                  options={author.queriedAuthors}
                 />
               </StorySortDropdownContainer>
             )}
@@ -176,6 +152,5 @@ BodyViewOptions.propTypes = {
   showSortDropdown: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
   showAuthorDropdown: PropTypes.bool,
-  authorFilterId: PropTypes.number,
-  handleToggleAuthorId: PropTypes.func,
+  author: AuthorPropTypes,
 };

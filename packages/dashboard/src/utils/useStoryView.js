@@ -29,6 +29,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import useApi from '../app/api/useApi';
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
 import clamp from './clamp';
@@ -39,6 +40,7 @@ export default function useStoryView({
   isLoading = false,
   totalPages,
 }) {
+  const getAuthors = useApi((v) => v.actions.usersApi.getAuthors);
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
   const [filter, _setFilter] = useState(
@@ -47,17 +49,14 @@ export default function useStoryView({
   const [sortDirection, _setSortDirection] = useState(SORT_DIRECTION.DESC);
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
-  const [authorFilterId, _setAuthor] = useState(null);
+  const [authorFilterId, _setAuthorFilterId] = useState(null);
+  const [queriedAuthors, setQueriedAuthors] = useState([]);
   const showStoriesWhileLoading = useRef(false);
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
     isGrid: viewStyle === VIEW_STYLE.GRID,
   });
-
-  const toggleAuthorFilterId = useCallback(({ id }) => {
-    _setAuthor((v) => (v === id ? null : id));
-  }, []);
 
   const setPageClamped = useCallback(
     (newPage) => {
@@ -121,6 +120,34 @@ export default function useStoryView({
     setPageClamped(page + 1);
   }, [page, setPageClamped]);
 
+  const toggleAuthorFilterId = useCallback(({ id }) => {
+    _setAuthorFilterId((v) => (v === id ? null : id));
+  }, []);
+
+  const queryAuthorsBySearch = useCallback(
+    (search) => {
+      return getAuthors(search).then((data) => {
+        const userData = data.map(({ id, name }) => ({
+          id,
+          name,
+        }));
+        setQueriedAuthors((exisitingUsers) => {
+          const exisitingUsersIds = exisitingUsers.map(({ id }) => id);
+          const newUsers = userData.filter(
+            (newUser) => !exisitingUsersIds.includes(newUser.id)
+          );
+          return [...exisitingUsers, ...newUsers];
+        });
+      });
+    },
+    [getAuthors]
+  );
+
+  // Fetch initial list of authors on mount
+  useEffect(() => {
+    queryAuthorsBySearch();
+  }, [queryAuthorsBySearch]);
+
   useEffect(() => {
     trackEvent('search', {
       search_type: 'dashboard_stories',
@@ -169,6 +196,8 @@ export default function useStoryView({
       author: {
         filterId: authorFilterId,
         toggleFilterId: toggleAuthorFilterId,
+        queriedAuthors,
+        queryAuthorsBySearch,
       },
       showStoriesWhileLoading,
     }),
@@ -188,6 +217,8 @@ export default function useStoryView({
       setSearchKeyword,
       authorFilterId,
       toggleAuthorFilterId,
+      queriedAuthors,
+      queryAuthorsBySearch,
     ]
   );
 }
@@ -201,6 +232,13 @@ export const ViewPropTypes = PropTypes.shape({
 export const AuthorPropTypes = PropTypes.shape({
   filterId: PropTypes.number,
   toggleFilterId: PropTypes.func,
+  queriedAuthors: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })
+  ),
+  queryAuthorsBySearch: PropTypes.func,
 });
 
 export const FilterPropTypes = PropTypes.shape({

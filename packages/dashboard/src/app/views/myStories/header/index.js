@@ -180,8 +180,7 @@ function Header({
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={onSortChange}
-        authorFilterId={author.filterId}
-        handleToggleAuthorId={author.toggleFilterId}
+        author={author}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'

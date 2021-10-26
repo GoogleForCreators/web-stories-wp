@@ -82,6 +82,7 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
 
 export const Selected = styled(Checkmark)`
   width: 16px;
+  min-width: 16px;
   height: auto;
   margin-right: 4px;
   color: ${({ theme }) => theme.colors.fg.primary};
