@@ -202,7 +202,7 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
           }
           isIndeterminate={borderRadius.topLeft === MULTIPLE_VALUE}
           containerStyleOverride={
-            lockedRadius ? inputContainerStyleOverride : styleOverrideTopLeft
+            lockRadius ? inputContainerStyleOverride : styleOverrideTopLeft
           }
         />
         {!lockRadius && (
