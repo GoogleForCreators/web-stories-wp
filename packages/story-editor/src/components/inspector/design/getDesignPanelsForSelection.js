@@ -20,7 +20,6 @@
 import { elementTypes } from '../../../elements';
 import {
   AnimationPanel,
-  BorderRadiusPanel,
   BorderStylePanel,
   CaptionsPanel,
   FilterPanel,
@@ -137,8 +136,6 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: TextBoxPanel };
         case PanelTypes.SHAPE_STYLE:
           return { type, Panel: ShapeStylePanel };
-        case PanelTypes.BORDER_RADIUS:
-          return { type, Panel: BorderRadiusPanel };
         case PanelTypes.BORDER:
           return { type, Panel: BorderStylePanel };
         case PanelTypes.VIDEO_OPTIONS:

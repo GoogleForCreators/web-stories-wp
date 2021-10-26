@@ -19,20 +19,21 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { LockToggle, NumericInput } from '@web-stories-wp/design-system';
+import {
+  LockToggle,
+  NumericInput,
+  Icons,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { canMaskHaveBorder } from '../../../../masks';
 import Tooltip from '../../../tooltip';
-import {
-  useCommonObjectValue,
-  inputContainerStyleOverride,
-  focusStyle,
-} from '../../shared';
+import { useCommonObjectValue, focusStyle } from '../../shared';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const DEFAULT_BORDER_RADIUS = {
@@ -47,7 +48,9 @@ const FlexContainer = styled.div`
   display: flex;
 `;
 
-const InputContainer = styled.div``;
+const InputContainer = styled.div`
+  margin-left: 1px;
+`;
 
 const LockContainer = styled.div`
   position: relative;
@@ -61,8 +64,57 @@ const StyledLockToggle = styled(LockToggle)`
   ${focusStyle};
 `;
 
+const inputContainerStyleOverride = css`
+  position: relative;
+  :focus-within {
+    z-index: 1;
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
+`;
+
+const styleOverrideTopLeft = css`
+  ${inputContainerStyleOverride}
+  border-radius: 4px 0 0 4px;
+`;
+
+const styleOverrideTopRight = css`
+  ${inputContainerStyleOverride}
+  border-radius: 0;
+`;
+
+const styleOverrideBottomLeft = css`
+  ${inputContainerStyleOverride}
+  border-radius: 0;
+`;
+
+const styleOverrideBottomRight = css`
+  ${inputContainerStyleOverride}
+  border-radius: 0 4px 4px 0;
+`;
+
 const BoxedNumericInput = styled(NumericInput)`
-  width: 25%;
+  border-radius: 0px;
+  margin-left: -1px;
+  svg {
+    ${({ corner }) => (corner === 'topLeft' ? 'transform: rotate(90deg);' : '')}
+  }
+
+  ${({ isSmall, corner }) =>
+    isSmall &&
+    `
+    width: 25%;
+    svg {
+      ${corner === 'topRight' ? 'transform: rotate(180deg);' : ''}
+      ${corner === 'bottomRight' ? 'transform: rotate(270deg);' : ''}
+      width: 29px;
+      height: 29px;
+      margin-right: -14px;
+    }
+  `}
 `;
 
 function RadiusControls({ selectedElements, pushUpdateForObject }) {
@@ -130,10 +182,14 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
   const firstInputLabel = lockRadius
     ? __('Corner Radius', 'web-stories')
     : __('Top left corner radius', 'web-stories');
+  let lockedRadius;
   return (
     <FlexContainer>
       <InputContainer>
         <BoxedNumericInput
+          isSmall={!lockRadius}
+          corner="topLeft"
+          suffix={<Icons.Corner />}
           value={
             borderRadius.topLeft === MULTIPLE_VALUE ? '' : borderRadius.topLeft
           }
@@ -145,11 +201,16 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
               : ''
           }
           isIndeterminate={borderRadius.topLeft === MULTIPLE_VALUE}
-          containerStyleOverride={inputContainerStyleOverride}
+          containerStyleOverride={
+            lockedRadius ? inputContainerStyleOverride : styleOverrideTopLeft
+          }
         />
         {!lockRadius && (
           <>
             <BoxedNumericInput
+              isSmall
+              corner="topRight"
+              suffix={<Icons.Corner />}
               value={
                 borderRadius.topRight === MULTIPLE_VALUE
                   ? ''
@@ -163,9 +224,10 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
                   : ''
               }
               isIndeterminate={borderRadius.topRight === MULTIPLE_VALUE}
-              containerStyleOverride={inputContainerStyleOverride}
+              containerStyleOverride={styleOverrideTopRight}
             />
             <BoxedNumericInput
+              isSmall
               value={
                 borderRadius.bottomLeft === MULTIPLE_VALUE
                   ? ''
@@ -178,10 +240,12 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
                   ? MULTIPLE_DISPLAY_VALUE
                   : ''
               }
+              suffix={<Icons.Corner />}
               isIndeterminate={borderRadius.bottomLeft === MULTIPLE_VALUE}
-              containerStyleOverride={inputContainerStyleOverride}
+              containerStyleOverride={styleOverrideBottomLeft}
             />
             <BoxedNumericInput
+              isSmall
               value={
                 borderRadius.bottomRight === MULTIPLE_VALUE
                   ? ''
@@ -194,8 +258,10 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
                   ? MULTIPLE_DISPLAY_VALUE
                   : ''
               }
+              corner="bottomRight"
+              suffix={<Icons.Corner />}
               isIndeterminate={borderRadius.bottomRight === MULTIPLE_VALUE}
-              containerStyleOverride={inputContainerStyleOverride}
+              containerStyleOverride={styleOverrideBottomRight}
             />
           </>
         )}
