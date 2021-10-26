@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useRightClickMenu } from '../../app/rightClickMenu';
+import { useRightClickMenu } from '../../app';
 import DirectionAware from '../directionAware';
 
 const RightClickMenuContainer = styled.div`

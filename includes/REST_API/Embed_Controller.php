@@ -30,7 +30,7 @@ use DOMNodeList;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Document_Parser;
-use Google\Web_Stories\Traits\Post_Type;
+
 use WP_Error;
 use WP_Http;
 use WP_Network;
@@ -45,7 +45,7 @@ use WP_REST_Server;
  * Class Embed_Controller
  */
 class Embed_Controller extends REST_Controller implements HasRequirements {
-	use Document_Parser, Post_Type;
+	use Document_Parser;
 
 	/**
 	 * Story_Post_Type instance.
@@ -211,7 +211,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	private function get_data_from_post( $url ) {
 		$post = $this->url_to_post( $url );
 
-		if ( ! $post || $this->story_post_type::POST_TYPE_SLUG !== $post->post_type ) {
+		if ( ! $post || $this->story_post_type->get_slug() !== $post->post_type ) {
 			return false;
 		}
 
@@ -301,7 +301,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 				$values = [];
 				if (
 				preg_match(
-					'#[?&](' . preg_quote( $this->story_post_type::POST_TYPE_SLUG, '#' ) . ')=([^&]+)#',
+					'#[?&](' . preg_quote( $this->story_post_type->get_slug(), '#' ) . ')=([^&]+)#',
 					$url,
 					$values
 				)
@@ -309,10 +309,10 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 					$slug = $values[2];
 
 					if ( function_exists( 'wpcom_vip_get_page_by_path' ) ) {
-						$post = wpcom_vip_get_page_by_path( $slug, OBJECT, $this->story_post_type::POST_TYPE_SLUG );
+						$post = wpcom_vip_get_page_by_path( $slug, OBJECT, $this->story_post_type->get_slug() );
 					} else {
 						// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions
-						$post = get_page_by_path( $slug, OBJECT, $this->story_post_type::POST_TYPE_SLUG );
+						$post = get_page_by_path( $slug, OBJECT, $this->story_post_type->get_slug() );
 					}
 				}
 			}
@@ -437,7 +437,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function get_proxy_item_permissions_check() {
-		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to make proxied embed requests.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 

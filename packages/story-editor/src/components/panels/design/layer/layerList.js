@@ -30,7 +30,7 @@ import {
   ReorderableSeparator,
   ReorderableItem,
 } from '../../../reorderable';
-import { useStory } from '../../../../app';
+import { useRightClickMenu, useStory } from '../../../../app';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
 import { LAYER_HEIGHT } from './constants';
 import Layer from './layer';
@@ -59,6 +59,8 @@ function LayerPanel({ layers }) {
     setSelectedElementsById: state.actions.setSelectedElementsById,
   }));
 
+  const { onOpenMenu } = useRightClickMenu();
+
   const numLayers = layers && layers.length;
 
   const focusCanvas = useFocusCanvas();
@@ -76,6 +78,7 @@ function LayerPanel({ layers }) {
 
   return (
     <LayerList
+      onContextMenu={onOpenMenu}
       onPositionChange={(oldPos, newPos) =>
         arrangeElement({
           elementId: layers.find((layer) => layer.position === oldPos).id,

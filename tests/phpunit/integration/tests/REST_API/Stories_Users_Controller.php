@@ -87,14 +87,14 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 			'user_posts_count_public',
 			[
 				self::$user_id,
-				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				$post_type->get_slug(),
 			]
 		);
 		$this->assertEquals( 3, $result1 );
 
 		$post_id = self::factory()->post->create(
 			[
-				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => $post_type->get_slug(),
 				'post_status' => 'publish',
 				'post_author' => self::$user_id,
 			]
@@ -104,7 +104,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 			'user_posts_count_public',
 			[
 				self::$user_id,
-				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				$post_type->get_slug(),
 			]
 		);
 
@@ -117,7 +117,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 			'user_posts_count_public',
 			[
 				self::$user_id,
-				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				$post_type->get_slug(),
 			]
 		);
 
@@ -138,19 +138,13 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 			'user_posts_count_public',
 			[
 				-1,
-				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-			]
+				$post_type->get_slug(),
+			] 
 		);
 		$this->assertEquals( 0, $result1 );
 
-		$result1 = $this->call_private_method(
-			$this->controller,
-			'user_posts_count_public',
-			[
-				self::$user_id,
-				'invalid',
-			]
-		);
+		$result1 = $this->call_private_method( $this->controller, 'user_posts_count_public', [ self::$user_id, 'invalid' ] );
+
 		$this->assertEquals( 0, $result1 );
 	}
 }

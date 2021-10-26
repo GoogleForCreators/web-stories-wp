@@ -342,6 +342,19 @@ describe('Right Click Menu integration', () => {
         )
       ).toBeNull();
     });
+
+    it('right clicking a layer in the layer panel should open the custom right click menu', async () => {
+      await addEarthImage();
+
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.layerPanel.layers[0],
+        {
+          button: 'right',
+        }
+      );
+
+      expect(rightClickMenu()).not.toBeNull();
+    });
   });
 
   describe('right click menu: foreground and background media actions', () => {

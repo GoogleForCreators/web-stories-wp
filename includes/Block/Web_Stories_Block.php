@@ -27,18 +27,17 @@
 namespace Google\Web_Stories\Block;
 
 use Google\Web_Stories\AMP_Story_Player_Assets;
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Embed_Base;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Post_Type;
-use Google\Web_Stories\Traits\Stories_Script_Data;
+use Google\Web_Stories\Stories_Script_Data;
 
 /**
  * Latest Stories block class.
  */
 class Web_Stories_Block extends Embed_Base {
-	use Stories_Script_Data, Post_Type;
 
 	/**
 	 * Script handle.
@@ -60,6 +59,35 @@ class Web_Stories_Block extends Embed_Base {
 	 * @var int
 	 */
 	const MAX_NUM_OF_STORIES = 20;
+
+	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	protected $story_post_type;
+
+	/**
+	 * Stories_Script_Data instance.
+	 *
+	 * @var Stories_Script_Data Stories_Script_Data instance.
+	 */
+	protected $stories_script_data;
+
+	/**
+	 * Embed Base constructor.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param Assets              $assets              Assets instance.
+	 * @param Story_Post_Type     $story_post_type     Story_Post_Type instance.
+	 * @param Stories_Script_Data $stories_script_data Stories_Script_Data instance.
+	 */
+	public function __construct( Assets $assets, Story_Post_Type $story_post_type, Stories_Script_Data $stories_script_data ) {
+		parent::__construct( $assets );
+		$this->story_post_type     = $story_post_type;
+		$this->stories_script_data = $stories_script_data;
+	}
 
 	/**
 	 * Initializes the Web Stories embed block.
@@ -182,18 +210,16 @@ class Web_Stories_Block extends Embed_Base {
 	 * @return array Script settings.
 	 */
 	private function get_script_settings(): array {
-		$rest_base = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
-
 		$settings = [
 			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 			'config'     => [
 				'maxNumOfStories' => self::MAX_NUM_OF_STORIES,
-				'archiveURL'      => get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ),
+				'archiveURL'      => get_post_type_archive_link( $this->story_post_type->get_slug() ),
 				'api'             => [
-					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
+					'stories' => trailingslashit( $this->story_post_type->get_rest_url() ),
 					'users'   => '/web-stories/v1/users/',
 				],
-				'fieldStates'     => $this->fields_states(),
+				'fieldStates'     => $this->stories_script_data->fields_states(),
 			],
 		];
 
@@ -304,7 +330,7 @@ class Web_Stories_Block extends Embed_Base {
 		$attributes = $this->block_attributes;
 
 		$query_args = [
-			'post_type'        => Story_Post_Type::POST_TYPE_SLUG,
+			'post_type'        => $this->story_post_type->get_slug(),
 			'post_status'      => 'publish',
 			'suppress_filters' => false,
 			'no_found_rows'    => true,
