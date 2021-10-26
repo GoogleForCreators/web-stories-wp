@@ -46,9 +46,9 @@ describe('Admin User', () => {
   afterEach(async () => {
     await visitSettings();
 
-    await enableCheckbox(telemetryCheckboxSelector);
-    await enableCheckbox(videoOptimizationCheckboxSelector);
-    await enableCheckbox(videoCacheCheckboxSelector);
+    await disableCheckbox(telemetryCheckboxSelector);
+    await disableCheckbox(videoOptimizationCheckboxSelector);
+    await disableCheckbox(videoCacheCheckboxSelector);
   });
 
   it('should let me see and update all settings', async () => {

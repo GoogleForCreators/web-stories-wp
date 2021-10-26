@@ -47,7 +47,7 @@ describe('Contributor User', () => {
   afterEach(async () => {
     await visitSettings();
 
-    await enableCheckbox(telemetryCheckboxSelector);
+    await disableCheckbox(telemetryCheckboxSelector);
   });
 
   it('should only let me see and update the telemetry setting', async () => {
