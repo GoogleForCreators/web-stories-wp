@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
-import { Icons } from '@web-stories-wp/design-system';
+import { Icons, noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -30,6 +30,7 @@ import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
 import { useStory, useStoryTriggersDispatch } from '../../../story';
 import { ACTIONS } from '../constants';
 import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
+import { useConfig, useLocalMedia } from '../../..';
 
 const {
   Bucket,
@@ -79,6 +80,9 @@ jest.mock('@web-stories-wp/design-system', () => ({
 }));
 
 jest.mock('@web-stories-wp/tracking');
+
+jest.mock('../../../config');
+jest.mock('../../../media');
 
 const mockClickEvent = {
   preventDefault: jest.fn(),
@@ -268,6 +272,10 @@ describe('useQuickActions', () => {
   const mockDispatchStoryEvent = jest.fn();
   const mockUpdateElementsById = jest.fn();
   const mockUseApplyTextAutoStyle = useApplyTextAutoStyle;
+  const mockUseConfig = useConfig;
+  const mockUseLocalMedia = useLocalMedia;
+  const mockOpenMediaPicker = jest.fn();
+  const mockUseMediaPicker = () => mockOpenMediaPicker;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -293,6 +301,25 @@ describe('useQuickActions', () => {
     });
 
     useStoryTriggersDispatch.mockReturnValue(mockDispatchStoryEvent);
+
+    mockUseConfig.mockReturnValue({
+      allowedTranscodableMimeTypes: [],
+      allowedFileTypes: [],
+      allowedMimeTypes: {
+        image: [],
+        video: [],
+      },
+      capabilities: { hasUploadMediaAction: true },
+      isRTL: true,
+      useMediaPicker: mockUseMediaPicker,
+    });
+
+    mockUseLocalMedia.mockReturnValue({
+      resetWithFetch: noop,
+      updateVideoIsMuted: noop,
+      optimizeVideo: noop,
+      optimizeGif: noop,
+    });
   });
 
   describe('multiple elements selected', () => {
@@ -554,12 +581,6 @@ describe('useQuickActions', () => {
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      result.current[0].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: IMAGE_ELEMENT.id,
-        highlight: states.MEDIA,
-      });
-
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: IMAGE_ELEMENT.id,
@@ -571,6 +592,14 @@ describe('useQuickActions', () => {
         elementId: IMAGE_ELEMENT.id,
         highlight: states.LINK,
       });
+    });
+
+    it(`\`${ACTIONS.REPLACE_MEDIA.text}\` action should open the media picker`, () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+
+      expect(mockOpenMediaPicker).toHaveBeenCalledTimes(1);
     });
 
     it(`\`${ACTIONS.RESET_ELEMENT.text}\` action should not be present if element has no animations`, () => {
@@ -786,12 +815,6 @@ describe('useQuickActions', () => {
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      result.current[0].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: VIDEO_ELEMENT.id,
-        highlight: states.MEDIA,
-      });
-
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: VIDEO_ELEMENT.id,
@@ -809,6 +832,14 @@ describe('useQuickActions', () => {
         elementId: VIDEO_ELEMENT.id,
         highlight: states.CAPTIONS,
       });
+    });
+
+    it(`\`${ACTIONS.REPLACE_MEDIA.text}\` action should open the media picker`, () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+
+      expect(mockOpenMediaPicker).toHaveBeenCalledTimes(1);
     });
 
     it(`should not show \`${ACTIONS.RESET_ELEMENT.text}\` action if element has no animations`, () => {

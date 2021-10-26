@@ -23,6 +23,8 @@ import PropTypes from 'prop-types';
  */
 import { useMediaPicker } from './mediaPicker';
 
+export { useMediaPicker };
+
 function MediaUpload({ render, ...rest }) {
   const open = useMediaPicker(rest);
 

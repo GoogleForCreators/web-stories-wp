@@ -15,7 +15,7 @@
  */
 export { default as PostPublishDialog } from './postPublishDialog';
 export { default as Layout } from './layout';
-export { default as MediaUpload } from './mediaUpload';
+export { default as MediaUpload, useMediaPicker } from './mediaUpload';
 export { default as PostLock } from './postLock';
 export { default as StatusCheck } from './statusCheck';
 export * from './metaBoxes';
