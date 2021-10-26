@@ -68,7 +68,7 @@ function DefaultTemplates({ pageSize }) {
     async function loadPageTemplates() {
       setIsLoading(true);
       const trackTiming = getTimeTracker('load_page_templates');
-      setPageTemplates(await getPageTemplates());
+      setPageTemplates(await getPageTemplates({ showImages: true }));
       setIsLoading(false);
       trackTiming();
     }
