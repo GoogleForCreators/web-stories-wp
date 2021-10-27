@@ -252,7 +252,8 @@ function fetchStories(
   storiesState.storiesOrderById = Object.values(storiesState.stories)
     .filter(
       ({ status: storyStatus, title }) =>
-        statuses.includes(storyStatus) && title.includes(searchTerm)
+        statuses.includes(storyStatus) &&
+        title.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => {
       let value;
