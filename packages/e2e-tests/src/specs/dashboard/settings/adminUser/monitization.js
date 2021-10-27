@@ -17,59 +17,28 @@
 /**
  * External dependencies
  */
-import {
-  clickButton,
-  disableCheckbox,
-  enableCheckbox,
-  visitSettings,
-} from '@web-stories-wp/e2e-test-utils';
+import { clickButton, visitSettings } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * Internal dependencies
  */
-import {
-  monetizationDropdownSelector,
-  telemetryCheckboxSelector,
-  videoCacheCheckboxSelector,
-  videoOptimizationCheckboxSelector,
-} from '../../../utils';
+import { monetizationDropdownSelector } from '../../../../utils';
 
 describe('Admin User', () => {
   beforeEach(async () => {
     await visitSettings();
-
-    await enableCheckbox(telemetryCheckboxSelector);
-    await enableCheckbox(videoOptimizationCheckboxSelector);
-    await enableCheckbox(videoCacheCheckboxSelector);
   });
 
   afterEach(async () => {
     await visitSettings();
-
-    await disableCheckbox(telemetryCheckboxSelector);
-    await enableCheckbox(videoOptimizationCheckboxSelector);
-    await disableCheckbox(videoCacheCheckboxSelector);
   });
 
   it('should let me see and update all settings', async () => {
-    // verify that the telemetry checkbox can be changed
-    await expect(page).toMatchElement(`${telemetryCheckboxSelector}:checked`);
-    await disableCheckbox(telemetryCheckboxSelector);
-
-    // verify that the video optimization checkbox can be changed
-    await expect(page).toMatchElement(
-      `${videoOptimizationCheckboxSelector}:checked`
-    );
-    await disableCheckbox(videoOptimizationCheckboxSelector);
-
-    // verify that the video cache checkbox can be changed
-    await expect(page).toMatchElement(`${videoCacheCheckboxSelector}:checked`);
-    await disableCheckbox(videoCacheCheckboxSelector);
-
     // verify that the monetization settings can be changed
     await clickButton(monetizationDropdownSelector, {
       text: 'None',
     });
+
     await expect(page).toClick('li', { text: 'Google AdSense' });
     await expect(page).toMatchElement(monetizationDropdownSelector, {
       text: 'Google AdSense',
