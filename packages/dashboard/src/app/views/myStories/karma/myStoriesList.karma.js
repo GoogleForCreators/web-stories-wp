@@ -86,6 +86,10 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
     it('should switch to List View and back to Grid View', async () => {
       await clickListView();
 
+      const initialGridViewItems =
+        fixture.screen.queryAllByTestId(/^story-grid-item/);
+      expect(initialGridViewItems.length).toBe(0);
+
       const listViewTable = fixture.screen.getByTestId('story-list-view');
 
       expect(listViewTable).toBeTruthy();
@@ -144,7 +148,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
 
       await fixture.events.keyboard.press('Enter');
 
-      expect(utils.getByText(/A New Title/)).toBeTruthy();
+      expect(utils.getByText(/^A New Title$/)).toBeTruthy();
     });
 
     it('should Duplicate a story', async () => {
