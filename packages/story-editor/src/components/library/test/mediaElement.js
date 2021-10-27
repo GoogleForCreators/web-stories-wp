@@ -59,6 +59,9 @@ const GIF_RESOURCE = {
   height: 100,
   local: true, // Not yet uploaded
   alt: 'gif :)',
+  output: {
+    src: 'http://gif-url.com',
+  },
 };
 
 const renderMediaElement = (resource, providerType, canEditMedia = true) => {
