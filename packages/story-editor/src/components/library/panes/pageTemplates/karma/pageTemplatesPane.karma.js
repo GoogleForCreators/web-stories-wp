@@ -192,8 +192,6 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
         (p) => p.pageTemplateType === 'cover'
       );
       expectPageTemplateEqual(currentPage, coverPage);
-
-      await fixture.snapshot('applied page template');
     });
   });
 

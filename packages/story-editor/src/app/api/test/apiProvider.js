@@ -59,9 +59,7 @@ describe('APIProvider', () => {
 
     let pageTemplatesResult;
     await act(async () => {
-      pageTemplatesResult = await result.current.actions.getPageTemplates({
-        showImages: true,
-      });
+      pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
@@ -83,18 +81,14 @@ describe('APIProvider', () => {
 
     let pageTemplatesResult;
     await act(async () => {
-      pageTemplatesResult = await result.current.actions.getPageTemplates({
-        showImages: true,
-      });
+      pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
     expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
 
     await act(async () => {
-      pageTemplatesResult = await result.current.actions.getPageTemplates({
-        showImages: true,
-      });
+      pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
     expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);

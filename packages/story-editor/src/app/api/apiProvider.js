@@ -31,16 +31,14 @@ function APIProvider({ children }) {
   const { apiCallbacks: actions, cdnURL } = useConfig();
   const pageTemplates = useRef({
     base: [],
-    withoutImages: [],
   });
 
   actions.getPageTemplates = useCallback(async () => {
     // check if pageTemplates have been loaded yet
-    if (pageTemplates.current.base.length === 0) {
-      pageTemplates.current.base = await getAllTemplates({ cdnURL });
+    if (pageTemplates.current.length === 0) {
+      pageTemplates.current = await getAllTemplates({ cdnURL });
     }
-
-    return pageTemplates.current.base;
+    return pageTemplates.current;
   }, [cdnURL]);
 
   return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
