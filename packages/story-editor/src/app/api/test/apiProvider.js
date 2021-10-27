@@ -26,9 +26,6 @@ import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 
-jest.mock('../utils/removeImagesFromPageTemplates');
-import removeImagesFromPageTemplates from '../utils/removeImagesFromPageTemplates';
-
 jest.mock('@web-stories-wp/templates');
 
 const renderApiProvider = ({ configValue }) => {
@@ -46,7 +43,7 @@ describe('APIProvider', () => {
     jest.clearAllMocks();
   });
 
-  it('getPageTemplates gets pageTemplates w/ cdnURL', async () => {
+  it('getPageTemplates gets pageTemplates with cdnURL', async () => {
     const pageTemplates = [{ id: 'templateid' }];
     getAllTemplatesMock.mockReturnValue(pageTemplates);
 
@@ -67,33 +64,7 @@ describe('APIProvider', () => {
       });
     });
 
-    expect(removeImagesFromPageTemplates).toHaveBeenCalledWith(pageTemplates);
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
-  });
-
-  it('getPageTemplates gets pageTemplates w/ cdnURL and replaces images', async () => {
-    const pageTemplates = [{ id: 'templateid' }];
-    const formattedPageTemplates = [{ id: 'templateid', result: 'formatted' }];
-    getAllTemplatesMock.mockReturnValue(pageTemplates);
-    removeImagesFromPageTemplates.mockReturnValue(formattedPageTemplates);
-
-    const cdnURL = 'https://test.url';
-    const { result } = renderApiProvider({
-      configValue: {
-        api: {},
-        apiCallbacks: {},
-        cdnURL,
-        postLock: { api: '' },
-      },
-    });
-
-    let pageTemplatesResult;
-    await act(async () => {
-      pageTemplatesResult = await result.current.actions.getPageTemplates();
-    });
-
-    expect(removeImagesFromPageTemplates).toHaveBeenCalledWith(pageTemplates);
-    expect(pageTemplatesResult).toStrictEqual(formattedPageTemplates);
   });
 
   it('getPageTemplates should memoize the templates if they have already been fetched', async () => {
