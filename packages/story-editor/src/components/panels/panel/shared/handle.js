@@ -56,7 +56,7 @@ const Handle = styled.div`
 const DragBar = styled.div`
   position: absolute;
   width: 35px;
-  height: 2px;
+  height: 3px;
   top: ${HEIGHT - 4}px;
   background: ${({ theme }) => theme.colors.bg.quaternary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
