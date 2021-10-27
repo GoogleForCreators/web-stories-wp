@@ -20,6 +20,8 @@
 import {
   visitSettings,
   uploadPublisherLogo,
+  withExperimentalFeatures,
+  deleteMedia,
 } from '@web-stories-wp/e2e-test-utils';
 
 const SETTINGS_SELECTOR = '[data-testid="editor-settings"]';
@@ -27,6 +29,8 @@ const PUBLISHER_LOGOS_CONTAINER_SELECTOR =
   '[data-testid="publisher-logos-container"]';
 const CONTEXT_MENU_BUTTON_SELECTOR =
   '[data-testid="publisher-logo-context-menu-button-1"]';
+const ERROR_TEXT =
+  'Sorry, this file type is not supported. Only jpg, png, and static gifs are supported for publisher logos.';
 
 async function focusOnPublisherLogos(page) {
   //wrong element in focus
@@ -52,7 +56,7 @@ async function focusOnPublisherLogos(page) {
     : Promise.reject(new Error('could not focus on publisher logos'));
 }
 
-describe('Publisher Logo', () => {
+describe('Publisher Logo without SVG option enabled', () => {
   beforeAll(async () => {
     await visitSettings();
     await uploadPublisherLogo('yay-fox.gif');
@@ -209,5 +213,92 @@ describe('Publisher Logo', () => {
 
     await expect(page).toMatch('Setting saved.');
     await uploadPublisherLogo('its-a-walk-off.gif');
+  });
+});
+
+describe('Publisher logo with SVG option enabled', () => {
+  // eslint-disable-next-line jest/require-hook
+  withExperimentalFeatures(['enableSVG']);
+
+  let uploadedFiles = [];
+
+  beforeEach(() => (uploadedFiles = []));
+
+  afterEach(async () => {
+    for (const file of uploadedFiles) {
+      // eslint-disable-next-line no-await-in-loop
+      await deleteMedia(file);
+    }
+  });
+
+  it('should not upload a logo that is an invalid type with svg enabled', async () => {
+    await visitSettings();
+
+    // Upload publisher logo
+    await uploadPublisherLogo('video-play.svg', false);
+
+    // verify error message
+    await expect(page).toMatchElement('[role="alert"]', {
+      text: ERROR_TEXT,
+    });
+  });
+
+  it('should be able to upload multiple logos', async () => {
+    await visitSettings();
+
+    // Upload publisher logo
+    const logoOneName = await uploadPublisherLogo('yay-fox.gif');
+    // verify no error message
+    await expect(page).not.toMatchElement('[role="alert"]', {
+      text: ERROR_TEXT,
+    });
+
+    const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
+    // verify no error message
+    await expect(page).not.toMatchElement('[role="alert"]', {
+      text: ERROR_TEXT,
+    });
+
+    uploadedFiles.push(logoOneName);
+    uploadedFiles.push(logoTwoName);
+  });
+
+  // TODO(#9152): Fix flakey test.
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should be able to delete all except one logo', async () => {
+    await visitSettings();
+
+    // Upload publisher logo
+    const logoOneName = await uploadPublisherLogo('yay-fox.gif');
+    // verify no error message
+    await expect(page).not.toMatchElement('[role="alert"]', {
+      text: ERROR_TEXT,
+    });
+
+    const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
+    // verify no error message
+    await expect(page).not.toMatchElement('[role="alert"]', {
+      text: ERROR_TEXT,
+    });
+
+    // Delete the second logo
+    await expect(page).toClick(
+      `button[aria-label^="Publisher logo menu for ${logoTwoName}"`
+    );
+    await expect(page).toClick(
+      '[data-testid="publisher-logo-1"] [data-testid="context-menu-list"] button',
+      {
+        text: 'Delete',
+      }
+    );
+    await expect(page).toClick('button', { text: 'Delete Logo' });
+
+    // should not find a button if its the last context menu
+    await expect(page).not.toMatchElement(
+      `button[aria-label^="Publisher logo menu for ${logoOneName}"`
+    );
+
+    uploadedFiles.push(logoOneName);
+    uploadedFiles.push(logoTwoName);
   });
 });
