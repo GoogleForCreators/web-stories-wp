@@ -37,7 +37,7 @@ function useProcessMedia({
   deleteMediaElement,
 }) {
   const {
-    actions: { getOptimizedMediaById },
+    actions: { getOptimizedMediaById, getMutedMediaById },
   } = useAPI();
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
@@ -325,7 +325,15 @@ function useProcessMedia({
         });
       };
 
-      const process = async () => {
+      (async () => {
+        const mutedResource = await getMutedMediaById(resourceId);
+
+        // This video was muted before, no need to mute it again.
+        if (mutedResource) {
+          updateExistingElements(resourceId, mutedResource);
+          return;
+        }
+
         let file = false;
         let posterFile = false;
         try {
@@ -360,15 +368,15 @@ function useProcessMedia({
           },
           posterFile,
         });
-      };
-      return process();
+      })();
     },
     [
       copyResourceData,
-      uploadMedia,
-      uploadVideoPoster,
+      getMutedMediaById,
       updateExistingElements,
       updateOldMutedObject,
+      uploadMedia,
+      uploadVideoPoster,
     ]
   );
 

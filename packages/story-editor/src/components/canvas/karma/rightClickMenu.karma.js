@@ -314,7 +314,7 @@ describe('Right Click Menu integration', () => {
     pages[0].elements.map((elem, index) => {
       // ids won't match
       const { id, ...originalElement } = elem;
-      const { id: newId, ...newElement } = pages[1].elements[index];
+      const { id: newId, basedOn, ...newElement } = pages[1].elements[index];
 
       expect(originalElement).toEqual(newElement);
     });
@@ -341,6 +341,19 @@ describe('Right Click Menu integration', () => {
           'right-click-context-menu[aria-expanded="true"]'
         )
       ).toBeNull();
+    });
+
+    it('right clicking a layer in the layer panel should open the custom right click menu', async () => {
+      await addEarthImage();
+
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.layerPanel.layers[0],
+        {
+          button: 'right',
+        }
+      );
+
+      expect(rightClickMenu()).not.toBeNull();
     });
   });
 

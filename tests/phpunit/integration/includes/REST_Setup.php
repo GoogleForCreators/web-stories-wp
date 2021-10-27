@@ -1,8 +1,8 @@
 <?php
 /**
- * Test_Class class.
+ * REST_Setup trait.
  *
- * Basic test that designed to replace WP_Test_REST_TestCase.
+ * Add method assertErrorResponse to any test class.
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -28,21 +28,19 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
-use Spy_REST_Server;
 use WP_Error;
 use WP_REST_Response;
+use Spy_REST_Server;
 
 /**
- * Class Test_REST_TestCase
+ * trait REST_Setup
  *
  * @package Google\Web_Stories\Tests
  */
-abstract class Test_REST_TestCase extends TestCase {
+trait REST_Setup {
 	use Capabilities_Setup, Kses_Setup;
 
-	public function set_up() {
-		parent::set_up();
-
+	protected function set_up_rest() {
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = new Spy_REST_Server();
@@ -53,14 +51,12 @@ abstract class Test_REST_TestCase extends TestCase {
 		$this->set_permalink_structure( '/%postname%/' );
 	}
 
-	public function tear_down() {
+	protected function tear_down_rest() {
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
 
 		$this->remove_caps_from_roles();
-
-		parent::tear_down();
 	}
 
 	/**
@@ -68,9 +64,9 @@ abstract class Test_REST_TestCase extends TestCase {
 	 *
 	 * @link https://github.com/WordPress/wordpress-develop/blob/2382765afa36e10bf3c74420024ad4e85763a47c/tests/phpunit/includes/testcase-rest-api.php#L4-L18
 	 *
-	 * @param string     $code Status code.
-	 * @param WP_REST_Response|WP_Error  $response Response object.
-	 * @param int|null $status Status code.
+	 * @param string                    $code     Status code.
+	 * @param WP_REST_Response|WP_Error $response Response object.
+	 * @param int|null                  $status   Status code.
 	 *
 	 * @return void
 	 */

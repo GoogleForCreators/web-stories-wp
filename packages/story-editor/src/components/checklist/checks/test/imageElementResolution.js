@@ -51,4 +51,21 @@ describe('imageElementResolution', () => {
     const result = imageElementResolution(tooLowResolutionImageElement);
     expect(result).toBe(true);
   });
+
+  it("should return true if an image element's resolution is too low (<2x pixel density) accounting for scale", () => {
+    const tooLowResolutionImageElement = {
+      id: 910,
+      type: 'image',
+      height: 200,
+      width: 200,
+      scale: 400,
+      resource: {
+        height: 700,
+        width: 700,
+      },
+    };
+
+    const result = imageElementResolution(tooLowResolutionImageElement);
+    expect(result).toBe(true);
+  });
 });

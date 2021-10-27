@@ -129,26 +129,32 @@ export const filterOptionsByLabelText = (options, labelText) =>
   );
 
 /**
- * Recursively count the number of `options` in an array of nested objects.
+ * Flattens a tree of options. Order is preserved ->
+ * all children will follow each parent option.
  *
- * @param {Array.<Object>} option Array of options to count
- * @return {number} the count of all options
+ * @param {Array.<Object>} optionTree Array of nested options
+ * @param {number} level The nesting level
+ * @return {Array.<Object>} Flat array of options, ordered by parent
  */
-const countOptions = (option) => {
-  if (!option?.options?.length) {
-    return 1;
-  }
-
-  return (
-    1 + option.options.reduce((sum, child) => sum + countOptions(child), 0)
-  );
-};
+function flattenOptionTree(optionTree = [], level = 0) {
+  return optionTree.flatMap(({ options, ...option }) => [
+    {
+      ...option,
+      $level: level,
+    },
+    ...flattenOptionTree(options, level + 1),
+  ]);
+}
 
 /**
- * Recursively count the number of `options` in an array of nested objects.
+ * Create a filtered and flattened, ordered list of options.
  *
- * @param {Array.<Object>} tree Array of options to count.
- * @return {number} the count of all options
+ * @param {Array.<Object>} categories Unordered of categories
+ * @param {string} labelText The text to filter by
+ * @return {Array.<Object>} The flattened and filtered list of options
  */
-export const getOptionCount = (tree = []) =>
-  tree.reduce((count, option) => count + countOptions(option), 0);
+export function makeFlatOptionTree(categories, labelText = '') {
+  const optionTree = buildOptionsTree(categories);
+  const filteredOptionTree = filterOptionsByLabelText(optionTree, labelText);
+  return flattenOptionTree(filteredOptionTree);
+}

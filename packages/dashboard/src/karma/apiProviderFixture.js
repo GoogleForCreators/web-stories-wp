@@ -196,7 +196,7 @@ function getSettingsState() {
 
 function getCurrentUserState() {
   return {
-    data: { id: 1, meta: { web_stories_tracking_optin: true } },
+    data: { id: 1, meta: { webStoriesTrackingOptin: true } },
     isUpdating: false,
   };
 }
@@ -270,7 +270,7 @@ function fetchStories(
           break;
         }
         case STORY_SORT_OPTIONS.CREATED_BY: {
-          value = a.author.localeCompare(b.author);
+          value = a.author.name.localeCompare(b.author.name);
           break;
         }
         default: {
@@ -406,8 +406,7 @@ function toggleOptInTracking(currentUser) {
     data: {
       ...currentUser.data,
       meta: {
-        web_stories_tracking_optin:
-          !currentUser.data.meta.web_stories_tracking_optin,
+        webStoriesTrackingOptin: !currentUser.data.meta.webStoriesTrackingOptin,
       },
     },
   };

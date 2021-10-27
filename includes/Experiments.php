@@ -356,19 +356,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 
 			/**
-			 * Author: @brookegraham
-			 * Issue: #8832
-			 * Creation date: 2021-08-30
-			 */
-			[
-				'name'        => 'enableTaxonomiesSupport',
-				'label'       => __( 'Taxonomies', 'web-stories' ),
-				'description' => __( 'Enable support of tags and categories for stories', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
 			 * Author: @barklund
 			 * Issue: #8877
 			 * Creation date: 2021-09-01
@@ -404,6 +391,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Video Captions', 'web-stories' ),
 				'description' => __( 'Improve video captions appearance when viewing stories', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 		];
 	}

@@ -130,7 +130,9 @@ describe('TextEdit integration', () => {
     });
 
     describe('shortcuts', () => {
-      it('should enter/exit edit mode using the keyboard', async () => {
+      // TODO(#9547): Fix flaky test.
+      // eslint-disable-next-line jasmine/no-disabled-tests
+      xit('should enter/exit edit mode using the keyboard', async () => {
         // Enter edit mode using the Enter key
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
         await fixture.events.keyboard.press('Enter');

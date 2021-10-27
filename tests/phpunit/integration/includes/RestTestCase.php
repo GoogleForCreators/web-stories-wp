@@ -1,6 +1,8 @@
 <?php
 /**
- * Layouts method.
+ * RestTestCase class.
+ *
+ * Basic test that designed to replace WP_Test_REST_TestCase.
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -24,27 +26,25 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Traits;
+namespace Google\Web_Stories\Tests\Integration;
 
 /**
- * Trait Layout
+ * Class RestTestCase
  *
- * @package Google\Web_Stories\Traits
+ * @package Google\Web_Stories\Tests
  */
-trait Layout {
-	/**
-	 * Get supported layouts for web stories.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return mixed|void
-	 */
-	protected function get_layouts() {
-		return [
-			'carousel' => __( 'Box Carousel', 'web-stories' ),
-			'circles'  => __( 'Circle Carousel', 'web-stories' ),
-			'grid'     => __( 'Grid', 'web-stories' ),
-			'list'     => __( 'List', 'web-stories' ),
-		];
+abstract class RestTestCase extends TestCase {
+	use REST_Setup;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->set_up_rest();
+	}
+
+	public function tear_down() {
+		$this->tear_down_rest();
+
+		parent::tear_down();
 	}
 }

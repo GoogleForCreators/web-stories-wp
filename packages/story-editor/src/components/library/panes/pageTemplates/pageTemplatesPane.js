@@ -85,6 +85,7 @@ function PageTemplatesPane(props) {
 
   const [showDefaultTemplates, setShowDefaultTemplates] = useState(true);
   const [highlightedTemplate, setHighlightedTemplate] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateTemplatesList = useCallback(
     (page) => {
@@ -101,6 +102,7 @@ function PageTemplatesPane(props) {
       return;
     }
 
+    setIsLoading(true);
     getCustomPageTemplates(nextTemplatesToFetch)
       .then(({ templates, hasMore }) => {
         setSavedTemplates([...(savedTemplates || []), ...templates]);
@@ -115,7 +117,8 @@ function PageTemplatesPane(props) {
         if (null === savedTemplates) {
           setSavedTemplates([]);
         }
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, [
     getCustomPageTemplates,
     nextTemplatesToFetch,
@@ -125,10 +128,10 @@ function PageTemplatesPane(props) {
   ]);
 
   useEffect(() => {
-    if (!savedTemplates) {
+    if (!savedTemplates && !showDefaultTemplates) {
       loadTemplates();
     }
-  }, [savedTemplates, loadTemplates]);
+  }, [savedTemplates, loadTemplates, showDefaultTemplates]);
 
   useEffect(() => {
     let timeout = null;
@@ -186,6 +189,7 @@ function PageTemplatesPane(props) {
             pageSize={pageSize}
             highlightedTemplate={highlightedTemplate}
             loadTemplates={loadTemplates}
+            isLoading={isLoading}
           />
         )}
       </PaneInner>

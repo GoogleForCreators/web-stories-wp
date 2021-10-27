@@ -149,18 +149,6 @@ class Dashboard extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @covers ::get_post_type_archive_link
-	 * @covers \Google\Web_Stories\Traits\Post_Type::get_post_type_has_archive
-	 */
-	public function test_get_post_type_archive_link() {
-		$result = $this->call_private_method( $this->instance, 'get_post_type_archive_link', [ self::$cpt_has_archive ] );
-		$this->assertSame( get_post_type_archive_link( self::$cpt_has_archive ), $result );
-
-		$result = $this->call_private_method( $this->instance, 'get_post_type_archive_link', [ self::$cpt_no_archive ] );
-		$this->assertNotSame( get_post_type_archive_link( self::$cpt_no_archive ), $result );
-	}
-
-	/**
 	 * @covers ::enqueue_assets
 	 */
 	public function test_enqueue_assets() {

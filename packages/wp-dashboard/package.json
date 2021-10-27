@@ -19,9 +19,9 @@
     "@web-stories-wp/react": "*",
     "@web-stories-wp/story-editor": "*",
     "@web-stories-wp/tracking": "*",
-    "@wordpress/api-fetch": "^5.2.1",
+    "@wordpress/api-fetch": "^5.2.4",
     "flagged": "^2.0.1",
-    "styled-components": "^5.3.1"
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {}
 }

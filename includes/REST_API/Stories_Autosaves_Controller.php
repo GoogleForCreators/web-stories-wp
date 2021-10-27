@@ -31,7 +31,6 @@ use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Post_Type;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
 use WP_REST_Controller;
@@ -43,7 +42,6 @@ use WP_REST_Server;
  * Stories_Autosaves_Controller class.
  */
 class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implements Service, Delayed, Registerable, HasRequirements {
-	use Post_Type;
 
 	/**
 	 * Parent post controller.
@@ -74,13 +72,13 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
 	public function __construct( Story_Post_Type $story_post_type ) {
-		parent::__construct( $story_post_type::POST_TYPE_SLUG );
+		parent::__construct( $story_post_type->get_slug() );
 
-		$parent_controller = $this->get_post_type_parent_controller( $story_post_type::POST_TYPE_SLUG );
+		$parent_controller = $story_post_type->get_parent_controller();
 
-		$this->parent_base       = $story_post_type::POST_TYPE_SLUG;
+		$this->parent_base       = $story_post_type->get_slug();
 		$this->parent_controller = $parent_controller;
-		$this->rest_namespace    = 'web-stories/v1';
+		$this->rest_namespace    = $story_post_type->get_rest_namespace();
 	}
 
 	/**

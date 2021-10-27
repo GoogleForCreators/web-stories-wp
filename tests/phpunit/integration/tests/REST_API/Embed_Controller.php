@@ -17,10 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Settings;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -32,11 +29,7 @@ use WP_REST_Server;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Embed_Controller
  */
-class Embed_Controller extends Test_REST_TestCase {
-	/**
-	 * @var WP_REST_Server
-	 */
-	protected $server;
+class Embed_Controller extends DependencyInjectedRestTestCase {
 
 	protected static $story_id;
 	protected static $subscriber;
@@ -85,7 +78,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		$story_content  = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Embed Controller Test Story',
 				'post_status'  => 'publish',
 				'post_content' => $story_content,
@@ -102,10 +95,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
 
-		$settings         = new Settings();
-		$this->controller = new \Google\Web_Stories\REST_API\Embed_Controller(
-			new Story_Post_Type( $settings, new Experiments( $settings ) )
-		);
+		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Embed_Controller::class );
 	}
 
 	public function tear_down() {
@@ -154,8 +144,6 @@ class Embed_Controller extends Test_REST_TestCase {
 	 * @covers ::register_routes
 	 */
 	public function test_register_routes() {
-		$this->controller->register_routes();
-
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/embed', $routes );
@@ -305,8 +293,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?)
-		$settings        = new Settings();
-		$story_post_type = new Story_Post_Type( $settings, new Experiments( $settings ) );
+		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );
@@ -338,8 +325,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?).
-		$settings        = new Settings();
-		$story_post_type = new Story_Post_Type( $settings, new Experiments( $settings ) );
+		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );

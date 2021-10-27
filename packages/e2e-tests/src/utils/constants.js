@@ -13,22 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { buildOptionsTree } from '../../../form/hierarchical/utils';
 
-function flattenOptionTree(optionTree = [], level = 0) {
-  return optionTree.flatMap(({ options, ...option }) => [
-    {
-      ...option,
-      $level: level,
-    },
-    ...flattenOptionTree(options, level + 1),
-  ]);
-}
+export const monetizationDropdownSelector =
+  'button[aria-label="Monetization type"]';
 
-export function makeFlatOptionTree(categories) {
-  const optionTree = buildOptionsTree(categories);
-  return flattenOptionTree(optionTree);
-}
+export const telemetryCheckboxSelector =
+  'input[data-testid="telemetry-settings-checkbox"]';
+
+export const videoOptimizationCheckboxSelector =
+  'input[data-testid="media-optimization-settings-checkbox"]';
+
+export const videoCacheCheckboxSelector =
+  'input[data-testid="video-cache-settings-checkbox"]';

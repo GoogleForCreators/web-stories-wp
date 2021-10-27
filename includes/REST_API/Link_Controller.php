@@ -31,7 +31,6 @@ use DOMNodeList;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Document_Parser;
-use Google\Web_Stories\Traits\Post_Type;
 use WP_Error;
 use WP_Http;
 use WP_REST_Request;
@@ -44,7 +43,7 @@ use WP_REST_Server;
  * Class Link_Controller
  */
 class Link_Controller extends REST_Controller implements HasRequirements {
-	use Document_Parser, Post_Type;
+	use Document_Parser;
 
 	/**
 	 * Story_Post_Type instance.
@@ -345,7 +344,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function parse_link_permissions_check() {
-		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to process links.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 
