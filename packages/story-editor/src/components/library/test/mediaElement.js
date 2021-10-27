@@ -50,6 +50,17 @@ const VIDEO_RESOURCE = {
   alt: 'video :)',
 };
 
+const GIF_RESOURCE = {
+  id: 789,
+  src: 'http://gif-url.com',
+  type: 'gif',
+  mimeType: 'image/gif',
+  width: 100,
+  height: 100,
+  local: true, // Not yet uploaded
+  alt: 'gif :)',
+};
+
 const renderMediaElement = (resource, providerType, canEditMedia = true) => {
   const canvasContext = {
     state: {
@@ -93,21 +104,14 @@ const renderMediaElement = (resource, providerType, canEditMedia = true) => {
 
 describe('MediaElement', () => {
   it.each`
-    type       | resource          | local
-    ${'image'} | ${IMAGE_RESOURCE} | ${true}
-    ${'image'} | ${IMAGE_RESOURCE} | ${false}
-    ${'video'} | ${VIDEO_RESOURCE} | ${true}
-    ${'video'} | ${VIDEO_RESOURCE} | ${false}
+    type       | resource
+    ${'image'} | ${IMAGE_RESOURCE}
+    ${'video'} | ${VIDEO_RESOURCE}
+    ${'gif'}   | ${GIF_RESOURCE}
   `(
-    'should render MediaElement for a resource of type=`$type` when local=`$local` without accessibility violations',
-    async ({ resource, local }) => {
-      const { container } = renderMediaElement(
-        {
-          ...resource,
-          local,
-        },
-        'local'
-      );
+    'should render MediaElement for a resource of type=`$type` without accessibility violations',
+    async ({ resource }) => {
+      const { container } = renderMediaElement(resource, 'local');
 
       const results = await axe(container);
       expect(results).toHaveNoViolations();
@@ -146,6 +150,22 @@ describe('MediaElement', () => {
     expect(getByAriaLabel('More')).toBeInTheDocument();
   });
 
+  it("should render dropdown menu's more icon for uploaded gif", () => {
+    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
+      {
+        ...GIF_RESOURCE,
+        local: false, // Already uploaded
+      },
+      'local'
+    );
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+
+    const element = screen.getByTitle('gif :)');
+    fireEvent.focus(element);
+
+    expect(getByAriaLabel('More')).toBeInTheDocument();
+  });
+
   it("should render dropdown menu's more icon users without permission", () => {
     const { queryByAriaLabel } = renderMediaElement(
       {
@@ -178,6 +198,16 @@ describe('MediaElement', () => {
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = screen.getByTitle('video :)');
+    fireEvent.focus(element);
+
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+  });
+
+  it("should not render dropdown menu's more icon for not uploaded gif", () => {
+    const { queryByAriaLabel } = renderMediaElement(GIF_RESOURCE, 'local');
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+
+    const element = screen.getByTitle('gif :)');
     fireEvent.focus(element);
 
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();

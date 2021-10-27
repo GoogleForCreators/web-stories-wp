@@ -187,7 +187,7 @@ function InnerElement({
         {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- No captions/tracks because video is muted. */}
         <Video key={src} {...videoProps} ref={mediaElement}>
           {type === ContentType.GIF ? (
-            resource.output.src && (
+            resource.output?.src && (
               <source
                 src={resource.output.src}
                 type={resource.output.mimeType}
