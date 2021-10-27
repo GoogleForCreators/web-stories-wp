@@ -104,6 +104,7 @@ function TextIcon(props) {
         />
       </IconWrapper>
       <QuickAction
+        aria-label={__('Add new text element', 'web-stories')}
         onClick={handleAddText}
         tabIndex={isActive ? 0 : -1}
         onFocus={() => setIsFocusingQuick(true)}
