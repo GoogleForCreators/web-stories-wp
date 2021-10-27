@@ -30,6 +30,7 @@ import { usePresubmitHandler } from '../../../form';
 import StyleControls from './style';
 import ColorControls from './color';
 import FontControls from './font';
+import TextBoxControls from './textBox';
 
 function StylePanel(props) {
   // use highlights to update panel styles
@@ -86,6 +87,7 @@ function StylePanel(props) {
           }
         }}
       />
+      <TextBoxControls {...props} />
     </SimplePanel>
   );
 }

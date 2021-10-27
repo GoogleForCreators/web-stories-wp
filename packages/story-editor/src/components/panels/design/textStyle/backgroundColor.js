@@ -45,7 +45,7 @@ const FILL_OPTIONS = [
   { id: BACKGROUND_TEXT_MODE.HIGHLIGHT, label: __('Highlight', 'web-stories') },
 ];
 
-function ColorControls({ selectedElements, pushUpdate }) {
+function BackgroundControls({ selectedElements, pushUpdate }) {
   const backgroundColor = useCommonColorValue(
     selectedElements,
     'backgroundColor'
@@ -114,9 +114,9 @@ function ColorControls({ selectedElements, pushUpdate }) {
   );
 }
 
-ColorControls.propTypes = {
+BackgroundControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
 };
 
-export default ColorControls;
+export default BackgroundControls;

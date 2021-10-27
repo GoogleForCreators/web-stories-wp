@@ -44,7 +44,7 @@ const DEFAULT_PADDING = {
   hasHiddenPadding: false,
 };
 
-describe('Panels/TextBox', () => {
+describe('panels/TextBox', () => {
   let textElement, unlockPaddingTextElement;
   let controls;
   const paddingRatioLockLabel = 'Toggle padding ratio lock';
@@ -96,7 +96,7 @@ describe('Panels/TextBox', () => {
     expect(element).toBeInTheDocument();
   });
 
-  describe('PaddingControls', () => {
+  describe('paddingControls', () => {
     let textSamePadding,
       unlockPaddingTextSamePadding,
       textDifferentPadding,
@@ -533,7 +533,7 @@ describe('Panels/TextBox', () => {
     });
   });
 
-  describe('Mixed value multi-selection', () => {
+  describe('mixed value multi-selection', () => {
     it('should display Mixed value in case of mixed value multi-selection', () => {
       const textElement1 = textElement;
       const textElement2 = {
