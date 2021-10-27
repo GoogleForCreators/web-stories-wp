@@ -25,7 +25,7 @@ import {
 import percySnapshot from '@percy/puppeteer';
 
 describe('Background Audio', () => {
-  let uploadedFiles = [];
+  let uploadedFiles;
 
   beforeEach(() => (uploadedFiles = []));
 

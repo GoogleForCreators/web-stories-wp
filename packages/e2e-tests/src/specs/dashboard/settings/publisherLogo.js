@@ -31,7 +31,7 @@ describe('Publisher logo', () => {
   // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enableSVG']);
 
-  let uploadedFiles = [];
+  let uploadedFiles;
 
   beforeEach(() => (uploadedFiles = []));
 
