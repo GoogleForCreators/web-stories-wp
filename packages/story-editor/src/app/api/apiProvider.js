@@ -35,10 +35,10 @@ function APIProvider({ children }) {
 
   actions.getPageTemplates = useCallback(async () => {
     // check if pageTemplates have been loaded yet
-    if (pageTemplates.current.length === 0) {
-      pageTemplates.current = await getAllTemplates({ cdnURL });
+    if (pageTemplates.current.base.length === 0) {
+      pageTemplates.current.base = await getAllTemplates({ cdnURL });
     }
-    return pageTemplates.current;
+    return pageTemplates.current.base;
   }, [cdnURL]);
 
   return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
