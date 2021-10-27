@@ -19,6 +19,11 @@
 import apiFetch from '@wordpress/api-fetch';
 
 /**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './utils';
+
+/**
  * Get user.
  *
  * @param {string} apiPath API path.
@@ -27,7 +32,7 @@ import apiFetch from '@wordpress/api-fetch';
 export function getUser(apiPath) {
   return apiFetch({
     path: apiPath,
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }
 
 /**
@@ -43,11 +48,11 @@ export function toggleWebStoriesMediaOptimization(apiPath, currentUser) {
     data: {
       meta: {
         web_stories_media_optimization:
-          !currentUser.meta.web_stories_media_optimization,
+          !currentUser.meta.webStoriesMediaOptimization,
       },
     },
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }
 
 /**
@@ -62,10 +67,9 @@ export function toggleWebStoriesTrackingOptIn(apiPath, currentUser) {
     path: apiPath,
     data: {
       meta: {
-        web_stories_tracking_optin:
-          !currentUser.meta.web_stories_tracking_optin,
+        web_stories_tracking_optin: !currentUser.meta.webStoriesTrackingOptin,
       },
     },
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }

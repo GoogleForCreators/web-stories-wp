@@ -134,7 +134,7 @@ function fetchStories(
           break;
         }
         case STORY_SORT_OPTIONS.CREATED_BY: {
-          value = a.author.localeCompare(b.author);
+          value = a.author.name.localeCompare(b.author.name);
           break;
         }
         default: {
