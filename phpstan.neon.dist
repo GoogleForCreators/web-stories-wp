@@ -38,6 +38,7 @@ parameters:
     - third-party/
   scanFiles:
     - tests/phpstan/stubs/amp.php
+    - tests/phpstan/stubs/jetpack.php
     - tests/phpstan/stubs/wordpress-seo.php
     - tests/phpstan/stubs/wp-cli.php
     - tests/phpstan/stubs/wpdotcom.php
