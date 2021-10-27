@@ -50,6 +50,8 @@ export { ReactComponent as ArrowUpleft } from './arrow_upleft.svg';
 export { ReactComponent as ArrowUpright } from './arrow_upright.svg';
 export { ReactComponent as ArrowsLeftright } from './arrows_leftright.svg';
 export { ReactComponent as Bookmark } from './bookmark.svg';
+export { ReactComponent as BorderLeft } from './border_left.svg';
+export { ReactComponent as BorderTop } from './border_top.svg';
 export { ReactComponent as Box1 } from './box1.svg';
 export { ReactComponent as Box4 } from './box4.svg';
 export { ReactComponent as Box4Alternate } from './box4_alternate.svg';
