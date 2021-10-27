@@ -327,7 +327,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => stories[id].author
+        (id) => stories[id].author.name
       );
 
       // author is the third column
@@ -361,7 +361,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created_gmt)
+        getRelativeDisplayDate(stories[id].createdGmt)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -394,7 +394,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified_gmt)
+        getRelativeDisplayDate(stories[id].modifiedGmt)
       );
 
       // Last Modified is the fifth column
@@ -465,7 +465,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => stories[id].author
+        (id) => stories[id].author.name
       );
 
       // author is the third column
@@ -500,7 +500,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created_gmt)
+        getRelativeDisplayDate(stories[id].createdGmt)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -533,7 +533,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified_gmt)
+        getRelativeDisplayDate(stories[id].modifiedGmt)
       );
 
       // Last Modified is the fifth column
