@@ -72,7 +72,7 @@ describe('Telemetry Banner', () => {
     let optedIn = await fixture.renderHook(() =>
       useApi(
         ({ state: { currentUser } }) =>
-          currentUser.data?.meta?.web_stories_tracking_optin ?? false
+          currentUser.data?.meta?.webStoriesTrackingOptin ?? false
       )
     );
 
@@ -87,7 +87,7 @@ describe('Telemetry Banner', () => {
     optedIn = await fixture.renderHook(() =>
       useApi(
         ({ state: { currentUser } }) =>
-          currentUser.data?.meta?.web_stories_tracking_optin ?? false
+          currentUser.data?.meta?.webStoriesTrackingOptin ?? false
       )
     );
 
@@ -129,7 +129,7 @@ describe('Telemetry Banner', () => {
     let optedIn = await fixture.renderHook(() =>
       useApi(
         ({ state: { currentUser } }) =>
-          currentUser.data?.meta?.web_stories_tracking_optin ?? false
+          currentUser.data?.meta?.webStoriesTrackingOptin ?? false
       )
     );
 
@@ -142,7 +142,7 @@ describe('Telemetry Banner', () => {
     optedIn = await fixture.renderHook(() =>
       useApi(
         ({ state: { currentUser } }) =>
-          currentUser.data?.meta?.web_stories_tracking_optin ?? false
+          currentUser.data?.meta?.webStoriesTrackingOptin ?? false
       )
     );
 

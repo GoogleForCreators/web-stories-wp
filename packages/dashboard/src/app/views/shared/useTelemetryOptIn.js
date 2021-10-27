@@ -59,9 +59,9 @@ export default function useTelemetryOptIn() {
   }));
 
   const dataIsLoaded =
-    currentUser.data.meta?.web_stories_tracking_optin !== undefined;
+    currentUser.data.meta?.webStoriesTrackingOptin !== undefined;
 
-  const optedIn = Boolean(currentUser.data.meta?.web_stories_tracking_optin);
+  const optedIn = Boolean(currentUser.data.meta?.webStoriesTrackingOptin);
 
   useEffect(() => {
     if (optedIn) {

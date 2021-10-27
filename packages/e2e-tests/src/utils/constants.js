@@ -13,5 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as reshapeStoryObject } from './reshapeStoryObject';
-export * from './snakeToCamelCase';
+
+export const monetizationDropdownSelector =
+  'button[aria-label="Monetization type"]';
+
+export const telemetryCheckboxSelector =
+  'input[data-testid="telemetry-settings-checkbox"]';
+
+export const videoOptimizationCheckboxSelector =
+  'input[data-testid="media-optimization-settings-checkbox"]';
+
+export const videoCacheCheckboxSelector =
+  'input[data-testid="video-cache-settings-checkbox"]';

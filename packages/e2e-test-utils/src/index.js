@@ -51,6 +51,8 @@ export { default as minWPVersionRequired } from './minWPVersionRequired';
 export { default as visitBlockWidgetScreen } from './visitBlockWidgetScreen';
 export { default as insertWidget } from './insertWidget';
 export { default as triggerHighPriorityChecklistSection } from './triggerHighPriorityChecklistSection';
+export { default as disableCheckbox } from './disableCheckbox';
+export { default as enableCheckbox } from './enableCheckbox';
 export {
   getEditedPostContent,
   setPostContent,

@@ -38,7 +38,7 @@ export const StoryPropType = PropTypes.shape({
   status: DashboardStatusesPropType,
   title: PropTypes.string.isRequired,
   modified: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  author: PropTypes.string,
+  author: PropTypes.object,
   capabilities: PropTypes.shape({
     hasDeleteAction: PropTypes.bool,
     hasEditAction: PropTypes.bool,
@@ -88,7 +88,7 @@ export const UserPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
-  avatar_urls: PropTypes.object,
+  avatarUrls: PropTypes.object,
 });
 
 export const StoriesPropType = PropTypes.arrayOf(StoryPropType);

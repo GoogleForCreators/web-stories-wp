@@ -13,5 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as reshapeStoryObject } from './reshapeStoryObject';
-export * from './snakeToCamelCase';
+export default async function disableCheckbox(selector) {
+  await page.waitForSelector(selector);
+  await page.evaluate((checkbox) => {
+    const node = document.querySelector(checkbox);
+    if (node.checked) {
+      node.click();
+    }
+  }, selector);
+
+  await expect(page).toMatchElement(`${selector}:not(:checked)`);
+}

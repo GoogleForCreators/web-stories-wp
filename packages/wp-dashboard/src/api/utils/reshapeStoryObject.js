@@ -32,7 +32,7 @@ export default function reshapeStoryObject(originalStoryData) {
     preview_link: previewLink,
     edit_link: editStoryLink,
     _embedded: {
-      author = [{ name: '' }],
+      author = [{ name: '', id: 0 }],
       'wp:featuredmedia': featuredMedia = [{ source_url: '' }],
       'wp:lock': lock = [{ locked: false }],
       'wp:lockuser': lockUser = [{ id: 0, name: '' }],
@@ -56,10 +56,13 @@ export default function reshapeStoryObject(originalStoryData) {
     status,
     title: title.raw,
     created: date,
-    created_gmt: `${date_gmt}Z`,
+    createdGmt: `${date_gmt}Z`,
     modified,
-    modified_gmt: `${modified_gmt}Z`,
-    author: author[0].name,
+    modifiedGmt: `${modified_gmt}Z`,
+    author: {
+      name: author[0].name,
+      id: author[0].id,
+    },
     locked: lock[0]?.locked,
     lockUser: {
       id: lockUser[0].id,
@@ -71,7 +74,6 @@ export default function reshapeStoryObject(originalStoryData) {
     editStoryLink,
     previewLink,
     link,
-    originalStoryData,
     capabilities,
   };
 }
