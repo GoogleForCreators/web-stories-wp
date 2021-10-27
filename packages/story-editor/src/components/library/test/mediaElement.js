@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -87,7 +87,7 @@ describe('MediaElement', () => {
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
-    const element = getByAriaLabel('image :)');
+    const element = screen.getByAltText('image :)');
     fireEvent.focus(element);
 
     expect(getByAriaLabel('More')).toBeInTheDocument();
@@ -154,13 +154,10 @@ describe('MediaElement', () => {
       alt: 'image :)',
     };
 
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
-      resource,
-      'local'
-    );
+    const { queryByAriaLabel } = renderMediaElement(resource, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
-    const element = getByAriaLabel('image :)');
+    const element = screen.getByAltText('image :)');
     fireEvent.focus(element);
 
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
