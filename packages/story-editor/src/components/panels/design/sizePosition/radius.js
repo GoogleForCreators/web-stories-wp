@@ -50,7 +50,7 @@ const FlexContainer = styled.div`
 
 const InputContainer = styled.div`
   margin-left: 1px;
-  ${({ isSmall }) => (!isSmall ? 'width: calc(50% - 24px);' : '')}
+  ${({ isSmall }) => (!isSmall ? 'max-width: 106px' : '')}
 `;
 
 const LockContainer = styled.div`

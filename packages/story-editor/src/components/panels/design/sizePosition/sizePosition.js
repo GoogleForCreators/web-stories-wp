@@ -75,6 +75,10 @@ const gridWithoutFlip = css`
     'c c c c c c c';
 `;
 
+const unlockedRadiusLines = `
+  'o . . . . . .'
+  'c c c c c c c'
+`;
 const gridWithFlip = css`
   grid-template-areas:
     ${({ isSingleMedia }) => (isSingleMedia ? `'b b b b b . .'` : null)}
@@ -82,14 +86,7 @@ const gridWithFlip = css`
     'w . d . h . l'
     'r . . . f . .'
     ${({ unlockedRadius }) =>
-      unlockedRadius
-        ? `
-    'o . . . . . .'
-    'c c c c c c c';
-    `
-        : `
-    'o . . . c c c'
-  `};
+      !unlockedRadius ? `'o . . . c c c'` : unlockedRadiusLines};
 `;
 
 const Grid = styled.div`
