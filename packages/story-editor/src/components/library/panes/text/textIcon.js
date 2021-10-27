@@ -99,19 +99,21 @@ function TextIcon(props) {
         <AnimatedTextIcon
           id="text-tab-icon"
           isSecondary={isHoveringQuick || isFocusingQuick}
-          aria-label={__('Text library', 'web-stories')}
+          title={__('Text library', 'web-stories')}
           onPointerOver={() => setIsHoveringQuick(false)}
         />
       </IconWrapper>
       <QuickAction
-        aria-label={__('Add new text element', 'web-stories')}
         onClick={handleAddText}
         tabIndex={isActive ? 0 : -1}
         onFocus={() => setIsFocusingQuick(true)}
         onBlur={() => setIsFocusingQuick(false)}
         onPointerOver={() => setIsHoveringQuick(true)}
       >
-        <AnimatedTextAddIcon isPrimary={isHoveringQuick || isFocusingQuick} />
+        <AnimatedTextAddIcon
+          title={__('Add new text element', 'web-stories')}
+          isPrimary={isHoveringQuick || isFocusingQuick}
+        />
       </QuickAction>
     </TextIconContainer>
   );
