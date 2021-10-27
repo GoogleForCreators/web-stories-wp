@@ -50,6 +50,7 @@ const FlexContainer = styled.div`
 
 const InputContainer = styled.div`
   margin-left: 1px;
+  ${({ isSmall }) => (!isSmall ? 'width: calc(50% - 24px);' : '')}
 `;
 
 const LockContainer = styled.div`
@@ -182,10 +183,9 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
   const firstInputLabel = lockRadius
     ? __('Corner Radius', 'web-stories')
     : __('Top left corner radius', 'web-stories');
-  let lockedRadius;
   return (
     <FlexContainer>
-      <InputContainer>
+      <InputContainer isSmall={!lockRadius}>
         <BoxedNumericInput
           isSmall={!lockRadius}
           corner="topLeft"

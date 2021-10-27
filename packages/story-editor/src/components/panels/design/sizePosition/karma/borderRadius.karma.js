@@ -142,7 +142,9 @@ describe('Border Radius', () => {
   it('should not allow border for non-rectangular shape', async () => {
     await fixture.events.click(fixture.editor.library.shapesTab);
     await fixture.events.click(fixture.editor.library.shapes.shape('Circle'));
-    // Verify that panel is not found.
-    expect(() => fixture.editor.inspector.designPanel.sizePosition).toThrow();
+    // Verify that the radius input is not found.
+    expect(() =>
+      fixture.editor.inspector.designPanel.sizePosition.radius()
+    ).toThrow();
   });
 });

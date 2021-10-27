@@ -66,33 +66,35 @@ function getStickerAspectRatio(element) {
   return stickers?.[element?.sticker?.type].aspectRatio || 1;
 }
 
-const gridWithoutFlip = `
-  'x . . . y . .'
-  'w . d . h . l'
-  'r . . . o . .'
-  'c c c c c c c';
+const gridWithoutFlip = css`
+  grid-template-areas:
+    ${({ isSingleMedia }) => (isSingleMedia ? `'b b b b b . .'` : null)}
+    'x . . . y . .'
+    'w . d . h . l'
+    'r . . . o . .'
+    'c c c c c c c';
 `;
 
 const gridWithFlip = css`
-  'x . . . y . .'
-  'w . d . h . l'
-  'r . . . f . .'
-  ${({ unlockedRadius }) =>
-    unlockedRadius
-      ? `
-  'o . . . . . .'
-  'c c c c c c c';
-  `
-      : `
-  'o . . . c c c';
-  `}
+  grid-template-areas:
+    ${({ isSingleMedia }) => (isSingleMedia ? `'b b b b b . .'` : null)}
+    'x . . . y . .'
+    'w . d . h . l'
+    'r . . . f . .'
+    ${({ unlockedRadius }) =>
+      unlockedRadius
+        ? `
+    'o . . . . . .'
+    'c c c c c c c';
+    `
+        : `
+    'o . . . c c c'
+  `};
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-areas:
-    ${({ isSingleMedia }) => (isSingleMedia ? `'b b b b b . .'` : null)}
-    ${({ canFlip }) => (canFlip ? gridWithFlip : gridWithoutFlip)}
+  ${({ canFlip }) => (canFlip ? gridWithFlip : gridWithoutFlip)}
   grid-template-columns: 1fr 4px 8px 4px 1fr 4px 32px;
   grid-template-rows: repeat(4, 36px);
   row-gap: 16px;
