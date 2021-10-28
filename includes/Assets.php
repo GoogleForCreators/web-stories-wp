@@ -392,6 +392,13 @@ class Assets {
 			$translations[] = (string) load_script_textdomain( $dynamic_chunk, 'web-stories' );
 		}
 
-		return array_filter( $translations );
+		return array_values(
+			array_map(
+				static function( $translations ) {
+					return json_decode( $translations, true );
+				},
+				array_filter( $translations )
+			)
+		);
 	}
 }
