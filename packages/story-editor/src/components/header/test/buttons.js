@@ -392,7 +392,9 @@ describe('buttons', () => {
     setupButtons({
       storyState: { capabilities: { publish: false } },
     });
-    expect(screen.getByRole('button', { name: 'Submit for review' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Submit for review' })
+    ).toBeInTheDocument();
   });
 
   it('should open draft preview when clicking on Preview via about:blank', () => {
