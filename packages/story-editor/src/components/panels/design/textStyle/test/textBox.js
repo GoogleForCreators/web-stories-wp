@@ -23,7 +23,7 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import TextBox from '../textBox';
+import TextBox from '../textStyle';
 import ColorInput from '../../../../form/color/color';
 import {
   BACKGROUND_TEXT_MODE,
