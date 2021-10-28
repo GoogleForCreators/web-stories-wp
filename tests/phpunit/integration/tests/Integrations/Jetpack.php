@@ -30,8 +30,6 @@ class Jetpack extends DependencyInjectedTestCase {
 	const MP4_FILE       = 'video.mp4';
 	const POSTER_URL     = 'https://www.example.com/test.mp4';
 
-	const ATTACHMENT_URL = 'http://www.example.com/test.mp4';
-
 	/**
 	 * Test instance.
 	 *
