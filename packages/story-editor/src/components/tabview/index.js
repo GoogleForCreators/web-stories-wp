@@ -70,7 +70,7 @@ const TabElement = styled.li.attrs(({ isActive }) => ({
   position: relative;
   transition: color 0.2s ease;
   color: ${({ theme, isActive }) =>
-    isActive ? theme.colors.fg.primary : theme.colors.gray[30]};
+    isActive ? theme.colors.fg.primary : theme.colors.fg.tertiary};
 
   border-radius: ${({ theme }) => theme.borders.radius.small};
   ${({ theme }) =>
