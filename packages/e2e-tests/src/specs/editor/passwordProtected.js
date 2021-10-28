@@ -37,7 +37,8 @@ describe('Password protected stories', () => {
     await expect(page).toMatchElement('input[placeholder="Enter a password"]');
     await page.type('input[placeholder="Enter a password"]', 'password');
 
-    await expect(page).toClick('button', { text: 'Update' });
+    await expect(page).toClick('button[aria-label="Save draft"]');
+    await page.waitForSelector('button[aria-label="Preview"]:not([disabled])');
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage, false);
