@@ -438,6 +438,10 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     });
 
     it('should filter by author', async () => {
+      const originalStoryAuthorsNames = fixture.screen
+        .getAllByTestId(/^story-grid-item/)
+        .map((storyThumb) => storyThumb.innerText);
+
       // click the author toggle
       const authorDropdown = fixture.screen.getByLabelText(
         'Filter stories by author'
@@ -456,6 +460,11 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       expect(firstAuthor).toBeTruthy();
       const firstAuthorName = firstAuthor.innerText;
       await fixture.events.click(firstAuthor);
+
+      // Check that not all the stories were from the first author originally
+      expect(
+        originalStoryAuthorsNames.some((name) => name !== firstAuthorName)
+      ).toBeTruthy();
 
       // see that all rendered stories are by the clicked author
       const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
