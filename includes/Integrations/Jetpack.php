@@ -265,8 +265,8 @@ class Jetpack extends Service_Base {
 			$data['media_details']['length']           = (int) floor( $metadata['videopress']['duration'] / 1000 );
 		}
 
-		if ( isset( $data['url'], $metadata['videopress']['file_url_base']['https'], $metadata['videopress']['files']['hd']['mp4'] ) ) {
-			$data['url'] = $metadata['videopress']['file_url_base']['https'] . $metadata['videopress']['files']['hd']['mp4'];
+		if ( isset( $data['source_url'], $metadata['videopress']['file_url_base']['https'], $metadata['videopress']['files']['hd']['mp4'] ) ) {
+			$data['source_url'] = $metadata['videopress']['file_url_base']['https'] . $metadata['videopress']['files']['hd']['mp4'];
 		}
 
 		// Get the correct poster with matching dimensions from VideoPress.
