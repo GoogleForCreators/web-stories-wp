@@ -25,7 +25,6 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 import useApi from '../useApi';
-import { ERRORS } from '../../textContent';
 
 const fetchStories = () => {
   return Promise.resolve({
@@ -66,25 +65,6 @@ const fetchStories = () => {
       all: 1,
       publish: 1,
       draft: 0,
-    },
-  });
-};
-
-const getUser = function () {
-  return Promise.resolve({
-    id: 1,
-    name: 'dev',
-    url: 'https://www.story-link.com',
-    description: '',
-    link: 'https://www.story-link.com/author/dev/',
-    slug: 'dev',
-    avatarUrls: {},
-    meta: {
-      webStoriesTrackingOptin: false,
-      webStoriesMediaOptimization: true,
-      webStoriesOnboarding: {
-        safeZone: true,
-      },
     },
   });
 };
@@ -160,7 +140,7 @@ describe('ApiProvider', () => {
         <ConfigProvider
           config={{
             api: { stories: 'stories' },
-            apiCallbacks: { fetchStories, getUser },
+            apiCallbacks: { fetchStories },
           }}
         >
           <ApiProvider {...props} />
@@ -211,7 +191,7 @@ describe('ApiProvider', () => {
         <ConfigProvider
           config={{
             api: { stories: 'stories' },
-            apiCallbacks: { fetchStories, getUser, updateStory },
+            apiCallbacks: { fetchStories, updateStory },
           }}
         >
           <ApiProvider {...props} />
@@ -273,7 +253,7 @@ describe('ApiProvider', () => {
         <ConfigProvider
           config={{
             api: { stories: 'stories' },
-            apiCallbacks: { fetchStories, getUser, duplicateStory },
+            apiCallbacks: { fetchStories, duplicateStory },
           }}
         >
           <ApiProvider {...props} />
@@ -359,7 +339,7 @@ describe('ApiProvider', () => {
         <ConfigProvider
           config={{
             api: { stories: 'stories' },
-            apiCallbacks: { fetchStories, getUser, trashStory },
+            apiCallbacks: { fetchStories, trashStory },
           }}
         >
           <ApiProvider {...props} />
@@ -387,7 +367,7 @@ describe('ApiProvider', () => {
         <ConfigProvider
           config={{
             api: { stories: 'stories' },
-            apiCallbacks: { fetchStories, getUser },
+            apiCallbacks: { fetchStories },
           }}
         >
           <ApiProvider {...props} />
@@ -412,53 +392,5 @@ describe('ApiProvider', () => {
     });
 
     expect(listenerMock).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe('useSettingsApi', () => {
-  it('should return an error when fetching settings API request fails', async () => {
-    const { result } = renderHook(() => useApi(), {
-      wrapper: (props) => (
-        <ConfigProvider
-          config={{
-            api: { settings: 'wordpress' },
-            apiCallbacks: { fetchSettings: () => Promise.reject({}), getUser }, // eslint-disable-line prefer-promise-reject-errors
-          }}
-        >
-          <ApiProvider {...props} />
-        </ConfigProvider>
-      ),
-    });
-
-    await act(async () => {
-      await result.current.actions.settingsApi.fetchSettings();
-    });
-
-    expect(result.current.state.settings.error.message).toStrictEqual(
-      ERRORS.LOAD_SETTINGS.MESSAGE
-    );
-  });
-
-  it('should return an error when updating settings API request fails', async () => {
-    const { result } = renderHook(() => useApi(), {
-      wrapper: (props) => (
-        <ConfigProvider
-          config={{
-            api: { settings: 'wordpress' },
-            apiCallbacks: { updateSettings: () => Promise.reject({}), getUser }, // eslint-disable-line prefer-promise-reject-errors
-          }}
-        >
-          <ApiProvider {...props} />
-        </ConfigProvider>
-      ),
-    });
-
-    await act(async () => {
-      await result.current.actions.settingsApi.updateSettings('2738237892739');
-    });
-
-    expect(result.current.state.settings.error.message).toStrictEqual(
-      ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE
-    );
   });
 });
