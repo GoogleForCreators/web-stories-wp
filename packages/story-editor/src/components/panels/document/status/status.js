@@ -20,7 +20,7 @@
 import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Input } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
