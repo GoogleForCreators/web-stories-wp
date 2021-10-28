@@ -18,7 +18,6 @@
  * External dependencies
  */
 import * as React from 'react';
-import { FlagsProvider } from 'flagged';
 import {
   act,
   configure,
@@ -97,6 +96,7 @@ const defaultConfig = {
       label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
     },
   ],
+  flags: {},
 };
 
 export default class Fixture {
@@ -169,7 +169,8 @@ export default class Fixture {
    * @param {Object} flags Flags object.
    */
   setFlags(flags) {
-    this._flags = { ...flags };
+    this._flags = { ...this._config.flags, ...flags };
+    this._config.flags = this._flags;
   }
 
   /**
@@ -208,11 +209,9 @@ export default class Fixture {
     setAppElement(root);
 
     const { container } = render(
-      <FlagsProvider features={this._flags}>
-        <Dashboard key={Math.random()} config={this._config}>
-          <InterfaceSkeleton />
-        </Dashboard>
-      </FlagsProvider>,
+      <Dashboard key={Math.random()} config={this._config}>
+        <InterfaceSkeleton />
+      </Dashboard>,
       {
         container: root,
       }
