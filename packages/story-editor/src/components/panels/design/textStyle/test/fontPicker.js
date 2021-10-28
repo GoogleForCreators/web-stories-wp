@@ -19,7 +19,7 @@
  */
 import { act, fireEvent, waitFor, screen } from '@testing-library/react';
 import { curatedFontNames } from '@web-stories-wp/fonts';
-import { AdvancedDropDown } from '@web-stories-wp/design-system';
+import { Datalist } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -68,7 +68,7 @@ function arrange(options) {
 
   return renderWithTheme(
     <FontContext.Provider value={fontContextValues}>
-      <AdvancedDropDown.DropDown {...props} />
+      <Datalist.DropDown {...props} />
     </FontContext.Provider>
   );
 }

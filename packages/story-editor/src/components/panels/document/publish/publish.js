@@ -30,7 +30,7 @@ import {
   Text,
   THEME_CONSTANTS,
   Icons,
-  AdvancedDropDown,
+  Datalist,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -229,9 +229,9 @@ function PublishPanel() {
         return option;
       }
       return (
-        <AdvancedDropDown.Option value={option.id} ref={ref} {...rest}>
+        <Datalist.Option value={option.id} ref={ref} {...rest}>
           <LogoImg src={option.url} alt="" />
-        </AdvancedDropDown.Option>
+        </Datalist.Option>
       );
     }
   );
@@ -249,15 +249,12 @@ function PublishPanel() {
   };
 
   const renderUploadButton = (open) => (
-    <AdvancedDropDown.Option
-      onClick={open}
-      aria-label={__('Add new', 'web-stories')}
-    >
+    <Datalist.Option onClick={open} aria-label={__('Add new', 'web-stories')}>
       <Icons.ArrowCloud height={32} width={32} />
       <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
         {__('Add new', 'web-stories')}
       </Text>
-    </AdvancedDropDown.Option>
+    </Datalist.Option>
   );
   const publisherLogosWithUploadOption = [...publisherLogos];
   if (hasUploadMediaAction) {
@@ -330,7 +327,7 @@ function PublishPanel() {
           </MediaInputWrapper>
           <DropdownWrapper>
             <MediaWrapper>
-              <AdvancedDropDown.DropDown
+              <Datalist.DropDown
                 options={publisherLogosWithUploadOption}
                 primaryOptions={publisherLogosWithUploadOption}
                 onChange={onPublisherLogoChange}

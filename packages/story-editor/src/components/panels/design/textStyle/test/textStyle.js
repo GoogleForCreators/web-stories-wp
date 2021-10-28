@@ -37,9 +37,11 @@ import { renderPanel } from '../../../shared/test/_utils';
 
 let mockControls;
 jest.mock('../../../../../utils/textMeasurements');
-jest.mock('../../../../form/advancedDropDown', () => {
+jest.mock('@web-stories-wp/design-system', () => {
   // eslint-disable-next-line no-undef
   const React = require('@web-stories-wp/react');
+  // eslint-disable-next-line no-undef
+  const DesignSystem = require('@web-stories-wp/design-system');
   // eslint-disable-next-line no-undef
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
@@ -51,7 +53,10 @@ jest.mock('../../../../form/advancedDropDown', () => {
   };
   return {
     __esModule: true,
-    default: FakeControl,
+    ...DesignSystem,
+    Datalist: {
+      DropDown: FakeControl,
+    },
   };
 });
 jest.mock('../../../../form/color/color', () => {

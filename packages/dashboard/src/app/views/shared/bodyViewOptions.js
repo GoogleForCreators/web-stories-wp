@@ -24,7 +24,7 @@ import {
   Text,
   THEME_CONSTANTS,
   DropDown,
-  AdvancedDropDown,
+  Datalist,
   noop,
 } from '@web-stories-wp/design-system';
 
@@ -59,7 +59,7 @@ const StyledDropDown = styled(DropDown)`
 `;
 
 const BodyViewOptionsHeader = styled.div``;
-const StyledAdvancedDropDown = styled(AdvancedDropDown.DropDown)`
+const StyledDatalist = styled(Datalist.DropDown)`
   width: 150px;
 `;
 
@@ -93,7 +93,7 @@ export default function BodyViewOptions({
         <ControlsContainer>
           {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
             <StorySortDropdownContainer>
-              <StyledAdvancedDropDown
+              <StyledDatalist
                 hasSearch
                 hasDropDownBorder
                 searchResultsLabel={__('Search results', 'web-stories')}

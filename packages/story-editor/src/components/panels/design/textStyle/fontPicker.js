@@ -20,7 +20,7 @@
 import { forwardRef, useCallback, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-import { AdvancedDropDown } from '@web-stories-wp/design-system';
+import { Datalist } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -131,7 +131,7 @@ const FontPicker = forwardRef(function FontPicker(
 
   const renderer = ({ option, ...rest }, _ref) => {
     return (
-      <AdvancedDropDown.Option
+      <Datalist.Option
         ref={_ref}
         {...rest}
         fontFamily={
@@ -141,17 +141,15 @@ const FontPicker = forwardRef(function FontPicker(
         }
       >
         {fontFamily === option.id && (
-          <AdvancedDropDown.Selected
-            aria-label={__('Selected', 'web-stories')}
-          />
+          <Datalist.Selected aria-label={__('Selected', 'web-stories')} />
         )}
         {option.name}
-      </AdvancedDropDown.Option>
+      </Datalist.Option>
     );
   };
 
   return (
-    <AdvancedDropDown.DropDown
+    <Datalist.DropDown
       ref={ref}
       highlightStylesOverride={highlightStylesOverride}
       data-testid="font"

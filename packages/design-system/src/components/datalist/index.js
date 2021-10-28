@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { default as DropDown } from './advancedDropDown';
+import { default as DropDown } from './datalist';
 import * as styles from './list/styled';
 
 export default {

@@ -19,7 +19,7 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
-import { AdvancedDropDown } from '@web-stories-wp/design-system';
+import { Datalist } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -109,7 +109,7 @@ function Author() {
   };
   return (
     <Row>
-      <AdvancedDropDown.DropDown
+      <Datalist.DropDown
         options={queriedUsers}
         searchResultsLabel={__('Search results', 'web-stories')}
         aria-label={__('Author', 'web-stories')}

@@ -72,7 +72,7 @@ const Container = styled.div`
  * @param {string} props.dropDownLabel The visible label of the dropdown select.
  * @return {*} Render.
  */
-const AdvancedDropDown = forwardRef(function AdvancedDropDown(
+const Datalist = forwardRef(function Datalist(
   {
     onChange,
     disabled = false,
@@ -217,7 +217,7 @@ const AdvancedDropDown = forwardRef(function AdvancedDropDown(
   );
 });
 
-AdvancedDropDown.propTypes = {
+Datalist.propTypes = {
   selectedId: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
@@ -239,4 +239,4 @@ AdvancedDropDown.propTypes = {
   hasDropDownBorder: PropTypes.bool,
 };
 
-export default AdvancedDropDown;
+export default Datalist;
