@@ -30,8 +30,12 @@ use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Types;
+use Jetpack_Options;
+use stdClass;
 use WP_Post;
 use WP_REST_Response;
+use function video_get_info_by_blogpostid;
+use function videopress_get_video_details;
 
 /**
  * Class Jetpack.
@@ -94,13 +98,13 @@ class Jetpack extends Service_Base {
 
 		add_filter( 'jetpack_is_amp_request', [ $this, 'force_amp_request' ] );
 		add_filter( 'web_stories_allowed_mime_types', [ $this, 'add_videopress' ] );
-		add_filter( 'web_stories_rest_prepare_attachment', [ $this, 'filter_api_response' ], 10, 2 );
+		add_filter( 'web_stories_rest_prepare_attachment', [ $this, 'filter_rest_api_response' ], 10, 2 );
 		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
 		add_action( 'added_post_meta', [ $this, 'add_term' ], 10, 3 );
 	}
 
 	/**
-	 * Adds the web story post type to Jetpack / WordPress.com sitemaps.
+	 * Adds the web-story post type to Jetpack / WordPress.com sitemaps.
 	 *
 	 * @see https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80
 	 *
@@ -120,7 +124,9 @@ class Jetpack extends Service_Base {
 	}
 
 	/**
-	 * Add VideoPress to allowed mime types. If the site does not support videopress, this allow will be filtered out.
+	 * Add VideoPress to allowed mime types.
+	 *
+	 * If the site does not support VideoPress, this will be filtered out.
 	 *
 	 * @since 1.7.2
 	 *
@@ -139,7 +145,9 @@ class Jetpack extends Service_Base {
 
 
 	/**
-	 * Only change out of admin ajax is the mime type match exactly what web stories is looking for.
+	 * Filter ajax query attachments args when accessed from the Web Stories editor.
+	 *
+	 * Only filters the response if the mime type matches exactly what Web Stories is looking for.
 	 *
 	 * @since 1.7.2
 	 *
@@ -148,13 +156,7 @@ class Jetpack extends Service_Base {
 	 * @return array|mixed Filtered query args.
 	 */
 	public function filter_ajax_query_attachments_args( $args ) {
-		if ( ! is_array( $args ) ) {
-			return $args;
-		}
-		if ( ! isset( $args['post_mime_type'] ) ) {
-			return $args;
-		}
-		if ( ! is_array( $args['post_mime_type'] ) ) {
+		if ( ! is_array( $args ) || ! isset( $args['post_mime_type'] ) || ! is_array( $args['post_mime_type'] ) ) {
 			return $args;
 		}
 
@@ -183,33 +185,52 @@ class Jetpack extends Service_Base {
 	 * Changes the video/videopress type back to mp4
 	 * and ensures MP4 source URLs are returned.
 	 *
-	 * @since 1.7.2
-	 *
-	 * @param array|mixed $response   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
+	 * @param array|mixed $data   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
 	 * @param WP_Post     $attachment Attachment object.
 	 *
 	 * @return array|mixed
+	 *@since 1.7.2
+	 *
 	 */
-	public function filter_admin_ajax_response( $response, $attachment ) {
+	public function filter_admin_ajax_response( $data, $attachment ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
-			return $response;
+			return $data;
 		}
 
-		if ( ! is_array( $response ) ) {
-			return $response;
+		if ( ! is_array( $data ) ) {
+			return $data;
 		}
 
 		// Reset mime type back to mp4, as this is the correct value.
-		$response['mime']    = 'video/mp4';
-		$response['subtype'] = 'mp4';
+		$data['mime']    = 'video/mp4';
+		$data['subtype'] = 'mp4';
 
-		// Make video as optimized.
-		$response[ $this->media_source_taxonomy::MEDIA_SOURCE_KEY ] = 'video-optimization';
+		// Mark video as optimized.
+		$data[ $this->media_source_taxonomy::MEDIA_SOURCE_KEY ] = 'video-optimization';
 
-		$response['url'] = $response['url'] ?? null;
-		$response['url'] = $this->get_videopress_video_url( $attachment ) ?? $response['url'];
+		$videopress_data = $this->get_videopress_video_data( $attachment );
 
-		return $response;
+		// If VideoPress has finished processing, use the duration in milliseconds to get formatted seconds and minutes.
+		if ( $videopress_data && isset( $data['media_details'], $videopress_data->duration ) && ! isset( $data['media_details']['length_formatted'] ) ) {
+			$data['media_details']['length_formatted'] = $this->format_milliseconds( $videopress_data->duration );
+			$data['media_details']['length']           = (int) floor( $videopress_data->duration / 1000 );
+		}
+
+		if ( isset( $data['url'], $videopress_data->file_url_base->https, $videopress_data->files->hd->mp4 ) ) {
+			$data['url'] = $videopress_data->file_url_base->https . $videopress_data->files->hd->mp4;
+		}
+
+		// Get the correct poster with matching dimensions from VideoPress.
+		if ( isset( $data['featured_media_src'], $videopress_data->poster, $videopress_data->width, $videopress_data->height ) ) {
+			$data['featured_media_src'] = [
+				'src' => $videopress_data->poster,
+				'width' => $videopress_data->width,
+				'height' => $videopress_data->height,
+				'generated' => true,
+			];
+		}
+
+		return $data;
 	}
 
 	/**
@@ -225,7 +246,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return WP_REST_Response
 	 */
-	public function filter_api_response( WP_REST_Response $response, WP_Post $post ) {
+	public function filter_rest_api_response( WP_REST_Response $response, WP_Post $post ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $post->post_mime_type ) {
 			return $response;
 		}
@@ -235,11 +256,30 @@ class Jetpack extends Service_Base {
 		// Reset mime type back to mp4, as this is the correct value.
 		$data['mime_type'] = 'video/mp4';
 
-		// Make video as optimized.
+		// Mark video as optimized.
 		$data[ $this->media_source_taxonomy::MEDIA_SOURCE_KEY ] = 'video-optimization';
 
-		$data['source_url'] = $data['source_url'] ?? null;
-		$data['source_url'] = $this->get_videopress_video_url( $post ) ?? $data['source_url'];
+		$videopress_data = $this->get_videopress_video_data( $post );
+
+		// If VideoPress has finished processing, use the duration in milliseconds to get formatted seconds and minutes.
+		if ( $videopress_data && isset( $data['media_details'], $videopress_data->duration ) && ! isset( $data['media_details']['length_formatted'] ) ) {
+			$data['media_details']['length_formatted'] = $this->format_milliseconds( $videopress_data->duration );
+			$data['media_details']['length']           = (int) floor( $videopress_data->duration / 1000 );
+		}
+
+		if ( isset( $data['source_url'], $videopress_data->file_url_base->https, $videopress_data->files->hd->mp4 ) ) {
+			$data['source_url'] = $videopress_data->file_url_base->https . $videopress_data->files->hd->mp4;
+		}
+
+		// Get the correct poster with matching dimensions from VideoPress.
+		if ( isset( $data['featured_media_src'], $videopress_data->poster, $videopress_data->width, $videopress_data->height ) ) {
+			$data['featured_media_src'] = [
+				'src' => $videopress_data->poster,
+				'width' => $videopress_data->width,
+				'height' => $videopress_data->height,
+				'generated' => true,
+			];
+		}
 
 		$response->set_data( $data );
 
@@ -247,15 +287,15 @@ class Jetpack extends Service_Base {
 	}
 
 	/**
-	 * Returns an attachment's VideoPress MP4 URL.
+	 * Returns an attachment's VideoPress data.
 	 *
 	 * @since 1.14.0
 	 *
 	 * @param WP_Post $post Post object.
 	 *
-	 * @return string|null MP4 video URL if available, null otherwise.
+	 * @return stdClass|null VideoPress data if available.
 	 */
-	protected function get_videopress_video_url( $post ) {
+	protected function get_videopress_video_data( $post ) {
 		if (
 			function_exists( '\videopress_get_video_details' ) &&
 			function_exists( '\video_get_info_by_blogpostid' )
@@ -263,14 +303,10 @@ class Jetpack extends Service_Base {
 			$blog_id = $this->get_jetpack_blog_id();
 
 			if ( $blog_id ) {
-				$videopress_info = \video_get_info_by_blogpostid( $blog_id, $post->ID );
+				$videopress_info = video_get_info_by_blogpostid( $blog_id, $post->ID );
 
 				if ( isset( $videopress_info->guid ) ) {
-					$videopress_data = \videopress_get_video_details( $videopress_info->guid );
-
-					if ( isset( $videopress_data->file_url_base->https, $videopress_data->files->hd->mp4 ) ) {
-						return $videopress_data->file_url_base->https . $videopress_data->files->hd->mp4;
-					}
+					return videopress_get_video_details( $videopress_info->guid );
 				}
 			}
 		}
@@ -293,55 +329,16 @@ class Jetpack extends Service_Base {
 		}
 
 		if (
-			class_exists( '\Jetpack_Options' ) &&
-			method_exists( '\Jetpack_Options', 'get_option' ) &&
-			class_exists( '\Jetpack' ) &&
-			method_exists( '\Jetpack', 'is_active' ) &&
+			class_exists( Jetpack_Options::class ) &&
+			method_exists( Jetpack_Options::class, 'get_option' ) &&
+			class_exists( \Jetpack::class ) &&
+			method_exists( \Jetpack::class, 'is_active' ) &&
 			\Jetpack::is_active()
 		) {
-			return \Jetpack_Options::get_option( 'id' );
+			return Jetpack_Options::get_option( 'id' );
 		}
 
 		return null;
-	}
-
-	/**
-	 * Add extra data to an source array.
-	 *
-	 * @since 1.8.0
-	 *
-	 * @param array  $data           Source data to be modified.
-	 * @param string $videopress_key VideoPress array key.
-	 *
-	 * @return array
-	 */
-	protected function add_extra_data( array $data, $videopress_key ): array {
-
-		if ( isset( $data['media_details']['videopress'] ) ) {
-			$videopress = $data['media_details']['videopress'];
-			// If VideoPress has finished processing, use the duration in milliseconds to get formatted seconds and minutes.
-			if ( isset( $videopress['duration'] ) && $videopress['duration'] ) {
-				$data['media_details']['length_formatted'] = $this->format_milliseconds( $videopress['duration'] );
-				$data['media_details']['length']           = (int) floor( $videopress['duration'] / 1000 );
-			}
-
-			// If video has not finished processing, reset request to original url.
-			if ( isset( $videopress['finished'], $videopress['original'] ) && ! $videopress['finished'] ) {
-				$data[ $videopress_key ] = $videopress['original'];
-			}
-
-			$url_base = $videopress['file_url_base']['https'] ?? $videopress['file_url_base']['http'];
-
-			if ( isset( $videopress['files']['hd']['mp4'] ) ) {
-				$data[ $videopress_key ] = $url_base . $videopress['files']['hd']['mp4'];
-			} elseif ( isset( $videopress['files']['dvd']['mp4'] ) ) {
-				$data[ $videopress_key ] = $url_base . $videopress['files']['dvd']['mp4'];
-			} elseif ( isset( $videopress['files']['std']['mp4'] ) ) {
-				$data[ $videopress_key ] = $url_base . $videopress['files']['std']['mp4'];
-			}
-		}
-
-		return $data;
 	}
 
 	/**
@@ -390,7 +387,7 @@ class Jetpack extends Service_Base {
 	}
 
 	/**
-	 * Force jetpack to see web stories as AMP.
+	 * Force Jetpack to see Web Stories as AMP.
 	 *
 	 * @since 1.2.0
 	 *
