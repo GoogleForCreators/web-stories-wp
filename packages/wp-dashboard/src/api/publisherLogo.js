@@ -27,22 +27,22 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  * Fetch publisher logos.
  * Used for "Publisher Logo" field under editor settings page
  *
- * @param {Object} config Configuration object.
+ * @param {string} apiPath API path.
  * @return {Promise} Request promise.
  */
-export function fetchPublisherLogos(config) {
-  return apiFetch({ path: config.api.publisherLogos });
+export function fetchPublisherLogos(apiPath) {
+  return apiFetch({ path: apiPath });
 }
 
 /**
  * Remove publisher logo.
  *
- * @param {Object} config Configuration object.
+ * @param {string} apiPath API path.
  * @param {number|string} logoId Logo id.
  * @return {Promise} Request promise.
  */
-export function removePublisherLogo(config, logoId) {
-  const path = addQueryArgs(`${config.api.publisherLogos}${logoId}/`, {
+export function removePublisherLogo(apiPath, logoId) {
+  const path = addQueryArgs(`${apiPath}${logoId}/`, {
     _method: 'DELETE',
   });
 
@@ -55,13 +55,13 @@ export function removePublisherLogo(config, logoId) {
 /**
  * Add publisher logo.
  *
- * @param {Object} config Configuration object.
+ * @param {string} apiPath API path.
  * @param {number|string} logoId Logo id.
  * @return {Promise} Request promise.
  */
-export function addPublisherLogo(config, logoId) {
+export function addPublisherLogo(apiPath, logoId) {
   return apiFetch({
-    path: config.api.publisherLogos,
+    path: apiPath,
     data: {
       id: logoId,
     },
@@ -72,13 +72,13 @@ export function addPublisherLogo(config, logoId) {
 /**
  * Set publisher logo as default.
  *
- * @param {Object} config Configuration object.
+ * @param {string} apiPath API path.
  * @param {number|string} logoId Logo id.
  * @return {Promise} Request promise.
  */
-export function setPublisherLogoAsDefault(config, logoId) {
+export function setPublisherLogoAsDefault(apiPath, logoId) {
   return apiFetch({
-    path: `${config.api.publisherLogos}${logoId}/`,
+    path: `${apiPath}${logoId}/`,
     data: {
       active: true,
     },

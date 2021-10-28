@@ -27,7 +27,6 @@ import { Text, THEME_CONSTANTS, DropDown } from '@web-stories-wp/design-system';
  */
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
-import TelemetryBanner from './telemetryBanner';
 
 const DisplayFormatContainer = styled.div`
   height: 76px;
@@ -52,6 +51,8 @@ const StyledDropDown = styled(DropDown)`
   width: 210px;
 `;
 
+const BodyViewOptionsHeader = styled.div``;
+
 export default function BodyViewOptions({
   currentSort,
   handleLayoutSelect,
@@ -66,7 +67,7 @@ export default function BodyViewOptions({
 }) {
   return (
     <StandardViewContentGutter>
-      <TelemetryBanner />
+      <BodyViewOptionsHeader id="body-view-options-header" />
       {!isLoading && (
         <DisplayFormatContainer>
           <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
