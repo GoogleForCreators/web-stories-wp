@@ -330,6 +330,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Archive Page', 'web-stories' ),
 				'description' => __( 'Allow Web Stories archive page customization', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @miina

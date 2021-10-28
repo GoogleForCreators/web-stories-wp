@@ -144,9 +144,9 @@ function InnerElement({
   const displayPoster = poster ?? newVideoPosterRef.current;
 
   const commonProps = {
-    width: width,
-    height: height,
-    alt: alt,
+    width,
+    height,
+    alt,
     crossOrigin: 'anonymous',
   };
 
@@ -165,11 +165,11 @@ function InnerElement({
   const imageProps = {
     ...commonImageProps,
     src: thumbnailURL,
-    'aria-label': alt,
   };
   const videoProps = {
     ...commonProps,
-    'aria-label': alt,
+    title: alt,
+    alt: null,
     loop: type === ContentType.GIF,
     muted: true,
     preload: 'metadata',
