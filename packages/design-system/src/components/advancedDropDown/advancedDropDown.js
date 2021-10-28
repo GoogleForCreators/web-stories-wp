@@ -96,6 +96,8 @@ const AdvancedDropDown = forwardRef(function AdvancedDropDown(
   },
   ref
 ) {
+  const searchRef = useRef();
+  const listRef = useRef();
   if (!options && !getOptionsByQuery) {
     throw new Error(
       'Dropdown initiated with invalid params: options or getOptionsByQuery has to be set'
@@ -129,14 +131,23 @@ const AdvancedDropDown = forwardRef(function AdvancedDropDown(
     [onChange, internalRef]
   );
 
+  const focusSearch = useCallback(() => {
+    searchRef.current?.focus();
+  }, []);
+  const focusList = useCallback(() => {
+    listRef.current?.focus();
+  }, []);
+
   const list = (
     <OptionsContainer
+      ref={searchRef}
       isOpen={isOpen}
       onClose={debouncedCloseDropDown}
       getOptionsByQuery={getOptionsByQuery}
       hasSearch={hasSearch}
       isInline={isInline}
       hasDropDownBorder={hasDropDownBorder}
+      focusList={focusList}
       renderContents={({
         searchKeyword,
         setIsExpanded,
@@ -145,6 +156,7 @@ const AdvancedDropDown = forwardRef(function AdvancedDropDown(
         listId,
       }) => (
         <List
+          ref={listRef}
           listId={listId}
           value={selectedId}
           keyword={searchKeyword}
@@ -159,10 +171,24 @@ const AdvancedDropDown = forwardRef(function AdvancedDropDown(
           priorityOptions={priorityOptions}
           priorityLabel={priorityLabel}
           searchResultsLabel={searchResultsLabel}
+          focusSearch={focusSearch}
           renderer={renderer}
         />
       )}
     />
+  );
+
+  const DropDownSelectRef = useCallback(
+    (node) => {
+      // `ref` can either be a callback ref or a normal ref.
+      if (typeof ref == 'function') {
+        ref(node);
+      } else if (ref) {
+        ref.current = node;
+      }
+      internalRef.current = node;
+    },
+    [ref]
   );
 
   const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
@@ -173,15 +199,7 @@ const AdvancedDropDown = forwardRef(function AdvancedDropDown(
         aria-pressed={isOpen}
         aria-haspopup
         aria-expanded={isOpen}
-        ref={(node) => {
-          // `ref` can either be a callback ref or a normal ref.
-          if (typeof ref == 'function') {
-            ref(node);
-          } else if (ref) {
-            ref.current = node;
-          }
-          internalRef.current = node;
-        }}
+        ref={DropDownSelectRef}
         activeItemLabel={selectedOption?.name}
         activeItemRenderer={activeItemRenderer}
         dropDownLabel={dropDownLabel}

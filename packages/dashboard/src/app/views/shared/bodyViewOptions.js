@@ -74,7 +74,6 @@ export default function BodyViewOptions({
   currentSort,
   handleLayoutSelect,
   handleSortChange,
-  isLoading,
   resultsLabel,
   layoutStyle,
   pageSortOptions = [],
@@ -87,50 +86,48 @@ export default function BodyViewOptions({
   return (
     <StandardViewContentGutter>
       <BodyViewOptionsHeader id="body-view-options-header" />
-      {!isLoading && (
-        <DisplayFormatContainer>
-          <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
-          </Text>
-          <ControlsContainer>
-            {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
-              <StorySortDropdownContainer>
-                <StyledAdvancedDropDown
-                  hasSearch
-                  hasDropDownBorder
-                  searchResultsLabel={__('Search results', 'web-stories')}
-                  aria-label={__('Filter stories by author', 'web-stories')}
-                  onChange={author.toggleFilterId}
-                  getOptionsByQuery={author.queryAuthorsBySearch}
-                  selectedId={author.filterId}
-                  placeholder={__('Author', 'web-stories')}
-                  primaryOptions={author.queriedAuthors}
-                  options={author.queriedAuthors}
-                />
-              </StorySortDropdownContainer>
-            )}
-            {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
-              <StorySortDropdownContainer>
-                <StyledDropDown
-                  ariaLabel={sortDropdownAriaLabel}
-                  options={pageSortOptions}
-                  type={DROPDOWN_TYPES.MENU}
-                  selectedValue={currentSort}
-                  onMenuItemClick={(_, newSort) => handleSortChange(newSort)}
-                />
-              </StorySortDropdownContainer>
-            )}
-            {showGridToggle && (
-              <ControlsContainer>
-                <ViewStyleBar
-                  layoutStyle={layoutStyle}
-                  onPress={handleLayoutSelect}
-                />
-              </ControlsContainer>
-            )}
-          </ControlsContainer>
-        </DisplayFormatContainer>
-      )}
+      <DisplayFormatContainer>
+        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
+        </Text>
+        <ControlsContainer>
+          {layoutStyle === VIEW_STYLE.GRID && showAuthorDropdown && (
+            <StorySortDropdownContainer>
+              <StyledAdvancedDropDown
+                hasSearch
+                hasDropDownBorder
+                searchResultsLabel={__('Search results', 'web-stories')}
+                aria-label={__('Filter stories by author', 'web-stories')}
+                onChange={author.toggleFilterId}
+                getOptionsByQuery={author.queryAuthorsBySearch}
+                selectedId={author.filterId}
+                placeholder={__('Author', 'web-stories')}
+                primaryOptions={author.queriedAuthors}
+                options={author.queriedAuthors}
+              />
+            </StorySortDropdownContainer>
+          )}
+          {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
+            <StorySortDropdownContainer>
+              <StyledDropDown
+                ariaLabel={sortDropdownAriaLabel}
+                options={pageSortOptions}
+                type={DROPDOWN_TYPES.MENU}
+                selectedValue={currentSort}
+                onMenuItemClick={(_, newSort) => handleSortChange(newSort)}
+              />
+            </StorySortDropdownContainer>
+          )}
+          {showGridToggle && (
+            <ControlsContainer>
+              <ViewStyleBar
+                layoutStyle={layoutStyle}
+                onPress={handleLayoutSelect}
+              />
+            </ControlsContainer>
+          )}
+        </ControlsContainer>
+      </DisplayFormatContainer>
     </StandardViewContentGutter>
   );
 }
@@ -139,7 +136,6 @@ BodyViewOptions.propTypes = {
   currentSort: PropTypes.string.isRequired,
   handleLayoutSelect: PropTypes.func,
   handleSortChange: PropTypes.func,
-  isLoading: PropTypes.bool,
   layoutStyle: PropTypes.string.isRequired,
   resultsLabel: PropTypes.string.isRequired,
   pageSortOptions: PropTypes.arrayOf(

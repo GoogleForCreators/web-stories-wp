@@ -35,6 +35,9 @@ export const List = styled.div`
   font-size: 14px;
   text-align: left;
   list-style: none;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+
+  ${themeHelpers.focusableOutlineCSS}
 `;
 
 export const Group = styled.ul`

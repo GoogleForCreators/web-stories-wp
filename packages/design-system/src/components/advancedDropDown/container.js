@@ -23,6 +23,8 @@ import {
   useRef,
   useState,
   useFocusOut,
+  useMemo,
+  forwardRef,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -31,6 +33,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
+import { noop } from '../../utils/noop';
 import SearchInput from './searchInput';
 import { isKeywordFilterable } from './utils';
 
@@ -60,25 +63,42 @@ const Container = styled.div`
   ${({ theme, hasDropDownBorder }) =>
     hasDropDownBorder &&
     css`
-      border: 1px solid ${theme.colors.divider.primary};
+      border: 1px solid ${theme.colors.border.defaultNormal};
     `}
 `;
 
-function OptionsContainer({
-  onClose,
-  isOpen,
-  getOptionsByQuery,
-  hasSearch,
-  renderContents,
-  isInline,
-  hasDropDownBorder = false,
-}) {
+const OptionsContainer = forwardRef(function OptionsContainer(
+  {
+    onClose,
+    isOpen,
+    getOptionsByQuery,
+    hasSearch,
+    renderContents,
+    isInline,
+    hasDropDownBorder = false,
+    focusList = noop,
+  },
+  inputRef
+) {
   const ref = useRef();
-  const inputRef = useRef();
   const [searchKeyword, setSearchKeyword] = useState('');
   const [queriedOptions, setQueriedOptions] = useState(null);
   const [isExpanded, setIsExpanded] = useState(true);
   const [trigger, setTrigger] = useState(0);
+
+  const handleKeyDown = useCallback(
+    (evt) => {
+      // since there's only two elements in this dialog either
+      // 'tab' || 'shift+tab' should circle to the other element
+      // in the dialog
+      if (evt.key === 'Tab') {
+        evt.stopPropagation();
+        evt.preventDefault();
+        focusList();
+      }
+    },
+    [focusList]
+  );
 
   useFocusOut(ref, onClose, [onClose]);
 
@@ -103,9 +123,9 @@ function OptionsContainer({
     if (isOpen) {
       inputRef?.current?.focus();
     }
-  }, [isOpen]);
+  }, [isOpen, inputRef]);
 
-  const listId = `list-${uuidv4()}`;
+  const listId = useMemo(() => `list-${uuidv4()}`, []);
   return (
     <Container
       role="dialog"
@@ -122,6 +142,7 @@ function OptionsContainer({
           isExpanded={isExpanded}
           focusFontListFirstOption={() => setTrigger((v) => v + 1)}
           aria-owns={listId}
+          onKeyDown={handleKeyDown}
         />
       )}
       {renderContents({
@@ -133,7 +154,7 @@ function OptionsContainer({
       })}
     </Container>
   );
-}
+});
 
 OptionsContainer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
@@ -143,6 +164,7 @@ OptionsContainer.propTypes = {
   renderContents: PropTypes.func.isRequired,
   isInline: PropTypes.bool,
   hasDropDownBorder: PropTypes.bool,
+  focusList: PropTypes.func,
 };
 
 export default OptionsContainer;
