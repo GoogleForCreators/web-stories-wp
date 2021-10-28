@@ -17,10 +17,15 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useMemo,
+  useState,
+} from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -41,7 +46,7 @@ const HelperText = styled(Text).attrs({
 function StatusPanel() {
   const {
     status = '',
-    password: savedPassword,
+    password,
     updateStory,
     capabilities,
   } = useStory(
@@ -53,117 +58,122 @@ function StatusPanel() {
       actions: { updateStory },
     }) => ({ status, password, updateStory, capabilities })
   );
-  const [password, setPassword] = useState(savedPassword);
 
-  const passwordProtected = 'protected';
-  const getStatusValue = useCallback(
+  const [hasPassword, setHasPassword] = useState(Boolean(password));
+
+  const visibility = useMemo(
     (value) => {
-      // Always display protected visibility, independent of the status.
-      if (password && password.length) {
-        return passwordProtected;
+      if (hasPassword) {
+        return 'protected';
       }
-      // Display as public even if scheduled for future, private post can't be scheduled.
-      if ('future' === value) {
-        return 'publish';
+
+      if ('private' === value) {
+        return 'private';
       }
-      return value;
+
+      return 'public';
     },
-    [password]
+    [hasPassword]
   );
-
-  const [currentStatus, setCurrentStatus] = useState(getStatusValue(status));
-
-  useEffect(() => {
-    // updated displayed password when stored password is updated
-    setPassword(savedPassword);
-  }, [savedPassword]);
 
   const visibilityOptions = [
     {
-      value: 'draft',
-      label: __('Draft', 'web-stories'),
-      helper: __('Visible to just me', 'web-stories'),
+      value: 'public',
+      label: __('Public', 'web-stories'),
+      helper: __('Visible to everyone', 'web-stories'),
     },
   ];
 
   if (capabilities?.publish) {
-    visibilityOptions.push({
-      value: 'publish',
-      label: __('Public', 'web-stories'),
-      helper: __('Visible to everyone', 'web-stories'),
-    });
     visibilityOptions.push({
       value: 'private',
       label: __('Private', 'web-stories'),
       helper: __('Visible to site admins & editors only', 'web-stories'),
     });
     visibilityOptions.push({
+      value: 'protected',
       label: __('Password Protected', 'web-stories'),
-      value: passwordProtected,
-      helper: __('Need password to view', 'web-stories'),
+      helper: __('Visible only to those with the password.', 'web-stories'),
     });
   }
 
-  const handleChangePassword = useCallback((evt) => {
-    setPassword(evt.target.value);
-  }, []);
-
-  // @todo this should still allow showing the moment where the warning is red, currently just doesn't allow adding more.
-  const handleUpdatePassword = useCallback(
+  const handleChangePassword = useCallback(
     (evt) => {
-      if (isValidPassword(evt.target.value)) {
-        updateStory({
-          properties: { password: evt.target.value },
-        });
-      }
+      updateStory({
+        properties: { password: evt.target.value },
+      });
     },
     [updateStory]
   );
 
-  const isValidPassword = (value) => {
-    return value && value.length <= 20;
-  };
-
   const handleChangeVisibility = useCallback(
     (evt) => {
-      const properties =
-        passwordProtected === evt.target.value
-          ? { status: 'publish', password }
-          : { status: evt.target.value, password: '' };
+      const newVisibility = evt.target.value;
+
+      if ('private' === newVisibility) {
+        if (
+          !window.confirm(
+            __(
+              'Would you like to privately publish this story now?',
+              'web-stories'
+            )
+          )
+        ) {
+          return;
+        }
+      }
+
+      const properties = {};
+
+      switch (newVisibility) {
+        case 'public':
+          properties.status = visibility === 'private' ? 'draft' : status;
+          properties.password = '';
+          setHasPassword(false);
+          break;
+
+        case 'private':
+          properties.status = 'private';
+          properties.password = '';
+          setHasPassword(false);
+          break;
+
+        case 'protected':
+          properties.status = visibility === 'private' ? 'draft' : status;
+          properties.password = password || '';
+          setHasPassword(true);
+          break;
+
+        default:
+          break;
+      }
 
       updateStory({ properties });
-      setCurrentStatus(evt.target.value);
     },
-    [password, updateStory]
+    [status, visibility, password, setHasPassword, updateStory]
   );
 
   return (
     <SimplePanel
       name="status"
-      title={__('Status and visibility', 'web-stories')}
+      title={__('Visibility', 'web-stories')}
       collapsedByDefault={false}
     >
       <>
-        <Row>
-          <HelperText>
-            {__('Set the current status of your story to', 'web-stories')}
-          </HelperText>
-        </Row>
         <Row>
           <RadioGroup
             groupLabel="Visibility"
             name="radio-group-visibility"
             options={visibilityOptions}
             onChange={handleChangeVisibility}
-            value={currentStatus}
+            value={visibility}
           />
         </Row>
-        {passwordProtected === currentStatus && (
+        {hasPassword && (
           <InputRow>
             <Input
               aria-label={__('Password', 'web-stories')}
               value={password}
-              onBlur={handleUpdatePassword}
               onChange={handleChangePassword}
               placeholder={__('Enter a password', 'web-stories')}
             />

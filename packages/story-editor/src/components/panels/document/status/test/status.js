@@ -67,7 +67,7 @@ describe('statusPanel', () => {
   it('should render Status Panel', () => {
     arrange();
     const element = screen.getByRole('button', {
-      name: 'Status and visibility',
+      name: 'Visibility',
     });
     expect(element).toBeInTheDocument();
 

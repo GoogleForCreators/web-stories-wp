@@ -34,13 +34,13 @@ import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 const TRANSITION_DURATION = 300;
 
 function PublishButton({ forceIsSaving }) {
-  const { isSaving, date, storyId, saveStory, title, editLink, capabilities } =
+  const { isSaving, date, storyId, saveStory, title, editLink, canPublish } =
     useStory(
       ({
         state: {
-          capabilities,
           meta: { isSaving },
           story: { date, storyId, title, editLink },
+          capabilities,
         },
         actions: { saveStory },
       }) => ({
@@ -50,7 +50,7 @@ function PublishButton({ forceIsSaving }) {
         saveStory,
         title,
         editLink,
-        capabilities,
+        canPublish: Boolean(capabilities?.publish),
       })
     );
   const { isUploading } = useLocalMedia((state) => ({
@@ -87,24 +87,34 @@ function PublishButton({ forceIsSaving }) {
   }, [showDialog]);
 
   const publish = useCallback(() => {
+    let newStatus = 'pending';
+
+    if (canPublish) {
+      if (hasFutureDate) {
+        newStatus = 'future';
+      } else {
+        newStatus = 'publish';
+      }
+    }
+
     trackEvent('publish_story', {
-      status: hasFutureDate ? 'future' : 'publish',
+      status: newStatus,
       title_length: title.length,
     });
 
     setShowDialog(false);
-    saveStory({ status: 'publish' });
+    saveStory({ status: newStatus });
     refreshPostEditURL();
-  }, [refreshPostEditURL, saveStory, hasFutureDate, title]);
+  }, [refreshPostEditURL, saveStory, hasFutureDate, title, canPublish]);
 
   const handlePublish = useCallback(() => {
-    if (shouldReviewDialogBeSeen) {
+    if (shouldReviewDialogBeSeen && canPublish) {
       setShowDialog(true);
       return;
     }
 
     publish();
-  }, [shouldReviewDialogBeSeen, publish]);
+  }, [shouldReviewDialogBeSeen, canPublish, publish]);
 
   const handleReviewChecklist = useCallback(() => {
     setShowDialog(false);
@@ -124,11 +134,10 @@ function PublishButton({ forceIsSaving }) {
     <>
       <ButtonWithChecklistWarning
         onClick={handlePublish}
-        disabled={
-          !capabilities?.publish || isSaving || forceIsSaving || isUploading
-        }
-        text={text}
+        disabled={isSaving || forceIsSaving || isUploading}
+        text={canPublish ? text : __('Submit for review', 'web-stories')}
         isUploading={isUploading}
+        canPublish={canPublish}
       />
       <ReviewChecklistDialog
         isOpen={showDialog}
