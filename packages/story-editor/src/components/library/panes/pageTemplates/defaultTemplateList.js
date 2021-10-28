@@ -35,6 +35,7 @@ import { duplicatePage } from '../../../../elements';
 import { useStory } from '../../../../app/story';
 import { PANE_PADDING } from '../shared';
 import { useConfig } from '../../../../app/config';
+
 import DefaultPageTemplate from './defaultPageTemplate';
 
 const WrapperGrid = styled.div`
