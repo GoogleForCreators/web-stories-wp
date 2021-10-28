@@ -208,24 +208,23 @@ class Jetpack extends Service_Base {
 		// Mark video as optimized.
 		$data[ $this->media_source_taxonomy::MEDIA_SOURCE_KEY ] = 'video-optimization';
 
-		$videopress_data = $this->get_videopress_video_data( $attachment );
+		$metadata = wp_get_attachment_metadata( $attachment->ID );
 
-		// If VideoPress has finished processing, use the duration in milliseconds to get formatted seconds and minutes.
-		if ( $videopress_data && isset( $data['media_details'], $videopress_data->duration ) && ! isset( $data['media_details']['length_formatted'] ) ) {
-			$data['media_details']['length_formatted'] = $this->format_milliseconds( $videopress_data->duration );
-			$data['media_details']['length']           = (int) floor( $videopress_data->duration / 1000 );
+		if ( isset( $metadata['videopress']['duration'] ) ) {
+			$data['media_details']['length_formatted'] = $this->format_milliseconds( $metadata['videopress']['duration'] );
+			$data['media_details']['length']           = (int) floor( $metadata['videopress']['duration'] / 1000 );
 		}
 
-		if ( isset( $data['url'], $videopress_data->file_url_base->https, $videopress_data->files->hd->mp4 ) ) {
-			$data['url'] = $videopress_data->file_url_base->https . $videopress_data->files->hd->mp4;
+		if ( isset( $data['url'], $metadata['videopress']['file_url_base']['https'], $metadata['videopress']['files']['hd']['mp4'] ) ) {
+			$data['url'] = $metadata['videopress']['file_url_base']['https'] . $metadata['videopress']['files']['hd']['mp4'];
 		}
 
 		// Get the correct poster with matching dimensions from VideoPress.
-		if ( isset( $data['featured_media_src'], $videopress_data->poster, $videopress_data->width, $videopress_data->height ) ) {
+		if ( isset( $data['featured_media_src'], $metadata['videopress']['poster'], $metadata['videopress']['width'], $metadata['videopress']['height'] ) ) {
 			$data['featured_media_src'] = [
-				'src'       => $videopress_data->poster,
-				'width'     => $videopress_data->width,
-				'height'    => $videopress_data->height,
+				'src'       => $metadata['videopress']['poster'],
+				'width'     => $metadata['videopress']['width'],
+				'height'    => $metadata['videopress']['height'],
 				'generated' => true,
 			];
 		}
@@ -259,24 +258,23 @@ class Jetpack extends Service_Base {
 		// Mark video as optimized.
 		$data[ $this->media_source_taxonomy::MEDIA_SOURCE_KEY ] = 'video-optimization';
 
-		$videopress_data = $this->get_videopress_video_data( $post );
+		$metadata = wp_get_attachment_metadata( $post->ID );
 
-		// If VideoPress has finished processing, use the duration in milliseconds to get formatted seconds and minutes.
-		if ( $videopress_data && isset( $data['media_details'], $videopress_data->duration ) && ! isset( $data['media_details']['length_formatted'] ) ) {
-			$data['media_details']['length_formatted'] = $this->format_milliseconds( $videopress_data->duration );
-			$data['media_details']['length']           = (int) floor( $videopress_data->duration / 1000 );
+		if ( isset( $metadata['videopress']['duration'] ) ) {
+			$data['media_details']['length_formatted'] = $this->format_milliseconds( $metadata['videopress']['duration'] );
+			$data['media_details']['length']           = (int) floor( $metadata['videopress']['duration'] / 1000 );
 		}
 
-		if ( isset( $data['source_url'], $videopress_data->file_url_base->https, $videopress_data->files->hd->mp4 ) ) {
-			$data['source_url'] = $videopress_data->file_url_base->https . $videopress_data->files->hd->mp4;
+		if ( isset( $data['url'], $metadata['videopress']['file_url_base']['https'], $metadata['videopress']['files']['hd']['mp4'] ) ) {
+			$data['url'] = $metadata['videopress']['file_url_base']['https'] . $metadata['videopress']['files']['hd']['mp4'];
 		}
 
 		// Get the correct poster with matching dimensions from VideoPress.
-		if ( isset( $data['featured_media_src'], $videopress_data->poster, $videopress_data->width, $videopress_data->height ) ) {
+		if ( isset( $data['featured_media_src'], $metadata['videopress']['poster'], $metadata['videopress']['width'], $metadata['videopress']['height'] ) ) {
 			$data['featured_media_src'] = [
-				'src'       => $videopress_data->poster,
-				'width'     => $videopress_data->width,
-				'height'    => $videopress_data->height,
+				'src'       => $metadata['videopress']['poster'],
+				'width'     => $metadata['videopress']['width'],
+				'height'    => $metadata['videopress']['height'],
 				'generated' => true,
 			];
 		}
@@ -284,61 +282,6 @@ class Jetpack extends Service_Base {
 		$response->set_data( $data );
 
 		return $response;
-	}
-
-	/**
-	 * Returns an attachment's VideoPress data.
-	 *
-	 * @since 1.14.0
-	 *
-	 * @param WP_Post $post Post object.
-	 *
-	 * @return stdClass|null VideoPress data if available.
-	 */
-	protected function get_videopress_video_data( $post ) {
-		if (
-			function_exists( '\videopress_get_video_details' ) &&
-			function_exists( '\video_get_info_by_blogpostid' )
-		) {
-			$blog_id = $this->get_jetpack_blog_id();
-
-			if ( $blog_id ) {
-				$videopress_info = video_get_info_by_blogpostid( $blog_id, $post->ID );
-
-				if ( isset( $videopress_info->guid ) ) {
-					return videopress_get_video_details( $videopress_info->guid );
-				}
-			}
-		}
-
-		return null;
-	}
-
-	/**
-	 * Get site ID as needed by Jetpack.
-	 *
-	 * @see VideoPress_Gutenberg::get_blog_id
-	 *
-	 * @since 1.14.0
-	 *
-	 * @return int|null Site ID if found.
-	 */
-	private function get_jetpack_blog_id() {
-		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
-			return get_current_blog_id();
-		}
-
-		if (
-			class_exists( Jetpack_Options::class ) &&
-			method_exists( Jetpack_Options::class, 'get_option' ) &&
-			class_exists( \Jetpack::class ) &&
-			method_exists( \Jetpack::class, 'is_active' ) &&
-			\Jetpack::is_active()
-		) {
-			return Jetpack_Options::get_option( 'id' );
-		}
-
-		return null;
 	}
 
 	/**
