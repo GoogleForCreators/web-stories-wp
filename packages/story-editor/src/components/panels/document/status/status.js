@@ -21,6 +21,7 @@ import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { Input } from '@web-stories-wp/design-system';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -28,6 +29,7 @@ import { Input } from '@web-stories-wp/design-system';
 import { useStory } from '../../../../app/story';
 import { Row, RadioGroup } from '../../../form';
 import { SimplePanel } from '../../panel';
+import useRefreshPostEditURL from '../../../../utils/useRefreshPostEditURL';
 
 const InputRow = styled(Row)`
   margin-left: 34px;
@@ -39,14 +41,25 @@ function StatusPanel() {
     password,
     updateStory,
     capabilities,
+    editLink,
+    title,
+    storyId,
   } = useStory(
     ({
       state: {
-        story: { status, password },
+        story: { status, password, editLink, title, storyId },
         capabilities,
       },
       actions: { updateStory },
-    }) => ({ status, password, updateStory, capabilities })
+    }) => ({
+      status,
+      password,
+      updateStory,
+      capabilities,
+      editLink,
+      title,
+      storyId,
+    })
   );
 
   const [hasPassword, setHasPassword] = useState(Boolean(password));
@@ -93,12 +106,15 @@ function StatusPanel() {
     [updateStory]
   );
 
+  const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
+
   const handleChangeVisibility = useCallback(
     (evt) => {
       const newVisibility = evt.target.value;
 
       if ('private' === newVisibility) {
         if (
+          // TODO: Display ReviewChecklistDialog (albeit with different wording) instead?
           !window.confirm(
             __(
               'Would you like to privately publish this story now?',
@@ -123,6 +139,12 @@ function StatusPanel() {
           properties.status = 'private';
           properties.password = '';
           setHasPassword(false);
+
+          trackEvent('publish_story', {
+            status: 'private',
+            title_length: title.length,
+          });
+          refreshPostEditURL();
           break;
 
         case 'protected':
@@ -137,7 +159,15 @@ function StatusPanel() {
 
       updateStory({ properties });
     },
-    [status, visibility, password, setHasPassword, updateStory]
+    [
+      status,
+      visibility,
+      password,
+      setHasPassword,
+      updateStory,
+      title,
+      refreshPostEditURL,
+    ]
   );
 
   return (
