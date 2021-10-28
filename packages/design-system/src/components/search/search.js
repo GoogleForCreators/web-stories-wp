@@ -177,7 +177,7 @@ export const Search = ({
   );
 
   const handleClearInput = useCallback(() => {
-    inputState.set('');
+    inputState.set(undefined);
     onMenuItemClick?.(null, { label: '', value: '' });
     handleReturnToInput();
   }, [handleReturnToInput, inputState, onMenuItemClick]);
