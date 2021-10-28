@@ -72,23 +72,33 @@ describe('statusPanel', () => {
     expect(element).toBeInTheDocument();
 
     const radioOptions = screen.getAllByRole('radio');
-    expect(radioOptions).toHaveLength(4);
+    expect(radioOptions).toHaveLength(3);
+    expect(screen.getByText('Public')).toBeInTheDocument();
+    expect(screen.getByText('Private')).toBeInTheDocument();
+    expect(screen.getByText('Password Protected')).toBeInTheDocument();
   });
 
-  it('should not render the status option without correct permissions', () => {
+  it('should always render the "Public" visibility option', () => {
     arrange({
       publish: false,
     });
-    expect(screen.queryByText('Public')).not.toBeInTheDocument();
+    expect(screen.getByText('Public')).toBeInTheDocument();
+  });
+
+  it('should not render other visibility options if lacking permissions', () => {
+    arrange({
+      publish: false,
+    });
+    expect(screen.queryByText('Private')).not.toBeInTheDocument();
+    expect(screen.queryByText('Password Protected')).not.toBeInTheDocument();
   });
 
   it('should update the story when clicking on status', () => {
     const { updateStory } = arrange();
-    const publishOption = screen.getByText('Public');
-    fireEvent.click(publishOption);
+    fireEvent.click(screen.getByText('Private'));
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
-        status: 'publish',
+        status: 'private',
         password: '',
       },
     });
@@ -104,39 +114,21 @@ describe('statusPanel', () => {
     expect(screen.queryByLabelText('Password')).toBeInTheDocument();
   });
 
-  it('should hide password field on change status', () => {
+  it('should hide password field when changing visibility', () => {
     const { updateStory } = arrange(
       {
         publish: true,
       },
       'test'
     );
-    expect(screen.queryByLabelText('Password')).toBeInTheDocument();
-    const publishOption = screen.getByText('Public');
-    fireEvent.click(publishOption);
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Public'));
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
-        status: 'publish',
+        status: 'draft',
         password: '',
       },
     });
     expect(screen.queryByLabelText('Password')).not.toBeInTheDocument();
-  });
-
-  it('should update password field on blur', () => {
-    const { updateStory } = arrange(
-      {
-        publish: false,
-      },
-      'test'
-    );
-    const passwordInput = screen.queryByLabelText('Password');
-    expect(passwordInput).toBeInTheDocument();
-    fireEvent.blur(passwordInput);
-    expect(updateStory).toHaveBeenCalledWith({
-      properties: {
-        password: 'test',
-      },
-    });
   });
 });
