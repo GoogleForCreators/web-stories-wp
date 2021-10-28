@@ -147,7 +147,7 @@ export const StoryListItem = ({
                 onFocus={onFocusSelectAll}
                 onBlur={onBlurDeselectAll}
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-                as="h4"
+                as="h3"
                 aria-label={
                   isLocked
                     ? sprintf(
