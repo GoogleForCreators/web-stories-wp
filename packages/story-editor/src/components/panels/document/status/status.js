@@ -17,11 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useMemo,
-  useState,
-} from '@web-stories-wp/react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
@@ -35,12 +31,6 @@ import { SimplePanel } from '../../panel';
 
 const InputRow = styled(Row)`
   margin-left: 34px;
-`;
-
-const HelperText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
-})`
-  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 function StatusPanel() {
