@@ -36,7 +36,13 @@ function arrange(
 
   const storyContextValue = {
     state: {
-      story: { status: 'draft', password },
+      story: {
+        status: 'draft',
+        password,
+        title: '',
+        storyId: 123,
+        editLink: 'http://localhost/wp-admin/post.php?post=123&action=edit',
+      },
       capabilities,
     },
     actions: { updateStory },
@@ -52,12 +58,24 @@ function arrange(
   };
 }
 
+const windowConfirm = jest.fn(() => true);
+
 describe('statusPanel', () => {
   beforeAll(() => {
     localStorage.setItem(
       'web_stories_ui_panel_settings:status',
       JSON.stringify({ isCollapsed: false })
     );
+
+    // Mock window.confirm()
+    Object.defineProperty(window, 'confirm', {
+      writable: true,
+      value: windowConfirm,
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   afterAll(() => {
@@ -73,29 +91,32 @@ describe('statusPanel', () => {
 
     const radioOptions = screen.getAllByRole('radio');
     expect(radioOptions).toHaveLength(3);
-    expect(screen.getByText('Public')).toBeInTheDocument();
-    expect(screen.getByText('Private')).toBeInTheDocument();
-    expect(screen.getByText('Password Protected')).toBeInTheDocument();
+    expect(screen.getByLabelText('Public')).toBeInTheDocument();
+    expect(screen.getByLabelText('Private')).toBeInTheDocument();
+    expect(screen.getByLabelText('Password Protected')).toBeInTheDocument();
   });
 
   it('should always render the "Public" visibility option', () => {
     arrange({
       publish: false,
     });
-    expect(screen.getByText('Public')).toBeInTheDocument();
+    expect(screen.getByLabelText('Public')).toBeInTheDocument();
   });
 
   it('should not render other visibility options if lacking permissions', () => {
     arrange({
       publish: false,
     });
-    expect(screen.queryByText('Private')).not.toBeInTheDocument();
-    expect(screen.queryByText('Password Protected')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Private')).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Password Protected')
+    ).not.toBeInTheDocument();
   });
 
-  it('should update the story when clicking on status', () => {
+  it('should update the status when marking a story private', () => {
     const { updateStory } = arrange();
-    fireEvent.click(screen.getByText('Private'));
+    fireEvent.click(screen.getByLabelText('Private'));
+    expect(windowConfirm).toHaveBeenCalledWith(expect.any(String));
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
         status: 'private',
