@@ -28,8 +28,7 @@
     "history": "^5.0.1",
     "prop-types": "^15.7.2",
     "query-string": "^7.0.1",
-    "styled-components": "^5.3.3",
-    "uuid": "^8.3.2"
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.3.6",

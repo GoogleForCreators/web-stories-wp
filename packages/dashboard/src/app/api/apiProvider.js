@@ -23,42 +23,23 @@ import { createContext } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import useMediaApi from './useMediaApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
-import useUsersApi from './useUserApi';
-import useSettingsApi from './useSettingsApi';
-import usePagesApi from './usePagesApi';
-import usePublisherLogosApi from './usePublisherLogosApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
-  const { currentUser, api: usersApi } = useUsersApi();
   const { templates, api: templateApi } = useTemplateApi();
   const { stories, api: storyApi } = useStoryApi();
-  const { media, api: mediaApi } = useMediaApi();
-  const { settings, api: settingsApi } = useSettingsApi();
-  const { api: pagesApi } = usePagesApi();
-  const { publisherLogos, api: publisherLogosApi } = usePublisherLogosApi();
 
   const value = {
     state: {
-      media,
-      settings,
       stories,
       templates,
-      currentUser,
-      publisherLogos,
     },
     actions: {
-      mediaApi,
-      settingsApi,
       storyApi,
       templateApi,
-      usersApi,
-      pagesApi,
-      publisherLogosApi,
     },
   };
 
