@@ -421,4 +421,33 @@ trait Sanitization_Utils {
 			$image->setAttribute( 'srcset', implode( ', ', $entries_by_widths ) );
 		}
 	}
+
+	/**
+	 * Remove images referencing the grid-placeholder.png file which has since been removed.
+	 *
+	 * @link https://github.com/google/web-stories-wp/issues/9530
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @return void
+	 */
+	private function remove_page_template_placeholder_images( &$document ) {
+		$placeholder_img = 'assets/images/editor/grid-placeholder.png';
+
+		/**
+		 * List of <amp-img> elements.
+		 *
+		 * @var DOMElement[] $images Image elements.
+		 */
+		$images = $document->body->getElementsByTagName( 'amp-img' );
+
+		foreach ( $images as $image ) {
+			$src = $image->getAttribute( 'src' );
+
+			if ( $image->parentNode && false !== strpos( $src, $placeholder_img ) ) {
+				$image->parentNode->removeChild( $image );
+			}
+		}
+	}
 }

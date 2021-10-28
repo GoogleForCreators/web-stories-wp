@@ -14,3 +14,5 @@
  * limitations under the License.
  */
 export { default as useAdminSubMenu } from './useAdminSubMenu';
+export { default as useMediaOptimization } from './useMediaOptimization';
+export { default as useTelemetryOptIn } from './useTelemetryOptIn';
