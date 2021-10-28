@@ -185,12 +185,12 @@ class Jetpack extends Service_Base {
 	 * Changes the video/videopress type back to mp4
 	 * and ensures MP4 source URLs are returned.
 	 *
+	 * @since 1.7.2
+	 *
 	 * @param array|mixed $data   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
 	 * @param WP_Post     $attachment Attachment object.
 	 *
 	 * @return array|mixed
-	 *@since 1.7.2
-	 *
 	 */
 	public function filter_admin_ajax_response( $data, $attachment ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
@@ -223,9 +223,9 @@ class Jetpack extends Service_Base {
 		// Get the correct poster with matching dimensions from VideoPress.
 		if ( isset( $data['featured_media_src'], $videopress_data->poster, $videopress_data->width, $videopress_data->height ) ) {
 			$data['featured_media_src'] = [
-				'src' => $videopress_data->poster,
-				'width' => $videopress_data->width,
-				'height' => $videopress_data->height,
+				'src'       => $videopress_data->poster,
+				'width'     => $videopress_data->width,
+				'height'    => $videopress_data->height,
 				'generated' => true,
 			];
 		}
@@ -274,9 +274,9 @@ class Jetpack extends Service_Base {
 		// Get the correct poster with matching dimensions from VideoPress.
 		if ( isset( $data['featured_media_src'], $videopress_data->poster, $videopress_data->width, $videopress_data->height ) ) {
 			$data['featured_media_src'] = [
-				'src' => $videopress_data->poster,
-				'width' => $videopress_data->width,
-				'height' => $videopress_data->height,
+				'src'       => $videopress_data->poster,
+				'width'     => $videopress_data->width,
+				'height'    => $videopress_data->height,
 				'generated' => true,
 			];
 		}
