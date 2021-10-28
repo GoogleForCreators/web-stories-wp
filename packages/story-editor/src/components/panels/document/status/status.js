@@ -51,20 +51,17 @@ function StatusPanel() {
 
   const [hasPassword, setHasPassword] = useState(Boolean(password));
 
-  const visibility = useMemo(
-    (value) => {
-      if (hasPassword) {
-        return 'protected';
-      }
+  const visibility = useMemo(() => {
+    if (hasPassword) {
+      return 'protected';
+    }
 
-      if ('private' === value) {
-        return 'private';
-      }
+    if (status === 'private') {
+      return 'private';
+    }
 
-      return 'public';
-    },
-    [hasPassword]
-  );
+    return 'public';
+  }, [status, hasPassword]);
 
   const visibilityOptions = [
     {
