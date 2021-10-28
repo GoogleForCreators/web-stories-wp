@@ -40,7 +40,7 @@ export default function useStoryView({
   isLoading = false,
   totalPages,
 }) {
-  const getAuthors = useApi((v) => v.actions.usersApi.getAuthors);
+  const getAuthors = useApi(({ actions }) => actions.usersApi.getAuthors);
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
   const [filter, _setFilter] = useState(
@@ -121,7 +121,7 @@ export default function useStoryView({
   }, [page, setPageClamped]);
 
   const toggleAuthorFilterId = useCallback(({ id }) => {
-    _setAuthorFilterId((v) => (v === id ? null : id));
+    _setAuthorFilterId((prevFilterId) => (prevFilterId === id ? null : id));
   }, []);
 
   const queryAuthorsBySearch = useCallback(
@@ -237,7 +237,7 @@ export const AuthorPropTypes = PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
     })
-  ),
+  ).isRequired,
   queryAuthorsBySearch: PropTypes.func,
 });
 
