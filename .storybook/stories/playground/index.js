@@ -80,6 +80,7 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
           color: [],
           textStyles: [],
         },
+        date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
       };
       break;
     case 'getPublisherLogos':
@@ -93,10 +94,7 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   return callbacks;
 }, {});
 
-// @todo Figure out what all keys should be optional.
 const config = {
-  autoSaveInterval: 60,
-  isRTL: false,
   locale: {
     locale: 'en-US',
     dateFormat: 'F j, Y',
@@ -191,31 +189,27 @@ const config = {
     audio: [],
     video: ['video/mp4', 'video/webm'],
   },
-  postType: 'web-story',
   storyId: 1,
-  dashboardLink:
-    'https://example.org/wp-admin/edit.php?post_type=web-story&page=stories-dashboard',
+  // When capabilities.canManageSettings is false, dashboardSettingsLink wouldn't be used.
   dashboardSettingsLink:
-    'https://example.org/wp-admin/edit.php?post_type=web-story&page=stories-dashboard#/editor-settings',
+    'https://example.org/web-stories-dashboard#/editor-settings',
+  // @todo WordPress specific page ( Must be optional ).
   generalSettingsLink: 'https://example.org/wp-admin/options-general.php',
   cdnURL: 'https://wp.stories.google/static/main/',
   maxUpload: 314572800,
-  isDemo: false,
   capabilities: {
-    hasUploadMediaAction: true,
-    canManageSettings: true,
+    hasUploadMediaAction: false,
+    canManageSettings: false,
   },
-  api: {},
   metadata: {
     publisher: '',
   },
-  version: '1.14.0-alpha.0',
   showMedia3p: true,
   encodeMarkup: true,
   ffmpegCoreUrl:
     'https://wp.stories.google/static/main/js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
-  apiCallbacks,
-  MediaUpload,
+  apiCallbacks, // @todo Should be optional.
+  MediaUpload, // @todo Should be optional.
 };
 
 export const _default = () => (

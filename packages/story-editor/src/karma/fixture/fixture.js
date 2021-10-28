@@ -108,7 +108,6 @@ const DEFAULT_CONFIG = {
   capabilities: {
     hasUploadMediaAction: true,
   },
-  dashboardLink: 'https://www.example.com/dashboard',
   postLock: {
     interval: 150,
     showLockedDialog: true,
