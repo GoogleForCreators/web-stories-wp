@@ -32,13 +32,13 @@ import getPreloadResources from './utils/getPreloadResources';
 
 function OutputStory({
   story: {
-    featuredMedia: { url: featuredMediaUrl },
+    featuredMedia,
     link,
     title,
     autoAdvance,
     defaultPageDuration,
     backgroundAudio,
-    publisherLogo: { url: publisherLogo } = {},
+    publisherLogo,
   },
   pages,
   metadata: { publisher },
@@ -47,6 +47,9 @@ function OutputStory({
   const ampExtensions = getUsedAmpExtensions(pages, args);
   const fontDeclarations = getFontDeclarations(pages);
   const preloadResources = getPreloadResources(pages);
+
+  const featuredMediaUrl = featuredMedia?.url || '';
+  const publisherLogoUrl = publisherLogo?.url || '';
 
   return (
     <html amp="" lang="en">
@@ -77,7 +80,7 @@ function OutputStory({
         <amp-story
           standalone=""
           publisher={publisher}
-          publisher-logo-src={publisherLogo}
+          publisher-logo-src={publisherLogoUrl}
           title={title}
           poster-portrait-src={featuredMediaUrl}
           background-audio={backgroundAudio?.src ?? undefined}

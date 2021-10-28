@@ -82,6 +82,9 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
         },
       };
       break;
+    case 'getPublisherLogos':
+      response = [{ url: '' }];
+      break;
     default:
       response = {};
   }
