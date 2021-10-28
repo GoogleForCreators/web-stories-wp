@@ -30,12 +30,8 @@ use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Types;
-use Jetpack_Options;
-use stdClass;
 use WP_Post;
 use WP_REST_Response;
-use function video_get_info_by_blogpostid;
-use function videopress_get_video_details;
 
 /**
  * Class Jetpack.
