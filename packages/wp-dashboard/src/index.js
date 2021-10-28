@@ -32,7 +32,6 @@ import { StrictMode, render } from '@web-stories-wp/react';
 import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
 import { setLocaleData } from '@web-stories-wp/i18n';
-import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
