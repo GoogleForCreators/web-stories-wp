@@ -51,6 +51,9 @@ function setup(_storyContextValue = {}) {
       stories: '',
       storyLocking: '',
     },
+    flags: {
+      enablePostLocking: true,
+    },
   };
 
   const storyContextValue = {
@@ -76,7 +79,7 @@ function setup(_storyContextValue = {}) {
   };
 
   return renderWithTheme(
-    <FlagsProvider features={{ enablePostLocking: true }}>
+    <FlagsProvider features={configValue.flags}>
       <ConfigContext.Provider value={configValue}>
         <StoryContext.Provider value={storyContextValue}>
           <CurrentUserContext.Provider value={userContextValue}>
