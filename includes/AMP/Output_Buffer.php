@@ -119,14 +119,24 @@ class Output_Buffer extends Service_Base implements Conditional {
 	/**
 	 * Check whether the conditional object is currently needed.
 	 *
+	 * If the AMP plugin is installed and available in a version >= than ours,
+	 * all sanitization and optimization should be delegated to the AMP plugin.
+	 * But ONLY if AMP logic has not been disabled through any of its available filters.
+	 *
 	 * @since 1.10.0
 	 *
 	 * @return bool Whether the conditional object is needed.
 	 */
 	public static function is_needed(): bool {
-		// If the AMP plugin is installed and available in a version >= than ours,
-		// all sanitization and optimization should be delegated to the AMP plugin.
-		return ! defined( '\AMP__VERSION' ) || ( defined( '\AMP__VERSION' ) && version_compare( \AMP__VERSION, WEBSTORIES_AMP_VERSION, '<' ) );
+		$current_post = get_post();
+
+		$has_old_amp_version = ! defined( '\AMP__VERSION' ) || ( defined( '\AMP__VERSION' ) && version_compare( \AMP__VERSION, WEBSTORIES_AMP_VERSION, '<' ) );
+		$amp_available       = function_exists( 'amp_is_available' ) && amp_is_available();
+		$amp_enabled         = function_exists( 'amp_is_enabled' ) && amp_is_enabled(); // Technically an internal method.
+		$amp_initialized     = did_action( 'amp_init' ) > 0;
+		$amp_supported_post  = function_exists( 'amp_is_post_supported' ) && amp_is_post_supported( $current_post->ID ?? 0 );
+
+		return $has_old_amp_version || ! $amp_available || ! $amp_enabled || ! $amp_initialized || ! $amp_supported_post;
 	}
 
 	/**

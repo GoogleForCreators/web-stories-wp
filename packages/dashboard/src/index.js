@@ -20,7 +20,10 @@
 import Dashboard from './dashboard';
 
 export * from './app';
+export * from './app/router';
 export * from './constants';
+export * from './components';
+export * from './app/views/shared';
 export { GlobalStyle as DashboardGlobalStyle } from './theme';
 export { default as DashboardKeyboardOnlyOutline } from './utils/keyboardOnlyOutline';
 export { default as InterfaceSkeleton } from './components/interfaceSkeleton';

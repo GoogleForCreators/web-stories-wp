@@ -28,6 +28,7 @@
 namespace Google\Web_Stories\Renderer\Story;
 
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Traits\Amp;
@@ -39,13 +40,6 @@ use Google\Web_Stories\Traits\Amp;
  */
 class Embed {
 	use Amp;
-
-	/**
-	 * Script handle for frontend assets.
-	 *
-	 * @var string
-	 */
-	const SCRIPT_HANDLE = 'web-stories-embed';
 
 	/**
 	 * Current post.
@@ -96,9 +90,8 @@ class Embed {
 		$class  = $args['class'];
 		$url    = $this->story->get_url();
 		$title  = $this->story->get_title();
-		$poster = ! empty( $this->story->get_poster_portrait() ) ? esc_url_raw( $this->story->get_poster_portrait() ) : '';
+		$poster = ! empty( $this->story->get_poster_portrait() ) ? $this->story->get_poster_portrait() : '';
 
-		$poster_style  = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 		$wrapper_style = sprintf(
 			'--aspect-ratio: %F; --width: %dpx; --height: %dpx',
 			0 !== $args['width'] ? $args['height'] / $args['width'] : 1,
@@ -107,7 +100,7 @@ class Embed {
 		);
 
 		// This CSS is used for AMP and non-AMP.
-		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
+		$this->assets->enqueue_style_asset( Embed_Base::SCRIPT_HANDLE );
 
 		if ( $this->is_amp() ) {
 			ob_start();
@@ -118,10 +111,21 @@ class Embed {
 						width="<?php echo esc_attr( $args['width'] ); ?>"
 						height="<?php echo esc_attr( $args['height'] ); ?>"
 						layout="intrinsic">
-						<a
-							href="<?php echo esc_url( $url ); ?>"
-							style="<?php echo esc_attr( $poster_style ); ?>">
-							<?php echo esc_html( $title ); ?>
+						<a href="<?php echo esc_url( $url ); ?>">
+							<?php if ( $poster ) { ?>
+								<img
+									src="<?php echo esc_url( $poster ); ?>"
+									width="<?php echo esc_attr( $args['width'] ); ?>"
+									height="<?php echo esc_attr( $args['height'] ); ?>"
+									alt="<?php echo esc_attr( $title ); ?>"
+									loading="lazy"
+									data-amp-story-player-poster-img
+								/>
+								<?php
+							} else {
+								echo esc_html( $title );
+							}
+							?>
 						</a>
 					</amp-story-player>
 				</div>
@@ -138,10 +142,21 @@ class Embed {
 		<div class="<?php echo esc_attr( "$class web-stories-embed $align" ); ?>">
 			<div class="wp-block-embed__wrapper" style="<?php echo esc_attr( $wrapper_style ); ?>">
 				<amp-story-player>
-					<a
-						href="<?php echo esc_url( $url ); ?>"
-						style="<?php echo esc_attr( $poster_style ); ?>">
-						<?php echo esc_html( $title ); ?>
+					<a href="<?php echo esc_url( $url ); ?>">
+						<?php if ( $poster ) { ?>
+							<img
+								src="<?php echo esc_url( $poster ); ?>"
+								width="<?php echo esc_attr( $args['width'] ); ?>"
+								height="<?php echo esc_attr( $args['height'] ); ?>"
+								alt="<?php echo esc_attr( $title ); ?>"
+								loading="lazy"
+								data-amp-story-player-poster-img
+							/>
+							<?php
+						} else {
+							echo esc_html( $title );
+						}
+						?>
 					</a>
 				</amp-story-player>
 			</div>

@@ -376,7 +376,7 @@ class Assets {
 	/**
 	 * Returns the translations for a script and all of its chunks.
 	 *
-	 * @since 1.12.0
+	 * @since 1.14.0
 	 *
 	 * @param string $script_handle    Name of the script. Should be unique.
 	 * @return array Script translations.

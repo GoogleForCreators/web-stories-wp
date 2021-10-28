@@ -92,17 +92,17 @@ function usePageAsCanvas() {
           setPageCanvasPromise(null);
         };
         // If we haven't started the generation yet, create a promise.
-        if (!pageCanvasPromise) {
-          import(
-            /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
-          ).then((htmlToImage) => {
-            const promise = htmlToImage.toCanvas(fullbleedContainer, {
-              fontEmbedCss: '',
-              pixelRatio: 1,
-            });
-            setPageCanvasPromise(promise);
-            promise.then(onCompletion).catch(onFail);
-          });
+        if (!pageCanvasPromise && fullbleedContainer) {
+          import(/* webpackChunkName: "chunk-html-to-image" */ 'html-to-image')
+            .then((htmlToImage) => {
+              const promise = htmlToImage.toCanvas(fullbleedContainer, {
+                fontEmbedCss: '',
+                pixelRatio: 1,
+              });
+              setPageCanvasPromise(promise);
+              promise.then(onCompletion).catch(onFail);
+            })
+            .catch(() => {});
         } else if (resetZoom) {
           // If we already have a promise and we're resetting zoom, we're inserting an element.
           // This means that the callback might have changed and we need to handle the promise again.

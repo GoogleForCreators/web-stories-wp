@@ -3,7 +3,7 @@
   "private": true,
   "engines": {
     "node": ">= 16",
-    "npm": "~7"
+    "npm": ">= 7.3"
   },
   "type": "module",
   "exports": {
@@ -11,7 +11,7 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@wordpress/e2e-test-utils": "^5.4.3",
+    "@wordpress/e2e-test-utils": "^5.4.4",
     "@wordpress/url": "^3.2.1"
   }
 }

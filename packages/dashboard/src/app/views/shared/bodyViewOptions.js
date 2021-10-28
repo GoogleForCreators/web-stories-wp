@@ -17,24 +17,16 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
-import { trackClick } from '@web-stories-wp/tracking';
-import {
-  Text,
-  THEME_CONSTANTS,
-  DropDown,
-  Link,
-} from '@web-stories-wp/design-system';
+import { TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { Text, THEME_CONSTANTS, DropDown } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
-import TelemetryBanner from './telemetryBanner';
 
 const DisplayFormatContainer = styled.div`
   height: 76px;
@@ -55,13 +47,11 @@ const ControlsContainer = styled.div`
   align-items: center;
 `;
 
-const StyledLink = styled(Link)`
-  margin-right: 24px;
-`;
-
 const StyledDropDown = styled(DropDown)`
   width: 210px;
 `;
+
+const BodyViewOptionsHeader = styled.div``;
 
 export default function BodyViewOptions({
   currentSort,
@@ -74,15 +64,10 @@ export default function BodyViewOptions({
   showGridToggle,
   showSortDropdown,
   sortDropdownAriaLabel,
-  wpListURL,
 }) {
-  const handleClassicListViewClick = useCallback((evt) => {
-    trackClick(evt, 'open_classic_list_view');
-  }, []);
-
   return (
     <StandardViewContentGutter>
-      <TelemetryBanner />
+      <BodyViewOptionsHeader id="body-view-options-header" />
       {!isLoading && (
         <DisplayFormatContainer>
           <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
@@ -102,15 +87,6 @@ export default function BodyViewOptions({
             )}
             {showGridToggle && (
               <ControlsContainer>
-                {layoutStyle === VIEW_STYLE.LIST && wpListURL && (
-                  <StyledLink
-                    href={wpListURL}
-                    onClick={handleClassicListViewClick}
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  >
-                    {__('See classic WP list view', 'web-stories')}
-                  </StyledLink>
-                )}
                 <ViewStyleBar
                   layoutStyle={layoutStyle}
                   onPress={handleLayoutSelect}
@@ -131,7 +107,6 @@ BodyViewOptions.propTypes = {
   isLoading: PropTypes.bool,
   layoutStyle: PropTypes.string.isRequired,
   resultsLabel: PropTypes.string.isRequired,
-  wpListURL: PropTypes.string,
   pageSortOptions: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,

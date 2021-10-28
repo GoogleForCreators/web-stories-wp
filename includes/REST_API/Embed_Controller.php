@@ -27,9 +27,10 @@
 namespace Google\Web_Stories\REST_API;
 
 use DOMNodeList;
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Document_Parser;
-use Google\Web_Stories\Traits\Post_Type;
+
 use WP_Error;
 use WP_Http;
 use WP_Network;
@@ -43,15 +44,39 @@ use WP_REST_Server;
  *
  * Class Embed_Controller
  */
-class Embed_Controller extends REST_Controller {
-	use Document_Parser, Post_Type;
+class Embed_Controller extends REST_Controller implements HasRequirements {
+	use Document_Parser;
+
+	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
 
 	/**
 	 * Constructor.
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
-	public function __construct() {
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->story_post_type = $story_post_type;
+
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'embed';
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
 	}
 
 	/**
@@ -186,7 +211,7 @@ class Embed_Controller extends REST_Controller {
 	private function get_data_from_post( $url ) {
 		$post = $this->url_to_post( $url );
 
-		if ( ! $post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
+		if ( ! $post || $this->story_post_type->get_slug() !== $post->post_type ) {
 			return false;
 		}
 
@@ -276,7 +301,7 @@ class Embed_Controller extends REST_Controller {
 				$values = [];
 				if (
 				preg_match(
-					'#[?&](' . preg_quote( Story_Post_Type::POST_TYPE_SLUG, '#' ) . ')=([^&]+)#',
+					'#[?&](' . preg_quote( $this->story_post_type->get_slug(), '#' ) . ')=([^&]+)#',
 					$url,
 					$values
 				)
@@ -284,10 +309,10 @@ class Embed_Controller extends REST_Controller {
 					$slug = $values[2];
 
 					if ( function_exists( 'wpcom_vip_get_page_by_path' ) ) {
-						$post = wpcom_vip_get_page_by_path( $slug, OBJECT, Story_Post_Type::POST_TYPE_SLUG );
+						$post = wpcom_vip_get_page_by_path( $slug, OBJECT, $this->story_post_type->get_slug() );
 					} else {
 						// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions
-						$post = get_page_by_path( $slug, OBJECT, Story_Post_Type::POST_TYPE_SLUG );
+						$post = get_page_by_path( $slug, OBJECT, $this->story_post_type->get_slug() );
 					}
 				}
 			}
@@ -412,7 +437,7 @@ class Embed_Controller extends REST_Controller {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function get_proxy_item_permissions_check() {
-		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to make proxied embed requests.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 

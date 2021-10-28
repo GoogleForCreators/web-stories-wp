@@ -27,7 +27,7 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  * Fetch publisher logos.
  * Used for "Publisher Logo" field under editor settings page
  *
- * @param {string} apiPath API Path.
+ * @param {string} apiPath API path.
  * @return {Promise} Request promise.
  */
 export function fetchPublisherLogos(apiPath) {
@@ -37,12 +37,14 @@ export function fetchPublisherLogos(apiPath) {
 /**
  * Remove publisher logo.
  *
+ * @param {string} apiPath API path.
  * @param {number|string} logoId Logo id.
- * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
-export function removePublisherLogo(logoId, apiPath) {
-  const path = addQueryArgs(`${apiPath}${logoId}/`, { _method: 'DELETE' });
+export function removePublisherLogo(apiPath, logoId) {
+  const path = addQueryArgs(`${apiPath}${logoId}/`, {
+    _method: 'DELETE',
+  });
 
   return apiFetch({
     path,
@@ -53,11 +55,11 @@ export function removePublisherLogo(logoId, apiPath) {
 /**
  * Add publisher logo.
  *
+ * @param {string} apiPath API path.
  * @param {number|string} logoId Logo id.
- * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
-export function addPublisherLogo(logoId, apiPath) {
+export function addPublisherLogo(apiPath, logoId) {
   return apiFetch({
     path: apiPath,
     data: {
@@ -70,11 +72,11 @@ export function addPublisherLogo(logoId, apiPath) {
 /**
  * Set publisher logo as default.
  *
+ * @param {string} apiPath API path.
  * @param {number|string} logoId Logo id.
- * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
-export function setPublisherLogoAsDefault(logoId, apiPath) {
+export function setPublisherLogoAsDefault(apiPath, logoId) {
   return apiFetch({
     path: `${apiPath}${logoId}/`,
     data: {

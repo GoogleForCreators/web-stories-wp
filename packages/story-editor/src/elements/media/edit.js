@@ -42,6 +42,7 @@ import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
 import { shouldDisplayBorder } from '../../utils/elementBorder';
+import useCORSProxy from '../../utils/useCORSProxy';
 import EditCropMoveable from './editCropMoveable';
 import { mediaWithScale } from './util';
 import EditPanMoveable from './editPanMoveable';
@@ -117,6 +118,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
   const elementRef = useRef();
+  const { getProxiedUrl } = useCORSProxy();
 
   const isUpdatedLocally = useRef(false);
   const lastLocalProperties = useRef({ scale });
@@ -185,6 +187,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
     ...mediaProps,
   };
 
+  const url = getProxiedUrl(resource, resource?.src);
   useEffect(() => {
     if (
       croppedMedia &&
@@ -232,16 +235,14 @@ function MediaEdit({ element, box, setLocalProperties }) {
         /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
         <FadedImage
           {...fadedMediaProps}
-          src={resource.src}
+          src={url}
           srcSet={calculateSrcSet(resource)}
         />
       )}
       {isVideo && (
         //eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- Faded video doesn't need captions.
         <FadedVideo {...fadedMediaProps}>
-          {resource.src && (
-            <source src={resource.src} type={resource.mimeType} />
-          )}
+          {url && <source src={url} type={resource.mimeType} />}
         </FadedVideo>
       )}
       <CropBox ref={setCropBox} {...borderProps}>
@@ -251,7 +252,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
           {isVideo && (
             /*eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- Tracks might not exist. Also, unwanted in edit mode. */
             <CropVideo {...cropMediaProps}>
-              <source src={resource.src} type={resource.mimeType} />
+              <source src={url} type={resource.mimeType} />
             </CropVideo>
           )}
         </WithMask>

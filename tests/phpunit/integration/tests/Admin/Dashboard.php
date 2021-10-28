@@ -18,14 +18,23 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Dashboard
  */
-class Dashboard extends TestCase {
+class Dashboard extends DependencyInjectedTestCase {
 	use Capabilities_Setup;
+
+	/**
+	 * @var \Google\Web_Stories\Admin\Dashboard
+	 */
+	private $instance;
 
 	protected static $user_id;
 
@@ -61,6 +70,9 @@ class Dashboard extends TestCase {
 
 	public function set_up() {
 		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Admin\Dashboard::class );
+
 		$this->add_caps_to_roles();
 	}
 
@@ -77,16 +89,8 @@ class Dashboard extends TestCase {
 	 * @covers ::get_hook_suffix
 	 */
 	public function test_get_not_set_hook_suffix() {
-		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
-			$this->createMock( \Google\Web_Stories\Experiments::class ),
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
-			$this->createMock( \Google\Web_Stories\Decoder::class ),
-			$this->createMock( \Google\Web_Stories\Locale::class ),
-			( new \Google\Web_Stories\Admin\Google_Fonts() ),
-			( new \Google\Web_Stories\Assets() )
-		);
-		$dashboard->add_menu_page();
-		$this->assertFalse( $dashboard->get_hook_suffix( 'nothing' ) );
+		$this->instance->add_menu_page();
+		$this->assertFalse( $this->instance->get_hook_suffix( 'nothing' ) );
 	}
 
 	/**
@@ -94,18 +98,10 @@ class Dashboard extends TestCase {
 	 * @covers ::get_hook_suffix
 	 */
 	public function test_add_menu_page_no_user() {
-		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
-			$this->createMock( \Google\Web_Stories\Experiments::class ),
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
-			$this->createMock( \Google\Web_Stories\Decoder::class ),
-			$this->createMock( \Google\Web_Stories\Locale::class ),
-			( new \Google\Web_Stories\Admin\Google_Fonts() ),
-			( new \Google\Web_Stories\Assets() )
-		);
-		$dashboard->add_menu_page();
-		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
-		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
-		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
+		$this->instance->add_menu_page();
+		$this->assertFalse( $this->instance->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertFalse( $this->instance->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertFalse( $this->instance->get_hook_suffix( 'stories-dashboard-settings' ) );
 	}
 
 	/**
@@ -117,18 +113,10 @@ class Dashboard extends TestCase {
 
 		wp_set_current_user( self::$user_id );
 
-		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
-			$this->createMock( \Google\Web_Stories\Experiments::class ),
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
-			$this->createMock( \Google\Web_Stories\Decoder::class ),
-			$this->createMock( \Google\Web_Stories\Locale::class ),
-			( new \Google\Web_Stories\Admin\Google_Fonts() ),
-			( new \Google\Web_Stories\Assets() )
-		);
-		$dashboard->add_menu_page();
-		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
-		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
-		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
+		$this->instance->add_menu_page();
+		$this->assertFalse( $this->instance->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertFalse( $this->instance->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertFalse( $this->instance->get_hook_suffix( 'stories-dashboard-settings' ) );
 	}
 
 	/**
@@ -139,21 +127,13 @@ class Dashboard extends TestCase {
 		wp_set_current_user( self::$user_id );
 		wp_get_current_user()->add_cap( 'edit_web-stories' );
 
-		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
-			$this->createMock( \Google\Web_Stories\Experiments::class ),
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
-			$this->createMock( \Google\Web_Stories\Decoder::class ),
-			$this->createMock( \Google\Web_Stories\Locale::class ),
-			( new \Google\Web_Stories\Admin\Google_Fonts() ),
-			( new \Google\Web_Stories\Assets() )
-		);
-		$dashboard->add_menu_page();
-		$this->assertNotFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
-		$this->assertNotEmpty( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
-		$this->assertNotFalse( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
-		$this->assertNotEmpty( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
-		$this->assertNotFalse( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
-		$this->assertNotEmpty( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
+		$this->instance->add_menu_page();
+		$this->assertNotFalse( $this->instance->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertNotEmpty( $this->instance->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertNotFalse( $this->instance->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertNotEmpty( $this->instance->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertNotFalse( $this->instance->get_hook_suffix( 'stories-dashboard-settings' ) );
+		$this->assertNotEmpty( $this->instance->get_hook_suffix( 'stories-dashboard-settings' ) );
 	}
 
 	/**
@@ -162,40 +142,10 @@ class Dashboard extends TestCase {
 	public function test_enqueue_assets_wrong_page() {
 		wp_set_current_user( self::$user_id );
 
-		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
-			$this->createMock( \Google\Web_Stories\Experiments::class ),
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
-			$this->createMock( \Google\Web_Stories\Decoder::class ),
-			$this->createMock( \Google\Web_Stories\Locale::class ),
-			( new \Google\Web_Stories\Admin\Google_Fonts() ),
-			( new \Google\Web_Stories\Assets() )
-		);
-		$dashboard->add_menu_page();
-		$dashboard->enqueue_assets( 'foo' );
-		$this->assertFalse( wp_script_is( $dashboard::SCRIPT_HANDLE ) );
-		$this->assertFalse( wp_style_is( $dashboard::SCRIPT_HANDLE ) );
-	}
-
-	/**
-	 * @covers ::get_post_type_archive_link
-	 * @covers \Google\Web_Stories\Traits\Post_Type::get_post_type_has_archive
-	 */
-	public function test_get_post_type_archive_link() {
-		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
-			$this->createMock( \Google\Web_Stories\Experiments::class ),
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
-			$this->createMock( \Google\Web_Stories\Decoder::class ),
-			$this->createMock( \Google\Web_Stories\Locale::class ),
-			( new \Google\Web_Stories\Admin\Google_Fonts() ),
-			( new \Google\Web_Stories\Assets() )
-		);
-
-
-		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ self::$cpt_has_archive ] );
-		$this->assertSame( get_post_type_archive_link( self::$cpt_has_archive ), $result );
-
-		$result = $this->call_private_method( $dashboard, 'get_post_type_archive_link', [ self::$cpt_no_archive ] );
-		$this->assertNotSame( get_post_type_archive_link( self::$cpt_no_archive ), $result );
+		$this->instance->add_menu_page();
+		$this->instance->enqueue_assets( 'foo' );
+		$this->assertFalse( wp_script_is( $this->instance::SCRIPT_HANDLE ) );
+		$this->assertFalse( wp_style_is( $this->instance::SCRIPT_HANDLE ) );
 	}
 
 	/**
@@ -220,24 +170,25 @@ class Dashboard extends TestCase {
 				]
 			);
 
-		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
+		$this->instance = new \Google\Web_Stories\Admin\Dashboard(
 			$experiments,
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
 			$this->createMock( \Google\Web_Stories\Locale::class ),
 			( new \Google\Web_Stories\Admin\Google_Fonts() ),
-			$assets
+			$assets,
+			new Story_Post_Type( new Settings(), $experiments )
 		);
 
-		$dashboard->add_menu_page();
-		$dashboard->enqueue_assets( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
+		$this->instance->add_menu_page();
+		$this->instance->enqueue_assets( $this->instance->get_hook_suffix( 'stories-dashboard' ) );
 
-		$this->assertTrue( wp_script_is( $dashboard::SCRIPT_HANDLE ) );
+		$this->assertTrue( wp_script_is( $this->instance::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_script_is( 'fake_js_chunk', 'registered' ) );
 
-		$this->assertTrue( wp_style_is( $dashboard::SCRIPT_HANDLE ) );
+		$this->assertTrue( wp_style_is( $this->instance::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_style_is( 'fake_css_chunk', 'registered' ) );
 
-		$this->assertSame( 'web-stories', wp_scripts()->registered[ $dashboard::SCRIPT_HANDLE ]->textdomain );
+		$this->assertSame( 'web-stories', wp_scripts()->registered[ $this->instance::SCRIPT_HANDLE ]->textdomain );
 	}
 }

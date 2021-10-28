@@ -28,8 +28,8 @@ namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Services;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
@@ -42,7 +42,7 @@ use WP_Screen;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class AMP extends Service_Base {
+class AMP extends Service_Base implements HasRequirements {
 	use Screen;
 
 	/**
@@ -60,16 +60,25 @@ class AMP extends Service_Base {
 	private $settings;
 
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Settings $settings Settings instance.
+	 * @param Settings        $settings        Settings instance.
+	 * @param Story_Post_Type $story_post_type Experiments instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Settings $settings ) {
-		$this->settings = $settings;
+	public function __construct( Settings $settings, Story_Post_Type $story_post_type ) {
+		$this->settings        = $settings;
+		$this->story_post_type = $story_post_type;
 	}
 
 	/**
@@ -92,6 +101,19 @@ class AMP extends Service_Base {
 	}
 
 	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because settings needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'settings' ];
+	}
+
+	/**
 	 * Filter AMP options to force Standard mode (AMP-first) when a web story is being requested.
 	 *
 	 * @since 1.2.0
@@ -104,9 +126,9 @@ class AMP extends Service_Base {
 		if ( ! is_array( $options ) ) {
 			return $options;
 		}
-		if ( $this->get_request_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
+		if ( $this->get_request_post_type() === $this->story_post_type->get_slug() ) {
 			$options['theme_support']          = 'standard';
-			$options['supported_post_types'][] = Story_Post_Type::POST_TYPE_SLUG;
+			$options['supported_post_types'][] = $this->story_post_type->get_slug();
 			$options['supported_templates'][]  = 'is_singular';
 		}
 		return $options;
@@ -128,10 +150,10 @@ class AMP extends Service_Base {
 		if ( ! is_array( $post_types ) ) {
 			return $post_types;
 		}
-		if ( $this->get_request_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
-			$post_types = array_merge( $post_types, [ Story_Post_Type::POST_TYPE_SLUG ] );
+		if ( $this->get_request_post_type() === $this->story_post_type->get_slug() ) {
+			$post_types = array_merge( $post_types, [ $this->story_post_type->get_slug() ] );
 		} else {
-			$post_types = array_diff( $post_types, [ Story_Post_Type::POST_TYPE_SLUG ] );
+			$post_types = array_diff( $post_types, [ $this->story_post_type->get_slug() ] );
 		}
 
 		return array_values( $post_types );
@@ -146,7 +168,7 @@ class AMP extends Service_Base {
 	 * @return array|mixed Sanitizers.
 	 */
 	public function add_amp_content_sanitizers( $sanitizers ) {
-		if ( ! is_singular( 'web-story' ) ) {
+		if ( ! is_singular( $this->story_post_type->get_slug() ) ) {
 			return $sanitizers;
 		}
 
@@ -269,7 +291,7 @@ class AMP extends Service_Base {
 	public function filter_amp_skip_post( $skipped, $post ) {
 		// This is the opposite to the `AMP__VERSION >= WEBSTORIES_AMP_VERSION` check in the HTML renderer.
 		if (
-			'web-story' === get_post_type( $post )
+			$this->story_post_type->get_slug() === get_post_type( $post )
 			&&
 			defined( '\AMP__VERSION' )
 			&&
@@ -329,8 +351,8 @@ class AMP extends Service_Base {
 			return null;
 		}
 
-		if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), '/web-stories/v1/web-story/' ) ) {
-			return Story_Post_Type::POST_TYPE_SLUG;
+		if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), $this->story_post_type->get_rest_url() ) ) {
+			return $this->story_post_type->get_slug();
 		}
 
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized

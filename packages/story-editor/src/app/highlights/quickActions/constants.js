@@ -32,6 +32,10 @@ export const ACTIONS = {
     trackingEventName: 'add_captions',
     text: __('Add captions', 'web-stories'),
   },
+  AUTO_STYLE_TEXT: {
+    trackingEventName: 'auto_style_text',
+    text: __('Adaptive text colors', 'web-stories'),
+  },
   CHANGE_BACKGROUND_COLOR: {
     trackingEventName: 'change_background_color',
     text: __('Change background color', 'web-stories'),

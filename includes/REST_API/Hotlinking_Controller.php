@@ -26,8 +26,9 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Types;
 use WP_Error;
 use WP_Http;
@@ -40,14 +41,50 @@ use WP_REST_Server;
  *
  * Class Hotlinking_Controller
  */
-class Hotlinking_Controller extends REST_Controller {
-	use Post_Type, Types;
+class Hotlinking_Controller extends REST_Controller implements HasRequirements {
+	use Types;
+
+	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
 	/**
 	 * Constructor.
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Experiments     $experiments Experiments instance.
+	 *
+	 * @return void
 	 */
-	public function __construct() {
+	public function __construct( Story_Post_Type $story_post_type, Experiments $experiments ) {
+		$this->story_post_type = $story_post_type;
+		$this->experiments     = $experiments;
+
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'hotlink';
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
 	}
 
 	/**
@@ -62,11 +99,36 @@ class Hotlinking_Controller extends REST_Controller {
 	public function register_routes() {
 		register_rest_route(
 			$this->namespace,
-			'/' . $this->rest_base,
+			'/' . $this->rest_base . '/validate',
 			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'parse_url' ],
+					'permission_callback' => [ $this, 'parse_url_permissions_check' ],
+					'args'                => [
+						'url' => [
+							'description'       => __( 'The URL to process.', 'web-stories' ),
+							'required'          => true,
+							'type'              => 'string',
+							'format'            => 'uri',
+							'validate_callback' => [ $this, 'validate_url' ],
+						],
+					],
+				],
+			]
+		);
+
+		if ( ! $this->experiments->is_experiment_enabled( 'enableCORSProxy' ) ) {
+			return;
+		}
+
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/proxy',
+			[
+				[
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => [ $this, 'proxy_url' ],
 					'permission_callback' => [ $this, 'parse_url_permissions_check' ],
 					'args'                => [
 						'url' => [
@@ -166,6 +228,51 @@ class Hotlinking_Controller extends REST_Controller {
 		return rest_ensure_response( $response );
 	}
 
+	/**
+	 * Parses a URL to return proxied file.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 *
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function proxy_url( $request ) {
+		$url = untrailingslashit( $request['url'] );
+
+		$args          = [
+			'limit_response_size' => 15728640, // 15MB. @todo Remove this, when streaming is implemented.
+			'timeout'             => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
+		];
+		$proxy_request = wp_safe_remote_get( $url, $args );
+		if ( is_wp_error( $proxy_request ) ) {
+			$proxy_request->add_data( [ 'status' => 404 ] );
+			return $proxy_request;
+		}
+
+		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $proxy_request ) ) {
+			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+		}
+
+		$headers            = wp_remote_retrieve_headers( $proxy_request );
+		$mime_type          = $headers['content-type'];
+		$allowed_mime_types = $this->get_allowed_mime_types();
+		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
+		if ( ! in_array( $mime_type, $allowed_mime_types, true ) ) {
+			return new WP_Error( 'rest_invalid_mime_type', __( 'Invalid Mime Type', 'web-stories' ), [ 'status' => 400 ] );
+		}
+
+		$file_size = (int) $headers['content-length'];
+
+		$body = wp_remote_retrieve_body( $proxy_request );
+
+		header( 'Content-Type: ' . $mime_type );
+		header( 'Content-Length: ' . $file_size );
+
+		echo $body; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		exit;
+	}
 
 	/**
 	 * Prepares response asset response.
@@ -274,7 +381,7 @@ class Hotlinking_Controller extends REST_Controller {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function parse_url_permissions_check() {
-		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to insert external media.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 

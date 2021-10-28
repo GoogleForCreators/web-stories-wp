@@ -285,19 +285,27 @@
         "jest-dom"
       ],
       "rules": {
-        "jest/lowercase-name": [
+        "jest/no-hooks": "off",
+        "jest/prefer-expect-assertions": "off",
+        "jest/prefer-inline-snapshots": "off",
+        "jest/prefer-lowercase-title": [
           "error",
           {
             "ignore": ["describe"]
           }
         ],
-        "jest/no-hooks": "off",
-        "jest/prefer-expect-assertions": "off",
-        "jest/prefer-inline-snapshots": "off",
         "jsdoc/require-jsdoc": "off",
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debug": "error",
         "testing-library/no-dom-import": "error"
+      }
+    },
+    {
+      "files": [
+        "__mocks__/**/*.js"
+      ],
+      "rules": {
+      "jest/require-hook":  "off"
       }
     },
     {
@@ -361,20 +369,28 @@
         "plugin:jest/all"
       ],
       "rules": {
-        "jest/lowercase-name": [
+        "jest/no-hooks": "off",
+        "jest/prefer-expect-assertions": "off",
+        "jest/prefer-inline-snapshots": "off",
+        "jest/prefer-lowercase-title": [
           "error",
           {
             "ignore": ["describe"]
           }
-        ],
-        "jest/no-hooks": "off",
-        "jest/prefer-expect-assertions": "off",
-        "jest/prefer-inline-snapshots": "off"
+        ]
       },
       "globals": {
         "browser": "readonly",
         "page": "readonly",
         "wp": "readonly"
+      }
+    },
+    {
+      "files": [
+        "packages/e2e-test-utils/**/*.js"
+      ],
+      "rules": {
+        "jest/expect-expect": "off"
       }
     },
     {

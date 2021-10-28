@@ -28,9 +28,7 @@ import {
   trashAllTerms,
 } from '@web-stories-wp/e2e-test-utils';
 
-// Extend Jest matchers.
-import 'jest-extended';
-
+// eslint-disable-next-line jest/require-hook
 expect.extend({
   toBeValidAMP,
 });
@@ -91,11 +89,6 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Another Firefox warning.
   'Layout was forced before the page was fully loaded',
-
-  // @todo Fix issues, see https://github.com/google/web-stories-wp/issues/9327
-  'Error inlining remote css file SecurityError',
-  'Error loading remote stylesheet SecurityError',
-  'Error while reading CSS rules from https://fonts.googleapis.com',
 ];
 
 export function addAllowedErrorMessage(message) {
@@ -122,6 +115,7 @@ if ('true' === process.env.CI) {
 }
 
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
+// eslint-disable-next-line jest/require-hook
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 1000 });
 
 /**
@@ -222,20 +216,13 @@ async function runAxeTestsForStoriesEditor() {
   await expect(page).toPassAxeTests({
     // Temporary disabled rules to enable initial integration.
     disabledRules: [
-      'aria-allowed-role',
       'aria-input-field-name',
       'aria-required-parent',
-      'button-name',
       'color-contrast',
       // Because of multiple #_wpnonce elements.
       'duplicate-id',
-      'label',
-      'landmark-banner-is-top-level',
-      'landmark-no-duplicate-banner',
       'landmark-unique',
-      'page-has-heading-one',
       'region',
-      'scrollable-region-focusable',
       'aria-allowed-attr',
       'nested-interactive',
     ],

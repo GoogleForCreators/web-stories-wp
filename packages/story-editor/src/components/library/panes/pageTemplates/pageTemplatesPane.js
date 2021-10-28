@@ -85,16 +85,24 @@ function PageTemplatesPane(props) {
 
   const [showDefaultTemplates, setShowDefaultTemplates] = useState(true);
   const [highlightedTemplate, setHighlightedTemplate] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateTemplatesList = useCallback(
     (page) => {
-      setSavedTemplates([page, ...savedTemplates]);
+      setSavedTemplates([page, ...(savedTemplates || [])]);
       setHighlightedTemplate(page.id);
     },
     [setSavedTemplates, savedTemplates]
   );
 
   const loadTemplates = useCallback(() => {
+    // if nextTemplatesToFetch is false, we must not perform an API call
+    // with page=false.
+    if (!nextTemplatesToFetch) {
+      return;
+    }
+
+    setIsLoading(true);
     getCustomPageTemplates(nextTemplatesToFetch)
       .then(({ templates, hasMore }) => {
         setSavedTemplates([...(savedTemplates || []), ...templates]);
@@ -104,7 +112,13 @@ function PageTemplatesPane(props) {
           setNextTemplatesToFetch(nextTemplatesToFetch + 1);
         }
       })
-      .catch(() => setNextTemplatesToFetch(false));
+      .catch(() => {
+        setNextTemplatesToFetch(false);
+        if (null === savedTemplates) {
+          setSavedTemplates([]);
+        }
+      })
+      .finally(() => setIsLoading(false));
   }, [
     getCustomPageTemplates,
     nextTemplatesToFetch,
@@ -114,10 +128,10 @@ function PageTemplatesPane(props) {
   ]);
 
   useEffect(() => {
-    if (!savedTemplates) {
+    if (!savedTemplates && !showDefaultTemplates) {
       loadTemplates();
     }
-  }, [savedTemplates, loadTemplates]);
+  }, [savedTemplates, loadTemplates, showDefaultTemplates]);
 
   useEffect(() => {
     let timeout = null;
@@ -151,14 +165,12 @@ function PageTemplatesPane(props) {
     <StyledPane id={paneId} {...props}>
       <PaneInner>
         <>
-          {savedTemplates && (
-            <ButtonWrapper>
-              <TemplateSave
-                setShowDefaultTemplates={setShowDefaultTemplates}
-                updateList={updateTemplatesList}
-              />
-            </ButtonWrapper>
-          )}
+          <ButtonWrapper>
+            <TemplateSave
+              setShowDefaultTemplates={setShowDefaultTemplates}
+              updateList={updateTemplatesList}
+            />
+          </ButtonWrapper>
           <DropDownWrapper>
             <Select
               options={options}
@@ -177,6 +189,7 @@ function PageTemplatesPane(props) {
             pageSize={pageSize}
             highlightedTemplate={highlightedTemplate}
             loadTemplates={loadTemplates}
+            isLoading={isLoading}
           />
         )}
       </PaneInner>

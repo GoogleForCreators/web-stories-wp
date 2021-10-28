@@ -32,11 +32,11 @@ import { SEARCH_PAGES_FIELDS, GET_PAGE_FIELDS } from './constants';
  * Search pages by search term.
  * Used for "Stories Archive" custom page selection on settings page.
  *
- * @param {string} searchTerm Search term.
  * @param {string} apiPath API path.
+ * @param {string} searchTerm Search term.
  * @return {Promise} Request promise.
  */
-export function searchPages(searchTerm, apiPath) {
+export function searchPages(apiPath, searchTerm) {
   const path = addQueryArgs(apiPath, {
     per_page: 100,
     search: searchTerm,
@@ -50,11 +50,11 @@ export function searchPages(searchTerm, apiPath) {
  * Get page by id.
  * Used for getting the custom page by id after selection is saved on settings page
  *
+ * @param {string} apiPath API path.
  * @param {number} id page id.
- * @param {string} apiPath API Path.
  * @return {Promise} Request promise.
  */
-export function getPageById(id, apiPath) {
+export function getPageById(apiPath, id) {
   const path = addQueryArgs(`${apiPath}${id}/`, {
     _fields: GET_PAGE_FIELDS,
   });

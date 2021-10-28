@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@web-stories-wp/i18n';
 import { PatternPropType } from '@web-stories-wp/patterns';
-import { NumericInput } from '@web-stories-wp/design-system';
+import { NumericInput, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -64,7 +64,7 @@ function OpacityInput({ value, onChange }) {
       onChange={handleChange}
       value={inputValue}
       unit={_x('%', 'Percentage', 'web-stories')}
-      suffix={__('Opacity', 'web-stories')}
+      suffix={<Icons.ColorDrop />}
       min={0}
       max={100}
       allowEmpty={false}

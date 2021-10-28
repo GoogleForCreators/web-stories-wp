@@ -96,38 +96,38 @@ function arrange(extraStylePresets, extraStateProps) {
   };
 }
 
+const EDIT_BUTTON_LABEL = 'Edit styles';
+const APPLY_PRESET = 'Apply style';
+const PANEL_LABEL = 'Saved Styles';
+const TEST_COLOR = {
+  color: {
+    r: 1,
+    g: 1,
+    b: 1,
+  },
+};
+const BACKGROUND_PROPS = {
+  backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+  backgroundColor: TEST_COLOR,
+};
+
+const TEST_STYLE = {
+  color: TEST_COLOR,
+  letterSpacing: 1,
+  lineHeight: 2,
+  ...BACKGROUND_PROPS,
+  fontWeight: 700,
+  font: TEXT_ELEMENT_DEFAULT_FONT,
+};
+
 describe('Panels/Preset', () => {
-  const EDIT_BUTTON_LABEL = 'Edit styles';
-  const APPLY_PRESET = 'Apply style';
-  const PANEL_LABEL = 'Saved Styles';
-  const TEST_COLOR = {
-    color: {
-      r: 1,
-      g: 1,
-      b: 1,
-    },
-  };
-  const BACKGROUND_PROPS = {
-    backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
-    backgroundColor: TEST_COLOR,
-  };
-
-  const TEST_STYLE = {
-    color: TEST_COLOR,
-    letterSpacing: 1,
-    lineHeight: 2,
-    ...BACKGROUND_PROPS,
-    fontWeight: 700,
-    font: TEXT_ELEMENT_DEFAULT_FONT,
-  };
-
-  areAllType.mockImplementation((elType, els) => {
-    return els.length > 0 && els.every(({ type }) => elType === type);
-  });
-
-  getPanelInitialHeight.mockReturnValue(150);
-
   beforeAll(() => {
+    areAllType.mockImplementation((elType, els) => {
+      return els.length > 0 && els.every(({ type }) => elType === type);
+    });
+
+    getPanelInitialHeight.mockReturnValue(150);
+
     localStorage.setItem(
       `web_stories_ui_panel_settings:stylepreset-${PRESET_TYPES.STYLE}`,
       JSON.stringify({ isCollapsed: false })

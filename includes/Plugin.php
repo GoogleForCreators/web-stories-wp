@@ -103,6 +103,7 @@ class Plugin extends ServiceBasedPlugin {
 		'meta_boxes'                   => Admin\Meta_Boxes::class,
 		'settings'                     => Settings::class,
 		'site_health'                  => Admin\Site_Health::class,
+		'story_archive'                => Story_Archive::class,
 		'story_post_type'              => Story_Post_Type::class,
 		'story_shortcode'              => Shortcode\Stories_Shortcode::class,
 		'svg'                          => Media\SVG::class,
@@ -169,10 +170,12 @@ class Plugin extends ServiceBasedPlugin {
 			Assets::class,
 			Decoder::class,
 			Experiments::class,
+			Story_Post_Type::class,
 			Injector::class,
 			Integrations\Site_Kit::class,
 			Locale::class,
 			Settings::class,
+			Stories_Script_Data::class,
 			User\Preferences::class,
 		];
 	}

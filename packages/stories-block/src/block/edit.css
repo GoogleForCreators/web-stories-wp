@@ -1,6 +1,10 @@
 /* Load main styles on edit screen. */
 @import '../css/style.css';
 
+.web-stories-list__story {
+  cursor: default;
+}
+
 /* Carousel view styles */
 
 .web-stories-list.is-view-type-carousel .web-stories-list__story {

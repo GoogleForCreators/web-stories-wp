@@ -108,51 +108,51 @@ function arrange(extraStylePresets, extraStateProps, extraStoryPresets) {
   };
 }
 
+const EDIT_BUTTON_LABEL = 'Edit colors';
+const APPLY_GLOBAL_PRESET = 'Apply global color';
+const ADD_LOCAL_LABEL = 'Add local color';
+const ADD_GLOBAL_LABEL = 'Add global color';
+const PANEL_LABEL = 'Saved Colors';
+const TEST_COLOR = {
+  color: {
+    r: 1,
+    g: 1,
+    b: 1,
+  },
+};
+const TEST_COLOR_2 = {
+  color: {
+    r: 2,
+    g: 2,
+    b: 2,
+  },
+};
+const LINEAR_COLOR = {
+  type: 'linear',
+  stops: [
+    {
+      color: { r: 255, g: 0, b: 0 },
+      position: 0,
+    },
+    {
+      color: { r: 0, g: 0, b: 255 },
+      position: 1,
+    },
+  ],
+};
+const BACKGROUND_PROPS = {
+  backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+  backgroundColor: TEST_COLOR,
+};
+
 describe('Panels/Preset', () => {
-  const EDIT_BUTTON_LABEL = 'Edit colors';
-  const APPLY_GLOBAL_PRESET = 'Apply global color';
-  const ADD_LOCAL_LABEL = 'Add local color';
-  const ADD_GLOBAL_LABEL = 'Add global color';
-  const PANEL_LABEL = 'Saved Colors';
-  const TEST_COLOR = {
-    color: {
-      r: 1,
-      g: 1,
-      b: 1,
-    },
-  };
-  const TEST_COLOR_2 = {
-    color: {
-      r: 2,
-      g: 2,
-      b: 2,
-    },
-  };
-  const LINEAR_COLOR = {
-    type: 'linear',
-    stops: [
-      {
-        color: { r: 255, g: 0, b: 0 },
-        position: 0,
-      },
-      {
-        color: { r: 0, g: 0, b: 255 },
-        position: 1,
-      },
-    ],
-  };
-  const BACKGROUND_PROPS = {
-    backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
-    backgroundColor: TEST_COLOR,
-  };
-
-  areAllType.mockImplementation((elType, els) => {
-    return els.length > 0 && els.every(({ type }) => elType === type);
-  });
-
-  getPanelInitialHeight.mockReturnValue(150);
-
   beforeAll(() => {
+    areAllType.mockImplementation((elType, els) => {
+      return els.length > 0 && els.every(({ type }) => elType === type);
+    });
+
+    getPanelInitialHeight.mockReturnValue(150);
+
     localStorage.setItem(
       `web_stories_ui_panel_settings:stylepreset-${PRESET_TYPES.COLOR}`,
       JSON.stringify({ isCollapsed: false })

@@ -26,7 +26,6 @@ import { canTranscodeResource } from '@web-stories-wp/media';
 import PropTypes from 'prop-types';
 import {
   useCallback,
-  useEffect,
   useMemo,
   useReducer,
   useRef,
@@ -152,9 +151,6 @@ function RightClickMenuProvider({ children }) {
     })
   );
 
-  // Ref for attaching the context menu
-  const rightClickAreaRef = useRef();
-
   // Needed to not pass stale refs of `undo` to snackbar
   const undoRef = useRef(undo);
   undoRef.current = undo;
@@ -178,22 +174,29 @@ function RightClickMenuProvider({ children }) {
    *
    * @param {Event} evt The triggering event
    */
-  const handleOpenMenu = useCallback((evt) => {
-    evt.preventDefault();
-    evt.stopPropagation();
+  const handleOpenMenu = useCallback(
+    (evt) => {
+      if (selectedElements.length > 1) {
+        return;
+      }
 
-    dispatch({
-      type: ACTION_TYPES.OPEN_MENU,
-      payload: {
-        x: evt?.x,
-        y: evt?.y,
-      },
-    });
+      evt.preventDefault();
+      evt.stopPropagation();
 
-    trackEvent('context_menu_action', {
-      name: 'context_menu_opened',
-    });
-  }, []);
+      dispatch({
+        type: ACTION_TYPES.OPEN_MENU,
+        payload: {
+          x: evt?.clientX,
+          y: evt?.clientY,
+        },
+      });
+
+      trackEvent('context_menu_action', {
+        name: 'context_menu_opened',
+      });
+    },
+    [selectedElements]
+  );
 
   /**
    * Close the menu and reset the tracked position.
@@ -1022,21 +1025,6 @@ function RightClickMenuProvider({ children }) {
     textItems,
   ]);
 
-  // Override the browser's context menu if the
-  // rightClickAreaRef is set
-  useEffect(() => {
-    const node = rightClickAreaRef.current;
-    if (!node) {
-      return undefined;
-    }
-
-    node.addEventListener('contextmenu', handleOpenMenu);
-
-    return () => {
-      node.removeEventListener('contextmenu', handleOpenMenu);
-    };
-  }, [handleOpenMenu]);
-
   useGlobalKeyDownEffect(
     { key: ['mod+alt+o'] },
     (evt) => {
@@ -1062,7 +1050,6 @@ function RightClickMenuProvider({ children }) {
       menuPosition,
       onCloseMenu: handleCloseMenu,
       onOpenMenu: handleOpenMenu,
-      rightClickAreaRef,
     }),
     [handleCloseMenu, handleOpenMenu, isMenuOpen, menuItems, menuPosition]
   );

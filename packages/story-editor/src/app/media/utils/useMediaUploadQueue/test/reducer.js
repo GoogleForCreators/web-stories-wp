@@ -297,6 +297,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               foo: 'bar',
               isMuting: false,
+              isMuted: true,
             },
             state: 'MUTED',
           },
@@ -461,6 +462,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               foo: 'bar',
               isTranscoding: false,
+              isOptimized: true,
             },
             state: 'TRANSCODED',
           },

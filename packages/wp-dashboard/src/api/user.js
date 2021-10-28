@@ -19,6 +19,11 @@
 import apiFetch from '@wordpress/api-fetch';
 
 /**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './utils';
+
+/**
  * Get user.
  *
  * @param {string} apiPath API path.
@@ -27,45 +32,44 @@ import apiFetch from '@wordpress/api-fetch';
 export function getUser(apiPath) {
   return apiFetch({
     path: apiPath,
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }
 
 /**
  * Toggle web stories media optimization on settings page.
  *
- * @param {string} currentUser Current user.
  * @param {string} apiPath API path.
+ * @param {Object} currentUser Current user.
  * @return {Promise} Request promise.
  */
-export function toggleWebStoriesMediaOptimization(currentUser, apiPath) {
+export function toggleWebStoriesMediaOptimization(apiPath, currentUser) {
   return apiFetch({
     path: apiPath,
     data: {
       meta: {
         web_stories_media_optimization:
-          !currentUser.meta.web_stories_media_optimization,
+          !currentUser.meta.webStoriesMediaOptimization,
       },
     },
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }
 
 /**
  * Handles the toggle web stories tracking opt in on settings page.
  *
- * @param {Object} currentUser Current user object.
  * @param {string} apiPath API path.
+ * @param {Object} currentUser Current user object.
  * @return {Promise} Request promise.
  */
-export function toggleWebStoriesTrackingOptIn(currentUser, apiPath) {
+export function toggleWebStoriesTrackingOptIn(apiPath, currentUser) {
   return apiFetch({
     path: apiPath,
     data: {
       meta: {
-        web_stories_tracking_optin:
-          !currentUser.meta.web_stories_tracking_optin,
+        web_stories_tracking_optin: !currentUser.meta.webStoriesTrackingOptin,
       },
     },
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }

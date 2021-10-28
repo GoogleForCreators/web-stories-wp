@@ -990,7 +990,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => stories[id].author
+        (id) => stories[id].author.name
       );
 
       // author is the third column
@@ -1030,7 +1030,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created_gmt)
+        getRelativeDisplayDate(stories[id].createdGmt)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -1070,7 +1070,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified_gmt)
+        getRelativeDisplayDate(stories[id].modifiedGmt)
       );
 
       // Last Modified is the fifth column
@@ -1155,7 +1155,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => stories[id].author
+        (id) => stories[id].author.name
       );
 
       // author is the third column
@@ -1197,7 +1197,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created_gmt)
+        getRelativeDisplayDate(stories[id].createdGmt)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -1238,7 +1238,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified_gmt)
+        getRelativeDisplayDate(stories[id].modifiedGmt)
       );
 
       // Last Modified is the fifth column
@@ -1259,22 +1259,6 @@ describe('List view', () => {
       expect(rowModifiedValues).toEqual(
         storieModifiedSortedByModified.reverse()
       );
-    });
-  });
-
-  describe('CUJ: Creator can view their stories in list view: Go to WP list view to do any action', () => {
-    it('should add a link to the classic WordPress list view', async () => {
-      const listViewButton = fixture.screen.getByLabelText(
-        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
-      );
-
-      await fixture.events.click(listViewButton);
-
-      const wpListViewLink = fixture.screen.getByRole('link', {
-        name: /^See classic WP list view$/,
-      });
-
-      expect(wpListViewLink).toBeTruthy();
     });
   });
 

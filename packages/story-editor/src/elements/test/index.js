@@ -18,7 +18,12 @@
  * Internal dependencies
  */
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
-import { createNewElement, createPage, duplicatePage } from '..';
+import {
+  createNewElement,
+  createPage,
+  duplicatePage,
+  duplicateElement,
+} from '..';
 
 describe('Element', () => {
   describe('createNewElement', () => {
@@ -58,6 +63,82 @@ describe('Element', () => {
         expect.objectContaining({
           isBackground: true,
           isDefaultBackground: true,
+        }),
+      ]);
+    });
+  });
+
+  describe('duplicateElement', () => {
+    it('should create element with new id', () => {
+      const oldElement = {
+        id: 'abc',
+        type: 'image',
+        x: 10,
+        y: 20,
+      };
+      const { element } = duplicateElement({
+        element: oldElement,
+      });
+      expect(element).toStrictEqual(
+        expect.objectContaining({
+          ...oldElement,
+          id: expect.not.stringMatching(oldElement.id),
+          basedOn: oldElement.id,
+        })
+      );
+    });
+
+    it('should offset element if based on an existing element', () => {
+      const oldElement = {
+        id: 'abc',
+        type: 'image',
+        x: 10,
+        y: 20,
+      };
+      const { element } = duplicateElement({
+        element: oldElement,
+        existingElements: [oldElement],
+      });
+      expect(element).toStrictEqual(
+        expect.objectContaining({
+          ...oldElement,
+          id: expect.not.stringMatching(oldElement.id),
+          basedOn: oldElement.id,
+          x: expect.any(Number),
+          y: expect.any(Number),
+        })
+      );
+      expect(element.x).not.toBe(oldElement.x);
+      expect(element.y).not.toBe(oldElement.y);
+    });
+
+    it('should duplicate element animations', () => {
+      const oldElement = {
+        id: 'abc',
+        type: 'image',
+        x: 10,
+        y: 20,
+      };
+      const animations = [
+        { id: 'aaaa', type: 'animation_1', targets: [oldElement.id] },
+        { id: 'bbbb', type: 'animation_1', targets: ['ccc'] },
+        { id: 'cccc', type: 'animation_2', targets: [oldElement.id] },
+      ];
+      const { element, elementAnimations } = duplicateElement({
+        element: oldElement,
+        animations: animations,
+      });
+
+      expect(elementAnimations).toStrictEqual([
+        expect.objectContaining({
+          ...animations[0],
+          id: expect.not.stringMatching(animations[0].id),
+          targets: [element.id],
+        }),
+        expect.objectContaining({
+          ...animations[2],
+          id: expect.not.stringMatching(animations[2].id),
+          targets: [element.id],
         }),
       ]);
     });
