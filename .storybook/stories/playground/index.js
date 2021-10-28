@@ -18,10 +18,17 @@
  * External dependencies
  */
 import StoryEditor, { InterfaceSkeleton } from '@web-stories-wp/story-editor';
+import styled from 'styled-components';
 
 export default {
   title: 'Playground/Stories Editor',
 };
+
+// @todo Instead of 100vh, may be the story editor should define its minimum required height to work properly,
+// and that height should be set with the <StoryEditor> component.
+const AppContainer = styled.div`
+  height: 100vh;
+`;
 
 const MediaUpload = ({ render }) => {
   return render(() => {});
@@ -209,7 +216,9 @@ const config = {
 };
 
 export const _default = () => (
-  <StoryEditor config={config}>
-    <InterfaceSkeleton />
-  </StoryEditor>
+  <AppContainer>
+    <StoryEditor config={config}>
+      <InterfaceSkeleton />
+    </StoryEditor>
+  </AppContainer>
 );
