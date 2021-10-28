@@ -22,10 +22,9 @@ const MAX_WAIT_THRESHOLD = 5000;
  * Attempts to open the story preview in a new tab.
  *
  * @param {Page} editorPage Editor page object.
- * @param {boolean} checkStory Check to see if amp-story-player exists.
  * @return {Promise<Page>} Preview page object.
  */
-async function previewStory(editorPage, checkStory = true) {
+async function previewStory(editorPage) {
   let openTabs = await browser.pages();
   const expectedTabsCount = openTabs.length + 1;
   await expect(editorPage).toClick(
@@ -49,9 +48,12 @@ async function previewStory(editorPage, checkStory = true) {
   }
 
   const previewPage = openTabs[openTabs.length - 1];
-  if (checkStory) {
-    await previewPage.waitForSelector('amp-story');
-  }
+
+  // Wait for the preview interstitial to end.
+  await previewPage.waitForFunction(
+    () => !document.title.includes('Generating the preview')
+  );
+
   return previewPage;
 }
 

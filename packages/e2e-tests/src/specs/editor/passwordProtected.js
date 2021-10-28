@@ -41,7 +41,7 @@ describe('Password protected stories', () => {
     await page.waitForSelector('button[aria-label="Preview"]:not([disabled])');
 
     const editorPage = page;
-    const previewPage = await previewStory(editorPage, false);
+    const previewPage = await previewStory(editorPage);
 
     await expect(previewPage).toMatch('Protected: Password protected story');
 
