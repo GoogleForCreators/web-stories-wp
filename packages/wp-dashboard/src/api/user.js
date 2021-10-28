@@ -26,25 +26,25 @@ import { snakeToCamelCaseObjectKeys } from './utils';
 /**
  * Get user.
  *
- * @param {Object} config Configuration object.
+ * @param {string} apiPath API path.
  * @return {Promise} Request promise.
  */
-export function getUser(config) {
+export function getUser(apiPath) {
   return apiFetch({
-    path: config.api.currentUser,
+    path: apiPath,
   }).then(snakeToCamelCaseObjectKeys);
 }
 
 /**
  * Toggle web stories media optimization on settings page.
  *
- * @param {Object} config Configuration object.
- * @param {string} currentUser Current user.
+ * @param {string} apiPath API path.
+ * @param {Object} currentUser Current user.
  * @return {Promise} Request promise.
  */
-export function toggleWebStoriesMediaOptimization(config, currentUser) {
+export function toggleWebStoriesMediaOptimization(apiPath, currentUser) {
   return apiFetch({
-    path: config.api.currentUser,
+    path: apiPath,
     data: {
       meta: {
         web_stories_media_optimization:
@@ -58,13 +58,13 @@ export function toggleWebStoriesMediaOptimization(config, currentUser) {
 /**
  * Handles the toggle web stories tracking opt in on settings page.
  *
- * @param {Object} config Configuration object.
+ * @param {string} apiPath API path.
  * @param {Object} currentUser Current user object.
  * @return {Promise} Request promise.
  */
-export function toggleWebStoriesTrackingOptIn(config, currentUser) {
+export function toggleWebStoriesTrackingOptIn(apiPath, currentUser) {
   return apiFetch({
-    path: config.api.currentUser,
+    path: apiPath,
     data: {
       meta: {
         web_stories_tracking_optin: !currentUser.meta.webStoriesTrackingOptin,

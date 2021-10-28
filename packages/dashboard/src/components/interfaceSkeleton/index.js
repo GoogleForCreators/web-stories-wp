@@ -26,12 +26,12 @@ import {
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackScreenView } from '@web-stories-wp/tracking';
 import { Snackbar, useSnackbar } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import {
-  EditorSettingsView,
   ExploreTemplatesView,
   MyStoriesView,
   TemplateDetailsView,
@@ -47,7 +47,7 @@ import { AppFrame, LeftRail, PageContent } from '../pageStructure';
 import useApiAlerts from '../../app/api/useApiAlerts';
 import useApi from '../../app/api/useApi';
 
-const InterfaceSkeleton = () => {
+const InterfaceSkeleton = ({ additionalRoutes }) => {
   const {
     state: {
       currentPath,
@@ -163,10 +163,10 @@ const InterfaceSkeleton = () => {
             path={NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL}
             component={<TemplateDetailsView />}
           />
-          <Route
-            path={APP_ROUTES.EDITOR_SETTINGS}
-            component={<EditorSettingsView />}
-          />
+          {additionalRoutes &&
+            additionalRoutes.map((routeProps) => (
+              <Route key={routeProps.path} {...routeProps} />
+            ))}
         </PageContent>
       </AppFrame>
       <Snackbar.Container
@@ -177,6 +177,10 @@ const InterfaceSkeleton = () => {
       />
     </>
   );
+};
+
+InterfaceSkeleton.propTypes = {
+  additionalRoutes: PropTypes.array,
 };
 
 export default InterfaceSkeleton;

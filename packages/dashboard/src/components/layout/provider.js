@@ -21,7 +21,6 @@ import {
   useMemo,
   useRef,
   useCallback,
-  useState,
   createContext,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
@@ -31,7 +30,6 @@ export const LayoutContext = createContext(null);
 const Provider = ({ children }) => {
   const firstFocusableContentRef = useRef();
   const scrollFrameRef = useRef(null);
-  const [telemetryBannerOpen, setTelemetryBannerOpen] = useState(false);
 
   // Get the first focusable content in the dashboard
   // so we can send focus there without having to
@@ -54,14 +52,12 @@ const Provider = ({ children }) => {
     () => ({
       state: {
         scrollFrameRef,
-        telemetryBannerOpen,
       },
       actions: {
         scrollToTop,
-        setTelemetryBannerOpen,
       },
     }),
-    [setTelemetryBannerOpen, telemetryBannerOpen, scrollToTop]
+    [scrollToTop]
   );
 
   return (

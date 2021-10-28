@@ -39,7 +39,7 @@
     "html-to-image": "1.9.0",
     "polished": "^4.1.3",
     "prop-types": "^15.7.2",
-    "react-calendar": "^3.4.0",
+    "react-calendar": "^3.5.0",
     "react-color": "^2.19.3",
     "react-moveable": "^0.28.3",
     "react-photo-gallery": "^8.0.0",
