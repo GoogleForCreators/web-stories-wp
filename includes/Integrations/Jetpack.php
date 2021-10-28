@@ -206,17 +206,17 @@ class Jetpack extends Service_Base {
 
 		$metadata = wp_get_attachment_metadata( $attachment->ID );
 
-		if ( isset( $metadata['videopress']['duration'] ) ) {
+		if ( $metadata && isset( $metadata['videopress']['duration'] ) ) {
 			$data['media_details']['length_formatted'] = $this->format_milliseconds( $metadata['videopress']['duration'] );
 			$data['media_details']['length']           = (int) floor( $metadata['videopress']['duration'] / 1000 );
 		}
 
-		if ( isset( $data['url'], $metadata['videopress']['file_url_base']['https'], $metadata['videopress']['files']['hd']['mp4'] ) ) {
+		if ( $metadata && isset( $data['url'], $metadata['videopress']['file_url_base']['https'], $metadata['videopress']['files']['hd']['mp4'] ) ) {
 			$data['url'] = $metadata['videopress']['file_url_base']['https'] . $metadata['videopress']['files']['hd']['mp4'];
 		}
 
 		// Get the correct poster with matching dimensions from VideoPress.
-		if ( isset( $data['featured_media_src'], $metadata['videopress']['poster'], $metadata['videopress']['width'], $metadata['videopress']['height'] ) ) {
+		if ( $metadata && isset( $data['featured_media_src'], $metadata['videopress']['poster'], $metadata['videopress']['width'], $metadata['videopress']['height'] ) ) {
 			$data['featured_media_src'] = [
 				'src'       => $metadata['videopress']['poster'],
 				'width'     => $metadata['videopress']['width'],
@@ -256,17 +256,17 @@ class Jetpack extends Service_Base {
 
 		$metadata = wp_get_attachment_metadata( $post->ID );
 
-		if ( isset( $metadata['videopress']['duration'] ) ) {
+		if ( $metadata && isset( $metadata['videopress']['duration'] ) ) {
 			$data['media_details']['length_formatted'] = $this->format_milliseconds( $metadata['videopress']['duration'] );
 			$data['media_details']['length']           = (int) floor( $metadata['videopress']['duration'] / 1000 );
 		}
 
-		if ( isset( $data['source_url'], $metadata['videopress']['file_url_base']['https'], $metadata['videopress']['files']['hd']['mp4'] ) ) {
+		if ( $metadata && isset( $data['source_url'], $metadata['videopress']['file_url_base']['https'], $metadata['videopress']['files']['hd']['mp4'] ) ) {
 			$data['source_url'] = $metadata['videopress']['file_url_base']['https'] . $metadata['videopress']['files']['hd']['mp4'];
 		}
 
 		// Get the correct poster with matching dimensions from VideoPress.
-		if ( isset( $data['featured_media_src'], $metadata['videopress']['poster'], $metadata['videopress']['width'], $metadata['videopress']['height'] ) ) {
+		if ( $metadata && isset( $data['featured_media_src'], $metadata['videopress']['poster'], $metadata['videopress']['width'], $metadata['videopress']['height'] ) ) {
 			$data['featured_media_src'] = [
 				'src'       => $metadata['videopress']['poster'],
 				'width'     => $metadata['videopress']['width'],
