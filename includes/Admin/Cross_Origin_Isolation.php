@@ -29,17 +29,16 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Context;
-use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Services;
+use Google\Web_Stories\User\Preferences;
 
 /**
  * Class Cross_Origin_Isolation
  *
  * @package Google\Web_Stories
  */
-class Cross_Origin_Isolation extends Service_Base implements Conditional, HasRequirements {
+class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	/**
 	 * Context instance.
 	 *
@@ -48,12 +47,23 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional, HasReq
 	private $context;
 
 	/**
-	 * Single constructor.
+	 * Preferences instance.
 	 *
-	 * @param Context $context Context instance.
+	 * @var Preferences Preferences instance.
 	 */
-	public function __construct( Context $context ) {
-		$this->context = $context;
+	private $preferences;
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param Preferences $preferences Preferences instance.
+	 * @param Context     $context     Context instance.
+	 */
+	public function __construct( Preferences $preferences, Context $context ) {
+		$this->preferences = $preferences;
+		$this->context     = $context;
 	}
 
 	/**
@@ -97,13 +107,22 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional, HasReq
 	}
 
 	/**
-	 * Check whether the conditional object is currently needed.
+	 * Determines whether "full" cross-origin isolation is needed.
 	 *
-	 * @since 1.6.0
+	 * By default, `crossorigin="anonymous"` attributes are added to all external
+	 * resources to make sure they can be accessed programmatically (e.g. by html-to-image).
+	 *
+	 * However, actual cross-origin isolation by sending COOP and COEP headers is only
+	 * needed when video optimization is enabled
+	 *
+	 * @link https://github.com/google/web-stories-wp/issues/9327
+	 * @link https://web.dev/coop-coep/
+	 *
+	 * @since 1.14.0
 	 *
 	 * @return bool Whether the conditional object is needed.
 	 */
-	public static function is_needed(): bool {
+	private function needs_isolation(): bool {
 		$user_id = get_current_user_id();
 		if ( ! $user_id ) {
 			return false;
@@ -114,17 +133,13 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional, HasReq
 			return false;
 		}
 
-		$user_preferences = Services::get( 'user_preferences' );
-
 		return rest_sanitize_boolean(
-			$user_preferences->get_preference( $user_id, $user_preferences::MEDIA_OPTIMIZATION_META_KEY )
+			$this->preferences->get_preference( $user_id, $this->preferences::MEDIA_OPTIMIZATION_META_KEY )
 		);
 	}
 
 	/**
 	 * Get the list of service IDs required for this service to be registered.
-	 *
-	 * Needed because the service is used in the static `is_needed()` method.
 	 *
 	 * @since 1.12.0
 	 *
@@ -135,15 +150,17 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional, HasReq
 	}
 
 	/**
-	 * Start output buffer and add headers.
+	 * Start output buffer to add headers and `crossorigin` attribute everywhere.
 	 *
 	 * @since 1.6.0
 	 *
 	 * @return void
 	 */
 	public function admin_header() {
-		header( 'Cross-Origin-Opener-Policy: same-origin' );
-		header( 'Cross-Origin-Embedder-Policy: require-corp' );
+		if ( $this->needs_isolation() ) {
+			header( 'Cross-Origin-Opener-Policy: same-origin' );
+			header( 'Cross-Origin-Embedder-Policy: require-corp' );
+		}
 
 		ob_start( [ $this, 'replace_in_dom' ] );
 	}

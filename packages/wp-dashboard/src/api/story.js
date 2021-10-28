@@ -34,7 +34,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_FIELDS, STORY_EMBED } from './constants';
-import { reshapeStoryObject } from './utils';
+import { reshapeStoryObject, snakeToCamelCaseObjectKeys } from './utils';
 
 /**
  * Fetch stories ( When dashboard link is clicked. )
@@ -125,7 +125,7 @@ export function updateStory(config, story) {
 
   const data = {
     id: story.id,
-    author: story.originalStoryData.author,
+    author: story.author.id,
     title: story.title?.raw || story.title,
   };
 
@@ -186,7 +186,7 @@ export const createStoryFromTemplate = async (config, template) => {
       story_data: storyData,
     },
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 };
 
 /**
@@ -197,10 +197,6 @@ export const createStoryFromTemplate = async (config, template) => {
  * @return {Promise} Request promise.
  */
 export function duplicateStory(config, story) {
-  const {
-    originalStoryData: { id },
-  } = story;
-
   const path = addQueryArgs(config.api.stories, {
     _embed: STORY_EMBED,
     _fields: STORY_FIELDS,
@@ -209,7 +205,7 @@ export function duplicateStory(config, story) {
   return apiFetch({
     path,
     data: {
-      original_id: id,
+      original_id: story.id,
       status: 'draft',
     },
     method: 'POST',

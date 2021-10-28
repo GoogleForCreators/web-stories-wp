@@ -88,49 +88,59 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @covers ::is_needed
+	 * @covers ::needs_isolation
 	 */
-	public function test_is_needed() {
+	public function test_needs_isolation() {
 		wp_set_current_user( $this->admin_id );
 		update_user_meta( $this->admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$this->assertTrue( \Google\Web_Stories\Admin\Cross_Origin_Isolation::is_needed() );
+		$actual = $this->call_private_method( $this->instance, 'needs_isolation' );
+
+		$this->assertTrue( $actual );
 	}
 
 	/**
-	 * @covers ::is_needed
+	 * @covers ::needs_isolation
 	 */
-	public function test_is_needed_default_user_meta_value() {
+	public function test_needs_isolation_default_user_meta_value() {
 		wp_set_current_user( $this->admin_id );
 
-		$this->assertTrue( \Google\Web_Stories\Admin\Cross_Origin_Isolation::is_needed() );
+		$actual = $this->call_private_method( $this->instance, 'needs_isolation' );
+
+		$this->assertTrue( $actual );
 	}
 
 	/**
-	 * @covers ::is_needed
+	 * @covers ::needs_isolation
 	 */
-	public function test_is_needed_no_user() {
-		$this->assertFalse( \Google\Web_Stories\Admin\Cross_Origin_Isolation::is_needed() );
+	public function test_needs_isolation_no_user() {
+		$actual = $this->call_private_method( $this->instance, 'needs_isolation' );
+
+		$this->assertFalse( $actual );
 	}
 
 	/**
-	 * @covers ::is_needed
+	 * @covers ::needs_isolation
 	 */
-	public function test_is_needed_opt_out() {
+	public function test_needs_isolation_opt_out() {
 		wp_set_current_user( $this->admin_id );
 		update_user_meta( $this->admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
 
-		$this->assertFalse( \Google\Web_Stories\Admin\Cross_Origin_Isolation::is_needed() );
+		$actual = $this->call_private_method( $this->instance, 'needs_isolation' );
+
+		$this->assertFalse( $actual );
 	}
 
 	/**
-	 * @covers ::is_needed
+	 * @covers ::needs_isolation
 	 */
-	public function test_is_needed_no_upload_caps() {
+	public function test_needs_isolation_no_upload_caps() {
 		wp_set_current_user( $this->contributor_id );
 		update_user_meta( $this->contributor_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$this->assertFalse( \Google\Web_Stories\Admin\Cross_Origin_Isolation::is_needed() );
+		$actual = $this->call_private_method( $this->instance, 'needs_isolation' );
+
+		$this->assertFalse( $actual );
 	}
 
 	/**

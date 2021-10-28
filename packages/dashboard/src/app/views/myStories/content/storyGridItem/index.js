@@ -78,8 +78,8 @@ const StoryGridItem = forwardRef(
 
     const storyDate = getRelativeDisplayDate(
       story?.status === STORY_STATUS.DRAFT
-        ? story?.modified_gmt
-        : story?.created_gmt
+        ? story?.modifiedGmt
+        : story?.createdGmt
     );
 
     const formattedTitle = titleFormatted(story.title);
