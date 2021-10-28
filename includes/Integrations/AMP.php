@@ -35,7 +35,6 @@ use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
 use WP_Post;
-use WP_Screen;
 
 /**
  * Class AMP.
@@ -339,23 +338,19 @@ class AMP extends Service_Base implements HasRequirements {
 			return $this->get_validated_url_post_type( (int) $_GET['post'] );
 		}
 
-		$current_screen = get_current_screen();
+		$current_screen_post_type = $this->context->get_screen_post_type();
 
-		if ( $current_screen instanceof WP_Screen ) {
+		if ( $current_screen_post_type ) {
 			$current_post = get_post();
 
-			if ( self::AMP_VALIDATED_URL_POST_TYPE === $current_screen->post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen->post_type ) {
+			if ( self::AMP_VALIDATED_URL_POST_TYPE === $current_screen_post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen_post_type ) {
 				$validated_url_post_type = $this->get_validated_url_post_type( $current_post->ID );
 				if ( $validated_url_post_type ) {
 					return $validated_url_post_type;
 				}
 			}
 
-			if ( $current_screen->post_type ) {
-				return $current_screen->post_type;
-			}
-
-			return null;
+			return $current_screen_post_type;
 		}
 
 		if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), $this->story_post_type->get_rest_url() ) ) {

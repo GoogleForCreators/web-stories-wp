@@ -134,4 +134,17 @@ class Context {
 
 		return $screen->base ?? null;
 	}
+
+	/**
+	 * Returns the current screen post type if available.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return string|null Current screen post type if available.
+	 */
+	public function get_screen_post_type() {
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
+		return $screen->post_type ?? null;
+	}
 }
