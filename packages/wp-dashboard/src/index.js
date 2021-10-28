@@ -23,6 +23,10 @@
 import './publicPath';
 import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
 
+// We need to load translations before any other imports happen.
+// That's why this is in its own dedicated module imported here at the very top.
+import './setLocaleData';
+
 /**
  * External dependencies
  */
@@ -31,7 +35,6 @@ import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
 import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
-import { setLocaleData } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -54,10 +57,6 @@ const initialize = async (id, config) => {
   setAppElement(appElement);
 
   updateSettings(config.locale);
-
-  for (const localeData of config.localeData || []) {
-    setLocaleData(localeData);
-  }
 
   // Already tracking screen views in AppContent, no need to send page views as well.
   await initializeTracking('Dashboard', false);
