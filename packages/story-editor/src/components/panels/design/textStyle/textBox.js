@@ -15,13 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { __ } from '@web-stories-wp/i18n';
-import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
-
-/**
  * Internal dependencies
  */
 import { usePresubmitHandler } from '../../../form';
@@ -29,24 +22,15 @@ import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPositi
 import BackgroundColorControls from './backgroundColor';
 import PaddingControls from './padding';
 
-const SubHeading = styled.div``;
-const Container = styled.section``;
-
 function TextBox(props) {
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
-  const title = __('Text box', 'web-stories');
   return (
-    <Container aria-label={title}>
-      <SubHeading>
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {title}
-        </Text>
-      </SubHeading>
+    <>
       <BackgroundColorControls {...props} />
       <PaddingControls {...props} />
-    </Container>
+    </>
   );
 }
 

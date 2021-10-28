@@ -19,6 +19,8 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import { useState } from '@web-stories-wp/react';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -31,6 +33,14 @@ import StyleControls from './style';
 import ColorControls from './color';
 import FontControls from './font';
 import TextBoxControls from './textBox';
+
+const SubSection = styled.section`
+  border-top: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+`;
+const SubHeading = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  margin: 14px 0;
+`;
 
 function StylePanel(props) {
   // use highlights to update panel styles
@@ -87,7 +97,12 @@ function StylePanel(props) {
           }
         }}
       />
-      <TextBoxControls {...props} />
+      <SubSection>
+        <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {__('Text Box', 'web-stories')}
+        </SubHeading>
+        <TextBoxControls {...props} />
+      </SubSection>
     </SimplePanel>
   );
 }
