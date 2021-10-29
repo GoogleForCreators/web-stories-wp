@@ -35,32 +35,45 @@ import {
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { DEFAULT_BORDER } from './shared';
 
-const BorderInputsGrid = styled.div`
+const BorderInputsFlexContainer = styled.div`
   display: flex;
+  gap: 7px;
   margin-bottom: 16px;
 `;
 
 const BorderInputsWrapper = styled.div`
   margin-left: 1px;
-  ${({ locked }) => (locked ? 'width: calc(50% - 32px);' : '')}
+  width: ${({ locked }) => (locked ? 'width: calc(50% - 32px);' : 'auto')};
+`;
+
+const iconCss = css`
+  width: 10px;
+  height: 10px;
+  margin-right: -14px;
 `;
 
 const BorderWidthNumericInput = styled(NumericInput)`
   border-radius: 0px;
   margin-left: -1px;
+  width: ${({ locked }) => (locked ? 'auto' : '25%')};
+`;
 
-  ${({ locked, border }) =>
-    !locked &&
-    `
-    width: 25%;
-    svg {
-      width: 10px;
-      height: 10px;
-      margin-right: -14px;
-      ${border === 'right' ? 'transform: scaleX(-1);' : ''}
-      ${border === 'bottom' ? 'transform: scaleY(-1);' : ''}
-    }
-  `}
+const BorderTop = styled(Icons.BorderTop)`
+  ${iconCss}
+`;
+
+const BorderBottom = styled(Icons.BorderTop)`
+  ${iconCss}
+  transform: scaleY(-1);
+`;
+
+const BorderLeft = styled(Icons.BorderLeft)`
+  ${iconCss}
+`;
+
+const BorderRight = styled(Icons.BorderLeft)`
+  ${iconCss}
+  transform: scaleX(-1);
 `;
 
 const styleOverrideTopLeft = css`
@@ -91,7 +104,6 @@ const ToggleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 8px;
 `;
 
 function WidthControls({ selectedElements, pushUpdateForObject }) {
@@ -139,11 +151,11 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
     };
   }, []);
   return (
-    <BorderInputsGrid locked={lockBorder}>
+    <BorderInputsFlexContainer locked={lockBorder}>
       <BorderInputsWrapper locked={lockBorder}>
         <BorderWidthNumericInput
           locked={lockBorder}
-          suffix={!lockBorder && <Icons.BorderLeft />}
+          suffix={!lockBorder && <BorderLeft />}
           value={border.left}
           aria-label={firstInputLabel}
           onChange={handleChange('left')}
@@ -155,31 +167,26 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
         {!lockBorder && (
           <>
             <BorderWidthNumericInput
-              suffix={<Icons.BorderTop />}
+              suffix={<BorderTop />}
               value={border.top}
               onChange={handleChange('top')}
               aria-label={__('Top border', 'web-stories')}
-              labelText={__('Top', 'web-stories')}
               containerStyleOverride={styleOverrideTopRight}
               {...getMixedValueProps(border.top)}
             />
             <BorderWidthNumericInput
-              border="right"
-              suffix={<Icons.BorderLeft />}
+              suffix={<BorderRight />}
               value={border.right}
               onChange={handleChange('right')}
               aria-label={__('Right border', 'web-stories')}
-              labelText={__('Right', 'web-stories')}
               containerStyleOverride={styleOverrideBottomLeft}
               {...getMixedValueProps(border.right)}
             />
             <BorderWidthNumericInput
-              border="bottom"
-              suffix={<Icons.BorderTop />}
+              suffix={<BorderBottom />}
               value={border.bottom}
               onChange={handleChange('bottom')}
               aria-label={__('Bottom border', 'web-stories')}
-              labelText={__('Bottom', 'web-stories')}
               containerStyleOverride={styleOverrideBottomRight}
               {...getMixedValueProps(border.bottom)}
             />
@@ -209,7 +216,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
           />
         </Tooltip>
       </ToggleWrapper>
-    </BorderInputsGrid>
+    </BorderInputsFlexContainer>
   );
 }
 
