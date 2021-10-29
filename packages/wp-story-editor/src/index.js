@@ -30,7 +30,6 @@ import './setLocaleData';
 /**
  * External dependencies
  */
-import { setLocaleData } from '@web-stories-wp/i18n';
 import StoryEditor from '@web-stories-wp/story-editor';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
@@ -62,10 +61,6 @@ const initialize = (id, config) => {
   setAppElement(appElement);
 
   updateSettings(config.locale);
-
-  for (const localeData of config.localeData || []) {
-    setLocaleData(localeData);
-  }
 
   initializeTracking('Editor');
 
