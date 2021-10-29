@@ -111,7 +111,7 @@ const defaultConfig = {
   storyId: 1,
   dashboardSettingsLink: '',
   // @todo WordPress specific page ( Must be optional ).
-  generalSettingsLink: 'https://example.org/wp-admin/options-general.php',
+  generalSettingsLink: '',
   cdnURL: 'https://wp.stories.google/static/main/',
   maxUpload: 314572800,
   capabilities: {

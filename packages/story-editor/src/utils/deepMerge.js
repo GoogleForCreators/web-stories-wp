@@ -13,15 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export default function deepMerge(object, source) {
+/**
+ * Deep merge objects.
+ *
+ * @param {Object} object object to override.
+ * @param {Object} source Source object.
+ * @return {Object}
+ */
+export default function deepMerge(object, source = {}) {
   Object.entries(source).forEach(([key, value]) => {
     if (value && 'object' === typeof value && !Array.isArray(value)) {
       if (!object[key]) {
-        object = { ...object, [key]: {} };
+        Object.assign(object, { [key]: {} });
       }
       deepMerge(object[key], value);
     } else {
-      object = { ...object, [key]: value };
+      Object.assign(object, { [key]: value });
     }
   });
 

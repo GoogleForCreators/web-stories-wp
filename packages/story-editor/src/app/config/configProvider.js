@@ -22,10 +22,13 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import deepMerge from '../../utils/deepMerge';
+import defaultConfig from '../../defaultConfig';
 import Context from './context';
 
 function ConfigProvider({ config, children }) {
-  return <Context.Provider value={config}>{children}</Context.Provider>;
+  const _config = deepMerge(defaultConfig, config);
+  return <Context.Provider value={_config}>{children}</Context.Provider>;
 }
 
 ConfigProvider.propTypes = {
