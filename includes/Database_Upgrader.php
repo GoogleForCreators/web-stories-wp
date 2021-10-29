@@ -80,6 +80,7 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 		'3.0.11' => Migrations\Add_Media_Source_Source_Image::class,
 		'3.0.12' => Migrations\Set_Legacy_Analytics_Usage_Flag::class,
 		'3.0.13' => Migrations\Add_Stories_Caps::class,
+		'3.0.14' => Migrations\Add_Media_Source_Page_Template::class,
 	];
 
 	/**
