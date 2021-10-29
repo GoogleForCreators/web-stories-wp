@@ -39,7 +39,6 @@ export const Wrapper = styled.div`
   height: 36px;
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.colors.standard.white};
-  /* Note: background to be updated in 9104 */
   background-color: ${({ theme }) => theme.colors.standard.white};
 `;
 
