@@ -145,6 +145,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
+      // navigate to Save current page a template button and save
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Enter');
 
@@ -155,7 +156,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       expect(
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBe(1);
-
+      // navigate to newly saved template and open delete dialog
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Space');
@@ -165,11 +166,13 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await waitFor(() => {
         expect(fixture.screen.getByRole('dialog')).toBeTruthy();
       });
-
+      // navigate to delete button, and delete newly created template
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Enter');
 
+      await fixture.events.sleep(500);
+      // there should no longer be any saved templates
       await waitFor(() => {
         expect(
           fixture.screen.getByRole('list', {
