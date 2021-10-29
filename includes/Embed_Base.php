@@ -72,9 +72,6 @@ abstract class Embed_Base extends Service_Base {
 		}
 
 		$this->assets->register_style_asset( self::SCRIPT_HANDLE );
-		// Set a style without a `src` allows us to just use the inline style below
-		// without needing an external stylesheet.
-		wp_styles()->registered[ self::SCRIPT_HANDLE ]->src = false;
 
 		if ( defined( 'AMPFORWP_VERSION' ) ) {
 			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
