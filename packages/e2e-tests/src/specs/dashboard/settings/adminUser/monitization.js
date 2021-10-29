@@ -25,15 +25,11 @@ import { clickButton, visitSettings } from '@web-stories-wp/e2e-test-utils';
 import { monetizationDropdownSelector } from '../../../../utils';
 
 describe('Admin User', () => {
-  beforeEach(async () => {
-    await visitSettings();
-  });
-
-  afterEach(async () => {
-    await visitSettings();
-  });
-
   it('should let me see and update all settings', async () => {
+    await visitSettings();
+
+    await expect(page).toMatchElement(monetizationDropdownSelector);
+
     // verify that the monetization settings can be changed
     await clickButton(monetizationDropdownSelector, {
       text: 'None',

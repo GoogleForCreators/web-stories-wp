@@ -29,7 +29,6 @@ import './style.css'; // This way the general dashboard styles are loaded before
 import Dashboard from '@web-stories-wp/dashboard';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
-import { FlagsProvider } from 'flagged';
 import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
 
@@ -46,9 +45,8 @@ import { Layout } from './components';
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
- * @param {Object} flags    The flags for the application.
  */
-const initialize = async (id, config, flags) => {
+const initialize = async (id, config) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
@@ -66,21 +64,19 @@ const initialize = async (id, config, flags) => {
   };
 
   render(
-    <FlagsProvider features={flags}>
-      <StrictMode>
-        <Dashboard config={dashboardConfig}>
-          <GlobalStyle />
-          <Layout />
-        </Dashboard>
-      </StrictMode>
-    </FlagsProvider>,
+    <StrictMode>
+      <Dashboard config={dashboardConfig}>
+        <GlobalStyle />
+        <Layout />
+      </Dashboard>
+    </StrictMode>,
     appElement
   );
 };
 
 const initializeWithConfig = () => {
-  const { id, config, flags } = window.webStoriesDashboardSettings;
-  initialize(id, config, flags);
+  const { id, config } = window.webStoriesDashboardSettings;
+  initialize(id, config);
 };
 
 if ('loading' === document.readyState) {

@@ -215,8 +215,6 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
         (p) => p.pageTemplateType === 'cover'
       );
       expectPageTemplateEqual(currentPage, coverPage);
-
-      await fixture.snapshot('applied page template');
     });
   });
 
@@ -351,10 +349,15 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Enter');
 
-      const list = fixture.editor.getByRole('list', {
-        name: 'Page Template Options',
+      await fixture.events.sleep(500);
+
+      await waitFor(() => {
+        expect(
+          fixture.screen.getByRole('list', {
+            name: 'Page Template Options',
+          }).children.length
+        ).toBe(0);
       });
-      expect(list.children.length).toBe(0);
     });
   });
 });

@@ -20,7 +20,6 @@
 import * as React from 'react';
 const { useCallback, useState, useMemo, forwardRef } = React;
 
-import { FlagsProvider } from 'flagged';
 import {
   configure,
   render,
@@ -123,6 +122,7 @@ const DEFAULT_CONFIG = {
     timezone: 'America/New_York',
     weekStartsOn: 0,
   },
+  flags: {},
   MediaUpload,
 };
 
@@ -199,14 +199,12 @@ export class Fixture {
 
     const panels = [
       'animation',
-      'borderRadius',
       'borderStyle',
       'captions',
       'globalStoryStyles',
       'colorPresets',
       'filter',
       'imageAccessibility',
-      'layerStyle',
       'link',
       'pageAttachment',
       'pageBackground',
@@ -305,7 +303,8 @@ export class Fixture {
    * @param {Object} flags Flags.
    */
   setFlags(flags) {
-    this._flags = { ...flags };
+    this._flags = { ...this._config.flags, ...flags };
+    this._config.flags = this._flags;
   }
 
   setConfig(config) {
@@ -333,11 +332,9 @@ export class Fixture {
     setAppElement(root);
 
     const { container, getByRole } = render(
-      <FlagsProvider features={this._flags}>
-        <StoryEditor key={Math.random()} config={this._config}>
-          <Layout header={<HeaderLayout />} />
-        </StoryEditor>
-      </FlagsProvider>,
+      <StoryEditor key={Math.random()} config={this._config}>
+        <Layout header={<HeaderLayout />} />
+      </StoryEditor>,
       {
         container: root,
       }
