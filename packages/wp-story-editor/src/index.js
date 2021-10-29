@@ -29,7 +29,6 @@ import './style.css'; // This way the general editor styles are loaded before al
 import StoryEditor from '@web-stories-wp/story-editor';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
-import { FlagsProvider } from 'flagged';
 import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
 
@@ -50,9 +49,8 @@ import getApiCallbacks from './api/utils/getApiCallbacks';
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
- * @param {Object} flags    The flags for the application.
  */
-const initialize = (id, config, flags) => {
+const initialize = (id, config) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
@@ -69,23 +67,21 @@ const initialize = (id, config, flags) => {
   };
 
   render(
-    <FlagsProvider features={flags}>
-      <StrictMode>
-        <StoryEditor config={editorConfig}>
-          <Layout />
-          <PostPublishDialog />
-          <StatusCheck />
-          <PostLock />
-        </StoryEditor>
-      </StrictMode>
-    </FlagsProvider>,
+    <StrictMode>
+      <StoryEditor config={editorConfig}>
+        <Layout />
+        <PostPublishDialog />
+        <StatusCheck />
+        <PostLock />
+      </StoryEditor>
+    </StrictMode>,
     appElement
   );
 };
 
 const initializeWithConfig = () => {
-  const { id, config, flags } = window.webStoriesEditorSettings;
-  initialize(id, config, flags);
+  const { id, config } = window.webStoriesEditorSettings;
+  initialize(id, config);
 };
 
 if ('loading' === document.readyState) {

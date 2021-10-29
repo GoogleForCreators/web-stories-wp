@@ -52,7 +52,7 @@ describe('Autoplay video', () => {
 
   it('should autoplay on insert and on drop', async () => {
     const video = Array.from(mediaPane.querySelectorAll('video')).filter(
-      (el) => el.ariaLabel === 'ranger9'
+      (el) => el.title === 'ranger9'
     );
     await clickOnTarget(video[0]);
 

@@ -26,6 +26,7 @@ import {
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -42,6 +43,8 @@ import {
 } from './constants';
 import SearchInput from './input';
 import useSearch from './useSearch';
+
+const SearchInputWrapper = styled.div``;
 
 /**
  *
@@ -89,6 +92,7 @@ export const Search = ({
   const clearId = useMemo(() => `clear-button-${uuidv4()}`, []);
 
   const inputRef = useRef();
+  const inputWrapperRef = useRef();
 
   const {
     activeOption,
@@ -101,11 +105,10 @@ export const Search = ({
     options,
     selectedValue,
     handleSearchValueChange,
-    inputRef,
   });
 
   const isMenuHidden = useMemo(
-    () => disabled || inputState?.value?.length === 0,
+    () => Boolean(disabled || inputState?.value?.length === 0),
     [disabled, inputState]
   );
 
@@ -174,7 +177,7 @@ export const Search = ({
   );
 
   const handleClearInput = useCallback(() => {
-    inputState.set('');
+    inputState.set(undefined);
     onMenuItemClick?.(null, { label: '', value: '' });
     handleReturnToInput();
   }, [handleReturnToInput, inputState, onMenuItemClick]);
@@ -189,22 +192,12 @@ export const Search = ({
     [isMenuFocused]
   );
 
-  const trimInputState = useCallback(() => {
-    if (
-      inputState?.value &&
-      inputState.value.length !== inputState.value.trim().length
-    ) {
-      inputState.set((prevInputVal) => prevInputVal.trim());
-    }
-  }, [inputState]);
-
   const handleEndSearch = useCallback(() => {
-    trimInputState();
     if (isMenuHidden || inputState.value?.trim().length === 0) {
       isMenuFocused.set(false);
       isOpen.set(false);
     }
-  }, [inputState, isMenuFocused, isMenuHidden, isOpen, trimInputState]);
+  }, [inputState, isMenuFocused, isMenuHidden, isOpen]);
 
   const handleInputKeyPress = useCallback(
     (event) => {
@@ -214,7 +207,7 @@ export const Search = ({
           isMenuFocused.set(false);
         }
       } else if (key === 'Tab') {
-        handleEndSearch();
+        handleEndSearch(event);
       } else if (key === 'ArrowDown') {
         focusSentToList();
       } else if (key === 'Enter') {
@@ -233,7 +226,10 @@ export const Search = ({
     ]
   );
 
-  useFocusOut(inputRef, handleEndSearch, [handleEndSearch]);
+  // By using inputWrapperRef instead of inputRef we ensure that this isn't triggered
+  // when clicking on the search input's "Clear" button.
+  // It will still trigger when actually clicking on an option within the Popup.
+  useFocusOut(inputWrapperRef, handleEndSearch, [handleEndSearch]);
 
   return (
     <DropDownContainer>
@@ -247,28 +243,30 @@ export const Search = ({
           {label}
         </Label>
       )}
-      <SearchInput
-        // Passed through to input
-        aria-label={ariaInputLabel}
-        hasError={hasError}
-        id={inputId}
-        onChange={handleInputChange}
-        onClick={handleInputClick}
-        onFocus={handleInputFocus}
-        onKeyDown={handleInputKeyPress}
-        placeholder={placeholder}
-        // Used within SearchInput
-        ariaClearLabel={ariaClearLabel}
-        clearId={clearId}
-        disabled={disabled}
-        handleClearInput={handleClearInput}
-        handleTabClear={handleTabClear}
-        inputValue={inputState?.value || ''}
-        isOpen={isOpen?.value}
-        listId={listId}
-        ref={inputRef}
-        {...rest}
-      />
+      <SearchInputWrapper ref={inputWrapperRef}>
+        <SearchInput
+          // Passed through to input
+          aria-label={ariaInputLabel}
+          hasError={hasError}
+          id={inputId}
+          onChange={handleInputChange}
+          onClick={handleInputClick}
+          onFocus={handleInputFocus}
+          onKeyDown={handleInputKeyPress}
+          placeholder={placeholder}
+          // Used within SearchInput
+          ariaClearLabel={ariaClearLabel}
+          clearId={clearId}
+          disabled={disabled}
+          handleClearInput={handleClearInput}
+          handleTabClear={handleTabClear}
+          inputValue={inputState?.value || ''}
+          isOpen={isOpen?.value}
+          listId={listId}
+          ref={inputRef}
+          {...rest}
+        />
+      </SearchInputWrapper>
 
       {!isMenuHidden && (
         <Popup
