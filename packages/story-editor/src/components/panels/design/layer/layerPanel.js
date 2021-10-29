@@ -24,12 +24,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {
-  MAX_HEIGHT_DEFAULT,
-  Panel,
-  PanelTitle,
-  PanelContent,
-} from '../../panel';
+import { Panel, PanelTitle, PanelContent } from '../../panel';
+import useInspector from '../../../inspector/useInspector';
 import LayerList from './layerList';
 import useLayers from './useLayers';
 
@@ -56,6 +52,14 @@ const Divider = styled.div`
 function LayerPanel() {
   const layers = useLayers();
 
+  const {
+    state: { inspectorContentHeight },
+  } = useInspector();
+
+  // We want the max height to fill the space underneath the document/design tab bar.
+  // Since the document/design tab bar is 50px subtract that from the full height of the inspector.
+  const maxHeight = inspectorContentHeight - 50;
+
   const initialHeight = useMemo(() => Math.round(window.innerHeight / 4), []);
 
   return (
@@ -72,7 +76,7 @@ function LayerPanel() {
           isSecondary
           isResizable
           count={layers?.length}
-          maxHeight={MAX_HEIGHT_DEFAULT}
+          maxHeight={maxHeight}
         >
           {__('Layers', 'web-stories')}
         </StyledPanelTitle>
