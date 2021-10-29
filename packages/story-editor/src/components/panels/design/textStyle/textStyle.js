@@ -19,18 +19,8 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import { useState } from '@web-stories-wp/react';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  Icons,
-  Text,
-  THEME_CONSTANTS,
-  themeHelpers,
-} from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
-import { trackEvent } from '@web-stories-wp/tracking';
 import PropTypes from 'prop-types';
 
 /**
@@ -39,16 +29,14 @@ import PropTypes from 'prop-types';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 import { styles, useHighlights, states } from '../../../../app/highlights';
 import { usePresubmitHandler } from '../../../form';
-import PanelTitle from '../../panel/shared/title';
 import PanelContent from '../../panel/shared/content';
 import Panel from '../../panel/panel';
-import Tooltip from '../../../tooltip';
-import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
 import StyleControls from './style';
 import ColorControls from './color';
 import FontControls from './font';
 import BackgroundColorControls from './backgroundColor';
 import PaddingControls from './padding';
+import PanelHeader from './panelHeader';
 
 const SubSection = styled.section`
   border-top: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
@@ -58,18 +46,7 @@ const SubHeading = styled(Text)`
   margin: 14px 0;
 `;
 
-const AutoStyleButton = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.SQUARE,
-  type: BUTTON_TYPES.TERTIARY,
-  size: BUTTON_SIZES.SMALL,
-})`
-  margin-right: 4px;
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(theme.colors.border.focus, '#1d1f20')};
-`;
-
 function StylePanel(props) {
-  const { selectedElements, pushUpdate } = props;
   // use highlights to update panel styles
   // but don't dynamically adjust the `isPersistable` prop on `SimplePanel`
   // the textStyle panel automatically opens already whenever a text element is selected
@@ -85,36 +62,9 @@ function StylePanel(props) {
 
   const [fontsFocused, setFontsFocused] = useState(false);
 
-  const applyTextAutoStyle = useApplyTextAutoStyle(
-    selectedElements[0],
-    (textProps) => {
-      pushUpdate(textProps, true);
-      trackEvent('auto_style_text');
-    }
-  );
-
-  const getActions = () => {
-    const isCollapsed = false; // @todo Get correct.
-    if (isCollapsed) {
-      return null;
-    }
-    return (
-      <Tooltip title={__('Adaptive text colors', 'web-stories')}>
-        <AutoStyleButton
-          aria-label={__('Adaptive text colors', 'web-stories')}
-          onClick={applyTextAutoStyle}
-          disabled={selectedElements?.length > 1}
-        >
-          <Icons.ColorBucket />
-        </AutoStyleButton>
-      </Tooltip>
-    );
-  };
-
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
-  const panelTitle = __('Text', 'web-stories');
   return (
     <Panel
       name="textStyle"
@@ -125,9 +75,7 @@ function StylePanel(props) {
       onAnimationEnd={() => resetHighlight()}
       isPersistable={false}
     >
-      <PanelTitle ariaLabel={panelTitle} secondaryAction={getActions()}>
-        {panelTitle}
-      </PanelTitle>
+      <PanelHeader {...props} />
       <PanelContent>
         <FontControls
           {...props}
