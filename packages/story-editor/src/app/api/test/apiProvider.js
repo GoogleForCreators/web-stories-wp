@@ -26,9 +26,6 @@ import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 
-jest.mock('../utils/removeImagesFromPageTemplates');
-import removeImagesFromPageTemplates from '../utils/removeImagesFromPageTemplates';
-
 jest.mock('@web-stories-wp/templates');
 
 const renderApiProvider = ({ configValue }) => {
@@ -46,36 +43,9 @@ describe('APIProvider', () => {
     jest.clearAllMocks();
   });
 
-  it('getPageTemplates gets pageTemplates w/ cdnURL', async () => {
+  it('getPageTemplates gets pageTemplates with cdnURL', async () => {
     const pageTemplates = [{ id: 'templateid' }];
     getAllTemplatesMock.mockReturnValue(pageTemplates);
-
-    const cdnURL = 'https://test.url';
-    const { result } = renderApiProvider({
-      configValue: {
-        api: {},
-        apiCallbacks: {},
-        cdnURL,
-        postLock: { api: '' },
-      },
-    });
-
-    let pageTemplatesResult;
-    await act(async () => {
-      pageTemplatesResult = await result.current.actions.getPageTemplates({
-        showImages: true,
-      });
-    });
-
-    expect(removeImagesFromPageTemplates).toHaveBeenCalledWith(pageTemplates);
-    expect(pageTemplatesResult).toStrictEqual(pageTemplates);
-  });
-
-  it('getPageTemplates gets pageTemplates w/ cdnURL and replaces images', async () => {
-    const pageTemplates = [{ id: 'templateid' }];
-    const formattedPageTemplates = [{ id: 'templateid', result: 'formatted' }];
-    getAllTemplatesMock.mockReturnValue(pageTemplates);
-    removeImagesFromPageTemplates.mockReturnValue(formattedPageTemplates);
 
     const cdnURL = 'https://test.url';
     const { result } = renderApiProvider({
@@ -92,8 +62,7 @@ describe('APIProvider', () => {
       pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
-    expect(removeImagesFromPageTemplates).toHaveBeenCalledWith(pageTemplates);
-    expect(pageTemplatesResult).toStrictEqual(formattedPageTemplates);
+    expect(pageTemplatesResult).toStrictEqual(pageTemplates);
   });
 
   it('getPageTemplates should memoize the templates if they have already been fetched', async () => {
@@ -112,18 +81,14 @@ describe('APIProvider', () => {
 
     let pageTemplatesResult;
     await act(async () => {
-      pageTemplatesResult = await result.current.actions.getPageTemplates({
-        showImages: true,
-      });
+      pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
     expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
 
     await act(async () => {
-      pageTemplatesResult = await result.current.actions.getPageTemplates({
-        showImages: true,
-      });
+      pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
     expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);

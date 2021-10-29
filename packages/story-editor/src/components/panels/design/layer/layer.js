@@ -46,6 +46,7 @@ const ActionsContainer = styled.div`
   top: 0;
   right: 0;
   padding-right: 6px;
+  column-gap: 6px;
 
   --background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};
@@ -243,13 +244,21 @@ const LayerAction = styled(Button).attrs({
   }
 `;
 
+function preventReorder(e) {
+  e.stopPropagation();
+  e.preventDefault();
+}
+
 function Layer({ layer }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(layer.type);
   const { isSelected, handleClick } = useLayerSelection(layer);
-  const { currentPage, deleteElementById } = useStory((state) => ({
-    currentPage: state.state.currentPage,
-    deleteElementById: state.actions.deleteElementById,
-  }));
+  const { currentPage, deleteElementById, duplicateElementById } = useStory(
+    (state) => ({
+      currentPage: state.state.currentPage,
+      deleteElementById: state.actions.deleteElementById,
+      duplicateElementById: state.actions.duplicateElementById,
+    })
+  );
   const isBackground = currentPage.elements[0].id === layer.id;
   const layerId = `layer-${layer.id}`;
 
@@ -284,15 +293,36 @@ function Layer({ layer }) {
             <Icons.LockClosed />
           </LayerAction>
         ) : (
-          <Tooltip title={__('Delete Layer', 'web-stories')} hasTail isDelayed>
-            <LayerAction
-              aria-label={__('Delete', 'web-stories')}
-              aria-describedby={layerId}
-              onClick={() => deleteElementById({ elementId: layer.id })}
+          <>
+            <Tooltip
+              title={__('Delete Layer', 'web-stories')}
+              hasTail
+              isDelayed
             >
-              <Icons.Trash />
-            </LayerAction>
-          </Tooltip>
+              <LayerAction
+                aria-label={__('Delete', 'web-stories')}
+                aria-describedby={layerId}
+                onPointerDown={preventReorder}
+                onClick={() => deleteElementById({ elementId: layer.id })}
+              >
+                <Icons.Trash />
+              </LayerAction>
+            </Tooltip>
+            <Tooltip
+              title={__('Duplicate Layer', 'web-stories')}
+              hasTail
+              isDelayed
+            >
+              <LayerAction
+                aria-label={__('Duplicate', 'web-stories')}
+                aria-describedby={layerId}
+                onPointerDown={preventReorder}
+                onClick={() => duplicateElementById({ elementId: layer.id })}
+              >
+                <Icons.PagePlus />
+              </LayerAction>
+            </Tooltip>
+          </>
         )}
       </ActionsContainer>
     </LayerContainer>

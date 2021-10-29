@@ -30,6 +30,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
+  LoadingSpinner,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -38,15 +39,18 @@ import {
 import { useAPI } from '../../../../app/api';
 import Dialog from '../../../dialog';
 import useLibrary from '../../useLibrary';
+import { LoadingContainer } from '../shared';
 import TemplateList from './templateList';
 
 const Wrapper = styled.div`
+  height: 100%;
   padding-top: 5px;
   overflow-y: scroll;
   overflow-x: hidden;
+  min-height: 96px;
 `;
 
-function SavedTemplates({ pageSize, loadTemplates, ...rest }) {
+function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
   const {
     actions: { deletePageTemplate },
   } = useAPI();
@@ -74,6 +78,7 @@ function SavedTemplates({ pageSize, loadTemplates, ...rest }) {
     if (!nextTemplatesToFetch) {
       return;
     }
+
     loadTemplates();
   }, [nextTemplatesToFetch, loadTemplates]);
 
@@ -116,7 +121,7 @@ function SavedTemplates({ pageSize, loadTemplates, ...rest }) {
 
   return (
     <Wrapper ref={ref}>
-      {ref.current && (
+      {!isLoading && ref.current ? (
         <TemplateList
           parentRef={ref}
           pageSize={pageSize}
@@ -125,6 +130,10 @@ function SavedTemplates({ pageSize, loadTemplates, ...rest }) {
           fetchTemplates={fetchTemplates}
           {...rest}
         />
+      ) : (
+        <LoadingContainer>
+          <LoadingSpinner animationSize={64} numCircles={8} />
+        </LoadingContainer>
       )}
       {showDialog && (
         <Dialog
@@ -150,6 +159,7 @@ function SavedTemplates({ pageSize, loadTemplates, ...rest }) {
 SavedTemplates.propTypes = {
   pageSize: PropTypes.object.isRequired,
   loadTemplates: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default SavedTemplates;

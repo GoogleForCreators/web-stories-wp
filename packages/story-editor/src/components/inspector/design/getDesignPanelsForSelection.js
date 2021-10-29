@@ -20,13 +20,11 @@
 import { elementTypes } from '../../../elements';
 import {
   AnimationPanel,
-  BorderRadiusPanel,
   BorderStylePanel,
   CaptionsPanel,
   FilterPanel,
   ImageAccessibilityPanel,
   LinkPanel,
-  LayerStylePanel,
   PageAttachmentPanel,
   PageBackgroundPanel,
   ShapeStylePanel,
@@ -126,8 +124,6 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: ColorPresetPanel };
         case PanelTypes.STYLE_PRESETS:
           return { type, Panel: StylePresetPanel };
-        case PanelTypes.LAYER_STYLE:
-          return { type, Panel: LayerStylePanel };
         case PanelTypes.FILTER:
           return { type, Panel: FilterPanel };
         case PanelTypes.SIZE_POSITION:
@@ -140,8 +136,6 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: TextBoxPanel };
         case PanelTypes.SHAPE_STYLE:
           return { type, Panel: ShapeStylePanel };
-        case PanelTypes.BORDER_RADIUS:
-          return { type, Panel: BorderRadiusPanel };
         case PanelTypes.BORDER:
           return { type, Panel: BorderStylePanel };
         case PanelTypes.VIDEO_OPTIONS:

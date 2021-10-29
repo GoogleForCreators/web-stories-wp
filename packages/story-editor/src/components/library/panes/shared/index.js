@@ -43,6 +43,12 @@ function getTabId(tab) {
   return `library-tab-${tab}`;
 }
 
-export { Pane, getPaneId, getTabId };
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+`;
+
+export { Pane, getPaneId, getTabId, LoadingContainer };
 
 export { default as ChipGroup } from './chipGroup';

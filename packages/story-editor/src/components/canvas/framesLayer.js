@@ -27,15 +27,19 @@ import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
  * Internal dependencies
  */
 import { DESIGN_SPACE_MARGIN } from '../../constants';
-import { useStory, useCanvas, useLayout, useTransform } from '../../app';
+import {
+  useStory,
+  useCanvas,
+  useLayout,
+  useTransform,
+  useRightClickMenu,
+} from '../../app';
 import useCanvasKeys from '../../app/canvas/useCanvasKeys';
-import { useRightClickMenu } from '../../app/rightClickMenu';
 import PageMenu from './pagemenu';
 import { Layer, MenuArea, NavNextArea, NavPrevArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import PageNav from './pagenav';
-import RightClickMenu from './rightClickMenu';
 
 const FramesPageArea = styled(PageArea)`
   pointer-events: initial;
@@ -66,14 +70,15 @@ function FramesLayer() {
       setDesignSpaceGuideline,
     })
   );
-  const { rightClickAreaRef } = useRightClickMenu();
 
   const { isAnythingTransforming } = useTransform((state) => ({
     isAnythingTransforming: state.state.isAnythingTransforming,
   }));
 
-  const ref = useRef(null);
-  useCanvasKeys(ref);
+  const framesLayerRef = useRef(null);
+  useCanvasKeys(framesLayerRef);
+
+  const { onOpenMenu } = useRightClickMenu();
 
   const { setScrollOffset } = useLayout(({ actions: { setScrollOffset } }) => ({
     setScrollOffset,
@@ -97,7 +102,7 @@ function FramesLayer() {
 
   return (
     <Layer
-      ref={ref}
+      ref={framesLayerRef}
       data-testid="FramesLayer"
       pointerEvents="initial"
       // Use `-1` to ensure that there's a default target to focus if
@@ -107,7 +112,7 @@ function FramesLayer() {
       aria-label={__('Frames layer', 'web-stories')}
     >
       {!isAnimating && (
-        <FramesPageArea ref={rightClickAreaRef} onScroll={onScroll}>
+        <FramesPageArea onContextMenu={onOpenMenu} onScroll={onScroll}>
           {currentPage &&
             currentPage.elements.map((element) => {
               return <FrameElement key={element.id} element={element} />;
@@ -118,7 +123,6 @@ function FramesLayer() {
           />
         </FramesPageArea>
       )}
-      <RightClickMenu />
       <MenuArea
         pointerEvents="initial"
         // Make its own stacking context.

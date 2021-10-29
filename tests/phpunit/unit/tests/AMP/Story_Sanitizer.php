@@ -421,4 +421,39 @@ class Story_Sanitizer extends TestCase {
 
 		$this->assertStringContainsString( '<amp-story-page-outlink layout="nodisplay">', $actual );
 	}
+
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_amp_story_page_outlink
+	 */
+	public function test_sanitize_amp_story_page_outlink_element_order() {
+		$source = '<html><head></head><body><amp-story><amp-story-page><amp-story-page-outlink layout="nodisplay" cta-image=""><a href="https://www.bonappeteach.com/smoked-apple-cider/" target="_blank" rel="noreferrer">Get The Recipe!</a></amp-story-page-outlink><amp-story-grid-layer></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertStringContainsString( '</amp-story-page-outlink></amp-story-page>', $actual );
+	}
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::remove_page_template_placeholder_images
+	 */
+	public function test_remove_page_template_placeholder_images() {
+		$source = '<html><head></head><body><amp-img src="https://example.com/wp-content/plugins/web-stories/assets/images/editor/grid-placeholder.png" width="100" height="100"></amp-img></body></html>';
+
+		$args = [
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertStringNotContainsString( 'amp-img', $actual );
+	}
 }

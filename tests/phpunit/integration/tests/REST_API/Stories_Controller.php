@@ -19,7 +19,7 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use DateTime;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
+use Google\Web_Stories\Tests\Integration\RestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
 
@@ -30,7 +30,7 @@ use WP_REST_Request;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Controller
  */
-class Stories_Controller extends Test_REST_TestCase {
+class Stories_Controller extends RestTestCase {
 
 	protected $server;
 

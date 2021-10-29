@@ -101,6 +101,7 @@ trait Sanitization_Utils {
 	 * Sanitizes <amp-story-page-outlink> elements to ensure they're always valid.
 	 *
 	 * Removes empty `cta-image` attributes.
+	 * Ensures the element is always the last child of <amp-story-page>.
 	 *
 	 * @since 1.13.0
 	 *
@@ -118,6 +119,13 @@ trait Sanitization_Utils {
 		foreach ( $outlink_elements as $element ) {
 			if ( ! $element->getAttribute( 'cta-image' ) ) {
 				$element->removeAttribute( 'cta-image' );
+			}
+
+			$amp_story_page = $element->parentNode;
+
+			if ( $amp_story_page && $element !== $amp_story_page->lastChild ) {
+				$amp_story_page->removeChild( $element );
+				$amp_story_page->appendChild( $element );
 			}
 		}
 	}
@@ -411,6 +419,35 @@ trait Sanitization_Utils {
 			}
 
 			$image->setAttribute( 'srcset', implode( ', ', $entries_by_widths ) );
+		}
+	}
+
+	/**
+	 * Remove images referencing the grid-placeholder.png file which has since been removed.
+	 *
+	 * @link https://github.com/google/web-stories-wp/issues/9530
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @return void
+	 */
+	private function remove_page_template_placeholder_images( &$document ) {
+		$placeholder_img = 'assets/images/editor/grid-placeholder.png';
+
+		/**
+		 * List of <amp-img> elements.
+		 *
+		 * @var DOMElement[] $images Image elements.
+		 */
+		$images = $document->body->getElementsByTagName( 'amp-img' );
+
+		foreach ( $images as $image ) {
+			$src = $image->getAttribute( 'src' );
+
+			if ( $image->parentNode && false !== strpos( $src, $placeholder_img ) ) {
+				$image->parentNode->removeChild( $image );
+			}
 		}
 	}
 }

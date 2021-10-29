@@ -45,7 +45,7 @@
   width: 40px;
   z-index: 1;
   border: none;
-  background: none;
+  background: none !important;
   border-radius: 0;
 }
 

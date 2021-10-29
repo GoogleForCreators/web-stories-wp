@@ -147,7 +147,7 @@ export const StoryListItem = ({
                 onFocus={onFocusSelectAll}
                 onBlur={onBlurDeselectAll}
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-                as="h4"
+                as="h3"
                 aria-label={
                   isLocked
                     ? sprintf(
@@ -168,17 +168,17 @@ export const StoryListItem = ({
       </TableCell>
       <TableCell>
         <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {story.author || '—'}
+          {story.author?.name || '—'}
         </Text>
       </TableCell>
       <TableCell>
         <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {getRelativeDisplayDate(story.created_gmt)}
+          {getRelativeDisplayDate(story.createdGmt)}
         </Text>
       </TableCell>
       <TableCell>
         <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {getRelativeDisplayDate(story.modified_gmt)}
+          {getRelativeDisplayDate(story.modifiedGmt)}
         </Text>
       </TableCell>
       {storyStatus !== STORY_STATUS.DRAFT && (
