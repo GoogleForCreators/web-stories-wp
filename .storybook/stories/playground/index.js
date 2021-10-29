@@ -20,6 +20,11 @@
 import StoryEditor, { InterfaceSkeleton } from '@web-stories-wp/story-editor';
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { getDummyMedia } from './getDummyMedia';
+
 export default {
   title: 'Playground/Stories Editor',
 };
@@ -62,6 +67,8 @@ const apiCallbacksNames = [
 const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   let response;
 
+  const dummyMedia = getDummyMedia();
+
   switch (name) {
     case 'getCurrentUser':
       response = { id: 1 };
@@ -77,6 +84,15 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
           textStyles: [],
         },
         date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
+      };
+      break;
+    case 'getMedia':
+      response = {
+        data: dummyMedia,
+        headers: {
+          totalItems: dummyMedia.length,
+          totalPages: 1,
+        },
       };
       break;
     case 'getPublisherLogos':
