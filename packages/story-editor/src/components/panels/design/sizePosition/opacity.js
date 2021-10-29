@@ -18,15 +18,13 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, _x } from '@web-stories-wp/i18n';
-import { NumericInput } from '@web-stories-wp/design-system';
+import { Icons, NumericInput } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { Row } from '../../../form';
-import { SimplePanel } from '../../panel';
 import { getCommonValue, inputContainerStyleOverride } from '../../shared';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
@@ -37,15 +35,11 @@ const MIN_MAX = {
   },
 };
 
-const ShortRow = styled(Row)`
-  width: 128px;
-`;
-
 function defaultOpacity({ opacity }) {
   return typeof opacity !== 'undefined' ? opacity : MIN_MAX.OPACITY.MAX;
 }
 
-function LayerStylePanel({ selectedElements, pushUpdate }) {
+function OpacityControls({ selectedElements, pushUpdate }) {
   const opacity = getCommonValue(selectedElements, defaultOpacity);
 
   const handleChange = useCallback(
@@ -54,28 +48,24 @@ function LayerStylePanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <SimplePanel name="layerStyle" title={__('Layer', 'web-stories')}>
-      <ShortRow>
-        <NumericInput
-          suffix={__('Opacity', 'web-stories')}
-          unit={_x('%', 'Percentage', 'web-stories')}
-          value={opacity}
-          onChange={handleChange}
-          min={MIN_MAX.OPACITY.MIN}
-          max={MIN_MAX.OPACITY.MAX}
-          aria-label={__('Opacity in percent', 'web-stories')}
-          placeholder={opacity === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''}
-          isIndeterminate={opacity === MULTIPLE_VALUE}
-          containerStyleOverride={inputContainerStyleOverride}
-        />
-      </ShortRow>
-    </SimplePanel>
+    <NumericInput
+      suffix={<Icons.ColorDrop />}
+      unit={_x('%', 'Percentage', 'web-stories')}
+      value={opacity}
+      onChange={handleChange}
+      min={MIN_MAX.OPACITY.MIN}
+      max={MIN_MAX.OPACITY.MAX}
+      aria-label={__('Opacity in percent', 'web-stories')}
+      placeholder={opacity === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''}
+      isIndeterminate={opacity === MULTIPLE_VALUE}
+      containerStyleOverride={inputContainerStyleOverride}
+    />
   );
 }
 
-LayerStylePanel.propTypes = {
+OpacityControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
 };
 
-export default LayerStylePanel;
+export default OpacityControls;
