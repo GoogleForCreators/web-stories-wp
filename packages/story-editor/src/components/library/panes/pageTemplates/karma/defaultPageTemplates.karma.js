@@ -61,7 +61,7 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
 
   describe('Filtering chips', () => {
     it('should show all filtering chips', async () => {
-      await fixture.editor.library.pageTemplatesTab.click();
+      await fixture.events.click(fixture.editor.library.pageTemplatesTab);
       await waitFor(() => expectAllTemplatesLoaded);
 
       const filteringList = fixture.screen.getByRole('listbox', {
