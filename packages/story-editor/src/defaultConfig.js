@@ -126,6 +126,7 @@ const defaultConfig = {
   ffmpegCoreUrl:
     'https://wp.stories.google/static/main/js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
   apiCallbacks: {},
+  MediaUpload: () => null,
 };
 
 export default defaultConfig;
