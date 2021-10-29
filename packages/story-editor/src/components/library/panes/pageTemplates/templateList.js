@@ -24,6 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { UnitsProvider } from '@web-stories-wp/units';
 import { useSnackbar } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -164,6 +165,9 @@ function TemplateList({
                 return null;
               }
               const isActive = activeGridItemId === page.id && isGridFocused;
+
+              // TODO: Display images if available.
+              // Don't forget width & height attributes of course.
 
               return (
                 <PageTemplate

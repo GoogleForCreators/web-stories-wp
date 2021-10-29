@@ -19,9 +19,9 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { getCanvasBlob } from '@web-stories-wp/media';
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import {
   BUTTON_TRANSITION_TIMING,
   THEME_CONSTANTS,
@@ -36,6 +36,8 @@ import { useAPI } from '../../../../app/api';
 import { useStory } from '../../../../app/story';
 import { focusStyle } from '../../../panels/shared';
 import isDefaultPage from '../../../../utils/isDefaultPage';
+import { useCanvas, useConfig } from '../../../../app';
+import { useUploader } from '../../../../app/uploader';
 import { ReactComponent as Icon } from './images/illustration.svg';
 
 const StyledText = styled(Text)`
@@ -97,12 +99,22 @@ const SaveButton = styled.button`
 
 function TemplateSave({ setShowDefaultTemplates, updateList }) {
   const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
+  const {
     actions: { addPageTemplate },
   } = useAPI();
+  const {
+    actions: { uploadFile },
+  } = useUploader();
   const { showSnackbar } = useSnackbar();
 
   const { currentPage } = useStory(({ state: { currentPage } }) => ({
     currentPage,
+  }));
+
+  const { fullbleedContainer } = useCanvas((state) => ({
+    fullbleedContainer: state.state.fullbleedContainer,
   }));
 
   const isDisabled = useMemo(
@@ -110,12 +122,43 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
     [currentPage]
   );
   const handleSaveTemplate = useCallback(
-    (e) => {
+    async (e) => {
       e.preventDefault();
+
       if (isDisabled) {
         return;
       }
-      addPageTemplate({ ...currentPage, id: uuidv4(), title: null })
+
+      let imageId;
+
+      if (hasUploadMediaAction) {
+        // TODO(#9574): Generate image using html-to-image here.
+
+        const htmlToImage = await import(
+          /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
+        );
+
+        // TODO: We need something more reliable than fullbleedContainer. What if the canvas is small or zoomed in?
+        // Need to render this ourselves probably.
+        // Maybe extract into reusable function.
+        const imageCanvas = await htmlToImage.toCanvas(fullbleedContainer);
+        const imageBlob = await getCanvasBlob(imageCanvas);
+
+        try {
+          const resource = await uploadFile(imageBlob, {
+            web_stories_media_source: 'page-template',
+          });
+          imageId = resource.id;
+        } catch (err) {
+          // Catch upload errors, e.g. if the file is too large,
+          // so that the page template can still be added, albeit without an image.
+        }
+      }
+
+      addPageTemplate({
+        story_data: { ...currentPage },
+        featured_media: imageId,
+      })
         .then((addedTemplate) => {
           updateList?.(addedTemplate);
           showSnackbar({
@@ -141,6 +184,8 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       setShowDefaultTemplates,
       showSnackbar,
       updateList,
+      fullbleedContainer,
+      hasUploadMediaAction,
     ]
   );
 
