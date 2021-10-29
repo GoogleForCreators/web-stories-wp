@@ -29,7 +29,6 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import useApi from '../app/api/useApi';
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
 import clamp from './clamp';
@@ -51,7 +50,6 @@ export default function useStoryView({
   const [authorFilterId, _setAuthorFilterId] = useState(null);
   const [queriedAuthors, setQueriedAuthors] = useState([]);
   const showStoriesWhileLoading = useRef(false);
-  const getAuthors = useApi(({ actions }) => actions.usersApi.getAuthors);
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
@@ -124,30 +122,6 @@ export default function useStoryView({
     _setAuthorFilterId((prevFilterId) => (prevFilterId === id ? null : id));
   }, []);
 
-  const queryAuthorsBySearch = useCallback(
-    (search) => {
-      return getAuthors(search).then((data) => {
-        const userData = data.map(({ id, name }) => ({
-          id,
-          name,
-        }));
-        setQueriedAuthors((exisitingUsers) => {
-          const exisitingUsersIds = exisitingUsers.map(({ id }) => id);
-          const newUsers = userData.filter(
-            (newUser) => !exisitingUsersIds.includes(newUser.id)
-          );
-          return [...exisitingUsers, ...newUsers];
-        });
-      });
-    },
-    [getAuthors]
-  );
-
-  // Fetch initial list of authors on mount
-  useEffect(() => {
-    queryAuthorsBySearch();
-  }, [queryAuthorsBySearch]);
-
   useEffect(() => {
     trackEvent('search', {
       search_type: 'dashboard_stories',
@@ -197,7 +171,7 @@ export default function useStoryView({
         filterId: authorFilterId,
         toggleFilterId: toggleAuthorFilterId,
         queriedAuthors,
-        queryAuthorsBySearch,
+        setQueriedAuthors,
       },
       showStoriesWhileLoading,
     }),
@@ -218,7 +192,7 @@ export default function useStoryView({
       authorFilterId,
       toggleAuthorFilterId,
       queriedAuthors,
-      queryAuthorsBySearch,
+      setQueriedAuthors,
     ]
   );
 }
@@ -238,7 +212,7 @@ export const AuthorPropTypes = PropTypes.shape({
       name: PropTypes.string,
     })
   ).isRequired,
-  queryAuthorsBySearch: PropTypes.func,
+  setQueriedAuthors: PropTypes.func,
 });
 
 export const FilterPropTypes = PropTypes.shape({

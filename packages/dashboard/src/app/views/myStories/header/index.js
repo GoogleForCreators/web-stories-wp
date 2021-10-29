@@ -71,6 +71,7 @@ function Header({
   totalStoriesByStatus,
   view,
   author,
+  queryAuthorsBySearch,
 }) {
   const {
     actions: { scrollToTop },
@@ -181,6 +182,7 @@ function Header({
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={onSortChange}
         author={author}
+        queryAuthorsBySearch={queryAuthorsBySearch}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
@@ -199,6 +201,7 @@ Header.propTypes = {
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
   author: AuthorPropTypes,
+  queryAuthorsBySearch: PropTypes.func,
 };
 
 export default memo(Header);

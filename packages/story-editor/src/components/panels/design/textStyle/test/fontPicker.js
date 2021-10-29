@@ -31,12 +31,10 @@ import FontContext from '../../../../../app/font/context';
 import { renderWithTheme } from '../../../../../testUtils';
 import fontsListResponse from './fontsResponse';
 
-jest.mock(
-  '../../../popup/index.js',
-  () =>
-    ({ children, isOpen }) =>
-      isOpen ? children : null
-);
+jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
+  Popup: ({ children, isOpen }) => (isOpen ? children : null),
+}));
 
 const fonts = fontsListResponse.map((font) => {
   return { ...font, id: font.name };

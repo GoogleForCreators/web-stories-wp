@@ -67,7 +67,6 @@ const defaultAuthor = {
   filterId: null,
   toggleFilterId: noop,
   queriedAuthors: [],
-  queryAuthorsBySearch: noop,
 };
 
 export default function BodyViewOptions({
@@ -82,6 +81,7 @@ export default function BodyViewOptions({
   sortDropdownAriaLabel,
   showAuthorDropdown = false,
   author = defaultAuthor,
+  queryAuthorsBySearch = noop,
 }) {
   return (
     <StandardViewContentGutter>
@@ -99,7 +99,7 @@ export default function BodyViewOptions({
                 searchResultsLabel={__('Search results', 'web-stories')}
                 aria-label={__('Filter stories by author', 'web-stories')}
                 onChange={author.toggleFilterId}
-                getOptionsByQuery={author.queryAuthorsBySearch}
+                getOptionsByQuery={queryAuthorsBySearch}
                 selectedId={author.filterId}
                 placeholder={__('Author', 'web-stories')}
                 primaryOptions={author.queriedAuthors}
@@ -149,4 +149,5 @@ BodyViewOptions.propTypes = {
   sortDropdownAriaLabel: PropTypes.string.isRequired,
   showAuthorDropdown: PropTypes.bool,
   author: AuthorPropTypes,
+  queryAuthorsBySearch: PropTypes.func,
 };

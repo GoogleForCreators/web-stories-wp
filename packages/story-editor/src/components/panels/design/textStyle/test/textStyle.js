@@ -41,8 +41,6 @@ jest.mock('@web-stories-wp/design-system', () => {
   // eslint-disable-next-line no-undef
   const React = require('@web-stories-wp/react');
   // eslint-disable-next-line no-undef
-  const DesignSystem = require('@web-stories-wp/design-system');
-  // eslint-disable-next-line no-undef
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
     mockControls[props['data-testid']] = props;
@@ -53,7 +51,7 @@ jest.mock('@web-stories-wp/design-system', () => {
   };
   return {
     __esModule: true,
-    ...DesignSystem,
+    ...jest.requireActual('@web-stories-wp/design-system'),
     Datalist: {
       DropDown: FakeControl,
     },
