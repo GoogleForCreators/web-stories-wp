@@ -25,7 +25,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
 
-describe('Size & Position Panel', () => {
+describe('Selection Panel', () => {
   let fixture;
   let panel;
 
