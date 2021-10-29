@@ -114,7 +114,7 @@ class Page_Template_Controller extends Stories_Base_Controller {
 	public function get_items_permissions_check( $request ) {
 		$ret = parent::get_items_permissions_check( $request );
 
-		if ( ! $ret || is_wp_error( $ret ) ) {
+		if ( is_wp_error( $ret ) ) {
 			return $ret;
 		}
 
@@ -142,7 +142,7 @@ class Page_Template_Controller extends Stories_Base_Controller {
 	public function get_item_permissions_check( $request ) {
 		$ret = parent::get_item_permissions_check( $request );
 
-		if ( ! $ret || is_wp_error( $ret ) ) {
+		if ( is_wp_error( $ret ) ) {
 			return $ret;
 		}
 

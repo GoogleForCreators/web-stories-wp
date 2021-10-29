@@ -186,6 +186,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       updateList,
       fullbleedContainer,
       hasUploadMediaAction,
+      uploadFile,
     ]
   );
 
