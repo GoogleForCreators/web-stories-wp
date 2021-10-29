@@ -109,8 +109,9 @@ const defaultConfig = {
     video: ['video/mp4', 'video/webm'],
   },
   storyId: 1,
+  // @todo https://github.com/google/web-stories-wp/pull/9569#discussion_r739066940
   dashboardSettingsLink: '',
-  // @todo WordPress specific page ( Must be optional ).
+  // @todo https://github.com/google/web-stories-wp/pull/9569#discussion_r739065299
   generalSettingsLink: '',
   cdnURL: 'https://wp.stories.google/static/main/',
   maxUpload: 314572800,

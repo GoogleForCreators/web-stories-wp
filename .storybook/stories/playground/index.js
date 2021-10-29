@@ -30,11 +30,7 @@ const AppContainer = styled.div`
   height: 100vh;
 `;
 
-const MediaUpload = ({ render }) => {
-  return render(() => {});
-};
-
-// @todo None of these should be required by default.
+// @todo None of these should be required by default, https://github.com/google/web-stories-wp/pull/9569#discussion_r738458801
 const apiCallbacksNames = [
   'getAuthors',
   'getStoryById',
@@ -71,7 +67,7 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
       response = { id: 1 };
       break;
     case 'getStoryById':
-    case 'getDemoStoryById':
+    case 'getDemoStoryById': // @todo https://github.com/google/web-stories-wp/pull/9569#discussion_r739076535
       response = {
         title: { raw: '' },
         excerpt: { raw: '' },
@@ -95,14 +91,7 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
 }, {});
 
 const config = {
-  storyId: 1,
-  // When capabilities.canManageSettings is false, dashboardSettingsLink wouldn't be used.
-  dashboardSettingsLink:
-    'https://example.org/web-stories-dashboard#/editor-settings',
-  // @todo WordPress specific page ( Must be optional ).
-  generalSettingsLink: 'https://example.org/wp-admin/options-general.php',
-  apiCallbacks, // @todo Should be optional.
-  MediaUpload,
+  apiCallbacks,
 };
 
 export const _default = () => (
