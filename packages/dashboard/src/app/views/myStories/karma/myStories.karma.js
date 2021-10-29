@@ -438,6 +438,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     });
 
     it('should filter by author', async () => {
+      expect(1).toBe(1);
       const originalStoryAuthorsNames = fixture.screen
         .getAllByTestId(/^story-grid-item/)
         .map((storyThumb) => storyThumb.innerText);

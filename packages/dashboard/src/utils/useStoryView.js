@@ -40,7 +40,6 @@ export default function useStoryView({
   isLoading = false,
   totalPages,
 }) {
-  const getAuthors = useApi(({ actions }) => actions.usersApi.getAuthors);
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
   const [filter, _setFilter] = useState(
@@ -52,6 +51,7 @@ export default function useStoryView({
   const [authorFilterId, _setAuthorFilterId] = useState(null);
   const [queriedAuthors, setQueriedAuthors] = useState([]);
   const showStoriesWhileLoading = useRef(false);
+  const getAuthors = useApi(({ actions }) => actions.usersApi.getAuthors);
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,

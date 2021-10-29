@@ -14,21 +14,30 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
- */
-import apiFetch from '@wordpress/api-fetch';
-
-/**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { useCallback } from '@web-stories-wp/react';
 
-export function getAuthors(config, search) {
-  return apiFetch({
-    path: addQueryArgs(config.api.users, {
-      per_page: '100',
-      who: 'authors',
-      search,
-    }),
-  });
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../config';
+
+function useUsersApi() {
+  const {
+    apiCallbacks: { getAuthors: getAuthorsCallback },
+  } = useConfig();
+
+  const getAuthors = useCallback(
+    (search) => getAuthorsCallback(search),
+    [getAuthorsCallback]
+  );
+
+  return {
+    api: {
+      getAuthors,
+    },
+  };
 }
+
+export default useUsersApi;

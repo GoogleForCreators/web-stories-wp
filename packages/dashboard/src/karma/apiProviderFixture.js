@@ -66,11 +66,7 @@ export default function ApiProviderFixture({ children }) {
   const usersApi = useMemo(
     () => ({
       getAuthors: () =>
-        Promise.resolve(
-          formattedStoriesArray.flatMap(
-            ({ originalStoryData }) => originalStoryData?._embedded.author
-          )
-        ),
+        Promise.resolve(formattedStoriesArray.map((story) => story.author)),
     }),
     []
   );
@@ -133,13 +129,7 @@ function fetchStories(
         statuses.includes(storyStatus) &&
         title.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    .filter(
-      (story) =>
-        typeof author !== 'number' ||
-        story.originalStoryData?._embedded.author
-          .map(({ id }) => id)
-          .includes(author)
-    )
+    .filter((story) => typeof author !== 'number' || story.author.id === author)
     .sort((a, b) => {
       let value;
       switch (sortOption) {
