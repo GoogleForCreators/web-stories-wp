@@ -29,7 +29,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
+import {
+  DEFAULT_GRID_IMG_HEIGHT,
+  DEFAULT_GRID_IMG_WIDTH,
+  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
+} from '../../../../constants';
 import { CardGridItem } from '../../../../components';
 import { Container, Gradient, Scrim } from '../../shared/grid/components';
 import {
@@ -76,7 +80,12 @@ const TemplateGridItem = forwardRef(
             <PicturePoster>
               <source srcSet={posterSrc?.webp} type="image/webp" />
               <source srcSet={posterSrc?.png} type="image/png" />
-              <img src={posterSrc?.png} alt={posterAltText} />
+              <img
+                src={posterSrc?.png}
+                alt={posterAltText}
+                width={DEFAULT_GRID_IMG_WIDTH}
+                height={DEFAULT_GRID_IMG_HEIGHT}
+              />
             </PicturePoster>
             <Gradient />
             <Scrim
