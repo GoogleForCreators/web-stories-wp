@@ -20,6 +20,11 @@
 import { useState, useEffect } from '@web-stories-wp/react';
 import { generateVideoStrip } from '@web-stories-wp/media';
 
+/**
+ * Internal dependencies
+ */
+import { RAIL_HEIGHT } from './constants';
+
 function useRailBackground(isReady, videoData, railWidth) {
   const [railBackgroundImage, setRailBackgroundImage] = useState(null);
   useEffect(() => {
@@ -27,7 +32,7 @@ function useRailBackground(isReady, videoData, railWidth) {
       return;
     }
     const { element, resource } = videoData;
-    generateVideoStrip(element, resource, railWidth, 36).then(
+    generateVideoStrip(element, resource, railWidth, RAIL_HEIGHT).then(
       setRailBackgroundImage
     );
   }, [isReady, videoData, railWidth]);
