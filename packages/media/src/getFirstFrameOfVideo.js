@@ -18,23 +18,17 @@
  * Internal dependencies
  */
 import preloadVideo from './preloadVideo';
+import getCanvasBlob from './getCanvasBlob';
 
 function getImageFromVideo(video) {
-  return new Promise((resolve, reject) => {
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+  const canvas = document.createElement('canvas');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
 
-    const ctx = canvas.getContext('2d');
-    try {
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    } catch (err) {
-      // Browser probably doesn't support the video codec.
-      reject(err);
-    }
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    canvas.toBlob(resolve, 'image/jpeg');
-  });
+  return getCanvasBlob(canvas);
 }
 
 /**

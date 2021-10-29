@@ -44,3 +44,4 @@ export { default as resourceList } from './resourceList';
 export { default as isAnimatedGif } from './isAnimatedGif';
 export { default as hasVideoGotAudio } from './hasVideoGotAudio';
 export { default as canTranscodeResource } from './canTranscodeResource';
+export { default as getCanvasBlob } from './getCanvasBlob';
