@@ -70,7 +70,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const { getProxiedUrl } = useCORSProxy();
 
   const insertMedia = useCallback(
-    async (hotlinkData) => {
+    async (hotlinkData, needsProxy) => {
       const {
         ext,
         type,
@@ -79,8 +79,8 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       } = hotlinkData;
 
       try {
-        const proxiedUrl = getProxiedUrl({ isExternal: true }, link);
-        const resource = await getResourceFromUrl(proxiedUrl, type);
+        const proxiedUrl = getProxiedUrl({ needsProxy }, link);
+        const resource = await getResourceFromUrl(proxiedUrl, type, needsProxy);
         resource.alt = originalFileName;
         resource.src = link;
         resource.mimeType = mimeType;
@@ -117,7 +117,31 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     ]
   );
 
-  const onInsert = useCallback(() => {
+  /**
+   * Check if the resource can be accessed directly.
+   *
+   * Makes a HEAD request, which in turn triggers a CORS preflight request
+   * in the browser.
+   *
+   * If the request passes, we don't need to do anything.
+   * If it doesn't, it means we need to run the resource through our CORS proxy at all times.
+   *
+   * @type {function(): boolean}
+   */
+  const checkResourceAccess = useCallback(async () => {
+    let shouldProxy = false;
+    try {
+      await fetch(link, {
+        method: 'HEAD',
+      });
+    } catch (err) {
+      shouldProxy = true;
+    }
+
+    return shouldProxy;
+  }, [link]);
+
+  return useCallback(async () => {
     if (!link) {
       return;
     }
@@ -125,27 +149,34 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       setErrorMsg(__('Invalid link.', 'web-stories'));
       return;
     }
-    getHotlinkInfo(link)
-      .then((hotlinkInfo) => {
-        insertMedia(hotlinkInfo);
-      })
-      .catch(({ code }) => {
-        let description = __(
-          'No file types are currently supported.',
-          'web-stories'
-        );
-        if (allowedFileTypes.length) {
-          description = sprintf(
-            /* translators: %s is a list of allowed file extensions. */
-            __('You can insert %s.', 'web-stories'),
-            translateToExclusiveList(allowedFileTypes)
-          );
-        }
-        setErrorMsg(getErrorMessage(code, description));
-      });
-  }, [allowedFileTypes, link, getHotlinkInfo, setErrorMsg, insertMedia]);
 
-  return onInsert;
+    try {
+      const hotlinkInfo = await getHotlinkInfo(link);
+      const shouldProxy = await checkResourceAccess();
+
+      await insertMedia(hotlinkInfo, shouldProxy);
+    } catch (err) {
+      let description = __(
+        'No file types are currently supported.',
+        'web-stories'
+      );
+      if (allowedFileTypes.length) {
+        description = sprintf(
+          /* translators: %s is a list of allowed file extensions. */
+          __('You can insert %s.', 'web-stories'),
+          translateToExclusiveList(allowedFileTypes)
+        );
+      }
+      setErrorMsg(getErrorMessage(err.code, description));
+    }
+  }, [
+    allowedFileTypes,
+    link,
+    getHotlinkInfo,
+    setErrorMsg,
+    insertMedia,
+    checkResourceAccess,
+  ]);
 }
 
 export default useInsert;

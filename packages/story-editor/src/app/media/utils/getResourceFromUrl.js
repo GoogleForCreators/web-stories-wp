@@ -25,7 +25,7 @@ import {
   hasVideoGotAudio,
 } from '@web-stories-wp/media';
 
-async function getResourceFromUrl(value, type) {
+async function getResourceFromUrl(value, type, needsProxy) {
   const isVideo = type === 'video';
   const isImage = type === 'image';
   if (!isVideo && !isImage) {
@@ -52,6 +52,7 @@ async function getResourceFromUrl(value, type) {
     src: value,
     local: false,
     isExternal: true,
+    needsProxy,
     ...videoData,
   });
 }

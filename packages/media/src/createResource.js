@@ -71,6 +71,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @property {Object} sizes Object of image sizes.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos.
  * @property {?TrimData} trimData An optional object of video trim data.
+ * @property {boolean} needsProxy Whether the resource needs a CORS proxy.
  */
 
 /**
@@ -109,6 +110,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @property {Attribution|null} attribution An optional attribution for the resource.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos
  * @property {?TrimData} trimData An optional object of video trim data.
+ * @property {boolean} needsProxy Whether the resource needs a CORS proxy.
  */
 
 /**
@@ -140,6 +142,7 @@ function createResource({
   isMuted = false,
   isExternal = false,
   trimData,
+  needsProxy = false,
 }) {
   return {
     baseColor,
@@ -164,6 +167,7 @@ function createResource({
     isMuted,
     isExternal,
     trimData,
+    needsProxy,
   };
 }
 
