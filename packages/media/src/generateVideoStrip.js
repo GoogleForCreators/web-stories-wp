@@ -42,12 +42,14 @@ function seekVideo(video, offset) {
   });
 }
 
-/*
- * Returns an image of the first frame of a given video.
+/**
+ * Returns an image data URL with a video strip of the frames of the video.
  *
- * @see https://github.com/ampproject/amp-wp/blob/c5fba13dd17d4f713c9889d26898aec6091e421b/assets/src/stories-editor/helpers/uploadVideoFrame.js#L10-L39
- * @param {string} src Video src URL.
- * @return {Promise<string>} The extracted image in base64-encoded format.
+ * @param {Object} element Canvas element with information about size, scale, and focal point.
+ * @param {Object} resource Resource object with url and video length.
+ * @param {number} stripWidth Target strip width.
+ * @param {number} stripHeight Video src URL.
+ * @return {Promise<string>} The video strip as a data URL.
  */
 async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
   const {
