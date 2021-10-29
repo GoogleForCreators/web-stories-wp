@@ -171,14 +171,13 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Enter');
 
+      // add time buffer for templates to be removed
       await fixture.events.sleep(500);
       // there should no longer be any saved templates
       await waitFor(() => {
         expect(
-          fixture.screen.getByRole('list', {
-            name: 'Page Template Options',
-          }).children.length
-        ).toBe(0);
+          () => fixture.editor.library.pageTemplatesPane.pageTemplates
+        ).toThrow();
       });
     });
   });
