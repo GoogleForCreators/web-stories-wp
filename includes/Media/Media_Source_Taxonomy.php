@@ -125,7 +125,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 						'source-video',
 						'source-image',
 						'gif-conversion',
-						'page-template'
+						'page-template',
 					],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
