@@ -119,7 +119,7 @@ const LayerButton = styled(Button).attrs({
           theme.colors.interactiveBg.secondaryPress,
           0
         )};
-        --selected-hover-color: ${theme.colors.interactiveFg.brandHover};
+        --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
       }
     `}
 
