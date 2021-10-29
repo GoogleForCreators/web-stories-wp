@@ -126,6 +126,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
+    capabilities: { hasUploadMediaAction },
   } = useConfig();
 
   const stateRef = useRef();
@@ -222,8 +223,17 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   // Whenever media items in the library change,
   // generate missing posters if needed.
   useEffect(() => {
+    if (!hasUploadMediaAction) {
+      return;
+    }
     media?.forEach((mediaElement) => generateMissingPosters(mediaElement));
-  }, [media, mediaType, searchTerm, generateMissingPosters]);
+  }, [
+    media,
+    mediaType,
+    searchTerm,
+    generateMissingPosters,
+    hasUploadMediaAction,
+  ]);
 
   useEffect(() => {
     media?.forEach((mediaElement) => backfillHasAudio(mediaElement));
