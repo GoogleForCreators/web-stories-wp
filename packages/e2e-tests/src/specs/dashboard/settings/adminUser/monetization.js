@@ -25,8 +25,12 @@ import { clickButton, visitSettings } from '@web-stories-wp/e2e-test-utils';
 import { monetizationDropdownSelector } from '../../../../utils';
 
 describe('Admin User', () => {
-  it('should let me see and update all settings', async () => {
+  it('should let me see and update monetization settings', async () => {
     await visitSettings();
+
+    // Small trick to ensure we scroll to this input.
+    const monetizationDropdown = await page.$(monetizationDropdownSelector);
+    await monetizationDropdown.focus();
 
     await expect(page).toMatchElement(monetizationDropdownSelector);
 
