@@ -24,6 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { getDummyMedia } from './getDummyMedia';
+import { HeaderLayout } from './header';
 
 export default {
   title: 'Playground/Stories Editor',
@@ -113,7 +114,7 @@ const config = {
 export const _default = () => (
   <AppContainer>
     <StoryEditor config={config}>
-      <InterfaceSkeleton />
+      <InterfaceSkeleton header={<HeaderLayout />} />
     </StoryEditor>
   </AppContainer>
 );
