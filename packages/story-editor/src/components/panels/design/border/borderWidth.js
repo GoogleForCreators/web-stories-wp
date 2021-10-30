@@ -58,20 +58,21 @@ const BorderWidthNumericInput = styled(NumericInput)`
   width: ${({ locked }) => (locked ? 'auto' : '25%')};
 `;
 
-const BorderTop = styled(Icons.BorderTop)`
+const BorderTop = styled(Icons.Border)`
+  ${iconCss}
+  transform: rotate(90deg);
+`;
+
+const BorderBottom = styled(Icons.Border)`
+  ${iconCss}
+  transform: rotate(-90deg);
+`;
+
+const BorderLeft = styled(Icons.Border)`
   ${iconCss}
 `;
 
-const BorderBottom = styled(Icons.BorderTop)`
-  ${iconCss}
-  transform: scaleY(-1);
-`;
-
-const BorderLeft = styled(Icons.BorderLeft)`
-  ${iconCss}
-`;
-
-const BorderRight = styled(Icons.BorderLeft)`
+const BorderRight = styled(Icons.Border)`
   ${iconCss}
   transform: scaleX(-1);
 `;
