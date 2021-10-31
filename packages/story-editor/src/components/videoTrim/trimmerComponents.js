@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -28,20 +29,38 @@ import Slider from './slider';
 export const Menu = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 40px;
   gap: 14px;
 `;
 
-export const Wrapper = styled.div`
+export const RailWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+`;
+
+export const Rail = styled.div`
   position: relative;
-  flex-basis: ${({ pageWidth }) => pageWidth}px;
+  width: ${({ width }) => width}px;
   height: 36px;
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.colors.standard.white};
   /* Note: background to be updated in 9104 */
   background-color: ${({ theme }) => theme.colors.standard.white};
 `;
+
+export function Duration({ children }) {
+  return (
+    <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+      {children}
+    </Text>
+  );
+}
+Duration.propTypes = {
+  children: PropTypes.node,
+};
 
 export const Handle = styled(Slider)`
   top: 6px;

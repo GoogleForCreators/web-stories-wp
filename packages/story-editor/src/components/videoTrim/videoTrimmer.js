@@ -29,6 +29,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '@web-stories-wp/design-system';
+import { getVideoLengthDisplay } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -38,7 +39,9 @@ import useFocusTrapping from '../../utils/useFocusTrapping';
 import useVideoTrim from './useVideoTrim';
 import {
   Menu,
-  Wrapper,
+  RailWrapper,
+  Rail,
+  Duration,
   Handle,
   CurrentTime,
   Scrim,
@@ -149,31 +152,36 @@ function VideoTrimmer() {
           {__('Cancel', 'web-stories')}
         </Button>
       </ButtonWrapper>
-      <Wrapper pageWidth={railWidth}>
-        <Scrim isLeftAligned width={(startOffset / maxOffset) * railWidth} />
-        <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
-        <CurrentTime
-          railWidth={railWidth}
-          aria-label={__('Current time', 'web-stories')}
-          disabled
-          value={currentTime}
-          {...sliderProps}
-        />
-        <Handle
-          railWidth={railWidth}
-          value={startOffset}
-          aria-label={__('Start offset', 'web-stories')}
-          onChange={(val) => setStartOffset(val)}
-          {...sliderProps}
-        />
-        <Handle
-          railWidth={railWidth}
-          value={endOffset}
-          aria-label={__('End offset', 'web-stories')}
-          onChange={(val) => setEndOffset(val)}
-          {...sliderProps}
-        />
-      </Wrapper>
+      <RailWrapper>
+        <Rail width={railWidth}>
+          <Scrim isLeftAligned width={(startOffset / maxOffset) * railWidth} />
+          <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
+          <CurrentTime
+            railWidth={railWidth}
+            aria-label={__('Current time', 'web-stories')}
+            disabled
+            value={currentTime}
+            {...sliderProps}
+          />
+          <Handle
+            railWidth={railWidth}
+            value={startOffset}
+            aria-label={__('Start offset', 'web-stories')}
+            onChange={(val) => setStartOffset(val)}
+            {...sliderProps}
+          />
+          <Handle
+            railWidth={railWidth}
+            value={endOffset}
+            aria-label={__('End offset', 'web-stories')}
+            onChange={(val) => setEndOffset(val)}
+            {...sliderProps}
+          />
+        </Rail>
+        <Duration>
+          {getVideoLengthDisplay(Math.ceil((endOffset - startOffset) / 1000))}
+        </Duration>
+      </RailWrapper>
       <ButtonWrapper>
         <Button
           variant={BUTTON_VARIANTS.RECTANGLE}
