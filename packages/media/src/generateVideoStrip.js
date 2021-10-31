@@ -105,8 +105,6 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
   canvas.height = stripHeight;
   const ctx = canvas.getContext('2d');
 
-  window.dummy = { video, canvas };
-
   // Create a function to grab the current frame and either schedule next or abort
   let timeOffset = 0;
   let frame = 0;
