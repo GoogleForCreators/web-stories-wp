@@ -24,17 +24,25 @@ import {
   forwardRef,
   useDebouncedCallback,
 } from '@web-stories-wp/react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { DropDownSelect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import Popup from '../../popup';
-import { focusStyle } from '../../panels/shared';
+import { themeHelpers } from '../../theme';
+import { DropDownSelect } from '../dropDown';
+import { Popup } from '../popup';
 import OptionsContainer from './container';
 import List from './list';
+
+const focusStyle = css`
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+`;
 
 const DEFAULT_WIDTH = 240;
 
@@ -64,7 +72,7 @@ const Container = styled.div`
  * @param {string} props.dropDownLabel The visible label of the dropdown select.
  * @return {*} Render.
  */
-const DropDown = forwardRef(function DropDown(
+const Datalist = forwardRef(function Datalist(
   {
     onChange,
     disabled = false,
@@ -83,10 +91,13 @@ const DropDown = forwardRef(function DropDown(
     isInline = false,
     dropDownLabel = '',
     highlightStylesOverride,
+    hasDropDownBorder = false,
     ...rest
   },
   ref
 ) {
+  const searchRef = useRef();
+  const listRef = useRef();
   if (!options && !getOptionsByQuery) {
     throw new Error(
       'Dropdown initiated with invalid params: options or getOptionsByQuery has to be set'
@@ -120,13 +131,19 @@ const DropDown = forwardRef(function DropDown(
     [onChange, internalRef]
   );
 
+  const focusSearch = useCallback(() => {
+    searchRef.current?.focus();
+  }, []);
+
   const list = (
     <OptionsContainer
+      ref={searchRef}
       isOpen={isOpen}
       onClose={debouncedCloseDropDown}
       getOptionsByQuery={getOptionsByQuery}
       hasSearch={hasSearch}
       isInline={isInline}
+      hasDropDownBorder={hasDropDownBorder}
       renderContents={({
         searchKeyword,
         setIsExpanded,
@@ -135,6 +152,7 @@ const DropDown = forwardRef(function DropDown(
         listId,
       }) => (
         <List
+          ref={listRef}
           listId={listId}
           value={selectedId}
           keyword={searchKeyword}
@@ -149,10 +167,24 @@ const DropDown = forwardRef(function DropDown(
           priorityOptions={priorityOptions}
           priorityLabel={priorityLabel}
           searchResultsLabel={searchResultsLabel}
+          focusSearch={focusSearch}
           renderer={renderer}
         />
       )}
     />
+  );
+
+  const DropDownSelectRef = useCallback(
+    (node) => {
+      // `ref` can either be a callback ref or a normal ref.
+      if (typeof ref == 'function') {
+        ref(node);
+      } else if (ref) {
+        ref.current = node;
+      }
+      internalRef.current = node;
+    },
+    [ref]
   );
 
   const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
@@ -163,15 +195,7 @@ const DropDown = forwardRef(function DropDown(
         aria-pressed={isOpen}
         aria-haspopup
         aria-expanded={isOpen}
-        ref={(node) => {
-          // `ref` can either be a callback ref or a normal ref.
-          if (typeof ref == 'function') {
-            ref(node);
-          } else if (ref) {
-            ref.current = node;
-          }
-          internalRef.current = node;
-        }}
+        ref={DropDownSelectRef}
         activeItemLabel={selectedOption?.name}
         activeItemRenderer={activeItemRenderer}
         dropDownLabel={dropDownLabel}
@@ -189,7 +213,7 @@ const DropDown = forwardRef(function DropDown(
   );
 });
 
-DropDown.propTypes = {
+Datalist.propTypes = {
   selectedId: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
@@ -208,6 +232,7 @@ DropDown.propTypes = {
   activeItemRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   dropDownLabel: PropTypes.string,
   isInline: PropTypes.bool,
+  hasDropDownBorder: PropTypes.bool,
 };
 
-export default DropDown;
+export default Datalist;
