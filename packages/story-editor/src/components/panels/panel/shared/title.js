@@ -183,6 +183,7 @@ function Title({
       height,
       resizable,
       showDragHandle,
+      showFocusStyles,
       panelContentId,
       panelTitleId,
       ariaHidden,
@@ -244,6 +245,7 @@ function Title({
           handleDoubleClick={resetHeight}
           tabIndex={ariaHidden ? -1 : 0}
           showDragHandle={showDragHandle}
+          showFocusStyles={showFocusStyles}
         />
       )}
       <Toggle
