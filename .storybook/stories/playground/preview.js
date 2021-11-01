@@ -25,29 +25,31 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 `;
+import { useEffect } from 'react';
 
 export default {
   title: 'Playground/preview',
 };
 
-const LoadingText = styled.p`
-  text-align: center;
-  font-size: 30px;
-  color: #dfdfdf;
-`;
-
 const Text = styled.p``;
 
 function Preview() {
-  // @todo Get preview markup using localStorage and insert here.
-  return (
+  const content = window.localStorage.getItem('preview_markup');
+
+  useEffect(() => {
+    if (content) {
+      document.open();
+      document.write(content);
+      document.close();
+    }
+  }, [content]);
+
+  return !content ? (
     <>
       <GlobalStyle />
-      <LoadingText>{'Generating Preview..'}</LoadingText>
-      <Text>{'Preview Expired'}</Text>
-      <Text>{'Please click on the preview button again!'}</Text>
+      <Text>{'No Preview Available'}</Text>
     </>
-  );
+  ) : null;
 }
 
 export const _default = Preview;

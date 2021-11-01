@@ -18,16 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import {
-  CircularProgress,
-  PreviewButton,
-  useStory,
-} from '@web-stories-wp/story-editor';
+import { CircularProgress, useStory } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
 import { SaveButton } from './saveButton';
+import { PreviewButton } from './preview';
 
 const ButtonList = styled.nav`
   display: flex;

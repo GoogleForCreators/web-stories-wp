@@ -37,6 +37,7 @@ function SaveButton() {
     })
   );
 
+  // @todo Make the app state persistent.
   return (
     <Button
       variant={BUTTON_VARIANTS.RECTANGLE}

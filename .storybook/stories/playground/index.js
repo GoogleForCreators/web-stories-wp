@@ -78,7 +78,6 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
       textStyles: [],
     },
     date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
-    preview_link: `${window.location.origin}/iframe.html?id=playground-preview--default`,
   };
 
   switch (name) {
