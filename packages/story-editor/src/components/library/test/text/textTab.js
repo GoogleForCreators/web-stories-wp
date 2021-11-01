@@ -69,7 +69,7 @@ describe('TextTab', () => {
     );
 
     act(() => {
-      fireEvent.click(screen.getByLabelText('Add new text element'));
+      fireEvent.click(screen.getByTitle('Add new text element'));
     });
 
     await waitFor(() => expect(insertElement).toHaveBeenCalledTimes(1));
