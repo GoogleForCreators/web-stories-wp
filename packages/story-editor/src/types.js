@@ -67,6 +67,20 @@ StoryPropTypes.story = PropTypes.shape({
   backgroundAudio: BackgroundAudioPropType,
 });
 
+StoryPropTypes.outputStory = PropTypes.shape({
+  link: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  autoAdvance: PropTypes.bool,
+  defaultPageDuration: PropTypes.number,
+  backgroundAudio: BackgroundAudioPropType,
+  publisherLogo: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+  }),
+  featuredMedia: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+  }),
+});
+
 StoryPropTypes.mask = PropTypes.shape({
   type: PropTypes.string.isRequired,
 });

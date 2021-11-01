@@ -73,7 +73,7 @@ function OutputStory({
         {/* Everything between these markers can be replaced server-side. */}
         <meta name="web-stories-replace-head-start" />
         <title>{title}</title>
-        <link rel="canonical" href={link} />
+        {link && <link rel="canonical" href={link} />}
         <meta name="web-stories-replace-head-end" />
       </head>
       <body>
@@ -101,7 +101,7 @@ function OutputStory({
 }
 
 OutputStory.propTypes = {
-  story: StoryPropTypes.story.isRequired,
+  story: StoryPropTypes.outputStory.isRequired,
   pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
   metadata: PropTypes.shape({
     publisher: PropTypes.string.isRequired,
