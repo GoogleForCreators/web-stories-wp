@@ -57,7 +57,7 @@ import {
 export const getPagePreviewHeights = (width) => {
   const fullBleedHeight = Math.round((width / FULLBLEED_RATIO) * 100) / 100;
   const storyHeight = Math.round((width / PAGE_RATIO) * 100) / 100;
-  const posterHeight = Math.round(((width / (3 / 4)) * 100) / 100);
+  const posterHeight = Math.round(((width / (4 / 6)) * 100) / 100);
   return { fullBleedHeight, storyHeight, posterHeight };
 };
 
