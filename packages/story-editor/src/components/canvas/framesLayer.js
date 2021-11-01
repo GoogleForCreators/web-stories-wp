@@ -113,9 +113,8 @@ function FramesLayer() {
     >
       {!isAnimating && (
         <FramesPageArea
-          role="region"
           fullBleedContainerLabel={__(
-            'Fullbleed area (Frames Layer)',
+            'Fullbleed area (Frames layer)',
             'web-stories'
           )}
           onContextMenu={onOpenMenu}

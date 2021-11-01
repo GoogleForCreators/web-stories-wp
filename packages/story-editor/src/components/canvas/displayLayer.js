@@ -165,7 +165,7 @@ function DisplayLayer() {
           background={currentPage?.backgroundColor}
           isBackgroundSelected={isBackgroundSelected}
           fullBleedContainerLabel={__(
-            'Fullbleed area (Display Layer)',
+            'Fullbleed area (Display layer)',
             'web-stories'
           )}
           overlay={
