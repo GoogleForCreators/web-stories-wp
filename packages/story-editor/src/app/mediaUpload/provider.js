@@ -17,7 +17,7 @@
  * External dependencies
  */
 
-import { useRef } from '@web-stories-wp/react';
+import { useCallback, useRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -30,13 +30,15 @@ function OpenMediaUploadHandler({ onOpenMediaUpload, ...props }) {
    * `open` needs to be stored in a ref so that it does not cause endless
    * re-renders for any children.
    */
-  const openRef = useRef(open);
+  const openRef = useRef(onOpenMediaUpload);
   openRef.current = onOpenMediaUpload;
+
+  const handleOpenMediaUpload = useCallback((ev) => openRef.current(ev), []);
 
   return (
     <Context.Provider
       {...props}
-      value={{ onOpenMediaUpload: openRef.current }}
+      value={{ onOpenMediaUpload: handleOpenMediaUpload }}
     />
   );
 }

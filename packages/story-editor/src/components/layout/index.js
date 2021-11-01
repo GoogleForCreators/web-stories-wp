@@ -230,7 +230,7 @@ function Layout({ header, children }) {
       <LayoutProvider>
         <ChecklistCheckpointProvider>
           <MediaUploadProvider
-            title={__('Select media', 'web-stories')}
+            title={__('Replace media', 'web-stories')}
             buttonInsertText={__('Insert media', 'web-stories')}
             onSelect={handleMediaSelect}
             onClose={resetWithFetch}

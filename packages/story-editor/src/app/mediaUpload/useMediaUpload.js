@@ -24,15 +24,12 @@ import { useContextSelector, identity } from '@web-stories-wp/react';
 import Context from './context';
 
 function useMediaUpload(selector) {
-  const context = useContextSelector(Context, selector ?? identity);
+  const selectedContextPartial = useContextSelector(
+    Context,
+    selector ?? identity
+  );
 
-  if (!context) {
-    throw new Error(
-      'Must use `useMediaUpload()` within <mediaUpload.Provider />'
-    );
-  }
-
-  return context;
+  return selectedContextPartial;
 }
 
 export default useMediaUpload;
