@@ -381,6 +381,25 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		$this->assertSame( self::$attachment_id_1, $active_publisher_logo_id );
 	}
 
+	/**
+	 * @covers ::permissions_check
+	 * @covers ::create_item
+	 */
+	public function test_create_item_empty_array() {
+		$this->controller->register();
+
+		wp_set_current_user( self::$admin );
+
+		$request = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/publisher-logos' );
+		$request->set_body_params(
+			[
+				'id' => [],
+			]
+		);
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertErrorResponse( 'rest_invalid_id', $response );
+	}
 
 	/**
 	 * @covers ::permissions_check

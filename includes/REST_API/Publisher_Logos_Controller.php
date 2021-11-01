@@ -223,6 +223,14 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 		// Could be a single attachment ID or an array of attachment IDs.
 		$posts = (array) $request['id'];
 
+		if ( empty( $posts ) ) {
+			return new WP_Error(
+				'rest_invalid_id',
+				__( 'Invalid ID', 'web-stories' ),
+				[ 'status' => 400 ]
+			);
+		}
+
 		foreach ( $posts as $post_id ) {
 			$post = get_post( $post_id );
 
