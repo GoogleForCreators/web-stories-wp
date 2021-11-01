@@ -15,14 +15,12 @@
  */
 
 const ANIMATION = 'animation';
-const BORDER_RADIUS = 'borderRadius';
 const BORDER = 'borderStyle';
 const CAPTIONS = 'captions';
 const STYLE_PRESETS = 'stylePresets';
 const COLOR_PRESETS = 'colorPresets';
 const FILTER = 'filter';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
-const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const PAGE_ATTACHMENT = 'pageAttachment';
 const PAGE_BACKGROUND = 'pageBackground';
@@ -45,11 +43,9 @@ const PanelTypes = {
   STYLE_PRESETS,
   TEXT_STYLE,
   TEXT_BOX,
-  LAYER_STYLE,
   FILTER,
   SHAPE_STYLE,
   BORDER,
-  BORDER_RADIUS,
   ANIMATION,
   VIDEO_OPTIONS,
   CAPTIONS,

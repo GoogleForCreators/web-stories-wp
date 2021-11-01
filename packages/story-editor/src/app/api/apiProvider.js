@@ -26,29 +26,20 @@ import getAllTemplates from '@web-stories-wp/templates';
  */
 import { useConfig } from '../config';
 import Context from './context';
-import { removeImagesFromPageTemplates } from './utils';
 
 function APIProvider({ children }) {
   const { apiCallbacks: actions, cdnURL } = useConfig();
   const pageTemplates = useRef({
     base: [],
-    withoutImages: [],
   });
 
-  actions.getPageTemplates = useCallback(
-    async ({ showImages = false } = {}) => {
-      // check if pageTemplates have been loaded yet
-      if (pageTemplates.current.base.length === 0) {
-        pageTemplates.current.base = await getAllTemplates({ cdnURL });
-        pageTemplates.current.withoutImages = removeImagesFromPageTemplates(
-          pageTemplates.current.base
-        );
-      }
-
-      return pageTemplates.current[showImages ? 'base' : 'withoutImages'];
-    },
-    [cdnURL]
-  );
+  actions.getPageTemplates = useCallback(async () => {
+    // check if pageTemplates have been loaded yet
+    if (pageTemplates.current.base.length === 0) {
+      pageTemplates.current.base = await getAllTemplates({ cdnURL });
+    }
+    return pageTemplates.current.base;
+  }, [cdnURL]);
 
   return <Context.Provider value={{ actions }}>{children}</Context.Provider>;
 }

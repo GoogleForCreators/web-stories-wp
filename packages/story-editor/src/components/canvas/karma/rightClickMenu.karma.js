@@ -693,7 +693,7 @@ describe('Right Click Menu integration', () => {
 
         // add border radius
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.borderRadius.radius()
+          fixture.editor.inspector.designPanel.sizePosition.radius()
         );
         await fixture.events.keyboard.type('50');
 
@@ -704,7 +704,7 @@ describe('Right Click Menu integration', () => {
 
         // add opacity
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.layerStyle.opacity
+          fixture.editor.inspector.designPanel.sizePosition.opacity
         );
         await fixture.events.keyboard.type('40');
 
@@ -759,7 +759,7 @@ describe('Right Click Menu integration', () => {
 
         // add border radius
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.borderRadius.radius()
+          fixture.editor.inspector.designPanel.sizePosition.radius()
         );
         await fixture.events.keyboard.type('50');
 
@@ -770,7 +770,7 @@ describe('Right Click Menu integration', () => {
 
         // add opacity
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.layerStyle.opacity
+          fixture.editor.inspector.designPanel.sizePosition.opacity
         );
         await fixture.events.keyboard.type('40');
 

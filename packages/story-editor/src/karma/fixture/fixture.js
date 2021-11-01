@@ -200,14 +200,12 @@ export class Fixture {
 
     const panels = [
       'animation',
-      'borderRadius',
       'borderStyle',
       'captions',
       'globalStoryStyles',
       'colorPresets',
       'filter',
       'imageAccessibility',
-      'layerStyle',
       'link',
       'pageAttachment',
       'pageBackground',
