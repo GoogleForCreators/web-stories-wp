@@ -69,6 +69,16 @@ const inputContainerStyle = css`
   }
 `;
 
+const inputStyleOverride = css`
+  height: 36px;
+  padding: 2px 6px 2px 12px;
+`;
+
+const lastInputStyleOverride = css`
+  ${inputStyleOverride}
+  padding-right: 10px;
+`;
+
 const styleOverrideTopLeft = css`
   ${inputContainerStyle}
   border-radius: 4px 0 0 4px;
@@ -113,8 +123,11 @@ function StackedInputs(props) {
         value={left.props === MULTIPLE_VALUE ? '' : left.props}
         aria-label={firstInputLabel}
         onChange={(_, value) => handleChange(left.key, value)}
-        placeholder={left === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''}
+        placeholder={
+          left.props === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''
+        }
         isIndeterminate={left.props === MULTIPLE_VALUE}
+        styleOverride={inputStyleOverride}
         containerStyleOverride={
           lockInput ? inputContainerStyle : styleOverrideTopLeft
         }
@@ -132,6 +145,7 @@ function StackedInputs(props) {
               top.props === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''
             }
             isIndeterminate={top.props === MULTIPLE_VALUE}
+            styleOverride={inputStyleOverride}
             containerStyleOverride={styleOverrideTopRight}
           />
           <BoxedNumericInput
@@ -145,6 +159,7 @@ function StackedInputs(props) {
             suffix={suffix}
             side={right.key}
             isIndeterminate={right.props === MULTIPLE_VALUE}
+            styleOverride={inputStyleOverride}
             containerStyleOverride={styleOverrideBottomLeft}
           />
           <BoxedNumericInput
@@ -153,11 +168,12 @@ function StackedInputs(props) {
             aria-label={bottom.label}
             onChange={(_, value) => handleChange(bottom.key, value)}
             placeholder={
-              bottom === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''
+              bottom.props === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''
             }
             side={bottom.key}
             suffix={suffix}
             isIndeterminate={bottom.props === MULTIPLE_VALUE}
+            styleOverride={lastInputStyleOverride}
             containerStyleOverride={styleOverrideBottomRight}
           />
         </>

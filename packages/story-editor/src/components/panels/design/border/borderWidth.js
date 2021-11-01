@@ -19,82 +19,22 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { LockToggle, NumericInput, Icons } from '@web-stories-wp/design-system';
+import { LockToggle, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import Tooltip from '../../../tooltip';
-import {
-  focusStyle,
-  inputContainerStyleOverride,
-  useCommonObjectValue,
-} from '../../shared';
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import { focusStyle, useCommonObjectValue } from '../../shared';
+import StackedInputs from '../../../form/stackedInputs';
 import { DEFAULT_BORDER } from './shared';
 
 const BorderInputsFlexContainer = styled.div`
   display: flex;
   gap: 7px;
   margin-bottom: 16px;
-`;
-
-const BorderInputsWrapper = styled.div`
-  margin-left: 1px;
-  width: ${({ locked }) => (locked ? 'width: calc(50% - 32px);' : 'auto')};
-`;
-
-const iconCss = css`
-  width: 10px;
-  height: 10px;
-  margin-right: -14px;
-`;
-
-const BorderWidthNumericInput = styled(NumericInput)`
-  border-radius: 0px;
-  margin-left: -1px;
-  width: ${({ locked }) => (locked ? 'auto' : '25%')};
-`;
-
-const BorderTop = styled(Icons.Border)`
-  ${iconCss}
-  transform: rotate(90deg);
-`;
-
-const BorderBottom = styled(Icons.Border)`
-  ${iconCss}
-  transform: rotate(-90deg);
-`;
-
-const BorderLeft = styled(Icons.Border)`
-  ${iconCss}
-`;
-
-const BorderRight = styled(Icons.Border)`
-  ${iconCss}
-  transform: scaleX(-1);
-`;
-
-const styleOverrideTopLeft = css`
-  ${inputContainerStyleOverride}
-  border-radius: 4px 0 0 4px;
-`;
-
-const styleOverrideTopRight = css`
-  ${inputContainerStyleOverride}
-  border-radius: 0;
-`;
-
-const styleOverrideBottomLeft = css`
-  ${inputContainerStyleOverride}
-  border-radius: 0;
-`;
-
-const styleOverrideBottomRight = css`
-  ${inputContainerStyleOverride}
-  border-radius: 0 4px 4px 0;
 `;
 
 const StyledLockToggle = styled(LockToggle)`
@@ -145,55 +85,15 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
     ? __('Border', 'web-stories')
     : __('Left border', 'web-stories');
 
-  const getMixedValueProps = useCallback((value) => {
-    return {
-      isIndeterminate: MULTIPLE_VALUE === value,
-      placeholder: MULTIPLE_VALUE === value ? MULTIPLE_DISPLAY_VALUE : null,
-    };
-  }, []);
   return (
     <BorderInputsFlexContainer locked={lockBorder}>
-      <BorderInputsWrapper locked={lockBorder}>
-        <BorderWidthNumericInput
-          locked={lockBorder}
-          suffix={!lockBorder && <BorderLeft />}
-          value={border.left}
-          aria-label={firstInputLabel}
-          onChange={handleChange('left')}
-          containerStyleOverride={
-            lockBorder ? inputContainerStyleOverride : styleOverrideTopLeft
-          }
-          {...getMixedValueProps(border.left)}
-        />
-        {!lockBorder && (
-          <>
-            <BorderWidthNumericInput
-              suffix={<BorderTop />}
-              value={border.top}
-              onChange={handleChange('top')}
-              aria-label={__('Top border', 'web-stories')}
-              containerStyleOverride={styleOverrideTopRight}
-              {...getMixedValueProps(border.top)}
-            />
-            <BorderWidthNumericInput
-              suffix={<BorderRight />}
-              value={border.right}
-              onChange={handleChange('right')}
-              aria-label={__('Right border', 'web-stories')}
-              containerStyleOverride={styleOverrideBottomLeft}
-              {...getMixedValueProps(border.right)}
-            />
-            <BorderWidthNumericInput
-              suffix={<BorderBottom />}
-              value={border.bottom}
-              onChange={handleChange('bottom')}
-              aria-label={__('Bottom border', 'web-stories')}
-              containerStyleOverride={styleOverrideBottomRight}
-              {...getMixedValueProps(border.bottom)}
-            />
-          </>
-        )}
-      </BorderInputsWrapper>
+      <StackedInputs
+        lockInput={lockBorder}
+        inputProps={border}
+        handleChange={handleChange}
+        suffix={<Icons.Border />}
+        firstInputLabel={firstInputLabel}
+      />
       <ToggleWrapper>
         <Tooltip title={__('Toggle consistent border', 'web-stories')}>
           <StyledLockToggle
