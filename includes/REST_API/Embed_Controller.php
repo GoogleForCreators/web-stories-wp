@@ -29,8 +29,8 @@ namespace Google\Web_Stories\REST_API;
 use DOMNodeList;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Document_Parser;
-
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use DOMElement;
 use WP_Error;
 use WP_Http;
 use WP_Network;
@@ -45,7 +45,6 @@ use WP_REST_Server;
  * Class Embed_Controller
  */
 class Embed_Controller extends REST_Controller implements HasRequirements {
-	use Document_Parser;
 
 	/**
 	 * Story_Post_Type instance.
@@ -339,12 +338,12 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @return array|false Response data or false if document is not a story.
 	 */
 	private function get_data_from_document( $html ) {
-		$xpath = $this->html_to_xpath( $html );
+		$doc = Document::fromHtml( $html );
 
-		if ( ! $xpath ) {
+		if ( ! $doc ) {
 			return false;
 		}
-
+		$xpath     = $doc->xpath;
 		$amp_story = $xpath->query( '//amp-story' );
 
 		if ( ! $amp_story instanceof DOMNodeList || 0 === $amp_story->length ) {
@@ -358,6 +357,35 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 			'title'  => $title ?: '',
 			'poster' => $poster ?: '',
 		];
+	}
+
+	/**
+	 * Retrieve content of a given DOM node attribute.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param DOMNodeList<DOMElement>|false $query XPath query result.
+	 * @param string                        $attribute Attribute name.
+	 *
+	 * @return string|false Attribute content on success, false otherwise.
+	 */
+	protected function get_dom_attribute_content( $query, string $attribute ) {
+		if ( ! $query instanceof DOMNodeList || 0 === $query->length ) {
+			return false;
+		}
+
+		/**
+		 * DOMElement
+		 *
+		 * @var DOMElement $node
+		 */
+		$node = $query->item( 0 );
+
+		if ( ! $node instanceof DOMElement ) {
+			return false;
+		}
+
+		return $node->getAttribute( $attribute );
 	}
 
 	/**

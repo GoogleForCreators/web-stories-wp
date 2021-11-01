@@ -19,21 +19,22 @@
  */
 import { act, fireEvent, waitFor, screen } from '@testing-library/react';
 import { curatedFontNames } from '@web-stories-wp/fonts';
+import { Datalist } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import FontContext from '../../../../app/font/context';
-import { renderWithTheme } from '../../../../testUtils';
-import DropDown from '..';
+/**
+ * Internal dependencies
+ */
+import FontContext from '../../../../../app/font/context';
+import { renderWithTheme } from '../../../../../testUtils';
 import fontsListResponse from './fontsResponse';
 
-jest.mock(
-  '../../../popup/index.js',
-  () =>
-    ({ children, isOpen }) =>
-      isOpen ? children : null
-);
+jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
+  Popup: ({ children, isOpen }) => (isOpen ? children : null),
+}));
 
 const fonts = fontsListResponse.map((font) => {
   return { ...font, id: font.name };
@@ -65,7 +66,7 @@ function arrange(options) {
 
   return renderWithTheme(
     <FontContext.Provider value={fontContextValues}>
-      <DropDown {...props} />
+      <Datalist.DropDown {...props} />
     </FontContext.Provider>
   );
 }

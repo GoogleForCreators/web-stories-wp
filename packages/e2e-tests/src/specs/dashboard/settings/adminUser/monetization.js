@@ -28,6 +28,10 @@ describe('Admin User', () => {
   it('should let me see and update monetization settings', async () => {
     await visitSettings();
 
+    // Small trick to ensure we scroll to this input.
+    const monetizationDropdown = await page.$(monetizationDropdownSelector);
+    await monetizationDropdown.focus();
+
     await expect(page).toMatchElement(monetizationDropdownSelector);
 
     // verify that the monetization settings can be changed

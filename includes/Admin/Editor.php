@@ -260,7 +260,7 @@ class Editor extends Service_Base implements HasRequirements {
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
 
-		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies, false );
 		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $this->google_fonts::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
@@ -381,6 +381,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'encodeMarkup'                 => $this->decoder->supports_decoding(),
 				'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
 				'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
+				'localeData'                   => $this->assets->get_translations( self::SCRIPT_HANDLE ),
 				'flags'                        => array_merge(
 					$this->experiments->get_experiment_statuses( 'general' ),
 					$this->experiments->get_experiment_statuses( 'editor' )

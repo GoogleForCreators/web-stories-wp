@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+
 export { default as translateToExclusiveList } from './translateToExclusiveList';
 export { default as translateToInclusiveList } from './translateToInclusiveList';
 export { default as TranslateWithMarkup } from './translateWithMarkup';
-export * from '@wordpress/i18n';
+export { default as sprintf } from './sprintf';
+export * from './i18n';

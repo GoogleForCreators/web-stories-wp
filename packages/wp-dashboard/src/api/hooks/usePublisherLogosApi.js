@@ -109,7 +109,7 @@ export default function usePublisherLogosApi() {
   );
 
   const addPublisherLogo = useCallback(
-    async (publisherLogoId) => {
+    async (publisherLogoIds) => {
       dispatch({
         type: ACTION_TYPES.LOADING,
       });
@@ -117,15 +117,19 @@ export default function usePublisherLogosApi() {
       try {
         const response = await addPublisherLogoCallback(
           publisherLogosApiPath,
-          publisherLogoId
+          publisherLogoIds
         );
 
-        dispatch({
-          type: ACTION_TYPES.ADD_SUCCESS,
-          payload: {
-            publisherLogo: response,
-          },
-        });
+        const publisherLogos = Array.isArray(response) ? response : [response];
+
+        for (const publisherLogo of publisherLogos) {
+          dispatch({
+            type: ACTION_TYPES.ADD_SUCCESS,
+            payload: {
+              publisherLogo,
+            },
+          });
+        }
       } catch (err) {
         dispatch({
           type: ACTION_TYPES.ADD_FAILURE,

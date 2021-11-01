@@ -56,7 +56,7 @@ export function removePublisherLogo(apiPath, logoId) {
  * Add publisher logo.
  *
  * @param {string} apiPath API path.
- * @param {number|string} logoId Logo id.
+ * @param {number|Array<number>} logoId Single logo ID or array of logo IDs.
  * @return {Promise} Request promise.
  */
 export function addPublisherLogo(apiPath, logoId) {
