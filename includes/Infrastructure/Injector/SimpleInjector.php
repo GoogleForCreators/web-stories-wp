@@ -537,10 +537,8 @@ final class SimpleInjector implements Injector {
 		if ( ! class_exists( $class ) ) {
 			throw FailedToMakeInstance::for_unreflectable_class( $class );
 		}
-		try {
-			return new ReflectionClass( $class );
-		} catch ( Exception $exception ) {
-			throw FailedToMakeInstance::for_unreflectable_class( $class );
-		}
+
+		// There should be no ReflectionException happening because of the class existence check above.
+		return new ReflectionClass( $class );
 	}
 }
