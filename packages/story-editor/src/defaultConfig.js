@@ -108,6 +108,7 @@ const defaultConfig = {
     audio: [],
     video: ['video/mp4', 'video/webm'],
   },
+  isRTL: false,
   storyId: 1,
   // @todo https://github.com/google/web-stories-wp/pull/9569#discussion_r739066940
   dashboardSettingsLink: '',
