@@ -32,7 +32,7 @@ use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Types;
+use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Integrations\Site_Kit;

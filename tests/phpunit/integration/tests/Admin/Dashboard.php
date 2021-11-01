@@ -178,7 +178,7 @@ class Dashboard extends DependencyInjectedTestCase {
 			( new \Google\Web_Stories\Admin\Google_Fonts() ),
 			$assets,
 			new Story_Post_Type( new Settings(), $experiments ),
-			$this->createMock( \Google\Web_Stories\Types::class )
+			$this->createMock( \Google\Web_Stories\Media\Types::class )
 		);
 
 		$this->instance->add_menu_page();

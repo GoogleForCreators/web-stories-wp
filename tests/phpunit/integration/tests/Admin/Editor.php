@@ -88,7 +88,7 @@ class Editor extends DependencyInjectedTestCase {
 	private $page_template_post_type;
 
 	/**
-	 * @var \Google\Web_Stories\Types
+	 * @var \Google\Web_Stories\Media\Types
 	 */
 	private $types;
 
@@ -140,7 +140,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->assets                  = $this->createMock( \Google\Web_Stories\Assets::class );
 		$this->story_post_type         = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$this->page_template_post_type = $this->injector->make( \Google\Web_Stories\Page_Template_Post_Type::class );
-		$this->type                    = $this->injector->make( \Google\Web_Stories\Types::class );
+		$this->type                    = $this->injector->make( \Google\Web_Stories\Media\Types::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Editor(
 			$this->experiments,

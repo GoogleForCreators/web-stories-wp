@@ -29,7 +29,7 @@ namespace Google\Web_Stories\Integrations;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Types;
+use Google\Web_Stories\Media\Types;
 use WP_Post;
 use WP_REST_Response;
 

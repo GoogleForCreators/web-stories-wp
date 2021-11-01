@@ -29,7 +29,7 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Types;
+use Google\Web_Stories\Media\Types;
 use WP_Post;
 use WP_Error;
 use WP_REST_Request;

@@ -2,7 +2,7 @@
 /**
  * Class Types
  *
- * @package   Google\Web_Stories
+ * @package   Google\Web_Stories\Media
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/google/web-stories-wp
@@ -24,12 +24,12 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
+namespace Google\Web_Stories\Media;
 
 /**
  * Class Types
  *
- * @package Google\Web_Stories
+ * @package Google\Web_Stories\Media
  */
 class Types {
 	/**
