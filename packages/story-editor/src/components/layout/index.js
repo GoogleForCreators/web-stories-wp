@@ -47,7 +47,8 @@ import { ChecklistCheckpointProvider } from '../checklist';
 import { RightClickMenuProvider } from '../../app/rightClickMenu';
 import RightClickMenu from '../canvas/rightClickMenu';
 import { MediaUploadProvider } from '../../app/mediaUpload';
-import { useConfig, useStory } from '../..';
+import { useConfig } from '../../app/config';
+import { useStory } from '../../app/story';
 import { useLocalMedia } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
