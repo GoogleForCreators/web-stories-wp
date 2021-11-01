@@ -40,20 +40,36 @@ class Types extends TestCase {
 	 * @covers ::get_allowed_mime_types
 	 */
 	public function test_get_allowed_mime_types() {
-		$actual   = $this->instance->get_allowed_mime_types();
-		$expected = [
-			'image' => [
-				'image/webp',
-				'image/png',
-				'image/jpeg',
-				'image/gif',
-			],
-			'audio' => [],
-			'video' => [
-				'video/mp4',
-				'video/webm',
-			],
-		];
+		if ( version_compare( get_bloginfo( 'version' ), '5.8.0', '<' ) ) {
+			$expected = [
+				'image' => [
+					'image/png',
+					'image/jpeg',
+					'image/gif',
+				],
+				'audio' => [],
+				'video' => [
+					'video/mp4',
+					'video/webm',
+				],
+			];
+		} else {
+			$expected = [
+				'image' => [
+					'image/webp',
+					'image/png',
+					'image/jpeg',
+					'image/gif',
+				],
+				'audio' => [],
+				'video' => [
+					'video/mp4',
+					'video/webm',
+				],
+			];
+		}
+
+		$actual = $this->instance->get_allowed_mime_types();
 
 		$this->assertEqualSets( $expected, $actual );
 	}
@@ -62,13 +78,22 @@ class Types extends TestCase {
 	 * @covers ::get_allowed_image_mime_types
 	 */
 	public function test_get_allowed_image_mime_types() {
-		$actual   = $this->instance->get_allowed_image_mime_types();
-		$expected = [
-			'image/webp',
-			'image/png',
-			'image/jpeg',
-			'image/gif',
-		];
+		if ( version_compare( get_bloginfo( 'version' ), '5.8.0', '<' ) ) {
+			$expected = [
+				'image/png',
+				'image/jpeg',
+				'image/gif',
+			];
+		} else {
+			$expected = [
+				'image/webp',
+				'image/png',
+				'image/jpeg',
+				'image/gif',
+			];
+		}
+
+		$actual = $this->instance->get_allowed_image_mime_types();
 
 		$this->assertEqualSets( $expected, $actual );
 	}
