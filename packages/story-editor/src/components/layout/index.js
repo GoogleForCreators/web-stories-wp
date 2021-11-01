@@ -18,12 +18,14 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
   Snackbar,
   useSnackbar,
   themeHelpers,
 } from '@web-stories-wp/design-system';
+import { canTranscodeResource, resourceList } from '@web-stories-wp/media';
+import { useCallback, useMemo } from '@web-stories-wp/react';
 import Proptypes from 'prop-types';
 /**
  * Internal dependencies
@@ -45,6 +47,9 @@ import { ChecklistCheckpointProvider } from '../checklist';
 import { RightClickMenuProvider } from '../../app/rightClickMenu';
 import RightClickMenu from '../canvas/rightClickMenu';
 import { MediaUploadProvider } from '../../app/mediaUpload';
+import { useConfig, useStory } from '../..';
+import { useLocalMedia } from '../../app';
+import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
@@ -82,6 +87,143 @@ function Layout({ header, children }) {
       placement,
     })
   );
+  const {
+    allowedTranscodableMimeTypes,
+    allowedFileTypes,
+    allowedMimeTypes: {
+      image: allowedImageMimeTypes,
+      video: allowedVideoMimeTypes,
+    },
+    // capabilities: { hasUploadMediaAction },
+  } = useConfig();
+  const { showSnackbar } = useSnackbar();
+  const { selectedElements, updateElementsById } = useStory(
+    ({ state: { selectedElements }, actions: { updateElementsById } }) => ({
+      selectedElements,
+      updateElementsById,
+    })
+  );
+  const { resetWithFetch, updateVideoIsMuted, optimizeVideo, optimizeGif } =
+    useLocalMedia(
+      ({
+        actions: {
+          resetWithFetch,
+          updateVideoIsMuted,
+          optimizeVideo,
+          optimizeGif,
+        },
+      }) => {
+        return {
+          resetWithFetch,
+          updateVideoIsMuted,
+          optimizeVideo,
+          optimizeGif,
+        };
+      }
+    );
+
+  const { isTranscodingEnabled } = useFFmpeg();
+
+  // Media Upload Props
+  const allowedMimeTypes = useMemo(() => {
+    if (isTranscodingEnabled) {
+      return [
+        ...allowedTranscodableMimeTypes,
+        ...allowedImageMimeTypes,
+        ...allowedVideoMimeTypes,
+      ];
+    }
+    return [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  }, [
+    allowedImageMimeTypes,
+    allowedVideoMimeTypes,
+    isTranscodingEnabled,
+    allowedTranscodableMimeTypes,
+  ]);
+
+  const transcodableMimeTypes = useMemo(() => {
+    return allowedTranscodableMimeTypes.filter(
+      (x) => !allowedVideoMimeTypes.includes(x)
+    );
+  }, [allowedTranscodableMimeTypes, allowedVideoMimeTypes]);
+
+  let onSelectErrorMessage = __(
+    'No file types are currently supported.',
+    'web-stories'
+  );
+  if (allowedFileTypes.length) {
+    onSelectErrorMessage = sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s to insert into page.', 'web-stories'),
+      translateToExclusiveList(allowedFileTypes)
+    );
+  }
+
+  /**
+   * Insert element such image, video and audio into the editor.
+   *
+   * @param {Object} resource Resource object
+   * @param {string} thumbnailURL The thumbnail's url
+   * @return {null|*} Return onInsert or null.
+   */
+  const insertMediaElement = useCallback(
+    (resource, thumbnailURL) => {
+      resourceList.set(resource.id, {
+        url: thumbnailURL,
+        type: 'cached',
+      });
+      updateElementsById({
+        elementIds: [selectedElements?.[0]?.id],
+        properties: { resource },
+      });
+    },
+    [selectedElements, updateElementsById]
+  );
+
+  const handleMediaSelect = useCallback(
+    (resource) => {
+      try {
+        if (isTranscodingEnabled && canTranscodeResource(resource)) {
+          if (transcodableMimeTypes.includes(resource.mimeType)) {
+            optimizeVideo({ resource });
+          }
+
+          if (resource.mimeType === 'image/gif') {
+            optimizeGif({ resource });
+          }
+        }
+        // WordPress media picker event, sizes.medium.source_url is the smallest image
+        insertMediaElement(
+          resource,
+          resource.sizes?.medium?.source_url || resource.src
+        );
+
+        if (
+          !resource.local &&
+          allowedVideoMimeTypes.includes(resource.mimeType) &&
+          resource.isMuted === null
+        ) {
+          updateVideoIsMuted(resource.id, resource.src);
+        }
+      } catch (e) {
+        showSnackbar({
+          message: e.message,
+          dismissable: true,
+        });
+      }
+    },
+    [
+      allowedVideoMimeTypes,
+      insertMediaElement,
+      isTranscodingEnabled,
+      optimizeGif,
+      optimizeVideo,
+      showSnackbar,
+      transcodableMimeTypes,
+      updateVideoIsMuted,
+    ]
+  );
+
   return (
     <>
       <LayoutProvider>
@@ -89,6 +231,10 @@ function Layout({ header, children }) {
           <MediaUploadProvider
             title={__('Select media', 'web-stories')}
             buttonInsertText={__('Insert media', 'web-stories')}
+            onSelect={handleMediaSelect}
+            onClose={resetWithFetch}
+            type={allowedMimeTypes}
+            onSelectErrorMessage={onSelectErrorMessage}
           >
             <HighlightsProvider>
               <Editor zIndex={3}>

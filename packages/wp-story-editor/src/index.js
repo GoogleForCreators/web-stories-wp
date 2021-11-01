@@ -45,7 +45,6 @@ import {
   StatusCheck,
   PostLock,
   MediaUpload,
-  useMediaPicker,
 } from './components';
 import getApiCallbacks from './api/utils/getApiCallbacks';
 
@@ -69,7 +68,6 @@ const initialize = (id, config) => {
     ...config,
     apiCallbacks: getApiCallbacks(config),
     MediaUpload,
-    useMediaPicker,
   };
 
   render(

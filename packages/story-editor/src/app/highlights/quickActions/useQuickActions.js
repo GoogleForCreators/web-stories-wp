@@ -34,6 +34,7 @@ import { useConfig } from '../../config';
 import { ELEMENT_TYPES } from '../../../elements';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
+import { useMediaUpload } from '../../mediaUpload';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
@@ -64,7 +65,7 @@ const {
  * @param {Function} args.onOpenMediaUpload Function that opens the media upload modal
  * @return {Array.<MenuItemProps>} an array of quick action objects
  */
-const useQuickActions = ({ onOpenMediaUpload }) => {
+const useQuickActions = () => {
   const {
     capabilities: { hasUploadMediaAction },
     isRTL,
@@ -99,6 +100,7 @@ const useQuickActions = ({ onOpenMediaUpload }) => {
       toggleTrimMode,
     })
   );
+  const { onOpenMediaUpload } = useMediaUpload();
 
   const undoRef = useRef(undo);
   undoRef.current = undo;
