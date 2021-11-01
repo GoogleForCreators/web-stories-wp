@@ -45,7 +45,7 @@ class Image_Sizes extends Service_Base {
 	/**
 	 * The image dimensions for the poster-portrait-src.
 	 *
-	 * @var string
+	 * @var int[]
 	 */
 	const POSTER_PORTRAIT_IMAGE_DIMENSIONS = [ 640, 853 ];
 
@@ -59,7 +59,7 @@ class Image_Sizes extends Service_Base {
 	/**
 	 * The image dimensions for media library thumbnails.
 	 *
-	 * @var string
+	 * @var int[]
 	 */
 	const STORY_THUMBNAIL_IMAGE_DIMENSIONS = [ 150, 9999 ];
 
@@ -73,7 +73,7 @@ class Image_Sizes extends Service_Base {
 	/**
 	 * The image dimensions for the publisher logo.
 	 *
-	 * @var string
+	 * @var int[]
 	 */
 	const PUBLISHER_LOGO_IMAGE_DIMENSIONS = [ 96, 96 ];
 
