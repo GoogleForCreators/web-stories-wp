@@ -17,39 +17,24 @@
 /**
  * External dependencies
  */
-import styled, { createGlobalStyle } from 'styled-components';
-export const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: #1a1d1f;
-    margin: 0;
-    padding: 0;
-  }
-`;
 import { useEffect } from 'react';
 
 export default {
   title: 'Playground/preview',
 };
 
-const Text = styled.p``;
-
 function Preview() {
-  const content = window.localStorage.getItem('preview_markup');
-
   useEffect(() => {
+    const content = window.localStorage.getItem('preview_markup');
+
     if (content) {
       document.open();
       document.write(content);
       document.close();
     }
-  }, [content]);
+  }, []);
 
-  return !content ? (
-    <>
-      <GlobalStyle />
-      <Text>{'No Preview Available'}</Text>
-    </>
-  ) : null;
+  return null;
 }
 
 export const _default = Preview;
