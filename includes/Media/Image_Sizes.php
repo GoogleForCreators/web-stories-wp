@@ -163,10 +163,11 @@ class Image_Sizes extends Service_Base {
 				$size_data['source_url'] = $image_src;
 			}
 
-			$full_src                      = wp_get_attachment_image_src( $attachment->ID, 'full' );
-			list ( $src, $width, $height ) = $full_src;
+			$img_src = wp_get_attachment_image_src( $attachment->ID, 'full' );
 
-			if ( ! empty( $full_src ) ) {
+			if ( $img_src ) {
+				list ( $src, $width, $height ) = $img_src;
+
 				$response['media_details']['sizes']['full'] = [
 					'file'       => wp_basename( $src ),
 					'width'      => $width,
