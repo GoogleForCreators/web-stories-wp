@@ -338,6 +338,7 @@ const PageArea = forwardRef(function PageArea(
   {
     children,
     fullbleedRef = createRef(),
+    fullBleedContainerLabel = __('Fullbleed area', 'web-stories'),
     overlay = [],
     background,
     isControlled = false,
@@ -404,7 +405,7 @@ const PageArea = forwardRef(function PageArea(
       >
         <PaddedPage ref={paddedRef}>
           <FullbleedContainer
-            aria-label={__('Fullbleed area', 'web-stories')}
+            aria-label={fullBleedContainerLabel}
             role="region"
             ref={fullbleedRef}
             data-testid="fullbleed"
@@ -441,6 +442,7 @@ PageArea.propTypes = {
   className: PropTypes.string,
   showOverflow: PropTypes.bool,
   isBackgroundSelected: PropTypes.bool,
+  fullBleedContainerLabel: PropTypes.string,
   pageAreaRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   withSafezone: PropTypes.bool,
 };
