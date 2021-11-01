@@ -61,8 +61,6 @@ const {
  * Quick actions should have the same shape as items in
  * the design system's context menu.
  *
- * @param {Object} args Object of arguments
- * @param {Function} args.onOpenMediaUpload Function that opens the media upload modal
  * @return {Array.<MenuItemProps>} an array of quick action objects
  */
 const useQuickActions = () => {

@@ -73,14 +73,6 @@ function MediaUpload({ render: _render, onSelect }) {
   return _render(open);
 }
 
-function useMediaPicker({ onSelect }) {
-  const open = () => {
-    onSelect({ src: 'https://www.example.com/media1' });
-  };
-
-  return open;
-}
-
 const DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
@@ -132,7 +124,6 @@ const DEFAULT_CONFIG = {
   },
   flags: {},
   MediaUpload,
-  useMediaPicker,
 };
 
 /**
