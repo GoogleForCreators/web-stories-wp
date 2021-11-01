@@ -25,7 +25,7 @@ services:
       - phpstan.broker.dynamicStaticMethodReturnTypeExtension
 
 parameters:
-  level: 8
+  level: 9
   inferPrivatePropertyTypeFromConstructor: true
   checkGenericClassInNonGenericObjectType: false
   checkMissingIterableValueType: false
