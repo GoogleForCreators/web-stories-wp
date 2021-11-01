@@ -19,10 +19,6 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { NumericInput } from '@web-stories-wp/design-system';
-
-/**
- * Internal dependencies
- */
 /**
  * Internal dependencies
  */
