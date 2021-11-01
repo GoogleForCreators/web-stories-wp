@@ -83,10 +83,7 @@ OpenMediaUploadHandler.propTypes = {
  * @return {Node} The wrapped children
  */
 function MediaUploadProvider({ children, ...props }) {
-  const {
-    // capabilities: { hasUploadMediaAction },
-    MediaUpload,
-  } = useConfig();
+  const { MediaUpload } = useConfig();
 
   return (
     <MediaUpload
