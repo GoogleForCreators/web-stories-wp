@@ -21,7 +21,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Icons } from '@web-stories-wp/design-system';
 
 function ElementsIcon() {
-  return <Icons.Box4 aria-label={__('Elements library', 'web-stories')} />;
+  return <Icons.Box4 title={__('Elements library', 'web-stories')} />;
 }
 
 export default ElementsIcon;

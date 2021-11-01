@@ -21,12 +21,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Icons } from '@web-stories-wp/design-system';
 
 function Media3pIcon() {
-  return (
-    <Icons.Picture
-      alt={__('Explore Media', 'web-stories')}
-      title={__('Explore Media', 'web-stories')}
-    />
-  );
+  return <Icons.Picture title={__('Explore Media', 'web-stories')} />;
 }
 
 export default Media3pIcon;
