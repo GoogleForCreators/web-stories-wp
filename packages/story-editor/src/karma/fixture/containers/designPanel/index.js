@@ -27,7 +27,6 @@ import { Alignment } from './alignment';
 import { Animation } from './animationPanel';
 import { Filter } from './filter';
 import { Border } from './border';
-import { BorderRadius } from './borderRadius';
 import { ColorPreset } from './colorPreset';
 import { Layers } from './layers';
 import { Link } from './link';
@@ -39,7 +38,6 @@ import { VideoPoster } from './videoPoster';
 import { Captions } from './captions';
 import { TextBox } from './textBox';
 import { ShapeStyle } from './shapeStyle';
-import { LayerStyle } from './layerStyle';
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
@@ -109,25 +107,9 @@ export class DesignPanel extends Container {
     );
   }
 
-  get borderRadius() {
-    return this._get(
-      this.getByRole('region', { name: /Corner Radius/i }),
-      'borderRadius',
-      BorderRadius
-    );
-  }
-
   get imageAccessibility() {
     // @todo: implement
     return null;
-  }
-
-  get layerStyle() {
-    return this._get(
-      this.getByRole('region', { name: /Layer$/i }),
-      'layerStyle',
-      LayerStyle
-    );
   }
 
   get shapeStyle() {
@@ -140,7 +122,7 @@ export class DesignPanel extends Container {
 
   get sizePosition() {
     return this._get(
-      this.getByRole('region', { name: /Size & Position/i }),
+      this.getByRole('region', { name: /Selection/i }),
       'sizePosition',
       SizePosition
     );

@@ -211,7 +211,12 @@ class Poster extends Service_Base {
 	 * @return array
 	 */
 	public function get_thumbnail_data( int $thumbnail_id ): array {
-		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
+		$img_src = wp_get_attachment_image_src( $thumbnail_id, 'full' );
+
+		if ( ! $img_src ) {
+			return [];
+		}
+
 		list ( $src, $width, $height ) = $img_src;
 		$generated                     = $this->is_poster( $thumbnail_id );
 		return compact( 'src', 'width', 'height', 'generated' );

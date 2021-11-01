@@ -22,9 +22,7 @@ import { Icons } from '@web-stories-wp/design-system';
 
 function PageTemplatesIcon() {
   return (
-    <Icons.Box4Alternate
-      aria-label={__('Page templates library', 'web-stories')}
-    />
+    <Icons.Box4Alternate title={__('Page templates library', 'web-stories')} />
   );
 }
 
