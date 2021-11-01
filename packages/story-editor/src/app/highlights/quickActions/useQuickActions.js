@@ -18,10 +18,10 @@
  * External dependencies
  */
 import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
-import { sprintf, translateToExclusiveList, __ } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { canTranscodeResource, resourceList } from '@web-stories-wp/media';
+import { canTranscodeResource } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -34,8 +34,6 @@ import { useConfig } from '../../config';
 import { ELEMENT_TYPES } from '../../../elements';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
-import useFFmpeg from '../../media/utils/useFFmpeg';
-import { useLocalMedia } from '../..';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
@@ -62,19 +60,14 @@ const {
  * Quick actions should have the same shape as items in
  * the design system's context menu.
  *
+ * @param {Object} args Object of arguments
+ * @param {Function} args.onOpenMediaUpload Function that opens the media upload modal
  * @return {Array.<MenuItemProps>} an array of quick action objects
  */
-const useQuickActions = () => {
+const useQuickActions = ({ onOpenMediaUpload }) => {
   const {
-    allowedTranscodableMimeTypes,
-    allowedFileTypes,
-    allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      video: allowedVideoMimeTypes,
-    },
     capabilities: { hasUploadMediaAction },
     isRTL,
-    useMediaPicker,
   } = useConfig();
   const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
@@ -106,60 +99,6 @@ const useQuickActions = () => {
       toggleTrimMode,
     })
   );
-  const { resetWithFetch, updateVideoIsMuted, optimizeVideo, optimizeGif } =
-    useLocalMedia(
-      ({
-        actions: {
-          resetWithFetch,
-          updateVideoIsMuted,
-          optimizeVideo,
-          optimizeGif,
-        },
-      }) => {
-        return {
-          resetWithFetch,
-          updateVideoIsMuted,
-          optimizeVideo,
-          optimizeGif,
-        };
-      }
-    );
-
-  const { isTranscodingEnabled } = useFFmpeg();
-
-  const allowedMimeTypes = useMemo(() => {
-    if (isTranscodingEnabled) {
-      return [
-        ...allowedTranscodableMimeTypes,
-        ...allowedImageMimeTypes,
-        ...allowedVideoMimeTypes,
-      ];
-    }
-    return [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
-  }, [
-    allowedImageMimeTypes,
-    allowedVideoMimeTypes,
-    isTranscodingEnabled,
-    allowedTranscodableMimeTypes,
-  ]);
-
-  const transcodableMimeTypes = useMemo(() => {
-    return allowedTranscodableMimeTypes.filter(
-      (x) => !allowedVideoMimeTypes.includes(x)
-    );
-  }, [allowedTranscodableMimeTypes, allowedVideoMimeTypes]);
-
-  let onSelectErrorMessage = __(
-    'No file types are currently supported.',
-    'web-stories'
-  );
-  if (allowedFileTypes.length) {
-    onSelectErrorMessage = sprintf(
-      /* translators: %s: list of allowed file types. */
-      __('Please choose only %s to insert into page.', 'web-stories'),
-      translateToExclusiveList(allowedFileTypes)
-    );
-  }
 
   const undoRef = useRef(undo);
   undoRef.current = undo;
@@ -168,80 +107,6 @@ const useQuickActions = () => {
     (element) => element.isBackground
   );
   const selectedElement = selectedElements?.[0];
-
-  /**
-   * Insert element such image, video and audio into the editor.
-   *
-   * @param {Object} resource Resource object
-   * @param {string} thumbnailURL The thumbnail's url
-   * @return {null|*} Return onInsert or null.
-   */
-  const insertMediaElement = useCallback(
-    (resource, thumbnailURL) => {
-      resourceList.set(resource.id, {
-        url: thumbnailURL,
-        type: 'cached',
-      });
-      updateElementsById({
-        elementIds: [selectedElement.id],
-        properties: { resource },
-      });
-    },
-    [selectedElement, updateElementsById]
-  );
-
-  const handleMediaSelect = useCallback(
-    (resource) => {
-      try {
-        if (isTranscodingEnabled && canTranscodeResource(resource)) {
-          if (transcodableMimeTypes.includes(resource.mimeType)) {
-            optimizeVideo({ resource });
-          }
-
-          if (resource.mimeType === 'image/gif') {
-            optimizeGif({ resource });
-          }
-        }
-        // WordPress media picker event, sizes.medium.source_url is the smallest image
-        insertMediaElement(
-          resource,
-          resource.sizes?.medium?.source_url || resource.src
-        );
-
-        if (
-          !resource.local &&
-          allowedVideoMimeTypes.includes(resource.mimeType) &&
-          resource.isMuted === null
-        ) {
-          updateVideoIsMuted(resource.id, resource.src);
-        }
-      } catch (e) {
-        showSnackbar({
-          message: e.message,
-          dismissable: true,
-        });
-      }
-    },
-    [
-      allowedVideoMimeTypes,
-      insertMediaElement,
-      isTranscodingEnabled,
-      optimizeGif,
-      optimizeVideo,
-      showSnackbar,
-      transcodableMimeTypes,
-      updateVideoIsMuted,
-    ]
-  );
-
-  const openMediaPicker = useMediaPicker({
-    title: __('Select media', 'web-stories'),
-    buttonInsertText: __('Insert media', 'web-stories'),
-    onSelect: handleMediaSelect,
-    onClose: resetWithFetch,
-    type: allowedMimeTypes,
-    onSelectErrorMessage: onSelectErrorMessage,
-  });
 
   /**
    * Prevent quick actions menu from removing focus from the canvas.
@@ -519,7 +384,7 @@ const useQuickActions = () => {
         label: ACTIONS.REPLACE_MEDIA.text,
         onClick: (ev) => {
           dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
-          openMediaPicker(ev);
+          onOpenMediaUpload(ev);
 
           trackEvent('quick_action', {
             name: ACTIONS.REPLACE_MEDIA.trackingEventName,
@@ -536,7 +401,7 @@ const useQuickActions = () => {
     foregroundCommonActions,
     hasUploadMediaAction,
     dispatchStoryEvent,
-    openMediaPicker,
+    onOpenMediaUpload,
     selectedElement?.type,
   ]);
 
@@ -713,7 +578,7 @@ const useQuickActions = () => {
         label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
         onClick: (ev) => {
           dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
-          openMediaPicker(ev);
+          onOpenMediaUpload(ev);
 
           trackEvent('quick_action', {
             name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
@@ -752,7 +617,7 @@ const useQuickActions = () => {
     handleElementReset,
     handleFocusAnimationPanel,
     hasUploadMediaAction,
-    openMediaPicker,
+    onOpenMediaUpload,
     resetProperties,
     selectedElement,
     showClearAction,

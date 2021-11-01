@@ -29,6 +29,7 @@ import { useQuickActions } from '../../app/highlights';
 import DirectionAware from '../directionAware';
 import Carousel from '../carousel';
 import { useLayout } from '../../app';
+import { useMediaUpload } from '../../app/mediaUpload';
 import {
   CarouselArea,
   HeadArea,
@@ -41,7 +42,8 @@ function NavLayer({ header }) {
   const { hasHorizontalOverflow } = useLayout(
     ({ state: { hasHorizontalOverflow } }) => ({ hasHorizontalOverflow })
   );
-  const quickActions = useQuickActions();
+  const { onOpenMediaUpload } = useMediaUpload();
+  const quickActions = useQuickActions({ onOpenMediaUpload });
 
   /**
    * Stop the event from bubbling if the user clicks in between buttons.
