@@ -23,7 +23,7 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import TextBox from '../textStyle';
+import TextStyle from '../textStyle';
 import ColorInput from '../../../../form/color/color';
 import {
   BACKGROUND_TEXT_MODE,
@@ -31,11 +31,37 @@ import {
   MULTIPLE_DISPLAY_VALUE,
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
+import FontContext from '../../../../../app/font/context';
 
 jest.mock('../../../../form/color/color', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
+
+function Wrapper({ children }) {
+  return (
+    <FontContext.Provider
+      value={{
+        state: {
+          fonts: [],
+        },
+        actions: {
+          maybeEnqueueFontStyle: () => Promise.resolve(),
+          getFontByName: jest.fn(),
+        },
+      }}
+    >
+      {children}
+    </FontContext.Provider>
+  );
+}
+
+Wrapper.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+};
 
 const DEFAULT_PADDING = {
   horizontal: 0,
@@ -44,7 +70,7 @@ const DEFAULT_PADDING = {
   hasHiddenPadding: false,
 };
 
-describe('panels/TextBox', () => {
+describe('panels/TextStyle/TextBox', () => {
   let textElement, unlockPaddingTextElement;
   let controls;
   const paddingRatioLockLabel = 'Toggle padding ratio lock';
@@ -87,14 +113,8 @@ describe('panels/TextBox', () => {
   };
 
   function renderTextBox(selectedElements, ...args) {
-    return renderPanel(TextBox, selectedElements, ...args);
+    return renderPanel(TextStyle, selectedElements, Wrapper, ...args);
   }
-
-  it('should render <TextBox /> panel', () => {
-    renderTextBox([textElement]);
-    const element = screen.getByRole('button', { name: 'Text box' });
-    expect(element).toBeInTheDocument();
-  });
 
   describe('paddingControls', () => {
     let textSamePadding,
