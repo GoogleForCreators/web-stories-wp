@@ -47,10 +47,6 @@ const Handle = styled.div`
   right: 0;
   width: 100%;
   border-bottom: 1px solid transparent;
-
-  &:focus {
-    border-color: ${({ theme }) => theme.colors.border.focus};
-  }
 `;
 
 const DragBar = styled.div`
