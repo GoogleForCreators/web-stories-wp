@@ -176,6 +176,7 @@ class Plugin extends ServiceBasedPlugin {
 			Locale::class,
 			Settings::class,
 			Stories_Script_Data::class,
+			Types::class,
 			User\Preferences::class,
 		];
 	}
