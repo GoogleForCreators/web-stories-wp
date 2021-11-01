@@ -21,6 +21,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  useSnackbar,
 } from '@web-stories-wp/design-system';
 import { useStory } from '@web-stories-wp/story-editor';
 
@@ -37,13 +38,23 @@ function SaveButton() {
     })
   );
 
+  const { showSnackbar } = useSnackbar();
+
+  const handleSaveButton = () => {
+    saveStory().then(() => {
+      showSnackbar({
+        message: 'Story Saved',
+      });
+    });
+  };
+
   // @todo Make the app state persistent.
   return (
     <Button
       variant={BUTTON_VARIANTS.RECTANGLE}
       type={BUTTON_TYPES.PRIMARY}
       size={BUTTON_SIZES.SMALL}
-      onClick={() => saveStory({ status: 'draft' })}
+      onClick={handleSaveButton}
       disabled={isSaving}
     >
       {'Save'}
