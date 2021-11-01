@@ -22,6 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * External dependencies
  */
+import { useMemo, useDebouncedCallback } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
 
@@ -31,19 +32,37 @@ import { useFeature } from 'flagged';
 import {
   DASHBOARD_VIEWS,
   TEMPLATES_GALLERY_SORT_MENU_ITEMS,
+  TEXT_INPUT_DEBOUNCE,
 } from '../../../../constants';
+import { TemplatesPropType } from '../../../../types';
 import {
   FilterPropTypes,
   SortPropTypes,
   ViewPropTypes,
+  SearchPropTypes,
 } from '../../../../utils/useTemplateView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { PageHeading, BodyViewOptions } from '../../shared';
+import { getSearchOptions } from '../../utils';
 
-function Header({ filter, isLoading, totalTemplates, sort, view }) {
+function Header({
+  filter,
+  isLoading,
+  totalTemplates,
+  sort,
+  view,
+  search,
+  templates,
+}) {
   const enableInProgressTemplateActions = useFeature(
     'enableInProgressTemplateActions'
   );
+
+  const searchOptions = useMemo(() => getSearchOptions(templates), [templates]);
+
+  const debouncedSearchChange = useDebouncedCallback((value) => {
+    search.setKeyword(value);
+  }, TEXT_INPUT_DEBOUNCE);
 
   const resultsLabel = useDashboardResultsLabel({
     totalResults: totalTemplates,
@@ -53,7 +72,13 @@ function Header({ filter, isLoading, totalTemplates, sort, view }) {
 
   return (
     <>
-      <PageHeading heading={__('Explore Templates', 'web-stories')} />
+      <PageHeading
+        heading={__('Explore Templates', 'web-stories')}
+        showSearch
+        searchOptions={searchOptions}
+        searchValue={search.keyword}
+        handleSearchChange={debouncedSearchChange}
+      />
       <BodyViewOptions
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
@@ -78,6 +103,8 @@ Header.propTypes = {
   sort: SortPropTypes.isRequired,
   totalTemplates: PropTypes.number,
   view: ViewPropTypes.isRequired,
+  search: SearchPropTypes.isRequired,
+  templates: TemplatesPropType,
 };
 
 export default Header;

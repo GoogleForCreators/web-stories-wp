@@ -77,10 +77,18 @@ function ExploreTemplates() {
   }, [fetchExternalTemplates]);
 
   const orderedTemplates = useMemo(() => {
-    return templatesOrderById.map((templateId) => {
-      return templates[templateId];
-    });
-  }, [templatesOrderById, templates]);
+    return (
+      templatesOrderById
+        .map((templateId) => {
+          return templates[templateId];
+        })
+        // Add search keyword for title
+        .filter(
+          (template) =>
+            !search.keyword || template.title.includes(search.keyword)
+        )
+    );
+  }, [templatesOrderById, templates, search.keyword]);
 
   const handleCreateStoryFromTemplate = useCallback(
     (templateId) => {
