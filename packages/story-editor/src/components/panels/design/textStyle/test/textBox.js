@@ -33,10 +33,24 @@ import {
 import { renderPanel } from '../../../shared/test/_utils';
 import FontContext from '../../../../../app/font/context';
 
-jest.mock('../../../../form/color/color', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
+let mockControls;
+jest.mock('../../../../form/color/color', () => {
+  // eslint-disable-next-line no-undef
+  const React = require('@web-stories-wp/react');
+  // eslint-disable-next-line no-undef
+  const _PropTypes = require('prop-types');
+  const FakeControl = React.forwardRef(function FakeControl(props, ref) {
+    mockControls[props['data-testid']] = props;
+    return <div ref={ref} />;
+  });
+  FakeControl.propTypes = {
+    'data-testid': _PropTypes.string,
+  };
+  return {
+    __esModule: true,
+    default: FakeControl,
+  };
+});
 
 function Wrapper({ children }) {
   return (
@@ -71,8 +85,8 @@ const DEFAULT_PADDING = {
 };
 
 describe('panels/TextStyle/TextBox', () => {
+  mockControls = {};
   let textElement, unlockPaddingTextElement;
-  let controls;
   const paddingRatioLockLabel = 'Toggle padding ratio lock';
 
   beforeEach(() => {
@@ -99,18 +113,7 @@ describe('panels/TextStyle/TextBox', () => {
       ...unlockPaddingTextElement,
       padding: DEFAULT_PADDING,
     };
-    controls = {};
-    ColorInput.mockImplementation(FakeControl);
   });
-
-  function FakeControl(props) {
-    controls[props['data-testid']] = props;
-    return <div />;
-  }
-
-  FakeControl.propTypes = {
-    'data-testid': PropTypes.string,
-  };
 
   function renderTextBox(selectedElements, ...args) {
     return renderPanel(TextStyle, selectedElements, Wrapper, ...args);

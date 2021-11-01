@@ -201,6 +201,12 @@ describe('Panels/TextStyle', () => {
       lineHeight: 1,
       x: dx,
       y: dy,
+      padding: {
+        hasHiddenPadding: false,
+        horizontal: 0,
+        locked: true,
+        vertical: 0,
+      },
     });
   });
 
