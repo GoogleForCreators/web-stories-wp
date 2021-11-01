@@ -30,7 +30,6 @@ use DOMNodeList;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Document_Parser;
-
 use WP_Error;
 use WP_Http;
 use WP_Network;

@@ -40,9 +40,10 @@ class Types extends TestCase {
 	 * @covers ::get_allowed_mime_types
 	 */
 	public function test_get_allowed_mime_types() {
-		if ( version_compare( get_bloginfo( 'version' ), '5.8.0', '<' ) ) {
+		if ( $this->supportsWebP() ) {
 			$expected = [
 				'image' => [
+					'image/webp',
 					'image/png',
 					'image/jpeg',
 					'image/gif',
@@ -56,7 +57,6 @@ class Types extends TestCase {
 		} else {
 			$expected = [
 				'image' => [
-					'image/webp',
 					'image/png',
 					'image/jpeg',
 					'image/gif',
@@ -78,15 +78,16 @@ class Types extends TestCase {
 	 * @covers ::get_allowed_image_mime_types
 	 */
 	public function test_get_allowed_image_mime_types() {
-		if ( version_compare( get_bloginfo( 'version' ), '5.8.0', '<' ) ) {
+		if ( $this->supportsWebP() ) {
 			$expected = [
+				'image/webp',
 				'image/png',
 				'image/jpeg',
 				'image/gif',
 			];
 		} else {
+
 			$expected = [
-				'image/webp',
 				'image/png',
 				'image/jpeg',
 				'image/gif',
@@ -105,5 +106,11 @@ class Types extends TestCase {
 		$actual = $this->instance->get_file_type_exts( [ 'video/webm' ] );
 
 		$this->assertEqualSets( [ 'webm' ], $actual );
+	}
+
+	protected function supportsWebP() {
+		$mime_type = array_values( wp_get_mime_types() );
+
+		return in_array( 'image/webp', $mime_type, true );
 	}
 }
