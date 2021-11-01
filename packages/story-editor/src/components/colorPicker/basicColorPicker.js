@@ -43,17 +43,27 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   margin: 8px 16px 16px;
-  gap: 16px;
+`;
+
+const SavedColors = styled.div`
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  padding-bottom: 24px;
+`;
+
+const DefaultColors = styled.div`
+  padding-bottom: 24px;
 `;
 
 const Label = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
+  margin: 10px 0;
 `;
 
 const DefaultText = styled(Label)`
   margin-left: 8px;
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 const StyledButton = styled(Button)`
   display: flex;
@@ -85,49 +95,58 @@ function BasicColorPicker({
   return (
     <>
       <Header handleClose={handleClose}>
-        <DefaultText id="colorpicker-default-colors-title">
-          {__('Default colors', 'web-stories')}
-        </DefaultText>
+        <DefaultText>{__('Color', 'web-stories')}</DefaultText>
       </Header>
       <Body>
-        <BasicColorList
-          color={color}
-          colors={BASIC_COLORS}
-          handleColorChange={handleColorChange}
-          allowsOpacity={allowsOpacity}
-          allowsGradient={allowsGradient}
-          aria-labelledby="colorpicker-default-colors-title"
-        />
-        {allowsSavedColors && savedColors.length > 0 && (
-          <>
-            <Label id="colorpicker-saved-colors-title">
-              {__('Saved colors', 'web-stories')}
-            </Label>
-            <BasicColorList
-              color={color}
-              colors={savedColors}
-              handleColorChange={handleColorChange}
-              allowsOpacity={allowsOpacity}
-              allowsGradient={allowsGradient}
-              aria-labelledby="colorpicker-saved-colors-title"
-            />
-          </>
-        )}
-        {allowsSavedColors && storyColors.length > 0 && (
-          <>
-            <Label id="colorpicker-story-colors-title">
-              {__('Story colors', 'web-stories')}
-            </Label>
-            <BasicColorList
-              color={color}
-              colors={storyColors}
-              handleColorChange={handleColorChange}
-              allowsOpacity={allowsOpacity}
-              allowsGradient={allowsGradient}
-              aria-labelledby="colorpicker-story-colors-title"
-            />
-          </>
-        )}
+        <SavedColors>
+          {allowsSavedColors && (
+            <>
+              <Label id="colorpicker-story-colors-title">
+                {__('Current story', 'web-stories')}
+              </Label>
+              {storyColors.length > 0 && (
+                <BasicColorList
+                  color={color}
+                  colors={storyColors}
+                  handleColorChange={handleColorChange}
+                  allowsOpacity={allowsOpacity}
+                  allowsGradient={allowsGradient}
+                  aria-labelledby="colorpicker-story-colors-title"
+                />
+              )}
+            </>
+          )}
+          {allowsSavedColors && (
+            <>
+              <Label id="colorpicker-saved-colors-title">
+                {__('Saved colors', 'web-stories')}
+              </Label>
+              {savedColors.length > 0 && (
+                <BasicColorList
+                  color={color}
+                  colors={savedColors}
+                  handleColorChange={handleColorChange}
+                  allowsOpacity={allowsOpacity}
+                  allowsGradient={allowsGradient}
+                  aria-labelledby="colorpicker-saved-colors-title"
+                />
+              )}
+            </>
+          )}
+        </SavedColors>
+        <DefaultColors>
+          <Label id="colorpicker-default-colors-title">
+            {__('Default', 'web-stories')}
+          </Label>
+          <BasicColorList
+            color={color}
+            colors={BASIC_COLORS}
+            handleColorChange={handleColorChange}
+            allowsOpacity={allowsOpacity}
+            allowsGradient={allowsGradient}
+            aria-labelledby="colorpicker-default-colors-title"
+          />
+        </DefaultColors>
         <StyledButton
           onClick={showCustomPicker}
           type={BUTTON_TYPES.SECONDARY}
