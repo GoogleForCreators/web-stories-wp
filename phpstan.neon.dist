@@ -31,7 +31,7 @@ parameters:
   checkMissingIterableValueType: false
   paths:
     - includes/
-  excludes_analyse:
+  excludePaths:
     - includes/vendor/*
     - includes/polyfills/*
   scanDirectories:
