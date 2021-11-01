@@ -109,6 +109,7 @@ function BasicColorPicker({
                   color={color}
                   colors={storyColors}
                   handleColorChange={handleColorChange}
+                  addColorType="local"
                   allowsOpacity={allowsOpacity}
                   allowsGradient={allowsGradient}
                   aria-labelledby="colorpicker-story-colors-title"
@@ -125,6 +126,7 @@ function BasicColorPicker({
                 <BasicColorList
                   color={color}
                   colors={savedColors}
+                  addColorType="global"
                   handleColorChange={handleColorChange}
                   allowsOpacity={allowsOpacity}
                   allowsGradient={allowsGradient}

@@ -32,6 +32,7 @@ import { useRef } from '@web-stories-wp/react';
  * Internal dependencies
  */
 import useRovingTabIndex from '../../utils/useRovingTabIndex';
+import ColorAdd from './colorAdd';
 
 const focusStyle = css`
   ${({ theme }) =>
@@ -77,6 +78,7 @@ function BasicColorList({
   handleColorChange,
   allowsOpacity,
   allowsGradient,
+  addColorType = null,
   ...rest
 }) {
   const colorAsBackground = getPatternAsString(color);
@@ -118,6 +120,7 @@ function BasicColorList({
           />
         );
       })}
+      {addColorType && <ColorAdd type={addColorType} />}
     </SwatchList>
   );
 }
