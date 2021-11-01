@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,6 @@
 /**
  * External dependencies
  */
+import sprintf from '@tannin/sprintf';
 
-export { default as translateToExclusiveList } from './translateToExclusiveList';
-export { default as translateToInclusiveList } from './translateToInclusiveList';
-export { default as TranslateWithMarkup } from './translateWithMarkup';
-export { default as sprintf } from './sprintf';
-export * from './i18n';
+export default sprintf;
