@@ -52,7 +52,7 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
       css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
       name="style"
-      title={__('Style', 'web-stories')}
+      title={__('Color', 'web-stories')}
       isPersistable={!highlight}
     >
       <Row>
