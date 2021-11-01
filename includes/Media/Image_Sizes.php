@@ -45,7 +45,7 @@ class Image_Sizes extends Service_Base {
 	/**
 	 * The image dimensions for the poster-portrait-src.
 	 *
-	 * @var string
+	 * @var int[]
 	 */
 	const POSTER_PORTRAIT_IMAGE_DIMENSIONS = [ 640, 853 ];
 
@@ -59,7 +59,7 @@ class Image_Sizes extends Service_Base {
 	/**
 	 * The image dimensions for media library thumbnails.
 	 *
-	 * @var string
+	 * @var int[]
 	 */
 	const STORY_THUMBNAIL_IMAGE_DIMENSIONS = [ 150, 9999 ];
 
@@ -73,7 +73,7 @@ class Image_Sizes extends Service_Base {
 	/**
 	 * The image dimensions for the publisher logo.
 	 *
-	 * @var string
+	 * @var int[]
 	 */
 	const PUBLISHER_LOGO_IMAGE_DIMENSIONS = [ 96, 96 ];
 
@@ -163,10 +163,11 @@ class Image_Sizes extends Service_Base {
 				$size_data['source_url'] = $image_src;
 			}
 
-			$full_src                      = wp_get_attachment_image_src( $attachment->ID, 'full' );
-			list ( $src, $width, $height ) = $full_src;
+			$img_src = wp_get_attachment_image_src( $attachment->ID, 'full' );
 
-			if ( ! empty( $full_src ) ) {
+			if ( $img_src ) {
+				list ( $src, $width, $height ) = $img_src;
+
 				$response['media_details']['sizes']['full'] = [
 					'file'       => wp_basename( $src ),
 					'width'      => $width,
