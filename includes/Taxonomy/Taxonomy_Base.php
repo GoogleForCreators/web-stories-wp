@@ -49,7 +49,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 *
 	 * @var string
 	 */
-	CONST REST_NAMESPACE = 'web-stories/v1';
+	const REST_NAMESPACE = 'web-stories/v1';
 
 	/**
 	 * Taxonomy key, must not exceed 32 characters.

@@ -51,7 +51,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @var string
 	 */
-	CONST REST_NAMESPACE = 'web-stories/v1';
+	const REST_NAMESPACE = 'web-stories/v1';
 
 	/**
 	 * Registers the post type.
