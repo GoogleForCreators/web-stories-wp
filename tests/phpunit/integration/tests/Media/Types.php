@@ -39,8 +39,8 @@ class Types extends TestCase {
 	/**
 	 * @covers ::get_allowed_mime_types
 	 */
-	public function test_get_allowed_mime_types(){
-		$actual = $this->instance->get_allowed_mime_types();
+	public function test_get_allowed_mime_types() {
+		$actual   = $this->instance->get_allowed_mime_types();
 		$expected = [
 			'image' => [
 				'image/webp',
@@ -76,9 +76,9 @@ class Types extends TestCase {
 	/**
 	 * @covers ::get_file_type_exts
 	 */
-	public function test_get_file_type_exts(){
-		$actual = $this->instance->get_file_type_exts(['video/webm',]);
+	public function test_get_file_type_exts() {
+		$actual = $this->instance->get_file_type_exts( [ 'video/webm' ] );
 
-		$this->assertEqualSets( ['webm'], $actual );
+		$this->assertEqualSets( [ 'webm' ], $actual );
 	}
 }
