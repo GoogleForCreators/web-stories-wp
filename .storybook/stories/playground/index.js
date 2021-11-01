@@ -69,6 +69,17 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   let response;
 
   const dummyMedia = getDummyMedia();
+  const storyResponse = {
+    title: { raw: '' },
+    excerpt: { raw: '' },
+    permalink_template: 'https://example.org/web-stories/%pagename%/',
+    style_presets: {
+      color: [],
+      textStyles: [],
+    },
+    date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
+    preview_link: `${window.location.origin}/iframe.html?id=playground-preview--default`,
+  };
 
   switch (name) {
     case 'getCurrentUser':
@@ -76,17 +87,7 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
       break;
     case 'getStoryById':
     case 'getDemoStoryById': // @todo https://github.com/google/web-stories-wp/pull/9569#discussion_r739076535
-      response = {
-        title: { raw: '' },
-        excerpt: { raw: '' },
-        permalink_template: 'https://example.org/web-stories/%pagename%/',
-        style_presets: {
-          color: [],
-          textStyles: [],
-        },
-        date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
-        preview_link: `${window.location.origin}/iframe.html?id=playground-preview--default`,
-      };
+      response = storyResponse;
       break;
     case 'getMedia':
       response = {
@@ -104,7 +105,15 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
       response = {};
   }
 
-  callbacks[name] = () => Promise.resolve(response);
+  if ('saveStoryById' === name) {
+    callbacks[name] = (story) => {
+      window.localStorage.setItem('preview_markup', story?.content);
+      return Promise.resolve(storyResponse);
+    };
+  } else {
+    callbacks[name] = () => Promise.resolve(response);
+  }
+
   return callbacks;
 }, {});
 

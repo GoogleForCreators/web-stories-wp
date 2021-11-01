@@ -22,17 +22,28 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '@web-stories-wp/design-system';
+import { useStory } from '@web-stories-wp/story-editor';
 
 function SaveButton() {
-  const saveStory = () => {};
+  const { isSaving, saveStory } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+      },
+      actions: { saveStory },
+    }) => ({
+      isSaving,
+      saveStory,
+    })
+  );
 
   return (
     <Button
       variant={BUTTON_VARIANTS.RECTANGLE}
       type={BUTTON_TYPES.PRIMARY}
       size={BUTTON_SIZES.SMALL}
-      onClick={() => saveStory()}
-      disabled={false}
+      onClick={() => saveStory({ status: 'draft' })}
+      disabled={isSaving}
     >
       {'Save'}
     </Button>
