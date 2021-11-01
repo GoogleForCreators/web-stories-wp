@@ -108,7 +108,11 @@ class Sanitization {
 	 * @return void
 	 */
 	protected function ensure_required_markup( $document, array $scripts ) {
-		// Gather all links.
+		/**
+		 * Link elements.
+		 *
+		 * @var array{preconnect: \DOMElement[]|null,dns-prefetch: \DOMElement[]|null,preload: \DOMElement[]|null, prerender: \DOMElement[]|null, prefetch: \DOMElement[]|null }
+		 */
 		$links = [
 			Attribute::REL_PRECONNECT => [
 				// Include preconnect link for AMP CDN for browsers that don't support preload.
