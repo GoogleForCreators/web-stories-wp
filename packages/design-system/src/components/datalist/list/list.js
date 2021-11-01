@@ -180,10 +180,7 @@ const OptionList = forwardRef(function OptionList(
       evt.stopPropagation();
       evt.preventDefault();
 
-      // since there's only two elements in this dialog either
-      // 'tab' || 'shift+tab' should circle to the other element
-      // in the dialog
-      if (key === 'Tab') {
+      if (key === 'Tab' && evt.shiftKey) {
         focusSearch();
       }
 

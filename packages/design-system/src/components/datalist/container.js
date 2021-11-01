@@ -33,7 +33,6 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { noop } from '../../utils/noop';
 import SearchInput from './searchInput';
 import { isKeywordFilterable } from './utils';
 
@@ -76,7 +75,6 @@ const OptionsContainer = forwardRef(function OptionsContainer(
     renderContents,
     isInline,
     hasDropDownBorder = false,
-    focusList = noop,
   },
   inputRef
 ) {
@@ -85,20 +83,6 @@ const OptionsContainer = forwardRef(function OptionsContainer(
   const [queriedOptions, setQueriedOptions] = useState(null);
   const [isExpanded, setIsExpanded] = useState(true);
   const [trigger, setTrigger] = useState(0);
-
-  const handleKeyDown = useCallback(
-    (evt) => {
-      // since there's only two elements in this dialog either
-      // 'tab' || 'shift+tab' should circle to the other element
-      // in the dialog
-      if (evt.key === 'Tab') {
-        evt.stopPropagation();
-        evt.preventDefault();
-        focusList();
-      }
-    },
-    [focusList]
-  );
 
   useFocusOut(ref, onClose, [onClose]);
 
@@ -142,7 +126,6 @@ const OptionsContainer = forwardRef(function OptionsContainer(
           isExpanded={isExpanded}
           focusFontListFirstOption={() => setTrigger((v) => v + 1)}
           aria-owns={listId}
-          onKeyDown={handleKeyDown}
         />
       )}
       {renderContents({
@@ -164,7 +147,6 @@ OptionsContainer.propTypes = {
   renderContents: PropTypes.func.isRequired,
   isInline: PropTypes.bool,
   hasDropDownBorder: PropTypes.bool,
-  focusList: PropTypes.func,
 };
 
 export default OptionsContainer;

@@ -134,9 +134,6 @@ const Datalist = forwardRef(function Datalist(
   const focusSearch = useCallback(() => {
     searchRef.current?.focus();
   }, []);
-  const focusList = useCallback(() => {
-    listRef.current?.focus();
-  }, []);
 
   const list = (
     <OptionsContainer
@@ -147,7 +144,6 @@ const Datalist = forwardRef(function Datalist(
       hasSearch={hasSearch}
       isInline={isInline}
       hasDropDownBorder={hasDropDownBorder}
-      focusList={focusList}
       renderContents={({
         searchKeyword,
         setIsExpanded,
