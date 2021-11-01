@@ -43,6 +43,7 @@ function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
         labelId="text-color-label"
         changedStyle="color"
         ref={textColorRef}
+        hasEyedropper
       />
     </Row>
   );
