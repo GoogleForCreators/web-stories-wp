@@ -24,6 +24,11 @@ import {
   useStory,
 } from '@web-stories-wp/story-editor';
 
+/**
+ * Internal dependencies
+ */
+import { SaveButton } from './saveButton';
+
 const ButtonList = styled.nav`
   display: flex;
   justify-content: flex-end;
@@ -74,6 +79,7 @@ function Buttons() {
           {isSaving && <Loading />}
         </IconWithSpinner>
         <Space />
+        <SaveButton />
       </List>
     </ButtonList>
   );
