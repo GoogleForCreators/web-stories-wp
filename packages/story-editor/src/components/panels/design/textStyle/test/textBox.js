@@ -24,7 +24,6 @@ import { fireEvent, screen } from '@testing-library/react';
  * Internal dependencies
  */
 import TextStyle from '../textStyle';
-import ColorInput from '../../../../form/color/color';
 import {
   BACKGROUND_TEXT_MODE,
   HIDDEN_PADDING,
