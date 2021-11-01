@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import styled, { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -36,17 +39,15 @@ const LoadingText = styled.p`
 const Text = styled.p``;
 
 function Preview() {
-
   // @todo Get preview markup using localStorage and insert here.
-
   return (
     <>
       <GlobalStyle />
-      <LoadingText>Generating Preview..</LoadingText>
-      <Text>Preview Expired</Text>
-      <Text>Please click on the preview button again!</Text>
+      <LoadingText>{'Generating Preview..'}</LoadingText>
+      <Text>{'Preview Expired'}</Text>
+      <Text>{'Please click on the preview button again!'}</Text>
     </>
-  )
+  );
 }
 
 export const _default = Preview;

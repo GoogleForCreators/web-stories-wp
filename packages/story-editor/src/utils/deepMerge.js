@@ -18,7 +18,7 @@
  *
  * @param {Object} object object to override.
  * @param {Object} source Source object.
- * @return {Object}
+ * @return {Object} Merged object.
  */
 export default function deepMerge(object, source = {}) {
   Object.entries(source).forEach(([key, value]) => {
