@@ -109,6 +109,17 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.14.0 =
+
+**Release Date:** November 2, 2021.
+
+* New feature: archive page customization.
+* New feature: improved video captions appearance on the frontend.
+* New feature: right-click menu in the layers panel.
+* Performance improvements in the editor for default page templates.
+* Fixes an issue with embeds not appearing on the frontend.
+* Bug fixes and performance improvements.
+
 = 1.13.0 =
 
 **Release Date:** October 12, 2021.

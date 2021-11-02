@@ -62,7 +62,7 @@ jobs:
           npm ci
           npx rollup --config packages/migration/src/rollup.config.migrate.js
         env:
-          CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Run JavaScript unit tests
         run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage

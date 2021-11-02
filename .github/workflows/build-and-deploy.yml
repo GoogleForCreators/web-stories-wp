@@ -100,7 +100,6 @@ jobs:
         run: |
           npm ci
         env:
-          CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Install PHP dependencies
