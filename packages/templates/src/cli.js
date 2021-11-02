@@ -32,12 +32,12 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
   const browser = await puppeteer.launch({
     defaultViewport: null,
     headless: true,
-    args: [`--window-size=1600,800`],
+    args: [`--window-size=1600,1145`],
   });
   const page = await browser.newPage();
   await page.setViewport({
     width: 1600,
-    height: 800,
+    height: 1145,
     deviceScaleFactor: 2,
   });
   await page.goto(
@@ -97,11 +97,12 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
     await page.waitForSelector('aria/Preview');
     await page.click('aria/Preview');
 
+    // the viewport height decides the size of the preview, we're aiming to maintain our recommended 853px height, we get the closest to this by setting the viewport height to 1145
     const pagePreview = await browser.newPage();
     await pagePreview.setViewport({
       width: 1600,
-      height: 800,
-      deviceScaleFactor: 2,
+      height: 1145,
+      deviceScaleFactor: 1,
     });
     // set prefers-reduced-motion to get story without animations so screenshots are complete page views
     await pagePreview.emulateMediaFeatures([
