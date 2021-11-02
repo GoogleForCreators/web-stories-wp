@@ -38,10 +38,9 @@ import { useHighlights } from '../../app/highlights';
 import { DOCUMENT, DESIGN } from './constants';
 import Context from './context';
 import DesignInspector from './design';
-import DocumentInspector from './document';
 
 const INSPECTOR_TAB_IDS = new Set([DOCUMENT, DESIGN]);
-function InspectorProvider({ children }) {
+function InspectorProvider({ inspectorTabs = [], children }) {
   const {
     actions: { getAuthors },
   } = useAPI();
@@ -144,11 +143,7 @@ function InspectorProvider({ children }) {
           title: __('Design', 'web-stories'),
           Pane: DesignInspector,
         },
-        {
-          id: DOCUMENT,
-          title: __('Document', 'web-stories'),
-          Pane: DocumentInspector,
-        },
+        ...inspectorTabs,
       ],
     },
   };
@@ -158,6 +153,7 @@ function InspectorProvider({ children }) {
 
 InspectorProvider.propTypes = {
   children: PropTypes.node,
+  inspectorTabs: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default InspectorProvider;

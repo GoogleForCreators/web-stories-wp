@@ -21,13 +21,24 @@ import { InterfaceSkeleton } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { default as Header } from '../header';
 import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
+import DocumentInspector from '../documentInspector';
 
 function Layout() {
   return (
     <MetaBoxesProvider>
-      <InterfaceSkeleton header={<Header />}>
+      <InterfaceSkeleton
+        header={<Header />}
+        inspectorTabs={[
+          {
+            id: 'document',
+            title: __('Document', 'web-stories'),
+            Pane: DocumentInspector,
+          },
+        ]}
+      >
         <MetaBoxes />
       </InterfaceSkeleton>
     </MetaBoxesProvider>

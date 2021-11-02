@@ -14,30 +14,33 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import Proptypes from 'prop-types';
-
-/**
  * Internal dependencies
  */
-import { UploadDropTarget } from '../uploadDropTarget';
+/**
+ * External dependencies
+ */
+import {
+  PublishPanel,
+  ExcerptPanel,
+  SlugPanel,
+  StatusPanel,
+  PageAdvancementPanel,
+  BackgroundAudioPanel,
+  TaxonomiesPanel,
+} from '@web-stories-wp/story-editor';
 
-import InspectorProvider from './inspectorProvider';
-import InspectorLayout from './inspectorLayout';
-
-function Inspector({ inspectorTabs }) {
+function DocumentInspector() {
   return (
-    <InspectorProvider inspectorTabs={inspectorTabs}>
-      <UploadDropTarget disabled>
-        <InspectorLayout />
-      </UploadDropTarget>
-    </InspectorProvider>
+    <>
+      <StatusPanel />
+      <PublishPanel />
+      <ExcerptPanel />
+      <SlugPanel />
+      <PageAdvancementPanel />
+      <BackgroundAudioPanel />
+      <TaxonomiesPanel />
+    </>
   );
 }
 
-Inspector.propTypes = {
-  inspectorTabs: Proptypes.arrayOf(Proptypes.object),
-};
-
-export default Inspector;
+export default DocumentInspector;

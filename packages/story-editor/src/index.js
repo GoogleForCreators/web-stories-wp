@@ -26,6 +26,7 @@ export * from './app/config';
 export * from './app/story';
 export * from './app/api';
 export * from './components/header';
+export * from './components/panels/document';
 export * from './app/currentUser';
 export * from './output';
 
