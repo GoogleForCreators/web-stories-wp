@@ -22,36 +22,18 @@ import { useSnackbar } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { SUCCESS } from '../textContent';
 import useApi from './useApi';
 
 function useApiAlerts() {
-  const {
-    storyError,
-    templateError,
-    settingsError,
-    mediaError,
-    settingSaved,
-    publisherLogosError,
-  } = useApi(
+  const { storyError, templateError } = useApi(
     ({
       state: {
         stories: { error: storyError },
         templates: { error: templateError },
-        settings: { error: settingsError, settingSaved },
-        media: { error: mediaError },
-        publisherLogos: {
-          error: publisherLogosError,
-          settingSaved: publisherLogosSaved,
-        },
       },
     }) => ({
       storyError,
       templateError,
-      settingsError,
-      mediaError,
-      settingSaved: settingSaved || publisherLogosSaved,
-      publisherLogosError,
     })
   );
   const { showSnackbar } = useSnackbar();
@@ -71,29 +53,5 @@ function useApiAlerts() {
       debouncedShowSnackbar(templateError.message);
     }
   }, [templateError, debouncedShowSnackbar]);
-
-  useEffect(() => {
-    if (settingsError?.id) {
-      debouncedShowSnackbar(settingsError.message);
-    }
-  }, [settingsError, debouncedShowSnackbar]);
-
-  useEffect(() => {
-    if (settingSaved) {
-      debouncedShowSnackbar(SUCCESS.SETTINGS.UPDATED);
-    }
-  }, [debouncedShowSnackbar, settingSaved]);
-
-  useEffect(() => {
-    if (mediaError?.id) {
-      debouncedShowSnackbar(mediaError.message);
-    }
-  }, [mediaError, debouncedShowSnackbar]);
-
-  useEffect(() => {
-    if (publisherLogosError?.id) {
-      debouncedShowSnackbar(publisherLogosError.message);
-    }
-  }, [publisherLogosError, debouncedShowSnackbar]);
 }
 export default useApiAlerts;

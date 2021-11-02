@@ -42,13 +42,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	const PAGE_NAME = 'web-stories-experiments';
 
 	/**
-	 * Admin page hook suffix.
-	 *
-	 * @var string|false The experiments page's hook_suffix, or false if the user does not have the capability required.
-	 */
-	private $hook_suffix;
-
-	/**
 	 * Settings instance.
 	 *
 	 * @var Settings Settings instance.
@@ -101,7 +94,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * @return void
 	 */
 	public function add_menu_page() {
-		$this->hook_suffix = add_submenu_page(
+		add_submenu_page(
 			'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG,
 			__( 'Experiments', 'web-stories' ),
 			__( 'Experiments', 'web-stories' ),
@@ -330,6 +323,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Archive Page', 'web-stories' ),
 				'description' => __( 'Allow Web Stories archive page customization', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @miina
@@ -391,6 +385,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Video Captions', 'web-stories' ),
 				'description' => __( 'Improve video captions appearance when viewing stories', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 		];
 	}

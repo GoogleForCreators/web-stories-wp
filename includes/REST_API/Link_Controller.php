@@ -30,8 +30,7 @@ use DOMElement;
 use DOMNodeList;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Document_Parser;
-use Google\Web_Stories\Traits\Post_Type;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use WP_Error;
 use WP_Http;
 use WP_REST_Request;
@@ -44,7 +43,6 @@ use WP_REST_Server;
  * Class Link_Controller
  */
 class Link_Controller extends REST_Controller implements HasRequirements {
-	use Document_Parser, Post_Type;
 
 	/**
 	 * Story_Post_Type instance.
@@ -195,14 +193,16 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 			return rest_ensure_response( $response );
 		}
 
-		$xpath = $this->html_to_xpath( $html );
+		$doc = Document::fromHtml( $html );
 
-		if ( ! $xpath ) {
+		if ( ! $doc ) {
 			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 			$response = $this->prepare_item_for_response( $data, $request );
 
 			return rest_ensure_response( $response );
 		}
+
+		$xpath = $doc->xpath;
 
 		// Link title.
 
@@ -345,7 +345,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function parse_link_permissions_check() {
-		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to process links.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 
@@ -369,5 +369,34 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Retrieve content of a given DOM node attribute.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param DOMNodeList<DOMElement>|false $query XPath query result.
+	 * @param string                        $attribute Attribute name.
+	 *
+	 * @return string|false Attribute content on success, false otherwise.
+	 */
+	protected function get_dom_attribute_content( $query, string $attribute ) {
+		if ( ! $query instanceof DOMNodeList || 0 === $query->length ) {
+			return false;
+		}
+
+		/**
+		 * DOMElement
+		 *
+		 * @var DOMElement $node
+		 */
+		$node = $query->item( 0 );
+
+		if ( ! $node instanceof DOMElement ) {
+			return false;
+		}
+
+		return $node->getAttribute( $attribute );
 	}
 }

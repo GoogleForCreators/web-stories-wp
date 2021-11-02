@@ -23,7 +23,8 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
-import { renderWithTheme, StoryContext } from '@web-stories-wp/story-editor';
+import { StoryContext } from '@web-stories-wp/story-editor';
+import { renderWithTheme } from '@web-stories-wp/story-editor/src/testUtils';
 
 /**
  * Internal dependencies

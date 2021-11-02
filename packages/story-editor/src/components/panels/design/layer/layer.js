@@ -49,6 +49,7 @@ const ActionsContainer = styled.div`
   top: 0;
   right: 0;
   padding-right: 6px;
+  column-gap: 6px;
 
   --background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};

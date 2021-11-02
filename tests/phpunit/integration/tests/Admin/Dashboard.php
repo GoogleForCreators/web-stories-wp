@@ -149,18 +149,6 @@ class Dashboard extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @covers ::get_post_type_archive_link
-	 * @covers \Google\Web_Stories\Traits\Post_Type::get_post_type_has_archive
-	 */
-	public function test_get_post_type_archive_link() {
-		$result = $this->call_private_method( $this->instance, 'get_post_type_archive_link', [ self::$cpt_has_archive ] );
-		$this->assertSame( get_post_type_archive_link( self::$cpt_has_archive ), $result );
-
-		$result = $this->call_private_method( $this->instance, 'get_post_type_archive_link', [ self::$cpt_no_archive ] );
-		$this->assertNotSame( get_post_type_archive_link( self::$cpt_no_archive ), $result );
-	}
-
-	/**
 	 * @covers ::enqueue_assets
 	 */
 	public function test_enqueue_assets() {
@@ -189,7 +177,8 @@ class Dashboard extends DependencyInjectedTestCase {
 			$this->createMock( \Google\Web_Stories\Locale::class ),
 			( new \Google\Web_Stories\Admin\Google_Fonts() ),
 			$assets,
-			new Story_Post_Type( new Settings(), $experiments )
+			new Story_Post_Type( new Settings(), $experiments ),
+			$this->createMock( \Google\Web_Stories\Media\Types::class )
 		);
 
 		$this->instance->add_menu_page();
@@ -200,7 +189,5 @@ class Dashboard extends DependencyInjectedTestCase {
 
 		$this->assertTrue( wp_style_is( $this->instance::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_style_is( 'fake_css_chunk', 'registered' ) );
-
-		$this->assertSame( 'web-stories', wp_scripts()->registered[ $this->instance::SCRIPT_HANDLE ]->textdomain );
 	}
 }

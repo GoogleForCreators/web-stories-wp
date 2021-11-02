@@ -402,7 +402,7 @@ describe('Quick Actions integration', () => {
 
       // add styles to the shape
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.layerStyle.opacity
+        fixture.editor.inspector.designPanel.sizePosition.opacity
       );
       await fixture.events.keyboard.type('99');
       await fixture.events.keyboard.press('Enter');
@@ -1108,7 +1108,7 @@ describe('Quick Actions integration', () => {
 
       // apply opacity
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.layerStyle.opacity
+        fixture.editor.inspector.designPanel.sizePosition.opacity
       );
       await fixture.events.keyboard.type('40');
       await fixture.events.keyboard.press('Enter');

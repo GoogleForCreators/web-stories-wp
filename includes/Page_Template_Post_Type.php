@@ -28,13 +28,11 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\REST_API\Page_Template_Controller;
-use Google\Web_Stories\Traits\Post_Type;
 
 /**
  * Class Page_Template_Post_Type.
  */
-class Page_Template_Post_Type extends Service_Base implements HasRequirements {
-	use Post_Type;
+class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements {
 
 	/**
 	 * The slug of the page template post type.
@@ -63,15 +61,27 @@ class Page_Template_Post_Type extends Service_Base implements HasRequirements {
 	}
 
 	/**
+	 * Get post type slug.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return string
+	 */
+	public function get_slug(): string {
+		return self::POST_TYPE_SLUG;
+	}
+
+	/**
 	 * Registers the post type for page templates.
 	 *
-	 * @since 1.6.0
+	 * @since 1.14.0
 	 *
-	 * @return void
+	 * @return array
 	 */
-	public function register() {
-		$edit_posts   = $this->get_post_type_cap_name( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' );
-		$delete_posts = $this->get_post_type_cap_name( $this->story_post_type::POST_TYPE_SLUG, 'delete_posts' );
+	protected function get_args(): array {
+		$edit_posts   = $this->story_post_type->get_cap_name( 'edit_posts' );
+		$delete_posts = $this->story_post_type->get_cap_name( 'delete_posts' );
+
 		$capabilities = [
 			'edit_post'              => $edit_posts,
 			'read_post'              => $edit_posts,
@@ -89,57 +99,54 @@ class Page_Template_Post_Type extends Service_Base implements HasRequirements {
 			'create_posts'           => $edit_posts,
 		];
 
-		register_post_type(
-			self::POST_TYPE_SLUG,
-			[
-				'labels'                => [
-					'name'                     => _x( 'Page Templates', 'post type general name', 'web-stories' ),
-					'singular_name'            => _x( 'Page Template', 'post type singular name', 'web-stories' ),
-					'add_new'                  => _x( 'Add New', 'page template', 'web-stories' ),
-					'add_new_item'             => __( 'Add New Page Template', 'web-stories' ),
-					'edit_item'                => __( 'Edit Page Template', 'web-stories' ),
-					'new_item'                 => __( 'New Page Template', 'web-stories' ),
-					'view_item'                => __( 'View Page Template', 'web-stories' ),
-					'view_items'               => __( 'View Page Templates', 'web-stories' ),
-					'search_items'             => __( 'Search Page Templates', 'web-stories' ),
-					'not_found'                => __( 'No page templates found.', 'web-stories' ),
-					'not_found_in_trash'       => __( 'No page templates found in Trash.', 'web-stories' ),
-					'all_items'                => __( 'All Page Templates', 'web-stories' ),
-					'archives'                 => __( 'Page Template Archives', 'web-stories' ),
-					'attributes'               => __( 'Page Template Attributes', 'web-stories' ),
-					'insert_into_item'         => __( 'Insert into page template', 'web-stories' ),
-					'uploaded_to_this_item'    => __( 'Uploaded to this page template', 'web-stories' ),
-					'featured_image'           => _x( 'Featured Image', 'page template', 'web-stories' ),
-					'set_featured_image'       => _x( 'Set featured image', 'page template', 'web-stories' ),
-					'remove_featured_image'    => _x( 'Remove featured image', 'page template', 'web-stories' ),
-					'use_featured_image'       => _x( 'Use as featured image', 'page template', 'web-stories' ),
-					'filter_by_date'           => __( 'Filter by date', 'web-stories' ),
-					'filter_items_list'        => __( 'Filter page templates list', 'web-stories' ),
-					'items_list_navigation'    => __( 'Page Templates list navigation', 'web-stories' ),
-					'items_list'               => __( 'Page Templates list', 'web-stories' ),
-					'item_published'           => __( 'Page Template published.', 'web-stories' ),
-					'item_published_privately' => __( 'Page Template published privately.', 'web-stories' ),
-					'item_reverted_to_draft'   => __( 'Page Template reverted to draft.', 'web-stories' ),
-					'item_scheduled'           => __( 'Page Template scheduled', 'web-stories' ),
-					'item_updated'             => __( 'Page Template updated.', 'web-stories' ),
-					'menu_name'                => _x( 'Page Templates', 'admin menu', 'web-stories' ),
-					'name_admin_bar'           => _x( 'Page Template', 'add new on admin bar', 'web-stories' ),
-					'item_link'                => _x( 'Page Template Link', 'navigation link block title', 'web-stories' ),
-					'item_link_description'    => _x( 'A link to a page template.', 'navigation link block description', 'web-stories' ),
-				],
-				'supports'              => [
-					'title',
-					'author',
-					'excerpt',
-				],
-				'capabilities'          => $capabilities,
-				'rewrite'               => false,
-				'public'                => false,
-				'show_ui'               => false,
-				'show_in_rest'          => true,
-				'rest_controller_class' => Page_Template_Controller::class,
-			]
-		);
+		return [
+			'labels'                => [
+				'name'                     => _x( 'Page Templates', 'post type general name', 'web-stories' ),
+				'singular_name'            => _x( 'Page Template', 'post type singular name', 'web-stories' ),
+				'add_new'                  => _x( 'Add New', 'page template', 'web-stories' ),
+				'add_new_item'             => __( 'Add New Page Template', 'web-stories' ),
+				'edit_item'                => __( 'Edit Page Template', 'web-stories' ),
+				'new_item'                 => __( 'New Page Template', 'web-stories' ),
+				'view_item'                => __( 'View Page Template', 'web-stories' ),
+				'view_items'               => __( 'View Page Templates', 'web-stories' ),
+				'search_items'             => __( 'Search Page Templates', 'web-stories' ),
+				'not_found'                => __( 'No page templates found.', 'web-stories' ),
+				'not_found_in_trash'       => __( 'No page templates found in Trash.', 'web-stories' ),
+				'all_items'                => __( 'All Page Templates', 'web-stories' ),
+				'archives'                 => __( 'Page Template Archives', 'web-stories' ),
+				'attributes'               => __( 'Page Template Attributes', 'web-stories' ),
+				'insert_into_item'         => __( 'Insert into page template', 'web-stories' ),
+				'uploaded_to_this_item'    => __( 'Uploaded to this page template', 'web-stories' ),
+				'featured_image'           => _x( 'Featured Image', 'page template', 'web-stories' ),
+				'set_featured_image'       => _x( 'Set featured image', 'page template', 'web-stories' ),
+				'remove_featured_image'    => _x( 'Remove featured image', 'page template', 'web-stories' ),
+				'use_featured_image'       => _x( 'Use as featured image', 'page template', 'web-stories' ),
+				'filter_by_date'           => __( 'Filter by date', 'web-stories' ),
+				'filter_items_list'        => __( 'Filter page templates list', 'web-stories' ),
+				'items_list_navigation'    => __( 'Page Templates list navigation', 'web-stories' ),
+				'items_list'               => __( 'Page Templates list', 'web-stories' ),
+				'item_published'           => __( 'Page Template published.', 'web-stories' ),
+				'item_published_privately' => __( 'Page Template published privately.', 'web-stories' ),
+				'item_reverted_to_draft'   => __( 'Page Template reverted to draft.', 'web-stories' ),
+				'item_scheduled'           => __( 'Page Template scheduled', 'web-stories' ),
+				'item_updated'             => __( 'Page Template updated.', 'web-stories' ),
+				'menu_name'                => _x( 'Page Templates', 'admin menu', 'web-stories' ),
+				'name_admin_bar'           => _x( 'Page Template', 'add new on admin bar', 'web-stories' ),
+				'item_link'                => _x( 'Page Template Link', 'navigation link block title', 'web-stories' ),
+				'item_link_description'    => _x( 'A link to a page template.', 'navigation link block description', 'web-stories' ),
+			],
+			'supports'              => [
+				'title',
+				'author',
+				'excerpt',
+			],
+			'capabilities'          => $capabilities,
+			'rewrite'               => false,
+			'public'                => false,
+			'show_ui'               => false,
+			'show_in_rest'          => true,
+			'rest_controller_class' => Page_Template_Controller::class,
+		];
 	}
 
 	/**

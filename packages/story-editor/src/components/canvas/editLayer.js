@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { memo, useEffect, useRef } from '@web-stories-wp/react';
-import { _x } from '@web-stories-wp/i18n';
+import { _x, __ } from '@web-stories-wp/i18n';
 import { useKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
@@ -105,6 +105,10 @@ function EditLayerForElement({ element, showOverflow }) {
     >
       <EditPageArea
         ref={pageAreaRef}
+        fullBleedContainerLabel={__(
+          'Fullbleed area (Edit layer)',
+          'web-stories'
+        )}
         isControlled
         showOverflow={showOverflow}
         overflow={showOverflow ? 'visible' : 'hidden'}

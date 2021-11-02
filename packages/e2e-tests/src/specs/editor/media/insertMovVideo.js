@@ -26,7 +26,7 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Handling .mov files', () => {
-  let uploadedFiles = [];
+  let uploadedFiles;
 
   beforeEach(() => (uploadedFiles = []));
 

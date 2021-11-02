@@ -82,7 +82,7 @@ describe('Element', () => {
       expect(element).toStrictEqual(
         expect.objectContaining({
           ...oldElement,
-          id: expect.not.stringMatching(oldElement.id),
+          id: expect.not.stringMatching(new RegExp(`/^${oldElement.id}$/`)),
           basedOn: oldElement.id,
         })
       );
@@ -102,7 +102,7 @@ describe('Element', () => {
       expect(element).toStrictEqual(
         expect.objectContaining({
           ...oldElement,
-          id: expect.not.stringMatching(oldElement.id),
+          id: expect.not.stringMatching(new RegExp(`/^${oldElement.id}$/`)),
           basedOn: oldElement.id,
           x: expect.any(Number),
           y: expect.any(Number),
@@ -132,12 +132,12 @@ describe('Element', () => {
       expect(elementAnimations).toStrictEqual([
         expect.objectContaining({
           ...animations[0],
-          id: expect.not.stringMatching(animations[0].id),
+          id: expect.not.stringMatching(new RegExp(`/^${animations[0].id}$/`)),
           targets: [element.id],
         }),
         expect.objectContaining({
           ...animations[2],
-          id: expect.not.stringMatching(animations[2].id),
+          id: expect.not.stringMatching(new RegExp(`/^${animations[2].id}$/`)),
           targets: [element.id],
         }),
       ]);
@@ -161,26 +161,32 @@ describe('Element', () => {
 
       // Expect same structure but new id's!
       expect(newPage).toStrictEqual({
-        id: expect.not.stringMatching(oldPage.id),
+        id: expect.not.stringMatching(new RegExp(`/^${oldPage.id}$/`)),
         type: 'page',
         otherProperty: '45',
         animations: [],
         elements: [
           expect.objectContaining({
-            id: expect.not.stringMatching(oldElements[0].id),
+            id: expect.not.stringMatching(
+              new RegExp(`/^${oldElements[0].id}$/`)
+            ),
             isBackground: true,
             x: 10,
             y: 20,
             type: 'shape',
           }),
           expect.objectContaining({
-            id: expect.not.stringMatching(oldElements[1].id),
+            id: expect.not.stringMatching(
+              new RegExp(`/^${oldElements[1].id}$/`)
+            ),
             x: 110,
             y: 120,
             type: 'text',
           }),
           expect.objectContaining({
-            id: expect.not.stringMatching(oldElements[2].id),
+            id: expect.not.stringMatching(
+              new RegExp(`/^${oldElements[2].id}$/`)
+            ),
             x: 210,
             y: 220,
             type: 'image',

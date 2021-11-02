@@ -56,14 +56,13 @@ function createTaxonomy(slug, overrides) {
   return {
     slug,
     restBase: `${slug}s`,
-    _links: {
-      'wp:items': [{ href: 'someUrl' }],
-    },
+    restPath: 'someUrl',
     ...overrides,
   };
 }
 
-let autoIncrementId = 0;
+let autoIncrementId;
+
 function createTermFromName(taxonomy, name, overrides) {
   return {
     id: autoIncrementId++,
@@ -100,6 +99,10 @@ async function setup({ useStoryPartial = {}, useAPIPartial = {} }) {
 }
 
 describe('TaxonomyProvider', () => {
+  beforeAll(() => {
+    autoIncrementId = 0;
+  });
+
   it('should fetch taxonomies on mount if taxonomies present on story', async () => {
     const sampleTaxonomy = createTaxonomy('sample');
     const getTaxonomiesMock = jest.fn(() => mockResponse([sampleTaxonomy]));

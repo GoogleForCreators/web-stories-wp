@@ -27,7 +27,10 @@ import {
   toggleWebStoriesMediaOptimization,
 } from '../user';
 
-jest.mock('@wordpress/api-fetch');
+jest.mock('@wordpress/api-fetch', () => ({
+  __esModule: true,
+  default: jest.fn(() => Promise.resolve({})),
+}));
 
 describe('User API Callbacks', () => {
   const currentUserPath = '/web-stories/v1/users/me';
@@ -36,20 +39,14 @@ describe('User API Callbacks', () => {
     jest.clearAllMocks();
   });
 
-  const config = {
-    api: {
-      currentUser: currentUserPath,
-    },
-  };
-
   // Payload `__PAYLOAD_DATA__.meta.web_stories_tracking_optin` must be flipped value
   it('toggleWebStoriesTrackingOptIn: validate request payload & path', () => {
     const currentUser = {
       meta: {
-        web_stories_media_optimization: false,
+        webStoriesMediaOptimization: false,
       },
     };
-    toggleWebStoriesTrackingOptIn(config, currentUser);
+    toggleWebStoriesTrackingOptIn(currentUserPath, currentUser);
     expect(apiFetch).toHaveBeenCalledWith(
       expect.objectContaining({
         path: currentUserPath,
@@ -62,14 +59,14 @@ describe('User API Callbacks', () => {
     );
   });
 
-  // Payload `__PAYLOAD_DATA__.meta.web_stories_media_optimization` must be flipped value
+  // Payload `__PAYLOAD_DATA__.meta.webStoriesMediaOptimization` must be flipped value
   it('toggleWebStoriesMediaOptimization: validate request payload & path', () => {
     const currentUser = {
       meta: {
-        web_stories_media_optimization: false,
+        webStoriesMediaOptimization: false,
       },
     };
-    toggleWebStoriesMediaOptimization(config, currentUser);
+    toggleWebStoriesMediaOptimization(currentUserPath, currentUser);
     expect(apiFetch).toHaveBeenCalledWith(
       expect.objectContaining({
         path: currentUserPath,

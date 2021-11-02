@@ -24,6 +24,8 @@ import {
   SnackbarProvider,
   ModalGlobalStyle,
 } from '@web-stories-wp/design-system';
+import { FlagsProvider } from 'flagged';
+
 /**
  * Internal dependencies
  */
@@ -50,51 +52,53 @@ import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calenda
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
 
 function StoryEditor({ config, children }) {
-  const { storyId, isRTL } = config;
+  const { storyId, isRTL, flags } = config;
   return (
-    <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
-      <ThemeProvider theme={theme}>
-        <ErrorBoundary>
-          <ConfigProvider config={config}>
-            <APIProvider>
-              <FileProvider>
-                <Media3pApiProvider>
-                  <HistoryProvider size={50}>
-                    <SnackbarProvider>
-                      <StoryProvider storyId={storyId}>
-                        <TaxonomyProvider>
-                          <CurrentUserProvider>
-                            <FontProvider>
-                              <MediaProvider>
-                                <AutoSaveHandler />
-                                <TransformProvider>
-                                  <DropTargetsProvider>
-                                    <HelpCenterProvider>
-                                      <GlobalStyle />
-                                      <DevTools />
-                                      <DefaultMoveableGlobalStyle />
-                                      <CropMoveableGlobalStyle />
-                                      <ModalGlobalStyle />
-                                      <CalendarStyle />
-                                      <KeyboardOnlyOutlines />
-                                      {children}
-                                    </HelpCenterProvider>
-                                  </DropTargetsProvider>
-                                </TransformProvider>
-                              </MediaProvider>
-                            </FontProvider>
-                          </CurrentUserProvider>
-                        </TaxonomyProvider>
-                      </StoryProvider>
-                    </SnackbarProvider>
-                  </HistoryProvider>
-                </Media3pApiProvider>
-              </FileProvider>
-            </APIProvider>
-          </ConfigProvider>
-        </ErrorBoundary>
-      </ThemeProvider>
-    </StyleSheetManager>
+    <FlagsProvider features={flags}>
+      <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
+        <ThemeProvider theme={theme}>
+          <ErrorBoundary>
+            <ConfigProvider config={config}>
+              <APIProvider>
+                <FileProvider>
+                  <Media3pApiProvider>
+                    <HistoryProvider size={50}>
+                      <SnackbarProvider>
+                        <StoryProvider storyId={storyId}>
+                          <TaxonomyProvider>
+                            <CurrentUserProvider>
+                              <FontProvider>
+                                <MediaProvider>
+                                  <AutoSaveHandler />
+                                  <TransformProvider>
+                                    <DropTargetsProvider>
+                                      <HelpCenterProvider>
+                                        <GlobalStyle />
+                                        <DevTools />
+                                        <DefaultMoveableGlobalStyle />
+                                        <CropMoveableGlobalStyle />
+                                        <ModalGlobalStyle />
+                                        <CalendarStyle />
+                                        <KeyboardOnlyOutlines />
+                                        {children}
+                                      </HelpCenterProvider>
+                                    </DropTargetsProvider>
+                                  </TransformProvider>
+                                </MediaProvider>
+                              </FontProvider>
+                            </CurrentUserProvider>
+                          </TaxonomyProvider>
+                        </StoryProvider>
+                      </SnackbarProvider>
+                    </HistoryProvider>
+                  </Media3pApiProvider>
+                </FileProvider>
+              </APIProvider>
+            </ConfigProvider>
+          </ErrorBoundary>
+        </ThemeProvider>
+      </StyleSheetManager>
+    </FlagsProvider>
   );
 }
 

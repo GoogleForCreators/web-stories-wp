@@ -342,6 +342,19 @@ describe('Right Click Menu integration', () => {
         )
       ).toBeNull();
     });
+
+    it('right clicking a layer in the layer panel should open the custom right click menu', async () => {
+      await addEarthImage();
+
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.layerPanel.layers[0],
+        {
+          button: 'right',
+        }
+      );
+
+      expect(rightClickMenu()).not.toBeNull();
+    });
   });
 
   describe('right click menu: foreground and background media actions', () => {
@@ -680,7 +693,7 @@ describe('Right Click Menu integration', () => {
 
         // add border radius
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.borderRadius.radius()
+          fixture.editor.inspector.designPanel.sizePosition.radius()
         );
         await fixture.events.keyboard.type('50');
 
@@ -691,7 +704,7 @@ describe('Right Click Menu integration', () => {
 
         // add opacity
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.layerStyle.opacity
+          fixture.editor.inspector.designPanel.sizePosition.opacity
         );
         await fixture.events.keyboard.type('40');
 
@@ -746,7 +759,7 @@ describe('Right Click Menu integration', () => {
 
         // add border radius
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.borderRadius.radius()
+          fixture.editor.inspector.designPanel.sizePosition.radius()
         );
         await fixture.events.keyboard.type('50');
 
@@ -757,7 +770,7 @@ describe('Right Click Menu integration', () => {
 
         // add opacity
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.layerStyle.opacity
+          fixture.editor.inspector.designPanel.sizePosition.opacity
         );
         await fixture.events.keyboard.type('40');
 

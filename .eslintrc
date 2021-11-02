@@ -302,6 +302,14 @@
     },
     {
       "files": [
+        "__mocks__/**/*.js"
+      ],
+      "rules": {
+      "jest/require-hook":  "off"
+      }
+    },
+    {
+      "files": [
         "**/karma/**/*.js",
         "assets/src/karma-*/**/*.js",
         "packages/karma-*/**/*.js"
@@ -375,6 +383,14 @@
         "browser": "readonly",
         "page": "readonly",
         "wp": "readonly"
+      }
+    },
+    {
+      "files": [
+        "packages/e2e-test-utils/**/*.js"
+      ],
+      "rules": {
+        "jest/expect-expect": "off"
       }
     },
     {

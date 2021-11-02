@@ -25,7 +25,7 @@ import { curatedFontNames } from '@web-stories-wp/fonts';
  */
 import { renderWithTheme } from '../../../../testUtils';
 import FontContext from '../../../../app/font/context';
-import fontsListResponse from '../../../form/advancedDropDown/test/fontsResponse.json';
+import fontsListResponse from '../../../panels/design/textStyle/test/fontsResponse.json';
 import TextIcon from '../../panes/text/textIcon';
 import { DEFAULT_PRESET } from '../../panes/text/textPresets';
 import useLibrary from '../../useLibrary';
@@ -69,7 +69,7 @@ describe('TextTab', () => {
     );
 
     act(() => {
-      fireEvent.click(screen.getByLabelText('Add new text element'));
+      fireEvent.click(screen.getByTitle('Add new text element'));
     });
 
     await waitFor(() => expect(insertElement).toHaveBeenCalledTimes(1));

@@ -168,7 +168,7 @@ const useStoryApi = () => {
           type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS,
         });
 
-        window.location = response.edit_link;
+        window.location = response.editLink;
       } catch (err) {
         dispatch({
           type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,

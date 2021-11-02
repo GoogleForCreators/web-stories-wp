@@ -42,7 +42,7 @@ export const MenuContainer = styled.div(
     overflow-y: auto;
     overscroll-behavior: none auto;
     z-index: 2;
-    margin-top: 8px;
+    margin-top: 16px;
     margin-bottom: 8px;
     padding: 4px 0;
     background-color: ${theme.colors.bg.primary};

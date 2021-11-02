@@ -26,12 +26,11 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Services;
 use Google\Web_Stories\Settings;
+use Google\Web_Stories\Stories_Script_Data;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Traits\Layout;
-use Google\Web_Stories\Traits\Theme_Support;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
 use WP_Error;
@@ -44,7 +43,6 @@ use WP_Error;
  * @package Google\Web_Stories
  */
 class Customizer extends Service_Base {
-	use Theme_Support, Layout;
 
 	/**
 	 * Customizer section slug.
@@ -81,16 +79,38 @@ class Customizer extends Service_Base {
 	private $settings;
 
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
+	 * Stories_Script_Data instance.
+	 *
+	 * @var Stories_Script_Data Stories_Script_Data instance.
+	 */
+	protected $stories_script_data;
+
+	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Settings $settings Settings instance.
+	 * @param Settings            $settings            Settings instance.
+	 * @param Story_Post_Type     $story_post_type     Story_Post_Type instance.
+	 * @param Stories_Script_Data $stories_script_data Stories_Script_Data instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Settings $settings ) {
-		$this->settings = $settings;
+	public function __construct(
+		Settings $settings,
+		Story_Post_Type $story_post_type,
+		Stories_Script_Data $stories_script_data
+	) {
+		$this->settings            = $settings;
+		$this->story_post_type     = $story_post_type;
+		$this->stories_script_data = $stories_script_data;
 	}
 
 	/**
@@ -472,7 +492,7 @@ class Customizer extends Service_Base {
 	 * @return array An array of view type choices.
 	 */
 	private function get_view_type_choices( array $view_type ) : array {
-		$view_type_choices = $this->get_layouts();
+		$view_type_choices = $this->stories_script_data->get_layouts();
 
 		if ( empty( $view_type ) ) {
 			return $view_type_choices;
@@ -590,5 +610,102 @@ class Customizer extends Service_Base {
 		$stories = new Story_Query( $story_attributes, $query_arguments );
 
 		return $stories->render();
+	}
+
+	/**
+	 * Merges user defined arguments into defaults array.
+	 *
+	 * Like wp_parse_args(), but recursive.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @see wp_parse_args()
+	 *
+	 * @param array $args      Value to merge with $defaults.
+	 * @param array $defaults Optional. Array that serves as the defaults. Default empty array.
+	 * @return array Merged user defined values with defaults.
+	 */
+	private function parse_args( array $args, array $defaults = [] ) : array {
+		$parsed_args = $defaults;
+
+		foreach ( $args as $key => $value ) {
+			if ( is_array( $value ) && isset( $parsed_args[ $key ] ) ) {
+				$parsed_args[ $key ] = $this->parse_args( $value, $parsed_args[ $key ] );
+			} else {
+				$parsed_args[ $key ] = $value;
+			}
+		}
+
+		return $parsed_args;
+	}
+
+	/**
+	 * Get theme support configuration.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return array
+	 */
+	public function get_stories_theme_support() : array {
+		$support = get_theme_support( 'web-stories' );
+		$support = isset( $support[0] ) && is_array( $support[0] ) ? $support[0] : [];
+
+		$has_archive = (bool) $this->story_post_type->get_has_archive();
+
+		$default_support = [
+			'customizer' => [
+				'view_type'         => [
+					'enabled' => [ 'circles' ],
+					'default' => 'circles',
+				],
+				'title'             => [
+					'enabled' => true,
+					'default' => true,
+				],
+				'excerpt'           => [
+					'enabled' => true,
+					'default' => false,
+				],
+				'author'            => [
+					'enabled' => true,
+					'default' => true,
+				],
+				'date'              => [
+					'enabled' => false,
+					'default' => false,
+				],
+				'archive_link'      => [
+					'enabled' => $has_archive,
+					'default' => $has_archive,
+					'label'   => __( 'View all stories', 'web-stories' ),
+				],
+				'sharp_corners'     => [
+					'enabled' => false,
+					'default' => false,
+				],
+				'order'             => [
+					'default' => 'DESC',
+				],
+				'orderby'           => [
+					'default' => 'post_date',
+				],
+				'circle_size'       => [
+					'default' => 150,
+				],
+				'number_of_stories' => [
+					'default' => 10,
+				],
+				'number_of_columns' => [
+					'default' => 2,
+				],
+				'image_alignment'   => [
+					'default' => is_rtl() ? 'right' : 'left',
+				],
+			],
+		];
+
+		$support = $this->parse_args( $support, $default_support );
+
+		return $support;
 	}
 }

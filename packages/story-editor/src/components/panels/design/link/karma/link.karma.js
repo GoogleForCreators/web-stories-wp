@@ -230,14 +230,15 @@ describe('Link Panel', () => {
         })
       );
       const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
-      await moveElementToBottom(frame, 100);
+      await moveElementToBottom(frame, 0);
 
-      await closePanel('Size & Position');
+      await closePanel('Selection');
       await closePanel('Saved Colors');
-      await closePanel('Layer');
 
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
+
+      await fixture.events.sleep(5000);
 
       await fixture.snapshot('Page Attachment warning & dashed line visible');
 

@@ -39,8 +39,6 @@ export const APP_ROUTES = {
   DASHBOARD: '/',
   TEMPLATES_GALLERY: '/templates-gallery',
   TEMPLATE_DETAIL: 'template-detail',
-
-  EDITOR_SETTINGS: '/editor-settings',
 };
 
 export const NESTED_APP_ROUTES = {
@@ -56,7 +54,6 @@ export const ROUTE_TITLES = {
     'Template Details',
     'web-stories'
   ),
-  [APP_ROUTES.EDITOR_SETTINGS]: __('Settings', 'web-stories'),
   DEFAULT: __('Dashboard', 'web-stories'),
 };
 
@@ -102,6 +99,5 @@ export const MIN_IMG_WIDTH = 96;
 
 export * from './components';
 export * from './pageStructure';
-export * from './settings';
 export * from './stories';
 export * from './templates';
