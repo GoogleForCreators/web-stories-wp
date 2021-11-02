@@ -85,7 +85,6 @@ jobs:
           npm ci
           npm install puppeteer
         env:
-          CI: true
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Install PHP dependencies
