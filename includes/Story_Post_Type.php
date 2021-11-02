@@ -199,6 +199,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 			'exclude_from_search'   => true,
 			'show_ui'               => true,
 			'show_in_rest'          => true,
+			'rest_namespace'        => self::REST_NAMESPACE,
 			'rest_controller_class' => Stories_Controller::class,
 			'capability_type'       => [ 'web-story', 'web-stories' ],
 			'map_meta_cap'          => true,

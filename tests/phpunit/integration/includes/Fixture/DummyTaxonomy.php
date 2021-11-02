@@ -26,6 +26,7 @@ class DummyTaxonomy extends Taxonomy_Base {
 		return [
 			'show_in_rest'          => true,
 			'rest_controller_class' => Stories_Terms_Controller::class,
+			'rest_namespace'        => self::REST_NAMESPACE,
 		];
 	}
 }
