@@ -19,92 +19,33 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import {
-  LockToggle,
-  NumericInput,
-  Text,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+import { LockToggle, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Row } from '../../../form';
 import Tooltip from '../../../tooltip';
-import {
-  focusStyle,
-  inputContainerStyleOverride,
-  useCommonObjectValue,
-} from '../../shared';
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import { focusStyle, useCommonObjectValue } from '../../shared';
+import StackedInputs from '../../../form/stackedInputs';
 import { DEFAULT_BORDER } from './shared';
 
-const INPUT_TOTAL_HEIGHT = 64;
-const INPUT_WIDTH = 44;
-
-const BorderRow = styled(Row)`
-  ${({ locked }) => locked && 'justify-content: normal'};
+const BorderInputsFlexContainer = styled.div`
+  display: flex;
+  gap: 7px;
+  margin-bottom: 16px;
 `;
 
 const StyledLockToggle = styled(LockToggle)`
   ${focusStyle};
 `;
 
-const Separator = styled.div`
-  width: 8px;
-  margin: -20px 0 6px;
-  height: 1px;
-  background: ${({ theme }) => theme.colors.divider.primary};
-`;
-
-const Label = styled.label`
-  flex-shrink: 0;
-  height: ${({ locked }) => !locked && `${INPUT_TOTAL_HEIGHT}px`};
-  width: ${({ locked }) => (locked ? '50%' : `${INPUT_WIDTH}px`)};
-`;
-
-const LabelText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
-  as: 'span',
-})`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-  text-align: center;
-  width: 100%;
-  display: inline-block;
-  margin-top: 8px;
-  cursor: pointer;
-`;
-
 const ToggleWrapper = styled.div`
-  padding-top: 2px;
-  ${({ locked }) =>
-    locked &&
-    css`
-      padding-left: 8px;
-    `};
-  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
-
-function UnLockedInput({ labelText, ...rest }) {
-  return (
-    <>
-      <Separator />
-      <Label>
-        <NumericInput
-          containerStyleOverride={inputContainerStyleOverride}
-          {...rest}
-        />
-        <LabelText>{labelText}</LabelText>
-      </Label>
-    </>
-  );
-}
-
-UnLockedInput.propTypes = {
-  labelText: PropTypes.string.isRequired,
-};
 
 function WidthControls({ selectedElements, pushUpdateForObject }) {
   const border = useCommonObjectValue(
@@ -144,51 +85,16 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
     ? __('Border', 'web-stories')
     : __('Left border', 'web-stories');
 
-  const getMixedValueProps = useCallback((value) => {
-    return {
-      isIndeterminate: MULTIPLE_VALUE === value,
-      placeholder: MULTIPLE_VALUE === value ? MULTIPLE_DISPLAY_VALUE : null,
-    };
-  }, []);
   return (
-    <BorderRow locked={lockBorder}>
-      <Label locked={lockBorder}>
-        <NumericInput
-          locked={lockBorder}
-          value={border.left}
-          onChange={handleChange('left')}
-          aria-label={firstInputLabel}
-          {...getMixedValueProps(border.left)}
-          containerStyleOverride={inputContainerStyleOverride}
-        />
-        {!lockBorder && <LabelText>{__('Left', 'web-stories')}</LabelText>}
-      </Label>
-      {!lockBorder && (
-        <>
-          <UnLockedInput
-            value={border.top}
-            onChange={handleChange('top')}
-            aria-label={__('Top border', 'web-stories')}
-            labelText={__('Top', 'web-stories')}
-            {...getMixedValueProps(border.top)}
-          />
-          <UnLockedInput
-            value={border.right}
-            onChange={handleChange('right')}
-            aria-label={__('Right border', 'web-stories')}
-            labelText={__('Right', 'web-stories')}
-            {...getMixedValueProps(border.right)}
-          />
-          <UnLockedInput
-            value={border.bottom}
-            onChange={handleChange('bottom')}
-            aria-label={__('Bottom border', 'web-stories')}
-            labelText={__('Bottom', 'web-stories')}
-            {...getMixedValueProps(border.bottom)}
-          />
-        </>
-      )}
-      <ToggleWrapper locked={lockBorder}>
+    <BorderInputsFlexContainer locked={lockBorder}>
+      <StackedInputs
+        lockInput={lockBorder}
+        inputProps={border}
+        handleChange={handleChange}
+        suffix={<Icons.Border />}
+        firstInputLabel={firstInputLabel}
+      />
+      <ToggleWrapper>
         <Tooltip title={__('Toggle consistent border', 'web-stories')}>
           <StyledLockToggle
             isLocked={lockBorder}
@@ -211,7 +117,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
           />
         </Tooltip>
       </ToggleWrapper>
-    </BorderRow>
+    </BorderInputsFlexContainer>
   );
 }
 
