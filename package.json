@@ -170,8 +170,8 @@
     "lint:css": "npm-run-all --parallel --continue-on-error lint:css:*",
     "lint:css:js": "stylelint \"**/*.js\" --syntax \"css-in-js\"",
     "lint:css:js:fix": "stylelint \"**/*.js\" --syntax \"css-in-js\" --fix",
-    "lint:css:css": "stylelint \"**/*.css\" --syntax \"css\"",
-    "lint:css:css:fix": "stylelint \"**/*.css\" --syntax \"css\" --fix",
+    "lint:css:css": "stylelint \"**/*.css\"",
+    "lint:css:css:fix": "stylelint \"**/*.css\" --fix",
     "lint:js": "eslint .",
     "lint:js:fix": "eslint --fix .",
     "lint:js:report": "eslint --output-file build/lint-js-report.json --format json .",
@@ -244,7 +244,7 @@
     "*.json": [
       "prettier --write"
     ],
-    "*.css": "stylelint --fix --allow-empty-input --syntax \"css\"",
+    "*.css": "stylelint --fix --allow-empty-input",
     "*.md": [
       "eslint --fix",
       "markdownlint -f"
