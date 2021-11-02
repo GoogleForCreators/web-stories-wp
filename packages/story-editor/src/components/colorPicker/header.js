@@ -52,6 +52,7 @@ const Actions = styled.div`
 `;
 
 const StyledButton = styled(Button)`
+  margin-left: 8px;
   ${focusStyle};
 `;
 
