@@ -38,6 +38,7 @@ import { useState } from '@web-stories-wp/react';
  * Internal dependencies
  */
 import useStory from '../../app/story/useStory';
+import useEyedropper from '../eyedropper';
 import { BASIC_COLORS } from './constants';
 import Header from './header';
 import BasicColorList from './basicColorList';
@@ -63,11 +64,11 @@ const Label = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
-  margin: 10px 0;
+  margin: 16px 0 10px;
 `;
 
 const DefaultText = styled(Label)`
-  margin-left: 8px;
+  margin: 0 0 0 8px;
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 const StyledButton = styled(Button)`
@@ -78,9 +79,17 @@ const StyledButton = styled(Button)`
   flex-basis: 100%;
 `;
 
+const StyledText = styled(Text)`
+  padding: 5px 10px;
+`;
+
 const StyledPlus = styled(Icons.PlusOutline)`
   width: 32px;
   margin: -8px 0;
+`;
+
+const EyedropperWrapper = styled.div`
+  display: flex;
 `;
 
 function BasicColorPicker({
@@ -101,6 +110,10 @@ function BasicColorPicker({
   const [isEditMode, setIsEditMode] = useState(false);
   const [toDelete, setToDelete] = useState(null);
   const hasPresets = storyColors.length > 0 || savedColors.length > 0;
+
+  const { initEyedropper } = useEyedropper({
+    onChange: (newColor) => handleColorChange({ color: newColor }),
+  });
 
   const { deleteLocalColor, deleteGlobalColor } = useDeleteColor({
     setIsEditMode,
@@ -145,6 +158,21 @@ function BasicColorPicker({
         <DefaultText>{__('Color', 'web-stories')}</DefaultText>
       </Header>
       <Body>
+        <EyedropperWrapper>
+          <Button
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.QUATERNARY}
+            size={BUTTON_SIZES.SMALL}
+            aria-label={__('Pick a color from canvas', 'web-stories')}
+            onClick={initEyedropper()}
+            onPointerEnter={initEyedropper(false)}
+          >
+            <Icons.Pipette />
+          </Button>
+          <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('Sample color', 'web-stories')}
+          </StyledText>
+        </EyedropperWrapper>
         <SavedColors>
           {allowsSavedColors && (
             <>

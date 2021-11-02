@@ -115,7 +115,7 @@ function BasicColorList({
         const isGradientAndInvalid = !allowsGradient && hasGradient(pattern);
         const isDisabled = isTransparentAndInvalid || isGradientAndInvalid;
         let tooltip = null;
-        if (isDisabled) {
+        if (isDisabled && !isEditMode) {
           tooltip = isTransparentAndInvalid
             ? __(
                 'Page background colors cannot have an opacity.',

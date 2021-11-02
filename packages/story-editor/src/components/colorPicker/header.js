@@ -41,8 +41,9 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   height: ${HEADER_FOOTER_HEIGHT}px;
-  padding: 8px;
+  padding: 8px 8px 4px 8px;
   position: relative;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
 `;
 
 const Actions = styled.div`
