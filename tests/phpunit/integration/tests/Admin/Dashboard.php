@@ -183,7 +183,7 @@ class Dashboard extends DependencyInjectedTestCase {
 			$this->createMock( Locale::class ),
 			( new Google_Fonts() ),
 			$assets,
-			new Context( $post_type )
+			new Context( $post_type ),
 			$this->createMock( \Google\Web_Stories\Media\Types::class )
 		);
 
