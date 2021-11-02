@@ -48,6 +48,11 @@ function FilterPanel({ selectedElements, pushUpdate }) {
     [pushUpdate]
   );
 
+  // Enable eyedropper only for solid colors
+  // https://github.com/google/web-stories-wp/pull/9488#issuecomment-950679465
+  const hasEyedropper =
+    overlayType !== OverlayType.RADIAL && overlayType !== OverlayType.LINEAR;
+
   const { LayerIcon } = getDefinitionForType(selectedElements[0].type);
   return (
     <SimplePanel name="filter" title={__('Filters', 'web-stories')}>
@@ -84,6 +89,7 @@ function FilterPanel({ selectedElements, pushUpdate }) {
             value={overlay}
             onChange={updateOverlay}
             allowsGradient
+            hasEyedropper={hasEyedropper}
           />
         </Row>
       )}

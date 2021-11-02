@@ -56,9 +56,7 @@ function createTaxonomy(slug, overrides) {
   return {
     slug,
     restBase: `${slug}s`,
-    _links: {
-      'wp:items': [{ href: 'someUrl' }],
-    },
+    restPath: 'someUrl',
     ...overrides,
   };
 }

@@ -37,7 +37,7 @@ use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Traits\Types;
+use Google\Web_Stories\Media\Types;
 use WP_Post;
 
 /**
@@ -46,7 +46,6 @@ use WP_Post;
  * @package Google\Web_Stories\Admin
  */
 class Editor extends Service_Base implements HasRequirements {
-	use Types;
 
 	/**
 	 * Web Stories editor script handle.
@@ -125,6 +124,13 @@ class Editor extends Service_Base implements HasRequirements {
 	 */
 	private $context;
 
+  /**
+	 * Types instance.
+	 *
+	 * @var Types Types instance.
+	 */
+	private $types;
+
 	/**
 	 * Dashboard constructor.
 	 *
@@ -138,7 +144,8 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @param Assets                  $assets          Assets instance.
 	 * @param Story_Post_Type         $story_post_type Story_Post_Type instance.
 	 * @param Page_Template_Post_Type $page_template_post_type Page_Template_Post_Type instance.
-	 * @param Context                 $context Context instance.
+	 * @param Context                 $context         Context instance.
+	 * @param Types                   $types           Types instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -149,7 +156,8 @@ class Editor extends Service_Base implements HasRequirements {
 		Assets $assets,
 		Story_Post_Type $story_post_type,
 		Page_Template_Post_Type $page_template_post_type,
-		Context $context
+		Context $context,
+		Types $types
 	) {
 		$this->experiments             = $experiments;
 		$this->meta_boxes              = $meta_boxes;
@@ -160,6 +168,7 @@ class Editor extends Service_Base implements HasRequirements {
 		$this->story_post_type         = $story_post_type;
 		$this->page_template_post_type = $page_template_post_type;
 		$this->context                 = $context;
+		$this->types                   = $types;
 	}
 
 	/**
@@ -270,7 +279,7 @@ class Editor extends Service_Base implements HasRequirements {
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
 
-		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies, false );
 		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $this->google_fonts::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
@@ -331,9 +340,9 @@ class Editor extends Service_Base implements HasRequirements {
 		/** This filter is documented in wp-admin/includes/post.php */
 		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
 		$nonce              = wp_create_nonce( 'wp_rest' );
-		$mime_types         = $this->get_allowed_mime_types();
-		$image_mime_types   = $this->get_allowed_image_mime_types();
-		$audio_mime_types   = $this->get_allowed_audio_mime_types();
+		$mime_types         = $this->types->get_allowed_mime_types();
+		$image_mime_types   = $this->types->get_allowed_image_mime_types();
+		$audio_mime_types   = $this->types->get_allowed_audio_mime_types();
 
 		$story = new Story();
 		$story->load_from_post( $post );
@@ -344,11 +353,11 @@ class Editor extends Service_Base implements HasRequirements {
 				'autoSaveInterval'             => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'                        => is_rtl(),
 				'locale'                       => $this->locale->get_locale_settings(),
-				'allowedFileTypes'             => $this->get_allowed_file_types(),
-				'allowedTranscodableMimeTypes' => $this->get_allowed_transcodable_mime_types(),
-				'allowedImageFileTypes'        => $this->get_file_type_exts( $image_mime_types ),
+				'allowedFileTypes'             => $this->types->get_allowed_file_types(),
+				'allowedTranscodableMimeTypes' => $this->types->get_allowed_transcodable_mime_types(),
+				'allowedImageFileTypes'        => $this->types->get_file_type_exts( $image_mime_types ),
 				'allowedImageMimeTypes'        => $image_mime_types,
-				'allowedAudioFileTypes'        => $this->get_file_type_exts( $audio_mime_types ),
+				'allowedAudioFileTypes'        => $this->types->get_file_type_exts( $audio_mime_types ),
 				'allowedAudioMimeTypes'        => $audio_mime_types,
 				'allowedMimeTypes'             => $mime_types,
 				'postType'                     => $this->story_post_type->get_slug(),
@@ -391,6 +400,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'encodeMarkup'                 => $this->decoder->supports_decoding(),
 				'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
 				'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
+				'localeData'                   => $this->assets->get_translations( self::SCRIPT_HANDLE ),
 				'flags'                        => array_merge(
 					$this->experiments->get_experiment_statuses( 'general' ),
 					$this->experiments->get_experiment_statuses( 'editor' )

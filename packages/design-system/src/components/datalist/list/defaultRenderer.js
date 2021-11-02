@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Option, Selected } from './styled';
+import { Option, Selected, OverflowEllipses } from './styled';
 
 const DefaultRenderer = forwardRef(function DefaultRenderer(
   { option, value, ...rest },
@@ -35,14 +35,14 @@ const DefaultRenderer = forwardRef(function DefaultRenderer(
       {value === option.id && (
         <Selected aria-label={__('Selected', 'web-stories')} />
       )}
-      {option.name}
+      <OverflowEllipses>{option.name}</OverflowEllipses>
     </Option>
   );
 });
 
 DefaultRenderer.propTypes = {
   option: PropTypes.object.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any,
 };
 
 export default DefaultRenderer;

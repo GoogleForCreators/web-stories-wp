@@ -183,8 +183,8 @@ class Dashboard extends DependencyInjectedTestCase {
 			$this->createMock( Locale::class ),
 			( new Google_Fonts() ),
 			$assets,
-			$post_type,
 			new Context( $post_type )
+			$this->createMock( \Google\Web_Stories\Media\Types::class )
 		);
 
 		$this->instance->add_menu_page();
@@ -195,7 +195,5 @@ class Dashboard extends DependencyInjectedTestCase {
 
 		$this->assertTrue( wp_style_is( $this->instance::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_style_is( 'fake_css_chunk', 'registered' ) );
-
-		$this->assertSame( 'web-stories', wp_scripts()->registered[ $this->instance::SCRIPT_HANDLE ]->textdomain );
 	}
 }

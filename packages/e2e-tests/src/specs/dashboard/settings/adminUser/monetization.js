@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { clickButton, visitSettings } from '@web-stories-wp/e2e-test-utils';
+import { visitSettings } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * Internal dependencies
@@ -25,15 +25,17 @@ import { clickButton, visitSettings } from '@web-stories-wp/e2e-test-utils';
 import { monetizationDropdownSelector } from '../../../../utils';
 
 describe('Admin User', () => {
-  it('should let me see and update all settings', async () => {
+  it('should let me see and update monetization settings', async () => {
     await visitSettings();
+
+    // Small trick to ensure we scroll to this input.
+    const monetizationDropdown = await page.$(monetizationDropdownSelector);
+    await monetizationDropdown.focus();
 
     await expect(page).toMatchElement(monetizationDropdownSelector);
 
     // verify that the monetization settings can be changed
-    await clickButton(monetizationDropdownSelector, {
-      text: 'None',
-    });
+    await expect(page).toClick(monetizationDropdownSelector, { text: 'None' });
 
     await expect(page).toClick('li', { text: 'Google AdSense' });
     await expect(page).toMatchElement(monetizationDropdownSelector, {
@@ -41,7 +43,7 @@ describe('Admin User', () => {
     });
 
     // reset monetization setting
-    await clickButton(monetizationDropdownSelector, {
+    await expect(page).toClick(monetizationDropdownSelector, {
       text: 'Google AdSense',
     });
     await expect(page).toClick('li', { text: 'None' });

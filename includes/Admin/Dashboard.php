@@ -33,17 +33,16 @@ use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Tracking;
+use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Assets;
-use Google\Web_Stories\Traits\Types;
 
 /**
  * Dashboard class.
  */
 class Dashboard extends Service_Base {
-	use Types;
 
 	/**
 	 * Script handle.
@@ -114,6 +113,13 @@ class Dashboard extends Service_Base {
 	 * @var Context Context instance.
 	 */
 	private $context;
+	
+  /**
+	 * Types instance.
+	 *
+	 * @var Types Types instance.
+	 */
+	private $types;
 
 	/**
 	 * Dashboard constructor.
@@ -128,6 +134,7 @@ class Dashboard extends Service_Base {
 	 * @param Assets          $assets          Assets instance.
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 * @param Context         $context         Context instance.
+	 * @param Types           $types           Types instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -137,7 +144,8 @@ class Dashboard extends Service_Base {
 		Google_Fonts $google_fonts,
 		Assets $assets,
 		Story_Post_Type $story_post_type,
-		Context $context
+		Context $context,
+		Types $types
 	) {
 		$this->experiments     = $experiments;
 		$this->decoder         = $decoder;
@@ -147,6 +155,7 @@ class Dashboard extends Service_Base {
 		$this->assets          = $assets;
 		$this->story_post_type = $story_post_type;
 		$this->context         = $context;
+		$this->types           = $types;
 	}
 
 	/**
@@ -360,7 +369,7 @@ class Dashboard extends Service_Base {
 			return;
 		}
 
-		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ], false );
 
 		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $this->google_fonts::SCRIPT_HANDLE ] );
 
@@ -406,7 +415,7 @@ class Dashboard extends Service_Base {
 				'newStoryURL'           => $new_story_url,
 				'archiveURL'            => $this->story_post_type->get_archive_link(),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
-				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
+				'allowedImageMimeTypes' => $this->types->get_allowed_image_mime_types(),
 				'version'               => WEBSTORIES_VERSION,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),
 				'api'                   => [
@@ -425,6 +434,7 @@ class Dashboard extends Service_Base {
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],
 				'siteKitStatus'         => $this->site_kit->get_plugin_status(),
+				'localeData'            => $this->assets->get_translations( self::SCRIPT_HANDLE ),
 				'flags'                 => array_merge(
 					$this->experiments->get_experiment_statuses( 'general' ),
 					$this->experiments->get_experiment_statuses( 'dashboard' )
