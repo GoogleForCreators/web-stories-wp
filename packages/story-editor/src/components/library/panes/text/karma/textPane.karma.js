@@ -204,9 +204,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
   };
 
   describe('Easier/smarter text color', () => {
-    // TODO(#9224): Fix flaky test.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should add text color based on background', async () => {
+    it('should add text color based on background', async () => {
       // Enable the smart colors first.
       await fixture.editor.library.textTab.click();
       await fixture.events.click(fixture.editor.library.text.smartColorToggle);
