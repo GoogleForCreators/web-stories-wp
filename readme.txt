@@ -142,17 +142,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Easier selection of publisher logos in the editor.
 * Bug fixes and performance improvements.
 
-= 1.11.0 =
-
-**Release Date:** September 7, 2021.
-
-* New feature: 8 new templates for creators to choose from.
-* New feature: right-click menu in the editing canvas.
-* New feature: background audio support.
-* New color swatches in color picker.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.14.0 =
+
+Archive page customization, improved video captions appearance, layer panel improvements, and several bug fixes.
 
 = 1.13.0 =
 
@@ -161,7 +155,3 @@ Categories and tags support, improved performance in the editor, and several bug
 = 1.12.0 =
 
 Video trimming, improved analytics configuration, publisher logos management, saved template colors, and various bug fixes.
-
-= 1.11.0 =
-
-New templates, right-click menu, improved color picker, and background audio support.
