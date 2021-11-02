@@ -25,13 +25,15 @@ import {
   hasOpacity,
   hasGradient,
 } from '@web-stories-wp/patterns';
-import { Swatch, themeHelpers } from '@web-stories-wp/design-system';
+import { Icons, Swatch, themeHelpers } from '@web-stories-wp/design-system';
 import { useRef } from '@web-stories-wp/react';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import useRovingTabIndex from '../../utils/useRovingTabIndex';
+import Tooltip from '../tooltip';
 import ColorAdd from './colorAdd';
 
 const focusStyle = css`
@@ -75,10 +77,11 @@ function getPatternAsString(pattern) {
 function BasicColorList({
   color,
   colors,
-  handleColorChange,
+  handleClick,
   allowsOpacity,
   allowsGradient,
-  addColorType = null,
+  colorType = null,
+  isEditMode,
   ...rest
 }) {
   const colorAsBackground = getPatternAsString(color);
@@ -90,6 +93,20 @@ function BasicColorList({
     .map(getPatternAsString)
     .findIndex((c) => colorAsBackground === c);
 
+  const isLocal = 'local' === colorType;
+  const isGlobal = 'global' === colorType;
+
+  const deleteLabel = isLocal
+    ? __('Delete local color', 'web-stories')
+    : __('Delete global color', 'web-stories');
+
+  let applyLabel = __('Apply color', 'web-stories');
+  if (isLocal || isGlobal) {
+    applyLabel = isLocal
+      ? __('Apply local color', 'web-stories')
+      : __('Apply global color', 'web-stories');
+  }
+
   let firstIndex = 0;
   return (
     <SwatchList ref={listRef} {...rest}>
@@ -97,6 +114,15 @@ function BasicColorList({
         const isTransparentAndInvalid = !allowsOpacity && hasOpacity(pattern);
         const isGradientAndInvalid = !allowsGradient && hasGradient(pattern);
         const isDisabled = isTransparentAndInvalid || isGradientAndInvalid;
+        let tooltip = null;
+        if (isDisabled) {
+          tooltip = isTransparentAndInvalid
+            ? __(
+                'Page background colors cannot have an opacity.',
+                'web-stories'
+              )
+            : __('Gradient not allowed for Text', 'web-stories');
+        }
 
         const patternAsBackground = getPatternAsString(pattern);
         const isSelected = colorAsBackground === patternAsBackground;
@@ -109,28 +135,34 @@ function BasicColorList({
           tabIndex = -1;
         }
         return (
-          <StyledSwatch
-            key={patternAsBackground}
-            onClick={() => handleColorChange(pattern)}
-            pattern={pattern}
-            isSelected={isSelected}
-            isDisabled={isDisabled}
-            tabIndex={tabIndex}
-            title={patternAsBackground}
-          />
+          <Tooltip key={patternAsBackground} title={tooltip}>
+            <StyledSwatch
+              onClick={() => handleClick(pattern, isLocal)}
+              pattern={pattern}
+              isSelected={isSelected}
+              isDisabled={isDisabled}
+              tabIndex={tabIndex}
+              title={patternAsBackground}
+              aria-label={isEditMode ? deleteLabel : applyLabel}
+            >
+              {isEditMode && <Icons.Cross />}
+            </StyledSwatch>
+          </Tooltip>
         );
       })}
-      {addColorType && <ColorAdd type={addColorType} />}
+      {colorType && <ColorAdd type={colorType} />}
     </SwatchList>
   );
 }
 
 BasicColorList.propTypes = {
-  handleColorChange: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
   allowsOpacity: PropTypes.bool,
   allowsGradient: PropTypes.bool,
   color: PatternPropType,
   colors: PropTypes.arrayOf(PatternPropType),
+  colorType: PropTypes.string,
+  isEditMode: PropTypes.bool.isRequired,
 };
 
 export default BasicColorList;

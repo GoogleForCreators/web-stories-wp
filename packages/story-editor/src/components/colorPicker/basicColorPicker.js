@@ -28,6 +28,8 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  localStore,
+  LOCAL_STORAGE_PREFIX,
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import { useState } from '@web-stories-wp/react';
@@ -39,6 +41,8 @@ import useStory from '../../app/story/useStory';
 import { BASIC_COLORS } from './constants';
 import Header from './header';
 import BasicColorList from './basicColorList';
+import ConfirmationDialog from './confirmationDialog';
+import useDeleteColor from './useDeleteColor';
 
 const Body = styled.div`
   display: flex;
@@ -93,8 +97,43 @@ function BasicColorPicker({
     storyColors: state.state.story?.currentStoryStyles?.colors || [],
   }));
 
+  const [showDialog, setShowDialog] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [toDelete, setToDelete] = useState(null);
   const hasPresets = storyColors.length > 0 || savedColors.length > 0;
+
+  const { deleteLocalColor, deleteGlobalColor } = useDeleteColor({
+    setIsEditMode,
+  });
+
+  const handleClick = (preset, isLocal = false) => {
+    // If not in edit mode, apply the color.
+    if (!isEditMode) {
+      handleColorChange(preset);
+      return;
+    }
+    // If deleting a local color, delete without confirmation.
+    if (isLocal) {
+      deleteLocalColor(preset);
+      return;
+    }
+
+    // If the user has dismissed the confirmation dialogue previously.
+    const storageKey = 'DELETE_COLOR_PRESET_DIALOG_DISMISSED';
+    const isDialogDismissed = localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX[storageKey]
+    );
+    if (isDialogDismissed) {
+      deleteGlobalColor(preset);
+      return;
+    }
+
+    // Ask confirmation for a global color.
+    // @todo This is not working together with the popup!
+    setShowDialog(true);
+    setToDelete(preset);
+  };
+
   return (
     <>
       <Header
@@ -116,11 +155,12 @@ function BasicColorPicker({
                 <BasicColorList
                   color={color}
                   colors={storyColors}
-                  handleColorChange={handleColorChange}
-                  addColorType="local"
+                  handleClick={handleClick}
+                  colorType="local"
                   allowsOpacity={allowsOpacity}
                   allowsGradient={allowsGradient}
                   aria-labelledby="colorpicker-story-colors-title"
+                  isEditMode={isEditMode}
                 />
               )}
             </>
@@ -134,11 +174,12 @@ function BasicColorPicker({
                 <BasicColorList
                   color={color}
                   colors={savedColors}
-                  addColorType="global"
-                  handleColorChange={handleColorChange}
+                  colorType="global"
+                  handleClick={handleClick}
                   allowsOpacity={allowsOpacity}
                   allowsGradient={allowsGradient}
                   aria-labelledby="colorpicker-saved-colors-title"
+                  isEditMode={isEditMode}
                 />
               )}
             </>
@@ -151,10 +192,16 @@ function BasicColorPicker({
           <BasicColorList
             color={color}
             colors={BASIC_COLORS}
-            handleColorChange={handleColorChange}
+            handleClick={(pattern) => {
+              handleColorChange(pattern);
+              if (isEditMode) {
+                setIsEditMode(false);
+              }
+            }}
             allowsOpacity={allowsOpacity}
             allowsGradient={allowsGradient}
             aria-labelledby="colorpicker-default-colors-title"
+            isEditMode={false}
           />
         </DefaultColors>
         <StyledButton
@@ -167,6 +214,16 @@ function BasicColorPicker({
           <StyledPlus />
         </StyledButton>
       </Body>
+      {showDialog && (
+        <ConfirmationDialog
+          onClose={() => setShowDialog(false)}
+          onPrimary={() => {
+            deleteGlobalColor(toDelete);
+            setToDelete(null);
+            setShowDialog(false);
+          }}
+        />
+      )}
     </>
   );
 }
