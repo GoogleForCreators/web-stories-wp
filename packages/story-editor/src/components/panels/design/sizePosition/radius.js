@@ -74,10 +74,10 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
             [name]: value,
           }
         : {
-            left: value,
-            top: value,
-            right: value,
-            bottom: value,
+            topLeft: value,
+            topRight: value,
+            bottomRight: value,
+            bottomLeft: value,
           };
       pushUpdateForObject(
         'borderRadius',
