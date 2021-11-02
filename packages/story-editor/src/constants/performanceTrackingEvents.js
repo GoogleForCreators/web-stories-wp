@@ -47,6 +47,6 @@ export const TRACKING_EVENTS = {
   },
   SET_BACKGROUND_MEDIA: {
     category: 'background',
-    label: 'set_media_as',
+    label: 'set_media_as_bg',
   },
 };
