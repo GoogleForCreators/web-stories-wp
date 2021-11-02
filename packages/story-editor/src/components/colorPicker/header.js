@@ -29,6 +29,11 @@ import {
   BUTTON_VARIANTS,
 } from '@web-stories-wp/design-system';
 
+/**
+ * Internal dependencies
+ */
+import { focusStyle } from '../panels/shared';
+
 const HEADER_FOOTER_HEIGHT = 52;
 
 const Wrapper = styled.div`
@@ -40,28 +45,69 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const CloseButton = styled(Button)`
+const Actions = styled.div`
+  display: flex;
   margin-left: auto;
 `;
 
-function Header({ children, handleClose }) {
+const StyledButton = styled(Button)`
+  ${focusStyle};
+`;
+
+function Header({
+  children,
+  handleClose,
+  isEditMode,
+  setIsEditMode,
+  hasPresets,
+}) {
   const ref = useRef();
   useEffect(() => {
     ref.current?.focus();
   }, []);
+
+  const buttonProps = {
+    type: BUTTON_TYPES.TERTIARY,
+    size: BUTTON_SIZES.SMALL,
+    variant: BUTTON_VARIANTS.SQUARE,
+    onClick: (evt) => {
+      evt.stopPropagation();
+      setIsEditMode(!isEditMode);
+    },
+    isEditMode,
+  };
+
   return (
     <Wrapper>
       {children}
-      <CloseButton
-        aria-label={__('Close', 'web-stories')}
-        onClick={handleClose}
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
-        ref={ref}
-      >
-        <Icons.Cross />
-      </CloseButton>
+      <Actions>
+        {hasPresets && isEditMode && (
+          <StyledButton
+            {...buttonProps}
+            aria-label={__('Exit edit mode', 'web-stories')}
+          >
+            {__('Done', 'web-stories')}
+          </StyledButton>
+        )}
+        {hasPresets && !isEditMode && (
+          <StyledButton
+            {...buttonProps}
+            aria-label={__('Edit colors', 'web-stories')}
+          >
+            <Icons.Pencil />
+          </StyledButton>
+        )}
+        <StyledButton
+          aria-label={__('Close', 'web-stories')}
+          onClick={handleClose}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          variant={BUTTON_VARIANTS.SQUARE}
+          ref={ref}
+        >
+          <Icons.Cross />
+        </StyledButton>
+      </Actions>
     </Wrapper>
   );
 }
@@ -69,6 +115,9 @@ function Header({ children, handleClose }) {
 Header.propTypes = {
   children: PropTypes.node,
   handleClose: PropTypes.func.isRequired,
+  isEditMode: PropTypes.bool.isRequired,
+  setIsEditMode: PropTypes.func.isRequired,
+  hasPresets: PropTypes.bool.isRequired,
 };
 
 export default Header;

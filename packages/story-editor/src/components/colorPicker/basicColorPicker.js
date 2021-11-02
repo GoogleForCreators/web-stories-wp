@@ -30,6 +30,7 @@ import {
   BUTTON_VARIANTS,
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
+import { useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -92,9 +93,16 @@ function BasicColorPicker({
     storyColors: state.state.story?.currentStoryStyles?.colors || [],
   }));
 
+  const [isEditMode, setIsEditMode] = useState(false);
+  const hasPresets = storyColors.length > 0 || savedColors.length > 0;
   return (
     <>
-      <Header handleClose={handleClose}>
+      <Header
+        handleClose={handleClose}
+        isEditMode={isEditMode}
+        setIsEditMode={setIsEditMode}
+        hasPresets={hasPresets}
+      >
         <DefaultText>{__('Color', 'web-stories')}</DefaultText>
       </Header>
       <Body>
