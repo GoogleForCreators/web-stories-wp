@@ -109,7 +109,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.snapshot('consecutively added different text presets');
     });
 
-    fit('should ensure staggered presets fit on the page', async () => {
+    it('should ensure staggered presets fit on the page', async () => {
       const POSITION_MARGIN = dataFontEm(1);
       const PARAGRAPH_TEXT =
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';

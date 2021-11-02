@@ -20,7 +20,7 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-fdescribe('Canvas Keyboard Shortcuts', () => {
+describe('Canvas Keyboard Shortcuts', () => {
   let fixture;
   let elementIds;
 
