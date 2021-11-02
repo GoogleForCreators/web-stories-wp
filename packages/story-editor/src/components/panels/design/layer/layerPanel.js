@@ -26,6 +26,7 @@ import styled from 'styled-components';
  */
 import { Panel, PanelTitle, PanelContent } from '../../panel';
 import useInspector from '../../../inspector/useInspector';
+import { TAB_HEIGHT, TAB_VERTICAL_MARGIN } from '../../../tabview';
 import LayerList from './layerList';
 import useLayers from './useLayers';
 
@@ -57,8 +58,10 @@ function LayerPanel() {
   } = useInspector();
 
   // We want the max height to fill the space underneath the document/design tab bar.
-  // Since the document/design tab bar is 50px subtract that from the full height of the inspector.
-  const maxHeight = inspectorContentHeight - 50;
+  // Since the document/design tab bar has top and bottom margin in addition to a static
+  // height subtract sum from the full height of the inspector.
+  const tabHeight = 2 * TAB_VERTICAL_MARGIN + TAB_HEIGHT;
+  const maxHeight = inspectorContentHeight - tabHeight + 2;
 
   const initialHeight = useMemo(() => Math.round(window.innerHeight / 4), []);
 
