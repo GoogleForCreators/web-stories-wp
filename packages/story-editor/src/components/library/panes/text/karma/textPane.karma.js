@@ -109,9 +109,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.snapshot('consecutively added different text presets');
     });
 
-    // TODO(#9224): Fix flaky test.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should ensure staggered presets fit on the page', async () => {
+    fit('should ensure staggered presets fit on the page', async () => {
       const POSITION_MARGIN = dataFontEm(1);
       const PARAGRAPH_TEXT =
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
