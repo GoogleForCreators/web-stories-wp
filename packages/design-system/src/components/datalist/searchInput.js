@@ -21,17 +21,14 @@ import { forwardRef, useCallback } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import {
-  themeHelpers,
-  Icons,
-  Button,
-  BUTTON_VARIANTS,
-} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { noop } from '../../../utils/noop';
+import { themeHelpers } from '../../theme';
+import { Magnifier, Cross } from '../../icons';
+import { Button, BUTTON_VARIANTS } from '../button';
+import { noop } from '../../utils';
 
 const SearchContainer = styled.div`
   position: relative;
@@ -141,11 +138,11 @@ const SearchInput = forwardRef(function SearchInput(
         {...rest}
       />
       <SearchIconContainer>
-        <Icons.Magnifier />
+        <Magnifier />
       </SearchIconContainer>
       {value.trim().length > 0 && (
         <ClearButton onClick={() => onChange({ target: { value: '' } })}>
-          <Icons.Cross />
+          <Cross />
         </ClearButton>
       )}
     </SearchContainer>

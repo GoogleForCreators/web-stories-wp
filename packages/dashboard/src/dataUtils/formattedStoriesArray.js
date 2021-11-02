@@ -64,7 +64,7 @@ const formattedStoriesArray = [
     categories: [],
     author: {
       name: 'Chewbacca',
-      id: '',
+      id: 2,
     },
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
@@ -89,7 +89,7 @@ const formattedStoriesArray = [
     categories: [],
     author: {
       name: 'Luke Skywalker',
-      id: 1,
+      id: 3,
     },
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
@@ -114,7 +114,7 @@ const formattedStoriesArray = [
     categories: [],
     author: {
       name: 'Lando-Calrissian',
-      id: 1,
+      id: 4,
     },
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=161',

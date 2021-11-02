@@ -1,8 +1,8 @@
 <?php
 /**
- * Trait Types
+ * Class Types
  *
- * @package   Google\Web_Stories\Traits
+ * @package   Google\Web_Stories\Media
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/google/web-stories-wp
@@ -24,14 +24,14 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Traits;
+namespace Google\Web_Stories\Media;
 
 /**
- * Trait Types
+ * Class Types
  *
- * @package Google\Web_Stories\Traits
+ * @package Google\Web_Stories\Media
  */
-trait Types {
+class Types {
 	/**
 	 * Returns a list of allowed file types.
 	 *

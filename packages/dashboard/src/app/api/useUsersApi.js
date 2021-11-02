@@ -13,5 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './story';
-export * from './authors';
+/**
+ * External dependencies
+ */
+import { useCallback } from '@web-stories-wp/react';
+
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../config';
+
+function useUsersApi() {
+  const {
+    apiCallbacks: { getAuthors: getAuthorsCallback },
+  } = useConfig();
+
+  const getAuthors = useCallback(
+    (search) => getAuthorsCallback(search),
+    [getAuthorsCallback]
+  );
+
+  return {
+    api: {
+      getAuthors,
+    },
+  };
+}
+
+export default useUsersApi;
