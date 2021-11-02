@@ -44,7 +44,6 @@ const AutoStyleButton = styled(Button).attrs({
   type: BUTTON_TYPES.TERTIARY,
   size: BUTTON_SIZES.SMALL,
 })`
-  margin-right: 4px;
   ${({ theme }) =>
     themeHelpers.focusableOutlineCSS(theme.colors.border.focus, '#1d1f20')};
 `;
