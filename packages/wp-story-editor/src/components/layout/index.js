@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { InterfaceSkeleton } from '@web-stories-wp/story-editor';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
 import { default as Header } from '../header';
 import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
 import DocumentInspector from '../documentInspector';
