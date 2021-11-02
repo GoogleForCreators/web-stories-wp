@@ -69,7 +69,11 @@ describe('Telemetry Banner', () => {
 
   it('should keep focus on the checkbox when checking/unchecking via keyboard', async () => {
     await page.waitForTimeout(300); // Because dashboard takes some time before banner appears.
-    const checkbox = await page.$('#telemetry-banner-opt-in');
+
+    const bannerSelector = '#telemetry-banner-opt-in';
+    await page.waitForSelector(bannerSelector);
+    await expect(page).toMatchElement(bannerSelector);
+    const checkbox = await page.$(bannerSelector);
 
     await checkbox.focus();
     await page.keyboard.press('Space');
