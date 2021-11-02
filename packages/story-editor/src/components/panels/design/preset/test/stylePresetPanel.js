@@ -24,7 +24,7 @@ import { fireEvent, screen } from '@testing-library/react';
  */
 import StylePresetPanel from '../presetPanel';
 import StoryContext from '../../../../../app/story/context';
-import { BACKGROUND_TEXT_MODE , PRESET_TYPES } from '../../../../../constants';
+import { BACKGROUND_TEXT_MODE, PRESET_TYPES } from '../../../../../constants';
 import {
   getTextPresets,
   areAllType,

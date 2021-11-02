@@ -26,7 +26,7 @@ import { Icons } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { focusStyle } from '../panels/shared';
-import useAddPreset from '../panels/design/preset/useAddPreset';
+import useAddPreset from '../../utils/useAddPreset';
 import { PRESET_TYPES } from '../../constants';
 
 const COLOR_SIZE = 32;

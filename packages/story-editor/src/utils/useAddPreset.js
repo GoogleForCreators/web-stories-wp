@@ -20,14 +20,14 @@ import { useCallback } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app/story';
-import getUniquePresets from '../../../../utils/getUniquePresets';
+import { useStory } from '../app';
+import getUniquePresets from './getUniquePresets';
 import {
   areAllType,
   getPagePreset,
   getShapePresets,
   getTextPresets,
-} from '../../../../utils/presetUtils';
+} from './presetUtils';
 
 function useAddPreset({ presetType }) {
   const {
