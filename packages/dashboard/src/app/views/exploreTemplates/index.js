@@ -77,6 +77,7 @@ function ExploreTemplates() {
   }, [fetchExternalTemplates]);
 
   const orderedTemplates = useMemo(() => {
+    // console.log([...new Set(Object.values(templates).flatMap((t) => t.tags))]);
     return (
       templatesOrderById
         .map((templateId) => {
@@ -85,7 +86,8 @@ function ExploreTemplates() {
         // Add search keyword for title
         .filter(
           (template) =>
-            !search.keyword || template.title.includes(search.keyword)
+            !search.keyword ||
+            template.title.toLowerCase().includes(search.keyword.toLowerCase())
         )
     );
   }, [templatesOrderById, templates, search.keyword]);
