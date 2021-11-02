@@ -30,15 +30,18 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { useStory } from '../../../../app/story';
 import { Panel, PanelContent } from '../../panel';
-import { areAllType, getPanelInitialHeight } from '../../../../utils/presetUtils';
+import {
+  areAllType,
+  getPanelInitialHeight,
+} from '../../../../utils/presetUtils';
+import { PRESET_TYPES } from '../../../../constants';
+import useAddPreset from '../../../../utils/useAddPreset';
 import PresetsHeader from './header';
 import Resize from './resize';
-import useAddPreset from './useAddPreset';
 import useDeletePreset from './useDeletePreset';
 import StyleGroup from './stylePreset/styleGroup';
 import useApplyStyle from './stylePreset/useApplyStyle';
 import ConfirmationDialog from './confirmationDialog';
-import { PRESET_TYPES } from '../../../../constants';
 
 function PresetPanel({ pushUpdate }) {
   const { selectedElements, globalStoryStyles } = useStory(
