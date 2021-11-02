@@ -48,8 +48,8 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
   await page.click('#wp-submit');
   await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
-  await page.waitForSelector('aria/Explore Templates');
-  await page.click('aria/Explore Templates');
+  await page.waitForSelector('[aria-label^="Explore Templates"]');
+  await page.click('[aria-label^="Explore Templates"]');
 
   // Wait for templates to be rendered
   await page.waitForSelector('div.templateGridItem');
