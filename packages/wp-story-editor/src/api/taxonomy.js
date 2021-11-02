@@ -43,7 +43,7 @@ export async function getTaxonomies(config) {
   });
 
   return Object.values(result).map((taxonomy) => {
-    taxonomy.restPath = taxonomy['_links']?.['wp:items']?.[0]?.href;
+    taxonomy.rest_path = taxonomy['_links']?.['wp:items']?.[0]?.href;
 
     const entries = Object.entries(taxonomy);
 
