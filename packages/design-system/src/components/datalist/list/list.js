@@ -24,12 +24,12 @@ import {
   useCallback,
   useLayoutEffect,
   useFocusOut,
+  forwardRef,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -41,6 +41,9 @@ import {
   addUniqueEntries,
   getInset,
 } from '../utils';
+import { Text } from '../../typography';
+import { THEME_CONSTANTS } from '../../../theme';
+import { noop } from '../../../utils/noop';
 import { List, Group, GroupLabel, NoResult } from './styled';
 import DefaultRenderer from './defaultRenderer';
 
@@ -51,25 +54,28 @@ const StyledLabel = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
-function OptionList({
-  keyword = '',
-  value = '',
-  onSelect = () => {},
-  onClose = () => {},
-  onExpandedChange = () => {},
-  focusTrigger = 0,
-  options = [],
-  primaryOptions,
-  primaryLabel,
-  priorityOptions = [],
-  priorityLabel,
-  searchResultsLabel,
-  renderer = DefaultRenderer,
-  onObserve,
-  listId,
-}) {
+const OptionList = forwardRef(function OptionList(
+  {
+    keyword = '',
+    value = '',
+    onSelect = () => {},
+    onClose = () => {},
+    onExpandedChange = () => {},
+    focusTrigger = 0,
+    options = [],
+    primaryOptions,
+    primaryLabel,
+    priorityOptions = [],
+    priorityLabel,
+    searchResultsLabel,
+    renderer = DefaultRenderer,
+    onObserve,
+    focusSearch = noop,
+    listId,
+  },
+  listRef
+) {
   const OptionRenderer = renderer;
-  const listRef = useRef(null);
   const optionsRef = useRef([]);
   const [focusIndex, setFocusIndex] = useState(-1);
   const userSeenOptions = useRef([]);
@@ -139,7 +145,7 @@ function OptionList({
           rootMargin: '60px',
         }
       ),
-    [onObserve]
+    [onObserve, listRef]
   );
 
   // Observe rendered font options
@@ -169,10 +175,14 @@ function OptionList({
 
   const handleKeyPress = useCallback(
     (evt) => {
+      const { key } = evt;
+
       evt.stopPropagation();
       evt.preventDefault();
 
-      const { key } = evt;
+      if (key === 'Tab' && evt.shiftKey) {
+        focusSearch();
+      }
 
       if (key === 'Escape') {
         onClose();
@@ -188,7 +198,7 @@ function OptionList({
         );
       }
     },
-    [focusIndex, filteredOptions, onClose, onSelect]
+    [focusIndex, filteredOptions, onClose, onSelect, focusSearch]
   );
 
   useFocusOut(listRef, () => setFocusIndex(-1), []);
@@ -211,7 +221,7 @@ function OptionList({
 
     highlighedOptionEl.focus();
     listEl.scrollTo(0, highlighedOptionEl.offsetTop - listEl.clientHeight / 2);
-  }, [focusIndex, filteredOptions, keyword]);
+  }, [focusIndex, filteredOptions, keyword, onClose, listRef]);
 
   /*
    * ACCESSIBILITY COMMUNICATION WITH SEARCH INPUT
@@ -276,7 +286,7 @@ function OptionList({
       })}
     </List>
   );
-}
+});
 
 OptionList.propTypes = {
   keyword: PropTypes.string,
@@ -294,6 +304,7 @@ OptionList.propTypes = {
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   onObserve: PropTypes.func,
   listId: PropTypes.string.isRequired,
+  focusSearch: PropTypes.func,
 };
 
 export default OptionList;

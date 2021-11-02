@@ -319,6 +319,92 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::create_item
 	 */
+	public function test_create_item_multiple() {
+		$this->controller->register();
+
+		wp_set_current_user( self::$admin );
+
+		$request = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/publisher-logos' );
+		$request->set_body_params(
+			[
+				'id' => [ self::$attachment_id_1, self::$attachment_id_2 ],
+			]
+		);
+		$response = rest_get_server()->dispatch( $request );
+
+		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+
+		$data = $response->get_data();
+		$this->assertEqualSetsWithIndex(
+			[
+				[
+					'id'     => self::$attachment_id_1,
+					'title'  => get_the_title( self::$attachment_id_1 ),
+					'url'    => wp_get_attachment_url( self::$attachment_id_1 ),
+					'active' => true,
+					'_links' => [
+						'self'       => [
+							[
+								'href' => rest_url( 'web-stories/v1/publisher-logos/' . self::$attachment_id_1 ),
+							],
+						],
+						'collection' => [
+							[
+								'href' => rest_url( 'web-stories/v1/publisher-logos' ),
+							],
+						],
+					],
+				],
+				[
+					'id'     => self::$attachment_id_2,
+					'title'  => get_the_title( self::$attachment_id_2 ),
+					'url'    => wp_get_attachment_url( self::$attachment_id_2 ),
+					'active' => false,
+					'_links' => [
+						'self'       => [
+							[
+								'href' => rest_url( 'web-stories/v1/publisher-logos/' . self::$attachment_id_2 ),
+							],
+						],
+						'collection' => [
+							[
+								'href' => rest_url( 'web-stories/v1/publisher-logos' ),
+							],
+						],
+					],
+				],
+			],
+			$data
+		);
+		$this->assertEqualSets( [ self::$attachment_id_1, self::$attachment_id_2 ], $publisher_logos );
+		$this->assertSame( self::$attachment_id_1, $active_publisher_logo_id );
+	}
+
+	/**
+	 * @covers ::permissions_check
+	 * @covers ::create_item
+	 */
+	public function test_create_item_empty_array() {
+		$this->controller->register();
+
+		wp_set_current_user( self::$admin );
+
+		$request = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/publisher-logos' );
+		$request->set_body_params(
+			[
+				'id' => [],
+			]
+		);
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertErrorResponse( 'rest_invalid_id', $response );
+	}
+
+	/**
+	 * @covers ::permissions_check
+	 * @covers ::create_item
+	 */
 	public function test_create_item_updates_incorrect_active_publisher_logo() {
 		$this->controller->register();
 
