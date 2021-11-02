@@ -72,8 +72,8 @@ class Jetpack extends Service_Base {
 	 * @var Context Context instance.
 	 */
 	private $context;
-	
-  /**
+
+	/**
 	 * Types instance.
 	 *
 	 * @var Types Types instance.
@@ -86,8 +86,8 @@ class Jetpack extends Service_Base {
 	 * @since 1.12.0
 	 *
 	 * @param Media_Source_Taxonomy $media_source_taxonomy Media_Source_Taxonomy instance.
-	 * @param Context               $context Context instance.
-   * @param Types                 $types                 Types instance.
+	 * @param Context               $context               Context instance.
+	 * @param Types                 $types                 Types instance.
 	 */
 	public function __construct( Media_Source_Taxonomy $media_source_taxonomy, Context $context, Types $types ) {
 		$this->media_source_taxonomy = $media_source_taxonomy;

@@ -124,7 +124,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 */
 	private $context;
 
-  /**
+	/**
 	 * Types instance.
 	 *
 	 * @var Types Types instance.
@@ -133,6 +133,8 @@ class Editor extends Service_Base implements HasRequirements {
 
 	/**
 	 * Dashboard constructor.
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
 	 *
 	 * @since 1.0.0
 	 *

@@ -146,7 +146,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->story_post_type         = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$this->page_template_post_type = $this->injector->make( \Google\Web_Stories\Page_Template_Post_Type::class );
 		$this->context                 = $this->injector->make( \Google\Web_Stories\Context::class );
-		$this->type                    = $this->injector->make( \Google\Web_Stories\Media\Types::class );
+		$this->types                   = $this->injector->make( \Google\Web_Stories\Media\Types::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Editor(
 			$this->experiments,
@@ -158,7 +158,7 @@ class Editor extends DependencyInjectedTestCase {
 			$this->story_post_type,
 			$this->page_template_post_type,
 			$this->context,
-			$this->type
+			$this->types
 		);
 
 		$this->add_caps_to_roles();

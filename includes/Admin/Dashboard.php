@@ -113,8 +113,8 @@ class Dashboard extends Service_Base {
 	 * @var Context Context instance.
 	 */
 	private $context;
-	
-  /**
+
+	/**
 	 * Types instance.
 	 *
 	 * @var Types Types instance.
