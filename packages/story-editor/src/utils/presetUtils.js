@@ -27,16 +27,16 @@ import {
 /**
  * Internal dependencies
  */
-import objectPick from '../../../../utils/objectPick';
-import { generateFontFamily } from '../../../../elements/text/util';
+import { generateFontFamily } from '../elements/text/util';
 import {
   BACKGROUND_TEXT_MODE,
   MULTIPLE_VALUE,
   SAVED_STYLE_HEIGHT,
   STYLE_PRESETS_PER_ROW,
-} from '../../../../constants';
-import { getHTMLInfo } from '../../../richText/htmlManipulation';
-import { PRESET_TYPES } from './constants';
+  PRESET_TYPES,
+} from '../constants';
+import { getHTMLInfo } from '../components/richText/htmlManipulation';
+import objectPick from './objectPick';
 
 const TEXT_PRESET_STYLES = [
   'backgroundColor',

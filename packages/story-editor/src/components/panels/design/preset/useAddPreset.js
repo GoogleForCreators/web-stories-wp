@@ -27,7 +27,7 @@ import {
   getPagePreset,
   getShapePresets,
   getTextPresets,
-} from './utils';
+} from '../../../../utils/presetUtils';
 
 function useAddPreset({ presetType }) {
   const {

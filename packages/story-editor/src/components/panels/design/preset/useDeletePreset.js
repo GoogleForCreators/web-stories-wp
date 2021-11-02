@@ -22,7 +22,7 @@ import { useCallback } from '@web-stories-wp/react';
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
-import { PRESET_TYPES } from './constants';
+import { PRESET_TYPES } from '../../../../constants';
 
 function useDeletePreset({ presetType, setIsEditMode }) {
   const { currentStoryStyles, globalStoryStyles, updateStory } = useStory(

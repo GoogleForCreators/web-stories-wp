@@ -33,10 +33,10 @@ import {
   getPagePreset,
   areAllType,
   getPanelInitialHeight,
-} from '../utils';
+} from '../../../../../utils/presetUtils';
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
-import { PRESET_TYPES } from '../constants';
+import { PRESET_TYPES } from '../../../../../constants';
 
 jest.mock('../utils');
 

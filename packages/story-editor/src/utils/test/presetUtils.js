@@ -23,13 +23,12 @@ import {
   getPanelInitialHeight,
   getShapePresets,
   getTextPresets,
-} from '../utils';
-import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
-import objectWithout from '../../../../../utils/objectWithout';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
-import { PRESET_TYPES } from '../constants';
+} from '../presetUtils';
+import { BACKGROUND_TEXT_MODE, PRESET_TYPES } from '../../constants';
+import objectWithout from '../objectWithout';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 
-describe('Panels/StylePreset/utils', () => {
+describe('presetUtils', () => {
   const TEST_COLOR = {
     color: {
       r: 1,

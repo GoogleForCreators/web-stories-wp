@@ -24,7 +24,7 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
-import { PRESET_TYPES } from '../constants';
+import { PRESET_TYPES } from '../../../../../constants';
 
 describe('Panel: Color Presets', () => {
   let fixture;

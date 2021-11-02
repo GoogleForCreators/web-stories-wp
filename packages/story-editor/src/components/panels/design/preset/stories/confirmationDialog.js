@@ -24,7 +24,7 @@ import { boolean } from '@storybook/addon-knobs';
  * Internal dependencies
  */
 import ConfirmationDialog from '../confirmationDialog';
-import { PRESET_TYPES } from '../constants';
+import { PRESET_TYPES } from '../../../../../constants';
 
 export default {
   title: 'Stories Editor/Components/Panels/Preset/Dialog',
