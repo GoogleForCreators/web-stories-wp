@@ -24,6 +24,7 @@ class DummyTaxonomy extends Taxonomy_Base {
 	 */
 	protected function taxonomy_args(): array {
 		return [
+			'rest_namespace'        => 'web-stories/v1',
 			'show_in_rest'          => true,
 			'rest_controller_class' => Stories_Terms_Controller::class,
 		];
