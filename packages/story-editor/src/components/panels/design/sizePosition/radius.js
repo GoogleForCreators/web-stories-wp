@@ -68,16 +68,16 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
   const lockRadius = borderRadius.locked === true;
 
   const handleChange = useCallback(
-    (name, value) => {
+    (name) => (evt, value) => {
       const newRadius = !lockRadius
         ? {
             [name]: value,
           }
         : {
-            topLeft: value,
-            topRight: value,
-            bottomRight: value,
-            bottomLeft: value,
+            left: value,
+            top: value,
+            right: value,
+            bottom: value,
           };
       pushUpdateForObject(
         'borderRadius',

@@ -122,7 +122,7 @@ function StackedInputs(props) {
         suffix={!lockInput || showLockedSuffixIcon ? suffix : undefined}
         value={left.props === MULTIPLE_VALUE ? '' : left.props}
         aria-label={firstInputLabel}
-        onChange={(_, value) => handleChange(left.key, value)}
+        onChange={handleChange(left.key)}
         placeholder={
           left.props === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''
         }
@@ -140,7 +140,7 @@ function StackedInputs(props) {
             suffix={suffix}
             value={top.props === MULTIPLE_VALUE ? '' : top.props}
             aria-label={top.label}
-            onChange={(_, value) => handleChange(top.key, value)}
+            onChange={handleChange(top.key)}
             placeholder={
               top.props === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''
             }
@@ -152,7 +152,7 @@ function StackedInputs(props) {
             isSmall
             value={right.props === MULTIPLE_VALUE ? '' : right.props}
             aria-label={right.label}
-            onChange={(_, value) => handleChange(right.key, value)}
+            onChange={handleChange(right.key)}
             placeholder={
               right.props === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''
             }
@@ -166,7 +166,7 @@ function StackedInputs(props) {
             isSmall
             value={bottom.props === MULTIPLE_VALUE ? '' : bottom.props}
             aria-label={bottom.label}
-            onChange={(_, value) => handleChange(bottom.key, value)}
+            onChange={handleChange(bottom.key)}
             placeholder={
               bottom.props === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''
             }
