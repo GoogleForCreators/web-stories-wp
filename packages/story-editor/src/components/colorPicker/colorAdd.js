@@ -27,6 +27,7 @@ import { Icons } from '@web-stories-wp/design-system';
  */
 import { focusStyle } from '../panels/shared';
 import useAddPreset from '../panels/design/preset/useAddPreset';
+import { PRESET_TYPES } from '../panels/design/preset/constants';
 
 const COLOR_SIZE = 32;
 const AddColorAction = styled.button`
@@ -54,7 +55,7 @@ function ColorAdd({ type }) {
   const isLocal = 'local' === type;
   const isGlobal = 'global' === type;
   const { addGlobalPreset, addLocalPreset } = useAddPreset({
-    presetType: 'colors',
+    presetType: PRESET_TYPES.COLOR,
   });
   if (!isLocal && !isGlobal) {
     return null;

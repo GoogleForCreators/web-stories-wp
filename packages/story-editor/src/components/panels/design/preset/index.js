@@ -14,30 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import PresetPanel from '../presetPanel';
-import { PRESET_TYPES } from '../constants';
-
-function StylePresetPanel({ pushUpdate }) {
-  return (
-    <PresetPanel
-      presetType={PRESET_TYPES.STYLE}
-      title={__('Saved Styles', 'web-stories')}
-      pushUpdate={pushUpdate}
-    />
-  );
-}
-
-StylePresetPanel.propTypes = {
-  pushUpdate: PropTypes.func.isRequired,
-};
-
-export default StylePresetPanel;
+export { default } from './presetPanel';

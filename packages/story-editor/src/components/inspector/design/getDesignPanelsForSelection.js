@@ -35,7 +35,6 @@ import {
   ElementAlignmentPanel,
   VideoOptionsPanel,
   StylePresetPanel,
-  ColorPresetPanel,
   PageBackgroundAudioPanel,
 } from '../../panels/design';
 import PanelTypes from '../../panels/design/types';
@@ -120,8 +119,6 @@ function getDesignPanelsForSelection(elements) {
         case PanelTypes.PAGE_BACKGROUND:
           // Only display when isBackground.
           return null;
-        case PanelTypes.COLOR_PRESETS:
-          return { type, Panel: ColorPresetPanel };
         case PanelTypes.STYLE_PRESETS:
           return { type, Panel: StylePresetPanel };
         case PanelTypes.FILTER:

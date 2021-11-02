@@ -222,7 +222,6 @@ export class Fixture {
       'publishing',
       'status',
       `stylepreset-${PRESET_TYPES.STYLE}`,
-      `stylepreset-${PRESET_TYPES.COLOR}`,
     ];
     // Open all panels by default.
     panels.forEach((panel) => {
