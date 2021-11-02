@@ -28,7 +28,7 @@ import { PAGE_RATIO, UnitsProvider } from '@web-stories-wp/units';
 import { renderWithTheme } from '../../../../testUtils';
 import FontContext from '../../../../app/font/context';
 import useFont from '../../../../app/font/useFont';
-import fontsListResponse from '../../../form/advancedDropDown/test/fontsResponse.json';
+import fontsListResponse from '../../../panels/design/textStyle/test/fontsResponse.json';
 import TextPane from '../../panes/text/textPane';
 import { PRESETS } from '../../panes/text/textPresets';
 import useLibrary from '../../useLibrary';

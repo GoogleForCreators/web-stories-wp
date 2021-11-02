@@ -29,7 +29,7 @@ namespace Google\Web_Stories\Integrations;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Types;
+use Google\Web_Stories\Media\Types;
 use WP_Post;
 use WP_REST_Response;
 
@@ -39,7 +39,6 @@ use WP_REST_Response;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Jetpack extends Service_Base {
-	use Types;
 
 	/**
 	 * VideoPress Mime type.
@@ -67,14 +66,23 @@ class Jetpack extends Service_Base {
 	protected $media_source_taxonomy;
 
 	/**
+	 * Types instance.
+	 *
+	 * @var Types Types instance.
+	 */
+	private $types;
+
+	/**
 	 * Jetpack constructor.
 	 *
 	 * @since 1.12.0
 	 *
 	 * @param Media_Source_Taxonomy $media_source_taxonomy Media_Source_Taxonomy instance.
+	 * @param Types                 $types                 Types instance.
 	 */
-	public function __construct( Media_Source_Taxonomy $media_source_taxonomy ) {
+	public function __construct( Media_Source_Taxonomy $media_source_taxonomy, Types $types ) {
 		$this->media_source_taxonomy = $media_source_taxonomy;
+		$this->types                 = $types;
 	}
 
 	/**
@@ -157,7 +165,7 @@ class Jetpack extends Service_Base {
 		}
 
 		if ( in_array( self::VIDEOPRESS_MIME_TYPE, $args['post_mime_type'], true ) ) {
-			$allowed_mime_types = $this->get_allowed_mime_types();
+			$allowed_mime_types = $this->types->get_allowed_mime_types();
 			$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
 
 			if ( ! array_diff( $allowed_mime_types, $args['post_mime_type'] ) ) {
@@ -165,7 +173,7 @@ class Jetpack extends Service_Base {
 				add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 15, 2 );
 			}
 
-			$allowed_mime_types_transcodable = array_merge( $allowed_mime_types, $this->get_allowed_transcodable_mime_types() );
+			$allowed_mime_types_transcodable = array_merge( $allowed_mime_types, $this->types->get_allowed_transcodable_mime_types() );
 			if ( ! array_diff( $allowed_mime_types_transcodable, $args['post_mime_type'] ) ) {
 				// Load filter at 15, so it load after Media\Media\wp_prepare_attachment_for_js which is loaded at 10.
 				add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 15, 2 );
