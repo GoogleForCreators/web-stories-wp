@@ -30,6 +30,7 @@ import {
   Text,
   THEME_CONSTANTS,
   Icons,
+  Datalist,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -38,8 +39,7 @@ import {
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
 import { useHighlights, states, styles } from '../../../../app/highlights';
-import { Row, Media, Required, AdvancedDropDown } from '../../../form';
-import { Option } from '../../../form/advancedDropDown/list/styled';
+import { Row, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
 import { useAPI } from '../../../../app';
@@ -229,9 +229,9 @@ function PublishPanel() {
         return option;
       }
       return (
-        <Option value={option.id} ref={ref} {...rest}>
+        <Datalist.Option value={option.id} ref={ref} {...rest}>
           <LogoImg src={option.url} alt="" />
-        </Option>
+        </Datalist.Option>
       );
     }
   );
@@ -249,12 +249,12 @@ function PublishPanel() {
   };
 
   const renderUploadButton = (open) => (
-    <Option onClick={open} aria-label={__('Add new', 'web-stories')}>
+    <Datalist.Option onClick={open} aria-label={__('Add new', 'web-stories')}>
       <Icons.ArrowCloud height={32} width={32} />
       <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
         {__('Add new', 'web-stories')}
       </Text>
-    </Option>
+    </Datalist.Option>
   );
   const publisherLogosWithUploadOption = [...publisherLogos];
   if (hasUploadMediaAction) {
@@ -327,7 +327,7 @@ function PublishPanel() {
           </MediaInputWrapper>
           <DropdownWrapper>
             <MediaWrapper>
-              <AdvancedDropDown
+              <Datalist.DropDown
                 options={publisherLogosWithUploadOption}
                 primaryOptions={publisherLogosWithUploadOption}
                 onChange={onPublisherLogoChange}

@@ -25,6 +25,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { Media, Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
@@ -53,6 +54,11 @@ const StyledMedia = styled(Media)`
 const InputsWrapper = styled.div`
   align-self: flex-start;
   margin-left: 16px;
+`;
+
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  margin-bottom: 10px;
 `;
 
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
@@ -159,6 +165,9 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           canUpload={hasUploadMediaAction}
         />
         <InputsWrapper>
+          <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('Add a brief description of the video.', 'web-stories')}
+          </StyledText>
           <TextArea
             ref={(node) => {
               if (node && highlightInput?.focus && highlightInput?.showEffect) {
@@ -168,14 +177,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
                 node.focus();
               }
             }}
-            placeholder={
-              alt === MULTIPLE_VALUE
-                ? MULTIPLE_DISPLAY_VALUE
-                : __(
-                    'Add assistive text for visually impaired users',
-                    'web-stories'
-                  )
-            }
+            placeholder={alt === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''}
             value={alt || ''}
             onChange={(evt) =>
               pushUpdate(

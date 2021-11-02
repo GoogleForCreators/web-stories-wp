@@ -70,6 +70,36 @@ const sharedConfig = {
   },
   module: {
     rules: [
+      // This is a workaround to circumvent exports mangling in webpack v4,
+      // which would break i18n string extraction.
+      // While introducing global variables is not ideal, it helps ensuring
+      // i18n works while retaining all tree shaking functionality in webpack.
+      // See https://github.com/google/web-stories-wp/pull/9001 for context.
+      // TODO(#5792): Use `mangleExports` option in webpack v5 instead.
+      {
+        test: require.resolve('@web-stories-wp/i18n'), // eslint-disable-line node/no-extraneous-require
+        loader: 'expose-loader',
+        options: {
+          exposes: [
+            {
+              globalName: 'webStories.i18n.__',
+              moduleLocalName: '__',
+            },
+            {
+              globalName: 'webStories.i18n._n',
+              moduleLocalName: '_n',
+            },
+            {
+              globalName: 'webStories.i18n._x',
+              moduleLocalName: '_x',
+            },
+            {
+              globalName: 'webStories.i18n._nx',
+              moduleLocalName: '_nx',
+            },
+          ],
+        },
+      },
       !isProduction && {
         test: /\.js$/,
         use: ['source-map-loader'],

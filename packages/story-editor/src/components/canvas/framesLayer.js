@@ -112,7 +112,14 @@ function FramesLayer() {
       aria-label={__('Frames layer', 'web-stories')}
     >
       {!isAnimating && (
-        <FramesPageArea onContextMenu={onOpenMenu} onScroll={onScroll}>
+        <FramesPageArea
+          fullBleedContainerLabel={__(
+            'Fullbleed area (Frames layer)',
+            'web-stories'
+          )}
+          onContextMenu={onOpenMenu}
+          onScroll={onScroll}
+        >
           {currentPage &&
             currentPage.elements.map((element) => {
               return <FrameElement key={element.id} element={element} />;
