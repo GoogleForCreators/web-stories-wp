@@ -29,10 +29,6 @@ import { config } from './shared';
  * @param {string} eventName Event name, e.g. click or mousedown.
  */
 function trackTiming(category, time, label = '', eventName = 'click') {
-  if (!category) {
-    return;
-  }
-  // @todo Figure out most useful category and label for the reports.
   // Universal Analytics has a special `timing_complete` event which
   // does not exist in GA4.
   trackEvent('timing_complete', {
