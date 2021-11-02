@@ -203,6 +203,6 @@ class Admin extends Service_Base {
 
 		// Not using get_the_title() because we need the raw title.
 		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
-		return $post->post_title ?? '';
+		return $post->post_title;
 	}
 }

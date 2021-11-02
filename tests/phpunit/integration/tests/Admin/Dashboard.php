@@ -188,7 +188,5 @@ class Dashboard extends DependencyInjectedTestCase {
 
 		$this->assertTrue( wp_style_is( $this->instance::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_style_is( 'fake_css_chunk', 'registered' ) );
-
-		$this->assertSame( 'web-stories', wp_scripts()->registered[ $this->instance::SCRIPT_HANDLE ]->textdomain );
 	}
 }

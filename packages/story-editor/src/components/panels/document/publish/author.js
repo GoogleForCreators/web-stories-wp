@@ -19,11 +19,12 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import { Datalist } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { AdvancedDropDown, Row } from '../../../form';
+import { Row } from '../../../form';
 import { useStory } from '../../../../app/story';
 import { useAPI } from '../../../../app/api';
 import useInspector from '../../../inspector/useInspector';
@@ -108,7 +109,7 @@ function Author() {
   };
   return (
     <Row>
-      <AdvancedDropDown
+      <Datalist.DropDown
         options={queriedUsers}
         searchResultsLabel={__('Search results', 'web-stories')}
         aria-label={__('Author', 'web-stories')}

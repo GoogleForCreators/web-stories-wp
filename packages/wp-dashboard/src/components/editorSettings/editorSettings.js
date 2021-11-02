@@ -150,9 +150,7 @@ function EditorSettings() {
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
-      for (const id of newlyCreatedMediaIds) {
-        addPublisherLogo(id);
-      }
+      addPublisherLogo(newlyCreatedMediaIds);
     }
   }, [newlyCreatedMediaIds, addPublisherLogo]);
 

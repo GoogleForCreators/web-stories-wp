@@ -17,12 +17,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import {
-  Icons,
-  themeHelpers,
-  THEME_CONSTANTS,
-  Text,
-} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
+import { themeHelpers, THEME_CONSTANTS } from '../../../theme';
+import { Checkmark } from '../../../icons';
+import { Text } from '../../typography';
 
 export const List = styled.div`
   width: 100%;
@@ -30,11 +30,14 @@ export const List = styled.div`
   overflow-y: auto;
   overscroll-behavior: none auto;
   max-height: 305px;
-  padding: 0 0 10px 0;
+  padding: 4px;
   margin: 10px 0 0 0;
   font-size: 14px;
   text-align: left;
   list-style: none;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+
+  ${themeHelpers.focusableOutlineCSS}
 `;
 
 export const Group = styled.ul`
@@ -57,22 +60,22 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   position: relative;
   padding: 8px 16px;
   margin: 6px 0 0 0;
-  ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
-  white-space: nowrap;
   line-height: 1;
   cursor: pointer;
   background-clip: padding-box;
   color: ${({ theme }) => theme.colors.fg.primary};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+
+  ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
+  ${themeHelpers.focusableOutlineCSS}
 
   :first-of-type {
     margin-top: 0;
   }
 
-  :hover,
-  :focus {
+  :hover {
     background-color: ${({ theme }) =>
       theme.colors.interactiveBg.tertiaryHover};
-    border-radius: ${({ theme }) => theme.borders.radius.small};
   }
 
   :focus {
@@ -80,8 +83,9 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   }
 `;
 
-export const Selected = styled(Icons.Checkmark)`
+export const Selected = styled(Checkmark)`
   width: 16px;
+  min-width: 16px;
   height: auto;
   margin-right: 4px;
   color: ${({ theme }) => theme.colors.fg.primary};
@@ -95,4 +99,10 @@ export const NoResult = styled(Text).attrs(() => ({
   margin: 0;
   text-align: center;
   color: ${({ theme }) => theme.colors.fg.secondary};
+`;
+
+export const OverflowEllipses = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
