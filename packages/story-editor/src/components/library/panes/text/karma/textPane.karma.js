@@ -207,7 +207,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     fit('should add text color based on background', async () => {
       // Enable the smart colors first.
       await fixture.editor.library.textTab.click();
-      await fixture.events.click(fixture.editor.library.text.smartColorToggle);
+      fixture.editor.library.text.smartColorToggle.click();
 
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(

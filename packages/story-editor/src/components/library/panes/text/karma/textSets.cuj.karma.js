@@ -35,6 +35,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     fixture = new Fixture();
     await fixture.render();
     await fixture.editor.library.textTab.click();
+    fixture.editor.library.text.smartColorToggle.click();
   });
 
   afterEach(() => {
@@ -160,7 +161,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
   });
 
   describe('Easier/smarter text set color', () => {
-    fit('should add text color based on background', async () => {
+    it('should add text color based on background', async () => {
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
