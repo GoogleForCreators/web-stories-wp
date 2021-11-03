@@ -17,7 +17,7 @@
  * External dependencies
  */
 
-import { useCallback, useRef } from '@web-stories-wp/react';
+import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -35,12 +35,12 @@ function OpenMediaUploadHandler({ onOpenMediaUpload, ...props }) {
 
   const handleOpenMediaUpload = useCallback((ev) => openRef.current(ev), []);
 
-  return (
-    <Context.Provider
-      {...props}
-      value={{ onOpenMediaUpload: handleOpenMediaUpload }}
-    />
+  const contextValue = useMemo(
+    () => ({ onOpenMediaUpload: handleOpenMediaUpload }),
+    [handleOpenMediaUpload]
   );
+
+  return <Context.Provider {...props} value={contextValue} />;
 }
 OpenMediaUploadHandler.propTypes = {
   onOpenMediaUpload: PropTypes.func.isRequired,
