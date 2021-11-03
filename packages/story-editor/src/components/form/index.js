@@ -31,3 +31,4 @@ export {
   default as HierarchicalInput,
   makeFlatOptionTree,
 } from './hierarchical';
+export { default as StackableGroup } from './stackable';

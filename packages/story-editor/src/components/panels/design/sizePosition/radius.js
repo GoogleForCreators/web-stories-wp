@@ -19,17 +19,23 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { LockToggle, Icons } from '@web-stories-wp/design-system';
+import {
+  LockToggle,
+  NumericInput,
+  Icons,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
+import { StackableGroup } from '../../../form';
 import { canMaskHaveBorder } from '../../../../masks';
 import Tooltip from '../../../tooltip';
 import { useCommonObjectValue, focusStyle } from '../../shared';
-import StackedInputs from '../../../form/stackedInputs';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const DEFAULT_BORDER_RADIUS = {
   topLeft: 0,
@@ -54,6 +60,47 @@ const LockContainer = styled.div`
 const StyledLockToggle = styled(LockToggle)`
   ${focusStyle};
 `;
+
+const inputContainerStyleOverride = css`
+  position: relative;
+  :focus-within {
+    z-index: 1;
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
+`;
+
+const iconCss = css`
+  width: 29px;
+  height: 29px;
+`;
+
+const StackableInput = styled(NumericInput)`
+  svg {
+    ${iconCss}
+  }
+  & > div {
+    border-radius: 0;
+    padding: 2px 7px 2px 12px;
+    ${inputContainerStyleOverride};
+  }
+`;
+
+const TopLeft = styled(Icons.Corner)`
+  transform: rotate(90deg);
+`;
+
+const TopRight = styled(Icons.Corner)`
+  transform: rotate(180deg);
+`;
+
+const BottomRight = styled(Icons.Corner)`
+  transform: rotate(270deg);
+`;
+
 function RadiusControls({ selectedElements, pushUpdateForObject }) {
   const borderRadius = useCommonObjectValue(
     selectedElements,
@@ -68,7 +115,7 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
   const lockRadius = borderRadius.locked === true;
 
   const handleChange = useCallback(
-    (name) => (evt, value) => {
+    (name, value) => {
       const newRadius = !lockRadius
         ? {
             [name]: value,
@@ -119,16 +166,79 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
   const firstInputLabel = lockRadius
     ? __('Corner Radius', 'web-stories')
     : __('Top left corner radius', 'web-stories');
+
   return (
     <FlexContainer>
-      <StackedInputs
-        lockInput={lockRadius}
-        inputProps={borderRadius}
-        handleChange={handleChange}
-        suffix={<Icons.Corner />}
-        firstInputLabel={firstInputLabel}
-        showLockedSuffixIcon
-      />
+      <StackableGroup locked={lockRadius}>
+        <StackableInput
+          suffix={<TopLeft />}
+          value={
+            borderRadius.topLeft === MULTIPLE_VALUE ? '' : borderRadius.topLeft
+          }
+          aria-label={firstInputLabel}
+          onChange={(_, value) => handleChange('topLeft', value)}
+          placeholder={
+            borderRadius.topLeft === MULTIPLE_VALUE
+              ? MULTIPLE_DISPLAY_VALUE
+              : ''
+          }
+          isIndeterminate={borderRadius.topLeft === MULTIPLE_VALUE}
+        />
+
+        {!lockRadius && (
+          <>
+            <StackableInput
+              suffix={<TopRight />}
+              value={
+                borderRadius.topRight === MULTIPLE_VALUE
+                  ? ''
+                  : borderRadius.topRight
+              }
+              aria-label={__('Top right corner radius', 'web-stories')}
+              onChange={(_, value) => handleChange('topRight', value)}
+              placeholder={
+                borderRadius.topRight === MULTIPLE_VALUE
+                  ? MULTIPLE_DISPLAY_VALUE
+                  : ''
+              }
+              isIndeterminate={borderRadius.topRight === MULTIPLE_VALUE}
+            />
+            <StackableInput
+              value={
+                borderRadius.bottomLeft === MULTIPLE_VALUE
+                  ? ''
+                  : borderRadius.bottomLeft
+              }
+              aria-label={__('Bottom left corner radius', 'web-stories')}
+              onChange={(_, value) => handleChange('bottomLeft', value)}
+              placeholder={
+                borderRadius.bottomLeft === MULTIPLE_VALUE
+                  ? MULTIPLE_DISPLAY_VALUE
+                  : ''
+              }
+              suffix={<Icons.Corner />}
+              isIndeterminate={borderRadius.bottomLeft === MULTIPLE_VALUE}
+            />
+            <StackableInput
+              value={
+                borderRadius.bottomRight === MULTIPLE_VALUE
+                  ? ''
+                  : borderRadius.bottomRight
+              }
+              aria-label={__('Bottom right corner radius', 'web-stories')}
+              onChange={(_, value) => handleChange('bottomRight', value)}
+              placeholder={
+                borderRadius.bottomRight === MULTIPLE_VALUE
+                  ? MULTIPLE_DISPLAY_VALUE
+                  : ''
+              }
+              suffix={<BottomRight />}
+              isIndeterminate={borderRadius.bottomRight === MULTIPLE_VALUE}
+            />
+          </>
+        )}
+      </StackableGroup>
+
       <LockContainer>
         <Tooltip title={__('Toggle consistent corner radius', 'web-stories')}>
           <StyledLockToggle

@@ -19,16 +19,21 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { LockToggle, Icons } from '@web-stories-wp/design-system';
+import { LockToggle, NumericInput, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
+import { StackableGroup } from '../../../form';
 import Tooltip from '../../../tooltip';
-import { focusStyle, useCommonObjectValue } from '../../shared';
-import StackedInputs from '../../../form/stackedInputs';
+import {
+  focusStyle,
+  inputContainerStyleOverride,
+  useCommonObjectValue,
+} from '../../shared';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { DEFAULT_BORDER } from './shared';
 
 const BorderInputsFlexContainer = styled.div`
@@ -42,9 +47,33 @@ const StyledLockToggle = styled(LockToggle)`
 `;
 
 const ToggleWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding-top: 2px;
+  ${({ locked }) =>
+    locked &&
+    css`
+      padding-left: 8px;
+    `};
+  align-self: stretch;
+`;
+
+const StackableInput = styled(NumericInput)`
+  & > div {
+    border-radius: 0;
+    padding: 2px 7px 2px 12px;
+    ${inputContainerStyleOverride};
+  }
+`;
+
+const BorderTop = styled(Icons.Border)`
+  transform: rotate(90deg);
+`;
+
+const BorderBottom = styled(Icons.Border)`
+  transform: rotate(-90deg);
+`;
+
+const BorderRight = styled(Icons.Border)`
+  transform: scaleX(-1);
 `;
 
 function WidthControls({ selectedElements, pushUpdateForObject }) {
@@ -85,16 +114,55 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
     ? __('Border', 'web-stories')
     : __('Left border', 'web-stories');
 
+  const getMixedValueProps = useCallback((value) => {
+    return {
+      isIndeterminate: MULTIPLE_VALUE === value,
+      placeholder: MULTIPLE_VALUE === value ? MULTIPLE_DISPLAY_VALUE : null,
+    };
+  }, []);
   return (
-    <BorderInputsFlexContainer locked={lockBorder}>
-      <StackedInputs
-        lockInput={lockBorder}
-        inputProps={border}
-        handleChange={handleChange}
-        suffix={<Icons.Border />}
-        firstInputLabel={firstInputLabel}
-      />
-      <ToggleWrapper>
+    <BorderInputsFlexContainer>
+      <StackableGroup locked={lockBorder}>
+        <StackableInput
+          value={border.left}
+          onChange={handleChange('left')}
+          aria-label={firstInputLabel}
+          suffix={!lockBorder && <Icons.Border />}
+          {...getMixedValueProps(border.left)}
+        />
+
+        {!lockBorder && (
+          <>
+            <StackableInput
+              value={border.top}
+              onChange={handleChange('top')}
+              aria-label={__('Top border', 'web-stories')}
+              labelText={__('Top', 'web-stories')}
+              suffix={<BorderTop />}
+              {...getMixedValueProps(border.top)}
+            />
+
+            <StackableInput
+              value={border.right}
+              onChange={handleChange('right')}
+              aria-label={__('Right border', 'web-stories')}
+              labelText={__('Right', 'web-stories')}
+              suffix={<BorderRight />}
+              {...getMixedValueProps(border.right)}
+            />
+
+            <StackableInput
+              value={border.bottom}
+              onChange={handleChange('bottom')}
+              aria-label={__('Bottom border', 'web-stories')}
+              labelText={__('Bottom', 'web-stories')}
+              suffix={<BorderBottom />}
+              {...getMixedValueProps(border.bottom)}
+            />
+          </>
+        )}
+      </StackableGroup>
+      <ToggleWrapper locked={lockBorder}>
         <Tooltip title={__('Toggle consistent border', 'web-stories')}>
           <StyledLockToggle
             isLocked={lockBorder}
