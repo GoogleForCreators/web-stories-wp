@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * External dependencies
+ * Internal dependencies
  */
 import {
   PublishPanel,
@@ -24,7 +24,7 @@ import {
   PageAdvancementPanel,
   BackgroundAudioPanel,
   TaxonomiesPanel,
-} from '@web-stories-wp/story-editor';
+} from '../../../../components/panels/document';
 
 function DocumentInspector() {
   return (

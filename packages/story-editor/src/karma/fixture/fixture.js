@@ -50,6 +50,7 @@ import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
 import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
+import DocumentInspector from './components/documentInspector';
 
 if ('true' === process.env.CI) {
   configure({
@@ -334,7 +335,15 @@ export class Fixture {
 
     const { container, getByRole } = render(
       <StoryEditor key={Math.random()} config={this._config}>
-        <Layout header={<HeaderLayout />} />
+        <Layout
+          header={<HeaderLayout />}
+          inspectorTabs={{
+            document: {
+              title: 'Document',
+              Pane: DocumentInspector,
+            },
+          }}
+        />
       </StoryEditor>,
       {
         container: root,
