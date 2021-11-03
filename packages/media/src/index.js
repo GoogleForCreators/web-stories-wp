@@ -25,6 +25,7 @@ export { default as createFileReader } from './createFileReader';
 export { default as fetchRemoteFile } from './fetchRemoteFile';
 export { default as fetchRemoteBlob } from './fetchRemoteBlob';
 export { default as formatMsToHMS } from './formatMsToHMS';
+export { default as generateVideoStrip } from './generateVideoStrip';
 export { default as getFileNameFromUrl } from './getFileNameFromUrl';
 export { default as getFileNameWithExt } from './getFileNameWithExt';
 export { default as getExtensionFromMimeType } from './getExtensionFromMimeType';

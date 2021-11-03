@@ -65,25 +65,7 @@ export default [
       show_in_quick_edit: true,
       show_ui: true,
     },
-    _links: {
-      collection: [
-        {
-          href: 'http://localhost:8899/wp-json/web-stories/v1/taxonomies',
-        },
-      ],
-      'wp:items': [
-        {
-          href: 'http://localhost:8899/wp-json/wp/v2/story-categories',
-        },
-      ],
-      curies: [
-        {
-          name: 'wp',
-          href: 'https://api.w.org/{rel}',
-          templated: true,
-        },
-      ],
-    },
+    restPath: 'http://localhost:8899/wp-json/wp/v2/story-categories',
   },
   {
     name: 'Tags',
@@ -135,25 +117,7 @@ export default [
       show_in_quick_edit: true,
       show_ui: true,
     },
-    _links: {
-      collection: [
-        {
-          href: 'http://localhost:8899/wp-json/web-stories/v1/taxonomies',
-        },
-      ],
-      'wp:items': [
-        {
-          href: 'http://localhost:8899/wp-json/web-stories/v1/web_story_tag',
-        },
-      ],
-      curies: [
-        {
-          name: 'wp',
-          href: 'https://api.w.org/{rel}',
-          templated: true,
-        },
-      ],
-    },
+    restPath: 'http://localhost:8899/wp-json/web-stories/v1/web_story_tag',
   },
   {
     name: 'Colors',
@@ -206,25 +170,7 @@ export default [
       show_in_quick_edit: true,
       show_ui: true,
     },
-    _links: {
-      collection: [
-        {
-          href: 'http://localhost:8899/wp-json/web-stories/v1/taxonomies',
-        },
-      ],
-      'wp:items': [
-        {
-          href: 'http://localhost:8899/wp-json/wp/v2/story-colors',
-        },
-      ],
-      curies: [
-        {
-          name: 'wp',
-          href: 'https://api.w.org/{rel}',
-          templated: true,
-        },
-      ],
-    },
+    restPath: 'http://localhost:8899/wp-json/wp/v2/story-colors',
   },
   {
     name: 'Verticals',
@@ -277,24 +223,6 @@ export default [
       show_in_quick_edit: true,
       show_ui: true,
     },
-    _links: {
-      collection: [
-        {
-          href: 'http://localhost:8899/wp-json/web-stories/v1/taxonomies',
-        },
-      ],
-      'wp:items': [
-        {
-          href: 'http://localhost:8899/wp-json/web-stories/v1/web_story_category',
-        },
-      ],
-      curies: [
-        {
-          name: 'wp',
-          href: 'https://api.w.org/{rel}',
-          templated: true,
-        },
-      ],
-    },
+    restPath: 'http://localhost:8899/wp-json/web-stories/v1/web_story_category',
   },
 ];
