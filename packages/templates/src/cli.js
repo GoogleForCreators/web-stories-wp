@@ -120,7 +120,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
       return document.querySelectorAll('amp-story-page').length;
     });
 
-    for (let currentPage = 1; currentPage < totalPages; currentPage++) {
+    for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
       const templatePageSafeArea = await pagePreview.$(
         `amp-story-page:nth-child(${currentPage}) .page-safe-area`
       );
@@ -137,7 +137,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
         path: `${screenshotsPath}${templateName}/${currentPage}.webp`,
       });
 
-      if (currentPage !== totalPages - 1) {
+      if (currentPage < totalPages) {
         await pagePreview.click('aria/Next page');
       }
     }
