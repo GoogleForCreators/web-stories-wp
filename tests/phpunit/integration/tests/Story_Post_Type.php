@@ -178,7 +178,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	 * @covers ::register_meta
 	 */
 	public function test_register_meta() {
-		$this->call_private_method( $this->instance, 'register_meta' );
+		$this->instance->register_meta();
 
 		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::PUBLISHER_LOGO_META_KEY, $this->instance->get_slug() ) );
 	}

@@ -59,10 +59,10 @@ class Muting extends DependencyInjectedTestCase {
 	 * @covers ::register_meta
 	 */
 	public function test_register_meta() {
-		$this->call_private_method( $this->instance, 'register_meta' );
+		$this->instance->register_meta();
 
-		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Video\Muting::IS_MUTED_POST_META_KEY, 'attachment' ) );
-		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Video\Muting::MUTED_ID_POST_META_KEY, 'attachment' ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::IS_MUTED_POST_META_KEY, 'attachment' ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::MUTED_ID_POST_META_KEY, 'attachment' ) );
 	}
 
 	/**
@@ -106,8 +106,8 @@ class Muting extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->assertArrayNotHasKey( \Google\Web_Stories\Media\Video\Muting::IS_MUTED_REST_API_KEY, $image );
-		$this->assertArrayHasKey( \Google\Web_Stories\Media\Video\Muting::IS_MUTED_REST_API_KEY, $video );
+		$this->assertArrayNotHasKey( $this->instance::IS_MUTED_REST_API_KEY, $image );
+		$this->assertArrayHasKey( $this->instance::IS_MUTED_REST_API_KEY, $video );
 	}
 
 	/**
@@ -130,8 +130,8 @@ class Muting extends DependencyInjectedTestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		$this->assertArrayHasKey( \Google\Web_Stories\Media\Video\Muting::IS_MUTED_REST_API_KEY, $data );
-		$this->assertNull( $data[ \Google\Web_Stories\Media\Video\Muting::IS_MUTED_REST_API_KEY ] );
+		$this->assertArrayHasKey( $this->instance::IS_MUTED_REST_API_KEY, $data );
+		$this->assertNull( $data[ $this->instance::IS_MUTED_REST_API_KEY ] );
 	}
 
 	/**
@@ -146,7 +146,7 @@ class Muting extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Video',
 			]
 		);
-		update_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Video\Muting::IS_MUTED_POST_META_KEY, '1' );
+		update_post_meta( $video_attachment_id, $this->instance::IS_MUTED_POST_META_KEY, '1' );
 		$result = $this->instance->get_callback_is_muted( [ 'id' => $video_attachment_id ] );
 		$this->assertTrue( $result );
 	}

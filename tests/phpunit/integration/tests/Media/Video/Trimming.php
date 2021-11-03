@@ -23,33 +23,36 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * @coversDefaultClass \Google\Web_Stories\Media\Video\Trimming
  */
 class Trimming extends TestCase {
+
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Media\Video\Trimming
+	 */
+	protected $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = new \Google\Web_Stories\Media\Video\Trimming();
+	}
+
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$trimming = new \Google\Web_Stories\Media\Video\Trimming();
-		$trimming->register();
+		$this->instance->register();
 
-		$this->assertSame(
-			10,
-			has_filter(
-				'wp_prepare_attachment_for_js',
-				[
-					$trimming,
-					'wp_prepare_attachment_for_js',
-				]
-			)
-		);
+		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [ $this->instance, 'wp_prepare_attachment_for_js' ] ) );
 	}
 
 	/**
 	 * @covers ::register_meta
 	 */
 	public function test_register_meta() {
-		$trimming = new \Google\Web_Stories\Media\Video\Trimming();
-		$this->call_private_method( $trimming, 'register_meta' );
+		$this->instance->register_meta();
 
-		$this->assertTrue( registered_meta_key_exists( 'post', $trimming::TRIM_POST_META_KEY, 'attachment' ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::TRIM_POST_META_KEY, 'attachment' ) );
 	}
 
 	/**
@@ -76,15 +79,14 @@ class Trimming extends TestCase {
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
-		$trimming = new \Google\Web_Stories\Media\Video\Trimming();
-		$image    = $trimming->wp_prepare_attachment_for_js(
+		$image = $this->instance->wp_prepare_attachment_for_js(
 			[
 				'id'   => $poster_attachment_id,
 				'type' => 'image',
 				'url'  => wp_get_attachment_url( $poster_attachment_id ),
 			]
 		);
-		$video    = $trimming->wp_prepare_attachment_for_js(
+		$video = $this->instance->wp_prepare_attachment_for_js(
 			[
 				'id'   => $video_attachment_id,
 				'type' => 'video',
@@ -92,7 +94,7 @@ class Trimming extends TestCase {
 			]
 		);
 
-		$this->assertArrayNotHasKey( $trimming::TRIM_DATA_KEY, $image );
-		$this->assertArrayHasKey( $trimming::TRIM_DATA_KEY, $video );
+		$this->assertArrayNotHasKey( $this->instance::TRIM_DATA_KEY, $image );
+		$this->assertArrayHasKey( $this->instance::TRIM_DATA_KEY, $video );
 	}
 }
