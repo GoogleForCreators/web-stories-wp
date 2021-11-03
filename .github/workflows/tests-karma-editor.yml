@@ -64,7 +64,6 @@ jobs:
           npm ci
           npm install puppeteer
         env:
-          CI: true
           PUPPETEER_PRODUCT: chrome
 
       # FIXME: https://github.com/google/web-stories-wp/issues/4364
@@ -74,7 +73,6 @@ jobs:
       - name: Run integration tests
         run: npm run test:karma:edit-story -- --headless --snapshots --viewport=1600:1000 --coverage || npm run test:karma:edit-story:retry-failed -- --headless --snapshots --viewport=1600:1000
         env:
-          CI: true
           DISABLE_ERROR_BOUNDARIES: true
 
       - name: Add files for snapshotting

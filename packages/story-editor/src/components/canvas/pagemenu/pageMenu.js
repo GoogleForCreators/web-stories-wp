@@ -18,14 +18,17 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useCallback } from '@web-stories-wp/react';
+import { memo, useCallback, useRef } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { useStory, useHistory, useConfig, useLayout } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
+import usePerformanceTracking from '../../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 import PageMenuButton from './pageMenuButton';
 import AnimationToggle from './animationToggle';
 
@@ -87,6 +90,18 @@ function PageMenu() {
   }));
   const { isRTL } = useConfig();
 
+  const addPageButtonRef = useRef(null);
+  const deletePageButtonRef = useRef(null);
+
+  usePerformanceTracking({
+    node: addPageButtonRef.current,
+    eventData: TRACKING_EVENTS.PAGE_ADD,
+  });
+  usePerformanceTracking({
+    node: deletePageButtonRef.current,
+    eventData: TRACKING_EVENTS.PAGE_DELETE,
+  });
+
   const handleDeletePage = useCallback(
     () => deleteCurrentPage(),
     [deleteCurrentPage]
@@ -124,6 +139,7 @@ function PageMenu() {
       </Text>
       <CountSpace />
       <PageMenuButton
+        ref={deletePageButtonRef}
         title={__('Delete Page', 'web-stories')}
         disabled={disableDeleteButton}
         onClick={handleDeletePage}
@@ -141,6 +157,7 @@ function PageMenu() {
       </PageMenuButton>
       <IconSpace />
       <PageMenuButton
+        ref={addPageButtonRef}
         title={__('New Page', 'web-stories')}
         onClick={handleAddPage}
         aria-label={__('Add New Page', 'web-stories')}

@@ -47,6 +47,13 @@ use WP_Error;
 abstract class Post_Type_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware {
 
 	/**
+	 * Default REST Namespace.
+	 *
+	 * @var string
+	 */
+	const REST_NAMESPACE = 'web-stories/v1';
+
+	/**
 	 * Registers the post type.
 	 *
 	 * @since 1.14.0
@@ -169,7 +176,13 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @return string REST base.
 	 */
 	public function get_rest_namespace(): string {
-		return 'web-stories/v1';
+		$post_type_obj  = $this->get_object();
+		$rest_namespace = self::REST_NAMESPACE;
+		if ( $post_type_obj instanceof WP_Post_Type ) {
+			$rest_namespace = ( ! empty( $post_type_obj->rest_namespace ) && is_string( $post_type_obj->rest_namespace ) ) ? $post_type_obj->rest_namespace : self::REST_NAMESPACE;
+		}
+
+		return (string) $rest_namespace;
 	}
 
 	/**
