@@ -50,7 +50,7 @@ function Workspace({ header, inspectorTabs }) {
 
 Workspace.propTypes = {
   header: PropTypes.node,
-  inspectorTabs: PropTypes.arrayOf(PropTypes.object),
+  inspectorTabs: PropTypes.object,
 };
 
 export default Workspace;

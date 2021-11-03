@@ -40,7 +40,7 @@ import Context from './context';
 import DesignInspector from './design';
 
 const INSPECTOR_TAB_IDS = new Set([DOCUMENT, DESIGN]);
-function InspectorProvider({ inspectorTabs = [], children }) {
+function InspectorProvider({ inspectorTabs, children }) {
   const {
     actions: { getAuthors },
   } = useAPI();
@@ -143,17 +143,23 @@ function InspectorProvider({ inspectorTabs = [], children }) {
           title: __('Design', 'web-stories'),
           Pane: DesignInspector,
         },
-        ...inspectorTabs,
       ],
     },
   };
+
+  if (inspectorTabs?.document) {
+    state.data.tabs.push({
+      id: DOCUMENT,
+      ...inspectorTabs.document,
+    });
+  }
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
 InspectorProvider.propTypes = {
   children: PropTypes.node,
-  inspectorTabs: PropTypes.arrayOf(PropTypes.object),
+  inspectorTabs: PropTypes.object,
 };
 
 export default InspectorProvider;

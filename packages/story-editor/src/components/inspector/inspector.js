@@ -37,7 +37,7 @@ function Inspector({ inspectorTabs }) {
 }
 
 Inspector.propTypes = {
-  inspectorTabs: Proptypes.arrayOf(Proptypes.object),
+  inspectorTabs: Proptypes.object,
 };
 
 export default Inspector;

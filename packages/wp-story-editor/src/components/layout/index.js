@@ -31,13 +31,12 @@ function Layout() {
     <MetaBoxesProvider>
       <InterfaceSkeleton
         header={<Header />}
-        inspectorTabs={[
-          {
-            id: 'document',
+        inspectorTabs={{
+          document: {
             title: __('Document', 'web-stories'),
             Pane: DocumentInspector,
           },
-        ]}
+        }}
       >
         <MetaBoxes />
       </InterfaceSkeleton>
