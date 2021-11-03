@@ -28,12 +28,13 @@
 
 namespace Google\Web_Stories\User;
 
+use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Service_Base;
 
 /**
  * User Preferences class.
  */
-class Preferences extends Service_Base {
+class Preferences extends Service_Base implements HasMeta {
 	/**
 	 * Name of the user meta key used for opt-in.
 	 *
@@ -65,6 +66,17 @@ class Preferences extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
+		$this->register_meta();
+	}
+
+	/**
+	 * Register meta
+	 *
+	 * @since 1.15.0
+	 *
+	 * @return void
+	 */
+	public function register_meta() {
 		register_meta(
 			'user',
 			static::OPTIN_META_KEY,
