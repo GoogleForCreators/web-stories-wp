@@ -25,12 +25,13 @@ import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import Slider from './slider';
+import { RAIL_HEIGHT, RAIL_PADDING } from './constants';
 
 export const Menu = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 40px;
+  height: ${RAIL_HEIGHT + RAIL_PADDING * 2}px;
   gap: 14px;
 `;
 
@@ -44,10 +45,9 @@ export const RailWrapper = styled.div`
 export const Rail = styled.div`
   position: relative;
   width: ${({ width }) => width}px;
-  height: 36px;
+  height: ${RAIL_HEIGHT}px;
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.colors.standard.white};
-  /* Note: background to be updated in 9104 */
   background-color: ${({ theme }) => theme.colors.standard.white};
 `;
 
