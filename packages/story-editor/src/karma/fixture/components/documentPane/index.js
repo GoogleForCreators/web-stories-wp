@@ -26,7 +26,7 @@ import {
   TaxonomiesPanel,
 } from '../../../../components/panels/document';
 
-function DocumentInspector() {
+function DocumentPane() {
   return (
     <>
       <StatusPanel />
@@ -40,4 +40,4 @@ function DocumentInspector() {
   );
 }
 
-export default DocumentInspector;
+export default DocumentPane;

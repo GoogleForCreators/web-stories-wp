@@ -26,7 +26,7 @@ import {
   TaxonomiesPanel,
 } from '@web-stories-wp/story-editor';
 
-function DocumentInspector() {
+function DocumentPane() {
   return (
     <>
       <StatusPanel />
@@ -40,4 +40,4 @@ function DocumentInspector() {
   );
 }
 
-export default DocumentInspector;
+export default DocumentPane;

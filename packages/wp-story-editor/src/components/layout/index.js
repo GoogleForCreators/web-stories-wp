@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { default as Header } from '../header';
 import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
-import DocumentInspector from '../documentInspector';
+import DocumentPane from '../documentPane';
 
 function Layout() {
   return (
@@ -34,7 +34,7 @@ function Layout() {
         inspectorTabs={{
           document: {
             title: __('Document', 'web-stories'),
-            Pane: DocumentInspector,
+            Pane: DocumentPane,
           },
         }}
       >

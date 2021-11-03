@@ -50,7 +50,7 @@ import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
 import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
-import DocumentInspector from './components/documentInspector';
+import DocumentPane from './components/documentPane';
 
 if ('true' === process.env.CI) {
   configure({
@@ -340,7 +340,7 @@ export class Fixture {
           inspectorTabs={{
             document: {
               title: 'Document',
-              Pane: DocumentInspector,
+              Pane: DocumentPane,
             },
           }}
         />
