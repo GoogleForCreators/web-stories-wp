@@ -151,7 +151,7 @@ describe('useUploadMedia', () => {
     expect(mockShowSnackbar).toHaveBeenCalledTimes(1);
     expect(mockShowSnackbar).toHaveBeenCalledWith({
       message: 'Whoopsie',
-      dismissable: true,
+      dismissible: true,
     });
   });
 });

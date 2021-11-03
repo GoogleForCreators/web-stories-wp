@@ -66,7 +66,7 @@ export const _default = () => (
               'this is my aria label giving my message context for screen reader users'
             ),
             customZIndex: number('customZIndex'),
-            dismissable: boolean('dismissable'),
+            dismissible: boolean('dismissible'),
             preventAutoDismiss: boolean('preventAutoDismiss'),
             message: text('message', 'Sorry! File failed to upload.'),
             onAction: action('on action clicked'),
@@ -84,7 +84,7 @@ export const LightThemeDefault = () => (
       {
         actionLabel: text('actionLabel', ''),
         customZIndex: number('customZIndex'),
-        dismissable: boolean('dismissable'),
+        dismissible: boolean('dismissible'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
         preventAutoDismiss: boolean('preventAutoDismiss'),
@@ -100,7 +100,7 @@ export const Action = () => (
       {
         actionLabel: text('actionLabel', 'Retry'),
         customZIndex: number('customZIndex'),
-        dismissable: boolean('dismissable'),
+        dismissible: boolean('dismissible'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
         preventAutoDismiss: boolean('preventAutoDismiss'),
@@ -117,7 +117,7 @@ export const EarlyDismissWithAction = () => (
       {
         actionLabel: text('actionLabel', 'Retry'),
         customZIndex: number('customZIndex'),
-        dismissable: boolean('dismissable'),
+        dismissible: boolean('dismissible'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
         preventAutoDismiss: boolean('preventAutoDismiss'),
@@ -134,7 +134,7 @@ export const NoActionWithRemoveMessageTimingOverride = () => (
       {
         actionLabel: text('actionLabel', ''),
         customZIndex: number('customZIndex'),
-        dismissable: boolean('dismissable'),
+        dismissible: boolean('dismissible'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
         preventAutoDismiss: boolean('preventAutoDismiss'),
@@ -151,7 +151,7 @@ export const LongMessage = () => (
       {
         actionLabel: text('actionLabel', 'Retry'),
         customZIndex: number('customZIndex'),
-        dismissable: boolean('dismissable'),
+        dismissible: boolean('dismissible'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
         preventAutoDismiss: boolean('preventAutoDismiss'),
@@ -176,7 +176,7 @@ export const ThumbnailMessage = () => {
             {
               actionLabel: text('actionLabel', 'Retry'),
               customZIndex: number('customZIndex'),
-              dismissable: boolean('dismissable'),
+              dismissible: boolean('dismissible'),
               onAction: action('on action clicked'),
               onDismiss: action('on dismiss fired'),
               preventAutoDismiss: boolean('preventAutoDismiss'),
@@ -233,7 +233,7 @@ export const ShowSnackbarByClickingButton = () => {
           'this is my aria label giving my message context for screen reader users'
         ),
         customZIndex: number('customZIndex'),
-        dismissable: boolean('dismissable'),
+        dismissible: boolean('dismissible'),
         preventAutoDismiss: boolean('preventAutoDismiss'),
         message: randomMessage,
         onAction: action('on action clicked'),

@@ -48,7 +48,7 @@ function useApiAlerts() {
   const { showSnackbar } = useSnackbar();
 
   const debouncedShowSnackbar = useDebouncedCallback((message) => {
-    return showSnackbar({ message, dismissable: true });
+    return showSnackbar({ message, dismissible: true });
   }, 200);
 
   // if there is an API error, display a snackbar

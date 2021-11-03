@@ -145,7 +145,7 @@ export const SnackbarContainer = ({
         {orderedNotifications.map((notification, index) => {
           const {
             actionLabel,
-            dismissable,
+            dismissible,
             message,
             onAction,
             preventActionDismiss,
@@ -171,7 +171,7 @@ export const SnackbarContainer = ({
                   onAction={onAction}
                   actionLabel={actionLabel}
                   message={message}
-                  showCloseButton={dismissable}
+                  showCloseButton={dismissible}
                   removeMessageTimeInterval={timeout}
                   isPreventAutoDismiss={preventAutoDismiss}
                   isPreventActionDismiss={preventActionDismiss}

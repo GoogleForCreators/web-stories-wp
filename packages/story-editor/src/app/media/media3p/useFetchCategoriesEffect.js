@@ -67,7 +67,7 @@ export default function useFetchCategoriesEffect({
         fetchCategoriesError({ provider });
         showSnackbar({
           message: PROVIDERS[provider].fetchCategoriesErrorMessage,
-          dismissable: true,
+          dismissible: true,
         });
       }
     }

@@ -120,7 +120,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
           updateList?.(addedTemplate);
           showSnackbar({
             message: __('Page Template saved.', 'web-stories'),
-            dismissable: true,
+            dismissible: true,
           });
         })
         .catch(() => {
@@ -129,7 +129,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
               'Unable to save the template. Please try again.',
               'web-stories'
             ),
-            dismissable: true,
+            dismissible: true,
           });
         });
       setShowDefaultTemplates(false);

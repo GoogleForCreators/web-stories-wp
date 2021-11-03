@@ -171,7 +171,7 @@ const useQuickActions = () => {
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
+        dismissible: false,
         message: __('Element properties have been reset', 'web-stories'),
         // Don't pass a stale version of `undo`
         onAction: () => {

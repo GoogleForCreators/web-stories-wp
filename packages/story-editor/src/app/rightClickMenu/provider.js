@@ -384,7 +384,7 @@ function RightClickMenuProvider({ children }) {
 
     showSnackbar({
       actionLabel: __('Undo', 'web-stories'),
-      dismissable: false,
+      dismissible: false,
       message: __('Copied style.', 'web-stories'),
       onAction: () => {
         dispatch({
@@ -511,7 +511,7 @@ function RightClickMenuProvider({ children }) {
 
     showSnackbar({
       actionLabel: __('Undo', 'web-stories'),
-      dismissable: false,
+      dismissible: false,
       message: __('Pasted style.', 'web-stories'),
       // don't pass a stale reference for undo
       // need history updates to run so `undo` works correctly.
@@ -567,7 +567,7 @@ function RightClickMenuProvider({ children }) {
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
+        dismissible: false,
         message: __('Cleared style.', 'web-stories'),
         // don't pass a stale reference for undo
         // need history updates to run so `undo` works correctly.
@@ -646,7 +646,7 @@ function RightClickMenuProvider({ children }) {
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
+        dismissible: false,
         message: __('Saved style to "Saved Styles".', 'web-stories'),
         onAction: () => {
           deleteGlobalTextPreset(preset);
@@ -682,7 +682,7 @@ function RightClickMenuProvider({ children }) {
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
+        dismissible: false,
         message: __('Added color to "Saved Colors".', 'web-stories'),
         onAction: () => {
           deleteGlobalColorPreset(preset);
