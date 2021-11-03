@@ -35,7 +35,6 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     fixture = new Fixture();
     await fixture.render();
     await fixture.editor.library.textTab.click();
-    fixture.editor.library.text.smartColorToggle.click();
   });
 
   afterEach(() => {
@@ -164,6 +163,8 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     // TODO(#9224): Fix flaky test.
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should add text color based on background', async () => {
+      fixture.editor.library.text.smartColorToggle.click();
+
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
