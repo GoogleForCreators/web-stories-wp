@@ -55,9 +55,11 @@ function getImageResourceFromAttachment(attachment) {
     mime_type: mimeType,
     alt_text: alt,
     source_url: src,
+    meta: { web_stories_base_color: baseColor },
   } = attachment;
 
   return createResource({
+    baseColor,
     mimeType,
     creationDate: date_gmt,
     src,
@@ -88,10 +90,14 @@ function getVideoResourceFromAttachment(attachment) {
     alt_text: alt,
     source_url: src,
     web_stories_media_source: mediaSource,
-    meta: { web_stories_trim_data: trimData },
+    meta: {
+      web_stories_trim_data: trimData,
+      web_stories_base_color: baseColor,
+    },
   } = attachment;
 
   return createResource({
+    baseColor,
     mimeType,
     creationDate: date_gmt,
     src,
@@ -131,9 +137,11 @@ function getGifResourceFromAttachment(attachment) {
     },
     alt_text: alt,
     source_url: src,
+    meta: { web_stories_base_color: baseColor },
   } = attachment;
 
   return createResource({
+    baseColor,
     type: 'gif',
     mimeType: 'image/gif',
     creationDate: date_gmt,
