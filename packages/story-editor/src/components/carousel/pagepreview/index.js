@@ -40,6 +40,8 @@ import {
 } from '../../../utils/idleCallback';
 import { TransformProvider } from '../../transform';
 import DisplayElement from '../../canvas/displayElement';
+import usePerformanceTracking from '../../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 
 const Page = styled.button`
   display: block;
@@ -137,6 +139,11 @@ function PagePreview({ page, label, ...props }) {
     // Required because of eslint: consistent-return
     return undefined;
   }, [enableThumbnailCaching, isActive, pageNode, imageBlob, page]);
+
+  usePerformanceTracking({
+    node: pageNode,
+    eventData: TRACKING_EVENTS.PAGE_PREVIEW_CLICK,
+  });
 
   return (
     <UnitsProvider pageSize={{ width, height }}>

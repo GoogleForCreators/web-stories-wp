@@ -103,6 +103,7 @@ class Tag_Taxonomy extends Taxonomy_Base implements HasRequirements {
 			'show_admin_column'     => true,
 			'rewrite'               => true,
 			'show_in_rest'          => true,
+			'rest_namespace'        => self::REST_NAMESPACE,
 			'capabilities'          => self::DEFAULT_CAPABILITIES,
 			'rest_controller_class' => Stories_Terms_Controller::class,
 		];
