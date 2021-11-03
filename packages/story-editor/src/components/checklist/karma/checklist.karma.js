@@ -621,24 +621,6 @@ describe('Checklist integration - Card visibility', () => {
                   },
                 ],
               },
-              _links: {
-                'wp:action-assign-author': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:action-delete': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:action-publish': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:action-unfiltered-html': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:featuredmedia': {
-                  embeddable: true,
-                  href: 'http://stories.local/wp-json/web-stories/v1/media/2',
-                },
-              },
             }),
         },
       });
