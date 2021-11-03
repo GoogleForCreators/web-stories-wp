@@ -27,6 +27,7 @@ import {
   themeHelpers,
   Tooltip,
 } from '@web-stories-wp/design-system';
+import { useRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -35,6 +36,8 @@ import StoryPropTypes from '../../../../types';
 import { getDefinitionForType } from '../../../../elements';
 import { useStory } from '../../../../app';
 import { LayerText } from '../../../../elements/shared/layerText';
+import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
@@ -208,7 +211,7 @@ const LayerAction = styled(Button).attrs({
   }
 
   /*
-   * override base button background color so we can receive the 
+   * override base button background color so we can receive the
    * proper background color from the parent.
    */
   && {
@@ -259,12 +262,30 @@ function Layer({ layer }) {
       duplicateElementById: state.actions.duplicateElementById,
     })
   );
+
+  const layerRef = useRef(null);
+  usePerformanceTracking({
+    node: layerRef.current,
+    eventData: { ...TRACKING_EVENTS.SELECT_ELEMENT, label: layer.type },
+  });
+
+  const deleteButtonRef = useRef(null);
+  usePerformanceTracking({
+    node: deleteButtonRef.current,
+    eventData: { ...TRACKING_EVENTS.DELETE_ELEMENT, label: layer.type },
+  });
+
   const isBackground = currentPage.elements[0].id === layer.id;
   const layerId = `layer-${layer.id}`;
 
   return (
     <LayerContainer>
-      <LayerButton id={layerId} onClick={handleClick} isSelected={isSelected}>
+      <LayerButton
+        ref={layerRef}
+        id={layerId}
+        onClick={handleClick}
+        isSelected={isSelected}
+      >
         <LayerIconWrapper>
           <LayerIcon element={layer} currentPage={currentPage} />
         </LayerIconWrapper>
@@ -300,6 +321,7 @@ function Layer({ layer }) {
               isDelayed
             >
               <LayerAction
+                ref={deleteButtonRef}
                 aria-label={__('Delete', 'web-stories')}
                 aria-describedby={layerId}
                 onPointerDown={preventReorder}
