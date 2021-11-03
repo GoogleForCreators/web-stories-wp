@@ -29,7 +29,7 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Types;
+use Google\Web_Stories\Media\Types;
 use WP_Error;
 use WP_Http;
 use WP_REST_Request;
@@ -42,7 +42,6 @@ use WP_REST_Server;
  * Class Hotlinking_Controller
  */
 class Hotlinking_Controller extends REST_Controller implements HasRequirements {
-	use Types;
 
 	/**
 	 * Experiments instance.
@@ -59,16 +58,25 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	private $story_post_type;
 
 	/**
+	 * Types instance.
+	 *
+	 * @var Types Types instance.
+	 */
+	private $types;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 * @param Experiments     $experiments Experiments instance.
+	 * @param Types           $types Types instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Story_Post_Type $story_post_type, Experiments $experiments ) {
+	public function __construct( Story_Post_Type $story_post_type, Experiments $experiments, Types $types ) {
 		$this->story_post_type = $story_post_type;
 		$this->experiments     = $experiments;
+		$this->types           = $types;
 
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'hotlink';
@@ -198,13 +206,13 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$path      = wp_parse_url( $url, PHP_URL_PATH );
 		$file_name = basename( $path );
 
-		$exts = $this->get_file_type_exts( [ $mime_type ] );
+		$exts = $this->types->get_file_type_exts( [ $mime_type ] );
 		$ext  = '';
 		if ( $exts ) {
 			$ext = end( $exts );
 		}
 
-		$allowed_mime_types = $this->get_allowed_mime_types();
+		$allowed_mime_types = $this->types->get_allowed_mime_types();
 		$type               = '';
 		foreach ( $allowed_mime_types as $key => $mime_types ) {
 			if ( in_array( $mime_type, $mime_types, true ) ) {
@@ -256,7 +264,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 
 		$headers            = wp_remote_retrieve_headers( $proxy_request );
 		$mime_type          = $headers['content-type'];
-		$allowed_mime_types = $this->get_allowed_mime_types();
+		$allowed_mime_types = $this->types->get_allowed_mime_types();
 		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
 		if ( ! in_array( $mime_type, $allowed_mime_types, true ) ) {
 			return new WP_Error( 'rest_invalid_mime_type', __( 'Invalid Mime Type', 'web-stories' ), [ 'status' => 400 ] );
@@ -327,10 +335,10 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			return $this->add_additional_fields_schema( $this->schema );
 		}
 
-		$allowed_mime_types = $this->get_allowed_mime_types();
+		$allowed_mime_types = $this->types->get_allowed_mime_types();
 		$types              = array_keys( $allowed_mime_types );
 		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
-		$exts               = $this->get_file_type_exts( $allowed_mime_types );
+		$exts               = $this->types->get_file_type_exts( $allowed_mime_types );
 
 		$schema = [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',

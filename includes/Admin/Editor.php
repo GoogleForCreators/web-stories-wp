@@ -37,7 +37,7 @@ use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Traits\Screen;
-use Google\Web_Stories\Traits\Types;
+use Google\Web_Stories\Media\Types;
 use WP_Post;
 
 /**
@@ -46,7 +46,7 @@ use WP_Post;
  * @package Google\Web_Stories\Admin
  */
 class Editor extends Service_Base implements HasRequirements {
-	use Types, Screen;
+	use Screen;
 
 	/**
 	 * Web Stories editor script handle.
@@ -119,6 +119,13 @@ class Editor extends Service_Base implements HasRequirements {
 	private $page_template_post_type;
 
 	/**
+	 * Types instance.
+	 *
+	 * @var Types Types instance.
+	 */
+	private $types;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
@@ -131,6 +138,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @param Assets                  $assets          Assets instance.
 	 * @param Story_Post_Type         $story_post_type Story_Post_Type instance.
 	 * @param Page_Template_Post_Type $page_template_post_type Page_Template_Post_Type instance.
+	 * @param Types                   $types            Types instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -140,7 +148,8 @@ class Editor extends Service_Base implements HasRequirements {
 		Google_Fonts $google_fonts,
 		Assets $assets,
 		Story_Post_Type $story_post_type,
-		Page_Template_Post_Type $page_template_post_type
+		Page_Template_Post_Type $page_template_post_type,
+		Types $types
 	) {
 		$this->experiments             = $experiments;
 		$this->meta_boxes              = $meta_boxes;
@@ -150,6 +159,7 @@ class Editor extends Service_Base implements HasRequirements {
 		$this->assets                  = $assets;
 		$this->story_post_type         = $story_post_type;
 		$this->page_template_post_type = $page_template_post_type;
+		$this->types                   = $types;
 	}
 
 	/**
@@ -321,9 +331,9 @@ class Editor extends Service_Base implements HasRequirements {
 		/** This filter is documented in wp-admin/includes/post.php */
 		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
 		$nonce              = wp_create_nonce( 'wp_rest' );
-		$mime_types         = $this->get_allowed_mime_types();
-		$image_mime_types   = $this->get_allowed_image_mime_types();
-		$audio_mime_types   = $this->get_allowed_audio_mime_types();
+		$mime_types         = $this->types->get_allowed_mime_types();
+		$image_mime_types   = $this->types->get_allowed_image_mime_types();
+		$audio_mime_types   = $this->types->get_allowed_audio_mime_types();
 
 		$story = new Story();
 		$story->load_from_post( $post );
@@ -334,11 +344,11 @@ class Editor extends Service_Base implements HasRequirements {
 				'autoSaveInterval'             => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'                        => is_rtl(),
 				'locale'                       => $this->locale->get_locale_settings(),
-				'allowedFileTypes'             => $this->get_allowed_file_types(),
-				'allowedTranscodableMimeTypes' => $this->get_allowed_transcodable_mime_types(),
-				'allowedImageFileTypes'        => $this->get_file_type_exts( $image_mime_types ),
+				'allowedFileTypes'             => $this->types->get_allowed_file_types(),
+				'allowedTranscodableMimeTypes' => $this->types->get_allowed_transcodable_mime_types(),
+				'allowedImageFileTypes'        => $this->types->get_file_type_exts( $image_mime_types ),
 				'allowedImageMimeTypes'        => $image_mime_types,
-				'allowedAudioFileTypes'        => $this->get_file_type_exts( $audio_mime_types ),
+				'allowedAudioFileTypes'        => $this->types->get_file_type_exts( $audio_mime_types ),
 				'allowedAudioMimeTypes'        => $audio_mime_types,
 				'allowedMimeTypes'             => $mime_types,
 				'postType'                     => $this->story_post_type->get_slug(),

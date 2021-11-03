@@ -32,18 +32,18 @@ use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Tracking;
+use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Traits\Screen;
-use Google\Web_Stories\Traits\Types;
 
 /**
  * Dashboard class.
  */
 class Dashboard extends Service_Base {
-	use Types, Screen;
+	use Screen;
 
 	/**
 	 * Script handle.
@@ -109,6 +109,13 @@ class Dashboard extends Service_Base {
 	private $story_post_type;
 
 	/**
+	 * Types instance.
+	 *
+	 * @var Types Types instance.
+	 */
+	private $types;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
@@ -120,6 +127,7 @@ class Dashboard extends Service_Base {
 	 * @param Google_Fonts    $google_fonts  Google_Fonts instance.
 	 * @param Assets          $assets        Assets instance.
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Types           $types Types instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -128,7 +136,8 @@ class Dashboard extends Service_Base {
 		Locale $locale,
 		Google_Fonts $google_fonts,
 		Assets $assets,
-		Story_Post_Type $story_post_type
+		Story_Post_Type $story_post_type,
+		Types $types
 	) {
 		$this->experiments     = $experiments;
 		$this->decoder         = $decoder;
@@ -137,6 +146,7 @@ class Dashboard extends Service_Base {
 		$this->google_fonts    = $google_fonts;
 		$this->assets          = $assets;
 		$this->story_post_type = $story_post_type;
+		$this->types           = $types;
 	}
 
 	/**
@@ -396,7 +406,7 @@ class Dashboard extends Service_Base {
 				'newStoryURL'           => $new_story_url,
 				'archiveURL'            => $this->story_post_type->get_archive_link(),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
-				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
+				'allowedImageMimeTypes' => $this->types->get_allowed_image_mime_types(),
 				'version'               => WEBSTORIES_VERSION,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),
 				'api'                   => [

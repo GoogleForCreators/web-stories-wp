@@ -36,6 +36,7 @@ import {
 import useLayout from '../../app/layout/useLayout';
 import useFocusTrapping from '../../utils/useFocusTrapping';
 import useVideoTrim from './useVideoTrim';
+import useRailBackground from './useRailBackground';
 import {
   Menu,
   Wrapper,
@@ -115,13 +116,17 @@ function VideoTrimmer() {
     }
   }, []);
 
-  if (!pageWidth || !maxOffset || !videoData) {
+  const railWidth = Math.min(pageWidth, workspaceWidth - 2 * BUTTON_SPACE);
+
+  const isReady = pageWidth && maxOffset && videoData;
+
+  const railBackgroundImage = useRailBackground(isReady, videoData, railWidth);
+
+  if (!isReady) {
     // We still need a reffed element, or the focus trap will break,
     // so just return an empty element
     return <Menu ref={menu} />;
   }
-
-  const railWidth = Math.min(pageWidth, workspaceWidth - 2 * BUTTON_SPACE);
 
   const sliderProps = {
     min: 0,
@@ -149,7 +154,10 @@ function VideoTrimmer() {
           {__('Cancel', 'web-stories')}
         </Button>
       </ButtonWrapper>
-      <Wrapper pageWidth={railWidth}>
+      <Wrapper
+        pageWidth={railWidth}
+        style={{ backgroundImage: `url(${railBackgroundImage})` }}
+      >
         <Scrim isLeftAligned width={(startOffset / maxOffset) * railWidth} />
         <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
         <CurrentTime

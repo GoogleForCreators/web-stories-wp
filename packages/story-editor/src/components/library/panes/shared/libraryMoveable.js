@@ -38,6 +38,8 @@ import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';
 import { noop } from '../../../../utils/noop';
+import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -218,6 +220,15 @@ function LibraryMoveable({
       moveable.current.updateRect();
     }
   };
+
+  usePerformanceTracking({
+    node: targetBoxRef.current,
+    eventData: {
+      ...TRACKING_EVENTS.INSERT_ELEMENT,
+      label: type,
+    },
+    eventType: 'pointerdown',
+  });
 
   const onDragEnd = ({ inputEvent }) => {
     toggleDesignSpace(false);

@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import { __, _x } from '@web-stories-wp/i18n';
 import stickers from '@web-stories-wp/stickers';
 import {
@@ -52,6 +52,8 @@ import {
 import Tooltip from '../../../tooltip';
 import useStory from '../../../../app/story/useStory';
 import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
+import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
@@ -144,6 +146,12 @@ function SizePositionPanel(props) {
     selectedElements,
     'lockAspectRatio'
   );
+
+  const bgButtonRef = useRef(null);
+  usePerformanceTracking({
+    node: bgButtonRef.current,
+    eventData: TRACKING_EVENTS.SET_BACKGROUND_MEDIA,
+  });
 
   // When multiple element selected with aspect lock ratio value combined, it treated as true, reversed behavior with padding lock ratio.
   const lockAspectRatio =
@@ -256,6 +264,7 @@ function SizePositionPanel(props) {
         {isMedia && isSingleElement && (
           <Area area="b">
             <StyledButton
+              ref={bgButtonRef}
               onClick={handleSetBackground}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
