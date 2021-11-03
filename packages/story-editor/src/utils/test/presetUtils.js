@@ -429,33 +429,6 @@ describe('presetUtils', () => {
   });
 
   describe('getPanelInitialHeight', () => {
-    it('should get the initial height correctly for color presets', () => {
-      const presets = [
-        { color: { r: 25, g: 39, b: 1 } },
-        { color: { r: 25, g: 39, b: 2 } },
-        { color: { r: 25, g: 39, b: 3 } },
-        { color: { r: 25, g: 39, b: 4 } },
-        { color: { r: 25, g: 39, b: 5 } },
-        { color: { r: 25, g: 39, b: 6 } },
-        { color: { r: 25, g: 39, b: 7 } },
-        { color: { r: 25, g: 39, b: 8 } },
-        { color: { r: 25, g: 39, b: 9 } },
-        { color: { r: 25, g: 39, b: 10 } },
-        { color: { r: 25, g: 39, b: 11 } },
-        { color: { r: 25, g: 39, b: 12 } },
-        { color: { r: 25, g: 39, b: 13 } },
-      ];
-      // Three rows.
-      expect(getPanelInitialHeight(true, presets)).toBe(96);
-      // One row.
-      expect(
-        getPanelInitialHeight(true, [{ color: { r: 196, g: 196, b: 196 } }])
-      ).toBe(48);
-
-      // No rows.
-      expect(getPanelInitialHeight(true, [])).toBe(140);
-    });
-
     it('should get the initial height correctly for style presets', () => {
       const presets = [
         { fontSize: 1 },
@@ -467,9 +440,9 @@ describe('presetUtils', () => {
         { fontSize: 7 },
       ];
       // Three rows.
-      expect(getPanelInitialHeight(false, presets)).toBe(256);
+      expect(getPanelInitialHeight(presets)).toBe(256);
       // One row.
-      expect(getPanelInitialHeight(false, [{ fontSize: 1 }])).toBe(96);
+      expect(getPanelInitialHeight([{ fontSize: 1 }])).toBe(96);
     });
   });
 });
