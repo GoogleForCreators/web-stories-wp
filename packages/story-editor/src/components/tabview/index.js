@@ -38,6 +38,8 @@ import usePerformanceTracking from '../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../constants/performanceTrackingEvents';
 
 const ALERT_ICON_SIZE = 28;
+export const TAB_HEIGHT = 32;
+export const TAB_VERTICAL_MARGIN = 10;
 
 const Tabs = styled.ul.attrs({
   role: 'tablist',
@@ -64,8 +66,8 @@ const TabElement = styled.li.attrs(({ isActive }) => ({
   border: none;
   background: none;
   padding: 0 4px;
-  margin: 10px 12px 9px;
-  height: 32px;
+  margin: ${TAB_VERTICAL_MARGIN}px 12px 9px;
+  height: ${TAB_HEIGHT}px;
   display: flex;
   align-items: center;
   justify-content: center;
