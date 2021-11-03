@@ -18,7 +18,9 @@
  */
 import { boolean, number, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
+import { useState } from '@web-stories-wp/react';
 import styled, { ThemeProvider } from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -27,6 +29,19 @@ import { theme } from '../../..';
 import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
 import { SnackbarContainer } from '../snackbarContainer';
 import { THUMBNAIL_STATUS } from '../constants';
+import { Button, BUTTON_TYPES } from '../..';
+
+const buttonText = [
+  'Sorry, your image failed to load',
+  'Success! One cow successfully bought',
+  "We're sorry, the number you are trying to reach is unavailable",
+  'Pizza',
+  'Pizza bread',
+  'Bread sticks',
+  'goulash',
+  'Porcupines are cool',
+  'Whales are kind of cool too',
+];
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.colors.bg.primary};
@@ -181,5 +196,61 @@ export const ThumbnailMessage = () => {
         />
       </Container>
     </DarkThemeProvider>
+  );
+};
+
+export const ShowSnackbarByClickingButton = () => {
+  const [messageQueue, setMessageQueue] = useState([]);
+
+  const handleRemoveMessage = ({ id }) => {
+    setMessageQueue((currentMessages) => {
+      const index = currentMessages.findIndex((message) => message.key === id);
+
+      return [
+        ...currentMessages.slice(0, index),
+        ...currentMessages.slice(index + 1),
+      ];
+    });
+  };
+
+  const handleOnDismiss = (evt, notification) => {
+    action('on dismiss called')(evt);
+    handleRemoveMessage(notification);
+  };
+
+  const handleAddSnackbarToQueue = () => {
+    const newId = uuidv4();
+    const randomMessage =
+      buttonText[Math.floor(Math.random() * buttonText.length)];
+
+    setMessageQueue((currentMessages) => [
+      ...currentMessages,
+      {
+        key: newId,
+        actionLabel: text('actionLabel', ''),
+        'aria-label': text(
+          'aria-label',
+          'this is my aria label giving my message context for screen reader users'
+        ),
+        customZIndex: number('customZIndex'),
+        dismissable: boolean('dismissable'),
+        preventAutoDismiss: boolean('preventAutoDismiss'),
+        message: randomMessage,
+        onAction: action('on action clicked'),
+        onDismiss: (evt) => handleOnDismiss(evt, { id: newId }),
+        timeout: 5000,
+      },
+    ]);
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Container>
+        <Button type={BUTTON_TYPES.PRIMARY} onClick={handleAddSnackbarToQueue}>
+          {'Show Snackbar'}
+        </Button>
+        <SnackbarContainer notifications={messageQueue} />
+      </Container>
+    </ThemeProvider>
   );
 };
