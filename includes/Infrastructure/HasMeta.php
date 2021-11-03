@@ -10,7 +10,6 @@
 
 namespace Google\Web_Stories\Infrastructure;
 
-
 /**
  * Class registers meta.
  *
