@@ -24,22 +24,22 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import Slider from './slider';
+import { RAIL_HEIGHT, RAIL_PADDING } from './constants';
 
 export const Menu = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
+  height: ${RAIL_HEIGHT + RAIL_PADDING * 2}px;
   gap: 14px;
 `;
 
 export const Wrapper = styled.div`
   position: relative;
   flex-basis: ${({ pageWidth }) => pageWidth}px;
-  height: 36px;
+  height: ${RAIL_HEIGHT}px;
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.colors.standard.white};
-  /* Note: background to be updated in 9104 */
   background-color: ${({ theme }) => theme.colors.standard.white};
 `;
 
