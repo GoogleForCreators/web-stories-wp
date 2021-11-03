@@ -179,18 +179,16 @@ function BasicColorPicker({
               <Label id="colorpicker-story-colors-title">
                 {__('Current story', 'web-stories')}
               </Label>
-              {storyColors.length > 0 && (
-                <BasicColorList
-                  color={color}
-                  colors={storyColors}
-                  handleClick={handleClick}
-                  colorType="local"
-                  allowsOpacity={allowsOpacity}
-                  allowsGradient={allowsGradient}
-                  aria-labelledby="colorpicker-story-colors-title"
-                  isEditMode={isEditMode}
-                />
-              )}
+              <BasicColorList
+                color={color}
+                colors={storyColors}
+                handleClick={handleClick}
+                colorType="local"
+                allowsOpacity={allowsOpacity}
+                allowsGradient={allowsGradient}
+                aria-labelledby="colorpicker-story-colors-title"
+                isEditMode={isEditMode}
+              />
             </>
           )}
           {allowsSavedColors && (
@@ -198,18 +196,16 @@ function BasicColorPicker({
               <Label id="colorpicker-saved-colors-title">
                 {__('Saved colors', 'web-stories')}
               </Label>
-              {savedColors.length > 0 && (
-                <BasicColorList
-                  color={color}
-                  colors={savedColors}
-                  colorType="global"
-                  handleClick={handleClick}
-                  allowsOpacity={allowsOpacity}
-                  allowsGradient={allowsGradient}
-                  aria-labelledby="colorpicker-saved-colors-title"
-                  isEditMode={isEditMode}
-                />
-              )}
+              <BasicColorList
+                color={color}
+                colors={savedColors}
+                colorType="global"
+                handleClick={handleClick}
+                allowsOpacity={allowsOpacity}
+                allowsGradient={allowsGradient}
+                aria-labelledby="colorpicker-saved-colors-title"
+                isEditMode={isEditMode}
+              />
             </>
           )}
         </SavedColors>

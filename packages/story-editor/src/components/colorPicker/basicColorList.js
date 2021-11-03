@@ -113,7 +113,8 @@ function BasicColorList({
       {colors.map((pattern, i) => {
         const isTransparentAndInvalid = !allowsOpacity && hasOpacity(pattern);
         const isGradientAndInvalid = !allowsGradient && hasGradient(pattern);
-        const isDisabled = isTransparentAndInvalid || isGradientAndInvalid;
+        const isDisabled =
+          (isTransparentAndInvalid || isGradientAndInvalid) && !isEditMode;
         let tooltip = null;
         if (isDisabled && !isEditMode) {
           tooltip = isTransparentAndInvalid

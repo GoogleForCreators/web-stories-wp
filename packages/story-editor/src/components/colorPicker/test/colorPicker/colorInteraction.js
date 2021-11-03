@@ -18,27 +18,24 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { createSolid } from '@web-stories-wp/patterns';
 import { setAppElement } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import ColorPresetPanel from '../colorPreset';
-import StoryContext from '../../../../../app/story/context';
-import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
+import ColorPicker from '../../colorPicker';
+import { StoryContext } from '../../../../app/story';
+import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import {
   getShapePresets,
   getTextPresets,
   getPagePreset,
   areAllType,
-  getPanelInitialHeight,
-} from '../../../../../utils/presetUtils';
-import { renderWithTheme } from '../../../../../testUtils';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
-import { PRESET_TYPES } from '../../../../../constants';
+} from '../../../../utils/presetUtils';
+import { renderWithTheme } from '../../../../testUtils';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
-jest.mock('../utils');
+jest.mock('../../../../utils/presetUtils');
 
 function arrange(extraStylePresets, extraStateProps, extraStoryPresets) {
   const updateStory = jest.fn();
@@ -89,7 +86,7 @@ function arrange(extraStylePresets, extraStateProps, extraStoryPresets) {
     container,
   } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
-      <ColorPresetPanel pushUpdate={pushUpdate} />
+      <ColorPicker allowsSavedColors onChange={() => jest.fn()} />
     </StoryContext.Provider>
   );
   setAppElement(container);
@@ -109,10 +106,8 @@ function arrange(extraStylePresets, extraStateProps, extraStoryPresets) {
 }
 
 const EDIT_BUTTON_LABEL = 'Edit colors';
-const APPLY_GLOBAL_PRESET = 'Apply global color';
 const ADD_LOCAL_LABEL = 'Add local color';
 const ADD_GLOBAL_LABEL = 'Add global color';
-const PANEL_LABEL = 'Saved Colors';
 const TEST_COLOR = {
   color: {
     r: 1,
@@ -127,66 +122,24 @@ const TEST_COLOR_2 = {
     b: 2,
   },
 };
-const LINEAR_COLOR = {
-  type: 'linear',
-  stops: [
-    {
-      color: { r: 255, g: 0, b: 0 },
-      position: 0,
-    },
-    {
-      color: { r: 0, g: 0, b: 255 },
-      position: 1,
-    },
-  ],
-};
+
 const BACKGROUND_PROPS = {
   backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
   backgroundColor: TEST_COLOR,
 };
 
-describe('Panels/Preset', () => {
+describe('colorPicker/colorsInteraction', () => {
   beforeAll(() => {
     areAllType.mockImplementation((elType, els) => {
       return els.length > 0 && els.every(({ type }) => elType === type);
     });
-
-    getPanelInitialHeight.mockReturnValue(150);
-
-    localStorage.setItem(
-      `web_stories_ui_panel_settings:stylepreset-${PRESET_TYPES.COLOR}`,
-      JSON.stringify({ isCollapsed: false })
-    );
   });
 
   afterAll(() => {
     localStorage.clear();
   });
 
-  it('should render <ColorPresetPanel /> panel', () => {
-    arrange();
-    const element = screen.getByText(PANEL_LABEL);
-    expect(element).toBeInTheDocument();
-  });
-
-  it('should not display the panel if mixed types multi-selection', () => {
-    const extraStateProps = {
-      selectedElements: [
-        {
-          id: '1',
-          type: 'text',
-        },
-        {
-          id: '2',
-          type: 'shape',
-        },
-      ],
-    };
-    arrange(null, extraStateProps);
-    expect(screen.queryByText(PANEL_LABEL)).not.toBeInTheDocument();
-  });
-
-  describe('Panels/Preset/Header', () => {
+  describe('colorPicker/Header', () => {
     it('should not display edit button if no presets exist', () => {
       arrange();
 
@@ -409,7 +362,7 @@ describe('Panels/Preset', () => {
     });
   });
 
-  describe('Panels/StylePreset/Colors', () => {
+  describe('colorPicker/colorInteraction', () => {
     it('should allow deleting the relevant color preset', () => {
       const extraStylePresets = {
         colors: [TEST_COLOR, TEST_COLOR_2],
@@ -439,207 +392,6 @@ describe('Panels/Preset', () => {
             colors: [TEST_COLOR_2],
             textStyles: [],
           },
-        },
-      });
-    });
-
-    it('should allow applying color presets for shapes', () => {
-      const extraStylePresets = {
-        colors: [TEST_COLOR],
-      };
-      const extraStateProps = {
-        selectedElements: [
-          {
-            id: '1',
-            type: 'shape',
-          },
-        ],
-      };
-      const { updateElementsById } = arrange(
-        extraStylePresets,
-        extraStateProps
-      );
-      const applyPreset = screen.getByRole('button', {
-        name: APPLY_GLOBAL_PRESET,
-      });
-      expect(applyPreset).toBeInTheDocument();
-
-      fireEvent.click(applyPreset);
-      expect(updateElementsById).toHaveBeenCalledTimes(1);
-      expect(updateElementsById).toHaveBeenCalledWith({
-        elementIds: ['1'],
-        properties: {
-          backgroundColor: TEST_COLOR,
-        },
-      });
-    });
-
-    it('should allow applying color presets for text', () => {
-      const extraStylePresets = {
-        colors: [TEST_COLOR],
-      };
-      const { pushUpdate } = arrange(extraStylePresets);
-      const applyPreset = screen.getByRole('button', {
-        name: APPLY_GLOBAL_PRESET,
-      });
-      expect(applyPreset).toBeInTheDocument();
-
-      fireEvent.click(applyPreset);
-      expect(pushUpdate).toHaveBeenCalledTimes(1);
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function), true);
-      const updaterFunction = pushUpdate.mock.calls[0][0];
-      const partiallyBlueContent = {
-        content: 'Hello <span style="color: blue">World</span>',
-      };
-      const updatedContent = updaterFunction(partiallyBlueContent);
-      const expectedContent = {
-        content: '<span style="color: #010101">Hello World</span>',
-      };
-      expect(updatedContent).toStrictEqual(expectedContent);
-    });
-
-    it('should not apply colors with gradient to text', () => {
-      const extraStylePresets = {
-        colors: [LINEAR_COLOR],
-      };
-
-      const { pushUpdate } = arrange(extraStylePresets);
-      const applyPreset = screen.getByRole('button', {
-        name: APPLY_GLOBAL_PRESET,
-      });
-      expect(applyPreset).toBeInTheDocument();
-
-      fireEvent.click(applyPreset);
-      expect(pushUpdate).toHaveBeenCalledTimes(0);
-    });
-
-    it('should allow removing linear color when text selected', () => {
-      const extraStylePresets = {
-        colors: [LINEAR_COLOR],
-      };
-      const extraStoryPresets = {
-        colors: [LINEAR_COLOR],
-      };
-
-      const { updateStory } = arrange(
-        extraStylePresets,
-        null,
-        extraStoryPresets
-      );
-      const editButton = screen.getByLabelText(EDIT_BUTTON_LABEL);
-      fireEvent.click(editButton);
-
-      const deletePreset = screen.getByRole('button', {
-        name: 'Delete global color',
-      });
-
-      fireEvent.click(deletePreset);
-
-      const confirmationButton = screen.getByRole('button', { name: 'Delete' });
-      fireEvent.click(confirmationButton);
-
-      expect(updateStory).toHaveBeenCalledTimes(1);
-      expect(updateStory).toHaveBeenCalledWith({
-        properties: {
-          globalStoryStyles: {
-            colors: [],
-            textStyles: [],
-          },
-        },
-      });
-
-      updateStory.mockReset();
-      const deleteStoryPreset = screen.getByRole('button', {
-        name: 'Delete local color',
-      });
-      fireEvent.click(deleteStoryPreset);
-      expect(updateStory).toHaveBeenCalledTimes(1);
-      expect(updateStory).toHaveBeenCalledWith({
-        properties: {
-          currentStoryStyles: {
-            colors: [],
-          },
-        },
-      });
-    });
-
-    it('should not apply colors with opacity as Page background', () => {
-      const extraStylePresets = {
-        colors: [createSolid(1, 1, 1, 0.5), createSolid(1, 1, 1, 0)],
-      };
-      const extraStateProps = {
-        selectedElements: [
-          {
-            id: 'bg',
-          },
-        ],
-      };
-
-      const { updateCurrentPageProperties } = arrange(
-        extraStylePresets,
-        extraStateProps
-      );
-
-      const applyPresetButtons = screen.getAllByRole('button', {
-        name: APPLY_GLOBAL_PRESET,
-      });
-      const applyPreset1 = applyPresetButtons[0];
-      expect(applyPreset1).toBeDefined();
-
-      fireEvent.click(applyPreset1);
-      expect(updateCurrentPageProperties).toHaveBeenCalledTimes(0);
-
-      const applyPreset2 = applyPresetButtons[1];
-      expect(applyPreset2).toBeDefined();
-
-      fireEvent.click(applyPreset2);
-      expect(updateCurrentPageProperties).toHaveBeenCalledTimes(0);
-    });
-
-    it('should allow applying color preset for Page background', () => {
-      const extraStylePresets = {
-        colors: [TEST_COLOR],
-      };
-      const extraStoryPresets = {
-        colors: [LINEAR_COLOR],
-      };
-      const extraStateProps = {
-        selectedElements: [
-          {
-            id: 'bg',
-          },
-        ],
-      };
-      const { updateCurrentPageProperties } = arrange(
-        extraStylePresets,
-        extraStateProps,
-        extraStoryPresets
-      );
-
-      // Global color.
-      const applyPreset = screen.getByRole('button', {
-        name: APPLY_GLOBAL_PRESET,
-      });
-      expect(applyPreset).toBeInTheDocument();
-
-      fireEvent.click(applyPreset);
-      expect(updateCurrentPageProperties).toHaveBeenCalledTimes(1);
-      expect(updateCurrentPageProperties).toHaveBeenCalledWith({
-        properties: {
-          backgroundColor: TEST_COLOR,
-        },
-      });
-
-      // Local color.
-      updateCurrentPageProperties.mockReset();
-      const applyStoryPreset = screen.getByRole('button', {
-        name: 'Apply local color',
-      });
-      fireEvent.click(applyStoryPreset);
-      expect(updateCurrentPageProperties).toHaveBeenCalledTimes(1);
-      expect(updateCurrentPageProperties).toHaveBeenCalledWith({
-        properties: {
-          backgroundColor: LINEAR_COLOR,
         },
       });
     });
