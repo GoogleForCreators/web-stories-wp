@@ -335,10 +335,10 @@ describe('Quick Actions integration', () => {
       );
 
       expect(
-        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor
+        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.hex
       ).not.toBeNull();
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor
+        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.hex
       );
     });
 

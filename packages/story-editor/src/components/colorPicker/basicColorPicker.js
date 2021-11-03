@@ -238,7 +238,7 @@ function BasicColorPicker({
           <StyledPlus />
         </StyledButton>
       </Body>
-      {showDialog && (
+      {false && (
         <ConfirmationDialog
           onClose={() => setShowDialog(false)}
           onPrimary={() => {

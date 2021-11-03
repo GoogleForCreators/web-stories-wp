@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { Color } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
@@ -28,7 +29,13 @@ export class ShapeStyle extends AbstractPanel {
   }
 
   get backgroundColor() {
-    return this.getByRole('textbox', { name: /Background color/i });
+    const color = this._get(
+      this.getByRole('region', { name: /Color input: Background color/ }),
+      'backgroundColor',
+      Color
+    );
+    color.label = 'Background color';
+    return color;
   }
 
   get opacity() {

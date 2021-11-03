@@ -24,10 +24,9 @@ import { createSolid } from '@web-stories-wp/patterns';
  */
 import { Fixture } from '../../../../../karma/fixture';
 import { useInsertElement } from '../../../../canvas';
-import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
+import { BACKGROUND_TEXT_MODE, PRESET_TYPES } from '../../../../../constants';
 import { useStory } from '../../../../../app/story';
 import { DEFAULT_PRESET } from '../../../../library/panes/text/textPresets';
-import { PRESET_TYPES } from '../constants';
 
 describe('Panel: Style Presets', () => {
   let fixture;
