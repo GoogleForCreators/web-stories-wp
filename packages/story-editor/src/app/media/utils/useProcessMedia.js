@@ -33,6 +33,7 @@ function useProcessMedia({
   uploadMedia,
   uploadVideoPoster,
   updateVideoIsMuted,
+  updateBaseColor,
   updateMedia,
   deleteMediaElement,
 }) {
@@ -125,19 +126,18 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(resourceId, resource.id, 'source-video');
         deleteMediaElement({ id: resourceId });
-        if (
-          ['video', 'gif'].includes(resource.type) &&
-          !resource.local &&
-          !resource.posterId
-        ) {
+        if (resource.local) {
+          return;
+        }
+        if (['video', 'gif'].includes(resource.type) && !resource.posterId) {
           uploadVideoPoster(resource.id, resource.src);
         }
-        if (
-          'video' === resource.type &&
-          !resource.local &&
-          resource.isMuted === null
-        ) {
+        if ('video' === resource.type && resource.isMuted === null) {
           updateVideoIsMuted(resource.id, resource.src);
+        }
+
+        if (!resource?.baseColor.length) {
+          updateBaseColor({ resource });
         }
       };
 
@@ -173,6 +173,7 @@ function useProcessMedia({
           additionalData: {
             original_id: oldResource.id,
             web_stories_is_muted: oldResource.isMuted,
+            meta: { web_stories_base_color: oldResource.baseColor },
           },
         });
       })();
@@ -186,6 +187,7 @@ function useProcessMedia({
       updateOldTranscodedObject,
       deleteMediaElement,
       updateExistingElements,
+      updateBaseColor,
     ]
   );
 
@@ -217,13 +219,18 @@ function useProcessMedia({
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
-        if ('video' === resource.type && !resource.local) {
-          if (!resource.posterId) {
-            uploadVideoPoster(resource.id, resource.src);
-          }
-          if (resource.isMuted === null) {
-            updateVideoIsMuted(resource.id, resource.src);
-          }
+        if (resource.local || 'video' !== resource.type) {
+          return;
+        }
+
+        if (!resource.posterId) {
+          uploadVideoPoster(resource.id, resource.src);
+        }
+        if (resource.isMuted === null) {
+          updateVideoIsMuted(resource.id, resource.src);
+        }
+        if (!resource?.baseColor || !resource?.baseColor.length) {
+          updateBaseColor({ resource });
         }
       };
 
@@ -279,6 +286,7 @@ function useProcessMedia({
       uploadVideoPoster,
       updateExistingElements,
       updateVideoIsMuted,
+      updateBaseColor,
     ]
   );
 
@@ -308,12 +316,14 @@ function useProcessMedia({
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldMutedObject(oldResource.id, resource.id);
-        if (
-          ['video', 'gif'].includes(resource.type) &&
-          !resource.local &&
-          !resource.posterId
-        ) {
+        if (resource.local) {
+          return;
+        }
+        if (['video', 'gif'].includes(resource.type) && !resource.posterId) {
           uploadVideoPoster(resource.id, resource.src);
+        }
+        if (!resource?.baseColor || !resource?.baseColor.length) {
+          updateBaseColor({ resource });
         }
       };
 
@@ -356,6 +366,7 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
+            meta: { web_stories_base_color: oldResource.baseColor },
             original_id: oldResource.id,
             web_stories_media_source: oldResource?.isOptimized
               ? 'video-optimization'
@@ -377,6 +388,7 @@ function useProcessMedia({
       updateOldMutedObject,
       uploadMedia,
       uploadVideoPoster,
+      updateBaseColor,
     ]
   );
 
@@ -393,13 +405,14 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
-
-        if (
-          ['video', 'gif'].includes(resource.type) &&
-          !resource.local &&
-          !resource.posterId
-        ) {
+        if (resource.local) {
+          return;
+        }
+        if (['video', 'gif'].includes(resource.type) && !resource.posterId) {
           uploadVideoPoster(resource.id, resource.src);
+        }
+        if (!resource?.baseColor || !resource?.baseColor.length) {
+          updateBaseColor({ resource });
         }
       };
 
@@ -430,6 +443,7 @@ function useProcessMedia({
           onUploadProgress,
           additionalData: {
             original_id: oldResource.id,
+            meta: { web_stories_base_color: oldResource.baseColor },
           },
         });
       };
@@ -437,11 +451,12 @@ function useProcessMedia({
     },
     [
       copyResourceData,
-      uploadMedia,
-      uploadVideoPoster,
       updateOldTranscodedObject,
       deleteMediaElement,
+      uploadVideoPoster,
+      updateBaseColor,
       updateExistingElements,
+      uploadMedia,
     ]
   );
 
