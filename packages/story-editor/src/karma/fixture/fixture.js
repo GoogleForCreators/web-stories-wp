@@ -889,7 +889,6 @@ class APIProviderFixture {
                     slug: 'related-slug-1',
                     taxonomy: 'web_story_tag',
                     meta: [],
-                    _links: {},
                   },
                   {
                     id: this._termAutoIncrementId++,
@@ -900,7 +899,6 @@ class APIProviderFixture {
                     slug: 'related-slug-2',
                     taxonomy: 'web_story_tag',
                     meta: [],
-                    _links: {},
                   },
                 ]
               : []
@@ -922,7 +920,6 @@ class APIProviderFixture {
             taxonomy: 'web_story_category',
             parent: 0,
             meta: [],
-            _links: {},
             ...data,
           }),
         []

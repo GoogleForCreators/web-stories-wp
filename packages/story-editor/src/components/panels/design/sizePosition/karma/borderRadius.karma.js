@@ -46,7 +46,7 @@ describe('Border Radius', () => {
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       // Choose Fill as background for visibility.
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.textBox.fill
+        fixture.editor.inspector.designPanel.textStyle.fill
       );
 
       const panel = fixture.editor.inspector.designPanel.sizePosition;

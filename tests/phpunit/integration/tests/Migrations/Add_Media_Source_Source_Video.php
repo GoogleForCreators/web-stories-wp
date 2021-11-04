@@ -17,29 +17,39 @@
 
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * Class Add_Media_Source_Source_Video
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Source_Video
  */
-class Add_Media_Source_Source_Video extends TestCase {
+class Add_Media_Source_Source_Video extends DependencyInjectedTestCase {
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Migrations\Add_Media_Source_Source_Video
+	 */
+	protected $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Migrations\Add_Media_Source_Source_Video::class );
+	}
+
 	/**
 	 * @covers ::migrate
 	 * @covers ::get_term
 	 * @covers \Google\Web_Stories\Migrations\Add_Media_Source::migrate
 	 */
 	public function test_migrate() {
-		$media_source = new Media_Source_Taxonomy();
-		$object       = new \Google\Web_Stories\Migrations\Add_Media_Source_Source_Video( $media_source );
-		$object->migrate();
-		$term = $this->call_private_method( $object, 'get_term' );
+		$this->instance->migrate();
+		$term = $this->call_private_method( $this->instance, 'get_term' );
 
 		$terms = get_terms(
 			[
-				'taxonomy'   => $media_source->get_taxonomy_slug(),
+				'taxonomy'   => $this->container->get( 'media.media_source' )->get_taxonomy_slug(),
 				'hide_empty' => false,
 			]
 		);

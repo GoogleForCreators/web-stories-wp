@@ -36,10 +36,7 @@ const StyledPill = styled.button(
     background-color: ${isActive
       ? theme.colors.interactiveBg.primaryNormal
       : theme.colors.opacity.footprint};
-    border: 1px solid
-      ${isActive
-        ? theme.colors.interactiveBg.primaryNormal
-        : theme.colors.bg.primary};
+    border: none;
     border-radius: ${theme.borders.radius.x_large};
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
