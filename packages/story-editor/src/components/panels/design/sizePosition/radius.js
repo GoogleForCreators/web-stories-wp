@@ -19,19 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import {
-  LockToggle,
-  NumericInput,
-  Icons,
-  themeHelpers,
-} from '@web-stories-wp/design-system';
+import { LockToggle, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { StackableGroup } from '../../../form';
+import { StackableGroup, StackableInput } from '../../../form/stackable';
 import { canMaskHaveBorder } from '../../../../masks';
 import Tooltip from '../../../tooltip';
 import { useCommonObjectValue, focusStyle } from '../../shared';
@@ -59,34 +54,6 @@ const LockContainer = styled.div`
 
 const StyledLockToggle = styled(LockToggle)`
   ${focusStyle};
-`;
-
-const inputContainerStyleOverride = css`
-  position: relative;
-  :focus-within {
-    z-index: 1;
-    ${({ theme }) =>
-      themeHelpers.focusCSS(
-        theme.colors.border.focus,
-        theme.colors.bg.secondary
-      )};
-  }
-`;
-
-const iconCss = css`
-  width: 29px;
-  height: 29px;
-`;
-
-const StackableInput = styled(NumericInput)`
-  svg {
-    ${iconCss}
-  }
-  & > div {
-    border-radius: 0;
-    padding: 2px 7px 2px 12px;
-    ${inputContainerStyleOverride};
-  }
 `;
 
 const TopLeft = styled(Icons.Corner)`

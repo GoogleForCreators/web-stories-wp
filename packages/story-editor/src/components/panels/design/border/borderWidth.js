@@ -21,18 +21,14 @@ import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { LockToggle, NumericInput, Icons } from '@web-stories-wp/design-system';
+import { LockToggle, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { StackableGroup } from '../../../form';
+import { StackableGroup, StackableInput } from '../../../form/stackable';
 import Tooltip from '../../../tooltip';
-import {
-  focusStyle,
-  inputContainerStyleOverride,
-  useCommonObjectValue,
-} from '../../shared';
+import { focusStyle, useCommonObjectValue } from '../../shared';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { DEFAULT_BORDER } from './shared';
 
@@ -54,14 +50,6 @@ const ToggleWrapper = styled.div`
       padding-left: 8px;
     `};
   align-self: stretch;
-`;
-
-const StackableInput = styled(NumericInput)`
-  & > div {
-    border-radius: 0;
-    padding: 2px 7px 2px 12px;
-    ${inputContainerStyleOverride};
-  }
 `;
 
 const BorderTop = styled(Icons.Border)`
