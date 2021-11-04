@@ -221,7 +221,6 @@ async function runAxeTestsForStoriesEditor() {
       'color-contrast',
       // Because of multiple #_wpnonce elements.
       'duplicate-id',
-      'landmark-unique',
       'region',
       'aria-allowed-attr',
       'nested-interactive',

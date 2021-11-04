@@ -29,7 +29,7 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Traits\Types;
+use Google\Web_Stories\Media\Types;
 use WP_Post;
 use WP_Error;
 use WP_REST_Request;
@@ -40,18 +40,26 @@ use WP_REST_Attachments_Controller;
  * Stories_Media_Controller class.
  */
 class Stories_Media_Controller extends WP_REST_Attachments_Controller implements Service, Delayed, Registerable {
-	use Types;
+	/**
+	 * Types instance.
+	 *
+	 * @var Types Types instance.
+	 */
+	private $types;
 
 	/**
 	 * Constructor.
 	 *
 	 * Override the namespace.
 	 *
+	 * @param Types $types Types instance.
+	 *
 	 * @since 1.0.0
 	 */
-	public function __construct() {
+	public function __construct( Types $types ) {
 		parent::__construct( 'attachment' );
 		$this->namespace = 'web-stories/v1';
+		$this->types     = $types;
 	}
 
 	/**
@@ -383,6 +391,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @return array Array of supported media types.
 	 */
 	protected function get_media_types(): array {
-		return $this->get_allowed_mime_types();
+		return $this->types->get_allowed_mime_types();
 	}
 }

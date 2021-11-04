@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   Button,
@@ -33,6 +33,8 @@ import {
  * Internal dependencies
  */
 import { useConfig, useStory, useLayout } from '../../../app';
+import usePerformanceTracking from '../../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,6 +59,7 @@ function PageNav({ isNext = true }) {
     })
   );
   const { isRTL } = useConfig();
+  const buttonRef = useRef(null);
 
   // Cancel lasso on mouse down
   const cancelMouseDown = useCallback((evt) => evt.stopPropagation(), []);
@@ -74,6 +77,11 @@ function PageNav({ isNext = true }) {
       hasPageNavigation,
     })
   );
+
+  usePerformanceTracking({
+    node: buttonRef.current,
+    eventData: TRACKING_EVENTS.PAGE_NAVIGATION,
+  });
 
   // Buttons are completely missing if there's no room for them
   if (!hasPageNavigation) {
@@ -94,6 +102,7 @@ function PageNav({ isNext = true }) {
   return (
     <Wrapper>
       <Button
+        ref={buttonRef}
         variant={BUTTON_VARIANTS.SQUARE}
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.MEDIUM}

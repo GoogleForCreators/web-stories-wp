@@ -15,9 +15,10 @@
  */
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { sprintf, __ } from '@wordpress/i18n';
+import sprintf from './sprintf';
+import { __ } from './i18n';
 
 /**
  * Join all options in a list and translate. These will be joined with

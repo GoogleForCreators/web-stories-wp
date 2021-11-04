@@ -83,7 +83,7 @@ class AbstractLayer extends Container {
   }
 
   get fullbleed() {
-    return this.getByRole('region', { name: 'Fullbleed area' });
+    return this.getByRole('region', { name: /^Fullbleed area/ });
   }
 }
 
