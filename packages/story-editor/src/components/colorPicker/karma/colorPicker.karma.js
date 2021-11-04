@@ -93,9 +93,9 @@ describe('ColorPicker', () => {
       });
     };
 
-    const getApplyButton = (type) => {
+    const getApplyButton = (pattern) => {
       return fixture.screen.getByRole('option', {
-        name: `Apply ${type} color`,
+        name: pattern,
       });
     };
 
@@ -108,13 +108,18 @@ describe('ColorPicker', () => {
     };
 
     const getDeleteButton = (type) => {
+      if (type === 'global') {
+        return fixture.screen.getByRole('option', {
+          name: /Delete global color/,
+        });
+      }
       return fixture.screen.getByRole('option', {
-        name: `Delete ${type} color`,
+        name: /Delete local color/,
       });
     };
 
     describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Add Colors', () => {
-      it('should allow adding both local and global colors', async () => {
+      it('should allow adding local colors', async () => {
         // Switch to shapes tab and click the triangle
         await fixture.events.click(fixture.editor.library.shapesTab);
         await fixture.events.click(
@@ -126,42 +131,49 @@ describe('ColorPicker', () => {
         );
 
         await fixture.events.click(getAddButton('global'));
-        expect(getApplyButton('global')).toBeTruthy();
+        expect(getApplyButton('#c4c4c4')).toBeTruthy();
+      });
+
+      it('should allow adding global colors', async () => {
+        // Switch to shapes tab and click the triangle
+        await fixture.events.click(fixture.editor.library.shapesTab);
+        await fixture.events.click(
+          fixture.editor.library.shapes.shape('Triangle')
+        );
+
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
+        );
 
         await fixture.events.click(getAddButton('local'));
-        expect(getApplyButton('local')).toBeTruthy();
+        expect(getApplyButton('#c4c4c4')).toBeTruthy();
       });
 
       it('should allow applying global colors', async () => {
-        // Add text and save its color.
-        await fixture.events.click(fixture.editor.library.textAdd);
-        await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+        // Add shape and save its color.
+        await fixture.events.click(fixture.editor.library.shapesTab);
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.fontColor.button
+          fixture.editor.library.shapes.shape('Triangle')
+        );
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
         );
         await fixture.events.click(getAddButton('global'));
 
-        // Add shape and apply the previously saved color.
-        await fixture.events.click(fixture.editor.library.shapesTab);
-        await fixture.events.click(
-          fixture.editor.library.shapes.shape('Triangle')
-        );
-        await fixture.events.click(
-          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
-        );
-        await fixture.events.click(getApplyButton('global'));
-        const [shape] = await getSelection();
-        expect(shape.backgroundColor).toEqual({ color: { r: 0, g: 0, b: 0 } });
-      });
-
-      it('should allow applying local colors', async () => {
+        // Add text and apply the previously saved color.
         await fixture.events.click(fixture.editor.library.textAdd);
         await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontColor.button
         );
-        await fixture.events.click(getAddButton('local'));
+        await fixture.events.click(getApplyButton('#c4c4c4'));
+        const [text] = await getSelection();
+        expect(text.content).toEqual(
+          '<span style="color: #c4c4c4">Fill in some text</span>'
+        );
+      });
 
+      it('should allow applying local colors', async () => {
         await fixture.events.click(fixture.editor.library.shapesTab);
         await fixture.events.click(
           fixture.editor.library.shapes.shape('Triangle')
@@ -169,14 +181,24 @@ describe('ColorPicker', () => {
         await fixture.events.click(
           fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
         );
-        await fixture.events.click(getApplyButton('local'));
-        const [shape] = await getSelection();
-        expect(shape.backgroundColor).toEqual({ color: { r: 0, g: 0, b: 0 } });
+        await fixture.events.click(getAddButton('local'));
+
+        // Add text and apply the previously saved color.
+        await fixture.events.click(fixture.editor.library.textAdd);
+        await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.textStyle.fontColor.button
+        );
+        await fixture.events.click(getApplyButton('#c4c4c4'));
+        const [text] = await getSelection();
+        expect(text.content).toEqual(
+          '<span style="color: #c4c4c4">Fill in some text</span>'
+        );
       });
     });
 
     describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
-      it('should allow deleting local and global color presets', async () => {
+      fit('should allow deleting local and global color presets', async () => {
         // Add text element and a color preset.
         await fixture.events.click(fixture.editor.library.textAdd);
         await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
@@ -201,9 +223,9 @@ describe('ColorPicker', () => {
         // Delete global preset.
         await fixture.events.click(deleteGlobalButton);
 
-        // Confirm in the dialog since it's a global color.
+        // Confirm both the color picker and the confirmation dialog are open since it's a global color.
         await waitFor(() => {
-          expect(fixture.screen.getByRole('dialog')).toBeTruthy();
+          expect(fixture.screen.getAllByRole('dialog').length).toBe(2);
         });
         await fixture.events.click(
           fixture.screen.getByRole('button', { name: 'Delete' })
@@ -213,10 +235,10 @@ describe('ColorPicker', () => {
         await fixture.events.click(getDeleteButton('local'));
 
         // Verify the edit mode was exited (due to removing all elements).
-        expect(getExitEditButton()).toThrow();
+        expect(() => getExitEditButton()).toThrow();
 
         // Verify there is no edit button either (since we have no presets left).
-        expect(getEditButton()).toThrow();
+        expect(() => getEditButton()).toThrow();
       });
     });
   });

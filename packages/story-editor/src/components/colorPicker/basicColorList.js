@@ -27,7 +27,7 @@ import {
 } from '@web-stories-wp/patterns';
 import { Icons, Swatch, themeHelpers } from '@web-stories-wp/design-system';
 import { useRef } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -94,18 +94,6 @@ function BasicColorList({
     .findIndex((c) => colorAsBackground === c);
 
   const isLocal = 'local' === colorType;
-  const isGlobal = 'global' === colorType;
-
-  const deleteLabel = isLocal
-    ? __('Delete local color', 'web-stories')
-    : __('Delete global color', 'web-stories');
-
-  let applyLabel = __('Apply color', 'web-stories');
-  if (isLocal || isGlobal) {
-    applyLabel = isLocal
-      ? __('Apply local color', 'web-stories')
-      : __('Apply global color', 'web-stories');
-  }
 
   let firstIndex = 0;
   return (
@@ -126,6 +114,14 @@ function BasicColorList({
         }
 
         const patternAsBackground = getPatternAsString(pattern);
+        const title = !isEditMode
+          ? patternAsBackground
+          : sprintf(
+              /* translators: First %s is the color type, second %s is the color as a string */
+              __('Delete %1$s color: %2$s', 'web-stories'),
+              colorType,
+              patternAsBackground
+            );
         const isSelected = colorAsBackground === patternAsBackground;
         // By default, the first swatch can be tabbed into, unless there's a selected one.
         let tabIndex = i === firstIndex ? 0 : -1;
@@ -143,8 +139,7 @@ function BasicColorList({
               isSelected={isSelected}
               isDisabled={isDisabled}
               tabIndex={tabIndex}
-              title={patternAsBackground}
-              aria-label={isEditMode ? deleteLabel : applyLabel}
+              title={title}
             >
               {isEditMode && <Icons.Cross />}
             </StyledSwatch>

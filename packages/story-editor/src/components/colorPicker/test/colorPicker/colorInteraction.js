@@ -378,7 +378,8 @@ describe('colorPicker/colorsInteraction', () => {
       const editButton = screen.getByLabelText(EDIT_BUTTON_LABEL);
       fireEvent.click(editButton);
 
-      const deletePresets = screen.queryAllByLabelText('Delete global color');
+      const deletePresets = screen.queryAllByTitle(/Delete global color/);
+
       expect(deletePresets[0]).toBeDefined();
 
       fireEvent.click(deletePresets[0]);

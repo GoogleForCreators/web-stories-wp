@@ -85,6 +85,10 @@ class ColorPicker extends Container {
     return this.getByRole('button', { name: `Apply ${type} color` });
   }
 
+  addSavedColor(type) {
+    return this.getByRole('button', { name: `Add ${type} color` });
+  }
+
   get colorTypeSelect() {
     return this.getByRole('button', { name: 'Select color type' });
   }
