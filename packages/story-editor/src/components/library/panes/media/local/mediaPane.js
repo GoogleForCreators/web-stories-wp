@@ -114,6 +114,7 @@ function MediaPane(props) {
     setSearchTerm,
     uploadVideoPoster,
     updateVideoIsMuted,
+    updateBaseColor,
     totalItems,
     optimizeVideo,
     optimizeGif,
@@ -135,6 +136,7 @@ function MediaPane(props) {
         setSearchTerm,
         uploadVideoPoster,
         updateVideoIsMuted,
+        updateBaseColor,
         optimizeVideo,
         optimizeGif,
       },
@@ -153,6 +155,7 @@ function MediaPane(props) {
         setSearchTerm,
         uploadVideoPoster,
         updateVideoIsMuted,
+        updateBaseColor,
         optimizeVideo,
         optimizeGif,
       };
@@ -227,9 +230,12 @@ function MediaPane(props) {
         resource.sizes?.medium?.source_url || resource.src
       );
 
+      if (resource.local) {
+        return;
+      }
+
       if (
         !resource.posterId &&
-        !resource.local &&
         (allowedVideoMimeTypes.includes(resource.mimeType) ||
           resource.type === 'gif')
       ) {
@@ -239,11 +245,14 @@ function MediaPane(props) {
       }
 
       if (
-        !resource.local &&
         allowedVideoMimeTypes.includes(resource.mimeType) &&
         resource.isMuted === null
       ) {
         updateVideoIsMuted(resource.id, resource.src);
+      }
+
+      if (!resource?.baseColor || !resource?.baseColor.length) {
+        updateBaseColor({ resource });
       }
     } catch (e) {
       showSnackbar({
