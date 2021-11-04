@@ -28,7 +28,6 @@ import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import useAverageColor from '../../../../../elements/media/useAverageColor';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
@@ -104,26 +103,11 @@ function InnerElement({
   isMuted,
 }) {
   const newVideoPosterRef = useRef(null);
-  const hiddenPoster = useRef(null);
-  const mediaBaseColor = useRef(null);
 
   const {
     state: { draggingResource },
     actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
-
-  // Get the base color of the media for using when adding a new image,
-  // needed for example when droptargeting to bg.
-  const setAverageColor = (color) => {
-    mediaBaseColor.current = color;
-  };
-
-  useAverageColor(
-    [ContentType.VIDEO, ContentType.GIF].includes(type)
-      ? hiddenPoster
-      : mediaElement,
-    setAverageColor
-  );
 
   useEffect(() => {
     // assign display poster for videos
@@ -202,11 +186,7 @@ function InnerElement({
         </Video>
         {displayPoster && (
           /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
-          <HiddenPosterImage
-            ref={hiddenPoster}
-            src={poster}
-            {...commonImageProps}
-          />
+          <HiddenPosterImage src={poster} {...commonImageProps} />
         )}
         {type === ContentType.VIDEO && showVideoDetail && lengthFormatted && (
           <DurationWrapper>
@@ -244,29 +224,18 @@ function InnerElement({
     handleDrag(resource, event.clientX, event.clientY);
   };
 
+  const thumbnailUrl = type === ContentType.IMAGE ? thumbnailURL : poster;
+
   return (
     <>
       {media}
       <LibraryMoveable
         active={active}
         handleDrag={dragHandler}
-        handleDragEnd={() => {
-          handleDrop({
-            ...resource,
-            baseColor: mediaBaseColor.current,
-          });
-        }}
+        handleDragEnd={() => handleDrop(resource)}
         type={resource.type}
-        elementProps={{
-          resource: {
-            ...resource,
-            baseColor: mediaBaseColor.current,
-          },
-        }}
-        onClick={onClick(
-          type === ContentType.IMAGE ? thumbnailURL : poster,
-          mediaBaseColor.current
-        )}
+        elementProps={{ resource }}
+        onClick={onClick(thumbnailUrl)}
         cloneElement={CloneImg}
         cloneProps={cloneProps}
       />
