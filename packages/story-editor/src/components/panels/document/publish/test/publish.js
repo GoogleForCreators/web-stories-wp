@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor, screen } from '@testing-library/react';
+import { fireEvent, waitFor, screen, act } from '@testing-library/react';
 import MockDate from 'mockdate';
 
 /**
@@ -246,12 +246,17 @@ describe('PublishPanel', () => {
     expect(dateInCalendar).not.toBeInTheDocument();
 
     const element = screen.getByRole('button', { name: 'Story publish time' });
-    fireEvent.keyDown(element, {
-      key: 'Enter',
-      which: 13,
+
+    act(() => {
+      fireEvent.keyDown(element, {
+        key: 'Enter',
+        which: 13,
+      });
     });
 
-    dateInCalendar = screen.getByRole('button', { name: 'January 1, 2020' });
-    await waitFor(() => expect(dateInCalendar).toBeDefined());
+    await waitFor(() => {
+      dateInCalendar = screen.getByRole('button', { name: 'January 1, 2020' });
+      expect(dateInCalendar).toBeDefined();
+    });
   });
 });
