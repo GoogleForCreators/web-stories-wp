@@ -22,7 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * External dependencies
  */
-import { useMemo, useDebouncedCallback } from '@web-stories-wp/react';
+import { useDebouncedCallback } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
 
@@ -34,7 +34,6 @@ import {
   TEMPLATES_GALLERY_SORT_MENU_ITEMS,
   TEXT_INPUT_DEBOUNCE,
 } from '../../../../constants';
-import { TemplatesPropType } from '../../../../types';
 import {
   FilterPropTypes,
   SortPropTypes,
@@ -43,7 +42,6 @@ import {
 } from '../../../../utils/useTemplateView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { PageHeading, BodyViewOptions } from '../../shared';
-import { getSearchOptions } from '../../utils';
 
 function Header({
   filter,
@@ -52,13 +50,11 @@ function Header({
   sort,
   view,
   search,
-  templates,
+  searchOptions = [],
 }) {
   const enableInProgressTemplateActions = useFeature(
     'enableInProgressTemplateActions'
   );
-
-  const searchOptions = useMemo(() => getSearchOptions(templates), [templates]);
 
   const debouncedSearchChange = useDebouncedCallback((value) => {
     search.setKeyword(value);
@@ -74,10 +70,12 @@ function Header({
     <>
       <PageHeading
         heading={__('Explore Templates', 'web-stories')}
-        showSearch
+        searchPlaceholder={__('Search Templates', 'web-stories')}
+        showSearch={enableInProgressTemplateActions}
         searchOptions={searchOptions}
         searchValue={search.keyword}
         handleSearchChange={debouncedSearchChange}
+        syncSearchAndSelected={false}
       />
       <BodyViewOptions
         resultsLabel={resultsLabel}
@@ -104,7 +102,7 @@ Header.propTypes = {
   totalTemplates: PropTypes.number,
   view: ViewPropTypes.isRequired,
   search: SearchPropTypes.isRequired,
-  templates: TemplatesPropType,
+  searchOptions: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Header;

@@ -103,9 +103,7 @@ PageHeading.propTypes = {
   ]),
   heading: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
-  searchOptions: PropTypes.arrayOf(
-    PropTypes.shape({ label: PropTypes.string, value: PropTypes.string })
-  ),
+  searchOptions: PropTypes.arrayOf(PropTypes.object),
   showSearch: PropTypes.bool,
   handleSearchChange: PropTypes.func,
   searchValue: PropTypes.string,

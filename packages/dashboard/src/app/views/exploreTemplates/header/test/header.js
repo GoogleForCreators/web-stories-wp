@@ -62,6 +62,7 @@ describe('Explore Templates <Header />', function () {
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
           totalTemplates={8}
+          search={{ keyword: '', setKeyword: jest.fn() }}
           sort={{
             value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
             set: setSortFn,
@@ -86,6 +87,7 @@ describe('Explore Templates <Header />', function () {
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
           totalTemplates={8}
+          search={{ keyword: '', setKeyword: jest.fn() }}
           sort={{
             value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
             set: jest.fn,

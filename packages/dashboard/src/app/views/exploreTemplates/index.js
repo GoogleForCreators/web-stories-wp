@@ -24,9 +24,10 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { Layout, ScrollToTop } from '../../../components';
-import { useTemplateView } from '../../../utils';
+import { useTemplateView, uniqueEntriesByKey } from '../../../utils';
 
 import useApi from '../../api/useApi';
+import { getTemplateFilters, composeTemplateFilter } from '../utils';
 import Content from './content';
 import Header from './header';
 
@@ -76,21 +77,36 @@ function ExploreTemplates() {
     fetchExternalTemplates();
   }, [fetchExternalTemplates]);
 
+  // extract filters from template meta data
+  const filters = useMemo(() => getTemplateFilters(templates), [templates]);
+
+  // refine filters by search term
+  const selectFilters = useMemo(
+    () =>
+      search.keyword
+        ? filters.filter((opt) =>
+            opt.label.toLowerCase().includes(search.keyword.toLowerCase())
+          )
+        : filters,
+    [filters, search.keyword]
+  );
+
+  // filter templates by the refined filters
   const orderedTemplates = useMemo(() => {
-    // console.log([...new Set(Object.values(templates).flatMap((t) => t.tags))]);
-    return (
-      templatesOrderById
-        .map((templateId) => {
-          return templates[templateId];
-        })
-        // Add search keyword for title
-        .filter(
-          (template) =>
-            !search.keyword ||
-            template.title.toLowerCase().includes(search.keyword.toLowerCase())
-        )
-    );
-  }, [templatesOrderById, templates, search.keyword]);
+    return templatesOrderById
+      .map((templateId) => {
+        return templates[templateId];
+      })
+      .filter(composeTemplateFilter(selectFilters));
+  }, [templatesOrderById, templates, selectFilters]);
+
+  // Although we may want to filter templates based on
+  // repeat meta data of differing types, we only want
+  // the auto-complete to show unique labels
+  const searchOptions = useMemo(
+    () => uniqueEntriesByKey(selectFilters, 'label'),
+    [selectFilters]
+  );
 
   const handleCreateStoryFromTemplate = useCallback(
     (templateId) => {
@@ -117,9 +133,9 @@ function ExploreTemplates() {
         isLoading={isLoading && !totalTemplates}
         filter={filter}
         sort={sort}
-        templates={orderedTemplates}
         totalTemplates={totalTemplates}
         search={search}
+        searchOptions={searchOptions}
         view={view}
       />
       <Content
