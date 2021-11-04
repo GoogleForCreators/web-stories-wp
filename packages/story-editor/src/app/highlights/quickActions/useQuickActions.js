@@ -43,7 +43,7 @@ import { getResetProperties } from './utils';
 import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
 const UNDO_HELP_TEXT = sprintf(
-  /* translators: %s: Command or Control key on keyboard */
+  /* translators: %s: Command or Control key and the z key on the keyboard */
   __('Press %s to undo the last change', 'web-stories'),
   prettifyShortcut('mod+z')
 );
