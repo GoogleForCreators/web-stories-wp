@@ -54,12 +54,8 @@ function useDeleteColor({ setIsEditMode }) {
           },
         },
       });
-      // If no styles left, exit edit mode.
-      if (
-        updatedColors.length === 0 &&
-        !hasLocalPresets &&
-        globalColors.length === 0
-      ) {
+      // If no colors left, exit edit mode.
+      if (updatedColors.length === 0 && !hasLocalPresets) {
         setIsEditMode(false);
       }
     },
