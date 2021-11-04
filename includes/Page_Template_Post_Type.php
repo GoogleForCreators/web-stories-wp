@@ -145,6 +145,7 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 			'public'                => false,
 			'show_ui'               => false,
 			'show_in_rest'          => true,
+			'rest_namespace'        => self::REST_NAMESPACE,
 			'rest_controller_class' => Page_Template_Controller::class,
 		];
 	}

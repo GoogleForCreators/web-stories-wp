@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { memo, useCallback, useEffect, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { _x } from '@web-stories-wp/i18n';
+import { _x, __ } from '@web-stories-wp/i18n';
 import {
   StoryAnimation,
   STORY_ANIMATION_STATE,
@@ -164,6 +164,10 @@ function DisplayLayer() {
           fullbleedRef={setFullbleedContainer}
           background={currentPage?.backgroundColor}
           isBackgroundSelected={isBackgroundSelected}
+          fullBleedContainerLabel={__(
+            'Fullbleed area (Display layer)',
+            'web-stories'
+          )}
           overlay={
             currentPage && (
               <PageAttachment pageAttachment={currentPage.pageAttachment} />

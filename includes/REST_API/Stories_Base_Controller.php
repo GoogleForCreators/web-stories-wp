@@ -59,7 +59,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
-		$this->namespace = 'web-stories/v1';
+		$obj             = get_post_type_object( $post_type );
+		$this->namespace = ! empty( $obj->rest_namespace ) ? $obj->rest_namespace : 'web-stories/v1';
 		$injector        = Services::get_injector();
 		if ( ! method_exists( $injector, 'make' ) ) {
 			return;

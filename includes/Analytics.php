@@ -82,7 +82,7 @@ class Analytics extends Service_Base {
 	 * @see https://github.com/ampproject/amphtml/blob/master/spec/amp-var-substitutions.md
 	 *
 	 * @param string $tracking_id Tracking ID.
-	 * @return array <amp-analytics> configuration.
+	 * @return array<string, array> <amp-analytics> configuration.
 	 */
 	public function get_default_configuration( $tracking_id ): array {
 		$config = [
