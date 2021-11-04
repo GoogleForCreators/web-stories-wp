@@ -79,13 +79,23 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       } = hotlinkData;
 
       try {
-        const proxiedUrl = getProxiedUrl({ needsProxy }, link);
-        const resource = await getResourceFromUrl(proxiedUrl, type, needsProxy);
-        resource.alt = originalFileName;
+        const proxiedUrl = needsProxy
+          ? getProxiedUrl({ needsProxy }, link)
+          : link;
+
+        // Passing the potentially proxied URL here just so that things like
+        // getting image dimensions and video audio information works.
+        // Afterwards, overriding `src` again to ensure we store the original URL.
+        const resource = await getResourceFromUrl({
+          src: proxiedUrl,
+          mimeType,
+          needsProxy,
+          alt: originalFileName,
+        });
         resource.src = link;
-        resource.mimeType = mimeType;
+
+        // We still want to auto-generate video posters, even for hotlinked videos.
         if ('video' === type && hasUploadMediaAction) {
-          // Remove the extension from the filename for poster.
           const fileName = getPosterName(
             originalFileName.replace(`.${ext}`, '')
           );
@@ -98,6 +108,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
         insertElement(type, {
           resource,
         });
+
         setErrorMsg(null);
         setLink('');
         onClose();
