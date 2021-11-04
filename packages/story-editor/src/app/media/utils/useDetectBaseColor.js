@@ -24,17 +24,7 @@ import { useCallback } from '@web-stories-wp/react';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
-import { setOrCreateImage } from '../../../utils/getMediaBaseColor';
-
-function getMediaBaseColor(resource) {
-  const { type, src, poster, width, height } = resource;
-
-  return setOrCreateImage({
-    src: type === 'image' ? src : poster,
-    width,
-    height,
-  });
-}
+import { getResourceBaseColor } from '../../../utils/getMediaBaseColor';
 
 function useDetectBaseColor({ updateMediaElement }) {
   const {
@@ -89,7 +79,7 @@ function useDetectBaseColor({ updateMediaElement }) {
 
   const updateBaseColor = useCallback(
     async ({ resource }) => {
-      const color = await getMediaBaseColor(resource);
+      const color = await getResourceBaseColor(resource);
       await saveBaseColor(resource.id, color);
     },
     [saveBaseColor]

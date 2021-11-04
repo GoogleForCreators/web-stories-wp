@@ -46,13 +46,18 @@ function getImgNodeKey(elementId) {
   return `${IMG_NODE}_${elementId}`;
 }
 
-export function getMediaBaseColor(resource, onBaseColor) {
+export function getResourceBaseColor(resource) {
   const { type, src, poster } = resource;
-  setOrCreateImage({
-    src: type === 'video' ? poster : src,
+
+  return setOrCreateImage({
+    src: type === 'image' ? src : poster,
     width: 10,
     height: 'auto',
-  }).then(
+  });
+}
+
+export function getMediaBaseColor(resource, onBaseColor) {
+  getResourceBaseColor(resource).then(
     (color) => onBaseColor(color),
     () => onBaseColor([255, 255, 255]) // Fallback color is white.
   );
