@@ -32,11 +32,13 @@ import { DEFAULT_MASK } from '../../masks/constants';
 import { ZOOM_SETTING } from '../../constants';
 import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
 import getInsertedElementSize from '../../utils/getInsertedElementSize';
+import { getResourceBaseColor } from '../../utils/getMediaBaseColor';
 import useFocusCanvas from './useFocusCanvas';
 
 function useInsertElement() {
-  const { addElement } = useStory((state) => ({
+  const { addElement, updateElementById } = useStory((state) => ({
     addElement: state.actions.addElement,
+    updateElementById: state.actions.updateElementById,
   }));
   const { uploadVideoPoster, updateBaseColor } = useLocalMedia((state) => ({
     uploadVideoPoster: state.actions.uploadVideoPoster,
@@ -57,9 +59,10 @@ function useInsertElement() {
    */
   const backfillResource = useCallback(
     (resource) => {
-      const { type, src, id, posterId, local, baseColor } = resource;
+      const { type, src, id, posterId, local, baseColor, isExternal } =
+        resource;
 
-      if (local || !id) {
+      if (local || !id || isExternal) {
         return;
       }
 
@@ -68,11 +71,33 @@ function useInsertElement() {
         uploadVideoPoster(id, src);
       }
       // Backfill base color, if one not set.
-      if (!baseColor || !baseColor.length) {
+      if (!Array.isArray(baseColor) || !baseColor.length) {
         updateBaseColor({ resource });
       }
     },
     [uploadVideoPoster, updateBaseColor]
+  );
+
+  const generateBaseColorExternal = useCallback(
+    async (element) => {
+      const { id, resource } = element;
+      const { isExternal, local, baseColor: currentBaseColor } = resource;
+      if (
+        !local &&
+        isExternal &&
+        (!Array.isArray(currentBaseColor) || !currentBaseColor.length)
+      ) {
+        const baseColor = await getResourceBaseColor(resource);
+        const properties = {
+          resource: {
+            ...resource,
+            baseColor,
+          },
+        };
+        updateElementById({ elementId: id, properties });
+      }
+    },
+    [updateElementById]
   );
 
   /**
@@ -107,6 +132,7 @@ function useInsertElement() {
       if (resource) {
         backfillResource(resource);
         handleRegisterUsage(resource);
+        generateBaseColorExternal(element);
       }
       // Auto-play on insert.
       if (type === 'video' && resource?.src && !resource.isPlaceholder) {
@@ -123,6 +149,7 @@ function useInsertElement() {
     [
       addElement,
       backfillResource,
+      generateBaseColorExternal,
       focusCanvas,
       handleRegisterUsage,
       setZoomSetting,
