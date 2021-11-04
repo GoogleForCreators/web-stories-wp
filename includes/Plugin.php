@@ -173,6 +173,7 @@ class Plugin extends ServiceBasedPlugin {
 			Story_Post_Type::class,
 			Injector::class,
 			Integrations\Site_Kit::class,
+			Media\Types::class,
 			Locale::class,
 			Settings::class,
 			Stories_Script_Data::class,

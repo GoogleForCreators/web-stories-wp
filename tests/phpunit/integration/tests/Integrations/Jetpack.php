@@ -194,7 +194,8 @@ class Jetpack extends DependencyInjectedTestCase {
 	 * @covers ::filter_ajax_query_attachments_args
 	 */
 	public function test_filter_ajax_query_attachments_args() {
-		$allowed_mime_types   = $this->instance->get_allowed_mime_types();
+		$types                = $this->injector->make( \Google\Web_Stories\Media\Types::class );
+		$allowed_mime_types   = $types->get_allowed_mime_types();
 		$allowed_mime_types   = array_merge( ...array_values( $allowed_mime_types ) );
 		$allowed_mime_types[] = $this->instance::VIDEOPRESS_MIME_TYPE;
 		$args                 = [ 'post_mime_type' => $allowed_mime_types ];

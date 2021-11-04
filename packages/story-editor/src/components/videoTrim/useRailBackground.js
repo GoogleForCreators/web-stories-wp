@@ -17,32 +17,27 @@
 /**
  * External dependencies
  */
-import { forwardRef } from '@web-stories-wp/react';
-import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
+import { useState, useEffect } from '@web-stories-wp/react';
+import { generateVideoStrip } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
-import { Option, Selected } from './styled';
+import { RAIL_HEIGHT } from './constants';
 
-const DefaultRenderer = forwardRef(function DefaultRenderer(
-  { option, value, ...rest },
-  ref
-) {
-  return (
-    <Option key={option.id} {...rest} ref={ref}>
-      {value === option.id && (
-        <Selected aria-label={__('Selected', 'web-stories')} />
-      )}
-      {option.name}
-    </Option>
-  );
-});
+function useRailBackground(isReady, videoData, railWidth) {
+  const [railBackgroundImage, setRailBackgroundImage] = useState(null);
+  useEffect(() => {
+    if (!isReady) {
+      return;
+    }
+    const { element, resource } = videoData;
+    generateVideoStrip(element, resource, railWidth, RAIL_HEIGHT).then(
+      setRailBackgroundImage
+    );
+  }, [isReady, videoData, railWidth]);
 
-DefaultRenderer.propTypes = {
-  option: PropTypes.object.isRequired,
-  value: PropTypes.any.isRequired,
-};
+  return railBackgroundImage;
+}
 
-export default DefaultRenderer;
+export default useRailBackground;

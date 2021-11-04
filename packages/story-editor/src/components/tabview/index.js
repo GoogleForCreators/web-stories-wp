@@ -34,8 +34,12 @@ import {
  */
 import { useConfig } from '../../app';
 import Tooltip from '../tooltip';
+import usePerformanceTracking from '../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../constants/performanceTrackingEvents';
 
 const ALERT_ICON_SIZE = 28;
+export const TAB_HEIGHT = 32;
+export const TAB_VERTICAL_MARGIN = 10;
 
 const Tabs = styled.ul.attrs({
   role: 'tablist',
@@ -62,8 +66,8 @@ const TabElement = styled.li.attrs(({ isActive }) => ({
   border: none;
   background: none;
   padding: 0 4px;
-  margin: 10px 12px 9px;
-  height: 32px;
+  margin: ${TAB_VERTICAL_MARGIN}px 12px 9px;
+  height: ${TAB_HEIGHT}px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -107,6 +111,7 @@ const TabElement = styled.li.attrs(({ isActive }) => ({
     transition: transform 0.3s ease, color 0.2s ease;
     color: ${({ theme }) => theme.colors.fg.tertiary};
     border-radius: ${({ theme }) => theme.borders.radius.small};
+    pointer-events: none;
   }
 
   svg.alert {
@@ -144,7 +149,21 @@ const TabText = styled(Headline).attrs({
 
 const noop = () => {};
 
-function UnreffedTab({ children, tooltip = null, placement, ...rest }, ref) {
+function UnreffedTab(
+  { children, tooltip = null, placement, refId, tabRefs, ...rest },
+  ref
+) {
+  const { id } = rest;
+  const eventData = id.includes('library')
+    ? TRACKING_EVENTS.LIBRARY_PANEL_CLICK
+    : TRACKING_EVENTS.DESIGN_PANEL_CLICK;
+  usePerformanceTracking({
+    node: tabRefs[refId]?.current,
+    eventData: {
+      ...eventData,
+      label: `${refId}_tab`,
+    },
+  });
   const tab = (
     <TabElement ref={ref} {...rest}>
       {children}
@@ -166,6 +185,8 @@ UnreffedTab.propTypes = {
   children: PropTypes.node,
   tooltip: PropTypes.string,
   placement: PropTypes.string,
+  refId: PropTypes.string,
+  tabRefs: PropTypes.object,
 };
 
 function TabView({
@@ -276,6 +297,8 @@ function TabView({
           onFocus={() => {
             focused.current = tab;
           }}
+          refId={id}
+          tabRefs={tabRefs}
           {...tabRest}
         >
           {Boolean(title) && <TabText>{title}</TabText>}

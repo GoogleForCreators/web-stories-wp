@@ -149,7 +149,7 @@ function TaxonomyProvider(props) {
   const addSearchResultsToCache = useCallback(
     async (taxonomy, args, addNameToSelection = false) => {
       let response = [];
-      const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href;
+      const termsEndpoint = taxonomy?.restPath;
       if (!termsEndpoint) {
         return [];
       }
@@ -208,7 +208,7 @@ function TaxonomyProvider(props) {
         return;
       }
 
-      const termsEndpoint = taxonomy['_links']?.['wp:items']?.[0]?.href;
+      const termsEndpoint = taxonomy?.restPath;
       if (!termsEndpoint) {
         return;
       }

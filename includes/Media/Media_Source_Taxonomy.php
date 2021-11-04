@@ -96,6 +96,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 			'rewrite'               => false,
 			'hierarchical'          => false,
 			'show_in_rest'          => true,
+			'rest_namespace'        => self::REST_NAMESPACE,
 			'rest_controller_class' => Stories_Terms_Controller::class,
 		];
 	}
