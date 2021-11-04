@@ -33,7 +33,7 @@ import {
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
-jest.mock('../utils');
+jest.mock('../../../../../utils/presetUtils');
 
 function arrange(extraStylePresets, extraStateProps) {
   const updateStory = jest.fn();
