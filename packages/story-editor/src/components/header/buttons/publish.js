@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import { useCallback, useState } from '@web-stories-wp/react';
 import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
@@ -30,8 +30,6 @@ import { useStory, useLocalMedia } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useCheckpoint, ReviewChecklistDialog } from '../../checklist';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
-
-const TRANSITION_DURATION = 300;
 
 function PublishButton({ forceIsSaving }) {
   const { isSaving, date, storyId, saveStory, title, editLink, canPublish } =
@@ -57,19 +55,11 @@ function PublishButton({ forceIsSaving }) {
     isUploading: state.state.isUploading,
   }));
 
-  const { shouldReviewDialogBeSeen, onReviewDialogRequest } = useCheckpoint(
-    ({
-      actions: { onReviewDialogRequest },
-      state: { shouldReviewDialogBeSeen },
-    }) => ({
+  const { shouldReviewDialogBeSeen } = useCheckpoint(
+    ({ state: { shouldReviewDialogBeSeen } }) => ({
       shouldReviewDialogBeSeen,
-      onReviewDialogRequest,
     })
   );
-
-  const openChecklist = useCallback(() => {
-    onReviewDialogRequest();
-  }, [onReviewDialogRequest]);
 
   const [showDialog, setShowDialog] = useState(false);
 
@@ -79,12 +69,6 @@ function PublishButton({ forceIsSaving }) {
     subMinutes(toDate(date, getOptions()), 1),
     toDate(new Date(), getOptions())
   );
-
-  useEffect(() => {
-    if (showDialog) {
-      trackEvent('review_prepublish_checklist');
-    }
-  }, [showDialog]);
 
   const publish = useCallback(() => {
     let newStatus = 'pending';
@@ -116,15 +100,7 @@ function PublishButton({ forceIsSaving }) {
     publish();
   }, [shouldReviewDialogBeSeen, canPublish, publish]);
 
-  const handleReviewChecklist = useCallback(() => {
-    setShowDialog(false);
-    // Focus Checklist Tab
-    // Disable reason: If component unmounts, nothing bad can happen
-    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
-    setTimeout(() => openChecklist(), TRANSITION_DURATION);
-  }, [openChecklist]);
-
-  const handleClose = useCallback(() => setShowDialog(false), []);
+  const closeDialog = useCallback(() => setShowDialog(false), []);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
@@ -142,8 +118,8 @@ function PublishButton({ forceIsSaving }) {
       <ReviewChecklistDialog
         isOpen={showDialog}
         onIgnore={publish}
-        onReview={handleReviewChecklist}
-        onClose={handleClose}
+        onClose={closeDialog}
+        onReview={closeDialog}
       />
     </>
   );

@@ -30,6 +30,7 @@ import { useStory } from '../../../../app/story';
 import { Row, RadioGroup } from '../../../form';
 import { SimplePanel } from '../../panel';
 import useRefreshPostEditURL from '../../../../utils/useRefreshPostEditURL';
+import { ReviewChecklistDialog, useCheckpoint } from '../../../checklist';
 
 const InputRow = styled(Row)`
   margin-left: 34px;
@@ -59,6 +60,15 @@ function StatusPanel() {
       editLink,
       title,
       storyId,
+    })
+  );
+
+  const [showReviewDialog, setShowReviewDialog] = useState(false);
+  const closeReviewDialog = useCallback(() => setShowReviewDialog(false), []);
+
+  const { shouldReviewDialogBeSeen } = useCheckpoint(
+    ({ state: { shouldReviewDialogBeSeen } }) => ({
+      shouldReviewDialogBeSeen,
     })
   );
 
@@ -108,13 +118,28 @@ function StatusPanel() {
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
 
+  const publishPrivately = useCallback(() => {
+    const properties = {
+      status: 'private',
+      password: '',
+    };
+    setHasPassword(false);
+
+    trackEvent('publish_story', {
+      status: 'private',
+      title_length: title.length,
+    });
+    refreshPostEditURL();
+
+    updateStory({ properties });
+  }, [setHasPassword, title.length, refreshPostEditURL, updateStory]);
+
   const handleChangeVisibility = useCallback(
     (evt) => {
       const newVisibility = evt.target.value;
 
       if ('private' === newVisibility) {
         if (
-          // TODO: Display ReviewChecklistDialog (albeit with different wording) instead?
           !window.confirm(
             __(
               'Would you like to privately publish this story now?',
@@ -136,16 +161,12 @@ function StatusPanel() {
           break;
 
         case 'private':
-          properties.status = 'private';
-          properties.password = '';
-          setHasPassword(false);
-
-          trackEvent('publish_story', {
-            status: 'private',
-            title_length: title.length,
-          });
-          refreshPostEditURL();
-          break;
+          if (shouldReviewDialogBeSeen) {
+            setShowReviewDialog(true);
+          } else {
+            publishPrivately();
+          }
+          return;
 
         case 'protected':
           properties.status = visibility === 'private' ? 'draft' : status;
@@ -165,39 +186,47 @@ function StatusPanel() {
       password,
       setHasPassword,
       updateStory,
-      title,
-      refreshPostEditURL,
+      publishPrivately,
+      shouldReviewDialogBeSeen,
     ]
   );
 
   return (
-    <SimplePanel
-      name="status"
-      title={__('Visibility', 'web-stories')}
-      collapsedByDefault={false}
-    >
-      <>
-        <Row>
-          <RadioGroup
-            groupLabel="Visibility"
-            name="radio-group-visibility"
-            options={visibilityOptions}
-            onChange={handleChangeVisibility}
-            value={visibility}
-          />
-        </Row>
-        {hasPassword && (
-          <InputRow>
-            <Input
-              aria-label={__('Password', 'web-stories')}
-              value={password}
-              onChange={handleChangePassword}
-              placeholder={__('Enter a password', 'web-stories')}
+    <>
+      <SimplePanel
+        name="status"
+        title={__('Visibility', 'web-stories')}
+        collapsedByDefault={false}
+      >
+        <>
+          <Row>
+            <RadioGroup
+              groupLabel="Visibility"
+              name="radio-group-visibility"
+              options={visibilityOptions}
+              onChange={handleChangeVisibility}
+              value={visibility}
             />
-          </InputRow>
-        )}
-      </>
-    </SimplePanel>
+          </Row>
+          {hasPassword && (
+            <InputRow>
+              <Input
+                aria-label={__('Password', 'web-stories')}
+                value={password}
+                onChange={handleChangePassword}
+                placeholder={__('Enter a password', 'web-stories')}
+              />
+            </InputRow>
+          )}
+        </>
+      </SimplePanel>
+      <ReviewChecklistDialog
+        isOpen={showReviewDialog}
+        onIgnore={publishPrivately}
+        onClose={closeReviewDialog}
+        onReview={closeReviewDialog}
+      />
+    </>
   );
 }
 
