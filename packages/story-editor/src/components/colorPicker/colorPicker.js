@@ -74,6 +74,7 @@ function ColorPicker({
   changedStyle = 'background',
   onDimensionChange = () => {},
 }) {
+  const [showDialog, setShowDialog] = useState(false);
   // If initial color is a gradient, start by showing a custom color picker.
   // Note that no such switch happens if the color later changes to a gradient,
   // only if it was a gradient at the moment the color picker mounted.
@@ -113,15 +114,15 @@ function ColorPicker({
     [onDebouncedChange, selectedElementIds, changedStyle, pushTransform]
   );
 
-  const closeIfNotEyedropping = () => {
-    if (!isEyedropperActive) {
+  const maybeClose = () => {
+    if (!isEyedropperActive && !showDialog) {
       onClose();
     }
   };
 
   // Detect focus out of color picker (clicks or focuses outside)
   const containerRef = useRef();
-  useFocusOut(containerRef, closeIfNotEyedropping, [isEyedropperActive]);
+  useFocusOut(containerRef, maybeClose, [isEyedropperActive, showDialog]);
 
   // Re-establish focus when actively exiting by button or key press
   const previousFocus = useRef(document.activeElement);
@@ -162,6 +163,8 @@ function ColorPicker({
           hideCustomPicker={hideCustomPicker}
           handleClose={handleCloseAndRefocus}
           allowsSavedColors={allowsSavedColors}
+          showDialog={showDialog}
+          setShowDialog={setShowDialog}
         />
       </Container>
     </CSSTransition>

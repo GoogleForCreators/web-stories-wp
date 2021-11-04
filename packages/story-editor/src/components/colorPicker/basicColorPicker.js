@@ -100,13 +100,14 @@ function BasicColorPicker({
   allowsSavedColors,
   showCustomPicker,
   handleClose,
+  showDialog,
+  setShowDialog,
 }) {
   const { savedColors, storyColors } = useStory((state) => ({
     savedColors: state.state.story?.globalStoryStyles?.colors || [],
     storyColors: state.state.story?.currentStoryStyles?.colors || [],
   }));
 
-  const [showDialog, setShowDialog] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [toDelete, setToDelete] = useState(null);
   const hasPresets = storyColors.length > 0 || savedColors.length > 0;
@@ -142,7 +143,6 @@ function BasicColorPicker({
     }
 
     // Ask confirmation for a global color.
-    // @todo This is not working together with the popup!
     setShowDialog(true);
     setToDelete(preset);
   };
@@ -238,7 +238,7 @@ function BasicColorPicker({
           <StyledPlus />
         </StyledButton>
       </Body>
-      {false && (
+      {showDialog && (
         <ConfirmationDialog
           onClose={() => setShowDialog(false)}
           onPrimary={() => {
@@ -260,6 +260,8 @@ BasicColorPicker.propTypes = {
   allowsGradient: PropTypes.bool,
   allowsSavedColors: PropTypes.bool,
   color: PatternPropType,
+  showDialog: PropTypes.bool,
+  setShowDialog: PropTypes.func,
 };
 
 export default BasicColorPicker;
