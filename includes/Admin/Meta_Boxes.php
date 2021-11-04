@@ -28,13 +28,11 @@ namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Screen;
 
 /**
  * Class Meta_Boxes.
  */
 class Meta_Boxes extends Service_Base {
-	use Screen;
 	/**
 	 * Supported meta box locations.
 	 *
@@ -77,7 +75,8 @@ class Meta_Boxes extends Service_Base {
 	public function remove_meta_boxes() {
 		global $wp_meta_boxes;
 
-		$screen = $this->get_current_screen();
+		$screen = get_current_screen();
+
 		if ( ! $screen ) {
 			return;
 		}
@@ -147,7 +146,8 @@ class Meta_Boxes extends Service_Base {
 	public function get_meta_boxes_per_location(): array {
 		global $wp_meta_boxes;
 
-		$screen = $this->get_current_screen();
+		$screen = get_current_screen();
+
 		if ( ! $screen ) {
 			return [];
 		}

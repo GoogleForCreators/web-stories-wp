@@ -26,13 +26,13 @@
 
 namespace Google\Web_Stories\Renderer\Stories;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Services;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Amp;
 use Google\Web_Stories\Assets;
 use Iterator;
 use WP_Post;
@@ -48,14 +48,19 @@ use WP_Post;
  * @implements Iterator<int, \WP_Post>
  */
 abstract class Renderer implements RenderingInterface, Iterator {
-	use Amp;
-
 	/**
 	 * Assets instance.
 	 *
 	 * @var Assets Assets instance.
 	 */
 	protected $assets;
+
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	protected $context;
 
 	/**
 	 * Web Stories stylesheet handle.
@@ -151,7 +156,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param Story_Query $query                  Story_Query instance.
+	 * @param Story_Query $query Story_Query instance.
 	 */
 	public function __construct( Story_Query $query ) {
 		$this->query           = $query;
@@ -164,7 +169,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			return;
 		}
 
-		$this->assets = $injector->make( Assets::class );
+		$this->assets  = $injector->make( Assets::class );
+		$this->context = $injector->make( Context::class );
 	}
 
 	/**
@@ -466,7 +472,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$single_story_classes   = [];
 		$single_story_classes[] = 'web-stories-list__story';
 
-		if ( $this->is_amp() ) {
+		if ( $this->context->is_amp() ) {
 			$single_story_classes[] = 'web-stories-list__story--amp';
 		}
 
@@ -531,7 +537,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			$this->assets->enqueue_style_asset( self::STYLE_HANDLE );
 		}
 
-		if ( $this->is_amp() ) {
+		if ( $this->context->is_amp() ) {
 			?>
 			<div
 				class="<?php echo esc_attr( $single_story_classes ); ?>"
@@ -586,7 +592,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			<div class="web-stories-list__story-poster">
 				<a href="<?php echo esc_url( $story->get_url() ); ?>">
 					<?php
-					if ( $this->is_amp() ) {
+					if ( $this->context->is_amp() ) {
 						// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
 						?>
 						<amp-img
@@ -611,7 +617,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		}
 		$this->get_content_overlay();
 
-		if ( ! $this->is_amp() ) {
+		if ( ! $this->context->is_amp() ) {
 			$this->generate_lightbox_html( $story );
 		} else {
 			$this->generate_amp_lightbox_html_amp( $story );
@@ -797,7 +803,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		?>
 		<div class="web-stories-list__lightbox-wrapper <?php echo esc_attr( 'ws-lightbox-' . $this->instance_id ); ?>">
 			<?php
-			if ( $this->is_amp() ) {
+			if ( $this->context->is_amp() ) {
 				$this->render_stories_with_lightbox_amp();
 			} else {
 				$this->render_stories_with_lightbox();

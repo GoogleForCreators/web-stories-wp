@@ -27,10 +27,10 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Traits\Screen;
 
 /**
  * Class ImgAreaSelect_Patch
@@ -38,8 +38,6 @@ use Google\Web_Stories\Traits\Screen;
  * @package Google\Web_Stories
  */
 class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
-	use Screen;
-
 	/**
 	 * Web Stories editor script handle.
 	 *
@@ -55,14 +53,23 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	private $assets;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
 	 * Crop Script constructor.
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param Assets $assets Assets instance.
+	 * @param Assets  $assets  Assets instance.
+	 * @param Context $context Context instance.
 	 */
-	public function __construct( Assets $assets ) {
-		$this->assets = $assets;
+	public function __construct( Assets $assets, Context $context ) {
+		$this->assets  = $assets;
+		$this->context = $context;
 	}
 
 	/**
@@ -100,9 +107,10 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	 * @return string|mixed The filtered script tag.
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
-		if ( self::SCRIPT_HANDLE !== $handle || ! $this->is_edit_screen() ) {
+		if ( self::SCRIPT_HANDLE !== $handle || ! $this->context->is_story_editor() ) {
 			return $tag;
 		}
+
 		$asset   = $this->assets->get_asset_metadata( $handle );
 		$new_src = $this->assets->get_base_url( "assets/js/{$handle}.js" );
 		$new_src = add_query_arg(

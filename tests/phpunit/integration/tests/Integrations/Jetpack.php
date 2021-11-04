@@ -130,6 +130,8 @@ class Jetpack extends DependencyInjectedTestCase {
 	 * @covers ::add_term
 	 */
 	public function test_add_term() {
+		$this->instance->register();
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -213,7 +215,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @dataProvider get_sample_data
+	 * @dataProvider get_format_milliseconds_data
 	 *
 	 * @param string $milliseconds
 	 * @param string $string
@@ -225,11 +227,11 @@ class Jetpack extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @param $value
+	 * @param mixed $value
 	 * @param $object_id
 	 * @param $meta_key
 	 *
-	 * @return \array[][]
+	 * @return \array[][]|mixed
 	 */
 	public function filter_wp_get_attachment_metadata( $value, $object_id, $meta_key ) {
 		if ( '_wp_attachment_metadata' !== $meta_key ) {
@@ -263,7 +265,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	/**
 	 * @return array[]
 	 */
-	public function get_sample_data() {
+	public function get_format_milliseconds_data(): array {
 		return [
 			'5000'      => [
 				5000,
