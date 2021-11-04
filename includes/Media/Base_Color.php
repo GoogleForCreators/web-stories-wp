@@ -83,8 +83,6 @@ class Base_Color extends Service_Base implements HasMeta {
 				'object_subtype' => 'attachment',
 			]
 		);
-
-		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ] );
 	}
 
 	/**
