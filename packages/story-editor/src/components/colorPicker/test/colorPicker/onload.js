@@ -58,7 +58,7 @@ describe('<ColorPicker /> as it loads', () => {
         color: createSolid(238, 238, 238),
       });
 
-      const swatch = getSelectedSwatch('Default colors');
+      const swatch = getSelectedSwatch('Default');
       expect(swatch).toBeInTheDocument();
       expect(swatch).toHaveAccessibleName(/#eee/);
     });
@@ -68,7 +68,7 @@ describe('<ColorPicker /> as it loads', () => {
         color: createSolid(237, 238, 238),
       });
 
-      const swatch = getSelectedSwatch('Default colors');
+      const swatch = getSelectedSwatch('Default');
       expect(swatch).toBeNull();
     });
   });
