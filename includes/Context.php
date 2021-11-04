@@ -40,7 +40,7 @@ class Context {
 	/**
 	 * Context constructor.
 	 *
-	 * @since 1.14.0
+	 * @since 1.15.0
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
@@ -51,7 +51,7 @@ class Context {
 	/**
 	 * Determine whether the current response is a single web story.
 	 *
-	 * @since 1.14.0
+	 * @since 1.15.0
 	 *
 	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
 	 */
@@ -62,7 +62,7 @@ class Context {
 	/**
 	 * Determine whether the current response being served as AMP.
 	 *
-	 * @since 1.14.0
+	 * @since 1.15.0
 	 *
 	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
 	 */
@@ -86,7 +86,7 @@ class Context {
 	/**
 	 * Determines whether we're currently on the story editor screen.
 	 *
-	 * @since 1.14.0
+	 * @since 1.15.0
 	 *
 	 * @return bool Whether we're currently on the story editor screen.
 	 */
@@ -99,7 +99,7 @@ class Context {
 	/**
 	 * Determines whether we're currently on the media upload screen.
 	 *
-	 * @since 1.14.0
+	 * @since 1.15.0
 	 *
 	 * @return bool Whether we're currently on the media upload screen
 	 */
@@ -112,7 +112,7 @@ class Context {
 	/**
 	 * Whether we're currently on a block editor screen.
 	 *
-	 * @since 1.14.0
+	 * @since 1.15.0
 	 *
 	 * @return bool
 	 */
@@ -125,7 +125,7 @@ class Context {
 	/**
 	 * Returns the current screen base if available.
 	 *
-	 * @since 1.14.0
+	 * @since 1.15.0
 	 *
 	 * @return string|null Current screen base if available.
 	 */
@@ -138,7 +138,7 @@ class Context {
 	/**
 	 * Returns the current screen post type if available.
 	 *
-	 * @since 1.14.0
+	 * @since 1.15.0
 	 *
 	 * @return string|null Current screen post type if available.
 	 */
