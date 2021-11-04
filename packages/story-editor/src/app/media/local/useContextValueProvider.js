@@ -290,6 +290,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       resetWithFetch,
       uploadVideoPoster,
       updateVideoIsMuted,
+      updateBaseColor,
       deleteMediaElement,
       updateMediaElement,
       optimizeVideo,
