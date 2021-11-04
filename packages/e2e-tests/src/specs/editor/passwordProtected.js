@@ -40,7 +40,10 @@ describe('Password protected stories', () => {
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
 
-    await expect(previewPage).toMatch('Protected: Password protected story');
+    await previewPage.waitForSelector('input[name="post_password"]');
+    await previewPage.focus('input[name="post_password"]');
+
+    await expect(previewPage).toMatch('This content is password protected');
 
     await expect(previewPage).toFill('input[name="post_password"]', 'password');
 
