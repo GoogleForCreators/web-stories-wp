@@ -107,13 +107,13 @@ class ColorPicker extends Container {
     return this.getByRole('button', { name: /Exit edit mode/ });
   }
 
-  deleteStoryColor() {
+  get deleteStoryColor() {
     return this.getByRole('option', {
       name: /Delete local color/,
     });
   }
 
-  deleteGlobalColor() {
+  get deleteGlobalColor() {
     return this.getByRole('option', {
       name: /Delete global color/,
     });

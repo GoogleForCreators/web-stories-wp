@@ -217,7 +217,6 @@ describe('ColorPicker', () => {
 
         // Verify being in edit mode.
         expect(picker.exitEditButton).toBeTruthy();
-
         expect(picker.deleteGlobalColor).toBeTruthy();
 
         // Delete global preset.
@@ -232,7 +231,7 @@ describe('ColorPicker', () => {
         );
 
         // Delete local preset.
-        await fixture.events.click(picker.deleteLocalColor);
+        await fixture.events.click(picker.deleteStoryColor);
 
         // Verify the edit mode was exited (due to removing all elements).
         expect(() => picker.exitEditButton).toThrow();
