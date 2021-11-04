@@ -192,18 +192,19 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   const processMediaBaseColor = useCallback(
     (resource) => {
       const { baseColorProcessed, baseColorProcessing } = stateRef.current;
+      const { id } = resource;
 
       const process = async () => {
         // Simple way to prevent double-uploading.
         if (
-          baseColorProcessed.includes(resource.id) ||
-          baseColorProcessing.includes(resource.id)
+          baseColorProcessed.includes(id) ||
+          baseColorProcessing.includes(id)
         ) {
           return;
         }
-        setBaseColorProcessing({ id: resource.id });
+        setBaseColorProcessing({ id });
         await updateBaseColor({ resource });
-        removeBaseColorProcessing({ id: resource.id });
+        removeBaseColorProcessing({ id });
       };
       process();
     },
@@ -250,7 +251,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const backfillBaseColor = useCallback(
     (resource) => {
-      if (!resource.local && !resource?.baseColor.length && resource.id) {
+      const { local, baseColor, id } = resource;
+      if (!local && id && (!Array.isArray(baseColor) || !baseColor.length)) {
         processMediaBaseColor(resource);
       }
     },
