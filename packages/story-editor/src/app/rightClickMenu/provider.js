@@ -17,10 +17,11 @@
  * External dependencies
  */
 import {
+  getKeyForOS,
   useGlobalKeyDownEffect,
   useSnackbar,
 } from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { canTranscodeResource } from '@web-stories-wp/media';
 import PropTypes from 'prop-types';
@@ -60,6 +61,13 @@ import rightClickMenuReducer, {
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
 import { getDefaultPropertiesForType, getElementStyles } from './utils';
+
+const UNDO_HELP_TEXT = sprintf(
+  /* translators: %s: Command or Control key on keyboard */
+  __('Press %s Z to undo the last change', 'web-stories'),
+  getKeyForOS('mod'),
+  'Z'
+);
 
 /**
  * Determines the items displayed in the right click menu
@@ -398,6 +406,7 @@ function RightClickMenuProvider({ children }) {
           isBackground: selectedElement?.isBackground,
         });
       },
+      actionHelpText: UNDO_HELP_TEXT,
     });
 
     trackEvent('context_menu_action', {
@@ -524,6 +533,7 @@ function RightClickMenuProvider({ children }) {
           isBackground: selectedElement?.isBackground,
         });
       },
+      actionHelpText: UNDO_HELP_TEXT,
     });
 
     trackEvent('context_menu_action', {
@@ -580,6 +590,7 @@ function RightClickMenuProvider({ children }) {
             isBackground: selectedElement?.isBackground,
           });
         },
+        actionHelpText: UNDO_HELP_TEXT,
       });
 
       trackEvent('context_menu_action', {
@@ -656,6 +667,7 @@ function RightClickMenuProvider({ children }) {
             element: selectedElementType,
           });
         },
+        actionHelpText: UNDO_HELP_TEXT,
       });
 
       trackEvent('context_menu_action', {
@@ -692,6 +704,7 @@ function RightClickMenuProvider({ children }) {
             element: selectedElementType,
           });
         },
+        actionHelpText: UNDO_HELP_TEXT,
       });
 
       trackEvent('context_menu_action', {

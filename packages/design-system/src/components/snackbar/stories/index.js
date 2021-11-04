@@ -223,11 +223,11 @@ export const ShowSnackbarByClickingButton = () => {
     const randomMessage =
       buttonText[Math.floor(Math.random() * buttonText.length)];
 
-    setMessageQueue((currentMessages) => [
-      ...currentMessages,
-      {
+    setMessageQueue((currentMessages) => {
+      const hasAction = Boolean(Math.round(Math.random()));
+
+      let notification = {
         key: newId,
-        actionLabel: text('actionLabel', ''),
         'aria-label': text(
           'aria-label',
           'this is my aria label giving my message context for screen reader users'
@@ -236,11 +236,24 @@ export const ShowSnackbarByClickingButton = () => {
         dismissible: boolean('dismissible'),
         preventAutoDismiss: boolean('preventAutoDismiss'),
         message: randomMessage,
-        onAction: action('on action clicked'),
         onDismiss: (evt) => handleOnDismiss(evt, { id: newId }),
         timeout: 5000,
-      },
-    ]);
+      };
+
+      if (hasAction) {
+        notification = {
+          ...notification,
+          actionLabel: text('actionLabel', 'Undo'),
+          onAction: action('on action clicked'),
+          actionHelpText: text(
+            'actionHelpText',
+            'Click this button to get instant cheese'
+          ),
+        };
+      }
+
+      return [...currentMessages, notification];
+    });
   };
 
   return (

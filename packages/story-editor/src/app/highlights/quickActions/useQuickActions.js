@@ -18,8 +18,13 @@
  * External dependencies
  */
 import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import {
+  getKeyForOS,
+  useSnackbar,
+  PLACEMENT,
+  Icons,
+} from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { canTranscodeResource } from '@web-stories-wp/media';
 
@@ -36,6 +41,13 @@ import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
+
+const UNDO_HELP_TEXT = sprintf(
+  /* translators: %s: Command or Control key on keyboard */
+  __('Press %s Z to undo the last change', 'web-stories'),
+  getKeyForOS('mod'),
+  'Z'
+);
 
 const {
   Bucket,
@@ -183,6 +195,7 @@ const useQuickActions = () => {
             isBackground: true,
           });
         },
+        actionHelpText: UNDO_HELP_TEXT,
       });
     },
     [handleResetProperties, showSnackbar]

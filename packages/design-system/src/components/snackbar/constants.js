@@ -45,6 +45,7 @@ export const SnackbarNotificationThumbnail = PropTypes.shape({
 export const SnackbarNotification = PropTypes.shape({
   message: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   actionLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  actionHelpText: PropTypes.string,
   dismissible: PropTypes.bool,
   onAction: PropTypes.func,
   onDismiss: PropTypes.func,

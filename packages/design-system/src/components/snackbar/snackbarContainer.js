@@ -132,7 +132,11 @@ export const SnackbarContainer = ({
     notifications.forEach((notification) => {
       if (!announcedNotifications.current.has(notification)) {
         // speak the message
-        speak(notification.message);
+        const message = `${notification.message} ${
+          notification.actionHelpText ? notification.actionHelpText : ''
+        }`.trim();
+
+        speak(message);
 
         announcedNotifications.current.add(notification);
       }
