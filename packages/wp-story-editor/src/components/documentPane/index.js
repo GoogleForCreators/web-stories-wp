@@ -27,7 +27,6 @@ import {
 /**
  * Internal dependencies
  */
-import * as publisherLogoCallbacks from '../../api/publisherLogos';
 import PublishPanel from './publish';
 import StatusPanel from './status';
 
@@ -35,7 +34,7 @@ function DocumentPane() {
   return (
     <>
       <StatusPanel />
-      <PublishPanel apiCallbacks={publisherLogoCallbacks} />
+      <PublishPanel />
       <ExcerptPanel />
       <SlugPanel />
       <PageAdvancementPanel />

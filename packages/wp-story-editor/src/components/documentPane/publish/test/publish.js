@@ -32,6 +32,11 @@ import {
 import { renderWithTheme } from '../../../../testUtils';
 import PublishPanel from '../publish';
 
+jest.mock('./../../../../api/publisherLogos', () => ({
+  getPublisherLogos: jest.fn().mockResolvedValue([]),
+  addPublisherLogo: jest.fn().mockResolvedValue([]),
+}));
+
 function MediaUpload({ render }) {
   const open = jest.fn();
   return render(open);
@@ -59,11 +64,6 @@ function arrange(
       },
     },
     actions: { updateStory },
-  };
-
-  const publisherPanelApiCallbacks = {
-    getPublisherLogos: jest.fn().mockResolvedValue([]),
-    addPublisherLogo: jest.fn().mockResolvedValue([]),
   };
 
   const config = {
@@ -99,7 +99,7 @@ function arrange(
       <APIContext.Provider value={{ actions }}>
         <StoryContext.Provider value={storyContextValue}>
           <InspectorContext.Provider value={inspectorContextValue}>
-            <PublishPanel apiCallbacks={publisherPanelApiCallbacks} />
+            <PublishPanel />
           </InspectorContext.Provider>
         </StoryContext.Provider>
       </APIContext.Provider>

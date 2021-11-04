@@ -32,7 +32,6 @@ import {
   Icons,
   Datalist,
 } from '@web-stories-wp/design-system';
-import PropTypes from 'prop-types';
 import {
   useStory,
   useConfig,
@@ -51,6 +50,7 @@ import {
 /**
  * Internal dependencies
  */
+import * as apiCallbacks from '../../../api/publisherLogos';
 import PublishTime from './publishTime';
 import Author from './author';
 
@@ -114,7 +114,7 @@ const LogoImg = styled.img`
   max-height: 96px;
 `;
 
-function PublishPanel({ apiCallbacks }) {
+function PublishPanel() {
   const {
     state: { users },
   } = useInspector();
@@ -378,12 +378,5 @@ function PublishPanel({ apiCallbacks }) {
     </Panel>
   );
 }
-
-PublishPanel.propTypes = {
-  apiCallbacks: PropTypes.shape({
-    getPublisherLogos: PropTypes.func.isRequired,
-    addPublisherLogo: PropTypes.func.isRequired,
-  }),
-};
 
 export default PublishPanel;
