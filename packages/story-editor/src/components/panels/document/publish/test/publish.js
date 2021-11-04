@@ -73,6 +73,9 @@ function arrange(
       'image/jpg',
       'image/gif',
     ],
+    apiCallbacks: {
+      getAuthors: jest.fn().mockResolvedValue({}),
+    },
     api: {
       publisherLogos: '/web-stories/v1/publisher-logos/',
     },
@@ -87,9 +90,11 @@ function arrange(
     },
   };
 
+  const actions = config.apiCallbacks;
+
   const view = renderWithTheme(
     <ConfigContext.Provider value={config}>
-      <ApiContext.Provider value={{}}>
+      <ApiContext.Provider value={{ actions }}>
         <StoryContext.Provider value={storyContextValue}>
           <InspectorContext.Provider value={inspectorContextValue}>
             <PublishPanel apiCallbacks={publisherPanelApiCallbacks} />
