@@ -29,6 +29,8 @@ const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
   audioProcessing: [],
   audioProcessed: [],
+  baseColorProcessing: [],
+  baseColorProcessed: [],
   posterProcessing: [],
   posterProcessed: [],
   mediaType: '',
@@ -39,6 +41,7 @@ const INITIAL_STATE = {
  * @typedef {import('./typedefs').LocalMediaReducerState} LocalMediaReducerState
  */
 
+/* eslint-disable complexity */
 /**
  * The reducer for locally uploaded media.
  *
@@ -179,6 +182,32 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
 
+    case types.LOCAL_MEDIA_ADD_BASE_COLOR_PROCESSING: {
+      const { id } = payload;
+      if (!id || state.baseColorProcessing.includes(id)) {
+        return state;
+      }
+      return {
+        ...state,
+        baseColorProcessing: [...state.baseColorProcessing, id],
+      };
+    }
+
+    case types.LOCAL_MEDIA_REMOVE_BASE_COLOR_PROCESSING: {
+      const { id } = payload;
+      if (!id || !state.baseColorProcessing.includes(id)) {
+        return state;
+      }
+      const currentProcessing = [...state.baseColorProcessing];
+      const baseColorProcessing = currentProcessing.filter((e) => e !== id);
+
+      return {
+        ...state,
+        baseColorProcessing,
+        baseColorProcessed: [...state.baseColorProcessed, id],
+      };
+    }
+
     default:
       if (payload?.provider == 'local') {
         return commonReducer(state, { type, payload });
@@ -186,5 +215,5 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       return state;
   }
 }
-
+/* eslint-enable complexity */
 export default reducer;

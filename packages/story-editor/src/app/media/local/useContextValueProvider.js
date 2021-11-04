@@ -29,6 +29,7 @@ import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
 import useDetectVideoHasAudio from '../utils/useDetectVideoHasAudio';
+import useDetectBaseColor from '../utils/useDetectBaseColor';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -62,6 +63,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     removeAudioProcessing,
     setPosterProcessing,
     removePosterProcessing,
+    setBaseColorProcessing,
+    removeBaseColorProcessing,
     updateMediaElement,
     deleteMediaElement,
   } = reducerActions;
@@ -124,6 +127,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     updateMediaElement,
   });
 
+  const { updateBaseColor } = useDetectBaseColor({
+    updateMediaElement,
+  });
+
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
   } = useConfig();
@@ -182,10 +189,32 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setAudioProcessing, updateVideoIsMuted, removeAudioProcessing]
   );
 
+  const processMediaBaseColor = useCallback(
+    (resource) => {
+      const { baseColorProcessed, baseColorProcessing } = stateRef.current;
+
+      const process = async () => {
+        // Simple way to prevent double-uploading.
+        if (
+          baseColorProcessed.includes(resource.id) ||
+          baseColorProcessing.includes(resource.id)
+        ) {
+          return;
+        }
+        setBaseColorProcessing({ id: resource.id });
+        await updateBaseColor({ resource });
+        removeBaseColorProcessing({ id: resource.id });
+      };
+      process();
+    },
+    [setBaseColorProcessing, removeBaseColorProcessing, updateBaseColor]
+  );
+
   const { optimizeVideo, optimizeGif, muteExistingVideo, trimExistingVideo } =
     useProcessMedia({
       uploadVideoPoster,
       updateVideoIsMuted,
+      updateBaseColor,
       uploadMedia,
       updateMedia,
       deleteMediaElement,
@@ -219,6 +248,15 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [allowedVideoMimeTypes, processVideoAudio]
   );
 
+  const backfillBaseColor = useCallback(
+    (resource) => {
+      if (!resource.local && !resource?.baseColor.length && resource.id) {
+        processMediaBaseColor(resource);
+      }
+    },
+    [processMediaBaseColor]
+  );
+
   // Whenever media items in the library change,
   // generate missing posters if needed.
   useEffect(() => {
@@ -228,6 +266,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   useEffect(() => {
     media?.forEach((mediaElement) => backfillHasAudio(mediaElement));
   }, [media, mediaType, searchTerm, backfillHasAudio]);
+
+  useEffect(() => {
+    media?.forEach((mediaElement) => backfillBaseColor(mediaElement));
+  }, [media, mediaType, searchTerm, backfillBaseColor]);
 
   const isGeneratingPosterImages = Boolean(
     stateRef.current?.posterProcessing?.length

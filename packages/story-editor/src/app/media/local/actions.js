@@ -91,6 +91,24 @@ export const removeAudioProcessing =
     });
   };
 
+export const setBaseColorProcessing =
+  (dispatch) =>
+  ({ id }) => {
+    dispatch({
+      type: types.LOCAL_MEDIA_ADD_BASE_COLOR_PROCESSING,
+      payload: { id },
+    });
+  };
+
+export const removeBaseColorProcessing =
+  (dispatch) =>
+  ({ id }) => {
+    dispatch({
+      type: types.LOCAL_MEDIA_REMOVE_BASE_COLOR_PROCESSING,
+      payload: { id },
+    });
+  };
+
 export const setPosterProcessing =
   (dispatch) =>
   ({ id }) => {
