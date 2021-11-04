@@ -17,166 +17,216 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Input } from '@web-stories-wp/design-system';
+import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
 import { Row, RadioGroup } from '../../../form';
 import { SimplePanel } from '../../panel';
+import useRefreshPostEditURL from '../../../../utils/useRefreshPostEditURL';
+import { ReviewChecklistDialog, useCheckpoint } from '../../../checklist';
 
 const InputRow = styled(Row)`
   margin-left: 34px;
 `;
 
-const HelperText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
-})`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-`;
-
 function StatusPanel() {
   const {
     status = '',
-    password: savedPassword,
+    password,
     updateStory,
     capabilities,
+    editLink,
+    title,
+    storyId,
   } = useStory(
     ({
       state: {
-        story: { status, password },
+        story: { status, password, editLink, title, storyId },
         capabilities,
       },
       actions: { updateStory },
-    }) => ({ status, password, updateStory, capabilities })
+    }) => ({
+      status,
+      password,
+      updateStory,
+      capabilities,
+      editLink,
+      title,
+      storyId,
+    })
   );
-  const [password, setPassword] = useState(savedPassword);
 
-  useEffect(() => {
-    // updated displayed password when stored password is updated
-    setPassword(savedPassword);
-  }, [savedPassword]);
+  const [showReviewDialog, setShowReviewDialog] = useState(false);
+  const closeReviewDialog = useCallback(() => setShowReviewDialog(false), []);
+
+  const { shouldReviewDialogBeSeen } = useCheckpoint(
+    ({ state: { shouldReviewDialogBeSeen } }) => ({
+      shouldReviewDialogBeSeen,
+    })
+  );
+
+  const [hasPassword, setHasPassword] = useState(Boolean(password));
+
+  const visibility = useMemo(() => {
+    if (hasPassword) {
+      return 'protected';
+    }
+
+    if (status === 'private') {
+      return 'private';
+    }
+
+    return 'public';
+  }, [status, hasPassword]);
 
   const visibilityOptions = [
     {
-      value: 'draft',
-      label: __('Draft', 'web-stories'),
-      helper: __('Visible to just me', 'web-stories'),
+      value: 'public',
+      label: __('Public', 'web-stories'),
+      helper: __('Visible to everyone', 'web-stories'),
     },
   ];
 
   if (capabilities?.publish) {
     visibilityOptions.push({
-      value: 'publish',
-      label: __('Public', 'web-stories'),
-      helper: __('Visible to everyone', 'web-stories'),
-    });
-    visibilityOptions.push({
       value: 'private',
       label: __('Private', 'web-stories'),
       helper: __('Visible to site admins & editors only', 'web-stories'),
     });
+    visibilityOptions.push({
+      value: 'protected',
+      label: __('Password Protected', 'web-stories'),
+      helper: __('Visible only to those with the password.', 'web-stories'),
+    });
   }
 
-  const passwordProtected = 'protected';
-  // @todo Add this back once we have FE implementation, too.
-  /*visibilityOptions.push({
-    label: __('Password Protected', 'web-stories'),
-    value: passwordProtected,
-    helper: __('Need password to view', 'web-stories'),
-  });*/
-
-  const handleChangePassword = useCallback((evt) => {
-    setPassword(evt.target.value);
-  }, []);
-
-  // @todo this should still allow showing the moment where the warning is red, currently just doesn't allow adding more.
-  const handleUpdatePassword = useCallback(
-    (value) => {
-      if (isValidPassword(value)) {
-        updateStory({
-          properties: { password: value },
-        });
-      }
+  const handleChangePassword = useCallback(
+    (evt) => {
+      updateStory({
+        properties: { password: evt.target.value },
+      });
     },
     [updateStory]
   );
 
-  const isValidPassword = (value) => {
-    return value && value.length <= 20;
-  };
+  const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
+
+  const publishPrivately = useCallback(() => {
+    const properties = {
+      status: 'private',
+      password: '',
+    };
+    setHasPassword(false);
+
+    trackEvent('publish_story', {
+      status: 'private',
+      title_length: title.length,
+    });
+    refreshPostEditURL();
+
+    updateStory({ properties });
+  }, [setHasPassword, title.length, refreshPostEditURL, updateStory]);
 
   const handleChangeVisibility = useCallback(
     (evt) => {
-      // If password protected but no password, do nothing.
-      if (
-        evt.target.value === passwordProtected &&
-        !isValidPassword(password)
-      ) {
-        return;
+      const newVisibility = evt.target.value;
+
+      if ('private' === newVisibility) {
+        if (
+          !window.confirm(
+            __(
+              'Would you like to privately publish this story now?',
+              'web-stories'
+            )
+          )
+        ) {
+          return;
+        }
       }
-      // If password protected, keep the previous status.
-      const properties =
-        passwordProtected === status
-          ? { password }
-          : {
-              status: evt.target.value,
-              password: '',
-            };
+
+      const properties = {};
+
+      switch (newVisibility) {
+        case 'public':
+          properties.status = visibility === 'private' ? 'draft' : status;
+          properties.password = '';
+          setHasPassword(false);
+          break;
+
+        case 'private':
+          if (shouldReviewDialogBeSeen) {
+            setShowReviewDialog(true);
+          } else {
+            publishPrivately();
+          }
+          return;
+
+        case 'protected':
+          properties.status = visibility === 'private' ? 'draft' : status;
+          properties.password = password || '';
+          setHasPassword(true);
+          break;
+
+        default:
+          break;
+      }
+
       updateStory({ properties });
     },
-    [password, status, updateStory]
+    [
+      status,
+      visibility,
+      password,
+      setHasPassword,
+      updateStory,
+      publishPrivately,
+      shouldReviewDialogBeSeen,
+    ]
   );
 
-  const getStatusValue = (value) => {
-    // Always display protected visibility, independent of the status.
-    if (password && password.length) {
-      return passwordProtected;
-    }
-    // Display as public even if scheduled for future, private post can't be scheduled.
-    if ('future' === value) {
-      return 'publish';
-    }
-    return value;
-  };
-
   return (
-    <SimplePanel
-      name="status"
-      title={__('Status and visibility', 'web-stories')}
-      collapsedByDefault={false}
-    >
-      <>
-        <Row>
-          <HelperText>
-            {__('Set the current status of your story to', 'web-stories')}
-          </HelperText>
-        </Row>
-        <Row>
-          <RadioGroup
-            groupLabel="Visibility"
-            name="radio-group-visibility"
-            options={visibilityOptions}
-            onChange={handleChangeVisibility}
-            value={getStatusValue(status)}
-          />
-        </Row>
-        {passwordProtected === status && (
-          <InputRow>
-            <Input
-              aria-label={__('Password', 'web-stories')}
-              value={password}
-              onBlur={handleUpdatePassword}
-              onChange={handleChangePassword}
-              placeholder={__('Enter a password', 'web-stories')}
+    <>
+      <SimplePanel
+        name="status"
+        title={__('Visibility', 'web-stories')}
+        collapsedByDefault={false}
+      >
+        <>
+          <Row>
+            <RadioGroup
+              groupLabel="Visibility"
+              name="radio-group-visibility"
+              options={visibilityOptions}
+              onChange={handleChangeVisibility}
+              value={visibility}
             />
-          </InputRow>
-        )}
-      </>
-    </SimplePanel>
+          </Row>
+          {hasPassword && (
+            <InputRow>
+              <Input
+                aria-label={__('Password', 'web-stories')}
+                value={password}
+                onChange={handleChangePassword}
+                placeholder={__('Enter a password', 'web-stories')}
+              />
+            </InputRow>
+          )}
+        </>
+      </SimplePanel>
+      <ReviewChecklistDialog
+        isOpen={showReviewDialog}
+        onIgnore={publishPrivately}
+        onClose={closeReviewDialog}
+        onReview={closeReviewDialog}
+      />
+    </>
   );
 }
 

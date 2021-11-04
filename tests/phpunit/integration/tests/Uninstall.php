@@ -23,7 +23,7 @@ use Google\Web_Stories\Media\Media_Source_Taxonomy;
  * @runInSeparateProcess
  * @preserveGlobalState disabled
  */
-class Uninstall extends TestCase {
+class Uninstall extends DependencyInjectedTestCase {
 	protected static $attachment_ids;
 
 	protected static $user_id;
@@ -34,21 +34,28 @@ class Uninstall extends TestCase {
 
 	public function set_up() {
 		parent::set_up();
+
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
-		$source_taxonomy      = ( new Media_Source_Taxonomy() )->get_taxonomy_slug();
-		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => $source_taxonomy ] );
+		$source_taxonomy      = $this->injector->make( Media_Source_Taxonomy::class );
+		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => $source_taxonomy->get_taxonomy_slug() ] );
+
 		foreach ( self::$attachment_ids as $attachment_id ) {
 			add_post_meta( $attachment_id, 'web_stories_is_poster', '1' );
 			add_post_meta( $attachment_id, 'web_stories_poster_id', '999' );
-			wp_set_object_terms( $attachment_id, $terms_ids, $source_taxonomy );
+			wp_set_object_terms( $attachment_id, $terms_ids, $source_taxonomy->get_taxonomy_slug() );
 		}
+
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Page_Template_Post_Type::POST_TYPE_SLUG ] );
+
 		update_option( \Google\Web_Stories\Database_Upgrader::OPTION, '2.0.0' );
 		update_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.0.0' );
+
 		set_transient( 'web_stories_link_data_fdsf', 'hello' );
 		set_site_transient( 'web_stories_updater', 'hello' );
+
 		self::$user_id = self::factory()->user->create( [ 'role' => 'administrator' ] );
+
 		add_user_meta( self::$user_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
 		add_user_meta( self::$user_id, \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY, [ 'hello' => 'world' ] );
 	}
@@ -64,10 +71,10 @@ class Uninstall extends TestCase {
 
 
 	public function test_delete_terms() {
-		$source_taxonomy = ( new Media_Source_Taxonomy() )->get_taxonomy_slug();
+		$source_taxonomy = $this->injector->make( Media_Source_Taxonomy::class );
 		$terms           = get_terms(
 			[
-				'taxonomy'   => $source_taxonomy,
+				'taxonomy'   => $source_taxonomy->get_taxonomy_slug(),
 				'hide_empty' => false,
 			]
 		);
@@ -75,13 +82,13 @@ class Uninstall extends TestCase {
 		\Google\Web_Stories\delete_terms();
 		$terms = get_terms(
 			[
-				'taxonomy'   => $source_taxonomy,
+				'taxonomy'   => $source_taxonomy->get_taxonomy_slug(),
 				'hide_empty' => false,
 			]
 		);
 		$this->assertEqualSets( [], $terms );
 		foreach ( self::$attachment_ids as $attachment_id ) {
-			$post_terms = get_the_terms( $attachment_id, $source_taxonomy );
+			$post_terms = get_the_terms( $attachment_id, $source_taxonomy->get_taxonomy_slug() );
 			$this->assertFalse( $post_terms );
 		}
 	}
@@ -103,11 +110,13 @@ class Uninstall extends TestCase {
 	}
 
 	public function test_delete_stories_post_meta() {
-		\Google\Web_Stories\delete_stories_post_meta();
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
+
+		\Google\Web_Stories\delete_stories_post_meta();
+
 		foreach ( self::$attachment_ids as $attachment_id ) {
 			$this->assertSame( '', get_post_meta( $attachment_id, 'web_stories_is_poster', true ) );
-			$this->assertSame( '', get_post_meta( $attachment_id, 'web_stories_poster_id', true ) );
+			$this->assertSame( 0, get_post_meta( $attachment_id, 'web_stories_poster_id', true ) );
 		}
 	}
 

@@ -2,6 +2,10 @@
 
 namespace Google\Web_Stories\Tests\Integration\Renderer\Story;
 
+use Google\Web_Stories\Context;
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -23,14 +27,16 @@ class Embed extends TestCase {
 
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
-		$assets = new \Google\Web_Stories\Assets();
-		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story, $assets );
-		$args   = [
+		$assets   = new \Google\Web_Stories\Assets();
+		$settings = new Settings();
+		$context  = new Context( new Story_Post_Type( $settings, new Experiments( $settings ) ) );
+		$embed    = new \Google\Web_Stories\Renderer\Story\Embed( $story, $assets, $context );
+		$args     = [
 			'align'  => 'none',
 			'height' => 600,
 			'width'  => 360,
 		];
-		$render = $embed->render( $args );
+		$render   = $embed->render( $args );
 		$this->assertStringContainsString( 'test title', $render );
 		$this->assertStringNotContainsString( '<img', $render );
 	}
@@ -53,14 +59,16 @@ class Embed extends TestCase {
 
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
-		$assets = new \Google\Web_Stories\Assets();
-		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story, $assets );
-		$args   = [
+		$assets   = new \Google\Web_Stories\Assets();
+		$settings = new Settings();
+		$context  = new Context( new Story_Post_Type( $settings, new Experiments( $settings ) ) );
+		$embed    = new \Google\Web_Stories\Renderer\Story\Embed( $story, $assets, $context );
+		$args     = [
 			'align'  => 'none',
 			'height' => 600,
 			'width'  => 360,
 		];
-		$render = $embed->render( $args );
+		$render   = $embed->render( $args );
 		$this->assertStringContainsString( 'test title', $render );
 		$this->assertStringContainsString( '<img', $render );
 	}

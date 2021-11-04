@@ -388,11 +388,13 @@ describe('buttons', () => {
     expect(screen.getByRole('button', { name: 'Publish' })).toBeDisabled();
   });
 
-  it('should disable publish button when user lacks permission', () => {
+  it('should display button to submit for review if user cannot publish', () => {
     setupButtons({
       storyState: { capabilities: { publish: false } },
     });
-    expect(screen.getByRole('button', { name: 'Publish' })).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: 'Submit for review' })
+    ).toBeInTheDocument();
   });
 
   it('should open draft preview when clicking on Preview via about:blank', () => {

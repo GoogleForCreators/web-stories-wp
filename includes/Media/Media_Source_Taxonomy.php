@@ -26,9 +26,9 @@
 
 namespace Google\Web_Stories\Media;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\REST_API\Stories_Terms_Controller;
 use Google\Web_Stories\Taxonomy\Taxonomy_Base;
-use Google\Web_Stories\Traits\Screen;
 use WP_Query;
 use WP_Post;
 
@@ -38,7 +38,21 @@ use WP_Post;
  * @package Google\Web_Stories\Media
  */
 class Media_Source_Taxonomy extends Taxonomy_Base {
-	use Screen;
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
+	 * Single constructor.
+	 *
+	 * @param Context $context Context instance.
+	 */
+	public function __construct( Context $context ) {
+		$this->context = $context;
+	}
 
 	/**
 	 * Taxonomy key.
@@ -72,7 +86,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		$this->register_taxonomy();
 
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
-		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
+		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ] );
 
 		// Hide video posters from Media grid view.
 		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
@@ -139,12 +153,11 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array   $response   Array of prepared attachment data.
-	 * @param WP_Post $attachment Attachment object.
+	 * @param array|mixed $response   Array of prepared attachment data.
 	 *
-	 * @return array $response;
+	 * @return array|mixed $response Filtered attachment data.
 	 */
-	public function wp_prepare_attachment_for_js( $response, $attachment ) {
+	public function wp_prepare_attachment_for_js( $response ) {
 		if ( ! is_array( $response ) ) {
 			return $response;
 		}
@@ -162,14 +175,12 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @return string
 	 */
-	public function get_callback_media_source( $prepared ) {
+	public function get_callback_media_source( $prepared ): string {
 		$id = $prepared['id'];
 
 		$terms = get_the_terms( $id, $this->taxonomy_slug );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
-			$term = array_shift( $terms );
-
-			return $term->slug;
+			return array_shift( $terms )->slug;
 		}
 
 		return '';
@@ -236,9 +247,9 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array $args Query args.
+	 * @param array|mixed $args Query args.
 	 *
-	 * @return array Filtered query args.
+	 * @return array|mixed Filtered query args.
 	 */
 	public function filter_ajax_query_attachments_args( $args ) {
 		if ( ! is_array( $args ) ) {
@@ -261,13 +272,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @return void
 	 */
 	public function filter_generated_media_attachments( &$query ) {
-		$current_screen = $this->get_current_screen();
-
-		if ( ! $current_screen ) {
-			return;
-		}
-
-		if ( is_admin() && $query->is_main_query() && 'upload' === $current_screen->id ) {
+		if ( is_admin() && $query->is_main_query() && $this->context->is_upload_screen() ) {
 			$tax_query = $query->get( 'tax_query' );
 
 			$query->set( 'tax_query', $this->get_exclude_tax_query( [ 'tax_query' => $tax_query ] ) ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query

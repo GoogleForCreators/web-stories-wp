@@ -163,6 +163,8 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     // TODO(#9224): Fix flaky test.
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should add text color based on background', async () => {
+      fixture.editor.library.text.smartColorToggle.click();
+
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
@@ -175,6 +177,10 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
         { timeout: 2000 }
       );
       const textSets = fixture.editor.library.text.textSets;
+      // First hover text set to trigger image generation
+      await fixture.events.mouse.moveRel(textSets[1], 10, 10);
+      await fixture.events.sleep(800);
+      // Then click the text set
       await fixture.events.click(textSets[1]);
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       const selection = await getSelection();

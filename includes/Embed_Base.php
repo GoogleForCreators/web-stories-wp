@@ -49,14 +49,23 @@ abstract class Embed_Base extends Service_Base {
 	protected $assets;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	protected $context;
+
+	/**
 	 * Embed Base constructor.
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param Assets $assets            Assets instance.
+	 * @param Assets  $assets  Assets instance.
+	 * @param Context $context Context instance.
 	 */
-	public function __construct( Assets $assets ) {
-		$this->assets = $assets;
+	public function __construct( Assets $assets, Context $context ) {
+		$this->assets  = $assets;
+		$this->context = $context;
 	}
 
 	/**
@@ -187,7 +196,7 @@ abstract class Embed_Base extends Service_Base {
 		if ( is_feed() ) {
 			$renderer = new Image( $story );
 		} else {
-			$renderer = new Embed( $story, $this->assets );
+			$renderer = new Embed( $story, $this->assets, $this->context );
 		}
 
 		return $renderer->render( $attributes );

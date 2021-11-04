@@ -169,6 +169,7 @@ class Plugin extends ServiceBasedPlugin {
 			Admin\Meta_Boxes::class,
 			Analytics::class,
 			Assets::class,
+			Context::class,
 			Decoder::class,
 			Experiments::class,
 			Story_Post_Type::class,

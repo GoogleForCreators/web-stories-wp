@@ -17,24 +17,38 @@
 
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
+use Google\Web_Stories\Analytics;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Site_Kit
  */
-class Site_Kit extends TestCase {
+class Site_Kit extends DependencyInjectedTestCase {
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Integrations\Site_Kit
+	 */
+	protected $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Integrations\Site_Kit::class );
+	}
+
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
+		$analytics = $this->container->get( 'analytics' );
 		add_action( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] );
 
-		$site_kit = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-		$site_kit->register();
+		$this->instance->register();
 
-		$this->assertSame( 10, has_filter( 'googlesitekit_amp_gtag_opt', [ $site_kit, 'filter_site_kit_gtag_opt' ] ) );
+		$this->assertSame( 10, has_filter( 'googlesitekit_amp_gtag_opt', [ $this->instance, 'filter_site_kit_gtag_opt' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] ) );
 	}
 
@@ -49,13 +63,12 @@ class Site_Kit extends TestCase {
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
 
-		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
+		$analytics = $this->container->get( 'analytics' );
 		add_action( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] );
 
-		$site_kit = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-		$site_kit->register();
+		$this->instance->register();
 
-		$this->assertSame( 10, has_filter( 'googlesitekit_amp_gtag_opt', [ $site_kit, 'filter_site_kit_gtag_opt' ] ) );
+		$this->assertSame( 10, has_filter( 'googlesitekit_amp_gtag_opt', [ $this->instance, 'filter_site_kit_gtag_opt' ] ) );
 		$this->assertFalse( has_action( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] ) );
 	}
 
@@ -70,8 +83,7 @@ class Site_Kit extends TestCase {
 			'triggers' => [],
 		];
 
-		$site_kit = new \Google\Web_Stories\Integrations\Site_Kit( $this->createMock( \Google\Web_Stories\Analytics::class ) );
-		$actual   = $site_kit->filter_site_kit_gtag_opt( $gtag );
+		$actual = $this->instance->filter_site_kit_gtag_opt( $gtag );
 
 		$this->assertSame( $gtag, $actual );
 	}
@@ -100,7 +112,7 @@ class Site_Kit extends TestCase {
 
 		$this->go_to( get_permalink( $story_id ) );
 
-		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
+		$analytics = $this->createMock( Analytics::class );
 		$analytics->method( 'get_default_configuration' )
 				->willReturn(
 					[
@@ -111,8 +123,11 @@ class Site_Kit extends TestCase {
 					]
 				);
 
-		$site_kit = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-		$actual   = $site_kit->filter_site_kit_gtag_opt( $gtag );
+		$this->instance = new \Google\Web_Stories\Integrations\Site_Kit(
+			$analytics,
+			$this->injector->make( Context::class )
+		);
+		$actual         = $this->instance->filter_site_kit_gtag_opt( $gtag );
 
 		$this->assertArrayHasKey( 'storyProgress', $actual['triggers'] );
 		$this->assertArrayHasKey( 'storyEnd', $actual['triggers'] );
@@ -126,15 +141,12 @@ class Site_Kit extends TestCase {
 	public function test_get_site_kit_active_modules_option() {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 
-		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
-		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-
-		$actual_before = $this->call_private_method( $site_kit, 'get_site_kit_active_modules_option' );
+		$actual_before = $this->call_private_method( $this->instance, 'get_site_kit_active_modules_option' );
 
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
 
-		$actual_after = $this->call_private_method( $site_kit, 'get_site_kit_active_modules_option' );
+		$actual_after = $this->call_private_method( $this->instance, 'get_site_kit_active_modules_option' );
 
 		delete_option( 'googlesitekit_active_modules' );
 		delete_option( 'googlesitekit_analytics_settings' );
@@ -142,7 +154,7 @@ class Site_Kit extends TestCase {
 		update_option( 'googlesitekit-active-modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
 
-		$actual_after_legacy = $this->call_private_method( $site_kit, 'get_site_kit_active_modules_option' );
+		$actual_after_legacy = $this->call_private_method( $this->instance, 'get_site_kit_active_modules_option' );
 
 		$this->assertEmpty( $actual_before );
 		$this->assertSame( [ 'analytics' ], $actual_after );
@@ -153,9 +165,6 @@ class Site_Kit extends TestCase {
 	 * @covers ::get_plugin_status
 	 */
 	public function test_get_plugin_status() {
-		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
-		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-
 		$expected = [
 			'installed'       => false,
 			'active'          => false,
@@ -165,7 +174,7 @@ class Site_Kit extends TestCase {
 			'adsenseLink'     => __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' ),
 		];
 
-		$actual = $site_kit->get_plugin_status();
+		$actual = $this->instance->get_plugin_status();
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
@@ -176,9 +185,6 @@ class Site_Kit extends TestCase {
 	public function test_get_plugin_status_plugin_installed() {
 		wp_cache_set( 'plugins', [ 'google-site-kit/google-site-kit.php' ], 'plugins' );
 
-		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
-		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-
 		$expected = [
 			'installed'       => false,
 			'active'          => false,
@@ -188,7 +194,7 @@ class Site_Kit extends TestCase {
 			'adsenseLink'     => __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' ),
 		];
 
-		$actual = $site_kit->get_plugin_status();
+		$actual = $this->instance->get_plugin_status();
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
@@ -202,9 +208,6 @@ class Site_Kit extends TestCase {
 	public function test_get_plugin_status_plugin_active() {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 
-		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
-		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-
 		$expected = [
 			'installed'       => true,
 			'active'          => true,
@@ -214,7 +217,7 @@ class Site_Kit extends TestCase {
 			'adsenseLink'     => __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' ),
 		];
 
-		$actual = $site_kit->get_plugin_status();
+		$actual = $this->instance->get_plugin_status();
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
@@ -231,9 +234,6 @@ class Site_Kit extends TestCase {
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
 
-		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
-		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-
 		$expected = [
 			'installed'       => true,
 			'active'          => true,
@@ -243,7 +243,7 @@ class Site_Kit extends TestCase {
 			'analyticsLink'   => __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' ),
 		];
 
-		$actual = $site_kit->get_plugin_status();
+		$actual = $this->instance->get_plugin_status();
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
@@ -260,9 +260,6 @@ class Site_Kit extends TestCase {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 
-		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
-		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-
 		$expected = [
 			'installed'       => true,
 			'active'          => true,
@@ -272,7 +269,7 @@ class Site_Kit extends TestCase {
 			'analyticsLink'   => __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' ),
 		];
 
-		$actual = $site_kit->get_plugin_status();
+		$actual = $this->instance->get_plugin_status();
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
@@ -297,9 +294,6 @@ class Site_Kit extends TestCase {
 			false
 		);
 
-		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
-		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-
 		$expected = [
 			'installed'       => true,
 			'active'          => true,
@@ -309,7 +303,7 @@ class Site_Kit extends TestCase {
 			'analyticsLink'   => __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' ),
 		];
 
-		$actual = $site_kit->get_plugin_status();
+		$actual = $this->instance->get_plugin_status();
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
@@ -326,9 +320,6 @@ class Site_Kit extends TestCase {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'adsense' ], false );
 
-		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
-		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-
 		$expected = [
 			'installed'       => true,
 			'active'          => true,
@@ -338,7 +329,7 @@ class Site_Kit extends TestCase {
 			'analyticsLink'   => __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' ),
 		];
 
-		$actual = $site_kit->get_plugin_status();
+		$actual = $this->instance->get_plugin_status();
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}

@@ -28,14 +28,13 @@ namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Traits\Screen;
 use WP_Post;
-use WP_Screen;
 
 /**
  * Class AMP.
@@ -43,8 +42,6 @@ use WP_Screen;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class AMP extends Service_Base implements HasRequirements {
-	use Screen;
-
 	/**
 	 * Slug of the AMP validated URL post type.
 	 *
@@ -67,18 +64,27 @@ class AMP extends Service_Base implements HasRequirements {
 	private $story_post_type;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
 	 *
 	 * @param Settings        $settings        Settings instance.
 	 * @param Story_Post_Type $story_post_type Experiments instance.
+	 * @param Context         $context Context instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Settings $settings, Story_Post_Type $story_post_type ) {
+	public function __construct( Settings $settings, Story_Post_Type $story_post_type, Context $context ) {
 		$this->settings        = $settings;
 		$this->story_post_type = $story_post_type;
+		$this->context         = $context;
 	}
 
 	/**
@@ -150,13 +156,16 @@ class AMP extends Service_Base implements HasRequirements {
 		if ( ! is_array( $post_types ) ) {
 			return $post_types;
 		}
-		if ( $this->get_request_post_type() === $this->story_post_type->get_slug() ) {
-			$post_types = array_merge( $post_types, [ $this->story_post_type->get_slug() ] );
-		} else {
-			$post_types = array_diff( $post_types, [ $this->story_post_type->get_slug() ] );
+
+		$story_post_type = $this->story_post_type->get_slug();
+
+		$post_types = array_diff( $post_types, [ $story_post_type ] );
+
+		if ( $this->get_request_post_type() === $story_post_type ) {
+			$post_types = array_merge( $post_types, [ $story_post_type ] );
 		}
 
-		return array_values( $post_types );
+		return array_unique( array_values( $post_types ) );
 	}
 
 	/**
@@ -168,7 +177,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @return array|mixed Sanitizers.
 	 */
 	public function add_amp_content_sanitizers( $sanitizers ) {
-		if ( ! is_singular( $this->story_post_type->get_slug() ) ) {
+		if ( ! $this->context->is_web_story() ) {
 			return $sanitizers;
 		}
 
@@ -332,23 +341,19 @@ class AMP extends Service_Base implements HasRequirements {
 			return $this->get_validated_url_post_type( (int) $_GET['post'] );
 		}
 
-		$current_screen = $this->get_current_screen();
+		$current_screen_post_type = $this->context->get_screen_post_type();
 
-		if ( $current_screen instanceof WP_Screen ) {
+		if ( $current_screen_post_type ) {
 			$current_post = get_post();
 
-			if ( self::AMP_VALIDATED_URL_POST_TYPE === $current_screen->post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen->post_type ) {
+			if ( self::AMP_VALIDATED_URL_POST_TYPE === $current_screen_post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen_post_type ) {
 				$validated_url_post_type = $this->get_validated_url_post_type( $current_post->ID );
 				if ( $validated_url_post_type ) {
 					return $validated_url_post_type;
 				}
 			}
 
-			if ( $current_screen->post_type ) {
-				return $current_screen->post_type;
-			}
-
-			return null;
+			return $current_screen_post_type;
 		}
 
 		if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), $this->story_post_type->get_rest_url() ) ) {

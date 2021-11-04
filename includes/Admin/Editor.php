@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Infrastructure\HasRequirements;
@@ -36,7 +37,6 @@ use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Media\Types;
 use WP_Post;
 
@@ -46,7 +46,6 @@ use WP_Post;
  * @package Google\Web_Stories\Admin
  */
 class Editor extends Service_Base implements HasRequirements {
-	use Screen;
 
 	/**
 	 * Web Stories editor script handle.
@@ -119,6 +118,13 @@ class Editor extends Service_Base implements HasRequirements {
 	private $page_template_post_type;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
 	 * Types instance.
 	 *
 	 * @var Types Types instance.
@@ -127,6 +133,8 @@ class Editor extends Service_Base implements HasRequirements {
 
 	/**
 	 * Dashboard constructor.
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
 	 *
 	 * @since 1.0.0
 	 *
@@ -138,7 +146,8 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @param Assets                  $assets          Assets instance.
 	 * @param Story_Post_Type         $story_post_type Story_Post_Type instance.
 	 * @param Page_Template_Post_Type $page_template_post_type Page_Template_Post_Type instance.
-	 * @param Types                   $types            Types instance.
+	 * @param Context                 $context         Context instance.
+	 * @param Types                   $types           Types instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -149,6 +158,7 @@ class Editor extends Service_Base implements HasRequirements {
 		Assets $assets,
 		Story_Post_Type $story_post_type,
 		Page_Template_Post_Type $page_template_post_type,
+		Context $context,
 		Types $types
 	) {
 		$this->experiments             = $experiments;
@@ -159,6 +169,7 @@ class Editor extends Service_Base implements HasRequirements {
 		$this->assets                  = $assets;
 		$this->story_post_type         = $story_post_type;
 		$this->page_template_post_type = $page_template_post_type;
+		$this->context                 = $context;
 		$this->types                   = $types;
 	}
 
@@ -248,7 +259,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @return void
 	 */
 	public function admin_enqueue_scripts( $hook ) {
-		if ( ! $this->is_edit_screen() ) {
+		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}
 
