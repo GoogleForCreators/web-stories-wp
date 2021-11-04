@@ -136,7 +136,10 @@ function useProcessMedia({
           updateVideoIsMuted(resource.id, resource.src);
         }
 
-        if (!resource?.baseColor.length) {
+        if (
+          !Array.isArray(resource?.baseColor) ||
+          !resource?.baseColor.length
+        ) {
           updateBaseColor({ resource });
         }
       };
@@ -229,7 +232,10 @@ function useProcessMedia({
         if (resource.isMuted === null) {
           updateVideoIsMuted(resource.id, resource.src);
         }
-        if (!resource?.baseColor || !resource?.baseColor.length) {
+        if (
+          !Array.isArray(resource?.baseColor) ||
+          !resource?.baseColor.length
+        ) {
           updateBaseColor({ resource });
         }
       };
@@ -322,7 +328,10 @@ function useProcessMedia({
         if (['video', 'gif'].includes(resource.type) && !resource.posterId) {
           uploadVideoPoster(resource.id, resource.src);
         }
-        if (!resource?.baseColor || !resource?.baseColor.length) {
+        if (
+          !Array.isArray(resource?.baseColor) ||
+          !resource?.baseColor.length
+        ) {
           updateBaseColor({ resource });
         }
       };
@@ -411,7 +420,10 @@ function useProcessMedia({
         if (['video', 'gif'].includes(resource.type) && !resource.posterId) {
           uploadVideoPoster(resource.id, resource.src);
         }
-        if (!resource?.baseColor || !resource?.baseColor.length) {
+        if (
+          !Array.isArray(resource?.baseColor) ||
+          !resource?.baseColor.length
+        ) {
           updateBaseColor({ resource });
         }
       };

@@ -110,6 +110,7 @@ function setup() {
   );
 
   const uploadVideoPoster = jest.fn();
+  const updateBaseColor = jest.fn();
   const updateMedia = jest.fn();
   const deleteMediaElement = jest.fn();
   const updateVideoIsMuted = jest.fn();
@@ -119,6 +120,7 @@ function setup() {
       useProcessMedia({
         uploadMedia,
         uploadVideoPoster,
+        updateBaseColor,
         updateMedia,
         deleteMediaElement,
         updateVideoIsMuted,

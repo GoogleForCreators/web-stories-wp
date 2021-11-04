@@ -115,6 +115,7 @@ describe('useInsertElement', () => {
 
     useLocalMedia.mockReturnValue({
       uploadVideoPoster: jest.fn(),
+      updateBaseColor: jest.fn(),
     });
 
     useLayout.mockReturnValue({
