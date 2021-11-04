@@ -182,6 +182,7 @@ const SnackbarMessage = ({
   removeMessageTimeInterval,
   showCloseButton,
   placement = 'bottom',
+  actionHelpText,
   ...props
 }) => {
   const autoDismissRef = useRef();
@@ -274,6 +275,7 @@ SnackbarMessage.propTypes = {
   message: PropTypes.string.isRequired,
   onDismiss: PropTypes.func.isRequired,
   actionLabel: PropTypes.string,
+  actionHelpText: PropTypes.string,
   onAction: PropTypes.func,
   isPreventAutoDismiss: PropTypes.bool,
   isPreventActionDismiss: PropTypes.bool,

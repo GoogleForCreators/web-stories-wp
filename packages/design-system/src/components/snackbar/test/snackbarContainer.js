@@ -43,6 +43,14 @@ const NOTIFICATIONS = [
   },
 ];
 
+const NOTIFICATION_WITH_ACTION_AND_HELP_TEXT = {
+  'aria-label': 'test label again',
+  message: 'third one omg',
+  onDismiss: noop,
+  actionLabel: 'Derp',
+  actionHelpText: "Get out 'ma swamp",
+};
+
 describe('SnackbarContainer', () => {
   const mockUseLiveRegion = useLiveRegion;
   const mockSpeak = jest.fn();
@@ -70,5 +78,40 @@ describe('SnackbarContainer', () => {
     expect(mockSpeak).toHaveBeenCalledTimes(3);
     expect(mockSpeak).toHaveBeenCalledWith(NOTIFICATIONS[1].message);
     expect(mockSpeak).toHaveBeenCalledWith(NOTIFICATIONS[2].message);
+  });
+
+  it('should announce help text for an action', () => {
+    const { rerender } = renderWithProviders(
+      <SnackbarContainer notifications={[]} />
+    );
+
+    expect(mockSpeak).toHaveBeenCalledTimes(0);
+
+    rerender(
+      <SnackbarContainer
+        notifications={[
+          {
+            ...NOTIFICATIONS[0],
+            actionHelpText: 'click this button for christmas every day',
+          },
+        ]}
+      />
+    );
+
+    expect(mockSpeak).toHaveBeenCalledTimes(1);
+    expect(mockSpeak).toHaveBeenCalledWith(
+      `${NOTIFICATIONS[0].message} click this button for christmas every day`
+    );
+
+    rerender(
+      <SnackbarContainer
+        notifications={[NOTIFICATION_WITH_ACTION_AND_HELP_TEXT]}
+      />
+    );
+
+    expect(mockSpeak).toHaveBeenCalledTimes(2);
+    expect(mockSpeak).toHaveBeenCalledWith(
+      `${NOTIFICATION_WITH_ACTION_AND_HELP_TEXT.message} ${NOTIFICATION_WITH_ACTION_AND_HELP_TEXT.actionHelpText}`
+    );
   });
 });
