@@ -58,6 +58,9 @@ function arrange(children = null) {
         },
       },
     },
+    actions: {
+      updateStory: jest.fn(),
+    },
   };
   renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
