@@ -32,6 +32,7 @@ import {
   Icons,
   Datalist,
 } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -42,7 +43,6 @@ import { useHighlights, states, styles } from '../../../../app/highlights';
 import { Row, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
-import { useAPI } from '../../../../app';
 import PublishTime from './publishTime';
 import Author from './author';
 
@@ -106,14 +106,15 @@ const LogoImg = styled.img`
   max-height: 96px;
 `;
 
-function PublishPanel() {
+function PublishPanel({ apiCallbacks }) {
   const {
     state: { users },
   } = useInspector();
-
   const {
-    actions: { getPublisherLogos, addPublisherLogo },
-  } = useAPI();
+    api: { publisherLogos: publisherLogosPath },
+  } = useConfig();
+
+  const { getPublisherLogos, addPublisherLogo } = apiCallbacks;
 
   const {
     allowedImageMimeTypes,
@@ -126,8 +127,8 @@ function PublishPanel() {
   const [publisherLogos, setPublisherLogos] = useState([]);
 
   useEffect(() => {
-    getPublisherLogos().then(setPublisherLogos);
-  }, [getPublisherLogos]);
+    getPublisherLogos(publisherLogosPath).then(setPublisherLogos);
+  }, [getPublisherLogos, publisherLogosPath]);
 
   const { highlightPoster, highlightLogo, resetHighlight } = useHighlights(
     (state) => ({
@@ -182,7 +183,7 @@ function PublishPanel() {
 
   const onNewPublisherLogoSelected = ({ id, src }) => {
     const newLogo = { id, url: src };
-    addPublisherLogo(id);
+    addPublisherLogo(publisherLogosPath, id);
     setPublisherLogos((logos) => [...logos, newLogo]);
     onPublisherLogoChange(newLogo);
   };
@@ -369,5 +370,12 @@ function PublishPanel() {
     </Panel>
   );
 }
+
+PublishPanel.propTypes = {
+  apiCallbacks: PropTypes.shape({
+    getPublisherLogos: PropTypes.func.isRequired,
+    addPublisherLogo: PropTypes.func.isRequired,
+  }),
+};
 
 export default PublishPanel;

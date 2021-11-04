@@ -819,8 +819,6 @@ class APIProviderFixture {
         []
       );
 
-      const getPublisherLogos = useCallback(() => asyncResponse([]), []);
-
       const getAllStatuses = useCallback(
         () => jasmine.createSpy('getAllStatuses'),
         []
@@ -951,7 +949,6 @@ class APIProviderFixture {
           getMedia,
           getLinkMetadata,
           getHotlinkInfo,
-          getPublisherLogos,
           saveStoryById,
           getAllStatuses,
           getAuthors,

@@ -59,11 +59,9 @@ function arrange(
     actions: { updateStory },
   };
 
-  const getPublisherLogos = jest.fn().mockResolvedValue([]);
-  const apiValue = {
-    actions: {
-      getPublisherLogos,
-    },
+  const publisherPanelApiCallbacks = {
+    getPublisherLogos: jest.fn().mockResolvedValue([]),
+    addPublisherLogo: jest.fn().mockResolvedValue([]),
   };
 
   const config = {
@@ -88,10 +86,10 @@ function arrange(
 
   const view = renderWithTheme(
     <ConfigContext.Provider value={config}>
-      <ApiContext.Provider value={apiValue}>
+      <ApiContext.Provider value={{}}>
         <StoryContext.Provider value={storyContextValue}>
           <InspectorContext.Provider value={inspectorContextValue}>
-            <PublishPanel />
+            <PublishPanel apiCallbacks={publisherPanelApiCallbacks} />
           </InspectorContext.Provider>
         </StoryContext.Provider>
       </ApiContext.Provider>

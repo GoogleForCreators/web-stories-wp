@@ -26,11 +26,16 @@ import {
   TaxonomiesPanel,
 } from '@web-stories-wp/story-editor';
 
+/**
+ * Internal dependencies
+ */
+import * as publisherLogoCallbacks from '../../api/publisherLogos';
+
 function DocumentPane() {
   return (
     <>
       <StatusPanel />
-      <PublishPanel />
+      <PublishPanel apiCallbacks={publisherLogoCallbacks} />
       <ExcerptPanel />
       <SlugPanel />
       <PageAdvancementPanel />
