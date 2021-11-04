@@ -33,16 +33,24 @@ import {
   Datalist,
 } from '@web-stories-wp/design-system';
 import PropTypes from 'prop-types';
+import {
+  useStory,
+  useConfig,
+  Row,
+  Media,
+  Required,
+  useInspector,
+  highlightStates as states,
+  highlightStyles as styles,
+  useHighlights,
+  Panel,
+  PanelTitle,
+  PanelContent,
+} from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app/story';
-import { useConfig } from '../../../../app/config';
-import { useHighlights, states, styles } from '../../../../app/highlights';
-import { Row, Media, Required } from '../../../form';
-import useInspector from '../../../inspector/useInspector';
-import { Panel, PanelTitle, PanelContent } from '../../panel';
 import PublishTime from './publishTime';
 import Author from './author';
 

@@ -20,14 +20,12 @@
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { Datalist } from '@web-stories-wp/design-system';
-
-/**
- * Internal dependencies
- */
-import { Row } from '../../../form';
-import { useStory } from '../../../../app/story';
-import { useAPI } from '../../../../app/api';
-import useInspector from '../../../inspector/useInspector';
+import {
+  Row,
+  useStory,
+  useAPI,
+  useInspector,
+} from '@web-stories-wp/story-editor';
 
 function Author() {
   const {

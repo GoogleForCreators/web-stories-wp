@@ -17,10 +17,8 @@
  * External dependencies
  */
 import {
-  PublishPanel,
   ExcerptPanel,
   SlugPanel,
-  StatusPanel,
   PageAdvancementPanel,
   BackgroundAudioPanel,
   TaxonomiesPanel,
@@ -30,6 +28,8 @@ import {
  * Internal dependencies
  */
 import * as publisherLogoCallbacks from '../../api/publisherLogos';
+import PublishPanel from './publish';
+import StatusPanel from './status';
 
 function DocumentPane() {
   return (

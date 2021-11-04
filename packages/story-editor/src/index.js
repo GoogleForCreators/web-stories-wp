@@ -27,6 +27,9 @@ export * from './app/story';
 export * from './app/api';
 export * from './components/header';
 export * from './components/panels/document';
+export * from './components/form';
+export * from './components/panels/panel';
+export * from './components/panels/shared';
 export * from './app/currentUser';
 export * from './output';
 
@@ -34,12 +37,19 @@ export { default as getStoryPropsToSave } from './app/story/utils/getStoryPropsT
 export { default as FontContext } from './app/font/context';
 export { default as useLoadFontFiles } from './app/font/actions/useLoadFontFiles';
 export { default as StoryPropTypes } from './types';
-export { GlobalStyle } from './theme';
-export { default as theme } from './theme'; // @todo To be refactored.
+export { GlobalStyle, default as theme } from './theme'; // @todo To be refactored.
 export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 export { default as CircularProgress } from './components/circularProgress';
 export { default as InterfaceSkeleton } from './components/layout';
 export { default as Tooltip } from './components/tooltip';
+export { default as Popup } from './components/popup';
+export { default as useInspector } from './components/inspector/useInspector';
+export { default as InspectorContext } from './components/inspector/context';
+export {
+  styles as highlightStyles,
+  states as highlightStates,
+  useHighlights,
+} from './app/highlights';
 export { ConfigProvider as EditorConfigProvider } from './app/config';
 
 export { Dialog };

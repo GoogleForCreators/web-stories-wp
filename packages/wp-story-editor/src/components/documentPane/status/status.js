@@ -21,12 +21,12 @@ import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
-/**
- * Internal dependencies
- */
-import { useStory } from '../../../../app/story';
-import { Row, RadioGroup } from '../../../form';
-import { SimplePanel } from '../../panel';
+import {
+  useStory,
+  Row,
+  RadioGroup,
+  SimplePanel,
+} from '@web-stories-wp/story-editor';
 
 const InputRow = styled(Row)`
   margin-left: 34px;

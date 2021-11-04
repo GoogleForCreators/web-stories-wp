@@ -14,8 +14,22 @@
  * limitations under the License.
  */
 
-export { default as ExcerptPanel } from './excerpt';
-export { default as PageAdvancementPanel } from './pageAdvancement';
-export { default as SlugPanel } from './slug';
-export { default as BackgroundAudioPanel } from './backgroundAudio';
-export { default as TaxonomiesPanel } from './taxonomies';
+/**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '@web-stories-wp/design-system';
+
+// eslint-disable-next-line react/prop-types
+const WithThemeProvider = ({ children }) => {
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+};
+
+const renderWithTheme = (ui, options) =>
+  render(ui, {
+    wrapper: WithThemeProvider,
+    ...options,
+  });
+
+export default renderWithTheme;

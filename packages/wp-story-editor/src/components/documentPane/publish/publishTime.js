@@ -30,14 +30,13 @@ import {
   PLACEMENT,
   useKeyDownEffect,
 } from '@web-stories-wp/design-system';
-
-/**
- * Internal dependencies
- */
-import { DateTime, Row } from '../../../form';
-import Popup from '../../../popup';
-import { useStory } from '../../../../app/story';
-import { focusStyle } from '../../shared';
+import {
+  DateTime,
+  Row,
+  useStory,
+  Popup,
+  focusStyle,
+} from '@web-stories-wp/story-editor';
 
 // date-fns format without timezone.
 const TIMEZONELESS_FORMAT = 'Y-m-d\\TH:i:s';

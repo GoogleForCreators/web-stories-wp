@@ -19,15 +19,17 @@
  */
 import { fireEvent, waitFor, screen, act } from '@testing-library/react';
 import MockDate from 'mockdate';
+import {
+  APIContext,
+  ConfigContext,
+  StoryContext,
+  InspectorContext,
+} from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import ApiContext from '../../../../../app/api/context';
-import ConfigContext from '../../../../../app/config/context';
-import StoryContext from '../../../../../app/story/context';
-import { renderWithTheme } from '../../../../../testUtils';
-import InspectorContext from '../../../../inspector/context';
+import { renderWithTheme } from '../../../../testUtils';
 import PublishPanel from '../publish';
 
 function MediaUpload({ render }) {
@@ -94,13 +96,13 @@ function arrange(
 
   const view = renderWithTheme(
     <ConfigContext.Provider value={config}>
-      <ApiContext.Provider value={{ actions }}>
+      <APIContext.Provider value={{ actions }}>
         <StoryContext.Provider value={storyContextValue}>
           <InspectorContext.Provider value={inspectorContextValue}>
             <PublishPanel apiCallbacks={publisherPanelApiCallbacks} />
           </InspectorContext.Provider>
         </StoryContext.Provider>
-      </ApiContext.Provider>
+      </APIContext.Provider>
     </ConfigContext.Provider>
   );
   return {
