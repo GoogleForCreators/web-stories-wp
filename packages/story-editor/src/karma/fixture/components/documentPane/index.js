@@ -17,10 +17,8 @@
  * Internal dependencies
  */
 import {
-  PublishPanel,
   ExcerptPanel,
   SlugPanel,
-  StatusPanel,
   PageAdvancementPanel,
   BackgroundAudioPanel,
   TaxonomiesPanel,
@@ -29,8 +27,6 @@ import {
 function DocumentPane() {
   return (
     <>
-      <StatusPanel />
-      <PublishPanel />
       <ExcerptPanel />
       <SlugPanel />
       <PageAdvancementPanel />
