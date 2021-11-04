@@ -233,7 +233,6 @@ describe('Link Panel', () => {
       await moveElementToBottom(frame, 0);
 
       await closePanel('Selection');
-      await closePanel('Saved Colors');
 
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
