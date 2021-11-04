@@ -73,6 +73,9 @@ function arrange(
       'image/jpg',
       'image/gif',
     ],
+    api: {
+      publisherLogos: '/web-stories/v1/publisher-logos/',
+    },
     MediaUpload,
   };
   const loadUsers = jest.fn();
