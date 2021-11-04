@@ -17,7 +17,7 @@
  * External dependencies
  */
 import {
-  getKeyForOS,
+  prettifyShortcut,
   useGlobalKeyDownEffect,
   useSnackbar,
 } from '@web-stories-wp/design-system';
@@ -64,9 +64,8 @@ import { getDefaultPropertiesForType, getElementStyles } from './utils';
 
 const UNDO_HELP_TEXT = sprintf(
   /* translators: %s: Command or Control key on keyboard */
-  __('Press %s Z to undo the last change', 'web-stories'),
-  getKeyForOS('mod'),
-  'Z'
+  __('Press %s to undo the last change', 'web-stories'),
+  prettifyShortcut('mod+z')
 );
 
 /**

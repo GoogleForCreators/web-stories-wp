@@ -20,7 +20,7 @@
 import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import {
-  getKeyForOS,
+  prettifyShortcut,
   useSnackbar,
   PLACEMENT,
   Icons,
@@ -44,9 +44,8 @@ import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
 const UNDO_HELP_TEXT = sprintf(
   /* translators: %s: Command or Control key on keyboard */
-  __('Press %s Z to undo the last change', 'web-stories'),
-  getKeyForOS('mod'),
-  'Z'
+  __('Press %s to undo the last change', 'web-stories'),
+  prettifyShortcut('mod+z')
 );
 
 const {
