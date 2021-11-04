@@ -59,7 +59,7 @@ function useAddPreset({ presetType }) {
 
   const isText = areAllType('text', selectedElements);
   const isBackground =
-    selectedElements[0]?.id === currentPage?.elements?.[0]?.id;
+    selectedElements?.[0]?.id === currentPage?.elements?.[0]?.id;
 
   const getPresets = useCallback(
     (addedPresets, currentPresets) => {

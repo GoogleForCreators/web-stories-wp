@@ -25,6 +25,24 @@ import { createSolid } from '@web-stories-wp/patterns';
  */
 import { arrange } from './_utils';
 
+jest.mock(
+  '../../../../app/story/useStory',
+  () => (cb) =>
+    cb({
+      state: {
+        story: {
+          globalStoryStyles: {
+            colors: [],
+          },
+          selectedElements: [],
+        },
+      },
+      actions: {
+        updateStory: jest.fn(),
+      },
+    })
+);
+
 describe('<ColorPicker /> as the header is interacted with', () => {
   it('should invoke onchange with new correct pattern when switching to linear', async () => {
     const { getCustomButton, getLinearButton, onChange } = arrange({

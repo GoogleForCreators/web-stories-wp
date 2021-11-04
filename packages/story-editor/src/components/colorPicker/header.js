@@ -59,9 +59,9 @@ const StyledButton = styled(Button)`
 function Header({
   children,
   handleClose,
-  isEditMode,
-  setIsEditMode,
-  hasPresets,
+  isEditMode = false,
+  setIsEditMode = () => {},
+  hasPresets = false,
 }) {
   const ref = useRef();
   useEffect(() => {
@@ -117,9 +117,9 @@ function Header({
 Header.propTypes = {
   children: PropTypes.node,
   handleClose: PropTypes.func.isRequired,
-  isEditMode: PropTypes.bool.isRequired,
-  setIsEditMode: PropTypes.func.isRequired,
-  hasPresets: PropTypes.bool.isRequired,
+  isEditMode: PropTypes.bool,
+  setIsEditMode: PropTypes.func,
+  hasPresets: PropTypes.bool,
 };
 
 export default Header;
