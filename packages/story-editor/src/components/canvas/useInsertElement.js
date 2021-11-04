@@ -38,8 +38,9 @@ function useInsertElement() {
   const { addElement } = useStory((state) => ({
     addElement: state.actions.addElement,
   }));
-  const { uploadVideoPoster } = useLocalMedia((state) => ({
+  const { uploadVideoPoster, updateBaseColor } = useLocalMedia((state) => ({
     uploadVideoPoster: state.actions.uploadVideoPoster,
+    updateBaseColor: state.actions.updateBaseColor,
   }));
   const {
     actions: { registerUsage },
@@ -56,14 +57,22 @@ function useInsertElement() {
    */
   const backfillResource = useCallback(
     (resource) => {
-      const { type, src, id, posterId, local } = resource;
+      const { type, src, id, posterId, local, baseColor } = resource;
+
+      if (local || !id) {
+        return;
+      }
 
       // Generate video poster if one not set.
-      if (['video', 'gif'].includes(type) && id && !posterId && !local) {
+      if (['video', 'gif'].includes(type) && !posterId) {
         uploadVideoPoster(id, src);
       }
+      // Backfill base color, if one not set.
+      if (!baseColor || !baseColor.length) {
+        updateBaseColor({ resource });
+      }
     },
-    [uploadVideoPoster]
+    [uploadVideoPoster, updateBaseColor]
   );
 
   /**
