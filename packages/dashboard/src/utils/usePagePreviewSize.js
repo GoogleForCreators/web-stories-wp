@@ -46,8 +46,7 @@ import {
  * @param {number} width  width of page to base ratios on
  * @return {Object}       heights to use in pagePreviews { fullBleedHeight: Number, storyHeight: Number}
  */
-export const getPosterHeight = (width) =>
-  Math.round((width / PAGE_RATIO) * 100) / 100;
+export const getPosterHeight = (width) => Math.round(width / PAGE_RATIO);
 
 const getCurrentBp = (availableContainerSpace) =>
   availableContainerSpace <= MIN_DASHBOARD_WIDTH
