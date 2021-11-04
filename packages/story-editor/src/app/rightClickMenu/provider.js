@@ -63,7 +63,7 @@ import rightClickMenuReducer, {
 import { getDefaultPropertiesForType, getElementStyles } from './utils';
 
 const UNDO_HELP_TEXT = sprintf(
-  /* translators: %s: Command or Control key and the z key on the keyboard */
+  /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
   __('Press %s to undo the last change', 'web-stories'),
   prettifyShortcut('mod+z')
 );
