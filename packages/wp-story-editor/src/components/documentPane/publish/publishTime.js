@@ -33,8 +33,8 @@ import {
 import {
   DateTime,
   Row,
-  useStory,
   Popup,
+  useStory,
   focusStyle,
 } from '@web-stories-wp/story-editor';
 

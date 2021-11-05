@@ -33,18 +33,18 @@ import {
   Datalist,
 } from '@web-stories-wp/design-system';
 import {
-  useStory,
-  useConfig,
-  Row,
-  Media,
-  Required,
-  useInspector,
   highlightStates as states,
   highlightStyles as styles,
-  useHighlights,
+  Row,
+  Media,
   Panel,
+  Required,
   PanelTitle,
   PanelContent,
+  useStory,
+  useConfig,
+  useHighlights,
+  useInspector,
 } from '@web-stories-wp/story-editor';
 
 /**

@@ -23,13 +23,13 @@ import { __ } from '@web-stories-wp/i18n';
 import { Input } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 import {
-  useStory,
   Row,
   RadioGroup,
   SimplePanel,
-  useRefreshPostEditURL,
   ReviewChecklistDialog,
+  useStory,
   useCheckpoint,
+  useRefreshPostEditURL,
 } from '@web-stories-wp/story-editor';
 
 const InputRow = styled(Row)`
