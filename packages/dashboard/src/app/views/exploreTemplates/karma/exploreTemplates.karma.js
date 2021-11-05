@@ -31,7 +31,7 @@ describe('Grid view', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableInProgressTemplateActions: true });
+    fixture.setFlags({ enableExploreTemplatesSearch: true });
     await fixture.render();
 
     await navigateToExploreTemplates();

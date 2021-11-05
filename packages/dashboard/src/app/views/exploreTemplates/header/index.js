@@ -55,6 +55,9 @@ function Header({
   const enableInProgressTemplateActions = useFeature(
     'enableInProgressTemplateActions'
   );
+  const enableExploreTemplatesSearch = useFeature(
+    'enableExploreTemplatesSearch'
+  );
 
   const { setKeyword } = search;
   const debouncedSearchChange = useDebouncedCallback((value) => {
@@ -74,12 +77,11 @@ function Header({
       <PageHeading
         heading={__('Explore Templates', 'web-stories')}
         searchPlaceholder={__('Search Templates', 'web-stories')}
-        showSearch={enableInProgressTemplateActions}
+        showSearch={enableExploreTemplatesSearch}
         searchOptions={searchOptions}
         searchValue={search.keyword}
         handleSearchChange={debouncedSearchChange}
         clearSearch={clearSearch}
-        syncSearchAndSelected={false}
       />
       <BodyViewOptions
         resultsLabel={resultsLabel}

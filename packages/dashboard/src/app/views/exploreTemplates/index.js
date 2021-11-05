@@ -77,26 +77,27 @@ function ExploreTemplates() {
     fetchExternalTemplates();
   }, [fetchExternalTemplates]);
 
-  // extract filters from template meta data
-  const filters = useMemo(() => getTemplateFilters(templates), [templates]);
+  // extract templateFilters from template meta data
+  const templateFilters = useMemo(
+    () => getTemplateFilters(templates),
+    [templates]
+  );
 
-  // refine filters by search term
+  // refine templateFilters by search term
   const selectFilters = useMemo(
     () =>
       search.keyword
-        ? filters.filter((opt) =>
+        ? templateFilters.filter((opt) =>
             opt.label.toLowerCase().includes(search.keyword.toLowerCase())
           )
-        : filters,
-    [filters, search.keyword]
+        : templateFilters,
+    [templateFilters, search.keyword]
   );
 
-  // filter templates by the refined filters
+  // filter templates by the refined templateFilters
   const orderedTemplates = useMemo(() => {
     return templatesOrderById
-      .map((templateId) => {
-        return templates[templateId];
-      })
+      .map((templateId) => templates[templateId])
       .filter(composeTemplateFilter(selectFilters));
   }, [templatesOrderById, templates, selectFilters]);
 
