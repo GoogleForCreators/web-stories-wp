@@ -26,9 +26,11 @@ import {
   BUTTON_VARIANTS,
   Icons,
   Button,
+  PLACEMENT,
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { useRef, useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -38,7 +40,10 @@ import { PRESET_TYPES } from '../../../../../constants';
 import useAddPreset from '../../../../../utils/useAddPreset';
 import useApplyStyle from '../../preset/stylePreset/useApplyStyle';
 import { focusStyle } from '../../../shared';
+import Popup from '../../../../popup';
+import useInspector from '../../../../inspector/useInspector';
 import StyleGroup from './styleGroup';
+import StyleManager from './styleManager';
 
 const PresetsHeader = styled.div`
   display: flex;
@@ -71,8 +76,14 @@ function PresetPanel({ pushUpdate }) {
     }
   );
 
-  const { textStyles: globalPresets } = globalStoryStyles;
-  const hasPresets = globalPresets.length > 0;
+  const {
+    refs: { inspector },
+  } = useInspector();
+  const buttonRef = useRef(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const { textStyles } = globalStoryStyles;
+  const hasPresets = textStyles.length > 0;
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });
   const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
@@ -99,10 +110,28 @@ function PresetPanel({ pushUpdate }) {
       </PresetsHeader>
       <StylesWrapper>
         <StyleGroup
-          styles={globalPresets.slice(-2)}
+          styles={textStyles.slice(-2)}
           handleClick={handlePresetClick}
         />
       </StylesWrapper>
+      <StyledButton
+        ref={buttonRef}
+        type={BUTTON_TYPES.PLAIN}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.RECTANGLE}
+        onClick={() => setIsPopupOpen(true)}
+      >
+        {__('More styles >', 'web-stories')}
+      </StyledButton>
+      <Popup
+        anchor={buttonRef}
+        dock={inspector}
+        isOpen={isPopupOpen}
+        placement={PLACEMENT.LEFT_START}
+        renderContents={() => (
+          <StyleManager styles={textStyles} applyStyle={handlePresetClick} />
+        )}
+      />
     </>
   );
 }
