@@ -42,6 +42,7 @@ const apiCallbacksNames = [
   'updateStory',
 ];
 
+// @todo Remove items which are not required for now.
 const fetchStoriesResp = {
   stories: {
     1: {
@@ -87,6 +88,7 @@ const fetchStoriesResp = {
   },
 };
 
+// @todo Callbacks should be optional.
 const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   let response;
 
@@ -105,19 +107,93 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   return callbacks;
 }, {});
 
+// @todo Cleanup config and use a default configuration inside core dashboard package.
 const config = {
-  newStoryURL:
-    'http://localhost:45859/?path=/story/playground-stories-editor--default',
-  archiveURL: 'http://localhost:8899/web-stories',
+  userId: 1,
+  isRTL: false,
+  locale: {
+    locale: 'en-US',
+    dateFormat: 'F j, Y',
+    timeFormat: 'g:i a',
+    gmtOffset: '0',
+    timezone: '',
+    months: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    monthsShort: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ],
+    weekdays: [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ],
+    weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    weekdaysInitials: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    weekStartsOn: 1,
+  },
+  allowedImageMimeTypes: ['image/webp', 'image/png', 'image/jpeg', 'image/gif'],
+  flags: {
+    enableSVG: false,
+    enablePostLocking: false,
+    archivePageCustomization: true,
+    enableBetterCaptions: true,
+    enableInProgressTemplateActions: false,
+  },
+  cdnURL: 'https://wp.stories.google/static/main/',
+  maxUpload: 104857600,
+  maxUploadFormatted: '100 MB',
+  capabilities: {
+    canManageSettings: true,
+    canUploadFiles: true,
+  },
+  siteKitStatus: {
+    installed: false,
+    active: false,
+    analyticsActive: false,
+    adsenseActive: false,
+    analyticsLink: '',
+    adsenseLink: '',
+  },
+  localeData: [],
+  encodeMarkup: true,
+  newStoryURL: `${window.location.origin}/?path=/story/playground-stories-editor--default`,
+  archiveURL: '',
   version: '1.15.0-alpha.0',
   api: {
-    stories: '/web-stories/v1/web-story/',
-    media: '/web-stories/v1/media/',
-    currentUser: '/web-stories/v1/users/me/',
-    users: '/web-stories/v1/users/',
-    settings: '/web-stories/v1/settings/',
-    pages: '/wp/v2/pages/',
-    publisherLogos: '/web-stories/v1/publisher-logos/',
+    stories: '',
+    media: '',
+    currentUser: '',
+    users: '',
+    settings: '',
+    pages: '',
+    publisherLogos: '',
   },
   apiCallbacks,
 };
