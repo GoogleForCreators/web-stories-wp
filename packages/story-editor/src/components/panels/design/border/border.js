@@ -76,6 +76,7 @@ function BorderStylePanel(props) {
             }}
             label={__('Border color', 'web-stories')}
             changedStyle="border-color"
+            hasEyedropper
           />
         </Row>
       )}
