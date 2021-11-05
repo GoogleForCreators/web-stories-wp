@@ -22,6 +22,7 @@ import styled from 'styled-components';
 import { useCallback, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { PillGroup } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -45,7 +46,7 @@ const FILL_OPTIONS = [
   { id: BACKGROUND_TEXT_MODE.HIGHLIGHT, label: __('Highlight', 'web-stories') },
 ];
 
-function ColorControls({ selectedElements, pushUpdate }) {
+function BackgroundControls({ selectedElements, pushUpdate }) {
   const backgroundColor = useCommonColorValue(
     selectedElements,
     'backgroundColor'
@@ -107,6 +108,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
             }
             label={__('Background color', 'web-stories')}
             labelId="background-color-label"
+            hasEyedropper
           />
         </Row>
       )}
@@ -114,9 +116,9 @@ function ColorControls({ selectedElements, pushUpdate }) {
   );
 }
 
-ColorControls.propTypes = {
+BackgroundControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
 };
 
-export default ColorControls;
+export default BackgroundControls;

@@ -28,6 +28,7 @@ namespace Google\Web_Stories\Renderer;
 
 use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Embed;
@@ -56,16 +57,25 @@ class Archives extends Service_Base {
 	protected $amp_story_player_assets;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	protected $context;
+
+	/**
 	 * Archives constructor.
 	 *
 	 * @since 1.8.0
 	 *
 	 * @param Assets                  $assets            Assets instance.
 	 * @param AMP_Story_Player_Assets $amp_story_player_assets AMP_Story_Player_Assets instance.
+	 * @param Context                 $context                 Context instance.
 	 */
-	public function __construct( Assets $assets, AMP_Story_Player_Assets $amp_story_player_assets ) {
+	public function __construct( Assets $assets, AMP_Story_Player_Assets $amp_story_player_assets, Context $context ) {
 		$this->assets                  = $assets;
 		$this->amp_story_player_assets = $amp_story_player_assets;
+		$this->context                 = $context;
 	}
 
 	/**
@@ -104,7 +114,7 @@ class Archives extends Service_Base {
 			$story = new Story();
 			$story->load_from_post( $post );
 
-			$embed   = new Embed( $story, $this->assets );
+			$embed   = new Embed( $story, $this->assets, $this->context );
 			$content = $embed->render();
 		}
 

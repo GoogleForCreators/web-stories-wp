@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import { useCallback, useState } from '@web-stories-wp/react';
 import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
@@ -31,16 +31,14 @@ import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useCheckpoint, ReviewChecklistDialog } from '../../checklist';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
-const TRANSITION_DURATION = 300;
-
 function PublishButton({ forceIsSaving }) {
-  const { isSaving, date, storyId, saveStory, title, editLink, capabilities } =
+  const { isSaving, date, storyId, saveStory, title, editLink, canPublish } =
     useStory(
       ({
         state: {
-          capabilities,
           meta: { isSaving },
           story: { date, storyId, title, editLink },
+          capabilities,
         },
         actions: { saveStory },
       }) => ({
@@ -50,26 +48,18 @@ function PublishButton({ forceIsSaving }) {
         saveStory,
         title,
         editLink,
-        capabilities,
+        canPublish: Boolean(capabilities?.publish),
       })
     );
   const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
 
-  const { shouldReviewDialogBeSeen, onReviewDialogRequest } = useCheckpoint(
-    ({
-      actions: { onReviewDialogRequest },
-      state: { shouldReviewDialogBeSeen },
-    }) => ({
+  const { shouldReviewDialogBeSeen } = useCheckpoint(
+    ({ state: { shouldReviewDialogBeSeen } }) => ({
       shouldReviewDialogBeSeen,
-      onReviewDialogRequest,
     })
   );
-
-  const openChecklist = useCallback(() => {
-    onReviewDialogRequest();
-  }, [onReviewDialogRequest]);
 
   const [showDialog, setShowDialog] = useState(false);
 
@@ -80,41 +70,37 @@ function PublishButton({ forceIsSaving }) {
     toDate(new Date(), getOptions())
   );
 
-  useEffect(() => {
-    if (showDialog) {
-      trackEvent('review_prepublish_checklist');
-    }
-  }, [showDialog]);
-
   const publish = useCallback(() => {
+    let newStatus = 'pending';
+
+    if (canPublish) {
+      if (hasFutureDate) {
+        newStatus = 'future';
+      } else {
+        newStatus = 'publish';
+      }
+    }
+
     trackEvent('publish_story', {
-      status: hasFutureDate ? 'future' : 'publish',
+      status: newStatus,
       title_length: title.length,
     });
 
     setShowDialog(false);
-    saveStory({ status: 'publish' });
+    saveStory({ status: newStatus });
     refreshPostEditURL();
-  }, [refreshPostEditURL, saveStory, hasFutureDate, title]);
+  }, [refreshPostEditURL, saveStory, hasFutureDate, title, canPublish]);
 
   const handlePublish = useCallback(() => {
-    if (shouldReviewDialogBeSeen) {
+    if (shouldReviewDialogBeSeen && canPublish) {
       setShowDialog(true);
       return;
     }
 
     publish();
-  }, [shouldReviewDialogBeSeen, publish]);
+  }, [shouldReviewDialogBeSeen, canPublish, publish]);
 
-  const handleReviewChecklist = useCallback(() => {
-    setShowDialog(false);
-    // Focus Checklist Tab
-    // Disable reason: If component unmounts, nothing bad can happen
-    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
-    setTimeout(() => openChecklist(), TRANSITION_DURATION);
-  }, [openChecklist]);
-
-  const handleClose = useCallback(() => setShowDialog(false), []);
+  const closeDialog = useCallback(() => setShowDialog(false), []);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
@@ -124,17 +110,16 @@ function PublishButton({ forceIsSaving }) {
     <>
       <ButtonWithChecklistWarning
         onClick={handlePublish}
-        disabled={
-          !capabilities?.publish || isSaving || forceIsSaving || isUploading
-        }
-        text={text}
+        disabled={isSaving || forceIsSaving || isUploading}
+        text={canPublish ? text : __('Submit for review', 'web-stories')}
         isUploading={isUploading}
+        canPublish={canPublish}
       />
       <ReviewChecklistDialog
         isOpen={showDialog}
         onIgnore={publish}
-        onReview={handleReviewChecklist}
-        onClose={handleClose}
+        onClose={closeDialog}
+        onReview={closeDialog}
       />
     </>
   );

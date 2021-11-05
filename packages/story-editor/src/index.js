@@ -30,10 +30,12 @@ export * from './components/panels/document';
 export * from './components/form';
 export * from './components/panels/panel';
 export * from './components/panels/shared';
+export * from './components/checklist';
 export * from './app/currentUser';
 export * from './output';
 
 export { default as getStoryPropsToSave } from './app/story/utils/getStoryPropsToSave';
+export { default as useRefreshPostEditURL } from './utils/useRefreshPostEditURL';
 export { default as FontContext } from './app/font/context';
 export { default as useLoadFontFiles } from './app/font/actions/useLoadFontFiles';
 export { default as StoryPropTypes } from './types';

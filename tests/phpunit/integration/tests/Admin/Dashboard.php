@@ -18,12 +18,16 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
-use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Admin\Google_Fonts;
+use Google\Web_Stories\Assets;
+use Google\Web_Stories\Context;
+use Google\Web_Stories\Decoder;
+use Google\Web_Stories\Integrations\Site_Kit;
+use Google\Web_Stories\Locale;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Dashboard
@@ -158,7 +162,7 @@ class Dashboard extends DependencyInjectedTestCase {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 
-		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
+		$assets = $this->getMockBuilder( Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
 				[
@@ -170,14 +174,17 @@ class Dashboard extends DependencyInjectedTestCase {
 				]
 			);
 
+		$post_type = new Story_Post_Type( new Settings(), $experiments );
+
 		$this->instance = new \Google\Web_Stories\Admin\Dashboard(
 			$experiments,
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
-			$this->createMock( \Google\Web_Stories\Decoder::class ),
-			$this->createMock( \Google\Web_Stories\Locale::class ),
-			( new \Google\Web_Stories\Admin\Google_Fonts() ),
+			$this->createMock( Site_Kit::class ),
+			$this->createMock( Decoder::class ),
+			$this->createMock( Locale::class ),
+			( new Google_Fonts() ),
 			$assets,
-			new Story_Post_Type( new Settings(), $experiments ),
+			$post_type,
+			new Context( $post_type ),
 			$this->createMock( \Google\Web_Stories\Media\Types::class )
 		);
 

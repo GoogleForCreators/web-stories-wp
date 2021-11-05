@@ -20,10 +20,14 @@
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { useCallback, useEffect } from '@web-stories-wp/react';
+import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
 import Dialog from '../dialog';
+import { useCheckpoint } from './checkpointContext';
 
 const TEXT = {
   TITLE: __('Review checklist before publishing.', 'web-stories'),
@@ -35,7 +39,44 @@ const TEXT = {
   ),
 };
 
-function ReviewChecklistDialog({ isOpen, onIgnore, onReview, onClose }) {
+const TRANSITION_DURATION = 300;
+
+function ReviewChecklistDialog({
+  isOpen: _isOpen,
+  onIgnore,
+  onReview,
+  onClose,
+}) {
+  const { shouldReviewDialogBeSeen, onReviewDialogRequest } = useCheckpoint(
+    ({
+      actions: { onReviewDialogRequest },
+      state: { shouldReviewDialogBeSeen },
+    }) => ({
+      shouldReviewDialogBeSeen,
+      onReviewDialogRequest,
+    })
+  );
+
+  const isOpen = _isOpen && shouldReviewDialogBeSeen;
+
+  const openChecklist = useCallback(() => {
+    onReviewDialogRequest();
+  }, [onReviewDialogRequest]);
+
+  const onPrimary = useCallback(() => {
+    onReview?.();
+    // Focus Checklist Tab
+    // Disable reason: If component unmounts, nothing bad can happen
+    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    setTimeout(() => openChecklist(), TRANSITION_DURATION);
+  }, [onReview, openChecklist]);
+
+  useEffect(() => {
+    if (isOpen) {
+      trackEvent('review_prepublish_checklist');
+    }
+  }, [isOpen]);
+
   return (
     <Dialog
       isOpen={isOpen}
@@ -44,7 +85,7 @@ function ReviewChecklistDialog({ isOpen, onIgnore, onReview, onClose }) {
       onSecondary={onIgnore}
       secondaryText={TEXT.SECONDARY_BUTTON}
       primaryText={TEXT.PRIMARY_BUTTON}
-      onPrimary={onReview}
+      onPrimary={onPrimary}
       id="modal-review-checklist"
       contentStyles={{
         width: '434px',

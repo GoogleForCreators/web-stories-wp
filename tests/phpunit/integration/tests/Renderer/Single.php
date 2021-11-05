@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -25,7 +26,7 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * @package Google\Web_Stories\Tests
  * @coversDefaultClass \Google\Web_Stories\Renderer\Single
  */
-class Single extends TestCase {
+class Single extends DependencyInjectedTestCase {
 
 	/**
 	 * Admin user for test.
@@ -40,6 +41,11 @@ class Single extends TestCase {
 	 * @var int
 	 */
 	protected static $story_id;
+
+	/**
+	 * @var \Google\Web_Stories\Renderer\Single
+	 */
+	private $instance;
 
 	/**
 	 * @param \WP_UnitTest_Factory $factory
@@ -70,6 +76,12 @@ class Single extends TestCase {
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Renderer\Single::class );
+	}
+
 	/**
 	 * @covers ::filter_template_include
 	 */
@@ -77,10 +89,24 @@ class Single extends TestCase {
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 
-		$renderer = new \Google\Web_Stories\Renderer\Single();
-
-		$template_include = $renderer->filter_template_include( 'current' );
+		$template_include = $this->instance->filter_template_include( 'current' );
 		$this->assertStringContainsString( WEBSTORIES_PLUGIN_DIR_PATH, $template_include );
+	}
+
+	/**
+	 * @covers ::filter_template_include
+	 */
+	public function test_filter_template_include_with_password() {
+		$this->set_permalink_structure( '/%postname%/' );
+		$this->go_to( get_permalink( self::$story_id ) );
+
+		add_filter( 'post_password_required', '__return_true' );
+
+		$template_include = $this->instance->filter_template_include( 'current' );
+
+		remove_filter( 'post_password_required', '__return_true' );
+
+		$this->assertStringContainsString( 'current', $template_include );
 	}
 
 	/**
@@ -89,8 +115,9 @@ class Single extends TestCase {
 	public function test_show_admin_bar() {
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
-		$renderer       = new \Google\Web_Stories\Renderer\Single();
-		$show_admin_bar = $renderer->show_admin_bar( 'current' );
+
+		$show_admin_bar = $this->instance->show_admin_bar( 'current' );
+
 		$this->assertFalse( $show_admin_bar );
 		$this->assertTrue( is_singular( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
 	}

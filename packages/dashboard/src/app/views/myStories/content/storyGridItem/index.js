@@ -28,7 +28,11 @@ import { css } from 'styled-components';
  */
 import { StoryMenu } from '../../../../../components';
 import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
-import { STORY_STATUS } from '../../../../../constants';
+import {
+  DEFAULT_GRID_IMG_HEIGHT,
+  DEFAULT_GRID_IMG_WIDTH,
+  STORY_STATUS,
+} from '../../../../../constants';
 import {
   PageSizePropType,
   RenameStoryPropType,
@@ -152,6 +156,8 @@ const StoryGridItem = forwardRef(
                     src: story.featuredMediaUrl,
                   }
                 : null)}
+              width={DEFAULT_GRID_IMG_WIDTH}
+              height={DEFAULT_GRID_IMG_HEIGHT}
             />
             <Gradient />
             <Scrim>

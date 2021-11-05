@@ -292,7 +292,7 @@ function PublishPanel() {
     >
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent>
-        <PublishTime />
+        {capabilities?.publish && <PublishTime />}
         {capabilities?.['assign-author'] && users && <Author />}
         <HighlightRow
           isHighlighted={

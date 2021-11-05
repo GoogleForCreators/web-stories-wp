@@ -71,9 +71,10 @@ describe('Telemetry Banner', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should keep focus on the checkbox when checking/unchecking via keyboard', async () => {
     await page.waitForTimeout(300); // Because dashboard takes some time before banner appears.
-    const checkbox = await page.$('#telemetry-banner-opt-in');
 
-    await checkbox.focus();
+    const checkbox = await page.$('#telemetry-banner-opt-in');
+    await checkbox?.focus();
+
     await page.keyboard.press('Space');
     const optedIn = await page.evaluate(() => {
       const ele = document.getElementById('telemetry-banner-opt-in');

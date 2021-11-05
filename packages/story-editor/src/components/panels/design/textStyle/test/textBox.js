@@ -23,19 +23,58 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import TextBox from '../textBox';
-import ColorInput from '../../../../form/color/color';
+import TextStyle from '../textStyle';
 import {
   BACKGROUND_TEXT_MODE,
   HIDDEN_PADDING,
   MULTIPLE_DISPLAY_VALUE,
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
+import FontContext from '../../../../../app/font/context';
 
-jest.mock('../../../../form/color/color', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
+let mockControls;
+jest.mock('../../../../form/color/color', () => {
+  // eslint-disable-next-line no-undef
+  const React = require('@web-stories-wp/react');
+  // eslint-disable-next-line no-undef
+  const _PropTypes = require('prop-types');
+  const FakeControl = React.forwardRef(function FakeControl(props, ref) {
+    mockControls[props['data-testid']] = props;
+    return <div ref={ref} />;
+  });
+  FakeControl.propTypes = {
+    'data-testid': _PropTypes.string,
+  };
+  return {
+    __esModule: true,
+    default: FakeControl,
+  };
+});
+
+function Wrapper({ children }) {
+  return (
+    <FontContext.Provider
+      value={{
+        state: {
+          fonts: [],
+        },
+        actions: {
+          maybeEnqueueFontStyle: () => Promise.resolve(),
+          getFontByName: jest.fn(),
+        },
+      }}
+    >
+      {children}
+    </FontContext.Provider>
+  );
+}
+
+Wrapper.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+};
 
 const DEFAULT_PADDING = {
   horizontal: 0,
@@ -44,9 +83,9 @@ const DEFAULT_PADDING = {
   hasHiddenPadding: false,
 };
 
-describe('Panels/TextBox', () => {
+describe('panels/TextStyle/TextBox', () => {
+  mockControls = {};
   let textElement, unlockPaddingTextElement;
-  let controls;
   const paddingRatioLockLabel = 'Toggle padding ratio lock';
 
   beforeEach(() => {
@@ -73,30 +112,13 @@ describe('Panels/TextBox', () => {
       ...unlockPaddingTextElement,
       padding: DEFAULT_PADDING,
     };
-    controls = {};
-    ColorInput.mockImplementation(FakeControl);
   });
-
-  function FakeControl(props) {
-    controls[props['data-testid']] = props;
-    return <div />;
-  }
-
-  FakeControl.propTypes = {
-    'data-testid': PropTypes.string,
-  };
 
   function renderTextBox(selectedElements, ...args) {
-    return renderPanel(TextBox, selectedElements, ...args);
+    return renderPanel(TextStyle, selectedElements, Wrapper, ...args);
   }
 
-  it('should render <TextBox /> panel', () => {
-    renderTextBox([textElement]);
-    const element = screen.getByRole('button', { name: 'Text box' });
-    expect(element).toBeInTheDocument();
-  });
-
-  describe('PaddingControls', () => {
+  describe('paddingControls', () => {
     let textSamePadding,
       unlockPaddingTextSamePadding,
       textDifferentPadding,
@@ -533,7 +555,7 @@ describe('Panels/TextBox', () => {
     });
   });
 
-  describe('Mixed value multi-selection', () => {
+  describe('mixed value multi-selection', () => {
     it('should display Mixed value in case of mixed value multi-selection', () => {
       const textElement1 = textElement;
       const textElement2 = {

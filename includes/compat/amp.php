@@ -38,7 +38,8 @@ if ( ! function_exists( '\is_amp_endpoint' ) ) {
 	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
 	 */
 	function is_amp_endpoint(): bool {
-		return is_singular( Story_Post_Type::POST_TYPE_SLUG );
+		// Not using Context class because it's not available yet at this point.
+		return is_singular( Story_Post_Type::POST_TYPE_SLUG ) && ! is_embed() && ! post_password_required();
 	}
 }
 

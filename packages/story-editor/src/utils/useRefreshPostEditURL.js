@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Update page URL in browser.
@@ -28,7 +28,7 @@ import { sprintf, __ } from '@web-stories-wp/i18n';
  * @return {Function} Function to refresh the post edit URL.
  */
 function useRefreshPostEditURL(postId, postEditURL) {
-  const refreshPostEditURL = useCallback(() => {
+  return useCallback(() => {
     try {
       const newUrl = new URL(postEditURL);
       newUrl.hash = window.location.hash;
@@ -45,7 +45,6 @@ function useRefreshPostEditURL(postId, postEditURL) {
       // Do nothing for now.
     }
   }, [postId, postEditURL]);
-  return refreshPostEditURL;
 }
 
 export default useRefreshPostEditURL;
