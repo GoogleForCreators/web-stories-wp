@@ -32,7 +32,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { BUTTON_TRANSITION_TIMING } from '../button/constants';
 import { useKeyDownEffect } from '../keyboard';
-import { KEYS } from '../../utils';
+import { KEYS, noop } from '../../utils';
 import { MenuItem, MenuItemProps } from './menuItem';
 
 const FOCUSABLE_ELEMENTS = ['A', 'BUTTON'];
@@ -177,12 +177,12 @@ MenuList.propTypes = {
  * other apps the ability to inject their own media pickers.
  *
  * @param {Object} props Component props
- * @param {Function} props.children Children as a function.
+ * @param {Function} props.render Decorating wrapper function for menu item components.
  * @return {Node} The react component
  */
-const DefaultWrapper = ({ children, ...props }) => children(props);
-DefaultWrapper.propTypes = {
-  children: PropTypes.func.isRequired,
+const IdentityItemWrapper = ({ render, ...props }) => render(props);
+IdentityItemWrapper.propTypes = {
+  render: PropTypes.func.isRequired,
 };
 
 const Menu = ({
@@ -318,7 +318,13 @@ const Menu = ({
       >
         {items.map(
           (
-            { Wrapper = DefaultWrapper, separator, onFocus, ...itemProps },
+            {
+              Wrapper = IdentityItemWrapper,
+              separator,
+              onFocus,
+              onClick,
+              ...itemProps
+            },
             index
           ) => (
             <li
@@ -332,17 +338,24 @@ const Menu = ({
             >
               {/* Not standard - but necessary. `MediaUpload` component exposes an
               event handler in a render prop. */}
-              <Wrapper>
-                {(wrapperProps = {}) => (
+              <Wrapper
+                render={({
+                  onClick: wrapperOnClick = noop,
+                  ...wrapperProps
+                }) => (
                   <MenuItem
                     index={index}
                     onFocus={(ev) => handleFocusItem(ev, index, onFocus)}
                     onDismiss={onDismiss}
+                    onClick={(ev) => {
+                      wrapperOnClick(ev);
+                      onClick(ev);
+                    }}
                     {...itemProps}
                     {...wrapperProps}
                   />
                 )}
-              </Wrapper>
+              />
             </li>
           )
         )}

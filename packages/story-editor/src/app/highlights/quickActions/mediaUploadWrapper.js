@@ -20,49 +20,36 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
 import { useConfig } from '../..';
 
-const mediaUploadPropsType = {
-  title: PropTypes.string,
-  buttonInsertText: PropTypes.string,
-  onSelect: PropTypes.func.isRequired,
-  onSelectErrorMessage: PropTypes.string,
-  onClose: PropTypes.func,
-  onPermissionError: PropTypes.func,
-  type: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  cropParams: PropTypes.object,
-  multiple: PropTypes.bool,
-};
-
-const MediaUploadWrapper = ({ children, mediaUploadProps, ...props }) => {
+const MediaUploadWrapper = ({ render, ...props }) => {
   const { MediaUpload } = useConfig();
 
   return (
     <MediaUpload
-      {...mediaUploadProps}
-      // overwrite `onClick` because the only way to access the open
-      // function is to dive into the MediaUpload component in the render prop.
-      render={(open) => children({ ...props, onClick: open })}
+      {...props}
+      // Only way to access the open function is to dive
+      // into the MediaUpload component in the render prop.
+      render={(open) => render({ onClick: open })}
     />
   );
 };
 MediaUploadWrapper.propTypes = {
-  children: PropTypes.func.isRequired,
-  mediaUploadProps: PropTypes.shape(mediaUploadPropsType),
+  render: PropTypes.func.isRequired,
+  mediaUploadProps: PropTypes.shape({
+    title: PropTypes.string,
+    buttonInsertText: PropTypes.string,
+    onSelect: PropTypes.func.isRequired,
+    onSelectErrorMessage: PropTypes.string,
+    onClose: PropTypes.func,
+    onPermissionError: PropTypes.func,
+    type: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    cropParams: PropTypes.object,
+    multiple: PropTypes.bool,
+  }).isRequired,
 };
 
-const WithMediaUploadWrapper = ({ children, ...props }) => (
-  <MediaUploadWrapper mediaUploadProps={props}>{children}</MediaUploadWrapper>
-);
-WithMediaUploadWrapper.propTypes = {
-  children: PropTypes.func.isRequired,
-  ...mediaUploadPropsType,
-};
-
-export default WithMediaUploadWrapper;
+export default MediaUploadWrapper;
