@@ -176,7 +176,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       // there should no longer be any saved templates
       await waitFor(() => {
         expect(
-          () => fixture.editor.library.pageTemplatesPane.pageTemplates
+          () => fixture.editor.library.pageTemplatesPane.pageTemplates.length
         ).toThrow();
       });
     });
