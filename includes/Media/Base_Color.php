@@ -70,11 +70,14 @@ class Base_Color extends Service_Base implements HasMeta {
 			[
 				'type'           => 'array',
 				'description'    => __( 'Attachment base color', 'web-stories' ),
-				'show_in_rest'   => [
+				'show_in_rest' => [
 					'schema' => [
-						'type'  => 'array',
-						'items' => [
-							'type' => 'integer',
+						'type'     => 'array',
+						'maxItems' => 3,
+						'items'    => [
+							'minimum' => 0,
+							'maximum' => 255,
+							'type'    => 'integer',
 						],
 					],
 				],
