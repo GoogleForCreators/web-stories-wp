@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Admin
  */
-class Admin extends TestCase {
+class Admin extends DependencyInjectedTestCase {
 
 	/**
 	 * Admin user for test.
@@ -71,15 +71,27 @@ class Admin extends TestCase {
 	}
 
 	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Admin\Admin
+	 */
+	private $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Admin\Admin::class );
+	}
+
+	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$admin = new \Google\Web_Stories\Admin\Admin();
-		$admin->register();
+		$this->instance->register();
 
-		$this->assertSame( 99, has_filter( 'admin_body_class', [ $admin, 'admin_body_class' ] ) );
-		$this->assertSame( 10, has_filter( 'default_content', [ $admin, 'prefill_post_content' ] ) );
-		$this->assertSame( 10, has_filter( 'default_title', [ $admin, 'prefill_post_title' ] ) );
+		$this->assertSame( 99, has_filter( 'admin_body_class', [ $this->instance, 'admin_body_class' ] ) );
+		$this->assertSame( 10, has_filter( 'default_content', [ $this->instance, 'prefill_post_content' ] ) );
+		$this->assertSame( 10, has_filter( 'default_title', [ $this->instance, 'prefill_post_title' ] ) );
 
 	}
 
@@ -87,10 +99,9 @@ class Admin extends TestCase {
 	 * @covers ::admin_body_class
 	 */
 	public function test_admin_body_class() {
-		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( self::$admin_id );
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-		$result                    = $admin->admin_body_class( 'current' );
+		$result                    = $this->instance->admin_body_class( 'current' );
 		$this->assertStringContainsString( 'folded', $result );
 	}
 
@@ -98,10 +109,10 @@ class Admin extends TestCase {
 	 * @covers ::prefill_post_content
 	 */
 	public function test_prefill_post_content() {
-		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( self::$admin_id );
+
 		$_GET['from-web-story'] = self::$story_id;
-		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
+		$result                 = $this->instance->prefill_post_content( 'current', get_post( self::$post_id ) );
 		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 		$this->assertStringContainsString( 'wp-block-web-stories-embed', $result );
 		$this->assertStringContainsString( $poster, $result );
@@ -111,10 +122,10 @@ class Admin extends TestCase {
 	 * @covers ::prefill_post_content
 	 */
 	public function test_prefill_post_content_invalid_user() {
-		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( 0 );
+
 		$_GET['from-web-story'] = self::$story_id;
-		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
+		$result                 = $this->instance->prefill_post_content( 'current', get_post( self::$post_id ) );
 		$this->assertSame( 'current', $result );
 	}
 
@@ -124,10 +135,11 @@ class Admin extends TestCase {
 	 */
 	public function test_prefill_post_content_shortcode() {
 		add_filter( 'use_block_editor_for_post', '__return_false' );
-		$admin = new \Google\Web_Stories\Admin\Admin();
+
 		wp_set_current_user( self::$admin_id );
+
 		$_GET['from-web-story'] = self::$story_id;
-		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
+		$result                 = $this->instance->prefill_post_content( 'current', get_post( self::$post_id ) );
 		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 		$this->assertStringContainsString( '[web_stories_embed', $result );
 		$this->assertStringContainsString( $poster, $result );
@@ -138,10 +150,10 @@ class Admin extends TestCase {
 	 * @covers ::prefill_post_content
 	 */
 	public function test_prefill_post_content_invalid_id() {
-		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( self::$admin_id );
+
 		$_GET['from-web-story'] = 999999999;
-		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
+		$result                 = $this->instance->prefill_post_content( 'current', get_post( self::$post_id ) );
 		$this->assertSame( 'current', $result );
 	}
 
@@ -149,10 +161,10 @@ class Admin extends TestCase {
 	 * @covers ::prefill_post_title
 	 */
 	public function test_prefill_post_title() {
-		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( self::$admin_id );
+
 		$_GET['from-web-story'] = self::$story_id;
-		$result                 = $admin->prefill_post_title( 'current' );
+		$result                 = $this->instance->prefill_post_title( 'current' );
 		$this->assertSame( 'Admin Test Story', $result );
 	}
 
@@ -160,8 +172,8 @@ class Admin extends TestCase {
 	 * @covers ::prefill_post_title
 	 */
 	public function test_prefill_post_title_no_texturize() {
-		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( self::$admin_id );
+
 		$_GET['from-web-story'] = self::$story_id;
 
 		$original_title = get_post( self::$story_id )->post_title;
@@ -174,7 +186,7 @@ class Admin extends TestCase {
 			]
 		);
 
-		$result = $admin->prefill_post_title( 'current' );
+		$result = $this->instance->prefill_post_title( 'current' );
 
 		// Cleanup.
 		wp_update_post(

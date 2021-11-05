@@ -33,6 +33,7 @@ use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Stories_Script_Data;
+use Google\Web_Stories\Context;
 
 /**
  * Latest Stories block class.
@@ -82,9 +83,16 @@ class Web_Stories_Block extends Embed_Base {
 	 * @param Assets              $assets              Assets instance.
 	 * @param Story_Post_Type     $story_post_type     Story_Post_Type instance.
 	 * @param Stories_Script_Data $stories_script_data Stories_Script_Data instance.
+	 * @param Context             $context             Context instance.
 	 */
-	public function __construct( Assets $assets, Story_Post_Type $story_post_type, Stories_Script_Data $stories_script_data ) {
-		parent::__construct( $assets );
+	public function __construct(
+		Assets $assets,
+		Story_Post_Type $story_post_type,
+		Stories_Script_Data $stories_script_data,
+		Context $context
+	) {
+		parent::__construct( $assets, $context );
+
 		$this->story_post_type     = $story_post_type;
 		$this->stories_script_data = $stories_script_data;
 	}

@@ -15,60 +15,29 @@
  */
 
 /**
- * External dependencies
- */
-import { createSolidFromString } from '@web-stories-wp/patterns';
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
-import useInsertElement from '../useInsertElement';
 
 describe('Canvas Keyboard Shortcuts', () => {
   let fixture;
-  let element1;
-  let element2;
-  let element3;
-  let fullbleed;
+  let elementIds;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
 
-    fullbleed = fixture.container.querySelector('[data-testid="fullbleed"]');
+    // Let's insert three images
+    await fixture.events.click(fixture.editor.library.media.item(0));
+    await fixture.events.click(fixture.editor.library.media.item(1));
+    await fixture.events.click(fixture.editor.library.media.item(2));
 
-    const insertElement = await fixture.renderHook(() => useInsertElement());
-    element1 = await fixture.act(() =>
-      insertElement('shape', {
-        backgroundColor: createSolidFromString('#f00123'),
-        mask: { type: 'rectangle' },
-        x: 10,
-        y: 10,
-        width: 50,
-        height: 50,
-      })
-    );
-    element2 = await fixture.act(() =>
-      insertElement('shape', {
-        backgroundColor: createSolidFromString('#f00123'),
-        mask: { type: 'rectangle' },
-        x: 100,
-        y: 100,
-        width: 50,
-        height: 50,
-      })
-    );
-    element3 = await fixture.act(() =>
-      insertElement('shape', {
-        backgroundColor: createSolidFromString('#f00123'),
-        mask: { type: 'rectangle' },
-        x: 200,
-        y: 200,
-        width: 50,
-        height: 50,
-      })
-    );
+    // And let's get the ID's of those three elements for easy access later
+    const storyContext = await fixture.renderHook(() => useStory());
+    elementIds = storyContext.state.currentPage.elements
+      .slice(1)
+      .map(({ id }) => id);
   });
 
   afterEach(() => {
@@ -80,15 +49,13 @@ describe('Canvas Keyboard Shortcuts', () => {
     return storyContext.state.selectedElementIds;
   }
 
-  // TODO(#9382): Fix flaky test.
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should have the last element selected by default', async () => {
-    await fixture.events.focus(fullbleed);
+  it('should have the last element selected by default', async () => {
+    expect(await getSelection()).toEqual([elementIds[2]]);
+  });
+
+  it('should select all elements when pressing mod+a shortcut', async () => {
+    await fixture.events.focus(fixture.editor.canvas.framesLayer.fullbleed);
     await fixture.events.keyboard.shortcut('mod+a');
-    expect(await getSelection()).toEqual([
-      element1.id,
-      element2.id,
-      element3.id,
-    ]);
+    expect(await getSelection()).toEqual([...elementIds]);
   });
 });

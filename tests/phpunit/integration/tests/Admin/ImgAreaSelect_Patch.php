@@ -19,7 +19,9 @@ namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Admin\ImgAreaSelect_Patch as Testee;
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Context;
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * Class ImgAreaSelect_Patch
@@ -28,22 +30,36 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  *
  * @coversDefaultClass \Google\Web_Stories\Admin\ImgAreaSelect_Patch
  */
-class ImgAreaSelect_Patch extends TestCase {
+class ImgAreaSelect_Patch extends DependencyInjectedTestCase {
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Admin\ImgAreaSelect_Patch
+	 */
+	protected $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Admin\ImgAreaSelect_Patch::class );
+	}
+
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$object = new Testee( new Assets() );
-		$object->register();
+		$this->instance->register();
 
-		$this->assertSame( 10, has_filter( 'script_loader_tag', [ $object, 'script_loader_tag' ] ) );
+		$this->assertSame( 10, has_filter( 'script_loader_tag', [ $this->instance, 'script_loader_tag' ] ) );
 	}
 
 	/**
 	 * @covers ::script_loader_tag
 	 */
 	public function test_script_loader_tag() {
-		$assets = $this->getMockBuilder( Assets::class )->setMethods( [ 'get_asset_metadata', 'get_base_url' ] )->getMock();
+		$assets = $this->getMockBuilder( Assets::class )
+				->setMethods( [ 'get_asset_metadata', 'get_base_url' ] )
+				->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
 				[
@@ -54,10 +70,22 @@ class ImgAreaSelect_Patch extends TestCase {
 				]
 			);
 		$assets->method( 'get_base_url' )->willReturn( 'http://www.google.com/foo.js' );
-		$object = $this->getMockBuilder( Testee::class )->setConstructorArgs( [ $assets ] )->setMethods( [ 'is_edit_screen' ] )->getMock();
-		$object->method( 'is_edit_screen' )->willReturn( true );
-		$tag     = '<script src="http://www.example.com/foo.js"></script>';
-		$results = $object->script_loader_tag( $tag, Testee::SCRIPT_HANDLE, 'http://www.example.com/foo.js' );
+		$context = $this->getMockBuilder( Context::class )
+						->setConstructorArgs( [ $this->injector->make( Story_Post_Type::class ) ] )
+						->setMethods( [ 'is_story_editor' ] )
+						->getMock();
+		$context->method( 'is_story_editor' )->willReturn( true );
+
+		$this->instance = $this->getMockBuilder( Testee::class )
+						->setConstructorArgs( [ $assets, $context ] )
+						->setMethodsExcept( [ 'script_loader_tag' ] )
+						->getMock();
+
+		$tag = '<script src="http://www.example.com/foo.js"></script>';
+
+		$results = $this->instance->script_loader_tag( $tag, Testee::SCRIPT_HANDLE, 'http://www.example.com/foo.js' );
+
+		$this->assertIsString( $results );
 		$this->assertStringContainsString( '9.9.9', $results );
 		$this->assertStringContainsString( 'http://www.google.com/foo.js', $results );
 		$this->assertStringNotContainsString( 'http://www.example.com/foo.js', $results );
@@ -67,9 +95,8 @@ class ImgAreaSelect_Patch extends TestCase {
 	 * @covers ::script_loader_tag
 	 */
 	public function test_script_loader_tag_wrong_handle() {
-		$object  = new Testee( new Assets() );
 		$tag     = '<script src="http://www.example.com/foo.js"></script>';
-		$results = $object->script_loader_tag( $tag, 'wrong-handle', 'http://www.example.com/foo.js' );
+		$results = $this->instance->script_loader_tag( $tag, 'wrong-handle', 'http://www.example.com/foo.js' );
 		$this->assertSame( $tag, $results );
 	}
 
@@ -77,9 +104,8 @@ class ImgAreaSelect_Patch extends TestCase {
 	 * @covers ::script_loader_tag
 	 */
 	public function test_script_loader_tag_not_editor() {
-		$object  = new Testee( new Assets() );
 		$tag     = '<script src="http://www.example.com/foo.js"></script>';
-		$results = $object->script_loader_tag( $tag, Testee::SCRIPT_HANDLE, 'http://www.example.com/foo.js' );
+		$results = $this->instance->script_loader_tag( $tag, Testee::SCRIPT_HANDLE, 'http://www.example.com/foo.js' );
 		$this->assertSame( $tag, $results );
 	}
 }

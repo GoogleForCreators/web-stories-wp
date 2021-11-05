@@ -32,16 +32,10 @@ class Poster extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	/**
-	 * @var \Google\Web_Stories\Media\Media_Source_Taxonomy
-	 */
-	private $media_source;
-
 	public function set_up() {
 		parent::set_up();
 
-		$this->instance     = $this->injector->make( \Google\Web_Stories\Media\Video\Poster::class );
-		$this->media_source = $this->injector->make( \Google\Web_Stories\Media\Media_Source_Taxonomy::class );
+		$this->instance = $this->injector->make( \Google\Web_Stories\Media\Video\Poster::class );
 	}
 
 	/**
@@ -70,6 +64,7 @@ class Poster extends DependencyInjectedTestCase {
 	 */
 	public function test_rest_api_init() {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -181,7 +176,7 @@ class Poster extends DependencyInjectedTestCase {
 			]
 		);
 
-		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->media_source->get_taxonomy_slug() );
+		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 
 		$result = $this->instance->get_thumbnail_data( $poster_attachment_id );
 		$this->assertTrue( $result['generated'] );
@@ -210,7 +205,7 @@ class Poster extends DependencyInjectedTestCase {
 		);
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->media_source->get_taxonomy_slug() );
+		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 
 		$this->instance->delete_video_poster( $video_attachment_id );
@@ -266,8 +261,8 @@ class Poster extends DependencyInjectedTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		$media_source         = new Media_Source_Taxonomy();
-		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $media_source->get_taxonomy_slug() );
+
+		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
@@ -291,11 +286,11 @@ class Poster extends DependencyInjectedTestCase {
 		$result1 = $this->call_private_method( $this->instance, 'is_poster', [ $poster_attachment_id ] );
 		$this->assertFalse( $result1 );
 
-		wp_set_object_terms( $poster_attachment_id, 'editor', $this->media_source->get_taxonomy_slug() );
+		wp_set_object_terms( $poster_attachment_id, 'editor', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 		$result2 = $this->call_private_method( $this->instance, 'is_poster', [ $poster_attachment_id ] );
 		$this->assertFalse( $result2 );
 
-		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->media_source->get_taxonomy_slug() );
+		wp_set_object_terms( $poster_attachment_id, 'poster-generation', $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 		$result3 = $this->call_private_method( $this->instance, 'is_poster', [ $poster_attachment_id ] );
 		$this->assertTrue( $result3 );
 	}

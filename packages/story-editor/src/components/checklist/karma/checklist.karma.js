@@ -604,41 +604,6 @@ describe('Checklist integration - Card visibility', () => {
               permalink_template: 'http://stories3.local/stories/%pagename%/',
               style_presets: { textStyles: [], colors: [] },
               password: '',
-              _embedded: {
-                author: [{ id: 1, name: 'John Doe' }],
-                'wp:featuredmedia': [
-                  {
-                    id: 2,
-                    source_url: 'http://localhost:9876/__static__/earth.jpg',
-                    height: 200,
-                    width: 200,
-                  },
-                ],
-                'wp:publisherlogo': [
-                  {
-                    id: 0,
-                    source_url: 'http://localhost:9876/__static__/earth.jpg',
-                  },
-                ],
-              },
-              _links: {
-                'wp:action-assign-author': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:action-delete': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:action-publish': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:action-unfiltered-html': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:featuredmedia': {
-                  embeddable: true,
-                  href: 'http://stories.local/wp-json/web-stories/v1/media/2',
-                },
-              },
             }),
         },
       });
