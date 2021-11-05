@@ -38,19 +38,23 @@ import { PRESET_TYPES } from '../../../../../constants';
 import useAddPreset from '../../../../../utils/useAddPreset';
 import useApplyStyle from '../../preset/stylePreset/useApplyStyle';
 import { focusStyle } from '../../../shared';
+import StyleGroup from './styleGroup';
 
 const PresetsHeader = styled.div`
   display: flex;
+  padding: 8px 0;
+  justify-content: space-between;
 `;
 
 const StylesWrapper = styled.div``;
 
 const SubHeading = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
-  margin: 14px 0;
+  margin: 6px 0;
 `;
 
 const StyledButton = styled(Button)`
+  margin-left: auto;
   ${focusStyle};
 `;
 
@@ -94,8 +98,8 @@ function PresetPanel({ pushUpdate }) {
         </StyledButton>
       </PresetsHeader>
       <StylesWrapper>
-        <div
-          styles={globalPresets}
+        <StyleGroup
+          styles={globalPresets.slice(-2)}
           handleClick={handlePresetClick}
         />
       </StylesWrapper>
