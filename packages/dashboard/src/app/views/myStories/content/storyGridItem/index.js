@@ -164,7 +164,7 @@ const StoryGridItem = forwardRef(
               {story?.capabilities?.hasEditAction && (
                 <ScrimAnchor
                   className="grid-item-anchor"
-                  data-testid="edit-story-grid-link"
+                  data-testid="story-editor-grid-link"
                   tabIndex={tabIndex}
                   href={story.editStoryLink}
                 >
