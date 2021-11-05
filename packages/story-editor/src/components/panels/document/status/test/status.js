@@ -29,13 +29,20 @@ import StatusPanel from '../status';
 function arrange(
   capabilities = {
     publish: true,
-  }
+  },
+  password = ''
 ) {
   const updateStory = jest.fn();
 
   const storyContextValue = {
     state: {
-      story: { status: 'draft', password: '' },
+      story: {
+        status: 'draft',
+        password,
+        title: '',
+        storyId: 123,
+        editLink: 'http://localhost/wp-admin/post.php?post=123&action=edit',
+      },
       capabilities,
     },
     actions: { updateStory },
@@ -51,12 +58,24 @@ function arrange(
   };
 }
 
-describe('StatusPanel', () => {
+const windowConfirm = jest.fn(() => true);
+
+describe('statusPanel', () => {
   beforeAll(() => {
     localStorage.setItem(
       'web_stories_ui_panel_settings:status',
       JSON.stringify({ isCollapsed: false })
     );
+
+    // Mock window.confirm()
+    Object.defineProperty(window, 'confirm', {
+      writable: true,
+      value: windowConfirm,
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   afterAll(() => {
@@ -66,30 +85,71 @@ describe('StatusPanel', () => {
   it('should render Status Panel', () => {
     arrange();
     const element = screen.getByRole('button', {
-      name: 'Status and visibility',
+      name: 'Visibility',
     });
     expect(element).toBeInTheDocument();
 
     const radioOptions = screen.getAllByRole('radio');
     expect(radioOptions).toHaveLength(3);
+    expect(screen.getByLabelText('Public')).toBeInTheDocument();
+    expect(screen.getByLabelText('Private')).toBeInTheDocument();
+    expect(screen.getByLabelText('Password Protected')).toBeInTheDocument();
   });
 
-  it('should not render the status option without correct permissions', () => {
+  it('should always render the "Public" visibility option', () => {
     arrange({
       publish: false,
     });
-    expect(screen.queryByText('Public')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('Public')).toBeInTheDocument();
   });
 
-  it('should update the story when clicking on status', () => {
+  it('should not render other visibility options if lacking permissions', () => {
+    arrange({
+      publish: false,
+    });
+    expect(screen.queryByLabelText('Private')).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Password Protected')
+    ).not.toBeInTheDocument();
+  });
+
+  it('should update the status when marking a story private', () => {
     const { updateStory } = arrange();
-    const publishOption = screen.getByText('Public');
-    fireEvent.click(publishOption);
+    fireEvent.click(screen.getByLabelText('Private'));
+    expect(windowConfirm).toHaveBeenCalledWith(expect.any(String));
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
-        status: 'publish',
+        status: 'private',
         password: '',
       },
     });
+  });
+
+  it('should display password field', () => {
+    arrange(
+      {
+        publish: true,
+      },
+      'test'
+    );
+    expect(screen.queryByLabelText('Password')).toBeInTheDocument();
+  });
+
+  it('should hide password field when changing visibility', () => {
+    const { updateStory } = arrange(
+      {
+        publish: true,
+      },
+      'test'
+    );
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Public'));
+    expect(updateStory).toHaveBeenCalledWith({
+      properties: {
+        status: 'draft',
+        password: '',
+      },
+    });
+    expect(screen.queryByLabelText('Password')).not.toBeInTheDocument();
   });
 });

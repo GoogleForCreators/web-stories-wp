@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Integrations;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
@@ -66,6 +67,13 @@ class Jetpack extends Service_Base {
 	protected $media_source_taxonomy;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
 	 * Types instance.
 	 *
 	 * @var Types Types instance.
@@ -78,10 +86,12 @@ class Jetpack extends Service_Base {
 	 * @since 1.12.0
 	 *
 	 * @param Media_Source_Taxonomy $media_source_taxonomy Media_Source_Taxonomy instance.
+	 * @param Context               $context               Context instance.
 	 * @param Types                 $types                 Types instance.
 	 */
-	public function __construct( Media_Source_Taxonomy $media_source_taxonomy, Types $types ) {
+	public function __construct( Media_Source_Taxonomy $media_source_taxonomy, Context $context, Types $types ) {
 		$this->media_source_taxonomy = $media_source_taxonomy;
+		$this->context               = $context;
 		$this->types                 = $types;
 	}
 
@@ -343,7 +353,7 @@ class Jetpack extends Service_Base {
 	 * @return bool Whether the current request is an AMP request.
 	 */
 	public function force_amp_request( $is_amp_request ): bool {
-		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+		if ( ! $this->context->is_web_story() ) {
 			return (bool) $is_amp_request;
 		}
 		return true;

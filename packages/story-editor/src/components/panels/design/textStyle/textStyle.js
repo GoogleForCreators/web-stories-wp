@@ -19,17 +19,32 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import { useState } from '@web-stories-wp/react';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 import { styles, useHighlights, states } from '../../../../app/highlights';
-import { SimplePanel } from '../../panel';
 import { usePresubmitHandler } from '../../../form';
+import PanelContent from '../../panel/shared/content';
+import Panel from '../../panel/panel';
 import StyleControls from './style';
 import ColorControls from './color';
 import FontControls from './font';
+import BackgroundColorControls from './backgroundColor';
+import PaddingControls from './padding';
+import PanelHeader from './panelHeader';
+
+const SubSection = styled.section`
+  border-top: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+`;
+const SubHeading = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  margin: 14px 0;
+`;
 
 function StylePanel(props) {
   // use highlights to update panel styles
@@ -51,9 +66,8 @@ function StylePanel(props) {
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
   return (
-    <SimplePanel
+    <Panel
       name="textStyle"
-      title={__('Text', 'web-stories')}
       css={
         (dropdownHighlight?.showEffect || colorHighlight?.showEffect) &&
         styles.FLASH
@@ -61,35 +75,48 @@ function StylePanel(props) {
       onAnimationEnd={() => resetHighlight()}
       isPersistable={false}
     >
-      <FontControls
-        {...props}
-        fontDropdownRef={(node) => {
-          if (
-            node &&
-            dropdownHighlight?.focus &&
-            dropdownHighlight?.showEffect
-          ) {
-            node.focus();
-            setFontsFocused(true);
-          }
-        }}
-        highlightStylesOverride={fontsFocused ? styles.OUTLINE : []}
-      />
-      <StyleControls {...props} />
-      <ColorControls
-        {...props}
-        textColorRef={(node) => {
-          if (node && colorHighlight?.focus && colorHighlight?.showEffect) {
-            node.addEventListener('keydown', cancelHighlight, { once: true });
-            node.focus();
-            setFontsFocused(false);
-          }
-        }}
-      />
-    </SimplePanel>
+      <PanelHeader {...props} />
+      <PanelContent>
+        <FontControls
+          {...props}
+          fontDropdownRef={(node) => {
+            if (
+              node &&
+              dropdownHighlight?.focus &&
+              dropdownHighlight?.showEffect
+            ) {
+              node.focus();
+              setFontsFocused(true);
+            }
+          }}
+          highlightStylesOverride={fontsFocused ? styles.OUTLINE : []}
+        />
+        <StyleControls {...props} />
+        <ColorControls
+          {...props}
+          textColorRef={(node) => {
+            if (node && colorHighlight?.focus && colorHighlight?.showEffect) {
+              node.addEventListener('keydown', cancelHighlight, { once: true });
+              node.focus();
+              setFontsFocused(false);
+            }
+          }}
+        />
+        <SubSection>
+          <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('Text Box', 'web-stories')}
+          </SubHeading>
+          <BackgroundColorControls {...props} />
+          <PaddingControls {...props} />
+        </SubSection>
+      </PanelContent>
+    </Panel>
   );
 }
 
-StylePanel.propTypes = {};
+StylePanel.propTypes = {
+  selectedElements: PropTypes.array.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
+};
 
 export default StylePanel;

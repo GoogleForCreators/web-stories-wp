@@ -97,6 +97,9 @@ export const TEXT_INPUT_DEBOUNCE = 300;
 export const MIN_IMG_HEIGHT = 96;
 export const MIN_IMG_WIDTH = 96;
 
+export const DEFAULT_GRID_IMG_HEIGHT = 853;
+export const DEFAULT_GRID_IMG_WIDTH = 640;
+
 export * from './components';
 export * from './pageStructure';
 export * from './stories';
