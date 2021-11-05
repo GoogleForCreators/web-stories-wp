@@ -31,7 +31,7 @@ module.exports = function (config) {
   if (config.retryFailed) {
     // Loads names of failed specs and prepares them for use in a regex.
     specsToRetry = readFileSync(
-      'build/karma-edit-story-failed-tests.txt',
+      'build/karma-story-editor-failed-tests.txt',
       'utf-8'
     )
       .replace(/\s+$/g, '')
@@ -146,12 +146,12 @@ module.exports = function (config) {
     },
 
     coverageIstanbulReporter: {
-      dir: 'build/logs/karma-coverage/edit-story',
+      dir: 'build/logs/karma-coverage/story-editor',
       reports: ['text-summary', 'lcovonly'],
     },
 
     failedTestsReporter: {
-      outputFile: 'build/karma-edit-story-failed-tests.txt',
+      outputFile: 'build/karma-story-editor-failed-tests.txt',
     },
 
     // Continuous Integration mode
