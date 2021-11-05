@@ -1266,7 +1266,7 @@ const formattedTemplatesArray = [
       },
     ],
     status: 'template',
-    tags: ['Delicious', 'Baker', 'Cook'],
+    tags: ['Delicious', 'Baker', 'Cook', 'Test Tag'],
     colors: [
       { label: 'Pink', color: '#f3d9e1' },
       { label: 'Green', color: '#d8ddcc' },
@@ -1274,7 +1274,8 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
-    title: 'Cooking',
+    vertical: 'Fitness',
+    title: 'Filterable By Tag',
     postersByPage: [
       {
         webp: 'https://placekitten.com/g/200/300',
@@ -1490,8 +1491,10 @@ const formattedTemplatesArray = [
       { label: 'Black', color: '#28292b' },
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
+      { label: 'Test Color', color: '#eadfd6' },
     ],
-    title: 'DIY',
+    vertical: 'Fitness',
+    title: 'Filterable By Color',
     postersByPage: [
       {
         webp: 'https://placekitten.com/g/200/300',
@@ -1708,6 +1711,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
+    vertical: 'Entertainment',
     title: 'Entertainment',
     postersByPage: [
       {
@@ -1925,7 +1929,8 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
-    title: 'Fashion',
+    vertical: 'Test Vertical',
+    title: 'Filterable By Vertical',
     postersByPage: [
       {
         webp: 'https://placekitten.com/g/200/300',
@@ -2142,6 +2147,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
+    vertical: 'Fitness',
     title: 'Fitness',
     postersByPage: [
       {
@@ -2359,6 +2365,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
+    vertical: 'Travel',
     title: 'Travel',
     postersByPage: [
       {
@@ -2576,6 +2583,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
+    vertical: 'Wellbeing',
     title: 'Wellbeing',
     postersByPage: [
       {
@@ -2793,6 +2801,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
+    vertical: 'Beauty',
     title: 'Beauty',
     postersByPage: [
       {

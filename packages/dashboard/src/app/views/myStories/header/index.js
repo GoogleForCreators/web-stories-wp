@@ -77,6 +77,8 @@ function Header({
     actions: { scrollToTop },
   } = useLayoutContext();
 
+  const { setKeyword } = search;
+
   const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
 
   const resultsLabel = useDashboardResultsLabel({
@@ -154,8 +156,10 @@ function Header({
       search_type: 'dashboard',
       search_term: value,
     });
-    search.setKeyword(value);
+    setKeyword(value);
   }, TEXT_INPUT_DEBOUNCE);
+
+  const clearSearch = useCallback(() => setKeyword(''), [setKeyword]);
 
   return (
     <>
@@ -166,6 +170,7 @@ function Header({
         handleSearchChange={debouncedSearchChange}
         showSearch
         searchValue={search.keyword}
+        clearSearch={clearSearch}
       >
         {HeaderToggleButtons}
       </PageHeading>

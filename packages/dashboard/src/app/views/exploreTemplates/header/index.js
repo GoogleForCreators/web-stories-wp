@@ -22,7 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * External dependencies
  */
-import { useDebouncedCallback } from '@web-stories-wp/react';
+import { useDebouncedCallback, useCallback } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
 
@@ -56,9 +56,12 @@ function Header({
     'enableInProgressTemplateActions'
   );
 
+  const { setKeyword } = search;
   const debouncedSearchChange = useDebouncedCallback((value) => {
-    search.setKeyword(value);
+    setKeyword(value);
   }, TEXT_INPUT_DEBOUNCE);
+
+  const clearSearch = useCallback(() => setKeyword(''), [setKeyword]);
 
   const resultsLabel = useDashboardResultsLabel({
     totalResults: totalTemplates,
@@ -75,6 +78,7 @@ function Header({
         searchOptions={searchOptions}
         searchValue={search.keyword}
         handleSearchChange={debouncedSearchChange}
+        clearSearch={clearSearch}
         syncSearchAndSelected={false}
       />
       <BodyViewOptions
