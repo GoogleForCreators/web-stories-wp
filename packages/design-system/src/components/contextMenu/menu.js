@@ -172,6 +172,19 @@ MenuList.propTypes = {
   isIconMenu: PropTypes.bool,
 };
 
+/**
+ * Default wrapper to wrap the context menu's menu item. Necessary to allow
+ * other apps the ability to inject their own media pickers.
+ *
+ * @param {Object} props Component props
+ * @param {Function} props.children Children as a function.
+ * @return {Node} The react component
+ */
+const DefaultWrapper = ({ children, ...props }) => children(props);
+DefaultWrapper.propTypes = {
+  children: PropTypes.func.isRequired,
+};
+
 const Menu = ({
   items,
   isIconMenu,
@@ -303,24 +316,36 @@ const Menu = ({
         aria-label={groupLabel}
         role="group"
       >
-        {items.map(({ separator, onFocus, ...itemProps }, index) => (
-          <li
-            key={ids[index]}
-            role="menuitem"
-            className={
-              (separator === 'top' && SEPARATOR_TOP_CLASS) ||
-              (separator === 'bottom' && SEPARATOR_BOTTOM_CLASS) ||
-              ''
-            }
-          >
-            <MenuItem
-              index={index}
-              onFocus={(ev) => handleFocusItem(ev, index, onFocus)}
-              onDismiss={onDismiss}
-              {...itemProps}
-            />
-          </li>
-        ))}
+        {items.map(
+          (
+            { Wrapper = DefaultWrapper, separator, onFocus, ...itemProps },
+            index
+          ) => (
+            <li
+              key={ids[index]}
+              role="menuitem"
+              className={
+                (separator === 'top' && SEPARATOR_TOP_CLASS) ||
+                (separator === 'bottom' && SEPARATOR_BOTTOM_CLASS) ||
+                ''
+              }
+            >
+              {/* Not standard - but necessary. `MediaUpload` component exposes an
+              event handler in a render prop. */}
+              <Wrapper>
+                {(wrapperProps = {}) => (
+                  <MenuItem
+                    index={index}
+                    onFocus={(ev) => handleFocusItem(ev, index, onFocus)}
+                    onDismiss={onDismiss}
+                    {...itemProps}
+                    {...wrapperProps}
+                  />
+                )}
+              </Wrapper>
+            </li>
+          )
+        )}
       </MenuList>
     </MenuWrapper>
   );

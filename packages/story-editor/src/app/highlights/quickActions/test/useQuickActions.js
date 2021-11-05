@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
-import { Icons } from '@web-stories-wp/design-system';
+import { Icons, noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -30,8 +30,7 @@ import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
 import { useStory, useStoryTriggersDispatch } from '../../../story';
 import { ACTIONS } from '../constants';
 import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
-import { useMediaUpload } from '../../../mediaUpload';
-import { useConfig } from '../../..';
+import { useConfig, useLocalMedia } from '../../..';
 
 const {
   Bucket,
@@ -83,7 +82,7 @@ jest.mock('@web-stories-wp/design-system', () => ({
 jest.mock('@web-stories-wp/tracking');
 
 jest.mock('../../../config');
-jest.mock('../../../mediaUpload');
+jest.mock('../../../media');
 
 const mockClickEvent = {
   preventDefault: jest.fn(),
@@ -274,8 +273,9 @@ describe('useQuickActions', () => {
   const mockUpdateElementsById = jest.fn();
   const mockUseApplyTextAutoStyle = useApplyTextAutoStyle;
   const mockUseConfig = useConfig;
-  const mockUseMediaUpload = useMediaUpload;
-  const mockOnOpenMediaUpload = jest.fn();
+  const mockUseLocalMedia = useLocalMedia;
+  const mockOpenMediaPicker = jest.fn();
+  const mockMediaPicker = () => mockOpenMediaPicker;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -303,12 +303,22 @@ describe('useQuickActions', () => {
     useStoryTriggersDispatch.mockReturnValue(mockDispatchStoryEvent);
 
     mockUseConfig.mockReturnValue({
+      allowedTranscodableMimeTypes: [],
+      allowedFileTypes: [],
+      allowedMimeTypes: {
+        image: [],
+        video: [],
+      },
       capabilities: { hasUploadMediaAction: true },
-      isRTL: false,
+      isRTL: true,
+      MediaPicker: mockMediaPicker,
     });
 
-    mockUseMediaUpload.mockReturnValue({
-      onOpenMediaUpload: mockOnOpenMediaUpload,
+    mockUseLocalMedia.mockReturnValue({
+      resetWithFetch: noop,
+      updateVideoIsMuted: noop,
+      optimizeVideo: noop,
+      optimizeGif: noop,
     });
   });
 
@@ -431,14 +441,6 @@ describe('useQuickActions', () => {
       expect(result.current).toStrictEqual(backgroundMediaQuickActions);
     });
 
-    it(`\`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` action should open the media picker`, () => {
-      const { result } = renderHook(() => useQuickActions());
-
-      result.current[0].onClick(mockClickEvent);
-
-      expect(mockOnOpenMediaUpload).toHaveBeenCalledTimes(1);
-    });
-
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
 
@@ -478,14 +480,6 @@ describe('useQuickActions', () => {
       expect(result.current).toStrictEqual(backgroundMediaQuickActions);
     });
 
-    it(`\`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` action should open the media picker`, () => {
-      const { result } = renderHook(() => useQuickActions());
-
-      result.current[0].onClick(mockClickEvent);
-
-      expect(mockOnOpenMediaUpload).toHaveBeenCalledTimes(1);
-    });
-
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
 
@@ -519,14 +513,6 @@ describe('useQuickActions', () => {
       expect(result.current).toStrictEqual(
         backgroundMediaQuickActionsWithClear
       );
-    });
-
-    it(`\`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` action should open the media picker`, () => {
-      const { result } = renderHook(() => useQuickActions());
-
-      result.current[0].onClick(mockClickEvent);
-
-      expect(mockOnOpenMediaUpload).toHaveBeenCalledTimes(1);
     });
 
     it('should set the correct highlight', () => {
@@ -572,14 +558,6 @@ describe('useQuickActions', () => {
       expect(result.current).toStrictEqual(
         foregroundImageQuickActionsWithClear
       );
-    });
-
-    it(`\`${ACTIONS.REPLACE_MEDIA.text}\` action should open the media picker`, () => {
-      const { result } = renderHook(() => useQuickActions());
-
-      result.current[0].onClick(mockClickEvent);
-
-      expect(mockOnOpenMediaUpload).toHaveBeenCalledTimes(1);
     });
 
     it('should set the correct highlight', () => {
@@ -806,14 +784,6 @@ describe('useQuickActions', () => {
     it('should return the quick actions', () => {
       const { result } = renderHook(() => useQuickActions());
       expect(result.current).toStrictEqual(videoQuickActionsWithClear);
-    });
-
-    it(`\`${ACTIONS.REPLACE_MEDIA.text}\` action should open the media picker`, () => {
-      const { result } = renderHook(() => useQuickActions());
-
-      result.current[0].onClick(mockClickEvent);
-
-      expect(mockOnOpenMediaUpload).toHaveBeenCalledTimes(1);
     });
 
     it('should set the correct highlight', () => {
