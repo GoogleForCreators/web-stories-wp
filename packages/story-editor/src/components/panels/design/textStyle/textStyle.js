@@ -37,6 +37,7 @@ import FontControls from './font';
 import BackgroundColorControls from './backgroundColor';
 import PaddingControls from './padding';
 import PanelHeader from './panelHeader';
+import StylePresets from './stylePresets';
 
 const SubSection = styled.section`
   border-top: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
@@ -108,6 +109,9 @@ function StylePanel(props) {
           </SubHeading>
           <BackgroundColorControls {...props} />
           <PaddingControls {...props} />
+        </SubSection>
+        <SubSection>
+          <StylePresets {...props} />
         </SubSection>
       </PanelContent>
     </Panel>
