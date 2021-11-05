@@ -17,19 +17,18 @@
 /**
  * Internal dependencies
  */
-import { getPagePreviewHeights } from '../usePagePreviewSize';
+import { getPosterHeight } from '../usePagePreviewSize';
 
-describe('getPagePreviewHeights', () => {
-  it('should return { fullBleedHeight: 359.11, storyHeight: 303 } when width is 202', () => {
-    const previewHeights = getPagePreviewHeights(202);
+describe('usePagePreviewSize/getPosterHeight', () => {
+  it.each([
+    [202, 303],
+    [254, 381],
+  ])(
+    'should return height in 2:3 ratio relative to given width',
+    (width, expectedHeight) => {
+      const height = getPosterHeight(width);
 
-    expect(previewHeights.fullBleedHeight).toBeCloseTo(359.11);
-    expect(previewHeights.storyHeight).toBeCloseTo(303);
-  });
-  it('should return { fullBleedHeight: 451.55, storyHeight: 381 } when width is 202', () => {
-    const previewHeights = getPagePreviewHeights(254);
-
-    expect(previewHeights.fullBleedHeight).toBeCloseTo(451.56);
-    expect(previewHeights.storyHeight).toBeCloseTo(381);
-  });
+      expect(height).toBe(expectedHeight);
+    }
+  );
 });

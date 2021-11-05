@@ -51,7 +51,7 @@ DashboardGrid.propTypes = {
 };
 
 const CardGrid = forwardRef(function CardGrid(
-  { ariaLabel, children, pageSize, isPosterHeight },
+  { ariaLabel, children, pageSize },
   ref
 ) {
   return (
@@ -65,9 +65,7 @@ const CardGrid = forwardRef(function CardGrid(
       tabIndex={0}
       aria-label={ariaLabel}
       columnWidth={pageSize.width}
-      columnHeight={
-        isPosterHeight ? pageSize.posterHeight : pageSize.containerHeight
-      }
+      columnHeight={pageSize.height}
     >
       {children}
     </DashboardGrid>
@@ -78,7 +76,6 @@ CardGrid.propTypes = {
   ariaLabel: PropTypes.string,
   children: PropTypes.node.isRequired,
   pageSize: PageSizePropType.isRequired,
-  isPosterHeight: PropTypes.bool,
 };
 
 export default CardGrid;

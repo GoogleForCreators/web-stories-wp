@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 
-export {
-  FULLBLEED_RATIO,
-  PAGE_RATIO,
-  PAGE_WIDTH,
-  PAGE_HEIGHT,
-} from '@web-stories-wp/units';
+export { PAGE_RATIO, PAGE_WIDTH, PAGE_HEIGHT } from '@web-stories-wp/units';
 
 export const WPBODY_ID = 'wpbody';
 
