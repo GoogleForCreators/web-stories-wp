@@ -34,14 +34,14 @@ import {
  */
 import { focusStyle } from '../panels/shared';
 
-const HEADER_FOOTER_HEIGHT = 52;
+const HEADER_HEIGHT = 44;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: ${HEADER_FOOTER_HEIGHT}px;
-  padding: 8px 8px 4px 8px;
+  height: ${HEADER_HEIGHT}px;
+  padding: 4px 8px 4px 8px;
   position: relative;
   border-bottom: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
 `;
