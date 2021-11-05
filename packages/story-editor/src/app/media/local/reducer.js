@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* eslint complexity: ["error", { "max": 30 }] */
+/* eslint complexity: ["error", { "max": 31 }] */
 
 /**
  * Internal dependencies
@@ -41,7 +41,6 @@ const INITIAL_STATE = {
  * @typedef {import('./typedefs').LocalMediaReducerState} LocalMediaReducerState
  */
 
-/* eslint-disable complexity */
 /**
  * The reducer for locally uploaded media.
  *
@@ -215,5 +214,4 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       return state;
   }
 }
-/* eslint-enable complexity */
 export default reducer;
