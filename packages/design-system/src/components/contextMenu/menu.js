@@ -319,7 +319,7 @@ const Menu = ({
         {items.map(
           (
             {
-              Wrapper = IdentityItemWrapper,
+              ItemWrapper = IdentityItemWrapper,
               separator,
               onFocus,
               onClick,
@@ -338,7 +338,7 @@ const Menu = ({
             >
               {/* Not standard - but necessary. `MediaUpload` component exposes an
               event handler in a render prop. */}
-              <Wrapper
+              <ItemWrapper
                 render={({
                   onClick: wrapperOnClick = noop,
                   ...wrapperProps
