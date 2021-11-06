@@ -133,7 +133,7 @@ export const SnackbarContainer = ({
       if (!announcedNotifications.current.has(notification)) {
         // speak the message
         const message = `${notification.message} ${
-          notification.actionHelpText ? notification.actionHelpText : ''
+          notification.actionHelpText || ''
         }`.trim();
 
         speak(message);
