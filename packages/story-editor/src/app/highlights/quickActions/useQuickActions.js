@@ -38,7 +38,6 @@ import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
 import useFFmpeg from '../../media/utils/useFFmpeg';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
-import MediaUploadWrapper from './mediaUploadWrapper';
 
 const {
   Bucket,
@@ -75,6 +74,7 @@ const useQuickActions = () => {
     },
     capabilities: { hasUploadMediaAction },
     isRTL,
+    MediaUpload,
   } = useConfig();
   const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
@@ -228,14 +228,17 @@ const useQuickActions = () => {
   );
 
   const MediaPicker = useCallback(
-    (props) => (
-      <MediaUploadWrapper
+    ({ render, ...props }) => (
+      <MediaUpload
         title={__('Replace media', 'web-stories')}
         buttonInsertText={__('Insert media', 'web-stories')}
         onSelect={handleMediaSelect}
         onClose={resetWithFetch}
         type={allowedMimeTypes}
         onSelectErrorMessage={onSelectErrorMessage}
+        // Only way to access the open function is to dive
+        // into the MediaUpload component in the render prop.
+        render={(open) => render({ onClick: open })}
         {...props}
       />
     ),
@@ -532,7 +535,7 @@ const useQuickActions = () => {
             element: selectedElement?.type,
           });
         },
-        Wrapper: MediaPicker,
+        ItemWrapper: MediaPicker,
         ...actionMenuProps,
       });
     }
@@ -727,7 +730,7 @@ const useQuickActions = () => {
             isBackground: true,
           });
         },
-        Wrapper: MediaPicker,
+        ItemWrapper: MediaPicker,
         ...actionMenuProps,
       });
     }
