@@ -108,30 +108,38 @@ function PresetPanel({ pushUpdate }) {
           <Icons.Plus />
         </StyledButton>
       </PresetsHeader>
-      <StylesWrapper>
-        <StyleGroup
-          styles={textStyles.slice(-2)}
-          handleClick={handlePresetClick}
-        />
-      </StylesWrapper>
-      <StyledButton
-        ref={buttonRef}
-        type={BUTTON_TYPES.PLAIN}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        onClick={() => setIsPopupOpen(true)}
-      >
-        {__('More styles >', 'web-stories')}
-      </StyledButton>
-      <Popup
-        anchor={buttonRef}
-        dock={inspector}
-        isOpen={isPopupOpen}
-        placement={PLACEMENT.LEFT_START}
-        renderContents={() => (
-          <StyleManager styles={textStyles} applyStyle={handlePresetClick} />
-        )}
-      />
+      {hasPresets && (
+        <>
+          <StylesWrapper>
+            <StyleGroup
+              styles={textStyles.slice(-2)}
+              handleClick={handlePresetClick}
+            />
+          </StylesWrapper>
+          <StyledButton
+            ref={buttonRef}
+            type={BUTTON_TYPES.PLAIN}
+            size={BUTTON_SIZES.SMALL}
+            variant={BUTTON_VARIANTS.RECTANGLE}
+            onClick={() => setIsPopupOpen(true)}
+          >
+            {__('More styles >', 'web-stories')}
+          </StyledButton>
+          <Popup
+            anchor={buttonRef}
+            dock={inspector}
+            isOpen={isPopupOpen}
+            placement={PLACEMENT.LEFT_START}
+            renderContents={() => (
+              <StyleManager
+                styles={textStyles}
+                applyStyle={handlePresetClick}
+                onClose={() => setIsPopupOpen(false)}
+              />
+            )}
+          />
+        </>
+      )}
     </>
   );
 }

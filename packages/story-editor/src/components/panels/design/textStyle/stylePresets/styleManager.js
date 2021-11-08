@@ -28,6 +28,7 @@ import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
  */
 import Header from './header';
 import StyleGroup from './styleGroup';
+import useDeleteStyle from './useDeleteStyle';
 
 const Container = styled.div`
   border-radius: 8px;
@@ -68,11 +69,14 @@ function StyleManager({ styles, onClose, applyStyle }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const containerRef = useRef(null);
 
+  const deleteStyle = useDeleteStyle({ onEmpty: () => setIsEditMode(false) });
+
   const handleClick = (style) => {
-    if (isEditMode) {
+    if (!isEditMode) {
       applyStyle(style);
       return;
     }
+    deleteStyle(style);
   };
   return (
     <CSSTransition in appear classNames="style-manager" timeout={300}>

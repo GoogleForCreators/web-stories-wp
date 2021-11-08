@@ -82,22 +82,16 @@ function Header({
     <Wrapper>
       {children}
       <Actions>
-        {isEditMode && (
-          <StyledButton
-            {...buttonProps}
-            aria-label={__('Exit edit mode', 'web-stories')}
-          >
-            {__('Done', 'web-stories')}
-          </StyledButton>
-        )}
-        {!isEditMode && (
-          <StyledButton
-            {...buttonProps}
-            aria-label={__('Edit styles', 'web-stories')}
-          >
-            <Icons.Pencil />
-          </StyledButton>
-        )}
+        <StyledButton
+          {...buttonProps}
+          aria-label={
+            isEditMode
+              ? __('Exit edit mode', 'web-stories')
+              : __('Edit styles', 'web-stories')
+          }
+        >
+          {isEditMode ? __('Done', 'web-stories') : <Icons.Pencil />}
+        </StyledButton>
         <StyledButton
           aria-label={__('Close', 'web-stories')}
           onClick={handleClose}
