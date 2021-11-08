@@ -177,7 +177,7 @@ const useQuickActions = () => {
       });
       updateElementsById({
         elementIds: [selectedElements?.[0]?.id],
-        properties: { resource },
+        properties: { type: resource.type, resource },
       });
     },
     [selectedElements, updateElementsById]
