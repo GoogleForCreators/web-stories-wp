@@ -46,7 +46,7 @@ function useDeletePreset({ onEmpty }) {
       updateStory({
         properties: {
           globalStoryStyles: {
-            ...{ globalStoryStyles },
+            ...globalStoryStyles,
             textStyles: updatedStyles,
           },
         },

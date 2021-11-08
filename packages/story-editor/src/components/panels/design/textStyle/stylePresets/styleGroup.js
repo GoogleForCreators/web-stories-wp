@@ -24,8 +24,8 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import useKeyboardNavigation from './useKeyboardNavigation';
 import { SAVED_STYLE_HEIGHT, PRESET_TYPES } from '../../../../../constants';
+import useKeyboardNavigation from './useKeyboardNavigation';
 import StyleItem from './styleItem';
 
 const Group = styled.div`
