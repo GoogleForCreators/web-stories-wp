@@ -32,7 +32,7 @@ import { getMediaSizePositionProps } from '@web-stories-wp/media';
 import {
   setOrCreateImage,
   getImgNodeId,
-} from '../../../../utils/getMediaBaseColor';
+} from '../../../../utils/getResourceBaseColor';
 import {
   calculateLuminanceFromRGB,
   calculateLuminanceFromStyleColor,

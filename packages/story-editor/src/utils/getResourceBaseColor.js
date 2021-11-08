@@ -61,13 +61,6 @@ export function getResourceBaseColor(resource) {
   });
 }
 
-export function getMediaBaseColor(resource, onBaseColor) {
-  getResourceBaseColor(resource).then(
-    (color) => onBaseColor(color),
-    () => onBaseColor([255, 255, 255]) // Fallback color is white.
-  );
-}
-
 function getDefaultOnloadCallback(nodeKey, resolve, reject) {
   return () => {
     import(

@@ -24,7 +24,7 @@ import { useCallback } from '@web-stories-wp/react';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
-import { getResourceBaseColor } from '../../../utils/getMediaBaseColor';
+import { getResourceBaseColor } from '../../../utils/getResourceBaseColor';
 
 function useDetectBaseColor({ updateMediaElement }) {
   const {
