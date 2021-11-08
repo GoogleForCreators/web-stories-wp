@@ -17,7 +17,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -28,7 +27,7 @@ import {
   PageSizePropType,
   TemplatePropType,
 } from '../../../../types';
-import { Layout, useLayoutContext } from '../../../../components';
+import { Layout } from '../../../../components';
 import DetailsGallery from './detailsGallery';
 import RelatedGrid from './relatedGrid';
 
@@ -42,19 +41,6 @@ function Content({
   template,
   templateActions,
 }) {
-  const previousTemplateId = useRef(template?.id);
-
-  const {
-    actions: { scrollToTop },
-  } = useLayoutContext();
-
-  useEffect(() => {
-    if (template !== null && template?.id !== previousTemplateId.current) {
-      scrollToTop();
-      previousTemplateId.current = template.id;
-    }
-  }, [template, scrollToTop]);
-
   if (!template) {
     return null;
   }

@@ -22,6 +22,7 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
+  noop,
 } from '@web-stories-wp/design-system';
 import { forwardRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
@@ -57,6 +58,7 @@ const TemplateGridItem = forwardRef(
       slug,
       title,
       status,
+      onSeeDetailsClick = noop,
     },
     ref
   ) => {
@@ -103,6 +105,7 @@ const TemplateGridItem = forwardRef(
                     title
                   )}
                   href={detailLink}
+                  onClick={onSeeDetailsClick}
                   disabled={!detailLink}
                   className={FOCUS_TEMPLATE_CLASS}
                   tabIndex={tabIndex}
@@ -139,6 +142,7 @@ TemplateGridItem.propTypes = {
   detailLink: PropTypes.string,
   onCreateStory: PropTypes.func,
   onFocus: PropTypes.func.isRequired,
+  onSeeDetailsClick: PropTypes.func,
   height: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
   isActive: PropTypes.bool,

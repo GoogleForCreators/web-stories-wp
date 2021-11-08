@@ -32,7 +32,7 @@ import { useGridViewKeys } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { CardGrid } from '../../../../components';
+import { CardGrid, useLayoutContext } from '../../../../components';
 import {
   PageSizePropType,
   TemplatesPropType,
@@ -47,6 +47,10 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
+
+  const {
+    actions: { scrollToTop },
+  } = useLayoutContext();
 
   const [activeGridItemId, setActiveGridItemId] = useState(null);
 
@@ -96,6 +100,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
               onFocus={() => {
                 setActiveGridItemId(id);
               }}
+              onSeeDetailsClick={scrollToTop}
               height={pageSize.height}
               id={id}
               isActive={isActive}
@@ -111,7 +116,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
           );
         }
       ),
-    [templates, activeGridItemId, pageSize.height, handleUseStory]
+    [templates, activeGridItemId, pageSize.height, handleUseStory, scrollToTop]
   );
   return (
     <div ref={containerRef}>
