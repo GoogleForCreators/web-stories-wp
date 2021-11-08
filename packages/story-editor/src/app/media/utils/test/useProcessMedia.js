@@ -69,13 +69,14 @@ jest.mock('@web-stories-wp/media', () => {
 const updateElementsByResourceId = jest.fn();
 const uploadMedia = (
   files,
-  { onUploadSuccess, onUploadStart, onUploadError }
+  { onUploadSuccess, onUploadStart, onUploadError, additionalData }
 ) => {
   const resource = {
     src: 'http://www.google.com/foo.gif',
     id: 2,
     local: false,
     type: 'gif',
+    baseColor: additionalData?.meta?.web_stories_base_color,
   };
   if (onUploadSuccess) {
     onUploadSuccess({ resource });
@@ -134,6 +135,7 @@ function setup() {
     optimizeGif,
     muteExistingVideo,
     uploadVideoPoster,
+    updateBaseColor,
     updateMedia,
     deleteMediaElement,
   };
@@ -147,7 +149,8 @@ describe('useProcessMedia', () => {
         src: 'http://www.google.com/foo-optimized.mp4',
       }));
 
-      const { optimizeVideo, uploadVideoPoster, updateMedia } = setup();
+      const { optimizeVideo, uploadVideoPoster, updateBaseColor, updateMedia } =
+        setup();
       act(() => {
         optimizeVideo({
           resource: {
@@ -160,12 +163,14 @@ describe('useProcessMedia', () => {
       await waitFor(() => {
         expect(getOptimizedMediaById).toHaveBeenCalledWith(123);
         expect(uploadVideoPoster).not.toHaveBeenCalled();
+        expect(updateBaseColor).not.toHaveBeenCalled();
         expect(updateMedia).not.toHaveBeenCalled();
       });
     });
 
     it('should process video file', async () => {
-      const { optimizeVideo, uploadVideoPoster, updateMedia } = setup();
+      const { optimizeVideo, uploadVideoPoster, updateBaseColor, updateMedia } =
+        setup();
       act(() => {
         optimizeVideo({
           resource: {
@@ -180,6 +185,44 @@ describe('useProcessMedia', () => {
           2,
           'http://www.google.com/foo.gif'
         );
+
+        expect(updateBaseColor).toHaveBeenCalledWith({
+          resource: {
+            id: 2,
+            local: false,
+            src: 'http://www.google.com/foo.gif',
+            type: 'gif',
+          },
+        });
+        expect(updateMedia).toHaveBeenCalledWith(123, {
+          web_stories_media_source: 'source-video',
+          meta: {
+            web_stories_optimized_id: 2,
+          },
+        });
+      });
+    });
+
+    it('should process video file with base color', async () => {
+      const { optimizeVideo, uploadVideoPoster, updateBaseColor, updateMedia } =
+        setup();
+      act(() => {
+        optimizeVideo({
+          resource: {
+            src: 'http://www.google.com/foo.mov',
+            id: 123,
+            mimeType: 'video/quicktime',
+            baseColor: [0, 0, 0],
+          },
+        });
+      });
+      await waitFor(() => {
+        expect(uploadVideoPoster).toHaveBeenCalledWith(
+          2,
+          'http://www.google.com/foo.gif'
+        );
+
+        expect(updateBaseColor).not.toHaveBeenCalled();
         expect(updateMedia).toHaveBeenCalledWith(123, {
           web_stories_media_source: 'source-video',
           meta: {
@@ -194,6 +237,7 @@ describe('useProcessMedia', () => {
         optimizeVideo,
         uploadVideoPoster,
         updateMedia,
+        updateBaseColor,
         deleteMediaElement,
       } = setup();
       act(() => {
@@ -207,6 +251,7 @@ describe('useProcessMedia', () => {
       });
       await waitFor(() => {
         expect(uploadVideoPoster).not.toHaveBeenCalled();
+        expect(updateBaseColor).not.toHaveBeenCalled();
         expect(updateMedia).not.toHaveBeenCalled();
         expect(deleteMediaElement).not.toHaveBeenCalled();
       });
@@ -220,7 +265,12 @@ describe('useProcessMedia', () => {
         src: 'http://www.google.com/foo-optimized.mp4',
       }));
 
-      const { muteExistingVideo, uploadVideoPoster, updateMedia } = setup();
+      const {
+        muteExistingVideo,
+        uploadVideoPoster,
+        updateMedia,
+        updateBaseColor,
+      } = setup();
       act(() => {
         muteExistingVideo({
           resource: {
@@ -233,12 +283,18 @@ describe('useProcessMedia', () => {
       await waitFor(() => {
         expect(getMutedMediaById).toHaveBeenCalledWith(123);
         expect(uploadVideoPoster).not.toHaveBeenCalled();
+        expect(updateBaseColor).not.toHaveBeenCalled();
         expect(updateMedia).not.toHaveBeenCalled();
       });
     });
 
     it('should mute video file', async () => {
-      const { muteExistingVideo, uploadVideoPoster, updateMedia } = setup();
+      const {
+        muteExistingVideo,
+        uploadVideoPoster,
+        updateBaseColor,
+        updateMedia,
+      } = setup();
       act(() => {
         muteExistingVideo({
           resource: {
@@ -253,6 +309,45 @@ describe('useProcessMedia', () => {
           2,
           'http://www.google.com/foo.gif'
         );
+        expect(updateBaseColor).toHaveBeenCalledWith({
+          resource: {
+            src: 'http://www.google.com/foo.gif',
+            id: 2,
+            type: 'gif',
+            local: false,
+          },
+        });
+        expect(updateMedia).toHaveBeenCalledWith(123, {
+          meta: {
+            web_stories_muted_id: 2,
+          },
+        });
+      });
+    });
+
+    it('should mute video file with base color', async () => {
+      const {
+        muteExistingVideo,
+        uploadVideoPoster,
+        updateBaseColor,
+        updateMedia,
+      } = setup();
+      act(() => {
+        muteExistingVideo({
+          resource: {
+            src: 'http://www.google.com/foo.mp4',
+            id: 123,
+            mimeType: 'video/mp4',
+            baseColor: [0, 0, 0],
+          },
+        });
+      });
+      await waitFor(() => {
+        expect(uploadVideoPoster).toHaveBeenCalledWith(
+          2,
+          'http://www.google.com/foo.gif'
+        );
+        expect(updateBaseColor).not.toHaveBeenCalled();
         expect(updateMedia).toHaveBeenCalledWith(123, {
           meta: {
             web_stories_muted_id: 2,
@@ -262,7 +357,12 @@ describe('useProcessMedia', () => {
     });
 
     it('should mute video file with empty poster', async () => {
-      const { muteExistingVideo, uploadVideoPoster, updateMedia } = setup();
+      const {
+        muteExistingVideo,
+        uploadVideoPoster,
+        updateMedia,
+        updateBaseColor,
+      } = setup();
       act(() => {
         muteExistingVideo({
           resource: {
@@ -274,6 +374,14 @@ describe('useProcessMedia', () => {
         });
       });
       await waitFor(() => {
+        expect(updateBaseColor).toHaveBeenCalledWith({
+          resource: {
+            id: 2,
+            local: false,
+            src: 'http://www.google.com/foo.gif',
+            type: 'gif',
+          },
+        });
         expect(uploadVideoPoster).toHaveBeenCalledWith(
           2,
           'http://www.google.com/foo.gif'
@@ -290,6 +398,7 @@ describe('useProcessMedia', () => {
       const {
         muteExistingVideo,
         uploadVideoPoster,
+        updateBaseColor,
         updateMedia,
         deleteMediaElement,
       } = setup();
@@ -304,6 +413,7 @@ describe('useProcessMedia', () => {
       });
       await waitFor(() => {
         expect(uploadVideoPoster).not.toHaveBeenCalled();
+        expect(updateBaseColor).not.toHaveBeenCalled();
         expect(updateMedia).not.toHaveBeenCalled();
         expect(deleteMediaElement).not.toHaveBeenCalled();
       });
@@ -312,7 +422,8 @@ describe('useProcessMedia', () => {
 
   describe('optimizeGif', () => {
     it('should process gif file', async () => {
-      const { optimizeGif, uploadVideoPoster, updateMedia } = setup();
+      const { optimizeGif, uploadVideoPoster, updateBaseColor, updateMedia } =
+        setup();
       act(() => {
         optimizeGif({
           resource: {
@@ -327,6 +438,44 @@ describe('useProcessMedia', () => {
           2,
           'http://www.google.com/foo.gif'
         );
+        expect(updateBaseColor).toHaveBeenCalledWith({
+          resource: {
+            src: 'http://www.google.com/foo.gif',
+            id: 2,
+            local: false,
+            type: 'gif',
+          },
+        });
+
+        expect(updateMedia).toHaveBeenCalledWith(123, {
+          web_stories_media_source: 'source-image',
+          meta: {
+            web_stories_optimized_id: 2,
+          },
+        });
+      });
+    });
+
+    it('should process gif file with base color', async () => {
+      const { optimizeGif, uploadVideoPoster, updateBaseColor, updateMedia } =
+        setup();
+      act(() => {
+        optimizeGif({
+          resource: {
+            src: 'http://www.google.com/foo.gif',
+            id: 123,
+            mimeType: 'image/gif',
+            baseColor: [0, 0, 0],
+          },
+        });
+      });
+      await waitFor(() => {
+        expect(uploadVideoPoster).toHaveBeenCalledWith(
+          2,
+          'http://www.google.com/foo.gif'
+        );
+        expect(updateBaseColor).not.toHaveBeenCalled();
+
         expect(updateMedia).toHaveBeenCalledWith(123, {
           web_stories_media_source: 'source-image',
           meta: {
@@ -340,6 +489,7 @@ describe('useProcessMedia', () => {
       const {
         optimizeGif,
         uploadVideoPoster,
+        updateBaseColor,
         updateMedia,
         deleteMediaElement,
       } = setup();
@@ -354,6 +504,7 @@ describe('useProcessMedia', () => {
       });
       await waitFor(() => {
         expect(uploadVideoPoster).not.toHaveBeenCalled();
+        expect(updateBaseColor).not.toHaveBeenCalled();
         expect(updateMedia).not.toHaveBeenCalled();
         expect(deleteMediaElement).not.toHaveBeenCalled();
       });
