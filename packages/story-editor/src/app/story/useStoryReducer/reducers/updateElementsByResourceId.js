@@ -26,6 +26,8 @@ import { updateElementWithUpdater } from './utils';
  *
  * If an empty id or a no matches with id, state is unchanged.
  *
+ * If no element with the given resource id is found, state is changed.
+ *
  * If given set of properties is empty, state is unchanged.
  *
  * Current selection and page is unchanged.
@@ -44,6 +46,15 @@ function updateElementsByResourceId(
   if (id === null) {
     return state;
   }
+
+  const hasElementWithResourceId = state.pages.some((page) =>
+    page.elements.some((element) => element.resource?.id === id)
+  );
+
+  if (!hasElementWithResourceId) {
+    return state;
+  }
+
   const updatedPages = state.pages.map((page) => {
     const updatedElements = page.elements.map((element) => {
       if (element.resource?.id === id) {
@@ -51,6 +62,7 @@ function updateElementsByResourceId(
       }
       return element;
     });
+
     return {
       ...page,
       elements: updatedElements,
