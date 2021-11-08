@@ -65,6 +65,13 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	private $types;
 
 	/**
+	 * If streaming to a file, keep the file pointer
+	 *
+	 * @var resource
+	 */
+	protected $stream_handle;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
@@ -242,44 +249,96 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.13.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 * @return void
 	 */
 	public function proxy_url( $request ) {
 		$url = untrailingslashit( $request['url'] );
 
-		$args          = [
-			'limit_response_size' => 15728640, // 15MB. @todo Remove this, when streaming is implemented.
-			'timeout'             => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
+		$args = [
+			'timeout'  => 60, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
+			'blocking' => false,
 		];
-		$proxy_request = wp_safe_remote_get( $url, $args );
-		if ( is_wp_error( $proxy_request ) ) {
-			$proxy_request->add_data( [ 'status' => 404 ] );
-			return $proxy_request;
+
+		$http                = _wp_http_get_object();
+		$transport           = $http->_get_first_available_transport( $args, $url );
+		$can_stream_response = 'WP_Http_Curl' === $transport;
+
+		if ( $can_stream_response ) {
+			$this->proxy_url_stream( $url, $args );
+			return;
 		}
 
-		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $proxy_request ) ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
-		}
-
-		$headers            = wp_remote_retrieve_headers( $proxy_request );
-		$mime_type          = $headers['content-type'];
-		$allowed_mime_types = $this->types->get_allowed_mime_types();
-		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
-		if ( ! in_array( $mime_type, $allowed_mime_types, true ) ) {
-			return new WP_Error( 'rest_invalid_mime_type', __( 'Invalid Mime Type', 'web-stories' ), [ 'status' => 400 ] );
-		}
-
-		$file_size = (int) $headers['content-length'];
-
-		$body = wp_remote_retrieve_body( $proxy_request );
-
-		header( 'Content-Type: ' . $mime_type );
-		header( 'Content-Length: ' . $file_size );
-
-		echo $body; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		unset( $args['blocking'] );
+		$this->proxy_url_fallback( $url, $args );
 
 		exit;
+	}
+
+	/**
+	 * Proxy a given URL via a PHP stream / fopen.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param string $url  Request URL.
+	 * @param array  $args Request args.
+	 * @return void
+	 */
+	private function proxy_url_stream( $url, $args ) {
+		$mem_before = memory_get_usage();
+
+		if ( WP_DEBUG ) {
+			$this->stream_handle = fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
+		} else {
+			$this->stream_handle = @fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.PHP.NoSilencedErrors.Discouraged
+		}
+
+		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
+		wp_safe_remote_get( $url, $args );
+		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
+
+		$mem_after = memory_get_usage();
+
+		header( 'X-Memory-Before: ' . ( $mem_before ) );
+		header( 'X-Memory-After: ' . ( $mem_after ) );
+		header( 'X-Memory-Diff: ' . ( $mem_after - $mem_before ) );
+
+		rewind( $this->stream_handle );
+		while ( ! feof( $this->stream_handle ) ) {
+			echo fread( $this->stream_handle, 1024 * 1024 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_system_read_fread
+		}
+
+		fclose( $this->stream_handle );
+	}
+
+	/**
+	 * Proxy a given URL by storing in memory.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param string $url  Request URL.
+	 * @param array  $args Request args.
+	 * @return void
+	 */
+	private function proxy_url_fallback( $url, $args ) {
+		$response = wp_safe_remote_get( $url, $args );
+
+		$headers = wp_remote_retrieve_headers( $response );
+
+		$allowlist = [
+			'content-type',
+			'content-length',
+			'cache-control',
+			'etag',
+			'last-modified',
+		];
+
+		foreach ( $allowlist as $_header ) {
+			if ( isset( $headers[ $_header ] ) ) {
+				header( $_header . ': ' . $headers[ $_header ] );
+			}
+		}
+
+		echo wp_remote_retrieve_body( $response ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -419,5 +478,60 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Modifies the cURL configuration before the request is executed.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param resource $handle      The cURL handle returned by curl_init() (passed by reference).
+	 * @return void
+	 */
+	public function modify_curl_configuration( &$handle ) {
+		// Just some safeguard in case cURL is not really available.
+		if ( ! function_exists( 'curl_setopt' ) ) {
+			return;
+		}
+
+		// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_setopt
+
+		curl_setopt(
+			$handle,
+			CURLOPT_FILE,
+			$this->stream_handle
+		);
+
+		curl_setopt( $handle, CURLOPT_HEADERFUNCTION, [ $this, 'stream_headers' ] );
+
+		// phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_setopt
+	}
+
+	/**
+	 * Grabs the headers of the cURL request.
+	 *
+	 * Each header is sent individually to this callback,
+	 * so we take a look at each one to see if we should "forward" it.
+	 *
+	 * @param resource $handle  cURL handle.
+	 * @param string   $header cURL header.
+	 * @return int Header length.
+	 */
+	public function stream_headers( $handle, $header ): int {
+		$allowlist = [
+			'content-type',
+			'content-length',
+			'cache-control',
+			'etag',
+			'last-modified',
+		];
+
+		foreach ( $allowlist as $_header ) {
+			if ( 0 === stripos( $header, $_header . ': ' ) ) {
+				header( $header );
+			}
+		}
+
+		return strlen( $header );
 	}
 }
