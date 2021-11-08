@@ -134,7 +134,7 @@ const StoryGridItem = forwardRef(
       <CustomCardGridItem
         data-testid={`story-grid-item-${story.id}`}
         onFocus={onFocus}
-        $posterHeight={pageSize.posterHeight}
+        $posterHeight={pageSize.height}
         ref={ref}
         aria-label={sprintf(
           /* translators: %s: story title.*/
