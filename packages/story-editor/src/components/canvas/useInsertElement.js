@@ -59,34 +59,29 @@ function useInsertElement() {
    */
   const backfillResource = useCallback(
     (resource) => {
-      const { type, src, id, posterId, local, baseColor, isExternal } =
-        resource;
-
-      if (local || !id || isExternal) {
-        return;
-      }
+      const { type, src, id, posterId, local } = resource;
 
       // Generate video poster if one not set.
-      if (['video', 'gif'].includes(type) && !posterId) {
+      if (['video', 'gif'].includes(type) && id && !posterId && !local) {
         uploadVideoPoster(id, src);
       }
-      // Backfill base color, if one not set.
-      if (!Array.isArray(baseColor) || !baseColor.length) {
-        updateBaseColor({ resource });
-      }
     },
-    [uploadVideoPoster, updateBaseColor]
+    [uploadVideoPoster]
   );
 
-  const generateBaseColorExternal = useCallback(
+  const generateBaseColor = useCallback(
     async (element) => {
       const { id, resource } = element;
       const { isExternal, local, baseColor: currentBaseColor } = resource;
+
       if (
-        !local &&
-        isExternal &&
-        (!Array.isArray(currentBaseColor) || !currentBaseColor.length)
+        local ||
+        (Array.isArray(currentBaseColor) && currentBaseColor.length)
       ) {
+        return;
+      }
+
+      if (isExternal) {
         const baseColor = await getResourceBaseColor(resource);
         const properties = {
           resource: {
@@ -95,9 +90,11 @@ function useInsertElement() {
           },
         };
         updateElementById({ elementId: id, properties });
+      } else if (id) {
+        updateBaseColor({ resource });
       }
     },
-    [updateElementById]
+    [updateBaseColor, updateElementById]
   );
 
   /**
@@ -132,7 +129,7 @@ function useInsertElement() {
       if (resource) {
         backfillResource(resource);
         handleRegisterUsage(resource);
-        generateBaseColorExternal(element);
+        generateBaseColor(element);
       }
       // Auto-play on insert.
       if (type === 'video' && resource?.src && !resource.isPlaceholder) {
@@ -149,7 +146,7 @@ function useInsertElement() {
     [
       addElement,
       backfillResource,
-      generateBaseColorExternal,
+      generateBaseColor,
       focusCanvas,
       handleRegisterUsage,
       setZoomSetting,

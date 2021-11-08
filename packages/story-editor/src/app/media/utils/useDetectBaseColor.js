@@ -51,9 +51,6 @@ function useDetectBaseColor({ updateMediaElement }) {
      * @return {Promise<void>}
      */
     async (id, baseColor) => {
-      if (!hasUploadMediaAction) {
-        return;
-      }
       try {
         const newState = ({ resource }) => ({
           resource: {
@@ -66,10 +63,11 @@ function useDetectBaseColor({ updateMediaElement }) {
           id,
           data: { baseColor },
         });
-
-        await updateMedia(id, {
-          meta: { web_stories_base_color: baseColor },
-        });
+        if (hasUploadMediaAction) {
+          await updateMedia(id, {
+            meta: { web_stories_base_color: baseColor },
+          });
+        }
       } catch (error) {
         // Do nothing for now.
       }
@@ -79,8 +77,12 @@ function useDetectBaseColor({ updateMediaElement }) {
 
   const updateBaseColor = useCallback(
     async ({ resource }) => {
-      const color = await getResourceBaseColor(resource);
-      await saveBaseColor(resource.id, color);
+      try {
+        const color = await getResourceBaseColor(resource);
+        await saveBaseColor(resource.id, color);
+      } catch (error) {
+        // Do nothing for now.
+      }
     },
     [saveBaseColor]
   );

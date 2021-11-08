@@ -251,8 +251,14 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const backfillBaseColor = useCallback(
     (resource) => {
-      const { local, baseColor, id } = resource;
-      if (!local && id && (!Array.isArray(baseColor) || !baseColor.length)) {
+      const { local, baseColor, id, poster, type, src } = resource;
+      const imageSrc = type === 'image' ? src : poster;
+      if (
+        !local &&
+        id &&
+        imageSrc &&
+        (!Array.isArray(baseColor) || !baseColor.length)
+      ) {
         processMediaBaseColor(resource);
       }
     },
