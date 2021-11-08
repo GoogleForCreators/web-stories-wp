@@ -143,8 +143,22 @@ function Tooltip({
       ) {
         setDynamicPlacement(PLACEMENT.TOP);
       }
+      // in RTL mode, we can sometimes render a tooltip too far to the left
+      const isOverFlowingX = offset.popupLeft < 0;
+      if (isOverFlowingX) {
+        switch (dynamicPlacement) {
+          case dynamicPlacement.endsWith('start'):
+            setDynamicPlacement(`${placement}-end`);
+            break;
+          case dynamicPlacement.endsWith('end'):
+            setDynamicPlacement(`${placement}-start`);
+            break;
+          default:
+            setDynamicPlacement(`${placement}-start`);
+        }
+      }
     },
-    [dynamicPlacement]
+    [dynamicPlacement, placement]
   );
 
   const positionArrow = useCallback(

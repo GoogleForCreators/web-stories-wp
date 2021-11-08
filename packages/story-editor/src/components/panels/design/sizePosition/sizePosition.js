@@ -34,7 +34,6 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-  PLACEMENT,
   Tooltip,
 } from '@web-stories-wp/design-system';
 
@@ -376,10 +375,7 @@ function SizePositionPanel(props) {
           />
         </Area>
         <Area area="l">
-          <Tooltip
-            title={__('Lock aspect ratio', 'web-stories')}
-            placement={PLACEMENT.BOTTOM_START}
-          >
+          <Tooltip title={__('Lock aspect ratio', 'web-stories')}>
             <StyledLockToggle
               aria-label={__('Lock aspect ratio', 'web-stories')}
               title={__('Lock aspect ratio', 'web-stories')}
