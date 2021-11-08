@@ -24,7 +24,7 @@ import { createSolid } from '@web-stories-wp/patterns';
  */
 import { Fixture } from '../../../../../karma';
 import { useInsertElement } from '../../../../canvas';
-import { BACKGROUND_TEXT_MODE, PRESET_TYPES } from '../../../../../constants';
+import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { useStory } from '../../../../../app/story';
 import { DEFAULT_PRESET } from '../../../../library/panes/text/textPresets';
 
@@ -41,10 +41,6 @@ describe('Panel: Style Presets', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-    localStorage.setItem(
-      `web_stories_ui_panel_settings:stylepreset-${PRESET_TYPES.STYLE}`,
-      JSON.stringify({ isCollapsed: false, height: 200 })
-    );
   });
 
   afterEach(() => {
