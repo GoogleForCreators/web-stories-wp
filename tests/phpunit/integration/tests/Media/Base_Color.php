@@ -67,7 +67,9 @@ class Base_Color extends TestCase {
 			]
 		);
 
-		update_post_meta( $attachment_id, $this->instance::BASE_COLOR_POST_META_KEY, '#000000' );
+		$color = [ 0, 0, 0 ];
+
+		update_post_meta( $attachment_id, $this->instance::BASE_COLOR_POST_META_KEY, $color );
 
 		$image = $this->instance->wp_prepare_attachment_for_js(
 			[
@@ -79,6 +81,6 @@ class Base_Color extends TestCase {
 
 
 		$this->assertArrayHasKey( $this->instance::BASE_COLOR_POST_META_KEY, $image );
-		$this->assertSame( '#000000', $image[ $this->instance::BASE_COLOR_POST_META_KEY ] );
+		$this->assertSame( $color, $image[ $this->instance::BASE_COLOR_POST_META_KEY ] );
 	}
 }
