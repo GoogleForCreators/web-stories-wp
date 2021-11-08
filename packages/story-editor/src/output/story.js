@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../types';
+import StoryPropTypes, { BackgroundAudioPropType } from '../types';
 import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
 import Boilerplate from './utils/ampBoilerplate';
 import CustomCSS from './utils/styles';
@@ -101,7 +101,19 @@ function OutputStory({
 }
 
 OutputStory.propTypes = {
-  story: StoryPropTypes.outputStory.isRequired,
+  story: PropTypes.shape({
+    link: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    autoAdvance: PropTypes.bool,
+    defaultPageDuration: PropTypes.number,
+    backgroundAudio: BackgroundAudioPropType,
+    publisherLogo: PropTypes.shape({
+      url: PropTypes.string.isRequired,
+    }),
+    featuredMedia: PropTypes.shape({
+      url: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
   pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
   metadata: PropTypes.shape({
     publisher: PropTypes.string.isRequired,

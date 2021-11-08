@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { createResource } from '@web-stories-wp/media';
 
 function createDummyImageData({
   mimeType = 'image/jpeg',
@@ -23,8 +27,7 @@ function createDummyImageData({
   title,
 }) {
   const mime_type = mimeType;
-  return {
-    type: 'image',
+  return createResource({
     mimeType,
     creationDate: '2021-10-29T11:43:38',
     src,
@@ -111,12 +114,7 @@ function createDummyImageData({
         source_url: src,
       },
     },
-    local: false,
-    isPlaceholder: false,
-    isOptimized: false,
-    isMuted: false,
-    isExternal: false,
-  };
+  });
 }
 
 function createDummyVideoData({
@@ -127,8 +125,7 @@ function createDummyVideoData({
   title,
   poster,
 }) {
-  return {
-    type: 'video',
+  return createResource({
     mimeType,
     creationDate: '2021-10-29T11:56:33',
     src,
@@ -140,16 +137,7 @@ function createDummyVideoData({
     length: mediaDetails.length,
     lengthFormatted: mediaDetails.lengthFormatted,
     alt: title,
-    sizes: {},
-    local: false,
-    isPlaceholder: false,
-    isOptimized: false,
-    isMuted: false,
-    isExternal: false,
-    trimData: {
-      original: 0,
-    },
-  };
+  });
 }
 
 function getDummyMedia() {
