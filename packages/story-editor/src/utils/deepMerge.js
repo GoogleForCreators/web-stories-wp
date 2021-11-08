@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * Deep merge objects.
+ *
+ * @param {Object} object object to override.
+ * @param {Object} source Source object.
+ * @return {Object} Merged object.
  */
-import reducer from '../reducer';
-
-describe('reducer', () => {
-  it('should do nothing if unknown action given', () => {
-    const initialState = { pages: [] };
-
-    const result = reducer(initialState, {
-      type: 'UNKNOWN_ACTION',
-      payload: {},
-    });
-
-    expect(result).toBe(initialState);
+export default function deepMerge(object, source = {}) {
+  Object.entries(source).forEach(([key, value]) => {
+    if (value && 'object' === typeof value && !Array.isArray(value)) {
+      if (!object[key]) {
+        Object.assign(object, { [key]: {} });
+      }
+      deepMerge(object[key], value);
+    } else {
+      Object.assign(object, { [key]: value });
+    }
   });
-});
+
+  return object;
+}

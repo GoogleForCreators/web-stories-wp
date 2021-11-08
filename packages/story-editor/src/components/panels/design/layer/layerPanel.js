@@ -72,6 +72,7 @@ function LayerPanel() {
         initialHeight={initialHeight}
         resizable
         showDragHandle
+        showFocusStyles={false}
         ariaHidden
         collapsedByDefault={false}
       >

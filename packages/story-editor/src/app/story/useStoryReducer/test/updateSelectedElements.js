@@ -65,7 +65,7 @@ describe('updateSelectedElements', () => {
 
     const result = updateSelectedElements({ properties: { a: 1 } });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should do nothing if elements selected and animation playing or scrubbing', () => {
