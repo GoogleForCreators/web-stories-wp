@@ -17,6 +17,6 @@
     "expect-puppeteer": "^6.0.0",
     "jest-extended": "^1.1.0",
     "jest-puppeteer": "^6.0.0",
-    "puppeteer": "^10.4.0"
+    "puppeteer": "^11.0.0"
   }
 }
