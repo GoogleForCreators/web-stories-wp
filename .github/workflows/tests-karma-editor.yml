@@ -5,7 +5,7 @@ on:
     # Only run if editor-related files changed.
     paths:
       - 'babel.config.cjs'
-      - 'karma-edit-story.config.cjs'
+      - 'karma-story-editor.config.cjs'
       - 'webpack.config.cjs'
       - 'webpack.config.test.cjs'
       - 'packages/**/*.js'
@@ -19,7 +19,7 @@ on:
     # Only run if editor-related files changed.
     paths:
       - 'babel.config.cjs'
-      - 'karma-edit-story.config.cjs'
+      - 'karma-story-editor.config.cjs'
       - 'webpack.config.cjs'
       - 'webpack.config.test.cjs'
       - 'packages/**/*.js'
@@ -71,7 +71,7 @@ jobs:
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Run integration tests
-        run: npm run test:karma:edit-story -- --headless --snapshots --viewport=1600:1000 --coverage || npm run test:karma:edit-story:retry-failed -- --headless --snapshots --viewport=1600:1000
+        run: npm run test:karma:story-editor -- --headless --snapshots --viewport=1600:1000 --coverage || npm run test:karma:story-editor:retry-failed -- --headless --snapshots --viewport=1600:1000
         env:
           DISABLE_ERROR_BOUNDARIES: true
 
@@ -81,7 +81,7 @@ jobs:
       - name: Upload code coverage report
         uses: codecov/codecov-action@v2.1.0
         with:
-          file: build/logs/karma-coverage/edit-story/lcov.info
+          file: build/logs/karma-coverage/story-editor/lcov.info
           flags: karmatests
 
       - name: Upload Percy snapshots
