@@ -156,11 +156,12 @@ describe('Quick Actions integration', () => {
       const { resource: initialResource, ...initialElement } =
         initialCurrentPage.elements.find((element) => !element.isBackground);
 
-      // click quick menu button
+      // click replace media button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.replaceMediaButton
       );
 
+      // fixture replaces media automatically
       // verify that media was replaced
       const { currentPage } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
@@ -174,6 +175,7 @@ describe('Quick Actions integration', () => {
       // everything should be the same except the resource
       expect(initialElement).toEqual(finalElement);
       expect(initialResource).not.toEqual(finalResource);
+      expect(finalElement.type).toEqual(finalResource.type);
     });
 
     it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
@@ -539,6 +541,7 @@ describe('Quick Actions integration', () => {
       // everything should be the same except the resource
       expect(initialElement).toEqual(finalElement);
       expect(initialResource).not.toEqual(finalResource);
+      expect(finalElement.type).toEqual(finalResource.type);
     });
 
     it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
@@ -885,8 +888,11 @@ describe('Quick Actions integration', () => {
         }))
       );
 
-      const { resource: initialResource, ...initialElement } =
-        initialCurrentPage.elements.find((element) => !element.isBackground);
+      const {
+        resource: initialResource,
+        type: initialType,
+        ...initialElement
+      } = initialCurrentPage.elements.find((element) => !element.isBackground);
 
       // click quick menu button
       await fixture.events.click(
@@ -900,12 +906,19 @@ describe('Quick Actions integration', () => {
         }))
       );
 
-      const { resource: finalResource, ...finalElement } =
-        currentPage.elements.find((element) => !element.isBackground);
+      const {
+        resource: finalResource,
+        type: finalType,
+        ...finalElement
+      } = currentPage.elements.find((element) => !element.isBackground);
 
       // everything should be the same except the resource
       expect(initialElement).toEqual(finalElement);
       expect(initialResource).not.toEqual(finalResource);
+
+      // MediaUpload fixture injects an image. New media should not have the same type
+      expect(initialType).not.toEqual(finalType);
+      expect(finalType).toEqual(finalResource.type);
     });
 
     it(`should click the \`${ACTIONS.ADD_ANIMATION.text}\` button and open the animation panel and focus the animation dropdown`, async () => {

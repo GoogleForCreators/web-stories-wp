@@ -66,7 +66,7 @@ export const MEDIA_PER_PAGE = 20;
 
 function MediaUpload({ render: _render, onSelect }) {
   const open = () => {
-    const image = { src: 'https://www.example.com/media1' };
+    const image = { type: 'image', src: 'https://www.example.com/media1' };
     onSelect(image);
   };
 
