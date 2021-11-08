@@ -34,6 +34,8 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
+  PLACEMENT,
+  Tooltip,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -49,7 +51,6 @@ import {
   inputContainerStyleOverride,
   useCommonObjectValue,
 } from '../../shared';
-import Tooltip from '../../../tooltip';
 import useStory from '../../../../app/story/useStory';
 import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
@@ -375,7 +376,10 @@ function SizePositionPanel(props) {
           />
         </Area>
         <Area area="l">
-          <Tooltip title={__('Lock aspect ratio', 'web-stories')}>
+          <Tooltip
+            title={__('Lock aspect ratio', 'web-stories')}
+            placement={PLACEMENT.BOTTOM_START}
+          >
             <StyledLockToggle
               aria-label={__('Lock aspect ratio', 'web-stories')}
               title={__('Lock aspect ratio', 'web-stories')}

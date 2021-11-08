@@ -21,14 +21,18 @@ import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { LockToggle, Icons } from '@web-stories-wp/design-system';
+import {
+  LockToggle,
+  Icons,
+  PLACEMENT,
+  Tooltip,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { StackableGroup, StackableInput } from '../../../form/stackable';
 import { canMaskHaveBorder } from '../../../../masks';
-import Tooltip from '../../../tooltip';
 import { useCommonObjectValue, focusStyle } from '../../shared';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
@@ -207,7 +211,11 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
       </StackableGroup>
 
       <LockContainer>
-        <Tooltip title={__('Toggle consistent corner radius', 'web-stories')}>
+        <Tooltip
+          title={__('Toggle consistent corner radius', 'web-stories')}
+          placement={PLACEMENT.BOTTOM_START}
+          key={borderRadius.locked}
+        >
           <StyledLockToggle
             isLocked={borderRadius.locked}
             onClick={() => handleLockChange(!borderRadius.locked)}
