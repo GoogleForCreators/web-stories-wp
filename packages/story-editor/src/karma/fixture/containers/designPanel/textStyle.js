@@ -104,12 +104,20 @@ export class TextStyle extends AbstractPanel {
     return this.getByRole('option', { name: /fill/i });
   }
 
-  get add() {
+  get addStyle() {
     return this.getByRole('button', { name: /Add style/ });
   }
 
-  get apply() {
+  get applyStyle() {
     return this.getByRole('button', { name: /Apply style/ });
+  }
+
+  get presets() {
+    return this.getAllByRole('button', { name: /Apply style/ });
+  }
+
+  get moreStyles() {
+    return this.getByRole('button', { name: /More styles/ });
   }
 
   get styleManager() {

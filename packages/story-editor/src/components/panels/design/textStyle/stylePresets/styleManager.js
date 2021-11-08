@@ -120,7 +120,7 @@ function StyleManager({ styles, onClose, applyStyle }) {
           isEditMode={isEditMode}
           setIsEditMode={setIsEditMode}
         >
-          <StyledText>{__('Color', 'web-stories')}</StyledText>
+          <StyledText>{__('Saved Styles', 'web-stories')}</StyledText>
         </Header>
         <Body>
           <StyleGroup

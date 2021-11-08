@@ -33,10 +33,10 @@ import { Link } from './link';
 import { PageBackground } from './pageBackground';
 import { SizePosition } from './sizePosition';
 import { TextStyle } from './textStyle';
-import { TextStylePreset } from './textStylePreset';
 import { VideoPoster } from './videoPoster';
 import { Captions } from './captions';
 import { ShapeStyle } from './shapeStyle';
+
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
@@ -79,14 +79,6 @@ export class DesignPanel extends Container {
       this.getByRole('region', { name: /Accessibility/ }),
       'poster',
       VideoPoster
-    );
-  }
-
-  get textStylePreset() {
-    return this._get(
-      this.getByRole('region', { name: /Saved Styles/i }),
-      'textStylePreset',
-      TextStylePreset
     );
   }
 
