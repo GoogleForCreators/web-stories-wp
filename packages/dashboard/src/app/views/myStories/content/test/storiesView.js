@@ -109,8 +109,6 @@ describe('Dashboard <StoriesView />', function () {
           pageSize: {
             width: 210,
             height: 316,
-            containerHeight: 316,
-            posterHeight: 300,
           },
         }}
       />,
@@ -144,8 +142,6 @@ describe('Dashboard <StoriesView />', function () {
             pageSize: {
               width: 210,
               height: 316,
-              containerHeight: 316,
-              posterHeight: 300,
             },
           }}
           loading={{
@@ -180,8 +176,6 @@ describe('Dashboard <StoriesView />', function () {
             pageSize: {
               width: 210,
               height: 316,
-              containerHeight: 316,
-              posterHeight: 300,
             },
           }}
           loading={{
@@ -218,8 +212,6 @@ describe('Dashboard <StoriesView />', function () {
             pageSize: {
               width: 210,
               height: 316,
-              containerHeight: 316,
-              posterHeight: 300,
             },
           }}
           loading={{
@@ -254,8 +246,6 @@ describe('Dashboard <StoriesView />', function () {
             pageSize: {
               width: 210,
               height: 316,
-              containerHeight: 316,
-              posterHeight: 300,
             },
           }}
           loading={{
@@ -294,8 +284,6 @@ describe('Dashboard <StoriesView />', function () {
             pageSize: {
               width: 210,
               height: 316,
-              containerHeight: 316,
-              posterHeight: 300,
             },
           }}
         />,
