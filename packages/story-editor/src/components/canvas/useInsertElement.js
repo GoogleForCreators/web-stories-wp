@@ -72,10 +72,19 @@ function useInsertElement() {
   const generateBaseColor = useCallback(
     async (element) => {
       const { id, resource } = element;
-      const { isExternal, local, baseColor: currentBaseColor } = resource;
+      const {
+        isExternal,
+        local,
+        baseColor: currentBaseColor,
+        src,
+        poster,
+        type,
+      } = resource;
 
+      const imageSrc = type === 'image' ? src : poster;
       if (
         local ||
+        !imageSrc ||
         (Array.isArray(currentBaseColor) && currentBaseColor.length)
       ) {
         return;
