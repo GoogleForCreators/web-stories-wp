@@ -20,7 +20,6 @@
 import {
   findMatchingColor,
   findMatchingStylePreset,
-  getPanelInitialHeight,
   getShapePresets,
   getTextPresets,
 } from '../presetUtils';
@@ -426,23 +425,5 @@ describe('presetUtils', () => {
     };
     const presets = getShapePresets(elements, globalStoryStyles);
     expect(presets).toStrictEqual(expected);
-  });
-
-  describe('getPanelInitialHeight', () => {
-    it('should get the initial height correctly for style presets', () => {
-      const presets = [
-        { fontSize: 1 },
-        { fontSize: 2 },
-        { fontSize: 3 },
-        { fontSize: 4 },
-        { fontSize: 5 },
-        { fontSize: 6 },
-        { fontSize: 7 },
-      ];
-      // Three rows.
-      expect(getPanelInitialHeight(presets)).toBe(256);
-      // One row.
-      expect(getPanelInitialHeight([{ fontSize: 1 }])).toBe(96);
-    });
   });
 });

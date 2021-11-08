@@ -25,11 +25,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import StylePresetPanel from '../presetPanel';
 import StoryContext from '../../../../../app/story/context';
 import { BACKGROUND_TEXT_MODE, PRESET_TYPES } from '../../../../../constants';
-import {
-  getTextPresets,
-  areAllType,
-  getPanelInitialHeight,
-} from '../../../../../utils/presetUtils';
+import { getTextPresets, areAllType } from '../../../../../utils/presetUtils';
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
@@ -128,8 +124,6 @@ describe('Panels/Preset', () => {
     areAllType.mockImplementation((elType, els) => {
       return els.length > 0 && els.every(({ type }) => elType === type);
     });
-
-    getPanelInitialHeight.mockReturnValue(150);
 
     localStorage.setItem(
       `web_stories_ui_panel_settings:stylepreset-${PRESET_TYPES.STYLE}`,

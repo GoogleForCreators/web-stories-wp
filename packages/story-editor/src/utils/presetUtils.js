@@ -188,15 +188,3 @@ export function areAllType(elType, selectedElements) {
     selectedElements.every(({ type }) => elType === type)
   );
 }
-
-export function getPanelInitialHeight(presets) {
-  // Includes the helper text and button for saving a color.
-  const presetsCount = presets.length;
-  let initialHeight = 0;
-  if (presetsCount > 0) {
-    initialHeight =
-      Math.max(1.5, Math.ceil(presets.length / STYLE_PRESETS_PER_ROW)) *
-      SAVED_STYLE_HEIGHT;
-  }
-  return Math.min(initialHeight, window.innerHeight / 3);
-}
