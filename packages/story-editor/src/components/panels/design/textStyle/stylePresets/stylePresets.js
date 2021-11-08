@@ -64,8 +64,10 @@ const StyledButton = styled(Button)`
 
 const StyledMoreButton = styled(Button)`
   ${focusStyle};
-  margin-top: 4px 0;
+  margin: 12px 0;
+  padding: 0 16px;
   justify-content: center;
+  align-self: center;
   svg {
     transform: rotate(-90deg);
     height: 32px;
