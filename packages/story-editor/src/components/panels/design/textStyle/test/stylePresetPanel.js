@@ -24,7 +24,7 @@ import { fireEvent, screen } from '@testing-library/react';
  */
 import StylePresetPanel from '../stylePresets';
 import StoryContext from '../../../../../app/story/context';
-import { BACKGROUND_TEXT_MODE, PRESET_TYPES } from '../../../../../constants';
+import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { getTextPresets, areAllType } from '../../../../../utils/presetUtils';
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
@@ -95,9 +95,7 @@ function arrange(extraStylePresets, extraStateProps) {
   };
 }
 
-const EDIT_BUTTON_LABEL = 'Edit styles';
 const APPLY_PRESET = 'Apply style';
-const PANEL_LABEL = 'Saved Styles';
 const TEST_COLOR = {
   color: {
     r: 1,
@@ -124,50 +122,13 @@ describe('panels/Text/Style', () => {
     areAllType.mockImplementation((elType, els) => {
       return els.length > 0 && els.every(({ type }) => elType === type);
     });
-
-    localStorage.setItem(
-      `web_stories_ui_panel_settings:stylepreset-${PRESET_TYPES.STYLE}`,
-      JSON.stringify({ isCollapsed: false })
-    );
   });
 
   afterAll(() => {
     localStorage.clear();
   });
 
-  it('should render <StylePresetPanel /> panel', () => {
-    arrange();
-    const element = screen.getByText(PANEL_LABEL);
-    expect(element).toBeInTheDocument();
-  });
-
-  it('should not display the panel if mixed types multi-selection', () => {
-    const extraStateProps = {
-      selectedElements: [
-        {
-          id: '1',
-          type: 'text',
-        },
-        {
-          id: '2',
-          type: 'shape',
-        },
-      ],
-    };
-    arrange(null, extraStateProps);
-    expect(screen.queryByText(PANEL_LABEL)).not.toBeInTheDocument();
-  });
-
   describe('panels/Text/Style/Header', () => {
-    it('should display only Add button if no presets exist', () => {
-      arrange();
-      const addButton = screen.queryByLabelText('Add style');
-      expect(addButton).toBeInTheDocument();
-
-      const editButton = screen.queryByLabelText(EDIT_BUTTON_LABEL);
-      expect(editButton).not.toBeInTheDocument();
-    });
-
     it('should add a text style preset', () => {
       const extraStateProps = {
         selectedElements: [
