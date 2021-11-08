@@ -22,10 +22,9 @@ import { useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { STYLE_PRESETS_PER_ROW } from '../../../../../constants';
+const PRESETS_PER_ROW = 2;
 
 function useKeyboardNavigation({ activeIndex, setActiveIndex, groupRef }) {
-  const presetsPerRow = STYLE_PRESETS_PER_ROW;
   const getIndexDiff = (key, rowLength) => {
     switch (key) {
       case 'ArrowUp':
@@ -48,7 +47,7 @@ function useKeyboardNavigation({ activeIndex, setActiveIndex, groupRef }) {
       // When the user navigates in the colors using the arrow keys,
       // Let's change the active index accordingly, to indicate which preset should be focused
       if (groupRef.current) {
-        const diff = getIndexDiff(key, presetsPerRow);
+        const diff = getIndexDiff(key, PRESETS_PER_ROW);
         const buttons = groupRef.current.querySelectorAll(
           'button:not([disabled])'
         );
@@ -61,7 +60,7 @@ function useKeyboardNavigation({ activeIndex, setActiveIndex, groupRef }) {
         }
       }
     },
-    [activeIndex, setActiveIndex, groupRef, presetsPerRow]
+    [activeIndex, setActiveIndex, groupRef]
   );
 }
 

@@ -18,16 +18,14 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
 import ConfirmationDialog from '../confirmationDialog';
-import { PRESET_TYPES } from '../../../../../constants';
 
 export default {
-  title: 'Stories Editor/Components/Panels/Preset/Dialog',
+  title: 'Stories Editor/Components/Panels/TextStyle/StylePresets/Dialog',
   component: ConfirmationDialog,
 };
 
@@ -36,11 +34,6 @@ export const _default = () => {
     <ConfirmationDialog
       onClose={action('closed')}
       onPrimary={action('confirmed')}
-      presetType={
-        boolean('Preset type - colors', true)
-          ? PRESET_TYPES.COLOR
-          : PRESET_TYPES.STYLE
-      }
     />
   );
 };

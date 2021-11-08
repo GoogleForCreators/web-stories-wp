@@ -33,7 +33,6 @@ import {
   VideoAccessibilityPanel,
   ElementAlignmentPanel,
   VideoOptionsPanel,
-  StylePresetPanel,
   PageBackgroundAudioPanel,
 } from '../../panels/design';
 import PanelTypes from '../../panels/design/types';

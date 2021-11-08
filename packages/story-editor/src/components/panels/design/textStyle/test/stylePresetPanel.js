@@ -22,7 +22,7 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import StylePresetPanel from '../presetPanel';
+import StylePresetPanel from '../stylePresets';
 import StoryContext from '../../../../../app/story/context';
 import { BACKGROUND_TEXT_MODE, PRESET_TYPES } from '../../../../../constants';
 import { getTextPresets, areAllType } from '../../../../../utils/presetUtils';
@@ -119,7 +119,7 @@ const TEST_STYLE = {
   font: TEXT_ELEMENT_DEFAULT_FONT,
 };
 
-describe('Panels/Preset', () => {
+describe('panels/Text/Style', () => {
   beforeAll(() => {
     areAllType.mockImplementation((elType, els) => {
       return els.length > 0 && els.every(({ type }) => elType === type);
@@ -158,7 +158,7 @@ describe('Panels/Preset', () => {
     expect(screen.queryByText(PANEL_LABEL)).not.toBeInTheDocument();
   });
 
-  describe('Panels/Preset/Header', () => {
+  describe('panels/Text/Style/Header', () => {
     it('should display only Add button if no presets exist', () => {
       arrange();
       const addButton = screen.queryByLabelText('Add style');
@@ -206,7 +206,7 @@ describe('Panels/Preset', () => {
     });
   });
 
-  describe('Panels/StylePreset/Styles', () => {
+  describe('panels/Text/Style/Styles', () => {
     it('should allow applying styles for text', () => {
       const extraStylePresets = {
         textStyles: [TEST_STYLE],

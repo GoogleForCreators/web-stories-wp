@@ -31,8 +31,6 @@ import { generateFontFamily } from '../elements/text/util';
 import {
   BACKGROUND_TEXT_MODE,
   MULTIPLE_VALUE,
-  SAVED_STYLE_HEIGHT,
-  STYLE_PRESETS_PER_ROW,
   PRESET_TYPES,
 } from '../constants';
 import { getHTMLInfo } from '../components/richText/htmlManipulation';
