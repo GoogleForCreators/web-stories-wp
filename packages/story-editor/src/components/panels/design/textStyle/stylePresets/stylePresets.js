@@ -38,10 +38,10 @@ import { useMemo, useRef, useState } from '@web-stories-wp/react';
 import { useStory } from '../../../../../app';
 import { PRESET_TYPES } from '../../../../../constants';
 import useAddPreset from '../../../../../utils/useAddPreset';
-import useApplyStyle from '../../preset/stylePreset/useApplyStyle';
 import { focusStyle } from '../../../shared';
 import Popup from '../../../../popup';
 import useInspector from '../../../../inspector/useInspector';
+import useApplyStyle from './useApplyStyle';
 import StyleGroup from './styleGroup';
 import StyleManager from './styleManager';
 

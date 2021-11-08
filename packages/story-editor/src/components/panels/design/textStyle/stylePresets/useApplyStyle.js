@@ -21,7 +21,7 @@ import { useCallback, useRef } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import useRichTextFormatting from '../../textStyle/useRichTextFormatting';
+import useRichTextFormatting from '../useRichTextFormatting';
 import { useStory } from '../../../../../app/story';
 import { usePresubmitHandler } from '../../../../form';
 import getUpdatedSizeAndPosition from '../../../../../utils/getUpdatedSizeAndPosition';

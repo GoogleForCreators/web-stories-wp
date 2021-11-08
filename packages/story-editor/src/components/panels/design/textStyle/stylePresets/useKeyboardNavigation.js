@@ -18,10 +18,11 @@
  * External dependencies
  */
 import { useKeyDownEffect } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { STYLE_PRESETS_PER_ROW } from '../../../../constants';
+import { STYLE_PRESETS_PER_ROW } from '../../../../../constants';
 
 function useKeyboardNavigation({ activeIndex, setActiveIndex, groupRef }) {
   const presetsPerRow = STYLE_PRESETS_PER_ROW;
