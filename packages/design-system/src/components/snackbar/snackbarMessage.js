@@ -172,6 +172,7 @@ const CloseButton = styled(Button)`
 
 const SnackbarMessage = ({
   'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden,
   actionLabel,
   onAction = noop,
   onDismiss = noop,
@@ -223,6 +224,7 @@ const SnackbarMessage = ({
       role="alert"
       hasAction={hasAction}
       placement={placement}
+      aria-hidden={ariaHidden}
       {...props}
     >
       <Message
@@ -259,6 +261,7 @@ const SnackbarMessage = ({
             <CloseButton
               onClick={onDismiss}
               aria-label={__('Close', 'web-stories')}
+              aria-hidden={ariaHidden}
             >
               <Cross aria-hidden />
             </CloseButton>
@@ -271,6 +274,7 @@ const SnackbarMessage = ({
 
 SnackbarMessage.propTypes = {
   'aria-label': PropTypes.string.isRequired,
+  'aria-hidden': PropTypes.bool,
   customZIndex: PropTypes.number,
   message: PropTypes.string.isRequired,
   onDismiss: PropTypes.func.isRequired,
