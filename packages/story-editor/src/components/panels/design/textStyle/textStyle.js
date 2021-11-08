@@ -41,6 +41,8 @@ import StylePresets from './stylePresets';
 
 const SubSection = styled.section`
   border-top: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  display: flex;
+  flex-direction: column;
 `;
 const SubHeading = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};

@@ -30,7 +30,7 @@ import {
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-import { useRef, useState } from '@web-stories-wp/react';
+import { useMemo, useRef, useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -60,7 +60,18 @@ const SubHeading = styled(Text)`
 
 const StyledButton = styled(Button)`
   margin-left: auto;
+`;
+
+const StyledMoreButton = styled(Button)`
   ${focusStyle};
+  margin-top: 4px 0;
+  justify-content: center;
+  svg {
+    transform: rotate(-90deg);
+    height: 32px;
+    width: 32px;
+    margin-left: -4px;
+  }
 `;
 
 function PresetPanel({ pushUpdate }) {
@@ -92,6 +103,7 @@ function PresetPanel({ pushUpdate }) {
     handleApplyStyle(preset);
   };
 
+  const spacing = useMemo(() => ({ x: 20 }), []);
   return (
     <>
       <PresetsHeader>
@@ -116,20 +128,22 @@ function PresetPanel({ pushUpdate }) {
               handleClick={handlePresetClick}
             />
           </StylesWrapper>
-          <StyledButton
+          <StyledMoreButton
             ref={buttonRef}
             type={BUTTON_TYPES.PLAIN}
             size={BUTTON_SIZES.SMALL}
             variant={BUTTON_VARIANTS.RECTANGLE}
             onClick={() => setIsPopupOpen(true)}
           >
-            {__('More styles >', 'web-stories')}
-          </StyledButton>
+            {__('More styles', 'web-stories')}
+            <Icons.ChevronDownSmall />
+          </StyledMoreButton>
           <Popup
             anchor={buttonRef}
             dock={inspector}
             isOpen={isPopupOpen}
             placement={PLACEMENT.LEFT_START}
+            spacing={spacing}
             renderContents={() => (
               <StyleManager
                 styles={textStyles}

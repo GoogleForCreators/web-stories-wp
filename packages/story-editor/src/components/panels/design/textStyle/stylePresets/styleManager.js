@@ -22,6 +22,7 @@ import { CSSTransition } from 'react-transition-group';
 import { useRef, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -55,7 +56,7 @@ const Container = styled.div`
 
 const Body = styled.div`
   display: flex;
-  margin: 8px 16px 16px;
+  margin: 8px 12px 16px;
 `;
 
 const StyledText = styled(Text).attrs({
@@ -97,11 +98,18 @@ function StyleManager({ styles, onClose, applyStyle }) {
             styles={styles}
             handleClick={handleClick}
             isEditMode={isEditMode}
+            buttonWidth={106}
           />
         </Body>
       </Container>
     </CSSTransition>
   );
 }
+
+StyleManager.propTypes = {
+  styles: PropTypes.array.isRequired,
+  onClose: PropTypes.func.isRequired,
+  applyStyle: PropTypes.func.isRequired,
+};
 
 export default StyleManager;
