@@ -83,20 +83,16 @@ function Header({
     <Wrapper>
       {children}
       <Actions>
-        {hasPresets && isEditMode && (
+        {hasPresets && (
           <StyledButton
             {...buttonProps}
-            aria-label={__('Exit edit mode', 'web-stories')}
+            aria-label={
+              isEditMode
+                ? __('Exit edit mode', 'web-stories')
+                : __('Edit colors', 'web-stories')
+            }
           >
-            {__('Done', 'web-stories')}
-          </StyledButton>
-        )}
-        {hasPresets && !isEditMode && (
-          <StyledButton
-            {...buttonProps}
-            aria-label={__('Edit colors', 'web-stories')}
-          >
-            <Icons.Pencil />
+            {isEditMode ? __('Done', 'web-stories') : <Icons.Pencil />}
           </StyledButton>
         )}
         <StyledButton

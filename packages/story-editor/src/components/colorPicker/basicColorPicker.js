@@ -39,7 +39,7 @@ import { useState } from '@web-stories-wp/react';
  */
 import useStory from '../../app/story/useStory';
 import useEyedropper from '../eyedropper';
-import { BASIC_COLORS } from './constants';
+import { BASIC_COLORS, CONFIRMATION_DIALOG_STORAGE_KEY } from './constants';
 import Header from './header';
 import BasicColorList from './basicColorList';
 import ConfirmationDialog from './confirmationDialog';
@@ -117,7 +117,7 @@ function BasicColorPicker({
   });
 
   const { deleteLocalColor, deleteGlobalColor } = useDeleteColor({
-    setIsEditMode,
+    onEmpty: () => setIsEditMode(false),
   });
 
   const handleClick = (preset, isLocal = false) => {
@@ -133,9 +133,8 @@ function BasicColorPicker({
     }
 
     // If the user has dismissed the confirmation dialogue previously.
-    const storageKey = 'DELETE_COLOR_PRESET_DIALOG_DISMISSED';
     const isDialogDismissed = localStore.getItemByKey(
-      LOCAL_STORAGE_PREFIX[storageKey]
+      LOCAL_STORAGE_PREFIX[CONFIRMATION_DIALOG_STORAGE_KEY]
     );
     if (isDialogDismissed) {
       deleteGlobalColor(preset);
@@ -183,23 +182,19 @@ function BasicColorPicker({
                 color={color}
                 colors={storyColors}
                 handleClick={handleClick}
-                colorType="local"
+                isLocal
                 allowsOpacity={allowsOpacity}
                 allowsGradient={allowsGradient}
                 aria-labelledby="colorpicker-story-colors-title"
                 isEditMode={isEditMode}
               />
-            </>
-          )}
-          {allowsSavedColors && (
-            <>
               <Label id="colorpicker-saved-colors-title">
                 {__('Saved colors', 'web-stories')}
               </Label>
               <BasicColorList
                 color={color}
                 colors={savedColors}
-                colorType="global"
+                isGlobal
                 handleClick={handleClick}
                 allowsOpacity={allowsOpacity}
                 allowsGradient={allowsGradient}
@@ -218,9 +213,7 @@ function BasicColorPicker({
             colors={BASIC_COLORS}
             handleClick={(pattern) => {
               handleColorChange(pattern);
-              if (isEditMode) {
-                setIsEditMode(false);
-              }
+              setIsEditMode(false);
             }}
             allowsOpacity={allowsOpacity}
             allowsGradient={allowsGradient}

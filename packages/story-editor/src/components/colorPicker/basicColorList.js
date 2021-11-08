@@ -80,7 +80,8 @@ function BasicColorList({
   handleClick,
   allowsOpacity,
   allowsGradient,
-  colorType = null,
+  isLocal = false,
+  isGlobal = false,
   isEditMode,
   ...rest
 }) {
@@ -93,9 +94,10 @@ function BasicColorList({
     .map(getPatternAsString)
     .findIndex((c) => colorAsBackground === c);
 
-  const isLocal = 'local' === colorType;
-
   let firstIndex = 0;
+  const colorType = isLocal
+    ? __('local', 'web-stories')
+    : __('global', 'web-stories');
   return (
     <SwatchList ref={listRef} {...rest}>
       {colors.map((pattern, i) => {
@@ -146,7 +148,9 @@ function BasicColorList({
           </Tooltip>
         );
       })}
-      {colorType && <ColorAdd type={colorType} />}
+      {(isLocal || isGlobal) && (
+        <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
+      )}
     </SwatchList>
   );
 }
@@ -157,7 +161,8 @@ BasicColorList.propTypes = {
   allowsGradient: PropTypes.bool,
   color: PatternPropType,
   colors: PropTypes.arrayOf(PatternPropType),
-  colorType: PropTypes.string,
+  isLocal: PropTypes.bool,
+  isGlobal: PropTypes.bool,
   isEditMode: PropTypes.bool.isRequired,
 };
 

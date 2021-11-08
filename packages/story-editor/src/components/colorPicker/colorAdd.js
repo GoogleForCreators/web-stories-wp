@@ -51,9 +51,7 @@ const AddColorAction = styled.button`
   ${focusStyle};
 `;
 
-function ColorAdd({ type }) {
-  const isLocal = 'local' === type;
-  const isGlobal = 'global' === type;
+function ColorAdd({ isLocal = false, isGlobal = false }) {
   const { addGlobalPreset, addLocalPreset } = useAddPreset({
     presetType: PRESET_TYPES.COLOR,
   });
@@ -77,7 +75,8 @@ function ColorAdd({ type }) {
 }
 
 ColorAdd.propTypes = {
-  type: PropTypes.string.isRequired,
+  isLocal: PropTypes.bool,
+  isGlobal: PropTypes.bool,
 };
 
 export default ColorAdd;

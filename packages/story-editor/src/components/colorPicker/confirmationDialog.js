@@ -33,6 +33,7 @@ import {
  * Internal dependencies
  */
 import Dialog from '../dialog';
+import { CONFIRMATION_DIALOG_STORAGE_KEY } from './constants';
 
 const Label = styled.label`
   margin-left: 12px;
@@ -46,9 +47,10 @@ const CheckboxWrapper = styled.footer`
 `;
 
 function ConfirmationDialog({ onClose, onPrimary }) {
-  const storageKey = 'DELETE_COLOR_PRESET_DIALOG_DISMISSED';
   const [isDialogDismissed, setIsDialogDismissed] = useState(
-    localStore.getItemByKey(LOCAL_STORAGE_PREFIX[storageKey])
+    localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX[CONFIRMATION_DIALOG_STORAGE_KEY]
+    )
   );
 
   const cbId = `cb-${uuidv4()}`;
@@ -62,7 +64,7 @@ function ConfirmationDialog({ onClose, onPrimary }) {
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__(
-          'This is a global color. Deleting this color will remove it from the Saved Colors panel across all stories and the color will no longer be available to any other users on the site.',
+          'This is a global color. Deleting this color will remove it from the Saved Colors across all stories and the color will no longer be available to any other users on the site.',
           'web-stories'
         )}
       </Text>
@@ -72,7 +74,7 @@ function ConfirmationDialog({ onClose, onPrimary }) {
           checked={isDialogDismissed}
           onChange={() => {
             localStore.setItemByKey(
-              LOCAL_STORAGE_PREFIX[storageKey],
+              LOCAL_STORAGE_PREFIX[CONFIRMATION_DIALOG_STORAGE_KEY],
               !isDialogDismissed
             );
             setIsDialogDismissed(!isDialogDismissed);
