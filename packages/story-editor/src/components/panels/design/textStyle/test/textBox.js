@@ -31,6 +31,7 @@ import {
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import FontContext from '../../../../../app/font/context';
+import { StoryContext } from '../../../../../app/story';
 
 let mockControls;
 jest.mock('../../../../form/color/color', () => {
@@ -52,20 +53,36 @@ jest.mock('../../../../form/color/color', () => {
 });
 
 function Wrapper({ children }) {
+  const storyContextValue = {
+    state: {
+      selectedElements: [],
+      story: {
+        globalStoryStyles: {
+          ...{ colors: [], textStyles: [] },
+        },
+        currentStoryStyles: {
+          colors: [],
+        },
+      },
+    },
+    actions: { updateStory: jest.fn(), updateElementsById: jest.fn() },
+  };
   return (
-    <FontContext.Provider
-      value={{
-        state: {
-          fonts: [],
-        },
-        actions: {
-          maybeEnqueueFontStyle: () => Promise.resolve(),
-          getFontByName: jest.fn(),
-        },
-      }}
-    >
-      {children}
-    </FontContext.Provider>
+    <StoryContext.Provider value={storyContextValue}>
+      <FontContext.Provider
+        value={{
+          state: {
+            fonts: [],
+          },
+          actions: {
+            maybeEnqueueFontStyle: () => Promise.resolve(),
+            getFontByName: jest.fn(),
+          },
+        }}
+      >
+        {children}
+      </FontContext.Provider>
+    </StoryContext.Provider>
   );
 }
 

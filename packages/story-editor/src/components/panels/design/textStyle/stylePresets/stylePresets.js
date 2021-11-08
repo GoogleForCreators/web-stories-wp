@@ -91,17 +91,11 @@ const NoStylesText = styled(Text)`
 `;
 
 function PresetPanel({ pushUpdate }) {
-  const { globalStoryStyles } = useStory(
-    ({
-      state: {
-        story: { globalStoryStyles },
-      },
-    }) => {
-      return {
-        globalStoryStyles,
-      };
-    }
-  );
+  const { globalStoryStyles = [] } = useStory(({ state = {} }) => {
+    return {
+      globalStoryStyles: state.globalStoryStyles,
+    };
+  });
 
   const {
     refs: { inspector },
@@ -109,7 +103,7 @@ function PresetPanel({ pushUpdate }) {
   const buttonRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const { textStyles } = globalStoryStyles;
+  const { textStyles = [] } = globalStoryStyles;
   const hasPresets = textStyles.length > 0;
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });

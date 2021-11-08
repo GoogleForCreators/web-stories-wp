@@ -22,7 +22,7 @@ import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../../../karma/fixture';
+import { Fixture } from '../../../../../karma';
 import { useInsertElement } from '../../../../canvas';
 import { BACKGROUND_TEXT_MODE, PRESET_TYPES } from '../../../../../constants';
 import { useStory } from '../../../../../app/story';
