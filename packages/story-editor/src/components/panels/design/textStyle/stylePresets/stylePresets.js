@@ -76,6 +76,20 @@ const StyledMoreButton = styled(Button)`
   }
 `;
 
+const NoStylesWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% + 32px);
+  margin-left: -16px;
+  background-color: ${({ theme }) => theme.colors.opacity.black24};
+  height: 64px;
+`;
+
+const NoStylesText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+`;
+
 function PresetPanel({ pushUpdate }) {
   const { globalStoryStyles } = useStory(
     ({
@@ -155,6 +169,13 @@ function PresetPanel({ pushUpdate }) {
             )}
           />
         </>
+      )}
+      {!hasPresets && (
+        <NoStylesWrapper>
+          <NoStylesText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('No Styles Saved', 'web-stories')}
+          </NoStylesText>
+        </NoStylesWrapper>
       )}
     </>
   );
