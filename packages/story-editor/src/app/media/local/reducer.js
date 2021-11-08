@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* eslint complexity: ["error", { "max": 31 }] */
+/* eslint complexity: ["error", { "max": 30 }] */
 
 /**
  * Internal dependencies
@@ -24,6 +24,7 @@ import commonReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
 } from '../pagination/reducer';
 import * as types from './types';
+import * as reducers from './reducers';
 
 const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
@@ -182,29 +183,11 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     }
 
     case types.LOCAL_MEDIA_ADD_BASE_COLOR_PROCESSING: {
-      const { id } = payload;
-      if (!id || state.baseColorProcessing.includes(id)) {
-        return state;
-      }
-      return {
-        ...state,
-        baseColorProcessing: [...state.baseColorProcessing, id],
-      };
+      return reducers.addBaseColorProcessing(state, payload);
     }
 
     case types.LOCAL_MEDIA_REMOVE_BASE_COLOR_PROCESSING: {
-      const { id } = payload;
-      if (!id || !state.baseColorProcessing.includes(id)) {
-        return state;
-      }
-      const currentProcessing = [...state.baseColorProcessing];
-      const baseColorProcessing = currentProcessing.filter((e) => e !== id);
-
-      return {
-        ...state,
-        baseColorProcessing,
-        baseColorProcessed: [...state.baseColorProcessed, id],
-      };
+      return reducers.removeBaseColorProcessing(state, payload);
     }
 
     default:
