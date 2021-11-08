@@ -18,25 +18,12 @@
  * Internal dependencies
  */
 import * as types from './types';
+import { INITIAL_STATE } from './constants';
 
 /**
  * @typedef {import('../local/typedefs').LocalMediaReducerState} LocalMediaReducerState
  * @typedef {import('../media3p/typedefs').Media3pProviderReducerState} Media3pProviderReducerState
  */
-export const INITIAL_STATE = {
-  media: [],
-  // The page token of the last loaded page, or undefined if at the first page
-  // or no pages have been loaded.
-  pageToken: undefined,
-  // The page token of the next page, or undefined if at the last page or no
-  // pages have been loaded.
-  nextPageToken: undefined,
-  hasMore: true,
-  totalPages: 1,
-  isMediaLoading: false,
-  isMediaLoaded: false,
-  totalItems: 0,
-};
 
 /**
  * The reducer for the state of a media list pagination.

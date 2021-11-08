@@ -14,26 +14,13 @@
  * limitations under the License.
  */
 
-/* eslint complexity: ["error", { "max": 30 }] */
-
 /**
  * Internal dependencies
  */
-import * as commonTypes from '../pagination/types';
-import commonReducer, {
-  INITIAL_STATE as COMMON_INITIAL_STATE,
-} from '../pagination/reducer';
+import { FETCH_MEDIA_SUCCESS } from '../pagination/types';
+import { INITIAL_STATE } from './constants';
 import * as types from './types';
-
-const INITIAL_STATE = {
-  ...COMMON_INITIAL_STATE,
-  audioProcessing: [],
-  audioProcessed: [],
-  posterProcessing: [],
-  posterProcessed: [],
-  mediaType: '',
-  searchTerm: '',
-};
+import * as reducers from './reducers';
 
 /**
  * @typedef {import('./typedefs').LocalMediaReducerState} LocalMediaReducerState
@@ -54,136 +41,48 @@ const INITIAL_STATE = {
  */
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-    case commonTypes.FETCH_MEDIA_SUCCESS: {
-      const { provider, mediaType, searchTerm } = payload;
-      if (
-        provider === 'local' &&
-        mediaType === state.mediaType &&
-        searchTerm === state.searchTerm
-      ) {
-        return commonReducer(state, { type, payload });
-      }
-      return state;
+    case FETCH_MEDIA_SUCCESS: {
+      return reducers.fetchMedia(state, { type, payload });
     }
 
     case types.LOCAL_MEDIA_RESET_FILTERS: {
-      return {
-        ...INITIAL_STATE,
-        audioProcessing: [...state.audioProcessing],
-        audioProcessed: [...state.audioProcessed],
-        posterProcessing: [...state.posterProcessing],
-        posterProcessed: [...state.posterProcessed],
-      };
+      return reducers.resetFilters(state);
     }
 
     case types.LOCAL_MEDIA_SET_SEARCH_TERM: {
-      const { searchTerm } = payload;
-      if (searchTerm === state.searchTerm) {
-        return state;
-      }
-      return {
-        ...INITIAL_STATE,
-        audioProcessing: [...state.audioProcessing],
-        audioProcessed: [...state.audioProcessed],
-        posterProcessing: [...state.posterProcessing],
-        posterProcessed: [...state.posterProcessed],
-        mediaType: state.mediaType,
-        searchTerm,
-      };
+      return reducers.setSearchTerm(state, payload);
     }
 
     case types.LOCAL_MEDIA_SET_MEDIA_TYPE: {
-      const { mediaType } = payload;
-      if (mediaType === state.mediaType) {
-        return state;
-      }
-      return {
-        ...INITIAL_STATE,
-        media: state.media.filter(({ local }) => local), // This filter allows remove temporary file returned on upload
-        audioProcessing: [...state.audioProcessing],
-        audioProcessed: [...state.audioProcessed],
-        posterProcessing: [...state.posterProcessing],
-        posterProcessed: [...state.posterProcessed],
-        searchTerm: state.searchTerm,
-        mediaType,
-      };
+      return reducers.setMediaType(state, payload);
     }
 
     case types.LOCAL_MEDIA_SET_MEDIA: {
-      const { media } = payload;
-
-      return {
-        ...state,
-        media,
-      };
+      return reducers.setMedia(state, payload);
     }
 
     case types.LOCAL_MEDIA_PREPEND_MEDIA: {
-      const { media } = payload;
-
-      return {
-        ...state,
-        media: [...media, ...state.media],
-      };
+      return reducers.prependMedia(state, payload);
     }
 
     case types.LOCAL_MEDIA_ADD_POSTER_PROCESSING: {
-      const { id } = payload;
-      if (!id || state.posterProcessing.includes(id)) {
-        return state;
-      }
-      return {
-        ...state,
-        posterProcessing: [...state.posterProcessing, id],
-      };
+      return reducers.addPosterProcessing(state, payload);
     }
 
     case types.LOCAL_MEDIA_REMOVE_POSTER_PROCESSING: {
-      const { id } = payload;
-      if (!id || !state.posterProcessing.includes(id)) {
-        return state;
-      }
-      const currentProcessing = [...state.posterProcessing];
-      const posterProcessing = currentProcessing.filter((e) => e !== id);
-
-      return {
-        ...state,
-        posterProcessing,
-        posterProcessed: [...state.posterProcessed, id],
-      };
+      return reducers.removePosterProcessing(state, payload);
     }
 
     case types.LOCAL_MEDIA_ADD_AUDIO_PROCESSING: {
-      const { id } = payload;
-      if (!id || state.audioProcessing.includes(id)) {
-        return state;
-      }
-      return {
-        ...state,
-        audioProcessing: [...state.audioProcessing, id],
-      };
+      return reducers.addAudioProcessing(state, payload);
     }
 
     case types.LOCAL_MEDIA_REMOVE_AUDIO_PROCESSING: {
-      const { id } = payload;
-      if (!id || !state.audioProcessing.includes(id)) {
-        return state;
-      }
-      const currentProcessing = [...state.audioProcessing];
-      const audioProcessing = currentProcessing.filter((e) => e !== id);
-
-      return {
-        ...state,
-        audioProcessing,
-        audioProcessed: [...state.audioProcessed, id],
-      };
+      return reducers.removeAudioProcessing(state, payload);
     }
 
     default:
-      if (payload?.provider == 'local') {
-        return commonReducer(state, { type, payload });
-      }
-      return state;
+      return reducers.setupState(state, { type, payload });
   }
 }
 
