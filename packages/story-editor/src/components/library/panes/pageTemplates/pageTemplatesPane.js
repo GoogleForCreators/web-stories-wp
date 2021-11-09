@@ -57,14 +57,16 @@ const DropDownWrapper = styled.div`
   margin: 28px 16px 17px;
 `;
 
-const DEFAULT = 'default';
-const SAVED = 'saved';
-const PAGE_TEMPLATE_PANE_WIDTH = 158;
-
 const ButtonWrapper = styled.div`
   padding: 0 1em;
   margin-top: 24px;
 `;
+
+const DEFAULT = 'default';
+const SAVED = 'saved';
+const PAGE_TEMPLATE_PANE_WIDTH = 158;
+const LOCAL_STORAGE_KEY = 'web_stories_default_template_view';
+const DEFAULT_TEMPLATE_VIEW = window.localStorage.getItem(LOCAL_STORAGE_KEY);
 
 function PageTemplatesPane(props) {
   const {
@@ -83,7 +85,9 @@ function PageTemplatesPane(props) {
     setNextTemplatesToFetch: state.actions.setNextTemplatesToFetch,
   }));
 
-  const [showDefaultTemplates, setShowDefaultTemplates] = useState(true);
+  const [showDefaultTemplates, setShowDefaultTemplates] = useState(
+    DEFAULT_TEMPLATE_VIEW === SAVED ? false : true
+  );
   const [highlightedTemplate, setHighlightedTemplate] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -126,6 +130,14 @@ function PageTemplatesPane(props) {
     savedTemplates,
     setNextTemplatesToFetch,
   ]);
+
+  const handleToggle = (evt, value) => {
+    setShowDefaultTemplates(value === DEFAULT);
+    window.localStorage.setItem(
+      LOCAL_STORAGE_KEY,
+      showDefaultTemplates ? SAVED : DEFAULT
+    );
+  };
 
   useEffect(() => {
     if (!savedTemplates && !showDefaultTemplates) {
@@ -175,9 +187,7 @@ function PageTemplatesPane(props) {
             <Select
               options={options}
               selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
-              onMenuItemClick={(evt, value) =>
-                setShowDefaultTemplates(value === DEFAULT)
-              }
+              onMenuItemClick={(evt, value) => handleToggle(evt, value)}
               aria-label={__('Select templates type', 'web-stories')}
             />
           </DropDownWrapper>
