@@ -20,14 +20,14 @@ import { useCallback } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app/story';
-import getUniquePresets from '../../../../utils/getUniquePresets';
+import { useStory } from '../app';
+import getUniquePresets from './getUniquePresets';
 import {
   areAllType,
   getPagePreset,
   getShapePresets,
   getTextPresets,
-} from './utils';
+} from './presetUtils';
 
 function useAddPreset({ presetType }) {
   const {
@@ -59,7 +59,7 @@ function useAddPreset({ presetType }) {
 
   const isText = areAllType('text', selectedElements);
   const isBackground =
-    selectedElements[0]?.id === currentPage?.elements?.[0]?.id;
+    selectedElements?.[0]?.id === currentPage?.elements?.[0]?.id;
 
   const getPresets = useCallback(
     (addedPresets, currentPresets) => {

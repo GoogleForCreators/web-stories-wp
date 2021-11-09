@@ -32,8 +32,8 @@ import {
 /**
  * Internal dependencies
  */
-import Dialog from '../../../dialog';
-import { PRESET_TYPES } from '../../../../constants';
+import Dialog from '../dialog';
+import { CONFIRMATION_DIALOG_STORAGE_KEY } from './constants';
 
 const Label = styled.label`
   margin-left: 12px;
@@ -46,24 +46,13 @@ const CheckboxWrapper = styled.footer`
   border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
 `;
 
-function ConfirmationDialog({ onClose, onPrimary, presetType }) {
-  const isColor = PRESET_TYPES.COLOR === presetType;
-  const storageKey =
-    PRESET_TYPES.COLOR === presetType
-      ? 'DELETE_COLOR_PRESET_DIALOG_DISMISSED'
-      : 'DELETE_STYLE_PRESET_DIALOG_DISMISSED';
+function ConfirmationDialog({ onClose, onPrimary }) {
   const [isDialogDismissed, setIsDialogDismissed] = useState(
-    localStore.getItemByKey(LOCAL_STORAGE_PREFIX[storageKey])
+    localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX[CONFIRMATION_DIALOG_STORAGE_KEY]
+    )
   );
-  const dialogText = isColor
-    ? __(
-        'This is a global color. Deleting this color will remove it from the Saved Colors panel across all stories and the color will no longer be available to any other users on the site.',
-        'web-stories'
-      )
-    : __(
-        'This is a global style. Deleting this style will remove it from the Saved Styles panel across all stories and the style will no longer be available to any other users on the site.',
-        'web-stories'
-      );
+
   const cbId = `cb-${uuidv4()}`;
   return (
     <Dialog
@@ -74,7 +63,10 @@ function ConfirmationDialog({ onClose, onPrimary, presetType }) {
       primaryText={__('Delete', 'web-stories')}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {dialogText}
+        {__(
+          'This is a global color. Deleting this color will remove it from the Saved Colors across all stories and the color will no longer be available to any other users on the site.',
+          'web-stories'
+        )}
       </Text>
       <CheckboxWrapper>
         <Checkbox
@@ -82,7 +74,7 @@ function ConfirmationDialog({ onClose, onPrimary, presetType }) {
           checked={isDialogDismissed}
           onChange={() => {
             localStore.setItemByKey(
-              LOCAL_STORAGE_PREFIX[storageKey],
+              LOCAL_STORAGE_PREFIX[CONFIRMATION_DIALOG_STORAGE_KEY],
               !isDialogDismissed
             );
             setIsDialogDismissed(!isDialogDismissed);
@@ -101,7 +93,6 @@ function ConfirmationDialog({ onClose, onPrimary, presetType }) {
 ConfirmationDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   onPrimary: PropTypes.func.isRequired,
-  presetType: PropTypes.string.isRequired,
 };
 
 export default ConfirmationDialog;

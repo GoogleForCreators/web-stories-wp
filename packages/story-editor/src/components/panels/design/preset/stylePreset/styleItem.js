@@ -26,7 +26,7 @@ import { Icons } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
-import { generatePresetStyle } from '../utils';
+import { generatePresetStyle } from '../../../../../utils/presetUtils';
 import stripHTML from '../../../../../utils/stripHTML';
 import { useStory } from '../../../../../app/story';
 import { focusStyle } from '../../../shared';

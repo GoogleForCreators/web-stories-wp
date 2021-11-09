@@ -22,15 +22,18 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import StylePresetPanel from '../stylePreset';
+import StylePresetPanel from '../presetPanel';
 import StoryContext from '../../../../../app/story/context';
-import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
-import { getTextPresets, areAllType, getPanelInitialHeight } from '../utils';
+import { BACKGROUND_TEXT_MODE, PRESET_TYPES } from '../../../../../constants';
+import {
+  getTextPresets,
+  areAllType,
+  getPanelInitialHeight,
+} from '../../../../../utils/presetUtils';
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
-import { PRESET_TYPES } from '../constants';
 
-jest.mock('../utils');
+jest.mock('../../../../../utils/presetUtils');
 
 function arrange(extraStylePresets, extraStateProps) {
   const updateStory = jest.fn();

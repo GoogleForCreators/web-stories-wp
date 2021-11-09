@@ -25,6 +25,24 @@ import { waitFor, fireEvent } from '@testing-library/react';
  */
 import { arrange } from './_utils';
 
+jest.mock(
+  '../../../../app/story/useStory',
+  () => (cb) =>
+    cb({
+      state: {
+        story: {
+          globalStoryStyles: {
+            colors: [],
+          },
+          selectedElements: [],
+        },
+      },
+      actions: {
+        updateStory: jest.fn(),
+      },
+    })
+);
+
 describe('<ColorPicker /> as it loads', () => {
   describe('when opening the basic color picker', () => {
     it('should render with initial focus forced to the close button', async () => {
@@ -40,7 +58,7 @@ describe('<ColorPicker /> as it loads', () => {
         color: createSolid(238, 238, 238),
       });
 
-      const swatch = getSelectedSwatch('Default colors');
+      const swatch = getSelectedSwatch('Default');
       expect(swatch).toBeInTheDocument();
       expect(swatch).toHaveAccessibleName(/#eee/);
     });
@@ -50,7 +68,7 @@ describe('<ColorPicker /> as it loads', () => {
         color: createSolid(237, 238, 238),
       });
 
-      const swatch = getSelectedSwatch('Default colors');
+      const swatch = getSelectedSwatch('Default');
       expect(swatch).toBeNull();
     });
   });

@@ -28,6 +28,9 @@ export const TYPE_SOLID = 'solid';
 export const TYPE_LINEAR = 'linear';
 export const TYPE_RADIAL = 'radial';
 
+export const CONFIRMATION_DIALOG_STORAGE_KEY =
+  'DELETE_COLOR_PRESET_DIALOG_DISMISSED';
+
 const c = (hex) => createSolidFromString(`#${hex}`);
 
 export const BASIC_COLORS = [

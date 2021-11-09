@@ -30,6 +30,7 @@ import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { renderWithTheme } from '../../../../testUtils';
 import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
+import { StoryContext } from '../../../../app/story';
 
 jest.mock('@web-stories-wp/design-system', () => ({
   ...jest.requireActual('@web-stories-wp/design-system'),
@@ -45,7 +46,27 @@ jest.mock('@web-stories-wp/patterns', () => {
 });
 
 function arrange(children = null) {
-  renderWithTheme(children);
+  const storyContextValue = {
+    state: {
+      story: {
+        globalStoryStyles: {
+          colors: [],
+          textStyles: [],
+        },
+        currentStoryStyles: {
+          colors: [],
+        },
+      },
+    },
+    actions: {
+      updateStory: jest.fn(),
+    },
+  };
+  renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      {children}
+    </StoryContext.Provider>
+  );
   const button = screen.getByRole('button', { name: 'Color' });
   const input = screen.queryByLabelText('Color', { selector: 'input' });
   return {

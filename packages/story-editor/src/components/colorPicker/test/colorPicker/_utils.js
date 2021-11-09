@@ -82,7 +82,8 @@ function arrange(customProps = {}) {
       selected: true,
     });
   const getCustomButton = () => screen.getByRole('button', { name: 'Custom' });
-  const getAddCustomButton = () => screen.getByRole('button', { name: 'Add' });
+  const getAddCustomButton = () =>
+    screen.getByRole('button', { name: 'Add to Saved Colors' });
   const getBackButton = () => screen.getByRole('button', { name: 'Go back' });
   const wrapperRerender = (moreCustomProps) =>
     rerender(

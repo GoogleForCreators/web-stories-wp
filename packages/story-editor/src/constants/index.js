@@ -96,3 +96,8 @@ export const OUTLINK_THEME = {
   LIGHT: 'light',
   CUSTOM: 'custom',
 };
+
+export const PRESET_TYPES = {
+  STYLE: 'style',
+  COLOR: 'colors',
+};

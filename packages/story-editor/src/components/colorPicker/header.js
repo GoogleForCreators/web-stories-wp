@@ -29,39 +29,83 @@ import {
   BUTTON_VARIANTS,
 } from '@web-stories-wp/design-system';
 
-const HEADER_FOOTER_HEIGHT = 52;
+/**
+ * Internal dependencies
+ */
+import { focusStyle } from '../panels/shared';
+
+const HEADER_HEIGHT = 44;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: ${HEADER_FOOTER_HEIGHT}px;
-  padding: 8px;
+  height: ${HEADER_HEIGHT}px;
+  padding: 4px 8px 4px 8px;
   position: relative;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
 `;
 
-const CloseButton = styled(Button)`
+const Actions = styled.div`
+  display: flex;
   margin-left: auto;
 `;
 
-function Header({ children, handleClose }) {
+const StyledButton = styled(Button)`
+  margin-left: 8px;
+  ${focusStyle};
+`;
+
+function Header({
+  children,
+  handleClose,
+  isEditMode = false,
+  setIsEditMode = () => {},
+  hasPresets = false,
+}) {
   const ref = useRef();
   useEffect(() => {
     ref.current?.focus();
   }, []);
+
+  const buttonProps = {
+    type: BUTTON_TYPES.TERTIARY,
+    size: BUTTON_SIZES.SMALL,
+    variant: BUTTON_VARIANTS.SQUARE,
+    onClick: (evt) => {
+      evt.stopPropagation();
+      setIsEditMode(!isEditMode);
+    },
+    isEditMode,
+  };
+
   return (
     <Wrapper>
       {children}
-      <CloseButton
-        aria-label={__('Close', 'web-stories')}
-        onClick={handleClose}
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.SQUARE}
-        ref={ref}
-      >
-        <Icons.Cross />
-      </CloseButton>
+      <Actions>
+        {hasPresets && (
+          <StyledButton
+            {...buttonProps}
+            aria-label={
+              isEditMode
+                ? __('Exit edit mode', 'web-stories')
+                : __('Edit colors', 'web-stories')
+            }
+          >
+            {isEditMode ? __('Done', 'web-stories') : <Icons.Pencil />}
+          </StyledButton>
+        )}
+        <StyledButton
+          aria-label={__('Close', 'web-stories')}
+          onClick={handleClose}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          variant={BUTTON_VARIANTS.SQUARE}
+          ref={ref}
+        >
+          <Icons.Cross />
+        </StyledButton>
+      </Actions>
     </Wrapper>
   );
 }
@@ -69,6 +113,9 @@ function Header({ children, handleClose }) {
 Header.propTypes = {
   children: PropTypes.node,
   handleClose: PropTypes.func.isRequired,
+  isEditMode: PropTypes.bool,
+  setIsEditMode: PropTypes.func,
+  hasPresets: PropTypes.bool,
 };
 
 export default Header;

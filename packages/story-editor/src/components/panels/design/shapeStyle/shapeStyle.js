@@ -51,9 +51,11 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
-      name="style"
-      title={__('Style', 'web-stories')}
+      name="shapeStyle"
+      title={__('Color', 'web-stories')}
       isPersistable={!highlight}
+      aria-labelledby={null}
+      aria-label={__('Shape style', 'web-stories')}
     >
       <Row>
         <Color

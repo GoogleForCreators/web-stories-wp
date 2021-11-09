@@ -27,18 +27,16 @@ import {
 /**
  * Internal dependencies
  */
-import objectPick from '../../../../utils/objectPick';
-import { generateFontFamily } from '../../../../elements/text/util';
+import { generateFontFamily } from '../elements/text/util';
 import {
   BACKGROUND_TEXT_MODE,
-  COLOR_PRESETS_PER_ROW,
   MULTIPLE_VALUE,
-  SAVED_COLOR_SIZE,
   SAVED_STYLE_HEIGHT,
   STYLE_PRESETS_PER_ROW,
-} from '../../../../constants';
-import { getHTMLInfo } from '../../../richText/htmlManipulation';
-import { PRESET_TYPES } from './constants';
+  PRESET_TYPES,
+} from '../constants';
+import { getHTMLInfo } from '../components/richText/htmlManipulation';
+import objectPick from './objectPick';
 
 const TEXT_PRESET_STYLES = [
   'backgroundColor',
@@ -191,20 +189,14 @@ export function areAllType(elType, selectedElements) {
   );
 }
 
-export function getPanelInitialHeight(isColor, presets) {
-  const rowHeight = isColor ? SAVED_COLOR_SIZE : SAVED_STYLE_HEIGHT;
+export function getPanelInitialHeight(presets) {
   // Includes the helper text and button for saving a color.
-  const emptyColorsHeight = 140;
   const presetsCount = presets.length;
   let initialHeight = 0;
   if (presetsCount > 0) {
-    const presetsPerRow = isColor
-      ? COLOR_PRESETS_PER_ROW
-      : STYLE_PRESETS_PER_ROW;
     initialHeight =
-      Math.max(1.5, Math.ceil(presets.length / presetsPerRow)) * rowHeight;
-  } else if (isColor) {
-    initialHeight = emptyColorsHeight;
+      Math.max(1.5, Math.ceil(presets.length / STYLE_PRESETS_PER_ROW)) *
+      SAVED_STYLE_HEIGHT;
   }
   return Math.min(initialHeight, window.innerHeight / 3);
 }
