@@ -19,6 +19,7 @@
  */
 import Dashboard, { InterfaceSkeleton } from '@web-stories-wp/dashboard';
 import styled from 'styled-components';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -198,11 +199,30 @@ const config = {
   apiCallbacks,
 };
 
-export const _default = () => (
-  <AppContainer>
-    <Dashboard config={config}>
-      <GlobalStyle />
-      <InterfaceSkeleton />
-    </Dashboard>
-  </AppContainer>
-);
+/**
+ * Clears url hash ( Required only for storybook )
+ * Dashboard uses # for checking route path and story-editor uses #page,
+ * when returning from story-editor to dashboard in storybook, currentPath read from history package gets manipulated,
+ * which breaks the current path, so this custom hook is used to clear the hash before dashboard app is mounted.
+ */
+const useClearHash = () => {
+  const isHashCleaned = useRef(false);
+
+  if (!isHashCleaned.current) {
+    window.location.hash = '/';
+    isHashCleaned.current = true;
+  }
+};
+
+export const _default = () => {
+  useClearHash();
+
+  return (
+    <AppContainer>
+      <Dashboard config={config}>
+        <GlobalStyle />
+        <InterfaceSkeleton />
+      </Dashboard>
+    </AppContainer>
+  );
+};
