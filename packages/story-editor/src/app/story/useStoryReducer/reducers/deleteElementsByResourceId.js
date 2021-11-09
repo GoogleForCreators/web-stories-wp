@@ -21,6 +21,8 @@
  *
  * If an empty id or a no matches with id, state is unchanged.
  *
+ * If no element with the given resource id is found, state is changed.
+ *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string|null} payload.id id Delete all elements with this resource id
@@ -28,6 +30,14 @@
  */
 function deleteElementsByResourceId(state, { id }) {
   if (id === null) {
+    return state;
+  }
+
+  const hasElementWithResourceId = state.pages.some((page) =>
+    page.elements.some((element) => element.resource?.id === id)
+  );
+
+  if (!hasElementWithResourceId) {
     return state;
   }
 

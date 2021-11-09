@@ -79,6 +79,10 @@ describe('Embedding hotlinked media', () => {
   });
 
   it('should insert a new media element from valid url', async () => {
+    spyOn(window, 'fetch').and.callFake(() => {
+      return true;
+    });
+
     // Get URL from existing library.
     const libraryElement = fixture.editor.library.media.item(0);
     const img = libraryElement.getElementsByTagName('img')[0];

@@ -213,7 +213,7 @@ describe('updateElementsByResourceId', () => {
       }),
     });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should do nothing if no elements with given id', () => {
@@ -249,6 +249,6 @@ describe('updateElementsByResourceId', () => {
       }),
     });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 });

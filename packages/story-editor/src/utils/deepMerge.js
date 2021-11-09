@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,31 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * External dependencies
+ * Deep merge objects.
+ *
+ * @param {Object} object object to override.
+ * @param {Object} source Source object.
+ * @return {Object} Merged object.
  */
-import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
+export default function deepMerge(object, source = {}) {
+  Object.entries(source).forEach(([key, value]) => {
+    if (value && 'object' === typeof value && !Array.isArray(value)) {
+      if (!object[key]) {
+        Object.assign(object, { [key]: {} });
+      }
+      deepMerge(object[key], value);
+    } else {
+      Object.assign(object, { [key]: value });
+    }
+  });
 
-/**
- * Internal dependencies
- */
-import PresetPanel from '../presetPanel';
-import { PRESET_TYPES } from '../constants';
-
-function StylePresetPanel({ pushUpdate }) {
-  return (
-    <PresetPanel
-      presetType={PRESET_TYPES.STYLE}
-      title={__('Saved Styles', 'web-stories')}
-      pushUpdate={pushUpdate}
-    />
-  );
+  return object;
 }
-
-StylePresetPanel.propTypes = {
-  pushUpdate: PropTypes.func.isRequired,
-};
-
-export default StylePresetPanel;

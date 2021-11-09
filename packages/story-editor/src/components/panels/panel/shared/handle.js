@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
@@ -46,11 +46,16 @@ const Handle = styled.div`
   left: 0;
   right: 0;
   width: 100%;
-  border-bottom: 1px solid transparent;
 
-  &:focus {
-    border-color: ${({ theme }) => theme.colors.border.focus};
-  }
+  ${({ $showFocusStyles }) =>
+    $showFocusStyles &&
+    css`
+      border-bottom: 1px solid transparent;
+
+      &:focus {
+        border-color: ${({ theme }) => theme.colors.border.focus};
+      }
+    `};
 `;
 
 const DragBar = styled.div`
@@ -72,6 +77,7 @@ function DragHandle({
   handleDoubleClick,
   position,
   showDragHandle,
+  showFocusStyles = true,
   ...rest
 }) {
   const handle = useRef();
@@ -93,6 +99,7 @@ function DragHandle({
       aria-valuemin={minHeight}
       aria-valuemax={maxHeight}
       aria-label={__('Set panel height', 'web-stories')}
+      $showFocusStyles={showFocusStyles}
       {...rest}
     >
       {showDragHandle && <DragBar />}
@@ -109,6 +116,7 @@ DragHandle.propTypes = {
   maxHeight: PropTypes.number.isRequired,
   position: PropTypes.oneOf(['top', 'bottom']),
   showDragHandle: PropTypes.bool,
+  showFocusStyles: PropTypes.bool,
 };
 
 DragHandle.defaultProps = {

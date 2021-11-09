@@ -75,7 +75,7 @@ describe('clearBackgroundElement', () => {
 
     const result = clearBackgroundElement();
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should keep overlay if present', () => {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,31 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
-
 /**
  * Internal dependencies
  */
-import PresetPanel from '../presetPanel';
-import { PRESET_TYPES } from '../constants';
+import { INITIAL_STATE } from '../constants';
 
-function ColorPresetPanel({ pushUpdate }) {
-  return (
-    <PresetPanel
-      presetType={PRESET_TYPES.COLOR}
-      title={__('Saved Colors', 'web-stories')}
-      pushUpdate={pushUpdate}
-    />
-  );
+function setSearchTerm(state, { searchTerm }) {
+  if (searchTerm === state.searchTerm) {
+    return state;
+  }
+  return {
+    ...INITIAL_STATE,
+    audioProcessing: [...state.audioProcessing],
+    audioProcessed: [...state.audioProcessed],
+    posterProcessing: [...state.posterProcessing],
+    posterProcessed: [...state.posterProcessed],
+    mediaType: state.mediaType,
+    searchTerm,
+  };
 }
-
-ColorPresetPanel.propTypes = {
-  pushUpdate: PropTypes.func.isRequired,
-};
-
-export default ColorPresetPanel;
+export default setSearchTerm;

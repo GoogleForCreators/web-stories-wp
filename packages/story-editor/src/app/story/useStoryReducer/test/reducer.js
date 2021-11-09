@@ -28,6 +28,6 @@ describe('reducer', () => {
       payload: {},
     });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 });
