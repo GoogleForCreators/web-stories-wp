@@ -20,11 +20,14 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-import { Icons, Text } from '@web-stories-wp/design-system';
+import { Icons } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../../shared';
+import { focusStyle } from '../panels/shared';
+import useAddPreset from '../../utils/useAddPreset';
+import { PRESET_TYPES } from '../../constants';
 
 const COLOR_SIZE = 32;
 const AddColorAction = styled.button`
@@ -48,28 +51,32 @@ const AddColorAction = styled.button`
   ${focusStyle};
 `;
 
-const Note = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-`;
+function ColorAdd({ isLocal = false, isGlobal = false }) {
+  const { addGlobalPreset, addLocalPreset } = useAddPreset({
+    presetType: PRESET_TYPES.COLOR,
+  });
+  if (!isLocal && !isGlobal) {
+    return null;
+  }
 
-function ColorAdd({ handleAddPreset, helper, ...rest }) {
+  const label = isLocal
+    ? __('Add local color', 'web-stories')
+    : __('Add global color', 'web-stories');
+
   return (
-    <>
-      <AddColorAction
-        onClick={handleAddPreset}
-        aria-label={__('Add color', 'web-stories')}
-        {...rest}
-      >
-        <Icons.Plus />
-      </AddColorAction>
-      {helper && <Note>{helper}</Note>}
-    </>
+    <AddColorAction
+      tabIndex="0"
+      onClick={isLocal ? addLocalPreset : addGlobalPreset}
+      aria-label={label}
+    >
+      <Icons.Plus />
+    </AddColorAction>
   );
 }
 
 ColorAdd.propTypes = {
-  helper: PropTypes.string,
-  handleAddPreset: PropTypes.func.isRequired,
+  isLocal: PropTypes.bool,
+  isGlobal: PropTypes.bool,
 };
 
 export default ColorAdd;

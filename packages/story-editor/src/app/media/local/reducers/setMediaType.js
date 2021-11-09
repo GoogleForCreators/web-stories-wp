@@ -13,32 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { Color } from '../common';
-import { AbstractPanel } from './abstractPanel';
+import { INITIAL_STATE } from '../constants';
 
-/**
- * The shape style panel containing inputs for adding managing the background color and opacity
- */
-export class ShapeStyle extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
+function setMediaType(state, { mediaType }) {
+  if (mediaType === state.mediaType) {
+    return state;
   }
-
-  get backgroundColor() {
-    const color = this._get(
-      this.getByRole('region', { name: /Color input: Background color/ }),
-      'backgroundColor',
-      Color
-    );
-    color.label = 'Background color';
-    return color;
-  }
-
-  get opacity() {
-    return this.getByRole('textbox', { name: /Opacity/i });
-  }
+  return {
+    ...INITIAL_STATE,
+    media: state.media.filter(({ local }) => local), // This filter allows remove temporary file returned on upload
+    audioProcessing: [...state.audioProcessing],
+    audioProcessed: [...state.audioProcessed],
+    posterProcessing: [...state.posterProcessing],
+    posterProcessed: [...state.posterProcessed],
+    searchTerm: state.searchTerm,
+    mediaType,
+  };
 }
+
+export default setMediaType;

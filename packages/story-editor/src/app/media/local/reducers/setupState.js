@@ -13,32 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { Color } from '../common';
-import { AbstractPanel } from './abstractPanel';
+import commonReducer from '../../pagination/reducer';
 
-/**
- * The shape style panel containing inputs for adding managing the background color and opacity
- */
-export class ShapeStyle extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
+function setupState(state, { type, payload }) {
+  if (payload?.provider == 'local') {
+    return commonReducer(state, { type, payload });
   }
-
-  get backgroundColor() {
-    const color = this._get(
-      this.getByRole('region', { name: /Color input: Background color/ }),
-      'backgroundColor',
-      Color
-    );
-    color.label = 'Background color';
-    return color;
-  }
-
-  get opacity() {
-    return this.getByRole('textbox', { name: /Opacity/i });
-  }
+  return state;
 }
+export default setupState;

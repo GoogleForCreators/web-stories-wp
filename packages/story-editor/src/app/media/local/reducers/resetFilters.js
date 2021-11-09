@@ -17,28 +17,15 @@
 /**
  * Internal dependencies
  */
-import { Color } from '../common';
-import { AbstractPanel } from './abstractPanel';
+import { INITIAL_STATE } from '../constants';
 
-/**
- * The shape style panel containing inputs for adding managing the background color and opacity
- */
-export class ShapeStyle extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
-
-  get backgroundColor() {
-    const color = this._get(
-      this.getByRole('region', { name: /Color input: Background color/ }),
-      'backgroundColor',
-      Color
-    );
-    color.label = 'Background color';
-    return color;
-  }
-
-  get opacity() {
-    return this.getByRole('textbox', { name: /Opacity/i });
-  }
+function resetFilters(state) {
+  return {
+    ...INITIAL_STATE,
+    audioProcessing: [...state.audioProcessing],
+    audioProcessed: [...state.audioProcessed],
+    posterProcessing: [...state.posterProcessing],
+    posterProcessed: [...state.posterProcessed],
+  };
 }
+export default resetFilters;
