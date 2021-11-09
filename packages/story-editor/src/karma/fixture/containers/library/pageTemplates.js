@@ -45,7 +45,7 @@ export default class PageTemplates extends Container {
   }
 
   dropDownOption(name) {
-    return this.getByRole('option', { name });
+    return this.getByRole('option', { name: new RegExp(`${name}$`, 'i') });
   }
 
   get saveTemplateBtn() {

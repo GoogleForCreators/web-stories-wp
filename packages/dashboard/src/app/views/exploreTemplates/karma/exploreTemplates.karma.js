@@ -31,6 +31,7 @@ describe('Grid view', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ enableExploreTemplatesSearch: true });
     await fixture.render();
 
     await navigateToExploreTemplates();
@@ -163,6 +164,95 @@ describe('Grid view', () => {
       });
 
       expect(closeBtn).toBeTruthy();
+    });
+  });
+
+  describe('Creator can search explore templates by meta data', () => {
+    async function getTemplateIdByTitle(title) {
+      const { templates } = await getTemplatesState();
+      return Object.values(templates).find(
+        (template) => template.title === title
+      )?.id;
+    }
+
+    it('should filter stories using the search input', async () => {
+      // Get original 8 templates
+      const originalTemplates =
+        fixture.screen.getAllByTestId(/^template-grid-item-/);
+      expect(originalTemplates.length).toBe(8);
+
+      // Get the template Search component
+      const searchInput =
+        fixture.screen.getByPlaceholderText('Search Templates');
+      expect(searchInput).toBeTruthy();
+
+      // Template Data formatted to have meta data:
+      // {
+      //   [metaDataType]: `Test ${metaDataType}`
+      //   title: `Filterable By ${metaDataType}`
+      //   ...
+      // }
+
+      // Filter by Tag
+      await fixture.events.focus(searchInput);
+      await fixture.events.keyboard.type('Test Tag');
+      // Wait for the debounce
+      await fixture.events.sleep(500);
+      // See that grid updates
+      const testTagGridItems =
+        fixture.screen.getAllByTestId(/^template-grid-item-/);
+      expect(testTagGridItems.length).toBe(1);
+      // See that we have the right grid item
+      const filterableTagTemplateId = await getTemplateIdByTitle(
+        'Filterable By Tag'
+      );
+      const filterableTagTemplate = fixture.screen.getByTestId(
+        new RegExp(`^template-grid-item-${filterableTagTemplateId}$`)
+      );
+      expect(filterableTagTemplate).toBeDefined();
+
+      // Clear input
+      const clearInput = await fixture.screen.getByLabelText('Clear Search');
+      await fixture.events.click(clearInput);
+
+      // Filter by Color
+      await fixture.events.focus(searchInput);
+      await fixture.events.keyboard.type('Test Color');
+      // Wait for the debounce
+      await fixture.events.sleep(500);
+      // See that grid updates
+      const testColorGridItems =
+        fixture.screen.getAllByTestId(/^template-grid-item-/);
+      expect(testColorGridItems.length).toBe(1);
+      // See that we have the right grid item
+      const filterableColorTemplateId = await getTemplateIdByTitle(
+        'Filterable By Color'
+      );
+      const filterableColorTemplate = fixture.screen.getByTestId(
+        new RegExp(`^template-grid-item-${filterableColorTemplateId}$`)
+      );
+      expect(filterableColorTemplate).toBeDefined();
+
+      // Clear input
+      await fixture.events.click(clearInput);
+
+      // Filter by Vertical
+      await fixture.events.focus(searchInput);
+      await fixture.events.keyboard.type('Test Vertical');
+      // Wait for the debounce
+      await fixture.events.sleep(500);
+      // See that grid updates
+      const testVerticalGridItems =
+        fixture.screen.getAllByTestId(/^template-grid-item-/);
+      expect(testVerticalGridItems.length).toBe(1);
+      // See that we have the right grid item
+      const filterableVerticalTemplateId = await getTemplateIdByTitle(
+        'Filterable By Vertical'
+      );
+      const filterableVerticalTemplate = fixture.screen.getByTestId(
+        new RegExp(`^template-grid-item-${filterableVerticalTemplateId}$`)
+      );
+      expect(filterableVerticalTemplate).toBeDefined();
     });
   });
 });
