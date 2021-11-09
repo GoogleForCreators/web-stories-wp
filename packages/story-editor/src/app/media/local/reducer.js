@@ -73,6 +73,14 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       return reducers.removePosterProcessing(state, payload);
     }
 
+    case types.LOCAL_MEDIA_ADD_BASE_COLOR_PROCESSING: {
+      return reducers.addBaseColorProcessing(state, payload);
+    }
+
+    case types.LOCAL_MEDIA_REMOVE_BASE_COLOR_PROCESSING: {
+      return reducers.removeBaseColorProcessing(state, payload);
+    }
+
     case types.LOCAL_MEDIA_ADD_AUDIO_PROCESSING: {
       return reducers.addAudioProcessing(state, payload);
     }
