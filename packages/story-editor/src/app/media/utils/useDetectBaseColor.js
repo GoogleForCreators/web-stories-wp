@@ -24,7 +24,7 @@ import { useCallback } from '@web-stories-wp/react';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
-import { getResourceBaseColor } from '../../../utils/getResourceBaseColor';
+import { getMediaBaseColor } from '../../../utils/getMediaBaseColor';
 import useCORSProxy from '../../../utils/useCORSProxy';
 
 function useDetectBaseColor({ updateMediaElement }) {
@@ -87,7 +87,7 @@ function useDetectBaseColor({ updateMediaElement }) {
       const imageSrcProxied = getProxiedUrl(resource, imageSrc);
       let color;
       try {
-        color = await getResourceBaseColor(imageSrcProxied);
+        color = await getMediaBaseColor(imageSrcProxied);
       } catch (error) {
         color = '#ffffff';
       } finally {

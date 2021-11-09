@@ -47,7 +47,7 @@ function getImgNodeKey(elementId) {
   return `${IMG_NODE}_${elementId}`;
 }
 
-export function getResourceBaseColor(src) {
+export function getMediaBaseColor(src) {
   if (!src) {
     return Promise.reject(new Error('No source to image'));
   }
@@ -96,6 +96,7 @@ export function setOrCreateImage(
     const img = new Image();
     // Necessary to avoid tainting canvas with CORS image data.
     img.crossOrigin = 'anonymous';
+    img.decoding = 'async';
     img.addEventListener('load', getOnloadCallback(NODE_KEY, resolve, reject));
     img.addEventListener('error', (e) => {
       reject(new Error('Set image error: ' + e.message));
