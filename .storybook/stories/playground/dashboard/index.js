@@ -24,6 +24,7 @@ import { useRef } from 'react';
 /**
  * Internal dependencies
  */
+import { getStorybookUrl } from '../../../utils';
 import { GlobalStyle } from './theme';
 
 export default {
@@ -184,7 +185,9 @@ const config = {
   },
   localeData: [],
   encodeMarkup: true,
-  newStoryURL: `${window.location.origin}/?path=/story/playground-stories-editor--default`,
+  newStoryURL: getStorybookUrl(
+    '?path=/story/playground-stories-editor--default'
+  ),
   archiveURL: '',
   version: '1.15.0-alpha.0',
   api: {

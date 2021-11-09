@@ -25,6 +25,11 @@ import {
   Icons,
 } from '@web-stories-wp/design-system';
 
+/**
+ * Internal dependencies
+ */
+import { getStorybookUrl } from '../../../../../utils';
+
 function PreviewButton() {
   const { isSaving, saveStory } = useStory(
     ({
@@ -41,7 +46,9 @@ function PreviewButton() {
   const openPreviewLink = () => {
     saveStory();
 
-    const previewLink = `${window.location.origin}/iframe.html?id=playground-preview--default`;
+    const previewLink = getStorybookUrl(
+      'iframe.html?id=playground-preview--default'
+    );
 
     // Start a about:blank popup with waiting message until we complete
     // the saving operation. That way we will not bust the popup timeout.
