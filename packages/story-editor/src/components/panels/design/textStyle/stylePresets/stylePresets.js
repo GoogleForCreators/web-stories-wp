@@ -81,10 +81,9 @@ const NoStylesWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: calc(100% + 32px);
-  margin-left: -16px;
+  margin: 0 0 -8px -16px;
   background-color: ${({ theme }) => theme.colors.opacity.black24};
   height: 64px;
-  margin-bottom: -6px;
 `;
 
 const NoStylesText = styled(Text)`
