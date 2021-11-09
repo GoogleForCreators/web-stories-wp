@@ -82,11 +82,7 @@ function useInsertElement() {
       } = resource;
 
       const imageSrc = type === 'image' ? src : poster;
-      if (
-        local ||
-        !imageSrc ||
-        (Array.isArray(currentBaseColor) && currentBaseColor.length)
-      ) {
+      if (local || !imageSrc || currentBaseColor) {
         return;
       }
 

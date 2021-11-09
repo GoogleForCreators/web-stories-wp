@@ -212,7 +212,7 @@ describe('useProcessMedia', () => {
             src: 'http://www.google.com/foo.mov',
             id: 123,
             mimeType: 'video/quicktime',
-            baseColor: [0, 0, 0],
+            baseColor: '#000000',
           },
         });
       });
@@ -338,7 +338,7 @@ describe('useProcessMedia', () => {
             src: 'http://www.google.com/foo.mp4',
             id: 123,
             mimeType: 'video/mp4',
-            baseColor: [0, 0, 0],
+            baseColor: '#000000',
           },
         });
       });
@@ -465,7 +465,7 @@ describe('useProcessMedia', () => {
             src: 'http://www.google.com/foo.gif',
             id: 123,
             mimeType: 'image/gif',
-            baseColor: [0, 0, 0],
+            baseColor: '#000000',
           },
         });
       });

@@ -251,7 +251,7 @@ function MediaPane(props) {
         updateVideoIsMuted(resource.id, resource.src);
       }
 
-      if (!Array.isArray(resource?.baseColor) || !resource?.baseColor.length) {
+      if (!resource.baseColor) {
         updateBaseColor({ resource });
       }
     } catch (e) {

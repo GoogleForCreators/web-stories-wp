@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { trackError } from '@web-stories-wp/tracking';
+import { getHexFromSolidArray } from '@web-stories-wp/patterns';
 
 const STYLES = {
   boxSizing: 'border-box',
@@ -69,7 +70,8 @@ function getDefaultOnloadCallback(nodeKey, resolve, reject) {
       .then(({ default: ColorThief }) => {
         const node = document.body[nodeKey];
         const thief = new ColorThief();
-        resolve(thief.getColor(node.firstElementChild));
+        const rgb = thief.getColor(node.firstElementChild);
+        resolve(getHexFromSolidArray(rgb));
       })
       .catch((err) => {
         trackError('image_base_color', err.message);

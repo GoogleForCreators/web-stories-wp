@@ -253,12 +253,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     (resource) => {
       const { local, baseColor, id, poster, type, src } = resource;
       const imageSrc = type === 'image' ? src : poster;
-      if (
-        !local &&
-        id &&
-        imageSrc &&
-        (!Array.isArray(baseColor) || !baseColor.length)
-      ) {
+      if (!local && id && imageSrc && !baseColor) {
         processMediaBaseColor(resource);
       }
     },

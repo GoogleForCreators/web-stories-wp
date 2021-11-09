@@ -134,7 +134,7 @@ describe('useMedia3pApi', () => {
     expect(listMediaResult).toStrictEqual({
       media: [
         {
-          baseColor: undefined,
+          baseColor: '',
           alt: 'A cat',
           attribution: {
             author: {

@@ -514,7 +514,7 @@ describe('Checklist integration - Card visibility', () => {
           alt: 'small-video',
           local: false,
           isOptimized: false,
-          baseColor: [115, 71, 39],
+          baseColor: '#ff00ff',
         },
         controls: false,
         loop: false,
