@@ -84,7 +84,7 @@ export function generatePresetStyle(preset, prepareForCSS) {
   } = preset;
   let style = {
     textAlign,
-    letterSpacing,
+    letterSpacing: `${letterSpacing / 100}em`,
     fontWeight,
     textDecoration: isUnderline ? 'underline' : null,
     fontStyle: isItalic ? 'italic' : null,

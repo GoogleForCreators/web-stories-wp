@@ -94,8 +94,6 @@ function BasicColorList({
     .map(getPatternAsString)
     .findIndex((c) => colorAsBackground === c);
 
-  const isLocal = 'local' === colorType;
-
   let firstIndex = 0;
   const colorType = isLocal
     ? __('local', 'web-stories')

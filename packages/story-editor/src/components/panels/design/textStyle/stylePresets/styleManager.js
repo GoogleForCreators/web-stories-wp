@@ -124,7 +124,7 @@ function StyleManager({ styles, onClose, applyStyle }) {
         </Header>
         <Body>
           <StyleGroup
-            styles={styles}
+            styles={[...styles].reverse()}
             handleClick={handleClick}
             isEditMode={isEditMode}
             buttonWidth={106}

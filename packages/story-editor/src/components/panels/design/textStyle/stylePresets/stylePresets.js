@@ -30,7 +30,7 @@ import {
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-import { useMemo, useRef, useState } from '@web-stories-wp/react';
+import { useRef, useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -84,12 +84,14 @@ const NoStylesWrapper = styled.div`
   margin-left: -16px;
   background-color: ${({ theme }) => theme.colors.opacity.black24};
   height: 64px;
+  margin-bottom: -6px;
 `;
 
 const NoStylesText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
+const SPACING = { x: 20 };
 function PresetPanel({ pushUpdate }) {
   const { globalStoryStyles } = useStory(
     ({
@@ -119,12 +121,11 @@ function PresetPanel({ pushUpdate }) {
     handleApplyStyle(preset);
   };
 
-  const spacing = useMemo(() => ({ x: 20 }), []);
   return (
     <>
       <PresetsHeader>
         <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {__('Recent Saved Styles', 'web-stories')}
+          {__('Recently Saved Styles', 'web-stories')}
         </SubHeading>
         <StyledButton
           type={BUTTON_TYPES.TERTIARY}
@@ -140,7 +141,7 @@ function PresetPanel({ pushUpdate }) {
         <>
           <StylesWrapper>
             <StyleGroup
-              styles={textStyles.slice(-2)}
+              styles={[...textStyles].reverse().slice(0, 2)}
               handleClick={handlePresetClick}
             />
           </StylesWrapper>
@@ -159,7 +160,7 @@ function PresetPanel({ pushUpdate }) {
             dock={inspector}
             isOpen={isPopupOpen}
             placement={PLACEMENT.LEFT_START}
-            spacing={spacing}
+            spacing={SPACING}
             renderContents={() => (
               <StyleManager
                 styles={textStyles}

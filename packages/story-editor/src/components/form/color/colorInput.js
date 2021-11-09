@@ -24,7 +24,6 @@ import {
   useCallback,
   useState,
   useRef,
-  useMemo,
   useUnmount,
 } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
@@ -130,6 +129,7 @@ const StyledSwatch = styled(Swatch)`
 const loadReactColor = () =>
   import(/* webpackChunkName: "chunk-react-color" */ 'react-color');
 
+const SPACING = { x: 20 };
 const ColorInput = forwardRef(function ColorInput(
   {
     onChange,
@@ -178,7 +178,6 @@ const ColorInput = forwardRef(function ColorInput(
   useUnmount(() => () => setPickerOpen(false));
 
   const onClose = useCallback(() => setPickerOpen(false), []);
-  const spacing = useMemo(() => ({ x: 20 }), []);
 
   const tooltip = __('Open color picker', 'web-stories');
   return (
@@ -228,7 +227,7 @@ const ColorInput = forwardRef(function ColorInput(
         dock={inspector}
         isOpen={pickerOpen}
         placement={PLACEMENT.LEFT_START}
-        spacing={spacing}
+        spacing={SPACING}
         invisible={isEyedropperActive}
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
