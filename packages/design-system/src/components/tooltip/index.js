@@ -147,19 +147,20 @@ function Tooltip({
       } else if (shouldMoveToTop && isOverFlowingLeft) {
         setDynamicPlacement(PLACEMENT.TOP_START);
       } else if (!shouldMoveToTop && isOverFlowingLeft) {
-        switch (placement) {
-          case placement.endsWith('start'):
-            setDynamicPlacement(placement.replace('-start', '-end'));
+        const currentPlacement = placementRef.current;
+        switch (currentPlacement) {
+          case currentPlacement.endsWith('start'):
+            setDynamicPlacement(currentPlacement.replace('-start', '-end'));
             break;
-          case dynamicPlacement.endsWith('end'):
-            setDynamicPlacement(placement.replace('-end', '-start'));
+          case currentPlacement.endsWith('end'):
+            setDynamicPlacement(currentPlacement.replace('-end', '-start'));
             break;
           default:
-            setDynamicPlacement(`${placement}-start`);
+            setDynamicPlacement(`${currentPlacement}-start`);
         }
       }
     },
-    [dynamicPlacement, placement]
+    [dynamicPlacement]
   );
 
   const positionArrow = useCallback(
