@@ -128,6 +128,21 @@ function Tooltip({
     }),
     [placement]
   );
+  // We can sometimes render a tooltip too far to the left, ie. in RTL mode.
+  // when that is the case, we can switch to placement-start and the tooltip will no longer get cutoff.
+  const updatePlacement = useCallback(() => {
+    const currentPlacement = placementRef.current;
+    switch (currentPlacement) {
+      case currentPlacement.endsWith('start'):
+        setDynamicPlacement(currentPlacement.replace('-start', '-end'));
+        break;
+      case currentPlacement.endsWith('end'):
+        setDynamicPlacement(currentPlacement.replace('-end', '-start'));
+        break;
+      default:
+        setDynamicPlacement(`${currentPlacement}-start`);
+    }
+  }, []);
 
   // When near the edge of the viewport we want to force the tooltip to a new placement as to not
   // cutoff the contents of the tooltip.
@@ -138,8 +153,8 @@ function Tooltip({
       const shouldMoveToTop =
         dynamicPlacement.startsWith('bottom') &&
         neededVerticalSpace >= window.innerHeight;
-
-      // in RTL mode, we can sometimes render a tooltip too far to the left
+      // check that the tooltip isn't cutoff on the left edge of the screen.
+      // right-cutoff is already taken care of with `getOffset`
       const isOverFlowingLeft = offset.popupLeft < 0;
 
       if (shouldMoveToTop && !isOverFlowingLeft) {
@@ -147,20 +162,10 @@ function Tooltip({
       } else if (shouldMoveToTop && isOverFlowingLeft) {
         setDynamicPlacement(PLACEMENT.TOP_START);
       } else if (!shouldMoveToTop && isOverFlowingLeft) {
-        const currentPlacement = placementRef.current;
-        switch (currentPlacement) {
-          case currentPlacement.endsWith('start'):
-            setDynamicPlacement(currentPlacement.replace('-start', '-end'));
-            break;
-          case currentPlacement.endsWith('end'):
-            setDynamicPlacement(currentPlacement.replace('-end', '-start'));
-            break;
-          default:
-            setDynamicPlacement(`${currentPlacement}-start`);
-        }
+        updatePlacement();
       }
     },
-    [dynamicPlacement]
+    [dynamicPlacement, updatePlacement]
   );
 
   const positionArrow = useCallback(

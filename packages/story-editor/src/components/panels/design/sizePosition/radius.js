@@ -208,7 +208,7 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
       <LockContainer>
         <Tooltip
           title={__('Toggle consistent corner radius', 'web-stories')}
-          key={borderRadius.locked}
+          key={borderRadius.locked.toString()}
         >
           <StyledLockToggle
             isLocked={borderRadius.locked}
