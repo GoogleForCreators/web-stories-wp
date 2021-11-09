@@ -117,7 +117,9 @@ function ProviderPanel({ providerType, isActive, searchTerm, ...rest }) {
         data-testid={'media-subheading'}
         shouldDisplay={shouldDisplayMediaSubheading}
       >
-        {searchTerm.length ? searchResultsLabel : displayName}
+        {searchTerm.length && !state.categories.selectedCategoryId
+          ? searchResultsLabel
+          : displayName}
       </MediaSubheading>
       <PaginatedMediaGallery
         providerType={providerType}
