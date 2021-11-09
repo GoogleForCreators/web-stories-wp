@@ -44,13 +44,6 @@ const focusStyle = css`
     )};
 `;
 
-const ListBox = styled.div.attrs({ role: 'listbox' })`
-  display: flex;
-  max-width: 100%;
-  flex-wrap: wrap;
-  gap: 6px;
-`;
-
 const SwatchList = styled.div`
   display: flex;
   max-width: 100%;
@@ -106,7 +99,7 @@ function BasicColorList({
     : __('global', 'web-stories');
   return (
     <SwatchList ref={listRef} {...rest}>
-      <ListBox aria-labelledby={ariaLabelledBy}>
+      <SwatchList role="listbox" aria-labelledby={ariaLabelledBy}>
         {colors.map((pattern, i) => {
           const isTransparentAndInvalid = !allowsOpacity && hasOpacity(pattern);
           const isGradientAndInvalid = !allowsGradient && hasGradient(pattern);
@@ -155,7 +148,7 @@ function BasicColorList({
             </Tooltip>
           );
         })}
-      </ListBox>
+      </SwatchList>
       {(isLocal || isGlobal) && (
         <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
       )}
