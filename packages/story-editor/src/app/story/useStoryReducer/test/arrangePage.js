@@ -29,7 +29,7 @@ describe('arrangePage', () => {
     });
 
     const result = arrangePage({ pageId: '111', position: 3 });
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should reorder a page to the specified position', () => {
@@ -56,14 +56,14 @@ describe('arrangePage', () => {
 
     // Reorder page 555 - doesn't exist
     const firstFailedAttempt = arrangePage({ pageId: '555', position: 2 });
-    expect(firstFailedAttempt).toStrictEqual(initialState);
+    expect(firstFailedAttempt).toBe(initialState);
 
     // Reorder page 333 to position 2 - it's already there
     const secondFailedAttempt = arrangePage({ pageId: '333', position: 2 });
-    expect(secondFailedAttempt).toStrictEqual(initialState);
+    expect(secondFailedAttempt).toBe(initialState);
 
     // Reorder page 333 to position 20 - outside bounds
     const thirdFailedAttempt = arrangePage({ pageId: '333', position: 20 });
-    expect(thirdFailedAttempt).toStrictEqual(initialState);
+    expect(thirdFailedAttempt).toBe(initialState);
   });
 });

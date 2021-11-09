@@ -13,13 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as clamp } from './clamp';
-export { default as titleFormatted } from './titleFormatted';
-export { default as KeyboardOnlyOutline } from './keyboardOnlyOutline';
-export { default as useDashboardResultsLabel } from './useDashboardResultsLabel';
-export {
-  default as usePagePreviewSize,
-  getPosterHeight,
-} from './usePagePreviewSize';
-export { default as useStoryView } from './useStoryView';
-export { default as useTemplateView } from './useTemplateView';
+
+/**
+ * External dependencies
+ */
+import { useEffect } from 'react';
+
+export default {
+  title: 'Playground/preview',
+};
+
+function Preview() {
+  useEffect(() => {
+    const content = window.localStorage.getItem('preview_markup');
+
+    if (content) {
+      document.open();
+      document.write(content);
+      document.close();
+    }
+  }, []);
+
+  return null;
+}
+
+export const _default = Preview;

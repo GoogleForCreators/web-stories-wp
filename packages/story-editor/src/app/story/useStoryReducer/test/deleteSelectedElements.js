@@ -69,6 +69,6 @@ describe('deleteSelectedElements', () => {
 
     const result = deleteSelectedElements();
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 });
