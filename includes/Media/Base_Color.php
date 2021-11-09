@@ -68,20 +68,14 @@ class Base_Color extends Service_Base implements HasMeta {
 			'post',
 			self::BASE_COLOR_POST_META_KEY,
 			[
-				'type'           => 'array',
+				'type'           => 'string',
 				'description'    => __( 'Attachment base color', 'web-stories' ),
 				'show_in_rest'   => [
 					'schema' => [
-						'type'     => 'array',
-						'maxItems' => 3,
-						'items'    => [
-							'minimum' => 0,
-							'maximum' => 255,
-							'type'    => 'integer',
-						],
+						'type'   => 'string',
+						'format' => 'hex-color',
 					],
 				],
-				'default'        => [],
 				'single'         => true,
 				'object_subtype' => 'attachment',
 			]

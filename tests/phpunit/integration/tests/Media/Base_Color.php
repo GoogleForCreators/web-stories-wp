@@ -67,7 +67,7 @@ class Base_Color extends TestCase {
 			]
 		);
 
-		$color = [ 0, 0, 0 ];
+		$color = '#000000';
 
 		update_post_meta( $attachment_id, $this->instance::BASE_COLOR_POST_META_KEY, $color );
 
