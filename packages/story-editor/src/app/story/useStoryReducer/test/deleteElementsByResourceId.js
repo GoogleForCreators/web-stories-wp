@@ -90,7 +90,7 @@ describe('deleteElementsByResourceId', () => {
       id: null,
     });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should do nothing if no elements with given id', () => {
@@ -122,6 +122,6 @@ describe('deleteElementsByResourceId', () => {
       id: '12',
     });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 });

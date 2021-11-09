@@ -32,8 +32,8 @@ function useCORSProxy() {
   const enableCORSProxy = useFeature('enableCORSProxy');
   const getProxiedUrl = useCallback(
     (resource, src) => {
-      const { isExternal, id } = resource;
-      if (enableCORSProxy && !id && isExternal) {
+      const { needsProxy } = resource;
+      if (enableCORSProxy && needsProxy) {
         return getProxyUrl(src);
       }
       return src;

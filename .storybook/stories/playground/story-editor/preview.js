@@ -15,19 +15,26 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import reducer from '../reducer';
+import { useEffect } from 'react';
 
-describe('reducer', () => {
-  it('should do nothing if unknown action given', () => {
-    const initialState = { pages: [] };
+export default {
+  title: 'Playground/preview',
+};
 
-    const result = reducer(initialState, {
-      type: 'UNKNOWN_ACTION',
-      payload: {},
-    });
+function Preview() {
+  useEffect(() => {
+    const content = window.localStorage.getItem('preview_markup');
 
-    expect(result).toBe(initialState);
-  });
-});
+    if (content) {
+      document.open();
+      document.write(content);
+      document.close();
+    }
+  }, []);
+
+  return null;
+}
+
+export const _default = Preview;

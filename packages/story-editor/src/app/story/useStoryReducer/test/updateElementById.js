@@ -91,6 +91,7 @@ describe('updateElementById', () => {
       properties: () => ({ id: '321' }),
     });
 
+    // TODO: Use .toBe() and ensure that the test still passes.
     expect(result).toStrictEqual(initial);
   });
 
