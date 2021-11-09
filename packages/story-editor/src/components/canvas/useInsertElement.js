@@ -33,6 +33,7 @@ import { ZOOM_SETTING } from '../../constants';
 import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
 import getInsertedElementSize from '../../utils/getInsertedElementSize';
 import { getResourceBaseColor } from '../../utils/getResourceBaseColor';
+import useCORSProxy from '../../utils/useCORSProxy';
 import useFocusCanvas from './useFocusCanvas';
 
 function useInsertElement() {
@@ -47,6 +48,7 @@ function useInsertElement() {
   const {
     actions: { registerUsage },
   } = useMedia3pApi();
+  const { getProxiedUrl } = useCORSProxy();
 
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
     setZoomSetting,
@@ -87,7 +89,8 @@ function useInsertElement() {
       }
 
       if (isExternal) {
-        const baseColor = await getResourceBaseColor(resource);
+        const imageSrcProxy = getProxiedUrl(resource, imageSrc);
+        const baseColor = await getResourceBaseColor(imageSrcProxy);
         const properties = {
           resource: {
             ...resource,
@@ -99,7 +102,7 @@ function useInsertElement() {
         updateBaseColor({ resource });
       }
     },
-    [updateBaseColor, updateElementById]
+    [getProxiedUrl, updateBaseColor, updateElementById]
   );
 
   /**

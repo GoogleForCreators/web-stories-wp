@@ -47,16 +47,12 @@ function getImgNodeKey(elementId) {
   return `${IMG_NODE}_${elementId}`;
 }
 
-export function getResourceBaseColor(resource) {
-  const { type, src, poster } = resource;
-
-  const imageSrc = type === 'image' ? src : poster;
-
-  if (!imageSrc) {
+export function getResourceBaseColor(src) {
+  if (!src) {
     return Promise.reject(new Error('No source to image'));
   }
   return setOrCreateImage({
-    src: imageSrc,
+    src,
     width: 10,
     height: 'auto',
   });

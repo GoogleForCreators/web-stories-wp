@@ -25,6 +25,7 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import { getResourceBaseColor } from '../../../utils/getResourceBaseColor';
+import useCORSProxy from '../../../utils/useCORSProxy';
 
 function useDetectBaseColor({ updateMediaElement }) {
   const {
@@ -36,6 +37,7 @@ function useDetectBaseColor({ updateMediaElement }) {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+  const { getProxiedUrl } = useCORSProxy();
   const setProperties = useCallback(
     (id, properties) => {
       updateElementsByResourceId({ id, properties });
@@ -77,14 +79,22 @@ function useDetectBaseColor({ updateMediaElement }) {
 
   const updateBaseColor = useCallback(
     async ({ resource }) => {
+      const { type, src, poster } = resource;
+      const imageSrc = type === 'image' ? src : poster;
+      if (!imageSrc) {
+        return;
+      }
+      const imageSrcProxied = getProxiedUrl(resource, imageSrc);
+      let color;
       try {
-        const color = await getResourceBaseColor(resource);
-        await saveBaseColor(resource.id, color);
+        color = await getResourceBaseColor(imageSrcProxied);
       } catch (error) {
-        // Do nothing for now.
+        color = '#ffffff';
+      } finally {
+        await saveBaseColor(resource.id, color);
       }
     },
-    [saveBaseColor]
+    [getProxiedUrl, saveBaseColor]
   );
 
   return {

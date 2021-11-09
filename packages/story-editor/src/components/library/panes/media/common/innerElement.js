@@ -224,7 +224,7 @@ function InnerElement({
     handleDrag(resource, event.clientX, event.clientY);
   };
 
-  const thumbnailUrl = type === ContentType.IMAGE ? thumbnailURL : poster;
+  const imageURL = type === ContentType.IMAGE ? thumbnailURL : poster;
 
   return (
     <>
@@ -235,7 +235,7 @@ function InnerElement({
         handleDragEnd={() => handleDrop(resource)}
         type={resource.type}
         elementProps={{ resource }}
-        onClick={onClick(thumbnailUrl)}
+        onClick={onClick(imageURL)}
         cloneElement={CloneImg}
         cloneProps={cloneProps}
       />

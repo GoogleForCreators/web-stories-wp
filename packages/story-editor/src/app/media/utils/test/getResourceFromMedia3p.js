@@ -22,7 +22,7 @@ import getResourceFromMedia3p from '../getResourceFromMedia3p';
 describe('getResourceFromMedia3p', () => {
   it('should return video resource', () => {
     const media3pResource = {
-      baseColor: '#00ff00',
+      baseColor: '#ff00ff',
       name: 'media/coverr:g9re0sRUYA',
       provider: 'COVERR',
       type: 'VIDEO',
