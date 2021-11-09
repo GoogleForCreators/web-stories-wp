@@ -27,7 +27,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @return {import('./types').Resource} Resource object.
  */
 function createResource({
-  baseColor = '',
+  baseColor,
   type,
   mimeType,
   creationDate,

@@ -249,7 +249,7 @@ describe('changeBaseColorToHex', () => {
                 focalX: 50,
                 focalY: 50,
                 resource: {
-                  baseColor: '',
+                  baseColor: undefined,
                   isExternal: true,
                   type: 'video',
                   mimeType: 'video/mp4',
@@ -318,7 +318,7 @@ describe('changeBaseColorToHex', () => {
                 focalX: 50,
                 focalY: 50,
                 resource: {
-                  baseColor: '',
+                  baseColor: undefined,
                   type: 'gif',
                   mimeType: 'image/gif',
                   isExternal: true,
@@ -657,7 +657,7 @@ describe('changeBaseColorToHex', () => {
               focalX: 50,
               focalY: 50,
               resource: {
-                baseColor: '',
+                baseColor: undefined,
                 type: 'video',
                 mimeType: 'video/mp4',
                 creationDate: '2018-07-09T22:49:13Z',
@@ -726,7 +726,7 @@ describe('changeBaseColorToHex', () => {
               focalX: 50,
               focalY: 50,
               resource: {
-                baseColor: '',
+                baseColor: undefined,
                 type: 'gif',
                 mimeType: 'image/gif',
                 creationDate: '2021-01-24T19:47:19Z',
