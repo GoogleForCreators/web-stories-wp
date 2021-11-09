@@ -71,7 +71,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
       await fixture.events.sleep(200);
-      const message = await fixture.screen.getByRole('alert');
+      const message = await fixture.screen.getByRole('alert', { hidden: true });
       expect(message.textContent).toBe('Page Template saved.');
 
       expect(
