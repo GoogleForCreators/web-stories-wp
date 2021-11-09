@@ -115,6 +115,9 @@ function ColorPicker({
   );
 
   const maybeClose = () => {
+    // Usually we close the color picker when focusing anywhere outside of it.
+    // There's an exception for when the eyedropper is in use or when a confirmation dialog is open
+    // since both cause focusing outside of the color picker for interacting by the user, but the picker needs to stay open.
     if (!isEyedropperActive && !showDialog) {
       onClose();
     }

@@ -23,7 +23,7 @@ import { useCallback } from '@web-stories-wp/react';
  */
 import { useStory } from '../../app';
 
-function useDeleteColor({ setIsEditMode }) {
+function useDeleteColor({ onEmpty = () => {} }) {
   const { currentStoryStyles, globalStoryStyles, updateStory } = useStory(
     ({
       state: {
@@ -56,16 +56,10 @@ function useDeleteColor({ setIsEditMode }) {
       });
       // If no colors left, exit edit mode.
       if (updatedColors.length === 0 && !hasLocalPresets) {
-        setIsEditMode(false);
+        onEmpty();
       }
     },
-    [
-      globalColors,
-      updateStory,
-      hasLocalPresets,
-      globalStoryStyles,
-      setIsEditMode,
-    ]
+    [globalColors, updateStory, hasLocalPresets, globalStoryStyles, onEmpty]
   );
 
   const deleteLocalColor = useCallback(
@@ -78,10 +72,10 @@ function useDeleteColor({ setIsEditMode }) {
       });
       // If no colors are left, exit edit mode.
       if (updatedColors.length === 0 && globalColors.length === 0) {
-        setIsEditMode(false);
+        onEmpty();
       }
     },
-    [globalColors, localColors, updateStory, setIsEditMode]
+    [globalColors, localColors, updateStory, onEmpty]
   );
 
   return {

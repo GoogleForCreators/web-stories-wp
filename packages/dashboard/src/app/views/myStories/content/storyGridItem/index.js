@@ -28,7 +28,11 @@ import { css } from 'styled-components';
  */
 import { StoryMenu } from '../../../../../components';
 import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
-import { STORY_STATUS } from '../../../../../constants';
+import {
+  DEFAULT_GRID_IMG_HEIGHT,
+  DEFAULT_GRID_IMG_WIDTH,
+  STORY_STATUS,
+} from '../../../../../constants';
 import {
   PageSizePropType,
   RenameStoryPropType,
@@ -130,7 +134,7 @@ const StoryGridItem = forwardRef(
       <CustomCardGridItem
         data-testid={`story-grid-item-${story.id}`}
         onFocus={onFocus}
-        $posterHeight={pageSize.posterHeight}
+        $posterHeight={pageSize.height}
         ref={ref}
         aria-label={sprintf(
           /* translators: %s: story title.*/
@@ -152,13 +156,15 @@ const StoryGridItem = forwardRef(
                     src: story.featuredMediaUrl,
                   }
                 : null)}
+              width={DEFAULT_GRID_IMG_WIDTH}
+              height={DEFAULT_GRID_IMG_HEIGHT}
             />
             <Gradient />
             <Scrim>
               {story?.capabilities?.hasEditAction && (
                 <ScrimAnchor
                   className="grid-item-anchor"
-                  data-testid="edit-story-grid-link"
+                  data-testid="story-editor-grid-link"
                   tabIndex={tabIndex}
                   href={story.editStoryLink}
                 >
