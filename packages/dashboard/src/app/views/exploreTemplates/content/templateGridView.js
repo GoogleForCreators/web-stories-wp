@@ -117,7 +117,6 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
     <div ref={containerRef}>
       <CardGrid
         pageSize={pageSize}
-        isPosterHeight
         role="list"
         ref={gridRef}
         ariaLabel={__('Viewing available templates', 'web-stories')}

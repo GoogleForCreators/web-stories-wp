@@ -29,13 +29,11 @@ import {
   PageBackgroundPanel,
   ShapeStylePanel,
   SizePositionPanel,
-  TextBoxPanel,
   TextStylePanel,
   VideoAccessibilityPanel,
   ElementAlignmentPanel,
   VideoOptionsPanel,
   StylePresetPanel,
-  ColorPresetPanel,
   PageBackgroundAudioPanel,
 } from '../../panels/design';
 import PanelTypes from '../../panels/design/types';
@@ -120,8 +118,6 @@ function getDesignPanelsForSelection(elements) {
         case PanelTypes.PAGE_BACKGROUND:
           // Only display when isBackground.
           return null;
-        case PanelTypes.COLOR_PRESETS:
-          return { type, Panel: ColorPresetPanel };
         case PanelTypes.STYLE_PRESETS:
           return { type, Panel: StylePresetPanel };
         case PanelTypes.FILTER:
@@ -132,8 +128,6 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: LinkPanel };
         case PanelTypes.TEXT_STYLE:
           return { type, Panel: TextStylePanel };
-        case PanelTypes.TEXT_BOX:
-          return { type, Panel: TextBoxPanel };
         case PanelTypes.SHAPE_STYLE:
           return { type, Panel: ShapeStylePanel };
         case PanelTypes.BORDER:

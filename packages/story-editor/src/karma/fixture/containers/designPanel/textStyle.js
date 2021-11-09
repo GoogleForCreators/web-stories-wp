@@ -99,6 +99,10 @@ export class TextStyle extends AbstractPanel {
     return this.getByRole('button', { name: /Adaptive text colors/ });
   }
 
+  get fill() {
+    return this.getByRole('option', { name: /fill/i });
+  }
+
   // @todo: add remaining input options:
   // * font family and size
   // * justify toggles

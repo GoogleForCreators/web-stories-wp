@@ -27,10 +27,10 @@
 namespace Google\Web_Stories\AMP;
 
 use Exception;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Exception\SanitizationException;
 use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Throwable;
 
@@ -44,6 +44,7 @@ use Throwable;
  * @see \AMP_Theme_Support
  */
 class Output_Buffer extends Service_Base implements Conditional {
+
 	/**
 	 * Whether output buffering has started.
 	 *
@@ -66,16 +67,25 @@ class Output_Buffer extends Service_Base implements Conditional {
 	private $optimization;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
 	 * Output_Buffer constructor.
 	 *
 	 * @since 1.10.0
 	 *
 	 * @param Sanitization $sanitization Sanitization instance.
 	 * @param Optimization $optimization Optimization instance.
+	 * @param Context      $context Context instance.
 	 */
-	public function __construct( Sanitization $sanitization, Optimization $optimization ) {
+	public function __construct( Sanitization $sanitization, Optimization $optimization, Context $context ) {
 		$this->sanitization = $sanitization;
 		$this->optimization = $optimization;
+		$this->context      = $context;
 	}
 
 	/**
@@ -149,7 +159,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 * @return void
 	 */
 	public function start_output_buffering() {
-		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+		if ( ! $this->context->is_web_story() ) {
 			return;
 		}
 

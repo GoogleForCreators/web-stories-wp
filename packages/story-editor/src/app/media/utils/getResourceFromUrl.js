@@ -23,35 +23,57 @@ import {
   getVideoDimensions,
   getVideoLength,
   hasVideoGotAudio,
+  getTypeFromMime,
 } from '@web-stories-wp/media';
 
-async function getResourceFromUrl(value, type) {
-  const isVideo = type === 'video';
-  const isImage = type === 'image';
-  if (!isVideo && !isImage) {
+/**
+ * @typedef {Object} ResourceLike
+ * @property {string} src Resource URL.
+ * @property {string} mimeType Mime type.
+ * @property {boolean} needsProxy Whether the resource needs a CORS proxy.
+ */
+
+/**
+ * @typedef {import('@web-stories-wp/media').Resource} Resource
+ */
+
+/**
+ * Get a resource from a URL.
+ *
+ * @param {ResourceLike} resourceLike Resource-like object.
+ * @return {Promise<Resource>} Resource object.
+ */
+async function getResourceFromUrl(resourceLike) {
+  const { src, mimeType, ...rest } = resourceLike;
+  const type = getTypeFromMime(mimeType);
+
+  if (!['image', 'video'].includes(type)) {
     throw new Error('Invalid media type.');
   }
+
+  const isVideo = type === 'video';
+
   const getMediaDimensions = isVideo ? getVideoDimensions : getImageDimensions;
-  const { width, height } = await getMediaDimensions(value);
+  const { width, height } = await getMediaDimensions(src);
 
   // Add necessary data for video.
   const videoData = {};
   if (isVideo) {
-    const hasAudio = await hasVideoGotAudio(value);
+    const hasAudio = await hasVideoGotAudio(src);
     videoData.isMuted = !hasAudio;
-    const { length, formattedLength } = await getVideoLength(value);
+    const { length, formattedLength } = await getVideoLength(src);
     videoData.length = length;
     videoData.formattedLength = formattedLength;
-    videoData.isOptimized = true;
   }
 
   return createResource({
     type,
     width,
     height,
-    src: value,
+    src,
     local: false,
     isExternal: true,
+    ...rest,
     ...videoData,
   });
 }

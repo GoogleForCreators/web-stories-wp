@@ -31,7 +31,7 @@ describe('Template Details <RelatedGrid />', () => {
     renderWithProviders(
       <LayoutProvider>
         <RelatedGrid
-          pageSize={{ width: 200, height: 350, containerHeight: 350 }}
+          pageSize={{ width: 200, height: 350 }}
           relatedTemplates={formattedTemplatesArray.slice(0, 3)}
           templateActions={{
             createStoryFromTemplate: jest.fn(),
@@ -52,7 +52,7 @@ describe('Template Details <RelatedGrid />', () => {
     renderWithProviders(
       <LayoutProvider>
         <RelatedGrid
-          pageSize={{ width: 200, height: 350, containerHeight: 350 }}
+          pageSize={{ width: 200, height: 350 }}
           relatedTemplates={[]}
           templateActions={{
             createStoryFromTemplate: jest.fn(),

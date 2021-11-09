@@ -31,7 +31,7 @@ import { PageTemplatesPane, PageTemplatesIcon } from './panes/pageTemplates';
 
 export const MEDIA = {
   icon: MediaIcon,
-  tooltip: __('WordPress media', 'web-stories'),
+  tooltip: __('Media', 'web-stories'),
   placement: TOOLTIP_PLACEMENT.BOTTOM_START,
   Pane: MediaPane,
   id: 'media',

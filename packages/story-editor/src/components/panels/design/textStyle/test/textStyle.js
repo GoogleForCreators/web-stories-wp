@@ -32,6 +32,7 @@ import CanvasContext from '../../../../../app/canvas/context';
 import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
+  BACKGROUND_TEXT_MODE,
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 
@@ -177,6 +178,7 @@ describe('Panels/TextStyle', () => {
       width: 120,
       rotationAngle: 0,
       padding: DEFAULT_PADDING,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
     };
 
     mockControls = {};
@@ -204,6 +206,12 @@ describe('Panels/TextStyle', () => {
       lineHeight: 1,
       x: dx,
       y: dy,
+      padding: {
+        hasHiddenPadding: false,
+        horizontal: 0,
+        locked: true,
+        vertical: 0,
+      },
     });
   });
 

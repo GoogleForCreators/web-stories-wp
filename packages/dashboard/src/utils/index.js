@@ -19,7 +19,7 @@ export { default as KeyboardOnlyOutline } from './keyboardOnlyOutline';
 export { default as useDashboardResultsLabel } from './useDashboardResultsLabel';
 export {
   default as usePagePreviewSize,
-  getPagePreviewHeights,
+  getPosterHeight,
 } from './usePagePreviewSize';
 export { default as useStoryView } from './useStoryView';
 export { default as useTemplateView } from './useTemplateView';

@@ -595,8 +595,9 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     });
 
     it('should retain focus on menu close', async () => {
-      const allItemGridLinks =
-        fixture.screen.getAllByTestId(/edit-story-grid-link/);
+      const allItemGridLinks = fixture.screen.getAllByTestId(
+        /story-editor-grid-link/
+      );
 
       const storyIndex = 1;
       const selectedStory = allItemGridLinks[storyIndex];
@@ -628,8 +629,9 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     });
 
     it('should exit the grid and re-focus the first item', async () => {
-      const allItemGridLinks =
-        fixture.screen.getAllByTestId(/edit-story-grid-link/);
+      const allItemGridLinks = fixture.screen.getAllByTestId(
+        /story-editor-grid-link/
+      );
 
       const firstStory = allItemGridLinks[0];
       const lastStory = allItemGridLinks[allItemGridLinks.length - 1];

@@ -32,7 +32,7 @@ import useLibrary from '../../useLibrary';
 import { useHistory } from '../../../../app';
 import { getHTMLFormatters } from '../../../richText/htmlManipulation';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
-import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
+import { applyHiddenPadding } from '../../../panels/design/textStyle/utils';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import { calculateTextHeight } from '../../../../utils/textMeasurements';
 

@@ -28,11 +28,9 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Infrastructure\Conditional;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Services;
-use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\User\Preferences;
 
 /**
@@ -41,7 +39,12 @@ use Google\Web_Stories\User\Preferences;
  * @package Google\Web_Stories
  */
 class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
-	use Screen;
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
 
 	/**
 	 * Preferences instance.
@@ -56,9 +59,11 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 * @since 1.14.0
 	 *
 	 * @param Preferences $preferences Preferences instance.
+	 * @param Context     $context     Context instance.
 	 */
-	public function __construct( Preferences $preferences ) {
+	public function __construct( Preferences $preferences, Context $context ) {
 		$this->preferences = $preferences;
+		$this->context     = $context;
 	}
 
 	/**
@@ -67,7 +72,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 * @return void
 	 */
 	public function register() {
-		if ( ! $this->is_edit_screen() ) {
+		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}
 

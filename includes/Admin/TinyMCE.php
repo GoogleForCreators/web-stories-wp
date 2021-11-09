@@ -28,9 +28,9 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Assets;
-use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Stories_Script_Data;
 
 /**
@@ -39,8 +39,6 @@ use Google\Web_Stories\Stories_Script_Data;
  * @package Google\Web_Stories
  */
 class TinyMCE extends Service_Base {
-	use Screen;
-
 	/**
 	 * Web Stories tinymce script handle.
 	 *
@@ -63,16 +61,25 @@ class TinyMCE extends Service_Base {
 	protected $stories_script_data;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
 	 * Tinymce constructor.
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param Assets              $assets Assets instance.
+	 * @param Assets              $assets              Assets instance.
 	 * @param Stories_Script_Data $stories_script_data Stories_Script_Data instance.
+	 * @param Context             $context             Context instance.
 	 */
-	public function __construct( Assets $assets, Stories_Script_Data $stories_script_data ) {
+	public function __construct( Assets $assets, Stories_Script_Data $stories_script_data, Context $context ) {
 		$this->assets              = $assets;
 		$this->stories_script_data = $stories_script_data;
+		$this->context             = $context;
 	}
 
 	/**
@@ -83,7 +90,7 @@ class TinyMCE extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		if ( $this->is_block_editor() || $this->is_edit_screen() ) {
+		if ( $this->context->is_block_editor() || $this->context->is_story_editor() ) {
 			return;
 		}
 

@@ -17,15 +17,27 @@
 
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * Class Add_Poster_Generation_Media_Source
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source
  */
-class Add_Poster_Generation_Media_Source extends TestCase {
+class Add_Poster_Generation_Media_Source extends DependencyInjectedTestCase {
+	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source
+	 */
+	protected $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = $this->injector->make( \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source::class );
+	}
+
 	/**
 	 * @covers ::migrate
 	 * @covers \Google\Web_Stories\Migrations\Migration_Meta_To_Term::migrate
@@ -53,12 +65,10 @@ class Add_Poster_Generation_Media_Source extends TestCase {
 		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, 'true' );
 		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 
-		$media_source = new Media_Source_Taxonomy();
-		$object       = new \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source( $media_source );
-		$slug         = $this->call_private_method( $object, 'get_term_name' );
-		$object->migrate();
+		$slug = $this->call_private_method( $this->instance, 'get_term_name' );
+		$this->instance->migrate();
 
-		$terms = wp_get_post_terms( $poster_attachment_id, $media_source->get_taxonomy_slug() );
+		$terms = wp_get_post_terms( $poster_attachment_id, $this->container->get( 'media.media_source' )->get_taxonomy_slug() );
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertCount( 1, $terms );
 		$this->assertEqualSets( [ $slug ], $slugs );
@@ -69,9 +79,7 @@ class Add_Poster_Generation_Media_Source extends TestCase {
 	 * @covers \Google\Web_Stories\Migrations\Migration_Meta_To_Term::get_post_meta_key
 	 */
 	public function test_get_post_meta_key() {
-		$media_source = new Media_Source_Taxonomy();
-		$object       = new \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source( $media_source );
-		$results      = $this->call_private_method( $object, 'get_post_meta_key' );
+		$results = $this->call_private_method( $this->instance, 'get_post_meta_key' );
 		$this->assertSame( \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, $results );
 	}
 }

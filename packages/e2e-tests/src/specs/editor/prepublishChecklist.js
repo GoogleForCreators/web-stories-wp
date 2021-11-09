@@ -19,7 +19,6 @@
  */
 import {
   createNewStory,
-  insertStoryTitle,
   publishStory,
   triggerHighPriorityChecklistSection,
   withUser,
@@ -58,10 +57,8 @@ describe('Pre-Publish Checklist', () => {
     // eslint-disable-next-line jest/require-hook
     withUser('contributor', 'password');
 
-    it('should not let me publish a story as a contributor', async () => {
+    it('should not show messages user does not have permission for anyway', async () => {
       await createNewStory();
-
-      await insertStoryTitle('Publishing Flow: Contributor');
 
       await expect(page).toClick('button[aria-label="Checklist"]');
       await expect(page).toMatchElement(
@@ -72,9 +69,6 @@ describe('Pre-Publish Checklist', () => {
       await expect(page).toMatchElement('p', {
         text: 'You are all set for now. Return to this checklist as you build your Web Story for tips on how to improve it.',
       });
-
-      // verify that publish button is disabled
-      await expect(page).toMatchElement('button:disabled', { text: 'Publish' });
     });
   });
 });

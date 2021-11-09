@@ -28,11 +28,11 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Image;
-use Google\Web_Stories\Traits\Screen;
 use WP_Post;
 
 
@@ -40,7 +40,22 @@ use WP_Post;
  * Admin class.
  */
 class Admin extends Service_Base {
-	use Screen;
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
+	 * Single constructor.
+	 *
+	 * @param Context $context Context instance.
+	 */
+	public function __construct( Context $context ) {
+		$this->context = $context;
+	}
+
 	/**
 	 * Initialize admin-related functionality.
 	 *
@@ -78,17 +93,12 @@ class Admin extends Service_Base {
 	 * @return string|mixed $class List of Classes.
 	 */
 	public function admin_body_class( $class ) {
-		$screen = $this->get_current_screen();
-		if ( ! $screen ) {
-			return $class;
-		}
-
-		if ( ! $this->is_edit_screen( $screen ) ) {
+		if ( ! $this->context->is_story_editor() ) {
 			return $class;
 		}
 
 		// Default WordPress posts list table screen and dashboard.
-		if ( 'post' !== $screen->base ) {
+		if ( 'post' !== $this->context->get_screen_base() ) {
 			return $class;
 		}
 

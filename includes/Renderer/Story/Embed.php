@@ -24,14 +24,13 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Renderer\Story;
 
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\AMP_Story_Player_Assets;
-use Google\Web_Stories\Traits\Amp;
 
 /**
  * Class Embed
@@ -39,8 +38,6 @@ use Google\Web_Stories\Traits\Amp;
  * @package Google\Web_Stories\Renderer\Story
  */
 class Embed {
-	use Amp;
-
 	/**
 	 * Current post.
 	 *
@@ -56,16 +53,25 @@ class Embed {
 	private $assets;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
 	 * Embed constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story  $story             Story Object.
-	 * @param Assets $assets            Assets instance.
+	 * @param Story   $story   Story instance.
+	 * @param Assets  $assets  Assets instance.
+	 * @param Context $context Context instance.
 	 */
-	public function __construct( Story $story, Assets $assets ) {
-		$this->assets = $assets;
-		$this->story  = $story;
+	public function __construct( Story $story, Assets $assets, Context $context ) {
+		$this->assets  = $assets;
+		$this->story   = $story;
+		$this->context = $context;
 	}
 
 	/**
@@ -102,7 +108,7 @@ class Embed {
 		// This CSS is used for AMP and non-AMP.
 		$this->assets->enqueue_style_asset( Embed_Base::SCRIPT_HANDLE );
 
-		if ( $this->is_amp() ) {
+		if ( $this->context->is_amp() ) {
 			ob_start();
 			?>
 			<div class="<?php echo esc_attr( "$class web-stories-embed web-stories-embed-amp $align" ); ?>">

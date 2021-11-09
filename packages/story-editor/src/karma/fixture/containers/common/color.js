@@ -81,8 +81,14 @@ class ColorPicker extends Container {
     return this.getByRole('button', { name: /Add color/i });
   }
 
-  applySavedColor(type) {
-    return this.getByRole('button', { name: `Apply ${type} color` });
+  applySavedColor(pattern) {
+    return this.getByRole('option', {
+      name: pattern,
+    });
+  }
+
+  addSavedColor(type) {
+    return this.getByRole('button', { name: `Add ${type} color` });
   }
 
   get colorTypeSelect() {
@@ -91,6 +97,26 @@ class ColorPicker extends Container {
 
   get eyedropper() {
     return this.getByRole('button', { name: /Pick a color from canvas/i });
+  }
+
+  get editButton() {
+    return this.getByRole('button', { name: /Edit colors/ });
+  }
+
+  get exitEditButton() {
+    return this.getByRole('button', { name: /Exit edit mode/ });
+  }
+
+  get deleteStoryColor() {
+    return this.getByRole('option', {
+      name: /Delete local color/,
+    });
+  }
+
+  get deleteGlobalColor() {
+    return this.getByRole('option', {
+      name: /Delete global color/,
+    });
   }
 
   get custom() {

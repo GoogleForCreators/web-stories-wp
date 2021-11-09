@@ -7703,9 +7703,9 @@
       "tLGap": 0,
       "wAsc": 1006,
       "wDes": 295,
-      "xH": 425,
+      "xH": 430,
       "capH": 587,
-      "yMin": -283,
+      "yMin": -286,
       "yMax": 984,
       "hAsc": 918,
       "hDes": -220,
@@ -8618,6 +8618,35 @@
       "yMax": 2000,
       "hAsc": 2000,
       "hDes": -560,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Dongle",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 850,
+      "des": -598,
+      "tAsc": 570,
+      "tDes": -430,
+      "tLGap": 0,
+      "wAsc": 850,
+      "wDes": 598,
+      "xH": 280,
+      "capH": 395,
+      "yMin": -460,
+      "yMax": 712,
+      "hAsc": 850,
+      "hDes": -598,
       "lGap": 0
     }
   },
@@ -9992,17 +10021,21 @@
   {
     "family": "Faustina",
     "fallbacks": ["serif"],
-    "weights": [400, 500, 600, 700],
+    "weights": [300, 400, 500, 600, 700, 800],
     "styles": ["regular", "italic"],
     "variants": [
+      [0, 300],
       [0, 400],
       [0, 500],
       [0, 600],
       [0, 700],
+      [0, 800],
+      [1, 300],
       [1, 400],
       [1, 500],
       [1, 600],
-      [1, 700]
+      [1, 700],
+      [1, 800]
     ],
     "service": "fonts.google.com",
     "metrics": {
@@ -10016,7 +10049,7 @@
       "wDes": 215,
       "xH": 494,
       "capH": 648,
-      "yMin": -187,
+      "yMin": -210,
       "yMax": 1011,
       "hAsc": 1043,
       "hDes": -217,
@@ -10195,10 +10228,10 @@
       "tLGap": 0,
       "wAsc": 2164,
       "wDes": 1000,
-      "xH": 1050,
-      "capH": 1374,
+      "xH": 1053,
+      "capH": 1377,
       "yMin": -1000,
-      "yMax": 2100,
+      "yMax": 2400,
       "hAsc": 1980,
       "hDes": -644,
       "lGap": 0
@@ -16017,7 +16050,7 @@
       "xH": 481,
       "capH": 691,
       "yMin": -274,
-      "yMax": 1127,
+      "yMax": 1086,
       "hAsc": 974,
       "hDes": -286,
       "lGap": 0
@@ -19485,6 +19518,56 @@
     }
   },
   {
+    "family": "Mochiy Pop One",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1160,
+      "des": -288,
+      "tAsc": 880,
+      "tDes": -120,
+      "tLGap": 0,
+      "wAsc": 1160,
+      "wDes": 288,
+      "xH": 543,
+      "capH": 733,
+      "yMin": -295,
+      "yMax": 1142,
+      "hAsc": 1160,
+      "hDes": -288,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Mochiy Pop P One",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1160,
+      "des": -288,
+      "tAsc": 880,
+      "tDes": -120,
+      "tLGap": 0,
+      "wAsc": 1160,
+      "wDes": 288,
+      "xH": 543,
+      "capH": 733,
+      "yMin": -295,
+      "yMax": 1142,
+      "hAsc": 1160,
+      "hDes": -288,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Modak",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -19557,6 +19640,42 @@
       "hAsc": 750,
       "hDes": -250,
       "lGap": 200
+    }
+  },
+  {
+    "family": "Mohave",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 500, 600, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 1980,
+      "des": -806,
+      "tAsc": 1980,
+      "tDes": -806,
+      "tLGap": 0,
+      "wAsc": 1980,
+      "wDes": 806,
+      "xH": 1080,
+      "capH": 1500,
+      "yMin": -806,
+      "yMax": 1980,
+      "hAsc": 1980,
+      "hDes": -806,
+      "lGap": 0
     }
   },
   {
@@ -20333,8 +20452,8 @@
       "wDes": 445,
       "xH": 510,
       "capH": 700,
-      "yMin": -420,
-      "yMax": 1109,
+      "yMin": -322,
+      "yMax": 1110,
       "hAsc": 1145,
       "hDes": -445,
       "lGap": 0
@@ -23240,6 +23359,41 @@
       "yMax": 846,
       "hAsc": 1069,
       "hDes": -293,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Noto Sans Meetei Mayek",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1069,
+      "des": -321,
+      "tAsc": 1069,
+      "tDes": -321,
+      "tLGap": 0,
+      "wAsc": 1069,
+      "wDes": 321,
+      "xH": 536,
+      "capH": 659,
+      "yMin": -318,
+      "yMax": 1018,
+      "hAsc": 1069,
+      "hDes": -321,
       "lGap": 0
     }
   },
@@ -29852,6 +30006,42 @@
     }
   },
   {
+    "family": "Red Hat Mono",
+    "fallbacks": ["monospace"],
+    "weights": [300, 400, 500, 600, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [1, 300],
+      [1, 400],
+      [1, 500],
+      [1, 600],
+      [1, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1018,
+      "des": -305,
+      "tAsc": 1018,
+      "tDes": -305,
+      "tLGap": 0,
+      "wAsc": 1018,
+      "wDes": 305,
+      "xH": 481,
+      "capH": 700,
+      "yMin": -266,
+      "yMax": 1002,
+      "hAsc": 1018,
+      "hDes": -305,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Red Hat Text",
     "fallbacks": ["sans-serif"],
     "weights": [300, 400, 500, 600, 700],
@@ -29963,10 +30153,10 @@
       "tDes": -400,
       "tLGap": 0,
       "wAsc": 1400,
-      "wDes": 500,
+      "wDes": 400,
       "xH": 418,
       "capH": 725,
-      "yMin": -239,
+      "yMin": -400,
       "yMax": 1192,
       "hAsc": 1100,
       "hDes": -400,

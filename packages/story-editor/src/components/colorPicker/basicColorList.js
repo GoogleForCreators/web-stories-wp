@@ -25,13 +25,16 @@ import {
   hasOpacity,
   hasGradient,
 } from '@web-stories-wp/patterns';
-import { Swatch, themeHelpers } from '@web-stories-wp/design-system';
+import { Icons, Swatch, themeHelpers } from '@web-stories-wp/design-system';
 import { useRef } from '@web-stories-wp/react';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import useRovingTabIndex from '../../utils/useRovingTabIndex';
+import Tooltip from '../tooltip';
+import ColorAdd from './colorAdd';
 
 const focusStyle = css`
   ${({ theme }) =>
@@ -74,9 +77,12 @@ function getPatternAsString(pattern) {
 function BasicColorList({
   color,
   colors,
-  handleColorChange,
+  handleClick,
   allowsOpacity,
   allowsGradient,
+  isLocal = false,
+  isGlobal = false,
+  isEditMode,
   ...rest
 }) {
   const colorAsBackground = getPatternAsString(color);
@@ -89,14 +95,35 @@ function BasicColorList({
     .findIndex((c) => colorAsBackground === c);
 
   let firstIndex = 0;
+  const colorType = isLocal
+    ? __('local', 'web-stories')
+    : __('global', 'web-stories');
   return (
     <SwatchList ref={listRef} {...rest}>
       {colors.map((pattern, i) => {
         const isTransparentAndInvalid = !allowsOpacity && hasOpacity(pattern);
         const isGradientAndInvalid = !allowsGradient && hasGradient(pattern);
-        const isDisabled = isTransparentAndInvalid || isGradientAndInvalid;
+        const isDisabled =
+          (isTransparentAndInvalid || isGradientAndInvalid) && !isEditMode;
+        let tooltip = null;
+        if (isDisabled && !isEditMode) {
+          tooltip = isTransparentAndInvalid
+            ? __(
+                'Page background colors cannot have an opacity.',
+                'web-stories'
+              )
+            : __('Gradient not allowed for Text', 'web-stories');
+        }
 
         const patternAsBackground = getPatternAsString(pattern);
+        const title = !isEditMode
+          ? patternAsBackground
+          : sprintf(
+              /* translators: First %s is the color type, second %s is the color as a string */
+              __('Delete %1$s color: %2$s', 'web-stories'),
+              colorType,
+              patternAsBackground
+            );
         const isSelected = colorAsBackground === patternAsBackground;
         // By default, the first swatch can be tabbed into, unless there's a selected one.
         let tabIndex = i === firstIndex ? 0 : -1;
@@ -107,27 +134,36 @@ function BasicColorList({
           tabIndex = -1;
         }
         return (
-          <StyledSwatch
-            key={patternAsBackground}
-            onClick={() => handleColorChange(pattern)}
-            pattern={pattern}
-            isSelected={isSelected}
-            isDisabled={isDisabled}
-            tabIndex={tabIndex}
-            title={patternAsBackground}
-          />
+          <Tooltip key={patternAsBackground} title={tooltip}>
+            <StyledSwatch
+              onClick={() => handleClick(pattern, isLocal)}
+              pattern={pattern}
+              isSelected={isSelected}
+              isDisabled={isDisabled}
+              tabIndex={tabIndex}
+              title={title}
+            >
+              {isEditMode && <Icons.Cross />}
+            </StyledSwatch>
+          </Tooltip>
         );
       })}
+      {(isLocal || isGlobal) && (
+        <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
+      )}
     </SwatchList>
   );
 }
 
 BasicColorList.propTypes = {
-  handleColorChange: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
   allowsOpacity: PropTypes.bool,
   allowsGradient: PropTypes.bool,
   color: PatternPropType,
   colors: PropTypes.arrayOf(PatternPropType),
+  isLocal: PropTypes.bool,
+  isGlobal: PropTypes.bool,
+  isEditMode: PropTypes.bool.isRequired,
 };
 
 export default BasicColorList;
