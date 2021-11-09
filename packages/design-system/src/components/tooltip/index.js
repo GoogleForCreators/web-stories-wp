@@ -129,29 +129,30 @@ function Tooltip({
     [placement]
   );
 
-  // When near the bottom of the viewport and the tooltip is placed on the bottom we want to force the tooltip to the top as to not
+  // When near the edge of the viewport we want to force the tooltip to a new placement as to not
   // cutoff the contents of the tooltip.
   const positionPlacement = useCallback(
     ({ offset }) => {
-      // check to see if there's an overlap with the window edge
+      // check to see if there's an overlap with the window's bottom edge
       const neededVerticalSpace = offset.bottom;
-      // if the tooltip was assigned as bottom we want to always check it
-      if (
-        offset &&
+      const shouldMoveToTop =
         dynamicPlacement.startsWith('bottom') &&
-        neededVerticalSpace >= window.innerHeight
-      ) {
-        setDynamicPlacement(PLACEMENT.TOP);
-      }
+        neededVerticalSpace >= window.innerHeight;
+
       // in RTL mode, we can sometimes render a tooltip too far to the left
-      const isOverFlowingX = offset.popupLeft < 0;
-      if (isOverFlowingX) {
-        switch (dynamicPlacement) {
-          case dynamicPlacement.endsWith('start'):
-            setDynamicPlacement(`${placement}-end`);
+      const isOverFlowingLeft = offset.popupLeft < 0;
+
+      if (shouldMoveToTop && !isOverFlowingLeft) {
+        setDynamicPlacement(PLACEMENT.TOP);
+      } else if (shouldMoveToTop && isOverFlowingLeft) {
+        setDynamicPlacement(PLACEMENT.TOP_START);
+      } else if (!shouldMoveToTop && isOverFlowingLeft) {
+        switch (placement) {
+          case placement.endsWith('start'):
+            setDynamicPlacement(placement.replace('-start', '-end'));
             break;
           case dynamicPlacement.endsWith('end'):
-            setDynamicPlacement(`${placement}-start`);
+            setDynamicPlacement(placement.replace('-end', '-start'));
             break;
           default:
             setDynamicPlacement(`${placement}-start`);
