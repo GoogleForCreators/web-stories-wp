@@ -31,7 +31,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../app';
+import { useConfig } from '../../../app';
 import useCarousel from './useCarousel';
 
 const FlippableArrow = styled(Icons.ArrowLeft)`

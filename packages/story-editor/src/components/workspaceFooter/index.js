@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../../types';
-import PagePreview from '../../workspaceFooter/pagepreview';
-import { THUMBNAIL_DIMENSIONS } from '../../thumbnail';
 
-export const ThumbnailPagePreview = ({ page }) => (
-  <PagePreview
-    page={page}
-    width={THUMBNAIL_DIMENSIONS.WIDTH}
-    height={THUMBNAIL_DIMENSIONS.HEIGHT}
-    as="div"
-    help="checklist"
-    isActive
-    className="pagePreviewOverrides"
-  />
-);
-ThumbnailPagePreview.propTypes = {
-  page: StoryPropTypes.page.isRequired,
-};
+export { default } from './workspaceFooter';

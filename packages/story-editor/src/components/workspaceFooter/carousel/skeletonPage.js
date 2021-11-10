@@ -24,7 +24,7 @@ import { generatePatternStyles } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { getDefinitionForType } from '../../elements';
+import { getDefinitionForType } from '../../../elements';
 import useCarousel from './useCarousel';
 
 const EmptyPage = styled.li.attrs({ role: 'presentation' })`

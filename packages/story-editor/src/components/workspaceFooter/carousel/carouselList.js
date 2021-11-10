@@ -23,7 +23,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Reorderable } from '../reorderable';
+import { Reorderable } from '../../reorderable';
 import CarouselPage from './carouselPage';
 import SkeletonPage from './skeletonPage';
 import useCarousel from './useCarousel';
