@@ -39,10 +39,6 @@ const EmptyPage = styled.li.attrs({ role: 'presentation' })`
   border-radius: 4px;
 `;
 
-function getPatternFromArray(baseColor) {
-  return getSolidFromHex(baseColor.replace('#', ''));
-}
-
 function SkeletonPage({ pageId, index }) {
   const { pageThumbWidth, pageThumbHeight, pageThumbMargin, page } =
     useCarousel(
@@ -64,7 +60,7 @@ function SkeletonPage({ pageId, index }) {
   const { isMedia } = getDefinitionForType(bgElement.type);
   const bgColor =
     isMedia && bgElement.resource?.baseColor
-      ? getPatternFromArray(bgElement.resource.baseColor)
+      ? getSolidFromHex(bgElement.resource.baseColor.replace('#', ''))
       : page.backgroundColor;
   return (
     <EmptyPage
