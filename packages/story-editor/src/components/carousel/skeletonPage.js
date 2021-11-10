@@ -40,12 +40,7 @@ const EmptyPage = styled.li.attrs({ role: 'presentation' })`
 `;
 
 function getPatternFromArray(baseColor) {
-  if (typeof baseColor === 'string') {
-    return getSolidFromHex(baseColor.replace('#', ''));
-  }
-
-  const [r, g, b] = baseColor;
-  return { color: { r, g, b } };
+  return getSolidFromHex(baseColor.replace('#', ''));
 }
 
 function SkeletonPage({ pageId, index }) {

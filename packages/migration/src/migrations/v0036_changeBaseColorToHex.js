@@ -39,7 +39,7 @@ function getHexFromSolidArray(baseColor) {
 function updateElement(element) {
   if (
     element?.resource?.baseColor &&
-    Array.isArray(element?.resource?.baseColor)
+    typeof element?.resource?.baseColor === 'object'
   ) {
     element.resource.baseColor = getHexFromSolidArray(
       element?.resource?.baseColor
