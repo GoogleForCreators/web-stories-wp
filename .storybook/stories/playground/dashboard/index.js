@@ -20,11 +20,11 @@
 import Dashboard, { InterfaceSkeleton } from '@web-stories-wp/dashboard';
 import styled from 'styled-components';
 import { useRef } from 'react';
+import { toId } from '@storybook/csf';
 
 /**
  * Internal dependencies
  */
-import { getStorybookUrl } from '../../../utils';
 import { GlobalStyle } from './theme';
 
 export default {
@@ -109,6 +109,12 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   return callbacks;
 }, {});
 
+const linkHrefTo = (title, name) => {
+  const url = new URL(window.parent.location);
+  url.searchParams.set('path', '/story/' + toId(title, name));
+  return decodeURIComponent(url.href);
+};
+
 // @todo Cleanup config and use a default configuration inside core dashboard package.
 const config = {
   userId: 1,
@@ -123,9 +129,7 @@ const config = {
     canManageSettings: true,
     canUploadFiles: true,
   },
-  newStoryURL: getStorybookUrl(
-    '?path=/story/playground-stories-editor--default'
-  ),
+  newStoryURL: linkHrefTo('Playground/Stories Editor', 'default'),
   api: {},
   apiCallbacks,
 };
