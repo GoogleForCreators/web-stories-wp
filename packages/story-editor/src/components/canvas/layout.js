@@ -239,12 +239,20 @@ const NavNextArea = styled(NavArea).attrs({
   area: 'f',
 })``;
 
-const QuickActionsArea = styled(PaddedPage)`
+const menuAreaCss = css`
   grid-area: p;
   position: absolute;
   right: calc(-24px + var(--page-padding-px));
   padding-left: 0;
   padding-right: 0;
+`;
+const QuickActionsArea = styled.div`
+  ${menuAreaCss};
+`;
+
+const PageMenuArea = styled.div`
+  bottom: 0;
+  ${menuAreaCss};
 `;
 
 const CarouselArea = styled(Area).attrs({
@@ -454,6 +462,7 @@ export {
   MenuArea,
   NavPrevArea,
   NavNextArea,
+  PageMenuArea,
   QuickActionsArea,
   CarouselArea,
   useLayoutParams,

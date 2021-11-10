@@ -33,9 +33,11 @@ import {
   CarouselArea,
   HeadArea,
   Layer,
+  PageMenuArea,
   QuickActionsArea,
   Z_INDEX,
 } from './layout';
+import PageMenu from './pagemenu';
 
 function NavLayer({ header }) {
   const { hasHorizontalOverflow } = useLayout(
@@ -79,6 +81,11 @@ function NavLayer({ header }) {
           </QuickActionsArea>
         </DirectionAware>
       )}
+      <DirectionAware>
+        <PageMenuArea>
+          <PageMenu />
+        </PageMenuArea>
+      </DirectionAware>
       <CarouselArea pointerEvents="initial">
         <Carousel />
       </CarouselArea>

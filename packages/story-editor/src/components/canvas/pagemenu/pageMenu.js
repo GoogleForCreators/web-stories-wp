@@ -19,48 +19,33 @@
  */
 import styled from 'styled-components';
 import { memo, useCallback, useRef } from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
-import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { __ } from '@web-stories-wp/i18n';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useStory, useLayout } from '../../../app';
+import { useStory } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import usePerformanceTracking from '../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 import PageMenuButton from './pageMenuButton';
 import AnimationToggle from './animationToggle';
 
-const DIVIDER_HEIGHT = 16;
-
 const Wrapper = styled.div`
+  position: absolute;
+  bottom: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  --pagemenu-icon-space: ${({ isWidePage }) => (isWidePage ? 16 : 10)}px;
-  --pagemenu-count-space: ${({ isWidePage }) => (isWidePage ? 24 : 12)}px;
-`;
-
-const Divider = styled.span`
-  background-color: ${({ theme }) => theme.colors.bg.tertiary};
-  opacity: 0.3;
-  height: ${DIVIDER_HEIGHT}px;
-  width: 1px;
-`;
-
-const CountSpace = styled.div`
-  width: var(--pagemenu-count-space);
-`;
-
-const IconSpace = styled.div`
-  width: var(--pagemenu-icon-space);
+  display: block;
+  z-index: 9999;
+  pointer-events: auto;
 `;
 
 function PageMenu() {
   const {
-    currentPageNumber,
     currentPage,
     numberOfPages,
     deleteCurrentPage,
@@ -68,11 +53,10 @@ function PageMenu() {
     hasAnimations,
   } = useStory(
     ({
-      state: { currentPageNumber, currentPage, pages },
+      state: { currentPage, pages },
       actions: { deleteCurrentPage, addPage },
     }) => {
       return {
-        currentPageNumber,
         currentPage,
         numberOfPages: pages.length,
         deleteCurrentPage,
@@ -81,9 +65,6 @@ function PageMenu() {
       };
     }
   );
-  const { pageWidth } = useLayout((state) => ({
-    pageWidth: state.state.pageWidth,
-  }));
 
   const addPageButtonRef = useRef(null);
   const deletePageButtonRef = useRef(null);
@@ -112,7 +93,6 @@ function PageMenu() {
     [addPage, currentPage]
   );
 
-  const isWidePage = pageWidth > 280;
   const disableDeleteButton = numberOfPages <= 1;
 
   if (!currentPage) {
@@ -120,15 +100,23 @@ function PageMenu() {
   }
 
   return (
-    <Wrapper isWidePage={isWidePage}>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-        {sprintf(
-          /* translators: %s: page number. */
-          __('Page %s', 'web-stories'),
-          currentPageNumber
-        )}
-      </Text>
-      <CountSpace />
+    <Wrapper>
+      {hasAnimations && <AnimationToggle />}
+      <PageMenuButton
+        ref={addPageButtonRef}
+        title={__('New Page', 'web-stories')}
+        onClick={handleAddPage}
+        aria-label={__('Add New Page', 'web-stories')}
+      >
+        <Icons.PlusOutline />
+      </PageMenuButton>
+      <PageMenuButton
+        title={__('Duplicate Page', 'web-stories')}
+        onClick={handleDuplicatePage}
+        aria-label={__('Duplicate Page', 'web-stories')}
+      >
+        <Icons.PagePlus />
+      </PageMenuButton>
       <PageMenuButton
         ref={deletePageButtonRef}
         title={__('Delete Page', 'web-stories')}
@@ -138,33 +126,6 @@ function PageMenu() {
       >
         <Icons.Trash />
       </PageMenuButton>
-      <IconSpace />
-      <PageMenuButton
-        title={__('Duplicate Page', 'web-stories')}
-        onClick={handleDuplicatePage}
-        aria-label={__('Duplicate Page', 'web-stories')}
-      >
-        <Icons.PagePlus />
-      </PageMenuButton>
-      <IconSpace />
-      <PageMenuButton
-        ref={addPageButtonRef}
-        title={__('New Page', 'web-stories')}
-        onClick={handleAddPage}
-        aria-label={__('Add New Page', 'web-stories')}
-      >
-        <Icons.PlusOutline />
-      </PageMenuButton>
-      <IconSpace />
-      <Divider />
-      {hasAnimations && (
-        <>
-          <IconSpace />
-          <Divider />
-          <IconSpace />
-          <AnimationToggle />
-        </>
-      )}
     </Wrapper>
   );
 }
