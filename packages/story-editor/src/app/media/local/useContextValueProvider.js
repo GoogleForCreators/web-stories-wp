@@ -221,7 +221,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       deleteMediaElement,
     });
 
-  const generateMissingPosters = useCallback(
+  const backfillPoster = useCallback(
     ({ mimeType, posterId, id, src, local, type }) => {
       if (
         (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
@@ -261,18 +261,21 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   );
 
   // Whenever media items in the library change,
-  // generate missing posters if needed.
+  // generate missing posters / has audio / base color if needed.
   useEffect(() => {
-    media?.forEach((mediaElement) => generateMissingPosters(mediaElement));
-  }, [media, mediaType, searchTerm, generateMissingPosters]);
-
-  useEffect(() => {
-    media?.forEach((mediaElement) => backfillHasAudio(mediaElement));
-  }, [media, mediaType, searchTerm, backfillHasAudio]);
-
-  useEffect(() => {
-    media?.forEach((mediaElement) => backfillBaseColor(mediaElement));
-  }, [media, mediaType, searchTerm, backfillBaseColor]);
+    media?.forEach((mediaElement) => {
+      backfillPoster(mediaElement);
+      backfillHasAudio(mediaElement);
+      backfillBaseColor(mediaElement);
+    });
+  }, [
+    media,
+    mediaType,
+    searchTerm,
+    backfillBaseColor,
+    backfillPoster,
+    backfillHasAudio,
+  ]);
 
   const isGeneratingPosterImages = Boolean(
     stateRef.current?.posterProcessing?.length
