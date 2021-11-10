@@ -27,7 +27,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_EMBED, STORY_FIELDS } from './constants';
-import { base64Encode } from './utils';
+import { base64Encode, snakeToCamelCaseObjectKeys } from './utils';
 
 // Add custom fields and prepare story response.
 const transformGetStoryResponse = (post) => {
@@ -73,7 +73,7 @@ const transformGetStoryResponse = (post) => {
   post.taxonomies = links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [];
   post.terms = embedded?.['wp:term'] || [];
 
-  return post;
+  return snakeToCamelCaseObjectKeys(post);
 };
 
 export function getStoryById(config, storyId, isDemo = false) {
@@ -167,7 +167,7 @@ export function saveStoryById(config, story) {
       url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
     };
 
-    return data;
+    return snakeToCamelCaseObjectKeys(data);
   });
 }
 
@@ -186,5 +186,5 @@ export function autoSaveById(config, story) {
     path: `${config.api.stories}${storyId}/autosaves/`,
     data: storySaveData,
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }

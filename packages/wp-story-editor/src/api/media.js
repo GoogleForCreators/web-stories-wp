@@ -26,7 +26,11 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import { flattenFormData, getResourceFromAttachment } from './utils';
+import {
+  flattenFormData,
+  getResourceFromAttachment,
+  snakeToCamelCaseObjectKeys,
+} from './utils';
 import { MEDIA_FIELDS } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.
@@ -165,7 +169,7 @@ export function updateMedia(config, mediaId, data) {
     path: `${config.api.media}${mediaId}/`,
     data,
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }
 
 /**
@@ -185,5 +189,5 @@ export function deleteMedia(config, mediaId) {
     path: addQueryArgs(`${config.api.media}${mediaId}/`, { _method: 'DELETE' }),
     data: { force: true },
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }

@@ -22,6 +22,10 @@ import {
   getTypeFromMime,
   getResourceSize,
 } from '@web-stories-wp/media';
+/**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './snakeToCamelCase';
 
 /**
  * MediaDetails object.
@@ -175,11 +179,12 @@ function getResourceFromAttachment(attachment) {
 
   const type = getTypeFromMime(mimeType);
 
-  if (type === 'image') {
-    return getImageResourceFromAttachment(attachment);
-  } else {
-    return getVideoResourceFromAttachment(attachment);
-  }
+  const resource =
+    'image' === type
+      ? getImageResourceFromAttachment(attachment)
+      : getVideoResourceFromAttachment(attachment);
+
+  return snakeToCamelCaseObjectKeys(resource);
 }
 
 export default getResourceFromAttachment;
