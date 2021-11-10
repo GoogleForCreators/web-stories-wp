@@ -21,20 +21,10 @@ import { useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import {
-  COLOR_PRESETS_PER_ROW,
-  STYLE_PRESETS_PER_ROW,
-} from '../../../../constants';
-import { PRESET_TYPES } from './constants';
+import { STYLE_PRESETS_PER_ROW } from '../../../../constants';
 
-function useKeyboardNavigation({
-  activeIndex,
-  setActiveIndex,
-  groupRef,
-  type = PRESET_TYPES.COLOR,
-}) {
-  const presetsPerRow =
-    PRESET_TYPES.COLOR === type ? COLOR_PRESETS_PER_ROW : STYLE_PRESETS_PER_ROW;
+function useKeyboardNavigation({ activeIndex, setActiveIndex, groupRef }) {
+  const presetsPerRow = STYLE_PRESETS_PER_ROW;
   const getIndexDiff = (key, rowLength) => {
     switch (key) {
       case 'ArrowUp':

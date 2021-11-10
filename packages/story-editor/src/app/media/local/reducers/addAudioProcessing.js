@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,5 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+function addAudioProcessing(state, { id }) {
+  if (!id || state.audioProcessing.includes(id)) {
+    return state;
+  }
+  return {
+    ...state,
+    audioProcessing: [...state.audioProcessing, id],
+  };
+}
 
-export { default } from './stylePreset';
+export default addAudioProcessing;

@@ -23,4 +23,5 @@ export {
 } from './usePagePreviewSize';
 export { default as useStoryView } from './useStoryView';
 export { default as useTemplateView } from './useTemplateView';
+export { default as uniqueEntriesByKey } from './uniqueEntriesByKey';
 export { default as deepMerge } from './deepMerge';

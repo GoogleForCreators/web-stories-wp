@@ -18,7 +18,6 @@ const ANIMATION = 'animation';
 const BORDER = 'borderStyle';
 const CAPTIONS = 'captions';
 const STYLE_PRESETS = 'stylePresets';
-const COLOR_PRESETS = 'colorPresets';
 const FILTER = 'filter';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LINK = 'link';
@@ -38,7 +37,6 @@ const PanelTypes = {
   PAGE_ATTACHMENT,
   PAGE_BACKGROUND_AUDIO,
   SIZE_POSITION,
-  COLOR_PRESETS,
   STYLE_PRESETS,
   TEXT_STYLE,
   FILTER,
