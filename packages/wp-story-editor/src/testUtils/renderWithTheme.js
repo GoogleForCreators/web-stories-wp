@@ -14,4 +14,22 @@
  * limitations under the License.
  */
 
-export { default } from './documentInspector';
+/**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '@web-stories-wp/design-system';
+
+// eslint-disable-next-line react/prop-types
+const WithThemeProvider = ({ children }) => {
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+};
+
+const renderWithTheme = (ui, options) =>
+  render(ui, {
+    wrapper: WithThemeProvider,
+    ...options,
+  });
+
+export default renderWithTheme;

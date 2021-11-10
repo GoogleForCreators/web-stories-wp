@@ -32,17 +32,25 @@ import {
   Icons,
   Datalist,
 } from '@web-stories-wp/design-system';
+import {
+  highlightStates as states,
+  highlightStyles as styles,
+  Row,
+  Media,
+  Panel,
+  Required,
+  PanelTitle,
+  PanelContent,
+  useStory,
+  useConfig,
+  useHighlights,
+  useInspector,
+} from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app/story';
-import { useConfig } from '../../../../app/config';
-import { useHighlights, states, styles } from '../../../../app/highlights';
-import { Row, Media, Required } from '../../../form';
-import useInspector from '../../../inspector/useInspector';
-import { Panel, PanelTitle, PanelContent } from '../../panel';
-import { useAPI } from '../../../../app';
+import * as apiCallbacks from '../../../api/publisherLogos';
 import PublishTime from './publishTime';
 import Author from './author';
 
@@ -110,10 +118,11 @@ function PublishPanel() {
   const {
     state: { users },
   } = useInspector();
-
   const {
-    actions: { getPublisherLogos, addPublisherLogo },
-  } = useAPI();
+    api: { publisherLogos: publisherLogosPath },
+  } = useConfig();
+
+  const { getPublisherLogos, addPublisherLogo } = apiCallbacks;
 
   const {
     allowedImageMimeTypes,
@@ -126,8 +135,8 @@ function PublishPanel() {
   const [publisherLogos, setPublisherLogos] = useState([]);
 
   useEffect(() => {
-    getPublisherLogos().then(setPublisherLogos);
-  }, [getPublisherLogos]);
+    getPublisherLogos(publisherLogosPath).then(setPublisherLogos);
+  }, [getPublisherLogos, publisherLogosPath]);
 
   const { highlightPoster, highlightLogo, resetHighlight } = useHighlights(
     (state) => ({
@@ -182,7 +191,7 @@ function PublishPanel() {
 
   const onNewPublisherLogoSelected = ({ id, src }) => {
     const newLogo = { id, url: src };
-    addPublisherLogo(id);
+    addPublisherLogo(publisherLogosPath, id);
     setPublisherLogos((logos) => [...logos, newLogo]);
     onPublisherLogoChange(newLogo);
   };
