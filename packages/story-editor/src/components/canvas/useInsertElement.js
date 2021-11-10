@@ -89,15 +89,23 @@ function useInsertElement() {
       }
 
       if (isExternal) {
-        const imageSrcProxy = getProxiedUrl(resource, imageSrc);
-        const baseColor = await getMediaBaseColor(imageSrcProxy);
-        const properties = {
-          resource: {
-            ...resource,
-            baseColor,
-          },
-        };
-        updateElementById({ elementId: id, properties });
+        let baseColor;
+        try {
+          const imageSrcProxied = getProxiedUrl(resource, imageSrc);
+          baseColor = await getMediaBaseColor(imageSrcProxied);
+        } catch (error) {
+          baseColor = '#ffffff';
+        } finally {
+          updateElementById({
+            elementId: id,
+            properties: {
+              resource: {
+                ...resource,
+                baseColor,
+              },
+            },
+          });
+        }
       } else if (id) {
         updateBaseColor({ resource });
       }
