@@ -53,5 +53,5 @@ export const SnackbarNotification = PropTypes.shape({
   preventAutoDismiss: PropTypes.bool,
   timeout: PropTypes.number,
   thumbnail: SnackbarNotificationThumbnail,
-  key: PropTypes.string,
+  id: PropTypes.string,
 });

@@ -161,7 +161,7 @@ export const SnackbarContainer = ({
           return (
             <CSSTransition
               in
-              key={notification.key || ids[index]}
+              key={notification.id || ids[index]}
               timeout={300}
               unmountOnExit
               classNames="react-snackbar-alert__snackbar-container"

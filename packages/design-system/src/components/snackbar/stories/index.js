@@ -227,7 +227,7 @@ export const ShowSnackbarByClickingButton = () => {
       const hasAction = Boolean(Math.round(Math.random()));
 
       let notification = {
-        key: newId,
+        id: newId,
         'aria-label': text(
           'aria-label',
           'this is my aria label giving my message context for screen reader users'
