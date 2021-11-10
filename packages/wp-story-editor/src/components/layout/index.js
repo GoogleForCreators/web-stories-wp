@@ -17,17 +17,27 @@
  * External dependencies
  */
 import { InterfaceSkeleton } from '@web-stories-wp/story-editor';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { default as Header } from '../header';
 import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
+import DocumentPane from '../documentPane';
 
 function Layout() {
   return (
     <MetaBoxesProvider>
-      <InterfaceSkeleton header={<Header />}>
+      <InterfaceSkeleton
+        header={<Header />}
+        inspectorTabs={{
+          document: {
+            title: __('Document', 'web-stories'),
+            Pane: DocumentPane,
+          },
+        }}
+      >
         <MetaBoxes />
       </InterfaceSkeleton>
     </MetaBoxesProvider>

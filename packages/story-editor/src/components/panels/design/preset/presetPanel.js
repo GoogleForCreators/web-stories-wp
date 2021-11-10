@@ -23,59 +23,52 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
 } from '@web-stories-wp/design-system';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
 import { Panel, PanelContent } from '../../panel';
-import { areAllType, getPanelInitialHeight } from './utils';
+import {
+  areAllType,
+  getPanelInitialHeight,
+} from '../../../../utils/presetUtils';
+import { PRESET_TYPES } from '../../../../constants';
+import useAddPreset from '../../../../utils/useAddPreset';
 import PresetsHeader from './header';
 import Resize from './resize';
-import useAddPreset from './useAddPreset';
-import ColorPresetPanel from './colorPreset/colorPresetPanel';
 import useDeletePreset from './useDeletePreset';
 import StyleGroup from './stylePreset/styleGroup';
-import useApplyColor from './colorPreset/useApplyColor';
-import { PRESET_TYPES } from './constants';
 import useApplyStyle from './stylePreset/useApplyStyle';
 import ConfirmationDialog from './confirmationDialog';
 
-function PresetPanel({ presetType, title, pushUpdate }) {
-  const isStyle = PRESET_TYPES.STYLE === presetType;
-  const isColor = PRESET_TYPES.COLOR === presetType;
-  const { currentStoryStyles, selectedElements, globalStoryStyles } = useStory(
+function PresetPanel({ pushUpdate }) {
+  const { selectedElements, globalStoryStyles } = useStory(
     ({
       state: {
         selectedElements,
-        story: { globalStoryStyles, currentStoryStyles },
+        story: { globalStoryStyles },
       },
     }) => {
       return {
-        currentStoryStyles,
         selectedElements,
         globalStoryStyles,
       };
     }
   );
 
-  const { colors, textStyles } = globalStoryStyles;
-  const globalPresets = isColor ? colors : textStyles;
-  const { colors: localColors } = currentStoryStyles;
-  const hasLocalPresets = localColors.length > 0;
-  // If there are any global presets or local colors in case of color.
-  const hasPresets = globalPresets.length > 0 || (isColor && hasLocalPresets);
+  const { textStyles: globalPresets } = globalStoryStyles;
+  const hasPresets = globalPresets.length > 0;
 
   const [showDialog, setShowDialog] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [toDelete, setToDelete] = useState(null);
 
-  const handleApplyColor = useApplyColor({ pushUpdate });
   const handleApplyStyle = useApplyStyle({ pushUpdate });
-  const handleApplyPreset = isColor ? handleApplyColor : handleApplyStyle;
-  const { addGlobalPreset } = useAddPreset({ presetType });
+  const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
   const { deleteLocalPreset, deleteGlobalPreset } = useDeletePreset({
-    presetType,
+    presetType: PRESET_TYPES.STYLE,
     setIsEditMode,
   });
 
@@ -86,21 +79,15 @@ function PresetPanel({ presetType, title, pushUpdate }) {
     }
   }, [hasPresets, isEditMode]);
 
-  if (!isStyle && !isColor) {
-    return null;
-  }
-
   const isText = areAllType('text', selectedElements);
-  const isShape = areAllType('shape', selectedElements);
-  // Text and shape presets are not compatible.
-  if (!isText && !isShape && selectedElements.length > 1) {
+  if (!isText) {
     return null;
   }
 
   const handlePresetClick = (preset, isLocal = false) => {
     // If not in edit mode, apply the color.
     if (!isEditMode) {
-      handleApplyPreset(preset);
+      handleApplyStyle(preset);
       return;
     }
     // If deleting a local color, delete without confirmation.
@@ -110,10 +97,7 @@ function PresetPanel({ presetType, title, pushUpdate }) {
     }
 
     // If the user has dismissed the confirmation dialogue previously.
-    const storageKey =
-      PRESET_TYPES.COLOR === presetType
-        ? 'DELETE_COLOR_PRESET_DIALOG_DISMISSED'
-        : 'DELETE_STYLE_PRESET_DIALOG_DISMISSED';
+    const storageKey = 'DELETE_STYLE_PRESET_DIALOG_DISMISSED';
     const isDialogDismissed = localStore.getItemByKey(
       LOCAL_STORAGE_PREFIX[storageKey]
     );
@@ -128,11 +112,11 @@ function PresetPanel({ presetType, title, pushUpdate }) {
   };
 
   const resizable = hasPresets;
-  const canCollapse = !isEditMode && (hasPresets || isColor);
+  const canCollapse = !isEditMode && hasPresets;
   return (
     <Panel
-      name={`stylepreset-${presetType}`}
-      initialHeight={getPanelInitialHeight(isColor, globalPresets)}
+      name={`stylepreset-${PRESET_TYPES.STYLE}`}
+      initialHeight={getPanelInitialHeight(globalPresets)}
       resizable={resizable}
       canCollapse={canCollapse}
     >
@@ -142,28 +126,20 @@ function PresetPanel({ presetType, title, pushUpdate }) {
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
         canCollapse={canCollapse}
-        title={title}
-        presetType={presetType}
+        title={__('Saved Styles', 'web-stories')}
+        presetType={PRESET_TYPES.STYLE}
       />
       <PanelContent isPrimary>
-        {isColor && (
-          <ColorPresetPanel
-            isEditMode={isEditMode}
-            handlePresetClick={handlePresetClick}
-          />
-        )}
-        {isStyle && (
-          <StyleGroup
-            styles={globalPresets}
-            isEditMode={isEditMode}
-            handleClick={handlePresetClick}
-          />
-        )}
+        <StyleGroup
+          styles={globalPresets}
+          isEditMode={isEditMode}
+          handleClick={handlePresetClick}
+        />
       </PanelContent>
       {resizable && <Resize position="bottom" />}
       {showDialog && (
         <ConfirmationDialog
-          presetType={presetType}
+          presetType={PRESET_TYPES.STYLE}
           onClose={() => setShowDialog(false)}
           onPrimary={() => {
             deleteGlobalPreset(toDelete);
@@ -177,8 +153,6 @@ function PresetPanel({ presetType, title, pushUpdate }) {
 }
 
 PresetPanel.propTypes = {
-  presetType: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
   pushUpdate: PropTypes.func.isRequired,
 };
 
