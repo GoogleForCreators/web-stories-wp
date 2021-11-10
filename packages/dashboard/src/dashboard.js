@@ -22,6 +22,7 @@ import {
   SnackbarProvider,
   theme as externalDesignSystemTheme,
   ThemeGlobals,
+  deepMerge,
 } from '@web-stories-wp/design-system';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
@@ -37,7 +38,7 @@ import ApiProvider from './app/api/apiProvider';
 import { NavProvider } from './components';
 import { RouterProvider } from './app/router';
 import { GlobalStyle } from './theme';
-import { KeyboardOnlyOutline, deepMerge } from './utils';
+import { KeyboardOnlyOutline } from './utils';
 import defaultConfig from './defaultConfig';
 
 function Dashboard({ config, children }) {

@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
 import {
   SnackbarProvider,
   ModalGlobalStyle,
+  deepMerge,
 } from '@web-stories-wp/design-system';
 import { useMemo } from '@web-stories-wp/react';
 import { FlagsProvider } from 'flagged';
@@ -51,7 +52,6 @@ import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
-import deepMerge from './utils/deepMerge';
 import defaultConfig from './defaultConfig';
 
 function StoryEditor({ config, children }) {
