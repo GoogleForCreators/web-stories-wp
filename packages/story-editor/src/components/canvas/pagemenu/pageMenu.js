@@ -25,7 +25,7 @@ import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { useStory, useHistory, useConfig, useLayout } from '../../../app';
+import { useStory, useLayout } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import usePerformanceTracking from '../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
@@ -60,10 +60,6 @@ const IconSpace = styled.div`
 
 function PageMenu() {
   const {
-    state: { canUndo, canRedo },
-    actions: { undo, redo },
-  } = useHistory();
-  const {
     currentPageNumber,
     currentPage,
     numberOfPages,
@@ -88,7 +84,6 @@ function PageMenu() {
   const { pageWidth } = useLayout((state) => ({
     pageWidth: state.state.pageWidth,
   }));
-  const { isRTL } = useConfig();
 
   const addPageButtonRef = useRef(null);
   const deletePageButtonRef = useRef(null);
@@ -119,10 +114,6 @@ function PageMenu() {
 
   const isWidePage = pageWidth > 280;
   const disableDeleteButton = numberOfPages <= 1;
-
-  const handleUndo = useCallback(() => undo(), [undo]);
-
-  const handleRedo = useCallback(() => redo(), [redo]);
 
   if (!currentPage) {
     return null;
@@ -166,26 +157,6 @@ function PageMenu() {
       </PageMenuButton>
       <IconSpace />
       <Divider />
-      <IconSpace />
-      <PageMenuButton
-        title={__('Undo', 'web-stories')}
-        shortcut="mod+z"
-        disabled={!canUndo}
-        onClick={handleUndo}
-        aria-label={__('Undo Changes', 'web-stories')}
-      >
-        {isRTL ? <Icons.ArrowDownRightCurved /> : <Icons.ArrowDownLeftCurved />}
-      </PageMenuButton>
-      <IconSpace />
-      <PageMenuButton
-        title={__('Redo', 'web-stories')}
-        shortcut="shift+mod+z"
-        disabled={!canRedo}
-        onClick={handleRedo}
-        aria-label={__('Redo Changes', 'web-stories')}
-      >
-        {isRTL ? <Icons.ArrowDownLeftCurved /> : <Icons.ArrowDownRightCurved />}
-      </PageMenuButton>
       {hasAnimations && (
         <>
           <IconSpace />

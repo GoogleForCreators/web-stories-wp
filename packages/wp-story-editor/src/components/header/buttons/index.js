@@ -21,8 +21,10 @@ import styled from 'styled-components';
 import {
   useStory,
   CircularProgress,
+  RedoButton,
   PreviewButton,
   SwitchToDraftButton,
+  UndoButton,
   UpdateButton,
   PublishButton,
 } from '@web-stories-wp/story-editor';
@@ -96,6 +98,10 @@ function Buttons() {
   return (
     <ButtonList>
       <List>
+        <UndoButton />
+        <Space />
+        <RedoButton />
+        <Space />
         <IconWithSpinner>
           <PreviewButton forceIsSaving={isSavingMetaBoxes} />
           {isSaving && <Loading />}
