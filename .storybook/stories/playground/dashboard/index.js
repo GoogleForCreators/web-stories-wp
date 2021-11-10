@@ -44,7 +44,14 @@ const apiCallbacksNames = [
   'updateStory',
 ];
 
-// @todo Remove items which are not required for now.
+const linkHrefTo = (title, name) => {
+  const url = new URL(window.parent.location);
+  url.searchParams.set('path', '/story/' + toId(title, name));
+  return decodeURIComponent(url.href);
+};
+
+const storyEditorLink = linkHrefTo('Playground/Stories Editor', 'default');
+
 const fetchStoriesResp = {
   stories: {
     1: {
@@ -53,40 +60,32 @@ const fetchStoriesResp = {
       title: 'Example story',
       created: '2021-11-04T10:12:47',
       createdGmt: '2021-11-04T10:12:47Z',
-      modified: '2021-11-04T10:12:48',
-      modifiedGmt: '2021-11-04T10:12:48Z',
       author: {
-        name: 'author',
-        id: 3,
+        name: 'Author',
+        id: 1,
       },
-      locked: false,
-      lockUser: {
-        id: 0,
-        name: '',
-        avatar: null,
+      featuredMediaUrl:
+        'https://wp.stories.google/static/main/images/templates/food-and-stuff/page1_bg.jpg',
+    },
+    2: {
+      id: 2,
+      status: 'publish',
+      title: 'Example story 2',
+      created: '2021-12-04T10:12:47',
+      createdGmt: '2021-12-04T10:12:47Z',
+      author: {
+        name: 'Author',
+        id: 1,
       },
-      bottomTargetAction:
-        'http://localhost:8899/wp-admin/post.php?post=85&action=edit',
-      featuredMediaUrl: '',
-      editStoryLink:
-        'http://localhost:8899/wp-admin/post.php?post=85&action=edit',
-      previewLink: 'http://localhost:8899/web-stories/test-quick-edit',
-      link: 'http://localhost:8899/web-stories/test-quick-edit',
-      capabilities: {
-        hasEditAction: true,
-        hasDeleteAction: true,
-      },
+      featuredMediaUrl:
+        'https://wp.stories.google/static/main/images/templates/fresh-and-bright/page8_figure.jpg',
     },
   },
-  fetchedStoryIds: [1],
+  fetchedStoryIds: [1, 2],
   totalPages: 1,
   totalStoriesByStatus: {
-    all: 1,
-    publish: 1,
-    draft: 0,
-    future: 0,
-    pending: 0,
-    private: 0,
+    all: 2,
+    publish: 2,
   },
 };
 
@@ -109,12 +108,6 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   return callbacks;
 }, {});
 
-const linkHrefTo = (title, name) => {
-  const url = new URL(window.parent.location);
-  url.searchParams.set('path', '/story/' + toId(title, name));
-  return decodeURIComponent(url.href);
-};
-
 // @todo Cleanup config and use a default configuration inside core dashboard package.
 const config = {
   userId: 1,
@@ -129,7 +122,7 @@ const config = {
     canManageSettings: true,
     canUploadFiles: true,
   },
-  newStoryURL: linkHrefTo('Playground/Stories Editor', 'default'),
+  newStoryURL: storyEditorLink,
   api: {},
   apiCallbacks,
 };
