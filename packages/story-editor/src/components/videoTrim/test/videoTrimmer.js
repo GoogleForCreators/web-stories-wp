@@ -217,13 +217,13 @@ describe('Video Trimmer', () => {
       expect(setIsDraggingHandles).toHaveBeenCalledWith(true);
       setIsDraggingHandles.mockReset();
 
-      // Move to the 10% mark
+      // Move to the 90% mark
       firePointerEvent.pointerMove(handle, { clientX: 90 });
 
       expect(setEndOffset).toHaveBeenCalledWith(9000);
       setEndOffset.mockReset();
 
-      // Move to the 30% mark
+      // Move to the 70% mark
       firePointerEvent.pointerMove(handle, { clientX: 70 });
 
       expect(setEndOffset).toHaveBeenCalledWith(7000);
