@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { LockToggle, Icons, Tooltip } from '@web-stories-wp/design-system';
+import { LockToggle, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -30,6 +30,7 @@ import { StackableGroup, StackableInput } from '../../../form/stackable';
 import { canMaskHaveBorder } from '../../../../masks';
 import { useCommonObjectValue, focusStyle } from '../../shared';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import Tooltip from '../../../tooltip';
 
 const DEFAULT_BORDER_RADIUS = {
   topLeft: 0,

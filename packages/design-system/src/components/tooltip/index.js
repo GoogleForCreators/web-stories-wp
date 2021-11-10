@@ -133,14 +133,28 @@ function Tooltip({
   const updatePlacement = useCallback(() => {
     const currentPlacement = placementRef.current;
     switch (currentPlacement) {
-      case currentPlacement.endsWith('start'):
-        setDynamicPlacement(currentPlacement.replace('-start', '-end'));
+      case PLACEMENT.BOTTOM_START:
+      case PLACEMENT.TOP_START:
+      case PLACEMENT.RIGHT_START:
+        // {placement}-START shouldn't ever appear in overflow so do nothing
         break;
-      case currentPlacement.endsWith('end'):
+      case PLACEMENT.BOTTOM_END:
+      case PLACEMENT.TOP_END:
+      case PLACEMENT.RIGHT_END:
         setDynamicPlacement(currentPlacement.replace('-end', '-start'));
+        break;
+      case PLACEMENT.LEFT_END:
+        setDynamicPlacement(PLACEMENT.RIGHT_END);
+        break;
+      case PLACEMENT.LEFT_START:
+        setDynamicPlacement(PLACEMENT.RIGHT_START);
+        break;
+      case PLACEMENT.LEFT:
+        setDynamicPlacement(PLACEMENT.RIGHT);
         break;
       default:
         setDynamicPlacement(`${currentPlacement}-start`);
+        break;
     }
   }, []);
 
