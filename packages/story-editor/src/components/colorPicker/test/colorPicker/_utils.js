@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen, within } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -119,30 +119,4 @@ function arrange(customProps = {}) {
   };
 }
 
-function firePointerEvent(node, eventType, properties) {
-  fireEvent(node, new window.MouseEvent(eventType, properties));
-}
-
-const pointerEventTypes = [
-  'pointerOver',
-  'pointerEnter',
-  'pointerDown',
-  'pointerMove',
-  'pointerUp',
-  'pointerCancel',
-  'pointerOut',
-  'pointerLeave',
-  'gotPointerCapture',
-  'lostPointerCapture',
-];
-
-// eslint-disable-next-line jest/require-hook -- False positive since this is not a test file.
-pointerEventTypes.forEach((type) => {
-  firePointerEvent[type] = (node, properties) =>
-    firePointerEvent(node, type.toLowerCase(), {
-      bubbles: true,
-      ...properties,
-    });
-});
-
-export { getResolvingPromise, arrange, firePointerEvent };
+export { getResolvingPromise, arrange };
