@@ -13,7 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import {
+  ExcerptPanel,
+  SlugPanel,
+  PageAdvancementPanel,
+  BackgroundAudioPanel,
+  TaxonomiesPanel,
+} from '@web-stories-wp/story-editor';
 
-export { default as getSearchOptions } from './getSearchOptions';
-export { default as getTemplateFilters } from './getTemplateFilters';
-export { default as composeTemplateFilter } from './composeTemplateFilter';
+/**
+ * Internal dependencies
+ */
+import PublishPanel from './publish';
+import StatusPanel from './status';
+
+function DocumentPane() {
+  return (
+    <>
+      <StatusPanel />
+      <PublishPanel />
+      <ExcerptPanel />
+      <SlugPanel />
+      <PageAdvancementPanel />
+      <BackgroundAudioPanel />
+      <TaxonomiesPanel />
+    </>
+  );
+}
+
+export default DocumentPane;

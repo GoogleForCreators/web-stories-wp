@@ -13,12 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './authors';
-export * from './story';
-export * from './media';
-export * from './metadata';
-export * from './pageTemplate';
-export * from './user';
-export * from './hotlinkInfo';
-export * from './proxy';
-export * from './taxonomy';
+/**
+ * takes an array of entries and returns an array of unique
+ * entries based on the supplied key value for each entry
+ *
+ * @param {Array<Object>} entries array of entries
+ * @param {string} key a common key in all entries
+ * @return {Array<Object>} an array of unique entries based on provided key
+ */
+function uniqueEntriesByKey(entries, key) {
+  const map = new Map();
+  entries.forEach((entry) => {
+    map.set(entry[key], entry);
+  });
+  return [...map.values()];
+}
+
+export default uniqueEntriesByKey;

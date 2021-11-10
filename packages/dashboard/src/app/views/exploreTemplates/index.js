@@ -24,9 +24,10 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { Layout, ScrollToTop } from '../../../components';
-import { useTemplateView } from '../../../utils';
+import { useTemplateView, uniqueEntriesByKey } from '../../../utils';
 
 import useApi from '../../api/useApi';
+import { getTemplateFilters, composeTemplateFilter } from '../utils';
 import Content from './content';
 import Header from './header';
 
@@ -76,11 +77,37 @@ function ExploreTemplates() {
     fetchExternalTemplates();
   }, [fetchExternalTemplates]);
 
+  // extract templateFilters from template meta data
+  const templateFilters = useMemo(
+    () => getTemplateFilters(templates),
+    [templates]
+  );
+
+  // refine templateFilters by search term
+  const selectFilters = useMemo(
+    () =>
+      search.keyword
+        ? templateFilters.filter((opt) =>
+            opt.label.toLowerCase().includes(search.keyword.toLowerCase())
+          )
+        : templateFilters,
+    [templateFilters, search.keyword]
+  );
+
+  // filter templates by the refined templateFilters
   const orderedTemplates = useMemo(() => {
-    return templatesOrderById.map((templateId) => {
-      return templates[templateId];
-    });
-  }, [templatesOrderById, templates]);
+    return templatesOrderById
+      .map((templateId) => templates[templateId])
+      .filter(composeTemplateFilter(selectFilters));
+  }, [templatesOrderById, templates, selectFilters]);
+
+  // Although we may want to filter templates based on
+  // repeat meta data of differing types, we only want
+  // the auto-complete to show unique labels
+  const searchOptions = useMemo(
+    () => uniqueEntriesByKey(selectFilters, 'label'),
+    [selectFilters]
+  );
 
   const handleCreateStoryFromTemplate = useCallback(
     (templateId) => {
@@ -107,9 +134,9 @@ function ExploreTemplates() {
         isLoading={isLoading && !totalTemplates}
         filter={filter}
         sort={sort}
-        templates={orderedTemplates}
         totalTemplates={totalTemplates}
         search={search}
+        searchOptions={searchOptions}
         view={view}
       />
       <Content

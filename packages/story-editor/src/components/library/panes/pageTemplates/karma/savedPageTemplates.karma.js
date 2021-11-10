@@ -47,6 +47,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.dropDown
       );
+      await fixture.events.sleep(500);
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.dropDownOption(
           'Saved templates'

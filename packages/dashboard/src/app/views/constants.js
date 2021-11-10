@@ -13,12 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './authors';
-export * from './story';
-export * from './media';
-export * from './metadata';
-export * from './pageTemplate';
-export * from './user';
-export * from './hotlinkInfo';
-export * from './proxy';
-export * from './taxonomy';
+export const TEMPLATE_META_DATA_TYPES = {
+  VERTICAL: 'VERTICAL',
+  COLOR: 'COLOR',
+  TAG: 'TAG',
+};

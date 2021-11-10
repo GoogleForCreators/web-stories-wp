@@ -19,16 +19,23 @@
  */
 import { fireEvent, waitFor, screen, act } from '@testing-library/react';
 import MockDate from 'mockdate';
+import {
+  APIContext,
+  ConfigContext,
+  StoryContext,
+  InspectorContext,
+} from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import ApiContext from '../../../../../app/api/context';
-import ConfigContext from '../../../../../app/config/context';
-import StoryContext from '../../../../../app/story/context';
-import { renderWithTheme } from '../../../../../testUtils';
-import InspectorContext from '../../../../inspector/context';
+import { renderWithTheme } from '../../../../testUtils';
 import PublishPanel from '../publish';
+
+jest.mock('./../../../../api/publisherLogos', () => ({
+  getPublisherLogos: jest.fn().mockResolvedValue([]),
+  addPublisherLogo: jest.fn().mockResolvedValue([]),
+}));
 
 function MediaUpload({ render }) {
   const open = jest.fn();
@@ -59,13 +66,6 @@ function arrange(
     actions: { updateStory },
   };
 
-  const getPublisherLogos = jest.fn().mockResolvedValue([]);
-  const apiValue = {
-    actions: {
-      getPublisherLogos,
-    },
-  };
-
   const config = {
     capabilities,
     allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
@@ -75,6 +75,12 @@ function arrange(
       'image/jpg',
       'image/gif',
     ],
+    apiCallbacks: {
+      getAuthors: jest.fn().mockResolvedValue({}),
+    },
+    api: {
+      publisherLogos: '/web-stories/v1/publisher-logos/',
+    },
     MediaUpload,
   };
   const loadUsers = jest.fn();
@@ -86,15 +92,17 @@ function arrange(
     },
   };
 
+  const actions = config.apiCallbacks;
+
   const view = renderWithTheme(
     <ConfigContext.Provider value={config}>
-      <ApiContext.Provider value={apiValue}>
+      <APIContext.Provider value={{ actions }}>
         <StoryContext.Provider value={storyContextValue}>
           <InspectorContext.Provider value={inspectorContextValue}>
             <PublishPanel />
           </InspectorContext.Provider>
         </StoryContext.Provider>
-      </ApiContext.Provider>
+      </APIContext.Provider>
     </ConfigContext.Provider>
   );
   return {

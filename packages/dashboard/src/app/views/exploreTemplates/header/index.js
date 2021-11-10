@@ -22,6 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * External dependencies
  */
+import { useDebouncedCallback, useCallback } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
 
@@ -31,19 +32,39 @@ import { useFeature } from 'flagged';
 import {
   DASHBOARD_VIEWS,
   TEMPLATES_GALLERY_SORT_MENU_ITEMS,
+  TEXT_INPUT_DEBOUNCE,
 } from '../../../../constants';
 import {
   FilterPropTypes,
   SortPropTypes,
   ViewPropTypes,
+  SearchPropTypes,
 } from '../../../../utils/useTemplateView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { PageHeading, BodyViewOptions } from '../../shared';
 
-function Header({ filter, isLoading, totalTemplates, sort, view }) {
+function Header({
+  filter,
+  isLoading,
+  totalTemplates,
+  sort,
+  view,
+  search,
+  searchOptions = [],
+}) {
   const enableInProgressTemplateActions = useFeature(
     'enableInProgressTemplateActions'
   );
+  const enableExploreTemplatesSearch = useFeature(
+    'enableExploreTemplatesSearch'
+  );
+
+  const { setKeyword } = search;
+  const debouncedSearchChange = useDebouncedCallback((value) => {
+    setKeyword(value);
+  }, TEXT_INPUT_DEBOUNCE);
+
+  const clearSearch = useCallback(() => setKeyword(''), [setKeyword]);
 
   const resultsLabel = useDashboardResultsLabel({
     totalResults: totalTemplates,
@@ -53,7 +74,15 @@ function Header({ filter, isLoading, totalTemplates, sort, view }) {
 
   return (
     <>
-      <PageHeading heading={__('Explore Templates', 'web-stories')} />
+      <PageHeading
+        heading={__('Explore Templates', 'web-stories')}
+        searchPlaceholder={__('Search Templates', 'web-stories')}
+        showSearch={enableExploreTemplatesSearch}
+        searchOptions={searchOptions}
+        searchValue={search.keyword}
+        handleSearchChange={debouncedSearchChange}
+        clearSearch={clearSearch}
+      />
       <BodyViewOptions
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
@@ -78,6 +107,8 @@ Header.propTypes = {
   sort: SortPropTypes.isRequired,
   totalTemplates: PropTypes.number,
   view: ViewPropTypes.isRequired,
+  search: SearchPropTypes.isRequired,
+  searchOptions: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Header;
