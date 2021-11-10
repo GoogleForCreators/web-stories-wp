@@ -47,15 +47,25 @@ function getImgNodeKey(elementId) {
   return `${IMG_NODE}_${elementId}`;
 }
 
-export function getMediaBaseColor(src) {
+export async function getMediaBaseColor(src) {
   if (!src) {
     return Promise.reject(new Error('No source to image'));
   }
-  return setOrCreateImage({
-    src,
-    width: 10,
-    height: 'auto',
-  });
+  let color;
+  try {
+    color = await setOrCreateImage({
+      src,
+      width: 10,
+      height: 'auto',
+    });
+  } catch (error) {
+    // Known error of color thief with white only images.
+    if (error?.name !== 'TypeError') {
+      throw error;
+    }
+    color = '#ffffff';
+  }
+  return color;
 }
 
 function getDefaultOnloadCallback(nodeKey, resolve, reject) {

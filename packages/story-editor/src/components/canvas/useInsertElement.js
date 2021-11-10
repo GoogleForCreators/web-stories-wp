@@ -89,13 +89,9 @@ function useInsertElement() {
       }
 
       if (isExternal) {
-        let baseColor;
         try {
           const imageSrcProxied = getProxiedUrl(resource, imageSrc);
-          baseColor = await getMediaBaseColor(imageSrcProxied);
-        } catch (error) {
-          baseColor = '#ffffff';
-        } finally {
+          const baseColor = await getMediaBaseColor(imageSrcProxied);
           updateElementById({
             elementId: id,
             properties: {
@@ -105,6 +101,8 @@ function useInsertElement() {
               },
             },
           });
+        } catch (error) {
+          // Do nothing for now.
         }
       } else if (id) {
         updateBaseColor({ resource });

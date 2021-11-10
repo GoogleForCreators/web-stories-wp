@@ -85,13 +85,11 @@ function useDetectBaseColor({ updateMediaElement }) {
         return;
       }
       const imageSrcProxied = getProxiedUrl(resource, imageSrc);
-      let color;
       try {
-        color = await getMediaBaseColor(imageSrcProxied);
-      } catch (error) {
-        color = '#ffffff';
-      } finally {
+        const color = await getMediaBaseColor(imageSrcProxied);
         await saveBaseColor(resource.id, color);
+      } catch (error) {
+        // Do nothing for now.
       }
     },
     [getProxiedUrl, saveBaseColor]
