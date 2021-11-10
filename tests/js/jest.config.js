@@ -62,6 +62,7 @@ export default {
   collectCoverageFrom: [
     '<rootDir>/packages/**/*.js',
     '<rootDir>/bin/**/*.js',
+    '!<rootDir>/packages/fonts/**',
     '!**/karma/**',
     '!**/test/**',
     '!**/testUtils/**',
