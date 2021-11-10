@@ -88,7 +88,7 @@ function useUploadMedia({
     if (isTranscoding && isDialogDismissed) {
       showSnackbar({
         message: __('Video optimization in progress', 'web-stories'),
-        dismissable: true,
+        dismissible: true,
       });
     }
   }, [isTranscoding, showSnackbar]);
@@ -178,7 +178,7 @@ function useUploadMedia({
           src: thumbnailSrc,
           alt: resource?.alt,
         },
-        dismissable: true,
+        dismissible: true,
       });
     }
   }, [failures, deleteMediaElement, removeItem, showSnackbar]);
@@ -233,7 +233,7 @@ function useUploadMedia({
           } catch (e) {
             showSnackbar({
               message: e.message,
-              dismissable: true,
+              dismissible: true,
             });
 
             return;

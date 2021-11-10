@@ -160,7 +160,7 @@ function StoriesView({
           __('%s has been copied to your clipboard.', 'web-stories'),
           titleFormatted(story.title)
         ),
-        dismissable: true,
+        dismissible: true,
       });
       setFocusedStory({ id: story.id });
     },
