@@ -65,6 +65,7 @@ export default {
     '!<rootDir>/packages/fonts/**',
     '!**/karma/**',
     '!**/test/**',
+    '!**/testUtils/**',
     '!**/stories/**',
   ],
   modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],

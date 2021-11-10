@@ -33,7 +33,7 @@ import {
  */
 import { PanelTitle } from '../../panel';
 import { focusStyle } from '../../shared';
-import { PRESET_TYPES } from './constants';
+import { PRESET_TYPES } from '../../../../constants';
 
 const StyledButton = styled(Button)`
   ${focusStyle};

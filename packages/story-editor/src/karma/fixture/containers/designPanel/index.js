@@ -105,7 +105,7 @@ export class DesignPanel extends Container {
 
   get shapeStyle() {
     return this._get(
-      this.getByRole('region', { name: /Style/i }),
+      this.getByRole('region', { name: /Shape style/i }),
       'shapeStyle',
       ShapeStyle
     );
