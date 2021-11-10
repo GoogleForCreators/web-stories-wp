@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +16,32 @@
 /**
  * External dependencies
  */
-import { InterfaceSkeleton } from '@web-stories-wp/story-editor';
-import { __ } from '@web-stories-wp/i18n';
+import {
+  ExcerptPanel,
+  SlugPanel,
+  PageAdvancementPanel,
+  BackgroundAudioPanel,
+  TaxonomiesPanel,
+} from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { default as Header } from '../header';
-import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
-import DocumentPane from '../documentPane';
+import PublishPanel from './publish';
+import StatusPanel from './status';
 
-function Layout() {
+function DocumentPane() {
   return (
-    <MetaBoxesProvider>
-      <InterfaceSkeleton
-        header={<Header />}
-        inspectorTabs={{
-          document: {
-            title: __('Document', 'web-stories'),
-            Pane: DocumentPane,
-          },
-        }}
-      >
-        <MetaBoxes />
-      </InterfaceSkeleton>
-    </MetaBoxesProvider>
+    <>
+      <StatusPanel />
+      <PublishPanel />
+      <ExcerptPanel />
+      <SlugPanel />
+      <PageAdvancementPanel />
+      <BackgroundAudioPanel />
+      <TaxonomiesPanel />
+    </>
   );
 }
 
-export default Layout;
+export default DocumentPane;

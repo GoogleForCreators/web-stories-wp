@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './authors';
-export * from './story';
-export * from './media';
-export * from './metadata';
-export * from './pageTemplate';
-export * from './user';
-export * from './hotlinkInfo';
-export * from './proxy';
-export * from './taxonomy';
+/**
+ * Internal dependencies
+ */
+import {
+  ExcerptPanel,
+  SlugPanel,
+  PageAdvancementPanel,
+  BackgroundAudioPanel,
+  TaxonomiesPanel,
+} from '../../../../components/panels/document';
+
+function DocumentPane() {
+  return (
+    <>
+      <ExcerptPanel />
+      <SlugPanel />
+      <PageAdvancementPanel />
+      <BackgroundAudioPanel />
+      <TaxonomiesPanel />
+    </>
+  );
+}
+
+export default DocumentPane;
