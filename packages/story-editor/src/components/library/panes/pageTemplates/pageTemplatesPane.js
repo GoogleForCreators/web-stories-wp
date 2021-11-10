@@ -91,7 +91,7 @@ function PageTemplatesPane(props) {
   }));
 
   const [showDefaultTemplates, setShowDefaultTemplates] = useState(
-    DEFAULT_TEMPLATE_VIEW === SAVED ? false : true
+    DEFAULT_TEMPLATE_VIEW === null ? true : DEFAULT_TEMPLATE_VIEW
   );
   const [highlightedTemplate, setHighlightedTemplate] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -100,7 +100,7 @@ function PageTemplatesPane(props) {
     (page) => {
       setSavedTemplates([page, ...(savedTemplates || [])]);
       setHighlightedTemplate(page.id);
-      localStore.setItemByKey(LOCAL_STORAGE_KEY, SAVED);
+      localStore.setItemByKey(LOCAL_STORAGE_KEY, false);
     },
     [setSavedTemplates, savedTemplates]
   );
@@ -139,10 +139,7 @@ function PageTemplatesPane(props) {
 
   const handleToggle = (evt, value) => {
     setShowDefaultTemplates(value === DEFAULT);
-    localStore.setItemByKey(
-      LOCAL_STORAGE_KEY,
-      showDefaultTemplates ? SAVED : DEFAULT
-    );
+    localStore.setItemByKey(LOCAL_STORAGE_KEY, !showDefaultTemplates);
   };
 
   useEffect(() => {
