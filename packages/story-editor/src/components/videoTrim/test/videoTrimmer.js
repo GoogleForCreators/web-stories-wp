@@ -161,7 +161,7 @@ describe('Video Trimmer', () => {
       expect(getCancel()).toBeEnabled();
     });
 
-    it('should have enabled trim button only once changed', () => {
+    it('should have enabled trim button if and only if component handles have updated', () => {
       const { getSubmit, rerender } = setup();
       expect(getSubmit()).toBeDisabled();
 
