@@ -15,5 +15,5 @@
  */
 export { default as flattenFormData } from './flattenFormData';
 export { default as base64Encode } from './base64Encode';
-export { default as snakeCaseToCamelCase } from './snakeCaseToCamelCase';
+export * from './snakeToCamelCase';
 export { default as getResourceFromAttachment } from './getResourceFromAttachment';
