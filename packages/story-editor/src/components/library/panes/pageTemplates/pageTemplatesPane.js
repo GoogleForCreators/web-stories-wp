@@ -26,6 +26,10 @@ import {
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+import {
+  localStore,
+  LOCAL_STORAGE_PREFIX,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -65,8 +69,9 @@ const ButtonWrapper = styled.div`
 const DEFAULT = 'default';
 const SAVED = 'saved';
 const PAGE_TEMPLATE_PANE_WIDTH = 158;
-const LOCAL_STORAGE_KEY = 'web_stories_default_template_view';
-const DEFAULT_TEMPLATE_VIEW = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+const LOCAL_STORAGE_KEY =
+  LOCAL_STORAGE_PREFIX.DEFAULT_VIEW_PAGE_TEMPLATE_LAYOUT;
+const DEFAULT_TEMPLATE_VIEW = localStore.getItemByKey(LOCAL_STORAGE_KEY);
 
 function PageTemplatesPane(props) {
   const {
@@ -95,6 +100,7 @@ function PageTemplatesPane(props) {
     (page) => {
       setSavedTemplates([page, ...(savedTemplates || [])]);
       setHighlightedTemplate(page.id);
+      localStore.setItemByKey(LOCAL_STORAGE_KEY, SAVED);
     },
     [setSavedTemplates, savedTemplates]
   );
@@ -133,7 +139,7 @@ function PageTemplatesPane(props) {
 
   const handleToggle = (evt, value) => {
     setShowDefaultTemplates(value === DEFAULT);
-    window.localStorage.setItem(
+    localStore.setItemByKey(
       LOCAL_STORAGE_KEY,
       showDefaultTemplates ? SAVED : DEFAULT
     );
