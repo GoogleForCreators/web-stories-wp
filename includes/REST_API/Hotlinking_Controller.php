@@ -297,7 +297,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		if ( WP_DEBUG ) {
 			$this->stream_handle = fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
 		} else {
-			$this->stream_handle = @fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.PHP.NoSilencedErrors.Discouraged
+			$this->stream_handle = @fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.PHP.NoSilencedErrors.Discouraged, Generic.PHP.NoSilencedErrors.Forbidden
 		}
 
 		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
