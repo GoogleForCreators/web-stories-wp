@@ -42,6 +42,12 @@ use WP_REST_Server;
  * Class Hotlinking_Controller
  */
 class Hotlinking_Controller extends REST_Controller implements HasRequirements {
+	const PROXY_HEADERS_ALLOWLIST = [
+		'Content-Type',
+		'Cache-Control',
+		'Etag',
+		'Last-Modified',
+	];
 
 	/**
 	 * Experiments instance.
@@ -259,13 +265,12 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			'blocking' => false,
 		];
 
-		$http                = _wp_http_get_object();
-		$transport           = $http->_get_first_available_transport( $args, $url );
-		$can_stream_response = 'WP_Http_Curl' === $transport;
+		$http      = _wp_http_get_object();
+		$transport = $http->_get_first_available_transport( $args, $url );
 
-		if ( $can_stream_response ) {
-			$this->proxy_url_stream( $url, $args );
-			return;
+		if ( 'WP_Http_Curl' === $transport ) {
+			$this->proxy_url_curl( $url, $args );
+			exit;
 		}
 
 		unset( $args['blocking'] );
@@ -275,17 +280,20 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	}
 
 	/**
-	 * Proxy a given URL via a PHP stream / fopen.
+	 * Proxy a given URL via a PHP read-write stream.
 	 *
 	 * @since 1.15.0
+	 *
+	 * @SuppressWarnings(PHPMD.ErrorControlOperator)
 	 *
 	 * @param string $url  Request URL.
 	 * @param array  $args Request args.
 	 * @return void
 	 */
-	private function proxy_url_stream( $url, $args ) {
-		$mem_before = memory_get_usage();
-
+	private function proxy_url_curl( $url, $args ) {
+		// php://temp is a read-write streams that allows temporary data to be stored in a file-like wrapper.
+		// Other than php://memory, php://temp will use a temporary file once the amount of data stored hits a predefined limit (the default is 2 MB).
+		// The location of this temporary file is determined in the same way as the {@see sys_get_temp_dir()} function.
 		if ( WP_DEBUG ) {
 			$this->stream_handle = fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
 		} else {
@@ -295,12 +303,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
 		wp_safe_remote_get( $url, $args );
 		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
-
-		$mem_after = memory_get_usage();
-
-		header( 'X-Memory-Before: ' . ( $mem_before ) );
-		header( 'X-Memory-After: ' . ( $mem_after ) );
-		header( 'X-Memory-Diff: ' . ( $mem_after - $mem_before ) );
 
 		rewind( $this->stream_handle );
 		while ( ! feof( $this->stream_handle ) ) {
@@ -322,17 +324,11 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	private function proxy_url_fallback( $url, $args ) {
 		$response = wp_safe_remote_get( $url, $args );
 
+		http_response_code( $response['status'] );
+
 		$headers = wp_remote_retrieve_headers( $response );
 
-		$allowlist = [
-			'content-type',
-			'content-length',
-			'cache-control',
-			'etag',
-			'last-modified',
-		];
-
-		foreach ( $allowlist as $_header ) {
+		foreach ( self::PROXY_HEADERS_ALLOWLIST as $_header ) {
 			if ( isset( $headers[ $_header ] ) ) {
 				header( $_header . ': ' . $headers[ $_header ] );
 			}
@@ -513,22 +509,24 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * Each header is sent individually to this callback,
 	 * so we take a look at each one to see if we should "forward" it.
 	 *
+	 * @since 1.15.0
+	 *
 	 * @param resource $handle  cURL handle.
 	 * @param string   $header cURL header.
 	 * @return int Header length.
 	 */
 	public function stream_headers( $handle, $header ): int {
-		$allowlist = [
-			'content-type',
-			'content-length',
-			'cache-control',
-			'etag',
-			'last-modified',
-		];
+		// Parse Status-Line, the first component in the HTTP response, e.g. HTTP/1.1 200 OK.
+		// Extract the status code to re-send that here.
+		if ( 0 === strpos( $header, 'HTTP/' ) ) {
+			$status = explode( ' ', $header );
+			http_response_code( $status[1] );
+			return strlen( $header );
+		}
 
-		foreach ( $allowlist as $_header ) {
-			if ( 0 === stripos( $header, $_header . ': ' ) ) {
-				header( $header );
+		foreach ( self::PROXY_HEADERS_ALLOWLIST as $_header ) {
+			if ( 0 === stripos( $header, strtolower( $_header ) . ': ' ) ) {
+				header( $header, true );
 			}
 		}
 
