@@ -44,24 +44,43 @@ const focusStyle = css`
     )};
 `;
 
-const SwatchList = styled.div`
-  display: flex;
-  max-width: 100%;
-  flex-wrap: wrap;
-  gap: 6px;
+const Wrapper = styled.div`
+  display: inline-block;
+`;
+
+const SwatchList = styled.div.attrs({ role: 'listbox' })`
+  width: 100%;
+  display: inline;
+`;
+
+const SwatchWrapper = styled.div.attrs({ role: 'presentation' })`
+  display: inline-block;
 `;
 
 const StyledSwatch = styled(Swatch).attrs(({ isSelected }) => ({
   role: 'option',
   'aria-selected': isSelected,
 }))`
+  display: inline-block;
+  border: 2px solid transparent;
+  height: 36px;
+  width: 36px;
+
   ${focusStyle};
 
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
-      border: 2px solid ${theme.colors.border.defaultActive};
+      border-color: ${theme.colors.border.defaultActive};
     `}
+
+  ::after {
+    content: '';
+    height: 36px;
+    width: 36px;
+    display: inline-block;
+    padding: 6px;
+  }
 `;
 
 function getPatternAsString(pattern) {
@@ -73,7 +92,6 @@ function getPatternAsString(pattern) {
 }
 
 function BasicColorList({
-  'aria-labelledby': ariaLabelledBy,
   color,
   colors,
   handleClick,
@@ -98,8 +116,8 @@ function BasicColorList({
     ? __('local', 'web-stories')
     : __('global', 'web-stories');
   return (
-    <SwatchList ref={listRef} {...rest}>
-      <SwatchList role="listbox" aria-labelledby={ariaLabelledBy}>
+    <Wrapper>
+      <SwatchList ref={listRef} {...rest}>
         {colors.map((pattern, i) => {
           const isTransparentAndInvalid = !allowsOpacity && hasOpacity(pattern);
           const isGradientAndInvalid = !allowsGradient && hasGradient(pattern);
@@ -134,30 +152,31 @@ function BasicColorList({
             tabIndex = -1;
           }
           return (
-            <Tooltip key={patternAsBackground} title={tooltip}>
-              <StyledSwatch
-                onClick={() => handleClick(pattern, isLocal)}
-                pattern={pattern}
-                isSelected={isSelected}
-                isDisabled={isDisabled}
-                tabIndex={tabIndex}
-                title={title}
-              >
-                {isEditMode && <Icons.Cross />}
-              </StyledSwatch>
-            </Tooltip>
+            <SwatchWrapper key={patternAsBackground}>
+              <Tooltip title={tooltip}>
+                <StyledSwatch
+                  onClick={() => handleClick(pattern, isLocal)}
+                  pattern={pattern}
+                  isSelected={isSelected}
+                  isDisabled={isDisabled}
+                  tabIndex={tabIndex}
+                  title={title}
+                >
+                  {isEditMode && <Icons.Cross />}
+                </StyledSwatch>
+              </Tooltip>
+            </SwatchWrapper>
           );
         })}
       </SwatchList>
       {(isLocal || isGlobal) && (
         <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
       )}
-    </SwatchList>
+    </Wrapper>
   );
 }
 
 BasicColorList.propTypes = {
-  'aria-labelledby': PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
   allowsOpacity: PropTypes.bool,
   allowsGradient: PropTypes.bool,
