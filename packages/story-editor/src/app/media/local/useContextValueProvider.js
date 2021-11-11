@@ -171,6 +171,27 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setPosterProcessing, uploadVideoFrame, removePosterProcessing]
   );
 
+  const postProcessingResource = useCallback(
+    (resource) => {
+      const { local, type, isMuted, baseColor, src, id, posterId } = resource;
+
+      if (local) {
+        return;
+      }
+      if (['video', 'gif'].includes(type) && !posterId) {
+        uploadVideoPoster(id, src);
+      }
+      if ('video' === type && isMuted === null) {
+        updateVideoIsMuted(id, src);
+      }
+
+      if (!baseColor) {
+        updateBaseColor({ resource });
+      }
+    },
+    [updateBaseColor, updateVideoIsMuted, uploadVideoPoster]
+  );
+
   const processVideoAudio = useCallback(
     (id, src) => {
       const { audioProcessed, audioProcessing } = stateRef.current;
@@ -213,9 +234,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const { optimizeVideo, optimizeGif, muteExistingVideo, trimExistingVideo } =
     useProcessMedia({
-      uploadVideoPoster,
-      updateVideoIsMuted,
-      updateBaseColor,
+      postProcessingResource,
       uploadMedia,
       updateMedia,
       deleteMediaElement,
@@ -295,8 +314,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       uploadMedia,
       resetWithFetch,
       uploadVideoPoster,
-      updateVideoIsMuted,
-      updateBaseColor,
+      postProcessingResource,
       deleteMediaElement,
       updateMediaElement,
       optimizeVideo,

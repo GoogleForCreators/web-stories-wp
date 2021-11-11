@@ -31,9 +31,7 @@ import useStory from '../../story/useStory';
 
 function useProcessMedia({
   uploadMedia,
-  uploadVideoPoster,
-  updateVideoIsMuted,
-  updateBaseColor,
+  postProcessingResource,
   updateMedia,
   deleteMediaElement,
 }) {
@@ -126,19 +124,7 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(resourceId, resource.id, 'source-video');
         deleteMediaElement({ id: resourceId });
-        if (resource.local) {
-          return;
-        }
-        if (['video', 'gif'].includes(resource.type) && !resource.posterId) {
-          uploadVideoPoster(resource.id, resource.src);
-        }
-        if ('video' === resource.type && resource.isMuted === null) {
-          updateVideoIsMuted(resource.id, resource.src);
-        }
-
-        if (!resource.baseColor) {
-          updateBaseColor({ resource });
-        }
+        postProcessingResource(resource);
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -179,15 +165,13 @@ function useProcessMedia({
       })();
     },
     [
+      updateExistingElements,
       copyResourceData,
-      getOptimizedMediaById,
-      uploadMedia,
-      uploadVideoPoster,
-      updateVideoIsMuted,
       updateOldTranscodedObject,
       deleteMediaElement,
-      updateExistingElements,
-      updateBaseColor,
+      postProcessingResource,
+      getOptimizedMediaById,
+      uploadMedia,
     ]
   );
 
@@ -219,19 +203,7 @@ function useProcessMedia({
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
-        if (resource.local || 'video' !== resource.type) {
-          return;
-        }
-
-        if (!resource.posterId) {
-          uploadVideoPoster(resource.id, resource.src);
-        }
-        if (resource.isMuted === null) {
-          updateVideoIsMuted(resource.id, resource.src);
-        }
-        if (!resource.baseColor) {
-          updateBaseColor({ resource });
-        }
+        postProcessingResource(resource);
       };
 
       const onUploadProgress = ({ resource }) => {
@@ -281,12 +253,10 @@ function useProcessMedia({
       return process();
     },
     [
-      copyResourceData,
-      uploadMedia,
-      uploadVideoPoster,
       updateExistingElements,
-      updateVideoIsMuted,
-      updateBaseColor,
+      copyResourceData,
+      postProcessingResource,
+      uploadMedia,
     ]
   );
 
@@ -316,15 +286,7 @@ function useProcessMedia({
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldMutedObject(oldResource.id, resource.id);
-        if (resource.local) {
-          return;
-        }
-        if (['video', 'gif'].includes(resource.type) && !resource.posterId) {
-          uploadVideoPoster(resource.id, resource.src);
-        }
-        if (!resource.baseColor) {
-          updateBaseColor({ resource });
-        }
+        postProcessingResource(resource);
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -382,13 +344,12 @@ function useProcessMedia({
       })();
     },
     [
-      copyResourceData,
-      getMutedMediaById,
       updateExistingElements,
+      copyResourceData,
       updateOldMutedObject,
+      postProcessingResource,
+      getMutedMediaById,
       uploadMedia,
-      uploadVideoPoster,
-      updateBaseColor,
     ]
   );
 
@@ -405,15 +366,7 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
-        if (resource.local) {
-          return;
-        }
-        if (['video', 'gif'].includes(resource.type) && !resource.posterId) {
-          uploadVideoPoster(resource.id, resource.src);
-        }
-        if (!resource.baseColor) {
-          updateBaseColor({ resource });
-        }
+        postProcessingResource(resource);
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -453,8 +406,7 @@ function useProcessMedia({
       copyResourceData,
       updateOldTranscodedObject,
       deleteMediaElement,
-      uploadVideoPoster,
-      updateBaseColor,
+      postProcessingResource,
       updateExistingElements,
       uploadMedia,
     ]

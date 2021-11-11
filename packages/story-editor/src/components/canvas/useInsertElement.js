@@ -41,9 +41,8 @@ function useInsertElement() {
     addElement: state.actions.addElement,
     updateElementById: state.actions.updateElementById,
   }));
-  const { uploadVideoPoster, updateBaseColor } = useLocalMedia((state) => ({
-    uploadVideoPoster: state.actions.uploadVideoPoster,
-    updateBaseColor: state.actions.updateBaseColor,
+  const { postProcessingResource } = useLocalMedia((state) => ({
+    postProcessingResource: state.actions.postProcessingResource,
   }));
   const {
     actions: { registerUsage },
@@ -53,23 +52,6 @@ function useInsertElement() {
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
     setZoomSetting,
   }));
-
-  /**
-   * @param {Object} resource The resource to verify/update.
-   * @param {string} elementId The element's id to be updated once resource
-   * is complete.
-   */
-  const backfillResource = useCallback(
-    (resource) => {
-      const { type, src, id, posterId, local } = resource;
-
-      // Generate video poster if one not set.
-      if (['video', 'gif'].includes(type) && id && !posterId && !local) {
-        uploadVideoPoster(id, src);
-      }
-    },
-    [uploadVideoPoster]
-  );
 
   const generateBaseColor = useCallback(
     async (element) => {
@@ -84,31 +66,27 @@ function useInsertElement() {
       } = resource;
 
       const imageSrc = type === 'image' ? src : poster;
-      if (local || !imageSrc || currentBaseColor) {
+      if (local || !imageSrc || currentBaseColor || !isExternal) {
         return;
       }
 
-      if (isExternal) {
-        try {
-          const imageSrcProxied = getProxiedUrl(resource, imageSrc);
-          const baseColor = await getMediaBaseColor(imageSrcProxied);
-          updateElementById({
-            elementId: id,
-            properties: {
-              resource: {
-                ...resource,
-                baseColor,
-              },
+      try {
+        const imageSrcProxied = getProxiedUrl(resource, imageSrc);
+        const baseColor = await getMediaBaseColor(imageSrcProxied);
+        updateElementById({
+          elementId: id,
+          properties: {
+            resource: {
+              ...resource,
+              baseColor,
             },
-          });
-        } catch (error) {
-          // Do nothing for now.
-        }
-      } else if (id) {
-        updateBaseColor({ resource });
+          },
+        });
+      } catch (error) {
+        // Do nothing for now.
       }
     },
-    [getProxiedUrl, updateBaseColor, updateElementById]
+    [getProxiedUrl, updateElementById]
   );
 
   /**
@@ -141,7 +119,7 @@ function useInsertElement() {
       const { id, resource } = element;
       addElement({ element });
       if (resource) {
-        backfillResource(resource);
+        postProcessingResource(resource);
         handleRegisterUsage(resource);
         generateBaseColor(element);
       }
@@ -159,7 +137,7 @@ function useInsertElement() {
     },
     [
       addElement,
-      backfillResource,
+      postProcessingResource,
       generateBaseColor,
       focusCanvas,
       handleRegisterUsage,

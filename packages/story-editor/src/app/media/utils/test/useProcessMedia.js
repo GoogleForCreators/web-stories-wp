@@ -116,15 +116,32 @@ function setup() {
   const deleteMediaElement = jest.fn();
   const updateVideoIsMuted = jest.fn();
 
+  const postProcessingResource = (resource) => {
+    const { local, isExternal, type, isMuted, baseColor, src, id, posterId } =
+      resource;
+
+    if (local || isExternal) {
+      return;
+    }
+    if (id && src && ['video', 'gif'].includes(type) && !posterId) {
+      uploadVideoPoster(id, src);
+    }
+    if (id && src && 'video' === type && isMuted === null) {
+      updateVideoIsMuted(id, src);
+    }
+
+    if (!baseColor) {
+      updateBaseColor({ resource });
+    }
+  };
+
   const { result } = renderHook(
     () =>
       useProcessMedia({
         uploadMedia,
-        uploadVideoPoster,
-        updateBaseColor,
+        postProcessingResource,
         updateMedia,
         deleteMediaElement,
-        updateVideoIsMuted,
       }),
     { wrapper }
   );
