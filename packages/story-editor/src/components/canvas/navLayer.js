@@ -21,6 +21,7 @@ import { memo, useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { ContextMenu } from '@web-stories-wp/design-system';
 import Proptypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -29,15 +30,19 @@ import { useQuickActions } from '../../app/highlights';
 import DirectionAware from '../directionAware';
 import Carousel from '../carousel';
 import { useLayout } from '../../app';
-import {
-  CarouselArea,
-  HeadArea,
-  Layer,
-  PageMenuArea,
-  QuickActionsArea,
-  Z_INDEX,
-} from './layout';
+import { CarouselArea, HeadArea, Layer, PageMenuArea, Z_INDEX } from './layout';
 import PageMenu from './pagemenu';
+
+const MenusWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9999;
+  pointer-events: auto;
+  min-height: 100%;
+`;
 
 function NavLayer({ header }) {
   const { hasHorizontalOverflow } = useLayout(
@@ -64,28 +69,27 @@ function NavLayer({ header }) {
       onMouseDown={(evt) => evt.stopPropagation()}
     >
       <HeadArea pointerEvents="initial">{header}</HeadArea>
-      {showQuickActions && (
+      <PageMenuArea>
         <DirectionAware>
-          <QuickActionsArea>
-            <ContextMenu
-              isAlwaysVisible
-              isIconMenu
-              disableControlledTabNavigation
-              groupLabel={__(
-                'Group of available options for selected element',
-                'web-stories'
-              )}
-              items={quickActions}
-              onMouseDown={handleMenuBackgroundClick}
-            />
-          </QuickActionsArea>
+          <MenusWrapper>
+            {showQuickActions && (
+              <ContextMenu
+                isInline
+                isAlwaysVisible
+                isIconMenu
+                disableControlledTabNavigation
+                groupLabel={__(
+                  'Group of available options for selected element',
+                  'web-stories'
+                )}
+                items={quickActions}
+                onMouseDown={handleMenuBackgroundClick}
+              />
+            )}
+            <PageMenu />
+          </MenusWrapper>
         </DirectionAware>
-      )}
-      <DirectionAware>
-        <PageMenuArea>
-          <PageMenu />
-        </PageMenuArea>
-      </DirectionAware>
+      </PageMenuArea>
       <CarouselArea pointerEvents="initial">
         <Carousel />
       </CarouselArea>

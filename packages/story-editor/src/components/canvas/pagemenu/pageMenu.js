@@ -33,15 +33,7 @@ import PageMenuButton from './pageMenuButton';
 import AnimationToggle from './animationToggle';
 
 const Wrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  display: block;
-  z-index: 9999;
-  pointer-events: auto;
+  margin-top: auto;
 `;
 
 function PageMenu() {

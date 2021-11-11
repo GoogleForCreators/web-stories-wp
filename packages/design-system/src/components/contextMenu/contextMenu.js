@@ -26,7 +26,13 @@ import Menu, { MenuPropTypes } from './menu';
 import AnimationContainer from './animationContainer';
 import Mask from './mask';
 
-const ContextMenu = ({ animate, isAlwaysVisible, items, ...props }) => {
+const ContextMenu = ({
+  animate,
+  isAlwaysVisible,
+  items,
+  isInline = false,
+  ...props
+}) => {
   const Wrapper = useMemo(
     () => (animate ? AnimationContainer : Popover),
     [animate]
@@ -35,6 +41,7 @@ const ContextMenu = ({ animate, isAlwaysVisible, items, ...props }) => {
   return (
     <>
       <Wrapper
+        isInline={isInline}
         role={isAlwaysVisible ? '' : 'dialog'}
         isOpen={isAlwaysVisible || props.isOpen}
       >
