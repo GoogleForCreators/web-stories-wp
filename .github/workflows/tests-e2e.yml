@@ -113,7 +113,7 @@ jobs:
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: npm run test:e2e -- --reporters=default
         env:
           WP_VERSION: ${{ matrix.wp }}
         if: ( ! matrix.snapshots ) || ( github.event.pull_request.draft == true )
