@@ -47,6 +47,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.dropDown
       );
+      await fixture.events.sleep(500);
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.dropDownOption(
           'Saved templates'
@@ -71,7 +72,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
       await fixture.events.sleep(200);
-      const message = await fixture.screen.getByRole('alert');
+      const message = await fixture.screen.getByRole('alert', { hidden: true });
       expect(message.textContent).toBe('Page Template saved.');
 
       expect(
@@ -150,7 +151,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.keyboard.press('Enter');
 
       await fixture.events.sleep(200);
-      const message = await fixture.screen.getByRole('alert');
+      const message = await fixture.screen.getByRole('alert', { hidden: true });
       expect(message.textContent).toBe('Page Template saved.');
 
       expect(

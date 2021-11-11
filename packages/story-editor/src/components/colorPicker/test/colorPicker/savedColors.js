@@ -23,6 +23,7 @@ import { waitFor, act, fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+import { areAllType } from '../../../../utils/presetUtils';
 import { arrange } from './_utils';
 
 const mockSavedColors = jest
@@ -45,6 +46,7 @@ jest.mock(
           globalStoryStyles: {
             colors: mockSavedColors(),
           },
+          selectedElements: [],
         },
       },
       actions: {
@@ -52,6 +54,8 @@ jest.mock(
       },
     })
 );
+
+jest.mock('../../../../utils/presetUtils');
 
 const TEAL_COLOR = createSolid(0, 255, 255);
 const PINK_COLOR = createSolid(255, 0, 255);
@@ -78,6 +82,10 @@ const SEMIGRAD_LABEL =
   'linear-gradient(0.5turn, rgba(0,255,0,0.3) 0%, rgba(255,0,255,0.3) 100%)';
 
 describe('<ColorPicker /> and saved colors', () => {
+  beforeEach(() => {
+    areAllType.mockImplementation(() => true);
+  });
+
   it('should not display saved colors on load if not enabled', () => {
     const { getSwatchList } = arrange({
       color: PINK_COLOR,

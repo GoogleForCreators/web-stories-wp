@@ -125,10 +125,15 @@ function VideoTrimmer() {
 
   const railBackgroundImage = useRailBackground(isReady, videoData, railWidth);
 
+  const menuProps = {
+    ref: menu,
+    'aria-label': __('Video trimmer', 'web-stories'),
+  };
+
   if (!isReady) {
     // We still need a reffed element, or the focus trap will break,
     // so just return an empty element
-    return <Menu ref={menu} />;
+    return <Menu {...menuProps} />;
   }
 
   const sliderProps = {
@@ -145,7 +150,7 @@ function VideoTrimmer() {
   };
 
   return (
-    <Menu ref={menu}>
+    <Menu {...menuProps}>
       <ButtonWrapper isStart>
         <Button
           variant={BUTTON_VARIANTS.RECTANGLE}

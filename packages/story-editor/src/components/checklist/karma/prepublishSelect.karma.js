@@ -289,35 +289,6 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       );
     });
 
-    it('should open the document inspector panel and focus the media button', async () => {
-      await addPages(4);
-      await fixture.events.click(fixture.editor.library.media.item(0));
-
-      let storyContext = await fixture.renderHook(() => useStory());
-      const [elementId] = storyContext.state.selectedElementIds;
-
-      await clickOnCanvas();
-      storyContext = await fixture.renderHook(() => useStory());
-      expect(storyContext.state.selectedElementIds[0]).not.toEqual(elementId);
-
-      await openChecklist();
-      // high priority should auto expand
-      const noPosterImage = fixture.screen.getByText(
-        PRIORITY_COPY.storyMissingPoster.title
-      );
-      await fixture.events.click(noPosterImage);
-      await waitFor(() => {
-        expect(
-          fixture.editor.inspector.documentPanel.node.querySelector(
-            `[id^="panel-publishing-"]`
-          )
-        ).not.toBeNull();
-      });
-      const mediaButton = fixture.screen.getByLabelText('Poster image');
-      expect(mediaButton.contains(document.activeElement)).toBeTrue();
-      await fixture.snapshot('document tab opened by checklist panel');
-    });
-
     it('should open the design panel accessibility section and focus the video poster button when using mouse', async () => {
       await fixture.act(() => {
         insertElement('video', {

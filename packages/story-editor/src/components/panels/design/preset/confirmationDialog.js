@@ -33,7 +33,7 @@ import {
  * Internal dependencies
  */
 import Dialog from '../../../dialog';
-import { PRESET_TYPES } from './constants';
+import { PRESET_TYPES } from '../../../../constants';
 
 const Label = styled.label`
   margin-left: 12px;

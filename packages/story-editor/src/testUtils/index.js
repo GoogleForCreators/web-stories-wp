@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export { default as firePointerEvent } from './firePointerEvent';
 export { default as renderWithTheme } from './renderWithTheme';
 export * from './queryByAriaLabel';
 export * from './queryByAutoAdvanceAfter';

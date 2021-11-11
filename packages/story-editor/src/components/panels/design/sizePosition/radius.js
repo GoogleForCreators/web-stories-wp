@@ -19,18 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import {
-  LockToggle,
-  NumericInput,
-  Icons,
-  themeHelpers,
-} from '@web-stories-wp/design-system';
+import { LockToggle, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
+import { StackableGroup, StackableInput } from '../../../form/stackable';
 import { canMaskHaveBorder } from '../../../../masks';
 import Tooltip from '../../../tooltip';
 import { useCommonObjectValue, focusStyle } from '../../shared';
@@ -48,11 +44,6 @@ const FlexContainer = styled.div`
   display: flex;
 `;
 
-const InputContainer = styled.div`
-  margin-left: 1px;
-  ${({ isSmall }) => (!isSmall ? 'max-width: 106px' : '')}
-`;
-
 const LockContainer = styled.div`
   position: relative;
   display: flex;
@@ -65,57 +56,16 @@ const StyledLockToggle = styled(LockToggle)`
   ${focusStyle};
 `;
 
-const inputContainerStyleOverride = css`
-  position: relative;
-  :focus-within {
-    z-index: 1;
-    ${({ theme }) =>
-      themeHelpers.focusCSS(
-        theme.colors.border.focus,
-        theme.colors.bg.secondary
-      )};
-  }
+const TopLeft = styled(Icons.Corner)`
+  transform: rotate(90deg);
 `;
 
-const styleOverrideTopLeft = css`
-  ${inputContainerStyleOverride}
-  border-radius: 4px 0 0 4px;
+const TopRight = styled(Icons.Corner)`
+  transform: rotate(180deg);
 `;
 
-const styleOverrideTopRight = css`
-  ${inputContainerStyleOverride}
-  border-radius: 0;
-`;
-
-const styleOverrideBottomLeft = css`
-  ${inputContainerStyleOverride}
-  border-radius: 0;
-`;
-
-const styleOverrideBottomRight = css`
-  ${inputContainerStyleOverride}
-  border-radius: 0 4px 4px 0;
-`;
-
-const BoxedNumericInput = styled(NumericInput)`
-  border-radius: 0px;
-  margin-left: -1px;
-  svg {
-    ${({ corner }) => (corner === 'topLeft' ? 'transform: rotate(90deg);' : '')}
-  }
-
-  ${({ isSmall, corner }) =>
-    isSmall &&
-    `
-    width: 25%;
-    svg {
-      ${corner === 'topRight' ? 'transform: rotate(180deg);' : ''}
-      ${corner === 'bottomRight' ? 'transform: rotate(270deg);' : ''}
-      width: 29px;
-      height: 29px;
-      margin-right: -14px;
-    }
-  `}
+const BottomRight = styled(Icons.Corner)`
+  transform: rotate(270deg);
 `;
 
 function RadiusControls({ selectedElements, pushUpdateForObject }) {
@@ -183,13 +133,12 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
   const firstInputLabel = lockRadius
     ? __('Corner Radius', 'web-stories')
     : __('Top left corner radius', 'web-stories');
+
   return (
     <FlexContainer>
-      <InputContainer isSmall={!lockRadius}>
-        <BoxedNumericInput
-          isSmall={!lockRadius}
-          corner="topLeft"
-          suffix={<Icons.Corner />}
+      <StackableGroup locked={lockRadius}>
+        <StackableInput
+          suffix={<TopLeft />}
           value={
             borderRadius.topLeft === MULTIPLE_VALUE ? '' : borderRadius.topLeft
           }
@@ -201,16 +150,12 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
               : ''
           }
           isIndeterminate={borderRadius.topLeft === MULTIPLE_VALUE}
-          containerStyleOverride={
-            lockRadius ? inputContainerStyleOverride : styleOverrideTopLeft
-          }
         />
+
         {!lockRadius && (
           <>
-            <BoxedNumericInput
-              isSmall
-              corner="topRight"
-              suffix={<Icons.Corner />}
+            <StackableInput
+              suffix={<TopRight />}
               value={
                 borderRadius.topRight === MULTIPLE_VALUE
                   ? ''
@@ -224,10 +169,8 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
                   : ''
               }
               isIndeterminate={borderRadius.topRight === MULTIPLE_VALUE}
-              containerStyleOverride={styleOverrideTopRight}
             />
-            <BoxedNumericInput
-              isSmall
+            <StackableInput
               value={
                 borderRadius.bottomLeft === MULTIPLE_VALUE
                   ? ''
@@ -242,10 +185,8 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
               }
               suffix={<Icons.Corner />}
               isIndeterminate={borderRadius.bottomLeft === MULTIPLE_VALUE}
-              containerStyleOverride={styleOverrideBottomLeft}
             />
-            <BoxedNumericInput
-              isSmall
+            <StackableInput
               value={
                 borderRadius.bottomRight === MULTIPLE_VALUE
                   ? ''
@@ -258,14 +199,13 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
                   ? MULTIPLE_DISPLAY_VALUE
                   : ''
               }
-              corner="bottomRight"
-              suffix={<Icons.Corner />}
+              suffix={<BottomRight />}
               isIndeterminate={borderRadius.bottomRight === MULTIPLE_VALUE}
-              containerStyleOverride={styleOverrideBottomRight}
             />
           </>
         )}
-      </InputContainer>
+      </StackableGroup>
+
       <LockContainer>
         <Tooltip title={__('Toggle consistent corner radius', 'web-stories')}>
           <StyledLockToggle

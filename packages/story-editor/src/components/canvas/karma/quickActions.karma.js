@@ -280,13 +280,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations and styles match original animation
@@ -349,10 +350,10 @@ describe('Quick Actions integration', () => {
       );
 
       expect(
-        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor
+        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.hex
       ).not.toBeNull();
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor
+        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.hex
       );
     });
 
@@ -463,13 +464,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations match original animation
@@ -633,13 +635,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations match original animation
@@ -814,13 +817,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations match original animation
@@ -1032,13 +1036,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations and styles match original animation
@@ -1195,13 +1200,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations and styles match original animation

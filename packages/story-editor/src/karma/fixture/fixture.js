@@ -43,13 +43,14 @@ import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import formattedTemplatesArray from '../../dataUtils/formattedTemplatesArray';
-import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
+import { PRESET_TYPES } from '../../constants';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
 import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
+import DocumentPane from './components/documentPane';
 
 if ('true' === process.env.CI) {
   configure({
@@ -221,7 +222,6 @@ export class Fixture {
       'publishing',
       'status',
       `stylepreset-${PRESET_TYPES.STYLE}`,
-      `stylepreset-${PRESET_TYPES.COLOR}`,
     ];
     // Open all panels by default.
     panels.forEach((panel) => {
@@ -333,7 +333,15 @@ export class Fixture {
 
     const { container, getByRole } = render(
       <StoryEditor key={Math.random()} config={this._config}>
-        <Layout header={<HeaderLayout />} />
+        <Layout
+          header={<HeaderLayout />}
+          inspectorTabs={{
+            document: {
+              title: 'Document',
+              Pane: DocumentPane,
+            },
+          }}
+        />
       </StoryEditor>,
       {
         container: root,
@@ -809,8 +817,6 @@ class APIProviderFixture {
         []
       );
 
-      const getPublisherLogos = useCallback(() => asyncResponse([]), []);
-
       const getAllStatuses = useCallback(
         () => jasmine.createSpy('getAllStatuses'),
         []
@@ -938,7 +944,6 @@ class APIProviderFixture {
           getMedia,
           getLinkMetadata,
           getHotlinkInfo,
-          getPublisherLogos,
           saveStoryById,
           getAllStatuses,
           getAuthors,
