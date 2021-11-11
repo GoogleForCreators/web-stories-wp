@@ -243,9 +243,10 @@ const PageMenuArea = styled.div`
   grid-area: p;
   position: absolute;
   right: calc(-24px + var(--page-padding-px));
+  top: calc(0.5 * var(--page-padding-px));
   padding-left: 0;
   padding-right: 0;
-  min-height: 100%;
+  min-height: calc(100% - var(--page-padding-px));
 `;
 
 const CarouselArea = styled(Area).attrs({
