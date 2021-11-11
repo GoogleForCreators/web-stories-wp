@@ -93,7 +93,7 @@ function PageMenu() {
   }
 
   return (
-    <Wrapper>
+    <Wrapper role="group" aria-label={__('Page actions', 'web-stories')}>
       {hasAnimations && <AnimationToggle />}
       <PageMenuButton
         ref={addPageButtonRef}
