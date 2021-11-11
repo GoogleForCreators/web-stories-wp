@@ -47,7 +47,7 @@ describe('Checklist integration', () => {
     let clickCount = 1;
     while (clickCount <= count) {
       // eslint-disable-next-line no-await-in-loop
-      await fixture.events.click(fixture.editor.canvas.pageActiona.addPage);
+      await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
         expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
