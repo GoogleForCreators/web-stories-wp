@@ -51,6 +51,22 @@ const Wrapper = styled.div`
 const SwatchList = styled.div.attrs({ role: 'listbox' })`
   width: 100%;
   display: inline;
+
+  > div {
+    vertical-align: top;
+
+    /* Add a grid similar to css gap in flexbox */
+    padding: 2px 3px 0 3px;
+    padding-bottom: 0;
+    /* Remove padding from swatches on left edge */
+    :nth-child(6n + 1) {
+      padding-left: 0;
+    }
+    /* Remove padding from swatches on right edge */
+    :nth-child(6n) {
+      padding-right: 0;
+    }
+  }
 `;
 
 const SwatchWrapper = styled.div.attrs({ role: 'presentation' })`
@@ -62,25 +78,32 @@ const StyledSwatch = styled(Swatch).attrs(({ isSelected }) => ({
   'aria-selected': isSelected,
 }))`
   display: inline-block;
-  border: 2px solid transparent;
-  height: 36px;
-  width: 36px;
 
   ${focusStyle};
 
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
-      border-color: ${theme.colors.border.defaultActive};
+      border: 2px solid ${theme.colors.border.defaultActive};
+
+      :after {
+        border: none;
+      }
     `}
 
   ::after {
     content: '';
-    height: 36px;
-    width: 36px;
+    height: 32px;
+    width: 32px;
     display: inline-block;
     padding: 6px;
   }
+`;
+
+const StyledColorAdd = styled(ColorAdd)`
+  /* Line up 'Color Add' button with the rest of the grid */
+  margin-top: 2px;
+  margin-left: ${({ $firstInRow }) => ($firstInRow ? 0 : 3)}px;
 `;
 
 function getPatternAsString(pattern) {
@@ -170,7 +193,11 @@ function BasicColorList({
         })}
       </SwatchList>
       {(isLocal || isGlobal) && (
-        <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
+        <StyledColorAdd
+          $firstInRow={!Math.floor(colors.length % 6)}
+          isLocal={isLocal}
+          isGlobal={isGlobal}
+        />
       )}
     </Wrapper>
   );
