@@ -27,7 +27,7 @@ import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import Slider from './slider';
 import { RAIL_HEIGHT, RAIL_PADDING } from './constants';
 
-export const Menu = styled.div`
+export const Menu = styled.aside`
   display: flex;
   justify-content: center;
   align-items: flex-start;

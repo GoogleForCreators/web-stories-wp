@@ -50,6 +50,7 @@ import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
 import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
+import DocumentPane from './components/documentPane';
 
 if ('true' === process.env.CI) {
   configure({
@@ -332,7 +333,15 @@ export class Fixture {
 
     const { container, getByRole } = render(
       <StoryEditor key={Math.random()} config={this._config}>
-        <Layout header={<HeaderLayout />} />
+        <Layout
+          header={<HeaderLayout />}
+          inspectorTabs={{
+            document: {
+              title: 'Document',
+              Pane: DocumentPane,
+            },
+          }}
+        />
       </StoryEditor>,
       {
         container: root,
@@ -808,8 +817,6 @@ class APIProviderFixture {
         []
       );
 
-      const getPublisherLogos = useCallback(() => asyncResponse([]), []);
-
       const getAllStatuses = useCallback(
         () => jasmine.createSpy('getAllStatuses'),
         []
@@ -937,7 +944,6 @@ class APIProviderFixture {
           getMedia,
           getLinkMetadata,
           getHotlinkInfo,
-          getPublisherLogos,
           saveStoryById,
           getAllStatuses,
           getAuthors,

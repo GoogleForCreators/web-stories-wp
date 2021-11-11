@@ -110,7 +110,7 @@ function TemplateDetails() {
       .catch(() => {
         showSnackbar({
           message: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
-          dismissable: true,
+          dismissible: true,
         });
       });
   }, [

@@ -15,3 +15,5 @@
  */
 
 export { default as getSearchOptions } from './getSearchOptions';
+export { default as getTemplateFilters } from './getTemplateFilters';
+export { default as composeTemplateFilter } from './composeTemplateFilter';

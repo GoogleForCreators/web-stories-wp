@@ -442,23 +442,6 @@ describe('Checklist integration - Card visibility', () => {
   };
 
   /**
-   * Add poster image to story that has
-   * - width less than the minimum allowed poster image width
-   * - height less than the minimum allowed poster image height
-   *
-   * This will trigger an a11y issue in the checklist.
-   */
-  const addPosterImageWithIssues = async () => {
-    // open the document panel
-    await fixture.events.click(fixture.editor.inspector.documentTab);
-
-    // open the menu - mock will add picture automatically
-    await fixture.events.click(
-      fixture.editor.inspector.documentPanel.posterMenuButton
-    );
-  };
-
-  /**
    * Inserts an image that has
    * - width less than the minimum allowed image width (2 times element width)
    * - height less than the minimum allowed image height (2 times element height)
@@ -529,56 +512,6 @@ describe('Checklist integration - Card visibility', () => {
       })
     );
   };
-
-  describe('hasUploadMediaAction=true', () => {
-    beforeEach(async () => {
-      fixture = new Fixture();
-      fixture.setFlags({ enableChecklistCompanion: true });
-
-      fixture.setConfig({ capabilities: { hasUploadMediaAction: true } });
-      await fixture.render();
-    });
-
-    afterEach(() => {
-      fixture.restore();
-    });
-
-    /**
-     * Check if a card is visible in the application.
-     *
-     * @param {string} title Title of the card
-     */
-    const checkIfCardExists = async (title) => {
-      const card = await fixture.screen.queryByText(title);
-
-      expect(card).not.toBeNull();
-    };
-
-    it(`should show cards that require the \`hasUploadMediaAction\` permission`, async () => {
-      // add issues to checklist that need to be resolved by uploading media
-      await addImageWithIssues();
-      await addVideoWithIssues();
-
-      // show all checkpoints
-      await addPages(4);
-      await openChecklist();
-
-      priorityIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
-
-      // add poster image to see new problems
-      await addPosterImageWithIssues();
-      posterIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
-
-      // open design tab
-      await fixture.events.click(fixture.editor.checklist.designTab);
-
-      designIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
-
-      accessibilityIssuesRequiringMediaUploadPermissions.forEach(
-        checkIfCardExists
-      );
-    });
-  });
 
   describe('hasUploadMediaAction=false', () => {
     beforeEach(async () => {

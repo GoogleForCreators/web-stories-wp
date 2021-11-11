@@ -22,15 +22,15 @@ import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { Input } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
-import { useStory } from '../../../../app/story';
-import { Row, RadioGroup } from '../../../form';
-import { SimplePanel } from '../../panel';
-import useRefreshPostEditURL from '../../../../utils/useRefreshPostEditURL';
-import { ReviewChecklistDialog, useCheckpoint } from '../../../checklist';
+import {
+  Row,
+  RadioGroup,
+  SimplePanel,
+  ReviewChecklistDialog,
+  useStory,
+  useCheckpoint,
+  useRefreshPostEditURL,
+} from '@web-stories-wp/story-editor';
 
 const InputRow = styled(Row)`
   margin-left: 34px;

@@ -22,8 +22,9 @@ import { fireEvent, waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+import { firePointerEvent } from '../../../../testUtils';
 import { LINE_LENGTH } from '../../constants';
-import { arrange, firePointerEvent } from './_utils';
+import { arrange } from './_utils';
 
 describe('<ColorPicker /> when moving a stop with a pointer device', () => {
   it('should move stop when dragging a stop', async () => {
