@@ -100,7 +100,7 @@ describe('Drop-Target integration', () => {
       expect(rep2).toBeEmpty();
 
       // Verify the background base color is handled as expected.
-      expect(bgElement.resource.baseColor).toEqual('#ffffff');
+      expect(bgElement.resource.baseColor).toEqual('#2c1c1c');
     });
   });
 
