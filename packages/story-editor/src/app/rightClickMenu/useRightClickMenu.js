@@ -24,15 +24,7 @@ import { useContextSelector, identity } from '@web-stories-wp/react';
 import Context from './context';
 
 function useRightClickMenu(selector) {
-  const context = useContextSelector(Context, selector ?? identity);
-
-  if (!context) {
-    throw new Error(
-      'Must use `useRightClickMenu()` within <rightClickMenu.Provider />'
-    );
-  }
-
-  return context;
+  return useContextSelector(Context, selector ?? identity);
 }
 
 export default useRightClickMenu;
