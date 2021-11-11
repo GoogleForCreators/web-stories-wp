@@ -42,6 +42,12 @@ use WP_REST_Server;
  * Class Hotlinking_Controller
  */
 class Hotlinking_Controller extends REST_Controller implements HasRequirements {
+	const PROXY_HEADERS_ALLOWLIST = [
+		'Content-Type',
+		'Cache-Control',
+		'Etag',
+		'Last-Modified',
+	];
 
 	/**
 	 * Experiments instance.
@@ -63,6 +69,13 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @var Types Types instance.
 	 */
 	private $types;
+
+	/**
+	 * File pointer resource.
+	 *
+	 * @var resource
+	 */
+	protected $stream_handle;
 
 	/**
 	 * Constructor.
@@ -239,47 +252,112 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Parses a URL to return proxied file.
 	 *
+	 * @SuppressWarnings(PHPMD.ErrorControlOperator)
+	 *
 	 * @since 1.13.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 * @return void
 	 */
 	public function proxy_url( $request ) {
 		$url = untrailingslashit( $request['url'] );
 
-		$args          = [
-			'limit_response_size' => 15728640, // 15MB. @todo Remove this, when streaming is implemented.
-			'timeout'             => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
+		$args = [
+			'timeout'  => 60, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
+			'blocking' => false,
 		];
-		$proxy_request = wp_safe_remote_get( $url, $args );
-		if ( is_wp_error( $proxy_request ) ) {
-			$proxy_request->add_data( [ 'status' => 404 ] );
-			return $proxy_request;
+
+		$http      = _wp_http_get_object();
+		$transport = $http->_get_first_available_transport( $args, $url );
+
+		// When cURL is available, we might be able to use it together with fopen().
+		if ( 'WP_Http_Curl' === $transport ) {
+			// php://temp is a read-write streams that allows temporary data to be stored in a file-like wrapper.
+			// Other than php://memory, php://temp will use a temporary file once the amount of data stored hits a predefined limit (the default is 2 MB).
+			// The location of this temporary file is determined in the same way as the {@see sys_get_temp_dir()} function.
+			if ( WP_DEBUG ) {
+				$stream_handle = fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
+			} else {
+				$stream_handle = @fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.PHP.NoSilencedErrors.Discouraged, Generic.PHP.NoSilencedErrors.Forbidden
+			}
+
+			if ( $stream_handle ) {
+				$this->stream_handle = $stream_handle;
+				$this->proxy_url_curl( $url, $args );
+			}
+			exit;
 		}
 
-		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $proxy_request ) ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
-		}
-
-		$headers            = wp_remote_retrieve_headers( $proxy_request );
-		$mime_type          = $headers['content-type'];
-		$allowed_mime_types = $this->types->get_allowed_mime_types();
-		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
-		if ( ! in_array( $mime_type, $allowed_mime_types, true ) ) {
-			return new WP_Error( 'rest_invalid_mime_type', __( 'Invalid Mime Type', 'web-stories' ), [ 'status' => 400 ] );
-		}
-
-		$file_size = (int) $headers['content-length'];
-
-		$body = wp_remote_retrieve_body( $proxy_request );
-
-		header( 'Content-Type: ' . $mime_type );
-		header( 'Content-Length: ' . $file_size );
-
-		echo $body; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		// If either cURL is not available or fopen() did not succeed, use whatever WP gives us,
+		// using good old wp_remote
+		// Fall back to using whatever else is set up on the site, presumably WP_Http_Streams
+		// or just cURL but without .
+		unset( $args['blocking'] );
+		$this->proxy_url_fallback( $url, $args );
 
 		exit;
+	}
+
+	/**
+	 * Proxy a given URL via a PHP read-write stream.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param string $url  Request URL.
+	 * @param array  $args Request args.
+	 * @return void
+	 */
+	private function proxy_url_curl( $url, $args ) {
+		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
+		$response = wp_safe_remote_get( $url, $args );
+		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
+
+		$status = wp_remote_retrieve_response_code( $response );
+
+		if ( ! $status ) {
+			http_response_code( 404 );
+			return;
+		}
+
+		http_response_code( (int) $status );
+
+		rewind( $this->stream_handle );
+		while ( ! feof( $this->stream_handle ) ) {
+			echo fread( $this->stream_handle, 1024 * 1024 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_system_read_fread
+		}
+
+		fclose( $this->stream_handle );
+	}
+
+	/**
+	 * Proxy a given URL by storing in memory.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param string $url  Request URL.
+	 * @param array  $args Request args.
+	 * @return void
+	 */
+	private function proxy_url_fallback( $url, $args ) {
+		$response = wp_safe_remote_get( $url, $args );
+		$status   = wp_remote_retrieve_response_code( $response );
+
+		if ( ! $status ) {
+			http_response_code( 404 );
+			return;
+		}
+
+		http_response_code( (int) $status );
+
+		$headers = wp_remote_retrieve_headers( $response );
+
+		foreach ( self::PROXY_HEADERS_ALLOWLIST as $_header ) {
+			if ( isset( $headers[ $_header ] ) ) {
+				header( $_header . ': ' . $headers[ $_header ] );
+			}
+		}
+
+		echo wp_remote_retrieve_body( $response ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -419,5 +497,63 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Modifies the cURL configuration before the request is executed.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param resource $handle      The cURL handle returned by curl_init() (passed by reference).
+	 * @return void
+	 */
+	public function modify_curl_configuration( &$handle ) {
+		// Just some safeguard in case cURL is not really available,
+		// despite this method being run in the context of WP_Http_Curl.
+		if ( ! function_exists( 'curl_setopt' ) ) {
+			return;
+		}
+
+		// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_setopt
+
+		curl_setopt(
+			$handle,
+			CURLOPT_FILE,
+			$this->stream_handle
+		);
+
+		curl_setopt( $handle, CURLOPT_HEADERFUNCTION, [ $this, 'stream_headers' ] );
+
+		// phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_setopt
+	}
+
+	/**
+	 * Grabs the headers of the cURL request.
+	 *
+	 * Each header is sent individually to this callback,
+	 * so we take a look at each one to see if we should "forward" it.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @param resource $handle  cURL handle.
+	 * @param string   $header cURL header.
+	 * @return int Header length.
+	 */
+	public function stream_headers( $handle, $header ): int {
+		// Parse Status-Line, the first component in the HTTP response, e.g. HTTP/1.1 200 OK.
+		// Extract the status code to re-send that here.
+		if ( 0 === strpos( $header, 'HTTP/' ) ) {
+			$status = explode( ' ', $header );
+			http_response_code( (int) $status[1] );
+			return strlen( $header );
+		}
+
+		foreach ( self::PROXY_HEADERS_ALLOWLIST as $_header ) {
+			if ( 0 === stripos( $header, strtolower( $_header ) . ': ' ) ) {
+				header( $header, true );
+			}
+		}
+
+		return strlen( $header );
 	}
 }
