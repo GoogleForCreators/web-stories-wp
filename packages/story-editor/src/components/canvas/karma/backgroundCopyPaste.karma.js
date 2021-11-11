@@ -301,13 +301,6 @@ describe('Background Copy Paste integration', () => {
         : value.test(el.getAttribute(attr));
   }
 
-  function getButtonByAriaLabel(ariaLabel) {
-    return getElementByQueryAndMatcher(
-      'button',
-      getByAttribute('aria-label', ariaLabel)
-    );
-  }
-
   function getInputByAriaLabel(ariaLabel) {
     return getElementByQueryAndMatcher(
       'input',
