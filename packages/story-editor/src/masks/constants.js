@@ -68,6 +68,7 @@ export const MaskTypes = {
 };
 
 const ICON_CLIP_PATHS = {
+  [MaskTypes.CIRCLE]: `M36,18a18,18,0,1,1,-18,-18a18,18,0,0,1,18,18z`,
   [MaskTypes.BLOB_6]: `M0.41,0.99c-0.01,0-0.01,0-0.02,0c-0.04,0-0.09-0.01-0.15-0.03c-0.05-0.01-0.08-0.08-0.1-0.13
   C0.12,0.79,0.11,0.73,0.11,0.68c0-0.06,0.01-0.13,0.05-0.17c0.06-0.05,0.09-0.08,0.11-0.12C0.3,0.34,0.31,0.3,0.31,0.26
   c0-0.01,0.01-0.03,0.01-0.04c0.01-0.05,0.03-0.1,0.09-0.16c0.04-0.04,0.1-0.05,0.15-0.05c0.04,0,0.09,0.01,0.14,0.03
@@ -188,7 +189,9 @@ export const MASKS = [
     showInLibrary: true,
     name: _x('Circle', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.CIRCLE],
+    iconPath: ICON_CLIP_PATHS[MaskTypes.CIRCLE],
     ratio: 1,
+    iconRatio: 1,
   },
   {
     type: MaskTypes.TRIANGLE,
