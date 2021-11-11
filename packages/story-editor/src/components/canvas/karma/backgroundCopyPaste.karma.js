@@ -224,8 +224,7 @@ describe('Background Copy Paste integration', () => {
 
   // High-level helpers
   async function addNewPage() {
-    const addPage = getButtonByAriaLabel(/^Add New Page$/i);
-    await fixture.events.click(addPage);
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
   }
   async function gotoPage(index /* 1-indexed */) {
     const carousel = getElementByQueryAndMatcher(
