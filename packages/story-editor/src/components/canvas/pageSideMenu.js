@@ -48,7 +48,7 @@ const MenusWrapper = styled.div`
     background-color: ${rgba(theme.colors.standard.black, 0.45)};
     border-radius: ${theme.borders.radius.small};
     padding: 8px;
-    margin-left: -16px;
+    margin-left: -24px;
   `}
 `;
 
