@@ -12,7 +12,20 @@ on:
       - '__mocks__/**'
       - '__static__/**'
       - 'bin/**'
+      - 'packages/e2e-test-utils/**'
+      - 'packages/e2e-tests/**'
+      - 'packages/karma-*/**'
       - 'tests/**'
+      - '**.md'
+      - '**.yml'
+      - '**.neon.dist'
+      - '**.xml.dist'
+      - '.editorconfig'
+      - '.eslint*'
+      - '.markdownlint*'
+      - '.phpstorm.meta.php'
+      - '.prettier*'
+      - '.stylelint*'
     branches:
       - main
       - release/*
@@ -27,7 +40,20 @@ on:
       - '__mocks__/**'
       - '__static__/**'
       - 'bin/**'
+      - 'packages/e2e-test-utils/**'
+      - 'packages/e2e-tests/**'
+      - 'packages/karma-*/**'
       - 'tests/**'
+      - '**.md'
+      - '**.yml'
+      - '**.neon.dist'
+      - '**.xml.dist'
+      - '.editorconfig'
+      - '.eslint*'
+      - '.markdownlint*'
+      - '.phpstorm.meta.php'
+      - '.prettier*'
+      - '.stylelint*'
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
