@@ -71,7 +71,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	private $types;
 
 	/**
-	 * If streaming to a file, keep the file pointer
+	 * File pointer resource.
 	 *
 	 * @var resource
 	 */
@@ -252,6 +252,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Parses a URL to return proxied file.
 	 *
+	 * @SuppressWarnings(PHPMD.ErrorControlOperator)
+	 *
 	 * @since 1.13.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
@@ -268,11 +270,28 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$http      = _wp_http_get_object();
 		$transport = $http->_get_first_available_transport( $args, $url );
 
+		// When cURL is available, we might be able to use it together with fopen().
 		if ( 'WP_Http_Curl' === $transport ) {
-			$this->proxy_url_curl( $url, $args );
+			// php://temp is a read-write streams that allows temporary data to be stored in a file-like wrapper.
+			// Other than php://memory, php://temp will use a temporary file once the amount of data stored hits a predefined limit (the default is 2 MB).
+			// The location of this temporary file is determined in the same way as the {@see sys_get_temp_dir()} function.
+			if ( WP_DEBUG ) {
+				$stream_handle = fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
+			} else {
+				$stream_handle = @fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.PHP.NoSilencedErrors.Discouraged, Generic.PHP.NoSilencedErrors.Forbidden
+			}
+
+			if ( $stream_handle ) {
+				$this->stream_handle = $stream_handle;
+				$this->proxy_url_curl( $url, $args );
+			}
 			exit;
 		}
 
+		// If either cURL is not available or fopen() did not succeed, use whatever WP gives us,
+		// using good old wp_remote
+		// Fall back to using whatever else is set up on the site, presumably WP_Http_Streams
+		// or just cURL but without .
 		unset( $args['blocking'] );
 		$this->proxy_url_fallback( $url, $args );
 
@@ -284,25 +303,23 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.15.0
 	 *
-	 * @SuppressWarnings(PHPMD.ErrorControlOperator)
-	 *
 	 * @param string $url  Request URL.
 	 * @param array  $args Request args.
 	 * @return void
 	 */
 	private function proxy_url_curl( $url, $args ) {
-		// php://temp is a read-write streams that allows temporary data to be stored in a file-like wrapper.
-		// Other than php://memory, php://temp will use a temporary file once the amount of data stored hits a predefined limit (the default is 2 MB).
-		// The location of this temporary file is determined in the same way as the {@see sys_get_temp_dir()} function.
-		if ( WP_DEBUG ) {
-			$this->stream_handle = fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
-		} else {
-			$this->stream_handle = @fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.PHP.NoSilencedErrors.Discouraged, Generic.PHP.NoSilencedErrors.Forbidden
+		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
+		$response = wp_safe_remote_get( $url, $args );
+		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
+
+		$status = wp_remote_retrieve_response_code( $response );
+
+		if ( ! $status ) {
+			http_response_code( 404 );
+			return;
 		}
 
-		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
-		wp_safe_remote_get( $url, $args );
-		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
+		http_response_code( (int) $status );
 
 		rewind( $this->stream_handle );
 		while ( ! feof( $this->stream_handle ) ) {
@@ -323,8 +340,14 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 */
 	private function proxy_url_fallback( $url, $args ) {
 		$response = wp_safe_remote_get( $url, $args );
+		$status   = wp_remote_retrieve_response_code( $response );
 
-		http_response_code( $response['status'] );
+		if ( ! $status ) {
+			http_response_code( 404 );
+			return;
+		}
+
+		http_response_code( (int) $status );
 
 		$headers = wp_remote_retrieve_headers( $response );
 
@@ -485,7 +508,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @return void
 	 */
 	public function modify_curl_configuration( &$handle ) {
-		// Just some safeguard in case cURL is not really available.
+		// Just some safeguard in case cURL is not really available,
+		// despite this method being run in the context of WP_Http_Curl.
 		if ( ! function_exists( 'curl_setopt' ) ) {
 			return;
 		}
@@ -520,7 +544,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		// Extract the status code to re-send that here.
 		if ( 0 === strpos( $header, 'HTTP/' ) ) {
 			$status = explode( ' ', $header );
-			http_response_code( $status[1] );
+			http_response_code( (int) $status[1] );
 			return strlen( $header );
 		}
 
