@@ -209,6 +209,8 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
       <LockContainer>
         <Tooltip
           title={__('Toggle consistent corner radius', 'web-stories')}
+          // Key is needed to remount the component when `borderRadius.locked` changes. Otherwise when toggle is open,
+          // tooltip may cover content.
           key={borderRadius.locked.toString()}
         >
           <StyledLockToggle
