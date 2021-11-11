@@ -21,6 +21,7 @@ import { ContextMenu } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -28,6 +29,7 @@ import styled from 'styled-components';
 import DirectionAware from '../directionAware';
 import { useLayout } from '../../app';
 import { useQuickActions } from '../../app/highlights';
+import { ZOOM_SETTING } from '../../constants';
 import PageMenu from './pagemenu/pageMenu';
 
 const MenusWrapper = styled.div`
@@ -39,12 +41,28 @@ const MenusWrapper = styled.div`
   z-index: 9999;
   pointer-events: auto;
   min-height: 100%;
+  ${({ isZoomed, theme }) =>
+    isZoomed &&
+    `
+    min-height: initial;
+    background-color: ${rgba(theme.colors.standard.black, 0.45)};
+    border-radius: ${theme.borders.radius.small};
+    padding: 8px;
+    margin-left: -16px;
+  `}
+`;
+
+const Divider = styled.div`
+  width: 20px;
+  height: 1px;
+  margin: 13px auto 1px;
+  background-color: ${({ theme }) => theme.colors.divider.primary};
 `;
 
 function PageSideMenu() {
-  const { hasHorizontalOverflow } = useLayout(
-    ({ state: { hasHorizontalOverflow } }) => ({ hasHorizontalOverflow })
-  );
+  const { zoomSetting } = useLayout(({ state: { zoomSetting } }) => ({
+    zoomSetting,
+  }));
   const quickActions = useQuickActions();
 
   /**
@@ -56,25 +74,29 @@ function PageSideMenu() {
     ev.stopPropagation();
   }, []);
 
-  const showQuickActions =
-    !hasHorizontalOverflow && Boolean(quickActions.length);
+  const showQuickActions = Boolean(quickActions.length);
+
+  const isZoomed = zoomSetting !== ZOOM_SETTING.FIT;
 
   return (
     <DirectionAware>
-      <MenusWrapper>
+      <MenusWrapper isZoomed={isZoomed}>
         {showQuickActions && (
-          <ContextMenu
-            isInline
-            isAlwaysVisible
-            isIconMenu
-            disableControlledTabNavigation
-            groupLabel={__(
-              'Group of available options for selected element',
-              'web-stories'
-            )}
-            items={quickActions}
-            onMouseDown={handleMenuBackgroundClick}
-          />
+          <>
+            <ContextMenu
+              isInline
+              isAlwaysVisible
+              isIconMenu
+              disableControlledTabNavigation
+              groupLabel={__(
+                'Group of available options for selected element',
+                'web-stories'
+              )}
+              items={quickActions}
+              onMouseDown={handleMenuBackgroundClick}
+            />
+            {isZoomed && <Divider />}
+          </>
         )}
         <PageMenu />
       </MenusWrapper>
