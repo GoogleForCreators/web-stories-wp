@@ -1,0 +1,85 @@
+/*
+ * Copyright 2021 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import { ContextMenu } from '@web-stories-wp/design-system';
+import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from '@web-stories-wp/react';
+import styled from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import DirectionAware from '../directionAware';
+import { useLayout } from '../../app';
+import { useQuickActions } from '../../app/highlights';
+import PageMenu from './pagemenu/pageMenu';
+
+const MenusWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9999;
+  pointer-events: auto;
+  min-height: 100%;
+`;
+
+function PageSideMenu() {
+  const { hasHorizontalOverflow } = useLayout(
+    ({ state: { hasHorizontalOverflow } }) => ({ hasHorizontalOverflow })
+  );
+  const quickActions = useQuickActions();
+
+  /**
+   * Stop the event from bubbling if the user clicks in between buttons.
+   *
+   * This prevents the selected element in the canvas from losing focus.
+   */
+  const handleMenuBackgroundClick = useCallback((ev) => {
+    ev.stopPropagation();
+  }, []);
+
+  const showQuickActions =
+    !hasHorizontalOverflow && Boolean(quickActions.length);
+
+  return (
+    <DirectionAware>
+      <MenusWrapper>
+        {showQuickActions && (
+          <ContextMenu
+            isInline
+            isAlwaysVisible
+            isIconMenu
+            disableControlledTabNavigation
+            groupLabel={__(
+              'Group of available options for selected element',
+              'web-stories'
+            )}
+            items={quickActions}
+            onMouseDown={handleMenuBackgroundClick}
+          />
+        )}
+        <PageMenu />
+      </MenusWrapper>
+    </DirectionAware>
+  );
+}
+
+export default PageSideMenu;
