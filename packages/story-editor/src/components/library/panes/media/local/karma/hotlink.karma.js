@@ -68,14 +68,12 @@ describe('Embedding hotlinked media', () => {
     await waitFor(() => expect(dialog.textContent).toContain('You can insert'));
 
     await fixture.events.click(input);
-    await fixture.events.keyboard.type('https://example.jpg');
+    await fixture.events.keyboard.type('https://example.jpgef');
     await fixture.events.click(insertBtn);
 
     await fixture.events.sleep(500);
     dialog = screen.getByRole('dialog');
-    await waitFor(() =>
-      expect(dialog.textContent).toContain('Media failed to load')
-    );
+    await waitFor(() => expect(dialog.textContent).toContain('You can insert'));
   });
 
   it('should insert a new media element from valid url', async () => {
