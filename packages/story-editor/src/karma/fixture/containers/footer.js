@@ -31,7 +31,7 @@ export class Footer extends Container {
 
   get carousel() {
     return this._get(
-      this.getByRole('section', { name: 'Page Carousel' }),
+      this.getByRole('region', { name: 'Page Carousel' }),
       'carousel',
       Carousel
     );
