@@ -79,13 +79,13 @@ export default {
   modified: '2020-05-06T22:32:37',
   excerpt: { raw: '' },
   link: 'http://stories.local/?post_type=web-story&p=1',
-  preview_link: 'http://stories.local/?post_type=web-story&p=1',
+  previewLink: 'http://stories.local/?post_type=web-story&p=1',
   storyData: {
     version: DATA_VERSION,
     pages: [],
   },
   permalinkTemplate: 'http://stories3.local/stories/%pagename%/',
-  style_presets: { textStyles: [], colors: [] },
+  stylePresets: { textStyles: [], colors: [] },
   password: '',
   author: { id: 1, name: 'John Doe' },
   capabilities: {

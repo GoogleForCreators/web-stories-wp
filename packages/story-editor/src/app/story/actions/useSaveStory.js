@@ -84,7 +84,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             status,
             slug,
             link,
-            preview_link: previewLink,
+            previewLink: previewLink,
             edit_link: newEditLink,
             embed_post_link: embedPostLink,
             featured_media: featuredMedia,
