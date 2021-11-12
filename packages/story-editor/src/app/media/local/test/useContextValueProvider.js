@@ -113,14 +113,14 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-640x853.jpg',
       },
-      'web-stories-publisher-logo': {
+      webStoriesPublisherLogo: {
         file: 'IMAGE-96x96.jpg',
         width: 96,
         height: 96,
         mimeType: 'image/jpeg',
         sourceUrl: 'http://wp.local/wp-content/uploads/2020/09/IMAGE-96x96.jpg',
       },
-      'web-stories-thumbnail': {
+      webStoriesThumbnail: {
         file: 'IMAGE-150x308.jpg',
         width: 150,
         height: 308,
