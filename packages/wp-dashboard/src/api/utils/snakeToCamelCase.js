@@ -14,25 +14,9 @@
  * limitations under the License.
  */
 /**
- * Takes a string that is in snake case and returns the same
- * term in camel case.
- *
- * @param {string} string The key in snake case
- * @return {string} The key in camel case
+ * External dependencies
  */
-export function snakeToCamelCase(string = '') {
-  if (!string.includes('_') && !string.includes('-')) {
-    return string;
-  }
-
-  return string
-    .toLowerCase()
-    .replace(
-      /([a-z])([_|-][a-z])/g,
-      (_match, group1, group2) =>
-        group1 + group2.toUpperCase().replace('_', '').replace('-', '')
-    );
-}
+import { snakeToCamelCase } from '@web-stories-wp/design-system';
 
 /**
  * Transform a given object keys from snake case to camel case recursively.

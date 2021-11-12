@@ -13,12 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export function snakeToCamelCase(string = '') {
+  if (!string.includes('_') && !string.includes('-')) {
+    return string;
+  }
 
-export { default as isNullOrUndefinedOrEmptyString } from './isNullOrUndefinedOrEmptyString';
-export { noop } from './noop';
-export { default as addQueryArgs } from './addQueryArgs';
-export { default as labelAccessibilityValidator } from './labelAccessibilityValidator';
-export { default as useLiveRegion } from './useLiveRegion';
-export * from './constants';
-export * from './directions';
-export * from './snakeToCamelCase';
+  return string
+    .toLowerCase()
+    .replace(
+      /([a-z])([_|-][a-z])/g,
+      (_match, group1, group2) =>
+        group1 + group2.toUpperCase().replace('_', '').replace('-', '')
+    );
+}

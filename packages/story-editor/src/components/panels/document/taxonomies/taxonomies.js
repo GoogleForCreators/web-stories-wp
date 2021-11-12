@@ -19,6 +19,7 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { snakeToCamelCase } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -50,8 +51,8 @@ function TaxonomiesPanel(props) {
   const availableTaxonomies = taxonomies.filter((taxonomy) => {
     const isVisible = taxonomy?.visibility?.showUi;
     const canAssignTerms = Boolean(
-      capabilities[`assign-${taxonomy?.restBase}`] ||
-        capabilities[`assign-${taxonomy?.slug}`]
+      capabilities[snakeToCamelCase(`assign-${taxonomy?.restBase}`)] ||
+        capabilities[snakeToCamelCase(`assign-${taxonomy?.slug}`)]
     );
 
     return isVisible && canAssignTerms;
@@ -69,8 +70,8 @@ function TaxonomiesPanel(props) {
     >
       {availableTaxonomies.map((taxonomy) => {
         const canCreateTerms = Boolean(
-          capabilities[`create-${taxonomy?.restBase}`] ||
-            capabilities[`create-${taxonomy?.slug}`]
+          capabilities[snakeToCamelCase(`create-${taxonomy?.restBase}`)] ||
+            capabilities[snakeToCamelCase(`create-${taxonomy?.slug}`)]
         );
 
         return (

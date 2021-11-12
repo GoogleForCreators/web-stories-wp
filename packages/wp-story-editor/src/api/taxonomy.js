@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { addQueryArgs, snakeToCamelCase } from '@web-stories-wp/design-system';
 
 /**
  * WordPress dependencies
@@ -26,7 +26,7 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import { snakeToCamelCase, snakeToCamelCaseObjectKeys } from './utils';
+import { snakeToCamelCaseObjectKeys } from './utils';
 
 /**
  * Get all taxonomies.
