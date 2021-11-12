@@ -105,9 +105,9 @@ export const MediaPicker = ({ render, ...props }) => {
   const { showSnackbar } = useSnackbar();
 
   // Media Upload Props
-  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  let allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
   if (isTranscodingEnabled) {
-    allowedMimeTypes.concat(allowedTranscodableMimeTypes);
+    allowedMimeTypes = allowedMimeTypes.concat(allowedTranscodableMimeTypes);
   }
 
   const transcodableMimeTypes = allowedTranscodableMimeTypes.filter(
