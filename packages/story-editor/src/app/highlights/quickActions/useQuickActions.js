@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
@@ -64,18 +65,7 @@ const {
   Scissors,
 } = Icons;
 
-/** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
-
-/**
- * Determines the quick actions to display in the quick
- * actions menu from the selected element.
- *
- * Quick actions should have the same shape as items in
- * the design system's context menu.
- *
- * @return {Array.<MenuItemProps>} an array of quick action objects
- */
-const useQuickActions = () => {
+export const MediaPicker = ({ render, ...props }) => {
   const {
     allowedTranscodableMimeTypes,
     allowedFileTypes,
@@ -83,38 +73,13 @@ const useQuickActions = () => {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
     },
-    capabilities: { hasUploadMediaAction },
-    isRTL,
     MediaUpload,
   } = useConfig();
-  const dispatchStoryEvent = useStoryTriggersDispatch();
-  const {
-    currentPage,
-    selectedElementAnimations,
-    selectedElements,
-    updateElementsById,
-  } = useStory(
-    ({
-      state: { currentPage, selectedElementAnimations, selectedElements },
-      actions: { updateElementsById },
-    }) => ({
-      currentPage,
-      selectedElementAnimations,
+
+  const { selectedElements, updateElementsById } = useStory(
+    ({ state: { selectedElements }, actions: { updateElementsById } }) => ({
       selectedElements,
       updateElementsById,
-    })
-  );
-  const { undo } = useHistory(({ actions: { undo } }) => ({
-    undo,
-  }));
-  const { showSnackbar } = useSnackbar();
-  const { setHighlights } = useHighlights(({ setHighlights }) => ({
-    setHighlights,
-  }));
-  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
-    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
-      hasTrimMode,
-      toggleTrimMode,
     })
   );
   const { resetWithFetch, updateVideoIsMuted, optimizeVideo, optimizeGif } =
@@ -137,6 +102,7 @@ const useQuickActions = () => {
     );
 
   const { isTranscodingEnabled } = useFFmpeg();
+  const { showSnackbar } = useSnackbar();
 
   // Media Upload Props
   const allowedMimeTypes = useMemo(() => {
@@ -237,23 +203,82 @@ const useQuickActions = () => {
       updateVideoIsMuted,
     ]
   );
+  return (
+    <MediaUpload
+      title={__('Replace media', 'web-stories')}
+      buttonInsertText={__('Insert media', 'web-stories')}
+      onSelect={handleMediaSelect}
+      onClose={resetWithFetch}
+      type={allowedMimeTypes}
+      onSelectErrorMessage={onSelectErrorMessage}
+      // Only way to access the open function is to dive
+      // into the MediaUpload component in the render prop.
+      render={(open) => render({ onClick: open })}
+      {...props}
+    />
+  );
+};
+MediaPicker.propTypes = {
+  buttonInsertText: PropTypes.string,
+  cropParams: PropTypes.bool,
+  multiple: PropTypes.bool,
+  onClose: PropTypes.func,
+  onPermissionError: PropTypes.func,
+  onSelect: PropTypes.func,
+  onSelectErrorMessage: PropTypes.string,
+  render: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  type: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+};
 
-  const MediaPicker = useCallback(
-    ({ render, ...props }) => (
-      <MediaUpload
-        title={__('Replace media', 'web-stories')}
-        buttonInsertText={__('Insert media', 'web-stories')}
-        onSelect={handleMediaSelect}
-        onClose={resetWithFetch}
-        type={allowedMimeTypes}
-        onSelectErrorMessage={onSelectErrorMessage}
-        // Only way to access the open function is to dive
-        // into the MediaUpload component in the render prop.
-        render={(open) => render({ onClick: open })}
-        {...props}
-      />
-    ),
-    [allowedMimeTypes, handleMediaSelect, resetWithFetch, onSelectErrorMessage]
+/** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
+
+/**
+ * Determines the quick actions to display in the quick
+ * actions menu from the selected element.
+ *
+ * Quick actions should have the same shape as items in
+ * the design system's context menu.
+ *
+ * @return {Array.<MenuItemProps>} an array of quick action objects
+ */
+const useQuickActions = () => {
+  const {
+    capabilities: { hasUploadMediaAction },
+    isRTL,
+  } = useConfig();
+  const dispatchStoryEvent = useStoryTriggersDispatch();
+  const {
+    currentPage,
+    selectedElementAnimations,
+    selectedElements,
+    updateElementsById,
+  } = useStory(
+    ({
+      state: { currentPage, selectedElementAnimations, selectedElements },
+      actions: { updateElementsById },
+    }) => ({
+      currentPage,
+      selectedElementAnimations,
+      selectedElements,
+      updateElementsById,
+    })
+  );
+  const { undo } = useHistory(({ actions: { undo } }) => ({
+    undo,
+  }));
+  const { showSnackbar } = useSnackbar();
+  const { setHighlights } = useHighlights(({ setHighlights }) => ({
+    setHighlights,
+  }));
+  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
+    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
+      hasTrimMode,
+      toggleTrimMode,
+    })
   );
 
   const undoRef = useRef(undo);
@@ -558,7 +583,6 @@ const useQuickActions = () => {
     foregroundCommonActions,
     hasUploadMediaAction,
     dispatchStoryEvent,
-    MediaPicker,
     selectedElement?.type,
   ]);
 
@@ -774,7 +798,6 @@ const useQuickActions = () => {
     handleElementReset,
     handleFocusAnimationPanel,
     hasUploadMediaAction,
-    MediaPicker,
     resetProperties,
     selectedElement,
     showClearAction,
