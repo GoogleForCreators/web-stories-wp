@@ -54,7 +54,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           stylePresets: globalStoryStyles,
           password,
           previewLink: previewLink,
-          edit_link: editLink,
+          editLink: editLink,
           embed_post_link: embedPostLink,
           author,
           capabilities = {
