@@ -25,7 +25,7 @@ export function createStory(properties = {}) {
     permalinkTemplate: 'http://localhost:8899/web-stories/%pagename%',
     stylePresets: { colors: [TEST_COLOR] },
     author: { id: 1, name: 'John Doe' },
-    featured_media: { height: 0, id: 0, url: '', width: 0 },
+    featuredMedia: { height: 0, id: 0, url: '', width: 0 },
     publisher_logo: { height: 0, id: 0, url: '', width: 0 },
     lockUser: {
       id: 0,

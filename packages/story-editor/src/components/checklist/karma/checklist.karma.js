@@ -533,7 +533,7 @@ describe('Checklist integration - Card visibility', () => {
                 version: DATA_VERSION,
                 pages: [],
               },
-              featured_media: 2,
+              featuredMedia: 2,
               permalinkTemplate: 'http://stories3.local/stories/%pagename%/',
               stylePresets: { textStyles: [], colors: [] },
               password: '',
