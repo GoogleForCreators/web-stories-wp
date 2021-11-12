@@ -19,10 +19,10 @@ export default [
     name: 'Categories',
     slug: 'web_story_category',
     capabilities: {
-      manage_terms: 'manage_categories',
-      edit_terms: 'manage_categories',
-      delete_terms: 'manage_categories',
-      assign_terms: 'edit_posts',
+      manageTerms: 'manage_categories',
+      editTerms: 'manage_categories',
+      deleteTerms: 'manage_categories',
+      assignTerms: 'edit_posts',
     },
     description: 'Story Categories',
     labels: {
@@ -71,10 +71,10 @@ export default [
     name: 'Tags',
     slug: 'web_story_tag',
     capabilities: {
-      manage_terms: 'manage_categories',
-      edit_terms: 'manage_categories',
-      delete_terms: 'manage_categories',
-      assign_terms: 'edit_posts',
+      manageTerms: 'manage_categories',
+      editTerms: 'manage_categories',
+      deleteTerms: 'manage_categories',
+      assignTerms: 'edit_posts',
     },
     description: 'Story Tags',
     labels: {
@@ -123,10 +123,10 @@ export default [
     name: 'Colors',
     slug: 'story_color',
     capabilities: {
-      manage_terms: 'manage_categories',
-      edit_terms: 'manage_categories',
-      delete_terms: 'manage_categories',
-      assign_terms: 'edit_posts',
+      manageTerms: 'manage_categories',
+      editTerms: 'manage_categories',
+      deleteTerms: 'manage_categories',
+      assignTerms: 'edit_posts',
     },
     description: 'Story Colors',
     labels: {
@@ -176,10 +176,10 @@ export default [
     name: 'Verticals',
     slug: 'story-vertical',
     capabilities: {
-      manage_terms: 'manage_categories',
-      edit_terms: 'manage_categories',
-      delete_terms: 'manage_categories',
-      assign_terms: 'edit_posts',
+      manageTerms: 'manage_categories',
+      editTerms: 'manage_categories',
+      deleteTerms: 'manage_categories',
+      assignTerms: 'edit_posts',
     },
     description: 'Story Verticals',
     labels: {
