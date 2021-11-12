@@ -45,7 +45,6 @@ function VideoTrimProvider({ children }) {
     setStartOffset,
     setEndOffset,
     setVideoNode,
-    resetOffsets,
     setIsDraggingHandles,
   } = useVideoNode(videoData);
 
@@ -93,7 +92,6 @@ function VideoTrimProvider({ children }) {
       setVideoNode,
       setStartOffset,
       setEndOffset,
-      resetOffsets,
       setIsDraggingHandles,
     },
   };

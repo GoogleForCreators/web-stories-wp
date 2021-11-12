@@ -22,8 +22,9 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+import { firePointerEvent } from '../../../../testUtils';
 import { LINE_LENGTH } from '../../constants';
-import { arrange, firePointerEvent } from './_utils';
+import { arrange } from './_utils';
 
 // There's a slight offset, so +1
 const OFFSET20 = LINE_LENGTH * 0.2 + 1;

@@ -13,31 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * Internal dependencies
+ * External dependencies
  */
-import {
-  PublishPanel,
-  ExcerptPanel,
-  SlugPanel,
-  StatusPanel,
-  PageAdvancementPanel,
-  BackgroundAudioPanel,
-  TaxonomiesPanel,
-} from '../../panels/document';
+import { render } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '@web-stories-wp/design-system';
 
-function DocumentInspector() {
-  return (
-    <>
-      <StatusPanel />
-      <PublishPanel />
-      <ExcerptPanel />
-      <SlugPanel />
-      <PageAdvancementPanel />
-      <BackgroundAudioPanel />
-      <TaxonomiesPanel />
-    </>
-  );
-}
+// eslint-disable-next-line react/prop-types
+const WithThemeProvider = ({ children }) => {
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+};
 
-export default DocumentInspector;
+const renderWithTheme = (ui, options) =>
+  render(ui, {
+    wrapper: WithThemeProvider,
+    ...options,
+  });
+
+export default renderWithTheme;

@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { StoryContext } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import StoryContext from '../../../../../app/story/context';
-import { renderWithTheme } from '../../../../../testUtils';
+import { renderWithTheme } from '../../../../testUtils';
 import StatusPanel from '../status';
 
 function arrange(

@@ -32,6 +32,9 @@
     "wp-coding-standards/wpcs": "^2.3",
     "yoast/wp-test-utils": "^1.0.0"
   },
+  "suggest": {
+    "ext-curl": "Used for modifying cURL requests in CORS proxy"
+  },
   "config": {
     "discard-changes": true,
     "platform": {

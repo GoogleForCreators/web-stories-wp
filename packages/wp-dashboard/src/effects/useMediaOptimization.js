@@ -51,7 +51,7 @@ export default function useMediaOptimization() {
     trackEvent('video_optimization_optin', {
       status: mediaOptimization ? 'off' : 'on',
     });
-    showSnackbar({ message: SUCCESS.SETTINGS.UPDATED, dismissable: true });
+    showSnackbar({ message: SUCCESS.SETTINGS.UPDATED, dismissible: true });
   }, [mediaOptimization, showSnackbar, toggleWebStoriesMediaOptimization]);
 
   return {

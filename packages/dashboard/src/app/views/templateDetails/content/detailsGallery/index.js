@@ -106,9 +106,7 @@ function DetailsGallery({
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.CIRCLE}
         aria-label={__('View previous template', 'web-stories')}
-        onClick={({ currentTarget }) => {
-          // blurring target here because memoized button remains active on click
-          currentTarget.blur();
+        onClick={() => {
           switchToTemplateByOffset(-1);
         }}
         disabled={!orderedTemplatesLength || activeTemplateIndex === 0}
@@ -123,9 +121,7 @@ function DetailsGallery({
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.CIRCLE}
         aria-label={__('View next template', 'web-stories')}
-        onClick={({ currentTarget }) => {
-          // blurring target here because memoized button remains active on click
-          currentTarget.blur();
+        onClick={() => {
           switchToTemplateByOffset(1);
         }}
         disabled={

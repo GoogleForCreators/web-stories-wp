@@ -102,7 +102,7 @@ export default function useFetchMediaEffect({
         fetchMediaError({ provider, pageToken });
         showSnackbar({
           message: PROVIDERS[provider].fetchMediaErrorMessage,
-          dismissable: true,
+          dismissible: true,
         });
       }
     }
