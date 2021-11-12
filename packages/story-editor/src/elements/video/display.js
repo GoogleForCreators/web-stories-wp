@@ -118,11 +118,13 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
         >
           {url && <source src={url} type={resource.mimeType} />}
           {tracks &&
-            tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
+            tracks.map(({ srclang, label, track: src, id: key }, i) => (
               <track
                 srcLang={srclang}
                 label={label}
-                kind={kind}
+                // Hides the track from the user.
+                // Displaying happens in VideoCaptionsLayer instead.
+                kind="metadata"
                 src={src}
                 key={key}
                 default={i === 0}
