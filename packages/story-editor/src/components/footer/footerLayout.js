@@ -50,7 +50,7 @@ const Area = styled.div`
   flex-direction: column;
 `;
 
-function WorkspaceLayout() {
+function FooterLayout() {
   return (
     <Wrapper aria-label={__('Workspace Footer', 'web-stories')}>
       <Area area="carousel">
@@ -66,4 +66,4 @@ function WorkspaceLayout() {
   );
 }
 
-export default WorkspaceLayout;
+export default FooterLayout;

@@ -14,4 +14,29 @@
  * limitations under the License.
  */
 
-export { default } from './workspaceFooter';
+/**
+ * Internal dependencies
+ */
+import { Fixture } from '../../../karma';
+
+describe('Footer menu', () => {
+  let fixture;
+
+  beforeEach(async () => {
+    fixture = new Fixture();
+    await fixture.render();
+  });
+
+  afterEach(() => {
+    fixture.restore();
+  });
+
+  it('should show correct tooltip on hover', async () => {
+    const { gridViewToggle } = fixture.editor.footer;
+    await fixture.events.mouse.moveRel(gridViewToggle, '50%', '50%', {
+      steps: 2,
+    });
+
+    await fixture.snapshot('Grid view tooltip visible');
+  });
+});

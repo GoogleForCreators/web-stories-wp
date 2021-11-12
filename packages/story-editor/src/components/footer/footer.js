@@ -31,7 +31,7 @@ import {
  */
 import { ChecklistProvider } from '../checklist';
 import { KeyboardShortcutsMenuProvider } from '../keyboardShortcutsMenu/keyboardShortcutsMenuContext';
-import WorkspaceLayout from './workspaceLayout';
+import FooterLayout from './footerLayout';
 import { VERY_WIDE_WORKSPACE_LIMIT, VERY_WIDE_MARGIN } from './constants';
 
 const Outer = styled.section`
@@ -41,7 +41,7 @@ const Inner = styled(Outer)`
   margin-right: ${({ marginRight }) => marginRight}px;
 `;
 
-function WorkspaceFooter() {
+function Footer() {
   const ref = useRef();
   const [workspaceWidth, setWorkspaceWidth] = useState(0);
 
@@ -56,7 +56,7 @@ function WorkspaceFooter() {
       <KeyboardShortcutsMenuProvider>
         <Outer ref={ref}>
           <Inner marginRight={margin}>
-            <WorkspaceLayout />
+            <FooterLayout />
           </Inner>
         </Outer>
       </KeyboardShortcutsMenuProvider>
@@ -65,4 +65,4 @@ function WorkspaceFooter() {
 }
 
 // Don't rerender the workspace footer needlessly e.g. on element selection change.
-export default memo(WorkspaceFooter);
+export default memo(Footer);

@@ -247,7 +247,7 @@ const QuickActionsArea = styled(PaddedPage)`
   padding-right: 0;
 `;
 
-const WorkspaceFooterArea = styled(Area).attrs({
+const FooterArea = styled(Area).attrs({
   area: 'w',
   showOverflow: true,
 })``;
@@ -455,7 +455,7 @@ export {
   NavPrevArea,
   NavNextArea,
   QuickActionsArea,
-  WorkspaceFooterArea,
+  FooterArea,
   useLayoutParams,
   useLayoutParamsCssVars,
 };

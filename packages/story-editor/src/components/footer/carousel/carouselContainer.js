@@ -26,7 +26,7 @@ import { memo, useRef, useState, useResizeEffect } from '@web-stories-wp/react';
 import CarouselLayout from './carouselLayout';
 import CarouselProvider from './carouselProvider';
 
-const Wrapper = styled.section`
+const Wrapper = styled.div`
   height: 100%;
   width: 100%;
 `;

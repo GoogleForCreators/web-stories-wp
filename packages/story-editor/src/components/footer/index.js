@@ -14,29 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { Fixture } from '../../../../karma';
-
-describe('Carousel menu', () => {
-  let fixture;
-
-  beforeEach(async () => {
-    fixture = new Fixture();
-    await fixture.render();
-  });
-
-  afterEach(() => {
-    fixture.restore();
-  });
-
-  it('should show correct tooltip on hover', async () => {
-    const { gridViewToggle } = fixture.editor.carousel;
-    await fixture.events.mouse.moveRel(gridViewToggle, '50%', '50%', {
-      steps: 2,
-    });
-
-    await fixture.snapshot('Grid view tooltip visible');
-  });
-});
+export { default } from './footer';

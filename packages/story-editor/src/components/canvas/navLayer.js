@@ -27,10 +27,10 @@ import Proptypes from 'prop-types';
  */
 import { useQuickActions } from '../../app/highlights';
 import DirectionAware from '../directionAware';
-import WorkspaceFooter from '../workspaceFooter';
+import Footer from '../footer';
 import { useLayout } from '../../app';
 import {
-  WorkspaceFooterArea,
+  FooterArea,
   HeadArea,
   Layer,
   QuickActionsArea,
@@ -79,9 +79,9 @@ function NavLayer({ header }) {
           </QuickActionsArea>
         </DirectionAware>
       )}
-      <WorkspaceFooterArea pointerEvents="initial">
-        <WorkspaceFooter />
-      </WorkspaceFooterArea>
+      <FooterArea pointerEvents="initial">
+        <Footer />
+      </FooterArea>
     </Layer>
   );
 }
