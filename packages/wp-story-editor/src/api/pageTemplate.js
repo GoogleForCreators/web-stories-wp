@@ -37,8 +37,12 @@ export function getCustomPageTemplates(config, page = 1) {
   return apiFetch({ path }).then(({ headers, body }) => {
     const totalPages = parseInt(headers['X-WP-TotalPages']);
     const templates = body.map((template) => {
-      return { ...template['story_data'], templateId: template.id };
+      const storyData = template['story_data'];
+      storyData.elements = storyData.elements.map(snakeToCamelCaseObjectKeys);
+
+      return { ...storyData, templateId: template.id };
     });
+
     return {
       templates,
       hasMore: totalPages > page,

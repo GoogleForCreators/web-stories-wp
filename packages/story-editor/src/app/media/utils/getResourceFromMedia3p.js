@@ -232,7 +232,7 @@ function mediaUrlToImageSizeDescription(media, url, originalSize) {
   }
   return {
     file: media.name,
-    source_url: url.url,
+    sourceUrl: url.url,
     mime_type: url.mimeType,
     width: url.width ?? provider.defaultPreviewWidth,
     height:
@@ -267,7 +267,7 @@ function getImageResourceFromMedia3p(m) {
     type: m.type.toLowerCase(),
     mimeType: imageUrls.full.mime_type,
     creationDate: m.createTime,
-    src: imageUrls.full.source_url,
+    src: imageUrls.full.sourceUrl,
     width: imageUrls.full.width,
     height: imageUrls.full.height,
     alt: m.description || m.title || m.name,
@@ -289,7 +289,7 @@ function getVideoResourceFromMedia3p(m) {
     type: m.type.toLowerCase(),
     mimeType: videoUrls.full.mime_type,
     creationDate: m.createTime,
-    src: videoUrls.full.source_url,
+    src: videoUrls.full.sourceUrl,
     width: videoUrls.full.width,
     height: videoUrls.full.height,
     poster: m.imageUrls[0].url,
@@ -315,7 +315,7 @@ function getGifResourceFromMedia3p(m) {
     type: m.type.toLowerCase(),
     mimeType: imageUrls.full.mime_type,
     creationDate: m.createTime,
-    src: imageUrls.full.source_url,
+    src: imageUrls.full.sourceUrl,
     width: imageUrls.full.width,
     height: imageUrls.full.height,
     poster: previewUrl,
@@ -327,7 +327,7 @@ function getGifResourceFromMedia3p(m) {
     sizes: imageUrls,
     output: {
       mimeType: videoUrls.mp4.full.mime_type,
-      src: videoUrls.mp4.full.source_url,
+      src: videoUrls.mp4.full.sourceUrl,
     },
     attribution: getAttributionFromMedia3p(m),
   });
