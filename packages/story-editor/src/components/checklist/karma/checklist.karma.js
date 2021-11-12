@@ -524,7 +524,7 @@ describe('Checklist integration - Card visibility', () => {
               author: 1,
               slug: '',
               date: '2020-05-06T22:32:37',
-              date_gmt: '2020-05-06T22:32:37',
+              dateGmt: '2020-05-06T22:32:37',
               modified: '2020-05-06T22:32:37',
               excerpt: { raw: '' },
               link: 'http://stories.local/?post_type=web-story&p=1',
