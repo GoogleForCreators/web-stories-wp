@@ -120,7 +120,7 @@ describe('TaxonomiesPanel', () => {
           labels: {},
           hierarchical: false,
           visibility: {
-            show_ui: true,
+            showUi: true,
           },
         },
         {
@@ -134,7 +134,7 @@ describe('TaxonomiesPanel', () => {
           },
           hierarchical: true,
           visibility: {
-            show_ui: true,
+            showUi: true,
           },
         },
       ],

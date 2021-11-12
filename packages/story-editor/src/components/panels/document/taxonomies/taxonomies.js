@@ -48,7 +48,7 @@ function TaxonomiesPanel(props) {
   }
 
   const availableTaxonomies = taxonomies.filter((taxonomy) => {
-    const isVisible = taxonomy?.visibility?.show_ui;
+    const isVisible = taxonomy?.visibility?.showUi;
     const canAssignTerms = Boolean(
       capabilities[`assign-${taxonomy?.restBase}`] ||
         capabilities[`assign-${taxonomy?.slug}`]
