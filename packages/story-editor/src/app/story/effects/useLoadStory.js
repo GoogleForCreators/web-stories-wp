@@ -61,7 +61,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
             publish: false,
             assignAuthor: false,
           },
-          lock_user: lockUser,
+          lockUser,
           featured_media: featuredMedia,
           publisher_logo: publisherLogo,
           taxonomies,

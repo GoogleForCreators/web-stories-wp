@@ -96,7 +96,7 @@ export default {
     assignWebStoryCategory: true,
     createWebStoryCategory: true,
   },
-  lock_user: {
+  lockUser: {
     id: 0,
     name: '',
     avatar: '',
