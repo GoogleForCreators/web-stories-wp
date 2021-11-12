@@ -16,8 +16,6 @@
     "title": { "raw": "brochure", "rendered": "brochure" },
     "author": 1,
     "featuredMedia": 0,
-    "comment_status": "open",
-    "ping_status": "closed",
     "template": "",
     "meta": {
       "web_stories_is_poster": false,
@@ -88,8 +86,6 @@
     "title": { "raw": "testImage", "rendered": "testImage" },
     "author": 1,
     "featuredMedia": 0,
-    "comment_status": "open",
-    "ping_status": "closed",
     "template": "",
     "meta": {
       "web_stories_is_poster": false,
