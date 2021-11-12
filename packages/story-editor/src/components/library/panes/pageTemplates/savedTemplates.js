@@ -17,33 +17,33 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import {
-  useState,
-  useCallback,
-  useRef,
-  useLayoutEffect,
-  useEffect,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import {
+  LoadingSpinner,
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-  LoadingSpinner,
 } from '@web-stories-wp/design-system';
-import { getCanvasBlob } from '@web-stories-wp/media';
+import { __ } from '@web-stories-wp/i18n';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../../../app';
 import { useAPI } from '../../../../app/api';
+import { useUploader } from '../../../../app/uploader';
+// import storyPageToBlob from '../../../../utils/storyPageToBlob';
 import Dialog from '../../../dialog';
 import useLibrary from '../../useLibrary';
 import { LoadingContainer } from '../shared';
-import { useConfig } from '../../../../app';
-import { useUploader } from '../../../../app/uploader';
 import TemplateList from './templateList';
 
 const Wrapper = styled.div`
@@ -135,6 +135,9 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
   });
 
   // TODO: Maybe use proper reducer here like in useContextValueProvider.
+  // I think we'll need to take some measures with our approach here
+  // to not bog down the users machine. Possibly use the Background
+  // task api like the carousel and do them sequentially?
   const generateMissingImages = useCallback(
     async (pageTemplate) => {
       if (pageTemplate?.image?.url) {
@@ -150,18 +153,8 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
 
       imageBackFillState.current.processing.push(pageTemplate.id);
 
-      // TODO: Render page template and then use html-to-image on it.
-      // Maybe extract into reusable function.
-
-      const htmlToImage = await import(
-        /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
-      );
-
-      // TODO: This needs to be a ref to an actual rendered node.
-      const TODO_REF = null;
-
-      const imageCanvas = await htmlToImage.toCanvas(TODO_REF);
-      const imageBlob = await getCanvasBlob(imageCanvas);
+      const imageBlob = null;
+      // const imageBlob = await storyPageToBlob(pageTemplate);
 
       try {
         const resource = await uploadFile(imageBlob, {
