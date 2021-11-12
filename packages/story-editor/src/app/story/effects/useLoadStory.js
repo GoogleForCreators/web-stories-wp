@@ -49,7 +49,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           modified,
           excerpt: { raw: excerpt },
           link,
-          story_data: storyDataRaw,
+          storyData: storyDataRaw,
           permalinkTemplate: permalinkTemplate,
           style_presets: globalStoryStyles,
           password,

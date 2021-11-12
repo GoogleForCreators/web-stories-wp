@@ -738,7 +738,7 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             ...storyResponse,
-            story_data: {
+            storyData: {
               version: DATA_VERSION,
               pages: this._pages,
             },
@@ -750,7 +750,7 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             ...storyResponse,
-            story_data: {
+            storyData: {
               version: DATA_VERSION,
               pages: this._pages,
             },

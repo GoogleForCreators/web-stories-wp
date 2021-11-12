@@ -80,7 +80,7 @@ export default {
   excerpt: { raw: '' },
   link: 'http://stories.local/?post_type=web-story&p=1',
   preview_link: 'http://stories.local/?post_type=web-story&p=1',
-  story_data: {
+  storyData: {
     version: DATA_VERSION,
     pages: [],
   },
