@@ -34,7 +34,7 @@ function getSmallestUrlForWidth(minWidth, resource) {
       .filter((s) => aspectRatiosApproximatelyMatch(s, resource))
       .find((s) => s.width >= minWidth * window.devicePixelRatio);
     if (smallestMedia) {
-      return smallestMedia.source_url;
+      return smallestMedia.sourceUrl;
     }
   }
   return resource.src;

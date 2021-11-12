@@ -26,12 +26,12 @@ describe('calculateSrcSet', () => {
       height: 800,
       sizes: {
         size1: {
-          source_url: 'URL1',
+          sourceUrl: 'URL1',
           width: 200,
           height: 400,
         },
         size2: {
-          source_url: 'URL2',
+          sourceUrl: 'URL2',
           width: 400,
           height: 800,
         },
@@ -48,17 +48,17 @@ describe('calculateSrcSet', () => {
       height: 800,
       sizes: {
         size1: {
-          source_url: 'URL1',
+          sourceUrl: 'URL1',
           width: 200,
           height: 400,
         },
         size2: {
-          source_url: 'URL2',
+          sourceUrl: 'URL2',
           width: 400,
           height: 800,
         },
         size3: {
-          source_url: 'URL3',
+          sourceUrl: 'URL3',
           width: 400,
           height: 410,
         },
@@ -75,22 +75,22 @@ describe('calculateSrcSet', () => {
       height: 1600,
       sizes: {
         size1: {
-          source_url: 'URL1',
+          sourceUrl: 'URL1',
           width: 200,
           height: 400,
         },
         size2: {
-          source_url: 'URL2',
+          sourceUrl: 'URL2',
           width: 400,
           height: 800,
         },
         size3: {
-          source_url: 'URL3',
+          sourceUrl: 'URL3',
           width: 200,
           height: 400,
         },
         size4: {
-          source_url: 'URL3',
+          sourceUrl: 'URL3',
           width: 800,
           height: 1600,
         },
@@ -107,9 +107,9 @@ describe('calculateSrcSet', () => {
       width: 400,
       height: 200,
       sizes: {
-        img1: { height: 100, source_url: 'small-url' },
+        img1: { height: 100, sourceUrl: 'small-url' },
         img2: { width: 300, height: 150 },
-        img3: { width: 400, height: 200, source_url: 'large-url' },
+        img3: { width: 400, height: 200, sourceUrl: 'large-url' },
       },
     };
 
@@ -123,9 +123,9 @@ describe('calculateSrcSet', () => {
       width: 500,
       height: 500,
       sizes: {
-        img1: { width: 100, height: 100, source_url: 'small url' },
-        img2: { width: 200, height: 200, source_url: 'medium url' },
-        img3: { width: 300, height: 300, source_url: 'large url' },
+        img1: { width: 100, height: 100, sourceUrl: 'small url' },
+        img2: { width: 200, height: 200, sourceUrl: 'medium url' },
+        img3: { width: 300, height: 300, sourceUrl: 'large url' },
       },
     };
 
@@ -139,9 +139,9 @@ describe('calculateSrcSet', () => {
       width: 500,
       height: 500,
       sizes: {
-        img1: { width: 100, height: 100, source_url: 'small%20url' },
-        img2: { width: 200, height: 200, source_url: 'medium%20url' },
-        img3: { width: 300, height: 300, source_url: 'large%20url' },
+        img1: { width: 100, height: 100, sourceUrl: 'small%20url' },
+        img2: { width: 200, height: 200, sourceUrl: 'medium%20url' },
+        img3: { width: 300, height: 300, sourceUrl: 'large%20url' },
       },
     };
 
@@ -157,9 +157,9 @@ describe('calculateSrcSet', () => {
       width: 500,
       height: 500,
       sizes: {
-        img1: { width: 100, height: 100, source_url: 'small      url' },
-        img2: { width: 200, height: 200, source_url: 'medium     url' },
-        img3: { width: 300, height: 300, source_url: 'large      url' },
+        img1: { width: 100, height: 100, sourceUrl: 'small      url' },
+        img2: { width: 200, height: 200, sourceUrl: 'medium     url' },
+        img3: { width: 300, height: 300, sourceUrl: 'large      url' },
       },
     };
 
@@ -175,9 +175,9 @@ describe('calculateSrcSet', () => {
       width: 500,
       height: 500,
       sizes: {
-        img1: { width: 100, height: 100, source_url: '' },
-        img2: { width: 200, height: 200, source_url: '' },
-        img3: { width: 300, height: 300, source_url: '' },
+        img1: { width: 100, height: 100, sourceUrl: '' },
+        img2: { width: 200, height: 200, sourceUrl: '' },
+        img3: { width: 300, height: 300, sourceUrl: '' },
       },
     };
 
@@ -194,107 +194,107 @@ describe('calculateSrcSet', () => {
         thumbnail: {
           width: 300,
           height: 300,
-          source_url: 'image-300x300.jpg',
+          sourceUrl: 'image-300x300.jpg',
         },
         medium: {
           width: 225,
           height: 300,
-          source_url: 'image-225x300.jpg',
+          sourceUrl: 'image-225x300.jpg',
         },
         medium_large: {
           width: 768,
           height: 1024,
-          source_url: 'image-768x1024.jpg',
+          sourceUrl: 'image-768x1024.jpg',
         },
         large: {
           width: 768,
           height: 1024,
-          source_url: 'image-768x1024.jpg',
+          sourceUrl: 'image-768x1024.jpg',
         },
         'rss-image': {
           width: 225,
           height: 300,
-          source_url: 'image-225x300.jpg',
+          sourceUrl: 'image-225x300.jpg',
         },
         'featured-long': {
           width: 600,
           height: 850,
-          source_url: 'image-600x850.jpg',
+          sourceUrl: 'image-600x850.jpg',
         },
         'featured-wide': {
           width: 800,
           height: 560,
-          source_url: 'image-800x560.jpg',
+          sourceUrl: 'image-800x560.jpg',
         },
         'featured-square': {
           width: 600,
           height: 600,
-          source_url: 'image-600x600.jpg',
+          sourceUrl: 'image-600x600.jpg',
         },
         'single-post-featured': {
           width: 1000,
           height: 500,
-          source_url: 'image-1000x500.jpg',
+          sourceUrl: 'image-1000x500.jpg',
         },
         wp_rp_thumbnail: {
           width: 400,
           height: 400,
-          source_url: 'image-400x400.jpg',
+          sourceUrl: 'image-400x400.jpg',
         },
         thumbnail_old_300x300: {
           width: '300',
           height: '300',
-          source_url: 'image-300x300.jpg',
+          sourceUrl: 'image-300x300.jpg',
         },
         medium_old_225x300: {
           width: '225',
           height: '300',
-          source_url: 'image-225x300.jpg',
+          sourceUrl: 'image-225x300.jpg',
         },
         medium_large_old_768x1024: {
           width: '768',
           height: '1024',
-          source_url: 'image-768x1024.jpg',
+          sourceUrl: 'image-768x1024.jpg',
         },
         large_old_768x1024: {
           width: '768',
           height: '1024',
-          source_url: 'image-768x1024.jpg',
+          sourceUrl: 'image-768x1024.jpg',
         },
         'rss-image_old_225x300': {
           width: '225',
           height: '300',
-          source_url: 'image-225x300.jpg',
+          sourceUrl: 'image-225x300.jpg',
         },
         'square-entry-image': {
           width: '400',
           height: '400',
-          source_url: 'image-400x400.jpg',
+          sourceUrl: 'image-400x400.jpg',
         },
         'vertical-entry-image': {
           width: '600',
           height: '850',
-          source_url: 'image-600x850.jpg',
+          sourceUrl: 'image-600x850.jpg',
         },
         'small-vertical-entry-image': {
           width: '150',
           height: '200',
-          source_url: 'image-150x200.jpg',
+          sourceUrl: 'image-150x200.jpg',
         },
         'horizontal-entry-image': {
           width: '775',
           height: '500',
-          source_url: 'image-775x500.jpg',
+          sourceUrl: 'image-775x500.jpg',
         },
         wp_rp_thumbnail_old_400x400: {
           width: '400',
           height: '400',
-          source_url: 'image-400x400.jpg',
+          sourceUrl: 'image-400x400.jpg',
         },
         full: {
           width: 1000,
           height: 1333,
-          source_url: 'image.jpg',
+          sourceUrl: 'image.jpg',
         },
       },
     };
@@ -314,19 +314,19 @@ describe('calculateSrcSet', () => {
         thumbnail: {
           width: 150,
           height: 200,
-          source_url:
+          sourceUrl:
             'https://example.com/images/w_150,h_200,c_scale/image.jpg?_i=AA',
         },
         medium: {
           width: 225,
           height: 300,
-          source_url:
+          sourceUrl:
             'https://example.com/images/w_225,h_300,c_scale/image.jpg?_i=AA',
         },
         full: {
           width: 640,
           height: 853,
-          source_url:
+          sourceUrl:
             'https://example.com/images/w_640,h_853,c_scale/image.jpg?_i=AA',
         },
       },
