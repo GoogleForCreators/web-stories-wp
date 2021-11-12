@@ -105,27 +105,14 @@ export const MediaPicker = ({ render, ...props }) => {
   const { showSnackbar } = useSnackbar();
 
   // Media Upload Props
-  const allowedMimeTypes = useMemo(() => {
-    if (isTranscodingEnabled) {
-      return [
-        ...allowedTranscodableMimeTypes,
-        ...allowedImageMimeTypes,
-        ...allowedVideoMimeTypes,
-      ];
-    }
-    return [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
-  }, [
-    allowedImageMimeTypes,
-    allowedVideoMimeTypes,
-    isTranscodingEnabled,
-    allowedTranscodableMimeTypes,
-  ]);
+  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  if (isTranscodingEnabled) {
+    allowedMimeTypes.concat(allowedTranscodableMimeTypes);
+  }
 
-  const transcodableMimeTypes = useMemo(() => {
-    return allowedTranscodableMimeTypes.filter(
-      (x) => !allowedVideoMimeTypes.includes(x)
-    );
-  }, [allowedTranscodableMimeTypes, allowedVideoMimeTypes]);
+  const transcodableMimeTypes = allowedTranscodableMimeTypes.filter(
+    (x) => !allowedVideoMimeTypes.includes(x)
+  );
 
   let onSelectErrorMessage = __(
     'No file types are currently supported.',
