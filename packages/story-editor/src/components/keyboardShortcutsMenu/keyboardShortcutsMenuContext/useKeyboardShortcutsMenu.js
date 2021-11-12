@@ -25,11 +25,5 @@ import { useContextSelector, identity } from '@web-stories-wp/react';
 import Context from './context';
 
 export function useKeyboardShortcutsMenu(selector) {
-  const context = useContextSelector(Context, selector ?? identity);
-  if (!context) {
-    throw new Error(
-      'Must use `useKeyboardShortcutsMenu` within <keyboardShortcutsMenu.Provider />'
-    );
-  }
-  return context;
+  return useContextSelector(Context, selector ?? identity);
 }
