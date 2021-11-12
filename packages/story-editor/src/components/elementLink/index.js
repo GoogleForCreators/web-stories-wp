@@ -18,9 +18,10 @@ export function getLinkFromElement(element) {
   return element.link || null;
 }
 
-export function createLink({ url = '', ...rest } = {}) {
+export function createLink({ url = '', rel = [], ...rest } = {}) {
   return {
     url,
+    rel,
     ...rest,
   };
 }

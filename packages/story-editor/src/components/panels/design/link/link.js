@@ -28,7 +28,13 @@ import {
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import {
+  Input,
+  Text,
+  Checkbox,
+  THEME_CONSTANTS,
+  Link,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -63,6 +69,30 @@ const Error = styled.span`
   color: ${({ theme }) => theme.colors.fg.negative};
 `;
 
+const CheckboxWrapper = styled.div`
+  display: flex;
+  padding: 9px 0;
+`;
+
+const Label = styled.label`
+  margin-left: 12px;
+`;
+
+const CheckboxContainer = styled.div`
+  margin: 12px 0;
+`;
+
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  padding: 8px 0;
+`;
+
+const LinkTypes = [
+  { key: 'nofollow', title: __('No follow', 'web-stories') },
+  { key: 'ugc', title: __('User-generated content', 'web-stories') },
+  { key: 'sponsored', title: __('Sponsored', 'web-stories') },
+];
+
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const { clearEditing, setDisplayLinkGuidelines, displayLinkGuidelines } =
     useCanvas((state) => ({
@@ -88,10 +118,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     getElementsInAttachmentArea(selectedElements).length > 0 &&
     currentPage?.pageAttachment?.url?.length > 0;
 
-  const defaultLink = useMemo(
-    () => createLink({ url: '', icon: null, desc: null }),
-    []
-  );
+  const defaultLink = useMemo(() => createLink({ icon: null, desc: null }), []);
 
   const link = useCommonObjectValue(selectedElements, 'link', defaultLink);
 
@@ -108,11 +135,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         'link',
         () =>
           url
-            ? {
+            ? createLink({
                 url,
                 desc: title ? title : '',
                 icon: icon ? toAbsoluteUrl(url, icon) : '',
-              }
+              })
             : null,
         defaultLink,
         true
@@ -201,8 +228,24 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     link.url,
   ]);
 
+  const onChangeRel = useCallback(
+    (value) => {
+      const rel = link.rel.includes(value)
+        ? link.rel.filter((el) => el !== value)
+        : [...link.rel, value];
+      handleChange({ rel }, true);
+    },
+    [handleChange, link]
+  );
+
   const isMultipleUrl = MULTIPLE_VALUE === link.url;
   const isMultipleDesc = MULTIPLE_VALUE === link.desc;
+  const showRelOption =
+    MULTIPLE_VALUE !== link.rel && link.url && !isMultipleUrl;
+
+  const relHelpLink =
+    'https://developers.google.com/search/docs/advanced/guidelines/qualify-outbound-links?hl=en';
+
   return (
     <SimplePanel
       name="link"
@@ -283,6 +326,40 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             </IconInfo>
           </Row>
         </>
+      )}
+      {showRelOption && (
+        <CheckboxContainer>
+          <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('About this link.', 'web-stories')}
+          </StyledText>
+          {LinkTypes.map(({ key, title }) => (
+            <CheckboxWrapper key={key}>
+              <Checkbox
+                id={key}
+                name={key}
+                checked={link.rel && link.rel.includes(key)}
+                onChange={() => onChangeRel(key)}
+              />
+              <Label htmlFor={key}>
+                <Text
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  as="span"
+                >
+                  {title}
+                </Text>
+              </Label>
+            </CheckboxWrapper>
+          ))}
+
+          <Link
+            rel="noopener noreferrer"
+            target="_blank"
+            href={relHelpLink}
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+          >
+            {__('What are these?', 'web-stories')}
+          </Link>
+        </CheckboxContainer>
       )}
     </SimplePanel>
   );
