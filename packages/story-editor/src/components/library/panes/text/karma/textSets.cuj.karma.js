@@ -160,9 +160,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
   });
 
   describe('Easier/smarter text set color', () => {
-    // TODO(#9224): Fix flaky test.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should add text color based on background', async () => {
+    it('should add text color based on background', async () => {
       fixture.editor.library.text.smartColorToggle.click();
 
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
@@ -179,10 +177,17 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       const textSets = fixture.editor.library.text.textSets;
       // First hover text set to trigger image generation
       await fixture.events.mouse.moveRel(textSets[1], 10, 10);
+
       await fixture.events.sleep(800);
       // Then click the text set
       await fixture.events.click(textSets[1]);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(
+        () =>
+          expect(
+            fixture.editor.canvas.framesLayer.frames[1].node
+          ).toBeDefined(),
+        { timeout: 5000 }
+      );
       const selection = await getSelection();
       // Text color should be changed to white, since it's placed on a dark background.
       expect(selection[1].content).toEqual(
