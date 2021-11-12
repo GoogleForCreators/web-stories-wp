@@ -61,7 +61,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         file: 'IMAGE-146x300.jpg',
         width: 146,
         height: 300,
-        mime_type: 'image/jpeg',
+        mimeType: 'image/jpeg',
         sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-146x300.jpg',
       },
@@ -69,7 +69,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         file: 'IMAGE-498x1024.jpg',
         width: 498,
         height: 1024,
-        mime_type: 'image/jpeg',
+        mimeType: 'image/jpeg',
         sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-498x1024.jpg',
       },
@@ -77,7 +77,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         file: 'IMAGE-150x150.jpg',
         width: 150,
         height: 150,
-        mime_type: 'image/jpeg',
+        mimeType: 'image/jpeg',
         sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-150x150.jpg',
       },
@@ -85,7 +85,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         file: 'IMAGE-768x1579.jpg',
         width: 768,
         height: 1579,
-        mime_type: 'image/jpeg',
+        mimeType: 'image/jpeg',
         sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-768x1579.jpg',
       },
@@ -93,7 +93,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         file: 'IMAGE-747x1536.jpg',
         width: 747,
         height: 1536,
-        mime_type: 'image/jpeg',
+        mimeType: 'image/jpeg',
         sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-747x1536.jpg',
       },
@@ -101,7 +101,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         file: 'IMAGE-996x2048.jpg',
         width: 996,
         height: 2048,
-        mime_type: 'image/jpeg',
+        mimeType: 'image/jpeg',
         sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-996x2048.jpg',
       },
@@ -109,7 +109,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         file: 'IMAGE-640x853.jpg',
         width: 640,
         height: 853,
-        mime_type: 'image/jpeg',
+        mimeType: 'image/jpeg',
         sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-640x853.jpg',
       },
@@ -117,14 +117,14 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         file: 'IMAGE-96x96.jpg',
         width: 96,
         height: 96,
-        mime_type: 'image/jpeg',
+        mimeType: 'image/jpeg',
         sourceUrl: 'http://wp.local/wp-content/uploads/2020/09/IMAGE-96x96.jpg',
       },
       'web-stories-thumbnail': {
         file: 'IMAGE-150x308.jpg',
         width: 150,
         height: 308,
-        mime_type: 'image/jpeg',
+        mimeType: 'image/jpeg',
         sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-150x308.jpg',
       },
@@ -132,7 +132,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         file: 'IMAGE.jpg',
         width: 1080,
         height: 2220,
-        mime_type: 'image/jpeg',
+        mimeType: 'image/jpeg',
         sourceUrl: 'http://wp.local/wp-content/uploads/2020/09/IMAGE.jpg',
       },
     },

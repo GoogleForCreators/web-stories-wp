@@ -163,7 +163,7 @@ describe('useMedia3pApi', () => {
               file: 'media/unsplash:1234',
               sourceUrl:
                 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=340&h=227&fit=max',
-              mime_type: 'image/jpeg',
+              mimeType: 'image/jpeg',
               width: 340,
               height: 227,
             },
@@ -171,7 +171,7 @@ describe('useMedia3pApi', () => {
               file: 'media/unsplash:1234',
               sourceUrl:
                 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=1060&h=707&fit=max',
-              mime_type: 'image/jpeg',
+              mimeType: 'image/jpeg',
               width: 1060,
               height: 707,
             },
@@ -179,7 +179,7 @@ describe('useMedia3pApi', () => {
               file: 'media/unsplash:1234',
               sourceUrl:
                 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=2121&h=1414&fit=max',
-              mime_type: 'image/jpeg',
+              mimeType: 'image/jpeg',
               width: 2121,
               height: 1414,
             },
@@ -187,7 +187,7 @@ describe('useMedia3pApi', () => {
               file: 'media/unsplash:1234',
               sourceUrl:
                 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=3182&h=2121&fit=max',
-              mime_type: 'image/jpeg',
+              mimeType: 'image/jpeg',
               width: 3182,
               height: 2121,
             },
@@ -195,7 +195,7 @@ describe('useMedia3pApi', () => {
               file: 'media/unsplash:1234',
               sourceUrl:
                 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=4243&h=2829&fit=max',
-              mime_type: 'image/jpeg',
+              mimeType: 'image/jpeg',
               width: 4243,
               height: 2829,
             },
@@ -203,7 +203,7 @@ describe('useMedia3pApi', () => {
               file: 'media/unsplash:1234',
               sourceUrl:
                 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=5304&h=3536&fit=max',
-              mime_type: 'image/jpeg',
+              mimeType: 'image/jpeg',
               width: 5304,
               height: 3536,
             },
