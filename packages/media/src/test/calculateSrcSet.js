@@ -201,7 +201,7 @@ describe('calculateSrcSet', () => {
           height: 300,
           sourceUrl: 'image-225x300.jpg',
         },
-        medium_large: {
+        mediumLarge: {
           width: 768,
           height: 1024,
           sourceUrl: 'image-768x1024.jpg',

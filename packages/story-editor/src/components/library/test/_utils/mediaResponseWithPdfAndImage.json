@@ -128,14 +128,14 @@
           "mimeType": "image/jpeg",
           "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage-150x150.jpg"
         },
-        "medium_large": {
+        "mediumLarge": {
           "file": "testImage-768x1043.jpg",
           "width": 768,
           "height": 1043,
           "mimeType": "image/jpeg",
           "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage-768x1043.jpg"
         },
-        "web-stories-poster-portrait": {
+        "webStoriesPosterPortrait": {
           "file": "testImage-696x928.jpg",
           "width": 696,
           "height": 928,

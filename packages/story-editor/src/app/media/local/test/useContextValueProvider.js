@@ -81,7 +81,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-150x150.jpg',
       },
-      medium_large: {
+      mediumLarge: {
         file: 'IMAGE-768x1579.jpg',
         width: 768,
         height: 1579,
@@ -105,7 +105,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-996x2048.jpg',
       },
-      'web-stories-poster-portrait': {
+      webStoriesPosterPortrait: {
         file: 'IMAGE-640x853.jpg',
         width: 640,
         height: 853,

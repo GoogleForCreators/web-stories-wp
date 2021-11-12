@@ -24,7 +24,7 @@ const ResourcePropTypes = {};
 ResourcePropTypes.resourceSize = PropTypes.shape({
   file: PropTypes.string,
   sourceUrl: PropTypes.string.isRequired,
-  mime_type: PropTypes.string.isRequired,
+  mimeType: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 });
