@@ -44,66 +44,24 @@ const focusStyle = css`
     )};
 `;
 
-const Wrapper = styled.div`
-  display: inline-block;
-`;
-
 const SwatchList = styled.div.attrs({ role: 'listbox' })`
-  width: 100%;
-  display: inline;
-
-  > div {
-    vertical-align: top;
-
-    /* Add a grid similar to css gap in flexbox */
-    padding: 2px 3px 0 3px;
-    padding-bottom: 0;
-    /* Remove padding from swatches on left edge */
-    :nth-child(6n + 1) {
-      padding-left: 0;
-    }
-    /* Remove padding from swatches on right edge */
-    :nth-child(6n) {
-      padding-right: 0;
-    }
-  }
-`;
-
-const SwatchWrapper = styled.div.attrs({ role: 'presentation' })`
-  display: inline-block;
+  display: flex;
+  max-width: 100%;
+  flex-wrap: wrap;
+  gap: 6px;
 `;
 
 const StyledSwatch = styled(Swatch).attrs(({ isSelected }) => ({
   role: 'option',
   'aria-selected': isSelected,
 }))`
-  display: inline-block;
-
   ${focusStyle};
 
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
       border: 2px solid ${theme.colors.border.defaultActive};
-
-      :after {
-        border: none;
-      }
     `}
-
-  ::after {
-    content: '';
-    height: 32px;
-    width: 32px;
-    display: inline-block;
-    padding: 6px;
-  }
-`;
-
-const StyledColorAdd = styled(ColorAdd)`
-  /* Line up 'Color Add' button with the rest of the grid */
-  margin-top: 2px;
-  margin-left: ${({ $firstInRow }) => ($firstInRow ? 0 : 3)}px;
 `;
 
 function getPatternAsString(pattern) {
@@ -139,44 +97,46 @@ function BasicColorList({
     ? __('local', 'web-stories')
     : __('global', 'web-stories');
   return (
-    <Wrapper>
-      <SwatchList ref={listRef} {...rest}>
-        {colors.map((pattern, i) => {
-          const isTransparentAndInvalid = !allowsOpacity && hasOpacity(pattern);
-          const isGradientAndInvalid = !allowsGradient && hasGradient(pattern);
-          const isDisabled =
-            (isTransparentAndInvalid || isGradientAndInvalid) && !isEditMode;
-          let tooltip = null;
-          if (isDisabled && !isEditMode) {
-            tooltip = isTransparentAndInvalid
-              ? __(
-                  'Page background colors cannot have an opacity.',
-                  'web-stories'
-                )
-              : __('Gradient not allowed for Text', 'web-stories');
-          }
+    <>
+      {colors.length > 0 && (
+        <SwatchList ref={listRef} {...rest}>
+          {colors.map((pattern, i) => {
+            const isTransparentAndInvalid =
+              !allowsOpacity && hasOpacity(pattern);
+            const isGradientAndInvalid =
+              !allowsGradient && hasGradient(pattern);
+            const isDisabled =
+              (isTransparentAndInvalid || isGradientAndInvalid) && !isEditMode;
+            let tooltip = null;
+            if (isDisabled && !isEditMode) {
+              tooltip = isTransparentAndInvalid
+                ? __(
+                    'Page background colors cannot have an opacity.',
+                    'web-stories'
+                  )
+                : __('Gradient not allowed for Text', 'web-stories');
+            }
 
-          const patternAsBackground = getPatternAsString(pattern);
-          const title = !isEditMode
-            ? patternAsBackground
-            : sprintf(
-                /* translators: First %s is the color type, second %s is the color as a string */
-                __('Delete %1$s color: %2$s', 'web-stories'),
-                colorType,
-                patternAsBackground
-              );
-          const isSelected = colorAsBackground === patternAsBackground;
-          // By default, the first swatch can be tabbed into, unless there's a selected one.
-          let tabIndex = i === firstIndex ? 0 : -1;
-          if (selectedSwatchIndex >= 0) {
-            tabIndex = isSelected ? 0 : -1;
-          } else if (isDisabled && i === firstIndex) {
-            firstIndex++;
-            tabIndex = -1;
-          }
-          return (
-            <SwatchWrapper key={patternAsBackground}>
-              <Tooltip title={tooltip}>
+            const patternAsBackground = getPatternAsString(pattern);
+            const title = !isEditMode
+              ? patternAsBackground
+              : sprintf(
+                  /* translators: First %s is the color type, second %s is the color as a string */
+                  __('Delete %1$s color: %2$s', 'web-stories'),
+                  colorType,
+                  patternAsBackground
+                );
+            const isSelected = colorAsBackground === patternAsBackground;
+            // By default, the first swatch can be tabbed into, unless there's a selected one.
+            let tabIndex = i === firstIndex ? 0 : -1;
+            if (selectedSwatchIndex >= 0) {
+              tabIndex = isSelected ? 0 : -1;
+            } else if (isDisabled && i === firstIndex) {
+              firstIndex++;
+              tabIndex = -1;
+            }
+            return (
+              <Tooltip key={patternAsBackground} title={tooltip}>
                 <StyledSwatch
                   onClick={() => handleClick(pattern, isLocal)}
                   pattern={pattern}
@@ -188,18 +148,17 @@ function BasicColorList({
                   {isEditMode && <Icons.Cross />}
                 </StyledSwatch>
               </Tooltip>
-            </SwatchWrapper>
-          );
-        })}
-      </SwatchList>
-      {(isLocal || isGlobal) && (
-        <StyledColorAdd
-          $firstInRow={!Math.floor(colors.length % 6)}
-          isLocal={isLocal}
-          isGlobal={isGlobal}
-        />
+            );
+          })}
+          {(isLocal || isGlobal) && (
+            <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
+          )}
+        </SwatchList>
       )}
-    </Wrapper>
+      {!colors.length && (isLocal || isGlobal) && (
+        <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
+      )}
+    </>
   );
 }
 
