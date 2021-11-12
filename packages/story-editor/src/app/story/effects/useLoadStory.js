@@ -63,7 +63,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           },
           lockUser,
           featuredMedia,
-          publisher_logo: publisherLogo,
+          publisherLogo,
           taxonomies,
           terms,
         } = post;

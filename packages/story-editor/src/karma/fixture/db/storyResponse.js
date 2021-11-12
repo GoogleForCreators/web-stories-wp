@@ -107,7 +107,7 @@ export default {
     width: 0,
     url: '',
   },
-  publisher_logo: {
+  publisherLogo: {
     id: 0,
     height: 0,
     width: 0,
