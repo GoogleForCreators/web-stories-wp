@@ -71,7 +71,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
 
   const insertMedia = useCallback(
     async (hotlinkData, needsProxy) => {
-      const { ext, type, mimeType, file_name: originalFileName } = hotlinkData;
+      const { ext, type, mimeType, fileName: originalFileName } = hotlinkData;
 
       try {
         const proxiedUrl = needsProxy

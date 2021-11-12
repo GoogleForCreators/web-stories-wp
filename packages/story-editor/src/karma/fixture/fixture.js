@@ -812,7 +812,7 @@ class APIProviderFixture {
             ext: 'jpg',
             mimeType: 'image/jpeg',
             type: 'image',
-            file_name: 'example.jpg',
+            fileName: 'example.jpg',
           }),
         []
       );
