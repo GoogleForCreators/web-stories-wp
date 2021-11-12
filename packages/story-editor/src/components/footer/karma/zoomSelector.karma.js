@@ -81,12 +81,12 @@ describe('Zoom selector', () => {
   });
 
   it('should always show zoom selector in primary menu', () => {
-    const { zoomSelector } = fixture.editor.carousel;
+    const { zoomSelector } = fixture.editor.footer;
     expect(zoomSelector).not.toBeNull();
   });
 
   it('should default set zoom to FIT and have no scroll', async () => {
-    const { zoomSelector } = fixture.editor.carousel;
+    const { zoomSelector } = fixture.editor.footer;
     expect(zoomSelector.node).toHaveTextContent('Fit');
 
     const { scrollContainer } = fixture.editor.canvas.framesLayer;
@@ -97,7 +97,7 @@ describe('Zoom selector', () => {
   });
 
   it('should allow setting zoom to 100% and work correctly', async () => {
-    const { zoomSelector } = fixture.editor.carousel;
+    const { zoomSelector } = fixture.editor.footer;
 
     await fixture.events.click(zoomSelector.select);
     await fixture.events.sleep(300);
@@ -115,7 +115,7 @@ describe('Zoom selector', () => {
   });
 
   it('should allow setting zoom to FILL and work correctly', async () => {
-    const { zoomSelector } = fixture.editor.carousel;
+    const { zoomSelector } = fixture.editor.footer;
 
     await fixture.events.click(zoomSelector.select);
     await fixture.events.sleep(300);
@@ -130,7 +130,7 @@ describe('Zoom selector', () => {
   });
 
   it('should allow setting zoom to 200% and work correctly', async () => {
-    const { zoomSelector } = fixture.editor.carousel;
+    const { zoomSelector } = fixture.editor.footer;
 
     await fixture.events.click(zoomSelector.select);
     await fixture.events.sleep(300);

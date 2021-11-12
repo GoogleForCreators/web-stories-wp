@@ -22,7 +22,7 @@ import { useCallback, useState, useLayoutEffect } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { useConfig, useStory } from '../../app';
+import { useConfig, useStory } from '../../../app';
 
 function useCarouselScroll({
   listElement,

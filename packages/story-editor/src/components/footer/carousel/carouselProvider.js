@@ -29,11 +29,11 @@ import {
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStory } from '../../../app';
 import {
   requestIdleCallback,
   cancelIdleCallback,
-} from '../../utils/idleCallback';
+} from '../../../utils/idleCallback';
 import CarouselContext from './carouselContext';
 import useCarouselSizing from './useCarouselSizing';
 import useCarouselScroll from './useCarouselScroll';
@@ -107,7 +107,6 @@ function CarouselProvider({ availableSpace, children }) {
       pageThumbWidth,
       pageThumbHeight,
       pageThumbMargin,
-      availableSpace,
       carouselWidth,
       hasOverflow,
       pages,

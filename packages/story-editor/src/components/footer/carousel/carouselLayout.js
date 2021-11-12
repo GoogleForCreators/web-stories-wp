@@ -24,27 +24,23 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { CarouselScrollForward, CarouselScrollBack } from './carouselScroll';
-import PrimaryMenu from './primaryMenu';
-import SecondaryMenu from './secondaryMenu';
 import CarouselList from './carouselList';
 import useCarousel from './useCarousel';
-import { MENU_GUTTER, BUTTON_WIDTH, BUTTON_GAP } from './constants';
+import { BUTTON_WIDTH, BUTTON_GAP } from './constants';
 
 const Wrapper = styled.section`
   position: relative;
   display: grid;
   grid:
-    /* Note the two empty 1fr areas each side of the buttons - that's on purpose */
-    'secondary . prev-navigation . carousel . next-navigation . primary' auto /
-    ${MENU_GUTTER}px
+    /* Note the two empty 1fr areas on either side of the buttons - that's on purpose */
+    '. prev-navigation . carousel . next-navigation .' auto /
     1fr
     ${BUTTON_WIDTH}px
     ${BUTTON_GAP}px
     auto
     ${BUTTON_GAP}px
     ${BUTTON_WIDTH}px
-    1fr
-    ${MENU_GUTTER}px;
+    1fr;
   width: 100%;
   height: 100%;
 `;
@@ -74,12 +70,6 @@ function CarouselLayout() {
       </Area>
       <Area area="next-navigation">
         <CarouselScrollForward />
-      </Area>
-      <Area area="primary">
-        <PrimaryMenu />
-      </Area>
-      <Area area="secondary">
-        <SecondaryMenu />
       </Area>
     </Wrapper>
   );

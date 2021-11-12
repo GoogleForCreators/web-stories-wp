@@ -31,8 +31,7 @@ import {
  */
 import { ChecklistProvider } from '../checklist';
 import { KeyboardShortcutsMenuProvider } from '../keyboardShortcutsMenu/keyboardShortcutsMenuContext';
-import CarouselLayout from './carouselLayout';
-import CarouselProvider from './carouselProvider';
+import FooterLayout from './footerLayout';
 import { VERY_WIDE_WORKSPACE_LIMIT, VERY_WIDE_MARGIN } from './constants';
 
 const Outer = styled.section`
@@ -42,31 +41,28 @@ const Inner = styled(Outer)`
   margin-right: ${({ marginRight }) => marginRight}px;
 `;
 
-function CarouselContainer() {
+function Footer() {
   const ref = useRef();
   const [workspaceWidth, setWorkspaceWidth] = useState(0);
 
   useResizeEffect(ref, ({ width }) => setWorkspaceWidth(width), []);
-  const [margin, width] = useMemo(() => {
-    const rightMargin =
-      workspaceWidth >= VERY_WIDE_WORKSPACE_LIMIT ? VERY_WIDE_MARGIN : 0;
-    return [rightMargin, workspaceWidth - rightMargin];
-  }, [workspaceWidth]);
+  const margin = useMemo(
+    () => (workspaceWidth >= VERY_WIDE_WORKSPACE_LIMIT ? VERY_WIDE_MARGIN : 0),
+    [workspaceWidth]
+  );
 
   return (
-    <CarouselProvider availableSpace={width}>
-      <ChecklistProvider>
-        <KeyboardShortcutsMenuProvider>
-          <Outer ref={ref}>
-            <Inner marginRight={margin}>
-              <CarouselLayout />
-            </Inner>
-          </Outer>
-        </KeyboardShortcutsMenuProvider>
-      </ChecklistProvider>
-    </CarouselProvider>
+    <ChecklistProvider>
+      <KeyboardShortcutsMenuProvider>
+        <Outer ref={ref}>
+          <Inner marginRight={margin}>
+            <FooterLayout />
+          </Inner>
+        </Outer>
+      </KeyboardShortcutsMenuProvider>
+    </ChecklistProvider>
   );
 }
 
-// Don't rerender the carousel container needlessly e.g. on element selection change.
-export default memo(CarouselContainer);
+// Don't rerender the workspace footer needlessly e.g. on element selection change.
+export default memo(Footer);
