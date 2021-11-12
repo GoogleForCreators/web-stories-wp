@@ -67,7 +67,7 @@ function TemplateList({
       });
       showSnackbar({
         message: __('Page Template added.', 'web-stories'),
-        dismissable: true,
+        dismissible: true,
       });
     },
     [addPage, showSnackbar]

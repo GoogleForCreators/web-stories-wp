@@ -109,7 +109,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         .catch(() => {
           showSnackbar({
             message: __('Failed to save the story', 'web-stories'),
-            dismissable: true,
+            dismissible: true,
           });
         })
         .finally(() => {
