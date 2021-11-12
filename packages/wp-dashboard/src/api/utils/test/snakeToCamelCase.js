@@ -23,14 +23,16 @@ import {
 
 describe('snakeToCamelCase', () => {
   it.each`
-    key            | result
-    ${''}          | ${''}
-    ${undefined}   | ${''}
-    ${'test'}      | ${'test'}
-    ${'rest_base'} | ${'restBase'}
-    ${'_links'}    | ${'_links'}
-    ${'links_'}    | ${'links_'}
-    ${'a_l'}       | ${'aL'}
+    key                 | result
+    ${''}               | ${''}
+    ${undefined}        | ${''}
+    ${'test'}           | ${'test'}
+    ${'rest_base'}      | ${'restBase'}
+    ${'rest-base'}      | ${'restBase'}
+    ${'rest-base_test'} | ${'restBaseTest'}
+    ${'_links'}         | ${'_links'}
+    ${'links_'}         | ${'links_'}
+    ${'a_l'}            | ${'aL'}
   `('should return the expected string for $key', ({ key, result }) => {
     expect(snakeToCamelCase(key)).toStrictEqual(result);
   });

@@ -21,15 +21,16 @@
  * @return {string} The key in camel case
  */
 export function snakeToCamelCase(string = '') {
-  if (!string.includes('_')) {
+  if (!string.includes('_') && !string.includes('-')) {
     return string;
   }
 
   return string
     .toLowerCase()
     .replace(
-      /([a-z])([_][a-z])/g,
-      (_match, group1, group2) => group1 + group2.toUpperCase().replace('_', '')
+      /([a-z])([_|-][a-z])/g,
+      (_match, group1, group2) =>
+        group1 + group2.toUpperCase().replace('_', '').replace('-', '')
     );
 }
 
