@@ -31,9 +31,9 @@
     },
     "caption": { "raw": "", "rendered": "" },
     "altText": "brochure",
-    "media_type": "file",
+    "mediaType": "file",
     "mimeType": "application/pdf",
-    "media_details": {
+    "mediaDetails": {
       "sizes": {
         "full": {
           "file": "brochure-pdf.jpg",
@@ -101,9 +101,9 @@
     },
     "caption": { "raw": "", "rendered": "" },
     "altText": "test-image",
-    "media_type": "image",
+    "mediaType": "image",
     "mimeType": "image/jpeg",
-    "media_details": {
+    "mediaDetails": {
       "width": 1080,
       "height": 1467,
       "file": "2020/04/testImage.jpg",
