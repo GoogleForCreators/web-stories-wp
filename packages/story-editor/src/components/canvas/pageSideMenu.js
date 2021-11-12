@@ -31,7 +31,7 @@ import { useQuickActions } from '../../app/highlights';
 import { ZOOM_SETTING } from '../../constants';
 import PageMenu from './pagemenu/pageMenu';
 
-const MenusWrapper = styled.aside`
+const MenusWrapper = styled.section`
   position: absolute;
   display: flex;
   flex-direction: column;
