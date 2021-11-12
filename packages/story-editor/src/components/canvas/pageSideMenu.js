@@ -19,7 +19,6 @@
  */
 import { ContextMenu } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -32,7 +31,7 @@ import { useQuickActions } from '../../app/highlights';
 import { ZOOM_SETTING } from '../../constants';
 import PageMenu from './pagemenu/pageMenu';
 
-const MenusWrapper = styled.div`
+const MenusWrapper = styled.aside`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -65,22 +64,16 @@ function PageSideMenu() {
   }));
   const quickActions = useQuickActions();
 
-  /**
-   * Stop the event from bubbling if the user clicks in between buttons.
-   *
-   * This prevents the selected element in the canvas from losing focus.
-   */
-  const handleMenuBackgroundClick = useCallback((ev) => {
-    ev.stopPropagation();
-  }, []);
-
   const showQuickActions = Boolean(quickActions.length);
 
   const isZoomed = zoomSetting !== ZOOM_SETTING.FIT;
 
   return (
     <DirectionAware>
-      <MenusWrapper isZoomed={isZoomed}>
+      <MenusWrapper
+        aria-label={__('Page side menu', 'web-stories')}
+        isZoomed={isZoomed}
+      >
         {showQuickActions && (
           <>
             <ContextMenu
@@ -93,7 +86,11 @@ function PageSideMenu() {
                 'web-stories'
               )}
               items={quickActions}
-              onMouseDown={handleMenuBackgroundClick}
+              onMouseDown={(e) => {
+                // Stop the event from bubbling if the user clicks in between buttons.
+                // This prevents the selected element in the canvas from losing focus.
+                e.stopPropagation();
+              }}
             />
             {isZoomed && <Divider />}
           </>

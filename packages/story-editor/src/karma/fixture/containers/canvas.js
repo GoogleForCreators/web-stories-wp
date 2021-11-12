@@ -71,7 +71,7 @@ export class Canvas extends Container {
 
   get pageActions() {
     return this._get(
-      this.getAllByRole('group', { name: 'Page actions' })[0],
+      this.getByRole('group', { name: 'Page actions' }),
       'pageActions',
       PageActions
     );

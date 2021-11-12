@@ -44,10 +44,7 @@ const ButtonList = styled.nav`
 const List = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const Space = styled.div`
-  width: 8px;
+  gap: 8px;
 `;
 
 const Spinner = styled.div`
@@ -99,14 +96,11 @@ function Buttons() {
     <ButtonList>
       <List>
         <UndoButton />
-        <Space />
         <RedoButton />
-        <Space />
         <IconWithSpinner>
           <PreviewButton forceIsSaving={isSavingMetaBoxes} />
           {isSaving && <Loading />}
         </IconWithSpinner>
-        <Space />
         {isDraft ? (
           <UpdateButton
             hasUpdates={hasMetaBoxes}
@@ -115,7 +109,6 @@ function Buttons() {
         ) : (
           <SwitchToDraftButton forceIsSaving={isSavingMetaBoxes} />
         )}
-        <Space />
         {isDraft && <PublishButton forceIsSaving={isSavingMetaBoxes} />}
         {!isDraft && (
           <UpdateButton
@@ -123,7 +116,6 @@ function Buttons() {
             forceIsSaving={isSavingMetaBoxes}
           />
         )}
-        <Space />
       </List>
     </ButtonList>
   );

@@ -42,7 +42,7 @@ const ContextMenu = ({
     <>
       <Wrapper
         isInline={isInline}
-        role={isAlwaysVisible ? '' : 'dialog'}
+        role={isAlwaysVisible ? null : 'dialog'}
         isOpen={isAlwaysVisible || props.isOpen}
       >
         <Menu aria-expanded={props.isOpen} items={items} {...props} />
