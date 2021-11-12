@@ -312,15 +312,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$response = wp_safe_remote_get( $url, $args );
 		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
 
-		$status = wp_remote_retrieve_response_code( $response );
-
-		if ( ! $status ) {
-			http_response_code( 404 );
-			return;
-		}
-
-		http_response_code( (int) $status );
-
 		rewind( $this->stream_handle );
 		while ( ! feof( $this->stream_handle ) ) {
 			echo fread( $this->stream_handle, 1024 * 1024 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_system_read_fread
