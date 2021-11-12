@@ -50,7 +50,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           excerpt: { raw: excerpt },
           link,
           story_data: storyDataRaw,
-          permalink_template: permalinkTemplate,
+          permalinkTemplate: permalinkTemplate,
           style_presets: globalStoryStyles,
           password,
           preview_link: previewLink,

@@ -22,7 +22,7 @@ export function createStory(properties = {}) {
   return {
     title: { raw: 'title' },
     excerpt: { raw: 'excerpt' },
-    permalink_template: 'http://localhost:8899/web-stories/%pagename%',
+    permalinkTemplate: 'http://localhost:8899/web-stories/%pagename%',
     style_presets: { colors: [TEST_COLOR] },
     author: { id: 1, name: 'John Doe' },
     featured_media: { height: 0, id: 0, url: '', width: 0 },

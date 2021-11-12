@@ -534,7 +534,7 @@ describe('Checklist integration - Card visibility', () => {
                 pages: [],
               },
               featured_media: 2,
-              permalink_template: 'http://stories3.local/stories/%pagename%/',
+              permalinkTemplate: 'http://stories3.local/stories/%pagename%/',
               style_presets: { textStyles: [], colors: [] },
               password: '',
             }),
