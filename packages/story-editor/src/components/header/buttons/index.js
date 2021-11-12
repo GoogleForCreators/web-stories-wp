@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
+export { Redo as RedoButton, Undo as UndoButton } from './historyButtons';
 export { default as PreviewButton } from './preview';
 export { default as PublishButton } from './publish';
-export { default as RedoButton } from './redo';
 export { default as SwitchToDraftButton } from './switchToDraft';
 export { default as UpdateButton } from './update';
-export { default as UndoButton } from './undo';
