@@ -155,6 +155,7 @@ function BasicColorList({
           )}
         </SwatchList>
       )}
+      {/* The `ColorAdd` button can only live in the listbox if there is at least one element with `role="option"` */}
       {!colors.length && (isLocal || isGlobal) && (
         <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
       )}
