@@ -18,15 +18,20 @@
  */
 import apiFetch from '@wordpress/api-fetch';
 
+/**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './utils';
+
 export function getCurrentUser(config) {
   return apiFetch({
     path: config.api.currentUser,
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }
 export function updateCurrentUser(config, data) {
   return apiFetch({
     path: config.api.currentUser,
     method: 'POST',
     data,
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }

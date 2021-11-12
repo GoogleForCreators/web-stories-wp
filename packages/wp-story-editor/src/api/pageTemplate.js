@@ -21,6 +21,10 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+/**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './utils';
 
 export function getCustomPageTemplates(config, page = 1) {
   const perPage = 100;
@@ -64,5 +68,5 @@ export function deletePageTemplate(config, id) {
     }),
     data: { force: true },
     method: 'POST',
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }
