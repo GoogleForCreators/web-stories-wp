@@ -59,7 +59,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           author,
           capabilities = {
             publish: false,
-            'assign-author': false,
+            assignAuthor: false,
           },
           lock_user: lockUser,
           featured_media: featuredMedia,

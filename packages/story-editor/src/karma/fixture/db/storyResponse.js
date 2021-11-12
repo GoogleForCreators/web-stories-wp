@@ -90,11 +90,11 @@ export default {
   author: { id: 1, name: 'John Doe' },
   capabilities: {
     publish: true,
-    'assign-author': true,
-    'assign-web_story_tag': true,
-    'create-web_story_tag': true,
-    'assign-web_story_category': true,
-    'create-web_story_category': true,
+    assignAuthor: true,
+    assignWebStoryTag: true,
+    createWebStoryTag: true,
+    assignWebStoryCategory: true,
+    createWebStoryCategory: true,
   },
   lock_user: {
     id: 0,
