@@ -309,7 +309,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 */
 	private function proxy_url_curl( $url, $args ) {
 		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
-		$response = wp_safe_remote_get( $url, $args );
+		wp_safe_remote_get( $url, $args );
 		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
 
 		rewind( $this->stream_handle );
