@@ -156,7 +156,8 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     if (!link) {
       return;
     }
-    if (!isValidUrl(link)) {
+
+    if (!isValidUrl(encodeURI(link))) {
       setErrorMsg(__('Invalid link.', 'web-stories'));
       return;
     }

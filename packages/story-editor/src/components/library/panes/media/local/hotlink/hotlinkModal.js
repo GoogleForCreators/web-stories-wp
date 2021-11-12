@@ -76,8 +76,9 @@ function HotlinkModal({ isOpen, onClose }) {
 
   const onBlur = useCallback(() => {
     if (link?.length > 0) {
-      setLink(withProtocol(link));
-      if (!isValidUrl(link)) {
+      const newLink = withProtocol(link);
+      setLink(newLink);
+      if (!isValidUrl(encodeURI(newLink))) {
         setErrorMsg(__('Invalid link.', 'web-stories'));
       }
     }
