@@ -81,7 +81,8 @@ describe('Pre-Publish Checklist : Admin User', () => {
 
     //find publish panel button
     const publishPanelButton = await expect(page).toMatchElement(
-      '#inspector-tab-document section:nth-child(0n+2) button'
+      '#inspector-tab-document button',
+      { text: 'Publishing' }
     );
 
     const isPublishPanelExpanded = await publishPanelButton.evaluate(
