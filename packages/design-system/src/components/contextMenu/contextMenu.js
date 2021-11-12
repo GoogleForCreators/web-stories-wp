@@ -21,7 +21,7 @@ import { useMemo } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { Popover, Shadow } from './styled';
+import { SmartPopover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
 import AnimationContainer from './animationContainer';
 import Mask from './mask';
@@ -34,7 +34,7 @@ const ContextMenu = ({
   ...props
 }) => {
   const Wrapper = useMemo(
-    () => (animate ? AnimationContainer : Popover),
+    () => (animate ? AnimationContainer : SmartPopover),
     [animate]
   );
 

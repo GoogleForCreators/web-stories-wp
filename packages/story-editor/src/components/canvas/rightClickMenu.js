@@ -61,7 +61,6 @@ const RightClickMenu = () => {
     <DirectionAware>
       <RightClickMenuContainer position={menuPosition} ref={ref}>
         <ContextMenu
-          animate
           data-testid="right-click-context-menu"
           isOpen={isMenuOpen}
           onDismiss={onCloseMenu}
