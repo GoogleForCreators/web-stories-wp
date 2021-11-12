@@ -66,8 +66,7 @@
       }
     },
     "post": null,
-    "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/brochure.pdf",
-    "missing_image_sizes": []
+    "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/brochure.pdf"
   },
   {
     "id": 768,
@@ -174,7 +173,6 @@
       }
     },
     "post": null,
-    "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg",
-    "missing_image_sizes": []
+    "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg"
   }
 ]
