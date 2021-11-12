@@ -45,31 +45,41 @@ export const Shadow = styled.div`
 `;
 
 export function SmartPopover(props) {
-  const setRef = useCallback((node) => {
-    if (!node) {
-      return;
-    }
+  const setRef = useCallback(
+    (node) => {
+      if (!node) {
+        return;
+      }
 
-    const boundingBox = node.getBoundingClientRect();
-    const max = {
-      x: window.innerWidth - boundingBox.width,
-      y: window.innerHeight - boundingBox.height,
-    };
+      const boundingBox = node.getBoundingClientRect();
+      const max = {
+        x: window.innerWidth - boundingBox.width,
+        y: window.innerHeight - boundingBox.height,
+      };
 
-    // This is modeling the behavior of chrome:
-    // - menu becomes right justified if not enough space horizontally
-    // - menu sticks to bottom if not enough space vertically
-    const delta = {
-      x: max.x < boundingBox.x ? -boundingBox.width : 0,
-      y: Math.min(0, max.y - boundingBox.y),
-    };
-    node.style.setProperty('--delta-x', delta.x);
-    node.style.setProperty('--delta-y', delta.y);
-  }, []);
+      // This is modeling the behavior of chrome:
+      // - menu becomes right justified if not enough space horizontally
+      // - menu sticks to bottom if not enough space vertically
+      const horizontalEdgeCondition = props.isRTL
+        ? boundingBox.x < 0
+        : max.x < boundingBox.x;
+      const horizontalEdgeTransform = props.isRTL
+        ? boundingBox.width
+        : -boundingBox.width;
+      const delta = {
+        x: horizontalEdgeCondition ? horizontalEdgeTransform : 0,
+        y: Math.min(0, max.y - boundingBox.y),
+      };
+      node.style.setProperty('--delta-x', delta.x);
+      node.style.setProperty('--delta-y', delta.y);
+    },
+    [props.isRTL]
+  );
 
   return props.isOpen && <Popover ref={setRef} {...props} />;
 }
 
 SmartPopover.propTypes = {
   isOpen: PropTypes.bool,
+  isRTL: PropTypes.bool,
 };

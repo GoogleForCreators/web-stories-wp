@@ -30,6 +30,7 @@ const ContextMenu = ({
   animate,
   isAlwaysVisible,
   items,
+  isRTL,
   isInline = false,
   ...props
 }) => {
@@ -44,6 +45,7 @@ const ContextMenu = ({
         isInline={isInline}
         role={isAlwaysVisible ? null : 'dialog'}
         isOpen={isAlwaysVisible || props.isOpen}
+        isRTL={isRTL}
       >
         <Menu aria-expanded={props.isOpen} items={items} {...props} />
         {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
@@ -58,6 +60,7 @@ ContextMenu.propTypes = {
   animate: PropTypes.bool,
   isOpen: PropTypes.bool,
   isAlwaysVisible: PropTypes.bool,
+  isRTL: PropTypes.bool,
 };
 
 export default ContextMenu;
