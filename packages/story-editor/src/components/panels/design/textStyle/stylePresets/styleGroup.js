@@ -24,8 +24,8 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import useKeyboardNavigation from '../useKeyboardNavigation';
 import { SAVED_STYLE_HEIGHT, PRESET_TYPES } from '../../../../../constants';
+import useKeyboardNavigation from './useKeyboardNavigation';
 import StyleItem from './styleItem';
 
 const Group = styled.div`
@@ -35,13 +35,17 @@ const Group = styled.div`
   grid-row-gap: 16px;
 `;
 
-const STYLE_WIDTH = 128;
 const ButtonWrapper = styled.div`
   height: ${SAVED_STYLE_HEIGHT}px;
-  width: ${STYLE_WIDTH}px;
+  width: ${({ width }) => width}px;
 `;
 
-function StyleGroup({ styles, isEditMode, handleClick }) {
+function StyleGroup({
+  styles,
+  isEditMode = false,
+  handleClick,
+  buttonWidth = 128,
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
 
@@ -55,7 +59,7 @@ function StyleGroup({ styles, isEditMode, handleClick }) {
   return (
     <Group ref={groupRef}>
       {styles.map((style, i) => (
-        <ButtonWrapper key={JSON.stringify(style)}>
+        <ButtonWrapper key={JSON.stringify(style)} width={buttonWidth}>
           <StyleItem
             style={style}
             i={i}
@@ -72,7 +76,8 @@ function StyleGroup({ styles, isEditMode, handleClick }) {
 StyleGroup.propTypes = {
   styles: PropTypes.array.isRequired,
   handleClick: PropTypes.func.isRequired,
-  isEditMode: PropTypes.bool.isRequired,
+  isEditMode: PropTypes.bool,
+  buttonWidth: PropTypes.number,
 };
 
 export default StyleGroup;

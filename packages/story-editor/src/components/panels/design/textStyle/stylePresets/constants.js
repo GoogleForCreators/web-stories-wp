@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { useEffect } from 'react';
-
-export default {
-  title: 'Playground/preview',
-};
-
-function Preview() {
-  useEffect(() => {
-    const content = window.localStorage.getItem('preview_markup');
-
-    if (content) {
-      document.open();
-      document.write(content);
-      document.close();
-    }
-  }, []);
-
-  return null;
-}
-
-export const _default = Preview;
+export const STORAGE_KEY = 'DELETE_STYLE_PRESET_DIALOG_DISMISSED';
