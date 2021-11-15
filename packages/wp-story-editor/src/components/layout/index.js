@@ -26,11 +26,25 @@ import { default as Header } from '../header';
 import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
 import DocumentPane from '../documentPane';
 
+// @todo To be removed.
+const Priority = () => null;
+const Design = () => null;
+const Accessibility = () => null;
+
 function Layout() {
   return (
     <MetaBoxesProvider>
       <InterfaceSkeleton
         header={<Header />}
+        footer={{
+          secondaryMenu: {
+            checkList: {
+              Priority,
+              Design,
+              Accessibility,
+            },
+          },
+        }}
         inspectorTabs={{
           document: {
             title: __('Document', 'web-stories'),

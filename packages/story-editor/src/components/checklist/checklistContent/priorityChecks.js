@@ -104,6 +104,7 @@ export function PriorityChecks(props) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
       <PriorityPanel {...props}>
+        {props.children}
         <StoryMissingTitle />
         {canManageSettings && <StoryMissingPublisherName />}
         <StoryTitleLength />
@@ -127,4 +128,5 @@ PriorityChecks.propTypes = {
   maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  children: PropTypes.node,
 };

@@ -81,6 +81,7 @@ export function AccessibilityChecks(props) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
       <AccessibilityPanel {...props}>
+        {props.children}
         <VideoOptimizationToggle />
         <PageBackgroundTextLowContrast />
         <TextElementFontSizeTooSmall />
@@ -99,4 +100,5 @@ AccessibilityChecks.propTypes = {
   maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  children: PropTypes.node,
 };

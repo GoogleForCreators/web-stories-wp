@@ -78,6 +78,7 @@ export function DesignChecks(props) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
       <DesignPanel {...props}>
+        {props.children}
         <StoryPagesCount />
         <PageTooMuchText />
         <PageTooLittleText />
@@ -94,4 +95,5 @@ DesignChecks.propTypes = {
   maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  children: PropTypes.node,
 };
