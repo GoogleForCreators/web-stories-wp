@@ -262,6 +262,16 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	public function proxy_url( $request ) {
 		$url = untrailingslashit( $request['url'] );
 
+		// Remove any relevant headers already set by WP_REST_Server::serve_request() // wp_get_nocache_headers().
+		if ( ! headers_sent() ) {
+			header_remove( 'Cache-Control' );
+			header_remove( 'Content-Type' );
+			header_remove( 'Expires' );
+			header_remove( 'Last Modified' );
+		}
+
+		header( 'Cache-Control: max-age=3600' );
+
 		$args = [
 			'timeout'  => 60, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 			'blocking' => false,
