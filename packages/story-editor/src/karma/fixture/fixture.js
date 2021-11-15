@@ -817,6 +817,11 @@ class APIProviderFixture {
         []
       );
 
+      const getProxyUrl = useCallback(
+        () => 'http://localhost:9876/__static__/saturn.jpg',
+        []
+      );
+
       const getAllStatuses = useCallback(
         () => jasmine.createSpy('getAllStatuses'),
         []
@@ -944,6 +949,7 @@ class APIProviderFixture {
           getMedia,
           getLinkMetadata,
           getHotlinkInfo,
+          getProxyUrl,
           saveStoryById,
           getAllStatuses,
           getAuthors,
