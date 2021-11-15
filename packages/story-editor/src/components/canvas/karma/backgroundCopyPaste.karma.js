@@ -224,8 +224,7 @@ describe('Background Copy Paste integration', () => {
 
   // High-level helpers
   async function addNewPage() {
-    const addPage = getButtonByAriaLabel(/^Add New Page$/i);
-    await fixture.events.click(addPage);
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
   }
   async function gotoPage(index /* 1-indexed */) {
     const carousel = getElementByQueryAndMatcher(
@@ -300,13 +299,6 @@ describe('Background Copy Paste integration', () => {
       typeof value === 'string'
         ? el.getAttribute(attr) === value
         : value.test(el.getAttribute(attr));
-  }
-
-  function getButtonByAriaLabel(ariaLabel) {
-    return getElementByQueryAndMatcher(
-      'button',
-      getByAttribute('aria-label', ariaLabel)
-    );
   }
 
   function getInputByAriaLabel(ariaLabel) {

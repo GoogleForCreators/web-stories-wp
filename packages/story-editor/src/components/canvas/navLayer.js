@@ -17,44 +17,18 @@
 /**
  * External dependencies
  */
-import { memo, useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { ContextMenu } from '@web-stories-wp/design-system';
+import { memo } from '@web-stories-wp/react';
 import Proptypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { useQuickActions } from '../../app/highlights';
-import DirectionAware from '../directionAware';
 import Footer from '../footer';
-import { useLayout } from '../../app';
-import {
-  FooterArea,
-  HeadArea,
-  Layer,
-  QuickActionsArea,
-  Z_INDEX,
-} from './layout';
+import DirectionAware from '../directionAware';
+import PageSideMenu from './pageSideMenu';
+import { FooterArea, HeadArea, Layer, PageMenuArea, Z_INDEX } from './layout';
 
 function NavLayer({ header }) {
-  const { hasHorizontalOverflow } = useLayout(
-    ({ state: { hasHorizontalOverflow } }) => ({ hasHorizontalOverflow })
-  );
-  const quickActions = useQuickActions();
-
-  /**
-   * Stop the event from bubbling if the user clicks in between buttons.
-   *
-   * This prevents the selected element in the canvas from losing focus.
-   */
-  const handleMenuBackgroundClick = useCallback((ev) => {
-    ev.stopPropagation();
-  }, []);
-
-  const showQuickActions =
-    !hasHorizontalOverflow && Boolean(quickActions.length);
-
   return (
     <Layer
       pointerEvents="none"
@@ -62,23 +36,11 @@ function NavLayer({ header }) {
       onMouseDown={(evt) => evt.stopPropagation()}
     >
       <HeadArea pointerEvents="initial">{header}</HeadArea>
-      {showQuickActions && (
-        <DirectionAware>
-          <QuickActionsArea>
-            <ContextMenu
-              isAlwaysVisible
-              isIconMenu
-              disableControlledTabNavigation
-              groupLabel={__(
-                'Group of available options for selected element',
-                'web-stories'
-              )}
-              items={quickActions}
-              onMouseDown={handleMenuBackgroundClick}
-            />
-          </QuickActionsArea>
-        </DirectionAware>
-      )}
+      <DirectionAware>
+        <PageMenuArea>
+          <PageSideMenu />
+        </PageMenuArea>
+      </DirectionAware>
       <FooterArea pointerEvents="initial">
         <Footer />
       </FooterArea>
