@@ -46,6 +46,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const IconInfo = styled.div`
   display: flex;
@@ -101,6 +102,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const {
     actions: { getLinkMetadata },
   } = useAPI();
+
+  const { getProxiedUrl } = useCORSProxy();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
     ({ url, title, icon }) =>
@@ -201,6 +204,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     link.url,
   ]);
 
+  const linkIcon = getProxiedUrl({ needsProxy: true }, encodeURI(link.icon));
+
   const isMultipleUrl = MULTIPLE_VALUE === link.url;
   const isMultipleDesc = MULTIPLE_VALUE === link.desc;
   return (
@@ -272,7 +277,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           <Row spaceBetween={false}>
             <LinkIcon
               handleChange={handleChangeIcon}
-              icon={link.icon}
+              icon={linkIcon}
               isLoading={fetchingMetadata}
               disabled={fetchingMetadata}
             />
