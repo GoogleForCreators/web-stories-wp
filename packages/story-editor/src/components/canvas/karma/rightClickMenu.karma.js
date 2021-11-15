@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -335,9 +335,9 @@ describe('Right Click Menu integration', () => {
         }
       );
       expect(
-        fixture.screen.queryByTestId(
-          'right-click-context-menu[aria-expanded="true"]'
-        )
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
       ).toBeNull();
     });
 
@@ -355,49 +355,29 @@ describe('Right Click Menu integration', () => {
     });
 
     it('should open and close the context menu using keyboard shortcuts', async () => {
-      const textA = await addText({
-        fontSize: 60,
-        content: '<span style="color: #ff0110">Some Text Element</span>',
-        backgroundColor: { r: 10, g: 0, b: 200 },
-        lineHeight: 1.4,
-        textAlign: 'center',
-        border: {
-          left: 1,
-          right: 1,
-          top: 1,
-          bottom: 1,
-          lockedWidth: true,
-          color: {
-            color: {
-              r: 0,
-              g: 0,
-              b: 0,
-            },
-          },
-        },
-        padding: {
-          vertical: 0,
-          horizontal: 20,
-          locked: true,
-        },
-      });
+      // add an element to the page
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
 
       // only possible if element in canvas is focused
-      await fixture.events.focus(
-        fixture.editor.canvas.framesLayer.frame(textA.id).node
-      );
+      await fixture.events.focus(frame1);
 
       // open right click menu
       await fixture.events.keyboard.shortcut('mod+alt+shift+m');
 
-      expect(rightClickMenu()).not.toBeNull();
+      expect(
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
+      ).not.toBeNull();
 
       // close right click menu
       await fixture.events.keyboard.press('esc');
       expect(
-        fixture.screen.queryByTestId(
-          'right-click-context-menu[aria-expanded="true"]'
-        )
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
       ).toBeNull();
     });
   });
