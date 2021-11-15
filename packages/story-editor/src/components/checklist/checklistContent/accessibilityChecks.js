@@ -22,18 +22,20 @@ import PropTypes from 'prop-types';
  */
 import { __ } from '@web-stories-wp/i18n';
 import { ISSUE_TYPES } from '../constants';
-import ElementLinkTappableRegionTooSmall from '../checks/elementLinkTappableRegionTooSmall';
-import ElementLinkTappableRegionTooBig from '../checks/elementLinkTappableRegionTooBig';
-import ImageElementMissingAlt from '../checks/imageElementMissingAlt';
-import { PageBackgroundTextLowContrast } from '../checks/pageBackgroundLowTextContrast';
-import TextElementFontSizeTooSmall from '../checks/textElementFontSizeTooSmall';
-import VideoElementMissingCaptions from '../checks/videoElementMissingCaptions';
-import VideoElementMissingDescription from '../checks/videoElementMissingDescription';
-import { ChecklistCategoryProvider } from '../countContext/checkCountContext';
+import { ChecklistCategoryProvider } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import VideoOptimizationToggle from '../videoOptimizationCheckbox';
 import { useIsChecklistMounted } from '../popupMountedContext';
 import { useConfig } from '../../../app';
+import {
+  ElementLinkTappableRegionTooSmall,
+  ElementLinkTappableRegionTooBig,
+  ImageElementMissingAlt,
+  PageBackgroundTextLowContrast,
+  TextElementFontSizeTooSmall,
+  VideoElementMissingCaptions,
+  VideoElementMissingDescription,
+} from '../checks';
 
 function AccessibilityPanel({
   children,

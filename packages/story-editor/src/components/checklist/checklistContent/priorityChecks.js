@@ -27,21 +27,23 @@ import useFFmpeg from '../../../app/media/utils/useFFmpeg';
 import { useConfig } from '../../../app';
 import { PANEL_STATES } from '../../tablist';
 import { ISSUE_TYPES } from '../constants';
-import PublisherLogoSize from '../checks/publisherLogoSize';
-import StoryMissingExcerpt from '../checks/storyMissingExerpt';
-import StoryMissingTitle from '../checks/storyMissingTitle';
-import StoryPosterSize from '../checks/storyPosterSize';
-import { StoryPosterAttached } from '../checks/storyPosterAttached';
-import StoryTitleLength from '../checks/storyTitleLength';
-import VideoElementMissingPoster from '../checks/videoElementMissingPoster';
 import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
-import VideoOptimization from '../checks/videoOptimization';
-import StoryMissingPublisherName from '../checks/storyMissingPublisherName';
-import StoryAmpValidationErrors from '../checks/storyAmpValidationErrors';
-import PublisherLogoMissing from '../checks/publisherLogoMissing';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import {
+  PublisherLogoSize,
+  StoryMissingExcerpt,
+  StoryMissingTitle,
+  StoryPosterSize,
+  StoryPosterAttached,
+  StoryTitleLength,
+  VideoElementMissingPoster,
+  VideoOptimization,
+  StoryMissingPublisherName,
+  StoryAmpValidationErrors,
+  PublisherLogoMissing,
+} from '../checks';
 
 function PriorityPanel({
   children,

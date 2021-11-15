@@ -22,16 +22,18 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ISSUE_TYPES } from '../constants';
-import PageTooManyLinks from '../checks/pageTooManyLinks';
-import PageTooMuchText from '../checks/pageTooMuchText';
-import PageTooLittleText from '../checks/pageTooLittleText';
-import VideoElementResolution from '../checks/videoElementResolution';
-import ImageElementResolution from '../checks/imageElementResolution';
-import StoryPagesCount from '../checks/storyPagesCount';
 import { ChecklistCategoryProvider } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useIsChecklistMounted } from '../popupMountedContext';
 import { useConfig } from '../../../app';
+import {
+  PageTooManyLinks,
+  PageTooMuchText,
+  PageTooLittleText,
+  VideoElementResolution,
+  ImageElementResolution,
+  StoryPagesCount,
+} from '../checks';
 
 function DesignPanel({
   badgeCount = 0,
