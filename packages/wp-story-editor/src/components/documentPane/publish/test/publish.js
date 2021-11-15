@@ -44,7 +44,7 @@ function MediaUpload({ render }) {
 
 function arrange(
   capabilities = {
-    'assign-author': true,
+    assignAuthor: true,
     publish: true,
     hasUploadMediaAction: true,
   }
