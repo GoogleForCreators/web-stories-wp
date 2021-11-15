@@ -78,10 +78,6 @@ const Label = styled.label`
   margin-left: 12px;
 `;
 
-const CheckboxContainer = styled.div`
-  margin: 12px 0;
-`;
-
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   padding: 8px 0;
@@ -239,7 +235,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const isMultipleUrl = MULTIPLE_VALUE === link.url;
   const isMultipleDesc = MULTIPLE_VALUE === link.desc;
-  const showRelOption = MULTIPLE_VALUE !== link.rel && displayMetaFields;
+  const isMultipleRel = MULTIPLE_VALUE === link.rel;
 
   const relHelpLink = __(
     'https://developers.google.com/search/docs/advanced/guidelines/qualify-outbound-links?hl=en',
@@ -325,41 +321,44 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               </IconText>
             </IconInfo>
           </Row>
-        </>
-      )}
-      {showRelOption && (
-        <CheckboxContainer>
-          <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {__('Qualify outbound links', 'web-stories')}
-          </StyledText>
-          {LinkTypes.map(({ key, title }) => (
-            <CheckboxWrapper key={key}>
-              <Checkbox
-                id={key}
-                name={key}
-                checked={link.rel && link.rel.includes(key)}
-                onChange={() => onChangeRel(key)}
-              />
-              <Label htmlFor={key}>
-                <Text
+          {!isMultipleRel && (
+            <Row>
+              <div>
+                <StyledText
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  as="span"
                 >
-                  {title}
-                </Text>
-              </Label>
-            </CheckboxWrapper>
-          ))}
-
-          <Link
-            rel="noopener noreferrer"
-            target="_blank"
-            href={relHelpLink}
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          >
-            {__('Learn more', 'web-stories')}
-          </Link>
-        </CheckboxContainer>
+                  {__('Qualify outbound links', 'web-stories')}
+                </StyledText>
+                {LinkTypes.map(({ key, title }) => (
+                  <CheckboxWrapper key={key}>
+                    <Checkbox
+                      id={key}
+                      name={key}
+                      checked={link?.rel.includes(key)}
+                      onChange={() => onChangeRel(key)}
+                    />
+                    <Label htmlFor={key}>
+                      <Text
+                        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                        as="span"
+                      >
+                        {title}
+                      </Text>
+                    </Label>
+                  </CheckboxWrapper>
+                ))}
+                <Link
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={relHelpLink}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                >
+                  {__('Learn more', 'web-stories')}
+                </Link>
+              </div>
+            </Row>
+          )}
+        </>
       )}
     </SimplePanel>
   );
