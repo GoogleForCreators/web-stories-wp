@@ -88,9 +88,8 @@ const StyledText = styled(Text)`
 `;
 
 const LinkTypes = [
-  { key: 'nofollow', title: __('No follow', 'web-stories') },
-  { key: 'ugc', title: __('User-generated content', 'web-stories') },
   { key: 'sponsored', title: __('Sponsored', 'web-stories') },
+  { key: 'nofollow', title: __('Nofollow', 'web-stories') },
 ];
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
@@ -240,11 +239,12 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const isMultipleUrl = MULTIPLE_VALUE === link.url;
   const isMultipleDesc = MULTIPLE_VALUE === link.desc;
-  const showRelOption =
-    MULTIPLE_VALUE !== link.rel && link.url && !isMultipleUrl;
+  const showRelOption = MULTIPLE_VALUE !== link.rel && displayMetaFields;
 
-  const relHelpLink =
-    'https://developers.google.com/search/docs/advanced/guidelines/qualify-outbound-links?hl=en';
+  const relHelpLink = __(
+    'https://developers.google.com/search/docs/advanced/guidelines/qualify-outbound-links?hl=en',
+    'web-stories'
+  );
 
   return (
     <SimplePanel
@@ -330,7 +330,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       {showRelOption && (
         <CheckboxContainer>
           <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {__('About this link.', 'web-stories')}
+            {__('Qualify outbound links', 'web-stories')}
           </StyledText>
           {LinkTypes.map(({ key, title }) => (
             <CheckboxWrapper key={key}>
@@ -357,7 +357,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             href={relHelpLink}
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
           >
-            {__('What are these?', 'web-stories')}
+            {__('Learn more', 'web-stories')}
           </Link>
         </CheckboxContainer>
       )}

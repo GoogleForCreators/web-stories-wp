@@ -145,7 +145,7 @@ describe('Panels/Link', () => {
         },
       },
     ]);
-    expect(screen.getByText('About this link.')).toBeInTheDocument();
+    expect(screen.getByText('Qualify outbound links')).toBeInTheDocument();
   });
 
   it('should check rel options for valid url', () => {
@@ -158,8 +158,8 @@ describe('Panels/Link', () => {
         },
       },
     ]);
-    expect(screen.getByText('About this link.')).toBeInTheDocument();
-    const optionA = screen.getByRole('checkbox', { name: 'No follow' });
+    expect(screen.getByText('Qualify outbound links')).toBeInTheDocument();
+    const optionA = screen.getByRole('checkbox', { name: 'Nofollow' });
     expect(optionA).toBeChecked();
   });
 

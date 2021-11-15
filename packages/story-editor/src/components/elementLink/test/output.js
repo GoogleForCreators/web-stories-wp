@@ -25,7 +25,7 @@ import { render, screen } from '@testing-library/react';
 import WithLink from '../output';
 
 describe('WithLink', () => {
-  function withLink() {
+  function withLink(linkProps) {
     const props = {
       element: {
         id: '123',
@@ -48,6 +48,7 @@ describe('WithLink', () => {
           url: 'https://example.com/',
           icon: 'https://example.com/image.png',
           desc: 'Lorem ipsum dolor',
+          ...linkProps,
         },
       },
     };
@@ -64,6 +65,20 @@ describe('WithLink', () => {
       const a = screen.getByRole('link');
       await expect(a.target).toBe('_blank');
       await expect(a.rel).toBe('noreferrer');
+    });
+  });
+
+  describe('a[rel]', () => {
+    it('should use rel=noreferrer', async () => {
+      render(withLink());
+      const a = screen.getByRole('link');
+      await expect(a.rel).toBe('noreferrer');
+    });
+
+    it('should use rel=noreferrer nofollow', async () => {
+      render(withLink({ rel: ['nofollow'] }));
+      const a = screen.getByRole('link');
+      await expect(a.rel).toBe('nofollow noreferrer');
     });
   });
 
