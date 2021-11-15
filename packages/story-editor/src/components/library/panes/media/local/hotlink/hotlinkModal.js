@@ -32,8 +32,9 @@ import PropTypes from 'prop-types';
  */
 import { useConfig } from '../../../../../../app';
 import Dialog from '../../../../../dialog';
-import { isValidUrl, withProtocol } from '../../../../../../utils/url';
+import { withProtocol } from '../../../../../../utils/url';
 import useInsert from './useInsert';
+import { isValidUrlForHotlinking } from './utils';
 
 const InputWrapper = styled.div`
   margin: 16px 4px;
@@ -78,7 +79,7 @@ function HotlinkModal({ isOpen, onClose }) {
     if (link?.length > 0) {
       const newLink = withProtocol(link);
       setLink(newLink);
-      if (!isValidUrl(encodeURI(newLink))) {
+      if (!isValidUrlForHotlinking(newLink)) {
         setErrorMsg(__('Invalid link.', 'web-stories'));
       }
     }

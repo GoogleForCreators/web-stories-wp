@@ -24,7 +24,6 @@ import { getFirstFrameOfVideo } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
-import { isValidUrl } from '../../../../../../utils/url';
 import useLibrary from '../../../../useLibrary';
 import getResourceFromUrl from '../../../../../../app/media/utils/getResourceFromUrl';
 import {
@@ -34,6 +33,7 @@ import {
 import { useConfig } from '../../../../../../app/config';
 import { useAPI } from '../../../../../../app/api';
 import useCORSProxy from '../../../../../../utils/useCORSProxy';
+import { isValidUrlForHotlinking } from './utils';
 
 function getErrorMessage(code, description) {
   switch (code) {
@@ -157,7 +157,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       return;
     }
 
-    if (!isValidUrl(encodeURI(link))) {
+    if (!isValidUrlForHotlinking(link)) {
       setErrorMsg(__('Invalid link.', 'web-stories'));
       return;
     }
