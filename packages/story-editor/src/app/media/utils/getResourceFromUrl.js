@@ -73,6 +73,7 @@ async function getResourceFromUrl(resourceLike) {
     src,
     local: false,
     isExternal: true,
+    mimeType,
     ...rest,
     ...videoData,
   });
