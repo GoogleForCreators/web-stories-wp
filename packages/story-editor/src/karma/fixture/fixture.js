@@ -405,7 +405,7 @@ export class Fixture {
   collapseHelpCenter() {
     const { _editor, _events } = this;
     if (!_editor || !_events) {
-      throw new Error('Not ready: fixture not set up');
+      throw new Error('Not ready: Help Center unable to collapse');
     }
 
     const { toggleButton } = _editor.helpCenter;
