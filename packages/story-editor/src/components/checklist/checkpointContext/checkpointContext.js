@@ -156,12 +156,7 @@ ChecklistCheckpointProvider.propTypes = {
 };
 
 export function useCheckpoint(selector) {
-  const context = useContextSelector(CheckpointContext, selector ?? identity);
-  if (!context) {
-    throw new Error(
-      'Must use `useCheckpoint` within <checkpointContext.Provider />'
-    );
-  }
-  return context;
+  return useContextSelector(CheckpointContext, selector ?? identity);
 }
+
 export { ChecklistCheckpointProvider };

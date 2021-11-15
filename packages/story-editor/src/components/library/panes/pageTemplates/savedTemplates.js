@@ -107,7 +107,7 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
               'Unable to delete the template. Please try again.',
               'web-stories'
             ),
-            dismissable: true,
+            dismissible: true,
           });
         }),
     [

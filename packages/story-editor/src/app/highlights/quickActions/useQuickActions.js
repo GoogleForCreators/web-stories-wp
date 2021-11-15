@@ -18,8 +18,13 @@
  * External dependencies
  */
 import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import {
+  prettifyShortcut,
+  useSnackbar,
+  PLACEMENT,
+  Icons,
+} from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { canTranscodeResource } from '@web-stories-wp/media';
 
@@ -36,6 +41,12 @@ import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
+
+const UNDO_HELP_TEXT = sprintf(
+  /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
+  __('Press %s to undo the last change', 'web-stories'),
+  prettifyShortcut('mod+z')
+);
 
 const {
   Bucket,
@@ -171,7 +182,7 @@ const useQuickActions = () => {
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
+        dismissible: false,
         message: __('Element properties have been reset', 'web-stories'),
         // Don't pass a stale version of `undo`
         onAction: () => {
@@ -183,6 +194,7 @@ const useQuickActions = () => {
             isBackground: true,
           });
         },
+        actionHelpText: UNDO_HELP_TEXT,
       });
     },
     [handleResetProperties, showSnackbar]

@@ -133,7 +133,7 @@ const MenuList = styled.ul`
         background-color: transparent;
 
         span {
-          color: ${({ theme }) => theme.colors.bg.tertiary};
+          color: ${({ theme }) => theme.colors.fg.disable};
         }
       }
 

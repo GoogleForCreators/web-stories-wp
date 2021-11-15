@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo } from '@web-stories-wp/react';
+import { useCallback, useEffect, useMemo, useRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -24,7 +24,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { noop } from '../../utils';
+import { noop, useLiveRegion } from '../../utils';
 import { PLACEMENT } from '../popup';
 import { SnackbarMessage } from './snackbarMessage';
 import { Placement, SnackbarNotification } from './constants';
@@ -102,6 +102,8 @@ export const SnackbarContainer = ({
   placement = PLACEMENT.BOTTOM,
   max = 10,
 }) => {
+  const speak = useLiveRegion('assertive');
+  const announcedNotifications = useRef(new Set());
   const ids = useMemo(() => notifications.map(() => uuidv4()), [notifications]);
 
   const orderedNotifications =
@@ -125,13 +127,29 @@ export const SnackbarContainer = ({
     }
   }, [max, notifications, onRemove]);
 
+  // Announce messages to screen reader when a new message shows up
+  useEffect(() => {
+    notifications.forEach((notification) => {
+      if (!announcedNotifications.current.has(notification)) {
+        // speak the message
+        const message = `${notification.message} ${
+          notification.actionHelpText || ''
+        }`.trim();
+
+        speak(message);
+
+        announcedNotifications.current.add(notification);
+      }
+    });
+  }, [notifications, speak]);
+
   return (
     <StyledContainer placement={placement}>
       <TransitionGroup>
         {orderedNotifications.map((notification, index) => {
           const {
             actionLabel,
-            dismissable,
+            dismissible,
             message,
             onAction,
             preventActionDismiss,
@@ -143,7 +161,7 @@ export const SnackbarContainer = ({
           return (
             <CSSTransition
               in
-              key={notification.key || ids[index]}
+              key={notification.id || ids[index]}
               timeout={300}
               unmountOnExit
               classNames="react-snackbar-alert__snackbar-container"
@@ -151,13 +169,13 @@ export const SnackbarContainer = ({
               <ChildContainer placement={placement}>
                 <Component
                   {...notificationProps}
-                  aria-label={message}
+                  aria-hidden
                   placement={placement}
                   onDismiss={handleDismiss(notification)}
                   onAction={onAction}
                   actionLabel={actionLabel}
                   message={message}
-                  showCloseButton={dismissable}
+                  showCloseButton={dismissible}
                   removeMessageTimeInterval={timeout}
                   isPreventAutoDismiss={preventAutoDismiss}
                   isPreventActionDismiss={preventActionDismiss}
