@@ -44,9 +44,7 @@ const focusStyle = css`
     )};
 `;
 
-const SwatchList = styled.div.attrs({
-  role: 'listbox',
-})`
+const SwatchList = styled.div.attrs({ role: 'listbox' })`
   display: flex;
   max-width: 100%;
   flex-wrap: wrap;
@@ -99,59 +97,69 @@ function BasicColorList({
     ? __('local', 'web-stories')
     : __('global', 'web-stories');
   return (
-    <SwatchList ref={listRef} {...rest}>
-      {colors.map((pattern, i) => {
-        const isTransparentAndInvalid = !allowsOpacity && hasOpacity(pattern);
-        const isGradientAndInvalid = !allowsGradient && hasGradient(pattern);
-        const isDisabled =
-          (isTransparentAndInvalid || isGradientAndInvalid) && !isEditMode;
-        let tooltip = null;
-        if (isDisabled && !isEditMode) {
-          tooltip = isTransparentAndInvalid
-            ? __(
-                'Page background colors cannot have an opacity.',
-                'web-stories'
-              )
-            : __('Gradient not allowed for Text', 'web-stories');
-        }
+    <>
+      {colors.length > 0 && (
+        <SwatchList ref={listRef} {...rest}>
+          {colors.map((pattern, i) => {
+            const isTransparentAndInvalid =
+              !allowsOpacity && hasOpacity(pattern);
+            const isGradientAndInvalid =
+              !allowsGradient && hasGradient(pattern);
+            const isDisabled =
+              (isTransparentAndInvalid || isGradientAndInvalid) && !isEditMode;
+            let tooltip = null;
+            if (isDisabled && !isEditMode) {
+              tooltip = isTransparentAndInvalid
+                ? __(
+                    'Page background colors cannot have an opacity.',
+                    'web-stories'
+                  )
+                : __('Gradient not allowed for Text', 'web-stories');
+            }
 
-        const patternAsBackground = getPatternAsString(pattern);
-        const title = !isEditMode
-          ? patternAsBackground
-          : sprintf(
-              /* translators: First %s is the color type, second %s is the color as a string */
-              __('Delete %1$s color: %2$s', 'web-stories'),
-              colorType,
-              patternAsBackground
+            const patternAsBackground = getPatternAsString(pattern);
+            const title = !isEditMode
+              ? patternAsBackground
+              : sprintf(
+                  /* translators: First %s is the color type, second %s is the color as a string */
+                  __('Delete %1$s color: %2$s', 'web-stories'),
+                  colorType,
+                  patternAsBackground
+                );
+            const isSelected = colorAsBackground === patternAsBackground;
+            // By default, the first swatch can be tabbed into, unless there's a selected one.
+            let tabIndex = i === firstIndex ? 0 : -1;
+            if (selectedSwatchIndex >= 0) {
+              tabIndex = isSelected ? 0 : -1;
+            } else if (isDisabled && i === firstIndex) {
+              firstIndex++;
+              tabIndex = -1;
+            }
+            return (
+              <Tooltip key={patternAsBackground} title={tooltip}>
+                <StyledSwatch
+                  onClick={() => handleClick(pattern, isLocal)}
+                  pattern={pattern}
+                  isSelected={isSelected}
+                  isDisabled={isDisabled}
+                  tabIndex={tabIndex}
+                  title={title}
+                >
+                  {isEditMode && <Icons.Cross />}
+                </StyledSwatch>
+              </Tooltip>
             );
-        const isSelected = colorAsBackground === patternAsBackground;
-        // By default, the first swatch can be tabbed into, unless there's a selected one.
-        let tabIndex = i === firstIndex ? 0 : -1;
-        if (selectedSwatchIndex >= 0) {
-          tabIndex = isSelected ? 0 : -1;
-        } else if (isDisabled && i === firstIndex) {
-          firstIndex++;
-          tabIndex = -1;
-        }
-        return (
-          <Tooltip key={patternAsBackground} title={tooltip}>
-            <StyledSwatch
-              onClick={() => handleClick(pattern, isLocal)}
-              pattern={pattern}
-              isSelected={isSelected}
-              isDisabled={isDisabled}
-              tabIndex={tabIndex}
-              title={title}
-            >
-              {isEditMode && <Icons.Cross />}
-            </StyledSwatch>
-          </Tooltip>
-        );
-      })}
-      {(isLocal || isGlobal) && (
+          })}
+          {(isLocal || isGlobal) && (
+            <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
+          )}
+        </SwatchList>
+      )}
+      {/* The `ColorAdd` button can only live in the listbox if there is at least one element with `role="option"` */}
+      {!colors.length && (isLocal || isGlobal) && (
         <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
       )}
-    </SwatchList>
+    </>
   );
 }
 
