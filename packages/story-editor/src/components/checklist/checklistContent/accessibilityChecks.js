@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import { ISSUE_TYPES } from '../constants';
 import ElementLinkTappableRegionTooSmall from '../checks/elementLinkTappableRegionTooSmall';
+import ElementLinkTappableRegionTooBig from '../checks/elementLinkTappableRegionTooBig';
 import ImageElementMissingAlt from '../checks/imageElementMissingAlt';
 import { PageBackgroundTextLowContrast } from '../checks/pageBackgroundLowTextContrast';
 import TextElementFontSizeTooSmall from '../checks/textElementFontSizeTooSmall';
@@ -84,6 +85,7 @@ export function AccessibilityChecks(props) {
         <VideoElementMissingDescription />
         {hasUploadMediaAction && <VideoElementMissingCaptions />}
         <ElementLinkTappableRegionTooSmall />
+        <ElementLinkTappableRegionTooBig />
         <ImageElementMissingAlt />
       </AccessibilityPanel>
     </ChecklistCategoryProvider>

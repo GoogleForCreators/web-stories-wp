@@ -17,10 +17,11 @@
  * External dependencies
  */
 import {
+  prettifyShortcut,
   useGlobalKeyDownEffect,
   useSnackbar,
 } from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { canTranscodeResource } from '@web-stories-wp/media';
 import PropTypes from 'prop-types';
@@ -41,13 +42,14 @@ import { useStory } from '..';
 import { createPage, duplicatePage, ELEMENT_TYPES } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
 import useAddPreset from '../../utils/useAddPreset';
-import useApplyStyle from '../../components/panels/design/preset/stylePreset/useApplyStyle';
+import useApplyStyle from '../../components/panels/design/textStyle/stylePresets/useApplyStyle';
 import { PRESET_TYPES } from '../../constants';
 import { useCanvas } from '../canvas';
 import { getTextPresets } from '../../utils/presetUtils';
 import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import { useHistory } from '../history';
-import useDeletePreset from '../../components/panels/design/preset/useDeletePreset';
+import useDeleteStyle from '../../components/panels/design/textStyle/stylePresets/useDeleteStyle';
+import useDeleteColor from '../../components/colorPicker/useDeleteColor';
 import { noop } from '../../utils/noop';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import {
@@ -60,6 +62,12 @@ import rightClickMenuReducer, {
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
 import { getDefaultPropertiesForType, getElementStyles } from './utils';
+
+const UNDO_HELP_TEXT = sprintf(
+  /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
+  __('Press %s to undo the last change', 'web-stories'),
+  prettifyShortcut('mod+z')
+);
 
 /**
  * Determines the items displayed in the right click menu
@@ -79,13 +87,11 @@ function RightClickMenuProvider({ children }) {
   const { addGlobalPreset: addGlobalColorPreset } = useAddPreset({
     presetType: PRESET_TYPES.COLOR,
   });
-  const { deleteGlobalPreset: deleteGlobalTextPreset } = useDeletePreset({
-    presetType: PRESET_TYPES.STYLE,
-    setIsEditMode: noop,
+  const deleteGlobalTextPreset = useDeleteStyle({
+    onEmpty: noop,
   });
-  const { deleteGlobalPreset: deleteGlobalColorPreset } = useDeletePreset({
-    presetType: PRESET_TYPES.COLOR,
-    setIsEditMode: noop,
+  const { deleteGlobalPreset: deleteGlobalColorPreset } = useDeleteColor({
+    onEmpty: noop,
   });
   const { setEditingElement } = useCanvas(({ actions }) => ({
     setEditingElement: actions.setEditingElement,
@@ -384,7 +390,7 @@ function RightClickMenuProvider({ children }) {
 
     showSnackbar({
       actionLabel: __('Undo', 'web-stories'),
-      dismissable: false,
+      dismissible: false,
       message: __('Copied style.', 'web-stories'),
       onAction: () => {
         dispatch({
@@ -398,6 +404,7 @@ function RightClickMenuProvider({ children }) {
           isBackground: selectedElement?.isBackground,
         });
       },
+      actionHelpText: UNDO_HELP_TEXT,
     });
 
     trackEvent('context_menu_action', {
@@ -511,7 +518,7 @@ function RightClickMenuProvider({ children }) {
 
     showSnackbar({
       actionLabel: __('Undo', 'web-stories'),
-      dismissable: false,
+      dismissible: false,
       message: __('Pasted style.', 'web-stories'),
       // don't pass a stale reference for undo
       // need history updates to run so `undo` works correctly.
@@ -524,6 +531,7 @@ function RightClickMenuProvider({ children }) {
           isBackground: selectedElement?.isBackground,
         });
       },
+      actionHelpText: UNDO_HELP_TEXT,
     });
 
     trackEvent('context_menu_action', {
@@ -567,7 +575,7 @@ function RightClickMenuProvider({ children }) {
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
+        dismissible: false,
         message: __('Cleared style.', 'web-stories'),
         // don't pass a stale reference for undo
         // need history updates to run so `undo` works correctly.
@@ -580,6 +588,7 @@ function RightClickMenuProvider({ children }) {
             isBackground: selectedElement?.isBackground,
           });
         },
+        actionHelpText: UNDO_HELP_TEXT,
       });
 
       trackEvent('context_menu_action', {
@@ -646,7 +655,7 @@ function RightClickMenuProvider({ children }) {
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
+        dismissible: false,
         message: __('Saved style to "Saved Styles".', 'web-stories'),
         onAction: () => {
           deleteGlobalTextPreset(preset);
@@ -656,6 +665,7 @@ function RightClickMenuProvider({ children }) {
             element: selectedElementType,
           });
         },
+        actionHelpText: UNDO_HELP_TEXT,
       });
 
       trackEvent('context_menu_action', {
@@ -682,7 +692,7 @@ function RightClickMenuProvider({ children }) {
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
+        dismissible: false,
         message: __('Added color to "Saved Colors".', 'web-stories'),
         onAction: () => {
           deleteGlobalColorPreset(preset);
@@ -692,6 +702,7 @@ function RightClickMenuProvider({ children }) {
             element: selectedElementType,
           });
         },
+        actionHelpText: UNDO_HELP_TEXT,
       });
 
       trackEvent('context_menu_action', {

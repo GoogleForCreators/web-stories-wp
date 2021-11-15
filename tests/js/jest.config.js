@@ -60,10 +60,12 @@ export default {
   coverageReporters: ['lcov'],
   coverageDirectory: '<rootDir>/build/logs',
   collectCoverageFrom: [
-    '<rootDir>/assets/src/**/*.js',
+    '<rootDir>/packages/**/*.js',
     '<rootDir>/bin/**/*.js',
+    '!<rootDir>/packages/fonts/**',
     '!**/karma/**',
     '!**/test/**',
+    '!**/testUtils/**',
     '!**/stories/**',
   ],
   modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],

@@ -311,7 +311,6 @@
     {
       "files": [
         "**/karma/**/*.js",
-        "assets/src/karma-*/**/*.js",
         "packages/karma-*/**/*.js"
       ],
       "extends": [

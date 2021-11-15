@@ -16,8 +16,6 @@
 
 export { default as ExcerptPanel } from './excerpt';
 export { default as PageAdvancementPanel } from './pageAdvancement';
-export { default as PublishPanel } from './publish';
 export { default as SlugPanel } from './slug';
-export { default as StatusPanel } from './status';
 export { default as BackgroundAudioPanel } from './backgroundAudio';
 export { default as TaxonomiesPanel } from './taxonomies';

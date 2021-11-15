@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import Proptypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -22,14 +26,18 @@ import { UploadDropTarget } from '../uploadDropTarget';
 import InspectorProvider from './inspectorProvider';
 import InspectorLayout from './inspectorLayout';
 
-function Inspector() {
+function Inspector({ inspectorTabs }) {
   return (
-    <InspectorProvider>
+    <InspectorProvider inspectorTabs={inspectorTabs}>
       <UploadDropTarget disabled>
         <InspectorLayout />
       </UploadDropTarget>
     </InspectorProvider>
   );
 }
+
+Inspector.propTypes = {
+  inspectorTabs: Proptypes.object,
+};
 
 export default Inspector;

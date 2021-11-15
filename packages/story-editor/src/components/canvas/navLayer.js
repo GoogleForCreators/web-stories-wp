@@ -23,9 +23,16 @@ import Proptypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import Carousel from '../carousel';
-import { CarouselArea, HeadArea, Layer, PageMenuArea, Z_INDEX } from './layout';
+import Footer from '../footer';
 import PageSideMenu from './pageSideMenu';
+import { useLayout } from '../../app';
+import {
+  FooterArea,
+  HeadArea,
+  Layer,
+  PageMenuArea,
+  Z_INDEX,
+} from './layout';
 
 function NavLayer({ header }) {
   return (
@@ -38,9 +45,9 @@ function NavLayer({ header }) {
       <PageMenuArea>
         <PageSideMenu />
       </PageMenuArea>
-      <CarouselArea pointerEvents="initial">
-        <Carousel />
-      </CarouselArea>
+      <FooterArea pointerEvents="initial">
+        <Footer />
+      </FooterArea>
     </Layer>
   );
 }
