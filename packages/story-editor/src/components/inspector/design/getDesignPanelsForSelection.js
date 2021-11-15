@@ -33,7 +33,6 @@ import {
   VideoAccessibilityPanel,
   ElementAlignmentPanel,
   VideoOptionsPanel,
-  StylePresetPanel,
   PageBackgroundAudioPanel,
 } from '../../panels/design';
 import PanelTypes from '../../panels/design/types';
@@ -118,8 +117,6 @@ function getDesignPanelsForSelection(elements) {
         case PanelTypes.PAGE_BACKGROUND:
           // Only display when isBackground.
           return null;
-        case PanelTypes.STYLE_PRESETS:
-          return { type, Panel: StylePresetPanel };
         case PanelTypes.FILTER:
           return { type, Panel: FilterPanel };
         case PanelTypes.SIZE_POSITION:

@@ -56,7 +56,9 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
-        expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
+        expect(fixture.editor.footer.carousel.pages.length).toBe(
+          clickCount + 1
+        );
       });
       clickCount++;
     }

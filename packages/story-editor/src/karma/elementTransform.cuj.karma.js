@@ -56,7 +56,7 @@ describe('Element transform', () => {
       await fixture.render();
 
       // Switch to 100% zoom to make sure all full pixels are valid coordinates
-      const { zoomSelector } = fixture.editor.carousel;
+      const { zoomSelector } = fixture.editor.footer;
       await fixture.events.click(zoomSelector.select);
       await fixture.events.sleep(300);
       await fixture.events.click(await zoomSelector.option('100%'));

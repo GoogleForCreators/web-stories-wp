@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import { Container } from './container';
-import { Select } from './common';
 
 /**
  * The page carousel.
@@ -44,30 +43,6 @@ export class Carousel extends Container {
   page(pageId) {
     return this.pages.find(
       (page) => page.node.getAttribute('data-page-id') === pageId
-    );
-  }
-
-  get gridViewToggle() {
-    return this.getByRole('button', { name: 'Grid View' });
-  }
-
-  get helpCenterToggle() {
-    return this.getByRole('button', { name: /^Help Center/ });
-  }
-
-  get checklistToggle() {
-    return this.getByRole('button', { name: /^Checklist/ });
-  }
-
-  get keyboardShortcutsToggle() {
-    return this.getByRole('button', { name: /^Keyboard Shortcuts$/ });
-  }
-
-  get zoomSelector() {
-    return this._get(
-      this.getByRole('button', { name: 'Zoom Level' }),
-      'zoomSelector',
-      Select
     );
   }
 }

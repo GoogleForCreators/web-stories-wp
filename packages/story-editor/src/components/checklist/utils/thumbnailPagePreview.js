@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../../../types';
-import PagePreview from '../../carousel/pagepreview';
+import PagePreview from '../../footer/pagepreview';
 import { THUMBNAIL_DIMENSIONS } from '../../thumbnail';
 
 export const ThumbnailPagePreview = ({ page }) => (
