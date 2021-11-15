@@ -39,7 +39,7 @@ const mockUseCurrentUser = useCurrentUser;
 const mockToggleWebStoriesMediaOptimization = jest.fn();
 const mockUser = {
   meta: {
-    web_stories_media_optimization: false,
+    webStoriesMediaOptimization: false,
   },
 };
 
@@ -61,7 +61,7 @@ describe('VideoOptimizationCheckbox', () => {
     mockUseCurrentUser.mockReturnValue({
       currentUser: {
         ...mockUser,
-        meta: { ...mockUser.meta, web_stories_media_optimization: true },
+        meta: { ...mockUser.meta, webStoriesMediaOptimization: true },
       },
       toggleWebStoriesMediaOptimization: mockToggleWebStoriesMediaOptimization,
     });
@@ -78,7 +78,7 @@ describe('VideoOptimizationCheckbox', () => {
     mockUseCurrentUser.mockReturnValue({
       currentUser: {
         ...mockUser,
-        meta: { ...mockUser.meta, web_stories_media_optimization: false },
+        meta: { ...mockUser.meta, webStoriesMediaOptimization: false },
       },
       toggleWebStoriesMediaOptimization: mockToggleWebStoriesMediaOptimization,
     });
