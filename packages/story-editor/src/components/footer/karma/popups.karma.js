@@ -25,32 +25,27 @@ describe('Popup Menus - Help Center, KeyboardShortcuts, and Checklist', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
     fixture.restore();
   });
 
-  it('should start with all popups closed', () => {
+  it('should start with help center open', () => {
     const { helpCenterToggle, checklistToggle, keyboardShortcutsToggle } =
       fixture.editor.footer;
 
     expect(helpCenterToggle).toBeDefined();
     expect(checklistToggle).toBeDefined();
     expect(keyboardShortcutsToggle).toBeDefined();
-    expect(fixture.editor.helpCenter.quickTips).toBeNull();
+    expect(fixture.editor.helpCenter.quickTips).toBeDefined();
   });
 
-  it('should collapse helpCenter and keyboard shortcuts when checklist is expanded', async () => {
-    const { helpCenterToggle, checklistToggle } = fixture.editor.footer;
-    await fixture.events.click(helpCenterToggle);
-
-    const { quickTips } = await fixture.editor.helpCenter;
-    expect(quickTips).toBeDefined();
+  it('should collapse help center and keyboard shortcuts when checklist is expanded', async () => {
+    const { checklistToggle } = fixture.editor.footer;
 
     await fixture.events.click(checklistToggle);
-    await fixture.events.sleep(500);
+    await fixture.events.sleep(300); // allow transition to play out
 
     expect(
       fixture.editor.checklist.issues.getAttribute('data-isexpanded')
@@ -63,7 +58,7 @@ describe('Popup Menus - Help Center, KeyboardShortcuts, and Checklist', () => {
     const { helpCenterToggle, checklistToggle } = fixture.editor.footer;
 
     await fixture.events.click(checklistToggle);
-
+    await fixture.events.sleep(300);
     expect(
       fixture.editor.checklist.issues.getAttribute('data-isexpanded')
     ).toBe('true');
@@ -73,15 +68,16 @@ describe('Popup Menus - Help Center, KeyboardShortcuts, and Checklist', () => {
 
     const { quickTips } = await fixture.editor.helpCenter;
 
-    await fixture.events.sleep(500);
+    await fixture.events.sleep(300);
 
     expect(quickTips).toBeDefined();
   });
 
-  it('should collapse checklist and helpCenter when keyboard shortcuts menu is expanded', async () => {
+  it('should collapse checklist and help center when keyboard shortcuts menu is expanded', async () => {
     const { checklistToggle, keyboardShortcutsToggle } = fixture.editor.footer;
 
     await fixture.events.click(checklistToggle);
+    await fixture.events.sleep(300);
 
     expect(
       fixture.editor.checklist.issues.getAttribute('data-isexpanded')
@@ -90,9 +86,9 @@ describe('Popup Menus - Help Center, KeyboardShortcuts, and Checklist', () => {
 
     await fixture.events.click(keyboardShortcutsToggle);
 
-    const { keyboardShortcutsMenu } = await fixture.editor.keyboardShortcuts;
+    await fixture.events.sleep(300);
 
-    await fixture.events.sleep(500);
+    const { keyboardShortcutsMenu } = await fixture.editor.keyboardShortcuts;
 
     expect(keyboardShortcutsMenu).toBeDefined();
   });
