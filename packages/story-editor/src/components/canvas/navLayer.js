@@ -25,14 +25,7 @@ import Proptypes from 'prop-types';
  */
 import Footer from '../footer';
 import PageSideMenu from './pageSideMenu';
-import { useLayout } from '../../app';
-import {
-  FooterArea,
-  HeadArea,
-  Layer,
-  PageMenuArea,
-  Z_INDEX,
-} from './layout';
+import { FooterArea, HeadArea, Layer, PageMenuArea, Z_INDEX } from './layout';
 
 function NavLayer({ header }) {
   return (
