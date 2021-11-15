@@ -24,6 +24,7 @@ import Proptypes from 'prop-types';
  * Internal dependencies
  */
 import Footer from '../footer';
+import DirectionAware from '../directionAware';
 import PageSideMenu from './pageSideMenu';
 import { FooterArea, HeadArea, Layer, PageMenuArea, Z_INDEX } from './layout';
 
@@ -35,9 +36,11 @@ function NavLayer({ header }) {
       onMouseDown={(evt) => evt.stopPropagation()}
     >
       <HeadArea pointerEvents="initial">{header}</HeadArea>
-      <PageMenuArea>
-        <PageSideMenu />
-      </PageMenuArea>
+      <DirectionAware>
+        <PageMenuArea>
+          <PageSideMenu />
+        </PageMenuArea>
+      </DirectionAware>
       <FooterArea pointerEvents="initial">
         <Footer />
       </FooterArea>

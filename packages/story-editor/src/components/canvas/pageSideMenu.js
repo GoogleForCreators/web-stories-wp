@@ -25,7 +25,6 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import DirectionAware from '../directionAware';
 import { useLayout } from '../../app';
 import { useQuickActions } from '../../app/highlights';
 import { ZOOM_SETTING } from '../../constants';
@@ -69,35 +68,33 @@ function PageSideMenu() {
   const isZoomed = zoomSetting !== ZOOM_SETTING.FIT;
 
   return (
-    <DirectionAware>
-      <MenusWrapper
-        aria-label={__('Page side menu', 'web-stories')}
-        isZoomed={isZoomed}
-      >
-        {showQuickActions && (
-          <>
-            <ContextMenu
-              isInline
-              isAlwaysVisible
-              isIconMenu
-              disableControlledTabNavigation
-              groupLabel={__(
-                'Group of available options for selected element',
-                'web-stories'
-              )}
-              items={quickActions}
-              onMouseDown={(e) => {
-                // Stop the event from bubbling if the user clicks in between buttons.
-                // This prevents the selected element in the canvas from losing focus.
-                e.stopPropagation();
-              }}
-            />
-            {isZoomed && <Divider />}
-          </>
-        )}
-        <PageMenu />
-      </MenusWrapper>
-    </DirectionAware>
+    <MenusWrapper
+      aria-label={__('Page side menu', 'web-stories')}
+      isZoomed={isZoomed}
+    >
+      {showQuickActions && (
+        <>
+          <ContextMenu
+            isInline
+            isAlwaysVisible
+            isIconMenu
+            disableControlledTabNavigation
+            groupLabel={__(
+              'Group of available options for selected element',
+              'web-stories'
+            )}
+            items={quickActions}
+            onMouseDown={(e) => {
+              // Stop the event from bubbling if the user clicks in between buttons.
+              // This prevents the selected element in the canvas from losing focus.
+              e.stopPropagation();
+            }}
+          />
+          {isZoomed && <Divider />}
+        </>
+      )}
+      <PageMenu />
+    </MenusWrapper>
   );
 }
 
