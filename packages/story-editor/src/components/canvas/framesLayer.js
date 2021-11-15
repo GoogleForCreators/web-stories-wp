@@ -92,7 +92,7 @@ function FramesLayer() {
     [setScrollOffset]
   );
 
-  useKeyDownEffect(framesLayerRef, 'mod+option+shift+m', onOpenMenu);
+  useKeyDownEffect(framesLayerRef, 'mod+alt+shift+m', onOpenMenu);
 
   return (
     <Layer
