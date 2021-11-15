@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { screen, act } from '@testing-library/react';
+import { snakeToCamelCase } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -31,8 +32,8 @@ function arrange({ taxonomies, isCapable }) {
   const storyContextValue = {
     state: {
       capabilities: taxonomies.reduce((acc, curr) => {
-        acc[`assign-${curr.slug}`] = isCapable;
-        acc[`create-${curr.slug}`] = isCapable;
+        acc[snakeToCamelCase(`assign-${curr.slug}`)] = isCapable;
+        acc[snakeToCamelCase(`create-${curr.slug}`)] = isCapable;
         return acc;
       }, {}),
     },
