@@ -42,13 +42,14 @@ import { useStory } from '..';
 import { createPage, duplicatePage, ELEMENT_TYPES } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
 import useAddPreset from '../../utils/useAddPreset';
-import useApplyStyle from '../../components/panels/design/preset/stylePreset/useApplyStyle';
+import useApplyStyle from '../../components/panels/design/textStyle/stylePresets/useApplyStyle';
 import { PRESET_TYPES } from '../../constants';
 import { useCanvas } from '../canvas';
 import { getTextPresets } from '../../utils/presetUtils';
 import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import { useHistory } from '../history';
-import useDeletePreset from '../../components/panels/design/preset/useDeletePreset';
+import useDeleteStyle from '../../components/panels/design/textStyle/stylePresets/useDeleteStyle';
+import useDeleteColor from '../../components/colorPicker/useDeleteColor';
 import { noop } from '../../utils/noop';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import {
@@ -86,13 +87,11 @@ function RightClickMenuProvider({ children }) {
   const { addGlobalPreset: addGlobalColorPreset } = useAddPreset({
     presetType: PRESET_TYPES.COLOR,
   });
-  const { deleteGlobalPreset: deleteGlobalTextPreset } = useDeletePreset({
-    presetType: PRESET_TYPES.STYLE,
-    setIsEditMode: noop,
+  const deleteGlobalTextPreset = useDeleteStyle({
+    onEmpty: noop,
   });
-  const { deleteGlobalPreset: deleteGlobalColorPreset } = useDeletePreset({
-    presetType: PRESET_TYPES.COLOR,
-    setIsEditMode: noop,
+  const { deleteGlobalPreset: deleteGlobalColorPreset } = useDeleteColor({
+    onEmpty: noop,
   });
   const { setEditingElement } = useCanvas(({ actions }) => ({
     setEditingElement: actions.setEditingElement,

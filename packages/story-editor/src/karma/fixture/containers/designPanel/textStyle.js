@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { ToggleButton, Select, Color } from '../common';
+import { Container } from '../container';
 import { AbstractPanel } from './abstractPanel';
 
 /**
@@ -103,7 +104,59 @@ export class TextStyle extends AbstractPanel {
     return this.getByRole('option', { name: /fill/i });
   }
 
+  get addStyle() {
+    return this.getByRole('button', { name: /Add style/ });
+  }
+
+  get applyStyle() {
+    return this.getByRole('button', { name: /Apply style/ });
+  }
+
+  get presets() {
+    return this.getAllByRole('button', { name: /Apply style/ });
+  }
+
+  get moreStyles() {
+    return this.getByRole('button', { name: /More styles/ });
+  }
+
+  get styleManager() {
+    return this._get(
+      this.getByRoleIn(this.node.ownerDocument, 'dialog', {
+        name: /Style presets manager/,
+      }),
+      'styleManager',
+      StyleManager
+    );
+  }
+
   // @todo: add remaining input options:
   // * font family and size
   // * justify toggles
+}
+
+class StyleManager extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get apply() {
+    return this.getByRole('button', { name: /Apply style/ });
+  }
+
+  get presets() {
+    return this.getAllByRole('button', { name: /Apply style/ });
+  }
+
+  get delete() {
+    return this.getByRole('button', { name: /Delete style/ });
+  }
+
+  get edit() {
+    return this.getByRole('button', { name: /Edit style/ });
+  }
+
+  get exit() {
+    return this.getByRole('button', { name: /Exit edit mode/ });
+  }
 }
