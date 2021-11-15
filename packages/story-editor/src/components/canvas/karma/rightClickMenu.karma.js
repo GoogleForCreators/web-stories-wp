@@ -31,7 +31,6 @@ import useInsertElement from '../useInsertElement';
 
 describe('Right Click Menu integration', () => {
   let fixture;
-  let duplicatePageCarouselButton;
   let insertElement;
 
   beforeEach(async () => {
@@ -39,10 +38,6 @@ describe('Right Click Menu integration', () => {
     await fixture.render();
 
     insertElement = await fixture.renderHook(() => useInsertElement());
-
-    duplicatePageCarouselButton = fixture.screen.getByRole('button', {
-      name: /Duplicate Page/,
-    });
   });
 
   afterEach(async () => {
@@ -333,9 +328,12 @@ describe('Right Click Menu integration', () => {
     // after it is opened :grimacing:.
     it('right clicking away from the canvas should not open the custom right click menu', async () => {
       // right click outside canvas
-      await fixture.events.click(duplicatePageCarouselButton, {
-        button: 'right',
-      });
+      await fixture.events.click(
+        fixture.editor.canvas.pageActions.duplicatePage,
+        {
+          button: 'right',
+        }
+      );
       expect(
         fixture.screen.queryByTestId(
           'right-click-context-menu[aria-expanded="true"]'

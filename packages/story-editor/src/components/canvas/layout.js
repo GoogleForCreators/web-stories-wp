@@ -52,7 +52,7 @@ const HEADER_GAP = 16;
 // 8px extra is for the focus outline to display.
 const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE + 8;
 const MENU_GAP = 12;
-const CAROUSEL_HEIGHT = 104;
+const FOOTER_HEIGHT = 104;
 // 8px extra is for the focus outline to display.
 const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;
 const PAGE_NAV_GAP = 20;
@@ -76,7 +76,7 @@ const Layer = styled.section`
     f = forward navigation
     p = canvas page
     m = page action menu
-    c = thumbnail carousel
+    w = workspace footer
 
     Also note that we need to specify all the widths and heights
     even though some of the elements could just use the size that
@@ -91,7 +91,7 @@ const Layer = styled.section`
     '. . . . . . .' ${MENU_GAP}px
     'm m m m m m m' ${MENU_HEIGHT}px
     '. . . . . . .' 1fr
-    'c c c c c c c' ${CAROUSEL_HEIGHT}px
+    'w w w w w w w' ${FOOTER_HEIGHT}px
     /
     1fr
     var(--page-nav-width)
@@ -239,16 +239,16 @@ const NavNextArea = styled(NavArea).attrs({
   area: 'f',
 })``;
 
-const QuickActionsArea = styled(PaddedPage)`
+const PageMenuArea = styled.div`
   grid-area: p;
   position: absolute;
   right: calc(-24px + var(--page-padding-px));
-  padding-left: 0;
-  padding-right: 0;
+  top: calc(0.5 * var(--page-padding-px));
+  min-height: calc(100% - var(--page-padding-px));
 `;
 
-const CarouselArea = styled(Area).attrs({
-  area: 'c',
+const FooterArea = styled(Area).attrs({
+  area: 'w',
   showOverflow: true,
 })``;
 
@@ -272,7 +272,7 @@ function useLayoutParams(containerRef) {
       HEADER_GAP -
       MENU_HEIGHT -
       MENU_GAP -
-      CAROUSEL_HEIGHT;
+      FOOTER_HEIGHT;
 
     setWorkspaceSize({ width: maxWidth, height: maxHeight });
   });
@@ -454,8 +454,8 @@ export {
   MenuArea,
   NavPrevArea,
   NavNextArea,
-  QuickActionsArea,
-  CarouselArea,
+  PageMenuArea,
+  FooterArea,
   useLayoutParams,
   useLayoutParamsCssVars,
 };

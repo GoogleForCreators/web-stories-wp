@@ -46,7 +46,7 @@ describe('Quick Actions integration', () => {
 
   describe('menu visibility', () => {
     it('quick menu should not be visible if the canvas is overflowing', async () => {
-      const { zoomSelector } = fixture.editor.carousel;
+      const { zoomSelector } = fixture.editor.footer;
 
       await fixture.events.click(zoomSelector.select);
       await fixture.events.sleep(300);

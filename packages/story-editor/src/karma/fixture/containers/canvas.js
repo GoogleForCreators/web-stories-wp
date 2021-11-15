@@ -68,6 +68,14 @@ export class Canvas extends Container {
       QuickActionMenu
     );
   }
+
+  get pageActions() {
+    return this._get(
+      this.getByRole('group', { name: 'Page actions' }),
+      'pageActions',
+      PageActions
+    );
+  }
 }
 
 /**
@@ -179,10 +187,6 @@ class FramesLayer extends AbstractLayer {
     );
   }
 
-  get addPage() {
-    return this.getByRole('button', { name: 'Add New Page' });
-  }
-
   get prevPage() {
     return this.getByRole('button', { name: 'Previous Page' });
   }
@@ -273,5 +277,26 @@ class Header extends Container {
 
   get schedule() {
     return this.getByRole('button', { name: 'Schedule' });
+  }
+}
+
+/**
+ * Page action buttons.
+ */
+class PageActions extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get addPage() {
+    return this.getByRole('button', { name: 'Add New Page' });
+  }
+
+  get duplicatePage() {
+    return this.getByRole('button', { name: 'Duplicate Page' });
+  }
+
+  get deletePage() {
+    return this.getByRole('button', { name: 'Delete Page' });
   }
 }

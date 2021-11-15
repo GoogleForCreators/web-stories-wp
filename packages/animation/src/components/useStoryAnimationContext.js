@@ -23,16 +23,7 @@ import { identity, useContextSelector } from '@web-stories-wp/react';
 import { StoryAnimationContext } from './provider';
 
 function useStoryAnimationContext(selector) {
-  const context = useContextSelector(
-    StoryAnimationContext,
-    selector ?? identity
-  );
-  if (!context) {
-    throw new Error(
-      'Must use `useStoryAnimationContext()` within <StoryAnimation.Provider />'
-    );
-  }
-  return context;
+  return useContextSelector(StoryAnimationContext, selector ?? identity);
 }
 
 export default useStoryAnimationContext;

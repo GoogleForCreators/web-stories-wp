@@ -31,8 +31,6 @@ import { generateFontFamily } from '../elements/text/util';
 import {
   BACKGROUND_TEXT_MODE,
   MULTIPLE_VALUE,
-  SAVED_STYLE_HEIGHT,
-  STYLE_PRESETS_PER_ROW,
   PRESET_TYPES,
 } from '../constants';
 import { getHTMLInfo } from '../components/richText/htmlManipulation';
@@ -86,7 +84,7 @@ export function generatePresetStyle(preset, prepareForCSS) {
   } = preset;
   let style = {
     textAlign,
-    letterSpacing,
+    letterSpacing: `${letterSpacing / 100}em`,
     fontWeight,
     textDecoration: isUnderline ? 'underline' : null,
     fontStyle: isItalic ? 'italic' : null,
@@ -187,16 +185,4 @@ export function areAllType(elType, selectedElements) {
     selectedElements.length > 0 &&
     selectedElements.every(({ type }) => elType === type)
   );
-}
-
-export function getPanelInitialHeight(presets) {
-  // Includes the helper text and button for saving a color.
-  const presetsCount = presets.length;
-  let initialHeight = 0;
-  if (presetsCount > 0) {
-    initialHeight =
-      Math.max(1.5, Math.ceil(presets.length / STYLE_PRESETS_PER_ROW)) *
-      SAVED_STYLE_HEIGHT;
-  }
-  return Math.min(initialHeight, window.innerHeight / 3);
 }

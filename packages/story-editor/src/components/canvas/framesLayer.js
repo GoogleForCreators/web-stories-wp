@@ -35,8 +35,7 @@ import {
   useRightClickMenu,
 } from '../../app';
 import useCanvasKeys from '../../app/canvas/useCanvasKeys';
-import PageMenu from './pagemenu';
-import { Layer, MenuArea, NavNextArea, NavPrevArea, PageArea } from './layout';
+import { Layer, NavNextArea, NavPrevArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import PageNav from './pagenav';
@@ -91,14 +90,6 @@ function FramesLayer() {
       }),
     [setScrollOffset]
   );
-  const { isEditing, hasEditMenu = false } = useCanvas(
-    ({ state: { isEditing, editingElementState: { hasEditMenu } = {} } }) => ({
-      isEditing,
-      hasEditMenu,
-    })
-  );
-
-  const isEditingWithMenu = isEditing && hasEditMenu;
 
   return (
     <Layer
@@ -130,15 +121,6 @@ function FramesLayer() {
           />
         </FramesPageArea>
       )}
-      <MenuArea
-        pointerEvents="initial"
-        // Make its own stacking context.
-        zIndex={1}
-        // Cancel lasso.
-        onMouseDown={(evt) => evt.stopPropagation()}
-      >
-        {!isEditingWithMenu && <PageMenu />}
-      </MenuArea>
       <NavPrevArea>
         <PageNav isNext={false} />
       </NavPrevArea>

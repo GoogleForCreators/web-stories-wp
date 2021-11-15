@@ -23,8 +23,8 @@ import styled, { css } from 'styled-components';
 export const POPOVER_Z_INDEX = 9991;
 
 export const Popover = styled.div(
-  ({ isOpen }) => css`
-    position: absolute;
+  ({ isOpen, isInline }) => css`
+    position: ${isInline ? 'relative' : 'absolute'};
     display: none;
 
     ${isOpen &&

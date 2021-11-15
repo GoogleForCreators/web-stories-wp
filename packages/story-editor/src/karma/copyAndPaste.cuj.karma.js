@@ -225,11 +225,9 @@ describe('Background Copy & Paste', () => {
     fixture = new Fixture();
     await fixture.render();
 
-    // Create a new blank page to copy to.
-    const addNewPageButton = fixture.screen.getByRole('button', {
-      name: /Add New Page/,
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage, {
+      clickCount: 1,
     });
-    await fixture.events.click(addNewPageButton, { clickCount: 1 });
 
     // Navigate back to previous page and add Background image
     await goToPreviousPage();

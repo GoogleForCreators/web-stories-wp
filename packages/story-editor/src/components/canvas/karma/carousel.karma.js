@@ -74,8 +74,8 @@ describe('Carousel integration', () => {
   }
 
   async function clickOnThumbnail(index) {
-    await fixture.editor.carousel.waitReady();
-    const thumb = fixture.editor.carousel.pages[index];
+    await fixture.editor.footer.carousel.waitReady();
+    const thumb = fixture.editor.footer.carousel.pages[index];
     thumb.node.scrollIntoView();
     await fixture.events.mouse.clickOn(thumb.node, 5, 5);
   }
@@ -95,7 +95,7 @@ describe('Carousel integration', () => {
   it('should exit the carousel on Esc', async () => {
     // Enter.
     await clickOnThumbnail(0);
-    await fixture.editor.carousel.waitFocusedWithin();
+    await fixture.editor.footer.carousel.waitFocusedWithin();
 
     // Exit.
     await fixture.events.keyboard.press('Esc');

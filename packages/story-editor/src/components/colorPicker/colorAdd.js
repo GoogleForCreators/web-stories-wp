@@ -51,7 +51,7 @@ const AddColorAction = styled.button`
   ${focusStyle};
 `;
 
-function ColorAdd({ isLocal = false, isGlobal = false }) {
+function ColorAdd({ isLocal = false, isGlobal = false, ...props }) {
   const { addGlobalPreset, addLocalPreset } = useAddPreset({
     presetType: PRESET_TYPES.COLOR,
   });
@@ -68,6 +68,7 @@ function ColorAdd({ isLocal = false, isGlobal = false }) {
       tabIndex="0"
       onClick={isLocal ? addLocalPreset : addGlobalPreset}
       aria-label={label}
+      {...props}
     >
       <Icons.Plus />
     </AddColorAction>
