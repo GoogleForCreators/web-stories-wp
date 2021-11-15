@@ -34,6 +34,7 @@ describe('Canvas keys integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     const insertElement = await fixture.renderHook(() => useInsertElement());
     element1 = await fixture.act(() =>

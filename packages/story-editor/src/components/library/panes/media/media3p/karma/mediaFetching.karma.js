@@ -210,6 +210,7 @@ xdescribe('Media3pPane fetching', () => {
     jasmine.clock().install();
 
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     unsplashSection = fixture.querySelector(
       '#provider-bottom-wrapper-unsplash'

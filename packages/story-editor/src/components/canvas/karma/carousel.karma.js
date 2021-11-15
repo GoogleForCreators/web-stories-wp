@@ -39,6 +39,7 @@ describe('Carousel integration', () => {
       { id: 'page4', backgroundColor: createSolid(0, 0, 255) },
     ]);
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     const insertElement = await fixture.renderHook(() => useInsertElement());
     element1 = await fixture.act(() =>

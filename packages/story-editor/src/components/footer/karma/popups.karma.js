@@ -25,6 +25,7 @@ describe('Popup Menus - Help Center, KeyboardShortcuts, and Checklist', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {

@@ -391,23 +391,26 @@ export class Fixture {
       });
     });
 
-    await waitFor(
-      async () => {
-        // Set help center to closed right away.
-        // Because there's logic to pop open the help center on initial load
-        // This wait + click to close the button is more in line with
-        // testing the actual behavior rather than overriding the local storage.
-        await this.editor.helpCenter.toggleButton;
-        await this.events?.click(this.editor.helpCenter.toggleButton, {
-          clickCount: 1,
-        });
-        await this.events?.sleep(500);
-      },
-      { timeout: 3000 }
-    );
-
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
+  }
+
+  /**
+   * Tells the fixture to close the help center
+   * which will default to Open the first time the fixture renders.
+   *
+   * @param {Function} func The hook function. E.g. `useStory`.
+   * @return {Promise<Object>} Resolves when help center toggle is clicked.
+   */
+  collapseHelpCenter() {
+    const { _editor, _events } = this;
+    if (!_editor || !_events) {
+      throw new Error('Not ready: fixture not set up');
+    }
+
+    const { toggleButton } = _editor.helpCenter;
+
+    return _events.click(toggleButton);
   }
 
   /**

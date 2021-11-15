@@ -46,6 +46,7 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
