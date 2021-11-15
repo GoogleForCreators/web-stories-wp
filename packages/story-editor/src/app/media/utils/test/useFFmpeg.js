@@ -40,7 +40,7 @@ jest.mock('@ffmpeg/ffmpeg', () => {
 function arrange({ userSettingEnabled, hasUploadMediaAction }) {
   const currentUser = {
     meta: {
-      web_stories_media_optimization: userSettingEnabled,
+      webStoriesMediaOptimization: userSettingEnabled,
     },
   };
   const configState = {
