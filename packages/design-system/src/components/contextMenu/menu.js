@@ -197,7 +197,7 @@ const Menu = ({
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const wrapperRef = useRef(null);
   const listRef = useRef(null);
-  const menuWasAlreadyOpen = useRef(isOpen);
+  const menuWasAlreadyOpen = useRef(false);
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
   // Need ref so that `items.length` changes do not trigger the effect

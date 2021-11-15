@@ -76,7 +76,7 @@ export function SmartPopover(props) {
     [props.isRTL]
   );
 
-  return props.isOpen && <Popover ref={setRef} {...props} />;
+  return props.isOpen ? <Popover ref={setRef} {...props} /> : null;
 }
 
 SmartPopover.propTypes = {
