@@ -151,16 +151,22 @@ function useProcessMedia({
           // Ignore for now.
           return;
         }
+
+        const additionalData = {
+          original_id: oldResource.id,
+          web_stories_is_muted: oldResource.isMuted,
+        };
+
+        if (oldResource?.baseColor) {
+          additionalData.meta.web_stories_base_color = oldResource.baseColor;
+        }
+
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadStart,
           onUploadError,
           onUploadProgress,
-          additionalData: {
-            original_id: oldResource.id,
-            web_stories_is_muted: oldResource.isMuted,
-            meta: { web_stories_base_color: oldResource.baseColor },
-          },
+          additionalData,
         });
       })();
     },
@@ -230,18 +236,20 @@ function useProcessMedia({
           }
         }
 
+        const additionalData = {
+          web_stories_is_muted: oldResource.isMuted,
+          original_id: oldResource.id,
+          web_stories_media_source: oldResource?.isOptimized
+            ? 'video-optimization'
+            : 'editor',
+        };
+
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadStart,
           onUploadError,
           onUploadProgress,
-          additionalData: {
-            web_stories_is_muted: oldResource.isMuted,
-            original_id: oldResource.id,
-            web_stories_media_source: oldResource?.isOptimized
-              ? 'video-optimization'
-              : 'editor',
-          },
+          additionalData,
           trimData,
           resource: {
             ...oldResource,
@@ -322,18 +330,23 @@ function useProcessMedia({
           }
         }
 
+        const additionalData = {
+          original_id: oldResource.id,
+          web_stories_media_source: oldResource?.isOptimized
+            ? 'video-optimization'
+            : 'editor',
+        };
+
+        if (oldResource?.baseColor) {
+          additionalData.meta.web_stories_base_color = oldResource.baseColor;
+        }
+
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadStart,
           onUploadError,
           onUploadProgress,
-          additionalData: {
-            meta: { web_stories_base_color: oldResource.baseColor },
-            original_id: oldResource.id,
-            web_stories_media_source: oldResource?.isOptimized
-              ? 'video-optimization'
-              : 'editor',
-          },
+          additionalData,
           muteVideo: true,
           resource: {
             ...oldResource,
@@ -391,13 +404,18 @@ function useProcessMedia({
           return;
         }
 
+        const additionalData = {
+          original_id: oldResource.id,
+        };
+
+        if (oldResource?.baseColor) {
+          additionalData.meta.web_stories_base_color = oldResource.baseColor;
+        }
+
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadProgress,
-          additionalData: {
-            original_id: oldResource.id,
-            meta: { web_stories_base_color: oldResource.baseColor },
-          },
+          additionalData,
         });
       };
       return process();
