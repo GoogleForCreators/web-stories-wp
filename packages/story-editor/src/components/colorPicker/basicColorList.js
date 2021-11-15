@@ -135,19 +135,25 @@ function BasicColorList({
               firstIndex++;
               tabIndex = -1;
             }
-            return (
+            const renderedSwatch = (
+              <StyledSwatch
+                key={tooltip ? null : patternAsBackground}
+                onClick={() => handleClick(pattern, isLocal)}
+                pattern={pattern}
+                isSelected={isSelected}
+                isDisabled={isDisabled}
+                tabIndex={tabIndex}
+                title={title}
+              >
+                {isEditMode && <Icons.Cross />}
+              </StyledSwatch>
+            );
+            return tooltip ? (
               <Tooltip key={patternAsBackground} title={tooltip}>
-                <StyledSwatch
-                  onClick={() => handleClick(pattern, isLocal)}
-                  pattern={pattern}
-                  isSelected={isSelected}
-                  isDisabled={isDisabled}
-                  tabIndex={tabIndex}
-                  title={title}
-                >
-                  {isEditMode && <Icons.Cross />}
-                </StyledSwatch>
+                {renderedSwatch}
               </Tooltip>
+            ) : (
+              renderedSwatch
             );
           })}
           {(isLocal || isGlobal) && (
