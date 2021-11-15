@@ -361,7 +361,7 @@ const shortcuts = {
               <kbd className="large-key">{prettifyShortcut('mod')}</kbd>
               <kbd className="large-key">{prettifyShortcut('alt')}</kbd>
               <kbd className="large-key">{prettifyShortcut('shift')}</kbd>
-              <kbd>{'m'}</kbd>
+              <kbd>{'M'}</kbd>
             </kbd>
           ),
         },
