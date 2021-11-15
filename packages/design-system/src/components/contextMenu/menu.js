@@ -220,6 +220,7 @@ const Menu = ({
 
   /**
    * Allow navigation of the list using the UP and DOWN arrow keys.
+   * Close menu if ESCAPE is pressed.
    *
    * @param {Event} event The synthetic event
    * @return {void} void
@@ -227,6 +228,11 @@ const Menu = ({
   const handleKeyboardNav = useCallback(
     (evt) => {
       const { key, shiftKey } = evt;
+      if (key === 'Escape') {
+        onDismiss?.(evt);
+        return;
+      }
+
       const isAscending =
         [KEYS.UP, KEYS.LEFT].includes(key) || (key === KEYS.TAB && shiftKey);
       let index = focusedIndex + (isAscending ? -1 : 1);
@@ -292,8 +298,8 @@ const Menu = ({
   const keySpec = useMemo(
     () =>
       disableControlledTabNavigation
-        ? { key: ['down', 'up', 'left', 'right'] }
-        : { key: ['down', 'up', 'left', 'right', 'tab'], shift: true },
+        ? { key: ['esc', 'down', 'up', 'left', 'right'] }
+        : { key: ['esc', 'down', 'up', 'left', 'right', 'tab'], shift: true },
     [disableControlledTabNavigation]
   );
 

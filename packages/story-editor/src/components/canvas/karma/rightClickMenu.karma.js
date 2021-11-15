@@ -353,6 +353,53 @@ describe('Right Click Menu integration', () => {
 
       expect(rightClickMenu()).not.toBeNull();
     });
+
+    it('should open and close the context menu using keyboard shortcuts', async () => {
+      const textA = await addText({
+        fontSize: 60,
+        content: '<span style="color: #ff0110">Some Text Element</span>',
+        backgroundColor: { r: 10, g: 0, b: 200 },
+        lineHeight: 1.4,
+        textAlign: 'center',
+        border: {
+          left: 1,
+          right: 1,
+          top: 1,
+          bottom: 1,
+          lockedWidth: true,
+          color: {
+            color: {
+              r: 0,
+              g: 0,
+              b: 0,
+            },
+          },
+        },
+        padding: {
+          vertical: 0,
+          horizontal: 20,
+          locked: true,
+        },
+      });
+
+      // only possible if element in canvas is focused
+      await fixture.events.focus(
+        fixture.editor.canvas.framesLayer.frame(textA.id).node
+      );
+
+      // open right click menu
+      await fixture.events.keyboard.shortcut('mod+alt+shift+m');
+
+      expect(rightClickMenu()).not.toBeNull();
+
+      // close right click menu
+      await fixture.events.keyboard.press('esc');
+      expect(
+        fixture.screen.queryByTestId(
+          'right-click-context-menu[aria-expanded="true"]'
+        )
+      ).toBeNull();
+    });
   });
 
   describe('right click menu: foreground and background media actions', () => {
