@@ -75,7 +75,7 @@ function VideoOptimizationCheckbox() {
     })
   );
 
-  const checked = currentUser?.meta?.web_stories_media_optimization;
+  const checked = currentUser?.meta?.webStoriesMediaOptimization;
   const showCheckbox = !checked && hasUploadMediaAction;
 
   return showCheckbox && isChecklistMounted ? (
@@ -89,7 +89,7 @@ function VideoOptimizationCheckbox() {
       <CheckboxContainer>
         <Checkbox
           id="automatic-video-optimization-toggle"
-          checked={currentUser?.meta?.web_stories_media_optimization}
+          checked={currentUser?.meta?.webStoriesMediaOptimization}
           onChange={toggleWebStoriesMediaOptimization}
         />
         <CheckboxLabel

@@ -248,9 +248,9 @@ function HelpCenterProvider({ children }) {
 
   // Hydrate unread tips once from current user endpoint.
   useEffect(() => {
-    if (!isHydrated && currentUser?.meta?.web_stories_onboarding) {
+    if (!isHydrated && currentUser?.meta?.webStoriesOnboarding) {
       actions.hydrateReadTipsSuccess({
-        readTips: currentUser.meta.web_stories_onboarding,
+        readTips: currentUser.meta.webStoriesOnboarding,
       });
     }
   }, [actions, currentUser, isHydrated]);

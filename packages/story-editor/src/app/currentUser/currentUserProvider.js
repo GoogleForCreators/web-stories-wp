@@ -47,7 +47,7 @@ function CurrentUserProvider({ children }) {
     return updateCurrentUser({
       meta: {
         web_stories_media_optimization:
-          !currentUser.meta.web_stories_media_optimization,
+          !currentUser.meta.webStoriesMediaOptimization,
       },
     });
   }, [currentUser, updateCurrentUser]);

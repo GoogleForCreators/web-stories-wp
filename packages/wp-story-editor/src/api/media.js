@@ -104,8 +104,8 @@ export async function getMutedMediaById(config, mediaId) {
 
   const result = await apiFetch({ path });
 
-  if (result?.meta?.web_stories_muted_id) {
-    return getMediaById(config, result.meta.web_stories_muted_id);
+  if (result?.meta?.webStoriesMutedId) {
+    return getMediaById(config, result.meta.webStoriesMutedId);
   }
 
   return null;
@@ -126,8 +126,8 @@ export async function getOptimizedMediaById(config, mediaId) {
 
   const result = await apiFetch({ path });
 
-  if (result?.meta?.web_stories_optimized_id) {
-    return getMediaById(config, result.meta.web_stories_optimized_id);
+  if (result?.meta?.webStoriesOptimizedId) {
+    return getMediaById(config, result.meta.webStoriesOptimizedId);
   }
 
   return null;
