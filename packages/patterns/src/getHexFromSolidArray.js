@@ -18,7 +18,7 @@ function getHexFromSolidArray(dims) {
     .map((n) => n.toString(16))
     .map((s) => s.padStart(2, '0'))
     .join('');
-  return '#' + color;
+  return `#${color}`;
 }
 
 export default getHexFromSolidArray;

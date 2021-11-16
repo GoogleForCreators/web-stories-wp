@@ -33,14 +33,11 @@ function getHexFromSolidArray(baseColor) {
     .map((n) => n.toString(16))
     .map((s) => s.padStart(2, '0'))
     .join('');
-  return '#' + color;
+  return `#${color}`;
 }
 
 function updateElement(element) {
-  if (
-    element?.resource?.baseColor &&
-    typeof element?.resource?.baseColor === 'object'
-  ) {
+  if (Array.isArray(element?.resource?.baseColor)) {
     element.resource.baseColor = getHexFromSolidArray(
       element?.resource?.baseColor
     );
