@@ -21,9 +21,7 @@ import percySnapshot from '@percy/puppeteer';
 import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Template', () => {
-  // TODO(#9665): Fix flakey test.
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should be able to use existing template for new story', async () => {
+  it('should be able to use existing template for new story', async () => {
     await visitDashboard();
 
     const dashboardNavigation = await expect(page).toMatchElement(
@@ -59,8 +57,8 @@ describe('Template', () => {
     await expect(page).toClick('button', { text: 'Use template' });
     await page.waitForNavigation();
 
-    // Wait for media elements to load before continuing.
-    await page.waitForSelector('[data-testid="mediaElement-image"]');
+    // Wait for title input to load before continuing.
+    await page.waitForSelector('input[placeholder="Add title"]');
     await expect(page).toMatch('Layers');
     await expect(page).toMatchElement('input[placeholder="Add title"]');
     await expect(page).toMatchElement('[data-element-id]');
@@ -80,8 +78,8 @@ describe('Template', () => {
       text: 'Fresh',
     });
 
-    // Toggle open 'Saved Colors'
-    await expect(page).toClick('button', { text: 'Saved Colors' });
+    // Open the color picker
+    await expect(page).toClick('button[aria-label="Text color"]');
 
     // Get all saved story colors and subtract 1 button for adding other colors
     const editorSavedColors = await page.evaluate(() => {

@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
   prettifyShortcut,
   useSnackbar,
@@ -26,7 +27,7 @@ import {
   Icons,
 } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { canTranscodeResource } from '@web-stories-wp/media';
+import { canTranscodeResource, resourceList } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -36,9 +37,11 @@ import updateProperties from '../../../components/inspector/design/updatePropert
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
+import { useLocalMedia } from '../../media';
 import { ELEMENT_TYPES } from '../../../elements';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
+import useFFmpeg from '../../media/utils/useFFmpeg';
 import { getResetProperties } from './utils';
 import { ACTIONS, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
@@ -62,6 +65,162 @@ const {
   Scissors,
 } = Icons;
 
+export const MediaPicker = ({ render, ...props }) => {
+  const {
+    allowedTranscodableMimeTypes,
+    allowedFileTypes,
+    allowedMimeTypes: {
+      image: allowedImageMimeTypes,
+      video: allowedVideoMimeTypes,
+    },
+    MediaUpload,
+  } = useConfig();
+
+  const { selectedElements, updateElementsById } = useStory(
+    ({ state: { selectedElements }, actions: { updateElementsById } }) => ({
+      selectedElements,
+      updateElementsById,
+    })
+  );
+  const { resetWithFetch, updateVideoIsMuted, optimizeVideo, optimizeGif } =
+    useLocalMedia(
+      ({
+        actions: {
+          resetWithFetch,
+          updateVideoIsMuted,
+          optimizeVideo,
+          optimizeGif,
+        },
+      }) => {
+        return {
+          resetWithFetch,
+          updateVideoIsMuted,
+          optimizeVideo,
+          optimizeGif,
+        };
+      }
+    );
+
+  const { isTranscodingEnabled } = useFFmpeg();
+  const { showSnackbar } = useSnackbar();
+
+  // Media Upload Props
+  let allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  if (isTranscodingEnabled) {
+    allowedMimeTypes = allowedMimeTypes.concat(allowedTranscodableMimeTypes);
+  }
+
+  const transcodableMimeTypes = allowedTranscodableMimeTypes.filter(
+    (x) => !allowedVideoMimeTypes.includes(x)
+  );
+
+  let onSelectErrorMessage = __(
+    'No file types are currently supported.',
+    'web-stories'
+  );
+  if (allowedFileTypes.length) {
+    onSelectErrorMessage = sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s to insert into page.', 'web-stories'),
+      translateToExclusiveList(allowedFileTypes)
+    );
+  }
+
+  /**
+   * Insert element such image, video and audio into the editor.
+   *
+   * @param {Object} resource Resource object
+   * @param {string} thumbnailURL The thumbnail's url
+   * @return {null|*} Return onInsert or null.
+   */
+  const insertMediaElement = useCallback(
+    (resource, thumbnailURL) => {
+      resourceList.set(resource.id, {
+        url: thumbnailURL,
+        type: 'cached',
+      });
+      updateElementsById({
+        elementIds: [selectedElements?.[0]?.id],
+        properties: { type: resource.type, resource },
+      });
+    },
+    [selectedElements, updateElementsById]
+  );
+
+  const handleMediaSelect = useCallback(
+    (resource) => {
+      try {
+        if (isTranscodingEnabled && canTranscodeResource(resource)) {
+          if (transcodableMimeTypes.includes(resource.mimeType)) {
+            optimizeVideo({ resource });
+          }
+
+          if (resource.mimeType === 'image/gif') {
+            optimizeGif({ resource });
+          }
+        }
+        // WordPress media picker event, sizes.medium.source_url is the smallest image
+        insertMediaElement(
+          resource,
+          resource.sizes?.medium?.source_url || resource.src
+        );
+
+        if (
+          !resource.local &&
+          allowedVideoMimeTypes.includes(resource.mimeType) &&
+          resource.isMuted === null
+        ) {
+          updateVideoIsMuted(resource.id, resource.src);
+        }
+      } catch (e) {
+        showSnackbar({
+          message: e.message,
+          dismissable: true,
+        });
+      }
+    },
+    [
+      allowedVideoMimeTypes,
+      insertMediaElement,
+      isTranscodingEnabled,
+      optimizeGif,
+      optimizeVideo,
+      showSnackbar,
+      transcodableMimeTypes,
+      updateVideoIsMuted,
+    ]
+  );
+  return (
+    <MediaUpload
+      title={__('Replace media', 'web-stories')}
+      buttonInsertText={__('Insert media', 'web-stories')}
+      onSelect={handleMediaSelect}
+      onClose={resetWithFetch}
+      type={allowedMimeTypes}
+      onSelectErrorMessage={onSelectErrorMessage}
+      // Only way to access the open function is to dive
+      // into the MediaUpload component in the render prop.
+      render={(open) => render({ onClick: open })}
+      {...props}
+    />
+  );
+};
+MediaPicker.propTypes = {
+  buttonInsertText: PropTypes.string,
+  cropParams: PropTypes.bool,
+  multiple: PropTypes.bool,
+  onClose: PropTypes.func,
+  onPermissionError: PropTypes.func,
+  onSelect: PropTypes.func,
+  onSelectErrorMessage: PropTypes.string,
+  render: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  type: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+};
+
 /** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
 
 /**
@@ -74,7 +233,10 @@ const {
  * @return {Array.<MenuItemProps>} an array of quick action objects
  */
 const useQuickActions = () => {
-  const { isRTL } = useConfig();
+  const {
+    capabilities: { hasUploadMediaAction },
+    isRTL,
+  } = useConfig();
   const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
     currentPage,
@@ -382,32 +544,34 @@ const useQuickActions = () => {
     resetProperties,
   ]);
 
-  const foregroundImageActions = useMemo(
-    () => [
-      {
+  const foregroundImageActions = useMemo(() => {
+    const actions = [];
+
+    if (hasUploadMediaAction) {
+      actions.push({
         Icon: PictureSwap,
         label: ACTIONS.REPLACE_MEDIA.text,
-        onClick: (ev) => {
+        onClick: () => {
           dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
-          handleFocusMediaPanel()(ev);
 
           trackEvent('quick_action', {
             name: ACTIONS.REPLACE_MEDIA.trackingEventName,
             element: selectedElement?.type,
           });
         },
+        ItemWrapper: MediaPicker,
         ...actionMenuProps,
-      },
-      ...foregroundCommonActions,
-    ],
-    [
-      actionMenuProps,
-      handleFocusMediaPanel,
-      foregroundCommonActions,
-      dispatchStoryEvent,
-      selectedElement?.type,
-    ]
-  );
+      });
+    }
+
+    return [...actions, ...foregroundCommonActions];
+  }, [
+    actionMenuProps,
+    foregroundCommonActions,
+    hasUploadMediaAction,
+    dispatchStoryEvent,
+    selectedElement?.type,
+  ]);
 
   const shapeActions = useMemo(
     () => [
@@ -561,21 +725,6 @@ const useQuickActions = () => {
   const backgroundElementMediaActions = useMemo(() => {
     const baseActions = [
       {
-        Icon: PictureSwap,
-        label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
-        onClick: (ev) => {
-          dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
-          handleFocusMediaPanel()(ev);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
-            element: selectedElement?.type,
-            isBackground: true,
-          });
-        },
-        ...actionMenuProps,
-      },
-      {
         Icon: CircleSpeed,
         label: ACTIONS.ADD_ANIMATION.text,
         onClick: (evt) => {
@@ -590,6 +739,24 @@ const useQuickActions = () => {
         ...actionMenuProps,
       },
     ];
+
+    if (hasUploadMediaAction) {
+      baseActions.unshift({
+        Icon: PictureSwap,
+        label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
+        onClick: () => {
+          dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
+            element: selectedElement?.type,
+            isBackground: true,
+          });
+        },
+        ItemWrapper: MediaPicker,
+        ...actionMenuProps,
+      });
+    }
 
     const clearAction = {
       Icon: Eraser,
@@ -617,7 +784,7 @@ const useQuickActions = () => {
     dispatchStoryEvent,
     handleElementReset,
     handleFocusAnimationPanel,
-    handleFocusMediaPanel,
+    hasUploadMediaAction,
     resetProperties,
     selectedElement,
     showClearAction,

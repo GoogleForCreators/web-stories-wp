@@ -67,7 +67,7 @@ export const MEDIA_PER_PAGE = 20;
 
 function MediaUpload({ render: _render, onSelect }) {
   const open = () => {
-    const image = { src: 'media1' };
+    const image = { type: 'image', src: 'https://www.example.com/media1' };
     onSelect(image);
   };
 
@@ -817,6 +817,11 @@ class APIProviderFixture {
         []
       );
 
+      const getProxyUrl = useCallback(
+        () => 'http://localhost:9876/__static__/saturn.jpg',
+        []
+      );
+
       const getAllStatuses = useCallback(
         () => jasmine.createSpy('getAllStatuses'),
         []
@@ -944,6 +949,7 @@ class APIProviderFixture {
           getMedia,
           getLinkMetadata,
           getHotlinkInfo,
+          getProxyUrl,
           saveStoryById,
           getAllStatuses,
           getAuthors,

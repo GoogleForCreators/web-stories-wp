@@ -25,8 +25,10 @@ import styled from 'styled-components';
 import useStory from '../../../../../app/story/useStory';
 import CircularProgress from '../../../../../components/circularProgress';
 import {
+  RedoButton,
   PreviewButton,
   SwitchToDraftButton,
+  UndoButton,
   UpdateButton,
   PublishButton,
 } from '../../../../../components/header/buttons';
@@ -41,10 +43,7 @@ const ButtonList = styled.nav`
 const List = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const Space = styled.div`
-  width: 8px;
+  gap: 8px;
 `;
 
 const Spinner = styled.div`
@@ -85,16 +84,15 @@ function Buttons() {
   return (
     <ButtonList>
       <List>
+        <UndoButton />
+        <RedoButton />
         <IconWithSpinner>
           <PreviewButton />
           <Loading />
         </IconWithSpinner>
-        <Space />
         {isDraft ? <UpdateButton /> : <SwitchToDraftButton />}
-        <Space />
         {isDraft && <PublishButton />}
         {!isDraft && <UpdateButton />}
-        <Space />
       </List>
     </ButtonList>
   );

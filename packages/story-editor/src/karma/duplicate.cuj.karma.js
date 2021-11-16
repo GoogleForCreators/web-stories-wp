@@ -22,7 +22,6 @@ import { Fixture } from './fixture';
 
 describe('Duplicate Page', () => {
   let fixture;
-  let duplicatePageButton;
 
   beforeEach(async () => {
     fixture = new Fixture();
@@ -39,10 +38,6 @@ describe('Duplicate Page', () => {
         content: 'Hello, Stories!',
       })
     );
-
-    duplicatePageButton = fixture.screen.getByRole('button', {
-      name: /Duplicate Page/,
-    });
   });
 
   afterEach(() => {
@@ -87,7 +82,10 @@ describe('Duplicate Page', () => {
     ).not.toBeUndefined();
 
     // duplicate page
-    await fixture.events.click(duplicatePageButton, { clickCount: 1 });
+    await fixture.events.click(
+      fixture.editor.canvas.pageActions.duplicatePage,
+      { clickCount: 1 }
+    );
 
     // get the duplicated element
     const { animations, elements } = await fixture.renderHook(() =>

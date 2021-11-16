@@ -187,6 +187,7 @@ function BasicColorPicker({
                 allowsGradient={allowsGradient}
                 aria-labelledby="colorpicker-story-colors-title"
                 isEditMode={isEditMode}
+                data-testid="saved-story-colors"
               />
               <Label id="colorpicker-saved-colors-title">
                 {__('Saved colors', 'web-stories')}

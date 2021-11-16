@@ -239,12 +239,12 @@ const NavNextArea = styled(NavArea).attrs({
   area: 'f',
 })``;
 
-const QuickActionsArea = styled(PaddedPage)`
+const PageMenuArea = styled.div`
   grid-area: p;
   position: absolute;
   right: calc(-24px + var(--page-padding-px));
-  padding-left: 0;
-  padding-right: 0;
+  top: calc(0.5 * var(--page-padding-px));
+  min-height: calc(100% - var(--page-padding-px));
 `;
 
 const FooterArea = styled(Area).attrs({
@@ -454,7 +454,7 @@ export {
   MenuArea,
   NavPrevArea,
   NavNextArea,
-  QuickActionsArea,
+  PageMenuArea,
   FooterArea,
   useLayoutParams,
   useLayoutParamsCssVars,

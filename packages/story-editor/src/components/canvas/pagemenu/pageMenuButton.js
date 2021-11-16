@@ -33,7 +33,7 @@ import { forwardRef } from '@web-stories-wp/react';
 import Tooltip from '../../tooltip';
 
 const StyledButton = styled(Button)`
-  margin-top: 4px;
+  margin-top: 12px;
 `;
 
 function PageMenuButtonWithRef(
@@ -44,7 +44,7 @@ function PageMenuButtonWithRef(
     <Tooltip title={title} shortcut={shortcut} hasTail>
       <StyledButton
         variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.TERTIARY}
+        type={BUTTON_TYPES.SECONDARY}
         size={BUTTON_SIZES.SMALL}
         ref={forwardedRef}
         {...rest}
