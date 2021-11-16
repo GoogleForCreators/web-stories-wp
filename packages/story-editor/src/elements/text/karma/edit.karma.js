@@ -130,9 +130,7 @@ describe('TextEdit integration', () => {
     });
 
     describe('shortcuts', () => {
-      // TODO(#9547): Fix flaky test.
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should enter/exit edit mode using the keyboard', async () => {
+      it('should enter/exit edit mode using the keyboard', async () => {
         // Enter edit mode using the Enter key
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
         await fixture.events.keyboard.press('Enter');
@@ -142,7 +140,9 @@ describe('TextEdit integration', () => {
 
         // Exit edit mode using the Esc key
         await fixture.events.keyboard.press('Esc');
-        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+        await waitFor(() =>
+          expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull()
+        );
       });
     });
   });
