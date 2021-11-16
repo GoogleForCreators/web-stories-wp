@@ -165,7 +165,7 @@ function OutputPage({
         >
           <a
             href={page.pageAttachment.url}
-            rel={page.pageAttachment?.rel.join(' ')}
+            rel={page.pageAttachment?.rel?.join(' ').trim() || ''}
           >
             {page.pageAttachment.ctaText || __('Learn more', 'web-stories')}
           </a>
