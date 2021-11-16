@@ -25,7 +25,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-describe('TextEdit integration', () => {
+fdescribe('TextEdit integration', () => {
   let fixture;
 
   beforeEach(async () => {
