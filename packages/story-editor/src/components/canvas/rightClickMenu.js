@@ -44,7 +44,12 @@ const RightClickMenu = () => {
     maskRef,
   } = useRightClickMenu();
   const ref = useRef();
-  // If ContextMenu is already rendered prevent browser's context menu when right clicking on ContextMenu
+
+  /**
+   * Prevent browser's context menu when right clicking on custom ContextMenu
+   *
+   * @param {Object} evt Triggering event
+   */
   const preventAdditionalContext = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
