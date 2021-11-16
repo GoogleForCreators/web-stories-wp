@@ -186,7 +186,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 					// update_post_meta() expects slashed.
 					update_post_meta( $post_id, $meta_field, wp_slash( $value ) );
 				}
-			}       
+			}
 		}
 
 		$attachment_id = wp_update_post( $args, true );
