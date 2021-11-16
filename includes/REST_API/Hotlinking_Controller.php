@@ -252,6 +252,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Parses a URL to return proxied file.
 	 *
+	 * @todo Forward the Range request header.
+	 *
 	 * @SuppressWarnings(PHPMD.ErrorControlOperator)
 	 *
 	 * @since 1.13.0
