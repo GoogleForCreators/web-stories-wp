@@ -80,7 +80,7 @@ function PageAttachmentPanel() {
 
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
-  const { url, ctaText = defaultCTA, icon, theme, needsProxy } = pageAttachment;
+  const { url, ctaText = defaultCTA, icon, theme } = pageAttachment;
   const [_ctaText, _setCtaText] = useState(ctaText);
   const [_url, _setUrl] = useState(url);
   const [displayWarning, setDisplayWarning] = useState(false);
@@ -133,12 +133,12 @@ function PageAttachmentPanel() {
     try {
       const { image } = await getLinkMetadata(value);
       const iconUrl = image ? toAbsoluteUrl(value, image) : '';
-      const shouldProxy = await checkResourceAccess(iconUrl);
+      const needsProxy = await checkResourceAccess(iconUrl);
 
       updatePageAttachment({
         url: value,
         icon: iconUrl,
-        needsProxy: shouldProxy,
+        needsProxy,
       });
     } catch (e) {
       // We're allowing to save invalid URLs, however, remove icon in this case.
@@ -208,7 +208,7 @@ function PageAttachmentPanel() {
 
   const checkboxId = `cb-${uuidv4()}`;
 
-  const iconUrl = getProxiedUrl({ needsProxy }, encodeURI(icon));
+  const iconUrl = getProxiedUrl(pageAttachment, encodeURI(icon));
 
   let hint;
   const hasError = displayWarning || isInvalidUrl;

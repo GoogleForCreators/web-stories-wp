@@ -208,10 +208,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     link.url,
   ]);
 
-  const linkIcon = getProxiedUrl(
-    { needsProxy: link.needsProxy },
-    encodeURI(link.icon)
-  );
+  const linkIcon = getProxiedUrl(link, encodeURI(link.icon));
 
   const isMultipleUrl = MULTIPLE_VALUE === link.url;
   const isMultipleDesc = MULTIPLE_VALUE === link.desc;
