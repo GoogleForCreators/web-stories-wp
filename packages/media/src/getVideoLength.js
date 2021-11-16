@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import preloadVideoMetadata from './preloadVideoMetadata';
-import getVideoLengthFromDisplay from './getVideoLengthDisplay';
+import getVideoLengthDisplay from './getVideoLengthDisplay';
 
 /**
  * Get video length from a video.
@@ -29,7 +29,7 @@ import getVideoLengthFromDisplay from './getVideoLengthDisplay';
 const getVideoLength = async (src) => {
   const video = await preloadVideoMetadata(src);
   const length = Math.round(video.duration);
-  const lengthFormatted = getVideoLengthFromDisplay(length);
+  const lengthFormatted = getVideoLengthDisplay(length);
   return {
     length,
     lengthFormatted,
