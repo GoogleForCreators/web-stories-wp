@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
 import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
@@ -27,7 +26,7 @@ import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-fdescribe('Carousel integration', () => {
+describe('Carousel integration', () => {
   let fixture;
   let element1;
 
@@ -78,14 +77,12 @@ fdescribe('Carousel integration', () => {
   async function clickOnThumbnail(index) {
     await fixture.events.sleep(100);
     const { pages } = await fixture.editor.footer.carousel;
-    // expect(pages[index]).toBe('not this but i need to see inside here remote!');
-    const thumb = await pages[index];
+    // node is found fine running locally while _node is present when running remote.
+    const page = await pages[index];
+    const thumb = !page?.node ? page._node : page.node;
     await expect(thumb).toBeDefined();
-
-    const thumbNode = !thumb?.node ? thumb._node : thumb.node;
-    await expect(thumbNode).toBeDefined();
-    await thumbNode.scrollIntoView();
-    await fixture.events.mouse.clickOn(thumbNode, 5, 5);
+    await thumb.scrollIntoView();
+    await fixture.events.mouse.clickOn(thumb, 5, 5);
   }
 
   it('should select the current page', async () => {
