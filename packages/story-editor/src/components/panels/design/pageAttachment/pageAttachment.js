@@ -43,6 +43,8 @@ import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { OUTLINK_THEME } from '../../../../constants';
+import checkResourceAccess from '../../../../utils/checkResourceAccess';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const Label = styled.label`
   margin-left: 12px;
@@ -78,7 +80,7 @@ function PageAttachmentPanel() {
 
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
-  const { url, ctaText = defaultCTA, icon, theme } = pageAttachment;
+  const { url, ctaText = defaultCTA, icon, theme, needsProxy } = pageAttachment;
   const [_ctaText, _setCtaText] = useState(ctaText);
   const [_url, _setUrl] = useState(url);
   const [displayWarning, setDisplayWarning] = useState(false);
@@ -124,24 +126,27 @@ function PageAttachmentPanel() {
   );
 
   const debouncedUpdate = useDebouncedCallback(updatePageAttachment, 300);
+  const { getProxiedUrl } = useCORSProxy();
 
-  const populateUrlData = useDebouncedCallback((value) => {
+  const populateUrlData = useDebouncedCallback(async (value) => {
     setFetchingMetadata(true);
-    getLinkMetadata(value)
-      .then(({ image }) => {
-        updatePageAttachment({
-          url: value,
-          icon: image ? toAbsoluteUrl(value, image) : '',
-        });
-      })
-      .catch(() => {
-        // We're allowing to save invalid URLs, however, remove icon in this case.
-        updatePageAttachment({ url: value, icon: '' });
-        setIsInvalidUrl(true);
-      })
-      .finally(() => {
-        setFetchingMetadata(false);
+    try {
+      const { image } = await getLinkMetadata(value);
+      const iconUrl = image ? toAbsoluteUrl(value, image) : '';
+      const shouldProxy = await checkResourceAccess(iconUrl);
+
+      updatePageAttachment({
+        url: value,
+        icon: iconUrl,
+        needsProxy: shouldProxy,
       });
+    } catch (e) {
+      // We're allowing to save invalid URLs, however, remove icon in this case.
+      updatePageAttachment({ url: value, icon: '', needsProxy: false });
+      setIsInvalidUrl(true);
+    } finally {
+      setFetchingMetadata(false);
+    }
   }, 1200);
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
@@ -202,6 +207,8 @@ function PageAttachmentPanel() {
   );
 
   const checkboxId = `cb-${uuidv4()}`;
+
+  const iconUrl = getProxiedUrl({ needsProxy }, encodeURI(icon));
 
   let hint;
   const hasError = displayWarning || isInvalidUrl;
@@ -273,7 +280,7 @@ function PageAttachmentPanel() {
           <StyledRow>
             <LinkIcon
               handleChange={handleChangeIcon}
-              icon={icon}
+              icon={iconUrl}
               isLoading={fetchingMetadata}
               disabled={fetchingMetadata}
             />
