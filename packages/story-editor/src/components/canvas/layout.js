@@ -52,7 +52,8 @@ const HEADER_GAP = 16;
 // 8px extra is for the focus outline to display.
 const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE + 8;
 const MENU_GAP = 12;
-const FOOTER_HEIGHT = 104;
+const FOOTER_HEIGHT = 106;
+const BOTTOM_MARGIN = 16;
 // 8px extra is for the focus outline to display.
 const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;
 const PAGE_NAV_GAP = 20;
@@ -92,6 +93,7 @@ const Layer = styled.section`
     'm m m m m m m' ${MENU_HEIGHT}px
     '. . . . . . .' 1fr
     'w w w w w w w' ${FOOTER_HEIGHT}px
+    '. . . . . . .' ${BOTTOM_MARGIN}px
     /
     1fr
     var(--page-nav-width)

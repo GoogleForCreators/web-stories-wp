@@ -47,11 +47,8 @@ const MenuItems = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 16px 16px;
-`;
-
-const Space = styled.span`
-  width: 8px;
+  margin: 0 16px;
+  gap: 8px;
 `;
 
 const POPUPS = {
@@ -168,11 +165,9 @@ function SecondaryMenu() {
     <Wrapper>
       <MenuItems>
         <HelpCenter />
-        <Space />
         <ChecklistCountProvider>
           <Checklist />
         </ChecklistCountProvider>
-        <Space />
         <KeyboardShortcutsMenu />
       </MenuItems>
     </Wrapper>

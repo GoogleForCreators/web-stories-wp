@@ -36,6 +36,10 @@ const MainIcon = styled(Icons.Checkbox)`
   display: block;
 `;
 
+const StyledToggleButton = styled(ToggleButton)`
+  display: block;
+`;
+
 function Toggle({ isOpen = false, popupId = '', onClick = noop }) {
   const priorityCount = useCategoryCount(ISSUE_TYPES.PRIORITY);
 
@@ -49,7 +53,7 @@ function Toggle({ isOpen = false, popupId = '', onClick = noop }) {
   );
 
   return (
-    <ToggleButton
+    <StyledToggleButton
       aria-owns={popupId}
       onClick={onClick}
       isOpen={isOpen}

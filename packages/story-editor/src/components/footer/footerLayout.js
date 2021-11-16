@@ -45,9 +45,8 @@ const Wrapper = styled.section`
 const Area = styled.div`
   grid-area: ${({ area }) => area};
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  flex-direction: column;
 `;
 
 function FooterLayout() {

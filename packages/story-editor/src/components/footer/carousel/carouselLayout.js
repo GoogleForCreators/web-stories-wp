@@ -23,8 +23,11 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { useLayout } from '../../../app';
+import { CAROUSEL_STATE } from '../../../constants';
 import { CarouselScrollForward, CarouselScrollBack } from './carouselScroll';
 import CarouselList from './carouselList';
+import CarouselDrawer from './carouselDrawer';
 import useCarousel from './useCarousel';
 import { BUTTON_WIDTH, BUTTON_GAP } from './constants';
 
@@ -32,8 +35,16 @@ const Wrapper = styled.section`
   position: relative;
   display: grid;
   grid:
-    /* Note the two empty 1fr areas on either side of the buttons - that's on purpose */
-    '. prev-navigation . carousel . next-navigation .' auto /
+    /* Note the two empty 1fr areas on either side of the buttons - that's on purpose
+     *
+     * d = drawer button
+     * p = previous arrow
+     * c = carousel page list
+     * n = next arrow
+     */
+    '. d d d d d .' 32px
+    '. . . . . . .' ${({ isCollapsed }) => (isCollapsed ? 3 : 8)}px
+    '. p . c . n .' auto /
     1fr
     ${BUTTON_WIDTH}px
     ${BUTTON_GAP}px
@@ -42,7 +53,7 @@ const Wrapper = styled.section`
     ${BUTTON_WIDTH}px
     1fr;
   width: 100%;
-  height: 100%;
+  height: auto;
 `;
 
 const Area = styled.div`
@@ -54,23 +65,39 @@ const Area = styled.div`
 `;
 
 function CarouselLayout() {
+  const { carouselState } = useLayout(({ state: { carouselState } }) => ({
+    carouselState,
+  }));
+
   const { numPages } = useCarousel(({ state: { numPages } }) => ({ numPages }));
 
   if (numPages <= 0) {
     return null;
   }
 
+  const isCollapsed = carouselState === CAROUSEL_STATE.CLOSED;
+
   return (
-    <Wrapper aria-label={__('Page Carousel', 'web-stories')}>
-      <Area area="prev-navigation">
-        <CarouselScrollBack />
+    <Wrapper
+      aria-label={__('Page Carousel', 'web-stories')}
+      isCollapsed={isCollapsed}
+    >
+      <Area area="d">
+        <CarouselDrawer />
       </Area>
-      <Area area="carousel">
-        <CarouselList />
-      </Area>
-      <Area area="next-navigation">
-        <CarouselScrollForward />
-      </Area>
+      {!isCollapsed && (
+        <>
+          <Area area="p">
+            <CarouselScrollBack />
+          </Area>
+          <Area area="c">
+            <CarouselList />
+          </Area>
+          <Area area="n">
+            <CarouselScrollForward />
+          </Area>
+        </>
+      )}
     </Wrapper>
   );
 }

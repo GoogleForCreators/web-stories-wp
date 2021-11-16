@@ -38,6 +38,7 @@ const StyledToggleButton = styled(ToggleButton)`
   padding-left: 3px;
   padding-right: 3px;
   width: auto;
+  display: block;
 `;
 
 const Wrapper = styled.div`
