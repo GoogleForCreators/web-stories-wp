@@ -76,10 +76,10 @@ fdescribe('Carousel integration', () => {
 
   async function clickOnThumbnail(index) {
     await fixture.events.sleep(100);
-
+    await fixture.editor.footer.carousel.waitReady();
     const thumb = await fixture.editor.footer.carousel.pages[index];
 
-    await expect(thumb).toBe('clearly not this!');
+    // await expect(thumb).toBe('clearly not this!');
     await thumb.node.scrollIntoView();
     await fixture.events.mouse.clickOn(thumb.node, 5, 5);
   }
