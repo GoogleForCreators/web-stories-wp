@@ -397,9 +397,8 @@ export class Fixture {
 
   /**
    * Tells the fixture to close the help center
-   * which will default to Open the first time the fixture renders.
+   * which will default to open the first time the fixture renders.
    *
-   * @param {Function} func The hook function. E.g. `useStory`.
    * @return {Promise<Object>} Resolves when help center toggle is clicked.
    */
   collapseHelpCenter() {
