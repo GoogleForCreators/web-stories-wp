@@ -26,7 +26,7 @@ import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-describe('Carousel integration', () => {
+fdescribe('Carousel integration', () => {
   let fixture;
   let element1;
 
@@ -76,13 +76,12 @@ describe('Carousel integration', () => {
 
   async function clickOnThumbnail(index) {
     await fixture.events.sleep(100);
-    const { pages } = await fixture.editor.footer.carousel;
-    // node is found fine running locally while _node is present when running remote.
-    const page = await pages[index];
-    const thumb = !page?.node ? page._node : page.node;
-    await expect(thumb).toBeDefined();
-    await thumb.scrollIntoView();
-    await fixture.events.mouse.clickOn(thumb, 5, 5);
+
+    const thumb = await fixture.editor.footer.carousel.pages[index];
+
+    await expect(thumb).toBe('clearly not this!');
+    await thumb.node.scrollIntoView();
+    await fixture.events.mouse.clickOn(thumb.node, 5, 5);
   }
 
   it('should select the current page', async () => {
