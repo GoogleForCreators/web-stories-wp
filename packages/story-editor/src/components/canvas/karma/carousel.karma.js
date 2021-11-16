@@ -26,7 +26,7 @@ import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-fdescribe('Carousel integration', () => {
+describe('Carousel integration', () => {
   let fixture;
   let element1;
 
@@ -78,8 +78,6 @@ fdescribe('Carousel integration', () => {
     await fixture.events.sleep(100);
     await fixture.editor.footer.carousel.waitReady();
     const thumb = await fixture.editor.footer.carousel.pages[index];
-
-    // await expect(thumb).toBe('clearly not this!');
     await thumb.node.scrollIntoView();
     await fixture.events.mouse.clickOn(thumb.node, 5, 5);
   }
