@@ -27,9 +27,9 @@ import { withProtocol } from '../../utils/url';
 import { getLinkFromElement } from '.';
 
 function WithLink({ element, children, ...rest }) {
-  const link = getLinkFromElement(element);
+  const link = getLinkFromElement(element) || {};
   const { url, icon, desc, rel = [] } = link;
-  if (url.length) {
+  if (!url) {
     return children;
   }
   rel.push('noreferrer');

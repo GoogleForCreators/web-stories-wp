@@ -86,5 +86,8 @@ describe('WithLink', () => {
     it('should produce valid AMP output', async () => {
       await expect(withLink()).toBeValidAMPStoryElement();
     });
+    it('should produce link with rel valid AMP output', async () => {
+      await expect(withLink({ rel: ['nofollow'] })).toBeValidAMPStoryElement();
+    });
   });
 });
