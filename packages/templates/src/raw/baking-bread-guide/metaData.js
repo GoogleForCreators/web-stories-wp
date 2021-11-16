@@ -22,7 +22,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 export default {
   slug: 'baking-bread-guide',
   creationDate: '2021-07-13T00:00:00.000Z',
-  title: _x('Baking Bread Guide ', 'template name', 'web-stories'),
+  title: _x('Baking Bread Guide', 'template name', 'web-stories'),
   tags: [
     _x('Food', 'template keyword', 'web-stories'),
     _x('Cooking', 'template keyword', 'web-stories'),

@@ -1,8 +1,6 @@
 # Overall settings for PR integration via codecov.io
 # See https://docs.codecov.io/docs/codecovyml-reference
 
-comment: false
-
 # Separate PR statuses for project-level and patch-level coverage
 # See https://docs.codecov.io/docs/commit-status
 coverage:
@@ -65,12 +63,7 @@ coverage:
 
 # Pull request comments
 # See https://docs.codecov.io/docs/pull-request-comments
-comment:
-  layout: 'reach, diff, flags, files'
-  behavior: default
-  require_changes: true
-  branches:
-    - 'main'
+comment: false
 
 # See https://docs.codecov.io/docs/ignoring-paths
 ignore:

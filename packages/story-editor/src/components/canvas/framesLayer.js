@@ -26,6 +26,7 @@ import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 import { DESIGN_SPACE_MARGIN } from '../../constants';
 import {
   useStory,
@@ -35,8 +36,7 @@ import {
   useRightClickMenu,
 } from '../../app';
 import useCanvasKeys from '../../app/canvas/useCanvasKeys';
-import PageMenu from './pagemenu';
-import { Layer, MenuArea, NavNextArea, NavPrevArea, PageArea } from './layout';
+import { Layer, NavNextArea, NavPrevArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import PageNav from './pagenav';
@@ -91,14 +91,8 @@ function FramesLayer() {
       }),
     [setScrollOffset]
   );
-  const { isEditing, hasEditMenu = false } = useCanvas(
-    ({ state: { isEditing, editingElementState: { hasEditMenu } = {} } }) => ({
-      isEditing,
-      hasEditMenu,
-    })
-  );
 
-  const isEditingWithMenu = isEditing && hasEditMenu;
+  useKeyDownEffect(framesLayerRef, 'mod+alt+shift+m', onOpenMenu);
 
   return (
     <Layer
@@ -106,7 +100,7 @@ function FramesLayer() {
       data-testid="FramesLayer"
       pointerEvents="initial"
       // Use `-1` to ensure that there's a default target to focus if
-      // there's no selection, but it's not reacheable by keyboard
+      // there's no selection, but it's not reachable by keyboard
       // otherwise.
       tabIndex="-1"
       aria-label={__('Frames layer', 'web-stories')}
@@ -130,15 +124,6 @@ function FramesLayer() {
           />
         </FramesPageArea>
       )}
-      <MenuArea
-        pointerEvents="initial"
-        // Make its own stacking context.
-        zIndex={1}
-        // Cancel lasso.
-        onMouseDown={(evt) => evt.stopPropagation()}
-      >
-        {!isEditingWithMenu && <PageMenu />}
-      </MenuArea>
       <NavPrevArea>
         <PageNav isNext={false} />
       </NavPrevArea>

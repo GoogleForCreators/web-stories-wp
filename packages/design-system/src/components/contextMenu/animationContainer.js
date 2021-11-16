@@ -65,6 +65,7 @@ const MenuCounterRevealer = styled.div`
 
 const ButtonInner = styled(Popover)`
   ${fullSize}
+  ${({ isInline }) => isInline && `position: relative`};
   transform: ${(props) => {
     switch (props.align) {
       case CORNER_DIRECTIONS.top_left:
