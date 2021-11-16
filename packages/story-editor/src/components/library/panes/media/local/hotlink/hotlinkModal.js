@@ -36,7 +36,7 @@ import { withProtocol } from '../../../../../../utils/url';
 import useInsert from './useInsert';
 import { isValidUrlForHotlinking } from './utils';
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.form`
   margin: 16px 4px;
   width: 470px;
   height: 100px;
@@ -67,7 +67,7 @@ function HotlinkModal({ isOpen, onClose }) {
   }
   const [link, setLink] = useState('');
 
-  const onInsert = useInsert({
+  const { onInsert, isInserting } = useInsert({
     link,
     setLink,
     errorMsg,
@@ -96,6 +96,17 @@ function HotlinkModal({ isOpen, onClose }) {
     [setLink, errorMsg]
   );
 
+  const onSubmit = useCallback(
+    (evt) => {
+      evt.preventDefault();
+
+      if (!isInserting) {
+        onInsert();
+      }
+    },
+    [isInserting, onInsert]
+  );
+
   return (
     <Dialog
       onClose={() => {
@@ -108,9 +119,9 @@ function HotlinkModal({ isOpen, onClose }) {
       onPrimary={() => onInsert()}
       primaryText={__('Insert', 'web-stories')}
       secondaryText={__('Cancel', 'web-stories')}
-      primaryRest={{ disabled: errorMsg || !link }}
+      primaryRest={{ disabled: errorMsg || !link || isInserting }}
     >
-      <InputWrapper>
+      <InputWrapper onSubmit={onSubmit}>
         <Input
           ref={inputRef}
           onChange={({ target: { value } }) => onChange(value)}

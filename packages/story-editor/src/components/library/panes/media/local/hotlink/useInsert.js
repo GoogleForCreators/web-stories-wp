@@ -17,13 +17,19 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback, useState } from '@web-stories-wp/react';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import { getFirstFrameOfVideo } from '@web-stories-wp/media';
+import {
+  getImageFromVideo,
+  preloadVideoMetadata,
+  getVideoLengthDisplay,
+} from '@web-stories-wp/media';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
+import useStory from '../../../../../../app/story/useStory';
 import useLibrary from '../../../../useLibrary';
 import getResourceFromUrl from '../../../../../../app/media/utils/getResourceFromUrl';
 import {
@@ -54,6 +60,23 @@ function getErrorMessage(code, description) {
   }
 }
 
+function seekVideo(video) {
+  video.preload = 'auto';
+
+  return new Promise((resolve, reject) => {
+    video.addEventListener('error', reject);
+    video.addEventListener(
+      'canplay',
+      () => {
+        video.currentTime = 0.99;
+      },
+      { once: true } // Important because 'canplay' can be fired hundreds of times.
+    );
+
+    video.addEventListener('seeked', () => resolve(video), { once: true });
+  });
+}
+
 function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
@@ -65,6 +88,11 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const {
     actions: { getHotlinkInfo },
   } = useAPI();
+  const { updateElementsByResourceId } = useStory((state) => ({
+    updateElementsByResourceId: state.actions.updateElementsByResourceId,
+  }));
+
+  const [isInserting, setIsInserting] = useState(false);
 
   const { uploadVideoPoster } = useUploadVideoFrame({});
   const { getProxiedUrl } = useCORSProxy();
@@ -78,40 +106,87 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
         file_name: originalFileName,
       } = hotlinkData;
 
+      const isVideo = type === 'video';
+
       try {
         const proxiedUrl = needsProxy
           ? getProxiedUrl({ needsProxy }, link)
           : link;
 
-        // Passing the potentially proxied URL here just so that things like
-        // getting image dimensions and video audio information works.
-        // Afterwards, overriding `src` again to ensure we store the original URL.
-        const resource = await getResourceFromUrl({
+        const resourceLike = {
+          id: uuidv4(),
           src: proxiedUrl,
           mimeType,
           needsProxy,
           alt: originalFileName,
-        });
-        resource.src = link;
+        };
 
-        // We still want to auto-generate video posters, even for hotlinked videos.
-        if ('video' === type && hasUploadMediaAction) {
-          const fileName = getPosterName(
-            originalFileName.replace(`.${ext}`, '')
+        let video;
+
+        // We need to gather some metadata for videos, but do it efficiently
+        // by only loading it once, speeding up insertion.
+        if (isVideo) {
+          video = await preloadVideoMetadata(proxiedUrl);
+
+          resourceLike.width = video.videoWidth;
+          resourceLike.height = video.videoHeight;
+
+          resourceLike.length = Math.round(video.duration);
+          resourceLike.lengthFormatted = getVideoLengthDisplay(
+            resourceLike.length
           );
-          const posterFile = await getFirstFrameOfVideo(proxiedUrl);
-          const posterData = await uploadVideoPoster(0, fileName, posterFile);
-          resource.poster = posterData.poster;
-          resource.posterId = posterData.posterId;
+
+          resourceLike.isMuted = !(
+            video.mozHasAudio ||
+            Boolean(video.webkitAudioDecodedByteCount) ||
+            Boolean(video.audioTracks?.length)
+          );
         }
+
+        // Passing the potentially proxied URL here just so that
+        // metadata retrieval works as expected (if still needed after the above).
+        // Afterwards, overriding `src` again to ensure we store the original URL.
+        const resource = await getResourceFromUrl(resourceLike);
+        resource.src = link;
 
         insertElement(type, {
           resource,
         });
 
+        setIsInserting(false);
         setErrorMsg(null);
         setLink('');
         onClose();
+
+        // We still want to auto-generate and *upload* video posters,
+        // even for hotlinked videos.
+        // This can easily be done after actual insertion though, as it might fail.
+        // Thus adding this nested try ... catch.
+        if (isVideo && hasUploadMediaAction) {
+          try {
+            const fileName = getPosterName(
+              originalFileName.replace(`.${ext}`, '')
+            );
+            video = await seekVideo(video);
+            const posterFile = await getImageFromVideo(video);
+            const posterData = await uploadVideoPoster(0, fileName, posterFile);
+
+            updateElementsByResourceId({
+              id: resource.id,
+              properties: (existingResource) => {
+                return {
+                  resource: {
+                    ...existingResource.resource,
+                    poster: posterData.poster,
+                    posterId: posterData.posterId,
+                  },
+                };
+              },
+            });
+          } catch {
+            // No need to catch poster generation errors.
+          }
+        }
       } catch (e) {
         setErrorMsg(getErrorMessage());
       }
@@ -125,6 +200,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       setLink,
       uploadVideoPoster,
       getProxiedUrl,
+      updateElementsByResourceId,
     ]
   );
 
@@ -152,7 +228,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     return shouldProxy;
   }, [link]);
 
-  return useCallback(async () => {
+  const onInsert = useCallback(async () => {
     if (!link) {
       return;
     }
@@ -162,12 +238,16 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       return;
     }
 
+    setIsInserting(true);
+
     try {
       const hotlinkInfo = await getHotlinkInfo(link);
       const shouldProxy = await checkResourceAccess();
 
       await insertMedia(hotlinkInfo, shouldProxy);
     } catch (err) {
+      setIsInserting(false);
+
       let description = __(
         'No file types are currently supported.',
         'web-stories'
@@ -189,6 +269,11 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     insertMedia,
     checkResourceAccess,
   ]);
+
+  return {
+    onInsert,
+    isInserting,
+  };
 }
 
 export default useInsert;

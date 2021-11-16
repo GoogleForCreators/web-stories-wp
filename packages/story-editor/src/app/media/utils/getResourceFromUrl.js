@@ -44,38 +44,64 @@ import {
  * @return {Promise<Resource>} Resource object.
  */
 async function getResourceFromUrl(resourceLike) {
-  const { src, mimeType, ...rest } = resourceLike;
+  const {
+    src,
+    mimeType,
+    width,
+    height,
+    isMuted,
+    length,
+    lengthFormatted,
+    ...rest
+  } = resourceLike;
   const type = getTypeFromMime(mimeType);
 
   if (!['image', 'video'].includes(type)) {
     throw new Error('Invalid media type.');
   }
 
+  const additionalData = {};
+
   const isVideo = type === 'video';
 
-  const getMediaDimensions = isVideo ? getVideoDimensions : getImageDimensions;
-  const { width, height } = await getMediaDimensions(src);
+  // Only need to fetch dimensions if not already provided.
+  if (!width || !height) {
+    const getMediaDimensions = isVideo
+      ? getVideoDimensions
+      : getImageDimensions;
+    const dimensions = await getMediaDimensions(src);
+    additionalData.width = dimensions.width;
+    additionalData.height = dimensions.height;
+  }
 
   // Add necessary data for video.
-  const videoData = {};
+
   if (isVideo) {
-    const hasAudio = await hasVideoGotAudio(src);
-    videoData.isMuted = !hasAudio;
-    const { length, formattedLength } = await getVideoLength(src);
-    videoData.length = length;
-    videoData.formattedLength = formattedLength;
+    if (isMuted === null) {
+      const hasAudio = await hasVideoGotAudio(src);
+      additionalData.isMuted = !hasAudio;
+    }
+
+    if (length === null || lengthFormatted === null) {
+      const lengthData = await getVideoLength(src);
+      additionalData.length = lengthData.length;
+      additionalData.formattedLength = lengthData.formattedLength;
+    }
   }
 
   return createResource({
     type,
     width,
     height,
+    isMuted,
+    length,
+    lengthFormatted,
     src,
     local: false,
     isExternal: true,
     mimeType,
     ...rest,
-    ...videoData,
+    ...additionalData,
   });
 }
 
