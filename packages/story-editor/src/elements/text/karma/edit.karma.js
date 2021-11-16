@@ -140,6 +140,7 @@ fdescribe('TextEdit integration', () => {
 
         // Exit edit mode using the Esc key
         await fixture.events.keyboard.press('Esc');
+        await fixture.events.sleep(100);
         await waitFor(() =>
           expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull()
         );
