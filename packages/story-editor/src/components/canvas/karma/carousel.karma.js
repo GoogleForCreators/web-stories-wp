@@ -77,7 +77,7 @@ fdescribe('Carousel integration', () => {
 
   async function clickOnThumbnail(index) {
     const { pages } = await fixture.editor.footer.carousel;
-    expect(pages).toBeDefined();
+    expect(pages).toBe('not this but i need to see inside here remote!');
     const thumb = pages[index];
     await expect(thumb).toBeDefined();
     await thumb.node.scrollIntoView();
