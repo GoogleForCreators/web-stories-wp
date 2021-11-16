@@ -72,6 +72,18 @@ function getPatternAsString(pattern) {
   return styles.backgroundColor || styles.backgroundImage;
 }
 
+function ConditionalTooltip({ tooltip, children }) {
+  if (!tooltip) {
+    return children;
+  }
+  return <Tooltip title={tooltip}>{children}</Tooltip>;
+}
+
+ConditionalTooltip.propTypes = {
+  tooltip: PropTypes.string,
+  children: PropTypes.node.isRequired,
+};
+
 function BasicColorList({
   color,
   colors,
@@ -135,25 +147,19 @@ function BasicColorList({
               firstIndex++;
               tabIndex = -1;
             }
-            const renderedSwatch = (
-              <StyledSwatch
-                key={tooltip ? null : patternAsBackground}
-                onClick={() => handleClick(pattern, isLocal)}
-                pattern={pattern}
-                isSelected={isSelected}
-                isDisabled={isDisabled}
-                tabIndex={tabIndex}
-                title={title}
-              >
-                {isEditMode && <Icons.Cross />}
-              </StyledSwatch>
-            );
-            return tooltip ? (
-              <Tooltip key={patternAsBackground} title={tooltip}>
-                {renderedSwatch}
-              </Tooltip>
-            ) : (
-              renderedSwatch
+            return (
+              <ConditionalTooltip key={patternAsBackground} tooltip={tooltip}>
+                <StyledSwatch
+                  onClick={() => handleClick(pattern, isLocal)}
+                  pattern={pattern}
+                  isSelected={isSelected}
+                  isDisabled={isDisabled}
+                  tabIndex={tabIndex}
+                  title={title}
+                >
+                  {isEditMode && <Icons.Cross />}
+                </StyledSwatch>
+              </ConditionalTooltip>
             );
           })}
           {(isLocal || isGlobal) && (
