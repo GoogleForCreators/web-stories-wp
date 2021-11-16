@@ -388,9 +388,16 @@ class AMP extends Service_Base implements HasRequirements {
 			return null;
 		}
 
-		$queried_object = get_post_meta( $post->ID, '_amp_queried_object', true );
+		$queried_object = (array) get_post_meta( $post->ID, '_amp_queried_object', true );
 		if ( isset( $queried_object['id'], $queried_object['type'] ) && 'post' === $queried_object['type'] ) {
-			$post_type = get_post_type( $queried_object['id'] );
+			/**
+			 * Post ID.
+			 *
+			 * @var int|string $post_id
+			 */
+			$post_id = $queried_object['id'];
+
+			$post_type = get_post_type( (int) $post_id );
 			if ( $post_type ) {
 				return $post_type;
 			}

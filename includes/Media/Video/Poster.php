@@ -235,6 +235,11 @@ class Poster extends Service_Base {
 	 * @return void
 	 */
 	public function delete_video_poster( int $attachment_id ) {
+		/**
+		 * Post ID.
+		 *
+		 * @var int $post_id
+		 */
 		$post_id = get_post_meta( $attachment_id, self::POSTER_ID_POST_META_KEY, true );
 
 		if ( empty( $post_id ) ) {

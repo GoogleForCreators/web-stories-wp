@@ -109,7 +109,13 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		$response = parent::get_items( $request );
 
 		if ( $request['_web_stories_envelope'] && ! is_wp_error( $response ) ) {
-			$embed    = isset( $request['_embed'] ) ? rest_parse_embed_param( $request['_embed'] ) : false;
+			/**
+			 * Embed directive.
+			 *
+			 * @var string|array $embed
+			 */
+			$embed    = $request['_embed'] ?? false;
+			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
 			$response = rest_get_server()->envelope_response( $response, $embed );
 		}
 		return $response;
@@ -128,17 +134,43 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	public function create_item( $request ) {
 		// WP_REST_Attachments_Controller doesn't allow setting an attachment as the parent post.
 		// Hence we are working around this here.
-		$parent_post = ! empty( $request['post'] ) ? (int) $request['post'] : null;
-		$original_id = ! empty( $request['original_id'] ) ? (int) $request['original_id'] : null;
+
+		/**
+		 * Parent post.
+		 *
+		 * @var int $parent_post
+		 */
+		$parent_post = ! empty( $request['post'] ) ? $request['post'] : null;
+
+		/**
+		 * Original post ID.
+		 *
+		 * @var int $original_id
+		 */
+		$original_id = ! empty( $request['original_id'] ) ? $request['original_id'] : null;
+
 		unset( $request['post'] );
 
 		$response = parent::create_item( $request );
-		if ( is_wp_error( $response ) || ( ! $parent_post && ! $original_id ) ) {
+		if ( ( ! $parent_post && ! $original_id ) || is_wp_error( $response ) ) {
 			return $response;
 		}
 
-		$data       = $response->get_data();
-		$attachment = $this->process_post( $data['id'], $parent_post, $original_id );
+		/**
+		 * Response data.
+		 *
+		 * @var array $data
+		 */
+		$data = $response->get_data();
+
+		/**
+		 * Post ID.
+		 *
+		 * @var int $post_id
+		 */
+		$post_id = $data['id'];
+
+		$attachment = $this->process_post( $post_id, $parent_post, $original_id );
 		if ( is_wp_error( $attachment ) ) {
 			return $attachment;
 		}
@@ -178,7 +210,13 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 			$args['post_title']   = $attachment_post->post_title;
 
 			// Copy the image alt text from the edited image.
-			$image_alt = (string) get_post_meta( $original_id, '_wp_attachment_image_alt', true );
+
+			/**
+			 * Alt text.
+			 *
+			 * @var string $image_alt
+			 */
+			$image_alt = get_post_meta( $original_id, '_wp_attachment_image_alt', true );
 
 			if ( ! empty( $image_alt ) ) {
 				// update_post_meta() expects slashed.

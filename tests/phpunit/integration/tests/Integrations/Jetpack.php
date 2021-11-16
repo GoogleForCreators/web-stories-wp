@@ -98,6 +98,7 @@ class Jetpack extends DependencyInjectedTestCase {
 		$data = [
 			'source_url'         => self::ATTACHMENT_URL,
 			'featured_media_src' => [],
+			'media_details'      => [],
 		];
 
 		$response = rest_ensure_response( $data );

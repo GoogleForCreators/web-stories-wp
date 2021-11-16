@@ -142,7 +142,7 @@ class Core_Themes_Support extends Service_Base {
 
 		$this->extend_theme_support();
 
-		$options = get_option( Customizer::STORY_OPTION );
+		$options = (array) get_option( Customizer::STORY_OPTION );
 
 		// Load theme specific styles and render function only if selected to show stories.
 		if ( empty( $options['show_stories'] ) ) {
