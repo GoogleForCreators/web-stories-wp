@@ -22,7 +22,7 @@ import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-describe('PageMenu integration', () => {
+fdescribe('PageMenu integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -84,9 +84,7 @@ describe('PageMenu integration', () => {
         expect(await getSelection()).toEqual([]);
       });
 
-      // TODO(#9387): Fix flaky test.
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('using page menu', async () => {
+      it('using page menu', async () => {
         // Delete.
         await fixture.events.keyboard.shortcut('del');
         expect(getFrame()).toBeNull();
