@@ -21,13 +21,16 @@
  * @return {Promise} Video object.
  */
 const preloadVideoMetadata = (src) => {
+  const video = document.createElement('video');
+  video.preload = 'metadata';
+  video.crossOrigin = 'anonymous';
+  video.muted = true;
+
   return new Promise((resolve, reject) => {
-    const video = document.createElement('video');
-    video.onloadedmetadata = () => resolve(video);
-    video.onerror = reject;
-    video.crossOrigin = 'anonymous';
+    video.addEventListener('loadedmetadata', () => resolve(video));
+    video.addEventListener('error', reject);
+
     video.src = src;
-    video.muted = true;
   });
 };
 
