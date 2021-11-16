@@ -30,6 +30,7 @@ use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Media\Types;
+use Google\Web_Stories\Media\Base_Color;
 use WP_Post;
 use WP_Error;
 use WP_REST_Request;
@@ -177,13 +178,15 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 			$args['post_excerpt'] = $attachment_post->post_excerpt;
 			$args['post_title']   = $attachment_post->post_title;
 
-			// Copy the image alt text from the edited image.
-			$image_alt = (string) get_post_meta( $original_id, '_wp_attachment_image_alt', true );
+			$meta_fields = [ '_wp_attachment_image_alt', Base_Color::BASE_COLOR_POST_META_KEY ];
+			foreach ( $meta_fields as $meta_field ) {
+				$value = (string) get_post_meta( $original_id, $meta_field, true );
 
-			if ( ! empty( $image_alt ) ) {
-				// update_post_meta() expects slashed.
-				update_post_meta( $post_id, '_wp_attachment_image_alt', wp_slash( $image_alt ) );
-			}
+				if ( ! empty( $value ) ) {
+					// update_post_meta() expects slashed.
+					update_post_meta( $post_id, $meta_field, wp_slash( $value ) );
+				}
+			}       
 		}
 
 		$attachment_id = wp_update_post( $args, true );

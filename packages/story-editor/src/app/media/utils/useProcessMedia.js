@@ -152,21 +152,15 @@ function useProcessMedia({
           return;
         }
 
-        const additionalData = {
-          original_id: oldResource.id,
-          web_stories_is_muted: oldResource.isMuted,
-        };
-
-        if (oldResource?.baseColor) {
-          additionalData.meta.web_stories_base_color = oldResource.baseColor;
-        }
-
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadStart,
           onUploadError,
           onUploadProgress,
-          additionalData,
+          additionalData: {
+            original_id: oldResource.id,
+            web_stories_is_muted: oldResource.isMuted,
+          },
         });
       })();
     },
@@ -236,20 +230,18 @@ function useProcessMedia({
           }
         }
 
-        const additionalData = {
-          web_stories_is_muted: oldResource.isMuted,
-          original_id: oldResource.id,
-          web_stories_media_source: oldResource?.isOptimized
-            ? 'video-optimization'
-            : 'editor',
-        };
-
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadStart,
           onUploadError,
           onUploadProgress,
-          additionalData,
+          additionalData: {
+            original_id: oldResource.id,
+            web_stories_is_muted: oldResource.isMuted,
+            web_stories_media_source: oldResource?.isOptimized
+              ? 'video-optimization'
+              : 'editor',
+          },
           trimData,
           resource: {
             ...oldResource,
@@ -330,23 +322,17 @@ function useProcessMedia({
           }
         }
 
-        const additionalData = {
-          original_id: oldResource.id,
-          web_stories_media_source: oldResource?.isOptimized
-            ? 'video-optimization'
-            : 'editor',
-        };
-
-        if (oldResource?.baseColor) {
-          additionalData.meta.web_stories_base_color = oldResource.baseColor;
-        }
-
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadStart,
           onUploadError,
           onUploadProgress,
-          additionalData,
+          additionalData: {
+            original_id: oldResource.id,
+            web_stories_media_source: oldResource?.isOptimized
+              ? 'video-optimization'
+              : 'editor',
+          },
           muteVideo: true,
           resource: {
             ...oldResource,
@@ -404,18 +390,12 @@ function useProcessMedia({
           return;
         }
 
-        const additionalData = {
-          original_id: oldResource.id,
-        };
-
-        if (oldResource?.baseColor) {
-          additionalData.meta.web_stories_base_color = oldResource.baseColor;
-        }
-
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadProgress,
-          additionalData,
+          additionalData: {
+            original_id: oldResource.id,
+          },
         });
       };
       return process();
