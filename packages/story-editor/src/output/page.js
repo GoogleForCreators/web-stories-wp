@@ -163,7 +163,10 @@ function OutputPage({
           cta-image={page.pageAttachment.icon || undefined}
           theme={page.pageAttachment.theme}
         >
-          <a href={page.pageAttachment.url}>
+          <a
+            href={page.pageAttachment.url}
+            rel={page.pageAttachment?.rel.join(' ')}
+          >
             {page.pageAttachment.ctaText || __('Learn more', 'web-stories')}
           </a>
         </amp-story-page-outlink>

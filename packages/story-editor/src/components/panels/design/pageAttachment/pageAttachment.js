@@ -27,6 +27,7 @@ import { __ } from '@web-stories-wp/i18n';
 import {
   Checkbox,
   Input,
+  Link,
   Text,
   THEME_CONSTANTS,
   ThemeGlobals,
@@ -43,6 +44,7 @@ import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { OUTLINK_THEME } from '../../../../constants';
+import { LinkTypes, relHelpLink, relHelpText, relTitle } from '../constants';
 
 const Label = styled.label`
   margin-left: 12px;
@@ -64,6 +66,16 @@ const Space = styled.div`
   width: 20px;
 `;
 
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  padding: 8px 0;
+`;
+
+const CheckboxWrapper = styled.div`
+  display: flex;
+  padding: 9px 0;
+`;
+
 function PageAttachmentPanel() {
   const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
     updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
@@ -78,7 +90,7 @@ function PageAttachmentPanel() {
 
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
-  const { url, ctaText = defaultCTA, icon, theme } = pageAttachment;
+  const { url, ctaText = defaultCTA, icon, theme, rel = [] } = pageAttachment;
   const [_ctaText, _setCtaText] = useState(ctaText);
   const [_url, _setUrl] = useState(url);
   const [displayWarning, setDisplayWarning] = useState(false);
@@ -186,6 +198,16 @@ function PageAttachmentPanel() {
     [updatePageAttachment]
   );
 
+  const onChangeRel = useCallback(
+    (value) => {
+      const newRel = rel.includes(value)
+        ? rel.filter((el) => el !== value)
+        : [...rel, value];
+      updatePageAttachment({ rel: newRel }, true);
+    },
+    [updatePageAttachment, rel]
+  );
+
   const handleBlur = useCallback(
     ({ target }) => {
       if (!target.value) {
@@ -285,6 +307,39 @@ function PageAttachmentPanel() {
               {__('Link icon', 'web-stories')}
             </Text>
           </StyledRow>
+          <Row>
+            <div>
+              <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                {relTitle}
+              </StyledText>
+              {LinkTypes.map(({ key, title }) => (
+                <CheckboxWrapper key={key}>
+                  <Checkbox
+                    id={key}
+                    name={key}
+                    checked={rel?.includes(key)}
+                    onChange={() => onChangeRel(key)}
+                  />
+                  <Label htmlFor={key}>
+                    <Text
+                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                      as="span"
+                    >
+                      {title}
+                    </Text>
+                  </Label>
+                </CheckboxWrapper>
+              ))}
+              <Link
+                rel="noopener noreferrer"
+                target="_blank"
+                href={relHelpLink}
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+              >
+                {relHelpText}
+              </Link>
+            </div>
+          </Row>
         </>
       )}
     </SimplePanel>

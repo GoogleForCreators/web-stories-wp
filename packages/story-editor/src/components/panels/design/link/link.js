@@ -52,6 +52,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
+import { LinkTypes, relHelpLink, relHelpText, relTitle } from '../constants';
 
 const IconInfo = styled.div`
   display: flex;
@@ -82,11 +83,6 @@ const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   padding: 8px 0;
 `;
-
-const LinkTypes = [
-  { key: 'sponsored', title: __('Sponsored', 'web-stories') },
-  { key: 'nofollow', title: __('Nofollow', 'web-stories') },
-];
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const { clearEditing, setDisplayLinkGuidelines, displayLinkGuidelines } =
@@ -237,11 +233,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const isMultipleDesc = MULTIPLE_VALUE === link.desc;
   const isMultipleRel = MULTIPLE_VALUE === link.rel;
 
-  const relHelpLink = __(
-    'https://developers.google.com/search/docs/advanced/guidelines/qualify-outbound-links?hl=en',
-    'web-stories'
-  );
-
   return (
     <SimplePanel
       name="link"
@@ -327,14 +318,14 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
                 <StyledText
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 >
-                  {__('Qualify outbound links', 'web-stories')}
+                  {relTitle}
                 </StyledText>
                 {LinkTypes.map(({ key, title }) => (
                   <CheckboxWrapper key={key}>
                     <Checkbox
                       id={key}
                       name={key}
-                      checked={link?.rel.includes(key)}
+                      checked={link?.rel?.includes(key)}
                       onChange={() => onChangeRel(key)}
                     />
                     <Label htmlFor={key}>
@@ -353,7 +344,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
                   href={relHelpLink}
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
                 >
-                  {__('Learn more', 'web-stories')}
+                  {relHelpText}
                 </Link>
               </div>
             </Row>
