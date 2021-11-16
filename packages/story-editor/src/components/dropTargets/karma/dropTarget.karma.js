@@ -20,7 +20,7 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-fdescribe('Drop-Target integration', () => {
+describe('Drop-Target integration', () => {
   let fixture;
 
   beforeEach(async () => {

@@ -25,7 +25,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
 
-describe('Filter Panel', () => {
+fdescribe('Filter Panel', () => {
   let fixture;
   let bgImageId;
   let filterPanel;
@@ -124,9 +124,7 @@ describe('Filter Panel', () => {
         expect(overlay).toHaveStyle('background-color', 'rgba(0, 0, 0, 0.5)');
       });
 
-      // TODO(#9389): Fix flaky test.
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should render correct overlay when clicking "linear"', async () => {
+      it('should render correct overlay when clicking "linear"', async () => {
         await fixture.events.click(filterPanel.linear);
 
         const overlay = await waitFor(getBackgroundElementOverlay);
