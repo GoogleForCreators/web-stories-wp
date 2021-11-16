@@ -69,7 +69,7 @@ jest.mock('@web-stories-wp/media', () => {
 const updateElementsByResourceId = jest.fn();
 const uploadMedia = (
   files,
-  { onUploadSuccess, onUploadStart, onUploadError, additionalData }
+  { onUploadSuccess, onUploadStart, onUploadError }
 ) => {
   const resource = {
     src: 'http://www.google.com/foo.gif',
