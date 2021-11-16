@@ -25,6 +25,7 @@ import { getFirstFrameOfVideo } from '@web-stories-wp/media';
  * Internal dependencies
  */
 import { isValidUrl } from '../../../../../../utils/url';
+import checkResourceAccess from '../../../../../../utils/checkResourceAccess';
 import useLibrary from '../../../../useLibrary';
 import getResourceFromUrl from '../../../../../../app/media/utils/getResourceFromUrl';
 import {
@@ -128,30 +129,6 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     ]
   );
 
-  /**
-   * Check if the resource can be accessed directly.
-   *
-   * Makes a HEAD request, which in turn triggers a CORS preflight request
-   * in the browser.
-   *
-   * If the request passes, we don't need to do anything.
-   * If it doesn't, it means we need to run the resource through our CORS proxy at all times.
-   *
-   * @type {function(): boolean}
-   */
-  const checkResourceAccess = useCallback(async () => {
-    let shouldProxy = false;
-    try {
-      await fetch(link, {
-        method: 'HEAD',
-      });
-    } catch (err) {
-      shouldProxy = true;
-    }
-
-    return shouldProxy;
-  }, [link]);
-
   return useCallback(async () => {
     if (!link) {
       return;
@@ -163,7 +140,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
 
     try {
       const hotlinkInfo = await getHotlinkInfo(link);
-      const shouldProxy = await checkResourceAccess();
+      const shouldProxy = await checkResourceAccess(link);
 
       await insertMedia(hotlinkInfo, shouldProxy);
     } catch (err) {
@@ -180,14 +157,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       }
       setErrorMsg(getErrorMessage(err.code, description));
     }
-  }, [
-    allowedFileTypes,
-    link,
-    getHotlinkInfo,
-    setErrorMsg,
-    insertMedia,
-    checkResourceAccess,
-  ]);
+  }, [allowedFileTypes, link, getHotlinkInfo, setErrorMsg, insertMedia]);
 }
 
 export default useInsert;

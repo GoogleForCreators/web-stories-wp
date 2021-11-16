@@ -184,6 +184,7 @@ describe('Panels/Link', () => {
           url: 'http://example.com',
           desc: 'Example',
           icon: 'http://example.com/image.png',
+          needsProxy: true,
         },
       },
     ]);

@@ -47,6 +47,7 @@ import {
 } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import useCORSProxy from '../../../../utils/useCORSProxy';
+import checkResourceAccess from '../../../../utils/checkResourceAccess';
 
 const IconInfo = styled.div`
   display: flex;
@@ -89,10 +90,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     getElementsInAttachmentArea(selectedElements).length > 0 &&
     currentPage?.pageAttachment?.url?.length > 0;
 
-  const defaultLink = useMemo(
-    () => createLink({ url: '', icon: null, desc: null }),
-    []
-  );
+  const defaultLink = useMemo(() => createLink({ icon: null, desc: null }), []);
 
   const link = useCommonObjectValue(selectedElements, 'link', defaultLink);
 
@@ -106,16 +104,17 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const { getProxiedUrl } = useCORSProxy();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
-    ({ url, title, icon }) =>
+    ({ url, title, icon, needsProxy }) =>
       pushUpdateForObject(
         'link',
         () =>
           url
-            ? {
+            ? createLink({
                 url,
+                needsProxy,
                 desc: title ? title : '',
                 icon: icon ? toAbsoluteUrl(url, icon) : '',
-              }
+              })
             : null,
         defaultLink,
         true
@@ -127,18 +126,23 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     !isValidUrl(withProtocol(link.url || ''))
   );
 
-  const populateMetadata = useDebouncedCallback((url) => {
+  const populateMetadata = useDebouncedCallback(async (url) => {
     setFetchingMetadata(true);
-    getLinkMetadata(url)
-      .then(({ title, image }) => {
-        updateLinkFromMetadataApi({ url, title, icon: image });
-      })
-      .catch(() => {
-        setIsInvalidUrl(true);
-      })
-      .finally(() => {
-        setFetchingMetadata(false);
+    try {
+      const { title, image } = await getLinkMetadata(url);
+      const needsProxy = await checkResourceAccess(image);
+
+      updateLinkFromMetadataApi({
+        url,
+        title,
+        icon: image,
+        needsProxy,
       });
+    } catch (e) {
+      setIsInvalidUrl(true);
+    } finally {
+      setFetchingMetadata(false);
+    }
   }, 1200);
 
   const handleChange = useCallback(
@@ -204,7 +208,10 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     link.url,
   ]);
 
-  const linkIcon = getProxiedUrl({ needsProxy: true }, encodeURI(link.icon));
+  const linkIcon = getProxiedUrl(
+    { needsProxy: link.needsProxy },
+    encodeURI(link.icon)
+  );
 
   const isMultipleUrl = MULTIPLE_VALUE === link.url;
   const isMultipleDesc = MULTIPLE_VALUE === link.desc;

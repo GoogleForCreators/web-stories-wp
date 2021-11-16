@@ -33,7 +33,7 @@ function useCORSProxy() {
   const getProxiedUrl = useCallback(
     (resource, src) => {
       const { needsProxy } = resource;
-      if (enableCORSProxy && needsProxy) {
+      if (enableCORSProxy && needsProxy && src) {
         return getProxyUrl(src);
       }
       return src;
