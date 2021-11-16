@@ -52,7 +52,7 @@ const HEADER_GAP = 16;
 // 8px extra is for the focus outline to display.
 const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE + 8;
 const MENU_GAP = 12;
-const FOOTER_HEIGHT = 106;
+const FOOTER_HEIGHT = 100; // 32px button, 8px gap, 60px thumbnail
 const BOTTOM_MARGIN = 16;
 // 8px extra is for the focus outline to display.
 const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;

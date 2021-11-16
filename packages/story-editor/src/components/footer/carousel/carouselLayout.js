@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -24,12 +25,19 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { useLayout } from '../../../app';
-import { CAROUSEL_STATE } from '../../../constants';
+import {
+  CAROUSEL_STATE,
+  CAROUSEL_TRANSITION_DURATION,
+} from '../../../constants';
 import { CarouselScrollForward, CarouselScrollBack } from './carouselScroll';
 import CarouselList from './carouselList';
 import CarouselDrawer from './carouselDrawer';
 import useCarousel from './useCarousel';
 import { BUTTON_WIDTH, BUTTON_GAP } from './constants';
+
+// Animation height is difference between full height (94px) and
+// button height + margin (32px + 3px) = 94-35 = 59
+const ANIMATION_HEIGHT = 59;
 
 const Wrapper = styled.section`
   position: relative;
@@ -54,6 +62,26 @@ const Wrapper = styled.section`
     1fr;
   width: 100%;
   height: auto;
+
+  &.carousel-enter {
+    top: ${ANIMATION_HEIGHT}px;
+
+    &.carousel-enter-active {
+      top: 0;
+      transition: ${CAROUSEL_TRANSITION_DURATION}ms ease-out;
+      transition-property: top;
+    }
+  }
+
+  &.carousel-exit {
+    top: 0;
+
+    &.carousel-exit-active {
+      top: ${ANIMATION_HEIGHT}px;
+      transition: ${CAROUSEL_TRANSITION_DURATION}ms ease-out;
+      transition-property: top;
+    }
+  }
 `;
 
 const Area = styled.div`
@@ -77,28 +105,35 @@ function CarouselLayout() {
 
   const isCollapsed = carouselState === CAROUSEL_STATE.CLOSED;
 
+  const isOpenOrOpening = [
+    CAROUSEL_STATE.OPEN,
+    CAROUSEL_STATE.OPENING,
+  ].includes(carouselState);
+
   return (
-    <Wrapper
-      aria-label={__('Page Carousel', 'web-stories')}
-      isCollapsed={isCollapsed}
-    >
-      <Area area="d">
-        <CarouselDrawer />
-      </Area>
-      {!isCollapsed && (
-        <>
-          <Area area="p">
-            <CarouselScrollBack />
-          </Area>
-          <Area area="c">
-            <CarouselList />
-          </Area>
-          <Area area="n">
-            <CarouselScrollForward />
-          </Area>
-        </>
-      )}
-    </Wrapper>
+    <CSSTransition in={isOpenOrOpening} classNames="carousel" timeout={700}>
+      <Wrapper
+        aria-label={__('Page Carousel', 'web-stories')}
+        isCollapsed={isCollapsed}
+      >
+        <Area area="d">
+          <CarouselDrawer />
+        </Area>
+        {!isCollapsed && (
+          <>
+            <Area area="p">
+              <CarouselScrollBack />
+            </Area>
+            <Area area="c">
+              <CarouselList />
+            </Area>
+            <Area area="n">
+              <CarouselScrollForward />
+            </Area>
+          </>
+        )}
+      </Wrapper>
+    </CSSTransition>
   );
 }
 
