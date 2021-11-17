@@ -98,8 +98,11 @@ function usePageAsCanvas(element) {
               const promise = htmlToImage.toCanvas(fullbleedContainer, {
                 fontEmbedCss: '',
                 pixelRatio: 1,
-                // exclude selected element from generated image to prevent interfereing with contrast calculation
-                filter: (node) => !node.dataset?.elementId === element.id,
+                // exclude selected element from generated image to prevent interfereing with contrast calculation. true includes and false excludes
+                filter: (node) =>
+                  !node.dataset ||
+                  !node.dataset.elementId ||
+                  node.dataset.elementId !== element.id,
               });
               setPageCanvasPromise(promise);
               promise.then(onCompletion).catch(onFail);
