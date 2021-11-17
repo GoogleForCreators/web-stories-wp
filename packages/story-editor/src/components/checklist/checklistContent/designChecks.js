@@ -25,15 +25,6 @@ import { ISSUE_TYPES } from '../constants';
 import { ChecklistCategoryProvider } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import { useConfig } from '../../../app';
-import {
-  PageTooManyLinks,
-  PageTooMuchText,
-  PageTooLittleText,
-  VideoElementResolution,
-  ImageElementResolution,
-  StoryPagesCount,
-} from '../checks';
 
 function DesignPanel({
   badgeCount = 0,
@@ -71,21 +62,9 @@ DesignPanel.propTypes = {
 };
 
 export function DesignChecks(props) {
-  const { hasUploadMediaAction } = useConfig(({ capabilities }) => ({
-    hasUploadMediaAction: capabilities.hasUploadMediaAction,
-  }));
-
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
-      <DesignPanel {...props}>
-        {props.children}
-        <StoryPagesCount />
-        <PageTooMuchText />
-        <PageTooLittleText />
-        <PageTooManyLinks />
-        {hasUploadMediaAction && <VideoElementResolution />}
-        {hasUploadMediaAction && <ImageElementResolution />}
-      </DesignPanel>
+      <DesignPanel {...props}>{props.children}</DesignPanel>
     </ChecklistCategoryProvider>
   );
 }

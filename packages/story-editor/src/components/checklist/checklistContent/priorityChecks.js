@@ -23,27 +23,12 @@ import { useEffect } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import useFFmpeg from '../../../app/media/utils/useFFmpeg';
-import { useConfig } from '../../../app';
 import { PANEL_STATES } from '../../tablist';
 import { ISSUE_TYPES } from '../constants';
 import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import {
-  PublisherLogoSize,
-  StoryMissingExcerpt,
-  StoryMissingTitle,
-  StoryPosterSize,
-  StoryPosterAttached,
-  StoryTitleLength,
-  VideoElementMissingPoster,
-  VideoOptimization,
-  StoryMissingPublisherName,
-  StoryAmpValidationErrors,
-  PublisherLogoMissing,
-} from '../checks';
 
 function PriorityPanel({
   children,
@@ -89,35 +74,14 @@ export function PriorityChecks(props) {
       updateHighPriorityCount,
     })
   );
-  const { canManageSettings, hasUploadMediaAction } = useConfig(
-    ({ capabilities }) => ({
-      canManageSettings: capabilities.canManageSettings,
-      hasUploadMediaAction: capabilities.hasUploadMediaAction,
-    })
-  );
 
   useEffect(() => {
     updateHighPriorityCount(count);
   }, [updateHighPriorityCount, count]);
 
-  const { isTranscodingEnabled } = useFFmpeg();
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
-      <PriorityPanel {...props}>
-        {props.children}
-        <StoryMissingTitle />
-        {canManageSettings && <StoryMissingPublisherName />}
-        <StoryTitleLength />
-        <StoryMissingExcerpt />
-        {hasUploadMediaAction && <StoryPosterAttached />}
-        {hasUploadMediaAction && <StoryPosterSize />}
-        {hasUploadMediaAction && <PublisherLogoMissing />}
-        {hasUploadMediaAction && <PublisherLogoSize />}
-        {hasUploadMediaAction && <VideoElementMissingPoster />}
-        {/* `isTranscodingEnabled` already checks for `hasUploadMediaAction` */}
-        {isTranscodingEnabled && <VideoOptimization />}
-        <StoryAmpValidationErrors />
-      </PriorityPanel>
+      <PriorityPanel {...props}>{props.children}</PriorityPanel>
     </ChecklistCategoryProvider>
   );
 }
