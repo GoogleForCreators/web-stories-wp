@@ -21,10 +21,10 @@ import { useMemo } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
+import { usePointerDownOutsideRef } from '../../utils';
 import { SmartPopover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
 import AnimationContainer from './animationContainer';
-import Mask from './mask';
 
 const ContextMenu = ({
   animate,
@@ -34,25 +34,23 @@ const ContextMenu = ({
   isInline = false,
   ...props
 }) => {
+  const ref = usePointerDownOutsideRef(props.onDismiss);
   const Wrapper = useMemo(
     () => (animate ? AnimationContainer : SmartPopover),
     [animate]
   );
 
   return (
-    <>
-      <Wrapper
-        isInline={isInline}
-        role={isAlwaysVisible ? null : 'dialog'}
-        isOpen={isAlwaysVisible || props.isOpen}
-        isRTL={isRTL}
-      >
-        <Menu aria-expanded={props.isOpen} items={items} {...props} />
-        {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
-        {!animate && <Shadow />}
-      </Wrapper>
-      {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
-    </>
+    <Wrapper
+      isInline={isInline}
+      role={isAlwaysVisible ? null : 'dialog'}
+      isOpen={isAlwaysVisible || props.isOpen}
+      isRTL={isRTL}
+    >
+      <Menu ref={ref} aria-expanded={props.isOpen} items={items} {...props} />
+      {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
+      {!animate && <Shadow />}
+    </Wrapper>
   );
 };
 ContextMenu.propTypes = {
