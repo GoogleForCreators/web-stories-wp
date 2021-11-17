@@ -118,10 +118,6 @@ export function initHelpers(data) {
     await data.fixture.events.keyboard.down('shift');
     await repeatPress('ArrowRight', endOffset - startOffset);
     await data.fixture.events.keyboard.up('shift');
-    await data.fixture.snapshot('End of selection');
-    await data.fixture.events.keyboard.press('Del');
-    await data.fixture.snapshot('Text selection removed');
-
   }
 
   return {
