@@ -233,8 +233,8 @@ export function Checklist({ items }) {
 
 Checklist.propTypes = {
   items: PropTypes.shape({
-    Priority: PropTypes.node,
-    Design: PropTypes.node,
-    Accessibility: PropTypes.node,
+    Priority: PropTypes.elementType,
+    Design: PropTypes.elementType,
+    Accessibility: PropTypes.elementType,
   }),
 };
