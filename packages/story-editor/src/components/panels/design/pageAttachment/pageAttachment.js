@@ -43,7 +43,6 @@ import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { OUTLINK_THEME } from '../../../../constants';
-import checkResourceAccess from '../../../../utils/checkResourceAccess';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const Label = styled.label`
@@ -126,7 +125,7 @@ function PageAttachmentPanel() {
   );
 
   const debouncedUpdate = useDebouncedCallback(updatePageAttachment, 300);
-  const { getProxiedUrl } = useCORSProxy();
+  const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
   const populateUrlData = useDebouncedCallback(async (value) => {
     setFetchingMetadata(true);

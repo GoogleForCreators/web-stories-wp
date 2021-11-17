@@ -25,7 +25,6 @@ import { getFirstFrameOfVideo } from '@web-stories-wp/media';
  * Internal dependencies
  */
 import { isValidUrl } from '../../../../../../utils/url';
-import checkResourceAccess from '../../../../../../utils/checkResourceAccess';
 import useLibrary from '../../../../useLibrary';
 import getResourceFromUrl from '../../../../../../app/media/utils/getResourceFromUrl';
 import {
@@ -68,7 +67,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   } = useAPI();
 
   const { uploadVideoPoster } = useUploadVideoFrame({});
-  const { getProxiedUrl } = useCORSProxy();
+  const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
   const insertMedia = useCallback(
     async (hotlinkData, needsProxy) => {
@@ -157,7 +156,14 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       }
       setErrorMsg(getErrorMessage(err.code, description));
     }
-  }, [allowedFileTypes, link, getHotlinkInfo, setErrorMsg, insertMedia]);
+  }, [
+    link,
+    setErrorMsg,
+    getHotlinkInfo,
+    checkResourceAccess,
+    insertMedia,
+    allowedFileTypes,
+  ]);
 }
 
 export default useInsert;

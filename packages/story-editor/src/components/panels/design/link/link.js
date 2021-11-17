@@ -47,7 +47,6 @@ import {
 } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import useCORSProxy from '../../../../utils/useCORSProxy';
-import checkResourceAccess from '../../../../utils/checkResourceAccess';
 
 const IconInfo = styled.div`
   display: flex;
@@ -101,7 +100,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     actions: { getLinkMetadata },
   } = useAPI();
 
-  const { getProxiedUrl } = useCORSProxy();
+  const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
     ({ url, title, icon, needsProxy }) =>
