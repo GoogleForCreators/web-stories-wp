@@ -33,11 +33,15 @@ import { CarouselScrollForward, CarouselScrollBack } from './carouselScroll';
 import CarouselList from './carouselList';
 import CarouselDrawer from './carouselDrawer';
 import useCarousel from './useCarousel';
-import { BUTTON_WIDTH, BUTTON_GAP } from './constants';
+import {
+  NAVIGATION_BUTTON_WIDTH,
+  NAVIGATION_BUTTON_GAP,
+  DRAWER_BUTTON_GAP_EXPANDED,
+  DRAWER_BUTTON_GAP_COLLAPSED,
+} from './constants';
 
-// Animation height is difference between full height (94px) and
-// button height + margin (32px + 3px) = 94-35 = 59
-const ANIMATION_HEIGHT = 59;
+const DRAWER_BUTTON_GAP_DIFF =
+  DRAWER_BUTTON_GAP_EXPANDED - DRAWER_BUTTON_GAP_COLLAPSED;
 
 const Wrapper = styled.section`
   position: relative;
@@ -51,20 +55,21 @@ const Wrapper = styled.section`
      * n = next arrow
      */
     '. d d d d d .' 32px
-    '. . . . . . .' ${({ isCollapsed }) => (isCollapsed ? 3 : 8)}px
+    '. . . . . . .' ${({ isCollapsed }) =>
+      isCollapsed ? DRAWER_BUTTON_GAP_COLLAPSED : DRAWER_BUTTON_GAP_EXPANDED}px
     '. p . c . n .' auto /
     1fr
-    ${BUTTON_WIDTH}px
-    ${BUTTON_GAP}px
+    ${NAVIGATION_BUTTON_WIDTH}px
+    ${NAVIGATION_BUTTON_GAP}px
     auto
-    ${BUTTON_GAP}px
-    ${BUTTON_WIDTH}px
+    ${NAVIGATION_BUTTON_GAP}px
+    ${NAVIGATION_BUTTON_WIDTH}px
     1fr;
   width: 100%;
   height: auto;
 
   &.carousel-enter {
-    top: ${ANIMATION_HEIGHT}px;
+    top: ${({ thumbHeight }) => thumbHeight + DRAWER_BUTTON_GAP_DIFF}px;
 
     &.carousel-enter-active {
       top: 0;
@@ -77,7 +82,7 @@ const Wrapper = styled.section`
     top: 0;
 
     &.carousel-exit-active {
-      top: ${ANIMATION_HEIGHT}px;
+      top: ${({ thumbHeight }) => thumbHeight + DRAWER_BUTTON_GAP_DIFF}px;
       transition: ${CAROUSEL_TRANSITION_DURATION}ms ease-out;
       transition-property: top;
     }
@@ -97,7 +102,12 @@ function CarouselLayout() {
     carouselState,
   }));
 
-  const { numPages } = useCarousel(({ state: { numPages } }) => ({ numPages }));
+  const { numPages, pageThumbHeight } = useCarousel(
+    ({ state: { numPages, pageThumbHeight } }) => ({
+      numPages,
+      pageThumbHeight,
+    })
+  );
 
   if (numPages <= 0) {
     return null;
@@ -115,6 +125,7 @@ function CarouselLayout() {
       <Wrapper
         aria-label={__('Page Carousel', 'web-stories')}
         isCollapsed={isCollapsed}
+        thumbHeight={pageThumbHeight}
       >
         <Area area="d">
           <CarouselDrawer />

@@ -19,10 +19,16 @@
  */
 import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
-// The buttons and menu gutters
-export const BUTTON_WIDTH = THEME_CONSTANTS.ICON_SIZE;
-export const BUTTON_GAP = 8;
-export const BUTTON_GUTTER = BUTTON_WIDTH + BUTTON_GAP;
+// The navigation buttons and menu gutters
+export const NAVIGATION_BUTTON_WIDTH = THEME_CONSTANTS.ICON_SIZE;
+export const NAVIGATION_BUTTON_GAP = 8;
+export const NAVIGATION_BUTTON_GUTTER =
+  NAVIGATION_BUTTON_WIDTH + NAVIGATION_BUTTON_GAP;
+
+// Drawer button
+export const DRAWER_BUTTON_HEIGHT = 32;
+export const DRAWER_BUTTON_GAP_EXPANDED = 8;
+export const DRAWER_BUTTON_GAP_COLLAPSED = 3;
 
 // Thumbnail size varies with available carousel size - over or under this limit
 export const WIDE_CAROUSEL_LIMIT = 400;
