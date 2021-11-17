@@ -75,6 +75,8 @@ function HotlinkModal({ isOpen, onClose }) {
     onClose,
   });
 
+  const isDisabled = errorMsg || !link || isInserting;
+
   const onBlur = useCallback(() => {
     if (link?.length > 0) {
       const newLink = withProtocol(link);
@@ -100,11 +102,11 @@ function HotlinkModal({ isOpen, onClose }) {
     (evt) => {
       evt.preventDefault();
 
-      if (!isInserting) {
+      if (!isDisabled) {
         onInsert();
       }
     },
-    [isInserting, onInsert]
+    [isDisabled, onInsert]
   );
 
   return (
@@ -119,7 +121,7 @@ function HotlinkModal({ isOpen, onClose }) {
       onPrimary={() => onInsert()}
       primaryText={__('Insert', 'web-stories')}
       secondaryText={__('Cancel', 'web-stories')}
-      primaryRest={{ disabled: errorMsg || !link || isInserting }}
+      primaryRest={{ disabled: isDisabled }}
     >
       <InputWrapper onSubmit={onSubmit}>
         <Input
