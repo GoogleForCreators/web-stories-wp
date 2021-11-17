@@ -19,6 +19,7 @@
  */
 import preloadVideo from './preloadVideo';
 import getImageFromVideo from './getImageFromVideo';
+import seekVideo from './seekVideo';
 
 /**
  * Returns an image of the first frame of a given video.
@@ -29,6 +30,7 @@ import getImageFromVideo from './getImageFromVideo';
  */
 async function getFirstFrameOfVideo(src) {
   const video = await preloadVideo(src);
+  await seekVideo(video);
   return getImageFromVideo(video);
 }
 

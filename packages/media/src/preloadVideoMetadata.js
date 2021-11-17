@@ -22,9 +22,9 @@
  */
 const preloadVideoMetadata = (src) => {
   const video = document.createElement('video');
-  video.preload = 'metadata';
-  video.crossOrigin = 'anonymous';
   video.muted = true;
+  video.crossOrigin = 'anonymous';
+  video.preload = 'metadata';
 
   return new Promise((resolve, reject) => {
     video.addEventListener('loadedmetadata', () => resolve(video));

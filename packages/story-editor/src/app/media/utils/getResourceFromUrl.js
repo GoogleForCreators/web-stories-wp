@@ -20,10 +20,11 @@
 import {
   createResource,
   getImageDimensions,
-  getVideoDimensions,
-  getVideoLength,
-  hasVideoGotAudio,
   getTypeFromMime,
+  preloadVideo,
+  seekVideo,
+  getVideoLengthDisplay,
+  hasVideoGotAudio,
 } from '@web-stories-wp/media';
 
 /**
@@ -60,33 +61,36 @@ async function getResourceFromUrl(resourceLike) {
     throw new Error('Invalid media type.');
   }
 
+  const hasDimensions = width && height;
+  const videoHasMissingMetadata =
+    !hasDimensions ||
+    isMuted === null ||
+    length === null ||
+    lengthFormatted === null;
+
   const additionalData = {};
 
-  const isVideo = type === 'video';
+  // Only need to fetch metadata if not already provided.
 
-  // Only need to fetch dimensions if not already provided.
-  if (!width || !height) {
-    const getMediaDimensions = isVideo
-      ? getVideoDimensions
-      : getImageDimensions;
-    const dimensions = await getMediaDimensions(src);
-    additionalData.width = dimensions.width;
-    additionalData.height = dimensions.height;
+  if (type === 'video' && videoHasMissingMetadata) {
+    const video = await preloadVideo(src);
+    await seekVideo(video);
+
+    additionalData.width = video.videoWidth;
+    additionalData.height = video.videoHeight;
+
+    additionalData.length = Math.round(video.duration);
+    additionalData.lengthFormatted = getVideoLengthDisplay(
+      additionalData.length
+    );
+
+    additionalData.isMuted = !hasVideoGotAudio(video);
   }
 
-  // Add necessary data for video.
-
-  if (isVideo) {
-    if (isMuted === null) {
-      const hasAudio = await hasVideoGotAudio(src);
-      additionalData.isMuted = !hasAudio;
-    }
-
-    if (length === null || lengthFormatted === null) {
-      const lengthData = await getVideoLength(src);
-      additionalData.length = lengthData.length;
-      additionalData.formattedLength = lengthData.formattedLength;
-    }
+  if (type === 'image' && !hasDimensions) {
+    const dimensions = await getImageDimensions(src);
+    additionalData.width = dimensions.width;
+    additionalData.height = dimensions.height;
   }
 
   return createResource({

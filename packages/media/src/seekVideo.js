@@ -15,19 +15,23 @@
  */
 
 /**
- * Internal dependencies
+ * Seek video element to a given offset.
+ *
+ * @param {HTMLVideoElement} video Video element.
+ * @param {number} [offset=0.99] Optional. Desired offset. Defaults to roughly the first frame.
+ * @return {Promise<void>}
  */
-import preloadVideoMetadata from './preloadVideoMetadata';
-
-async function preloadVideo(src) {
-  const video = await preloadVideoMetadata(src);
+function seekVideo(video, offset = 0.99) {
+  if (video.currentTime === offset) {
+    return Promise.resolve();
+  }
 
   return new Promise((resolve, reject) => {
-    video.addEventListener('canplay', () => resolve(video), { once: true });
     video.addEventListener('error', reject);
+    video.addEventListener('seeked', () => resolve(video), { once: true });
 
-    video.preload = 'auto';
+    video.currentTime = offset;
   });
 }
 
-export default preloadVideo;
+export default seekVideo;

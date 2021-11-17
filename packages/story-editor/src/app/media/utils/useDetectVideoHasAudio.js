@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import { hasVideoGotAudio } from '@web-stories-wp/media';
+import { hasVideoGotAudio, preloadVideo } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
@@ -55,7 +55,7 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
         return;
       }
       try {
-        const hasAudio = await hasVideoGotAudio(src);
+        const hasAudio = hasVideoGotAudio(await preloadVideo(src));
 
         const newState = ({ resource }) => ({
           resource: {

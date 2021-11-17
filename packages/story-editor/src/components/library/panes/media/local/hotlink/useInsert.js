@@ -21,15 +21,16 @@ import { useCallback, useState } from '@web-stories-wp/react';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
   getImageFromVideo,
-  preloadVideoMetadata,
+  seekVideo,
   getVideoLengthDisplay,
+  preloadVideo,
+  hasVideoGotAudio,
 } from '@web-stories-wp/media';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import useStory from '../../../../../../app/story/useStory';
 import useLibrary from '../../../../useLibrary';
 import getResourceFromUrl from '../../../../../../app/media/utils/getResourceFromUrl';
 import {
@@ -60,23 +61,6 @@ function getErrorMessage(code, description) {
   }
 }
 
-function seekVideo(video) {
-  video.preload = 'auto';
-
-  return new Promise((resolve, reject) => {
-    video.addEventListener('error', reject);
-    video.addEventListener(
-      'canplay',
-      () => {
-        video.currentTime = 0.99;
-      },
-      { once: true } // Important because 'canplay' can be fired hundreds of times.
-    );
-
-    video.addEventListener('seeked', () => resolve(video), { once: true });
-  });
-}
-
 function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
@@ -88,9 +72,6 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const {
     actions: { getHotlinkInfo },
   } = useAPI();
-  const { updateElementsByResourceId } = useStory((state) => ({
-    updateElementsByResourceId: state.actions.updateElementsByResourceId,
-  }));
 
   const [isInserting, setIsInserting] = useState(false);
 
@@ -123,10 +104,13 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
 
         let video;
 
-        // We need to gather some metadata for videos, but do it efficiently
-        // by only loading it once, speeding up insertion.
+        // We need to gather some metadata for videos, but efficiently.
+        // Thus only loading it once to speed up insertion.
         if (isVideo) {
-          video = await preloadVideoMetadata(proxiedUrl);
+          // preloadVideoMetadata would suffice, except for audio detection
+          // which requires loading more than just metadata.
+          video = await preloadVideo(proxiedUrl);
+          await seekVideo(video);
 
           resourceLike.width = video.videoWidth;
           resourceLike.height = video.videoHeight;
@@ -136,11 +120,33 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
             resourceLike.length
           );
 
-          resourceLike.isMuted = !(
-            video.mozHasAudio ||
-            Boolean(video.webkitAudioDecodedByteCount) ||
-            Boolean(video.audioTracks?.length)
-          );
+          resourceLike.isMuted = !hasVideoGotAudio(video);
+
+          // We want to auto-generate and *upload* posters for hotlinked videos.
+          // While this could be done _after_ insertion, at this point we have
+          // already preloaded the video, so this will be quick.
+          // Also, this avoids adding a history entry for adding the poster,
+          // which would also cause the autoplayed video to be paused again.
+          // However, upload might fail, thus adding this nested try ... catch.
+          if (hasUploadMediaAction) {
+            try {
+              const fileName = getPosterName(
+                originalFileName.replace(`.${ext}`, '')
+              );
+
+              const posterFile = await getImageFromVideo(video);
+              const posterData = await uploadVideoPoster(
+                0,
+                fileName,
+                posterFile
+              );
+
+              resourceLike.poster = posterData.poster;
+              resourceLike.posterId = posterData.posterId;
+            } catch {
+              // No need to catch poster generation errors.
+            }
+          }
         }
 
         // Passing the potentially proxied URL here just so that
@@ -157,36 +163,6 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
         setErrorMsg(null);
         setLink('');
         onClose();
-
-        // We still want to auto-generate and *upload* video posters,
-        // even for hotlinked videos.
-        // This can easily be done after actual insertion though, as it might fail.
-        // Thus adding this nested try ... catch.
-        if (isVideo && hasUploadMediaAction) {
-          try {
-            const fileName = getPosterName(
-              originalFileName.replace(`.${ext}`, '')
-            );
-            video = await seekVideo(video);
-            const posterFile = await getImageFromVideo(video);
-            const posterData = await uploadVideoPoster(0, fileName, posterFile);
-
-            updateElementsByResourceId({
-              id: resource.id,
-              properties: (existingResource) => {
-                return {
-                  resource: {
-                    ...existingResource.resource,
-                    poster: posterData.poster,
-                    posterId: posterData.posterId,
-                  },
-                };
-              },
-            });
-          } catch {
-            // No need to catch poster generation errors.
-          }
-        }
       } catch (e) {
         setErrorMsg(getErrorMessage());
       }
@@ -200,7 +176,6 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       setLink,
       uploadVideoPoster,
       getProxiedUrl,
-      updateElementsByResourceId,
     ]
   );
 
