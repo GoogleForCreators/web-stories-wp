@@ -112,6 +112,6 @@ describe('buildFonts', () => {
     await buildFonts('/assets/src/fonts/fonts.json');
 
     const contentAfter = readFileSync('/assets/src/fonts/fonts.json');
-    expect(contentAfter).toStrictEqual('');
+    expect(contentAfter).toBe('');
   });
 });

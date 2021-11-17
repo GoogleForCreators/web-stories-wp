@@ -2,7 +2,7 @@
 name: Release Plugin
 about: Create a tracking issue for a new plugin release.
 title: 'Release: vX.Y.Z'
-labels: Release
+labels: 'Type: Release'
 assignees: ''
 
 ---

@@ -28,9 +28,9 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Infrastructure\Conditional;
+use Google\Web_Stories\Context;
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\User\Preferences;
 
 /**
@@ -38,8 +38,33 @@ use Google\Web_Stories\User\Preferences;
  *
  * @package Google\Web_Stories
  */
-class Cross_Origin_Isolation extends Service_Base implements Conditional {
-	use Screen;
+class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
+	 * Preferences instance.
+	 *
+	 * @var Preferences Preferences instance.
+	 */
+	private $preferences;
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param Preferences $preferences Preferences instance.
+	 * @param Context     $context     Context instance.
+	 */
+	public function __construct( Preferences $preferences, Context $context ) {
+		$this->preferences = $preferences;
+		$this->context     = $context;
+	}
 
 	/**
 	 * Init
@@ -47,7 +72,7 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 * @return void
 	 */
 	public function register() {
-		if ( ! $this->is_edit_screen() ) {
+		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}
 
@@ -82,15 +107,60 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	}
 
 	/**
-	 * Start output buffer and add headers.
+	 * Determines whether "full" cross-origin isolation is needed.
+	 *
+	 * By default, `crossorigin="anonymous"` attributes are added to all external
+	 * resources to make sure they can be accessed programmatically (e.g. by html-to-image).
+	 *
+	 * However, actual cross-origin isolation by sending COOP and COEP headers is only
+	 * needed when video optimization is enabled
+	 *
+	 * @link https://github.com/google/web-stories-wp/issues/9327
+	 * @link https://web.dev/coop-coep/
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return bool Whether the conditional object is needed.
+	 */
+	private function needs_isolation(): bool {
+		$user_id = get_current_user_id();
+		if ( ! $user_id ) {
+			return false;
+		}
+
+		// Cross-origin isolation is not needed if users can't upload files anyway.
+		if ( ! user_can( $user_id, 'upload_files' ) ) {
+			return false;
+		}
+
+		return rest_sanitize_boolean(
+			$this->preferences->get_preference( $user_id, $this->preferences::MEDIA_OPTIMIZATION_META_KEY )
+		);
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'user_preferences' ];
+	}
+
+	/**
+	 * Start output buffer to add headers and `crossorigin` attribute everywhere.
 	 *
 	 * @since 1.6.0
 	 *
 	 * @return void
 	 */
 	public function admin_header() {
-		header( 'Cross-Origin-Opener-Policy: same-origin' );
-		header( 'Cross-Origin-Embedder-Policy: require-corp' );
+		if ( $this->needs_isolation() ) {
+			header( 'Cross-Origin-Opener-Policy: same-origin' );
+			header( 'Cross-Origin-Embedder-Policy: require-corp' );
+		}
 
 		ob_start( [ $this, 'replace_in_dom' ] );
 	}
@@ -168,9 +238,9 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 * @param string $handle The style's registered handle.
 	 * @param string $href   The stylesheet's source URL.
 	 *
-	 * @return string
+	 * @return string|mixed
 	 */
-	public function style_loader_tag( $tag, $handle, $href ): string {
+	public function style_loader_tag( $tag, $handle, $href ) {
 		return $this->add_attribute( $tag, 'href', $href );
 	}
 
@@ -179,13 +249,13 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $tag    The `<script>` tag for the enqueued script.
-	 * @param string $handle The script's registered handle.
-	 * @param string $src    The script's source URL.
+	 * @param string|mixed $tag The `<script>` tag for the enqueued script.
+	 * @param string       $handle    The script's registered handle.
+	 * @param string       $src       The script's source URL.
 	 *
-	 * @return string
+	 * @return string|mixed The filtered script tag.
 	 */
-	public function script_loader_tag( $tag, $handle, $src ): string {
+	public function script_loader_tag( $tag, $handle, $src ) {
 		return $this->add_attribute( $tag, 'src', $src );
 	}
 
@@ -194,20 +264,20 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $avatar      HTML for the user's avatar.
-	 * @param mixed  $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
-	 *                            user email, WP_User object, WP_Post object, or WP_Comment object.
-	 * @param int    $size        Square avatar width and height in pixels to retrieve.
-	 * @param string $default     URL for the default image or a default type. Accepts '404', 'retro', 'monsterid',
-	 *                            'wavatar', 'indenticon', 'mystery', 'mm', 'mysteryman', 'blank', or
-	 *                            'gravatar_default'. Default is the value of the 'avatar_default' option, with a
-	 *                            fallback of 'mystery'.
-	 * @param string $alt         Alternative text to use in the avatar image tag. Default empty.
-	 * @param array  $args        Arguments passed to get_avatar_data(), after processing.
+	 * @param string|mixed $avatar      HTML for the user's avatar.
+	 * @param mixed        $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
+	 *                                  user email, WP_User object, WP_Post object, or WP_Comment object.
+	 * @param int          $size        Square avatar width and height in pixels to retrieve.
+	 * @param string       $default     URL for the default image or a default type. Accepts '404', 'retro', 'monsterid',
+	 *                                  'wavatar', 'indenticon', 'mystery', 'mm', 'mysteryman', 'blank', or
+	 *                                  'gravatar_default'. Default is the value of the 'avatar_default' option, with a
+	 *                                  fallback of 'mystery'.
+	 * @param string       $alt         Alternative text to use in the avatar image tag. Default empty.
+	 * @param array        $args        Arguments passed to get_avatar_data(), after processing.
 	 *
-	 * @return string
+	 * @return string|mixed
 	 */
-	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ): string {
+	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ) {
 		return $this->add_attribute( $avatar, 'src', $args['url'] );
 	}
 
@@ -216,13 +286,17 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $html HTML string.
-	 * @param string $attribute Attribute to check for.
-	 * @param string $url URL.
+	 * @param string|mixed $html HTML string.
+	 * @param string       $attribute Attribute to check for.
+	 * @param string|null  $url URL.
 	 *
-	 * @return string
+	 * @return string|mixed
 	 */
-	protected function add_attribute( string $html, string $attribute, string $url ): string {
+	protected function add_attribute( $html, string $attribute, $url ) {
+		if ( ! $url ) {
+			return $html;
+		}
+
 		$site_url = site_url();
 		$url      = esc_url( $url );
 
@@ -288,28 +362,5 @@ class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	 */
 	private function starts_with( string $string, string $start_string ): bool {
 		return 0 === strpos( $string, $start_string );
-	}
-
-	/**
-	 * Check whether the conditional object is currently needed.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return bool Whether the conditional object is needed.
-	 */
-	public static function is_needed(): bool {
-		$user_id = get_current_user_id();
-		if ( ! $user_id ) {
-			return false;
-		}
-
-		// Cross-origin isolation is not needed if users can't upload files anyway.
-		if ( ! user_can( $user_id, 'upload_files' ) ) {
-			return false;
-		}
-
-		$check = get_user_meta( $user_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
-
-		return rest_sanitize_boolean( $check );
 	}
 }

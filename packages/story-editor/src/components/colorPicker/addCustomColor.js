@@ -33,6 +33,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import useStory from '../../app/story/useStory';
+import getUniquePresets from '../../utils/getUniquePresets';
 
 const StyledButton = styled(Button)`
   flex-basis: 100%;
@@ -57,7 +58,9 @@ function AddCustomColor({ color, onSave }) {
       properties: {
         globalStoryStyles: {
           ...globalStoryStyles,
-          colors: [...globalStoryStyles.colors, color].filter(Boolean),
+          colors: getUniquePresets(
+            [...globalStoryStyles.colors, color].filter(Boolean)
+          ),
         },
       },
     });
@@ -71,7 +74,7 @@ function AddCustomColor({ color, onSave }) {
       size={BUTTON_SIZES.SMALL}
       variant={BUTTON_VARIANTS.RECTANGLE}
     >
-      {__('Add', 'web-stories')}
+      {__('Add to Saved Colors', 'web-stories')}
     </StyledButton>
   );
 }

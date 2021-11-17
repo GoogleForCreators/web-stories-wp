@@ -30,6 +30,7 @@ import styled from 'styled-components';
  */
 import { useConfig, useCurrentUser } from '../../../app';
 import { CARD_WIDTH } from '../../secondaryPopup';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 const Container = styled.div`
   display: flex;
@@ -63,6 +64,7 @@ const CheckboxLabel = styled(DescriptionText)`
 `;
 
 function VideoOptimizationCheckbox() {
+  const isChecklistMounted = useIsChecklistMounted();
   const { capabilities: { hasUploadMediaAction } = {}, dashboardSettingsLink } =
     useConfig();
   const { currentUser, toggleWebStoriesMediaOptimization } = useCurrentUser(
@@ -76,7 +78,7 @@ function VideoOptimizationCheckbox() {
   const checked = currentUser?.meta?.web_stories_media_optimization;
   const showCheckbox = !checked && hasUploadMediaAction;
 
-  return showCheckbox ? (
+  return showCheckbox && isChecklistMounted ? (
     <Container>
       <DescriptionText>
         {__(

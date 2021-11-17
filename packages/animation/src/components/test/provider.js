@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-jest.mock('flagged');
 import { useFeature } from 'flagged';
 import { renderHook, act } from '@testing-library/react-hooks';
 
@@ -27,6 +26,8 @@ import { renderHook, act } from '@testing-library/react-hooks';
  */
 import { StoryAnimation, useStoryAnimationContext } from '..';
 import * as animationParts from '../../parts';
+
+jest.mock('flagged');
 
 function flushPromiseQueue() {
   return new Promise((resolve) => resolve());
@@ -61,7 +62,9 @@ const mockWAAPIAnimation = (overrides = {}) => ({
 });
 
 describe('StoryAnimation.Provider', () => {
-  useFeature.mockImplementation(() => true);
+  beforeAll(() => {
+    useFeature.mockImplementation(() => true);
+  });
 
   describe('getAnimationParts(target)', () => {
     it('gets all generated parts for a target', () => {
@@ -279,7 +282,7 @@ describe('StoryAnimation.Provider', () => {
       expect(play).toHaveBeenCalledTimes(numCalls);
       expect(pause).toHaveBeenCalledTimes(numCalls);
       animations.forEach((animation) => {
-        expect(animation.currentTime).toStrictEqual(200);
+        expect(animation.currentTime).toBe(200);
       });
     });
 

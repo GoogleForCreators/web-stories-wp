@@ -22,8 +22,9 @@ import { fireEvent, waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+import { firePointerEvent } from '../../../../testUtils';
 import { LINE_LENGTH } from '../../constants';
-import { arrange, firePointerEvent } from './_utils';
+import { arrange } from './_utils';
 
 describe('<ColorPicker /> when moving a stop with a pointer device', () => {
   it('should move stop when dragging a stop', async () => {
@@ -35,7 +36,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
           { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // Get first gradient stop
@@ -105,7 +106,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // Get first gradient stop

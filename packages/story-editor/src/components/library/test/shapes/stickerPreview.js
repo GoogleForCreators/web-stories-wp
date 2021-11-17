@@ -54,6 +54,7 @@ describe('StickerPreview', () => {
           canvasContainer: document.body,
           designSpaceGuideline: {},
         },
+        actions: {},
       };
       renderWithTheme(
         <CanvasContext.Provider value={canvasValue}>

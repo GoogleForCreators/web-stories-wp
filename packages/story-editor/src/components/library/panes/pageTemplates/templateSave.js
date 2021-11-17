@@ -68,9 +68,10 @@ const SaveButton = styled.button`
       theme.colors.interactiveBg.secondaryHover};
   }
 
-  ${({ isDisabled, theme }) =>
-    isDisabled &&
+  ${({ $isDisabled, theme }) =>
+    $isDisabled &&
     `
+      cursor: default;
       background-color: ${theme.colors.interactiveBg.disable};
       &:hover {
         background-color: ${theme.colors.interactiveBg.disable};
@@ -119,7 +120,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
           updateList?.(addedTemplate);
           showSnackbar({
             message: __('Page Template saved.', 'web-stories'),
-            dismissable: true,
+            dismissible: true,
           });
         })
         .catch(() => {
@@ -128,7 +129,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
               'Unable to save the template. Please try again.',
               'web-stories'
             ),
-            dismissable: true,
+            dismissible: true,
           });
         });
       setShowDefaultTemplates(false);
@@ -143,20 +144,18 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
     ]
   );
 
-  const textId = useMemo(() => `template_save_btn_${uuidv4()}`, []);
   return (
     <SaveButton
       aria-disabled={isDisabled}
       onClick={handleSaveTemplate}
-      aria-labelledby={textId}
-      isDisabled={isDisabled}
+      $isDisabled={isDisabled}
     >
       <IconWrapper>
-        <Icon />
+        <Icon aria-hidden />
       </IconWrapper>
       <StyledText
-        id={textId}
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        forwardedAs="span"
       >
         {__('Save current page as template', 'web-stories')}
       </StyledText>

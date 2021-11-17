@@ -99,11 +99,11 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param array $debugging_information The debugging information from Core.
+	 * @param array|mixed $debugging_information The debugging information from Core.
 	 *
-	 * @return array The debugging information, with added information for Web stories.
+	 * @return array|mixed The debugging information, with added information for Web stories.
 	 */
-	public function add_debug_information( array $debugging_information ): array {
+	public function add_debug_information( $debugging_information ) {
 		$enabled_experiments = [];
 		foreach ( $this->experiments->get_experiments() as $experiment ) {
 			$enabled = $this->experiments->is_experiment_enabled( $experiment['name'] );
@@ -114,7 +114,9 @@ class Site_Health extends Service_Base implements Conditional {
 		if ( ! $enabled_experiments ) {
 			$enabled_experiments = __( 'No experiments enabled', 'web-stories' );
 		}
-
+		if ( ! is_array( $debugging_information ) ) {
+			return $debugging_information;
+		}
 		$extra_data = [
 			'web_stories' => [
 				'label'       => esc_html__( 'Web Stories', 'web-stories' ),
@@ -186,10 +188,13 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param array $core_extensions The existing extensions from Core.
-	 * @return array The extensions, including those for Web Stories.
+	 * @param array|mixed $core_extensions The existing extensions from Core.
+	 * @return array|mixed The extensions, including those for Web Stories.
 	 */
-	public function add_extensions( array $core_extensions ): array {
+	public function add_extensions( $core_extensions ) {
+		if ( ! is_array( $core_extensions ) ) {
+			return $core_extensions;
+		}
 		$extensions = [
 			'json'     => [
 				'extension' => 'json',
@@ -230,11 +235,14 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param array $test_result Site Health test result.
+	 * @param array|mixed $test_result Site Health test result.
 	 *
-	 * @return array Modified test result.
+	 * @return array|mixed Modified test result.
 	 */
-	public function modify_test_result( array $test_result ): array {
+	public function modify_test_result( $test_result ) {
+		if ( ! is_array( $test_result ) ) {
+			return $test_result;
+		}
 		// Set the `https_status` test status to critical if its current status is recommended, along with adding to the
 		// description for why its required for Web Stories.
 		if ( isset( $test_result['test'], $test_result['status'], $test_result['description'] ) && 'https_status' === $test_result['test'] && 'recommended' === $test_result['status'] ) {

@@ -25,6 +25,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { Media, Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
@@ -55,6 +56,11 @@ const InputsWrapper = styled.div`
   margin-left: 16px;
 `;
 
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  margin-bottom: 10px;
+`;
+
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const resource = useCommonObjectValue(
     selectedElements,
@@ -66,15 +72,23 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
 
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
-  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
+  const {
+    allowedImageMimeTypes,
+    allowedImageFileTypes,
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
 
   const handleChangePoster = useCallback(
-    (image) => {
-      const newPoster = image?.sizes?.full?.url || image?.url;
-      if (newPoster === rawPoster) {
+    /**
+     * Handle video poster change.
+     *
+     * @param {import('@web-stories-wp/media').Resource} [newPoster] The new image. Or null if reset.
+     */
+    (newPoster) => {
+      if (newPoster?.src === rawPoster) {
         return;
       }
-      pushUpdate({ poster: newPoster }, true);
+      pushUpdate({ poster: newPoster?.src }, true);
     },
     [pushUpdate, rawPoster]
   );
@@ -148,8 +162,12 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           ariaLabel={__('Video poster', 'web-stories')}
           menuOptions={['edit', 'reset']}
           imgProps={cropParams}
+          canUpload={hasUploadMediaAction}
         />
         <InputsWrapper>
+          <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('Add a brief description of the video.', 'web-stories')}
+          </StyledText>
           <TextArea
             ref={(node) => {
               if (node && highlightInput?.focus && highlightInput?.showEffect) {
@@ -159,14 +177,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
                 node.focus();
               }
             }}
-            placeholder={
-              alt === MULTIPLE_VALUE
-                ? MULTIPLE_DISPLAY_VALUE
-                : __(
-                    'Add assistive text for visually impaired users',
-                    'web-stories'
-                  )
-            }
+            placeholder={alt === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''}
             value={alt || ''}
             onChange={(evt) =>
               pushUpdate(

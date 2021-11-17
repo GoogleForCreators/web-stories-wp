@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/overlay';
 import { setupReducer } from './_utils';
 
 describe('addPage', () => {
@@ -35,7 +34,6 @@ describe('addPage', () => {
       {
         id: '123',
         elements: [{ id: '456' }],
-        overlay: OverlayType.NONE,
       },
     ]);
   });
@@ -62,7 +60,7 @@ describe('addPage', () => {
 
     const result = addPage({ page: { id: '123', elements: [{ id: '456' }] } });
 
-    expect(result.current).toStrictEqual('123');
+    expect(result.current).toBe('123');
   });
 
   it('should insert the new page just after current one', () => {

@@ -63,7 +63,7 @@ function useUploadMedia({
       isTranscoding,
       pending,
       progress,
-      posterProcessed,
+      uploaded,
       failures,
     },
     actions: { addItem, removeItem },
@@ -88,7 +88,7 @@ function useUploadMedia({
     if (isTranscoding && isDialogDismissed) {
       showSnackbar({
         message: __('Video optimization in progress', 'web-stories'),
-        dismissable: true,
+        dismissible: true,
       });
     }
   }, [isTranscoding, showSnackbar]);
@@ -137,7 +137,7 @@ function useUploadMedia({
   // Handle *processed* items.
   // Update resources in media library and on canvas.
   useEffect(() => {
-    for (const { id, resource, onUploadSuccess } of posterProcessed) {
+    for (const { id, resource, onUploadSuccess } of uploaded) {
       if (!resource) {
         continue;
       }
@@ -150,7 +150,7 @@ function useUploadMedia({
 
       removeItem({ id });
     }
-  }, [posterProcessed, updateMediaElement, removeItem]);
+  }, [uploaded, updateMediaElement, removeItem]);
 
   // Handle *failed* items.
   // Remove resources from media library and canvas.
@@ -178,7 +178,7 @@ function useUploadMedia({
           src: thumbnailSrc,
           alt: resource?.alt,
         },
-        dismissable: true,
+        dismissible: true,
       });
     }
   }, [failures, deleteMediaElement, removeItem, showSnackbar]);
@@ -195,6 +195,7 @@ function useUploadMedia({
      * @param {Function} args.onUploadSuccess Callback for when upload succeeds.
      * @param {Object} args.additionalData Object of additionalData.
      * @param {boolean} args.muteVideo Should the video being transcoded, should also be muted.
+     * @param {import('@web-stories-wp/media').TrimData} args.trimData Trim data.
      * @param {import('@web-stories-wp/media').Resource} args.resource Resource object.
      * @param {Blob} args.posterFile Blob object of poster.
      * @return {void}
@@ -208,6 +209,7 @@ function useUploadMedia({
         onUploadSuccess,
         additionalData,
         muteVideo,
+        trimData,
         resource,
         posterFile,
       } = {}
@@ -231,7 +233,7 @@ function useUploadMedia({
           } catch (e) {
             showSnackbar({
               message: e.message,
-              dismissable: true,
+              dismissible: true,
             });
 
             return;
@@ -259,6 +261,7 @@ function useUploadMedia({
             additionalData,
             posterFile,
             muteVideo,
+            trimData,
           });
         })
       );

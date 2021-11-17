@@ -19,7 +19,6 @@
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import {
-  useState,
   useEffect,
   useRef,
   useCallback,
@@ -119,17 +118,20 @@ ThroughputPopup.propTypes = {
 };
 
 export function Checklist() {
-  const { close, toggle, isOpen, isChecklistMounted } = useChecklist(
-    ({
-      actions: { close, toggle },
-      state: { isOpen, isChecklistMounted },
-    }) => ({
-      close,
-      toggle,
-      isOpen,
-      isChecklistMounted,
-    })
-  );
+  const { close, openPanel, toggle, isOpen, isChecklistMounted, setOpenPanel } =
+    useChecklist(
+      ({
+        actions: { close, toggle, setOpenPanel },
+        state: { isOpen, isChecklistMounted, openPanel },
+      }) => ({
+        close,
+        toggle,
+        isOpen,
+        isChecklistMounted,
+        openPanel,
+        setOpenPanel,
+      })
+    );
 
   const priorityCount = useCategoryCount(ISSUE_TYPES.PRIORITY);
   const designCount = useCategoryCount(ISSUE_TYPES.DESIGN);
@@ -141,13 +143,12 @@ export function Checklist() {
 
   const navRef = useRef();
 
-  const [openPanel, setOpenPanel] = useState(null);
   const handleOpenPanel = useCallback(
     (panelName) => () =>
       setOpenPanel((currentOpenPanel) =>
         currentOpenPanel === panelName ? null : panelName
       ),
-    []
+    [setOpenPanel]
   );
   // Set Focus within the popup on open
   useEffect(() => {
@@ -163,7 +164,7 @@ export function Checklist() {
     if (checkpoint) {
       setOpenPanel(PANEL_EXPANSION_BY_CHECKPOINT[checkpoint]);
     }
-  }, [checkpoint]);
+  }, [checkpoint, setOpenPanel]);
 
   const visiblePanels = PANEL_VISIBILITY_BY_STATE[checkpoint];
   const priorityBadgeCount = visiblePanels.includes(ISSUE_TYPES.PRIORITY)

@@ -19,7 +19,7 @@
  */
 import { forwardRef, useCallback, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
+import { __, _x } from '@web-stories-wp/i18n';
 import { useFeatures } from 'flagged';
 import { css } from 'styled-components';
 import { DropDown, PLACEMENT } from '@web-stories-wp/design-system';
@@ -161,7 +161,7 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     <DropDown
       ref={ref}
       options={assembledOptions}
-      placeholder={__('None', 'web-stories')}
+      placeholder={_x('None', 'animation effect', 'web-stories')}
       selectedValue={selectedValue}
       ariaLabel={__('Animation: Effect Chooser', 'web-stories')}
       menuStylesOverride={styleOverrideForAnimationEffectMenu}

@@ -19,13 +19,10 @@
  */
 import { __, sprintf, _n } from '@web-stories-wp/i18n';
 
-export const DEFAULT_STORY_PAGE_ADVANCE_DURATION = 2000;
-
 export const STORY_CONTEXT_MENU_ACTIONS = {
   OPEN_IN_EDITOR: 'open-in-editor-action',
   RENAME: 'rename-action',
   DUPLICATE: 'duplicate-action',
-  CREATE_TEMPLATE: 'create-template-action',
   DELETE: 'delete-story-action',
   COPY_STORY_LINK: 'copy-story-link',
   OPEN_STORY_LINK: 'open-story-link',
@@ -55,11 +52,6 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Duplicate', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.DUPLICATE,
-  },
-  {
-    label: __('Create Template', 'web-stories'),
-    value: STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE,
-    inProgress: true,
   },
   {
     label: __('Delete Story', 'web-stories'),
@@ -107,13 +99,29 @@ export const STORY_SORT_MENU_ITEMS = [
   },
 ];
 
-export const STORY_STATUS = {
-  ALL: 'publish,draft,future,private',
-  PUBLISHED_AND_FUTURE: 'publish,future',
+/**
+ * All possible story statuses.
+ */
+const BASE_STATUSES = {
   DRAFT: 'draft',
   FUTURE: 'future',
+  PENDING: 'pending',
   PUBLISH: 'publish',
   PRIVATE: 'private',
+};
+
+export const STORY_STATUS = {
+  ALL: Object.values(BASE_STATUSES).join(','),
+  PUBLISHED_AND_FUTURE: [BASE_STATUSES.PUBLISH, BASE_STATUSES.FUTURE].join(','),
+  ...BASE_STATUSES,
+};
+
+export const DISPLAY_STATUS = {
+  [STORY_STATUS.PUBLISH]: __('Published', 'web-stories'),
+  [STORY_STATUS.PENDING]: __('Pending', 'web-stories'),
+  [STORY_STATUS.FUTURE]: __('Scheduled', 'web-stories'),
+  [STORY_STATUS.DRAFT]: __('Draft', 'web-stories'),
+  [STORY_STATUS.PRIVATE]: __('Private', 'web-stories'),
 };
 
 export const STORY_STATUSES = [
@@ -126,6 +134,11 @@ export const STORY_STATUSES = [
     label: __('Drafts', 'web-stories'),
     value: STORY_STATUS.DRAFT,
     status: STORY_STATUS.DRAFT,
+  },
+  {
+    label: __('Pending', 'web-stories'),
+    value: STORY_STATUS.PENDING,
+    status: STORY_STATUS.PENDING,
   },
   {
     label: __('Published', 'web-stories'),
@@ -189,6 +202,17 @@ export const STORY_VIEWING_LABELS = {
       ),
       n
     ),
+  [STORY_STATUS.PENDING]: (n) =>
+    sprintf(
+      /* translators: %d: number of stories */
+      _n(
+        'Viewing <strong>%d</strong> pending story',
+        'Viewing <strong>%d</strong> pending stories',
+        n,
+        'web-stories'
+      ),
+      n
+    ),
   [STORY_STATUS.PRIVATE]: (n) =>
     sprintf(
       /* translators: %d: number of stories */
@@ -207,9 +231,4 @@ export const STORY_ANIMATION_STATE = {
   PAUSED: 'paused',
   SCRUBBING: 'scrubbing',
   PLAYING: 'playing',
-};
-
-export const REST_LINKS = {
-  EDIT: 'wp:action-edit',
-  DELETE: 'wp:action-delete',
 };

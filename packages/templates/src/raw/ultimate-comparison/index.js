@@ -15,34 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'ultimate-comparison',
-  title: _x('Ultimate Comparison', 'template name', 'web-stories'),
-  tags: [
-    _x('Technology', 'template keyword', 'web-stories'),
-    _x('Products', 'template keyword', 'web-stories'),
-    _x('Comparison', 'template keyword', 'web-stories'),
-    _x('Minimal', 'template keyword', 'web-stories'),
-    _x('White', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Rose White', 'color', 'web-stories'), color: '#fff8f2' },
-    { label: _x('Coal Black', 'color', 'web-stories'), color: '#060607' },
-    { label: _x('Ember Orange', 'color', 'web-stories'), color: '#de7032' },
-  ],
-  description: __(
-    'With its ultra-modern typography, minimalistic layout and fresh, contrasty color palette, this template will let you create product guides that are clear, attractive and effective.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Technology', 'template vertical', 'web-stories'),
 };

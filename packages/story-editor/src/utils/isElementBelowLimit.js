@@ -24,7 +24,7 @@ import {
 } from '@web-stories-wp/units';
 
 function isElementBelowLimit(element, verifyLink = true) {
-  if (verifyLink && !element.link?.url?.length > 0) {
+  if (verifyLink && !element.link?.url?.length) {
     return false;
   }
   const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;

@@ -20,7 +20,10 @@ import { createSolidFromString } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
+import {
+  SHARED_DEFAULT_ATTRIBUTES,
+  SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
+} from '../shared/constants';
 import PanelTypes from '../../components/panels/design/types';
 
 const defaultBackgroundColor = createSolidFromString('#c4c4c4');
@@ -31,7 +34,7 @@ export const defaultAttributes = {
 };
 
 export const clearableAttributes = {
-  ...SHARED_DEFAULT_ATTRIBUTES,
+  ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
   backgroundColor: defaultBackgroundColor,
 };
 
@@ -56,9 +59,7 @@ export const panels = [
   PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
   PanelTypes.BORDER,
-  PanelTypes.LAYER_STYLE,
   PanelTypes.LINK,
   PanelTypes.SHAPE_STYLE,
-  PanelTypes.BORDER_RADIUS,
   PanelTypes.ANIMATION,
 ];

@@ -83,7 +83,7 @@ function StoriesPreview(props) {
           excerpt={story.excerpt.rendered ? story.excerpt.rendered : ''}
           date={story.date_gmt}
           author={story._embedded.author[0].name}
-          poster={story.featured_media_url}
+          poster={story._embedded?.['wp:featuredmedia']?.[0]?.source_url}
           imageAlignment={imageAlignment}
           isShowingAuthor={fieldState['show_author']}
           isShowingDate={fieldState['show_date']}
@@ -165,7 +165,7 @@ function StoriesPreview(props) {
           <StoriesLoop />
         )}
       </div>
-      {fieldState['show_archive_link'] && (
+      {fieldState['show_archive_link'] && archiveURL && (
         <div className="web-stories-list__archive-link">
           <a target="__blank" href={archiveURL}>
             {viewAllLabel}

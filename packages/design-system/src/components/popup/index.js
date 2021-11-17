@@ -26,11 +26,13 @@ import {
   useResizeEffect,
   createPortal,
 } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { themeHelpers } from '../../theme';
+import { noop } from '../../utils';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
 
@@ -72,14 +74,15 @@ function Popup({
   isOpen,
   fillWidth = false,
   fillHeight = false,
-  onPositionUpdate = () => {},
+  onPositionUpdate = noop,
+  refCallback = noop,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
   const popup = useRef(null);
 
   const positionPopup = useCallback(
-    (evt) => {
+    async (evt) => {
       if (!mounted) {
         return;
       }
@@ -88,7 +91,8 @@ function Popup({
       if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
         return;
       }
-      setPopupState({
+
+      await setPopupState({
         offset:
           anchor?.current && getOffset(placement, spacing, anchor, dock, popup),
       });
@@ -109,7 +113,10 @@ function Popup({
     };
   }, [isOpen, positionPopup]);
 
-  useLayoutEffect(onPositionUpdate, [popupState, onPositionUpdate]);
+  useLayoutEffect(() => {
+    onPositionUpdate(popupState);
+    refCallback(popup);
+  }, [popupState, onPositionUpdate, refCallback]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
 
@@ -131,5 +138,21 @@ function Popup({
       )
     : null;
 }
+
+Popup.propTypes = {
+  anchor: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    .isRequired,
+  dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  children: PropTypes.node,
+  renderContents: PropTypes.func,
+  placement: PropTypes.oneOf(Object.values(PLACEMENT)),
+  zIndex: PropTypes.number,
+  spacing: PropTypes.object,
+  isOpen: PropTypes.bool,
+  fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  onPositionUpdate: PropTypes.func,
+  refCallback: PropTypes.func,
+};
 
 export { Popup, PLACEMENT };

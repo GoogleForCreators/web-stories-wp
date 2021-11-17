@@ -33,15 +33,17 @@ jest.mock('../../styleManipulation', () => {
   };
 });
 
-getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
 describe('Color formatter', () => {
+  beforeAll(() => {
+    getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+  });
+
   beforeEach(() => {
     togglePrefixStyle.mockClear();
     getPrefixStylesInSelection.mockClear();
   });
-
-  const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
   describe('elementToStyle', () => {
     function setupFormatter(element) {
@@ -118,13 +120,13 @@ describe('Color formatter', () => {
     it('should return default 400 if no style matches', () => {
       const styles = [NONE];
       const result = setupFontWeight(styles);
-      expect(result).toStrictEqual(400);
+      expect(result).toBe(400);
     });
 
     it('should return parsed font weight if exactly one style matches', () => {
       const styles = [`${WEIGHT}-700`];
       const result = setupFontWeight(styles);
-      expect(result).toStrictEqual(700);
+      expect(result).toBe(700);
     });
 
     function setupIsBold(styleArray) {
@@ -141,13 +143,13 @@ describe('Color formatter', () => {
     it('should return false if no style matches', () => {
       const styles = [NONE];
       const result = setupIsBold(styles);
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
 
     it('should return true if all are bold', () => {
       const styles = [`${WEIGHT}-800`, `${WEIGHT}-600`];
       const result = setupIsBold(styles);
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 

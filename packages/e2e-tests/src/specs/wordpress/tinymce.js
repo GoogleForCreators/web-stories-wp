@@ -21,6 +21,7 @@ import percySnapshot from '@percy/puppeteer';
 import { withPlugin, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
 
 describe('TinyMCE button', () => {
+  // eslint-disable-next-line jest/require-hook
   withPlugin('classic-editor');
 
   it('should allow inserting shortcode via modal', async () => {

@@ -38,7 +38,7 @@ import {
 import {
   DashboardGlobalStyle,
   DashboardKeyboardOnlyOutline,
-  DashboardConfigProvider,
+  ConfigProvider as DashboardConfigProvider,
   ApiProvider,
 } from '@web-stories-wp/dashboard';
 
@@ -102,6 +102,9 @@ addDecorator((story, context) => {
         <DashboardConfigProvider
           config={{
             api: { stories: 'stories' },
+            apiCallbacks: {
+              getUser: () => Promise.resolve({ id: 1 }),
+            },
             editStoryURL: 'editStory',
             isRTL,
           }}

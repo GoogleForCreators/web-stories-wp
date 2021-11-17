@@ -90,6 +90,15 @@ function DetailsGallery({
   switchToTemplateByOffset,
   template,
 }) {
+  const galleryPosters = useMemo(
+    () =>
+      Object.values(template.postersByPage).map((poster, index) => ({
+        id: index,
+        ...poster,
+      })),
+    [template.postersByPage]
+  );
+
   const { NextButton, PrevButton } = useMemo(() => {
     const Previous = (
       <Button
@@ -97,9 +106,7 @@ function DetailsGallery({
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.CIRCLE}
         aria-label={__('View previous template', 'web-stories')}
-        onClick={({ currentTarget }) => {
-          // blurring target here because memoized button remains active on click
-          currentTarget.blur();
+        onClick={() => {
           switchToTemplateByOffset(-1);
         }}
         disabled={!orderedTemplatesLength || activeTemplateIndex === 0}
@@ -114,9 +121,7 @@ function DetailsGallery({
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.CIRCLE}
         aria-label={__('View next template', 'web-stories')}
-        onClick={({ currentTarget }) => {
-          // blurring target here because memoized button remains active on click
-          currentTarget.blur();
+        onClick={() => {
           switchToTemplateByOffset(1);
         }}
         disabled={
@@ -158,7 +163,7 @@ function DetailsGallery({
         <PaginationContainer alignLeft>{PrevButton}</PaginationContainer>
         <Inner>
           <CardGallery
-            story={template}
+            galleryPosters={galleryPosters}
             isRTL={isRTL}
             galleryLabel={__('Template details by page', 'web-stories')}
           />

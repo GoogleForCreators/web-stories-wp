@@ -14,3 +14,4 @@
  * limitations under the License.
  */
 export { default as renderWithProviders } from './renderWithProviders';
+export { groupTemplatesByTag } from './groupTemplatesByTag';

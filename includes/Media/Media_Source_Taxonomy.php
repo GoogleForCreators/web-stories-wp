@@ -26,26 +26,54 @@
 
 namespace Google\Web_Stories\Media;
 
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Traits\Screen;
+use Google\Web_Stories\Context;
+use Google\Web_Stories\REST_API\Stories_Terms_Controller;
+use Google\Web_Stories\Taxonomy\Taxonomy_Base;
 use WP_Query;
 use WP_Post;
-use WP_REST_Request;
 
 /**
  * Class Media_Source_Taxonomy
  *
  * @package Google\Web_Stories\Media
  */
-class Media_Source_Taxonomy extends Service_Base {
-	use Screen;
+class Media_Source_Taxonomy extends Taxonomy_Base {
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
 
 	/**
-	 * Key for media post type.
+	 * Single constructor.
+	 *
+	 * @param Context $context Context instance.
+	 */
+	public function __construct( Context $context ) {
+		$this->context = $context;
+	}
+
+	/**
+	 * Taxonomy key.
 	 *
 	 * @var string
 	 */
-	const TAXONOMY_SLUG = 'web_story_media_source';
+	protected $taxonomy_slug = 'web_story_media_source';
+
+	/**
+	 * Post type.
+	 *
+	 * @var string
+	 */
+	protected $taxonomy_post_type = 'attachment';
+
+	/**
+	 * Media Source key.
+	 *
+	 * @var string
+	 */
+	const MEDIA_SOURCE_KEY = 'web_stories_media_source';
 
 	/**
 	 * Init.
@@ -58,7 +86,7 @@ class Media_Source_Taxonomy extends Service_Base {
 		$this->register_taxonomy();
 
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
-		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
+		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ] );
 
 		// Hide video posters from Media grid view.
 		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
@@ -69,24 +97,22 @@ class Media_Source_Taxonomy extends Service_Base {
 	}
 
 	/**
-	 * Register taxonomy for attachment post type.
+	 * Taxonomy args.
 	 *
-	 * @since 1.10.0
+	 * @since 1.12.0
 	 *
-	 * @return void
+	 * @return array
 	 */
-	protected function register_taxonomy() {
-		register_taxonomy(
-			self::TAXONOMY_SLUG,
-			'attachment',
-			[
-				'label'        => __( 'Source', 'web-stories' ),
-				'public'       => false,
-				'rewrite'      => false,
-				'hierarchical' => false,
-				'show_in_rest' => true,
-			]
-		);
+	protected function taxonomy_args(): array {
+		return [
+			'label'                 => __( 'Source', 'web-stories' ),
+			'public'                => false,
+			'rewrite'               => false,
+			'hierarchical'          => false,
+			'show_in_rest'          => true,
+			'rest_namespace'        => self::REST_NAMESPACE,
+			'rest_controller_class' => Stories_Terms_Controller::class,
+		];
 	}
 
 	/**
@@ -99,13 +125,13 @@ class Media_Source_Taxonomy extends Service_Base {
 	public function rest_api_init() {
 		// Custom field, as built in term update require term id and not slug.
 		register_rest_field(
-			'attachment',
-			'media_source',
+			$this->taxonomy_post_type,
+			self::MEDIA_SOURCE_KEY,
 			[
 
 				'get_callback'    => [ $this, 'get_callback_media_source' ],
 				'schema'          => [
-					'description' => __( 'Media source. ', 'web-stories' ),
+					'description' => __( 'Media source.', 'web-stories' ),
 					'type'        => 'string',
 					'enum'        => [
 						'editor',
@@ -127,13 +153,15 @@ class Media_Source_Taxonomy extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array   $response   Array of prepared attachment data.
-	 * @param WP_Post $attachment Attachment object.
+	 * @param array|mixed $response   Array of prepared attachment data.
 	 *
-	 * @return array $response;
+	 * @return array|mixed $response Filtered attachment data.
 	 */
-	public function wp_prepare_attachment_for_js( $response, $attachment ): array {
-		$response['media_source'] = $this->get_callback_media_source( $response );
+	public function wp_prepare_attachment_for_js( $response ) {
+		if ( ! is_array( $response ) ) {
+			return $response;
+		}
+		$response[ self::MEDIA_SOURCE_KEY ] = $this->get_callback_media_source( $response );
 
 		return $response;
 	}
@@ -147,14 +175,12 @@ class Media_Source_Taxonomy extends Service_Base {
 	 *
 	 * @return string
 	 */
-	public function get_callback_media_source( $prepared ) {
+	public function get_callback_media_source( $prepared ): string {
 		$id = $prepared['id'];
 
-		$terms = get_the_terms( $id, self::TAXONOMY_SLUG );
+		$terms = get_the_terms( $id, $this->taxonomy_slug );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
-			$term = array_shift( $terms );
-
-			return $term->slug;
+			return array_shift( $terms )->slug;
 		}
 
 		return '';
@@ -171,7 +197,7 @@ class Media_Source_Taxonomy extends Service_Base {
 	 * @return true|\WP_Error
 	 */
 	public function update_callback_media_source( $value, $object ) {
-		$check = wp_set_object_terms( $object->ID, $value, self::TAXONOMY_SLUG );
+		$check = wp_set_object_terms( $object->ID, $value, $this->taxonomy_slug );
 		if ( is_wp_error( $check ) ) {
 			return $check;
 		}
@@ -189,7 +215,7 @@ class Media_Source_Taxonomy extends Service_Base {
 	private function get_exclude_tax_query( array $args ): array {
 		$tax_query = [
 			[
-				'taxonomy' => self::TAXONOMY_SLUG,
+				'taxonomy' => $this->taxonomy_slug,
 				'field'    => 'slug',
 				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 				'operator' => 'NOT IN',
@@ -221,11 +247,14 @@ class Media_Source_Taxonomy extends Service_Base {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array $args Query args.
+	 * @param array|mixed $args Query args.
 	 *
-	 * @return array Filtered query args.
+	 * @return array|mixed Filtered query args.
 	 */
-	public function filter_ajax_query_attachments_args( array $args ): array {
+	public function filter_ajax_query_attachments_args( $args ) {
+		if ( ! is_array( $args ) ) {
+			return $args;
+		}
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;
@@ -243,13 +272,7 @@ class Media_Source_Taxonomy extends Service_Base {
 	 * @return void
 	 */
 	public function filter_generated_media_attachments( &$query ) {
-		$current_screen = $this->get_current_screen();
-
-		if ( ! $current_screen ) {
-			return;
-		}
-
-		if ( is_admin() && $query->is_main_query() && 'upload' === $current_screen->id ) {
+		if ( is_admin() && $query->is_main_query() && $this->context->is_upload_screen() ) {
 			$tax_query = $query->get( 'tax_query' );
 
 			$query->set( 'tax_query', $this->get_exclude_tax_query( [ 'tax_query' => $tax_query ] ) ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
@@ -263,11 +286,14 @@ class Media_Source_Taxonomy extends Service_Base {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array $args Query args.
+	 * @param array|mixed $args Query args.
 	 *
-	 * @return array Filtered query args.
+	 * @return array|mixed Filtered query args.
 	 */
-	public function filter_rest_generated_media_attachments( array $args ): array {
+	public function filter_rest_generated_media_attachments( $args ) {
+		if ( ! is_array( $args ) ) {
+			return $args;
+		}
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;

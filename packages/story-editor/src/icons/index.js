@@ -14,12 +14,5 @@
  * limitations under the License.
  */
 
-export { ReactComponent as ArrowDown } from './arrow_down.svg';
-export { ReactComponent as Close } from './close.svg';
-export { ReactComponent as Dropdown } from './dropdown.svg';
-export { ReactComponent as KeyArrowUp } from './key_arrow_up.svg';
-export { ReactComponent as Media } from './media.svg';
-export { ReactComponent as More } from './more_horiz.svg';
-export { ReactComponent as TurningLine } from './turning_line.svg';
-export { ReactComponent as Union } from './union.svg';
-export { ReactComponent as Muted } from './volume_off.svg';
+export { ReactComponent as TenorLogoFull } from './tenor_logo_white.svg';
+export { ReactComponent as UnsplashLogoFull } from './unsplash_logo_full.svg';

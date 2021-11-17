@@ -16,10 +16,9 @@
 /**
  * Internal dependencies
  */
-import { ELEMENT_TYPES } from '../../story';
+import { getDefinitionForType, ELEMENT_TYPES } from '../../../elements';
 import objectPick from '../../../utils/objectPick';
 import { getElementStyles, getDefaultPropertiesForType } from '../utils';
-import { getDefinitionForType } from '../../../elements';
 
 const ALL_PROPERTIES = {
   // style properties

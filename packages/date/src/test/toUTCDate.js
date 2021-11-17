@@ -37,6 +37,6 @@ describe('date/toUTCDate', () => {
     const dateString = '2020-05-02T10:47:26';
     const utcDate = toUTCDate(dateString);
 
-    expect(utcDate.toISOString()).toStrictEqual('2020-05-02T10:47:26.000Z');
+    expect(utcDate.toISOString()).toBe('2020-05-02T10:47:26.000Z');
   });
 });

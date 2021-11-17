@@ -26,18 +26,19 @@ describe('Stories Dashboard', () => {
   it('should be able to open the dashboard', async () => {
     await visitDashboard();
 
-    await expect(page).toMatch('My Stories');
+    await expect(page).toMatchElement('h2', { text: 'Dashboard' });
 
     await percySnapshot(page, 'Stories Dashboard', { percyCSS });
   });
 
   describe('RTL', () => {
+    // eslint-disable-next-line jest/require-hook
     withRTL();
 
     it('should be able to open the dashboard', async () => {
       await visitDashboard();
 
-      await expect(page).toMatch('My Stories');
+      await expect(page).toMatchElement('h2', { text: 'Dashboard' });
 
       await percySnapshot(page, 'Stories Dashboard on RTL', { percyCSS });
     });

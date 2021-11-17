@@ -56,11 +56,11 @@ class Feed extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $content Feed content.
+	 * @param string|mixed $content Feed content.
 	 *
-	 * @return string
+	 * @return string|mixed
 	 */
-	public function embed_image( $content ): string {
+	public function embed_image( $content ) {
 		$post = get_post();
 
 		if ( $post instanceof WP_Post && Story_Post_Type::POST_TYPE_SLUG === $post->post_type ) {

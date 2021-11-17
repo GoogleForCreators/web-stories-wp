@@ -29,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useMediaPicker } from '../mediaPicker';
+import { useConfig } from '../../app';
 import { MULTIPLE_VALUE } from '../../constants';
 
 const StyledInput = styled(Input)`
@@ -41,6 +41,43 @@ const StyledInput = styled(Input)`
       )}
   }
 `;
+
+const MediaInputField = ({
+  open,
+  dropdownOptions,
+  onChange,
+  forwardedRef,
+  value,
+  ...rest
+}) => {
+  const onMenuOption = useCallback(
+    (evt, opt) => {
+      switch (opt) {
+        case 'edit':
+          open(evt);
+          break;
+        case 'remove':
+        case 'reset':
+          onChange(null);
+          break;
+        default:
+          break;
+      }
+    },
+    [onChange, open]
+  );
+
+  return (
+    <StyledInput
+      onMenuOption={onMenuOption}
+      menuOptions={dropdownOptions}
+      openMediaPicker={open}
+      ref={forwardedRef}
+      value={value === MULTIPLE_VALUE ? null : value}
+      {...rest}
+    />
+  );
+};
 
 function MediaInput(
   {
@@ -59,61 +96,65 @@ function MediaInput(
   },
   forwardedRef
 ) {
-  const openMediaPicker = useMediaPicker({
-    title,
-    buttonInsertText,
-    onSelect: onChange,
-    onSelectErrorMessage: onChangeErrorText,
-    type,
-    cropParams,
-  });
+  const { MediaUpload } = useConfig();
 
-  // Options available for the media input menu.
-  const availableMenuOptions = [
-    { label: __('Edit', 'web-stories'), value: 'edit' },
-    { label: __('Remove', 'web-stories'), value: 'remove' },
-    { label: __('Reset', 'web-stories'), value: 'reset' },
-  ];
+  const renderMediaIcon = useCallback(
+    (open) => {
+      // Options available for the media input menu.
+      const availableMenuOptions = [
+        { label: __('Edit', 'web-stories'), value: 'edit' },
+        { label: __('Remove', 'web-stories'), value: 'remove' },
+        { label: __('Reset', 'web-stories'), value: 'reset' },
+      ];
 
-  // No menu for mixed value.
-  // Match the options from props, if none are matched, menu is not displayed.
-  const dropdownOptions =
-    value === MULTIPLE_VALUE
-      ? []
-      : availableMenuOptions.filter(({ value: option }) =>
-          menuOptions.includes(option)
-        );
+      // No menu for mixed value.
+      // Match the options from props, if none are matched, menu is not displayed.
+      const dropdownOptions =
+        value === MULTIPLE_VALUE
+          ? []
+          : availableMenuOptions.filter(({ value: option }) =>
+              menuOptions.includes(option)
+            );
 
-  const onOption = useCallback(
-    (evt, opt) => {
-      switch (opt) {
-        case 'edit':
-          openMediaPicker(evt);
-          break;
-        case 'remove':
-        case 'reset':
-          onChange(null);
-          break;
-        default:
-          break;
-      }
+      return (
+        <MediaInputField
+          open={open}
+          onChange={onChange}
+          dropdownOptions={dropdownOptions}
+          forwardedRef={forwardedRef}
+          value={value}
+          {...rest}
+        />
+      );
     },
-    [onChange, openMediaPicker]
+    [onChange, menuOptions, forwardedRef, value, rest]
   );
 
   return (
-    <StyledInput
-      onMenuOption={onOption}
-      menuOptions={dropdownOptions}
-      openMediaPicker={openMediaPicker}
-      ref={forwardedRef}
-      value={value === MULTIPLE_VALUE ? null : value}
-      {...rest}
+    <MediaUpload
+      title={title}
+      buttonInsertText={buttonInsertText}
+      onSelect={onChange}
+      onSelectErrorMessage={onChangeErrorText}
+      type={type}
+      cropParams={cropParams}
+      render={renderMediaIcon}
     />
   );
 }
 
 const MediaInputWithRef = forwardRef(MediaInput);
+
+MediaInputField.propTypes = {
+  open: PropTypes.func,
+  dropdownOptions: PropTypes.array,
+  onChange: PropTypes.func,
+  forwardedRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.elementType }),
+  ]),
+  value: PropTypes.string,
+};
 
 MediaInput.propTypes = {
   className: PropTypes.string,

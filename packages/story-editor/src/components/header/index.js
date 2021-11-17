@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-export { default } from './headerLayout';
+export * from './buttons';
+export { default as HeaderTitle } from './title';

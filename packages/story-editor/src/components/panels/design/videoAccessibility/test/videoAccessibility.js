@@ -27,12 +27,14 @@ import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import ConfigContext from '../../../../../app/config/context';
 
-jest.mock('../../../../mediaPicker', () => ({
-  useMediaPicker: ({ onSelect }) => {
-    const image = { url: 'media1' };
-    return () => onSelect(image);
-  },
-}));
+function MediaUpload({ render, onSelect }) {
+  const open = () => {
+    const image = { src: 'media1' };
+    onSelect(image);
+  };
+
+  return render(open);
+}
 
 function arrange(selectedElements) {
   const configValue = {
@@ -46,6 +48,7 @@ function arrange(selectedElements) {
     capabilities: {
       hasUploadMediaAction: true,
     },
+    MediaUpload,
   };
 
   const wrapper = ({ children }) => (
@@ -76,9 +79,7 @@ describe('Panels/VideoAccessibility', () => {
 
   it('should trim video description to maximum allowed length if exceeding', () => {
     arrange([defaultElement]);
-    const input = screen.getByPlaceholderText(
-      'Add assistive text for visually impaired users'
-    );
+    const input = screen.getByRole('textbox', { name: 'Assistive text' });
     expect(input.maxLength).toBe(MIN_MAX.ALT_TEXT.MAX);
   });
 

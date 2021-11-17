@@ -17,37 +17,20 @@
 /**
  * External dependencies
  */
-import { useMemo, useState } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-
 import { ApiContext } from '../app/api/apiProvider';
 
-const noop = () => {};
-
 export default function MockApiProvider({ children, value }) {
-  const [currentUser, setCurrentUser] = useState(getCurrentUserState());
+  const mergedValue = {
+    state: {},
+    actions: {},
+    ...value,
+  };
 
-  const usersApi = useMemo(
-    () => ({
-      fetchCurrentUser: noop,
-      toggleWebStoriesTrackingOptIn: () =>
-        setCurrentUser(toggleOptInTracking(currentUser)),
-    }),
-    [currentUser]
-  );
-
-  const mergedValue = useMemo(
-    () => ({
-      state: { currentUser },
-      actions: { usersApi },
-      ...value,
-    }),
-    [currentUser, usersApi, value]
-  );
   return (
     <ApiContext.Provider value={mergedValue}>{children}</ApiContext.Provider>
   );
@@ -57,30 +40,3 @@ MockApiProvider.propTypes = {
   children: PropTypes.node,
   value: PropTypes.object,
 };
-
-function getCurrentUserState() {
-  return {
-    data: {
-      id: 1,
-      meta: {
-        web_stories_tracking_optin: false,
-        web_stories_onboarding: {},
-        web_stories_media_optimization: true,
-      },
-    },
-    isUpdating: false,
-  };
-}
-
-function toggleOptInTracking(currentUser) {
-  return {
-    ...currentUser,
-    data: {
-      ...currentUser.data,
-      meta: {
-        web_stories_tracking_optin:
-          !currentUser.data.meta.web_stories_tracking_optin,
-      },
-    },
-  };
-}

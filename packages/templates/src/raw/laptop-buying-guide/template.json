@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -153,7 +152,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 4, 4]
+            "baseColor": [4, 4, 4],
+            "isExternal": true
           },
           "type": "image",
           "x": 13,
@@ -190,7 +190,8 @@
             "alt": "Pointer hand icon",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 317,
@@ -379,7 +380,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -408,7 +408,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [20, 20, 23]
+            "baseColor": [20, 20, 23],
+            "isExternal": true
           },
           "x": 0,
           "y": -57,
@@ -605,12 +606,12 @@
             "width": 1920,
             "height": 1905,
             "id": 0,
-            "title": "Illustration, Digital, Woman, Water, Sol, Landscape",
             "alt": "Illustration, Digital, Woman, Water, Sol, Landscape",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [178, 140, 71]
+            "baseColor": [178, 140, 71],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.6 } }
         },
@@ -881,7 +882,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1002,7 +1002,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 4, 4]
+            "baseColor": [4, 4, 4],
+            "isExternal": true
           },
           "type": "image",
           "x": 17,
@@ -1247,7 +1248,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1368,7 +1368,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [5, 5, 5]
+            "baseColor": [5, 5, 5],
+            "isExternal": true
           },
           "type": "image",
           "x": -49,
@@ -1613,7 +1614,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1918,7 +1918,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 84, 252]
+            "baseColor": [4, 84, 252],
+            "isExternal": true
           },
           "resizeWidth": 242.328,
           "resizeHeight": 12.3438
@@ -2125,7 +2126,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 84, 252]
+            "baseColor": [4, 84, 252],
+            "isExternal": true
           },
           "resizeWidth": 212.031,
           "resizeHeight": 13.2188,
@@ -2336,7 +2338,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 84, 252]
+            "baseColor": [4, 84, 252],
+            "isExternal": true
           },
           "resizeWidth": 132.328,
           "resizeHeight": 11.4844,
@@ -2497,7 +2500,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [160, 113, 69]
+            "baseColor": [160, 113, 69],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.6 } }
         },
@@ -2768,7 +2772,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2885,12 +2888,12 @@
             "height": 1440,
             "posterId": 0,
             "id": 0,
-            "title": "Close-Up Of Laptop Against White Background",
             "alt": "Close-Up Of Laptop Against White Background",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [199, 199, 199]
+            "baseColor": [199, 199, 199],
+            "isExternal": true
           },
           "type": "image",
           "width": 384,
@@ -3136,7 +3139,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3251,11 +3253,11 @@
             "width": 1920,
             "height": 1329,
             "id": 0,
-            "title": "Macbook Pro 16\" mockup",
             "alt": "Macbook Pro 16\" mockup",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 17,
@@ -3500,7 +3502,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4494,7 +4495,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [230, 211, 195]
+            "baseColor": [230, 211, 195],
+            "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.6 } }
         },
@@ -4765,7 +4767,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4883,7 +4884,8 @@
             "alt": "Clean Macbook Air mockup",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 378,
@@ -5129,7 +5131,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -5247,7 +5248,8 @@
             "alt": "Laptop floating angled Open",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -5492,7 +5494,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -5638,7 +5639,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 4, 4]
+            "baseColor": [4, 4, 4],
+            "isExternal": true
           },
           "type": "image",
           "x": 45,
@@ -5915,7 +5917,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [216, 217, 218]
+            "baseColor": [216, 217, 218],
+            "isExternal": true
           },
           "type": "image",
           "x": 54,
@@ -6189,7 +6192,8 @@
             "alt": "Laptop floating angled Open",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "width": 131,
@@ -6457,7 +6461,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -6625,12 +6628,12 @@
             "width": 1920,
             "height": 1422,
             "id": 0,
-            "title": "Person holding turned-on black iPad",
             "alt": "Person holding turned-on black iPad",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [216, 219, 220]
+            "baseColor": [216, 219, 220],
+            "isExternal": true
           },
           "x": 76,
           "y": 153,
@@ -6884,7 +6887,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [213, 207, 197]
+            "baseColor": [213, 207, 197],
+            "isExternal": true
           }
         },
         {

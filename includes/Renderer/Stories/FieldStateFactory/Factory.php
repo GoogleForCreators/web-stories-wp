@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories\Renderer\Stories\FieldStateFactory;
 
+use Google\Web_Stories\Infrastructure\Injector;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Interfaces\FieldState;
 use Google\Web_Stories\Interfaces\FieldStateFactory;
 use Google\Web_Stories\Renderer\Stories\FieldState\CarouselView;
@@ -39,6 +41,23 @@ use Google\Web_Stories\Renderer\Stories\FieldState\ListView;
  * @package Google\Web_Stories\Renderer\Stories\FieldStateFactory
  */
 class Factory implements FieldStateFactory {
+
+	/**
+	 * Injector instance.
+	 *
+	 * @var Injector Injector instance.
+	 */
+	private $injector;
+
+	/**
+	 * Factory constructor.
+	 *
+	 * @param Injector $injector Injector instance.
+	 */
+	public function __construct( Injector $injector ) {
+		$this->injector = $injector;
+	}
+
 	/**
 	 * Returns field state for the provided view type.
 	 *
@@ -51,15 +70,44 @@ class Factory implements FieldStateFactory {
 	public function get_field( $view = 'grid' ) {
 		switch ( $view ) {
 			case 'grid':
-				return new GridView();
+				/**
+				 * GridView instance.
+				 *
+				 * @var FieldState
+				 */
+				$field_state = $this->injector->make( GridView::class );
+				break;
 			case 'list':
-				return new ListView();
+				/**
+				 * ListView instance.
+				 *
+				 * @var FieldState
+				 */
+				$field_state = $this->injector->make( ListView::class );
+				break;
 			case 'circles':
-				return new CircleView();
+				/**
+				 * CircleView instance.
+				 *
+				 * @var FieldState
+				 */
+				$field_state = $this->injector->make( CircleView::class );
+				break;
 			case 'carousel':
-				return new CarouselView();
+				/**
+				 * CarouselView instance.
+				 *
+				 * @var FieldState
+				 */
+				$field_state = $this->injector->make( CarouselView::class );
+				break;
 			default:
-				$default_field_state = new CircleView();
+				/**
+				 * CircleView instance.
+				 *
+				 * @var FieldState $default_field_state
+				 */
+				$default_field_state = $this->injector->make( CircleView::class );
 
 				/**
 				 * Filters the field state object.
@@ -72,7 +120,9 @@ class Factory implements FieldStateFactory {
 				 */
 				$field_state = apply_filters( 'web_stories_default_field_state', $default_field_state );
 
-				return $field_state instanceof FieldState ? $field_state : $default_field_state;
+				$field_state = $field_state instanceof FieldState ? $field_state : $default_field_state;
 		}
+
+		return $field_state;
 	}
 }

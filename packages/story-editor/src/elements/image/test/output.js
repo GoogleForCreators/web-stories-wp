@@ -35,7 +35,7 @@ describe('Image output', () => {
       x: 50,
       y: 100,
       height: 231.75,
-      width: 412,
+      width: 206,
       rotationAngle: 0,
       resource: {
         id: 123,
@@ -81,11 +81,64 @@ describe('Image output', () => {
     await expect(outputStr).toStrictEqual(
       expect.stringMatching('src="https://example.com/image.png"')
     );
-    // Generated sizes attribute should match: "(min-width: <desktop_screen_width>) <desktop_image_width>, <mobile_image_width>".
-    // The image size is 412px wide, which is full page width. 45vh is the page width of stories in desktop mode.
-    // The image zoom is 200 (2x) so double both measurements.
+    // `sizes` should match: (min-width: <desktop_screen_width>) <desktop_image_width>, <mobile_image_width>
+    // The image size is 206px wide, which is half page width.
+    // 45vh is the page width of stories in desktop mode (divided by 2, rounded up is 23).
     await expect(outputStr).toStrictEqual(
-      expect.stringMatching(/sizes="\(min-width: 1024px\) 90vh, 200vw"/)
+      expect.stringMatching(/sizes="\(min-width: 1024px\) 23vh, 50vw"/)
+    );
+    // The "disable-inline-width" attribute should accompany the "sizes" attribute.
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching('disable-inline-width="true"')
+    );
+  });
+
+  it('should generate correct `sizes` for a narrower background image', async () => {
+    const props = {
+      ...baseProps,
+      element: {
+        ...baseProps.element,
+        width: 206, // 50%
+        height: 732, // 100%
+        isBackground: true,
+        scale: 300,
+      },
+    };
+    const output = <ImageOutput {...props} />;
+    const outputStr = renderToStaticMarkup(output);
+    await expect(output).toBeValidAMPStoryElement();
+    // `sizes` should match: (min-width: <desktop_screen_width>) <desktop_image_width>, <mobile_image_width>
+    // The background image should scale up its width to fit the page.
+    // 45vh is the page width of stories in desktop mode.
+    // The image zoom is 300 (3x) so triple both measurements.
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching(/sizes="\(min-width: 1024px\) 135vh, 300vw"/)
+    );
+    // The "disable-inline-width" attribute should accompany the "sizes" attribute.
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching('disable-inline-width="true"')
+    );
+  });
+
+  it('should generate correct `sizes` for a wider background image', async () => {
+    const props = {
+      ...baseProps,
+      element: {
+        ...baseProps.element,
+        width: 412, // 100%
+        height: 183, // 25%
+        isBackground: true,
+        scale: 100,
+      },
+    };
+    const output = <ImageOutput {...props} />;
+    const outputStr = renderToStaticMarkup(output);
+    await expect(output).toBeValidAMPStoryElement();
+    // `sizes` should match: (min-width: <desktop_screen_width>) <desktop_image_width>, <mobile_image_width>
+    // The background image should scale up its width 4x since its height is 25%.
+    // 45vh is the page width of stories in desktop mode.
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching(/sizes="\(min-width: 1024px\) 180vh, 400vw"/)
     );
     // The "disable-inline-width" attribute should accompany the "sizes" attribute.
     await expect(outputStr).toStrictEqual(

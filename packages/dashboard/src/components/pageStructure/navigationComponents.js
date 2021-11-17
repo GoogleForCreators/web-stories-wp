@@ -60,10 +60,13 @@ const activeLinkCss = css`
 `;
 
 export const NavLink = styled(Link)(
-  ({ active, theme }) => css`
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-    grid-template-areas: 'icon link link link link';
+  ({ active, theme, isIconLink }) => css`
+    ${isIconLink &&
+    css`
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      grid-template-areas: 'icon link link link link';
+    `}
     color: ${theme.colors.fg.secondary};
 
     * {

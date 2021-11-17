@@ -15,39 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'plant-based-dyes-diy',
-  title: _x('Plant Based Dyes DIY', 'template name', 'web-stories'),
-  tags: [
-    _x('Crafts', 'template keyword', 'web-stories'),
-    _x('Plant', 'template keyword', 'web-stories'),
-    _x('DIY', 'template keyword', 'web-stories'),
-    _x('Calm', 'template keyword', 'web-stories'),
-    _x('Green', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    {
-      label: _x('Sweet Corn Yellow', 'color', 'web-stories'),
-      color: '#f9e46c',
-    },
-    { label: _x('Rainforest Green', 'color', 'web-stories'), color: '#4a6747' },
-    { label: _x('Herbal Green', 'color', 'web-stories'), color: '#a7aa2d' },
-    { label: _x('Dark Leaf Green', 'color', 'web-stories'), color: '#414c40' },
-    { label: _x('Almond Milk', 'color', 'web-stories'), color: '#f3e9d4' },
-  ],
-  description: __(
-    'With its gentle shapes, modest font and soothing pastel tones, this template will let you create nature-inspired DIY guides that feel relaxed and serene.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Arts & Crafts', 'template vertical', 'web-stories'),
 };

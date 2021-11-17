@@ -26,18 +26,18 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Traits\Publisher;
-use Google\Web_Stories\Traits\Screen;
-use Google\Web_Stories\Traits\Types;
-use Google\Web_Stories\Traits\Post_Type;
+use Google\Web_Stories\Media\Types;
 use WP_Post;
 
 /**
@@ -45,8 +45,7 @@ use WP_Post;
  *
  * @package Google\Web_Stories\Admin
  */
-class Editor extends Service_Base {
-	use Publisher, Types, Screen, Post_Type;
+class Editor extends Service_Base implements HasRequirements {
 
 	/**
 	 * Web Stories editor script handle.
@@ -105,24 +104,73 @@ class Editor extends Service_Base {
 	private $assets;
 
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
+	 * Page_Template_Post_Type instance.
+	 *
+	 * @var Page_Template_Post_Type Page_Template_Post_Type instance.
+	 */
+	private $page_template_post_type;
+
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
+	 * Types instance.
+	 *
+	 * @var Types Types instance.
+	 */
+	private $types;
+
+	/**
 	 * Dashboard constructor.
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments  $experiments   Experiments instance.
-	 * @param Meta_Boxes   $meta_boxes    Meta_Boxes instance.
-	 * @param Decoder      $decoder       Decoder instance.
-	 * @param Locale       $locale        Locale instance.
-	 * @param Google_Fonts $google_fonts  Google_Fonts instance.
-	 * @param Assets       $assets        Assets instance.
+	 * @param Experiments             $experiments     Experiments instance.
+	 * @param Meta_Boxes              $meta_boxes      Meta_Boxes instance.
+	 * @param Decoder                 $decoder         Decoder instance.
+	 * @param Locale                  $locale          Locale instance.
+	 * @param Google_Fonts            $google_fonts    Google_Fonts instance.
+	 * @param Assets                  $assets          Assets instance.
+	 * @param Story_Post_Type         $story_post_type Story_Post_Type instance.
+	 * @param Page_Template_Post_Type $page_template_post_type Page_Template_Post_Type instance.
+	 * @param Context                 $context         Context instance.
+	 * @param Types                   $types           Types instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale, Google_Fonts $google_fonts, Assets $assets ) {
-		$this->experiments  = $experiments;
-		$this->meta_boxes   = $meta_boxes;
-		$this->decoder      = $decoder;
-		$this->locale       = $locale;
-		$this->google_fonts = $google_fonts;
-		$this->assets       = $assets;
+	public function __construct(
+		Experiments $experiments,
+		Meta_Boxes $meta_boxes,
+		Decoder $decoder,
+		Locale $locale,
+		Google_Fonts $google_fonts,
+		Assets $assets,
+		Story_Post_Type $story_post_type,
+		Page_Template_Post_Type $page_template_post_type,
+		Context $context,
+		Types $types
+	) {
+		$this->experiments             = $experiments;
+		$this->meta_boxes              = $meta_boxes;
+		$this->decoder                 = $decoder;
+		$this->locale                  = $locale;
+		$this->google_fonts            = $google_fonts;
+		$this->assets                  = $assets;
+		$this->story_post_type         = $story_post_type;
+		$this->page_template_post_type = $page_template_post_type;
+		$this->context                 = $context;
+		$this->types                   = $types;
 	}
 
 	/**
@@ -139,19 +187,32 @@ class Editor extends Service_Base {
 	}
 
 	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story and page template post types need to be registered first.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'page_template_post_type', 'story_post_type' ];
+	}
+
+	/**
 	 * Replace default post editor with our own implementation.
 	 *
 	 * @codeCoverageIgnore
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool    $replace Bool if to replace editor or not.
-	 * @param WP_Post $post    Current post object.
+	 * @param bool|mixed $replace Bool if to replace editor or not.
+	 * @param WP_Post    $post    Current post object.
 	 *
-	 * @return bool Whether the editor has been replaced.
+	 * @return bool|mixed Whether the editor has been replaced.
 	 */
-	public function replace_editor( $replace, $post ): bool {
-		if ( Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
+	public function replace_editor( $replace, $post ) {
+		if ( $this->story_post_type->get_slug() === get_post_type( $post ) ) {
 
 			// Since the 'replace_editor' filter can be run multiple times, only load the
 			// custom editor after the 'current_screen' action and when we can be certain the
@@ -174,13 +235,13 @@ class Editor extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
-	 * @param string $post_type         The post type being checked.
+	 * @param bool|mixed $use_block_editor  Whether the post type can be edited or not. Default true.
+	 * @param string     $post_type         The post type being checked.
 	 *
-	 * @return bool Whether to use the block editor.
+	 * @return false|mixed Whether to use the block editor.
 	 */
-	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ): bool {
-		if ( Story_Post_Type::POST_TYPE_SLUG === $post_type ) {
+	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
+		if ( $this->story_post_type->get_slug() === $post_type ) {
 			return false;
 		}
 
@@ -198,7 +259,7 @@ class Editor extends Service_Base {
 	 * @return void
 	 */
 	public function admin_enqueue_scripts( $hook ) {
-		if ( ! $this->is_edit_screen() ) {
+		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}
 
@@ -212,7 +273,7 @@ class Editor extends Service_Base {
 
 		wp_enqueue_script(
 			self::AMP_VALIDATOR_SCRIPT_HANDLE,
-			'https://cdn.ampproject.org/v0/validator.js',
+			'https://cdn.ampproject.org/v0/validator_wasm.js',
 			[],
 			WEBSTORIES_VERSION,
 			true
@@ -220,9 +281,8 @@ class Editor extends Service_Base {
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
 
-		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies );
-		$font_handle = $this->google_fonts->get_handle();
-		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $font_handle ] );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies, false );
+		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $this->google_fonts::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
@@ -245,8 +305,7 @@ class Editor extends Service_Base {
 	 */
 	public function get_editor_settings(): array {
 		$post                 = get_post();
-		$story_id             = ( $post ) ? $post->ID : null;
-		$rest_base            = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
+		$story_id             = $post->ID ?? null;
 		$general_settings_url = admin_url( 'options-general.php' );
 
 		if ( $story_id ) {
@@ -262,7 +321,7 @@ class Editor extends Service_Base {
 		$is_demo       = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$dashboard_url = add_query_arg(
 			[
-				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'post_type' => $this->story_post_type->get_slug(),
 				'page'      => 'stories-dashboard',
 			],
 			admin_url( 'edit.php' )
@@ -270,7 +329,7 @@ class Editor extends Service_Base {
 
 		$dashboard_settings_url = add_query_arg(
 			[
-				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'post_type' => $this->story_post_type->get_slug(),
 				'page'      => 'stories-dashboard#/editor-settings',
 			],
 			admin_url( 'edit.php' )
@@ -281,11 +340,14 @@ class Editor extends Service_Base {
 		$user        = wp_get_current_user();
 
 		/** This filter is documented in wp-admin/includes/post.php */
-		$show_locked_dialog       = apply_filters( 'show_post_locked_dialog', true, $post, $user );
-		$nonce                    = wp_create_nonce( 'wp_rest' );
-		$mime_types               = $this->get_allowed_mime_types();
-		$mime_image_types         = $this->get_allowed_image_mime_types();
-		$page_templates_rest_base = $this->get_post_type_rest_base( Page_Template_Post_Type::POST_TYPE_SLUG );
+		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
+		$nonce              = wp_create_nonce( 'wp_rest' );
+		$mime_types         = $this->types->get_allowed_mime_types();
+		$image_mime_types   = $this->types->get_allowed_image_mime_types();
+		$audio_mime_types   = $this->types->get_allowed_audio_mime_types();
+
+		$story = new Story();
+		$story->load_from_post( $post );
 
 		$settings = [
 			'id'         => 'web-stories-editor',
@@ -293,17 +355,18 @@ class Editor extends Service_Base {
 				'autoSaveInterval'             => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'                        => is_rtl(),
 				'locale'                       => $this->locale->get_locale_settings(),
-				'allowedFileTypes'             => $this->get_allowed_file_types(),
-				'allowedTranscodableMimeTypes' => $this->get_allowed_transcodable_mime_types(),
-				'allowedImageFileTypes'        => $this->get_file_type_exts( $mime_image_types ),
-				'allowedImageMimeTypes'        => $mime_image_types,
+				'allowedFileTypes'             => $this->types->get_allowed_file_types(),
+				'allowedTranscodableMimeTypes' => $this->types->get_allowed_transcodable_mime_types(),
+				'allowedImageFileTypes'        => $this->types->get_file_type_exts( $image_mime_types ),
+				'allowedImageMimeTypes'        => $image_mime_types,
+				'allowedAudioFileTypes'        => $this->types->get_file_type_exts( $audio_mime_types ),
+				'allowedAudioMimeTypes'        => $audio_mime_types,
 				'allowedMimeTypes'             => $mime_types,
-				'postType'                     => Story_Post_Type::POST_TYPE_SLUG,
+				'postType'                     => $this->story_post_type->get_slug(),
 				'storyId'                      => $story_id,
 				'dashboardLink'                => $dashboard_url,
 				'dashboardSettingsLink'        => $dashboard_settings_url,
 				'generalSettingsLink'          => $general_settings_url,
-				'assetsURL'                    => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                       => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'                    => $max_upload_size,
 				'isDemo'                       => $is_demo,
@@ -312,18 +375,22 @@ class Editor extends Service_Base {
 					'canManageSettings'    => current_user_can( 'manage_options' ),
 				],
 				'api'                          => [
-					'users'         => '/web-stories/v1/users/',
-					'currentUser'   => '/web-stories/v1/users/me/',
-					'stories'       => sprintf( '/web-stories/v1/%s/', $rest_base ),
-					'pageTemplates' => sprintf( '/web-stories/v1/%s/', $page_templates_rest_base ),
-					'media'         => '/web-stories/v1/media/',
-					'link'          => '/web-stories/v1/link/',
-					'statusCheck'   => '/web-stories/v1/status-check/',
-					'metaBoxes'     => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
-					'storyLocking'  => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
+					'users'          => '/web-stories/v1/users/',
+					'currentUser'    => '/web-stories/v1/users/me/',
+					'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
+					'pageTemplates'  => trailingslashit( $this->page_template_post_type->get_rest_url() ),
+					'media'          => '/web-stories/v1/media/',
+					'hotlink'        => '/web-stories/v1/hotlink/validate/',
+					'publisherLogos' => '/web-stories/v1/publisher-logos/',
+					'proxy'          => rest_url( '/web-stories/v1/hotlink/proxy/' ),
+					'link'           => '/web-stories/v1/link/',
+					'statusCheck'    => '/web-stories/v1/status-check/',
+					'taxonomies'     => '/web-stories/v1/taxonomies/',
+					'metaBoxes'      => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+					'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
 				],
 				'metadata'                     => [
-					'publisher' => $this->get_publisher_data(),
+					'publisher' => $story->get_publisher_name(),
 				],
 				'postLock'                     => [
 					'interval'         => $time_window,
@@ -335,11 +402,12 @@ class Editor extends Service_Base {
 				'encodeMarkup'                 => $this->decoder->supports_decoding(),
 				'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
 				'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
+				'localeData'                   => $this->assets->get_translations( self::SCRIPT_HANDLE ),
+				'flags'                        => array_merge(
+					$this->experiments->get_experiment_statuses( 'general' ),
+					$this->experiments->get_experiment_statuses( 'editor' )
+				),
 			],
-			'flags'      => array_merge(
-				$this->experiments->get_experiment_statuses( 'general' ),
-				$this->experiments->get_experiment_statuses( 'editor' )
-			),
 			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 		];
 
@@ -367,7 +435,7 @@ class Editor extends Service_Base {
 			return;
 		}
 
-		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return;
 		}
 

@@ -72,13 +72,21 @@ function ColorPicker({
   allowsSavedColors = false,
   onClose = () => {},
   changedStyle = 'background',
+  onDimensionChange = () => {},
 }) {
+  const [showDialog, setShowDialog] = useState(false);
   // If initial color is a gradient, start by showing a custom color picker.
   // Note that no such switch happens if the color later changes to a gradient,
   // only if it was a gradient at the moment the color picker mounted.
   const [isCustomPicker, setCustomPicker] = useState(hasGradient(color));
-  const showCustomPicker = useCallback(() => setCustomPicker(true), []);
-  const hideCustomPicker = useCallback(() => setCustomPicker(false), []);
+  const showCustomPicker = useCallback(() => {
+    setCustomPicker(true);
+    onDimensionChange();
+  }, [onDimensionChange]);
+  const hideCustomPicker = useCallback(() => {
+    setCustomPicker(false);
+    onDimensionChange();
+  }, [onDimensionChange]);
 
   const {
     actions: { pushTransform },
@@ -106,15 +114,18 @@ function ColorPicker({
     [onDebouncedChange, selectedElementIds, changedStyle, pushTransform]
   );
 
-  const closeIfNotEyedropping = () => {
-    if (!isEyedropperActive) {
+  const maybeClose = () => {
+    // Usually we close the color picker when focusing anywhere outside of it.
+    // There's an exception for when the eyedropper is in use or when a confirmation dialog is open
+    // since both cause focusing outside of the color picker for interacting by the user, but the picker needs to stay open.
+    if (!isEyedropperActive && !showDialog) {
       onClose();
     }
   };
 
   // Detect focus out of color picker (clicks or focuses outside)
   const containerRef = useRef();
-  useFocusOut(containerRef, closeIfNotEyedropping, [isEyedropperActive]);
+  useFocusOut(containerRef, maybeClose, [isEyedropperActive, showDialog]);
 
   // Re-establish focus when actively exiting by button or key press
   const previousFocus = useRef(document.activeElement);
@@ -155,6 +166,8 @@ function ColorPicker({
           hideCustomPicker={hideCustomPicker}
           handleClose={handleCloseAndRefocus}
           allowsSavedColors={allowsSavedColors}
+          showDialog={showDialog}
+          setShowDialog={setShowDialog}
         />
       </Container>
     </CSSTransition>
@@ -170,6 +183,7 @@ ColorPicker.propTypes = {
   isEyedropperActive: PropTypes.bool,
   color: PatternPropType,
   changedStyle: PropTypes.string,
+  onDimensionChange: PropTypes.func,
 };
 
 export default ColorPicker;

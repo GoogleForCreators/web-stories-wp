@@ -23,7 +23,7 @@ import objectWithout from '../../../../utils/objectWithout';
 export { objectWithout };
 
 export function intersect(first, ...rest) {
-  if (!first || !rest || rest.length === 0) {
+  if (!first || !rest?.length) {
     return first;
   }
 

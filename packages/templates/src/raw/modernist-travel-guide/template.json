@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -34,11 +33,11 @@
             "width": 720,
             "height": 720,
             "id": 0,
-            "title": "Rover near road and buildings",
             "alt": "Rover near road and buildings",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": false,
+            "isExternal": true
           },
           "type": "image",
           "x": -104,
@@ -282,7 +281,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -362,12 +360,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Man wearing green polo shirt",
             "alt": "Man wearing green polo shirt",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 181, 172]
+            "baseColor": [196, 181, 172],
+            "isExternal": true
           },
           "type": "image",
           "x": 56,
@@ -401,12 +399,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Men's gray crew-neck long-sleeve shirt",
             "alt": "Men's gray crew-neck long-sleeve shirt",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [96, 85, 83]
+            "baseColor": [96, 85, 83],
+            "isExternal": true
           },
           "type": "image",
           "x": 86,
@@ -440,12 +438,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Woman wearing black shirt standing in front of red wall",
             "alt": "Woman wearing black shirt standing in front of red wall",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 150, 136]
+            "baseColor": [218, 150, 136],
+            "isExternal": true
           },
           "type": "image",
           "x": 232,
@@ -613,7 +611,6 @@
           "marginOffset": -18.91000000000001
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
       "type": "page",
       "id": "606df260-8e5f-47c0-9a8d-01f4b3d8797d",
@@ -673,12 +670,12 @@
             "height": 1920,
             "posterId": 0,
             "id": 0,
-            "title": "People inside building",
             "alt": "People inside building",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [195, 195, 195]
+            "baseColor": [195, 195, 195],
+            "isExternal": true
           }
         },
         {
@@ -844,12 +841,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Woman wearing black shirt standing in front of red wall",
             "alt": "Woman wearing black shirt standing in front of red wall",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 150, 136]
+            "baseColor": [218, 150, 136],
+            "isExternal": true
           },
           "type": "image",
           "x": 47,
@@ -1170,7 +1167,6 @@
           "marginOffset": -18.91000000000001
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "c7ba8f18-4a75-4175-a6b4-efaab898de64",
@@ -1209,7 +1205,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1237,12 +1232,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Low angle photography of a building at daytime",
             "alt": "Low angle photography of a building at daytime",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [34, 129, 157]
+            "baseColor": [34, 129, 157],
+            "isExternal": true
           },
           "type": "image",
           "x": 34,
@@ -1276,12 +1271,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "White concrete building during daytime",
             "alt": "White concrete building during daytime",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [120, 172, 206]
+            "baseColor": [120, 172, 206],
+            "isExternal": true
           },
           "type": "image",
           "x": 210,
@@ -1315,12 +1310,12 @@
             "height": 310,
             "posterId": 0,
             "id": 0,
-            "title": "White concrete building with chairs",
             "alt": "White concrete building with chairs",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [189, 193, 196]
+            "baseColor": [189, 193, 196],
+            "isExternal": true
           },
           "type": "image",
           "x": 104,
@@ -1414,7 +1409,6 @@
           "y": 487
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
       "type": "page",
       "id": "dca61177-1921-44a6-8347-4c88b991394d",
@@ -1427,7 +1421,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1455,12 +1448,12 @@
             "height": 720,
             "posterId": 0,
             "id": 0,
-            "title": "Aerial photography of cityscape during daytime",
             "alt": "Aerial photography of cityscape during daytime",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [175, 183, 183]
+            "baseColor": [175, 183, 183],
+            "isExternal": true
           },
           "type": "image",
           "x": -41,
@@ -1750,7 +1743,6 @@
           }
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
       "type": "page",
       "id": "4d233f88-21b3-4859-a478-b7140b212d93",
@@ -1800,12 +1792,12 @@
             "height": 1920,
             "posterId": 0,
             "id": 0,
-            "title": "Aerial photography of city buildings",
             "alt": "Aerial photography of city buildings",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [52, 44, 39]
+            "baseColor": [52, 44, 39],
+            "isExternal": true
           }
         },
         {
@@ -1970,12 +1962,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Man wearing green polo shirt",
             "alt": "Man wearing green polo shirt",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 181, 172]
+            "baseColor": [196, 181, 172],
+            "isExternal": true
           },
           "x": 47,
           "y": 437,
@@ -2296,7 +2288,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "bede0a0c-86c3-454c-9b4d-fbbe250926b6",
@@ -2335,7 +2326,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2439,12 +2429,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Lighted brown and black uplight chandelier",
             "alt": "Lighted brown and black uplight chandelier",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [52, 25, 13]
+            "baseColor": [52, 25, 13],
+            "isExternal": true
           },
           "type": "image",
           "x": 210,
@@ -2478,12 +2468,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Woman holding candelabra statue",
             "alt": "Woman holding candelabra statue",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [73, 37, 19]
+            "baseColor": [73, 37, 19],
+            "isExternal": true
           },
           "type": "image",
           "x": 35,
@@ -2517,12 +2507,12 @@
             "height": 249,
             "posterId": 0,
             "id": 0,
-            "title": "Person holding candlelabara statue",
             "alt": "Person holding candlelabara statue",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [203, 114, 61]
+            "baseColor": [203, 114, 61],
+            "isExternal": true
           },
           "type": "image",
           "x": 33,
@@ -2540,7 +2530,6 @@
           "id": "6ea197b2-c57c-4818-8178-4a8e62d4bca6"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
       "type": "page",
@@ -2554,7 +2543,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2732,12 +2720,12 @@
             "width": 546,
             "height": 720,
             "id": 0,
-            "title": "Aerial photography of city buildings",
             "alt": "Aerial photography of city buildings",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [50, 40, 34]
+            "baseColor": [50, 40, 34],
+            "isExternal": true
           },
           "type": "image",
           "x": -17,
@@ -2876,7 +2864,6 @@
           "y": 587
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "targets": ["064edb4d-1e1e-444d-a88f-bee0f29eff0a"],
@@ -2926,12 +2913,12 @@
             "height": 1920,
             "posterId": 0,
             "id": 0,
-            "title": "Photography of bike near store facade",
             "alt": "Photography of bike near store facade",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [83, 59, 48]
+            "baseColor": [83, 59, 48],
+            "isExternal": true
           }
         },
         {
@@ -3096,12 +3083,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Men's gray crew-neck long-sleeve shirt",
             "alt": "Men's gray crew-neck long-sleeve shirt",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [96, 85, 83]
+            "baseColor": [96, 85, 83],
+            "isExternal": true
           },
           "x": 47,
           "y": 437,
@@ -3422,7 +3409,6 @@
           "type": "text"
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "id": "654b2dd9-bd49-4fd2-b346-9ffe79cdfa8f",
@@ -3461,7 +3447,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3565,12 +3550,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Woman in white off shoulder dress standing near glass wall",
             "alt": "Woman in white off shoulder dress standing near glass wall",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [199, 201, 192]
+            "baseColor": [199, 201, 192],
+            "isExternal": true
           },
           "type": "image",
           "x": 35,
@@ -3604,12 +3589,12 @@
             "height": 480,
             "posterId": 0,
             "id": 0,
-            "title": "Assorted title book lot on table",
             "alt": "Assorted title book lot on table",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [128, 105, 83]
+            "baseColor": [128, 105, 83],
+            "isExternal": true
           },
           "type": "image",
           "x": 210,
@@ -3643,12 +3628,12 @@
             "height": 249,
             "posterId": 0,
             "id": 0,
-            "title": "Woman inside library looking at books",
             "alt": "Woman inside library looking at books",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [117, 92, 71]
+            "baseColor": [117, 92, 71],
+            "isExternal": true
           },
           "type": "image",
           "x": 35,
@@ -3666,7 +3651,6 @@
           "id": "a85e2d83-7f28-4ced-88ca-3477132db351"
         }
       ],
-      "overlay": "none",
       "animations": [],
       "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
       "type": "page",
@@ -3680,7 +3664,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3708,12 +3691,12 @@
             "height": 720,
             "posterId": 0,
             "id": 0,
-            "title": "Photography of bike near store facade",
             "alt": "Photography of bike near store facade",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [73, 51, 41]
+            "baseColor": [73, 51, 41],
+            "isExternal": true
           },
           "type": "image",
           "x": -17,
@@ -4000,7 +3983,6 @@
           "y": 587
         }
       ],
-      "overlay": "none",
       "animations": [
         {
           "targets": ["c318250c-ae21-4810-a405-3c04a9aa2207"],
@@ -4029,7 +4011,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4437,12 +4418,12 @@
             "height": 369,
             "posterId": 0,
             "id": 0,
-            "title": "Red and white concrete building",
             "alt": "Red and white concrete building",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 183, 172]
+            "baseColor": [196, 183, 172],
+            "isExternal": true
           },
           "type": "image",
           "x": 47,
@@ -4476,12 +4457,12 @@
             "height": 368,
             "posterId": 0,
             "id": 0,
-            "title": "People inside building",
             "alt": "People inside building",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [48, 46, 45]
+            "baseColor": [48, 46, 45],
+            "isExternal": true
           },
           "type": "image",
           "x": 47,
@@ -4499,7 +4480,6 @@
           "id": "a0963597-bf13-4117-91be-1db1833f7aa3"
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 181, "g": 16, "b": 6 } },
       "type": "page",
       "id": "27f5c03c-4a36-4269-8d27-966b911dfc57",

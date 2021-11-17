@@ -29,13 +29,15 @@ namespace Google\Web_Stories\Admin;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\PluginActivationAware;
+use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
 use Google\Web_Stories\Infrastructure\Service as ServiceInterface;
 use Google\Web_Stories\Assets;
 
 /**
  * Class Activation_Notice.
  */
-class Activation_Notice implements ServiceInterface, Registerable {
+class Activation_Notice implements ServiceInterface, Registerable, PluginActivationAware, PluginDeactivationAware {
 
 	/**
 	 * Script handle.
@@ -45,23 +47,16 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	const SCRIPT_HANDLE = 'web-stories-activation-notice';
 
 	/**
-	 * Activation flag instance.
+	 * Option name.
 	 *
-	 * @var Activation_Flag
+	 * @var string
 	 */
-	protected $activation_flag;
-
-	/**
-	 * Google_Fonts instance.
-	 *
-	 * @var Google_Fonts Google_Fonts instance.
-	 */
-	protected $google_fonts;
+	const OPTION_SHOW_ACTIVATION_NOTICE = 'web_stories_show_activation_notice';
 
 	/**
 	 * Assets instance.
 	 *
-	 * @var \Google\Web_Stories\Assets Assets instance.
+	 * @var Assets Assets instance.
 	 */
 	private $assets;
 
@@ -70,14 +65,10 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Activation_Flag $activation_flag Activation flag instance.
-	 * @param Google_Fonts    $google_fonts   Google_Fonts instance.
-	 * @param Assets          $assets          Assets instance.
+	 * @param Assets $assets Assets instance.
 	 */
-	public function __construct( Activation_Flag $activation_flag, Google_Fonts $google_fonts, Assets $assets ) {
-		$this->activation_flag = $activation_flag;
-		$this->google_fonts    = $google_fonts;
-		$this->assets          = $assets;
+	public function __construct( Assets $assets ) {
+		$this->assets = $assets;
 	}
 
 	/**
@@ -94,6 +85,32 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	}
 
 	/**
+	 * Act on plugin activation.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 *
+	 * @return void
+	 */
+	public function on_plugin_activation( $network_wide ) {
+		$this->set_activation_flag( $network_wide );
+	}
+
+	/**
+	 * Act on plugin deactivation.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param bool $network_wide Whether the deactivation was done network-wide.
+	 *
+	 * @return void
+	 */
+	public function on_plugin_deactivation( $network_wide ) {
+		$this->delete_activation_flag( $network_wide );
+	}
+
+	/**
 	 * Enqueues assets for the plugin activation notice.
 	 *
 	 * @since 1.0.0
@@ -103,7 +120,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 * @return void
 	 */
 	public function enqueue_assets( string $hook_suffix ) {
-		if ( ! $this->is_plugins_page( $hook_suffix ) || ! $this->activation_flag->get_activation_flag( is_network_admin() ) ) {
+		if ( ! $this->is_plugins_page( $hook_suffix ) || ! $this->get_activation_flag( is_network_admin() ) ) {
 			return;
 		}
 
@@ -114,8 +131,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 		 */
 		unset( $_GET['activate'] ); // phpcs:ignore WordPress.Security.NonceVerification, WordPress.VIP.SuperGlobalInputUsage
 
-		$font_handle = $this->google_fonts->get_handle();
-		$this->assets->enqueue_style( $font_handle );
+		$this->assets->enqueue_style( Google_Fonts::SCRIPT_HANDLE );
 
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 
@@ -191,14 +207,14 @@ class Activation_Notice implements ServiceInterface, Registerable {
 		}
 
 		$network_wide = is_network_admin();
-		$flag         = $this->activation_flag->get_activation_flag( $network_wide );
+		$flag         = $this->get_activation_flag( $network_wide );
 
 		if ( ! $flag ) {
 			return;
 		}
 
 		// Unset the flag so that the notice only shows once.
-		$this->activation_flag->delete_activation_flag( $network_wide );
+		$this->delete_activation_flag( $network_wide );
 
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/activation-notice.php';
 	}
@@ -214,5 +230,62 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 */
 	protected function is_plugins_page( $hook_suffix ): bool {
 		return ( ! empty( $hook_suffix ) && 'plugins.php' === $hook_suffix );
+	}
+
+	/**
+	 * Sets the flag that the plugin has just been activated.
+	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param bool $network_wide Whether the plugin is being activated network-wide.
+	 *
+	 * @return bool
+	 */
+	protected function set_activation_flag( bool $network_wide = false ): bool {
+		if ( $network_wide ) {
+			return update_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE, '1' );
+		}
+
+		return update_option( self::OPTION_SHOW_ACTIVATION_NOTICE, '1', false );
+	}
+
+	/**
+	 * Gets the flag that the plugin has just been activated.
+	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param bool $network_wide Whether to check the flag network-wide.
+	 *
+	 * @return bool True if just activated, false otherwise.
+	 */
+	protected function get_activation_flag( bool $network_wide = false ): bool {
+		if ( $network_wide ) {
+			return (bool) get_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE, false );
+		}
+
+		return (bool) get_option( self::OPTION_SHOW_ACTIVATION_NOTICE, false );
+	}
+
+	/**
+	 * Deletes the flag that the plugin has just been activated.
+	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param bool $network_wide Whether the plugin is being deactivated network-wide.
+	 *
+	 * @return bool True if flag deletion is successful, false otherwise.
+	 */
+	protected function delete_activation_flag( bool $network_wide = false ): bool {
+		if ( $network_wide ) {
+			return delete_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
+		}
+
+		return delete_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
 	}
 }

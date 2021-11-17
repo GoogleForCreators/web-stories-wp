@@ -23,6 +23,7 @@ const formattedTemplatesArray = [
   {
     version: 2,
     centerTargetAction: 'template-detail?id=10&isLocal=false',
+    slug: 'template-slug-1',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1265,7 +1266,7 @@ const formattedTemplatesArray = [
       },
     ],
     status: 'template',
-    tags: ['Delicious', 'Baker', 'Cook'],
+    tags: ['Delicious', 'Baker', 'Cook', 'Test Tag'],
     colors: [
       { label: 'Pink', color: '#f3d9e1' },
       { label: 'Green', color: '#d8ddcc' },
@@ -1273,11 +1274,31 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
-    title: 'Cooking',
+    vertical: 'Fitness',
+    title: 'Filterable By Tag',
+    postersByPage: [
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    ],
   },
   {
     version: 2,
     centerTargetAction: 'template-detail?id=9&isLocal=false',
+    slug: 'template-slug-2',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1470,12 +1491,33 @@ const formattedTemplatesArray = [
       { label: 'Black', color: '#28292b' },
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
+      { label: 'Test Color', color: '#eadfd6' },
     ],
-    title: 'DIY',
+    vertical: 'Fitness',
+    title: 'Filterable By Color',
+    postersByPage: [
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    ],
   },
   {
     version: 2,
     centerTargetAction: 'template-detail?id=3&isLocal=false',
+    slug: 'template-slug-3',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1669,11 +1711,31 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
+    vertical: 'Entertainment',
     title: 'Entertainment',
+    postersByPage: [
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    ],
   },
   {
     version: 2,
     centerTargetAction: 'template-detail?id=4&isLocal=false',
+    slug: 'template-slug-4',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1867,11 +1929,31 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
-    title: 'Fashion',
+    vertical: 'Test Vertical',
+    title: 'Filterable By Vertical',
+    postersByPage: [
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    ],
   },
   {
     version: 2,
     centerTargetAction: 'template-detail?id=5&isLocal=false',
+    slug: 'template-slug-5',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -2065,11 +2147,31 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
+    vertical: 'Fitness',
     title: 'Fitness',
+    postersByPage: [
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    ],
   },
   {
     version: 2,
     centerTargetAction: 'template-detail?id=6&isLocal=false',
+    slug: 'template-slug-6',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -2263,11 +2365,31 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
+    vertical: 'Travel',
     title: 'Travel',
+    postersByPage: [
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    ],
   },
   {
     version: 2,
     centerTargetAction: 'template-detail?id=7&isLocal=false',
+    slug: 'template-slug-7',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -2461,11 +2583,31 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
+    vertical: 'Wellbeing',
     title: 'Wellbeing',
+    postersByPage: [
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    ],
   },
   {
     version: 2,
     centerTargetAction: 'template-detail?id=8&isLocal=false',
+    slug: 'template-slug-8',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -2659,7 +2801,26 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
+    vertical: 'Beauty',
     title: 'Beauty',
+    postersByPage: [
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+      {
+        webp: 'https://placekitten.com/g/200/300',
+        png: 'https://placekitten.com/g/200/300',
+      },
+    ],
   },
 ];
 

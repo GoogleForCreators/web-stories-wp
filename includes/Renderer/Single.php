@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories\Renderer;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class Single
@@ -35,6 +35,22 @@ use Google\Web_Stories\Story_Post_Type;
  * @package Google\Web_Stories\Single
  */
 class Single extends Service_Base {
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
+	 * Single constructor.
+	 *
+	 * @param Context $context Context instance.
+	 */
+	public function __construct( Context $context ) {
+		$this->context = $context;
+	}
+
 	/**
 	 * Initializes the Single logic.
 	 *
@@ -54,12 +70,12 @@ class Single extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $template Template.
+	 * @param string|mixed $template Template.
 	 *
-	 * @return string Template.
+	 * @return string|mixed Template.
 	 */
-	public function filter_template_include( $template ): string {
-		if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) && ! is_embed() ) {
+	public function filter_template_include( $template ) {
+		if ( $this->context->is_web_story() ) {
 			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/single-web-story.php';
 		}
 
@@ -71,12 +87,12 @@ class Single extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param boolean $show Current value of filter.
+	 * @param boolean|mixed $show Current value of filter.
 	 *
-	 * @return bool
+	 * @return bool|mixed
 	 */
-	public function show_admin_bar( $show ): bool {
-		if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+	public function show_admin_bar( $show ) {
+		if ( $this->context->is_web_story() ) {
 			$show = false;
 		}
 

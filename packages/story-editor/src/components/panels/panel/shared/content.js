@@ -35,20 +35,16 @@ const Container = styled.div`
 
 function Content({ children, ...rest }) {
   const {
-    state: { isCollapsed, height, resizeable, panelContentId },
+    state: { isCollapsed, height, resizable, panelContentId },
   } = useContext(panelContext);
 
   const formStyle = {
-    height: resizeable ? `${height}px` : 'auto',
+    height: resizable ? `${height}px` : 'auto',
   };
 
-  return (
-    <Container
-      style={formStyle}
-      {...rest}
-      id={panelContentId}
-      hidden={isCollapsed}
-    >
+  // Don't render panel content/children when collapsed.
+  return isCollapsed ? null : (
+    <Container style={formStyle} {...rest} id={panelContentId}>
       {children}
     </Container>
   );

@@ -27,11 +27,14 @@ import {
   useResizeEffect,
   createPortal,
 } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
+import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
+import { noop } from '../../utils/noop';
 import { getTransforms, getOffset } from './utils';
 import { Placement } from './constants';
 
@@ -58,7 +61,7 @@ const Container = styled.div.attrs(
   position: fixed;
   z-index: 2;
   overflow-y: auto;
-  max-height: 100vh;
+  max-height: calc(100vh - ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px);
 `;
 
 function Popup({
@@ -72,7 +75,7 @@ function Popup({
   invisible,
   fillWidth = false,
   fillHeight = false,
-  onPositionUpdate = () => {},
+  onPositionUpdate = noop,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -144,5 +147,20 @@ function Popup({
       )
     : null;
 }
+
+Popup.propTypes = {
+  anchor: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    .isRequired,
+  dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  children: PropTypes.node,
+  renderContents: PropTypes.func,
+  placement: PropTypes.oneOf(Object.values(Placement)),
+  spacing: PropTypes.object,
+  isOpen: PropTypes.bool,
+  invisible: PropTypes.bool,
+  fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  onPositionUpdate: PropTypes.func,
+};
 
 export default Popup;

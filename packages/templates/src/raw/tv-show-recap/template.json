@@ -1,5 +1,5 @@
 {
-  "version": 32,
+  "version": 35,
   "pages": [
     {
       "elements": [
@@ -8,7 +8,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -36,12 +35,12 @@
             "height": 631,
             "posterId": 0,
             "id": 0,
-            "title": "Woman wearing off-shoulder dress",
             "alt": "Woman wearing off-shoulder dress",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [33, 23, 21]
+            "baseColor": [33, 23, 21],
+            "isExternal": true
           },
           "type": "image",
           "x": -10,
@@ -77,7 +76,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [211, 197, 196]
+            "baseColor": [211, 197, 196],
+            "isExternal": true
           },
           "type": "image",
           "x": 61,
@@ -290,7 +290,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -322,7 +321,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [232, 225, 223]
+            "baseColor": [232, 225, 223],
+            "isExternal": true
           },
           "x": 0,
           "y": -57,
@@ -492,12 +492,12 @@
             "height": 1920,
             "posterId": 0,
             "id": 0,
-            "title": "Woman in yellow off-shoulder dress sitting on bench",
             "alt": "Woman in yellow off-shoulder dress sitting on bench",
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [197, 183, 166]
+            "baseColor": [197, 183, 166],
+            "isExternal": true
           }
         },
         {
@@ -823,7 +823,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [212, 192, 177]
+            "baseColor": [212, 192, 177],
+            "isExternal": true
           }
         },
         {
@@ -1051,7 +1052,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [58, 36, 27]
+            "baseColor": [58, 36, 27],
+            "isExternal": true
           }
         },
         {
@@ -1355,7 +1357,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2177,7 +2178,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2209,7 +2209,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [39, 21, 20]
+            "baseColor": [39, 21, 20],
+            "isExternal": true
           },
           "type": "image",
           "x": -7,
@@ -2247,7 +2248,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [25, 22, 20]
+            "baseColor": [25, 22, 20],
+            "isExternal": true
           },
           "type": "image",
           "x": 78,
@@ -2592,7 +2594,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [65, 42, 30]
+            "baseColor": [65, 42, 30],
+            "isExternal": true
           }
         },
         {
@@ -2921,7 +2924,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [27, 25, 25]
+            "baseColor": [27, 25, 25],
+            "isExternal": true
           }
         },
         {
@@ -3091,7 +3095,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3275,7 +3278,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [55, 64, 73]
+            "baseColor": [55, 64, 73],
+            "isExternal": true
           },
           "type": "image",
           "x": 131.5,
@@ -3381,7 +3385,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [192, 179, 159]
+            "baseColor": [192, 179, 159],
+            "isExternal": true
           },
           "type": "image",
           "x": 264,
@@ -3487,7 +3492,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [113, 104, 100]
+            "baseColor": [113, 104, 100],
+            "isExternal": true
           },
           "type": "image",
           "x": 28,
@@ -3593,7 +3599,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [142, 134, 129]
+            "baseColor": [142, 134, 129],
+            "isExternal": true
           },
           "type": "image",
           "x": 131.5,
@@ -3722,7 +3729,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -3754,7 +3760,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [223, 226, 221]
+            "baseColor": [223, 226, 221],
+            "isExternal": true
           },
           "type": "image",
           "x": 0,
@@ -3903,7 +3910,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -4071,7 +4077,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [227, 229, 231]
+            "baseColor": [227, 229, 231],
+            "isExternal": true
           },
           "type": "image",
           "x": 53,
@@ -4177,7 +4184,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [184, 184, 184]
+            "baseColor": [184, 184, 184],
+            "isExternal": true
           },
           "type": "image",
           "x": 212,

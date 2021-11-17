@@ -79,4 +79,11 @@ describe('Library Media Tab', () => {
       ).toBeDefined();
     });
   });
+  //todo: add axe for all tabs in libraryTabs.karma.js once the text tab is no longer a button within a button see issue #7365
+  describe('library Media tab should have no aXe accessibility violations', () => {
+    it('should pass accessibility', async () => {
+      const mediaTab = fixture.container.querySelector(`#library-tab-media`);
+      await expectAsync(mediaTab).toHaveNoViolations();
+    });
+  });
 });

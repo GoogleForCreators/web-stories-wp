@@ -110,4 +110,29 @@ describe('getUsedAmpExtensions', () => {
       ])
     );
   });
+
+  it('should include the amp-stroy-captions script if there is a video with tracks', () => {
+    const pages = [
+      {
+        elements: [
+          {
+            type: 'video',
+            tracks: [{ track: 'https://example.com/track.vtt', id: 1 }],
+          },
+        ],
+      },
+    ];
+
+    const actual = getUsedAmpExtensions(pages, { enableBetterCaptions: true });
+
+    expect(actual).toHaveLength(4);
+    expect(actual).toStrictEqual(
+      expect.arrayContaining([
+        {
+          name: 'amp-story-captions',
+          src: 'https://cdn.ampproject.org/v0/amp-story-captions-0.1.js',
+        },
+      ])
+    );
+  });
 });

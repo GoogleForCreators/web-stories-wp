@@ -20,11 +20,13 @@
 import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
 import { createSolid } from '@web-stories-wp/patterns';
+
 /**
  * Internal dependencies
  */
 import TextStyle from '../textStyle';
 import FontContext from '../../../../../app/font/context';
+import { StoryContext } from '../../../../../app/story';
 import RichTextContext from '../../../../richText/context';
 import { calculateTextHeight } from '../../../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../../../utils/calcRotatedResizeOffset';
@@ -32,12 +34,13 @@ import CanvasContext from '../../../../../app/canvas/context';
 import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
+  BACKGROUND_TEXT_MODE,
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 
 let mockControls;
 jest.mock('../../../../../utils/textMeasurements');
-jest.mock('../../../../form/advancedDropDown', () => {
+jest.mock('@web-stories-wp/design-system', () => {
   // eslint-disable-next-line no-undef
   const React = require('@web-stories-wp/react');
   // eslint-disable-next-line no-undef
@@ -51,7 +54,10 @@ jest.mock('../../../../form/advancedDropDown', () => {
   };
   return {
     __esModule: true,
-    default: FakeControl,
+    ...jest.requireActual('@web-stories-wp/design-system'),
+    Datalist: {
+      DropDown: FakeControl,
+    },
   };
 });
 jest.mock('../../../../form/color/color', () => {
@@ -80,32 +86,63 @@ const DEFAULT_PADDING = {
 };
 
 function Wrapper({ children }) {
-  return (
-    <CanvasContext.Provider
-      value={{
-        state: {},
-        actions: {
-          clearEditing: jest.fn(),
+  const storyContextValue = {
+    state: {
+      selectedElements: [],
+      story: {
+        globalStoryStyles: {
+          ...{ colors: [], textStyles: [] },
         },
-      }}
-    >
-      <FontContext.Provider
+        currentStoryStyles: {
+          colors: [],
+        },
+      },
+    },
+    actions: { updateStory: jest.fn(), updateElementsById: jest.fn() },
+  };
+  return (
+    <StoryContext.Provider value={storyContextValue}>
+      <CanvasContext.Provider
         value={{
-          state: {
-            fonts: [
-              {
-                name: 'ABeeZee',
-                value: 'ABeeZee',
-                service: 'foo.bar.baz',
-                weights: [400],
-                styles: ['italic', 'regular'],
-                variants: [
-                  [0, 400],
-                  [1, 400],
-                ],
-                fallbacks: ['serif'],
-              },
-              {
+          state: {},
+          actions: {
+            clearEditing: jest.fn(),
+          },
+        }}
+      >
+        <FontContext.Provider
+          value={{
+            state: {
+              fonts: [
+                {
+                  name: 'ABeeZee',
+                  value: 'ABeeZee',
+                  service: 'foo.bar.baz',
+                  weights: [400],
+                  styles: ['italic', 'regular'],
+                  variants: [
+                    [0, 400],
+                    [1, 400],
+                  ],
+                  fallbacks: ['serif'],
+                },
+                {
+                  name: 'Neu Font',
+                  value: 'Neu Font',
+                  service: 'foo.bar.baz',
+                  weights: [400],
+                  styles: ['italic', 'regular'],
+                  variants: [
+                    [0, 400],
+                    [1, 400],
+                  ],
+                  fallbacks: ['fallback1'],
+                },
+              ],
+            },
+            actions: {
+              maybeEnqueueFontStyle: () => Promise.resolve(),
+              getFontByName: () => ({
                 name: 'Neu Font',
                 value: 'Neu Font',
                 service: 'foo.bar.baz',
@@ -116,34 +153,19 @@ function Wrapper({ children }) {
                   [1, 400],
                 ],
                 fallbacks: ['fallback1'],
-              },
-            ],
-          },
-          actions: {
-            maybeEnqueueFontStyle: () => Promise.resolve(),
-            getFontByName: () => ({
-              name: 'Neu Font',
-              value: 'Neu Font',
-              service: 'foo.bar.baz',
-              weights: [400],
-              styles: ['italic', 'regular'],
-              variants: [
-                [0, 400],
-                [1, 400],
-              ],
-              fallbacks: ['fallback1'],
-            }),
-            addRecentFont: jest.fn(),
-          },
-        }}
-      >
-        <RichTextContext.Provider
-          value={{ state: {}, actions: { selectionActions: {} } }}
+              }),
+              addRecentFont: jest.fn(),
+            },
+          }}
         >
-          {children}
-        </RichTextContext.Provider>
-      </FontContext.Provider>
-    </CanvasContext.Provider>
+          <RichTextContext.Provider
+            value={{ state: {}, actions: { selectionActions: {} } }}
+          >
+            {children}
+          </RichTextContext.Provider>
+        </FontContext.Provider>
+      </CanvasContext.Provider>
+    </StoryContext.Provider>
   );
 }
 
@@ -174,6 +196,7 @@ describe('Panels/TextStyle', () => {
       width: 120,
       rotationAngle: 0,
       padding: DEFAULT_PADDING,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
     };
 
     mockControls = {};
@@ -201,6 +224,12 @@ describe('Panels/TextStyle', () => {
       lineHeight: 1,
       x: dx,
       y: dy,
+      padding: {
+        hasHiddenPadding: false,
+        horizontal: 0,
+        locked: true,
+        vertical: 0,
+      },
     });
   });
 

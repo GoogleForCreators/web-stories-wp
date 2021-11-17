@@ -21,7 +21,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Icons } from '@web-stories-wp/design-system';
 
 function MediaIcon() {
-  return <Icons.ArrowCloud aria-label={__('Media Gallery', 'web-stories')} />;
+  return <Icons.ArrowCloud title={__('Media Gallery', 'web-stories')} />;
 }
 
 export default MediaIcon;

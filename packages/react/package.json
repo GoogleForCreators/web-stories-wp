@@ -2,8 +2,8 @@
   "name": "@web-stories-wp/react",
   "private": true,
   "engines": {
-    "node": ">= 15",
-    "npm": "~7"
+    "node": ">= 16",
+    "npm": ">= 7.3"
   },
   "exports": {
     "default": "./src/index.js"
@@ -20,6 +20,6 @@
     "use-debounce": "^7.0.0"
   },
   "devDependencies": {
-    "@testing-library/react": "^11.2.3"
+    "@testing-library/react": "^12.1.2"
   }
 }

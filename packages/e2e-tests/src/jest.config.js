@@ -41,6 +41,7 @@ export default {
   ],
   transformIgnorePatterns: ['node_modules'],
   setupFilesAfterEnv: [
+    'jest-extended/all',
     '<rootDir>/config/bootstrap.js',
     '@wordpress/jest-puppeteer-axe',
     '@wordpress/jest-console',

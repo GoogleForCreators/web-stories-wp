@@ -36,6 +36,7 @@ import {
 const DropDownSelect = (
   {
     activeItemLabel,
+    activeItemRenderer,
     disabled,
     dropDownLabel,
     hasError,
@@ -45,45 +46,54 @@ const DropDownSelect = (
     ...rest
   },
   ref
-) => (
-  <SelectButton
-    aria-haspopup
-    isOpen={isOpen}
-    disabled={disabled}
-    hasError={hasError}
-    onClick={onSelectClick}
-    ref={ref}
-    {...rest}
-  >
-    <Value
-      forwardedAs="span"
-      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-      selectValueStylesOverride={rest.selectValueStylesOverride}
+) => {
+  const ValueRenderer = activeItemRenderer;
+  return (
+    <SelectButton
+      aria-haspopup
+      isOpen={isOpen}
+      disabled={disabled}
+      hasError={hasError}
+      onClick={onSelectClick}
+      ref={ref}
+      autoHeight={activeItemRenderer}
+      {...rest}
     >
-      {activeItemLabel || placeholder}
-    </Value>
-
-    <Label>
-      {dropDownLabel && (
-        <LabelText
+      {activeItemRenderer ? (
+        <ValueRenderer />
+      ) : (
+        <Value
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          selectValueStylesOverride={rest.selectValueStylesOverride}
         >
-          {dropDownLabel}
-        </LabelText>
+          {activeItemLabel || placeholder}
+        </Value>
       )}
 
-      <ChevronWrap isOpen={isOpen}>
-        <StyledChevron />
-      </ChevronWrap>
-    </Label>
-  </SelectButton>
-);
+      <Label>
+        {dropDownLabel && (
+          <LabelText
+            forwardedAs="span"
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          >
+            {dropDownLabel}
+          </LabelText>
+        )}
+
+        <ChevronWrap isOpen={isOpen}>
+          <StyledChevron />
+        </ChevronWrap>
+      </Label>
+    </SelectButton>
+  );
+};
 
 export default forwardRef(DropDownSelect);
 
 DropDownSelect.propTypes = {
   activeItemLabel: PropTypes.string,
+  activeItemRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   dropDownLabel: PropTypes.string,
   onSelectClick: PropTypes.func.isRequired,
   placeholder: PropTypes.string,

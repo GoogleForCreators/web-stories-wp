@@ -29,7 +29,7 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Traits\Types;
+use Google\Web_Stories\Media\Types;
 use WP_Post;
 use WP_Error;
 use WP_REST_Request;
@@ -40,18 +40,26 @@ use WP_REST_Attachments_Controller;
  * Stories_Media_Controller class.
  */
 class Stories_Media_Controller extends WP_REST_Attachments_Controller implements Service, Delayed, Registerable {
-	use Types;
+	/**
+	 * Types instance.
+	 *
+	 * @var Types Types instance.
+	 */
+	private $types;
 
 	/**
 	 * Constructor.
 	 *
 	 * Override the namespace.
 	 *
+	 * @param Types $types Types instance.
+	 *
 	 * @since 1.0.0
 	 */
-	public function __construct() {
+	public function __construct( Types $types ) {
 		parent::__construct( 'attachment' );
 		$this->namespace = 'web-stories/v1';
+		$this->types     = $types;
 	}
 
 	/**
@@ -101,7 +109,8 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		$response = parent::get_items( $request );
 
 		if ( $request['_web_stories_envelope'] && ! is_wp_error( $response ) ) {
-			$response = rest_get_server()->envelope_response( $response, false );
+			$embed    = isset( $request['_embed'] ) ? rest_parse_embed_param( $request['_embed'] ) : false;
+			$response = rest_get_server()->envelope_response( $response, $embed );
 		}
 		return $response;
 	}
@@ -274,6 +283,71 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	}
 
 	/**
+	 * Prepares links for the request.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return array Links for the given post.
+	 */
+	protected function prepare_links( $post ): array {
+		$links = parent::prepare_links( $post );
+		$links = $this->add_taxonomy_links( $links, $post );
+
+		return $links;
+	}
+
+	/**
+	 * Adds a REST API links for the taxonomies.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param array   $links Links for the given post.
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return array Modified list of links.
+	 */
+	private function add_taxonomy_links( array $links, WP_Post $post ): array {
+		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );
+
+		if ( empty( $taxonomies ) ) {
+			return $links;
+		}
+		$links['https://api.w.org/term'] = [];
+
+		foreach ( $taxonomies as $taxonomy_obj ) {
+			// Skip taxonomies that are not public.
+			if ( empty( $taxonomy_obj->show_in_rest ) ) {
+				continue;
+			}
+
+			$controller = $taxonomy_obj->get_rest_controller();
+
+			if ( ! $controller ) {
+				continue;
+			}
+
+			$namespace = method_exists( $controller, 'get_namespace' ) ? $controller->get_namespace() : 'wp/v2';
+			$tax       = $taxonomy_obj->name;
+			$tax_base  = ! empty( $taxonomy_obj->rest_base ) ? $taxonomy_obj->rest_base : $tax;
+
+			$terms_url = add_query_arg(
+				'post',
+				$post->ID,
+				rest_url( sprintf( '%s/%s', $namespace, $tax_base ) )
+			);
+
+			$links['https://api.w.org/term'][] = [
+				'href'       => $terms_url,
+				'taxonomy'   => $tax,
+				'embeddable' => true,
+			];
+		}
+		return $links;
+	}
+
+	/**
 	 * Retrieves the attachment's schema, conforming to JSON Schema.
 	 *
 	 * Removes some unneeded fields to improve performance by
@@ -317,6 +391,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @return array Array of supported media types.
 	 */
 	protected function get_media_types(): array {
-		return $this->get_allowed_mime_types();
+		return $this->types->get_allowed_mime_types();
 	}
 }

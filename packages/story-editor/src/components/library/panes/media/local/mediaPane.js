@@ -18,12 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from '@web-stories-wp/react';
+import { useCallback, useEffect, useMemo } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import {
   __,
@@ -32,7 +27,7 @@ import {
   translateToExclusiveList,
 } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media';
+import { resourceList, canTranscodeResource } from '@web-stories-wp/media';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -41,6 +36,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
+  Icons,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -48,11 +44,9 @@ import {
  */
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
-import { useMediaPicker } from '../../../../mediaPicker';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import { Select } from '../../../../form';
-import { getResourceFromMediaPicker } from '../../../../../app/media/utils';
 import {
   MediaGalleryMessage,
   PaneHeader,
@@ -67,9 +61,10 @@ import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import { focusStyle } from '../../../../panels/shared';
 import useFFmpeg from '../../../../../app/media/utils/useFFmpeg';
-import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
+import Tooltip from '../../../../tooltip';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
+import LinkInsertion from './hotlink';
 
 export const ROOT_MARGIN = 300;
 
@@ -90,6 +85,12 @@ const SearchCount = styled(Text).attrs({
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
 `;
 
 const FILTER_NONE = LOCAL_MEDIA_TYPE_ALL;
@@ -159,6 +160,7 @@ function MediaPane(props) {
   );
 
   const { showSnackbar } = useSnackbar();
+  const enableHotlinking = useFeature('enableHotlinking');
 
   const {
     allowedTranscodableMimeTypes,
@@ -168,6 +170,7 @@ function MediaPane(props) {
       video: allowedVideoMimeTypes,
     },
     capabilities: { hasUploadMediaAction },
+    MediaUpload,
   } = useConfig();
 
   const { isTranscodingEnabled } = useFFmpeg();
@@ -198,8 +201,6 @@ function MediaPane(props) {
     insertElement: state.actions.insertElement,
   }));
 
-  const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
-
   const isSearching = searchTerm.length > 0;
 
   const onClose = resetWithFetch;
@@ -207,12 +208,11 @@ function MediaPane(props) {
   /**
    * Callback of select in media picker to insert media element.
    *
-   * @param {Object} mediaPickerEl Object coming from backbone media picker.
+   * @param {Object} resource Object coming from backbone media picker.
    */
-  const onSelect = (mediaPickerEl) => {
-    const resource = getResourceFromMediaPicker(mediaPickerEl);
+  const onSelect = (resource) => {
     try {
-      if (isTranscodingEnabled) {
+      if (isTranscodingEnabled && canTranscodeResource(resource)) {
         if (transcodableMimeTypes.includes(resource.mimeType)) {
           optimizeVideo({ resource });
         }
@@ -221,10 +221,10 @@ function MediaPane(props) {
           optimizeGif({ resource });
         }
       }
-      // WordPress media picker event, sizes.medium.url is the smallest image
+      // WordPress media picker event, sizes.medium.source_url is the smallest image
       insertMediaElement(
         resource,
-        mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
+        resource.sizes?.medium?.source_url || resource.src
       );
 
       if (
@@ -235,20 +235,20 @@ function MediaPane(props) {
       ) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.
-        uploadVideoPoster(resource.id, mediaPickerEl.url);
+        uploadVideoPoster(resource.id, resource.src);
       }
 
       if (
         !resource.local &&
         allowedVideoMimeTypes.includes(resource.mimeType) &&
-        !resource.isMuted
+        resource.isMuted === null
       ) {
         updateVideoIsMuted(resource.id, resource.src);
       }
     } catch (e) {
       showSnackbar({
         message: e.message,
-        dismissable: true,
+        dismissible: true,
       });
     }
   };
@@ -264,14 +264,6 @@ function MediaPane(props) {
       translateToExclusiveList(allowedFileTypes)
     );
   }
-
-  const openMediaPicker = useMediaPicker({
-    onSelect,
-    onSelectErrorMessage,
-    onClose,
-    type: allowedMimeTypes,
-    onPermissionError: () => setIsPermissionDialogOpen(true),
-  });
 
   /**
    * Filter REST API calls and re-request API.
@@ -322,6 +314,35 @@ function MediaPane(props) {
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
   );
 
+  const renderUploadButtonIcon = useCallback(
+    (open) => (
+      <Button
+        variant={BUTTON_VARIANTS.SQUARE}
+        type={BUTTON_TYPES.SECONDARY}
+        size={BUTTON_SIZES.SMALL}
+        onClick={open}
+        aria-label={__('Upload', 'web-stories')}
+      >
+        <Icons.ArrowCloud />
+      </Button>
+    ),
+    []
+  );
+
+  const renderUploadButton = useCallback(
+    (open) => (
+      <Button
+        variant={BUTTON_VARIANTS.RECTANGLE}
+        type={BUTTON_TYPES.SECONDARY}
+        size={BUTTON_SIZES.SMALL}
+        onClick={open}
+      >
+        {__('Upload', 'web-stories')}
+      </Button>
+    ),
+    []
+  );
+
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
@@ -355,15 +376,30 @@ function MediaPane(props) {
                 )}
               </SearchCount>
             )}
-            {!isSearching && (
-              <Button
-                variant={BUTTON_VARIANTS.RECTANGLE}
-                type={BUTTON_TYPES.SECONDARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={openMediaPicker}
-              >
-                {__('Upload', 'web-stories')}
-              </Button>
+            {!isSearching && enableHotlinking && (
+              <ButtonsWrapper>
+                <LinkInsertion />
+                {hasUploadMediaAction && (
+                  <Tooltip title={__('Upload', 'web-stories')}>
+                    <MediaUpload
+                      onSelect={onSelect}
+                      onSelectErrorMessage={onSelectErrorMessage}
+                      onClose={onClose}
+                      type={allowedMimeTypes}
+                      render={renderUploadButtonIcon}
+                    />
+                  </Tooltip>
+                )}
+              </ButtonsWrapper>
+            )}
+            {!isSearching && !enableHotlinking && hasUploadMediaAction && (
+              <MediaUpload
+                onSelect={onSelect}
+                onSelectErrorMessage={onSelectErrorMessage}
+                onClose={onClose}
+                type={allowedMimeTypes}
+                render={renderUploadButton}
+              />
             )}
           </FilterArea>
         </PaneHeader>
@@ -387,11 +423,6 @@ function MediaPane(props) {
             searchTerm={searchTerm}
           />
         )}
-
-        <MissingUploadPermissionDialog
-          isOpen={isPermissionDialogOpen}
-          onClose={() => setIsPermissionDialogOpen(false)}
-        />
         <VideoOptimizationDialog />
       </PaneInner>
     </StyledPane>

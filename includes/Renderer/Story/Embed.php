@@ -24,14 +24,13 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Renderer\Story;
 
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\AMP_Story_Player_Assets;
-use Google\Web_Stories\Traits\Amp;
 
 /**
  * Class Embed
@@ -39,15 +38,6 @@ use Google\Web_Stories\Traits\Amp;
  * @package Google\Web_Stories\Renderer\Story
  */
 class Embed {
-	use Amp;
-
-	/**
-	 * Script handle for frontend assets.
-	 *
-	 * @var string
-	 */
-	const SCRIPT_HANDLE = 'web-stories-embed';
-
 	/**
 	 * Current post.
 	 *
@@ -63,25 +53,25 @@ class Embed {
 	private $assets;
 
 	/**
-	 * AMP_Story_Player_Assets instance.
+	 * Context instance.
 	 *
-	 * @var AMP_Story_Player_Assets AMP_Story_Player_Assets instance.
+	 * @var Context Context instance.
 	 */
-	protected $amp_story_player_assets;
+	private $context;
 
 	/**
 	 * Embed constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story                   $story             Story Object.
-	 * @param Assets                  $assets            Assets instance.
-	 * @param AMP_Story_Player_Assets $amp_story_player_assets AMP_Story_Player_Assets instance.
+	 * @param Story   $story   Story instance.
+	 * @param Assets  $assets  Assets instance.
+	 * @param Context $context Context instance.
 	 */
-	public function __construct( Story $story, Assets $assets, AMP_Story_Player_Assets $amp_story_player_assets ) {
-		$this->assets                  = $assets;
-		$this->story                   = $story;
-		$this->amp_story_player_assets = $amp_story_player_assets;
+	public function __construct( Story $story, Assets $assets, Context $context ) {
+		$this->assets  = $assets;
+		$this->story   = $story;
+		$this->context = $context;
 	}
 
 	/**
@@ -106,9 +96,8 @@ class Embed {
 		$class  = $args['class'];
 		$url    = $this->story->get_url();
 		$title  = $this->story->get_title();
-		$poster = ! empty( $this->story->get_poster_portrait() ) ? esc_url_raw( $this->story->get_poster_portrait() ) : '';
+		$poster = ! empty( $this->story->get_poster_portrait() ) ? $this->story->get_poster_portrait() : '';
 
-		$poster_style  = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 		$wrapper_style = sprintf(
 			'--aspect-ratio: %F; --width: %dpx; --height: %dpx',
 			0 !== $args['width'] ? $args['height'] / $args['width'] : 1,
@@ -117,9 +106,9 @@ class Embed {
 		);
 
 		// This CSS is used for AMP and non-AMP.
-		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
+		$this->assets->enqueue_style_asset( Embed_Base::SCRIPT_HANDLE );
 
-		if ( $this->is_amp() ) {
+		if ( $this->context->is_amp() ) {
 			ob_start();
 			?>
 			<div class="<?php echo esc_attr( "$class web-stories-embed web-stories-embed-amp $align" ); ?>">
@@ -128,10 +117,21 @@ class Embed {
 						width="<?php echo esc_attr( $args['width'] ); ?>"
 						height="<?php echo esc_attr( $args['height'] ); ?>"
 						layout="intrinsic">
-						<a
-							href="<?php echo esc_url( $url ); ?>"
-							style="<?php echo esc_attr( $poster_style ); ?>">
-							<?php echo esc_html( $title ); ?>
+						<a href="<?php echo esc_url( $url ); ?>">
+							<?php if ( $poster ) { ?>
+								<img
+									src="<?php echo esc_url( $poster ); ?>"
+									width="<?php echo esc_attr( $args['width'] ); ?>"
+									height="<?php echo esc_attr( $args['height'] ); ?>"
+									alt="<?php echo esc_attr( $title ); ?>"
+									loading="lazy"
+									data-amp-story-player-poster-img
+								/>
+								<?php
+							} else {
+								echo esc_html( $title );
+							}
+							?>
 						</a>
 					</amp-story-player>
 				</div>
@@ -140,19 +140,29 @@ class Embed {
 
 			return (string) ob_get_clean();
 		}
-		$player_handle = $this->amp_story_player_assets->get_handle();
-		$this->assets->enqueue_style( $player_handle );
-		$this->assets->enqueue_script( $player_handle );
+		$this->assets->enqueue_style( AMP_Story_Player_Assets::SCRIPT_HANDLE );
+		$this->assets->enqueue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 
 		ob_start();
 		?>
 		<div class="<?php echo esc_attr( "$class web-stories-embed $align" ); ?>">
 			<div class="wp-block-embed__wrapper" style="<?php echo esc_attr( $wrapper_style ); ?>">
 				<amp-story-player>
-					<a
-						href="<?php echo esc_url( $url ); ?>"
-						style="<?php echo esc_attr( $poster_style ); ?>">
-						<?php echo esc_html( $title ); ?>
+					<a href="<?php echo esc_url( $url ); ?>">
+						<?php if ( $poster ) { ?>
+							<img
+								src="<?php echo esc_url( $poster ); ?>"
+								width="<?php echo esc_attr( $args['width'] ); ?>"
+								height="<?php echo esc_attr( $args['height'] ); ?>"
+								alt="<?php echo esc_attr( $title ); ?>"
+								loading="lazy"
+								data-amp-story-player-poster-img
+							/>
+							<?php
+						} else {
+							echo esc_html( $title );
+						}
+						?>
 					</a>
 				</amp-story-player>
 			</div>

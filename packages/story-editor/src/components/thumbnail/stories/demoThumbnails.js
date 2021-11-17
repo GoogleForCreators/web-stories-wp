@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import PagePreview from '../../carousel/pagepreview';
+import PagePreview from '../../footer/pagepreview';
 import { THUMBNAIL_TYPES, THUMBNAIL_DIMENSIONS } from '..';
 
 const LayerIconImageOutput = (
@@ -218,6 +218,7 @@ const PageThumbnail = (
     width={THUMBNAIL_DIMENSIONS.WIDTH}
     height={THUMBNAIL_DIMENSIONS.HEIGHT}
     as="div"
+    label="Page Thumbnail"
   />
 );
 

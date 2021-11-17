@@ -39,7 +39,7 @@ describe('date/formatDate', () => {
     const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString);
 
-    expect(formattedDate).toStrictEqual('2020-05-02');
+    expect(formattedDate).toBe('2020-05-02');
   });
 
   it('should return "May 2, 2020" with "F j, Y" formatting options', () => {
@@ -53,7 +53,7 @@ describe('date/formatDate', () => {
     const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString);
 
-    expect(formattedDate).toStrictEqual('May 2, 2020');
+    expect(formattedDate).toBe('May 2, 2020');
   });
 
   it('should return "2020-05-02" with "Y-m-d" formatting options', () => {
@@ -67,7 +67,7 @@ describe('date/formatDate', () => {
     const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString);
 
-    expect(formattedDate).toStrictEqual('2020-05-02');
+    expect(formattedDate).toBe('2020-05-02');
   });
 
   it('should return 05/02/2020 with m/d/Y formatting options', () => {
@@ -81,7 +81,7 @@ describe('date/formatDate', () => {
     const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString);
 
-    expect(formattedDate).toStrictEqual('05/02/2020');
+    expect(formattedDate).toBe('05/02/2020');
   });
 
   it('should return 02/05/2020 with d/m/Y formatting options', () => {
@@ -94,7 +94,7 @@ describe('date/formatDate', () => {
     const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString);
 
-    expect(formattedDate).toStrictEqual('02/05/2020');
+    expect(formattedDate).toBe('02/05/2020');
   });
 
   it('should return Sat 05 02 2020 with D m d yy formatting options', () => {
@@ -108,12 +108,12 @@ describe('date/formatDate', () => {
     const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString);
 
-    expect(formattedDate).toStrictEqual('Sat 05 02 2020');
+    expect(formattedDate).toBe('Sat 05 02 2020');
   });
 
   it('should return an empty string with a null date', () => {
     const formattedDate = formatDate(null);
 
-    expect(formattedDate).toStrictEqual('');
+    expect(formattedDate).toBe('');
   });
 });

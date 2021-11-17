@@ -22,17 +22,12 @@ import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
 
 /**
- * Internal dependencies
- */
-import getFileName from './getFileName';
-
-/**
  * Uploads a file to the Media Library, and awaits its upload.
  *
  * The file should reside in packages/e2e-tests/src/assets/.
  *
  * @param {string|null} file The file name to upload, for example 'foo.mp4'.
- * @param {boolean} checkUpload Check upload was successfully.
+ * @param {boolean} checkUpload Whether to check if upload was successful.
  * @return {string|null} The name of the file as it was uploaded.
  */
 async function uploadFile(file, checkUpload = true) {
@@ -44,19 +39,30 @@ async function uploadFile(file, checkUpload = true) {
   );
 
   // Prefixing makes it easier to identify files from tests later on.
-  const newFileName = `e2e-${file}`;
-  const newBaseName = getFileName(newFileName);
-  const tmpFileName = join(tmpdir(), newFileName);
+  const tmpFileName = join(tmpdir(), `e2e-${file}`);
   copyFileSync(testMediaPath, tmpFileName);
 
   // Wait for media modal to appear and upload file.
   await expect(page).toUploadFile('.media-modal input[type=file]', tmpFileName);
 
+  await page.waitForSelector('.media-uploader-status:not(.uploading)');
+  await page.waitForSelector('.button.media-button-select:not([disabled])');
   await expect(page).not.toMatchElement('.media-modal .upload-error');
 
-  // Upload successful!
+  const fileNameEl = await page.waitForSelector(
+    '.media-modal-content .attachment-details .filename'
+  );
+  const newFileName = await fileNameEl.evaluate((el) => el.textContent);
+
   if (checkUpload) {
-    await page.waitForSelector(`.media-modal li[aria-label="${newBaseName}"]`);
+    const attachmentTitleEl = await page.waitForSelector(
+      '#attachment-details-title'
+    );
+    const attachmentTitle = await attachmentTitleEl.evaluate((el) => el.value);
+    const escapedTitle = attachmentTitle.replace(/"/g, '\\"');
+    await page.waitForSelector(
+      `.attachments-browser .attachments .attachment[aria-label="${escapedTitle}"]`
+    );
   }
   await page.setDefaultTimeout(3000);
 

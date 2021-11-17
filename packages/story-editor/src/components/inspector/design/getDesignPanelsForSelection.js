@@ -20,24 +20,20 @@
 import { elementTypes } from '../../../elements';
 import {
   AnimationPanel,
-  BorderRadiusPanel,
   BorderStylePanel,
   CaptionsPanel,
   FilterPanel,
   ImageAccessibilityPanel,
   LinkPanel,
-  LayerStylePanel,
   PageAttachmentPanel,
   PageBackgroundPanel,
   ShapeStylePanel,
   SizePositionPanel,
-  TextBoxPanel,
   TextStylePanel,
   VideoAccessibilityPanel,
   ElementAlignmentPanel,
   VideoOptionsPanel,
-  StylePresetPanel,
-  ColorPresetPanel,
+  PageBackgroundAudioPanel,
 } from '../../panels/design';
 import PanelTypes from '../../panels/design/types';
 
@@ -100,6 +96,11 @@ function getDesignPanelsForSelection(elements) {
       Panel: PageAttachmentPanel,
     });
 
+    panels.push({
+      type: PanelTypes.PAGE_BACKGROUND_AUDIO,
+      Panel: PageBackgroundAudioPanel,
+    });
+
     return panels;
   }
 
@@ -116,12 +117,6 @@ function getDesignPanelsForSelection(elements) {
         case PanelTypes.PAGE_BACKGROUND:
           // Only display when isBackground.
           return null;
-        case PanelTypes.COLOR_PRESETS:
-          return { type, Panel: ColorPresetPanel };
-        case PanelTypes.STYLE_PRESETS:
-          return { type, Panel: StylePresetPanel };
-        case PanelTypes.LAYER_STYLE:
-          return { type, Panel: LayerStylePanel };
         case PanelTypes.FILTER:
           return { type, Panel: FilterPanel };
         case PanelTypes.SIZE_POSITION:
@@ -130,12 +125,8 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: LinkPanel };
         case PanelTypes.TEXT_STYLE:
           return { type, Panel: TextStylePanel };
-        case PanelTypes.TEXT_BOX:
-          return { type, Panel: TextBoxPanel };
         case PanelTypes.SHAPE_STYLE:
           return { type, Panel: ShapeStylePanel };
-        case PanelTypes.BORDER_RADIUS:
-          return { type, Panel: BorderRadiusPanel };
         case PanelTypes.BORDER:
           return { type, Panel: BorderStylePanel };
         case PanelTypes.VIDEO_OPTIONS:

@@ -115,9 +115,7 @@ describe('Styling multiple text fields', () => {
       );
     });
 
-    // Disable reason: To be fixed in 8655
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should apply formatting correctly for multi-style text field', async () => {
+    it('should apply formatting correctly for multi-style text field', async () => {
       const {
         bold,
         italic,
@@ -167,6 +165,7 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontColor.button);
       waitFor(() => fontColor.picker);
+      await data.fixture.events.click(fontColor.picker.custom);
       await data.fixture.events.click(fontColor.picker.hexButton);
       await data.fixture.events.keyboard.type('00FF00');
       // Wait for debounce in color picker (100ms)

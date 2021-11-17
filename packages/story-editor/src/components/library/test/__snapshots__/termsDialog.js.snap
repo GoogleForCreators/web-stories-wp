@@ -1,6 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TermsDialog should render 1`] = `
+.c1 {
+  width: 12px;
+  margin-left: 0.5ch;
+  margin-bottom: 2px;
+  stroke-width: 0;
+  vertical-align: text-bottom;
+}
+
 .c0 {
   font-family: 'Google Sans',sans-serif;
   color: #131516;
@@ -20,6 +28,7 @@ exports[`TermsDialog should render 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  vertical-align: baseline;
 }
 
 .c0:focus {
@@ -47,6 +56,11 @@ exports[`TermsDialog should render 1`] = `
   rel="noreferrer"
   target="_blank"
 >
-  Learn more.
+  <span>
+    Learn more.
+    <span
+      class="c1"
+    />
+  </span>
 </a>
 `;

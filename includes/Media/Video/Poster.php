@@ -51,6 +51,24 @@ class Poster extends Service_Base {
 	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
+	 * Media_Source_Taxonomy instance.
+	 *
+	 * @var Media_Source_Taxonomy Experiments instance.
+	 */
+	protected $media_source_taxonomy;
+
+	/**
+	 * Poster constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Media_Source_Taxonomy $media_source_taxonomy Media_Source_Taxonomy instance.
+	 */
+	public function __construct( Media_Source_Taxonomy $media_source_taxonomy ) {
+		$this->media_source_taxonomy = $media_source_taxonomy;
+	}
+
+	/**
 	 * Init.
 	 *
 	 * @since 1.10.0
@@ -160,18 +178,22 @@ class Poster extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array   $response   Array of prepared attachment data.
-	 * @param WP_Post $attachment Attachment object.
+	 * @param array|mixed $response   Array of prepared attachment data.
+	 * @param WP_Post     $attachment Attachment object.
 	 *
-	 * @return array $response;
+	 * @return array|mixed $response;
 	 */
-	public function wp_prepare_attachment_for_js( $response, $attachment ): array {
+	public function wp_prepare_attachment_for_js( $response, $attachment ) {
+		if ( ! is_array( $response ) ) {
+			return $response;
+		}
 		if ( 'video' === $response['type'] ) {
 			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
 			$image        = '';
 			if ( 0 !== $thumbnail_id ) {
 				$image = $this->get_thumbnail_data( $thumbnail_id );
 			}
+
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
 		}
@@ -189,7 +211,12 @@ class Poster extends Service_Base {
 	 * @return array
 	 */
 	public function get_thumbnail_data( int $thumbnail_id ): array {
-		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
+		$img_src = wp_get_attachment_image_src( $thumbnail_id, 'full' );
+
+		if ( ! $img_src ) {
+			return [];
+		}
+
 		list ( $src, $width, $height ) = $img_src;
 		$generated                     = $this->is_poster( $thumbnail_id );
 		return compact( 'src', 'width', 'height', 'generated' );
@@ -231,7 +258,7 @@ class Poster extends Service_Base {
 	 * @return bool
 	 */
 	protected function is_poster( int $post_id ): bool {
-		$terms = get_the_terms( $post_id, Media_Source_Taxonomy::TAXONOMY_SLUG );
+		$terms = get_the_terms( $post_id, $this->media_source_taxonomy->get_taxonomy_slug() );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );
 

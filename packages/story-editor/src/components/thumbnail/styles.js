@@ -145,6 +145,15 @@ export const Background = styled.div(
 
     ${$isPage &&
     css`
+      /* Specific overrides for PagePreview that is borrowed for checklist's thumbnails */
+      .pagePreviewOverrides {
+        border-color: none;
+
+        &::after {
+          content: none;
+          border: none;
+        }
+      }
       /* stylelint-disable-next-line */
       & > div > div {
         width: 100%;

@@ -39,7 +39,7 @@ import {
   TableStatusCell,
 } from '../../../../../components';
 import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
-import { STORY_STATUS } from '../../../../../constants';
+import { DISPLAY_STATUS, STORY_STATUS } from '../../../../../constants';
 import {
   RenameStoryPropType,
   StoryMenuPropType,
@@ -63,13 +63,6 @@ function onBlurDeselectAll() {
   window.getSelection().removeAllRanges();
 }
 
-const DISPLAY_STATUS = {
-  [STORY_STATUS.PUBLISH]: __('Published', 'web-stories'),
-  [STORY_STATUS.FUTURE]: __('Scheduled', 'web-stories'),
-  [STORY_STATUS.DRAFT]: __('Draft', 'web-stories'),
-  [STORY_STATUS.PRIVATE]: __('Private', 'web-stories'),
-};
-
 export const StoryListItem = ({
   story,
   renameStory,
@@ -92,7 +85,7 @@ export const StoryListItem = ({
           __('Context menu for %s', 'web-stories'),
           formattedTitle
         )}
-        onMoreButtonSelected={storyMenu.handleMenuToggle}
+        onMoreButtonSelected={(_, id) => storyMenu.handleMenuToggle(id)}
         contextMenuId={storyMenu.contextMenuId}
         storyId={story.id}
         menuItems={generateStoryMenu({
@@ -154,7 +147,7 @@ export const StoryListItem = ({
                 onFocus={onFocusSelectAll}
                 onBlur={onBlurDeselectAll}
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-                as="h4"
+                as="h3"
                 aria-label={
                   isLocked
                     ? sprintf(
@@ -175,17 +168,17 @@ export const StoryListItem = ({
       </TableCell>
       <TableCell>
         <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {story.author || '—'}
+          {story.author?.name || '—'}
         </Text>
       </TableCell>
       <TableCell>
         <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {getRelativeDisplayDate(story.created_gmt)}
+          {getRelativeDisplayDate(story.createdGmt)}
         </Text>
       </TableCell>
       <TableCell>
         <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {getRelativeDisplayDate(story.modified_gmt)}
+          {getRelativeDisplayDate(story.modifiedGmt)}
         </Text>
       </TableCell>
       {storyStatus !== STORY_STATUS.DRAFT && (

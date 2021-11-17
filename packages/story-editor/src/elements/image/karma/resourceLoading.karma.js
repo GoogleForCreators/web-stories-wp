@@ -40,7 +40,7 @@ describe('Image resource loading integration', () => {
     // Sleep a bit to ensure the media gallery grid is properly laid out.
     await fixture.events.sleep(50);
 
-    const image = fixture.screen.getAllByLabelText(
+    const image = fixture.screen.getAllByAltText(
       'image with transparent background'
     );
     await fixture.events.mouse.clickOn(image[0], 20, 20);

@@ -18,8 +18,6 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { TransformProvider, FontContext } from '@web-stories-wp/story-editor';
-
 /**
  * Internal dependencies
  */
@@ -28,36 +26,12 @@ import { renderWithProviders } from '../../../../../../testUtils';
 import LayoutProvider from '../../../../../../components/layout/provider';
 import { formattedTemplatesArray } from '../../../../../../storybookUtils';
 
-function render(ui, providerValues = {}, renderOptions = {}) {
-  const fontContextValue = {
-    state: {
-      fonts: [],
-    },
-    actions: {
-      maybeEnqueueFontStyle: jest.fn(),
-    },
-  };
-
-  return renderWithProviders(
-    ui,
-    providerValues,
-    renderOptions,
-    ({ children }) => (
-      <TransformProvider>
-        <FontContext.Provider value={fontContextValue}>
-          {children}
-        </FontContext.Provider>
-      </TransformProvider>
-    )
-  );
-}
-
 describe('Template Details <RelatedGrid />', () => {
   it('should render a grid of related templates', () => {
-    render(
+    renderWithProviders(
       <LayoutProvider>
         <RelatedGrid
-          pageSize={{ width: 200, height: 350, containerHeight: 350 }}
+          pageSize={{ width: 200, height: 350 }}
           relatedTemplates={formattedTemplatesArray.slice(0, 3)}
           templateActions={{
             createStoryFromTemplate: jest.fn(),
@@ -75,10 +49,10 @@ describe('Template Details <RelatedGrid />', () => {
   });
 
   it('should not render a grid of related templates when there are no related templates', () => {
-    render(
+    renderWithProviders(
       <LayoutProvider>
         <RelatedGrid
-          pageSize={{ width: 200, height: 350, containerHeight: 350 }}
+          pageSize={{ width: 200, height: 350 }}
           relatedTemplates={[]}
           templateActions={{
             createStoryFromTemplate: jest.fn(),

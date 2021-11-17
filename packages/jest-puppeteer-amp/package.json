@@ -2,8 +2,8 @@
   "name": "@web-stories-wp/jest-puppeteer-amp",
   "private": true,
   "engines": {
-    "node": ">= 15",
-    "npm": "~7"
+    "node": ">= 16",
+    "npm": ">= 7.3"
   },
   "type": "module",
   "exports": {

@@ -27,17 +27,24 @@ import ConfigContext from '../../../../../app/config/context';
 import { renderPanel } from '../../../shared/test/_utils';
 import Captions from '../captions';
 
+function MediaUpload({ render }) {
+  const open = jest.fn();
+  return render(open);
+}
+
 describe('Panels/Captions', () => {
   const defaultElement = {
     type: 'video',
     resource: { posterId: 0, poster: '', alt: '' },
     tracks: [],
   };
-  function arrange(...args) {
+  function arrange(config, ...args) {
     const configValue = {
       capabilities: {
         hasUploadMediaAction: true,
       },
+      ...config,
+      MediaUpload,
     };
 
     const wrapper = ({ children }) => (
@@ -61,15 +68,30 @@ describe('Panels/Captions', () => {
   });
 
   it('should render <Captions /> panel', () => {
-    arrange([defaultElement]);
+    arrange({}, [defaultElement]);
     const captionRegion = screen.getByRole('region', {
       name: /Caption and subtitles/i,
     });
     expect(captionRegion).toBeInTheDocument();
   });
 
+  it('should not render <Captions /> panel', () => {
+    arrange(
+      {
+        capabilities: {
+          hasUploadMediaAction: false,
+        },
+      },
+      [defaultElement]
+    );
+    const captionRegion = screen.queryByRole('region', {
+      name: /Caption and subtitles/i,
+    });
+    expect(captionRegion).not.toBeInTheDocument();
+  });
+
   it('should display Mixed in case of mixed value multi-selection', () => {
-    arrange([
+    arrange({}, [
       defaultElement,
       {
         resource: {

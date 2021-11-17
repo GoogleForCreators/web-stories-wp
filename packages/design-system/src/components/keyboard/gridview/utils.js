@@ -17,7 +17,9 @@
 // @todo: provide a cleaner `focusFirst()` API and takes into account
 // `tabIndex`, `disabled`, links, buttons, inputs, etc.
 export function focusOnPage(page) {
-  const button = page?.querySelector('button');
+  // grab the first focusable element available.
+  // currently can be a button or an anchor.
+  const button = page?.querySelectorAll(['button', 'a'])?.[0];
   if (button) {
     button.focus();
   }

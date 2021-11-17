@@ -136,6 +136,37 @@ function CustomStyles() {
                   transform: var(--initial-transform);
                 }
               }
+
+              .captions-area {
+                width: 100%;
+                height: 100%;
+                display: grid;
+                align-content: end;
+              }
+
+              .captions-wrap {
+                margin: 0 32px 16px;
+              }
+
+              amp-story-captions {
+                text-align: center;
+              }
+
+              amp-story-captions span {
+                display: inline-block;
+                margin: 0;
+                padding: 6px 12px;
+                vertical-align: middle;
+                border-radius: 15px;
+                background: rgba(11, 11, 11, 0.6);
+                color: rgba(255, 255, 255, 1);
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;;
+                font-size: calc(4 * var(--story-page-vw));
+                line-height: 1.4;
+                word-break: break-word;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+              }
               `,
       }}
     />

@@ -30,7 +30,7 @@ import { Text } from '../../typography';
 export const SelectButton = styled.button(
   ({ theme, hasError, isOpen, selectButtonStylesOverride }) => css`
     width: 100%;
-    height: 36px;
+    height: ${({ autoHeight }) => (autoHeight ? 'auto' : '36px')};
     display: flex;
     align-items: center;
     justify-content: space-between;

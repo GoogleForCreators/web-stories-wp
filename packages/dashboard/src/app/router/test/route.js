@@ -45,10 +45,6 @@ describe('Route', function () {
     );
   });
 
-  it('should a hashed url if the route starts with a backslash', function () {
-    expect(resolveRoute('/saved-templates')).toBe('#/saved-templates');
-  });
-
   it('should append a nested route to the current hash when the path is relative', function () {
     window.location.hash = '#/templates-gallery';
     expect(resolveRoute('template-detail')).toBe(

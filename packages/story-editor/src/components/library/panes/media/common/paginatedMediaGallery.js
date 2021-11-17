@@ -98,7 +98,7 @@ function PaginatedMediaGallery({
 
   // Scroll to the top when the searchTerm or selected category changes.
   useEffect(() => {
-    refContainer.current?.scrollTo(0, 0);
+    refContainer.current?.scrollTo?.(0, 0);
   }, [searchTerm, selectedCategoryId]);
 
   // After scroll or resize, see if we need the load the next page.

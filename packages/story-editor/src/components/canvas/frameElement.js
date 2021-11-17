@@ -43,6 +43,8 @@ import { useTransformHandler } from '../transform';
 import { getElementMask } from '../../masks';
 import { MaskTypes } from '../../masks/constants';
 import useDoubleClick from '../../utils/useDoubleClick';
+import usePerformanceTracking from '../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../constants/performanceTrackingEvents';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -145,11 +147,10 @@ function FrameElement({ element }) {
     !mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE);
   const eventHandlers = {
     onMouseDown: (evt) => {
-      if (isSelected) {
-        elementRef.current.focus({ preventScroll: true });
-      } else {
+      if (!isSelected) {
         handleSelectElement(id, evt);
       }
+      elementRef.current.focus({ preventScroll: true });
       if (!isBackground) {
         evt.stopPropagation();
       }
@@ -163,6 +164,15 @@ function FrameElement({ element }) {
     onPointerLeave,
     onClick: isMedia ? handleMediaClick(id) : null,
   };
+
+  usePerformanceTracking({
+    node: maskDisabled ? elementRef.current : null,
+    eventData: {
+      ...TRACKING_EVENTS.SELECT_ELEMENT,
+      label: element.type,
+    },
+    eventType: 'pointerdown',
+  });
 
   return (
     <WithLink

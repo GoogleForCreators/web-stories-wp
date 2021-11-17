@@ -34,32 +34,32 @@ describe('cleanForSlug', () => {
 
   it('should trim leading and ending whitespace and dashes', () => {
     const result = cleanForSlug('- Hello-World- ');
-    expect(result).toStrictEqual('hello-world');
+    expect(result).toBe('hello-world');
   });
 
   it('should not trim leading and ending whitespace and dashes if editing', () => {
     const result = cleanForSlug('- Hello-World- ', true);
-    expect(result).toStrictEqual('--hello-world--');
+    expect(result).toBe('--hello-world--');
   });
 
   it('should collapse multiple whitespace and dashes', () => {
     const result = cleanForSlug('Hello   cruel- world');
-    expect(result).toStrictEqual('hello-cruel-world');
+    expect(result).toBe('hello-cruel-world');
   });
 
   it('should not collapse multiple whitespace and dashes if editing', () => {
     const result = cleanForSlug('Hello   cruel- world', true);
-    expect(result).toStrictEqual('hello---cruel--world');
+    expect(result).toBe('hello---cruel--world');
   });
 
   it('should remove diacritics', () => {
     const result = cleanForSlug('-Hello-World-');
-    expect(result).toStrictEqual('hello-world');
+    expect(result).toBe('hello-world');
   });
 
   it('should remove all illegal characters', () => {
     const result = cleanForSlug('Hello-?,:;!"World');
-    expect(result).toStrictEqual('hello-world');
+    expect(result).toBe('hello-world');
   });
 
   // Disable reason: not implemented yet.

@@ -39,7 +39,6 @@ export const defaultAttributes = SHARED_DEFAULT_ATTRIBUTES;
 
 export const panels = [
   PanelTypes.ELEMENT_ALIGNMENT,
-  PanelTypes.LAYER_STYLE,
   PanelTypes.SIZE_POSITION,
   PanelTypes.ANIMATION,
   PanelTypes.LINK,

@@ -30,14 +30,14 @@ describe('appendRevisionToVersion', () => {
     const orig = process.env.GITHUB_SHA;
     delete process.env.GITHUB_SHA;
     const result = appendRevisionToVersion('1.2.3');
-    expect(result).toStrictEqual('1.2.3+1234567');
+    expect(result).toBe('1.2.3+1234567');
     process.env.GITHUB_SHA = orig;
   });
 
   it('should use the provided git commit hash', () => {
     process.env.GITHUB_SHA = 'abc1234';
     const result = appendRevisionToVersion('1.2.3');
-    expect(result).toStrictEqual('1.2.3+abc1234');
+    expect(result).toBe('1.2.3+abc1234');
     delete process.env.GITHUB_SHA;
   });
 });

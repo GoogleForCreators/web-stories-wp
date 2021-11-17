@@ -21,30 +21,40 @@
 // That's why the public path assignment is in its own dedicated module and imported here at the very top.
 // See https://webpack.js.org/guides/public-path/#on-the-fly
 import './publicPath';
+import './style.css'; // This way the general editor styles are loaded before all the component styles.
+
+// We need to load translations before any other imports happen.
+// That's why this is in its own dedicated module imported here at the very top.
+import './setLocaleData';
 
 /**
  * External dependencies
  */
-import App from '@web-stories-wp/story-editor';
+import StoryEditor from '@web-stories-wp/story-editor';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
-import { FlagsProvider } from 'flagged';
 import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import './style.css'; // This way the general editor styles are loaded before all the component styles.
+import {
+  Layout,
+  PostPublishDialog,
+  StatusCheck,
+  PostLock,
+  MediaUpload,
+} from './components';
+import getApiCallbacks from './api/utils/getApiCallbacks';
 
 /**
  * Initializes the web stories editor.
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
- * @param {Object} flags    The flags for the application.
  */
-const initialize = (id, config, flags) => {
+const initialize = (id, config) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
@@ -54,19 +64,28 @@ const initialize = (id, config, flags) => {
 
   initializeTracking('Editor');
 
+  const editorConfig = {
+    ...config,
+    apiCallbacks: getApiCallbacks(config),
+    MediaUpload,
+  };
+
   render(
-    <FlagsProvider features={flags}>
-      <StrictMode>
-        <App config={config} />
-      </StrictMode>
-    </FlagsProvider>,
+    <StrictMode>
+      <StoryEditor config={editorConfig}>
+        <Layout />
+        <PostPublishDialog />
+        <StatusCheck />
+        <PostLock />
+      </StoryEditor>
+    </StrictMode>,
     appElement
   );
 };
 
 const initializeWithConfig = () => {
-  const { id, config, flags } = window.webStoriesEditorSettings;
-  initialize(id, config, flags);
+  const { id, config } = window.webStoriesEditorSettings;
+  initialize(id, config);
 };
 
 if ('loading' === document.readyState) {

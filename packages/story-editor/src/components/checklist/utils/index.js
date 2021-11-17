@@ -19,3 +19,4 @@ export { filterStoryPages } from './filterStoryPages';
 export { filterStoryElements } from './filterStoryElements';
 export { getVisibleThumbnails } from './getVisibleThumbnails';
 export { getSpansFromContent } from './getSpansFromContent';
+export { ThumbnailPagePreview } from './thumbnailPagePreview';

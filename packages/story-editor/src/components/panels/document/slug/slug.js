@@ -109,24 +109,27 @@ function SlugPanel() {
       ? permalinkConfig.prefix + slug + permalinkConfig.suffix
       : link;
 
+  // In case of non-pretty permalinks, we're not showing the input.
   return (
     <SimplePanel
       name="permalink"
       title={__('Permalink', 'web-stories')}
       collapsedByDefault={false}
     >
-      <PermalinkRow>
-        <Input
-          value={String(slug)}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder={__('Enter slug', 'web-stories')}
-          aria-label={__('URL slug', 'web-stories')}
-          minLength={MIN_MAX.PERMALINK.MIN}
-          maxLength={MIN_MAX.PERMALINK.MAX}
-          containerStyleOverride={inputContainerStyleOverride}
-        />
-      </PermalinkRow>
+      {permalinkConfig && (
+        <PermalinkRow>
+          <Input
+            value={String(slug)}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder={__('Enter slug', 'web-stories')}
+            aria-label={__('URL slug', 'web-stories')}
+            minLength={MIN_MAX.PERMALINK.MIN}
+            maxLength={MIN_MAX.PERMALINK.MAX}
+            containerStyleOverride={inputContainerStyleOverride}
+          />
+        </PermalinkRow>
+      )}
       <LinkContainer>
         <Link
           rel="noopener noreferrer"

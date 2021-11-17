@@ -209,6 +209,9 @@ wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg --quiet
 wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg --quiet
 wp media import /var/www/html/wp-content/e2e-assets/example-3.png --quiet
 
+# Ensures that the patch command below always works.
+wp option update web_stories_experiments '{}' --format=json
+
 wp option patch insert web_stories_experiments enableSVG 1
 wp media import /var/www/html/wp-content/e2e-assets/video-play.svg
 wp option patch insert web_stories_experiments enableSVG 0

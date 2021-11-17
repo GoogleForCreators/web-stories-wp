@@ -28,7 +28,6 @@ import {
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { useFeature } from 'flagged';
 
 const Saturation = lazy(() =>
   import(
@@ -57,9 +56,9 @@ import {
   BUTTON_TYPES,
 } from '@web-stories-wp/design-system';
 import CircularProgress from '../circularProgress';
+import useEyedropper from '../eyedropper';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
-import useEyedropper from './eyedropper';
 
 const CONTAINER_PADDING = 16;
 const HEADER_FOOTER_HEIGHT = 36;
@@ -139,7 +138,12 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
 
-  const handleFormatHex = useCallback((v) => `#${v}`, []);
+  const handleFormatHex = useCallback((v) => {
+    if ('transparent' === v) {
+      v = '000000';
+    }
+    return `#${v}`;
+  }, []);
   const handleFormatPercentage = useCallback((v) => `${v}%`, []);
 
   const handleHexInputChange = useCallback(
@@ -152,8 +156,6 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       onChange({ ...rgb, a: isNaN(value) ? 1 : parseInt(value) / 100 }),
     [rgb, onChange]
   );
-
-  const enableEyedropper = useFeature('enableEyedropper');
 
   const { initEyedropper } = useEyedropper({
     onChange,
@@ -209,18 +211,16 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         </Suspense>
       </Body>
       <Footer>
-        {enableEyedropper && (
-          <Button
-            variant={BUTTON_VARIANTS.SQUARE}
-            type={BUTTON_TYPES.QUATERNARY}
-            size={BUTTON_SIZES.SMALL}
-            aria-label={__('Pick a color from canvas', 'web-stories')}
-            onClick={initEyedropper()}
-            onPointerEnter={initEyedropper(false)}
-          >
-            <Icons.Pipette />
-          </Button>
-        )}
+        <Button
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.QUATERNARY}
+          size={BUTTON_SIZES.SMALL}
+          aria-label={__('Pick a color from canvas', 'web-stories')}
+          onClick={initEyedropper()}
+          onPointerEnter={initEyedropper(false)}
+        >
+          <Icons.Pipette />
+        </Button>
         <HexValue>
           <EditablePreview
             label={__('Edit hex value', 'web-stories')}

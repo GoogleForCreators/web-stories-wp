@@ -34,6 +34,7 @@ const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 const storyTitle = 'Test post lock';
 
 describe('Post Locking', () => {
+  // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enablePostLocking']);
 
   beforeAll(async () => {
@@ -54,7 +55,7 @@ describe('Post Locking', () => {
     await visitDashboard();
 
     await expect(page).toMatch('Test post lock');
-    await page.hover('.lock-user-avatar');
+    await page.hover('[data-test-id="lock-user-avatar"]');
     await expect(page).toMatch('test_locker is currently editing this story');
     await percySnapshot(page, 'Stories Dashboard with lock', { percyCSS });
   });

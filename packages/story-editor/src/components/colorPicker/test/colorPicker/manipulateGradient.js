@@ -35,7 +35,7 @@ describe('<ColorPicker /> when manipulating a gradient', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     fireEvent.click(getGradientReverse());
@@ -74,7 +74,7 @@ describe('<ColorPicker /> when manipulating a gradient', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     fireEvent.click(getGradientRotate());

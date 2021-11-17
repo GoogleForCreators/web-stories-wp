@@ -39,10 +39,10 @@ function VideoLayerContent({
   if (!iconImage && showVideoPreviewAsBackup) {
     return <VideoImage src={src} alt={alt} />;
   } else if (!iconImage) {
-    return <Icons.Video width={28} height={28} title={alt} />;
+    return <Icons.Video width={21} height={21} title={alt} />;
   }
 
-  return <VisibleImage src={iconImage} alt={alt} width={28} height={28} />;
+  return <VisibleImage src={iconImage} alt={alt} width={21} height={21} />;
 }
 
 VideoLayerContent.propTypes = {

@@ -28,10 +28,10 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Assets;
-use Google\Web_Stories\Traits\Screen;
-use Google\Web_Stories\Traits\Stories_Script_Data;
+use Google\Web_Stories\Stories_Script_Data;
 
 /**
  * Class TinyMCE
@@ -39,8 +39,6 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  * @package Google\Web_Stories
  */
 class TinyMCE extends Service_Base {
-	use Stories_Script_Data, Screen;
-
 	/**
 	 * Web Stories tinymce script handle.
 	 *
@@ -56,14 +54,32 @@ class TinyMCE extends Service_Base {
 	private $assets;
 
 	/**
+	 * Stories_Script_Data instance.
+	 *
+	 * @var Stories_Script_Data Stories_Script_Data instance.
+	 */
+	protected $stories_script_data;
+
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
 	 * Tinymce constructor.
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param Assets $assets Assets instance.
+	 * @param Assets              $assets              Assets instance.
+	 * @param Stories_Script_Data $stories_script_data Stories_Script_Data instance.
+	 * @param Context             $context             Context instance.
 	 */
-	public function __construct( Assets $assets ) {
-		$this->assets = $assets;
+	public function __construct( Assets $assets, Stories_Script_Data $stories_script_data, Context $context ) {
+		$this->assets              = $assets;
+		$this->stories_script_data = $stories_script_data;
+		$this->context             = $context;
 	}
 
 	/**
@@ -74,7 +90,7 @@ class TinyMCE extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		if ( $this->is_block_editor() || $this->is_edit_screen() ) {
+		if ( $this->context->is_block_editor() || $this->context->is_story_editor() ) {
 			return;
 		}
 
@@ -103,11 +119,14 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $buttons Array of TinyMCE buttons.
+	 * @param array|mixed $buttons Array of TinyMCE buttons.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
-	public function tinymce_web_stories_button( array $buttons ): array {
+	public function tinymce_web_stories_button( $buttons ) {
+		if ( ! is_array( $buttons ) ) {
+			return $buttons;
+		}
 		$buttons[] = 'web_stories';
 
 		return $buttons;
@@ -118,11 +137,14 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $plugins Array of TinyMCE plugin scripts.
+	 * @param array|mixed $plugins Array of TinyMCE plugin scripts.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
-	public function web_stories_mce_plugin( array $plugins ): array {
+	public function web_stories_mce_plugin( $plugins ) {
+		if ( ! is_array( $plugins ) ) {
+			return $plugins;
+		}
 		$plugins['web_stories'] = $this->assets->get_base_url( 'assets/js/tinymce-button.js' );
 
 		return $plugins;
@@ -142,22 +164,26 @@ class TinyMCE extends Service_Base {
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
 			'webStoriesData',
-			$this->get_script_data()
+			$this->stories_script_data->get_script_data()
 		);
 	}
 
 	/**
-	 * High jack the tinymce to render an empty script tag for tinymce.
+	 * Hijack the button's script to render an empty script tag.
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param string $tag    The `<script>` tag for the enqueued script.
-	 * @param string $handle The script's registered handle.
-	 * @param string $src    The script's source URL.
+	 * @param string|mixed $tag    The `<script>` tag for the enqueued script.
+	 * @param string       $handle The script's registered handle.
+	 * @param string       $src    The script's source URL.
 	 *
-	 * @return string $tag The `<script>` tag for the enqueued script.
+	 * @return string|mixed The filtered script tag.
 	 */
-	public function script_loader_tag( $tag, $handle, $src ): string {
+	public function script_loader_tag( $tag, $handle, $src ) {
+		if ( ! is_string( $tag ) ) {
+			return $tag;
+		}
+
 		if ( self::SCRIPT_HANDLE === $handle ) {
 			$tag = str_replace( $src, '', $tag );
 			// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- False positive.

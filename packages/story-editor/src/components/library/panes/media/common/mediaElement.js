@@ -83,6 +83,9 @@ function Element({
     local,
     alt,
     isMuted,
+    isTranscoding,
+    isMuting,
+    isTrimming,
   } = resource;
 
   const oRatio =
@@ -215,7 +218,7 @@ function Element({
           active={active}
         />
         {attribution}
-        {local && (
+        {(local || isTranscoding || isMuting || isTrimming) && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (

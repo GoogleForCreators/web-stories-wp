@@ -62,8 +62,11 @@ trait Sanitization_Utils {
 	/**
 	 * Transform all hyperlinks to ensure they're always valid.
 	 *
-	 * Adds target and rel attributes.
-	 * Removes empty data-tooltip-icon and data-tooltip-text attributes.
+	 * Adds target="_blank" and rel="noreferrer" attributes.
+	 * Does not add rel="noreferrer" for same-origin links.
+	 *
+	 * Removes empty data-tooltip-icon and data-tooltip-text attributes
+	 * to prevent validation issues.
 	 *
 	 * @since 1.1.0
 	 *
@@ -71,28 +74,75 @@ trait Sanitization_Utils {
 	 * @return void
 	 */
 	private function transform_a_tags( &$document ) {
-		$hyperlinks = $document->getElementsByTagName( 'a' );
+		$links = $document->getElementsByTagName( 'a' );
 
 		/**
 		 * The <a> element
 		 *
-		 * @var DOMElement $hyperlink The <a> element
+		 * @var DOMElement $link The <a> element
 		 */
-		foreach ( $hyperlinks as $hyperlink ) {
-			if ( ! $hyperlink->getAttribute( 'target' ) ) {
-				$hyperlink->setAttribute( 'target', '_blank' );
+		foreach ( $links as $link ) {
+			if ( ! $link->getAttribute( 'target' ) ) {
+				$link->setAttribute( 'target', '_blank' );
 			}
 
-			if ( ! $hyperlink->getAttribute( 'rel' ) ) {
-				$hyperlink->setAttribute( 'rel', 'noreferrer' );
+			$is_link_to_same_origin = 0 === strpos( $link->getAttribute( 'href' ), home_url() );
+
+			$rel = $link->getAttribute( 'rel' );
+
+			// Links to the same site should not have "noreferrer".
+			// Other rel values should not be modified.
+			// See https://github.com/google/web-stories-wp/issues/9494.
+			$rel = str_replace( 'noreferrer', '', $rel );
+			if ( ! $is_link_to_same_origin ) {
+				$rel .= ' noreferrer';
 			}
 
-			if ( ! $hyperlink->getAttribute( 'data-tooltip-icon' ) ) {
-				$hyperlink->removeAttribute( 'data-tooltip-icon' );
+			if ( empty( $rel ) ) {
+				$link->removeAttribute( 'rel' );
+			} else {
+				$link->setAttribute( 'rel', trim( $rel ) );
 			}
 
-			if ( ! $hyperlink->getAttribute( 'data-tooltip-text' ) ) {
-				$hyperlink->removeAttribute( 'data-tooltip-text' );
+			if ( ! $link->getAttribute( 'data-tooltip-icon' ) ) {
+				$link->removeAttribute( 'data-tooltip-icon' );
+			}
+
+			if ( ! $link->getAttribute( 'data-tooltip-text' ) ) {
+				$link->removeAttribute( 'data-tooltip-text' );
+			}
+		}
+	}
+
+	/**
+	 * Sanitizes <amp-story-page-outlink> elements to ensure they're always valid.
+	 *
+	 * Removes empty `cta-image` attributes.
+	 * Ensures the element is always the last child of <amp-story-page>.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @return void
+	 */
+	private function sanitize_amp_story_page_outlink( &$document ) {
+		$outlink_elements = $document->getElementsByTagName( 'amp-story-page-outlink' );
+
+		/**
+		 * The <amp-story-page-outlink> element
+		 *
+		 * @var DOMElement $element The <amp-story-page-outlink> element
+		 */
+		foreach ( $outlink_elements as $element ) {
+			if ( ! $element->getAttribute( 'cta-image' ) ) {
+				$element->removeAttribute( 'cta-image' );
+			}
+
+			$amp_story_page = $element->parentNode;
+
+			if ( $amp_story_page && $element !== $amp_story_page->lastChild ) {
+				$amp_story_page->removeChild( $element );
+				$amp_story_page->appendChild( $element );
 			}
 		}
 	}
@@ -104,10 +154,9 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document       Document instance.
 	 * @param string                $publisher_logo Publisher logo.
-	 * @param string                $placeholder    Placeholder publisher logo.
 	 * @return void
 	 */
-	private function add_publisher_logo( &$document, $publisher_logo, $placeholder ) {
+	private function add_publisher_logo( &$document, $publisher_logo ) {
 		/**
 		 * The <amp-story> element.
 		 *
@@ -122,7 +171,8 @@ trait Sanitization_Utils {
 		// Add a publisher logo if missing or just a placeholder.
 		$existing_publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
 
-		if ( ! $existing_publisher_logo || $existing_publisher_logo === $placeholder ) {
+		// Backward compatibility for when fallback-wordpress-publisher-logo.png was provided by the plugin.
+		if ( ! $existing_publisher_logo || false !== strpos( $existing_publisher_logo, 'fallback-wordpress-publisher-logo.png' ) ) {
 			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
 		}
 
@@ -367,9 +417,16 @@ trait Sanitization_Utils {
 				continue;
 			}
 
-			$entries_by_widths = [];
+			$matches = [];
 
-			$entries = explode( ',', $srcset );
+			// Matches every srcset entry (consisting of a URL and a width descriptor) within `srcset=""`.
+			// Not using explode(',') to not break with URLs containing commas.
+			// Given "foo1,2/image.png 123w, foo2,3/image.png 456w", the named capture group "entry"
+			// will contain "foo1,2/image.png 123w" and "foo2,3/image.png 456w", without the trailing commas.
+			preg_match_all( '/((?<entry>[^ ]+ [\d]+w),?)/', $srcset, $matches );
+
+			$entries           = $matches['entry'] ?? [];
+			$entries_by_widths = [];
 
 			foreach ( $entries as $entry ) {
 				$entry_data = explode( ' ', $entry );
@@ -379,6 +436,35 @@ trait Sanitization_Utils {
 			}
 
 			$image->setAttribute( 'srcset', implode( ', ', $entries_by_widths ) );
+		}
+	}
+
+	/**
+	 * Remove images referencing the grid-placeholder.png file which has since been removed.
+	 *
+	 * @link https://github.com/google/web-stories-wp/issues/9530
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @return void
+	 */
+	private function remove_page_template_placeholder_images( &$document ) {
+		$placeholder_img = 'assets/images/editor/grid-placeholder.png';
+
+		/**
+		 * List of <amp-img> elements.
+		 *
+		 * @var DOMElement[] $images Image elements.
+		 */
+		$images = $document->body->getElementsByTagName( 'amp-img' );
+
+		foreach ( $images as $image ) {
+			$src = $image->getAttribute( 'src' );
+
+			if ( $image->parentNode && false !== strpos( $src, $placeholder_img ) ) {
+				$image->parentNode->removeChild( $image );
+			}
 		}
 	}
 }

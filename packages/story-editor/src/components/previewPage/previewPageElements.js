@@ -26,12 +26,12 @@ import DisplayElement from '../canvas/displayElement';
 import StoryPropTypes from '../../types';
 
 function PreviewPageElements({ page }) {
-  return page.elements.map(({ id, ...rest }) => (
+  return page.elements.map((element) => (
     <DisplayElement
       previewMode
-      key={id}
+      key={element.id}
       page={page}
-      element={{ id, ...rest }}
+      element={element}
       isAnimatable
     />
   ));

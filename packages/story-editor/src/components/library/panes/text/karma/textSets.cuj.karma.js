@@ -22,7 +22,7 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../../../karma/fixture';
+import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
 
 describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => {
@@ -57,10 +57,11 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     const textSets = fixture.editor.library.text.textSets;
     await fixture.events.click(textSets[1]);
 
-    const storyContext = await fixture.renderHook(() => useStory());
-    const selection = storyContext.state.selectedElements;
+    // Wait for text set to be inserted
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+
     // Text sets contain at least 2 elements.
-    expect(selection.length).toBeGreaterThan(1);
+    expect((await getSelection()).length).toBeGreaterThan(1);
   });
 
   it('should allow inserting text set by keyboard', async () => {
@@ -80,16 +81,14 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     expect(activeTextSetId).toBe(documentTestId);
     await fixture.events.keyboard.press('Enter');
 
-    const storyContext = await fixture.renderHook(() => useStory());
-    const selection = storyContext.state.selectedElements;
+    // Wait for text set to be inserted
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+
     // Text sets contain at least 2 elements.
-    expect(selection.length).toBeGreaterThan(1);
+    expect((await getSelection()).length).toBeGreaterThan(1);
   });
 
-  // Disable reason: flakey tests.
-  // See https://github.com/google/web-stories-wp/pull/6162
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should allow user to drag and drop text set onto page', async () => {
+  it('should allow user to drag and drop text set onto page', async () => {
     await waitFor(
       () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
       { timeout: 2000 }
@@ -109,9 +108,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
 
     // After text set has been added, there should some text elements
     await fixture.snapshot('Text set added');
-
-    const storyContext = await fixture.renderHook(() => useStory());
-    expect(storyContext.state.selectedElements.length).toBeGreaterThan(1);
+    expect((await getSelection()).length).toBeGreaterThan(1);
   });
 
   it('should allow filtering text sets by category', async () => {
@@ -137,22 +134,67 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     );
     let textSets = fixture.editor.library.text.textSets;
     await fixture.events.click(textSets[0]);
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('Editorial text set positioning');
 
-    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Header')
     );
     textSets = fixture.editor.library.text.textSets;
     await fixture.events.click(textSets[0]);
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('List text set positioning');
 
-    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Steps')
     );
     textSets = fixture.editor.library.text.textSets;
     await fixture.events.click(textSets[0]);
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('Steps text set positioning');
   });
+
+  describe('Easier/smarter text set color', () => {
+    it('should add text color based on background', async () => {
+      fixture.editor.library.text.smartColorToggle.click();
+
+      await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
+      );
+      await fixture.events.keyboard.type('000');
+      await fixture.events.keyboard.press('Tab');
+
+      await waitFor(
+        () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+        { timeout: 2000 }
+      );
+      const textSets = fixture.editor.library.text.textSets;
+      // First hover text set to trigger image generation
+      await fixture.events.mouse.moveRel(textSets[1], 10, 10);
+
+      await fixture.events.sleep(800);
+      // Then click the text set
+      await fixture.events.click(textSets[1]);
+      await waitFor(
+        () =>
+          expect(
+            fixture.editor.canvas.framesLayer.frames[1].node
+          ).toBeDefined(),
+        { timeout: 5000 }
+      );
+      const selection = await getSelection();
+      // Text color should be changed to white, since it's placed on a dark background.
+      expect(selection[1].content).toEqual(
+        '<span style="font-weight: 600; color: #fff; letter-spacing: 0.05em; text-transform: uppercase">Category</span>'
+      );
+    });
+  });
+
+  async function getSelection() {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.selectedElements;
+  }
 });

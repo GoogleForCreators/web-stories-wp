@@ -100,6 +100,9 @@ function ProviderPanel({ providerType, isActive, searchTerm, ...rest }) {
   const shouldDisplayMediaSubheading = Boolean(
     state.media?.length || state.categories.selectedCategoryId
   );
+  // When displaying search results, subHeading should be updated to reflect so
+  const searchResultsLabel = __('Search Results', 'web-stories');
+
   return (
     <ProviderWrapper {...rest}>
       {PROVIDERS[providerType].supportsCategories && (
@@ -114,7 +117,9 @@ function ProviderPanel({ providerType, isActive, searchTerm, ...rest }) {
         data-testid={'media-subheading'}
         shouldDisplay={shouldDisplayMediaSubheading}
       >
-        {displayName}
+        {searchTerm.length && !state.categories.selectedCategoryId
+          ? searchResultsLabel
+          : displayName}
       </MediaSubheading>
       <PaginatedMediaGallery
         providerType={providerType}

@@ -1,15 +1,13 @@
 {
-  "version": 32,
+  "version": 35,
   "pages": [
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -185,14 +183,14 @@
             "width": 1079,
             "height": 720,
             "id": 0,
-            "title": "Chair comfort contemporary daylight",
             "alt": "Chair comfort contemporary daylight",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [216, 211, 204]
+            "baseColor": [216, 211, 204],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 0,
@@ -235,14 +233,12 @@
       "pageTemplateType": "cover"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -360,14 +356,14 @@
             "width": 1080,
             "height": 720,
             "id": 0,
-            "title": "Man in blue crew neck shirt beside man in blue crew neck shirt photo",
             "alt": "Man in blue crew neck shirt beside man in blue crew neck shirt photo",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [36, 44, 44]
+            "baseColor": [36, 44, 44],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 50,
@@ -394,14 +390,14 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Standing lamp near window photo",
             "alt": "Standing lamp near window photo",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [217, 225, 213]
+            "baseColor": [217, 225, 213],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 136,
@@ -421,14 +417,12 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -455,14 +449,14 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Blue chair by the beige wall",
             "alt": "Blue chair by the beige wall",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [209, 198, 186]
+            "baseColor": [209, 198, 186],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 0,
@@ -564,14 +558,12 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -598,14 +590,14 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Yellow Chair",
             "alt": "Yellow Chair",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [66, 54, 43]
+            "baseColor": [66, 54, 43],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 83.5,
@@ -731,7 +723,6 @@
       "pageTemplateType": "section"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -758,14 +749,14 @@
             "width": 1080,
             "height": 1620,
             "id": 0,
-            "title": "Wooden chair and table with vase and flower",
             "alt": "Wooden chair and table with vase and flower",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [221, 206, 197]
+            "baseColor": [221, 206, 197],
+            "isExternal": true
           }
         },
         {
@@ -920,14 +911,12 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -954,14 +943,14 @@
             "width": 1080,
             "height": 1080,
             "id": 0,
-            "title": "Photo of black chair",
             "alt": "Photo of black chair",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [202, 196, 188]
+            "baseColor": [202, 196, 188],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 0,
@@ -1062,14 +1051,12 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1171,14 +1158,14 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Brown wooden framed gray padded chair photo",
             "alt": "Brown wooden framed gray padded chair photo",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [232, 231, 230]
+            "baseColor": [232, 231, 230],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 83.5,
@@ -1230,7 +1217,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1257,14 +1243,14 @@
             "width": 1080,
             "height": 721,
             "id": 0,
-            "title": "Abstract art background brown",
             "alt": "Abstract art background brown",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [198, 122, 75]
+            "baseColor": [198, 122, 75],
+            "isExternal": true
           }
         },
         {
@@ -1419,14 +1405,12 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1453,14 +1437,14 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Man sitting on a chair and reading a magazine",
             "alt": "Man sitting on a chair and reading a magazine",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [51, 62, 46]
+            "baseColor": [51, 62, 46],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "x": 0,
@@ -1628,14 +1612,12 @@
       "pageTemplateType": "quote"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1737,14 +1719,14 @@
             "width": 665,
             "height": 480,
             "id": 0,
-            "title": "Brown, White, and Blue Wooden Board",
             "alt": "Brown, White, and Blue Wooden Board",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [231, 221, 213]
+            "baseColor": [231, 221, 213],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 150,
@@ -1865,14 +1847,14 @@
             "width": 320,
             "height": 480,
             "id": 0,
-            "title": "Green leafed plant on brown pot",
             "alt": "Green leafed plant on brown pot",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [88, 79, 70]
+            "baseColor": [88, 79, 70],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "width": 150,

@@ -34,7 +34,6 @@ import {
   CardDetailsColumn,
   Row,
   Title,
-  TitleLink,
   DetailCopy,
   LockAvatar,
   LockedRow,
@@ -53,9 +52,7 @@ const StoryDisplayContent = ({
   onEditComplete,
   onEditCancel,
   status,
-  tabIndex,
   title,
-  titleLink,
 }) => {
   const displayDateText = useMemo(() => {
     if (!displayDate) {
@@ -106,7 +103,7 @@ const StoryDisplayContent = ({
             alt={name}
             height={24}
             width={24}
-            className="lock-user-avatar"
+            data-test-id="lock-user-avatar"
           />
         )}
       </Tooltip>
@@ -127,21 +124,7 @@ const StoryDisplayContent = ({
       ) : (
         <Row>
           {isLocked && <LockIcon />}
-          {titleLink ? (
-            <TitleLink
-              href={titleLink}
-              tabIndex={tabIndex}
-              aria-label={sprintf(
-                /* translators: %s: title*/
-                __('Open %s in editor', 'web-stories'),
-                title
-              )}
-            >
-              {formattedTitle}
-            </TitleLink>
-          ) : (
-            <Title>{formattedTitle}</Title>
-          )}
+          <Title>{formattedTitle}</Title>
         </Row>
       )}
       <CardDetailsGrid>
@@ -149,7 +132,10 @@ const StoryDisplayContent = ({
           {status === STORY_STATUS.DRAFT && (
             <DetailCopy isBold>{__('Draft', 'web-stories')}</DetailCopy>
           )}
-          {author && <DetailCopy>{author}</DetailCopy>}
+          {status === STORY_STATUS.PENDING && (
+            <DetailCopy isBold>{__('Pending', 'web-stories')}</DetailCopy>
+          )}
+          {author?.name && <DetailCopy>{author?.name}</DetailCopy>}
           <DetailCopy className="dashboard-grid-item-date">
             {displayDateText}
           </DetailCopy>
@@ -161,7 +147,7 @@ const StoryDisplayContent = ({
 };
 
 StoryDisplayContent.propTypes = {
-  author: PropTypes.string,
+  author: PropTypes.object,
   contextMenu: PropTypes.node,
   displayDate: PropTypes.string,
   editMode: PropTypes.bool,
@@ -171,9 +157,7 @@ StoryDisplayContent.propTypes = {
   lockUser: PropTypes.object,
   onEditComplete: PropTypes.func,
   onEditCancel: PropTypes.func,
-  tabIndex: PropTypes.number,
   title: PropTypes.string.isRequired,
-  titleLink: PropTypes.string,
   status: DashboardStatusesPropType,
 };
 

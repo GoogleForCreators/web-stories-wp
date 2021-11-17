@@ -26,11 +26,16 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Taxonomy\Category_Taxonomy;
+use Google\Web_Stories\Taxonomy\Tag_Taxonomy;
 use Google\Web_Stories\User\Preferences;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Media\Video\Optimization;
 use Google\Web_Stories\Media\Video\Muting;
 use Google\Web_Stories\Media\Video\Poster;
+use Google\Web_Stories\Media\Video\Trimming;
+use WP_Term;
+use WP_Term_Query;
 
 /**
  * Deletes options and transients.
@@ -124,6 +129,7 @@ function delete_stories_post_meta() {
 	delete_post_meta_by_key( Optimization::OPTIMIZED_ID_POST_META_KEY );
 	delete_post_meta_by_key( Muting::MUTED_ID_POST_META_KEY );
 	delete_post_meta_by_key( Muting::IS_MUTED_POST_META_KEY );
+	delete_post_meta_by_key( Trimming::TRIM_POST_META_KEY );
 }
 
 /**
@@ -154,7 +160,6 @@ function delete_posts() {
 			'suppress_filters' => false,
 			'post_type'        => [
 				Story_Post_Type::POST_TYPE_SLUG,
-				Template_Post_Type::POST_TYPE_SLUG,
 				Page_Template_Post_Type::POST_TYPE_SLUG,
 			],
 			'posts_per_page'   => - 1,
@@ -174,21 +179,31 @@ function delete_posts() {
  * @return void
  */
 function delete_terms() {
-	$taxonomy = Media_Source_Taxonomy::TAXONOMY_SLUG;
-	$term_ids = get_terms(
+	$taxonomies = [];
+
+	$settings  = new Settings();
+	$post_type = new Story_Post_Type( $settings, new Experiments( $settings ) );
+
+	$taxonomies[] = ( new Media_Source_Taxonomy( new Context( $post_type ) ) )->get_taxonomy_slug();
+	$taxonomies[] = ( new Category_Taxonomy( $post_type ) )->get_taxonomy_slug();
+	$taxonomies[] = ( new Tag_Taxonomy( $post_type ) )->get_taxonomy_slug();
+
+	$term_query = new WP_Term_Query();
+	$terms      = $term_query->query(
 		[
-			'taxonomy'   => $taxonomy,
+			'taxonomy'   => $taxonomies,
 			'hide_empty' => false,
-			'fields'     => 'ids',
 		]
 	);
 
-	if ( empty( $term_ids ) || ! is_array( $term_ids ) ) {
+	if ( empty( $terms ) || ! is_array( $terms ) ) {
 		return;
 	}
 
-	foreach ( $term_ids as $term_id ) {
-		wp_delete_term( $term_id, $taxonomy );
+	foreach ( $terms as $term ) {
+		if ( $term instanceof WP_Term ) {
+			wp_delete_term( $term->term_id, $term->taxonomy );
+		}
 	}
 }
 

@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../types';
+import StoryPropTypes, { BackgroundAudioPropType } from '../types';
 import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
 import Boilerplate from './utils/ampBoilerplate';
 import CustomCSS from './utils/styles';
@@ -32,18 +32,24 @@ import getPreloadResources from './utils/getPreloadResources';
 
 function OutputStory({
   story: {
-    featuredMedia: { url: featuredMediaUrl },
+    featuredMedia,
     link,
     title,
     autoAdvance,
     defaultPageDuration,
+    backgroundAudio,
+    publisherLogo,
   },
   pages,
   metadata: { publisher },
+  args = {},
 }) {
-  const ampExtensions = getUsedAmpExtensions(pages);
+  const ampExtensions = getUsedAmpExtensions(pages, args);
   const fontDeclarations = getFontDeclarations(pages);
   const preloadResources = getPreloadResources(pages);
+
+  const featuredMediaUrl = featuredMedia?.url || '';
+  const publisherLogoUrl = publisherLogo?.url || '';
 
   return (
     <html amp="" lang="en">
@@ -67,16 +73,17 @@ function OutputStory({
         {/* Everything between these markers can be replaced server-side. */}
         <meta name="web-stories-replace-head-start" />
         <title>{title}</title>
-        <link rel="canonical" href={link} />
+        {link && <link rel="canonical" href={link} />}
         <meta name="web-stories-replace-head-end" />
       </head>
       <body>
         <amp-story
           standalone=""
-          publisher={publisher.name}
-          publisher-logo-src={publisher.logo}
+          publisher={publisher}
+          publisher-logo-src={publisherLogoUrl}
           title={title}
           poster-portrait-src={featuredMediaUrl}
+          background-audio={backgroundAudio?.src ?? undefined}
         >
           {pages.map((page) => (
             <OutputPage
@@ -84,6 +91,7 @@ function OutputStory({
               page={page}
               autoAdvance={autoAdvance}
               defaultPageDuration={defaultPageDuration}
+              args={args}
             />
           ))}
         </amp-story>
@@ -93,14 +101,26 @@ function OutputStory({
 }
 
 OutputStory.propTypes = {
-  story: StoryPropTypes.story.isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
-  metadata: PropTypes.shape({
-    publisher: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      logo: PropTypes.string,
+  story: PropTypes.shape({
+    link: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    autoAdvance: PropTypes.bool,
+    defaultPageDuration: PropTypes.number,
+    backgroundAudio: BackgroundAudioPropType,
+    publisherLogo: PropTypes.shape({
+      url: PropTypes.string.isRequired,
+    }),
+    featuredMedia: PropTypes.shape({
+      url: PropTypes.string.isRequired,
     }),
   }).isRequired,
+  pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
+  metadata: PropTypes.shape({
+    publisher: PropTypes.string.isRequired,
+  }).isRequired,
+  args: PropTypes.shape({
+    enableBetterCaptions: PropTypes.bool,
+  }),
 };
 
 export default OutputStory;

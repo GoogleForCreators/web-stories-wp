@@ -16,13 +16,7 @@
 
 export { default as CardGallery } from './cardGallery';
 export { default as CardGrid } from './cardGrid';
-export {
-  ActionLabel,
-  CardPreviewContainer,
-  CardTitle,
-  FocusableGridItem,
-  default as CardGridItem,
-} from './cardGridItem';
+export { default as CardGridItem } from './cardGridItem';
 export { default as ColorList } from './colorList';
 export { StandardViewContentGutter } from './contentGutter';
 export { default as Dialog } from './dialog';

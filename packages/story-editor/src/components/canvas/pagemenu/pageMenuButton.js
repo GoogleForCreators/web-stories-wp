@@ -18,37 +18,51 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import {
   Button,
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
 } from '@web-stories-wp/design-system';
+import { forwardRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import Tooltip from '../../tooltip';
 
-function PageMenuButton({ children, title, shortcut, ...rest }) {
+const StyledButton = styled(Button)`
+  margin-top: 12px;
+`;
+
+function PageMenuButtonWithRef(
+  { children, title, shortcut, ...rest },
+  forwardedRef
+) {
   return (
     <Tooltip title={title} shortcut={shortcut} hasTail>
-      <Button
+      <StyledButton
         variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.TERTIARY}
+        type={BUTTON_TYPES.SECONDARY}
         size={BUTTON_SIZES.SMALL}
+        ref={forwardedRef}
         {...rest}
       >
         {children}
-      </Button>
+      </StyledButton>
     </Tooltip>
   );
 }
+
+const PageMenuButton = forwardRef(PageMenuButtonWithRef);
 
 PageMenuButton.propTypes = {
   children: PropTypes.node,
   title: PropTypes.string,
   shortcut: PropTypes.string,
 };
+
+PageMenuButtonWithRef.propTypes = PageMenuButton.propTypes;
 
 export default PageMenuButton;

@@ -39,9 +39,6 @@ export const PAGE_WIDTH_FACTOR = 12;
 
 export const DESIGN_SPACE_MARGIN = 48;
 
-export const COLOR_PRESETS_PER_ROW = 6;
-export const STYLE_PRESETS_PER_ROW = 2;
-
 export const TEXT_SET_SIZE = 150;
 
 export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
@@ -95,4 +92,9 @@ export const OUTLINK_THEME = {
   DARK: 'dark',
   LIGHT: 'light',
   CUSTOM: 'custom',
+};
+
+export const PRESET_TYPES = {
+  STYLE: 'style',
+  COLOR: 'colors',
 };

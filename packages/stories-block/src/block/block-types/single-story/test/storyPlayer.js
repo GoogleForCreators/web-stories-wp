@@ -59,9 +59,12 @@ describe('StoryPlayer', () => {
       >
         <a
           href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
-          style="--story-player-poster: url('https://amp.dev/static/samples/img/story_dog2_portrait.jpg');"
         >
-          Stories in AMP
+          <img
+            alt="Stories in AMP"
+            data-amp-story-player-poster-img="true"
+            src="https://amp.dev/static/samples/img/story_dog2_portrait.jpg"
+          />
         </a>
       </amp-story-player>
     `);

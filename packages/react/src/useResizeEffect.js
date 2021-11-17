@@ -43,7 +43,7 @@ function useResizeEffect(ref, handler, deps = undefined) {
   useEffect(
     () => {
       const node = ref?.current;
-      if (!node) {
+      if (!node || !ResizeObserver) {
         return undefined;
       }
 

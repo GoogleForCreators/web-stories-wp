@@ -24,9 +24,10 @@
 namespace Google\Web_Stories\Widgets;
 
 use WP_Widget;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Assets;
-use Google\Web_Stories\Traits\Stories_Script_Data;
+use Google\Web_Stories\Stories_Script_Data;
 
 /**
  * Class Stories
@@ -34,7 +35,6 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories extends WP_Widget {
-	use Stories_Script_Data;
 
 	const SCRIPT_HANDLE = 'web-stories-widget';
 
@@ -58,19 +58,37 @@ class Stories extends WP_Widget {
 	protected $assets;
 
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
+	 * Stories_Script_Data instance.
+	 *
+	 * @var Stories_Script_Data Stories_Script_Data instance.
+	 */
+	protected $stories_script_data;
+
+	/**
 	 * Stories constructor.
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param Assets $assets Assets instance.
+	 * @param Assets              $assets Assets instance.
+	 * @param Story_Post_Type     $story_post_type Story_Post_Type instance.
+	 * @param Stories_Script_Data $stories_script_data Stories_Script_Data instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Assets $assets ) {
-		$this->assets   = $assets;
-		$id_base        = 'web_stories_widget';
-		$name           = __( 'Web Stories', 'web-stories' );
-		$widget_options = [
+	public function __construct( Assets $assets, Story_Post_Type $story_post_type, Stories_Script_Data $stories_script_data ) {
+		$this->assets              = $assets;
+		$this->story_post_type     = $story_post_type;
+		$this->stories_script_data = $stories_script_data;
+		$id_base                   = 'web_stories_widget';
+		$name                      = __( 'Web Stories', 'web-stories' );
+		$widget_options            = [
 			'description'           => __( 'Display Web Stories in sidebar section.', 'web-stories' ),
 			'classname'             => 'web-stories-widget',
 			'show_instance_in_rest' => true,
@@ -154,7 +172,7 @@ class Stories extends WP_Widget {
 		$instance = wp_parse_args( $instance, $this->default_values() );
 
 		$title              = $instance['title'];
-		$view_types         = $this->get_layouts();
+		$view_types         = $this->stories_script_data->get_layouts();
 		$current_view_type  = (string) $instance['view_type'];
 		$show_title         = ! empty( $instance['show_title'] );
 		$show_author        = ! empty( $instance['show_author'] );
@@ -169,6 +187,8 @@ class Stories extends WP_Widget {
 		$number_of_stories  = (int) $instance['number_of_stories'];
 		$orderby            = (string) $instance['orderby'];
 		$order              = (string) $instance['order'];
+
+		$has_archive = $this->story_post_type->get_has_archive();
 
 		$this->input(
 			[
@@ -348,30 +368,32 @@ class Stories extends WP_Widget {
 			]
 		);
 
-		$this->input(
-			[
-				'id'            => 'show_archive_link',
-				'name'          => 'show_archive_link',
-				'label'         => __( 'Display Archive Link', 'web-stories' ),
-				'type'          => 'checkbox',
-				'classname'     => 'widefat show_archive_link stories-widget-field',
-				'wrapper_class' => 'archive_link_wrapper',
-				'value'         => $show_archive_link,
-			]
-		);
+		if ( $has_archive ) {
+			$this->input(
+				[
+					'id'            => 'show_archive_link',
+					'name'          => 'show_archive_link',
+					'label'         => __( 'Display Archive Link', 'web-stories' ),
+					'type'          => 'checkbox',
+					'classname'     => 'widefat show_archive_link stories-widget-field',
+					'wrapper_class' => 'archive_link_wrapper',
+					'value'         => $show_archive_link,
+				]
+			);
 
-		$this->input(
-			[
-				'id'            => 'archive_link_label',
-				'name'          => 'archive_link_label',
-				'label'         => __( 'Archive Link Label', 'web-stories' ),
-				'type'          => 'text',
-				'classname'     => 'widefat archive_link_label stories-widget-field',
-				'wrapper_class' => 'archive_link_label_wrapper',
-				'value'         => $archive_link_label,
-				'label_before'  => true,
-			]
-		);
+			$this->input(
+				[
+					'id'            => 'archive_link_label',
+					'name'          => 'archive_link_label',
+					'label'         => __( 'Archive Link Label', 'web-stories' ),
+					'type'          => 'text',
+					'classname'     => 'widefat archive_link_label stories-widget-field',
+					'wrapper_class' => 'archive_link_label_wrapper',
+					'value'         => $archive_link_label,
+					'label_before'  => true,
+				]
+			);
+		}
 
 		return '';
 	}
@@ -457,7 +479,7 @@ class Stories extends WP_Widget {
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
 			'webStoriesData',
-			$this->get_script_data()
+			$this->stories_script_data->get_script_data()
 		);
 	}
 

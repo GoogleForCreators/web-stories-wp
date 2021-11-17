@@ -24,11 +24,11 @@ import {
   setBrowserViewport,
   setCurrentUser,
   trashAllPosts,
+  deleteAllMedia,
+  trashAllTerms,
 } from '@web-stories-wp/e2e-test-utils';
 
-// Extend Jest matchers.
-import 'jest-extended';
-
+// eslint-disable-next-line jest/require-hook
 expect.extend({
   toBeValidAMP,
 });
@@ -115,6 +115,7 @@ if ('true' === process.env.CI) {
 }
 
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
+// eslint-disable-next-line jest/require-hook
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 1000 });
 
 /**
@@ -165,6 +166,17 @@ function observeConsoleLogging() {
       return;
     }
 
+    // Special case: ignore 403 errors on logout page.
+    // See https://github.com/google/web-stories-wp/pull/7889
+    if (
+      text.includes(
+        'Failed to load resource: the server responded with a status of 403 (Forbidden)'
+      ) &&
+      message.stackTrace()?.[0]?.url?.endsWith('wp-login.php?action=logout')
+    ) {
+      return;
+    }
+
     //eslint-disable-next-line security/detect-object-injection
     const logFunction = OBSERVED_CONSOLE_MESSAGE_TYPES[type];
 
@@ -204,20 +216,12 @@ async function runAxeTestsForStoriesEditor() {
   await expect(page).toPassAxeTests({
     // Temporary disabled rules to enable initial integration.
     disabledRules: [
-      'aria-allowed-role',
       'aria-input-field-name',
       'aria-required-parent',
-      'button-name',
       'color-contrast',
       // Because of multiple #_wpnonce elements.
       'duplicate-id',
-      'label',
-      'landmark-banner-is-top-level',
-      'landmark-no-duplicate-banner',
-      'landmark-unique',
-      'page-has-heading-one',
       'region',
-      'scrollable-region-focusable',
       'aria-allowed-attr',
       'nested-interactive',
     ],
@@ -241,6 +245,9 @@ beforeAll(async () => {
   await setCurrentUser('admin', 'password');
   await trashAllPosts();
   await trashAllPosts('web-story');
+  await trashAllTerms('web_story_category');
+  await trashAllTerms('web_story_tag');
+  await deleteAllMedia();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe

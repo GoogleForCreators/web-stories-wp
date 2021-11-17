@@ -67,7 +67,6 @@ class Plugin extends ServiceBasedPlugin {
 	 * @var string[]
 	 */
 	const SERVICES = [
-		'activation_flag'              => Admin\Activation_Flag::class,
 		'activation_notice'            => Admin\Activation_Notice::class,
 		'admin.google_fonts'           => Admin\Google_Fonts::class,
 		'amp_output_buffer'            => Output_Buffer::class,
@@ -100,13 +99,14 @@ class Plugin extends ServiceBasedPlugin {
 		'media.video.muting'           => Media\Video\Muting::class,
 		'media.video.optimization'     => Media\Video\Optimization::class,
 		'media.video.poster'           => Media\Video\Poster::class,
+		'media.video.trimming'         => Media\Video\Trimming::class,
 		'meta_boxes'                   => Admin\Meta_Boxes::class,
 		'settings'                     => Settings::class,
 		'site_health'                  => Admin\Site_Health::class,
+		'story_archive'                => Story_Archive::class,
 		'story_post_type'              => Story_Post_Type::class,
 		'story_shortcode'              => Shortcode\Stories_Shortcode::class,
 		'svg'                          => Media\SVG::class,
-		'template_post_type'           => Template_Post_Type::class,
 		'tracking'                     => Tracking::class,
 		'tinymce'                      => Admin\TinyMCE::class,
 		'register.widget'              => Register_Widget::class,
@@ -117,14 +117,17 @@ class Plugin extends ServiceBasedPlugin {
 		'user.capabilities'            => User\Capabilities::class,
 		'rest.embed_controller'        => REST_API\Embed_Controller::class,
 		'rest.link_controller'         => REST_API\Link_Controller::class,
+		'rest.hotlinking_controller'   => REST_API\Hotlinking_Controller::class,
+		'rest.publisher_logos'         => REST_API\Publisher_Logos_Controller::class,
 		'rest.status_check_controller' => REST_API\Status_Check_Controller::class,
 		'rest.stories_autosave'        => REST_API\Stories_Autosaves_Controller::class,
 		'rest.stories_lock'            => REST_API\Stories_Lock_Controller::class,
 		'rest.media'                   => REST_API\Stories_Media_Controller::class,
 		'rest.settings'                => REST_API\Stories_Settings_Controller::class,
 		'rest.users'                   => REST_API\Stories_Users_Controller::class,
-		'rest.template_autosave'       => REST_API\Template_Autosaves_Controller::class,
-		'rest.template_lock'           => REST_API\Template_Lock_Controller::class,
+		'rest.taxonomies'              => REST_API\Stories_Taxonomies_Controller::class,
+		'taxonomy.category'            => Taxonomy\Category_Taxonomy::class,
+		'taxonomy.tag'                 => Taxonomy\Tag_Taxonomy::class,
 		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
 	];
@@ -145,26 +148,6 @@ class Plugin extends ServiceBasedPlugin {
 	}
 
 	/**
-	 * Get the bindings for the dependency injector.
-	 *
-	 * The bindings array contains a map of <interface> => <implementation>
-	 * mappings, both of which should be fully qualified class names (FQCNs).
-	 *
-	 * The <interface> does not need to be the actual PHP `interface` language
-	 * construct, it can be a `class` as well.
-	 *
-	 * Whenever you ask the injector to "make()" an <interface>, it will resolve
-	 * these mappings and return an instance of the final <class> it found.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return array<string> Associative array of fully qualified class names.
-	 */
-	protected function get_bindings(): array {
-		return [];
-	}
-
-	/**
 	 * Get the shared instances for the dependency injector.
 	 *
 	 * The shared instances array contains a list of FQCNs that are meant to be
@@ -180,16 +163,22 @@ class Plugin extends ServiceBasedPlugin {
 	 */
 	protected function get_shared_instances(): array {
 		return [
-			Assets::class,
-			Experiments::class,
-			Admin\Meta_Boxes::class,
-			Locale::class,
-			Admin\Activation_Flag::class,
-			Integrations\Site_Kit::class,
-			Analytics::class,
-			Decoder::class,
-			AMP_Story_Player_Assets::class,
+			Admin\Customizer::class,
 			Admin\Google_Fonts::class,
+			Admin\Meta_Boxes::class,
+			Analytics::class,
+			Assets::class,
+			Context::class,
+			Decoder::class,
+			Experiments::class,
+			Story_Post_Type::class,
+			Injector::class,
+			Integrations\Site_Kit::class,
+			Media\Types::class,
+			Locale::class,
+			Settings::class,
+			Stories_Script_Data::class,
+			User\Preferences::class,
 		];
 	}
 
@@ -212,34 +201,5 @@ class Plugin extends ServiceBasedPlugin {
 				return Services::get( 'injector' );
 			},
 		];
-	}
-
-	/**
-	 * Backward compatibility, old style class stored all classes instances as class properties.
-	 * Use a magic getting to populate these class properties.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @param string $name property name.
-	 *
-	 * @return mixed
-	 */
-	public function __get( $name ) {
-		$services = $this->get_service_classes();
-		if ( isset( $services[ $name ] ) ) {
-			return $this->instantiate_service( $services[ $name ] );
-		}
-
-		if ( 'integrations' === $name ) {
-			return [
-				'webstories_core_themes_support' => $this->instantiate_service( $services['integrations.themes_support'] ),
-				'site-kit'                       => $this->instantiate_service( $services['integrations.sitekit'] ),
-				'nextgen_gallery'                => $this->instantiate_service( $services['integrations.nextgen_gallery'] ),
-				'jetpack'                        => $this->instantiate_service( $services['integrations.jetpack'] ),
-				'amp'                            => $this->instantiate_service( $services['integrations.amp'] ),
-			];
-		}
-
-		return $this->$name;
 	}
 }

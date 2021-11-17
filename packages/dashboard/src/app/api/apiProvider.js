@@ -18,76 +18,33 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, createContext } from '@web-stories-wp/react';
+import { createContext } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import { useConfig } from '../config';
-import dataAdapter from './wpAdapter';
-import useMediaApi from './useMediaApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
-import useUsersApi from './useUserApi';
-import useSettingsApi from './useSettingsApi';
+import useUsersApi from './useUsersApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
-  const { api, cdnURL, encodeMarkup } = useConfig();
+  const { api: usersApi } = useUsersApi();
+  const { templates, api: templateApi } = useTemplateApi();
+  const { stories, api: storyApi } = useStoryApi();
 
-  const { currentUser, api: usersApi } = useUsersApi(dataAdapter, {
-    currentUserApi: api.currentUser,
-  });
-
-  const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
-    cdnURL,
-    templateApi: api.templates,
-    encodeMarkup,
-  });
-
-  const { stories, api: storyApi } = useStoryApi(dataAdapter, {
-    storyApi: api.stories,
-  });
-
-  const { media, api: mediaApi } = useMediaApi(dataAdapter, {
-    globalMediaApi: api.media,
-  });
-
-  const { settings, api: settingsApi } = useSettingsApi(dataAdapter, {
-    globalStoriesSettingsApi: api.settings,
-  });
-
-  const value = useMemo(
-    () => ({
-      state: {
-        media,
-        settings,
-        stories,
-        templates,
-        currentUser,
-      },
-      actions: {
-        mediaApi,
-        settingsApi,
-        storyApi,
-        templateApi,
-        usersApi,
-      },
-    }),
-    [
-      media,
-      settings,
+  const value = {
+    state: {
       stories,
       templates,
-      currentUser,
-      mediaApi,
-      settingsApi,
+    },
+    actions: {
       storyApi,
       templateApi,
       usersApi,
-    ]
-  );
+    },
+  };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 }

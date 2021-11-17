@@ -28,6 +28,7 @@ import {
   togglePrefixStyle,
 } from '../styleManipulation';
 
+// eslint-disable-next-line jest/require-hook
 expect.extend({
   toHaveStyleAtCursor(received, style) {
     const styles = received.getCurrentInlineStyle().toArray();
@@ -85,7 +86,7 @@ describe('getPrefixStyleForCharacter', () => {
       { toArray: () => ['ALPHA', 'BRAVO', 'CHARLIE'] },
       'BRAVO'
     );
-    expect(match).toStrictEqual('BRAVO');
+    expect(match).toBe('BRAVO');
   });
 
   it('should return a prefix match', () => {
@@ -93,7 +94,7 @@ describe('getPrefixStyleForCharacter', () => {
       { toArray: () => ['ALPHA-1', 'BRAVO-2', 'CHARLIE-3'] },
       'BRAVO'
     );
-    expect(match).toStrictEqual('BRAVO-2');
+    expect(match).toBe('BRAVO-2');
   });
 
   it('should return first match if multiple', () => {
@@ -101,7 +102,7 @@ describe('getPrefixStyleForCharacter', () => {
       { toArray: () => ['ALPHA-1', 'BRAVO-2', 'BRAVO-3'] },
       'BRAVO'
     );
-    expect(match).toStrictEqual('BRAVO-2');
+    expect(match).toBe('BRAVO-2');
   });
 
   it('should return NONE if no match', () => {
@@ -109,7 +110,7 @@ describe('getPrefixStyleForCharacter', () => {
       { toArray: () => ['ALPHA-1', 'BRAVO-2', 'CHARLIE-3'] },
       'DELTA'
     );
-    expect(match).toStrictEqual('NONE');
+    expect(match).toBe('NONE');
   });
 });
 

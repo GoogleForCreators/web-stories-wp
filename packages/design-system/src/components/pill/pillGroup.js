@@ -30,6 +30,7 @@ const Container = styled.div.attrs({
 })`
   display: flex;
   flex: 1;
+  column-gap: 4px;
 `;
 
 function PillGroup({ options, value, onSelect, ...rest }) {

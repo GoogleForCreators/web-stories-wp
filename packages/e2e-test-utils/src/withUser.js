@@ -28,9 +28,11 @@ import { getCurrentUser, setCurrentUser } from './user';
 export default function withUser(username, password) {
   const currentUser = getCurrentUser();
 
-  /* eslint-disable jest/require-top-level-describe */
-  beforeAll(() => setCurrentUser(username, password));
+  /* eslint-disable jest/require-top-level-describe, require-await */
+  beforeAll(async () => setCurrentUser(username, password));
 
-  afterAll(() => setCurrentUser(currentUser.username, currentUser.password));
-  /* eslint-enable jest/require-top-level-describe */
+  afterAll(async () =>
+    setCurrentUser(currentUser.username, currentUser.password)
+  );
+  /* eslint-enable jest/require-top-level-describe, require-await */
 }

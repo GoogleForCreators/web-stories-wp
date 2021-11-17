@@ -25,11 +25,12 @@ import preloadImage from './preloadImage';
  * @param {string} src Image source.
  * @return {Promise} Image dimensions object.
  */
-const getImageDimensions = (src) => {
-  return preloadImage(src).then((img) => ({
+const getImageDimensions = async (src) => {
+  const img = await preloadImage(src);
+  return {
     width: img.naturalWidth,
     height: img.naturalHeight,
-  }));
+  };
 };
 
 export default getImageDimensions;

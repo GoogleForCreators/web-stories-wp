@@ -99,7 +99,6 @@ describe('Sticker library integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableStickers: true });
     await fixture.render();
   });
 

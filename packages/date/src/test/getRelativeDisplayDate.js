@@ -57,7 +57,7 @@ describe('date/getRelativeDisplayDate', () => {
     const date = subMinutes(getCurrentDate(), 2);
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('2 minutes ago');
+    expect(formattedDate).toBe('2 minutes ago');
   });
 
   it('should return 2 minutes ago in America/Los_Angeles', () => {
@@ -71,7 +71,7 @@ describe('date/getRelativeDisplayDate', () => {
     const date = subMinutes(getCurrentDate(), 2);
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('2 minutes ago');
+    expect(formattedDate).toBe('2 minutes ago');
   });
 
   it('should return an hour ago', () => {
@@ -85,7 +85,7 @@ describe('date/getRelativeDisplayDate', () => {
     const date = subHours(getCurrentDate(), 1);
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('an hour ago');
+    expect(formattedDate).toBe('an hour ago');
   });
 
   it('should return 2 hours ago', () => {
@@ -98,7 +98,7 @@ describe('date/getRelativeDisplayDate', () => {
     const date = subHours(getCurrentDate(), 2);
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('2 hours ago');
+    expect(formattedDate).toBe('2 hours ago');
   });
 
   it('should return yesterday', () => {
@@ -111,14 +111,14 @@ describe('date/getRelativeDisplayDate', () => {
     const date = subDays(getCurrentDate(), 1);
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('yesterday');
+    expect(formattedDate).toBe('yesterday');
   });
 
   it('should return 2020-05-02 with no formatting options', () => {
     const date = '2020-05-02T10:47:26';
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('2020-05-02');
+    expect(formattedDate).toBe('2020-05-02');
   });
 
   it('should return May 2, 2020 with F j, Y formatting options', () => {
@@ -132,7 +132,7 @@ describe('date/getRelativeDisplayDate', () => {
     const date = '2020-05-02T10:47:26';
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('May 2, 2020');
+    expect(formattedDate).toBe('May 2, 2020');
   });
 
   it('should return 2020-05-02 with Y-m-d formatting options', () => {
@@ -146,7 +146,7 @@ describe('date/getRelativeDisplayDate', () => {
     const date = '2020-05-02T10:47:26';
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('2020-05-02');
+    expect(formattedDate).toBe('2020-05-02');
   });
 
   it('should return 05/02/2020 with m/d/Y formatting options', () => {
@@ -160,7 +160,7 @@ describe('date/getRelativeDisplayDate', () => {
     const date = '2020-05-02T10:47:26';
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('05/02/2020');
+    expect(formattedDate).toBe('05/02/2020');
   });
 
   it('should return 02/05/2020 with d/m/Y formatting options', () => {
@@ -174,7 +174,7 @@ describe('date/getRelativeDisplayDate', () => {
     const date = '2020-05-02T10:47:26';
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('02/05/2020');
+    expect(formattedDate).toBe('02/05/2020');
   });
 
   it('should return Sat 05 02 2020 with D m d yy formatting options', () => {
@@ -187,7 +187,7 @@ describe('date/getRelativeDisplayDate', () => {
     const date = '2020-05-02T10:47:26';
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('Sat 05 02 2020');
+    expect(formattedDate).toBe('Sat 05 02 2020');
   });
 
   it('should correctly format a string date', () => {
@@ -201,12 +201,12 @@ describe('date/getRelativeDisplayDate', () => {
     const date = '2020-05-02T10:47:26';
     const formattedDate = getRelativeDisplayDate(date);
 
-    expect(formattedDate).toStrictEqual('05/02/2020');
+    expect(formattedDate).toBe('05/02/2020');
   });
 
   it('should return an empty string with a null date', () => {
     const formattedDate = getRelativeDisplayDate(null);
 
-    expect(formattedDate).toStrictEqual('');
+    expect(formattedDate).toBe('');
   });
 });

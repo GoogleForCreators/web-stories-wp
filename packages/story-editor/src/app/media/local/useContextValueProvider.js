@@ -28,7 +28,6 @@ import { useConfig } from '../../config';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
-import getResourceFromAttachment from '../utils/getResourceFromAttachment';
 import useDetectVideoHasAudio from '../utils/useDetectVideoHasAudio';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
@@ -90,12 +89,11 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         cacheBust: cacheBust,
       })
         .then(({ data, headers }) => {
-          const totalPages = parseInt(headers['X-WP-TotalPages']);
-          const totalItems = parseInt(headers['X-WP-Total']);
-          const mediaArray = data.map(getResourceFromAttachment);
+          const totalPages = parseInt(headers.totalPages);
+          const totalItems = parseInt(headers.totalItems);
           const hasMore = p < totalPages;
           callback({
-            media: mediaArray,
+            media: data,
             mediaType: currentMediaType,
             searchTerm: currentSearchTerm,
             pageToken: p,
@@ -184,13 +182,14 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setAudioProcessing, updateVideoIsMuted, removeAudioProcessing]
   );
 
-  const { optimizeVideo, optimizeGif, muteExistingVideo } = useProcessMedia({
-    uploadVideoPoster,
-    updateVideoIsMuted,
-    uploadMedia,
-    updateMedia,
-    deleteMediaElement,
-  });
+  const { optimizeVideo, optimizeGif, muteExistingVideo, trimExistingVideo } =
+    useProcessMedia({
+      uploadVideoPoster,
+      updateVideoIsMuted,
+      uploadMedia,
+      updateMedia,
+      deleteMediaElement,
+    });
 
   const generateMissingPosters = useCallback(
     ({ mimeType, posterId, id, src, local, type }) => {
@@ -254,6 +253,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       optimizeVideo,
       optimizeGif,
       muteExistingVideo,
+      trimExistingVideo,
     },
   };
 }

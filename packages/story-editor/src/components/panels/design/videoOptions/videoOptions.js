@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { canTranscodeResource } from '@web-stories-wp/media';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
@@ -32,17 +33,18 @@ import {
   BUTTON_VARIANTS,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
-import { useFeature } from 'flagged';
-import { useCallback, useMemo, useEffect } from '@web-stories-wp/react';
+import { useCallback, useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
+import useVideoTrim from '../../../videoTrim/useVideoTrim';
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
 import { useLocalMedia } from '../../../../app';
+import CircularProgress from '../../../circularProgress';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -50,6 +52,10 @@ const Row = styled(DefaultRow)`
 
 const StyledButton = styled(Button)`
   padding: 12px 8px;
+`;
+
+const TrimButton = styled(StyledButton)`
+  margin-left: 20px;
 `;
 
 const Label = styled.label`
@@ -64,6 +70,16 @@ const StyledCheckbox = styled(Checkbox)`
   `}
 `;
 
+const TrimWrapper = styled.div`
+  position: relative;
+  display: flex;
+`;
+
+const Spinner = styled.div`
+  margin-left: 4px;
+  margin-top: 4px;
+`;
+
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 })`
@@ -71,55 +87,63 @@ const HelperText = styled(Text).attrs({
 `;
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
-  const isMuteVideoEnabled = useFeature('enableMuteVideo');
   const { isTranscodingEnabled } = useFFmpeg();
   const { muteExistingVideo } = useLocalMedia((state) => ({
     muteExistingVideo: state.actions.muteExistingVideo,
   }));
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuted, isTranscoding, isMuting, local } = resource;
+  const { isMuting, isMuted, isTrimming } = resource;
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
-  const handleHandleMuteVideo = useCallback(() => {
+  const handleMuteVideo = useCallback(() => {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
-  const shouldDisplayMuteButton = useMemo(() => {
-    return (
-      (isMuteVideoEnabled &&
-        isTranscodingEnabled &&
-        !local &&
-        !isMuted &&
-        !isTranscoding &&
-        isSingleElement) ||
-      isMuting
-    );
-  }, [
-    isMuteVideoEnabled,
-    isTranscodingEnabled,
-    local,
-    isMuted,
-    isTranscoding,
-    isSingleElement,
-    isMuting,
-  ]);
+  const shouldDisableVideoActions = !canTranscodeResource(resource);
 
-  const buttonText = useMemo(() => {
-    return isMuting
-      ? __('Removing audio', 'web-stories')
-      : __('Remove audio', 'web-stories');
-  }, [isMuting]);
+  const shouldDisplayMuteButton =
+    isTranscodingEnabled &&
+    isSingleElement &&
+    ((!isMuted && canTranscodeResource(resource)) || isMuting);
+  const muteButtonText = isMuting
+    ? __('Removing audio…', 'web-stories')
+    : __('Remove audio', 'web-stories');
+
+  const trimButtonText = isTrimming
+    ? __('Trimming…', 'web-stories')
+    : __('Trim', 'web-stories');
+
+  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
+    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
+      hasTrimMode,
+      toggleTrimMode,
+    })
+  );
 
   const speak = useLiveRegion();
 
   useEffect(() => {
     if (isMuting) {
-      speak(buttonText);
+      speak(muteButtonText);
     }
-  }, [isMuting, buttonText, speak]);
+  }, [isMuting, muteButtonText, speak]);
+
+  useEffect(() => {
+    if (isTrimming) {
+      speak(trimButtonText);
+    }
+  }, [isTrimming, trimButtonText, speak]);
 
   const checkboxId = `cb-${uuidv4()}`;
+
+  const Processing = () => {
+    return (
+      <Spinner>
+        <CircularProgress size={24} />
+      </Spinner>
+    );
+  };
 
   return (
     <SimplePanel
@@ -137,19 +161,34 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
             {__('Loop', 'web-stories')}
           </Text>
         </Label>
-      </Row>
-      {shouldDisplayMuteButton && (
-        <>
-          <Row>
-            <StyledButton
-              disabled={isMuting}
+        {hasTrimMode && (
+          <TrimWrapper>
+            <TrimButton
+              disabled={shouldDisableVideoActions}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
-              onClick={handleHandleMuteVideo}
+              onClick={toggleTrimMode}
             >
-              {buttonText}
+              {trimButtonText}
+            </TrimButton>
+            {isTrimming && <Processing />}
+          </TrimWrapper>
+        )}
+      </Row>
+      {shouldDisplayMuteButton && (
+        <>
+          <Row spaceBetween={false}>
+            <StyledButton
+              disabled={shouldDisableVideoActions}
+              variant={BUTTON_VARIANTS.RECTANGLE}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={handleMuteVideo}
+            >
+              {muteButtonText}
             </StyledButton>
+            {isMuting && <Processing />}
           </Row>
           <Row>
             <HelperText>

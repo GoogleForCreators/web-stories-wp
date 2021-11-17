@@ -109,46 +109,49 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
-= 1.10.0 =
+= 1.14.0 =
 
-**Release Date:** August 10, 2021.
+**Release Date:** November 2, 2021.
 
-* New feature: 29 new templates for creators to choose from.
-* New feature: color eyedropper.
-* New feature: extended list of stickers.
-* New feature: ability to serve videos from the Google cache.
-* New feature: remove audio tracks to mute videos.
+* New feature: archive page customization.
+* New feature: improved video captions appearance on the frontend.
+* New feature: right-click menu in the layers panel.
+* Performance improvements in the editor for default page templates.
+* Fixes an issue with embeds not appearing on the frontend.
 * Bug fixes and performance improvements.
 
-= 1.9.0 =
+= 1.13.0 =
 
-**Release Date:** July 13, 2021.
+**Release Date:** October 12, 2021.
 
-* New feature: freshly redesigned checklist (now located next to the help center).
-* New feature: optimize existing videos in the WordPress media library.
-* New feature: crop publisher logo and poster images directly in the editor.
-* New feature: animated GIFs are now automatically optimized as videos.
-* New feature: 9 new templates for creators to choose from.
-* Minimum requirements are now PHP 7.0+ and WordPress 5.5+.
-* Compatibility with WordPress 5.8.
+* New feature: tags and categories management in the editor.
+* Performance improvements for page thumbnails in the editor.
+* Improves AMP compatibility of the Web Stories embed block.
+* Fixes an AMP validation issue related to link icons.
+* Fixes an issue with setting link icons in the editor.
+* Fixes an issue with custom page templates that caused the editor to crash.
+* Bug fixes and performance improvements.
 
-= 1.8.1 =
+= 1.12.0 =
 
-**Release Date:** June 30, 2021.
+**Release Date:** October 5, 2021.
 
-* New feature: 5 beautifully designed templates for creators to choose from.
-* Fixes an issue with elements disappearing when using certain animations.
+* New feature: video trimming tool in the editor.
+* New feature: [improved analytics configuration](https://wp.stories.google/docs/seo/#Adding-Analytics) via opt-in on the settings page.
+* Template colors are now available in "Saved Colors" when creating a story from a template.
+* Easier selection of publisher logos in the editor.
+* Bug fixes and performance improvements.
 
 == Upgrade Notice ==
 
-= 1.10.0 =
+= 1.14.0 =
 
-New templates, eyedropper, stickers, ability to mute videos, bug fixes and performance improvements.
+Archive page customization, improved video captions appearance, layer panel improvements, and several bug fixes.
 
-= 1.9.0 =
+= 1.13.0 =
 
-New templates, redesigned checklist, logo & poster image cropping, broader media optimization, bug fixes and performance improvements.
+Categories and tags support, improved performance in the editor, and several bug fixes.
 
-= 1.8.1 =
+= 1.12.0 =
 
-5 new templates for inspiring story creation, plus some bug fixes related to animations.
+Video trimming, improved analytics configuration, publisher logos management, saved template colors, and various bug fixes.

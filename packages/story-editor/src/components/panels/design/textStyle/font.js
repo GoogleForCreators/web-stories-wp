@@ -168,7 +168,7 @@ function FontControls({
 FontControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
-  fontDropdownRef: PropTypes.object,
+  fontDropdownRef: PropTypes.func,
   highlightStylesOverride: PropTypes.array,
 };
 

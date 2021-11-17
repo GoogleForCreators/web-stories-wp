@@ -21,30 +21,36 @@
 // That's why the public path assignment is in its own dedicated module and imported here at the very top.
 // See https://webpack.js.org/guides/public-path/#on-the-fly
 import './publicPath';
+import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
+
+// We need to load translations before any other imports happen.
+// That's why this is in its own dedicated module imported here at the very top.
+import './setLocaleData';
 
 /**
  * External dependencies
  */
-import App from '@web-stories-wp/dashboard';
+import Dashboard from '@web-stories-wp/dashboard';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
-import { FlagsProvider } from 'flagged';
 import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
+import getApiCallbacks from './api/utils/getApiCallbacks';
+import { GlobalStyle } from './theme';
+import { LEFT_RAIL_SECONDARY_NAVIGATION } from './constants';
+import { Layout } from './components';
 
 /**
  * Initializes the Web Stories dashboard screen.
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
- * @param {Object} flags    The flags for the application.
  */
-const initialize = async (id, config, flags) => {
+const initialize = async (id, config) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
@@ -55,19 +61,26 @@ const initialize = async (id, config, flags) => {
   // Already tracking screen views in AppContent, no need to send page views as well.
   await initializeTracking('Dashboard', false);
 
+  const dashboardConfig = {
+    ...config,
+    apiCallbacks: getApiCallbacks(config),
+    leftRailSecondaryNavigation: LEFT_RAIL_SECONDARY_NAVIGATION,
+  };
+
   render(
-    <FlagsProvider features={flags}>
-      <StrictMode>
-        <App config={config} />
-      </StrictMode>
-    </FlagsProvider>,
+    <StrictMode>
+      <Dashboard config={dashboardConfig}>
+        <GlobalStyle />
+        <Layout />
+      </Dashboard>
+    </StrictMode>,
     appElement
   );
 };
 
 const initializeWithConfig = () => {
-  const { id, config, flags } = window.webStoriesDashboardSettings;
-  initialize(id, config, flags);
+  const { id, config } = window.webStoriesDashboardSettings;
+  initialize(id, config);
 };
 
 if ('loading' === document.readyState) {

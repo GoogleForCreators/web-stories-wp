@@ -42,7 +42,6 @@ import { useUploader } from '../../../uploader';
 import { noop } from '../../../../utils/noop';
 import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
-import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
 import * as reducer from './reducer';
 
@@ -61,6 +60,7 @@ function useMediaUploadQueue() {
     stripAudioFromVideo,
     getFirstFrameOfVideo,
     convertGifToVideo,
+    trimVideo,
   } = useFFmpeg();
 
   const [state, actions] = useReduction(initialState, reducer);
@@ -73,8 +73,10 @@ function useMediaUploadQueue() {
     cancelUploading,
     startTranscoding,
     startMuting,
+    startTrimming,
     finishTranscoding,
     finishMuting,
+    finishTrimming,
     replacePlaceholderResource,
   } = actions;
 
@@ -216,6 +218,7 @@ function useMediaUploadQueue() {
             additionalData = {},
             posterFile,
             muteVideo,
+            trimData,
           } = item;
           if ('PENDING' !== itemState) {
             return;
@@ -238,8 +241,8 @@ function useMediaUploadQueue() {
             try {
               newFile = await convertGifToVideo(file);
               finishTranscoding({ id, file: newFile });
-              additionalData.media_source = 'gif-conversion';
-              additionalData.is_muted = true;
+              additionalData.web_stories_media_source = 'gif-conversion';
+              additionalData.web_stories_is_muted = true;
             } catch (error) {
               // Cancel uploading if there were any errors.
               cancelUploading({ id, error });
@@ -256,17 +259,29 @@ function useMediaUploadQueue() {
             }
           }
 
-          // Transcode/Optimize videos before upload.
-          // TODO: Only transcode & optimize video if needed (criteria TBD).
-          // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
           if (isTranscodingEnabled && canTranscodeFile(file)) {
-            if (!muteVideo) {
-              startTranscoding({ id });
-
+            if (trimData) {
+              startTrimming({ id });
               try {
-                newFile = await transcodeVideo(file);
-                finishTranscoding({ id, file: newFile });
-                additionalData.media_source = 'video-optimization';
+                newFile = await trimVideo(file, trimData.start, trimData.end);
+                finishTrimming({ id, file: newFile });
+                additionalData.meta = {
+                  web_stories_trim_data: trimData,
+                };
+              } catch (error) {
+                // Cancel uploading if there were any errors.
+                cancelUploading({ id, error });
+
+                trackError('upload_media', error?.message);
+
+                return;
+              }
+            } else if (muteVideo) {
+              startMuting({ id });
+              try {
+                newFile = await stripAudioFromVideo(file);
+                finishMuting({ id, file: newFile });
+                additionalData.web_stories_is_muted = true;
               } catch (error) {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });
@@ -276,11 +291,16 @@ function useMediaUploadQueue() {
                 return;
               }
             } else {
-              startMuting({ id });
+              // Transcode/Optimize videos before upload.
+              // TODO: Only transcode & optimize video if needed (criteria TBD).
+              // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
+
+              startTranscoding({ id });
+
               try {
-                newFile = await stripAudioFromVideo(file);
-                finishMuting({ id, file: newFile });
-                additionalData.is_muted = true;
+                newFile = await transcodeVideo(file);
+                finishTranscoding({ id, file: newFile });
+                additionalData.web_stories_media_source = 'video-optimization';
               } catch (error) {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });
@@ -302,13 +322,11 @@ function useMediaUploadQueue() {
           const trackTiming = getTimeTracker('load_upload_media');
 
           try {
-            const attachment = await uploadFile(newFile, additionalData);
-
             // The newly uploaded file won't have a poster yet.
             // However, we'll likely still have one on file.
             // Add it back so we're never without one.
             // The final poster will be uploaded later by uploadVideoPoster().
-            newResource = getResourceFromAttachment(attachment);
+            newResource = await uploadFile(newFile, additionalData);
           } catch (error) {
             // Cancel uploading if there were any errors.
             cancelUploading({ id, error });
@@ -348,6 +366,9 @@ function useMediaUploadQueue() {
     convertGifToVideo,
     startMuting,
     finishMuting,
+    trimVideo,
+    startTrimming,
+    finishTrimming,
   ]);
 
   return useMemo(
@@ -357,13 +378,14 @@ function useMediaUploadQueue() {
           (item) => !['UPLOADED', 'CANCELLED', 'PENDING'].includes(item.state)
         ),
         pending: state.queue.filter((item) => item.state === 'PENDING'),
-        posterProcessed: state.queue.filter(
-          (item) => item.state === 'UPLOADED'
-        ),
+        uploaded: state.queue.filter((item) => item.state === 'UPLOADED'),
         failures: state.queue.filter((item) => item.state === 'CANCELLED'),
-        isUploading: state.queue.length !== 0,
+        isUploading: state.queue.some(
+          (item) => !['UPLOADED', 'CANCELLED', 'PENDING'].includes(item.state)
+        ),
         isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),
         isMuting: state.queue.some((item) => item.state === 'MUTING'),
+        isTrimming: state.queue.some((item) => item.state === 'TRIMMING'),
       },
       actions: {
         addItem: actions.addItem,

@@ -15,39 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'indoor-garden-oasis-diy',
-  title: _x('Indoor Garden Oasis DIY', 'template name', 'web-stories'),
-  tags: [
-    _x('Home', 'template keyword', 'web-stories'),
-    _x('Garden', 'template keyword', 'web-stories'),
-    _x('How To', 'template keyword', 'web-stories'),
-    _x('Plant', 'template keyword', 'web-stories'),
-    _x('Green', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Everglades Green', 'color', 'web-stories'), color: '#235524' },
-    { label: _x('Mint Green', 'color', 'web-stories'), color: '#c2e3c3' },
-    {
-      label: _x('Banana Cream Yellow', 'color', 'web-stories'),
-      color: '#fcefab',
-    },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Mineral Green', 'color', 'web-stories'), color: '#65a867' },
-  ],
-  description: __(
-    'This template has a perfect balance of green, earthly colors and simple but playful typography. Create stories about gardening, nature crafts, cooking recipes, and more.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Home & Garden', 'template vertical', 'web-stories'),
 };

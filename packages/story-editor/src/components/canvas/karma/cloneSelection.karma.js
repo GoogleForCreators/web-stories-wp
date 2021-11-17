@@ -22,20 +22,84 @@ import { useStory } from '../../../app/story';
 
 describe('Clone element integration', () => {
   let fixture;
-  let bg, img1, img2;
+  let bg, bgRect;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
 
     bg = await getElementByIndex(1);
-    const bgRect = (
-      await getCanvasElementWrapperById(bg.id)
-    ).getBoundingClientRect();
+    bgRect = (await getCanvasElementWrapperById(bg.id)).getBoundingClientRect();
+  });
 
+  afterEach(() => {
+    fixture.restore();
+  });
+
+  it('should correctly do nothing if no selection', async () => {
+    // Switch to shapes tab and add a triangle
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
+    // Clear selection by pressing above background element
+    await clickAboveElement(bg.id);
+
+    // Press clone shortcut
+    await fixture.events.keyboard.shortcut('mod+d');
+
+    // Expect nothing to have changed
+    expect(await getNumElements()).toBe(2);
+  });
+
+  it('should correctly do nothing if background is selected', async () => {
+    // Switch to shapes tab and add a triangle
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
+    // Select background
+    await clickElement(bg.id);
+
+    // Press clone shortcut
+    await fixture.events.keyboard.shortcut('mod+d');
+
+    // Expect nothing to have changed
+    expect(await getNumElements()).toBe(2);
+  });
+
+  it('should correctly clone 1 element', async () => {
+    // Switch to shapes tab and add a triangle
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(
+      fixture.editor.library.shapes.shape('Rectangle')
+    );
+
+    // Select background to clear element selection.
+    await clickElement(bg.id);
+
+    // Select the added shape.
+    const shape = await getElementByIndex(2);
+    await clickElement(shape.id);
+
+    // Press clone shortcut
+    await fixture.events.keyboard.shortcut('mod+d');
+    // Expect a new image to have been added
+    expect(await getNumElements()).toBe(3);
+
+    // Verify new element is in fact a clone and in correct position
+    const clonedShape = await getElementByIndex(3);
+    expect(clonedShape).toEqual(
+      jasmine.objectContaining({
+        mask: {
+          type: 'rectangle',
+        },
+        x: shape.x + 30,
+        y: shape.y + 30,
+      })
+    );
+  });
+
+  it('should correctly clone 2 elements', async () => {
     // Add first image to page
     await fixture.events.click(getMediaElement(/blue-marble/));
-    img1 = await getElementByIndex(2);
+    let img1 = await getElementByIndex(2);
     // Drag it to (50,50)
     const rect1 = (
       await getCanvasElementWrapperById(img1.id)
@@ -47,9 +111,11 @@ describe('Clone element integration', () => {
       up(),
     ]);
 
+    // Save final objects
+    img1 = await getElementByIndex(2);
     // Add second image to page
     await fixture.events.click(getMediaElement(/saturn/));
-    img2 = await getElementByIndex(3);
+    let img2 = await getElementByIndex(3);
 
     // Drag it to (100,100)
     const rect2 = (
@@ -61,64 +127,9 @@ describe('Clone element integration', () => {
       move(bgRect.left + 100, bgRect.top + 100, { steps: 2 }),
       up(),
     ]);
-
-    // Save final objects
-    img1 = await getElementByIndex(2);
     img2 = await getElementByIndex(3);
-  });
 
-  afterEach(() => {
-    fixture.restore();
-  });
-
-  it('should correctly do nothing if no selection', async () => {
-    // Clear selection by pressing above background element
-    await clickAboveElement(bg.id);
-
-    // Press clone shortcut
-    await fixture.events.keyboard.shortcut('mod+d');
-
-    // Expect nothing to have changed
-    expect(await getNumElements()).toBe(3);
-  });
-
-  it('should correctly do nothing if background is selected', async () => {
-    // Select background
-    await clickElement(bg.id);
-
-    // Press clone shortcut
-    await fixture.events.keyboard.shortcut('mod+d');
-
-    // Expect nothing to have changed
-    expect(await getNumElements()).toBe(3);
-  });
-
-  // Disable reason: Flaky test, to be fixed in #8677
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly clone 1 element', async () => {
-    // Select img2
-    await clickElement(img2.id);
-
-    // Press clone shortcut
-    await fixture.events.keyboard.shortcut('mod+d');
-    // Expect a new image to have been added
-    expect(await getNumElements()).toBe(4);
-
-    // Verify new element is in fact a clone and in correct position
-    const clonedImg = await getElementByIndex(4);
-    expect(clonedImg).toEqual(
-      jasmine.objectContaining({
-        resource: jasmine.objectContaining({
-          src: img2.resource.src,
-        }),
-        x: img2.x + 30,
-        y: img2.y + 30,
-      })
-    );
-  });
-
-  it('should correctly clone 2 elements', async () => {
-    // Select img1 and img2
+    // Select img1 and img2.
     await clickElement(img1.id);
     await clickElement(img2.id, /* isMultiSelect */ true);
 
@@ -175,7 +186,7 @@ describe('Clone element integration', () => {
       // hold shift
       await fixture.events.keyboard.down('shift');
     }
-    await fixture.events.mouse.click(rect.left + 1, rect.top + 1);
+    await fixture.events.mouse.click(rect.left + 10, rect.top + 10);
     if (isMultiSelect) {
       // release shift
       await fixture.events.keyboard.up('shift');

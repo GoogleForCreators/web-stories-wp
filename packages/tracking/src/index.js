@@ -24,6 +24,7 @@ import isTrackingEnabled from './isTrackingEnabled';
 import trackClick from './trackClick';
 import trackError from './trackError';
 import trackEvent from './trackEvent';
+import trackTiming from './trackTiming';
 import trackScreenView from './trackScreenView';
 import getTimeTracker from './getTimeTracker';
 
@@ -36,5 +37,6 @@ export {
   trackClick,
   trackError,
   trackEvent,
+  trackTiming,
   getTimeTracker,
 };

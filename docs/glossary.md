@@ -4,7 +4,7 @@
 The checklist is a tab in the Design Panel that represents another, cleaner way of browsing through all current errors, warnings and suggestions that originate via helper mode or the editor itself.
 
 **Dashboard**:
-The CMS portion of the editor. Includes “My Stories” dashboard page, Template Gallery, Bookmarks.
+The CMS portion of the editor. Includes “Dashboard” dashboard page, Template Gallery, Bookmarks.
 
 **Design Panel**: 
 The right-hand sidebar of the editor. The Design Panel is where you modify the properties of the currently selected element or page.

@@ -32,17 +32,17 @@ describe('lerp', () => {
   it('calculates normal range properly', () => {
     const initial = 0;
     const target = 100;
-    expect(lerp(0.25, [initial, target])).toStrictEqual(25);
-    expect(lerp(0.5, [initial, target])).toStrictEqual(50);
-    expect(lerp(0.75, [initial, target])).toStrictEqual(75);
+    expect(lerp(0.25, [initial, target])).toBe(25);
+    expect(lerp(0.5, [initial, target])).toBe(50);
+    expect(lerp(0.75, [initial, target])).toBe(75);
   });
 
   it('calculates reverse range properly', () => {
     const initial = 100;
     const target = 0;
-    expect(lerp(0.25, [initial, target])).toStrictEqual(75);
-    expect(lerp(0.5, [initial, target])).toStrictEqual(50);
-    expect(lerp(0.75, [initial, target])).toStrictEqual(25);
+    expect(lerp(0.25, [initial, target])).toBe(75);
+    expect(lerp(0.5, [initial, target])).toBe(50);
+    expect(lerp(0.75, [initial, target])).toBe(25);
   });
 });
 
@@ -93,37 +93,37 @@ describe('clamp', () => {
 describe('progress', () => {
   it('calculates progress in standard range', () => {
     const standard = [0, 100];
-    expect(progress(0, standard)).toStrictEqual(0);
-    expect(progress(25, standard)).toStrictEqual(0.25);
-    expect(progress(50, standard)).toStrictEqual(0.5);
-    expect(progress(75, standard)).toStrictEqual(0.75);
-    expect(progress(100, standard)).toStrictEqual(1);
+    expect(progress(0, standard)).toBe(0);
+    expect(progress(25, standard)).toBe(0.25);
+    expect(progress(50, standard)).toBe(0.5);
+    expect(progress(75, standard)).toBe(0.75);
+    expect(progress(100, standard)).toBe(1);
   });
 
   it('calculates progress in inverse range', () => {
     const inverse = [100, 0];
-    expect(progress(100, inverse)).toStrictEqual(0);
-    expect(progress(75, inverse)).toStrictEqual(0.25);
-    expect(progress(50, inverse)).toStrictEqual(0.5);
-    expect(progress(25, inverse)).toStrictEqual(0.75);
-    expect(progress(0, inverse)).toStrictEqual(1);
+    expect(progress(100, inverse)).toBe(0);
+    expect(progress(75, inverse)).toBe(0.25);
+    expect(progress(50, inverse)).toBe(0.5);
+    expect(progress(25, inverse)).toBe(0.75);
+    expect(progress(0, inverse)).toBe(1);
   });
 
   it('calculates progress in negative range', () => {
     const negative = [-100, 0];
-    expect(progress(-100, negative)).toStrictEqual(0);
-    expect(progress(-75, negative)).toStrictEqual(0.25);
-    expect(progress(-50, negative)).toStrictEqual(0.5);
-    expect(progress(-25, negative)).toStrictEqual(0.75);
-    expect(progress(0, negative)).toStrictEqual(1);
+    expect(progress(-100, negative)).toBe(0);
+    expect(progress(-75, negative)).toBe(0.25);
+    expect(progress(-50, negative)).toBe(0.5);
+    expect(progress(-25, negative)).toBe(0.75);
+    expect(progress(0, negative)).toBe(1);
   });
 
   it('calculates progress in negative inverse range', () => {
     const negativeInverse = [0, -100];
-    expect(progress(0, negativeInverse)).toStrictEqual(0);
-    expect(progress(-25, negativeInverse)).toStrictEqual(0.25);
-    expect(progress(-50, negativeInverse)).toStrictEqual(0.5);
-    expect(progress(-75, negativeInverse)).toStrictEqual(0.75);
-    expect(progress(-100, negativeInverse)).toStrictEqual(1);
+    expect(progress(0, negativeInverse)).toBe(0);
+    expect(progress(-25, negativeInverse)).toBe(0.25);
+    expect(progress(-50, negativeInverse)).toBe(0.5);
+    expect(progress(-75, negativeInverse)).toBe(0.75);
+    expect(progress(-100, negativeInverse)).toBe(1);
   });
 });

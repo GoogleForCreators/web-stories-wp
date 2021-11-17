@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { calculateSrcSet, isBlobURL } from '@web-stories-wp/media';
-import { PAGE_WIDTH } from '@web-stories-wp/units';
+import {
+  PAGE_WIDTH,
+  FULLBLEED_HEIGHT,
+  FULLBLEED_RATIO,
+} from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -33,22 +37,33 @@ import MediaOutput from '../media/output';
  * @return {*} Rendered component.
  */
 function ImageOutput({ element, box }) {
-  const { resource } = element;
+  const { alt, isBackground, resource, width, height, scale } = element;
 
   const props = {
     layout: 'fill',
     src: !isBlobURL(resource.src) ? resource.src : '',
-    alt: element.alt !== undefined ? element.alt : resource.alt,
+    alt: alt !== undefined ? alt : resource.alt,
   };
 
-  const srcSet = calculateSrcSet(element.resource);
+  const srcSet = calculateSrcSet(resource);
   if (srcSet) {
     props.srcSet = srcSet;
 
+    // `width` of background elements reflects their original size.
+    // We need to account for both aspect-scale-to-fit background and element scale level.
+    let displayWidth = width;
+    if (isBackground) {
+      const aspectRatio = width / height;
+      const widthAsBackground =
+        aspectRatio <= FULLBLEED_RATIO
+          ? PAGE_WIDTH
+          : aspectRatio * FULLBLEED_HEIGHT;
+      displayWidth = widthAsBackground * (scale / 100);
+    }
+
     // If `srcset` exists but `sizes` doesn't, amp-img will generate a sizes attribute
     // with best-guess values that can result in poor image selection.
-    const imageWidthPercent =
-      (element.width * (element.scale / 100)) / PAGE_WIDTH;
+    const imageWidthPercent = displayWidth / PAGE_WIDTH;
     const mobileWidth = Math.round(imageWidthPercent * 100) + 'vw';
     // Width of a story page in desktop mode is 45vh.
     const desktopWidth = Math.round(imageWidthPercent * 45) + 'vh';

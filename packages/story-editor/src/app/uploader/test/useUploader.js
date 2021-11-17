@@ -255,7 +255,7 @@ describe('useUploader', () => {
       };
 
       const result = await uploadFile(file);
-      expect(result).toStrictEqual('Upload successful!');
+      expect(result).toBe('Upload successful!');
     });
   });
 });

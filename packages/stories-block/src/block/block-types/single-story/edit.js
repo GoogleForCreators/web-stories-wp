@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/* eslint complexity: ["error", { "max": 21 }] */
+
 /**
  * External dependencies
  */
@@ -35,6 +37,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { BlockIcon } from '../../icons';
+import FetchSelectedStories from '../../components/storyPicker/fetchSelectedStories';
 import EmbedControls from './embedControls';
 import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';
@@ -51,19 +54,23 @@ function StoryEmbedEdit({
   _isResizable,
 }) {
   const {
-    url: outerURL,
+    url: outerURL = '',
     width = 360,
     height = 600,
     align = 'none',
     poster,
     title,
+    stories = [],
   } = attributes;
 
   const [editingURL, setEditingURL] = useState(false);
   const [localURL, setLocalURL] = useState(outerURL);
   const [isFetchingData, setIsFetchingData] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [storyData, setStoryData] = useState({});
   const [cannotEmbed, setCannotEmbed] = useState(false);
+  const [selectedStoryIds, setSelectedStoryIds] = useState(stories);
+  const [selectedStories, _setSelectedStories] = useState([]);
 
   const showLoadingIndicator = isFetchingData;
   const showPlaceholder = !localURL || !outerURL || editingURL || cannotEmbed;
@@ -73,6 +80,20 @@ function StoryEmbedEdit({
     : _isResizable;
 
   const ref = useRef();
+
+  useEffect(() => {
+    if (attributes.stories.toString() !== selectedStoryIds.toString()) {
+      setAttributes({
+        stories: selectedStoryIds,
+      });
+    }
+  }, [attributes.stories, setAttributes, selectedStoryIds]);
+
+  useEffect(() => {
+    if (selectedStoryIds.length && !selectedStories.length) {
+      setIsFetching(true);
+    }
+  }, [selectedStoryIds, selectedStories, setIsFetching]);
 
   useEffect(() => {
     setLocalURL(outerURL);
@@ -108,7 +129,7 @@ function StoryEmbedEdit({
         setCannotEmbed(!(typeof data?.title === 'string'));
         setStoryData(data);
         setAttributes({
-          url: localURL,
+          url: url,
         });
       } catch (err) {
         // Only care about errors from apiFetch
@@ -121,7 +142,7 @@ function StoryEmbedEdit({
         setIsFetchingData(false);
       }
     },
-    [setAttributes, localURL]
+    [setAttributes]
   );
 
   useEffect(() => {
@@ -133,19 +154,40 @@ function StoryEmbedEdit({
     }
   }, [outerURL, setAttributes, storyData?.title, storyData?.poster]);
 
-  const onSubmit = useCallback(
-    (event) => {
-      if (event) {
-        event.preventDefault();
-      }
-
+  const setSelectedStories = useCallback(
+    (newStories) => {
+      _setSelectedStories(newStories);
+      setSelectedStoryIds(newStories.map((story) => story.id));
+      const newStory = newStories?.[0];
+      const link = newStory?.link;
+      const data = {
+        title: newStory?.title?.rendered,
+        poster: newStory?._embedded?.['wp:featuredmedia']?.[0]?.source_url,
+      };
+      setStoryData(data);
+      setLocalURL(link);
       setEditingURL(false);
       setCannotEmbed(false);
-      if (localURL !== outerURL) {
-        fetchStoryData(localURL);
+      setAttributes({
+        url: link,
+      });
+    },
+    [_setSelectedStories, setAttributes]
+  );
+
+  const onSubmit = useCallback(
+    (url) => {
+      _setSelectedStories([]);
+      setSelectedStoryIds([]);
+      setEditingURL(false);
+      setCannotEmbed(false);
+      setLocalURL(url);
+
+      if (url !== outerURL) {
+        fetchStoryData(url);
       }
     },
-    [localURL, outerURL, fetchStoryData]
+    [outerURL, fetchStoryData]
   );
 
   const switchBackToURLInput = useCallback(() => {
@@ -170,18 +212,30 @@ function StoryEmbedEdit({
   const onResizeStart = () => toggleSelection(false);
   const onResizeStop = () => toggleSelection(true);
 
-  const label = __('Story URL', 'web-stories');
+  const label = __('Single Story', 'web-stories');
 
   if (showPlaceholder) {
+    if (isFetching) {
+      return (
+        <FetchSelectedStories
+          icon={<BlockIcon />}
+          label={label}
+          selectedStoryIds={selectedStoryIds}
+          setSelectedStories={_setSelectedStories}
+          setIsFetching={setIsFetching}
+        />
+      );
+    }
     return (
       <EmbedPlaceholder
         icon={<BlockIcon />}
         label={label}
         value={localURL}
         onSubmit={onSubmit}
-        onChange={(event) => setLocalURL(event.target.value)}
         cannotEmbed={cannotEmbed}
         errorMessage={storyData?.message}
+        selectedStories={selectedStories}
+        setSelectedStories={setSelectedStories}
       />
     );
   }
@@ -292,6 +346,7 @@ StoryEmbedEdit.propTypes = {
     url: PropTypes.string,
     title: PropTypes.string,
     poster: PropTypes.string,
+    stories: PropTypes.array,
     width: PropTypes.number,
     height: PropTypes.number,
     align: PropTypes.string,

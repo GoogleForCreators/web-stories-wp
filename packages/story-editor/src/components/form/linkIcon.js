@@ -35,7 +35,11 @@ const StyledMedia = styled(Media)`
 `;
 
 function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
-  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
+  const {
+    allowedImageMimeTypes,
+    allowedImageFileTypes,
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
   const iconErrorMessage = useMemo(() => {
     let message = __(
       'No image file types are currently supported.',
@@ -53,6 +57,8 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
     return message;
   }, [allowedImageFileTypes]);
 
+  const options = hasUploadMediaAction ? ['edit', 'remove'] : ['remove'];
+
   return (
     <StyledMedia
       value={icon || ''}
@@ -68,7 +74,8 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
       type={allowedImageMimeTypes}
       isLoading={isLoading}
       variant={MEDIA_VARIANTS.CIRCLE}
-      menuOptions={icon ? ['edit', 'remove'] : []}
+      canUpload={(icon && !hasUploadMediaAction) || hasUploadMediaAction}
+      menuOptions={icon ? options : []}
       {...rest}
     />
   );

@@ -20,7 +20,6 @@
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { TransformProvider } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
@@ -29,7 +28,6 @@ import {
   formattedTemplatesArray,
   STORYBOOK_PAGE_SIZE,
 } from '../../../../../storybookUtils';
-import FontProvider from '../../../../font/fontProvider';
 import Content from '..';
 
 const StorybookLayoutContainer = styled.div`
@@ -42,57 +40,45 @@ export default {
   component: Content,
 };
 export const _default = () => (
-  <FontProvider>
-    <TransformProvider>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content
-            activeTemplateIndex={8}
-            isRTL={boolean('isRTL')}
-            orderedTemplatesLength={12}
-            pageSize={STORYBOOK_PAGE_SIZE}
-            relatedTemplates={formattedTemplatesArray.slice(0, 3)}
-            switchToTemplateByOffset={action(
-              'switch to template by offset clicked'
-            )}
-            template={formattedTemplatesArray[1]}
-            templateActions={{
-              createStoryFromTemplate: action(
-                'create story from template clicked'
-              ),
-              handlePreviewTemplate: action('handle preview template clicked'),
-            }}
-          />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
-    </TransformProvider>
-  </FontProvider>
+  <Layout.Provider>
+    <StorybookLayoutContainer>
+      <Content
+        activeTemplateIndex={8}
+        isRTL={boolean('isRTL')}
+        orderedTemplatesLength={12}
+        pageSize={STORYBOOK_PAGE_SIZE}
+        relatedTemplates={formattedTemplatesArray.slice(0, 3)}
+        switchToTemplateByOffset={action(
+          'switch to template by offset clicked'
+        )}
+        template={formattedTemplatesArray[1]}
+        templateActions={{
+          createStoryFromTemplate: action('create story from template clicked'),
+          handlePreviewTemplate: action('handle preview template clicked'),
+        }}
+      />
+    </StorybookLayoutContainer>
+  </Layout.Provider>
 );
 
 export const MissingTemplate = () => (
-  <FontProvider>
-    <TransformProvider>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content
-            activeTemplateIndex={8}
-            isRTL={boolean('isRTL')}
-            orderedTemplatesLength={12}
-            pageSize={STORYBOOK_PAGE_SIZE}
-            relatedTemplates={formattedTemplatesArray.slice(0, 3)}
-            switchToTemplateByOffset={action(
-              'switch to template by offset clicked'
-            )}
-            template={null}
-            templateActions={{
-              createStoryFromTemplate: action(
-                'create story from template clicked'
-              ),
-              handlePreviewTemplate: action('handle preview template clicked'),
-            }}
-          />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
-    </TransformProvider>
-  </FontProvider>
+  <Layout.Provider>
+    <StorybookLayoutContainer>
+      <Content
+        activeTemplateIndex={8}
+        isRTL={boolean('isRTL')}
+        orderedTemplatesLength={12}
+        pageSize={STORYBOOK_PAGE_SIZE}
+        relatedTemplates={formattedTemplatesArray.slice(0, 3)}
+        switchToTemplateByOffset={action(
+          'switch to template by offset clicked'
+        )}
+        template={null}
+        templateActions={{
+          createStoryFromTemplate: action('create story from template clicked'),
+          handlePreviewTemplate: action('handle preview template clicked'),
+        }}
+      />
+    </StorybookLayoutContainer>
+  </Layout.Provider>
 );

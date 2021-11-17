@@ -1,15 +1,13 @@
 {
-  "version": 32,
+  "version": 35,
   "pages": [
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -42,7 +40,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [40, 34, 28]
+            "baseColor": [40, 34, 28],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
           "x": 210,
@@ -257,7 +256,6 @@
       "pageTemplateType": "cover"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -289,7 +287,8 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "isMuted": false
+            "isMuted": false,
+            "isExternal": true
           },
           "overlay": {
             "type": "linear",
@@ -401,14 +400,12 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -441,7 +438,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [51, 37, 30]
+            "baseColor": [51, 37, 30],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
           "width": 272,
@@ -648,7 +646,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -686,7 +683,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [95, 95, 96]
+            "baseColor": [95, 95, 96],
+            "isExternal": true
           },
           "tracks": [],
           "loop": true
@@ -716,14 +714,12 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -818,7 +814,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [207, 194, 190]
+            "baseColor": [207, 194, 190],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
           "width": 315,
@@ -913,14 +910,12 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1124,14 +1119,14 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Woman's Face",
             "alt": "Woman's Face",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [58, 33, 19]
+            "baseColor": [58, 33, 19],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
           "width": 256,
@@ -1174,14 +1169,12 @@
       "pageTemplateType": "quote"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1214,7 +1207,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [216, 217, 212]
+            "baseColor": [216, 217, 212],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
           "width": 265,
@@ -1248,7 +1242,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [60, 51, 54]
+            "baseColor": [60, 51, 54],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
           "width": 331,
@@ -1571,13 +1566,13 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [57, 57, 57]
+            "baseColor": [57, 57, 57],
+            "isExternal": true
           },
           "tracks": [],
           "loop": true
         }
       ],
-      "overlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "id": "c5d0dc2a-59bc-4fe5-82c5-4e2dd8ea2373",
@@ -1601,14 +1596,12 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -1703,7 +1696,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [192, 184, 179]
+            "baseColor": [192, 184, 179],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
           "width": 304,
@@ -1798,14 +1792,12 @@
       "pageTemplateType": "editorial"
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2015,7 +2007,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [52, 36, 32]
+            "baseColor": [52, 36, 32],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
           "width": 256,
@@ -2058,7 +2051,6 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -2096,7 +2088,8 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [114, 114, 115]
+            "baseColor": [114, 114, 115],
+            "isExternal": true
           },
           "tracks": [],
           "loop": true
@@ -2130,14 +2123,12 @@
       "pageTemplateType": ""
     },
     {
-      "overlay": "none",
       "elements": [
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "x": 1,
           "y": 1,
           "width": 1,
@@ -2286,7 +2277,8 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [51, 33, 31]
+            "baseColor": [51, 33, 31],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
           "width": 200,
@@ -2314,14 +2306,14 @@
             "width": 720,
             "height": 1080,
             "id": 0,
-            "title": "Woman in Black Double Breasted Long-sleeved Dress",
             "alt": "Woman in Black Double Breasted Long-sleeved Dress",
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [218, 196, 174]
+            "baseColor": [218, 196, 174],
+            "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
           "width": 168,

@@ -57,14 +57,19 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 	 * @return void
 	 */
 	public function sanitize() {
-		// This fallback to get_permalink() ensures that there's a canonical link
-		// even when previewing drafts.
-		$canonical_url = wp_get_canonical_url();
-		if ( ! $canonical_url ) {
-			$canonical_url = get_permalink();
-		}
+		$canonical_url = $this->args['canonical_url'];
 
 		$query = $this->dom->xpath->query( '//link[@rel="canonical"]', $this->dom->head );
+
+		// Remove any duplicate items first.
+		if ( $query instanceof DOMNodeList && $query->length > 1 ) {
+			for ( $i = 1; $i < $query->length; $i++ ) {
+				$node = $query->item( $i );
+				if ( $node ) {
+					$this->dom->head->removeChild( $node );
+				}
+			}
+		}
 
 		/**
 		 * DOMElement

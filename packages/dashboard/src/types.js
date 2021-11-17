@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@web-stories-wp/story-editor';
 import {
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_STATUS,
@@ -38,16 +37,19 @@ export const StoryPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: DashboardStatusesPropType,
   title: PropTypes.string.isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page),
   modified: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  author: PropTypes.string,
+  author: PropTypes.object,
+  capabilities: PropTypes.shape({
+    hasDeleteAction: PropTypes.bool,
+    hasEditAction: PropTypes.bool,
+  }),
 });
 
 export const TemplatePropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: DashboardStatusesPropType,
   title: PropTypes.string.isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page),
+  pages: PropTypes.array,
   modified: PropTypes.object,
   colors: PropTypes.arrayOf(
     PropTypes.shape({
@@ -58,6 +60,13 @@ export const TemplatePropType = PropTypes.shape({
   description: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   createdBy: PropTypes.string,
+  postersByPage: PropTypes.arrayOf(
+    PropTypes.shape({
+      webp: PropTypes.string,
+      png: PropTypes.string,
+      type: PropTypes.string,
+    })
+  ),
 });
 
 export const TagPropType = PropTypes.shape({
@@ -79,14 +88,13 @@ export const UserPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
-  avatar_urls: PropTypes.object,
+  avatarUrls: PropTypes.object,
 });
 
 export const StoriesPropType = PropTypes.arrayOf(StoryPropType);
 export const TemplatesPropType = PropTypes.arrayOf(TemplatePropType).isRequired;
 
 export const StoryActionsPropType = PropTypes.shape({
-  createTemplateFromStory: PropTypes.func,
   duplicateStory: PropTypes.func,
   trashStory: PropTypes.func,
   updateStory: PropTypes.func,
@@ -106,7 +114,6 @@ export const TotalStoriesByStatusPropType = PropTypes.shape({
 export const PageSizePropType = PropTypes.shape({
   width: PropTypes.number,
   height: PropTypes.number,
-  containerHeight: PropTypes.number,
 });
 
 export const StoryMenuPropType = PropTypes.shape({

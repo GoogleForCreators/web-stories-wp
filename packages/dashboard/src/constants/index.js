@@ -21,9 +21,8 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Compass, FloppyDisk, HomeWithHeart } from '../icons';
+import { Compass, HomeWithHeart } from '../icons';
 import { STORY_VIEWING_LABELS } from './stories';
-import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
 import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
 
 export const KEYBOARD_USER_CLASS = `useskeyboard`;
@@ -37,67 +36,37 @@ export const Z_INDEX = {
 };
 
 export const APP_ROUTES = {
-  MY_STORIES: '/',
-  SAVED_TEMPLATES: '/saved-templates',
+  DASHBOARD: '/',
   TEMPLATES_GALLERY: '/templates-gallery',
   TEMPLATE_DETAIL: 'template-detail',
-
-  EDITOR_SETTINGS: '/editor-settings',
-  SUPPORT: __(
-    'https://wordpress.org/support/plugin/web-stories/',
-    'web-stories'
-  ),
 };
 
 export const NESTED_APP_ROUTES = {
   TEMPLATES_GALLERY_DETAIL: `${APP_ROUTES.TEMPLATES_GALLERY}/${APP_ROUTES.TEMPLATE_DETAIL}`,
-  SAVED_TEMPLATE_DETAIL: `${APP_ROUTES.SAVED_TEMPLATES}/${APP_ROUTES.TEMPLATE_DETAIL}`,
 };
 
 export const ADMIN_TITLE = __('Web Stories', 'web-stories');
 
 export const ROUTE_TITLES = {
-  [APP_ROUTES.MY_STORIES]: __('My Stories', 'web-stories'),
-  [APP_ROUTES.SAVED_TEMPLATES]: __('Saved Templates', 'web-stories'),
+  [APP_ROUTES.DASHBOARD]: __('Dashboard', 'web-stories'),
   [APP_ROUTES.TEMPLATES_GALLERY]: __('Explore Templates', 'web-stories'),
   [`${APP_ROUTES.TEMPLATES_GALLERY}/${APP_ROUTES.TEMPLATE_DETAIL}`]: __(
     'Template Details',
     'web-stories'
   ),
-  [APP_ROUTES.EDITOR_SETTINGS]: __('Settings', 'web-stories'),
-  [APP_ROUTES.SUPPORT]: __('Support', 'web-stories'),
-  DEFAULT: __('My Stories', 'web-stories'),
+  DEFAULT: __('Dashboard', 'web-stories'),
 };
 
 export const PRIMARY_PATHS = [
   {
-    value: APP_ROUTES.MY_STORIES,
-    label: ROUTE_TITLES[APP_ROUTES.MY_STORIES],
+    value: APP_ROUTES.DASHBOARD,
+    label: ROUTE_TITLES[APP_ROUTES.DASHBOARD],
     Icon: HomeWithHeart,
-  },
-  {
-    value: APP_ROUTES.SAVED_TEMPLATES,
-    label: ROUTE_TITLES[APP_ROUTES.SAVED_TEMPLATES],
-    inProgress: true,
-    Icon: FloppyDisk,
   },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
     label: ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY],
     Icon: Compass,
-  },
-];
-
-export const SECONDARY_PATHS = [
-  {
-    value: APP_ROUTES.EDITOR_SETTINGS,
-    label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
-  },
-  {
-    value: APP_ROUTES.SUPPORT,
-    label: ROUTE_TITLES[APP_ROUTES.SUPPORT],
-    isExternal: true,
-    trackingEvent: 'click_support_page',
   },
 ];
 
@@ -112,13 +81,11 @@ export const VIEW_STYLE_LABELS = {
 };
 
 export const DASHBOARD_VIEWS = {
-  MY_STORIES: 'MY_STORIES',
-  SAVED_TEMPLATES: 'SAVED_TEMPLATES',
+  DASHBOARD: 'DASHBOARD',
   TEMPLATES_GALLERY: 'TEMPLATES_GALLERY',
 };
 export const RESULT_LABELS = {
-  [DASHBOARD_VIEWS.MY_STORIES]: { ...STORY_VIEWING_LABELS },
-  [DASHBOARD_VIEWS.SAVED_TEMPLATES]: { ...SAVED_TEMPLATES_VIEWING_LABELS },
+  [DASHBOARD_VIEWS.DASHBOARD]: { ...STORY_VIEWING_LABELS },
   [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
 };
 
@@ -130,9 +97,10 @@ export const TEXT_INPUT_DEBOUNCE = 300;
 export const MIN_IMG_HEIGHT = 96;
 export const MIN_IMG_WIDTH = 96;
 
+export const DEFAULT_GRID_IMG_HEIGHT = 853;
+export const DEFAULT_GRID_IMG_WIDTH = 640;
+
 export * from './components';
 export * from './pageStructure';
-export * from './savedTemplates';
-export * from './settings';
 export * from './stories';
 export * from './templates';

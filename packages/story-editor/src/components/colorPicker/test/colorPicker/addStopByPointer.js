@@ -22,8 +22,9 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+import { firePointerEvent } from '../../../../testUtils';
 import { LINE_LENGTH } from '../../constants';
-import { arrange, firePointerEvent } from './_utils';
+import { arrange } from './_utils';
 
 // There's a slight offset, so +1
 const OFFSET20 = LINE_LENGTH * 0.2 + 1;
@@ -39,7 +40,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
             { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
           ],
         },
-        hasGradient: true,
+        allowsGradient: true,
       });
 
     // Initially 2 stops should be visible
@@ -100,7 +101,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
           { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // No temp stop visible initially
@@ -130,7 +131,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
           { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // No temp stop visible initially
@@ -154,7 +155,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
           { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // Click first stop (and give a fake offset)
@@ -175,7 +176,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
             { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
           ],
         },
-        hasGradient: true,
+        allowsGradient: true,
       }
     );
 

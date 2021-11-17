@@ -25,7 +25,7 @@ function GifLayerIcon({
     resource: { poster, alt },
   },
 }) {
-  return <VisibleImage src={poster} alt={alt} height="20" />;
+  return <VisibleImage src={poster} alt={alt} height={21} width={21} />;
 }
 
 GifLayerIcon.propTypes = {

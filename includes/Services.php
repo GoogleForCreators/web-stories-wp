@@ -51,7 +51,7 @@ final class Services {
 	 *
 	 * @return Service
 	 */
-	public static function get( $service ) {
+	public static function get( $service ): Service {
 		return self::get_container()->get( $service );
 	}
 
@@ -74,9 +74,9 @@ final class Services {
 	 *
 	 * @return Plugin Plugin object instance.
 	 */
-	public static function get_plugin() {
+	public static function get_plugin(): Plugin {
 		if ( null === self::$plugin ) {
-			self::$plugin = get_plugin_instance();
+			self::$plugin = PluginFactory::create();
 		}
 
 		return self::$plugin;
@@ -89,7 +89,7 @@ final class Services {
 	 *
 	 * @return ServiceContainer Service container object instance.
 	 */
-	public static function get_container() {
+	public static function get_container(): ServiceContainer {
 		if ( null === self::$container ) {
 			self::$container = self::get_plugin()->get_container();
 		}

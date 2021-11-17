@@ -66,7 +66,7 @@ describe('pageBackgroundTextLowContrast', () => {
   };
 
   it('should return true if the default font (no spans, no colors added) does not have high enough contrast with the page', async () => {
-    expect(await pageBackgroundTextLowContrast(page)).toBe(true);
+    await expect(pageBackgroundTextLowContrast(page)).resolves.toBe(true);
   });
   it('should return false if the text size is large enough', async () => {
     const largeGreyTextEl = {

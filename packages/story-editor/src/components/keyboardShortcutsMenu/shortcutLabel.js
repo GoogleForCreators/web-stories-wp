@@ -35,7 +35,7 @@ const Wrapper = styled.dd`
     align-items: center;
     margin: 0;
     padding: 0;
-    color: ${({ theme }) => theme.colors.fg.tertiary};
+    color: ${({ theme }) => theme.colors.fg.secondary};
     background-color: transparent;
 
     & > kbd {

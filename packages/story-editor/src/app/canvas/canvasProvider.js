@@ -53,6 +53,8 @@ function CanvasProvider({ children }) {
   const [eyedropperPixelData, setEyedropperPixelData] = useState(null);
   const [isEyedropperActive, setIsEyedropperActive] = useState(null);
   const [eyedropperCallback, setEyedropperCallback] = useState(null);
+  const [pageCanvasData, setPageCanvasData] = useState(null);
+  const [pageCanvasPromise, setPageCanvasPromise] = useState(null);
 
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
@@ -186,6 +188,8 @@ function CanvasProvider({ children }) {
         eyedropperCallback,
         eyedropperImg,
         eyedropperPixelData,
+        pageCanvasData,
+        pageCanvasPromise,
       },
       actions: {
         setPageContainer,
@@ -205,6 +209,8 @@ function CanvasProvider({ children }) {
         setEyedropperCallback,
         setEyedropperImg,
         setEyedropperPixelData,
+        setPageCanvasData,
+        setPageCanvasPromise,
       },
     }),
     [
@@ -239,6 +245,9 @@ function CanvasProvider({ children }) {
       setEyedropperImg,
       eyedropperPixelData,
       setEyedropperPixelData,
+      pageCanvasData,
+      pageCanvasPromise,
+      setPageCanvasPromise,
     ]
   );
   return (

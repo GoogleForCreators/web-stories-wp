@@ -42,7 +42,7 @@ $preload_paths = [
 			'_embed'           => rawurlencode(
 				implode(
 					',',
-					[ 'wp:featuredmedia', 'wp:lockuser', 'author' ]
+					[ 'wp:featuredmedia', 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
 				)
 			),
 			'context'          => 'edit',
@@ -63,7 +63,6 @@ $preload_paths = [
 						'preview_link',
 						'edit_link',
 						'embed_post_link',
-						'publisher_logo_url',
 						'permalink_template',
 						'style_presets',
 						'password',
@@ -75,7 +74,7 @@ $preload_paths = [
 	'/web-stories/v1/media/?' . build_query(
 		[
 			'context'               => 'edit',
-			'per_page'              => 100,
+			'per_page'              => 50,
 			'page'                  => 1,
 			'_web_stories_envelope' => 'true',
 			'_fields'               => rawurlencode(
@@ -90,8 +89,9 @@ $preload_paths = [
 						'featured_media_src',
 						'alt_text',
 						'source_url',
-						'media_source',
-						'is_muted',
+						'meta',
+						'web_stories_media_source',
+						'web_stories_is_muted',
 						// _web_stories_envelope will add these fields, we need them too.
 						'body',
 						'status',
@@ -108,6 +108,12 @@ $preload_paths = [
 		]
 	),
 	'/web-stories/v1/users/me/',
+	'/web-stories/v1/taxonomies/?' . build_query(
+		[
+			'context' => 'edit',
+			'type'    => $post_type_object->name,
+		]
+	),
 ];
 
 /**

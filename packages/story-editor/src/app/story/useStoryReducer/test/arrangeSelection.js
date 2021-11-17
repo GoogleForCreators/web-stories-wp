@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/overlay';
 import { setupReducer } from './_utils';
 
 describe('arrangeSelection', () => {
@@ -43,7 +42,7 @@ describe('arrangeSelection', () => {
 
     const result = arrangeSelection({ position: 2 });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should do nothing if there is no selection', () => {
@@ -53,7 +52,7 @@ describe('arrangeSelection', () => {
 
     const result = arrangeSelection({ position: 2 });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should do nothing if there is multi-selection', () => {
@@ -63,7 +62,7 @@ describe('arrangeSelection', () => {
 
     const result = arrangeSelection({ position: 2 });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 });
 
@@ -75,7 +74,6 @@ function getInitialState(selection) {
   return {
     pages: [
       {
-        overlay: OverlayType.NONE,
         id: '111',
         elements: [
           { id: '123', isBackground: true },

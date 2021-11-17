@@ -35,6 +35,7 @@ describe('Story Editor', () => {
   });
 
   describe('RTL', () => {
+    // eslint-disable-next-line jest/require-hook
     withRTL();
 
     it('should be able to create a blank story on RTL', async () => {
@@ -76,7 +77,8 @@ describe('Story Editor', () => {
     await expect(previewPage).toMatch(/Debug/i);
     await expect(previewPage).toMatch(/Add device/i);
 
-    await percySnapshot(previewPage, 'Preview with development mode');
+    await previewPage.waitForSelector('amp-story-player');
+    await expect(previewPage).toMatchElement('amp-story-player');
 
     await editorPage.bringToFront();
     await previewPage.close();

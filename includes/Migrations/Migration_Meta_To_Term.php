@@ -37,6 +37,24 @@ use Google\Web_Stories\Media\Media_Source_Taxonomy;
 abstract class Migration_Meta_To_Term extends Migrate_Base {
 
 	/**
+	 * Media_Source_Taxonomy instance.
+	 *
+	 * @var Media_Source_Taxonomy Experiments instance.
+	 */
+	protected $media_source_taxonomy;
+
+	/**
+	 * Migration_Meta_To_Term constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Media_Source_Taxonomy $media_source_taxonomy Media_Source_Taxonomy instance.
+	 */
+	public function __construct( Media_Source_Taxonomy $media_source_taxonomy ) {
+		$this->media_source_taxonomy = $media_source_taxonomy;
+	}
+
+	/**
 	 * Migration media post meta to taxonomy term.
 	 *
 	 * @since 1.7.2
@@ -57,7 +75,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 
 		if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
 			foreach ( $post_ids as $post_id ) {
-				wp_set_object_terms( (int) $post_id, $this->get_term_name(), Media_Source_Taxonomy::TAXONOMY_SLUG );
+				wp_set_object_terms( (int) $post_id, $this->get_term_name(), $this->media_source_taxonomy->get_taxonomy_slug() );
 			}
 		}
 	}

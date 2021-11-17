@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { duplicatePage } from '../../elements';
-
 export const ACTION_TYPES = {
   COPY_ELEMENT_STYLES: 'COPY_ELEMENT_STYLES',
-  COPY_PAGE: 'COPY_PAGE',
   OPEN_MENU: 'OPEN_MENU',
   CLOSE_MENU: 'CLOSE_MENU',
   RESET: 'RESET',
@@ -33,7 +27,6 @@ export const DEFAULT_RIGHT_CLICK_MENU_STATE = {
     styles: null,
     type: null,
   },
-  copiedPage: null,
   isMenuOpen: false,
   menuPosition: {
     x: 0,
@@ -49,11 +42,6 @@ function rightClickMenuReducer(state, action) {
         ...state,
         isMenuOpen: false,
         menuPosition: DEFAULT_RIGHT_CLICK_MENU_STATE.menuPosition,
-      };
-    case ACTION_TYPES.COPY_PAGE:
-      return {
-        ...state,
-        copiedPage: duplicatePage(action.payload),
       };
     case ACTION_TYPES.COPY_ELEMENT_STYLES:
       return {

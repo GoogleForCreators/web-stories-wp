@@ -25,15 +25,32 @@ import { createSolid } from '@web-stories-wp/patterns';
  */
 import { arrange } from './_utils';
 
-// Disable reason: To be fixed in 8655
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('<ColorPicker /> as the header is interacted with', () => {
+jest.mock(
+  '../../../../app/story/useStory',
+  () => (cb) =>
+    cb({
+      state: {
+        story: {
+          globalStoryStyles: {
+            colors: [],
+          },
+          selectedElements: [],
+        },
+      },
+      actions: {
+        updateStory: jest.fn(),
+      },
+    })
+);
+
+describe('<ColorPicker /> as the header is interacted with', () => {
   it('should invoke onchange with new correct pattern when switching to linear', async () => {
-    const { getLinearButton, onChange } = arrange({
+    const { getCustomButton, getLinearButton, onChange } = arrange({
       color: createSolid(0, 0, 255),
-      hasGradient: true,
+      allowsGradient: true,
     });
 
+    fireEvent.click(getCustomButton());
     fireEvent.click(getLinearButton());
 
     await waitFor(() =>
@@ -49,11 +66,12 @@ describe.skip('<ColorPicker /> as the header is interacted with', () => {
   });
 
   it('should invoke onchange with new correct pattern when switching to radial', async () => {
-    const { getRadialButton, onChange } = arrange({
+    const { getCustomButton, getRadialButton, onChange } = arrange({
       color: createSolid(0, 0, 255),
-      hasGradient: true,
+      allowsGradient: true,
     });
 
+    fireEvent.click(getCustomButton());
     fireEvent.click(getRadialButton());
 
     await waitFor(() =>
@@ -68,10 +86,17 @@ describe.skip('<ColorPicker /> as the header is interacted with', () => {
   });
 
   it('should display gradient line only if switching to non-solid pattern', async () => {
-    const { getGradientLine, getSolidButton, getLinearButton } = arrange({
+    const {
+      getCustomButton,
+      getGradientLine,
+      getSolidButton,
+      getLinearButton,
+    } = arrange({
       color: createSolid(0, 0, 0),
-      hasGradient: true,
+      allowsGradient: true,
     });
+
+    fireEvent.click(getCustomButton());
 
     await waitFor(() => expect(getGradientLine()).not.toBeInTheDocument());
     fireEvent.click(getLinearButton());

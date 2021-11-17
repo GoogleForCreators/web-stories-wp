@@ -25,7 +25,6 @@ import {
 } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@web-stories-wp/design-system';
-import { TransformProvider } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
@@ -33,12 +32,12 @@ import { Layout } from '../../../components';
 import { usePagePreviewSize, clamp } from '../../../utils';
 import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
-import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ERRORS } from '../../textContent';
 import Header from './header';
 import Content from './content';
+import { getRelatedTemplatesIds } from './utils';
 
 function TemplateDetails() {
   const [template, setTemplate] = useState(null);
@@ -56,36 +55,35 @@ function TemplateDetails() {
   const {
     isLoading,
     templates,
+    templatesByTag,
     templatesOrderById,
     createStoryFromTemplate,
-    fetchMyTemplateById,
     fetchExternalTemplates,
     fetchExternalTemplateById,
-    fetchRelatedTemplates,
   } = useApi(
     ({
       state: {
-        templates: { templates, templatesOrderById, totalPages, isLoading },
+        templates: {
+          templates,
+          templatesByTag,
+          templatesOrderById,
+          totalPages,
+          isLoading,
+        },
       },
       actions: {
         storyApi: { createStoryFromTemplate },
-        templateApi: {
-          fetchExternalTemplates,
-          fetchMyTemplateById,
-          fetchExternalTemplateById,
-          fetchRelatedTemplates,
-        },
+        templateApi: { fetchExternalTemplates, fetchExternalTemplateById },
       },
     }) => ({
       isLoading,
       templates,
+      templatesByTag,
       templatesOrderById,
       totalPages,
       createStoryFromTemplate,
       fetchExternalTemplates,
-      fetchMyTemplateById,
       fetchExternalTemplateById,
-      fetchRelatedTemplates,
     })
   );
   const { isRTL } = useConfig();
@@ -106,24 +104,19 @@ function TemplateDetails() {
     }
 
     const id = parseInt(templateId);
-    const isLocalTemplate = isLocal && isLocal.toLowerCase() === 'true';
-    const templateFetchFn = isLocalTemplate
-      ? fetchMyTemplateById
-      : fetchExternalTemplateById;
 
-    templateFetchFn(id)
+    fetchExternalTemplateById(id)
       .then(setTemplate)
       .catch(() => {
         showSnackbar({
           message: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
-          dismissable: true,
+          dismissible: true,
         });
       });
   }, [
     isLoading,
     fetchExternalTemplates,
     fetchExternalTemplateById,
-    fetchMyTemplateById,
     isLocal,
     templateId,
     templates,
@@ -136,21 +129,23 @@ function TemplateDetails() {
     if (!template || !templateId) {
       return;
     }
-    const id = parseInt(templateId);
+
+    const allRelatedTemplates = getRelatedTemplatesIds(
+      template,
+      templatesByTag
+    );
+
+    const randomRelatedTemplates = allRelatedTemplates
+      .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids;
+      .slice(0, 6); // Get first 6 templates
 
     setRelatedTemplates(
-      fetchRelatedTemplates(id).map((relatedTemplate) => ({
-        ...relatedTemplate,
-        centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
+      randomRelatedTemplates.map((id) => ({
+        ...templates[id],
+        centerTargetAction: resolveRelatedTemplateRoute(templates[id]),
       }))
     );
-  }, [
-    fetchRelatedTemplates,
-    template,
-    templates,
-    templatesOrderById,
-    templateId,
-  ]);
+  }, [template, templates, templatesByTag, templatesOrderById, templateId]);
 
   const activeTemplateIndex = useMemo(() => {
     if (templatesOrderById.length <= 0) {
@@ -176,7 +171,7 @@ function TemplateDetails() {
     [activeTemplateIndex, templatesOrderById, actions, templates]
   );
 
-  const onHandleCta = useCallback(() => {
+  const handleCreateStoryFromTemplate = useCallback(() => {
     trackEvent('use_template', {
       name: template.title,
       template_id: template.id,
@@ -185,28 +180,24 @@ function TemplateDetails() {
   }, [createStoryFromTemplate, template]);
 
   return (
-    <FontProvider>
-      <TransformProvider>
-        <Layout.Provider>
-          <Header
-            templateTitle={template?.title}
-            onHandleCtaClick={onHandleCta}
-          />
-          <Content
-            activeTemplateIndex={activeTemplateIndex}
-            isRTL={isRTL}
-            orderedTemplatesLength={templatesOrderById.length}
-            pageSize={pageSize}
-            switchToTemplateByOffset={switchToTemplateByOffset}
-            template={template}
-            relatedTemplates={relatedTemplates}
-            templateActions={{
-              createStoryFromTemplate,
-            }}
-          />
-        </Layout.Provider>
-      </TransformProvider>
-    </FontProvider>
+    <Layout.Provider>
+      <Header
+        templateTitle={template?.title}
+        onHandleCtaClick={handleCreateStoryFromTemplate}
+      />
+      <Content
+        activeTemplateIndex={activeTemplateIndex}
+        isRTL={isRTL}
+        orderedTemplatesLength={templatesOrderById.length}
+        pageSize={pageSize}
+        switchToTemplateByOffset={switchToTemplateByOffset}
+        template={template}
+        relatedTemplates={relatedTemplates}
+        templateActions={{
+          createStoryFromTemplate,
+        }}
+      />
+    </Layout.Provider>
   );
 }
 

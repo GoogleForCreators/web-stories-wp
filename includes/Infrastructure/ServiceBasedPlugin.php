@@ -19,8 +19,11 @@ namespace Google\Web_Stories\Infrastructure;
 
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\ServiceContainer\LazilyInstantiatedService;
-use function Google\Web_Stories\rewrite_flush;
-
+use WP_Site;
+use function add_action;
+use function apply_filters;
+use function did_action;
+use const WPCOM_IS_VIP_ENV;
 
 /**
  * This abstract base plugin provides all the boilerplate code for working with
@@ -69,7 +72,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	protected $injector;
 
 	/**
-	 * ServiceC ontainer.
+	 * ServiceContainer.
 	 *
 	 * @var ServiceContainer
 	 */
@@ -112,43 +115,101 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
-	 * Activate the plugin.
+	 * Act on plugin activation.
 	 *
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function activate( $network_wide ) {
+	public function on_plugin_activation( $network_wide ) {
 		$this->register_services();
 
 		foreach ( $this->service_container as $service ) {
-			if ( $service instanceof Activateable ) {
-				$service->activate( $network_wide );
+			if ( $service instanceof PluginActivationAware ) {
+				$service->on_plugin_activation( $network_wide );
 			}
 		}
 
-		rewrite_flush();
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false );
+		}
 	}
 
 	/**
-	 * Deactivate the plugin.
+	 * Act on plugin deactivation.
 	 *
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
 	 */
-	public function deactivate( $network_wide ) {
+	public function on_plugin_deactivation( $network_wide ) {
 		$this->register_services();
 
 		foreach ( $this->service_container as $service ) {
-			if ( $service instanceof Deactivateable ) {
-				$service->deactivate( $network_wide );
+			if ( $service instanceof PluginDeactivationAware ) {
+				$service->on_plugin_deactivation( $network_wide );
 			}
 		}
 
-		rewrite_flush();
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false );
+		}
+	}
+
+	/**
+	 * Act on site initialization on Multisite.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being initialized.
+	 * @return void
+	 */
+	public function on_site_initialization( WP_Site $site ) {
+		$this->register_services();
+
+		$site_id = (int) $site->blog_id;
+
+		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
+		switch_to_blog( $site_id );
+
+		foreach ( $this->service_container as $service ) {
+			if ( $service instanceof SiteInitializationAware ) {
+				$service->on_site_initialization( $site );
+			}
+		}
+
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false );
+		}
+
+		restore_current_blog();
+	}
+
+	/**
+	 * Act on site removal on Multisite.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_Site $site The site being removed.
+	 * @return void
+	 */
+	public function on_site_removal( WP_Site $site ) {
+		$this->register_services();
+
+		$site_id = (int) $site->blog_id;
+
+		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
+		switch_to_blog( $site_id );
+
+		foreach ( $this->service_container as $service ) {
+			if ( $service instanceof SiteRemovalAware ) {
+				$service->on_site_removal( $site );
+			}
+		}
+
+		restore_current_blog();
 	}
 
 	/**
@@ -161,7 +222,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 */
 	public function register() {
 		if ( false !== static::REGISTRATION_ACTION ) {
-			\add_action(
+			add_action(
 				static::REGISTRATION_ACTION,
 				[ $this, 'register_services' ]
 			);
@@ -205,38 +266,193 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *                                classes need to implement the
 			 *                                Service interface.
 			 */
-			$filtered_services = \apply_filters(
+			$filtered_services = apply_filters(
 				static::HOOK_PREFIX . static::SERVICES_FILTER,
 				$services
 			);
 
 			$services = $this->validate_services( $filtered_services, $services );
 		}
-		foreach ( $services as $id => $class ) {
-			$id    = $this->maybe_resolve( $id );
-			$class = $this->maybe_resolve( $class );
-			// Allow the services to delay their registration.
-			if ( is_a( $class, Delayed::class, true ) ) {
-				$registration_action = $class::get_registration_action();
-				if ( did_action( $registration_action ) ) {
-					$this->register_service( $id, $class );
 
-					continue;
-				}
+		while ( null !== key( $services ) ) {
+			$id    = $this->maybe_resolve( key( $services ) );
+			$class = $this->maybe_resolve( current( $services ) );
 
-				\add_action(
-					$class::get_registration_action(),
-					function () use ( $id, $class ) {
-						$this->register_service( $id, $class );
-					},
-					$class::get_registration_action_priority()
-				);
-
+			// Delay registering the service until all requirements are met.
+			if (
+				is_a( $class, HasRequirements::class, true )
+				&&
+				! $this->requirements_are_met( $id, $class, $services )
+			) {
 				continue;
 			}
 
-			$this->register_service( $id, $class );
+			$this->schedule_potential_service_registration( $id, $class );
+
+			next( $services );
 		}
+	}
+
+	/**
+	 * Returns the priority for a given service based on its requirements.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param HasRequirements|Delayed|class-string $class    Service FQCN of the service with requirements.
+	 * @param string[]                             $services List of services to be registered.
+	 *
+	 * @throws InvalidService If the required service is not recognized.
+	 *
+	 * @return int The registration action priority for the service.
+	 */
+	protected function get_registration_action_priority( $class, array &$services ): int {
+		$priority = 10;
+
+		if ( is_a( $class, Delayed::class, true ) ) {
+			$priority = $class::get_registration_action_priority();
+		}
+
+		if ( ! is_a( $class, HasRequirements::class, true ) ) {
+			return $priority;
+		}
+
+		$missing_requirements = $this->collect_missing_requirements( $class, $services );
+
+		foreach ( $missing_requirements as $missing_requirement ) {
+			if ( is_a( $missing_requirement, Delayed::class, true ) ) {
+				$action = $missing_requirement::get_registration_action();
+
+				if ( did_action( $action ) ) {
+					continue;
+				}
+
+				$requirement_priority = $this->get_registration_action_priority( $missing_requirement, $services );
+
+				$priority = max( $priority, $requirement_priority + 1 );
+			}
+		}
+
+		return $priority;
+	}
+
+	/**
+	 * Determine if the requirements for a service to be registered are met.
+	 *
+	 * This also hooks up another check in the future to the registration action(s) of its requirements.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param string                       $id       Service ID of the service with requirements.
+	 * @param HasRequirements|class-string $class    Service FQCN of the service with requirements.
+	 * @param string[]                     $services List of services to be registered.
+	 *
+	 * @throws InvalidService If the required service is not recognized.
+	 *
+	 * @return bool Whether the requirements for the service has been met.
+	 */
+	protected function requirements_are_met( string $id, $class, array &$services ): bool {
+		$missing_requirements = $this->collect_missing_requirements( $class, $services );
+
+		if ( empty( $missing_requirements ) ) {
+			return true;
+		}
+
+		foreach ( $missing_requirements as $missing_requirement ) {
+			if ( is_a( $missing_requirement, Delayed::class, true ) ) {
+				$action = $missing_requirement::get_registration_action();
+
+				if ( did_action( $action ) ) {
+					continue;
+				}
+
+				/*
+				 * If this service (A) has priority 10 but depends on another service (B) with same priority,
+				 * which itself depends on service (C) also with priority 10, this will ensure correct
+				 * order of registration by increasing priority for each step.
+				 *
+				 * The result will be:
+				 *
+				 * C: priority 10
+				 * B: priority 11
+				 * A: priority 12
+				 */
+
+				$priority = $this->get_registration_action_priority( $class, $services );
+
+				/*
+				 * The current service depends on another service that is Delayed and hasn't been registered yet
+				 * and for which the registration action has not yet passed.
+				 *
+				 * Therefore, we postpone the registration of the current service up until the requirement's
+				 * action has passed.
+				 *
+				 * We don't register the service right away, though, we will first check whether at that point,
+				 * the requirements have been met.
+				 *
+				 * Note that badly configured requirements can lead to services that will never register at all.
+				 */
+
+				add_action(
+					$action,
+					function () use ( $id, $class, $services ) {
+						if ( ! $this->requirements_are_met( $id, $class, $services ) ) {
+							return;
+						}
+
+						$this->schedule_potential_service_registration( $id, $class );
+					},
+					$priority
+				);
+
+				next( $services );
+				return false;
+			}
+		}
+
+		/*
+		 * The registration actions from all of the requirements were already processed. This means that the missing
+		 * requirement(s) are about to be registered, they just weren't encountered yet while traversing the services
+		 * map. Therefore, we skip registration for now and move this particular service to the end of the service map.
+		 *
+		 * Note: Moving the service to the end of the service map advances the internal array pointer to the next service.
+		 */
+		unset( $services[ $id ] );
+		$services[ $id ] = $class;
+
+		return false;
+	}
+
+	/**
+	 * Collect the list of missing requirements for a service which has requirements.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param HasRequirements|class-string $class    Service FQCN of the service with requirements.
+	 * @param string[]                     $services List of services to register.
+	 *
+	 * @throws InvalidService If the required service is not recognized.
+	 *
+	 * @return string[] List of missing requirements as a $service_id => $service_class mapping.
+	 */
+	protected function collect_missing_requirements( $class, $services ): array {
+		$requirements = $class::get_requirements();
+
+		$missing = [];
+
+		foreach ( $requirements as $requirement ) {
+			// Bail if it requires a service that is not recognized.
+			if ( ! array_key_exists( $requirement, $services ) ) {
+				throw InvalidService::from_service_id( $requirement );
+			}
+
+			if ( $this->get_container()->has( $requirement ) ) {
+				continue;
+			}
+
+			$missing[ $requirement ] = $services[ $requirement ];
+		}
+
+		return $missing;
 	}
 
 	/**
@@ -305,7 +521,39 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
-	 * Register a single service.
+	 * Schedule the potential registration of a single service.
+	 *
+	 * This takes into account whether the service registration needs to be delayed or not.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param string                       $id ID of the service to register.
+	 * @param HasRequirements|class-string $class Class of the service to register.
+	 * @return void
+	 */
+	protected function schedule_potential_service_registration( $id, $class ) {
+		if ( is_a( $class, Delayed::class, true ) ) {
+			$action   = $class::get_registration_action();
+			$priority = $class::get_registration_action_priority();
+
+			if ( did_action( $action ) ) {
+				$this->maybe_register_service( $id, $class );
+			} else {
+				add_action(
+					$action,
+					function () use ( $id, $class ) {
+						$this->maybe_register_service( $id, $class );
+					},
+					$priority
+				);
+			}
+		} else {
+			$this->maybe_register_service( $id, $class );
+		}
+	}
+
+	/**
+	 * Register a single service, provided its conditions are met.
 	 *
 	 * @since 1.6.0
 	 *
@@ -314,7 +562,12 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @return void
 	 */
-	protected function register_service( $id, $class ) {
+	protected function maybe_register_service( $id, $class ) {
+		// Ensure we don't register the same service more than once.
+		if ( $this->service_container->has( $id ) ) {
+			return;
+		}
+
 		// Only instantiate services that are actually needed.
 		if ( is_a( $class, Conditional::class, true )
 			&& ! $class::is_needed() ) {
@@ -338,7 +591,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @return ServiceContainer Service container of the plugin.
 	 */
-	public function get_container() {
+	public function get_container(): ServiceContainer {
 		return $this->service_container;
 	}
 
@@ -396,7 +649,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param Injector $injector Injector instance to configure.
 	 * @return Injector Configured injector instance.
 	 */
-	protected function configure_injector( Injector $injector ) {
+	protected function configure_injector( Injector $injector ): Injector {
 		$bindings         = $this->get_bindings();
 		$shared_instances = $this->get_shared_instances();
 		$arguments        = $this->get_arguments();
@@ -412,7 +665,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *                                implementation bindings. Both
 			 *                                should be FQCNs.
 			 */
-			$bindings = (array) \apply_filters(
+			$bindings = (array) apply_filters(
 				static::HOOK_PREFIX . static::BINDINGS_FILTER,
 				$bindings
 			);
@@ -428,7 +681,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *                                array maps argument names to
 			 *                                values.
 			 */
-			$arguments = (array) \apply_filters(
+			$arguments = (array) apply_filters(
 				static::HOOK_PREFIX . static::ARGUMENTS_FILTER,
 				$arguments
 			);
@@ -442,7 +695,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 * @param array<string> $shared_instances Array of FQCNs to turn
 			 *                                        into shared objects.
 			 */
-			$shared_instances = (array) \apply_filters(
+			$shared_instances = (array) apply_filters(
 				static::HOOK_PREFIX . static::SHARED_INSTANCES_FILTER,
 				$shared_instances
 			);
@@ -456,7 +709,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 * @param array<string> $delegations Associative array of class =>
 			 *                                   callable mappings.
 			 */
-			$delegations = (array) \apply_filters(
+			$delegations = (array) apply_filters(
 				static::HOOK_PREFIX . static::DELEGATIONS_FILTER,
 				$delegations
 			);
@@ -582,7 +835,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @return mixed Resolved or unchanged value.
 	 */
 	protected function maybe_resolve( $value ) {
-		if ( is_callable( $value ) ) {
+		if ( is_callable( $value ) && ! ( is_string( $value ) && function_exists( $value ) ) ) {
 			$value = $value( $this->injector, $this->service_container );
 		}
 

@@ -18,50 +18,27 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback } from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
-import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { memo, useCallback, useRef } from '@web-stories-wp/react';
+import { __ } from '@web-stories-wp/i18n';
+import { Icons } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { useStory, useHistory, useConfig, useLayout } from '../../../app';
+import { useStory } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
+import usePerformanceTracking from '../../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 import PageMenuButton from './pageMenuButton';
 import AnimationToggle from './animationToggle';
 
-const DIVIDER_HEIGHT = 16;
-
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  --pagemenu-icon-space: ${({ isWidePage }) => (isWidePage ? 16 : 10)}px;
-  --pagemenu-count-space: ${({ isWidePage }) => (isWidePage ? 24 : 12)}px;
-`;
-
-const Divider = styled.span`
-  background-color: ${({ theme }) => theme.colors.bg.tertiary};
-  opacity: 0.3;
-  height: ${DIVIDER_HEIGHT}px;
-  width: 1px;
-`;
-
-const CountSpace = styled.div`
-  width: var(--pagemenu-count-space);
-`;
-
-const IconSpace = styled.div`
-  width: var(--pagemenu-icon-space);
+  margin-top: auto;
+  padding: 0 4px;
 `;
 
 function PageMenu() {
   const {
-    state: { canUndo, canRedo },
-    actions: { undo, redo },
-  } = useHistory();
-  const {
-    currentPageNumber,
     currentPage,
     numberOfPages,
     deleteCurrentPage,
@@ -69,11 +46,10 @@ function PageMenu() {
     hasAnimations,
   } = useStory(
     ({
-      state: { currentPageNumber, currentPage, pages },
+      state: { currentPage, pages },
       actions: { deleteCurrentPage, addPage },
     }) => {
       return {
-        currentPageNumber,
         currentPage,
         numberOfPages: pages.length,
         deleteCurrentPage,
@@ -82,10 +58,18 @@ function PageMenu() {
       };
     }
   );
-  const { pageWidth } = useLayout((state) => ({
-    pageWidth: state.state.pageWidth,
-  }));
-  const { isRTL } = useConfig();
+
+  const addPageButtonRef = useRef(null);
+  const deletePageButtonRef = useRef(null);
+
+  usePerformanceTracking({
+    node: addPageButtonRef.current,
+    eventData: TRACKING_EVENTS.PAGE_ADD,
+  });
+  usePerformanceTracking({
+    node: deletePageButtonRef.current,
+    eventData: TRACKING_EVENTS.PAGE_DELETE,
+  });
 
   const handleDeletePage = useCallback(
     () => deleteCurrentPage(),
@@ -102,36 +86,23 @@ function PageMenu() {
     [addPage, currentPage]
   );
 
-  const isWidePage = pageWidth > 280;
   const disableDeleteButton = numberOfPages <= 1;
-
-  const handleUndo = useCallback(() => undo(), [undo]);
-
-  const handleRedo = useCallback(() => redo(), [redo]);
 
   if (!currentPage) {
     return null;
   }
 
   return (
-    <Wrapper isWidePage={isWidePage}>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-        {sprintf(
-          /* translators: %s: page number. */
-          __('Page %s', 'web-stories'),
-          currentPageNumber
-        )}
-      </Text>
-      <CountSpace />
+    <Wrapper role="group" aria-label={__('Page actions', 'web-stories')}>
+      {hasAnimations && <AnimationToggle />}
       <PageMenuButton
-        title={__('Delete Page', 'web-stories')}
-        disabled={disableDeleteButton}
-        onClick={handleDeletePage}
-        aria-label={__('Delete Page', 'web-stories')}
+        ref={addPageButtonRef}
+        title={__('New Page', 'web-stories')}
+        onClick={handleAddPage}
+        aria-label={__('Add New Page', 'web-stories')}
       >
-        <Icons.Trash />
+        <Icons.PlusOutline />
       </PageMenuButton>
-      <IconSpace />
       <PageMenuButton
         title={__('Duplicate Page', 'web-stories')}
         onClick={handleDuplicatePage}
@@ -139,46 +110,18 @@ function PageMenu() {
       >
         <Icons.PagePlus />
       </PageMenuButton>
-      <IconSpace />
       <PageMenuButton
-        title={__('New Page', 'web-stories')}
-        onClick={handleAddPage}
-        aria-label={__('Add New Page', 'web-stories')}
+        ref={deletePageButtonRef}
+        title={__('Delete Page', 'web-stories')}
+        disabled={disableDeleteButton}
+        onClick={handleDeletePage}
+        aria-label={__('Delete Page', 'web-stories')}
       >
-        <Icons.PlusOutline />
+        <Icons.Trash />
       </PageMenuButton>
-      <IconSpace />
-      <Divider />
-      <IconSpace />
-      <PageMenuButton
-        title={__('Undo', 'web-stories')}
-        shortcut="mod+z"
-        disabled={!canUndo}
-        onClick={handleUndo}
-        aria-label={__('Undo Changes', 'web-stories')}
-      >
-        {isRTL ? <Icons.ArrowDownRightCurved /> : <Icons.ArrowDownLeftCurved />}
-      </PageMenuButton>
-      <IconSpace />
-      <PageMenuButton
-        title={__('Redo', 'web-stories')}
-        shortcut="shift+mod+z"
-        disabled={!canRedo}
-        onClick={handleRedo}
-        aria-label={__('Redo Changes', 'web-stories')}
-      >
-        {isRTL ? <Icons.ArrowDownLeftCurved /> : <Icons.ArrowDownRightCurved />}
-      </PageMenuButton>
-      {hasAnimations && (
-        <>
-          <IconSpace />
-          <Divider />
-          <IconSpace />
-          <AnimationToggle />
-        </>
-      )}
     </Wrapper>
   );
 }
 
-export default PageMenu;
+// Don't rerender the page menu needlessly e.g. on element selection change.
+export default memo(PageMenu);

@@ -9,7 +9,7 @@ More details can be found in the `/karma` folder and the corresponding `README`s
 To run the full test suite, you can use the following commands:
 
 ```bash
-npm run test:karma:edit-story -- --headless --viewport=1600:1000
+npm run test:karma:story-editor -- --headless --viewport=1600:1000
 npm run test:karma:dashboard -- --headless --viewport=1600:1000
 ```
 

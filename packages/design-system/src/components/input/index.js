@@ -31,15 +31,18 @@ import { labelAccessibilityValidator } from '../../utils';
 
 const Container = styled.div`
   position: relative;
+  display: inline-block;
   width: 100%;
   min-width: 40px;
 `;
 
 const Label = styled(Text)`
   margin-bottom: 12px;
+  display: inline-block;
 `;
 
 const Hint = styled(Text)`
+  display: inline-block;
   margin-top: 12px;
   color: ${({ hasError, theme }) =>
     theme.colors.fg[hasError ? 'negative' : 'tertiary']};
@@ -91,7 +94,7 @@ const InputContainer = styled.div(
   `
 );
 
-const StyledInput = styled.input(
+export const BaseInput = styled.input(
   ({ hasSuffix, theme }) => css`
     height: 100%;
     width: 100%;
@@ -103,6 +106,7 @@ const StyledInput = styled.input(
     background-color: inherit;
     border: none;
     outline: none;
+    box-shadow: none;
     color: ${theme.colors.fg.primary};
 
     ${themeHelpers.expandPresetStyles({
@@ -126,7 +130,9 @@ const StyledInput = styled.input(
         color: ${theme.colors.fg.disable};
       }
     }
-
+    :focus {
+      box-shadow: none;
+    }
     :active:enabled {
       color: ${theme.colors.fg.primary};
     }
@@ -144,6 +150,7 @@ export const Input = forwardRef(
       label,
       onBlur,
       onFocus,
+      hasFocus = false,
       suffix,
       unit = '',
       value,
@@ -155,7 +162,7 @@ export const Input = forwardRef(
   ) => {
     const inputId = useMemo(() => id || uuidv4(), [id]);
 
-    const [isFocused, setIsFocused] = useState(false);
+    const [isFocused, setIsFocused] = useState(hasFocus);
     const [hasBeenSelected, setHasBeenSelected] = useState(false);
 
     let displayedValue = value;
@@ -180,7 +187,7 @@ export const Input = forwardRef(
           hasError={hasError}
           styleOverride={containerStyleOverride}
         >
-          <StyledInput
+          <BaseInput
             id={inputId}
             disabled={disabled}
             ref={(input) => {

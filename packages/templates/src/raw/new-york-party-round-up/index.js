@@ -15,33 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'new-york-party-round-up',
-  title: _x('New York Party Round-up', 'template name', 'web-stories'),
-  tags: [
-    _x('Entertainment', 'template keyword', 'web-stories'),
-    _x('Club', 'template keyword', 'web-stories'),
-    _x('Event', 'template keyword', 'web-stories'),
-    _x('Banner', 'template keyword', 'web-stories'),
-    _x('Black', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-  ],
-  description: __(
-    'This template’s large black and white banners and full-screen visuals will let you create simple yet attractive stories in the entertainment niche. Create buzzy listicles, announce events and show times, give out info about music festivals and more. Use the social share buttons to reach a wider audience.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Entertainment', 'template vertical', 'web-stories'),
 };

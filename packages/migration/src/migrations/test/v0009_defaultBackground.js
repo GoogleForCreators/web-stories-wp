@@ -44,8 +44,8 @@ describe('defaultBackground', () => {
     const bgEl = page.elements[0];
     expect(page.backgroundElementId).not.toBeNull();
     expect(page.backgroundElementId).toStrictEqual(bgEl.id);
-    expect(bgEl.type).toStrictEqual('shape');
-    expect(bgEl.isBackground).toStrictEqual(true);
+    expect(bgEl.type).toBe('shape');
+    expect(bgEl.isBackground).toBe(true);
   });
 
   it('should maintain background color when migrating', () => {
@@ -73,8 +73,8 @@ describe('defaultBackground', () => {
     const bgEl = page.elements[0];
     expect(page.backgroundElementId).not.toBeNull();
     expect(page.backgroundElementId).toStrictEqual(bgEl.id);
-    expect(bgEl.type).toStrictEqual('shape');
-    expect(bgEl.isBackground).toStrictEqual(true);
+    expect(bgEl.type).toBe('shape');
+    expect(bgEl.isBackground).toBe(true);
     expect(bgEl.backgroundColor).toStrictEqual({
       color: { r: 255, g: 0, b: 0, a: 0.5 },
     });

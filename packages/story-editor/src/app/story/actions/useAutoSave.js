@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from '@web-stories-wp/react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -42,16 +43,23 @@ function useAutoSave({ storyId, pages, story }) {
   const { metadata } = useConfig();
   const [isAutoSaving, setIsAutoSaving] = useState(false);
 
+  const enableBetterCaptions = useFeature('enableBetterCaptions');
+
   const autoSave = useCallback(
     (props) => {
       setIsAutoSaving(true);
       return autoSaveById({
         storyId,
-        ...getStoryPropsToSave({ story, pages, metadata }),
+        ...getStoryPropsToSave({
+          story,
+          pages,
+          metadata,
+          args: { enableBetterCaptions },
+        }),
         ...props,
       }).finally(() => setIsAutoSaving(false));
     },
-    [story, pages, metadata, autoSaveById, storyId]
+    [story, pages, metadata, autoSaveById, storyId, enableBetterCaptions]
   );
 
   return { autoSave, isAutoSaving };

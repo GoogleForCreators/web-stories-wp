@@ -22,8 +22,8 @@ import { prettifyShortcut } from '..';
 describe('prettifyShortcut', () => {
   describe('default platform', () => {
     it('should prettify keyboard shortcuts', () => {
-      expect(prettifyShortcut('shift+mod+z')).toStrictEqual('Shift+Ctrl+Z');
-      expect(prettifyShortcut('alt+b')).toStrictEqual('Alt+B');
+      expect(prettifyShortcut('shift+mod+z')).toBe('Shift+Ctrl+Z');
+      expect(prettifyShortcut('alt+b')).toBe('Alt+B');
     });
   });
 
@@ -35,8 +35,8 @@ describe('prettifyShortcut', () => {
     });
 
     it('should prettify keyboard shortcuts', () => {
-      expect(prettifyShortcut('shift+mod+z')).toStrictEqual('⇧⌘Z');
-      expect(prettifyShortcut('alt+b')).toStrictEqual('⌥B');
+      expect(prettifyShortcut('shift+mod+z')).toBe('⇧⌘Z');
+      expect(prettifyShortcut('alt+b')).toBe('⌥B');
     });
   });
 });

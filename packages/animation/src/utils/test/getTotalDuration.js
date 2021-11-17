@@ -21,7 +21,7 @@ import { getTotalDuration } from '..';
 
 describe('getTotalDuration', () => {
   it('returns 0 if no animations supplied', () => {
-    expect(getTotalDuration({})).toStrictEqual(0);
+    expect(getTotalDuration({})).toBe(0);
   });
 
   it('calculates the longest duration properly', () => {
@@ -33,7 +33,7 @@ describe('getTotalDuration', () => {
           { duration: 50, delay: 5 },
         ],
       })
-    ).toStrictEqual(200);
+    ).toBe(200);
   });
 
   it('calculates properly if missing duration or delay on animation', () => {
@@ -41,6 +41,6 @@ describe('getTotalDuration', () => {
       getTotalDuration({
         animations: [{ duration: 50, delay: 10 }, {}, { duration: 40 }],
       })
-    ).toStrictEqual(60);
+    ).toBe(60);
   });
 });

@@ -117,6 +117,74 @@ describe('calculateSrcSet', () => {
     expect(srcSet).toBe('large-url 400w');
   });
 
+  it('should encode URLs with spaces', () => {
+    const resource = {
+      src: 'default-url',
+      width: 500,
+      height: 500,
+      sizes: {
+        img1: { width: 100, height: 100, source_url: 'small url' },
+        img2: { width: 200, height: 200, source_url: 'medium url' },
+        img3: { width: 300, height: 300, source_url: 'large url' },
+      },
+    };
+
+    const srcSet = calculateSrcSet(resource);
+    expect(srcSet).toBe('large%20url 300w,medium%20url 200w,small%20url 100w');
+  });
+
+  it('should encode already encoded URLs', () => {
+    const resource = {
+      src: 'default-url',
+      width: 500,
+      height: 500,
+      sizes: {
+        img1: { width: 100, height: 100, source_url: 'small%20url' },
+        img2: { width: 200, height: 200, source_url: 'medium%20url' },
+        img3: { width: 300, height: 300, source_url: 'large%20url' },
+      },
+    };
+
+    const srcSet = calculateSrcSet(resource);
+    expect(srcSet).toBe(
+      'large%2520url 300w,medium%2520url 200w,small%2520url 100w'
+    );
+  });
+
+  it('should encode URLs with multiple spaces', () => {
+    const resource = {
+      src: 'default-url',
+      width: 500,
+      height: 500,
+      sizes: {
+        img1: { width: 100, height: 100, source_url: 'small      url' },
+        img2: { width: 200, height: 200, source_url: 'medium     url' },
+        img3: { width: 300, height: 300, source_url: 'large      url' },
+      },
+    };
+
+    const srcSet = calculateSrcSet(resource);
+    expect(srcSet).toBe(
+      'large%20%20%20%20%20%20url 300w,medium%20%20%20%20%20url 200w,small%20%20%20%20%20%20url 100w'
+    );
+  });
+
+  it('should ignore sizes with empty URLs', () => {
+    const resource = {
+      src: 'default-url',
+      width: 500,
+      height: 500,
+      sizes: {
+        img1: { width: 100, height: 100, source_url: '' },
+        img2: { width: 200, height: 200, source_url: '' },
+        img3: { width: 300, height: 300, source_url: '' },
+      },
+    };
+
+    const srcSet = calculateSrcSet(resource);
+    expect(srcSet).toBe('');
+  });
+
   it('should convert strings when checking for duplicates', () => {
     const resource = {
       src: 'image.jpg',
@@ -234,6 +302,41 @@ describe('calculateSrcSet', () => {
     const srcSet = calculateSrcSet(resource);
     expect(srcSet).toBe(
       'image.jpg 1000w,image-768x1024.jpg 768w,image-225x300.jpg 225w,image-150x200.jpg 150w'
+    );
+  });
+
+  it('should not break image URLs with commas in them', () => {
+    const resource = {
+      src: 'image.jpg',
+      width: 640,
+      height: 853,
+      sizes: {
+        thumbnail: {
+          width: 150,
+          height: 200,
+          source_url:
+            'https://example.com/images/w_150,h_200,c_scale/image.jpg?_i=AA',
+        },
+        medium: {
+          width: 225,
+          height: 300,
+          source_url:
+            'https://example.com/images/w_225,h_300,c_scale/image.jpg?_i=AA',
+        },
+        full: {
+          width: 640,
+          height: 853,
+          source_url:
+            'https://example.com/images/w_640,h_853,c_scale/image.jpg?_i=AA',
+        },
+      },
+    };
+
+    const srcSet = calculateSrcSet(resource);
+    expect(srcSet).toBe(
+      'https://example.com/images/w_640%2Ch_853%2Cc_scale/image.jpg?_i=AA 640w,' +
+        'https://example.com/images/w_225%2Ch_300%2Cc_scale/image.jpg?_i=AA 225w,' +
+        'https://example.com/images/w_150%2Ch_200%2Cc_scale/image.jpg?_i=AA 150w'
     );
   });
 });

@@ -23,7 +23,6 @@ import {
   useState,
 } from '@web-stories-wp/react';
 import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -33,22 +32,20 @@ import useLibrary from '../../useLibrary';
 import { useHistory } from '../../../../app';
 import { getHTMLFormatters } from '../../../richText/htmlManipulation';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
-import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
+import { applyHiddenPadding } from '../../../panels/design/textStyle/utils';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import { calculateTextHeight } from '../../../../utils/textMeasurements';
 
 const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';
 
-function useInsertPreset() {
+function useInsertPreset({ shouldUseSmartColor }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
   const {
     state: { versionNumber },
   } = useHistory();
-
-  const enableSmartTextColor = useFeature('enableSmartTextColor');
 
   const htmlFormatters = getHTMLFormatters();
   const { setColor } = htmlFormatters;
@@ -134,12 +131,12 @@ function useInsertPreset() {
   }, [autoColor, presetAtts, insertElement, setColor]);
 
   const insertPreset = useCallback(
-    (element, presetProps = {}) => {
+    async (element, presetProps = {}) => {
       const { isPositioned, accessibleColors, skipCanvasGeneration } =
         presetProps;
       // If it's already positioned, skip calculating that.
       const atts = isPositioned ? {} : getPosition(element);
-      if (enableSmartTextColor) {
+      if (shouldUseSmartColor) {
         setPresetAtts({
           ...element,
           ...atts,
@@ -149,11 +146,12 @@ function useInsertPreset() {
           setAutoColor(accessibleColors);
           return;
         }
-        calculateAccessibleTextColors(
-          { ...element, ...atts },
-          setAutoColor,
-          null,
-          skipCanvasGeneration
+        setAutoColor(
+          await calculateAccessibleTextColors(
+            { ...element, ...atts },
+            null,
+            skipCanvasGeneration
+          )
         );
       } else {
         const addedElement = insertElement(TYPE, {
@@ -169,7 +167,7 @@ function useInsertPreset() {
     [
       getPosition,
       calculateAccessibleTextColors,
-      enableSmartTextColor,
+      shouldUseSmartColor,
       insertElement,
     ]
   );

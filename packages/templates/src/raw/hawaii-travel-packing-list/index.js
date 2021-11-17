@@ -15,33 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'hawaii-travel-packing-list',
-  title: _x('Hawaii Travel Packing List', 'template name', 'web-stories'),
-  tags: [
-    _x('Travel', 'template keyword', 'web-stories'),
-    _x('Island', 'template keyword', 'web-stories'),
-    _x('List', 'template keyword', 'web-stories'),
-    _x('Nature', 'template keyword', 'web-stories'),
-    _x('Teal', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Cool Teal', 'color', 'web-stories'), color: '#EFFAF6' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-  ],
-  description: __(
-    'This template’s beautiful blue-green palette will let you create helpful travel and backpacking stories such as tourist guides, packing lists, and more, with the ability to add product links.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Travel', 'template vertical', 'web-stories'),
 };

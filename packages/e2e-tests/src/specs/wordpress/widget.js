@@ -26,6 +26,7 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Web Stories Widget', () => {
+  // eslint-disable-next-line jest/require-hook
   withPlugin('classic-widgets');
 
   beforeEach(async () => {

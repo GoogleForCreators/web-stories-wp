@@ -84,13 +84,18 @@ describe('Web Stories Block', () => {
 
     await page.waitForSelector('.web-stories-block-configuration-panel');
 
-    await expect(page).toClick('button', { text: 'Story URL' });
+    await expect(page).toClick('button', { text: 'Single Story' });
+
+    await expect(page).toMatch(
+      'Select an existing story from your site, or add one with a URL.'
+    );
+    await expect(page).toClick('button', { text: 'Insert from URL' });
 
     await page.type(
       'input[aria-label="Story URL"]',
       'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp'
     );
-    await expect(page).toClick('button', { text: 'Embed' });
+    await expect(page).toClick('button[aria-label="Embed"]');
 
     await expect(page).not.toMatch(
       'Sorry, this content could not be embedded.'
@@ -129,7 +134,9 @@ describe('Web Stories Block', () => {
   // Disable for https://github.com/google/web-stories-wp/issues/6237
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('AMP validation', () => {
+    // eslint-disable-next-line jest/require-hook
     withDisabledToolbarOnFrontend();
+    // eslint-disable-next-line jest/require-hook
     withPlugin('amp');
 
     it('should produce valid AMP when using the AMP plugin', async () => {

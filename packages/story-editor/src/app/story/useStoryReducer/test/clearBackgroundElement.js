@@ -75,10 +75,10 @@ describe('clearBackgroundElement', () => {
 
     const result = clearBackgroundElement();
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
-  it('should unset overlay if present', () => {
+  it('should keep overlay if present', () => {
     const { restore, clearBackgroundElement } = setupReducer();
 
     // Set an initial state with a current page, some elements and a default background element
@@ -92,7 +92,7 @@ describe('clearBackgroundElement', () => {
             isBackground: true,
           },
           elements: [
-            { id: '456', isBackground: true, overlay: {} },
+            { id: '456', isBackground: true, overlay: { type: 'linear' } },
             { id: '789' },
           ],
         },
@@ -109,7 +109,7 @@ describe('clearBackgroundElement', () => {
         isDefaultBackground: true,
         isBackground: true,
       },
-      { id: '456' },
+      { id: '456', overlay: { type: 'linear' } },
       { id: '789' },
     ]);
   });

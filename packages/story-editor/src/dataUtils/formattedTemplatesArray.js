@@ -1266,6 +1266,15 @@ const formattedTemplatesArray = [
         pageTemplateType: 'steps',
       },
     ],
+    postersByPage: [
+      { png: 'http://placekitten.com/158/237', type: 'cover' },
+      { png: 'http://placekitten.com/158/237', type: 'section' },
+      { png: 'http://placekitten.com/158/237', type: 'quote' },
+      { png: 'http://placekitten.com/158/237', type: 'editorial' },
+      { png: 'http://placekitten.com/158/237', type: 'list' },
+      { png: 'http://placekitten.com/158/237', type: 'table' },
+      { png: 'http://placekitten.com/158/237', type: 'steps' },
+    ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -1276,6 +1285,7 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Cooking',
+    slug: 'cooking',
   },
   {
     version: 2,
@@ -1464,6 +1474,7 @@ const formattedTemplatesArray = [
         pageTemplateType: 'cover',
       },
     ],
+    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'cover' }],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -1474,6 +1485,7 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'DIY',
+    slug: 'diy',
   },
   {
     version: 2,
@@ -1662,6 +1674,7 @@ const formattedTemplatesArray = [
         pageTemplateType: 'section',
       },
     ],
+    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'section' }],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -1672,6 +1685,7 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Entertainment',
+    slug: 'entertainment',
   },
   {
     version: 2,
@@ -1860,6 +1874,9 @@ const formattedTemplatesArray = [
         pageTemplateType: 'editorial',
       },
     ],
+    postersByPage: [
+      { png: 'http://placekitten.com/158/237', type: 'editorial' },
+    ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -1870,6 +1887,7 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Fashion',
+    slug: 'fashion',
   },
   {
     version: 2,
@@ -2058,6 +2076,7 @@ const formattedTemplatesArray = [
         pageTemplateType: 'steps',
       },
     ],
+    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'steps' }],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -2068,6 +2087,7 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Fitness',
+    slug: 'fitness',
   },
   {
     version: 2,
@@ -2256,6 +2276,7 @@ const formattedTemplatesArray = [
         pageTemplateType: 'cover',
       },
     ],
+    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'cover' }],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -2266,6 +2287,7 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Travel',
+    slug: 'travel',
   },
   {
     version: 2,
@@ -2454,6 +2476,7 @@ const formattedTemplatesArray = [
         pageTemplateType: 'section',
       },
     ],
+    postersByPage: [{ png: 'http://placekitten.com/158/237', type: 'section' }],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -2464,6 +2487,7 @@ const formattedTemplatesArray = [
       { label: 'Brown', color: '#eadfd6' },
     ],
     title: 'Wellbeing',
+    slug: 'wellbeing',
   },
   {
     version: 2,
@@ -2652,6 +2676,9 @@ const formattedTemplatesArray = [
         pageTemplateType: 'editorial',
       },
     ],
+    postersByPage: [
+      { png: 'http://placekitten.com/158/237', type: 'editorial' },
+    ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
@@ -2661,6 +2688,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
+    slug: 'beauty',
     title: 'Beauty',
   },
 ];

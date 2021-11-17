@@ -58,12 +58,42 @@ const sharedConfig = {
   output: {
     path: path.resolve(process.cwd(), 'assets', 'js'),
     filename: '[name].js',
-    chunkFilename: '[name]-[chunkhash].js',
+    chunkFilename: '[name].js?v=[chunkhash]',
     publicPath: '',
   },
   target: 'browserslist',
   module: {
     rules: [
+      // This is a workaround to circumvent exports mangling in webpack v4,
+      // which would break i18n string extraction.
+      // While introducing global variables is not ideal, it helps ensuring
+      // i18n works while retaining all tree shaking functionality in webpack.
+      // See https://github.com/google/web-stories-wp/pull/9001 for context.
+      // TODO(#5792): Use `mangleExports` option in webpack v5 instead.
+      {
+        test: require.resolve('@web-stories-wp/i18n'), // eslint-disable-line node/no-extraneous-require
+        loader: 'expose-loader',
+        options: {
+          exposes: [
+            {
+              globalName: 'webStories.i18n.__',
+              moduleLocalName: '__',
+            },
+            {
+              globalName: 'webStories.i18n._n',
+              moduleLocalName: '_n',
+            },
+            {
+              globalName: 'webStories.i18n._x',
+              moduleLocalName: '_x',
+            },
+            {
+              globalName: 'webStories.i18n._nx',
+              moduleLocalName: '_nx',
+            },
+          ],
+        },
+      },
       !isProduction && {
         test: /\.m?js$/,
         use: ['source-map-loader'],
@@ -151,6 +181,17 @@ const sharedConfig = {
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
         sideEffects: true,
       },
+      {
+        test: /\.(png|jpe?g|gif|webp)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: '../images',
+            },
+          },
+        ],
+      },
     ].filter(Boolean),
   },
   plugins: [
@@ -204,8 +245,11 @@ const sharedConfig = {
   },
 };
 
+const EDITOR_CHUNK = 'wp-story-editor';
+const DASHBOARD_CHUNK = 'wp-dashboard';
+
 // Template for html-webpack-plugin to generate JS/CSS chunk manifests in PHP.
-const templateContent = ({ htmlWebpackPlugin }) => {
+const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
   // Extract filename without extension from arrays of JS and CSS chunks.
   // E.g. "../css/some-chunk.css" -> "some-chunk"
   const filenameOf = (pathname) =>
@@ -217,27 +261,48 @@ const templateContent = ({ htmlWebpackPlugin }) => {
   const js = htmlWebpackPlugin.files.js
     .map((pathname) => {
       const f = filenameOf(pathname);
-      return f.substring(0, f.length - '.js'.length);
+      return f.split('.js')[0];
     })
     .filter(omitPrimaryChunk);
 
   const css = htmlWebpackPlugin.files.css
     .map((pathname) => {
       const f = filenameOf(pathname);
-      return f.substring(0, f.length - '.css'.length);
+      return f.split('.css')[0];
     })
     .filter(omitPrimaryChunk);
 
-  return `<?php return array(
-    'css' => ${JSON.stringify(css)},
-    'js' => ${JSON.stringify(js)});`;
+  // We're only interested in chunks from dynamic imports;
+  // ones that are not already in `js` and not primaries.
+  const chunks = chunkNames.filter(
+    (chunk) =>
+      !js.includes(chunk) && ![DASHBOARD_CHUNK, EDITOR_CHUNK].includes(chunk)
+  );
+
+  return `<?php
+  return [
+    'css'    => ${JSON.stringify(css)},
+    'js'     => ${JSON.stringify(js)},
+    'chunks' => ${JSON.stringify(chunks)},
+  ];`;
 };
+
+const templateParameters = (compilation, assets, assetTags, options) => ({
+  compilation,
+  webpackConfig: compilation.options,
+  htmlWebpackPlugin: {
+    tags: assetTags,
+    files: assets,
+    options,
+  },
+  chunkNames: compilation.chunks.map(({ name }) => name),
+});
 
 const editorAndDashboard = {
   ...sharedConfig,
   entry: {
-    'wp-story-editor': './packages/wp-story-editor/src/index.js',
-    'wp-dashboard': './packages/wp-dashboard/src/index.js',
+    [EDITOR_CHUNK]: './packages/wp-story-editor/src/index.js',
+    [DASHBOARD_CHUNK]: './packages/wp-dashboard/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins.filter(
@@ -250,18 +315,20 @@ const editorAndDashboard = {
       name: 'Editor & Dashboard',
     }),
     new HtmlWebpackPlugin({
-      filename: 'wp-story-editor.chunks.php',
+      filename: `${EDITOR_CHUNK}.chunks.php`,
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
+      chunks: [EDITOR_CHUNK],
       templateContent,
-      chunks: ['wp-story-editor'],
+      templateParameters,
     }),
     new HtmlWebpackPlugin({
-      filename: 'wp-dashboard.chunks.php',
+      filename: `${DASHBOARD_CHUNK}.chunks.php`,
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
+      chunks: [DASHBOARD_CHUNK],
       templateContent,
-      chunks: ['wp-dashboard'],
+      templateParameters,
     }),
   ],
   optimization: {

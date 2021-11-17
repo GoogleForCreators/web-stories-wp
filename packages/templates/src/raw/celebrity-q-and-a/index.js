@@ -15,34 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'celebrity-q-a',
-  title: _x('Celebrity Q & A', 'template name', 'web-stories'),
-  tags: [
-    _x('Entertainment', 'template keyword', 'web-stories'),
-    _x('Interview', 'template keyword', 'web-stories'),
-    _x('Questions', 'template keyword', 'web-stories'),
-    _x('Modern', 'template keyword', 'web-stories'),
-    _x('Black', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Black Bean', 'color', 'web-stories'), color: '#131313' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Bright Coral Red', 'color', 'web-stories'), color: '#fe3131' },
-  ],
-  description: __(
-    'This template’s magazine look and stylish modern design will let you present video interviews and Q&A’s in a way that is fun, engaging, and entertaining.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Entertainment', 'template vertical', 'web-stories'),
 };

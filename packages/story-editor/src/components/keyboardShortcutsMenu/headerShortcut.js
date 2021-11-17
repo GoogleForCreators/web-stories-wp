@@ -40,8 +40,8 @@ function HeaderShortcut(props) {
   const { label, shortcut } = header;
 
   return (
-    <List role="group">
-      <Item role="listitem">
+    <List>
+      <Item>
         <Headline
           as="h2"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
@@ -50,7 +50,7 @@ function HeaderShortcut(props) {
           {label}
         </Headline>
       </Item>
-      <ShortcutLabel role="listitem" keys={shortcut} />
+      <ShortcutLabel keys={shortcut} />
     </List>
   );
 }

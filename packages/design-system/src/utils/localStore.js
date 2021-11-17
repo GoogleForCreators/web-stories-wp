@@ -30,6 +30,7 @@ export const LOCAL_STORAGE_PREFIX = {
     'web_stories_delete_color_preset_dialog_dismissed',
   DELETE_STYLE_PRESET_DIALOG_DISMISSED:
     'web_stories_delete_style_preset_dialog_dismissed',
+  DEFAULT_VIEW_PAGE_TEMPLATE_LAYOUT: 'web_stories_default_template_view',
 };
 
 function getItemByKey(key) {
@@ -37,8 +38,8 @@ function getItemByKey(key) {
   try {
     const stored = localStorage.getItem(key);
     parsed = JSON.parse(stored);
-  } catch (e) {
-    trackError('local_storage_read', e.message);
+  } catch (err) {
+    trackError('local_storage_read', err.message);
   }
   return parsed;
 }
@@ -46,8 +47,8 @@ function getItemByKey(key) {
 function setItemByKey(key, data) {
   try {
     localStorage.setItem(key, JSON.stringify(data));
-  } catch (e) {
-    trackError('local_storage_write', e.message);
+  } catch (err) {
+    trackError('local_storage_write', err.message);
   }
 }
 

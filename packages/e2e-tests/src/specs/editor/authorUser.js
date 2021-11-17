@@ -27,6 +27,7 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Author User', () => {
+  // eslint-disable-next-line jest/require-hook
   withUser('author', 'password');
 
   it('should be able to directly preview a story without markup being stripped', async () => {

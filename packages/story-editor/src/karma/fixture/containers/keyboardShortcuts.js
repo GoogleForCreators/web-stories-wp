@@ -28,7 +28,7 @@ export class KeyboardShortcuts extends Container {
     super(node, path);
   }
   get keyboardShortcutsMenu() {
-    return this.queryByRole('list', {
+    return this.queryByRole('dialog', {
       name: /^Keyboard Shortcuts$/,
     });
   }

@@ -66,8 +66,8 @@ describe('reducer', () => {
       });
 
       expect(result.entries).toHaveLength(2);
-      expect(result.entries[1].id).toStrictEqual(3);
-      expect(result.entries[0].id).toStrictEqual(4);
+      expect(result.entries[1].id).toBe(3);
+      expect(result.entries[0].id).toBe(4);
     });
 
     it('should set correct state values when adding new entry', () => {
@@ -83,8 +83,8 @@ describe('reducer', () => {
         payload: newEntry,
       });
 
-      expect(result.versionNumber).toStrictEqual(4);
-      expect(result.offset).toStrictEqual(0);
+      expect(result.versionNumber).toBe(4);
+      expect(result.offset).toBe(0);
     });
 
     it('should respect the determined history size when adding a new entry', () => {
@@ -116,7 +116,7 @@ describe('reducer', () => {
         payload: requestedState,
       });
 
-      expect(result.offset).toStrictEqual(1);
+      expect(result.offset).toBe(1);
       expect(result.requestedState).toBeNull();
       expect(result.entries).toHaveLength(initialState.entries.length);
     });
@@ -137,8 +137,8 @@ describe('reducer', () => {
         payload: requestedState,
       });
 
-      expect(result.requestedState.current).toStrictEqual(1);
-      expect(result.requestedState.pages[0].id).toStrictEqual(2);
+      expect(result.requestedState.current).toBe(1);
+      expect(result.requestedState.pages[0].id).toBe(2);
     });
 
     it('should not dynamically set the replay if changed happened on more than one page', () => {
@@ -170,7 +170,7 @@ describe('reducer', () => {
       });
 
       expect(result.requestedState).toBeNull();
-      expect(result.offset).toStrictEqual(1);
+      expect(result.offset).toBe(1);
     });
 
     it('should not dynamically set the replay if a page was added', () => {
@@ -196,7 +196,7 @@ describe('reducer', () => {
       });
 
       expect(result.requestedState).toBeNull();
-      expect(result.offset).toStrictEqual(1);
+      expect(result.offset).toBe(1);
     });
   });
 
@@ -247,13 +247,13 @@ describe('reducer', () => {
         payload: 2,
       });
 
-      expect(result1.versionNumber).toStrictEqual(5);
+      expect(result1.versionNumber).toBe(5);
 
       const result2 = reducer(initialState, {
         type: REPLAY,
         payload: 5,
       });
-      expect(result2.versionNumber).toStrictEqual(2);
+      expect(result2.versionNumber).toBe(2);
     });
   });
 });

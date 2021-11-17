@@ -31,6 +31,10 @@ const MainIcon = styled(Icons.QuestionMarkOutline)`
   width: auto;
   display: block;
 `;
+const StyledToggleButton = styled(ToggleButton)`
+  padding-left: 3px;
+  padding-right: 3px;
+`;
 
 function Toggle({
   isOpen = false,
@@ -39,7 +43,7 @@ function Toggle({
   notificationCount = 0,
 }) {
   return (
-    <ToggleButton
+    <StyledToggleButton
       aria-owns={popupId}
       aria-label={
         notificationCount > 0

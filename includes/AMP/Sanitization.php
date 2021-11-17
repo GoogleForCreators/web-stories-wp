@@ -26,11 +26,10 @@
 
 namespace Google\Web_Stories\AMP;
 
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Services;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories_Dependencies\AMP_Allowed_Tags_Generated;
 use Google\Web_Stories_Dependencies\AMP_Content_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Dev_Mode_Sanitizer;
@@ -45,7 +44,6 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Extension;
 use Google\Web_Stories_Dependencies\AmpProject\Tag;
 use DOMElement;
-use WP_Post;
 
 /**
  * Sanitization class.
@@ -57,24 +55,24 @@ use WP_Post;
  * @see \AMP_Theme_Support
  */
 class Sanitization {
-	use Publisher;
+	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
 
 	/**
-	 * Experiments instance.
+	 * Analytics constructor.
 	 *
-	 * @var Experiments Experiments instance.
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
 	 */
-	private $experiments;
-
-	/**
-	 * Sanitization constructor.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param Experiments $experiments Experiments instance.
-	 */
-	public function __construct( Experiments $experiments ) {
-		$this->experiments = $experiments;
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
 	}
 
 	/**
@@ -110,7 +108,11 @@ class Sanitization {
 	 * @return void
 	 */
 	protected function ensure_required_markup( $document, array $scripts ) {
-		// Gather all links.
+		/**
+		 * Link elements.
+		 *
+		 * @var array{preconnect: \DOMElement[]|null,dns-prefetch: \DOMElement[]|null,preload: \DOMElement[]|null, prerender: \DOMElement[]|null, prefetch: \DOMElement[]|null }
+		 */
 		$links = [
 			Attribute::REL_PRECONNECT => [
 				// Include preconnect link for AMP CDN for browsers that don't support preload.
@@ -385,6 +387,8 @@ class Sanitization {
 	 * accessing options from the database, requiring AMP__VERSION,
 	 * and causing conflicts with our own amp_is_request() compat shim.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.1.0
 	 *
 	 * @see amp_get_content_sanitizers
@@ -395,6 +399,13 @@ class Sanitization {
 	 * @return array Sanitizers.
 	 */
 	protected function get_sanitizers(): array {
+		// This fallback to get_permalink() ensures that there's a canonical link
+		// even when previewing drafts.
+		$canonical_url = wp_get_canonical_url();
+		if ( ! $canonical_url ) {
+			$canonical_url = get_permalink();
+		}
+
 		$sanitizers = [
 			AMP_Script_Sanitizer::class            => [],
 			AMP_Style_Sanitizer::class             => [
@@ -403,31 +414,35 @@ class Sanitization {
 				 * @todo Enable by default and allow filtering once AMP_Style_Sanitizer does not call AMP_Options_Manager
 				 *       which in turn requires AMP__VERSION to be defined.
 				 */
-				'allow_transient_caching' => false,
-				'use_document_element'    => true,
+				'allow_transient_caching'   => false,
+				'use_document_element'      => true,
+				'dynamic_element_selectors' => [
+					'amp-story-captions',
+				],
 			],
 			Meta_Sanitizer::class                  => [],
 			AMP_Layout_Sanitizer::class            => [],
-			Canonical_Sanitizer::class             => [],
+			Canonical_Sanitizer::class             => [
+				'canonical_url' => $canonical_url,
+			],
 			AMP_Tag_And_Attribute_Sanitizer::class => [],
 		];
 
 		$post = get_queried_object();
 
 		if ( $post instanceof \WP_Post && Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
-			$video_cache_enabled = $this->experiments->is_experiment_enabled( 'videoCache' ) && (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
+			$video_cache_enabled = (bool) $this->settings->get_setting( $this->settings::SETTING_NAME_VIDEO_CACHE );
 
 			$story = new Story();
 			$story->load_from_post( $post );
 
 			$sanitizers[ Story_Sanitizer::class ] = [
-				'publisher_logo'             => $this->get_publisher_logo(),
-				'publisher'                  => $this->get_publisher_name(),
-				'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
-				'poster_images'              => [
+				'publisher_logo' => $story->get_publisher_logo_url(),
+				'publisher'      => $story->get_publisher_name(),
+				'poster_images'  => [
 					'poster-portrait-src' => $story->get_poster_portrait(),
 				],
-				'video_cache'                => $video_cache_enabled,
+				'video_cache'    => $video_cache_enabled,
 			];
 		}
 

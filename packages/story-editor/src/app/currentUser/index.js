@@ -15,4 +15,5 @@
  */
 
 export { default as CurrentUserProvider } from './currentUserProvider';
+export { default as CurrentUserContext } from './context';
 export { default as useCurrentUser } from './useCurrentUser';

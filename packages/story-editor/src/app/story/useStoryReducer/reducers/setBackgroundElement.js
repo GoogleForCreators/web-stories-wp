@@ -55,10 +55,10 @@ function setBackgroundElement(state, { elementId }) {
 
     const defaultBackgroundElement = page.defaultBackgroundElement;
 
-    // Unset isBackground and overlay for the element, too.
+    // Unset isBackground for the element, too.
     const elementsWithoutBackground = page.elements.map((element) => {
       if (element.isBackground) {
-        return objectWithout(element, ['overlay', 'isBackground']);
+        return objectWithout(element, ['isBackground']);
       }
       return element;
     });

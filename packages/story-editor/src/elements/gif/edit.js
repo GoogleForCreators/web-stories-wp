@@ -20,8 +20,8 @@
 import StoryPropTypes from '../../types';
 import MediaEdit from '../media/edit';
 
-function GifEdit({ element, box }) {
-  return <MediaEdit element={element} box={box} />;
+function GifEdit({ element, box, ...rest }) {
+  return <MediaEdit element={element} box={box} {...rest} />;
 }
 
 GifEdit.propTypes = {

@@ -36,7 +36,7 @@ concurrency:
 
 jobs:
   unit-php:
-    name: 'PHP ${{ matrix.php }} - WP ${{ matrix.wp }}'
+    name: PHP ${{ matrix.php }} - WP ${{ matrix.wp }}${{ matrix.experimental && ' (experimental)' || '' }}${{ matrix.coverage && ' (with coverage)' || '' }}${{ matrix.random && ' (in random order)' || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     services:
@@ -52,52 +52,57 @@ jobs:
     continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
-        php: ['8.0', '7.0']
-        wp: ['latest']
+        php: ['7.0', '8.0']
+
+        # Using a branch instead instead of 'latest' or a specific version ensures we
+        # get the latest test utils from that branch that includes the PHPUnity polyfills.
+        # TODO: Switch to 'latest' once a new minor release is out.
+        wp: ['5.8']
         coverage: [false]
         include:
+          # Using PHP 7.4 for code coverage run as 8.0 throws errors.
           - php: '7.4'
-            wp: 'latest'
+            wp: '5.8'
             coverage: true
 
           - php: '7.0'
             wp: '5.5'
 
-          - php: '7.4'
+          - php: '8.0'
+            wp: '5.8'
+            random: true
+            experimental: true
+
+          - php: '8.0'
             wp: 'trunk'
             experimental: true
+
+    # TODO(#8520): Enable 8.1 tests once compat improves.
+    #          - php: '8.1'
+    #            wp: 'trunk'
+    #            experimental: true
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get Composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Setup Composer cache
-        uses: pat-s/always-upload-cache@v2.1.5
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-            ${{ runner.os }}-
-
       # PHP-Scoper only works on PHP 7.2+ and we need to prefix our dependencies to accurately test them.
       # So we temporarily switch PHP versions, do a full install and then remove the package.
       # Then switch back to the PHP version we want to test and delete the vendor directory.
 
-      - name: Setup PHP 7.4
+      - name: Setup PHP 8.0
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: '8.0'
           tools: composer
 
-      - name: Install prefixed dependencies
-        run: |
-          composer install --prefer-dist --no-progress --no-interaction
-          rm -rf vendor/*
+      - name: Install PHP dependencies
+        uses: 'ramsey/composer-install@v1'
+        with:
+          composer-options: '--prefer-dist --no-progress --no-interaction'
+
+      - name: Remove prefixed dependencies
+        run: rm -rf vendor/*
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -107,10 +112,27 @@ jobs:
           coverage: ${{ matrix.coverage && 'xdebug' || 'none' }}
           tools: composer, cs2pr
 
-      - name: Install dependencies
+      - name: Install PHP dependencies
+        uses: 'ramsey/composer-install@v1'
+        with:
+          composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
+
+      # Installs PHPUnit 9.5+ for tests against trunk and PHPUnit 7.5.x for older versions,
+      # because WordPress 5.8 and below don't support newer PHPUnit versions.
+      # PHPUnit 7.5 does support PHP 7.0 though, so we don't run an update there.
+      - name: Update PHPUnit
         run: |
-          composer install --prefer-dist --no-progress --no-interaction --no-scripts
-          composer dump-autoload --no-interaction
+          if [[ $WP_VERSION == "trunk" ]]; then
+            composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
+          elif [[ $PHP_VERSION != "7.0" ]]; then
+            composer require --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit:^7.5 --with-dependencies
+          fi
+        env:
+          WP_VERSION: ${{ matrix.wp }}
+          PHP_VERSION: ${{ matrix.php }}
+
+      - name: Composer dump autoload
+        run: composer dump-autoload --no-interaction
 
       - name: Shutdown default MySQL service
         run: sudo service mysql stop
@@ -124,32 +146,32 @@ jobs:
       - name: Set up tests
         run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${{ job.services.mysql.ports['3306'] }} ${{ matrix.wp }} true
 
-      # 1. Installs PHPUnit 7.5 and patches it to run on PHP 8.
-      # 2. Dumps autoloader so mcaskill/composer-plugin-exclude-files is triggered.
-      - name: Update PHPUnit
-        run: |
-          composer require --dev --ignore-platform-reqs --no-interaction --no-scripts --update-with-all-dependencies phpunit/phpunit:^7.5
-          git apply patches/composer.patch
-          composer dump-autoload --no-interaction
-        if: ${{ matrix.php == '8.0' }}
-
       - name: Set up problem matchers for PHPUnit
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Run tests
         run: |
-          npm run test:php
-          npm run test:php:multisite
-        if: ${{ ! matrix.coverage }}
+          npm run test:php:unit
+          npm run test:php:integration:single
+          npm run test:php:integration:multisite
+        if: ${{ ! matrix.coverage && ! matrix.random }}
 
       - name: Run tests with coverage
         run: |
-          npm run test:php -- --coverage-clover build/logs/php-coverage.xml
-          npm run test:php -- --coverage-clover build/logs/php-coverage-multisite.xml -c phpunit-multisite.xml.dist
-        if: ${{ matrix.coverage }}
+          npm run test:php:unit -- --coverage-clover build/logs/php-coverage.xml
+          npm run test:php:integration:single -- --coverage-clover build/logs/php-coverage-integration.xml
+          npm run test:php:integration:multisite -- --coverage-clover build/logs/php-coverage-multisite.xml
+        if: ${{ matrix.coverage && ! matrix.random }}
+
+      - name: Run tests in random order
+        run: |
+          npm run test:php:unit -- --order-by random
+          npm run test:php:integration:single -- --order-by random
+          npm run test:php:integration:multisite -- --order-by random
+        if: ${{ matrix.random }}
 
       - name: Upload code coverage report
-        uses: codecov/codecov-action@v2.0.2
+        uses: codecov/codecov-action@v2.1.0
         with:
           file: build/logs/*.xml
         if: ${{ matrix.coverage }}

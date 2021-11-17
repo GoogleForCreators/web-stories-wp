@@ -15,29 +15,42 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import Inspector from '../inspector';
 import Canvas from '../canvas';
 import { RichTextProvider } from '../richText';
+import { VideoTrimProvider } from '../videoTrim';
 import ErrorBoundary from '../errorBoundary';
 import { CanvasArea, InspectorArea } from './layout';
 
-function Workspace() {
+function Workspace({ header, inspectorTabs }) {
   return (
-    <RichTextProvider>
-      <CanvasArea>
-        <ErrorBoundary>
-          <Canvas />
-        </ErrorBoundary>
-      </CanvasArea>
-      <InspectorArea>
-        <ErrorBoundary>
-          <Inspector />
-        </ErrorBoundary>
-      </InspectorArea>
-    </RichTextProvider>
+    <VideoTrimProvider>
+      <RichTextProvider>
+        <CanvasArea>
+          <ErrorBoundary>
+            <Canvas header={header} />
+          </ErrorBoundary>
+        </CanvasArea>
+        <InspectorArea>
+          <ErrorBoundary>
+            <Inspector inspectorTabs={inspectorTabs} />
+          </ErrorBoundary>
+        </InspectorArea>
+      </RichTextProvider>
+    </VideoTrimProvider>
   );
 }
+
+Workspace.propTypes = {
+  header: PropTypes.node,
+  inspectorTabs: PropTypes.object,
+};
 
 export default Workspace;

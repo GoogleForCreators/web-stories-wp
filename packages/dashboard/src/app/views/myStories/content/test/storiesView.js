@@ -87,7 +87,7 @@ const fakeStories = [
   },
 ];
 
-describe('My Stories <StoriesView />', function () {
+describe('Dashboard <StoriesView />', function () {
   it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
     renderWithProviders(
       <StoriesView
@@ -99,7 +99,6 @@ describe('My Stories <StoriesView />', function () {
           setDirection: noop,
         }}
         storyActions={{
-          createTemplateFromStory: jest.fn,
           duplicateStory: jest.fn,
           trashStory: jest.fn,
           updateStory: jest.fn,
@@ -110,12 +109,9 @@ describe('My Stories <StoriesView />', function () {
           pageSize: {
             width: 210,
             height: 316,
-            containerHeight: 316,
-            posterHeight: 300,
           },
         }}
       />,
-      { features: { enableInProgressStoryActions: false } },
       {}
     );
 
@@ -136,7 +132,6 @@ describe('My Stories <StoriesView />', function () {
             setDirection: noop,
           }}
           storyActions={{
-            createTemplateFromStory: jest.fn,
             duplicateStory: jest.fn,
             trashStory: jest.fn,
             updateStory: jest.fn,
@@ -147,8 +142,6 @@ describe('My Stories <StoriesView />', function () {
             pageSize: {
               width: 210,
               height: 316,
-              containerHeight: 316,
-              posterHeight: 300,
             },
           }}
           loading={{
@@ -156,7 +149,6 @@ describe('My Stories <StoriesView />', function () {
             showStoriesWhileLoading: { current: false },
           }}
         />,
-        { features: { enableInProgressStoryActions: false } },
         {}
       );
 
@@ -174,7 +166,6 @@ describe('My Stories <StoriesView />', function () {
             setDirection: noop,
           }}
           storyActions={{
-            createTemplateFromStory: jest.fn,
             duplicateStory: jest.fn,
             trashStory: jest.fn,
             updateStory: jest.fn,
@@ -185,8 +176,6 @@ describe('My Stories <StoriesView />', function () {
             pageSize: {
               width: 210,
               height: 316,
-              containerHeight: 316,
-              posterHeight: 300,
             },
           }}
           loading={{
@@ -194,7 +183,6 @@ describe('My Stories <StoriesView />', function () {
             showStoriesWhileLoading: { current: true },
           }}
         />,
-        { features: { enableInProgressStoryActions: false } },
         {}
       );
 
@@ -214,7 +202,6 @@ describe('My Stories <StoriesView />', function () {
             setDirection: noop,
           }}
           storyActions={{
-            createTemplateFromStory: jest.fn,
             duplicateStory: jest.fn,
             trashStory: jest.fn,
             updateStory: jest.fn,
@@ -225,8 +212,6 @@ describe('My Stories <StoriesView />', function () {
             pageSize: {
               width: 210,
               height: 316,
-              containerHeight: 316,
-              posterHeight: 300,
             },
           }}
           loading={{
@@ -234,7 +219,6 @@ describe('My Stories <StoriesView />', function () {
             showStoriesWhileLoading: { current: false },
           }}
         />,
-        { features: { enableInProgressStoryActions: false } },
         {}
       );
 
@@ -252,7 +236,6 @@ describe('My Stories <StoriesView />', function () {
             setDirection: noop,
           }}
           storyActions={{
-            createTemplateFromStory: jest.fn,
             duplicateStory: jest.fn,
             trashStory: jest.fn,
             updateStory: jest.fn,
@@ -263,8 +246,6 @@ describe('My Stories <StoriesView />', function () {
             pageSize: {
               width: 210,
               height: 316,
-              containerHeight: 316,
-              posterHeight: 300,
             },
           }}
           loading={{
@@ -272,7 +253,6 @@ describe('My Stories <StoriesView />', function () {
             showStoriesWhileLoading: { current: true },
           }}
         />,
-        { features: { enableInProgressStoryActions: false } },
         {}
       );
 
@@ -294,7 +274,6 @@ describe('My Stories <StoriesView />', function () {
             setDirection: noop,
           }}
           storyActions={{
-            createTemplateFromStory: jest.fn,
             duplicateStory: jest.fn,
             trashStory: jest.fn,
             updateStory: jest.fn,
@@ -305,8 +284,6 @@ describe('My Stories <StoriesView />', function () {
             pageSize: {
               width: 210,
               height: 316,
-              containerHeight: 316,
-              posterHeight: 300,
             },
           }}
         />,

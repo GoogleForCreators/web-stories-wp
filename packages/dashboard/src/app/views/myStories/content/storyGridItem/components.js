@@ -36,13 +36,8 @@ export const CustomCardGridItem = styled(CardGridItem)`
   grid-template-rows: ${({ $posterHeight }) => `${$posterHeight}px auto`};
 `;
 CustomCardGridItem.propTypes = {
-  $posterHeight: PropTypes.number.isRequired,
+  $posterHeight: PropTypes.number,
 };
-
-// Keeps grid item position contained
-export const Container = styled.div`
-  position: relative;
-`;
 
 // Allows grid item contents to overlay in a set space
 export const CardWrapper = styled.div`
@@ -51,44 +46,24 @@ export const CardWrapper = styled.div`
   width: 100%;
 `;
 
-// Displays story poster if available for story grid item as background of card area
-export const Poster = styled.div`
-  height: 100%;
-  width: 100%;
-  object-fit: fill;
-  border-radius: ${({ theme }) => theme.borders.radius.medium};
-  background: ${({ theme }) => theme.colors.gradient.placeholder};
-`;
-
-// Gradient overlays the story poster
-export const Gradient = styled.div`
-  position: absolute;
-  bottom: 0;
-  height: 67%;
-  width: 100%;
-  border-radius: ${({ theme }) => theme.borders.radius.medium};
-  background: ${({ theme }) => theme.colors.gradient.posterOverlay};
-`;
-
-// Holds story content
-export const Scrim = styled.div`
+export const ScrimAnchor = styled.a`
   position: absolute;
   top: 0;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 8px;
   border-radius: ${({ theme }) => theme.borders.radius.medium};
-  background: ${({ theme }) => theme.colors.opacity.black3};
-`;
 
+  &:hover,
+  &:focus {
+    box-shadow: none;
+    border: ${({ theme }) => `4px solid ${theme.colors.interactiveBg.active}`};
+  }
+`;
 // Components that create the content to display on top of a poster
 // Set guidance for how content should display on top of a poster
 export const StyledStoryDisplayContent = styled.div`
-  padding: 12px 4px 0 4px;
+  padding: 20px 12px 8px 12px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -141,14 +116,6 @@ export const Title = styled(Headline).attrs({
   -webkit-line-clamp: 3;
   /* stylelint-disable-next-line */
   -webkit-box-orient: vertical;
-`;
-
-export const TitleLink = styled(Title).attrs({
-  as: 'a',
-})`
-  &:hover {
-    color: ${({ theme }) => theme.colors.inverted.fg.linkHover};
-  }
 `;
 
 // All body text

@@ -21,6 +21,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useState } from '@web-stories-wp/react';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@web-stories-wp/design-system';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -56,6 +57,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const { editLink } = story;
   const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
 
+  const enableBetterCaptions = useFeature('enableBetterCaptions');
+
   const saveStory = useCallback(
     (props) => {
       setIsSaving(true);
@@ -68,18 +71,33 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
 
       return saveStoryById({
         storyId,
-        ...getStoryPropsToSave({ story, pages, metadata }),
+        ...getStoryPropsToSave({
+          story,
+          pages,
+          metadata,
+          args: { enableBetterCaptions },
+        }),
         ...props,
       })
         .then((data) => {
+          const {
+            status,
+            slug,
+            link,
+            preview_link: previewLink,
+            edit_link: newEditLink,
+            embed_post_link: embedPostLink,
+            featured_media: featuredMedia,
+          } = data;
+
           const properties = {
-            status: data.status,
-            slug: data.slug,
-            link: data.link,
-            featuredMediaUrl: data.featured_media_url,
-            previewLink: data.preview_link,
-            editLink: data.edit_link,
-            embedPostLink: data.embed_post_link,
+            status,
+            slug,
+            link,
+            previewLink,
+            editLink: newEditLink,
+            embedPostLink,
+            featuredMedia,
           };
           updateStory({ properties });
 
@@ -91,7 +109,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         .catch(() => {
           showSnackbar({
             message: __('Failed to save the story', 'web-stories'),
-            dismissable: true,
+            dismissible: true,
           });
         })
         .finally(() => {
@@ -110,6 +128,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       refreshPostEditURL,
       showSnackbar,
       resetNewChanges,
+      enableBetterCaptions,
     ]
   );
 

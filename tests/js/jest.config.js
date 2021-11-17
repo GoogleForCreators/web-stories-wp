@@ -27,6 +27,7 @@ export default {
   moduleNameMapper: {
     '\\.svg': join(__dirname, '/svgrMock.js'),
     '\\.css': join(__dirname, '/styleMock.js'),
+    '\\.png': join(__dirname, '/imageMock.js'),
   },
   setupFiles: [
     '<rootDir>/tests/js/setup-globals',
@@ -47,7 +48,7 @@ export default {
     WEB_STORIES_DISABLE_QUICK_TIPS: true,
     WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: true,
   },
-  setupFilesAfterEnv: ['<rootDir>/tests/js/jest.setup'],
+  setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/build',
@@ -66,10 +67,12 @@ export default {
   coverageReporters: ['lcov'],
   coverageDirectory: '<rootDir>/build/logs',
   collectCoverageFrom: [
-    '<rootDir>/assets/src/**/*.js',
+    '<rootDir>/packages/**/*.js',
     '<rootDir>/bin/**/*.js',
+    '!<rootDir>/packages/fonts/**',
     '!**/karma/**',
     '!**/test/**',
+    '!**/testUtils/**',
     '!**/stories/**',
   ],
   modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],

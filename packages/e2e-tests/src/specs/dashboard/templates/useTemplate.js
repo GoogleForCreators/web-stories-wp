@@ -21,7 +21,7 @@ import percySnapshot from '@percy/puppeteer';
 import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Template', () => {
-  it('should be able use existing template for new story', async () => {
+  it('should be able to use existing template for new story', async () => {
     await visitDashboard();
 
     const dashboardNavigation = await expect(page).toMatchElement(
@@ -40,17 +40,60 @@ describe('Template', () => {
       '[data-testid="template-grid-item-1"]'
     );
 
-    await percySnapshot(page, 'Explore Templates');
+    await expect(firstTemplate).toClick('a', { text: 'See details' });
+    // Get count of template colors to compare to 'saved colors' in the editor.
+    const templateDetailsColors = await page.evaluate(() => {
+      const elements = document.querySelectorAll(
+        'div[data-testid="detail-template-color"]'
+      );
+      const count = elements.length;
+      const colors = [];
+      for (let i = 0; i < count; i++) {
+        colors.push(window.getComputedStyle(elements[i]).backgroundColor);
+      }
+      return colors;
+    });
 
-    await expect(firstTemplate).toClick('button', { text: 'Use template' });
+    await expect(page).toClick('button', { text: 'Use template' });
     await page.waitForNavigation();
 
-    // Wait for media elements to load before continuing.
-    await page.waitForSelector('[data-testid="mediaElement-image"]');
-
+    // Wait for title input to load before continuing.
+    await page.waitForSelector('input[placeholder="Add title"]');
+    await expect(page).toMatch('Layers');
     await expect(page).toMatchElement('input[placeholder="Add title"]');
     await expect(page).toMatchElement('[data-element-id]');
 
+    // Wait for skeleton thumbnails in the carousel to render before taking a screenshot.
+    await page.waitForFunction(
+      () =>
+        !document.querySelector(
+          'li[data-testid^="carousel-page-preview-skeleton"]'
+        ),
+      { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
+    );
     await percySnapshot(page, 'Story From Template');
+
+    // Select a text layer so 'Saved Colors' panel is present
+    await expect(page).toClick('div[data-testid="layer-option"] button', {
+      text: 'Fresh',
+    });
+
+    // Open the color picker
+    await expect(page).toClick('button[aria-label="Text color"]');
+
+    // Get all saved story colors and subtract 1 button for adding other colors
+    const editorSavedColors = await page.evaluate(() => {
+      const elements = document.querySelectorAll(
+        'div[data-testid="saved-story-colors"] button > div'
+      );
+      const count = elements.length;
+      const colors = [];
+      for (let i = 0; i < count; i++) {
+        colors.push(window.getComputedStyle(elements[i]).backgroundColor);
+      }
+      return colors;
+    });
+
+    expect(editorSavedColors).toStrictEqual(templateDetailsColors);
   });
 });

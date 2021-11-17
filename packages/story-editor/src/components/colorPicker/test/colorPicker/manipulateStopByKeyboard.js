@@ -35,7 +35,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // Send key to gradient line itself, not a stop
@@ -66,7 +66,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     // Select middle stop
@@ -98,7 +98,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     const firstStop = getGradientStopAt(100);
@@ -142,7 +142,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     const firstStop = getGradientStopAt(100);
@@ -173,7 +173,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     const firstStop = getGradientStopAt(20);
@@ -204,7 +204,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 0.8 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     const lastStop = getGradientStopAt(80);
@@ -236,7 +236,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     const someStop = getGradientStopAt(20);
@@ -272,7 +272,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
-      hasGradient: true,
+      allowsGradient: true,
     });
 
     const lastStop = getGradientStopAt(100);

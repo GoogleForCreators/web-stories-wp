@@ -49,21 +49,24 @@ function setup() {
 
   localStore.setItemByKey(storageKey, false);
 
-  const view = renderWithTheme(
+  return renderWithTheme(
     <CurrentUserContext.Provider value={userValue}>
       <MediaContext.Provider value={mediaValue}>
         <VideoOptimizationDialog />
       </MediaContext.Provider>
     </CurrentUserContext.Provider>
   );
-
-  const { container } = view;
-  setAppElement(container);
-
-  return view;
 }
 
 describe('videoOptimizationDialog', () => {
+  let modalWrapper;
+
+  beforeAll(() => {
+    modalWrapper = document.createElement('aside');
+    document.documentElement.appendChild(modalWrapper);
+    setAppElement(modalWrapper);
+  });
+
   it('should render', () => {
     setup();
 

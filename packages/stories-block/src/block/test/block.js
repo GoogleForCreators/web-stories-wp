@@ -27,6 +27,6 @@ import { name, settings } from '..';
 describe('Block Registration', () => {
   it('should register Web Stories block without errors', () => {
     const block = registerBlockType(name, settings);
-    expect(block).not.toBeUndefined();
+    expect(block).toBeDefined();
   });
 });

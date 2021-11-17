@@ -27,68 +27,44 @@ import EmbedPlaceholder from '../embedPlaceholder';
 describe('EmbedPlaceholder', () => {
   it('should display the embed placeholder', () => {
     const onSubmit = jest.fn();
-    const onChange = jest.fn();
     render(
       <EmbedPlaceholder
         icon={null}
         label="Embed Placeholder"
-        value="https://example.com"
+        value=""
         onSubmit={onSubmit}
-        onChange={onChange}
         cannotEmbed={false}
       />
     );
     expect(screen.getByText('Embed Placeholder')).toBeInTheDocument();
-    expect(screen.getByRole('button')).toHaveTextContent('Embed');
-    expect(screen.getByRole('textbox')).toHaveValue('https://example.com');
-  });
-
-  it('should trigger onChange callback when typing', () => {
-    const onSubmit = jest.fn();
-    const onChange = jest.fn();
-    render(
-      <EmbedPlaceholder
-        icon={null}
-        label="Embed Placeholder"
-        value="https://example.com"
-        onSubmit={onSubmit}
-        onChange={onChange}
-        cannotEmbed={false}
-      />
-    );
-    fireEvent.change(screen.getByRole('textbox'), {
-      target: { value: 'https://newurl.com' },
-    });
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(screen.getByText('Select Story')).toBeInTheDocument();
+    expect(screen.getByText('Insert from URL')).toBeInTheDocument();
   });
 
   it('should trigger onSubmit callback when submitting the form', () => {
     const onSubmit = jest.fn();
-    const onChange = jest.fn();
     render(
       <EmbedPlaceholder
         icon={null}
         label="Embed Placeholder"
         value="https://example.com"
         onSubmit={onSubmit}
-        onChange={onChange}
         cannotEmbed={false}
       />
     );
+    fireEvent.click(screen.getByText('Replace URL'));
     fireEvent.submit(screen.getByTestId('embed-placeholder-form'));
     expect(onSubmit).toHaveBeenCalledTimes(1);
   });
 
   it('should display a message if embedding is not possible', () => {
     const onSubmit = jest.fn();
-    const onChange = jest.fn();
     render(
       <EmbedPlaceholder
         icon={null}
         label="Embed Placeholder"
         value="https://example.com"
         onSubmit={onSubmit}
-        onChange={onChange}
         cannotEmbed
       />
     );

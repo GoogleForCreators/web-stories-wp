@@ -17,11 +17,24 @@
 /**
  * External dependencies
  */
-import { forwardRef } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { themeHelpers } from '@web-stories-wp/design-system';
+import { Button, BUTTON_TYPES } from '@web-stories-wp/design-system';
 
+const pictureCss = css`
+  picture {
+    display: block;
+    & > img {
+      display: block;
+      height: 100%;
+      width: 100%;
+      object-fit: fill;
+      border-radius: ${({ theme }) => theme.borders.radius.medium};
+      border: ${({ theme }) =>
+        `1px solid ${theme.colors.border.defaultNormal}`};
+    }
+  }
+`;
 export const GalleryContainer = styled.div`
   flex: 1;
   display: flex;
@@ -29,102 +42,68 @@ export const GalleryContainer = styled.div`
   align-items: start;
 `;
 
-export const MiniCardButton = styled.button(
-  ({ theme }) => css`
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    display: block;
-    overflow: hidden;
-    cursor: pointer;
-    padding: 0;
-    background-color: transparent;
-    border: 1px solid ${theme.colors.border.defaultNormal};
-    border-radius: ${theme.borders.radius.small};
-    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
-  `
-);
-MiniCardButton.propTypes = {
-  isSelected: PropTypes.bool,
-};
-
 export const DisplayPage = styled.div`
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
-  ${({ theme }) =>
-    theme.numRows === 3
-      ? css`
-          width: 45.2%;
-          margin-left: 2.4%;
-        `
-      : css`
-          width: 38.6%;
-          margin-left: 2.1%;
-        `}
+  width: 38.6%;
+  margin-left: 2.1%;
+
+  ${pictureCss}
+
+  @media screen and (min-width: 1600px) {
+    width: 45.2%;
+    margin-left: 2.4%;
+  }
 `;
 
-const AspectSetter = styled.div`
-  position: relative;
-  height: 0;
-  padding-bottom: ${({ aspect }) => aspect * 100}%;
-`;
-const AspectInner = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-`;
-
-export const AspectRatio = forwardRef(function AspectRatio(
-  { aspect = 1, children },
-  ref
-) {
-  return (
-    <AspectSetter aspect={aspect}>
-      <AspectInner ref={ref}>{children}</AspectInner>
-    </AspectSetter>
-  );
-});
-
-AspectRatio.propTypes = {
-  aspect: PropTypes.number,
-  children: PropTypes.node,
+DisplayPage.propTypes = {
+  $isThreeRows: PropTypes.bool,
 };
 
 export const Thumbnails = styled.div`
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: start;
-  ${({ theme }) =>
-    theme.numRows === 3
-      ? css`
-          width: 52.3%;
-        `
-      : css`
-          width: 59.3%;
-        `}
-`;
+  display: grid;
+  width: 52.3%;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 8px;
+  row-gap: 16px;
+  margin-right: 16px;
 
-export const Thumbnail = styled.div`
-  position: relative;
-
-  ${({ theme }) =>
-    theme.numRows === 3
-      ? css`
-          width: 26%;
-          margin: 0 7.1% 7.1% 0;
-        `
-      : css`
-          width: 19.74%;
-          margin: 0 5.26% 5.26% 0;
-        `}
-
-  :nth-last-child(-n + ${({ theme }) => theme.numRows}) {
-    margin-bottom: 0;
+  @media screen and (min-width: 1600px) {
+    width: 59.3%;
+    grid-template-columns: repeat(4, 1fr);
   }
 `;
+
+export const ThumbnailButton = styled(Button).attrs({
+  type: BUTTON_TYPES.PLAIN,
+})`
+  display: block;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  position: relative;
+  &:active {
+    background-color: transparent;
+  }
+  ${({ $isSelected, theme }) =>
+    $isSelected &&
+    css`
+      &:after {
+        content: '';
+        position: absolute;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        display: block;
+        top: 0;
+        right: 0;
+        border-radius: ${theme.borders.radius.medium};
+        border: 4px solid ${theme.colors.interactiveBg.active};
+      }
+    `}
+  ${pictureCss};
+`;
+ThumbnailButton.propTypes = {
+  $isSelected: PropTypes.bool,
+};

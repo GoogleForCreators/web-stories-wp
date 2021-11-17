@@ -33,10 +33,61 @@ import StoryContext from '../../../app/story/context';
 import ConfigContext from '../../../app/config/context';
 import MediaContext from '../../../app/media/context';
 import HistoryContext from '../../../app/history/context';
-import Buttons from '../buttons';
 import { renderWithTheme } from '../../../testUtils';
 import { StoryTriggersProvider } from '../../../app/story/storyTriggers';
 import { CheckpointContext } from '../../checklist';
+import { useStory } from '../../../app';
+import {
+  PreviewButton,
+  PublishButton,
+  SwitchToDraftButton,
+  UpdateButton,
+} from '../buttons';
+import { CircularProgress } from '../../..';
+
+function Loading() {
+  const { isSaving } = useStory((state) => ({
+    isSaving: state.state.meta.isSaving,
+  }));
+
+  return (
+    isSaving && (
+      <div>
+        <CircularProgress size={32} />
+      </div>
+    )
+  );
+}
+
+const Buttons = () => {
+  const { status } = useStory(
+    ({
+      state: {
+        story: { status, embedPostLink, link },
+        meta: { isFreshlyPublished },
+      },
+    }) => ({
+      status,
+      embedPostLink,
+      link,
+      isFreshlyPublished,
+    })
+  );
+
+  const isDraft = 'draft' === status;
+
+  return (
+    <div>
+      <div>
+        <PreviewButton />
+        <Loading />
+      </div>
+      {isDraft ? <UpdateButton /> : <SwitchToDraftButton />}
+      {isDraft && <PublishButton />}
+      {!isDraft && <UpdateButton />}
+    </div>
+  );
+};
 
 function setupButtons({
   story: extraStoryProps,
@@ -55,7 +106,7 @@ function setupButtons({
   const storyContextValue = {
     state: {
       capabilities: {
-        hasPublishAction: true,
+        publish: true,
       },
       meta: { isSaving: false, isFreshlyPublished: false, ...extraMetaProps },
       story: {
@@ -230,18 +281,6 @@ describe('buttons', () => {
     expect(saveStory).not.toHaveBeenCalled();
   });
 
-  it('should display post-publish dialog if recently published', async () => {
-    setupButtons({ meta: { isFreshlyPublished: true } });
-
-    const dismissButton = screen.getByRole('button', { name: 'Dismiss' });
-    expect(dismissButton).toBeInTheDocument();
-    fireEvent.click(dismissButton);
-
-    await waitForElementToBeRemoved(() =>
-      screen.getByRole('button', { name: 'Dismiss' })
-    );
-  });
-
   it('should display Switch to draft button when published', () => {
     const { saveStory } = setupButtons({
       story: { status: 'publish' },
@@ -349,11 +388,13 @@ describe('buttons', () => {
     expect(screen.getByRole('button', { name: 'Publish' })).toBeDisabled();
   });
 
-  it('should disable publish button when user lacks permission', () => {
+  it('should display button to submit for review if user cannot publish', () => {
     setupButtons({
-      storyState: { capabilities: { hasPublishAction: false } },
+      storyState: { capabilities: { publish: false } },
     });
-    expect(screen.getByRole('button', { name: 'Publish' })).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: 'Submit for review' })
+    ).toBeInTheDocument();
   });
 
   it('should open draft preview when clicking on Preview via about:blank', () => {

@@ -26,12 +26,14 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
+
 /**
  * Experiments class.
  *
  * Allows turning flags on/off via the admin UI.
  */
-class Experiments extends Service_Base {
+class Experiments extends Service_Base implements HasRequirements {
 	/**
 	 * Settings page name.
 	 *
@@ -40,11 +42,24 @@ class Experiments extends Service_Base {
 	const PAGE_NAME = 'web-stories-experiments';
 
 	/**
-	 * Admin page hook suffix.
+	 * Settings instance.
 	 *
-	 * @var string|false The experiments page's hook_suffix, or false if the user does not have the capability required.
+	 * @var Settings Settings instance.
 	 */
-	private $hook_suffix;
+	private $settings;
+
+	/**
+	 * Experiments constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
 
 	/**
 	 * Initializes experiments
@@ -59,14 +74,16 @@ class Experiments extends Service_Base {
 	}
 
 	/**
-	 * Get the action priority to use for registering the service.
+	 * Get the list of service IDs required for this service to be registered.
 	 *
-	 * @since 1.6.0
+	 * Needed because settings needs to be registered first.
 	 *
-	 * @return int Registration action priority to use.
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
 	 */
-	public static function get_registration_action_priority(): int {
-		return 7;
+	public static function get_requirements(): array {
+		return [ 'settings' ];
 	}
 
 	/**
@@ -77,7 +94,7 @@ class Experiments extends Service_Base {
 	 * @return void
 	 */
 	public function add_menu_page() {
-		$this->hook_suffix = add_submenu_page(
+		add_submenu_page(
 			'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG,
 			__( 'Experiments', 'web-stories' ),
 			__( 'Experiments', 'web-stories' ),
@@ -165,7 +182,7 @@ class Experiments extends Service_Base {
 		<label for="<?php echo esc_attr( $args['id'] ); ?>">
 			<input
 				type="checkbox"
-				name="<?php echo esc_attr( sprintf( '%1$s[%2$s]', Settings::SETTING_NAME_EXPERIMENTS, $args['id'] ) ); ?>"
+				name="<?php echo esc_attr( sprintf( '%1$s[%2$s]', $this->settings::SETTING_NAME_EXPERIMENTS, $args['id'] ) ); ?>"
 				id="<?php echo esc_attr( $args['id'] ); ?>"
 				value="1"
 				<?php echo esc_attr( $disabled ); ?>
@@ -220,29 +237,6 @@ class Experiments extends Service_Base {
 	public function get_experiments(): array {
 		return [
 			/**
-			 * Author: @samwhale
-			 * Issue: 6153
-			 * Creation date: 2021-06-07
-			 */
-			[
-				'name'        => 'enableRightClickMenus',
-				'label'       => __( 'Right click menus', 'web-stories' ),
-				'description' => __( 'Enable a contextual shortcut menu when right clicking in the editor', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 6708
-			 * Creation date: 2021-03-23
-			 */
-			[
-				'name'        => 'enableStickers',
-				'label'       => __( 'Stickers', 'web-stories' ),
-				'description' => __( 'Append sticker buttons to the bottom of the shapes panel in library', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @littlemilkstudio
 			 * Issue: 6379
 			 * Creation date: 2021-03-09
@@ -252,28 +246,6 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Experimental animations', 'web-stories' ),
 				'description' => __( 'Enable any animation effects that are currently experimental', 'web-stories' ),
 				'group'       => 'editor',
-			],
-			/**
-			 * Author: @carlos-kelly
-			 * Issue: 2081
-			 * Creation date: 2020-05-28
-			 */
-			[
-				'name'        => 'enableInProgressViews',
-				'label'       => __( 'Views', 'web-stories' ),
-				'description' => __( 'Enable in-progress views to be accessed', 'web-stories' ),
-				'group'       => 'dashboard',
-			],
-			/**
-			 * Author: @brittanyirl
-			 * Issue: 2344
-			 * Creation date: 2020-06-10
-			 */
-			[
-				'name'        => 'enableInProgressStoryActions',
-				'label'       => __( 'Actions', 'web-stories' ),
-				'description' => __( 'Enable in-progress story actions', 'web-stories' ),
-				'group'       => 'dashboard',
 			],
 			/**
 			 * Author: @brittanyirl
@@ -287,14 +259,14 @@ class Experiments extends Service_Base {
 				'group'       => 'dashboard',
 			],
 			/**
-			 * Author: @brittanyirl
-			 * Issue: 2292
-			 * Creation date: 2020-06-11
+			 * Author: @littlemilkstudio
+			 * Issue: 9508
+			 * Creation date: 2021-11-05
 			 */
 			[
-				'name'        => 'enableBookmarkActions',
-				'label'       => __( 'Bookmarks', 'web-stories' ),
-				'description' => __( 'Enable bookmark actions', 'web-stories' ),
+				'name'        => 'enableExploreTemplatesSearch',
+				'label'       => __( 'Template search', 'web-stories' ),
+				'description' => __( 'Enable search for templates', 'web-stories' ),
 				'group'       => 'dashboard',
 			],
 			/**
@@ -353,51 +325,77 @@ class Experiments extends Service_Base {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @miina
-			 * Issue #7986
-			 * Creation date: 2021-08-08
+			 * Author: @spacedmonkey
+			 * Issue: #8811
+			 * Creation date: 2021-09-06
 			 */
 			[
-				'name'        => 'enableSmartTextColor',
-				'label'       => __( 'Smart text color', 'web-stories' ),
-				'description' => __( 'Enable text insertion with smart color ensuring good contrast with the background', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @merapi
-			 * Issue: #262
-			 * Creation date: 2021-07-08
-			 */
-			[
-				'name'        => 'enableEyedropper',
-				'label'       => __( 'Eyedropper', 'web-stories' ),
-				'description' => __( 'Enable choosing color using an eyedropper', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @swissspidy
-			 * Issue: #8310
-			 * Creation date: 2021-07-13
-			 */
-			[
-				'name'        => 'videoCache',
-				'label'       => __( 'Video Cache', 'web-stories' ),
-				'description' => __( 'Reduce hosting costs and improve user experience by serving videos from the Google cache.', 'web-stories' ),
+				'name'        => 'archivePageCustomization',
+				'label'       => __( 'Archive Page', 'web-stories' ),
+				'description' => __( 'Allow Web Stories archive page customization', 'web-stories' ),
 				'group'       => 'general',
 				'default'     => true,
+			],
+			/**
+			 * Author: @miina
+			 * Issue #471
+			 * Creation date: 2021-08-10
+			 */
+			[
+				'name'        => 'enableHotlinking',
+				'label'       => __( 'Insert media from link', 'web-stories' ),
+				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
+				'group'       => 'editor',
 			],
 
 			/**
 			 * Author: @spacedmonkey
-			 * Issue: #8310
-			 * Creation date: 2021-07-15
+			 * Issue #9039
+			 * Creation date: 2021-09-29
 			 */
 			[
-				'name'        => 'enableMuteVideo',
-				'label'       => __( 'Mute Videos', 'web-stories' ),
-				'description' => __( 'Allow videos to be muted in the editor.', 'web-stories' ),
+				'name'        => 'enableCORSProxy',
+				'label'       => __( 'CORS Proxy', 'web-stories' ),
+				'description' => __( 'Enable inserting media element without CORS headers', 'web-stories' ),
 				'group'       => 'editor',
+			],
+
+			/**
+			 * Author: @barklund
+			 * Issue: #8877
+			 * Creation date: 2021-09-01
+			 */
+			[
+				'name'        => 'enableVideoTrim',
+				'label'       => __( 'Video trimming', 'web-stories' ),
+				'description' => __( 'Enable video trimming', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+
+			/**
+			 * Author: @barklund
+			 * Issue: #8973
+			 * Creation date: 2021-09-07
+			 */
+			[
+				'name'        => 'enableThumbnailCaching',
+				'label'       => __( 'Thumbnail Caching', 'web-stories' ),
+				'description' => __( 'Enable thumbnail caching', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+
+			/**
+			 * Author: @swissspidy
+			 * Issue: #5315
+			 * Creation date: 2021-09-23
+			 */
+			[
+				'name'        => 'enableBetterCaptions',
+				'label'       => __( 'Video Captions', 'web-stories' ),
+				'description' => __( 'Improve video captions appearance when viewing stories', 'web-stories' ),
+				'group'       => 'general',
 				'default'     => true,
 			],
 		];
@@ -461,7 +459,7 @@ class Experiments extends Service_Base {
 			return (bool) $experiment['default'];
 		}
 
-		$experiments = get_option( Settings::SETTING_NAME_EXPERIMENTS );
+		$experiments = $this->settings->get_setting( $this->settings::SETTING_NAME_EXPERIMENTS, [] );
 		return ! empty( $experiments[ $name ] );
 	}
 
@@ -472,7 +470,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of all enabled experiments.
 	 */
-	public function get_enabled_experiments() {
+	public function get_enabled_experiments(): array {
 		$experiments = array_filter(
 			wp_list_pluck( $this->get_experiments(), 'name' ),
 			[ $this, 'is_experiment_enabled' ]

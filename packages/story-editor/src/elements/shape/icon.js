@@ -33,8 +33,8 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 28px;
-  width: 28px;
+  height: 21px;
+  width: 21px;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   background-color: ${({ theme }) => theme.colors.opacity.black10};
 `;
@@ -45,11 +45,16 @@ const ShapePreview = styled.div`
   height: ${({ height }) => height}px;
 `;
 
-function ShapeLayerIcon({ element: { id, mask, backgroundColor } }) {
+function ShapeLayerIcon({
+  element: { id, mask, backgroundColor, isDefaultBackground },
+  currentPage,
+}) {
   const maskDef = getMaskByType(mask.type);
 
   const maskId = `mask-${maskDef.type}-${id}-layer-preview`;
-
+  if (isDefaultBackground) {
+    backgroundColor = currentPage.backgroundColor;
+  }
   return (
     <Container>
       <ShapePreview
@@ -78,6 +83,7 @@ function ShapeLayerIcon({ element: { id, mask, backgroundColor } }) {
 
 ShapeLayerIcon.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  currentPage: StoryPropTypes.page,
 };
 
 export default ShapeLayerIcon;

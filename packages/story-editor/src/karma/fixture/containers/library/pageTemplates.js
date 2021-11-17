@@ -28,8 +28,16 @@ export default class PageTemplates extends Container {
     return this.getAllByRole('listitem');
   }
 
+  get pageTemplateButtons() {
+    return this.node.querySelectorAll('[data-testid^=page_template_]');
+  }
+
   pageTemplate(name) {
     return this.getByRole('listitem', { name });
+  }
+
+  pageTemplateButton(name) {
+    return this.getByRole('button', { name });
   }
 
   get dropDown() {
@@ -37,7 +45,7 @@ export default class PageTemplates extends Container {
   }
 
   dropDownOption(name) {
-    return this.getByRole('option', { name });
+    return this.getByRole('option', { name: new RegExp(`${name}$`, 'i') });
   }
 
   get saveTemplateBtn() {

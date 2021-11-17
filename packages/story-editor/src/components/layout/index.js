@@ -24,12 +24,12 @@ import {
   useSnackbar,
   themeHelpers,
 } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
 import Library from '../library';
 import Workspace from '../workspace';
-import MetaBoxes from '../../integrations/wordpress/metaBoxes';
 import {
   CANVAS_MIN_WIDTH,
   LIBRARY_MIN_WIDTH,
@@ -42,6 +42,8 @@ import { CanvasProvider } from '../../app/canvas';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
 import { ChecklistCheckpointProvider } from '../checklist';
+import { RightClickMenuProvider } from '../../app/rightClickMenu';
+import RightClickMenu from '../canvas/rightClickMenu';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
@@ -58,7 +60,7 @@ const Editor = withOverlay(styled.section.attrs({
   display: grid;
   grid:
     'lib   canv        insp' 1fr
-    'lib   metaboxes   insp' auto /
+    'lib   supplementary insp' auto /
     minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
     minmax(${CANVAS_MIN_WIDTH}px, 1fr)
     minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
@@ -71,13 +73,7 @@ const Area = styled.div`
   z-index: 2;
 `;
 
-const MetaBoxesArea = styled(Area).attrs({
-  area: 'metaboxes',
-})`
-  overflow-y: auto;
-`;
-
-function Layout() {
+function Layout({ header, inspectorTabs, children }) {
   const snackbarState = useSnackbar(
     ({ removeSnack, currentSnacks, placement }) => ({
       onRemove: removeSnack,
@@ -85,6 +81,7 @@ function Layout() {
       placement,
     })
   );
+
   return (
     <>
       <LayoutProvider>
@@ -92,14 +89,15 @@ function Layout() {
           <HighlightsProvider>
             <Editor zIndex={3}>
               <CanvasProvider>
-                <Area area="lib">
-                  <Library />
-                </Area>
-                <Workspace />
+                <RightClickMenuProvider>
+                  <Area area="lib">
+                    <Library />
+                  </Area>
+                  <Workspace header={header} inspectorTabs={inspectorTabs} />
+                  <RightClickMenu />
+                </RightClickMenuProvider>
               </CanvasProvider>
-              <MetaBoxesArea>
-                <MetaBoxes />
-              </MetaBoxesArea>
+              {children}
             </Editor>
           </HighlightsProvider>
         </ChecklistCheckpointProvider>
@@ -108,5 +106,11 @@ function Layout() {
     </>
   );
 }
+
+Layout.propTypes = {
+  children: PropTypes.node,
+  header: PropTypes.node,
+  inspectorTabs: PropTypes.object,
+};
 
 export default Layout;

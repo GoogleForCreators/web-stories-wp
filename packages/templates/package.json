@@ -2,8 +2,8 @@
   "name": "@web-stories-wp/templates",
   "private": true,
   "engines": {
-    "node": ">= 15",
-    "npm": "~7"
+    "node": ">= 16",
+    "npm": ">= 7.3"
   },
   "exports": {
     "default": "./src/index.js"
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@web-stories-wp/stickers": "*",
-    "puppeteer": "^10.2.0"
+    "puppeteer": "^10.4.0",
+    "@web-stories-wp/date": "*"
   }
 }

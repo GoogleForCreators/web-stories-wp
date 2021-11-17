@@ -21,22 +21,22 @@ import getFileName from '../getFileName';
 
 describe('getFileName', () => {
   it('should remove the file extension', () => {
-    expect(getFileName({ name: 'my-video.mp4' })).toStrictEqual('my-video');
+    expect(getFileName({ name: 'my-video.mp4' })).toBe('my-video');
   });
 
   it('should remove the file extension with period in name', () => {
-    expect(getFileName({ name: 'my.video.mp4' })).toStrictEqual('my.video');
+    expect(getFileName({ name: 'my.video.mp4' })).toBe('my.video');
   });
 
   it('should support files without extension', () => {
-    expect(getFileName({ name: 'my-video' })).toStrictEqual('my-video');
+    expect(getFileName({ name: 'my-video' })).toBe('my-video');
   });
 
   it('should return an empty string if missing name', () => {
-    expect(getFileName({ name: '' })).toStrictEqual('');
+    expect(getFileName({ name: '' })).toBe('');
   });
 
   it('should default to an empty name', () => {
-    expect(getFileName({})).toStrictEqual('');
+    expect(getFileName({})).toBe('');
   });
 });

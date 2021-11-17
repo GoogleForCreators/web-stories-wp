@@ -27,12 +27,14 @@ import { renderToStaticMarkup } from '@web-stories-wp/react';
 import StoryOutput from '../story';
 
 describe('Story output', () => {
-  useFeature.mockImplementation((feature) => {
-    const config = {
-      enableAnimation: true,
-    };
+  beforeAll(() => {
+    useFeature.mockImplementation((feature) => {
+      const config = {
+        enableAnimation: true,
+      };
 
-    return config[feature];
+      return config[feature];
+    });
   });
 
   it('should include Google Fonts stylesheet', () => {
@@ -53,7 +55,12 @@ describe('Story output', () => {
           width: 640,
           height: 853,
         },
-        publisherLogoUrl: 'https://example.com/logo.png',
+        publisherLogo: {
+          id: 1,
+          url: 'https://example.com/logo.png',
+          height: 0,
+          width: 0,
+        },
         password: '123',
         link: 'https://example.com/story',
         autoAdvance: false,
@@ -123,10 +130,7 @@ describe('Story output', () => {
         },
       ],
       metadata: {
-        publisher: {
-          name: 'Publisher Name',
-          logo: 'https://example.com/logo.png',
-        },
+        publisher: 'Publisher Name',
       },
     };
 
@@ -134,6 +138,68 @@ describe('Story output', () => {
 
     expect(content).toContain(
       '<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Roboto%3Aital%401&amp;family=Lato" rel="stylesheet"/>'
+    );
+  });
+
+  it('should add background audio', () => {
+    const props = {
+      id: '123',
+      backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+      story: {
+        title: 'Example',
+        slug: 'example',
+        status: 'publish',
+        author: { id: 1, name: 'John Doe' },
+        date: '123',
+        modified: '123',
+        excerpt: '123',
+        featuredMedia: {
+          id: 123,
+          url: 'https://example.com/poster.png',
+          width: 640,
+          height: 853,
+        },
+        publisherLogo: {
+          id: 1,
+          url: 'https://example.com/logo.png',
+          height: 0,
+          width: 0,
+        },
+        password: '123',
+        link: 'https://example.com/story',
+        autoAdvance: false,
+        backgroundAudio: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
+      },
+      pages: [
+        {
+          id: '123',
+          animations: [
+            { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
+            { id: 'anim1', targets: ['124'], type: 'spin', duration: 500 },
+          ],
+          backgroundColor: {
+            type: 'solid',
+            color: { r: 255, g: 255, b: 255 },
+          },
+          page: {
+            id: '123',
+          },
+          elements: [],
+        },
+      ],
+      metadata: {
+        publisher: 'Publisher Name',
+      },
+    };
+
+    const content = renderToStaticMarkup(<StoryOutput {...props} />);
+
+    expect(content).toContain(
+      'background-audio="https://example.com/audio.mp3"'
     );
   });
 
@@ -156,17 +222,19 @@ describe('Story output', () => {
             width: 640,
             height: 853,
           },
-          publisherLogoUrl: 'https://example.com/logo.png',
+          publisherLogo: {
+            id: 1,
+            url: 'https://example.com/logo.png',
+            height: 0,
+            width: 0,
+          },
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
         },
         pages: [],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 
@@ -191,7 +259,12 @@ describe('Story output', () => {
             width: 640,
             height: 853,
           },
-          publisherLogoUrl: 'https://example.com/logo.png',
+          publisherLogo: {
+            id: 1,
+            url: 'https://example.com/logo.png',
+            height: 0,
+            width: 0,
+          },
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
@@ -210,10 +283,7 @@ describe('Story output', () => {
           },
         ],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 
@@ -238,7 +308,12 @@ describe('Story output', () => {
             width: 640,
             height: 853,
           },
-          publisherLogoUrl: 'https://example.com/logo.png',
+          publisherLogo: {
+            id: 1,
+            url: 'https://example.com/logo.png',
+            height: 0,
+            width: 0,
+          },
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
@@ -277,10 +352,7 @@ describe('Story output', () => {
           },
         ],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
-          },
+          publisher: 'Publisher Name',
         },
       };
 
@@ -305,7 +377,12 @@ describe('Story output', () => {
             width: 640,
             height: 853,
           },
-          publisherLogoUrl: 'https://example.com/logo.png',
+          publisherLogo: {
+            id: 1,
+            url: 'https://example.com/logo.png',
+            height: 0,
+            width: 0,
+          },
           password: '123',
           link: 'https://example.com/story',
           autoAdvance: false,
@@ -347,10 +424,64 @@ describe('Story output', () => {
           },
         ],
         metadata: {
-          publisher: {
-            name: 'Publisher Name',
-            logo: 'https://example.com/logo.png',
+          publisher: 'Publisher Name',
+        },
+      };
+
+      await expect(<StoryOutput {...props} />).toBeValidAMP();
+    });
+
+    it('should produce valid AMP output when using background audio', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        story: {
+          title: 'Example',
+          slug: 'example',
+          status: 'publish',
+          author: { id: 1, name: 'John Doe' },
+          date: '123',
+          modified: '123',
+          excerpt: '123',
+          featuredMedia: {
+            id: 123,
+            url: 'https://example.com/poster.png',
+            width: 640,
+            height: 853,
           },
+          publisherLogo: {
+            id: 1,
+            url: 'https://example.com/logo.png',
+            height: 0,
+            width: 0,
+          },
+          password: '123',
+          link: 'https://example.com/story',
+          autoAdvance: false,
+          backgroundAudio: {
+            src: 'https://example.com/audio.mp3',
+            id: 123,
+            mimeType: 'audio/mpeg',
+          },
+        },
+        pages: [
+          {
+            id: '123',
+            animations: [
+              { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
+            ],
+            backgroundColor: {
+              type: 'solid',
+              color: { r: 255, g: 255, b: 255 },
+            },
+            page: {
+              id: '123',
+            },
+            elements: [],
+          },
+        ],
+        metadata: {
+          publisher: 'Publisher Name',
         },
       };
 

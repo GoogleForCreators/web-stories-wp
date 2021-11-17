@@ -55,6 +55,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
     isPlaceholder: false,
     isMuted: false,
     isOptimized: false,
+    isExternal: false,
     sizes: {
       medium: {
         file: 'IMAGE-146x300.jpg',
@@ -147,7 +148,6 @@ const renderAllProviders = ({
   apiState,
 }) =>
   renderHook(() => useContextValueProvider(reducerState, reducerActions), {
-    // eslint-disable-next-line react/display-name, react/prop-types
     wrapper: ({ children }) => (
       <ConfigProvider config={configState}>
         <ApiContext.Provider value={apiState}>{children}</ApiContext.Provider>

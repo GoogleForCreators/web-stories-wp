@@ -38,3 +38,5 @@ export default async function ({ cdnURL }) {
     };
   });
 }
+
+export { getTemplateMetaData } from './getMetaData';

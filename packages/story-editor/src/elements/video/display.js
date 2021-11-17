@@ -26,6 +26,7 @@ import { getMediaSizePositionProps } from '@web-stories-wp/media';
  */
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
+import useCORSProxy from '../../utils/useCORSProxy';
 import { getBackgroundStyle, videoWithScale } from './util';
 
 const Video = styled.video`
@@ -58,6 +59,8 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     loop,
   } = element;
   const ref = useRef();
+  const { getProxiedUrl } = useCORSProxy();
+
   let style = {};
   if (isBackground) {
     const styleProps = getBackgroundStyle();
@@ -80,6 +83,8 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
 
   const muted = Boolean(resource?.isMuted);
 
+  const url = getProxiedUrl(resource, resource?.src);
+
   return (
     <MediaDisplay
       element={element}
@@ -98,7 +103,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           />
         )
       ) : (
-        // eslint-disable-next-line styled-components-a11y/media-has-caption -- False positive.
+        // eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- False positive.
         <Video
           id={`video-${id}`}
           poster={poster || resource.poster}
@@ -111,9 +116,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           data-testid="videoElement"
           data-leaf-element="true"
         >
-          {resource.src && (
-            <source src={resource.src} type={resource.mimeType} />
-          )}
+          {url && <source src={url} type={resource.mimeType} />}
           {tracks &&
             tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
               <track

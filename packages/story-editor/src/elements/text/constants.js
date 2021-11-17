@@ -46,6 +46,7 @@ export const clearableAttributes = {
   content: '',
   border: null,
   borderRadius: null,
+  lockAspectRatio: undefined,
 };
 
 export const hasEditMode = true;
@@ -67,14 +68,9 @@ export const resizeRules = {
 };
 
 export const panels = [
-  PanelTypes.COLOR_PRESETS,
-  PanelTypes.STYLE_PRESETS,
   PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
-  PanelTypes.LAYER_STYLE,
   PanelTypes.TEXT_STYLE,
-  PanelTypes.TEXT_BOX,
-  PanelTypes.BORDER_RADIUS,
   PanelTypes.BORDER,
   PanelTypes.LINK,
   PanelTypes.ANIMATION,

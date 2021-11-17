@@ -33,7 +33,6 @@ import useHistoryEntry from './effects/useHistoryEntry';
 import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
-import useSaveMetaBoxes from './effects/useSaveMetaBoxes';
 import { StoryTriggersProvider } from './storyTriggers';
 
 /**
@@ -142,13 +141,6 @@ function StoryProvider({ storyId, children }) {
     story,
   });
 
-  // Legacy Meta Boxes support.
-  const { isSavingMetaBoxes } = useSaveMetaBoxes({
-    story,
-    isSaving,
-    isAutoSaving,
-  });
-
   const fullStory = useMemo(
     () => ({
       pages,
@@ -164,7 +156,9 @@ function StoryProvider({ storyId, children }) {
       animationState,
       capabilities,
       meta: {
-        isSaving: isSaving || isAutoSaving || isSavingMetaBoxes,
+        isSaving: isSaving || isAutoSaving,
+        isSavingStory: isSaving,
+        isAutoSavingStory: isAutoSaving,
         isFreshlyPublished,
       },
     }),
@@ -183,7 +177,6 @@ function StoryProvider({ storyId, children }) {
       capabilities,
       isSaving,
       isAutoSaving,
-      isSavingMetaBoxes,
       isFreshlyPublished,
     ]
   );

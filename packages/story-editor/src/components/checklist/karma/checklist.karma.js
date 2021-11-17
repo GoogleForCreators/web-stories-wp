@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 /**
  * Internal dependencies
  */
@@ -46,10 +47,12 @@ describe('Checklist integration', () => {
     let clickCount = 1;
     while (clickCount <= count) {
       // eslint-disable-next-line no-await-in-loop
-      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+      await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
-        expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
+        expect(fixture.editor.footer.carousel.pages.length).toBe(
+          clickCount + 1
+        );
       });
       clickCount++;
     }
@@ -234,7 +237,7 @@ describe('Checklist integration', () => {
     });
   });
 
-  describe('checkpoints', () => {
+  describe('Checkpoints', () => {
     it('empty story should begin in the empty state', async () => {
       await openChecklist();
 
@@ -401,10 +404,14 @@ describe('Checklist integration - Card visibility', () => {
 
     class Library {}
 
-    class CustomizeImageCropper {}
+    class Cropper {
+      extend() {
+        return class ExtendedCropper {};
+      }
+    }
 
     media.controller = {
-      CustomizeImageCropper,
+      Cropper,
       Library,
     };
     media.query = () => {};
@@ -420,10 +427,12 @@ describe('Checklist integration - Card visibility', () => {
     let clickCount = 1;
     while (clickCount <= count) {
       // eslint-disable-next-line no-await-in-loop
-      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+      await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
-        expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
+        expect(fixture.editor.footer.carousel.pages.length).toBe(
+          clickCount + 1
+        );
       });
       clickCount++;
     }
@@ -434,23 +443,6 @@ describe('Checklist integration - Card visibility', () => {
     await fixture.events.click(toggleButton);
     // wait for animation
     await fixture.events.sleep(500);
-  };
-
-  /**
-   * Add poster image to story that has
-   * - width less than the minimum allowed poster image width
-   * - height less than the minimum allowed poster image height
-   *
-   * This will trigger an a11y issue in the checklist.
-   */
-  const addPosterImageWithIssues = async () => {
-    // open the document panel
-    await fixture.events.click(fixture.editor.inspector.documentTab);
-
-    // open the menu - mock will add picture automatically
-    await fixture.events.click(
-      fixture.editor.inspector.documentPanel.posterMenuButton
-    );
   };
 
   /**
@@ -525,59 +517,33 @@ describe('Checklist integration - Card visibility', () => {
     );
   };
 
-  describe('hasUploadMediaAction=true', () => {
-    beforeEach(async () => {
-      fixture = new Fixture();
-      fixture.setFlags({ enableChecklistCompanion: true });
-
-      fixture.setConfig({ capabilities: { hasUploadMediaAction: true } });
-      await fixture.render();
-    });
-
-    afterEach(() => {
-      fixture.restore();
-    });
-
-    /**
-     * Check if a card is visible in the application.
-     *
-     * @param {string} title Title of the card
-     */
-    const checkIfCardExists = async (title) => {
-      const card = await fixture.screen.queryByText(title);
-
-      expect(card).not.toBeNull();
-    };
-
-    it(`should show cards that require the \`hasUploadMediaAction\` permission`, async () => {
-      // add issues to checklist that need to be resolved by uploading media
-      await addImageWithIssues();
-      await addVideoWithIssues();
-
-      // show all checkpoints
-      await addPages(4);
-      await openChecklist();
-
-      priorityIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
-
-      // add poster image to see new problems
-      await addPosterImageWithIssues();
-      posterIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
-
-      // open design tab
-      await fixture.events.click(fixture.editor.checklist.designTab);
-
-      designIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
-
-      accessibilityIssuesRequiringMediaUploadPermissions.forEach(
-        checkIfCardExists
-      );
-    });
-  });
-
   describe('hasUploadMediaAction=false', () => {
     beforeEach(async () => {
-      fixture = new Fixture();
+      fixture = new Fixture({
+        mocks: {
+          getStoryById: () =>
+            Promise.resolve({
+              title: { raw: '' },
+              status: 'draft',
+              author: 1,
+              slug: '',
+              date: '2020-05-06T22:32:37',
+              date_gmt: '2020-05-06T22:32:37',
+              modified: '2020-05-06T22:32:37',
+              excerpt: { raw: '' },
+              link: 'http://stories.local/?post_type=web-story&p=1',
+              preview_link: 'http://stories.local/?post_type=web-story&p=1',
+              story_data: {
+                version: DATA_VERSION,
+                pages: [],
+              },
+              featured_media: 2,
+              permalink_template: 'http://stories3.local/stories/%pagename%/',
+              style_presets: { textStyles: [], colors: [] },
+              password: '',
+            }),
+        },
+      });
       fixture.setFlags({ enableChecklistCompanion: true });
 
       fixture.setConfig({ capabilities: { hasUploadMediaAction: false } });
@@ -612,8 +578,6 @@ describe('Checklist integration - Card visibility', () => {
         checkIfCardDoesNotExist
       );
 
-      // add poster image to see new problems
-      await addPosterImageWithIssues();
       posterIssuesRequiringMediaUploadPermissions.forEach(
         checkIfCardDoesNotExist
       );

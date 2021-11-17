@@ -28,24 +28,20 @@ namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
-use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Context;
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Traits\Screen;
 use WP_Post;
-use WP_Screen;
 
 /**
  * Class AMP.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class AMP extends Service_Base {
-	use Publisher, Screen;
-
+class AMP extends Service_Base implements HasRequirements {
 	/**
 	 * Slug of the AMP validated URL post type.
 	 *
@@ -54,21 +50,41 @@ class AMP extends Service_Base {
 	const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
 
 	/**
-	 * Experiments instance.
+	 * Settings instance.
 	 *
-	 * @var Experiments Experiments instance.
+	 * @var Settings Settings instance.
 	 */
-	private $experiments;
+	private $settings;
 
 	/**
-	 * HTML constructor.
+	 * Story_Post_Type instance.
 	 *
-	 * @since 1.10.0
-	 *
-	 * @param Experiments $experiments Experiments instance.
+	 * @var Story_Post_Type Story_Post_Type instance.
 	 */
-	public function __construct( Experiments $experiments ) {
-		$this->experiments = $experiments;
+	private $story_post_type;
+
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings        $settings        Settings instance.
+	 * @param Story_Post_Type $story_post_type Experiments instance.
+	 * @param Context         $context Context instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings, Story_Post_Type $story_post_type, Context $context ) {
+		$this->settings        = $settings;
+		$this->story_post_type = $story_post_type;
+		$this->context         = $context;
 	}
 
 	/**
@@ -91,18 +107,34 @@ class AMP extends Service_Base {
 	}
 
 	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because settings needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'settings' ];
+	}
+
+	/**
 	 * Filter AMP options to force Standard mode (AMP-first) when a web story is being requested.
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param array $options Options.
+	 * @param array|mixed $options Options.
 	 *
-	 * @return array Filtered options.
+	 * @return array|mixed Filtered options.
 	 */
-	public function filter_amp_options( $options ): array {
-		if ( $this->get_request_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
+	public function filter_amp_options( $options ) {
+		if ( ! is_array( $options ) ) {
+			return $options;
+		}
+		if ( $this->get_request_post_type() === $this->story_post_type->get_slug() ) {
 			$options['theme_support']          = 'standard';
-			$options['supported_post_types'][] = Story_Post_Type::POST_TYPE_SLUG;
+			$options['supported_post_types'][] = $this->story_post_type->get_slug();
 			$options['supported_templates'][]  = 'is_singular';
 		}
 		return $options;
@@ -116,18 +148,24 @@ class AMP extends Service_Base {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param string[] $post_types Post types.
+	 * @param string[]|mixed $post_types Supportable post types.
 	 *
-	 * @return array Supportable post types.
+	 * @return array|mixed Supportable post types.
 	 */
-	public function filter_supportable_post_types( $post_types ): array {
-		if ( $this->get_request_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
-			$post_types = array_merge( $post_types, [ Story_Post_Type::POST_TYPE_SLUG ] );
-		} else {
-			$post_types = array_diff( $post_types, [ Story_Post_Type::POST_TYPE_SLUG ] );
+	public function filter_supportable_post_types( $post_types ) {
+		if ( ! is_array( $post_types ) ) {
+			return $post_types;
 		}
 
-		return array_values( $post_types );
+		$story_post_type = $this->story_post_type->get_slug();
+
+		$post_types = array_diff( $post_types, [ $story_post_type ] );
+
+		if ( $this->get_request_post_type() === $story_post_type ) {
+			$post_types = array_merge( $post_types, [ $story_post_type ] );
+		}
+
+		return array_unique( array_values( $post_types ) );
 	}
 
 	/**
@@ -135,11 +173,11 @@ class AMP extends Service_Base {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param array $sanitizers Sanitizers.
-	 * @return array Sanitizers.
+	 * @param array|mixed $sanitizers Sanitizers.
+	 * @return array|mixed Sanitizers.
 	 */
-	public function add_amp_content_sanitizers( $sanitizers ): array {
-		if ( ! is_singular( 'web-story' ) ) {
+	public function add_amp_content_sanitizers( $sanitizers ) {
+		if ( ! $this->context->is_web_story() ) {
 			return $sanitizers;
 		}
 
@@ -148,18 +186,30 @@ class AMP extends Service_Base {
 			return $sanitizers;
 		}
 
-		$video_cache_enabled = $this->experiments->is_experiment_enabled( 'videoCache' ) && (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
+		if ( ! is_array( $sanitizers ) ) {
+			return $sanitizers;
+		}
+
+		$video_cache_enabled = (bool) $this->settings->get_setting( $this->settings::SETTING_NAME_VIDEO_CACHE );
 
 		$story = new Story();
 		$story->load_from_post( $post );
+
+		if ( isset( $sanitizers['AMP_Style_Sanitizer'] ) ) {
+			if ( ! isset( $sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] ) ) {
+				$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] = [];
+			}
+
+			$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'][] = 'amp-story-captions';
+		}
+
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
-			'publisher_logo'             => $this->get_publisher_logo(),
-			'publisher'                  => $this->get_publisher_name(),
-			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
-			'poster_images'              => [
+			'publisher_logo' => $story->get_publisher_logo_url(),
+			'publisher'      => $story->get_publisher_name(),
+			'poster_images'  => [
 				'poster-portrait-src' => $story->get_poster_portrait(),
 			],
-			'video_cache'                => $video_cache_enabled,
+			'video_cache'    => $video_cache_enabled,
 		];
 
 		return $sanitizers;
@@ -217,13 +267,13 @@ class AMP extends Service_Base {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param bool       $excluded Excluded. Default value is whether element already has a `noamphtml` link relation or the URL is among `excluded_urls`.
+	 * @param bool|mixed $excluded Excluded. Default value is whether element already has a `noamphtml` link relation or the URL is among `excluded_urls`.
 	 * @param string     $url      URL considered for exclusion.
 	 * @param string[]   $rel      Link relations.
 	 * @param DOMElement $element  The element considered for excluding from AMP-to-AMP linking. May be instance of `a`, `area`, or `form`.
-	 * @return bool Whether AMP-to-AMP is excluded.
+	 * @return bool|mixed Whether AMP-to-AMP is excluded.
 	 */
-	public function filter_amp_to_amp_linking_element_excluded( $excluded, $url, $rel, $element ): bool {
+	public function filter_amp_to_amp_linking_element_excluded( $excluded, $url, $rel, $element ) {
 		if ( $element instanceof DOMElement && $element->parentNode instanceof DOMElement && 'amp-story-player' === $element->parentNode->tagName ) {
 			return true;
 		}
@@ -242,15 +292,15 @@ class AMP extends Service_Base {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param bool $skipped Whether the post should be skipped from AMP.
-	 * @param int  $post    Post ID.
+	 * @param bool|mixed $skipped Whether the post should be skipped from AMP.
+	 * @param int        $post    Post ID.
 	 *
-	 * @return bool Whether post should be skipped from AMP.
+	 * @return bool|mixed Whether post should be skipped from AMP.
 	 */
-	public function filter_amp_skip_post( $skipped, $post ): bool {
+	public function filter_amp_skip_post( $skipped, $post ) {
 		// This is the opposite to the `AMP__VERSION >= WEBSTORIES_AMP_VERSION` check in the HTML renderer.
 		if (
-			'web-story' === get_post_type( $post )
+			$this->story_post_type->get_slug() === get_post_type( $post )
 			&&
 			defined( '\AMP__VERSION' )
 			&&
@@ -291,27 +341,23 @@ class AMP extends Service_Base {
 			return $this->get_validated_url_post_type( (int) $_GET['post'] );
 		}
 
-		$current_screen = $this->get_current_screen();
+		$current_screen_post_type = $this->context->get_screen_post_type();
 
-		if ( $current_screen instanceof WP_Screen ) {
+		if ( $current_screen_post_type ) {
 			$current_post = get_post();
 
-			if ( self::AMP_VALIDATED_URL_POST_TYPE === $current_screen->post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen->post_type ) {
+			if ( self::AMP_VALIDATED_URL_POST_TYPE === $current_screen_post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen_post_type ) {
 				$validated_url_post_type = $this->get_validated_url_post_type( $current_post->ID );
 				if ( $validated_url_post_type ) {
 					return $validated_url_post_type;
 				}
 			}
 
-			if ( $current_screen->post_type ) {
-				return $current_screen->post_type;
-			}
-
-			return null;
+			return $current_screen_post_type;
 		}
 
-		if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), '/web-stories/v1/web-story/' ) ) {
-			return Story_Post_Type::POST_TYPE_SLUG;
+		if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), $this->story_post_type->get_rest_url() ) ) {
+			return $this->story_post_type->get_slug();
 		}
 
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized

@@ -20,7 +20,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
-import { getFileName } from '@web-stories-wp/media';
+import { getExtensionFromMimeType, getFileName } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -49,28 +49,60 @@ const isDevelopment = WEB_STORIES_ENV === 'development';
  */
 const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
+const FFMPEG_CONFIG = {
+  CODEC: [
+    // Use H.264 video codec.
+    '-vcodec',
+    'libx264',
+  ],
+  SCALE: [
+    // Scale down to 720p as recommended by Storytime.
+    // See https://trac.ffmpeg.org/wiki/Scaling
+    // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
+    '-vf',
+    `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
+  ],
+  FPS: [
+    // Reduce to 24fps as recommended by Storytime.
+    // See https://trac.ffmpeg.org/wiki/ChangingFrameRate
+    '-r',
+    '24',
+  ],
+  FASTSTART: [
+    // move some information to the beginning of your file.
+    '-movflags',
+    '+faststart',
+  ],
+  COLOR_PROFILE: [
+    // Simpler color profile
+    '-pix_fmt',
+    'yuv420p',
+  ],
+  PRESET: [
+    // As the name says...
+    '-preset',
+    'fast', // 'veryfast' seems to cause crashes.
+  ],
+  SEEK_TO_START: [
+    // Desired position.
+    // Using as an input option (before -i) saves us some time by seeking to position.
+    '-ss',
+    '00:00:01.000',
+  ],
+  SINGLE_FRAME: [
+    // Stop writing to the stream after 1 frame.
+    '-frames:v',
+    '1',
+  ],
+};
+
 const FFMPEG_SHARED_CONFIG = [
-  // Use H.264 video codec.
-  '-vcodec',
-  'libx264',
-  // Scale down to 720p as recommended by Storytime.
-  // See https://trac.ffmpeg.org/wiki/Scaling
-  // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
-  '-vf',
-  `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
-  // Reduce to 24fps as recommended by Storytime.
-  // See https://trac.ffmpeg.org/wiki/ChangingFrameRate
-  '-r',
-  '24',
-  // move some information to the beginning of your file.
-  '-movflags',
-  '+faststart',
-  // Simpler color profile
-  '-pix_fmt',
-  'yuv420p',
-  // As the name says...
-  '-preset',
-  'fast', // 'veryfast' seems to cause crashes.
+  ...FFMPEG_CONFIG.CODEC,
+  ...FFMPEG_CONFIG.SCALE,
+  ...FFMPEG_CONFIG.FPS,
+  ...FFMPEG_CONFIG.FASTSTART,
+  ...FFMPEG_CONFIG.COLOR_PROFILE,
+  ...FFMPEG_CONFIG.PRESET,
 ];
 
 /**
@@ -140,40 +172,30 @@ function useFFmpeg() {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_video_poster_ffmpeg');
 
+      let ffmpeg;
+
       try {
-        const ffmpeg = await getFFmpegInstance(file);
+        ffmpeg = await getFFmpegInstance(file);
 
         const tempFileName = uuidv4() + '.' + MEDIA_POSTER_IMAGE_FILE_TYPE;
         const originalFileName = getFileName(file);
         const outputFileName = getPosterName(originalFileName);
 
         await ffmpeg.run(
-          // Desired position.
-          // Using as an input option (before -i) saves us some time by seeking to position.
-          '-ss',
-          '00:00:01.000',
+          ...FFMPEG_CONFIG.SEEK_TO_START,
           // Input filename.
           '-i',
           file.name,
-          // Stop writing to the stream after 1 frame.
-          '-frames:v',
-          '1',
-          // Scale down to 720p as recommended by Storytime.
-          // See https://trac.ffmpeg.org/wiki/Scaling
-          // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
-          '-vf',
-          `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
-          // Simpler color profile
-          '-pix_fmt',
-          'yuv420p',
-          // As the name says...
-          '-preset',
-          'fast', // 'veryfast' seems to cause crashes.
+          ...FFMPEG_CONFIG.SINGLE_FRAME,
+          ...FFMPEG_CONFIG.SCALE,
+          ...FFMPEG_CONFIG.COLOR_PROFILE,
+          ...FFMPEG_CONFIG.PRESET,
           // Output filename. MUST be different from input filename.
           tempFileName
         );
 
         const data = ffmpeg.FS('readFile', tempFileName);
+
         return new File(
           [new Blob([data.buffer], { type: MEDIA_POSTER_IMAGE_MIME_TYPE })],
           outputFileName,
@@ -182,9 +204,18 @@ function useFFmpeg() {
           }
         );
       } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+
         trackError('video_poster_generation_ffmpeg', err.message);
+
         throw err;
       } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+
         trackTiming();
       }
     },
@@ -202,8 +233,10 @@ function useFFmpeg() {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_video_transcoding');
 
+      let ffmpeg;
+
       try {
-        const ffmpeg = await getFFmpegInstance(file);
+        ffmpeg = await getFFmpegInstance(file);
 
         const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
         const outputFileName =
@@ -219,6 +252,7 @@ function useFFmpeg() {
         );
 
         const data = ffmpeg.FS('readFile', tempFileName);
+
         return new File(
           [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
           outputFileName,
@@ -227,9 +261,75 @@ function useFFmpeg() {
           }
         );
       } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+
         trackError('video_transcoding', err.message);
+
         throw err;
       } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+
+        trackTiming();
+      }
+    },
+    [getFFmpegInstance]
+  );
+
+  /**
+   * Trim Video using FFmpeg.
+   *
+   * @param {File} file Original video file object.
+   * @param {string} start Time stamp of start time of new video. Example '00:01:02.345'.
+   * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
+   * @return {Promise<File>} Transcoded video file object.
+   */
+  const trimVideo = useCallback(
+    async (file, start, end) => {
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      const trackTiming = getTimeTracker('load_trim_video_transcoding');
+
+      let ffmpeg;
+
+      try {
+        ffmpeg = await getFFmpegInstance(file);
+
+        const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
+        const tempFileName = uuidv4() + '.' + ext;
+        const outputFileName = getFileName(file) + '-trimmed.' + ext;
+
+        await ffmpeg.run(
+          // Input filename.
+          '-i',
+          file.name,
+          '-ss',
+          start,
+          '-to',
+          end,
+          tempFileName
+        );
+        const data = ffmpeg.FS('readFile', tempFileName);
+
+        return new File([new Blob([data.buffer], { type })], outputFileName, {
+          type,
+        });
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(err);
+
+        trackError('trim_video_transcoding', err.message);
+
+        throw err;
+      } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+
         trackTiming();
       }
     },
@@ -247,12 +347,15 @@ function useFFmpeg() {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_mute_video_transcoding');
 
-      try {
-        const ffmpeg = await getFFmpegInstance(file);
+      let ffmpeg;
 
-        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
-        const outputFileName =
-          getFileName(file) + '-muted.' + MEDIA_TRANSCODED_FILE_TYPE;
+      try {
+        ffmpeg = await getFFmpegInstance(file);
+
+        const type = file?.type || MEDIA_TRANSCODED_MIME_TYPE;
+        const ext = getExtensionFromMimeType(type);
+        const tempFileName = uuidv4() + '.' + ext;
+        const outputFileName = getFileName(file) + '-muted.' + ext;
 
         await ffmpeg.run(
           // Input filename.
@@ -267,17 +370,23 @@ function useFFmpeg() {
         );
 
         const data = ffmpeg.FS('readFile', tempFileName);
-        return new File(
-          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
-          outputFileName,
-          {
-            type: MEDIA_TRANSCODED_MIME_TYPE,
-          }
-        );
+
+        return new File([new Blob([data.buffer], { type })], outputFileName, {
+          type,
+        });
       } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(err);
+
         trackError('mute_video_transcoding', err.message);
+
         throw err;
       } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+
         trackTiming();
       }
     },
@@ -295,8 +404,10 @@ function useFFmpeg() {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_gif_conversion');
 
+      let ffmpeg;
+
       try {
-        const ffmpeg = await getFFmpegInstance(file);
+        ffmpeg = await getFFmpegInstance(file);
 
         const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
         const outputFileName =
@@ -312,6 +423,7 @@ function useFFmpeg() {
         );
 
         const data = ffmpeg.FS('readFile', tempFileName);
+
         return new File(
           [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
           outputFileName,
@@ -320,9 +432,18 @@ function useFFmpeg() {
           }
         );
       } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+
         trackError('gif_conversion', err.message);
+
         throw err;
       } finally {
+        try {
+          ffmpeg.exit();
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+
         trackTiming();
       }
     },
@@ -370,6 +491,7 @@ function useFFmpeg() {
       stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
+      trimVideo,
     }),
     [
       isTranscodingEnabled,
@@ -378,6 +500,7 @@ function useFFmpeg() {
       stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
+      trimVideo,
     ]
   );
 }

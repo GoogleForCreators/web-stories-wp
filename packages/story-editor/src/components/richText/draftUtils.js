@@ -51,9 +51,8 @@ export function getAllStyleSetsInSelection(editorState) {
   let startOffset = selection.getStartOffset();
   const endKey = selection.getEndKey();
   const endOffset = selection.getEndOffset();
-  let hasMoreRounds = true;
-  while (hasMoreRounds) {
-    hasMoreRounds = key !== endKey;
+  do {
+    const hasMoreRounds = key !== endKey;
     const block = contentState.getBlockForKey(key);
     const offsetEnd = hasMoreRounds ? block.getLength() : endOffset;
     const characterList = block.getCharacterList();
@@ -72,7 +71,7 @@ export function getAllStyleSetsInSelection(editorState) {
     }
     key = contentState.getKeyAfter(key);
     startOffset = 0;
-  }
+  } while (key !== endKey);
 
   return styleSets;
 }

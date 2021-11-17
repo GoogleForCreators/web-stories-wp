@@ -28,11 +28,11 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Image;
-use Google\Web_Stories\Traits\Screen;
 use WP_Post;
 
 
@@ -40,7 +40,22 @@ use WP_Post;
  * Admin class.
  */
 class Admin extends Service_Base {
-	use Screen;
+	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	private $context;
+
+	/**
+	 * Single constructor.
+	 *
+	 * @param Context $context Context instance.
+	 */
+	public function __construct( Context $context ) {
+		$this->context = $context;
+	}
+
 	/**
 	 * Initialize admin-related functionality.
 	 *
@@ -73,22 +88,17 @@ class Admin extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $class Current classes.
+	 * @param string|mixed $class Current classes.
 	 *
-	 * @return string $class List of Classes.
+	 * @return string|mixed $class List of Classes.
 	 */
-	public function admin_body_class( $class ): string {
-		$screen = $this->get_current_screen();
-		if ( ! $screen ) {
-			return $class;
-		}
-
-		if ( ! $this->is_edit_screen( $screen ) ) {
+	public function admin_body_class( $class ) {
+		if ( ! $this->context->is_story_editor() ) {
 			return $class;
 		}
 
 		// Default WordPress posts list table screen and dashboard.
-		if ( 'post' !== $screen->base ) {
+		if ( 'post' !== $this->context->get_screen_base() ) {
 			return $class;
 		}
 
@@ -107,12 +117,12 @@ class Admin extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string   $content Default post content.
-	 * @param \WP_Post $post    Post object.
+	 * @param string|mixed $content Default post content.
+	 * @param \WP_Post     $post    Post object.
 	 *
-	 * @return string Pre-filled post content if applicable, or the default content otherwise.
+	 * @return string|mixed Pre-filled post content if applicable, or the default content otherwise.
 	 */
-	public function prefill_post_content( $content, $post ): string {
+	public function prefill_post_content( $content, $post ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $content;
 		}
@@ -156,7 +166,7 @@ class Admin extends Service_Base {
 		$renderer = new Image( $story );
 		$html     = $renderer->render( $args );
 
-		$content = '<!-- wp:web-stories/embed {"url":"%1$s","title":"%2$s","poster":"%3$s","width":"%4$s","height":"%5$s","align":"%6$s"} -->%7$s<!-- /wp:web-stories/embed -->';
+		$content = '<!-- wp:web-stories/embed {"blockType":"url","url":"%1$s","title":"%2$s","poster":"%3$s","width":"%4$s","height":"%5$s","align":"%6$s","stories": [%7$s]} -->%8$s<!-- /wp:web-stories/embed -->';
 
 		return sprintf(
 			$content,
@@ -166,6 +176,7 @@ class Admin extends Service_Base {
 			absint( $args['width'] ),
 			absint( $args['height'] ),
 			esc_js( $args['align'] ),
+			absint( $post_id ),
 			$html
 		);
 	}
@@ -175,11 +186,11 @@ class Admin extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $title Default post title.
+	 * @param string|mixed $title Default post title.
 	 *
-	 * @return string Pre-filled post title if applicable, or the default title otherwise.
+	 * @return string|mixed Pre-filled post title if applicable, or the default title otherwise.
 	 */
-	public function prefill_post_title( $title ): string {
+	public function prefill_post_title( $title ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $title;
 		}
@@ -202,6 +213,6 @@ class Admin extends Service_Base {
 
 		// Not using get_the_title() because we need the raw title.
 		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
-		return $post->post_title ?? '';
+		return $post->post_title;
 	}
 }

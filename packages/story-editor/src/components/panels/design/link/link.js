@@ -170,8 +170,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   );
 
   const handleChangeIcon = useCallback(
-    (image) => {
-      handleChange({ icon: image?.sizes?.full?.url || image?.url }, true);
+    /**
+     * Handle link icon change.
+     *
+     * @param {import('@web-stories-wp/media').Resource} resource The new image.
+     */
+    (resource) => {
+      handleChange({ icon: resource?.src }, true);
     },
     [handleChange]
   );

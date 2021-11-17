@@ -18,11 +18,10 @@
  * Internal dependencies
  */
 import { LAYER_DIRECTIONS } from '../../../../constants';
-import { OverlayType } from '../../../../utils/overlay';
 import { setupReducer } from './_utils';
 
 describe('arrangeElement', () => {
-  it('should do nothing if there is only two elements on page', () => {
+  it('should do nothing if there are only two elements on page', () => {
     const { restore, arrangeElement } = setupReducer();
 
     const initialState = restore({
@@ -37,7 +36,7 @@ describe('arrangeElement', () => {
 
     const result = arrangeElement({ elementId: '234', position: 0 });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should move element to specified position', () => {
@@ -230,7 +229,6 @@ function getInitialState() {
   return {
     pages: [
       {
-        overlay: OverlayType.NONE,
         id: '111',
         elements: [
           { id: '123', isBackground: true },

@@ -51,7 +51,7 @@ const Input = styled.input`
     `}
 `;
 
-function Title() {
+function HeaderTitle() {
   const { title, slug, updateStory } = useStory(
     ({
       state: {
@@ -107,4 +107,4 @@ function Title() {
   );
 }
 
-export default Title;
+export default HeaderTitle;

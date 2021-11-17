@@ -28,6 +28,7 @@ import {
 const MODAL = '.media-modal';
 
 describe('SVG', () => {
+  // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enableSVG']);
 
   it('should insert an existing SVG from media dialog', async () => {
@@ -62,11 +63,12 @@ describe('SVG', () => {
     await deleteMedia(filename);
   });
 
-  it('not should be to select SVG as publisher logo', async () => {
+  it('should not allow selecting an SVG file as publisher logo', async () => {
     await createNewStory();
 
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
     await expect(page).toClick('[aria-label="Publisher Logo"]');
+    await expect(page).toClick('[aria-label="Add new"]');
 
     await page.waitForSelector(MODAL, {
       visible: true,

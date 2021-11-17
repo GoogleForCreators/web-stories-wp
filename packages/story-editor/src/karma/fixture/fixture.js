@@ -20,7 +20,6 @@
 import * as React from 'react';
 const { useCallback, useState, useMemo, forwardRef } = React;
 
-import { FlagsProvider } from 'flagged';
 import {
   configure,
   render,
@@ -29,13 +28,13 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
-import { DATA_VERSION } from '@web-stories-wp/migration';
 import { FixtureEvents } from '@web-stories-wp/karma-fixture';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
  */
-import App from '../../editorApp';
+import StoryEditor from '../../storyEditor';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import FileProvider from '../../app/file/provider';
@@ -44,10 +43,14 @@ import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import formattedTemplatesArray from '../../dataUtils/formattedTemplatesArray';
-import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
+import { PRESET_TYPES } from '../../constants';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
+import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
+import HeaderLayout from './components/header';
+import storyResponse from './db/storyResponse';
+import DocumentPane from './components/documentPane';
 
 if ('true' === WEB_STORIES_CI) {
   configure({
@@ -62,6 +65,15 @@ if ('true' === WEB_STORIES_CI) {
 
 export const MEDIA_PER_PAGE = 20;
 
+function MediaUpload({ render: _render, onSelect }) {
+  const open = () => {
+    const image = { type: 'image', src: 'https://www.example.com/media1' };
+    onSelect(image);
+  };
+
+  return _render(open);
+}
+
 const DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
@@ -72,6 +84,8 @@ const DEFAULT_CONFIG = {
   allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
   allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
   allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+  allowedAudioFileTypes: ['mp3', 'aac', 'wav', 'ogg'],
+  allowedAudioMimeTypes: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
   allowedTranscodableMimeTypes: [
     'video/3gpp',
     'video/3gpp2',
@@ -94,7 +108,6 @@ const DEFAULT_CONFIG = {
   capabilities: {
     hasUploadMediaAction: true,
   },
-  dashboardLink: 'https://www.example.com/dashboard',
   postLock: {
     interval: 150,
     showLockedDialog: true,
@@ -110,6 +123,8 @@ const DEFAULT_CONFIG = {
     timezone: 'America/New_York',
     weekStartsOn: 0,
   },
+  flags: {},
+  MediaUpload,
 };
 
 /**
@@ -185,14 +200,12 @@ export class Fixture {
 
     const panels = [
       'animation',
-      'borderRadius',
       'borderStyle',
       'captions',
       'globalStoryStyles',
       'colorPresets',
       'filter',
       'imageAccessibility',
-      'layerStyle',
       'link',
       'pageAttachment',
       'pageBackground',
@@ -209,7 +222,6 @@ export class Fixture {
       'publishing',
       'status',
       `stylepreset-${PRESET_TYPES.STYLE}`,
-      `stylepreset-${PRESET_TYPES.COLOR}`,
     ];
     // Open all panels by default.
     panels.forEach((panel) => {
@@ -291,7 +303,8 @@ export class Fixture {
    * @param {Object} flags Flags.
    */
   setFlags(flags) {
-    this._flags = { ...flags };
+    this._flags = { ...this._config.flags, ...flags };
+    this._config.flags = this._flags;
   }
 
   setConfig(config) {
@@ -319,9 +332,17 @@ export class Fixture {
     setAppElement(root);
 
     const { container, getByRole } = render(
-      <FlagsProvider features={this._flags}>
-        <App key={Math.random()} config={this._config} />
-      </FlagsProvider>,
+      <StoryEditor key={Math.random()} config={this._config}>
+        <Layout
+          header={<HeaderLayout />}
+          inspectorTabs={{
+            document: {
+              title: 'Document',
+              Pane: DocumentPane,
+            },
+          }}
+        />
+      </StoryEditor>,
       {
         container: root,
       }
@@ -708,92 +729,30 @@ class APIProviderFixture {
    */
   constructor({ mocks = {} } = {}) {
     this._pages = [];
+    // begins at 4 because mocks have children with ids [1, 2, 3]
+    this._termAutoIncrementId = 4;
 
     // eslint-disable-next-line react/prop-types
     const Comp = ({ children }) => {
       const getStoryById = useCallback(
-        // @todo: put this to __db__/
         () =>
           asyncResponse({
-            title: { raw: '' },
-            status: 'draft',
-            author: 1,
-            slug: '',
-            date: '2020-05-06T22:32:37',
-            date_gmt: '2020-05-06T22:32:37',
-            modified: '2020-05-06T22:32:37',
-            excerpt: { raw: '' },
-            link: 'http://stories.local/?post_type=web-story&p=1',
-            preview_link: 'http://stories.local/?post_type=web-story&p=1',
+            ...storyResponse,
             story_data: {
               version: DATA_VERSION,
               pages: this._pages,
-            },
-            featured_media: 0,
-            featured_media_url: '',
-            publisher_logo_url:
-              'http://stories.local/wp-content/plugins/web-stories/assets/images/logo.png',
-            permalink_template: 'http://stories3.local/stories/%pagename%/',
-            style_presets: { textStyles: [], colors: [] },
-            password: '',
-            _embedded: { author: [{ id: 1, name: 'John Doe' }] },
-            _links: {
-              'wp:action-assign-author': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-delete': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-publish': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-unfiltered-html': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
             },
           }),
         []
       );
 
       const getDemoStoryById = useCallback(
-        // @todo: put this to __db__/
         () =>
           asyncResponse({
-            title: { raw: '' },
-            status: 'draft',
-            author: 1,
-            slug: '',
-            date: '2020-05-06T22:32:37',
-            date_gmt: '2020-05-06T22:32:37',
-            modified: '2020-05-06T22:32:37',
-            excerpt: { raw: '' },
-            link: 'http://stories.local/?post_type=web-story&p=1',
-            preview_link: 'http://stories.local/?post_type=web-story&p=1',
+            ...storyResponse,
             story_data: {
               version: DATA_VERSION,
               pages: this._pages,
-            },
-            featured_media: 0,
-            featured_media_url: '',
-            publisher_logo_url:
-              'http://stories .local/wp-content/plugins/web-stories/assets/images/logo.png',
-            permalink_template: 'http://stories3.local/stories/%pagename%/',
-            style_presets: { textStyles: [], colors: [] },
-            password: '',
-            _embedded: { author: [{ id: 1, name: 'John Doe' }] },
-            _links: {
-              'wp:action-assign-author': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-delete': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-publish': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
-              'wp:action-unfiltered-html': {
-                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-              },
             },
           }),
         []
@@ -825,7 +784,7 @@ class APIProviderFixture {
             .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
-          headers: { 'X-WP-TotalPages': 3 },
+          headers: { totalPages: 3 },
         });
       }, []);
       const uploadMedia = useCallback(
@@ -844,6 +803,22 @@ class APIProviderFixture {
             title: 'Example Site',
             image: 'example.jpg',
           }),
+        []
+      );
+
+      const getHotlinkInfo = useCallback(
+        () =>
+          asyncResponse({
+            ext: 'jpg',
+            mime_type: 'image/jpeg',
+            type: 'image',
+            file_name: 'example.jpg',
+          }),
+        []
+      );
+
+      const getProxyUrl = useCallback(
+        () => 'http://localhost:9876/__static__/saturn.jpg',
         []
       );
 
@@ -911,6 +886,61 @@ class APIProviderFixture {
       );
       const deletePageTemplate = useCallback(() => asyncResponse(), []);
 
+      const getTaxonomyTerm = useCallback(
+        (_, args) =>
+          asyncResponse(
+            args.orderby
+              ? [
+                  {
+                    id: this._termAutoIncrementId++,
+                    count: 3,
+                    description: '',
+                    link: '',
+                    name: 'related slug 1',
+                    slug: 'related-slug-1',
+                    taxonomy: 'web_story_tag',
+                    meta: [],
+                  },
+                  {
+                    id: this._termAutoIncrementId++,
+                    count: 2,
+                    description: '',
+                    link: '',
+                    name: 'related slug 2',
+                    slug: 'related-slug-2',
+                    taxonomy: 'web_story_tag',
+                    meta: [],
+                  },
+                ]
+              : []
+          ),
+        []
+      );
+
+      const createTaxonomyTerm = useCallback(
+        (_endpoint, data) =>
+          asyncResponse({
+            id: this._termAutoIncrementId++,
+            count: 0,
+            description: '',
+            link: '',
+            name: 'random name',
+            slug:
+              data?.name?.toLowerCase().replace(/[\s./_]/, '-') ||
+              'random-slug',
+            taxonomy: 'web_story_category',
+            parent: 0,
+            meta: [],
+            ...data,
+          }),
+        []
+      );
+
+      const getTaxonomies = useCallback(
+        () => asyncResponse(taxonomiesResponse),
+        []
+      );
+
       const state = {
         actions: {
           autoSaveById,
@@ -918,6 +948,8 @@ class APIProviderFixture {
           getDemoStoryById,
           getMedia,
           getLinkMetadata,
+          getHotlinkInfo,
+          getProxyUrl,
           saveStoryById,
           getAllStatuses,
           getAuthors,
@@ -930,6 +962,9 @@ class APIProviderFixture {
           getPageTemplates,
           getCurrentUser,
           updateCurrentUser,
+          getTaxonomyTerm,
+          createTaxonomyTerm,
+          getTaxonomies,
           ...mocks,
         },
       };

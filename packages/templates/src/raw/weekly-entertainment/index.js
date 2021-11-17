@@ -15,33 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'weekly-entertainment',
-  title: _x('Weekly Entertainment', 'template name', 'web-stories'),
-  tags: [
-    _x('Funny', 'template keyword', 'web-stories'),
-    _x('Action', 'template keyword', 'web-stories'),
-    _x('Hip', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Pink', 'color', 'web-stories'), color: '#ff00d6' },
-    { label: _x('Gray', 'color', 'web-stories'), color: '#525252' },
-  ],
-  description: __(
-    'Cover the world of entertainment with this template that comes with an edgy, interesting look. Works well as foundation for celebrity, movie, TV and music coverage, insights and inspiration.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Entertainment', 'template vertical', 'web-stories'),
 };

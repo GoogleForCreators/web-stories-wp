@@ -78,7 +78,7 @@ export default function useSearch({
    */
 
   const normalizedOptions = useMemo(() => {
-    if (!options || options.length == 0) {
+    if (!options || options.length === 0) {
       return [];
     }
     return getOptions(options);
@@ -122,17 +122,16 @@ export default function useSearch({
   );
 
   useEffect(() => {
-    if (inputState?.value === undefined && selectedValue) {
+    if (inputState?.value === undefined && selectedValue?.value !== undefined) {
       inputState.set(selectedValue?.label || '');
     }
   }, [inputState, selectedValue]);
   /**
    * send the inputState when it changes back to the parent so that any results that need to change can be changed.
    */
-  useEffect(
-    () => handleSearchValueChange?.(inputState.value),
-    [handleSearchValueChange, inputState]
-  );
+  useEffect(() => {
+    handleSearchValueChange?.(inputState.value);
+  }, [handleSearchValueChange, inputState]);
 
   /* Announce changes to the length of the list */
   useEffect(() => {

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
@@ -28,10 +28,12 @@ import { __ } from '@web-stories-wp/i18n';
 import useDragHandlers from '../useDragHandlers';
 import useKeyboardHandlers from '../useKeyboardHandlers';
 
+const HEIGHT = 8;
+
 const Handle = styled.div`
   border: 0;
   padding: 0;
-  height: 6px;
+  height: ${HEIGHT}px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -45,10 +47,25 @@ const Handle = styled.div`
   right: 0;
   width: 100%;
 
-  &:focus {
-    height: 5px;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.border.focus};
-  }
+  ${({ $showFocusStyles }) =>
+    $showFocusStyles &&
+    css`
+      border-bottom: 1px solid transparent;
+
+      &:focus {
+        border-color: ${({ theme }) => theme.colors.border.focus};
+      }
+    `};
+`;
+
+const DragBar = styled.div`
+  position: absolute;
+  width: 35px;
+  height: 3px;
+  top: ${HEIGHT - 4}px;
+  background: ${({ theme }) => theme.colors.bg.quaternary};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  cursor: inherit;
 `;
 
 function DragHandle({
@@ -59,6 +76,8 @@ function DragHandle({
   handleExpandToHeightChange,
   handleDoubleClick,
   position,
+  showDragHandle,
+  showFocusStyles = true,
   ...rest
 }) {
   const handle = useRef();
@@ -80,8 +99,11 @@ function DragHandle({
       aria-valuemin={minHeight}
       aria-valuemax={maxHeight}
       aria-label={__('Set panel height', 'web-stories')}
+      $showFocusStyles={showFocusStyles}
       {...rest}
-    />
+    >
+      {showDragHandle && <DragBar />}
+    </Handle>
   );
 }
 
@@ -93,6 +115,8 @@ DragHandle.propTypes = {
   minHeight: PropTypes.number.isRequired,
   maxHeight: PropTypes.number.isRequired,
   position: PropTypes.oneOf(['top', 'bottom']),
+  showDragHandle: PropTypes.bool,
+  showFocusStyles: PropTypes.bool,
 };
 
 DragHandle.defaultProps = {

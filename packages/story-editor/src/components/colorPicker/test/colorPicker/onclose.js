@@ -24,9 +24,25 @@ import { waitFor, fireEvent } from '@testing-library/react';
  */
 import { arrange, getResolvingPromise } from './_utils';
 
-// Disable reason: To be fixed in 8655
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('<ColorPicker /> as it closes', () => {
+jest.mock(
+  '../../../../app/story/useStory',
+  () => (cb) =>
+    cb({
+      state: {
+        story: {
+          globalStoryStyles: {
+            colors: [],
+          },
+          selectedElements: [],
+        },
+      },
+      actions: {
+        updateStory: jest.fn(),
+      },
+    })
+);
+
+describe('<ColorPicker /> as it closes', () => {
   it('should invoke onclose and restore focus when pressing "escape"', async () => {
     // Body has focus before the test runs. Make sure body is re-focusable
     document.body.tabIndex = 0;

@@ -75,8 +75,8 @@ function useStoryReducer(partial) {
       );
 
     return {
-      internal: wrapWithDispatch(internalActions, dispatch),
-      api: wrapWithDispatch(exposedActions, dispatch),
+      internal: wrapWithDispatch(internalActions),
+      api: wrapWithDispatch(exposedActions),
     };
   }, [dispatch]);
 

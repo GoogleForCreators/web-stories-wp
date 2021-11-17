@@ -86,7 +86,7 @@ const ButtonWrapper = styled.div`
 const PageTemplateTitle = styled.div`
   position: absolute;
   bottom: 0;
-  background-color: ${({ theme }) => theme.colors.opacity.overlayDark};
+  background-color: ${({ theme }) => theme.colors.opacity.black64};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   border-top-right-radius: 0;
   border-top-left-radius: 0;

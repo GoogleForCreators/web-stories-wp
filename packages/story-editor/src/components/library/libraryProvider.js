@@ -46,14 +46,16 @@ const LIBRARY_TAB_IDS = new Set(
 function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA.id);
   const [textSets, setTextSets] = useState({});
+  const [areTextSetsLoading, setAreTextSetsLoading] = useState({});
   const [savedTemplates, setSavedTemplates] = useState(null);
   // The first page of templates to fetch is 1.
   const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(1);
-  const [pageCanvasData, setPageCanvasData] = useState(null);
-  const [pageCanvasPromise, setPageCanvasPromise] = useState(null);
+  // If to use smart colors with text and text sets.
+  const [shouldUseSmartColor, setShouldUseSmartColor] = useState(false);
 
   const insertElement = useInsertElement();
-  const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
+  const { insertTextSet, insertTextSetByOffset } =
+    useInsertTextSet(shouldUseSmartColor);
 
   const { showElementsTab } = useFeatures();
   const { showMedia3p } = useConfig();
@@ -107,29 +109,29 @@ function LibraryProvider({ children }) {
   const state = useMemo(
     () => ({
       state: {
-        pageCanvasData,
+        areTextSetsLoading,
         tab,
         tabRefs,
         textSets,
         savedTemplates,
         nextTemplatesToFetch,
-        pageCanvasPromise,
+        shouldUseSmartColor,
       },
       actions: {
-        setPageCanvasData,
         setTab,
         insertElement,
         insertTextSet,
         insertTextSetByOffset,
         setSavedTemplates,
         setNextTemplatesToFetch,
-        setPageCanvasPromise,
+        setShouldUseSmartColor,
       },
       data: {
         tabs: tabs,
       },
     }),
     [
+      areTextSetsLoading,
       tab,
       tabRefs,
       textSets,
@@ -140,16 +142,16 @@ function LibraryProvider({ children }) {
       tabs,
       nextTemplatesToFetch,
       setNextTemplatesToFetch,
-      pageCanvasData,
-      pageCanvasPromise,
-      setPageCanvasPromise,
+      shouldUseSmartColor,
     ]
   );
   useEffect(() => {
     async function getTextSets() {
       const trackTiming = getTimeTracker('load_text_sets');
+      setAreTextSetsLoading(true);
       setTextSets(await loadTextSets());
       trackTiming();
+      setAreTextSetsLoading(false);
     }
     // if text sets have not been loaded but are needed fetch dynamically imported text sets
     if (tab === TEXT.id && !Object.keys(textSets).length) {

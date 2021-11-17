@@ -30,8 +30,8 @@ import { useState, useEffect, useCallback } from '@wordpress/element';
  */
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
 import StoriesPreview from '../../components/storiesPreview';
+import FetchSelectedStories from '../../components/storyPicker/fetchSelectedStories';
 import EmbedPlaceholder from './embedPlaceholder';
-import FetchSelectedStories from './fetchSelectedStories';
 
 function SelectedStoriesEdit({
   icon,

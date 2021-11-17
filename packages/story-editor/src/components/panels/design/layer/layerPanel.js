@@ -18,13 +18,15 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { useMemo } from '@web-stories-wp/react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { Panel, PanelTitle, PanelContent } from '../../panel';
-import { LAYER_HEIGHT, DEFAULT_LAYERS_VISIBLE } from './constants';
+import useInspector from '../../../inspector/useInspector';
+import { TAB_HEIGHT, TAB_VERTICAL_MARGIN } from '../../../tabview';
 import LayerList from './layerList';
 import useLayers from './useLayers';
 
@@ -50,24 +52,36 @@ const Divider = styled.div`
 
 function LayerPanel() {
   const layers = useLayers();
-  const numLayersVisible = layers?.length
-    ? Math.min(layers.length, DEFAULT_LAYERS_VISIBLE)
-    : DEFAULT_LAYERS_VISIBLE;
+
+  const {
+    state: { inspectorContentHeight },
+  } = useInspector();
+
+  // We want the max height to fill the space underneath the document/design tab bar.
+  // Since the document/design tab bar has top and bottom margin in addition to a static
+  // height subtract sum from the full height of the inspector.
+  const tabHeight = 2 * TAB_VERTICAL_MARGIN + TAB_HEIGHT;
+  const maxHeight = inspectorContentHeight - tabHeight + 2;
+
+  const initialHeight = useMemo(() => Math.round(window.innerHeight / 4), []);
 
   return (
     <Container>
       <Panel
-        name="layers"
-        initialHeight={Math.min(
-          numLayersVisible * LAYER_HEIGHT,
-          window.innerHeight / 3
-        )}
-        maxHeight={layers?.length * LAYER_HEIGHT}
-        resizeable
+        name="layer-panel"
+        initialHeight={initialHeight}
+        resizable
+        showDragHandle
+        showFocusStyles={false}
         ariaHidden
         collapsedByDefault={false}
       >
-        <StyledPanelTitle isSecondary isResizable>
+        <StyledPanelTitle
+          isSecondary
+          isResizable
+          count={layers?.length}
+          maxHeight={maxHeight}
+        >
           {__('Layers', 'web-stories')}
         </StyledPanelTitle>
 

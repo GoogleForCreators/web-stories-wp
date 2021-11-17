@@ -52,9 +52,9 @@ function useUploadVideoFrame({ updateMediaElement }) {
   );
 
   /**
-   * Uploads a poster file for a given video.
+   * Uploads a poster file.
    *
-   * Ensures the two are properly connected on the backend.
+   * If the poster is for a local video, ensures the two are properly connected on the backend.
    */
   const uploadVideoPoster = useCallback(
     /**
@@ -74,22 +74,27 @@ function useUploadVideoFrame({ updateMediaElement }) {
         posterFile.name = fileName;
       }
 
+      const resource = await uploadFile(posterFile, {
+        post: id,
+        web_stories_media_source: 'poster-generation',
+      });
       const {
         id: posterId,
-        source_url: poster,
-        media_details: { width: posterWidth, height: posterHeight },
-      } = await uploadFile(posterFile, {
-        post: id,
-        media_source: 'poster-generation',
-      });
+        src: poster,
+        width: posterWidth,
+        height: posterHeight,
+      } = resource;
 
-      await updateMedia(id, {
-        featured_media: posterId,
-        meta: {
-          web_stories_poster_id: posterId,
-        },
-        post: storyId,
-      });
+      // If video ID is not set, skip relating media.
+      if (id) {
+        await updateMedia(id, {
+          featured_media: posterId,
+          meta: {
+            web_stories_poster_id: posterId,
+          },
+          post: storyId,
+        });
+      }
 
       // Preload the full image in the browser to stop jumping around.
       await preloadImage(poster);

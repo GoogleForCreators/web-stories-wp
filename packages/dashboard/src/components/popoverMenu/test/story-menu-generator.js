@@ -80,11 +80,6 @@ describe('generateStoryMenu', () => {
         onClick: expect.any(Function),
       }),
       expect.objectContaining({
-        inProgress: true,
-        label: 'Create Template',
-        onClick: expect.any(Function),
-      }),
-      expect.objectContaining({
         label: 'Delete Story',
         onClick: expect.any(Function),
       }),

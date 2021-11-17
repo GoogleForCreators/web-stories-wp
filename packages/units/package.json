@@ -2,8 +2,8 @@
   "name": "@web-stories-wp/units",
   "private": true,
   "engines": {
-    "node": ">= 15",
-    "npm": "~7"
+    "node": ">= 16",
+    "npm": ">= 7.3"
   },
   "exports": {
     "default": "./src/index.js"

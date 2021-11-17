@@ -18,7 +18,8 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
-import { Icons } from '@web-stories-wp/design-system';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { Icons, noop, useSnackbar } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -28,12 +29,17 @@ import { states } from '../..';
 import useHighlights from '../../useHighlights';
 import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
 import { useStory, useStoryTriggersDispatch } from '../../../story';
-import { ACTION_TEXT } from '../constants';
+import { ACTIONS } from '../constants';
+import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
+import { useConfig, useLocalMedia } from '../../..';
+import useFFmpeg from '../../../media/utils/useFFmpeg';
+import { MediaPicker } from '../useQuickActions';
 
 const {
   Bucket,
   Captions,
   CircleSpeed,
+  ColorBucket,
   Eraser,
   LetterTLargeLetterTSmall,
   LetterTPlus,
@@ -69,10 +75,26 @@ jest.mock('../../useHighlights', () => ({
   default: jest.fn(),
 }));
 
+jest.mock('../../../../utils/useApplyTextAutoStyle');
+
 jest.mock('@web-stories-wp/design-system', () => ({
   ...jest.requireActual('@web-stories-wp/design-system'),
-  useSnackbar: () => ({ showSnackbar: jest.fn() }),
+  useSnackbar: jest.fn(() => ({ showSnackbar: jest.fn() })),
 }));
+
+jest.mock('@web-stories-wp/tracking');
+
+jest.mock('@web-stories-wp/media', () => ({
+  ...jest.requireActual('@web-stories-wp/media'),
+  canTranscodeResource: jest.fn(() => true),
+  resourceList: {
+    set: jest.fn(),
+  },
+}));
+
+jest.mock('../../../config');
+jest.mock('../../../media');
+jest.mock('../../../media/utils/useFFmpeg');
 
 const mockClickEvent = {
   preventDefault: jest.fn(),
@@ -100,6 +122,7 @@ const BACKGROUND_IMAGE_MEDIA3P_ELEMENT = {
   type: 'image',
   resource: {
     id: 'media/unsplash:wsomemedia-123',
+    isExternal: true,
   },
 };
 
@@ -132,46 +155,55 @@ const VIDEO_ELEMENT = {
   type: 'video',
 };
 
+const STICKER_ELEMENT = {
+  id: 'sticker-element-id',
+  type: 'sticker',
+};
+
 const resetElementAction = expect.objectContaining({
-  label: ACTION_TEXT.RESET_ELEMENT,
+  label: ACTIONS.RESET_ELEMENT.text,
   onClick: expect.any(Function),
   Icon: Eraser,
 });
 
 const defaultQuickActions = [
   expect.objectContaining({
-    label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
+    label: ACTIONS.CHANGE_BACKGROUND_COLOR.text,
     onClick: expect.any(Function),
     Icon: Bucket,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
+    label: ACTIONS.INSERT_BACKGROUND_MEDIA.text,
     onClick: expect.any(Function),
     Icon: Media,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.INSERT_TEXT,
+    label: ACTIONS.INSERT_TEXT.text,
     onClick: expect.any(Function),
     Icon: LetterTPlus,
   }),
 ];
 
-const foregroundImageQuickActions = [
+const foregroundCommonActions = [
   expect.objectContaining({
-    label: ACTION_TEXT.REPLACE_MEDIA,
-    onClick: expect.any(Function),
-    Icon: PictureSwap,
-  }),
-  expect.objectContaining({
-    label: ACTION_TEXT.ADD_ANIMATION,
+    label: ACTIONS.ADD_ANIMATION.text,
     onClick: expect.any(Function),
     Icon: CircleSpeed,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_LINK,
+    label: ACTIONS.ADD_LINK.text,
     onClick: expect.any(Function),
     Icon: Link,
   }),
+];
+
+const foregroundImageQuickActions = [
+  expect.objectContaining({
+    label: ACTIONS.REPLACE_MEDIA.text,
+    onClick: expect.any(Function),
+    Icon: PictureSwap,
+  }),
+  ...foregroundCommonActions,
 ];
 
 const foregroundImageQuickActionsWithClear = [
@@ -181,56 +213,43 @@ const foregroundImageQuickActionsWithClear = [
 
 const shapeQuickActions = [
   expect.objectContaining({
-    label: ACTION_TEXT.CHANGE_COLOR,
+    label: ACTIONS.CHANGE_COLOR.text,
     onClick: expect.any(Function),
     Icon: Bucket,
   }),
-  expect.objectContaining({
-    label: ACTION_TEXT.ADD_ANIMATION,
-    onClick: expect.any(Function),
-    Icon: CircleSpeed,
-  }),
-  expect.objectContaining({
-    label: ACTION_TEXT.ADD_LINK,
-    onClick: expect.any(Function),
-    Icon: Link,
-  }),
+  ...foregroundCommonActions,
 ];
 
 const shapeQuickActionsWithClear = [...shapeQuickActions, resetElementAction];
 
 const textQuickActions = [
   expect.objectContaining({
-    label: ACTION_TEXT.CHANGE_TEXT_COLOR,
+    label: ACTIONS.CHANGE_TEXT_COLOR.text,
     onClick: expect.any(Function),
     Icon: Bucket,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.CHANGE_FONT,
+    label: ACTIONS.CHANGE_FONT.text,
     onClick: expect.any(Function),
     Icon: LetterTLargeLetterTSmall,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_ANIMATION,
+    label: ACTIONS.AUTO_STYLE_TEXT.text,
     onClick: expect.any(Function),
-    Icon: CircleSpeed,
+    Icon: ColorBucket,
   }),
-  expect.objectContaining({
-    label: ACTION_TEXT.ADD_LINK,
-    onClick: expect.any(Function),
-    Icon: Link,
-  }),
+  ...foregroundCommonActions,
 ];
 const textQuickActionsWithClear = [...textQuickActions, resetElementAction];
 
 const backgroundMediaQuickActions = [
   expect.objectContaining({
-    label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
+    label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
     onClick: expect.any(Function),
     Icon: PictureSwap,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_ANIMATION,
+    label: ACTIONS.ADD_ANIMATION.text,
     onClick: expect.any(Function),
     Icon: CircleSpeed,
   }),
@@ -243,7 +262,7 @@ const backgroundMediaQuickActionsWithClear = [
 const videoQuickActions = [
   ...foregroundImageQuickActions,
   expect.objectContaining({
-    label: ACTION_TEXT.ADD_CAPTIONS,
+    label: ACTIONS.ADD_CAPTIONS.text,
     onClick: expect.any(Function),
     Icon: Captions,
   }),
@@ -251,13 +270,70 @@ const videoQuickActions = [
 
 const videoQuickActionsWithClear = [...videoQuickActions, resetElementAction];
 
-describe('useQuickActions', () => {
-  let highlight;
-  const mockUseHighlights = useHighlights;
-  const mockUseStory = useStory;
-  const mockDispatchStoryEvent = jest.fn();
-  const mockUpdateElementsById = jest.fn();
+const stickerQuickActions = [...foregroundCommonActions];
 
+const stickerQuickActionsWithClear = [
+  ...stickerQuickActions,
+  resetElementAction,
+];
+
+const videoResource = {
+  id: 'video',
+  type: 'video',
+  mimeType: 'videoMimeType',
+  src: 'video',
+};
+const imageResource = {
+  id: 'image',
+  type: 'image',
+  mimeType: 'image',
+  src: 'image',
+};
+const gifResource = {
+  id: 'gif',
+  type: 'gif',
+  mimeType: 'image/gif',
+  src: 'gif',
+};
+
+let highlight;
+const mockUseHighlights = useHighlights;
+const mockUseStory = useStory;
+const mockDispatchStoryEvent = jest.fn();
+const mockUpdateElementsById = jest.fn();
+const mockUseApplyTextAutoStyle = useApplyTextAutoStyle;
+const mockUseConfig = useConfig;
+const mockUseLocalMedia = useLocalMedia;
+const mockResetWithFetch = jest.fn();
+const mockUpdateVideoIsMuted = jest.fn();
+const mockOptimizeVideo = jest.fn();
+const mockOptimizeGif = jest.fn();
+const mockUseFFmpeg = useFFmpeg;
+const mockUseSnackbar = useSnackbar;
+const mockShowSnackbar = jest.fn();
+// eslint-disable-next-line react/prop-types
+const MockMediaPicker = ({ onSelect, onClose }) => (
+  <>
+    <button onClick={() => onSelect(imageResource)}>{'onSelect image'}</button>
+    <button onClick={() => onSelect(gifResource)}>{'onSelect gif'}</button>
+    <button onClick={() => onSelect(videoResource)}>{'onSelect video'}</button>
+    <button
+      onClick={() =>
+        onSelect({
+          ...videoResource,
+          local: false,
+          mimeType: 'muted',
+          isMuted: null,
+        })
+      }
+    >
+      {'onSelect muted video'}
+    </button>
+    <button onClick={onClose}>{'onClose'}</button>
+  </>
+);
+
+describe('useQuickActions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
@@ -266,6 +342,10 @@ describe('useQuickActions', () => {
       setHighlights: (value) => {
         highlight = value;
       },
+    }));
+
+    mockUseApplyTextAutoStyle.mockImplementation(() => ({
+      applyTextAutoStyle: jest.fn(),
     }));
 
     mockUseStory.mockReturnValue({
@@ -278,6 +358,25 @@ describe('useQuickActions', () => {
     });
 
     useStoryTriggersDispatch.mockReturnValue(mockDispatchStoryEvent);
+
+    mockUseConfig.mockReturnValue({
+      allowedTranscodableMimeTypes: [],
+      allowedFileTypes: [],
+      allowedMimeTypes: {
+        image: [],
+        video: [],
+      },
+      capabilities: { hasUploadMediaAction: true },
+      isRTL: true,
+      MediaPicker: MockMediaPicker,
+    });
+
+    mockUseLocalMedia.mockReturnValue({
+      resetWithFetch: noop,
+      updateVideoIsMuted: noop,
+      optimizeVideo: noop,
+      optimizeGif: noop,
+    });
   });
 
   describe('multiple elements selected', () => {
@@ -369,13 +468,13 @@ describe('useQuickActions', () => {
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        elementId: undefined,
+        elementId: BACKGROUND_ELEMENT.id,
         highlight: states.MEDIA,
       });
 
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        elementId: undefined,
+        elementId: BACKGROUND_ELEMENT.id,
         highlight: states.TEXT_SET,
       });
     });
@@ -401,12 +500,6 @@ describe('useQuickActions', () => {
 
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
-
-      result.current[0].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: BACKGROUND_IMAGE_ELEMENT.id,
-        highlight: states.MEDIA,
-      });
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
@@ -447,12 +540,6 @@ describe('useQuickActions', () => {
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      result.current[0].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: BACKGROUND_IMAGE_MEDIA3P_ELEMENT.id,
-        highlight: states.MEDIA3P,
-      });
-
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: BACKGROUND_IMAGE_MEDIA3P_ELEMENT.id,
@@ -487,12 +574,6 @@ describe('useQuickActions', () => {
 
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
-
-      result.current[0].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: BACKGROUND_VIDEO_ELEMENT.id,
-        highlight: states.MEDIA,
-      });
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
@@ -539,12 +620,6 @@ describe('useQuickActions', () => {
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      result.current[0].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: IMAGE_ELEMENT.id,
-        highlight: states.MEDIA,
-      });
-
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: IMAGE_ELEMENT.id,
@@ -558,7 +633,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`\`${ACTION_TEXT.RESET_ELEMENT}\` action should not be present if element has no animations`, () => {
+    it(`\`${ACTIONS.RESET_ELEMENT.text}\` action should not be present if element has no animations`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, IMAGE_ELEMENT],
@@ -637,7 +712,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`\`${ACTION_TEXT.CLEAR_ANIMATIONS}\` action should not be present if element has no animations`, () => {
+    it(`\`${ACTIONS.RESET_ELEMENT.text}\` action should not be present if element has no animations`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, SHAPE_ELEMENT],
@@ -694,20 +769,20 @@ describe('useQuickActions', () => {
         highlight: states.FONT,
       });
 
-      result.current[2].onClick(mockClickEvent);
+      result.current[3].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: TEXT_ELEMENT.id,
         highlight: states.ANIMATION,
       });
 
-      result.current[3].onClick(mockClickEvent);
+      result.current[4].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: TEXT_ELEMENT.id,
         highlight: states.LINK,
       });
     });
 
-    it(`\`${ACTION_TEXT.RESET_ELEMENT}\` action should not be present if element has no animations`, () => {
+    it(`\`${ACTIONS.RESET_ELEMENT.text}\` action should not be present if element has no animations`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, TEXT_ELEMENT],
@@ -719,7 +794,7 @@ describe('useQuickActions', () => {
 
       const { result } = renderHook(() => useQuickActions());
 
-      expect(result.current[4]).toBeUndefined();
+      expect(result.current[5]).toBeUndefined();
     });
 
     it('clicking `reset element` should update the element', () => {
@@ -739,7 +814,7 @@ describe('useQuickActions', () => {
       const { result } = renderHook(() => useQuickActions());
       expect(result.current).toStrictEqual(textQuickActionsWithClear);
 
-      result.current[4].onClick(mockClickEvent);
+      result.current[5].onClick(mockClickEvent);
       expect(mockUpdateElementsById).toHaveBeenCalledWith({
         elementIds: [TEXT_ELEMENT.id],
         properties: expect.any(Function),
@@ -771,12 +846,6 @@ describe('useQuickActions', () => {
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      result.current[0].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: VIDEO_ELEMENT.id,
-        highlight: states.MEDIA,
-      });
-
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: VIDEO_ELEMENT.id,
@@ -796,7 +865,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`should not show \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` action if element has no animations`, () => {
+    it(`should not show \`${ACTIONS.RESET_ELEMENT.text}\` action if element has no animations`, () => {
       mockUseStory.mockReturnValueOnce({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, VIDEO_ELEMENT],
@@ -811,7 +880,7 @@ describe('useQuickActions', () => {
       expect(result.current[4]).toBeUndefined();
     });
 
-    it(`should click \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS} and update the element`, () => {
+    it(`should click \`${ACTIONS.RESET_ELEMENT.text} and update the element`, () => {
       const { result } = renderHook(() => useQuickActions());
 
       result.current[4].onClick(mockClickEvent);
@@ -819,6 +888,181 @@ describe('useQuickActions', () => {
         elementIds: [VIDEO_ELEMENT.id],
         properties: expect.any(Function),
       });
+    });
+  });
+
+  describe('sticker element selected', () => {
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, STICKER_ELEMENT],
+        },
+        selectedElementAnimations: [
+          {
+            target: [STICKER_ELEMENT.id],
+          },
+        ],
+        selectedElements: [STICKER_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
+      });
+    });
+
+    it('should return the quick actions', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current).toStrictEqual(stickerQuickActionsWithClear);
+    });
+
+    it('should set the correct highlight', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: STICKER_ELEMENT.id,
+        highlight: states.ANIMATION,
+      });
+
+      result.current[1].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: STICKER_ELEMENT.id,
+        highlight: states.LINK,
+      });
+    });
+
+    it(`\`${ACTIONS.RESET_ELEMENT.text}\` action should not be present if element has no animations`, () => {
+      mockUseStory.mockReturnValue({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, STICKER_ELEMENT],
+        },
+        selectedElementAnimations: [],
+        selectedElements: [STICKER_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
+      });
+
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current[3]).toBeUndefined();
+    });
+
+    it('clicking `reset element` should update the element', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[2].onClick(mockClickEvent);
+      expect(mockUpdateElementsById).toHaveBeenCalledWith({
+        elementIds: [STICKER_ELEMENT.id],
+        properties: expect.any(Function),
+      });
+    });
+  });
+});
+
+describe('MediaPicker', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    mockUseStory.mockReturnValue({
+      selectedElements: [IMAGE_ELEMENT],
+      updateElementsById: mockUpdateElementsById,
+    });
+
+    mockUseConfig.mockReturnValue({
+      allowedTranscodableMimeTypes: ['videoMimeType'],
+      allowedFileTypes: ['pepperoni', 'cheese'],
+      allowedMimeTypes: {
+        image: ['image/gif'],
+        video: ['muted'],
+      },
+      capabilities: { hasUploadMediaAction: true },
+      isRTL: true,
+      MediaUpload: MockMediaPicker,
+    });
+
+    mockUseLocalMedia.mockReturnValue({
+      resetWithFetch: mockResetWithFetch,
+      updateVideoIsMuted: mockUpdateVideoIsMuted,
+      optimizeVideo: mockOptimizeVideo,
+      optimizeGif: mockOptimizeGif,
+    });
+
+    mockUseFFmpeg.mockReturnValue({ isTranscodingEnabled: true });
+    mockUseSnackbar.mockReturnValue({ showSnackbar: mockShowSnackbar });
+  });
+
+  it('should insert an image', () => {
+    render(<MediaPicker render={noop} />);
+
+    fireEvent.click(screen.getByText('onSelect image'));
+
+    expect(mockOptimizeGif).toHaveBeenCalledTimes(0);
+    expect(mockOptimizeVideo).toHaveBeenCalledTimes(0);
+    expect(mockUpdateElementsById).toHaveBeenCalledWith({
+      elementIds: [IMAGE_ELEMENT.id],
+      properties: { type: imageResource.id, resource: imageResource },
+    });
+  });
+
+  it('should insert an optimized gif', () => {
+    render(<MediaPicker render={noop} />);
+
+    fireEvent.click(screen.getByText('onSelect gif'));
+
+    expect(mockOptimizeGif).toHaveBeenCalledTimes(1);
+    expect(mockOptimizeVideo).toHaveBeenCalledTimes(0);
+    expect(mockUpdateElementsById).toHaveBeenCalledWith({
+      elementIds: [IMAGE_ELEMENT.id],
+      properties: { type: gifResource.id, resource: gifResource },
+    });
+  });
+
+  it('should insert an optimized video', () => {
+    render(<MediaPicker render={noop} />);
+
+    fireEvent.click(screen.getByText('onSelect video'));
+
+    expect(mockOptimizeGif).toHaveBeenCalledTimes(0);
+    expect(mockOptimizeVideo).toHaveBeenCalledTimes(1);
+    expect(mockUpdateElementsById).toHaveBeenCalledWith({
+      elementIds: [IMAGE_ELEMENT.id],
+      properties: { type: videoResource.id, resource: videoResource },
+    });
+  });
+
+  it('should call updateVideoIsMuted for a video that is muted', () => {
+    render(<MediaPicker render={noop} />);
+
+    fireEvent.click(screen.getByText('onSelect muted video'));
+
+    expect(mockUpdateVideoIsMuted).toHaveBeenCalledWith(
+      videoResource.id,
+      videoResource.src
+    );
+    expect(mockUpdateElementsById).toHaveBeenCalledWith({
+      elementIds: [IMAGE_ELEMENT.id],
+      properties: {
+        type: videoResource.id,
+        resource: {
+          ...videoResource,
+          local: false,
+          mimeType: 'muted',
+          isMuted: null,
+        },
+      },
+    });
+  });
+
+  it('should show a snackbar if something fails during upload', () => {
+    mockOptimizeVideo.mockImplementation(() => {
+      throw new Error('throwing it down');
+    });
+
+    render(<MediaPicker render={noop} />);
+
+    fireEvent.click(screen.getByText('onSelect video'));
+
+    expect(mockUpdateElementsById).not.toHaveBeenCalled();
+    expect(mockShowSnackbar).toHaveBeenCalledWith({
+      message: 'throwing it down',
+      dismissable: true,
     });
   });
 });

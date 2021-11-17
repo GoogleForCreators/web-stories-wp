@@ -25,6 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { Color, Row } from '../../../form';
 import useRichTextFormatting from './useRichTextFormatting';
+
 function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
   const {
     textInfo: { color },
@@ -42,6 +43,7 @@ function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
         labelId="text-color-label"
         changedStyle="color"
         ref={textColorRef}
+        hasEyedropper
       />
     </Row>
   );
@@ -50,7 +52,7 @@ function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
 ColorControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
-  textColorRef: PropTypes.object,
+  textColorRef: PropTypes.func,
 };
 
 export default ColorControls;

@@ -69,7 +69,6 @@ function arrange({ userSettingEnabled, hasUploadMediaAction }) {
   };
 
   return renderHook(() => useFFmpeg(), {
-    // eslint-disable-next-line react/display-name, react/prop-types
     wrapper: ({ children }) => (
       <ConfigProvider config={configState}>
         <CurrentUserContext.Provider value={{ state: { currentUser } }}>

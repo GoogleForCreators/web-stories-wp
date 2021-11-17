@@ -17,9 +17,10 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { memo, useEffect, useRef } from '@web-stories-wp/react';
-import { _x } from '@web-stories-wp/i18n';
+import { _x, __ } from '@web-stories-wp/i18n';
 import { useKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
@@ -30,7 +31,7 @@ import { getDefinitionForType } from '../../elements';
 import { useStory, useCanvas } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
-import { Layer, PageArea, Z_INDEX } from './layout';
+import { Layer, PageArea, MenuArea, Z_INDEX } from './layout';
 import useFocusCanvas from './useFocusCanvas';
 
 const LayerWithGrayout = styled(Layer)`
@@ -44,9 +45,15 @@ function EditLayer() {
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,
   }));
-  const { editingElementId } = useCanvas((state) => ({
-    editingElementId: state.state.editingElement,
-  }));
+
+  const { editingElement: editingElementId, showOverflow = true } = useCanvas(
+    ({
+      state: { editingElement, editingElementState: { showOverflow } = {} },
+    }) => ({
+      editingElement,
+      showOverflow,
+    })
+  );
 
   const editingElement =
     editingElementId &&
@@ -57,13 +64,15 @@ function EditLayer() {
     return null;
   }
 
-  return <EditLayerForElement element={editingElement} />;
+  return (
+    <EditLayerForElement element={editingElement} showOverflow={showOverflow} />
+  );
 }
 
-function EditLayerForElement({ element }) {
+function EditLayerForElement({ element, showOverflow }) {
   const ref = useRef(null);
   const pageAreaRef = useRef(null);
-  const { editModeGrayout } = getDefinitionForType(element.type);
+  const { editModeGrayout, EditMenu } = getDefinitionForType(element.type);
 
   const { clearEditing } = useCanvas((state) => ({
     clearEditing: state.actions.clearEditing,
@@ -96,18 +105,28 @@ function EditLayerForElement({ element }) {
     >
       <EditPageArea
         ref={pageAreaRef}
+        fullBleedContainerLabel={__(
+          'Fullbleed area (Edit layer)',
+          'web-stories'
+        )}
         isControlled
-        showOverflow
-        overflow="visible"
+        showOverflow={showOverflow}
+        overflow={showOverflow ? 'visible' : 'hidden'}
       >
         <EditElement element={element} />
       </EditPageArea>
+      {EditMenu && (
+        <MenuArea showOverflow>
+          <EditMenu />
+        </MenuArea>
+      )}
     </LayerWithGrayout>
   );
 }
 
 EditLayerForElement.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  showOverflow: PropTypes.bool.isRequired,
 };
 
 export default memo(EditLayer);

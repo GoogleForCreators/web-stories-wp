@@ -394,12 +394,18 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       // Exit edit-mode
       await data.fixture.events.keyboard.press('Escape');
+      await data.fixture.events.mouse.clickOn(
+        data.fixture.editor.canvas.framesLayer.container,
+        5,
+        5
+      );
 
       // Expect text content to be unchanged
       expect(getTextContent()).toBe('Fill in some text');
 
       // Expect line height to have changed
-      expect(getDisplayTextStyles().lineHeight).not.toBe(initialLineHeight);
+      const currentLineHeight = parseFloat(getDisplayTextStyles().lineHeight);
+      expect(currentLineHeight).not.toBe(initialLineHeight);
     });
   });
 

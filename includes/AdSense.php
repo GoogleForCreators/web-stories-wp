@@ -26,10 +26,32 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
+
 /**
  * Class AdSense
  */
-class AdSense extends Service_Base {
+class AdSense extends Service_Base implements HasRequirements {
+	/**
+	 * Settings instance.
+	 *
+	 * @var Settings Settings instance.
+	 */
+	private $settings;
+
+	/**
+	 * Analytics constructor.
+	 *
+	 * @since 1.12.0
+	 *
+	 * @param Settings $settings Settings instance.
+	 *
+	 * @return void
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
+
 	/**
 	 * Initializes all hooks.
 	 *
@@ -42,6 +64,19 @@ class AdSense extends Service_Base {
 	}
 
 	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because settings needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'settings' ];
+	}
+
+	/**
 	 * Returns the Google AdSense publisher ID.
 	 *
 	 * @since 1.3.0
@@ -49,7 +84,7 @@ class AdSense extends Service_Base {
 	 * @return string Publisher ID.
 	 */
 	private function get_publisher_id(): string {
-		return (string) get_option( Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID );
+		return (string) $this->settings->get_setting( $this->settings::SETTING_NAME_ADSENSE_PUBLISHER_ID );
 	}
 
 	/**
@@ -60,7 +95,7 @@ class AdSense extends Service_Base {
 	 * @return string Slot ID.
 	 */
 	private function get_slot_id(): string {
-		return (string) get_option( Settings::SETTING_NAME_ADSENSE_SLOT_ID );
+		return (string) $this->settings->get_setting( $this->settings::SETTING_NAME_ADSENSE_SLOT_ID );
 	}
 
 	/**
@@ -71,7 +106,7 @@ class AdSense extends Service_Base {
 	 * @return bool
 	 */
 	private function is_enabled(): bool {
-		return ( 'adsense' === (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ) );
+		return ( 'adsense' === (string) $this->settings->get_setting( $this->settings::SETTING_NAME_AD_NETWORK, 'none' ) );
 	}
 
 	/**

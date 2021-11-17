@@ -21,16 +21,19 @@
  *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
- * @param {number} payload.properties Object with story properties to set.
+ * @param {Object | Function} payload.properties Object with story properties to set.
  * @return {Object} New state
  */
 function updateStory(state, { properties }) {
   return {
     ...state,
-    story: {
-      ...state.story,
-      ...properties,
-    },
+    story:
+      typeof properties === 'function'
+        ? properties(state.story)
+        : {
+            ...state.story,
+            ...properties,
+          },
   };
 }
 

@@ -28,17 +28,46 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Media\Image_Sizes;
-use Google\Web_Stories\Traits\Post_Type;
-use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Model\Story;
 
 use WP_Post;
 
 /**
  * Discovery class.
  */
-class Discovery extends Service_Base {
-	use Publisher, Post_Type;
+class Discovery extends Service_Base implements HasRequirements {
+
+	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 */
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->story_post_type = $story_post_type;
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
+	}
+
 	/**
 	 * Initialize discovery functionality.
 	 *
@@ -53,6 +82,7 @@ class Discovery extends Service_Base {
 		add_action( 'web_stories_story_head', [ $this, 'print_twitter_metadata' ] );
 
 		add_action( 'web_stories_story_head', [ $this, 'print_feed_link' ], 4 );
+		add_action( 'wp_head', [ $this, 'print_feed_link' ], 4 );
 
 		// @todo Check if there's something to skip in the new version.
 		add_action( 'web_stories_story_head', 'rest_output_link_wp_head', 10, 0 );
@@ -140,21 +170,6 @@ class Discovery extends Service_Base {
 	 * @return array $metadata All schema.org metadata for the post.
 	 */
 	protected function get_schemaorg_metadata(): array {
-		$publisher = $this->get_publisher_data();
-
-		$metadata = [
-			'@context'  => 'http://schema.org',
-			'publisher' => [
-				'@type' => 'Organization',
-				'name'  => $publisher['name'],
-				// @todo: Provide width, height, caption, et al.
-				'logo'  => [
-					'@type' => 'ImageObject',
-					'url'   => $publisher['logo'],
-				],
-			],
-		];
-
 		/**
 		 * We're expecting a post object.
 		 *
@@ -162,13 +177,41 @@ class Discovery extends Service_Base {
 		 */
 		$post = get_queried_object();
 
+		$story = new Story();
+		$story->load_from_post( $post );
+
+		$metadata = [
+			'@context'  => 'http://schema.org',
+			'publisher' => [
+				'@type' => 'Organization',
+				'name'  => $story->get_publisher_name(),
+			],
+		];
+
 		if ( $post instanceof WP_Post ) {
+			$url    = $story->get_publisher_logo_url();
+			$size   = $story->get_publisher_logo_size();
+			$poster = $story->get_poster_portrait();
+
+			if ( ! empty( $url ) && ! empty( $size ) ) {
+				$metadata['publisher']['logo'] = [
+					'@type'  => 'ImageObject',
+					'url'    => $url,
+					'width'  => $size[0],
+					'height' => $size[1],
+				];
+			}
+
+			if ( $poster ) {
+				$metadata['image'] = $poster;
+			}
+
 			$metadata = array_merge(
 				$metadata,
 				[
 					'@type'            => 'Article',
-					'mainEntityOfPage' => get_permalink( $post ),
-					'headline'         => get_the_title( $post ),
+					'mainEntityOfPage' => $story->get_url(),
+					'headline'         => $story->get_title(),
 					'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
 					'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
 				]
@@ -181,11 +224,6 @@ class Discovery extends Service_Base {
 					'@type' => 'Person',
 					'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
 				];
-			}
-
-			$poster = $this->get_poster( $post );
-			if ( $poster ) {
-				$metadata['image'] = $poster['src'];
 			}
 		}
 
@@ -352,16 +390,15 @@ class Discovery extends Service_Base {
 			return;
 		}
 
-		$name = $this->get_post_type_label( Story_Post_Type::POST_TYPE_SLUG, 'name' );
+		$name = $this->story_post_type->get_label( 'name' );
 		if ( ! $name ) {
 			return;
 		}
 
-		$feed_url = add_query_arg(
-			'post_type',
-			Story_Post_Type::POST_TYPE_SLUG,
-			get_feed_link()
-		);
+		$feed = get_post_type_archive_feed_link( $this->story_post_type->get_slug() );
+		if ( ! $feed ) {
+			return;
+		}
 
 		/* translators: Separator between blog name and feed type in feed links. */
 		$separator = _x( '&raquo;', 'feed link', 'web-stories' );
@@ -374,7 +411,7 @@ class Discovery extends Service_Base {
 			'<link rel="alternate" type="%s" title="%s" href="%s">',
 			esc_attr( feed_content_type() ),
 			esc_attr( $title ),
-			esc_url( $feed_url )
+			esc_url( $feed )
 		);
 	}
 
@@ -393,6 +430,10 @@ class Discovery extends Service_Base {
 
 		$poster_id = (int) get_post_thumbnail_id( $post );
 		$image     = wp_get_attachment_image_src( $poster_id, $size );
+
+		if ( ! $image ) {
+			return false;
+		}
 
 		list( $src, $width, $height ) = $image;
 

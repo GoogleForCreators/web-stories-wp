@@ -26,42 +26,15 @@ import { differenceInSeconds } from '@web-stories-wp/date';
  */
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
-import {
-  publisherLogoIds as fillerPublisherLogoIds,
-  rawPublisherLogos,
-} from '../dataUtils/formattedPublisherLogos';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
+import { groupTemplatesByTag } from '../testUtils';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
-  const [media, setMediaState] = useState(getMediaState());
-  const [settings, setSettingsState] = useState(getSettingsState());
   const [stories, setStoriesState] = useState(getStoriesState());
   const [templates, setTemplatesState] = useState(getTemplatesState());
-  const [currentUser, setCurrentUser] = useState(getCurrentUserState());
-
-  const settingsApi = useMemo(
-    () => ({
-      fetchSettings: () =>
-        setSettingsState((currentState) => fetchSettings(currentState)),
-      updateSettings: (updates) =>
-        setSettingsState((currentState) =>
-          updateSettings(updates, currentState)
-        ),
-    }),
-    []
-  );
-
-  const mediaApi = useMemo(
-    () => ({
-      uploadMedia: jasmine.createSpy('uploadMedia'),
-      fetchMediaById: (newIds) =>
-        setMediaState((currentState) => fetchMediaById(newIds, currentState)),
-    }),
-    []
-  );
 
   const storyApi = useMemo(
     () => ({
@@ -80,62 +53,37 @@ export default function ApiProviderFixture({ children }) {
 
   const templateApi = useMemo(
     () => ({
-      bookmarkTemplateById: jasmine.createSpy('bookmarkTemplateById'),
-      createTemplateFromStory: jasmine.createSpy('createTemplateFromStory'),
-      fetchBookmarkedTemplates: jasmine.createSpy('fetchBookmarkedTemplates'),
       fetchExternalTemplates: () =>
         setTemplatesState((currentState) =>
           fetchExternalTemplates(currentState)
         ),
       fetchExternalTemplateById: (id) =>
         fetchExternalTemplateById(id, templates),
-      fetchMyTemplates: jasmine.createSpy('fetchMyTemplates'),
-      fetchMyTemplateById: (id) => fetchExternalTemplateById(id, templates),
-      fetchRelatedTemplates: (currentTemplateId) =>
-        fetchRelatedTemplates(currentTemplateId, templates),
-      fetchSavedTemplates: jasmine.createSpy('fetchSavedTemplates'),
     }),
     [templates]
   );
 
   const usersApi = useMemo(
     () => ({
-      fetchCurrentUser: jasmine.createSpy('fetchCurrentUser'),
-      toggleWebStoriesTrackingOptIn: () =>
-        setCurrentUser(toggleOptInTracking(currentUser)),
+      getAuthors: () =>
+        Promise.resolve(formattedStoriesArray.map((story) => story.author)),
     }),
-    [currentUser]
+    []
   );
 
   const value = useMemo(
     () => ({
       state: {
-        media,
-        settings,
         stories,
         templates,
-        currentUser,
       },
       actions: {
-        mediaApi,
-        settingsApi,
         storyApi,
         templateApi,
         usersApi,
       },
     }),
-    [
-      media,
-      settings,
-      stories,
-      templates,
-      currentUser,
-      mediaApi,
-      settingsApi,
-      storyApi,
-      templateApi,
-      usersApi,
-    ]
+    [stories, templates, storyApi, templateApi, usersApi]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
@@ -145,86 +93,6 @@ export default function ApiProviderFixture({ children }) {
 ApiProviderFixture.propTypes = {
   children: PropTypes.node,
 };
-
-function getMediaState() {
-  return {
-    error: {},
-    isLoading: false,
-    newlyCreatedMediaIds: [],
-    mediaById: rawPublisherLogos,
-  };
-}
-
-function fetchMediaById(newIds, currentState) {
-  const mediaState = { ...(currentState || getMediaState()) };
-  // TODO handle adding Ids
-  return mediaState;
-}
-
-function getSettingsState() {
-  return {
-    error: {},
-    settingSaved: false,
-    googleAnalyticsId: '',
-    publisherLogoIds: [],
-    activePublisherLogoId: fillerPublisherLogoIds[0],
-    adSensePublisherId: '',
-    adSenseSlotId: '',
-    adManagerSlotId: '',
-    adNetwork: 'none',
-  };
-}
-
-function getCurrentUserState() {
-  return {
-    data: { id: 1, meta: { web_stories_tracking_optin: true } },
-    isUpdating: false,
-  };
-}
-
-function fetchSettings(currentState) {
-  const settingsState = { ...currentState } || getSettingsState();
-  settingsState.googleAnalyticsId = 'UA-000000-2';
-  settingsState.publisherLogoIds = fillerPublisherLogoIds.slice(0, 2);
-  return settingsState;
-}
-
-function updateSettings(updates, currentState) {
-  const {
-    googleAnalyticsId,
-    publisherLogoIds,
-    publisherLogoIdToRemove,
-    publisherLogoToMakeDefault,
-  } = updates;
-  currentState.settingSaved = true;
-
-  if (googleAnalyticsId !== undefined) {
-    return {
-      ...currentState,
-      googleAnalyticsId,
-    };
-  } else if (publisherLogoIds) {
-    return {
-      ...currentState,
-      publisherLogoIds: [
-        ...new Set([...currentState.publisherLogoIds, ...publisherLogoIds]),
-      ],
-    };
-  } else if (publisherLogoIdToRemove) {
-    return {
-      ...currentState,
-      publisherLogoIds: currentState.publisherLogoIds.filter(
-        (logoId) => logoId !== publisherLogoIdToRemove
-      ),
-    };
-  } else if (publisherLogoToMakeDefault) {
-    return {
-      ...currentState,
-      activePublisherLogoId: publisherLogoToMakeDefault,
-    };
-  }
-  return currentState;
-}
 
 function getStoriesState() {
   const copiedStories = [...formattedStoriesArray];
@@ -248,17 +116,20 @@ function fetchStories(
     searchTerm = '',
     sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
     sortDirection,
+    author,
   },
   currentState
 ) {
-  const storiesState = { ...currentState } || getStoriesState();
+  const storiesState = currentState ? { ...currentState } : getStoriesState();
   const statuses = status.split(',');
 
   storiesState.storiesOrderById = Object.values(storiesState.stories)
     .filter(
       ({ status: storyStatus, title }) =>
-        statuses.includes(storyStatus) && title.includes(searchTerm)
+        statuses.includes(storyStatus) &&
+        title.toLowerCase().includes(searchTerm.toLowerCase())
     )
+    .filter((story) => typeof author !== 'number' || story.author.id === author)
     .sort((a, b) => {
       let value;
       switch (sortOption) {
@@ -275,7 +146,7 @@ function fetchStories(
           break;
         }
         case STORY_SORT_OPTIONS.CREATED_BY: {
-          value = a.author.localeCompare(b.author);
+          value = a.author.name.localeCompare(b.author.name);
           break;
         }
         default: {
@@ -385,13 +256,12 @@ function getTemplatesState() {
     allPagesFetched: true,
     error: {},
     isLoading: false,
-    savedTemplates: {},
-    savedTemplatesOrderById: [],
     templates: copiedTemplates.reduce((acc, curr) => {
       acc[curr.id] = curr;
 
       return acc;
     }, {}),
+    templatesByTag: groupTemplatesByTag(copiedTemplates),
     templatesOrderById: copiedTemplates.map(({ id }) => id),
     totalTemplates: copiedTemplates.length,
     totalPages: 1,
@@ -404,29 +274,4 @@ function fetchExternalTemplates(currentState) {
 
 function fetchExternalTemplateById(id, currentState) {
   return Promise.resolve(currentState.templates?.[id] ?? {});
-}
-
-function toggleOptInTracking(currentUser) {
-  return {
-    ...currentUser,
-    data: {
-      ...currentUser.data,
-      meta: {
-        web_stories_tracking_optin:
-          !currentUser.data.meta.web_stories_tracking_optin,
-      },
-    },
-  };
-}
-
-function fetchRelatedTemplates(currentTemplateId, currentState) {
-  if (!currentState.templates || !currentTemplateId) {
-    return [];
-  }
-
-  return currentState.templatesOrderById
-    .filter((id) => id !== currentTemplateId) // Filter out the current/active template
-    .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids
-    .map((id) => currentState.templates[id]) // Map the ids to templates
-    .slice(0, Math.floor(Math.random() * 5) + 1); // Return between 1 and 5 templates
 }

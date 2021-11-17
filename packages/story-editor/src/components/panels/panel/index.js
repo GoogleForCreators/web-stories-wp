@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export { default as Panel } from './panel';
+export { default as Panel, MAX_HEIGHT_DEFAULT } from './panel';
 export { default as panelContext } from './context';
 export { default as PanelTitle } from './shared/title';
 export { default as PanelContent } from './shared/content';

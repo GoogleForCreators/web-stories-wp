@@ -20,6 +20,7 @@
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
 import { curatedFontNames } from '@web-stories-wp/fonts';
+import { PAGE_RATIO, UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -27,11 +28,13 @@ import { curatedFontNames } from '@web-stories-wp/fonts';
 import { renderWithTheme } from '../../../../testUtils';
 import FontContext from '../../../../app/font/context';
 import useFont from '../../../../app/font/useFont';
-import fontsListResponse from '../../../form/advancedDropDown/test/fontsResponse.json';
+import fontsListResponse from '../../../panels/design/textStyle/test/fontsResponse.json';
 import TextPane from '../../panes/text/textPane';
 import { PRESETS } from '../../panes/text/textPresets';
 import useLibrary from '../../useLibrary';
 import useInsertPreset from '../../panes/text/useInsertPreset';
+import { TEXT_SET_SIZE } from '../../../../constants';
+import CanvasContext from '../../../../app/canvas/context';
 
 jest.mock('../../useLibrary');
 jest.mock('../../../../app/font/useFont');
@@ -66,7 +69,7 @@ describe('TextPane', () => {
     }));
   });
 
-  it('should insert text with preset text style on pressing a preset', async () => {
+  it('should insert text with preset text style when clicking Enter', async () => {
     const availableCuratedFonts = fontsListResponse.filter(
       (font) => curatedFontNames.indexOf(font.name) > 0
     );
@@ -82,22 +85,48 @@ describe('TextPane', () => {
       },
     };
 
+    const canvasContextValue = {
+      state: {
+        nodesById: {},
+        pageSize: {},
+        pageContainer: document.body,
+        canvasContainer: document.body,
+        designSpaceGuideline: {},
+      },
+      actions: {},
+    };
+
     renderWithTheme(
       <FlagsProvider
         features={{
           showTextSets: false,
           showTextAndShapesSearchInput: false,
-          enableSmartTextColor: true,
         }}
       >
-        <FontContext.Provider value={fontContextValues}>
-          <TextPane isActive />
-        </FontContext.Provider>
+        <CanvasContext.Provider value={canvasContextValue}>
+          <FontContext.Provider value={fontContextValues}>
+            <UnitsProvider
+              pageSize={{
+                width: TEXT_SET_SIZE,
+                height: TEXT_SET_SIZE / PAGE_RATIO,
+              }}
+              dataToEditorX={jest.fn()}
+              dataToEditorY={jest.fn()}
+            >
+              <TextPane isActive />
+            </UnitsProvider>
+          </FontContext.Provider>
+        </CanvasContext.Provider>
       </FlagsProvider>
     );
 
     act(() => {
-      fireEvent.click(screen.getByRole('button', { name: 'Title 1' }));
+      // Note: onClick handler is in Moveable so we can't test that directly in this component
+      // and have to test using key handlers instead.
+      fireEvent.keyDown(screen.getByRole('button', { name: 'Title 1' }), {
+        key: 'Enter',
+        which: 13,
+      });
     });
 
     await waitFor(() => expect(insertPreset).toHaveBeenCalledTimes(1));

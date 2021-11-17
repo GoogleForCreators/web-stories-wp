@@ -100,7 +100,7 @@ describe('deleteElementsById', () => {
 
     const result = deleteElementsById({ elementIds: [] });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should do nothing if only unknown elements', () => {
@@ -124,7 +124,7 @@ describe('deleteElementsById', () => {
 
     const result = deleteElementsById({ elementIds: ['000', '999'] });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should remove any deleted elements from selection too', () => {

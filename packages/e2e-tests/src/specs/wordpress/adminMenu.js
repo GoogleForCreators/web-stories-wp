@@ -31,7 +31,7 @@ describe('Admin Menu', () => {
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
     await expect(adminMenuItem).toMatchElement('a', {
-      text: 'My Stories',
+      text: 'Dashboard',
       visible: true,
     });
     await expect(adminMenuItem).toMatchElement('a', {
@@ -44,7 +44,7 @@ describe('Admin Menu', () => {
     });
   });
 
-  it('should link to "My Stories"', async () => {
+  it('should link to "Dashboard"', async () => {
     await visitAdminPage('index.php');
 
     const adminMenuItem = await expect(page).toMatchElement(
@@ -54,11 +54,13 @@ describe('Admin Menu', () => {
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
     await expect(adminMenuItem).toClick('a', {
-      text: 'My Stories',
+      text: 'Dashboard',
     });
     await page.waitForNavigation();
 
-    await expect(page).toMatch('My Stories');
+    // Can be Explore Templates or My Stories depending on if user has 0
+    // stories, so just check that we get navigated to the dashboard
+    await expect(page).toMatchElement('#web-stories-dashboard');
   });
 
   it('should link to "Explore Templates"', async () => {
