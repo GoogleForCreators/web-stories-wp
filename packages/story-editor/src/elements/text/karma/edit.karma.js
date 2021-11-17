@@ -87,7 +87,7 @@ describe('TextEdit integration', () => {
         await fixture.snapshot();
       });
 
-      fit('should handle a command, exit and save', async () => {
+      it('should handle a command, exit and save', async () => {
         // Increase the font size for ensuring the clicks to be in correct places.
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontSize,
