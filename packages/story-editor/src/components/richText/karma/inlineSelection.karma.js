@@ -204,7 +204,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
         'text-transform: uppercase',
       ].join('; ');
       const expected = `Fill <span style="${firstCSS}">i</span><span style="${secondCSS}">n</span><span style="${secondCSS}"> s</span>ome text`;
-      //expect(actual).toBe(expected);
+      expect(actual).toBe(expected);
     });
   });
 
