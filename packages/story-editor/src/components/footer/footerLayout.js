@@ -26,7 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
 import Carousel from './carousel';
 import PrimaryMenu from './primaryMenu';
 import SecondaryMenu from './secondaryMenu';
-import { MENU_GUTTER } from './constants';
+import { MAX_MENU_WIDTH } from './constants';
 
 const Wrapper = styled.section`
   position: relative;
@@ -34,9 +34,9 @@ const Wrapper = styled.section`
   grid:
     /* Note the two empty 1fr areas each side of the buttons - that's on purpose */
     'secondary carousel primary' auto /
-    ${MENU_GUTTER}px
-    minmax(auto, calc(100% - ${2 * MENU_GUTTER}px))
-    ${MENU_GUTTER}px;
+    ${MAX_MENU_WIDTH}px
+    minmax(auto, calc(100% - ${2 * MAX_MENU_WIDTH}px))
+    ${MAX_MENU_WIDTH}px;
   width: 100%;
   max-width: 100%;
   height: 100%;

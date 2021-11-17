@@ -33,6 +33,7 @@ import {
   useCheckpoint,
 } from '../checklist';
 import { useKeyboardShortcutsMenu } from '../keyboardShortcutsMenu/keyboardShortcutsMenuContext';
+import { FOOTER_MENU_GAP, FOOTER_MARGIN } from './constants';
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,8 +48,8 @@ const MenuItems = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 16px;
-  gap: 8px;
+  margin-left: ${FOOTER_MARGIN}px;
+  gap: ${FOOTER_MENU_GAP}px;
 `;
 
 const POPUPS = {
