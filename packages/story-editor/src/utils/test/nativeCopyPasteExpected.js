@@ -64,7 +64,7 @@ describe('nativeCopyPasteExpected', () => {
 
   it('should detect selection correctly for unsupported input', () => {
     const windowSpy = jest
-      .spyOn(global, 'getSelection')
+      .spyOn(window, 'getSelection')
       .mockImplementation(() => false);
 
     const incorrectInput = document.createElement('input');
@@ -80,7 +80,7 @@ describe('nativeCopyPasteExpected', () => {
 
   it('should use native copypaste if there is selection', () => {
     const windowSpy = jest
-      .spyOn(global, 'getSelection')
+      .spyOn(window, 'getSelection')
       .mockImplementation(() => ({
         rangeCount: 1,
         collapsed: false,

@@ -106,7 +106,7 @@ function StoryEmbedEdit({
 
   useEffect(() => {
     if (ref.current && window.AmpStoryPlayer) {
-      const player = new window.AmpStoryPlayer(global, ref.current);
+      const player = new window.AmpStoryPlayer(window, ref.current);
       player.load();
     }
   }, [showLoadingIndicator, showPlaceholder, isResizable]);

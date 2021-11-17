@@ -287,6 +287,9 @@
         "testing-library",
         "jest-dom"
       ],
+      "env": {
+        "node": true
+      },
       "rules": {
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
@@ -370,6 +373,9 @@
       "extends": [
         "plugin:jest/all"
       ],
+      "env": {
+        "node": true
+      },
       "rules": {
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",

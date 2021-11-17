@@ -74,7 +74,7 @@ const REGISTER_USAGE_URL =
   '?payload=02647749feef0d5536c92df1d9cfa38e';
 
 function mockFetch(response, { requestPath, requestMethod }) {
-  jest.spyOn(global, 'fetch').mockImplementation((url, { method }) => {
+  jest.spyOn(window, 'fetch').mockImplementation((url, { method }) => {
     const path = new URL(url).pathname;
     if (path !== requestPath) {
       throw new Error(
