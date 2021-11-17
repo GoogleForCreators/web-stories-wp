@@ -42,7 +42,7 @@ export const CAROUSEL_STATE = {
   CLOSING: 'CLOSING',
 };
 
-export const CAROUSEL_TRANSITION_DURATION = 700;
+export const CAROUSEL_TRANSITION_DURATION = 300;
 
 export const PAGE_WIDTH_FACTOR = 12;
 

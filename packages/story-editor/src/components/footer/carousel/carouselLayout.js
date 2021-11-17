@@ -121,7 +121,11 @@ function CarouselLayout() {
   ].includes(carouselState);
 
   return (
-    <CSSTransition in={isOpenOrOpening} classNames="carousel" timeout={700}>
+    <CSSTransition
+      in={isOpenOrOpening}
+      classNames="carousel"
+      timeout={CAROUSEL_TRANSITION_DURATION}
+    >
       <Wrapper
         aria-label={__('Page Carousel', 'web-stories')}
         isCollapsed={isCollapsed}
