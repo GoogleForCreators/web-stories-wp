@@ -180,18 +180,9 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       expect(fontColor.hex.value).toBe('EEEEEE');
 
       // Exit edit-mode
-      await richTextHasFocus();
-      await data.fixture.events.keyboard.press('Esc');
-      const bg = data.fixture.editor.canvas.framesLayer.frames[0].node;
-      const { x, y } = bg.getBoundingClientRect();
-      await data.fixture.events.mouse.click(x + 20, y + 20);
-      await data.fixture.events.sleep(500);
-      await data.fixture.events.mouse.click(x + 20, y + 20);
-      await data.fixture.snapshot('After exiting');
-
       const safezone = data.fixture.querySelector('[data-testid="safezone"]');
       await data.fixture.events.click(safezone);
-      await data.fixture.snapshot('After exiting try 2');
+      await data.fixture.snapshot('After exiting');
 
       // Assume text content to match expectation
       storyContext = await data.fixture.renderHook(() => useStory());
