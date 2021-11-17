@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { default as Header } from '../header';
 import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
 import DocumentPane from '../documentPane';
-import { Priority, Design, Accessibility } from '../checkList';
+import { Priority, Design, Accessibility } from '../checklist';
 
 function Layout() {
   return (
@@ -34,7 +34,7 @@ function Layout() {
         header={<Header />}
         footer={{
           secondaryMenu: {
-            checkList: {
+            checklist: {
               Priority,
               Design,
               Accessibility,

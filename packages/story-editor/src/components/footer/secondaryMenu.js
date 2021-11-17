@@ -170,9 +170,9 @@ function SecondaryMenu({ menu }) {
       <MenuItems>
         <HelpCenter />
         <Space />
-        {menu?.checkList && (
+        {menu?.checklist && (
           <ChecklistCountProvider>
-            <Checklist items={menu.checkList} />
+            <Checklist items={menu.checklist} />
           </ChecklistCountProvider>
         )}
         <Space />
@@ -184,7 +184,7 @@ function SecondaryMenu({ menu }) {
 
 SecondaryMenu.propTypes = {
   menu: PropTypes.shape({
-    checkList: PropTypes.object,
+    checklist: PropTypes.object,
   }),
 };
 
