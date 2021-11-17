@@ -46,7 +46,8 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 	 */
 	public function __construct( $taxonomy ) {
 		parent::__construct( $taxonomy );
-		$this->namespace = 'web-stories/v1';
+		$tax_obj         = get_taxonomy( $taxonomy );
+		$this->namespace = ! empty( $tax_obj->rest_namespace ) ? $tax_obj->rest_namespace : 'web-stories/v1';
 	}
 
 	/**
@@ -85,7 +86,7 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 
 		foreach ( $taxonomy_obj->object_type as $type ) {
 			$post_type_object = get_post_type_object( $type );
-			
+
 			if ( ! $post_type_object ) {
 				continue;
 			}

@@ -17,16 +17,16 @@
  * External dependencies
  */
 import {
+  prettifyShortcut,
   useGlobalKeyDownEffect,
   useSnackbar,
 } from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { canTranscodeResource } from '@web-stories-wp/media';
 import PropTypes from 'prop-types';
 import {
   useCallback,
-  useEffect,
   useMemo,
   useReducer,
   useRef,
@@ -41,14 +41,15 @@ import { v4 as uuidv4 } from 'uuid';
 import { useStory } from '..';
 import { createPage, duplicatePage, ELEMENT_TYPES } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
-import useAddPreset from '../../components/panels/design/preset/useAddPreset';
-import useApplyStyle from '../../components/panels/design/preset/stylePreset/useApplyStyle';
-import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
+import useAddPreset from '../../utils/useAddPreset';
+import useApplyStyle from '../../components/panels/design/textStyle/stylePresets/useApplyStyle';
+import { PRESET_TYPES } from '../../constants';
 import { useCanvas } from '../canvas';
-import { getTextPresets } from '../../components/panels/design/preset/utils';
+import { getTextPresets } from '../../utils/presetUtils';
 import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import { useHistory } from '../history';
-import useDeletePreset from '../../components/panels/design/preset/useDeletePreset';
+import useDeleteStyle from '../../components/panels/design/textStyle/stylePresets/useDeleteStyle';
+import useDeleteColor from '../../components/colorPicker/useDeleteColor';
 import { noop } from '../../utils/noop';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import {
@@ -61,6 +62,12 @@ import rightClickMenuReducer, {
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
 import { getDefaultPropertiesForType, getElementStyles } from './utils';
+
+const UNDO_HELP_TEXT = sprintf(
+  /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
+  __('Press %s to undo the last change', 'web-stories'),
+  prettifyShortcut('mod+z')
+);
 
 /**
  * Determines the items displayed in the right click menu
@@ -80,13 +87,11 @@ function RightClickMenuProvider({ children }) {
   const { addGlobalPreset: addGlobalColorPreset } = useAddPreset({
     presetType: PRESET_TYPES.COLOR,
   });
-  const { deleteGlobalPreset: deleteGlobalTextPreset } = useDeletePreset({
-    presetType: PRESET_TYPES.STYLE,
-    setIsEditMode: noop,
+  const deleteGlobalTextPreset = useDeleteStyle({
+    onEmpty: noop,
   });
-  const { deleteGlobalPreset: deleteGlobalColorPreset } = useDeletePreset({
-    presetType: PRESET_TYPES.COLOR,
-    setIsEditMode: noop,
+  const { deleteGlobalPreset: deleteGlobalColorPreset } = useDeleteColor({
+    onEmpty: noop,
   });
   const { setEditingElement } = useCanvas(({ actions }) => ({
     setEditingElement: actions.setEditingElement,
@@ -152,9 +157,6 @@ function RightClickMenuProvider({ children }) {
     })
   );
 
-  // Ref for attaching the context menu
-  const rightClickAreaRef = useRef();
-
   // Needed to not pass stale refs of `undo` to snackbar
   const undoRef = useRef(undo);
   undoRef.current = undo;
@@ -178,22 +180,37 @@ function RightClickMenuProvider({ children }) {
    *
    * @param {Event} evt The triggering event
    */
-  const handleOpenMenu = useCallback((evt) => {
-    evt.preventDefault();
-    evt.stopPropagation();
+  const handleOpenMenu = useCallback(
+    (evt) => {
+      if (selectedElements.length > 1) {
+        return;
+      }
 
-    dispatch({
-      type: ACTION_TYPES.OPEN_MENU,
-      payload: {
-        x: evt?.x,
-        y: evt?.y,
-      },
-    });
+      evt.preventDefault();
+      evt.stopPropagation();
 
-    trackEvent('context_menu_action', {
-      name: 'context_menu_opened',
-    });
-  }, []);
+      let x = evt?.clientX;
+      let y = evt?.clientY;
+
+      // Context menus opened through a shortcut will not have clientX and clientY
+      // Instead determine the position of the menu off of the element
+      if (!x && !y) {
+        const dims = evt.target.getBoundingClientRect();
+        x = dims.x;
+        y = dims.y;
+      }
+
+      dispatch({
+        type: ACTION_TYPES.OPEN_MENU,
+        payload: { x, y },
+      });
+
+      trackEvent('context_menu_action', {
+        name: 'context_menu_opened',
+      });
+    },
+    [selectedElements]
+  );
 
   /**
    * Close the menu and reset the tracked position.
@@ -381,7 +398,7 @@ function RightClickMenuProvider({ children }) {
 
     showSnackbar({
       actionLabel: __('Undo', 'web-stories'),
-      dismissable: false,
+      dismissible: false,
       message: __('Copied style.', 'web-stories'),
       onAction: () => {
         dispatch({
@@ -395,6 +412,7 @@ function RightClickMenuProvider({ children }) {
           isBackground: selectedElement?.isBackground,
         });
       },
+      actionHelpText: UNDO_HELP_TEXT,
     });
 
     trackEvent('context_menu_action', {
@@ -508,7 +526,7 @@ function RightClickMenuProvider({ children }) {
 
     showSnackbar({
       actionLabel: __('Undo', 'web-stories'),
-      dismissable: false,
+      dismissible: false,
       message: __('Pasted style.', 'web-stories'),
       // don't pass a stale reference for undo
       // need history updates to run so `undo` works correctly.
@@ -521,6 +539,7 @@ function RightClickMenuProvider({ children }) {
           isBackground: selectedElement?.isBackground,
         });
       },
+      actionHelpText: UNDO_HELP_TEXT,
     });
 
     trackEvent('context_menu_action', {
@@ -564,7 +583,7 @@ function RightClickMenuProvider({ children }) {
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
+        dismissible: false,
         message: __('Cleared style.', 'web-stories'),
         // don't pass a stale reference for undo
         // need history updates to run so `undo` works correctly.
@@ -577,6 +596,7 @@ function RightClickMenuProvider({ children }) {
             isBackground: selectedElement?.isBackground,
           });
         },
+        actionHelpText: UNDO_HELP_TEXT,
       });
 
       trackEvent('context_menu_action', {
@@ -643,7 +663,7 @@ function RightClickMenuProvider({ children }) {
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
+        dismissible: false,
         message: __('Saved style to "Saved Styles".', 'web-stories'),
         onAction: () => {
           deleteGlobalTextPreset(preset);
@@ -653,6 +673,7 @@ function RightClickMenuProvider({ children }) {
             element: selectedElementType,
           });
         },
+        actionHelpText: UNDO_HELP_TEXT,
       });
 
       trackEvent('context_menu_action', {
@@ -679,7 +700,7 @@ function RightClickMenuProvider({ children }) {
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
+        dismissible: false,
         message: __('Added color to "Saved Colors".', 'web-stories'),
         onAction: () => {
           deleteGlobalColorPreset(preset);
@@ -689,6 +710,7 @@ function RightClickMenuProvider({ children }) {
             element: selectedElementType,
           });
         },
+        actionHelpText: UNDO_HELP_TEXT,
       });
 
       trackEvent('context_menu_action', {
@@ -1022,21 +1044,6 @@ function RightClickMenuProvider({ children }) {
     textItems,
   ]);
 
-  // Override the browser's context menu if the
-  // rightClickAreaRef is set
-  useEffect(() => {
-    const node = rightClickAreaRef.current;
-    if (!node) {
-      return undefined;
-    }
-
-    node.addEventListener('contextmenu', handleOpenMenu);
-
-    return () => {
-      node.removeEventListener('contextmenu', handleOpenMenu);
-    };
-  }, [handleOpenMenu]);
-
   useGlobalKeyDownEffect(
     { key: ['mod+alt+o'] },
     (evt) => {
@@ -1062,7 +1069,6 @@ function RightClickMenuProvider({ children }) {
       menuPosition,
       onCloseMenu: handleCloseMenu,
       onOpenMenu: handleOpenMenu,
-      rightClickAreaRef,
     }),
     [handleCloseMenu, handleOpenMenu, isMenuOpen, menuItems, menuPosition]
   );

@@ -31,19 +31,21 @@ import { snakeCaseToCamelCase } from './utils';
 /**
  * Get all taxonomies.
  *
- * @param {string} postType Post type.
- * @param {string} path API path.
+ * @param {Object} config Configuration object.
  * @return {Promise} Taxonomies promise.
  */
-export async function getTaxonomies(postType, path) {
+export async function getTaxonomies(config) {
   const result = await apiFetch({
-    path: addQueryArgs(path, {
-      type: postType,
+    path: addQueryArgs(config.api.taxonomies, {
+      type: config.postType,
       context: 'edit',
     }),
   });
 
   return Object.values(result).map((taxonomy) => {
+    taxonomy.rest_path = taxonomy['_links']?.['wp:items']?.[0]?.href;
+    delete taxonomy['_links'];
+
     const entries = Object.entries(taxonomy);
 
     const formattedEntries = entries.map((entry) => [
@@ -58,11 +60,12 @@ export async function getTaxonomies(postType, path) {
 /**
  * Get a taxonomy term.
  *
+ * @param {Object} config configuration object.
  * @param {string} endpoint absolute url to interact with taxonomy
  * @param {Object} args Additional args.
  * @return {Promise} Term promise.
  */
-export function getTaxonomyTerm(endpoint, args = {}) {
+export function getTaxonomyTerm(config, endpoint, args = {}) {
   return apiFetch({
     url: addQueryArgs(endpoint, args),
   });
@@ -71,13 +74,14 @@ export function getTaxonomyTerm(endpoint, args = {}) {
 /**
  * Create a new taxonomy term.
  *
+ * @param {Object} config configuration object.
  * @param {string} endpoint absolute url to interact with taxonomy
  * @param {Object} args The args being sent.
  * @param {string} args.name The name.
  * @param {number|string} args.parent The parent id.
  * @return {Promise} Term promise.
  */
-export function createTaxonomyTerm(endpoint, args) {
+export function createTaxonomyTerm(config, endpoint, args) {
   return apiFetch({
     url: addQueryArgs(endpoint, args),
     method: 'POST',

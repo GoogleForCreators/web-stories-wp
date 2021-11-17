@@ -18,8 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import styled, { css } from 'styled-components';
+import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import { __, _x } from '@web-stories-wp/i18n';
 import stickers from '@web-stories-wp/stickers';
 import {
@@ -52,9 +52,13 @@ import {
 import Tooltip from '../../../tooltip';
 import useStory from '../../../../app/story/useStory';
 import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
+import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
+import OpacityControls from './opacity';
+import RadiusControls from './radius';
 
 const StyledLockToggle = styled(LockToggle)`
   ${focusStyle};
@@ -64,15 +68,34 @@ function getStickerAspectRatio(element) {
   return stickers?.[element?.sticker?.type].aspectRatio || 1;
 }
 
-const Grid = styled.div`
-  display: grid;
+const gridWithoutFlip = css`
   grid-template-areas:
     ${({ isSingleMedia }) => (isSingleMedia ? `'b b b b b . .'` : null)}
     'x . . . y . .'
     'w . d . h . l'
-    'r . . . f . .';
+    'r . . . o . .'
+    'c c c c c c c';
+`;
+
+const unlockedRadiusLines = `
+  'o . . . . . .'
+  'c c c c c c c'
+`;
+const gridWithFlip = css`
+  grid-template-areas:
+    ${({ isSingleMedia }) => (isSingleMedia ? `'b b b b b . .'` : null)}
+    'x . . . y . .'
+    'w . d . h . l'
+    'r . . . f . .'
+    ${({ unlockedRadius }) =>
+      !unlockedRadius ? `'o . . . c c c'` : unlockedRadiusLines};
+`;
+
+const Grid = styled.div`
+  display: grid;
+  ${({ canFlip }) => (canFlip ? gridWithFlip : gridWithoutFlip)}
   grid-template-columns: 1fr 4px 8px 4px 1fr 4px 32px;
-  grid-template-rows: repeat(3, 36px);
+  grid-template-rows: repeat(4, 36px);
   row-gap: 16px;
   align-items: center;
   justify-items: start;
@@ -96,18 +119,23 @@ const StyledButton = styled(Button)`
   ${focusStyle};
 `;
 
-function SizePositionPanel({
-  selectedElements,
-  submittedSelectedElements,
-  pushUpdate,
-  pushUpdateForObject,
-}) {
+function SizePositionPanel(props) {
+  const {
+    selectedElements,
+    submittedSelectedElements,
+    pushUpdate,
+    pushUpdateForObject,
+  } = props;
+
   const x = getCommonValue(selectedElements, 'x');
   const y = getCommonValue(selectedElements, 'y');
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
   const flip = useCommonObjectValue(selectedElements, 'flip', DEFAULT_FLIP);
+  const borderRadius = useCommonObjectValue(selectedElements, 'borderRadius', {
+    locked: true,
+  });
 
   const origRatio = useMemo(() => {
     const origWidth = getCommonValue(submittedSelectedElements, 'width');
@@ -118,6 +146,12 @@ function SizePositionPanel({
     selectedElements,
     'lockAspectRatio'
   );
+
+  const bgButtonRef = useRef(null);
+  usePerformanceTracking({
+    node: bgButtonRef.current,
+    eventData: TRACKING_EVENTS.SET_BACKGROUND_MEDIA,
+  });
 
   // When multiple element selected with aspect lock ratio value combined, it treated as true, reversed behavior with padding lock ratio.
   const lockAspectRatio =
@@ -221,11 +255,16 @@ function SizePositionPanel({
     };
   }, []);
   return (
-    <SimplePanel name="size" title={__('Size & Position', 'web-stories')}>
-      <Grid isSingleMedia={isMedia && isSingleElement}>
+    <SimplePanel name="size" title={__('Selection', 'web-stories')}>
+      <Grid
+        isSingleMedia={isMedia && isSingleElement}
+        canFlip={canFlip}
+        unlockedRadius={!borderRadius.locked}
+      >
         {isMedia && isSingleElement && (
           <Area area="b">
             <StyledButton
+              ref={bgButtonRef}
               onClick={handleSetBackground}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
@@ -375,6 +414,12 @@ function SizePositionPanel({
             />
           </Area>
         )}
+        <Area area="o">
+          <OpacityControls {...props} />
+        </Area>
+        <Area area="c">
+          <RadiusControls {...props} />
+        </Area>
       </Grid>
     </SimplePanel>
   );

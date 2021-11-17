@@ -25,12 +25,11 @@ import { waitFor, within } from '@testing-library/react';
 import { useStory } from '../../../../../app';
 import { Fixture } from '../../../../../karma';
 
-describe('Categories & Tags Panel', () => {
+describe('Taxonomies Panel', () => {
   let fixture;
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableTaxonomiesSupport: true });
     await fixture.render();
   });
 
@@ -38,14 +37,13 @@ describe('Categories & Tags Panel', () => {
     fixture.restore();
   });
 
-  async function openCategoriesAndTagsPanel() {
+  async function openTaxonomiesPanel() {
     // open document panel
     await fixture.events.click(fixture.editor.inspector.documentTab);
 
-    // expand the categories and tags panel
+    // expand the taxonomies panel
     await fixture.events.click(
-      fixture.editor.inspector.documentPanel.categoriesAndTags
-        .categoriesAndTagsButton
+      fixture.editor.inspector.documentPanel.taxonomies.taxonomiesButton
     );
   }
 
@@ -60,26 +58,25 @@ describe('Categories & Tags Panel', () => {
   }
 
   it('should have no aXe accessibility violations', async () => {
-    await openCategoriesAndTagsPanel();
-    const { categoriesAndTags } = fixture.editor.inspector.documentPanel;
-    await expectAsync(categoriesAndTags.node).toHaveNoViolations();
+    await openTaxonomiesPanel();
+    const { taxonomies } = fixture.editor.inspector.documentPanel;
+    await expectAsync(taxonomies.node).toHaveNoViolations();
   });
 
   describe('Categories', () => {
     describe('cursor interactions', () => {
       it('should add categories and remove categories', async () => {
-        await openCategoriesAndTagsPanel();
+        await openTaxonomiesPanel();
 
-        const categoriesAndTags =
-          fixture.editor.inspector.documentPanel.categoriesAndTags;
+        const { taxonomies } = fixture.editor.inspector.documentPanel;
 
         // track initial story categories
         const initialStoryTerms = await getStoryTerms();
 
         // click a checkbox
-        expect(categoriesAndTags.categories[0].checked).toBe(true);
-        await fixture.events.click(categoriesAndTags.categories[0]);
-        expect(categoriesAndTags.categories[0].checked).toBe(false);
+        expect(taxonomies.categories[0].checked).toBe(true);
+        await fixture.events.click(taxonomies.categories[0]);
+        expect(taxonomies.categories[0].checked).toBe(false);
 
         // verify category was removed from story
         let currentStoryTerms = await getStoryTerms();
@@ -88,8 +85,8 @@ describe('Categories & Tags Panel', () => {
         );
 
         // click a checkbox again
-        await fixture.events.click(categoriesAndTags.categories[0]);
-        expect(categoriesAndTags.categories[0].checked).toBe(true);
+        await fixture.events.click(taxonomies.categories[0]);
+        expect(taxonomies.categories[0].checked).toBe(true);
 
         // verify category was added to story
         currentStoryTerms = await getStoryTerms();
@@ -99,25 +96,24 @@ describe('Categories & Tags Panel', () => {
       });
 
       it('should add new categories', async () => {
-        await openCategoriesAndTagsPanel();
+        await openTaxonomiesPanel();
 
-        const categoriesAndTags =
-          fixture.editor.inspector.documentPanel.categoriesAndTags;
+        const { taxonomies } = fixture.editor.inspector.documentPanel;
 
         // track initial categories
-        const initialCategories = categoriesAndTags.categories;
+        const initialCategories = taxonomies.categories;
 
         // open the new category section
-        await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+        await fixture.events.click(taxonomies.addNewCategoryButton);
 
         // Add new category
-        await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
+        await fixture.events.focus(taxonomies.newCategoryNameInput);
         await fixture.events.keyboard.type('deer');
 
-        await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+        await fixture.events.click(taxonomies.addNewCategoryButton);
 
         // validate new checkbox was added
-        const finalCategories = categoriesAndTags.categories;
+        const finalCategories = taxonomies.categories;
         initialCategories.map((checkbox) =>
           expect(checkbox.name).not.toBe('hierarchical_term_deer')
         );
@@ -131,49 +127,32 @@ describe('Categories & Tags Panel', () => {
         // TODO: 9058 - validate new category exists on story once category is checked when added.
       });
 
-      // TODO: #9063
-      // disable reason: dropdown doesn't close unless the tests are slowed down
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should add a new category as a child of an existing category', async () => {
-        await openCategoriesAndTagsPanel();
-        const categoriesAndTags =
-          fixture.editor.inspector.documentPanel.categoriesAndTags;
+      it('should add a new category as a child of an existing category', async () => {
+        await openTaxonomiesPanel();
+        const { taxonomies } = fixture.editor.inspector.documentPanel;
         // find initial categories
-        const initialCategories = categoriesAndTags.categories;
+        const initialCategories = taxonomies.categories;
 
         // open the new category section
-        await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+        await fixture.events.click(taxonomies.addNewCategoryButton);
         // Input should be focused
-        expect(document.activeElement).toBe(
-          categoriesAndTags.newCategoryNameInput
-        );
+        expect(document.activeElement).toBe(taxonomies.newCategoryNameInput);
         // Add new category
-        await fixture.events.focus(categoriesAndTags.newCategoryNameInput);
+        await fixture.events.focus(taxonomies.newCategoryNameInput);
         await fixture.events.keyboard.type('deer');
-        await fixture.events.click(categoriesAndTags.parentDropdownButton);
+        await fixture.events.click(taxonomies.parentDropdownButton);
 
-        await waitFor(() =>
-          fixture.screen.getByRole('option', {
-            name: 'hierarchical_term_Booger',
-          })
-        );
         await fixture.events.click(
           fixture.screen.getByRole('option', {
-            name: 'hierarchical_term_Booger',
+            name: 'Booger',
           })
         );
-        await waitFor(() =>
-          fixture.screen
-            .queryByRole('option', {
-              name: 'hierarchical_term_Booger',
-            })
-            .toBeNull()
-        );
-        await fixture.events.click(categoriesAndTags.addNewCategoryButton);
+
+        await fixture.events.click(taxonomies.addNewCategoryButton);
         // validate new checkbox was added
-        const finalCategories = categoriesAndTags.categories;
+        const finalCategories = taxonomies.categories;
         initialCategories.map((checkbox) =>
-          expect(checkbox.name).not.toBe('hierarchical_term_deer')
+          expect(checkbox.name).not.toBe('deer')
         );
         expect(finalCategories.length).toBe(initialCategories.length + 1);
         expect(
@@ -198,24 +177,23 @@ describe('Categories & Tags Panel', () => {
       // TODO(#9226): Fix flaky test.
       // eslint-disable-next-line jasmine/no-disabled-tests
       xit('should add categories and remove categories', async () => {
-        await openCategoriesAndTagsPanel();
+        await openTaxonomiesPanel();
 
-        const categoriesAndTags =
-          fixture.editor.inspector.documentPanel.categoriesAndTags;
+        const { taxonomies } = fixture.editor.inspector.documentPanel;
 
         // track initial story categories
         const initialStoryTerms = await getStoryTerms();
 
         // focus the panel button
-        await fixture.events.focus(categoriesAndTags.categoriesAndTagsButton);
+        await fixture.events.focus(taxonomies.taxonomiesButton);
 
         // tab to first checkbox and un-check
-        expect(categoriesAndTags.categories[0].checked).toBe(true);
+        expect(taxonomies.categories[0].checked).toBe(true);
         await fixture.events.keyboard.press('Tab');
         await fixture.events.keyboard.press('Tab');
         expect(document.activeElement.type).toBe('checkbox');
         await fixture.events.keyboard.press('Space');
-        expect(categoriesAndTags.categories[0].checked).toBe(false);
+        expect(taxonomies.categories[0].checked).toBe(false);
 
         // verify category was removed from story
         let currentStoryTerms = await getStoryTerms();
@@ -225,7 +203,7 @@ describe('Categories & Tags Panel', () => {
 
         // check the checkbox again
         await fixture.events.keyboard.press('Space');
-        expect(categoriesAndTags.categories[0].checked).toBe(true);
+        expect(taxonomies.categories[0].checked).toBe(true);
 
         // verify category was added to story
         currentStoryTerms = await getStoryTerms();
@@ -235,22 +213,21 @@ describe('Categories & Tags Panel', () => {
       });
 
       it('should add new categories', async () => {
-        await openCategoriesAndTagsPanel();
+        await openTaxonomiesPanel();
 
-        const categoriesAndTags =
-          fixture.editor.inspector.documentPanel.categoriesAndTags;
+        const { taxonomies } = fixture.editor.inspector.documentPanel;
 
         // focus the panel button
-        await fixture.events.focus(categoriesAndTags.categoriesAndTagsButton);
+        await fixture.events.focus(taxonomies.taxonomiesButton);
 
         // track initial categories
-        const initialCategories = categoriesAndTags.categories;
+        const initialCategories = taxonomies.categories;
 
         // tab and to new category section
         let maxTabs = 0;
         while (
           maxTabs < 20 &&
-          document.activeElement !== categoriesAndTags.addNewCategoryButton
+          document.activeElement !== taxonomies.addNewCategoryButton
         ) {
           // eslint-disable-next-line no-await-in-loop
           await fixture.events.keyboard.press('Tab');
@@ -259,21 +236,17 @@ describe('Categories & Tags Panel', () => {
         await fixture.events.keyboard.press('Space');
 
         // Input should be focused
-        expect(document.activeElement).toBe(
-          categoriesAndTags.newCategoryNameInput
-        );
+        expect(document.activeElement).toBe(taxonomies.newCategoryNameInput);
 
         // Enter name and submit
         await fixture.events.keyboard.type('deer');
         await fixture.events.keyboard.press('Tab');
         await fixture.events.keyboard.press('Tab');
-        expect(document.activeElement).toBe(
-          categoriesAndTags.addNewCategoryButton
-        );
+        expect(document.activeElement).toBe(taxonomies.addNewCategoryButton);
         await fixture.events.keyboard.press('Enter');
 
         // validate new checkbox was added
-        const finalCategories = categoriesAndTags.categories;
+        const finalCategories = taxonomies.categories;
         initialCategories.map((checkbox) =>
           expect(checkbox.name).not.toBe('hierarchical_term_deer')
         );
@@ -288,22 +261,21 @@ describe('Categories & Tags Panel', () => {
       });
 
       it('should add a new category as a child of an existing category', async () => {
-        await openCategoriesAndTagsPanel();
+        await openTaxonomiesPanel();
 
-        const categoriesAndTags =
-          fixture.editor.inspector.documentPanel.categoriesAndTags;
+        const { taxonomies } = fixture.editor.inspector.documentPanel;
 
         // focus the panel button
-        await fixture.events.focus(categoriesAndTags.categoriesAndTagsButton);
+        await fixture.events.focus(taxonomies.taxonomiesButton);
 
         // track initial categories
-        const initialCategories = categoriesAndTags.categories;
+        const initialCategories = taxonomies.categories;
 
         // tab and to new category section
         let maxTabs = 0;
         while (
           maxTabs < 20 &&
-          document.activeElement !== categoriesAndTags.addNewCategoryButton
+          document.activeElement !== taxonomies.addNewCategoryButton
         ) {
           // eslint-disable-next-line no-await-in-loop
           await fixture.events.keyboard.press('Tab');
@@ -312,9 +284,7 @@ describe('Categories & Tags Panel', () => {
         await fixture.events.keyboard.press('Space');
 
         // Input should be focused
-        expect(document.activeElement).toBe(
-          categoriesAndTags.newCategoryNameInput
-        );
+        expect(document.activeElement).toBe(taxonomies.newCategoryNameInput);
 
         // Enter name
         await fixture.events.keyboard.type('deer');
@@ -327,13 +297,11 @@ describe('Categories & Tags Panel', () => {
 
         // Submit
         await fixture.events.keyboard.press('Tab');
-        expect(document.activeElement).toBe(
-          categoriesAndTags.addNewCategoryButton
-        );
+        expect(document.activeElement).toBe(taxonomies.addNewCategoryButton);
         await fixture.events.keyboard.press('Enter');
 
         // validate new checkbox was added
-        const finalCategories = categoriesAndTags.categories;
+        const finalCategories = taxonomies.categories;
         initialCategories.map((checkbox) =>
           expect(checkbox.name).not.toBe('deer')
         );
@@ -358,22 +326,21 @@ describe('Categories & Tags Panel', () => {
       });
 
       it('should submit new categories with Enter button', async () => {
-        await openCategoriesAndTagsPanel();
+        await openTaxonomiesPanel();
 
-        const categoriesAndTags =
-          fixture.editor.inspector.documentPanel.categoriesAndTags;
+        const { taxonomies } = fixture.editor.inspector.documentPanel;
 
         // focus the panel button
-        await fixture.events.focus(categoriesAndTags.categoriesAndTagsButton);
+        await fixture.events.focus(taxonomies.taxonomiesButton);
 
         // track initial categories
-        const initialCategories = categoriesAndTags.categories;
+        const initialCategories = taxonomies.categories;
 
         // tab to `Add New Category` button / section
         let maxTabs = 0;
         while (
           maxTabs < 20 &&
-          document.activeElement !== categoriesAndTags.addNewCategoryButton
+          document.activeElement !== taxonomies.addNewCategoryButton
         ) {
           // eslint-disable-next-line no-await-in-loop
           await fixture.events.keyboard.press('Tab');
@@ -383,16 +350,14 @@ describe('Categories & Tags Panel', () => {
         await fixture.events.keyboard.press('Space');
 
         // Input should be focused
-        expect(document.activeElement).toBe(
-          categoriesAndTags.newCategoryNameInput
-        );
+        expect(document.activeElement).toBe(taxonomies.newCategoryNameInput);
 
         // Enter name and submit
         await fixture.events.keyboard.type('deer');
         await fixture.events.keyboard.press('Enter');
 
         // validate new checkbox was added
-        const finalCategories = categoriesAndTags.categories;
+        const finalCategories = taxonomies.categories;
         initialCategories.map((checkbox) =>
           expect(checkbox.name).not.toBe('hierarchical_term_deer')
         );
@@ -407,19 +372,18 @@ describe('Categories & Tags Panel', () => {
       });
 
       it('should focus toggle on cancel', async () => {
-        await openCategoriesAndTagsPanel();
+        await openTaxonomiesPanel();
 
-        const categoriesAndTags =
-          fixture.editor.inspector.documentPanel.categoriesAndTags;
+        const { taxonomies } = fixture.editor.inspector.documentPanel;
 
         // focus the panel button
-        await fixture.events.focus(categoriesAndTags.categoriesAndTagsButton);
+        await fixture.events.focus(taxonomies.taxonomiesButton);
 
         // tab to `Add New Category` section
         let maxTabs = 0;
         while (
           maxTabs < 20 &&
-          document.activeElement !== categoriesAndTags.addNewCategoryButton
+          document.activeElement !== taxonomies.addNewCategoryButton
         ) {
           // eslint-disable-next-line no-await-in-loop
           await fixture.events.keyboard.press('Tab');
@@ -429,9 +393,7 @@ describe('Categories & Tags Panel', () => {
         await fixture.events.keyboard.press('Space');
 
         // Input should be focused
-        expect(document.activeElement).toBe(
-          categoriesAndTags.newCategoryNameInput
-        );
+        expect(document.activeElement).toBe(taxonomies.newCategoryNameInput);
 
         // Enter name and submit
         await fixture.events.keyboard.type('deer');
@@ -443,16 +405,14 @@ describe('Categories & Tags Panel', () => {
         await fixture.events.keyboard.press('Enter');
 
         // The toggle `Add New Category` should be focused
-        expect(document.activeElement).toBe(
-          categoriesAndTags.addNewCategoryButton
-        );
+        expect(document.activeElement).toBe(taxonomies.addNewCategoryButton);
       });
     });
   });
 
   describe('Tags', () => {
     it('populates the tags correctly from the story', async () => {
-      await openCategoriesAndTagsPanel();
+      await openTaxonomiesPanel();
       const currentStoryTerms = await getStoryTerms();
       const renderedTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
       expect(renderedTokens.length).toEqual(
@@ -461,14 +421,13 @@ describe('Categories & Tags Panel', () => {
     });
 
     it('can add tags with input', async () => {
-      await openCategoriesAndTagsPanel();
+      await openTaxonomiesPanel();
       const tag1Name = 'new tag';
       const tag2Name = 'another tag';
       let currentStoryTerms = await getStoryTerms();
       const initialTagsLength = currentStoryTerms['web_story_tag'].length;
-      const taxonomyPanel =
-        fixture.editor.inspector.documentPanel.categoriesAndTags;
-      const tagsInput = taxonomyPanel.tagsInput;
+      const { taxonomies } = fixture.editor.inspector.documentPanel;
+      const tagsInput = taxonomies.tagsInput;
       // enter in the first tag
       await fixture.events.focus(tagsInput);
       await fixture.events.keyboard.type(tag1Name);
@@ -506,7 +465,7 @@ describe('Categories & Tags Panel', () => {
     });
 
     it('can add tags with Most Used', async () => {
-      await openCategoriesAndTagsPanel();
+      await openTaxonomiesPanel();
       const initialTagsLength = (await getStoryTerms())['web_story_tag'].length;
 
       // get all most used terms
@@ -533,11 +492,10 @@ describe('Categories & Tags Panel', () => {
     });
 
     it('can delete tags with keyboard', async () => {
-      await openCategoriesAndTagsPanel();
+      await openTaxonomiesPanel();
       let currentStoryTerms = await getStoryTerms();
       const initialTagsLength = currentStoryTerms['web_story_tag'].length;
-      const tagsInput =
-        fixture.editor.inspector.documentPanel.categoriesAndTags.tagsInput;
+      const { tagsInput } = fixture.editor.inspector.documentPanel.taxonomies;
       const initialTokens = await fixture.screen.getAllByTestId(
         /^flat-term-token/
       );
@@ -564,14 +522,13 @@ describe('Categories & Tags Panel', () => {
     });
 
     it('can delete tags with mouse', async () => {
-      await openCategoriesAndTagsPanel();
+      await openTaxonomiesPanel();
       let currentStoryTerms = await getStoryTerms();
-      const taxonomyPanel =
-        fixture.editor.inspector.documentPanel.categoriesAndTags;
+      const { taxonomies } = fixture.editor.inspector.documentPanel;
       const initialTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
       const initialTagsLength = currentStoryTerms['web_story_tag'].length;
       // delete tag with mouse
-      const removeTagButtons = taxonomyPanel.tagTokenRemoveButtons;
+      const removeTagButtons = taxonomies.tagTokenRemoveButtons;
       await fixture.events.click(removeTagButtons[0]);
       await waitFor(
         () =>

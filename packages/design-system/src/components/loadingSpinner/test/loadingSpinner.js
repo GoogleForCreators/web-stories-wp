@@ -25,7 +25,7 @@ import { screen } from '@testing-library/react';
 import { LOADING_MESSAGE, LoadingSpinner } from '..';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
-describe('LoadingSpinner', () => {
+describe('loadingSpinner', () => {
   it('should render a loading message that is aria accessible', () => {
     renderWithProviders(<LoadingSpinner />);
 

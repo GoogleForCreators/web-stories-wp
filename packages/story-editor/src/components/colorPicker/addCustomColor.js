@@ -74,7 +74,7 @@ function AddCustomColor({ color, onSave }) {
       size={BUTTON_SIZES.SMALL}
       variant={BUTTON_VARIANTS.RECTANGLE}
     >
-      {__('Add', 'web-stories')}
+      {__('Add to Saved Colors', 'web-stories')}
     </StyledButton>
   );
 }

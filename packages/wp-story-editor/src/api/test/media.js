@@ -22,7 +22,7 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import { getMedia } from '..';
+import getApiCallbacks from '../utils/getApiCallbacks';
 import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
 jest.mock('@wordpress/api-fetch');
@@ -40,15 +40,15 @@ describe('Media API Callbacks', () => {
   });
 
   it('getMedia with cacheBust:true should call api with &cache_bust=true', () => {
-    getMedia(
-      {
-        mediaType: '',
-        searchTerm: '',
-        pagingNum: 1,
-        cacheBust: true,
-      },
-      '/web-stories/v1/media/'
-    );
+    const { getMedia } = getApiCallbacks({
+      api: { media: '/web-stories/v1/media/' },
+    });
+    getMedia({
+      mediaType: '',
+      searchTerm: '',
+      pagingNum: 1,
+      cacheBust: true,
+    });
 
     expect(apiFetch).toHaveBeenCalledWith(
       expect.objectContaining({

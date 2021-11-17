@@ -24,9 +24,5 @@ import { useContextSelector, identity } from '@web-stories-wp/react';
 import Context from '../context';
 
 export function useHelpCenter(selector) {
-  const context = useContextSelector(Context, selector ?? identity);
-  if (!context) {
-    throw new Error('Must use `useHelpCenter` within <helpCenter.Provider />');
-  }
-  return context;
+  return useContextSelector(Context, selector ?? identity);
 }

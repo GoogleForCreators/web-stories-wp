@@ -30,7 +30,7 @@ describe('Inserting WebM Video', () => {
   // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
   skipSuiteOnFirefox();
 
-  let uploadedFiles = [];
+  let uploadedFiles;
 
   beforeEach(() => (uploadedFiles = []));
 

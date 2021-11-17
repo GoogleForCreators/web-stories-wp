@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { createSolid } from '@web-stories-wp/patterns';
+
 /**
  * Internal dependencies
  */
@@ -37,10 +38,12 @@ jest.mock('../../styleManipulation', () => {
   };
 });
 
-getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
 describe('Color formatter', () => {
-  const { elementToStyle, stylesToCSS, getters, setters } = formatter;
+  beforeAll(() => {
+    getPrefixStylesInSelection.mockImplementation(() => [NONE]);
+  });
 
   beforeEach(() => {
     togglePrefixStyle.mockClear();

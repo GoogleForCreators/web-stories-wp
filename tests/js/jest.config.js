@@ -41,7 +41,7 @@ export default {
     '**/test/**/*.[jt]s',
     '**/?(*.)test.[jt]s',
   ],
-  setupFilesAfterEnv: ['<rootDir>/tests/js/jest.setup'],
+  setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/build',
@@ -60,10 +60,12 @@ export default {
   coverageReporters: ['lcov'],
   coverageDirectory: '<rootDir>/build/logs',
   collectCoverageFrom: [
-    '<rootDir>/assets/src/**/*.js',
+    '<rootDir>/packages/**/*.js',
     '<rootDir>/bin/**/*.js',
+    '!<rootDir>/packages/fonts/**',
     '!**/karma/**',
     '!**/test/**',
+    '!**/testUtils/**',
     '!**/stories/**',
   ],
   modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/vendor'],

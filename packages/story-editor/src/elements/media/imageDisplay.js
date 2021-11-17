@@ -32,7 +32,7 @@ import {
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-
+import useCORSProxy from '../../utils/useCORSProxy';
 import { mediaWithScale } from './util';
 import MediaDisplay from './display';
 
@@ -59,6 +59,9 @@ function ImageDisplay({ element, box, previewMode }) {
     initialSrc = resource.src;
   }
 
+  const { getProxiedUrl } = useCORSProxy();
+  initialSrc = getProxiedUrl(resource, initialSrc);
+
   const [srcType, setSrcType] = useState(initialSrcType);
   const [src, setSrc] = useState(initialSrc);
   const srcSet = srcType === 'fullsize' ? calculateSrcSet(resource) : '';
@@ -79,7 +82,8 @@ function ImageDisplay({ element, box, previewMode }) {
     let mounted = true;
     if (resourceList.get(resource.id)?.type !== 'fullsize' && resource.src) {
       timeout = setTimeout(async () => {
-        const preloadedImg = await preloadImage(resource.src, srcSet);
+        const url = getProxiedUrl(resource, resource.src);
+        const preloadedImg = await preloadImage(url, srcSet);
         if (mounted) {
           resourceList.set(resource.id, {
             type: 'fullsize',
@@ -93,7 +97,7 @@ function ImageDisplay({ element, box, previewMode }) {
       mounted = false;
       clearTimeout(timeout);
     };
-  }, [resource.id, resource.src, srcSet, srcType]);
+  }, [getProxiedUrl, resource, srcSet, srcType]);
 
   const showPlaceholder = srcType !== 'fullsize';
 

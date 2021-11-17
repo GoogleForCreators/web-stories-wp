@@ -181,7 +181,7 @@ function PageAttachmentPanel() {
      * @param {import('@web-stories-wp/media').Resource} resource The new image.
      */
     (resource) => {
-      updatePageAttachment({ icon: resource.src }, true);
+      updatePageAttachment({ icon: resource?.src }, true);
     },
     [updatePageAttachment]
   );

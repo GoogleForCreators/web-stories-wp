@@ -17,8 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 
 /**
@@ -28,7 +27,7 @@ use WP_REST_Request;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Autosaves_Controller
  */
-class Stories_Autosaves_Controller extends Test_REST_TestCase {
+class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 
 	/**
 	 * Author user ID.
@@ -55,7 +54,7 @@ class Stories_Autosaves_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->controller = new \Google\Web_Stories\REST_API\Stories_Autosaves_Controller();
+		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Stories_Autosaves_Controller::class );
 	}
 
 	public function test_create_item_as_author_should_not_strip_markup() {
@@ -70,7 +69,7 @@ class Stories_Autosaves_Controller extends Test_REST_TestCase {
 
 		$story = self::factory()->post->create(
 			[
-				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 			]
 		);
 

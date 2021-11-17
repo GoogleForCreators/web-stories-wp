@@ -29,14 +29,13 @@ namespace Google\Web_Stories\Taxonomy;
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
-use Google\Web_Stories\Infrastructure\SiteRemovalAware;
 use Google\Web_Stories\Service_Base;
 use WP_Site;
 
 /**
  * Taxonomy_Base class
  */
-abstract class Taxonomy_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware, SiteRemovalAware {
+abstract class Taxonomy_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware {
 
 	const DEFAULT_CAPABILITIES = [
 		'manage_terms' => 'manage_terms_web-stories',
@@ -44,6 +43,13 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 		'delete_terms' => 'delete_terms_web-stories',
 		'assign_terms' => 'assign_terms_web-stories',
 	];
+
+	/**
+	 * Default REST Namespace.
+	 *
+	 * @var string
+	 */
+	const REST_NAMESPACE = 'web-stories/v1';
 
 	/**
 	 * Taxonomy key, must not exceed 32 characters.
@@ -112,18 +118,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 */
 	public function on_site_initialization( WP_Site $site ) {
 		$this->register_taxonomy();
-	}
-
-	/**
-	 * Act on site removal.
-	 *
-	 * @since 1.12.0
-	 *
-	 * @param WP_Site $site The site being removed.
-	 * @return void
-	 */
-	public function on_site_removal( WP_Site $site ) {
-		$this->unregister_taxonomy();
 	}
 
 	/**

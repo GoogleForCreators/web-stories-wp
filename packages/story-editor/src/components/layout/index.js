@@ -24,7 +24,7 @@ import {
   useSnackbar,
   themeHelpers,
 } from '@web-stories-wp/design-system';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -42,6 +42,8 @@ import { CanvasProvider } from '../../app/canvas';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
 import { ChecklistCheckpointProvider } from '../checklist';
+import { RightClickMenuProvider } from '../../app/rightClickMenu';
+import RightClickMenu from '../canvas/rightClickMenu';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
@@ -71,7 +73,7 @@ const Area = styled.div`
   z-index: 2;
 `;
 
-function Layout({ header, children }) {
+function Layout({ header, inspectorTabs, children }) {
   const snackbarState = useSnackbar(
     ({ removeSnack, currentSnacks, placement }) => ({
       onRemove: removeSnack,
@@ -79,6 +81,7 @@ function Layout({ header, children }) {
       placement,
     })
   );
+
   return (
     <>
       <LayoutProvider>
@@ -86,10 +89,13 @@ function Layout({ header, children }) {
           <HighlightsProvider>
             <Editor zIndex={3}>
               <CanvasProvider>
-                <Area area="lib">
-                  <Library />
-                </Area>
-                <Workspace header={header} />
+                <RightClickMenuProvider>
+                  <Area area="lib">
+                    <Library />
+                  </Area>
+                  <Workspace header={header} inspectorTabs={inspectorTabs} />
+                  <RightClickMenu />
+                </RightClickMenuProvider>
               </CanvasProvider>
               {children}
             </Editor>
@@ -102,8 +108,9 @@ function Layout({ header, children }) {
 }
 
 Layout.propTypes = {
-  children: Proptypes.node,
-  header: Proptypes.node,
+  children: PropTypes.node,
+  header: PropTypes.node,
+  inspectorTabs: PropTypes.object,
 };
 
 export default Layout;

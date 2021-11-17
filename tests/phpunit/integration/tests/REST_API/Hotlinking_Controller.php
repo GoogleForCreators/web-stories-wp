@@ -17,10 +17,10 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
-use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 
 /**
  * Class Hotlinking_Controller
@@ -29,7 +29,7 @@ use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Hotlinking_Controller
  */
-class Hotlinking_Controller extends Test_REST_TestCase {
+class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	protected static $subscriber;
 	protected static $editor;
 
@@ -41,7 +41,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 	const URL_DOMAIN  = 'http://google.com';
 	const URL_PATH    = '/test.jpg';
 
-	const REST_URL = '/web-stories/v1/hotlink';
+	const REST_URL = '/web-stories/v1/hotlink/validate';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -77,7 +77,7 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
 
-		$this->controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller();
+		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Hotlinking_Controller::class );
 	}
 
 	public function tear_down() {
@@ -153,7 +153,6 @@ class Hotlinking_Controller extends Test_REST_TestCase {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( self::REST_URL, $routes );
-		$this->assertCount( 1, $routes[ self::REST_URL ] );
 	}
 
 	/**

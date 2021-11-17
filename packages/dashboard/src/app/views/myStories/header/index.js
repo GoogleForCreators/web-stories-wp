@@ -47,6 +47,7 @@ import {
   SearchPropTypes,
   SortPropTypes,
   ViewPropTypes,
+  AuthorPropTypes,
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
@@ -69,11 +70,14 @@ function Header({
   stories,
   totalStoriesByStatus,
   view,
-  wpListURL,
+  author,
+  queryAuthorsBySearch,
 }) {
   const {
     actions: { scrollToTop },
   } = useLayoutContext();
+
+  const { setKeyword } = search;
 
   const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
 
@@ -152,8 +156,10 @@ function Header({
       search_type: 'dashboard',
       search_term: value,
     });
-    search.setKeyword(value);
+    setKeyword(value);
   }, TEXT_INPUT_DEBOUNCE);
+
+  const clearSearch = useCallback(() => setKeyword(''), [setKeyword]);
 
   return (
     <>
@@ -164,6 +170,7 @@ function Header({
         handleSearchChange={debouncedSearchChange}
         showSearch
         searchValue={search.keyword}
+        clearSearch={clearSearch}
       >
         {HeaderToggleButtons}
       </PageHeading>
@@ -171,6 +178,7 @@ function Header({
       <BodyViewOptions
         showGridToggle
         showSortDropdown
+        showAuthorDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         isLoading={isLoading}
@@ -178,7 +186,8 @@ function Header({
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={onSortChange}
-        wpListURL={wpListURL}
+        author={author}
+        queryAuthorsBySearch={queryAuthorsBySearch}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
@@ -196,7 +205,8 @@ Header.propTypes = {
   stories: StoriesPropType,
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
-  wpListURL: PropTypes.string,
+  author: AuthorPropTypes,
+  queryAuthorsBySearch: PropTypes.func,
 };
 
 export default memo(Header);

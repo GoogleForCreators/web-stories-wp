@@ -137,10 +137,20 @@ describe('TextEdit integration', () => {
         expect(
           fixture.querySelector('[data-testid="textEditor"]')
         ).toBeDefined();
+        await fixture.events.sleep(300);
+        await fixture.events.keyboard.type('This is some test text.');
 
         // Exit edit mode using the Esc key
         await fixture.events.keyboard.press('Esc');
-        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+        await fixture.events.sleep(100);
+        await waitFor(() =>
+          expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull()
+        );
+        // The element is still selected and updated.
+        const storyContext = await fixture.renderHook(() => useStory());
+        expect(storyContext.state.selectedElements[0].content).toEqual(
+          'This is some test text.'
+        );
       });
     });
   });

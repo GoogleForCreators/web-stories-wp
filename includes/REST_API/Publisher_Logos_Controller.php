@@ -26,9 +26,9 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Post_Type;
 use WP_Error;
 use WP_Post;
 use WP_REST_Request;
@@ -40,8 +40,7 @@ use WP_REST_Server;
  *
  * @since 1.12.0
  */
-class Publisher_Logos_Controller extends REST_Controller {
-	use Post_Type;
+class Publisher_Logos_Controller extends REST_Controller implements HasRequirements {
 
 	/**
 	 * Settings instance.
@@ -51,15 +50,37 @@ class Publisher_Logos_Controller extends REST_Controller {
 	private $settings;
 
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param Settings $settings Settings instance.
+	 * @param Settings        $settings Settings instance.
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
-	public function __construct( Settings $settings ) {
-		$this->settings = $settings;
+	public function __construct( Settings $settings, Story_Post_Type $story_post_type ) {
+		$this->settings        = $settings;
+		$this->story_post_type = $story_post_type;
 
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'publisher-logos';
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because the story post type needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'settings', 'story_post_type' ];
 	}
 
 	/**
@@ -124,7 +145,7 @@ class Publisher_Logos_Controller extends REST_Controller {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function permissions_check() {
-		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new WP_Error(
 				'rest_forbidden',
 				__( 'Sorry, you are not allowed to manage publisher logos.', 'web-stories' ),
@@ -189,6 +210,8 @@ class Publisher_Logos_Controller extends REST_Controller {
 	/**
 	 * Adds a new publisher logo to the collection.
 	 *
+	 * Supports adding multiple logos at once.
+	 *
 	 * @since 1.12.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
@@ -197,9 +220,10 @@ class Publisher_Logos_Controller extends REST_Controller {
 	public function create_item( $request ) {
 		$publisher_logos = $this->filter_publisher_logos( (array) $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] ) );
 
-		$post = get_post( $request['id'] );
+		// Could be a single attachment ID or an array of attachment IDs.
+		$posts = (array) $request['id'];
 
-		if ( ! $post || 'attachment' !== $post->post_type ) {
+		if ( empty( $posts ) ) {
 			return new WP_Error(
 				'rest_invalid_id',
 				__( 'Invalid ID', 'web-stories' ),
@@ -207,25 +231,56 @@ class Publisher_Logos_Controller extends REST_Controller {
 			);
 		}
 
-		if ( in_array( $post->ID, $publisher_logos, true ) ) {
-			return new WP_Error(
-				'rest_publisher_logo_exists',
-				__( 'Publisher logo already exists', 'web-stories' ),
-				[ 'status' => 400 ]
-			);
-		}
+		foreach ( $posts as $post_id ) {
+			$post = get_post( $post_id );
 
-		$publisher_logos[] = $post->ID;
+			if ( ! $post || 'attachment' !== $post->post_type ) {
+				return new WP_Error(
+					'rest_invalid_id',
+					__( 'Invalid ID', 'web-stories' ),
+					[ 'status' => 400 ]
+				);
+			}
+
+			if ( in_array( $post->ID, $publisher_logos, true ) ) {
+				return new WP_Error(
+					'rest_publisher_logo_exists',
+					__( 'Publisher logo already exists', 'web-stories' ),
+					[ 'status' => 400 ]
+				);
+			}
+
+			$publisher_logos[] = $post->ID;
+		}
 
 		$this->settings->update_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, $publisher_logos );
 
 		$active_publisher_logo_id = absint( $this->settings->get_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
 
 		if ( 1 === count( $publisher_logos ) || ! in_array( $active_publisher_logo_id, $publisher_logos, true ) ) {
-			$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $post->ID );
+			$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $posts[0] );
 		}
 
-		return $this->prepare_item_for_response( $post, $request );
+		$results = [];
+
+		foreach ( $posts as $post ) {
+			/**
+			 * Post object.
+			 *
+			 * @var WP_Post $post
+			 */
+			$post = get_post( $post );
+
+			$data = $this->prepare_item_for_response( $post, $request );
+
+			if ( 1 === count( $posts ) ) {
+				return $data;
+			}
+
+			$results[] = $this->prepare_response_for_collection( $data );
+		}
+
+		return rest_ensure_response( $results );
 	}
 
 	/**

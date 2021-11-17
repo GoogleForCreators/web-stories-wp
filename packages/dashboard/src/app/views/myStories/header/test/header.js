@@ -80,7 +80,6 @@ describe('Dashboard <Header />', function () {
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
           }}
-          wpListURL="fakeurltoWordPressList.com"
         />
       </LayoutProvider>
     );
@@ -108,7 +107,6 @@ describe('Dashboard <Header />', function () {
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
           }}
-          wpListURL="fakeurltoWordPressList.com"
         />
       </LayoutProvider>
     );
@@ -137,7 +135,6 @@ describe('Dashboard <Header />', function () {
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
           }}
-          wpListURL="fakeurltoWordPressList.com"
         />
       </LayoutProvider>
     );
@@ -162,7 +159,6 @@ describe('Dashboard <Header />', function () {
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
           }}
-          wpListURL="fakeurltoWordPressList.com"
         />
       </LayoutProvider>
     );
@@ -208,7 +204,6 @@ describe('Dashboard <Header />', function () {
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
           }}
-          wpListURL="fakeurltoWordPressList.com"
         />
       </LayoutProvider>
     );
@@ -250,7 +245,6 @@ describe('Dashboard <Header />', function () {
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
           }}
-          wpListURL="fakeurltoWordPressList.com"
         />
       </LayoutProvider>
     );
@@ -291,7 +285,6 @@ describe('Dashboard <Header />', function () {
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
           }}
-          wpListURL="fakeurltoWordPressList.com"
         />
       </LayoutProvider>
     );
@@ -324,7 +317,6 @@ describe('Dashboard <Header />', function () {
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
           }}
-          wpListURL="fakeurltoWordPressList.com"
         />
       </LayoutProvider>
     );

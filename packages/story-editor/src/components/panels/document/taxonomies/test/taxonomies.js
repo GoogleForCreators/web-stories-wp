@@ -79,7 +79,7 @@ describe('TaxonomiesPanel', () => {
   it('should not render Taxonomies Panel if there are no taxonomies', () => {
     arrange({ taxonomies: [], isCapable: true });
     const element = screen.queryByRole('button', {
-      name: 'Categories and Tags',
+      name: 'Taxonomies',
     });
     expect(element).not.toBeInTheDocument();
   });
@@ -105,7 +105,7 @@ describe('TaxonomiesPanel', () => {
       isCapable: false,
     });
     const element = screen.queryByRole('button', {
-      name: 'Categories and Tags',
+      name: 'Taxonomies',
     });
     expect(element).not.toBeInTheDocument();
   });
@@ -141,7 +141,7 @@ describe('TaxonomiesPanel', () => {
       isCapable: true,
     });
     const element = await screen.findByRole('button', {
-      name: 'Categories and Tags',
+      name: 'Taxonomies',
     });
     expect(element).toBeInTheDocument();
   });

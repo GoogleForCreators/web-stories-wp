@@ -175,38 +175,19 @@ describe('storyReducer', () => {
       type: ACTION_TYPES.FETCH_STORIES_SUCCESS,
       payload: {
         page: 1,
-        stories: [
-          {
-            id: 94,
-            status: 'draft',
-            title: { raw: 'my test story 1' },
-            _embedded: { author: [{ id: 1, name: 'admin' }] },
-          },
-          {
-            id: 65,
-            status: 'publish',
-            title: { raw: 'my test story 2' },
-            _embedded: { author: [{ id: 1, name: 'admin' }] },
-          },
-          {
-            id: 78,
-            status: 'draft',
-            title: { raw: 'my test story 3' },
-            _embedded: { author: [{ id: 1, name: 'admin' }] },
-          },
-          {
-            id: 12,
-            status: 'draft',
-            title: { raw: 'my test story 4' },
-            _embedded: { author: [{ id: 1, name: 'admin' }] },
-          },
-        ],
+        stories: {
+          94: { id: 94, status: 'draft', title: 'my test story 1' },
+          65: { id: 65, status: 'publish', title: 'my test story 2' },
+          78: { id: 78, status: 'draft', title: 'my test story 3' },
+          12: { id: 12, status: 'draft', title: 'my test story 4' },
+        },
         totalStoriesByStatus: {
           all: 44,
           [STORY_STATUS.DRAFT]: 40,
           [STORY_STATUS.PUBLISH]: 4,
         },
         totalPages: 4,
+        fetchedStoryIds: [94, 65, 78, 12],
       },
     });
 
@@ -237,38 +218,19 @@ describe('storyReducer', () => {
         type: ACTION_TYPES.FETCH_STORIES_SUCCESS,
         payload: {
           page: 2,
-          stories: [
-            {
-              id: 94,
-              status: 'draft',
-              title: { raw: 'my test story 1' },
-              _embedded: { author: [{ id: 1, name: 'admin' }] },
-            },
-            {
-              id: 65,
-              status: 'publish',
-              title: { raw: 'my test story 2' },
-              _embedded: { author: [{ id: 1, name: 'admin' }] },
-            },
-            {
-              id: 78,
-              status: 'draft',
-              title: { raw: 'my test story 3' },
-              _embedded: { author: [{ id: 1, name: 'admin' }] },
-            },
-            {
-              id: 12,
-              status: 'draft',
-              title: { raw: 'my test story 4' },
-              _embedded: { author: [{ id: 1, name: 'admin' }] },
-            },
-          ],
+          stories: {
+            94: { id: 94, status: 'draft', title: 'my test story 1' },
+            65: { id: 65, status: 'publish', title: 'my test story 2' },
+            78: { id: 78, status: 'draft', title: 'my test story 3' },
+            12: { id: 12, status: 'draft', title: 'my test story 4' },
+          },
           totalStoriesByStatus: {
             all: 18,
             [STORY_STATUS.DRAFT]: 14,
             [STORY_STATUS.PUBLISH]: 4,
           },
           totalPages: 2,
+          fetchedStoryIds: [94, 65, 78, 12],
         },
       }
     );

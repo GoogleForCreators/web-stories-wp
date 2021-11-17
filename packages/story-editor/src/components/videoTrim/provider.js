@@ -45,7 +45,6 @@ function VideoTrimProvider({ children }) {
     setStartOffset,
     setEndOffset,
     setVideoNode,
-    resetOffsets,
     setIsDraggingHandles,
   } = useVideoNode(videoData);
 
@@ -61,7 +60,7 @@ function VideoTrimProvider({ children }) {
         length: lengthInSeconds,
         lengthFormatted: getVideoLengthDisplay(lengthInSeconds),
       },
-      // This is the ID of the resource, that's currently on canvas and needs to be cloned.
+      // This is the ID of the resource that's currently on canvas and needs to be cloned.
       // It's only different from the above resource, if the canvas resource is a trim of the other.
       canvasResourceId: element.resource.id,
       start: formatMsToHMS(startOffset),
@@ -93,7 +92,6 @@ function VideoTrimProvider({ children }) {
       setVideoNode,
       setStartOffset,
       setEndOffset,
-      resetOffsets,
       setIsDraggingHandles,
     },
   };

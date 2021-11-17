@@ -32,7 +32,7 @@ describe('updatePageProperties', () => {
       properties: { x: 1 },
     });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should update properties of the given page', () => {

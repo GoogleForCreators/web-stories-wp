@@ -19,7 +19,6 @@
  */
 import {
   createNewStory,
-  withExperimentalFeatures,
   withUser,
   publishStory,
   insertStoryTitle,
@@ -30,9 +29,9 @@ import {
 async function goToAndExpandTaxonomyPanel() {
   await expect(page).toClick('li[role="tab"]', { text: 'Document' });
 
-  const taxonomyPanel = await page.$(
-    'button[aria-label="Categories and Tags"]'
-  );
+  await expect(page).toMatch('Taxonomies');
+
+  const taxonomyPanel = await page.$('button[aria-label="Taxonomies"]');
 
   // Small trick to ensure we scroll to this panel.
   await taxonomyPanel.focus();
@@ -100,9 +99,8 @@ async function addTag(name) {
 
 describe('Taxonomies', () => {
   // TODO: Figure out how to scroll to the Taxonomies panel in Firefox so that the tests work.
+  // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
-
-  withExperimentalFeatures(['enableTaxonomiesSupport']);
 
   describe('Interaction', () => {
     // Create some categories and tags before running all tests so that they are available there.
@@ -215,6 +213,7 @@ describe('Taxonomies', () => {
     });
 
     describe('Contributor', () => {
+      // eslint-disable-next-line jest/require-hook
       withUser('contributor', 'password');
 
       it('should be able to manage categories but not add new ones', async () => {
@@ -309,7 +308,8 @@ describe('Taxonomies', () => {
       });
     });
 
-    describe('Custom Taxonomies', () => {
+    describe('Custom Taxonomy', () => {
+      // eslint-disable-next-line jest/require-hook
       withPlugin('web-stories-test-plugin-taxonomies');
 
       describe('Administrator', () => {
@@ -327,6 +327,7 @@ describe('Taxonomies', () => {
       });
 
       describe('Contributor', () => {
+        // eslint-disable-next-line jest/require-hook
         withUser('contributor', 'password');
 
         it('should see custom taxonomies', async () => {

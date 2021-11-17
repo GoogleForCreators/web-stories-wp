@@ -18,11 +18,24 @@
 namespace Google\Web_Stories\Tests\Unit\AMP;
 
 use Google\Web_Stories\Tests\Unit\TestCase;
+use Brain\Monkey;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Output_Buffer
  */
 class Output_Buffer extends TestCase {
+	public function set_up() {
+		parent::set_up();
+
+		Monkey\Functions\stubs(
+			[
+				'get_post' => static function () {
+					return null;
+				},
+			]
+		);
+	}
+
 	/**
 	 * @covers ::is_needed
 	 */
@@ -47,7 +60,18 @@ class Output_Buffer extends TestCase {
 	 */
 	public function test_is_needed_amp_same_version() {
 		define( 'AMP__VERSION', WEBSTORIES_AMP_VERSION );
-		$this->assertFalse( \Google\Web_Stories\AMP\Output_Buffer::is_needed() );
+		$this->assertTrue( \Google\Web_Stories\AMP\Output_Buffer::is_needed() );
+	}
+
+	/**
+	 * @covers ::is_needed
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_is_needed_amp_same_version_did_amp_init() {
+		define( 'AMP__VERSION', WEBSTORIES_AMP_VERSION );
+		do_action( 'amp_init' );
+		$this->assertTrue( \Google\Web_Stories\AMP\Output_Buffer::is_needed() );
 	}
 
 	/**
@@ -57,6 +81,44 @@ class Output_Buffer extends TestCase {
 	 */
 	public function test_is_needed_amp_higher_version() {
 		define( 'AMP__VERSION', '99.9.9' );
+		$this->assertTrue( \Google\Web_Stories\AMP\Output_Buffer::is_needed() );
+	}
+
+	/**
+	 * @covers ::is_needed
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_is_needed_amp_higher_version_did_amp_init() {
+		define( 'AMP__VERSION', '99.9.9' );
+		do_action( 'amp_init' );
+		$this->assertTrue( \Google\Web_Stories\AMP\Output_Buffer::is_needed() );
+	}
+
+	/**
+	 * @covers ::is_needed
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_is_needed_amp_properly_initialized() {
+		define( 'AMP__VERSION', WEBSTORIES_AMP_VERSION );
+		do_action( 'amp_init' );
+
+		Monkey\Functions\stubs(
+			[
+				'get_post'              => static function () {
+					return null;
+				},
+				'amp_is_available'      => static function () {
+					return true; },
+				'amp_is_enabled'        => static function () {
+					return true; },
+				'amp_is_post_supported' => static function ( $post ) {
+					return true;
+				},
+			]
+		);
+
 		$this->assertFalse( \Google\Web_Stories\AMP\Output_Buffer::is_needed() );
 	}
 }

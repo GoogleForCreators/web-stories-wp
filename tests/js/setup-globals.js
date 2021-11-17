@@ -82,6 +82,7 @@ window.HTMLMediaElement.prototype.pause = () => undefined;
 // Prevent React warnings when setting the `muted` attribute on `<video>` elements.
 // See https://github.com/testing-library/react-testing-library/issues/470
 // See https://github.com/facebook/react/issues/10389
+// eslint-disable-next-line jest/require-hook
 Object.defineProperty(HTMLMediaElement.prototype, 'muted', {
   set: () => {},
 });

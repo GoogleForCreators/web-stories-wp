@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -28,6 +28,7 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
+  useLiveRegion,
 } from '@web-stories-wp/design-system';
 import {
   useCallback,
@@ -43,10 +44,9 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { HierarchicalInput } from '../../../form';
+import { HierarchicalInput, makeFlatOptionTree } from '../../../form';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { ContentHeading, TaxonomyPropType, LinkButton } from './shared';
-import { makeFlatOptionTree } from './utils';
 
 const NO_PARENT_VALUE = 'NO_PARENT_VALUE';
 
@@ -120,24 +120,6 @@ function HierarchicalTermSelector({
     return [];
   }, [taxonomy, termCache, terms]);
 
-  const dropdownCategories = useMemo(
-    () =>
-      [
-        {
-          value: NO_PARENT_VALUE,
-          label: __('None', 'web-stories'),
-        },
-      ]
-        .concat(makeFlatOptionTree(categories))
-        .map(({ $level, label, ...opt }) => ({
-          ...opt,
-          label: `${Array.from({ length: $level }, () => '— ').join(
-            ''
-          )} ${label}`,
-        })),
-    [categories]
-  );
-
   const [showAddNewCategory, setShowAddNewCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [selectedParent, setSelectedParent] = useState(noParentId);
@@ -146,6 +128,10 @@ function HierarchicalTermSelector({
   const formRef = useRef();
   const toggleRef = useRef();
   const [toggleFocus, setToggleFocus] = useState(false);
+  const [searchText, setSearchText] = useState('');
+
+  const handleInputChange = useCallback((value) => setSearchText(value), []);
+  const speak = useLiveRegion('assertive');
 
   const resetInputs = useCallback(() => {
     setNewCategoryName('');
@@ -203,12 +189,20 @@ function HierarchicalTermSelector({
         slug: selectedParentSlug,
       };
       createTerm(taxonomy, newCategoryName, parentValue, true);
+      speak(
+        sprintf(
+          /* Translators: %s: Taxonomy label name. */
+          __('%s added.', 'web-stories'),
+          taxonomy.labels.singular_name
+        )
+      );
       setShowAddNewCategory(false);
       resetInputs();
       setToggleFocus(showAddNewCategory);
     },
     [
       createTerm,
+      speak,
       newCategoryName,
       noParentId,
       resetInputs,
@@ -218,7 +212,6 @@ function HierarchicalTermSelector({
       selectedParentSlug,
     ]
   );
-
   const handleParentSelect = useCallback(
     (_evt, menuItem) => setSelectedParent(menuItem),
     []
@@ -247,12 +240,37 @@ function HierarchicalTermSelector({
     }
   }, [toggleFocus]);
 
+  const orderedCategories = useMemo(
+    () => makeFlatOptionTree(categories, searchText),
+    [categories, searchText]
+  );
+
+  const dropdownCategories = useMemo(
+    () =>
+      [
+        {
+          value: NO_PARENT_VALUE,
+          label: __('None', 'web-stories'),
+        },
+      ]
+        .concat(orderedCategories)
+        .map(({ $level, label, ...opt }) => ({
+          ...opt,
+          label: `${Array.from({ length: $level }, () => '— ').join(
+            ''
+          )} ${label}`,
+        })),
+    [orderedCategories]
+  );
+
   return (
     <ContentArea>
       <ContentHeading>{taxonomy.labels.name}</ContentHeading>
       <HierarchicalInput
+        inputValue={searchText}
+        onInputChange={handleInputChange}
         label={taxonomy.labels.search_items}
-        options={categories}
+        options={orderedCategories}
         onChange={handleClickCategory}
         noOptionsText={taxonomy.labels?.not_found}
       />

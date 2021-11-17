@@ -68,36 +68,6 @@ class Experiments extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @covers ::add_menu_page
-	 */
-	public function test_add_menu_page_no_capabilities() {
-		$before = $this->get_private_property( $this->instance, 'hook_suffix' );
-
-		$this->instance->add_menu_page();
-
-		$after = $this->get_private_property( $this->instance, 'hook_suffix' );
-
-		$this->assertNull( $before );
-		$this->assertFalse( $after );
-	}
-
-	/**
-	 * @covers ::add_menu_page
-	 */
-	public function test_add_menu_page() {
-		wp_set_current_user( self::$user_id );
-
-		$before = $this->get_private_property( $this->instance, 'hook_suffix' );
-
-		$this->instance->add_menu_page();
-
-		$after = $this->get_private_property( $this->instance, 'hook_suffix' );
-
-		$this->assertNull( $before );
-		$this->assertSame( 'admin_page_web-stories-experiments', $after );
-	}
-
-	/**
 	 * @covers ::initialize_settings
 	 */
 	public function test_initialize_settings() {

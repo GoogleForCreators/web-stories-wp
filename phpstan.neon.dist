@@ -31,7 +31,7 @@ parameters:
   checkMissingIterableValueType: false
   paths:
     - includes/
-  excludes_analyse:
+  excludePaths:
     - includes/vendor/*
     - includes/polyfills/*
   scanDirectories:
@@ -41,6 +41,8 @@ parameters:
     - tests/phpstan/stubs/wordpress-seo.php
     - tests/phpstan/stubs/wp-cli.php
     - tests/phpstan/stubs/wpdotcom.php
+  stubFiles:
+    - tests/phpstan/stubs/wordpress-override.php
   bootstrapFiles:
     - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
     - tests/phpstan/stubs/wordpress-defines.php

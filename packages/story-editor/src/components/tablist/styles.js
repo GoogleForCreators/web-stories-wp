@@ -138,11 +138,12 @@ export const PanelWrapper = styled.div`
         }
       }
 
-      * ${TabPanel} {
+      ${ScrollableContent} {
         height: 560px;
-        padding: 0 0 16px 16px;
-        overflow-y: scroll;
-        visibility: visible;
+
+        ${TabPanel} {
+          visibility: visible;
+        }
       }
     `};
 `;
@@ -182,18 +183,19 @@ export const Badge = styled.div`
 `;
 
 export const ScrollableContent = styled.div`
+  height: 0;
   max-height: ${({ maxHeight }) => (maxHeight ? `calc(${maxHeight})` : 'none')};
   overflow-y: ${({ maxHeight }) => (maxHeight ? 'scroll' : 'hidden')};
+  transition: height 300ms ease-in;
 `;
 
 export const TabPanel = styled.div`
-  height: 0;
   padding: 0;
   visibility: hidden;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  overflow: hidden;
   background: ${({ theme }) => theme.colors.bg.primary};
   transition: all 300ms ease-in;
+  margin: 0 0 16px 16px;
 
   ${themeHelpers.scrollbarCSS};
 `;

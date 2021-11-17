@@ -21,11 +21,11 @@ import { FlagsProvider } from 'flagged';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { screen, act, waitFor } from '@testing-library/react';
 import {
-  renderWithTheme,
   ConfigContext,
   StoryContext,
   CurrentUserContext,
 } from '@web-stories-wp/story-editor';
+import { renderWithTheme } from '@web-stories-wp/story-editor/src/testUtils';
 
 /**
  * Internal dependencies
@@ -50,6 +50,9 @@ function setup(_storyContextValue = {}) {
     api: {
       stories: '',
       storyLocking: '',
+    },
+    flags: {
+      enablePostLocking: true,
     },
   };
 
@@ -76,7 +79,7 @@ function setup(_storyContextValue = {}) {
   };
 
   return renderWithTheme(
-    <FlagsProvider features={{ enablePostLocking: true }}>
+    <FlagsProvider features={configValue.flags}>
       <ConfigContext.Provider value={configValue}>
         <StoryContext.Provider value={storyContextValue}>
           <CurrentUserContext.Provider value={userContextValue}>

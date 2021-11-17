@@ -34,7 +34,6 @@ use Google\Web_Stories\Renderer\Story\Embed;
  * Embed block class.
  */
 abstract class Embed_Base extends Service_Base {
-
 	/**
 	 * Script handle for frontend assets.
 	 *
@@ -50,14 +49,23 @@ abstract class Embed_Base extends Service_Base {
 	protected $assets;
 
 	/**
+	 * Context instance.
+	 *
+	 * @var Context Context instance.
+	 */
+	protected $context;
+
+	/**
 	 * Embed Base constructor.
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param Assets $assets            Assets instance.
+	 * @param Assets  $assets  Assets instance.
+	 * @param Context $context Context instance.
 	 */
-	public function __construct( Assets $assets ) {
-		$this->assets = $assets;
+	public function __construct( Assets $assets, Context $context ) {
+		$this->assets  = $assets;
+		$this->context = $context;
 	}
 
 	/**
@@ -68,22 +76,14 @@ abstract class Embed_Base extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		$this->assets->register_style_asset( self::SCRIPT_HANDLE );
-		// Set a style without a `src` allows us to just use the inline style below
-		// without needing an external stylesheet.
-		wp_styles()->registered[ self::SCRIPT_HANDLE ]->src = false;
-
-		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s.css', self::SCRIPT_HANDLE ) );
-		if ( is_rtl() ) {
-			$path = $this->assets->get_base_path( sprintf( 'assets/css/%s-rtl.css', self::SCRIPT_HANDLE ) );
+		if ( wp_style_is( self::SCRIPT_HANDLE, 'registered' ) ) {
+			return;
 		}
 
-		if ( is_readable( $path ) ) {
-			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+		$this->assets->register_style_asset( self::SCRIPT_HANDLE );
 
-			if ( $css ) {
-				wp_add_inline_style( self::SCRIPT_HANDLE, $css );
-			}
+		if ( defined( 'AMPFORWP_VERSION' ) ) {
+			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
 		}
 
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
@@ -98,6 +98,22 @@ abstract class Embed_Base extends Service_Base {
 	 */
 	public static function get_registration_action_priority(): int {
 		return 11;
+	}
+
+	/**
+	 * Prints required inline CSS when using the AMP for WP plugin.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return void
+	 */
+	public function add_amp_post_template_css() {
+		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s%s.css', self::SCRIPT_HANDLE, is_rtl() ? '-rtl' : '' ) );
+
+		if ( is_readable( $path ) ) {
+			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+			echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
 	}
 
 	/**
@@ -180,7 +196,7 @@ abstract class Embed_Base extends Service_Base {
 		if ( is_feed() ) {
 			$renderer = new Image( $story );
 		} else {
-			$renderer = new Embed( $story, $this->assets );
+			$renderer = new Embed( $story, $this->assets, $this->context );
 		}
 
 		return $renderer->render( $attributes );

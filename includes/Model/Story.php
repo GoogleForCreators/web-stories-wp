@@ -159,9 +159,13 @@ class Story {
 
 		$publisher_logo_id = (int) get_post_meta( $this->id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
 		if ( 0 !== $publisher_logo_id ) {
-			list ( $src, $width, $height ) = wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
-			$this->publisher_logo_size     = [ $width, $height ];
-			$this->publisher_logo          = $src;
+			$img_src = wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
+
+			if ( $img_src ) {
+				list ( $src, $width, $height ) = $img_src;
+				$this->publisher_logo_size     = [ $width, $height ];
+				$this->publisher_logo          = $src;
+			}
 		}
 
 		return true;

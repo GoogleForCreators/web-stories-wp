@@ -57,11 +57,11 @@ export function fetchSettings(apiPath) {
 /**
  * Update settings.
  *
- * @param {Object} queryParams Query parameters to apply to URL.
  * @param {string} apiPath API path.
+ * @param {Object} queryParams Query parameters to apply to URL.
  * @return {Promise} Request promise.
  */
-export function updateSettings(queryParams, apiPath) {
+export function updateSettings(apiPath, queryParams) {
   const {
     googleAnalyticsId,
     usingLegacyAnalytics,

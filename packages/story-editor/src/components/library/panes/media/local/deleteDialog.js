@@ -66,7 +66,7 @@ function DeleteDialog({ mediaId, type, onClose }) {
       trackError('local_media_deletion', err.message);
       showSnackbar({
         message: __('Failed to delete media item.', 'web-stories'),
-        dismissable: true,
+        dismissible: true,
       });
     }
   }, [

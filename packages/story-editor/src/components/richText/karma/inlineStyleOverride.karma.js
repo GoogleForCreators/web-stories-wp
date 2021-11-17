@@ -283,7 +283,9 @@ describe('Inline style override', () => {
     });
   });
 
-  it('should have correct formatting deleting text with one formatting, ending up in different formatting', async () => {
+  // TODO(#9388): Fix flaky test.
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should have correct formatting deleting text with one formatting, ending up in different formatting', async () => {
     // Toggle bold for entire selection
     await data.fixture.events.keyboard.shortcut('mod+b');
 

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -31,7 +31,6 @@ import useInsertElement from '../useInsertElement';
 
 describe('Right Click Menu integration', () => {
   let fixture;
-  let duplicatePageCarouselButton;
   let insertElement;
 
   beforeEach(async () => {
@@ -39,10 +38,6 @@ describe('Right Click Menu integration', () => {
     await fixture.render();
 
     insertElement = await fixture.renderHook(() => useInsertElement());
-
-    duplicatePageCarouselButton = fixture.screen.getByRole('button', {
-      name: /Duplicate Page/,
-    });
   });
 
   afterEach(async () => {
@@ -314,7 +309,7 @@ describe('Right Click Menu integration', () => {
     pages[0].elements.map((elem, index) => {
       // ids won't match
       const { id, ...originalElement } = elem;
-      const { id: newId, ...newElement } = pages[1].elements[index];
+      const { id: newId, basedOn, ...newElement } = pages[1].elements[index];
 
       expect(originalElement).toEqual(newElement);
     });
@@ -333,13 +328,56 @@ describe('Right Click Menu integration', () => {
     // after it is opened :grimacing:.
     it('right clicking away from the canvas should not open the custom right click menu', async () => {
       // right click outside canvas
-      await fixture.events.click(duplicatePageCarouselButton, {
-        button: 'right',
-      });
+      await fixture.events.click(
+        fixture.editor.canvas.pageActions.duplicatePage,
+        {
+          button: 'right',
+        }
+      );
       expect(
-        fixture.screen.queryByTestId(
-          'right-click-context-menu[aria-expanded="true"]'
-        )
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
+      ).toBeNull();
+    });
+
+    it('right clicking a layer in the layer panel should open the custom right click menu', async () => {
+      await addEarthImage();
+
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.layerPanel.layers[0],
+        {
+          button: 'right',
+        }
+      );
+
+      expect(rightClickMenu()).not.toBeNull();
+    });
+
+    it('should open and close the context menu using keyboard shortcuts', async () => {
+      // add an element to the page
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+
+      // only possible if element in canvas is focused
+      await fixture.events.focus(frame1);
+
+      // open right click menu
+      await fixture.events.keyboard.shortcut('mod+alt+shift+m');
+
+      expect(
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
+      ).not.toBeNull();
+
+      // close right click menu
+      await fixture.events.keyboard.press('esc');
+      expect(
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
       ).toBeNull();
     });
   });
@@ -680,7 +718,7 @@ describe('Right Click Menu integration', () => {
 
         // add border radius
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.borderRadius.radius()
+          fixture.editor.inspector.designPanel.sizePosition.radius()
         );
         await fixture.events.keyboard.type('50');
 
@@ -691,7 +729,7 @@ describe('Right Click Menu integration', () => {
 
         // add opacity
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.layerStyle.opacity
+          fixture.editor.inspector.designPanel.sizePosition.opacity
         );
         await fixture.events.keyboard.type('40');
 
@@ -746,7 +784,7 @@ describe('Right Click Menu integration', () => {
 
         // add border radius
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.borderRadius.radius()
+          fixture.editor.inspector.designPanel.sizePosition.radius()
         );
         await fixture.events.keyboard.type('50');
 
@@ -757,7 +795,7 @@ describe('Right Click Menu integration', () => {
 
         // add opacity
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.layerStyle.opacity
+          fixture.editor.inspector.designPanel.sizePosition.opacity
         );
         await fixture.events.keyboard.type('40');
 

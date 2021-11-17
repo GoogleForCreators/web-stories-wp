@@ -43,6 +43,7 @@ class Story_Sanitizer extends TestCase {
 					return $show;
 				},
 				'is_rtl'       => false,
+				'home_url'     => 'https://www.example.com',
 			]
 		);
 	}
@@ -257,31 +258,44 @@ class Story_Sanitizer extends TestCase {
 		$this->assertStringContainsString( ' lang="en-US"', $actual );
 	}
 
-	/**
-	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::transform_a_tags
-	 */
-	public function test_transform_a_tags() {
-		$source = '<html><head></head><body><amp-story><a href="https://www.google.com">Google</a></amp-story></body></html>';
-
-		$args = [
-			'publisher_logo' => '',
-			'publisher'      => '',
-			'poster_images'  => [],
-			'video_cache'    => false,
+	public function data_test_transform_a_tags() {
+		return [
+			'Link without rel or target attribute' => [
+				'<html><head></head><body><a href="https://www.google.com">Google</a></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><a href="https://www.google.com" target="_blank" rel="noreferrer">Google</a></body></html>',
+			],
+			'Link with existing rel="nofollow"'    => [
+				'<html><head></head><body><a href="https://www.google.com" rel="nofollow">Google</a></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><a href="https://www.google.com" rel="nofollow noreferrer" target="_blank">Google</a></body></html>',
+			],
+			'Link to same origin'                  => [
+				'<html><head></head><body><a href="https://www.example.com">My Site</a></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><a href="https://www.example.com" target="_blank">My Site</a></body></html>',
+			],
+			'Link to same origin with existing rel="noreferrer"' => [
+				'<html><head></head><body><a href="https://www.example.com" rel="noreferrer">My Site</a></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><a href="https://www.example.com" target="_blank">My Site</a></body></html>',
+			],
+			'Outlink'                              => [
+				'<html><head></head><body><amp-story-page-outlink layout="nodisplay"><a href="https://www.google.com/">Google</a></amp-story-page-outlink></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story-page-outlink layout="nodisplay"><a href="https://www.google.com/" target="_blank" rel="noreferrer">Google</a></amp-story-page-outlink></body></html>',
+			],
+			'Outlink to same origin'               => [
+				'<html><head></head><body><amp-story-page-outlink layout="nodisplay"><a href="https://www.example.com/">My Site</a></amp-story-page-outlink></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story-page-outlink layout="nodisplay"><a href="https://www.example.com/" target="_blank">My Site</a></amp-story-page-outlink></body></html>',
+			],
+			'Link with empty data attributes'      => [
+				'<html><head></head><body><a href="https://www.google.com" data-tooltip-icon="" data-tooltip-text="">Google</a></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><a href="https://www.google.com" target="_blank" rel="noreferrer">Google</a></body></html>',
+			],
 		];
-
-		$actual = $this->sanitize_and_get( $source, $args );
-
-		$this->assertStringContainsString( 'rel="noreferrer"', $actual );
-		$this->assertStringContainsString( 'target="_blank"', $actual );
 	}
 
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::transform_a_tags
+	 * @dataProvider data_test_transform_a_tags
 	 */
-	public function test_transform_a_tags_data_attributes() {
-		$source = '<html><head></head><body><amp-story><a href="https://www.google.com" data-tooltip-icon="" data-tooltip-text="">Google</a></amp-story></body></html>';
-
+	public function test_transform_a_tags( $source, $expected ) {
 		$args = [
 			'publisher_logo' => '',
 			'publisher'      => '',
@@ -291,8 +305,7 @@ class Story_Sanitizer extends TestCase {
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
-		$this->assertStringNotContainsString( 'data-tooltip-icon', $actual );
-		$this->assertStringNotContainsString( 'data-tooltip-text', $actual );
+		$this->assertSame( $expected, $actual );
 	}
 
 	/**
@@ -387,6 +400,24 @@ class Story_Sanitizer extends TestCase {
 	}
 
 	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_srcset
+	 */
+	public function test_sanitize_srcset_commas() {
+		$source = '<html><head></head><body><amp-story><amp-img src="https://example.com/image.jpg" width="100" height="100" srcset="https://example.com/image/1000,1000/image.jpg 1000w,https://example.com/image/768,1024/image-768x1024.jpg 768w,https://example.com/image/225,300/image-225x300.jpg 225w,https://example.com/image/150,200/image-150x200.jpg 150w"></amp-img></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertStringContainsString( 'srcset="https://example.com/image/1000,1000/image.jpg 1000w, https://example.com/image/768,1024/image-768x1024.jpg 768w, https://example.com/image/225,300/image-225x300.jpg 225w, https://example.com/image/150,200/image-150x200.jpg 150w"', $actual );
+	}
+
+	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_amp_story_page_outlink
 	 */
 	public function test_sanitize_amp_story_page_outlink() {
@@ -402,5 +433,40 @@ class Story_Sanitizer extends TestCase {
 		$actual = $this->sanitize_and_get( $source, $args );
 
 		$this->assertStringContainsString( '<amp-story-page-outlink layout="nodisplay">', $actual );
+	}
+
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_amp_story_page_outlink
+	 */
+	public function test_sanitize_amp_story_page_outlink_element_order() {
+		$source = '<html><head></head><body><amp-story><amp-story-page><amp-story-page-outlink layout="nodisplay" cta-image=""><a href="https://www.bonappeteach.com/smoked-apple-cider/" target="_blank" rel="noreferrer">Get The Recipe!</a></amp-story-page-outlink><amp-story-grid-layer></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertStringContainsString( '</amp-story-page-outlink></amp-story-page>', $actual );
+	}
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::remove_page_template_placeholder_images
+	 */
+	public function test_remove_page_template_placeholder_images() {
+		$source = '<html><head></head><body><amp-img src="https://example.com/wp-content/plugins/web-stories/assets/images/editor/grid-placeholder.png" width="100" height="100"></amp-img></body></html>';
+
+		$args = [
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertStringNotContainsString( 'amp-img', $actual );
 	}
 }

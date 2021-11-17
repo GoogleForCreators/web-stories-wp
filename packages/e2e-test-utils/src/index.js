@@ -38,7 +38,6 @@ export { default as toggleVideoOptimization } from './toggleVideoOptimization';
 export { default as deleteMedia } from './deleteMedia';
 export { default as deleteAllMedia } from './deleteAllMedia';
 export { default as deleteWidgets } from './deleteWidgets';
-export { default as getFileName } from './getFileName';
 export { default as trashAllPosts } from './trashAllPosts';
 export { default as trashAllTerms } from './trashAllTerms';
 export { default as visitAdminPage } from './visitAdminPage';
@@ -49,10 +48,14 @@ export { default as createNewPost } from './createNewPost';
 export { default as visitBlockWidgetScreen } from './visitBlockWidgetScreen';
 export { default as insertWidget } from './insertWidget';
 export * from './conditions';
+export { default as disableCheckbox } from './disableCheckbox';
+export { default as enableCheckbox } from './enableCheckbox';
+export { default as uploadPublisherLogoEditor } from './uploadPublisherLogoEditor';
 export {
   getEditedPostContent,
   setPostContent,
   enablePageDialogAccept,
   setBrowserViewport,
   insertBlock,
+  createURL,
 } from '@wordpress/e2e-test-utils';

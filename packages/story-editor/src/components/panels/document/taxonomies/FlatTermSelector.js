@@ -24,8 +24,9 @@ import {
   useState,
   useEffect,
 } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf, _n } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+import { useLiveRegion } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -65,6 +66,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
 
   const { undo } = useHistory(({ actions: { undo } }) => ({ undo }));
   const [searchResults, setSearchResults] = useState([]);
+  const speak = useLiveRegion('assertive');
 
   const handleFreeformTermsChange = useCallback(
     (termNames) => {
@@ -116,6 +118,14 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       per_page: 20,
     });
     setSearchResults(results);
+
+    const count = results.length;
+    const message = sprintf(
+      /* Translators: %d: Number of results. */
+      _n('%d result found.', '%d results found.', 'web-stories', 'web-stories'),
+      count
+    );
+    speak(message);
   }, 300);
 
   const tokens = useMemo(() => {

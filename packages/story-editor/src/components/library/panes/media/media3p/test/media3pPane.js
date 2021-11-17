@@ -227,6 +227,18 @@ describe('Media3pPane', () => {
     expect(container.querySelector('input')).toBeEnabled();
   });
 
+  it('should render <Media3pPane /> with the "Search Results" text', () => {
+    useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
+    useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
+    useMediaResult.searchTerm = 'cats';
+    renderWithTheme(<Media3pPane isActive />);
+
+    const subHeading = screen.getByTestId('media-subheading');
+
+    expect(getComputedStyle(subHeading).display).not.toBe('none');
+    expect(subHeading).toHaveTextContent('Search Results');
+  });
+
   it('should render <Media3pPane /> with disabled search when a category is selected', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
@@ -241,6 +253,7 @@ describe('Media3pPane', () => {
   it('should render <Media3pPane /> with the category display name when selected', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
+    useMediaResult.searchTerm = '';
     renderWithTheme(<Media3pPane isActive />);
 
     const subHeading = screen.getByTestId('media-subheading');

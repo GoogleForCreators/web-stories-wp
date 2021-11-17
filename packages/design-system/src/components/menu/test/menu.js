@@ -31,14 +31,16 @@ import { getOptions } from '../utils';
 
 const groupedOptions = getOptions(basicDropDownOptions);
 
-describe('<Menu />', () => {
-  const onClickMock = jest.fn();
+const onClickMock = jest.fn();
+const scrollTo = jest.fn();
 
-  // Mock scrollTo
-  const scrollTo = jest.fn();
-  Object.defineProperty(window.Element.prototype, 'scrollTo', {
-    writable: true,
-    value: scrollTo,
+describe('<Menu />', () => {
+  beforeAll(() => {
+    // Mock scrollTo
+    Object.defineProperty(window.Element.prototype, 'scrollTo', {
+      writable: true,
+      value: scrollTo,
+    });
   });
 
   it('should render a <Menu /> list with 12 items', () => {

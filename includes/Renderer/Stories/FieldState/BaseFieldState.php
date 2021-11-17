@@ -23,17 +23,32 @@
 
 namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Interfaces\Field;
 use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
 use Google\Web_Stories\Interfaces\FieldState;
-use Google\Web_Stories\Traits\Post_Type;
+use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class BaseFieldState.
  */
 class BaseFieldState implements FieldState {
-	use Post_Type;
+
+	/**
+	 * Post type has archive.
+	 *
+	 * @var bool
+	 */
+	protected $has_archive = false;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 */
+	public function __construct( Story_Post_Type $story_post_type ) {
+		$this->has_archive = (bool) $story_post_type->get_has_archive();
+	}
+
 	/**
 	 * Image alignment FieldState.
 	 *
@@ -110,12 +125,11 @@ class BaseFieldState implements FieldState {
 	 * @return Field
 	 */
 	public function archive_link() {
-		$has_archive = $this->get_post_type_has_archive( Story_Post_Type::POST_TYPE_SLUG );
 		return new BaseField(
 			[
 				'label'  => __( 'Display Archive Link', 'web-stories' ),
-				'show'   => $has_archive,
-				'hidden' => ! $has_archive,
+				'show'   => $this->has_archive,
+				'hidden' => ! $this->has_archive,
 			]
 		);
 	}

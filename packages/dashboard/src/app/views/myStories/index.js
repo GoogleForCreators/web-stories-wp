@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo } from '@web-stories-wp/react';
+import { useEffect, useMemo, useCallback } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -25,7 +25,6 @@ import { useEffect, useMemo } from '@web-stories-wp/react';
 import { ScrollToTop, Layout } from '../../../components';
 import { STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
-import { useConfig } from '../../config';
 import useApi from '../../api/useApi';
 import Content from './content';
 import Header from './header';
@@ -42,10 +41,12 @@ function MyStories() {
     storiesOrderById,
     totalPages,
     totalStoriesByStatus,
+    getAuthors,
   } = useApi(
     ({
       actions: {
         storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
+        usersApi: { getAuthors },
       },
       state: {
         stories: {
@@ -68,17 +69,40 @@ function MyStories() {
       storiesOrderById,
       totalPages,
       totalStoriesByStatus,
+      getAuthors,
     })
   );
 
-  const { filter, page, search, sort, view, showStoriesWhileLoading } =
+  const { filter, page, search, sort, view, showStoriesWhileLoading, author } =
     useStoryView({
       filters: STORY_STATUSES,
       isLoading,
       totalPages,
     });
 
-  const { wpListURL } = useConfig();
+  const { setQueriedAuthors } = author;
+  const queryAuthorsBySearch = useCallback(
+    (authorSearchTerm) => {
+      return getAuthors(authorSearchTerm).then((data) => {
+        const userData = data.map(({ id, name }) => ({
+          id,
+          name,
+        }));
+        setQueriedAuthors((exisitingUsers) => {
+          const exisitingUsersIds = exisitingUsers.map(({ id }) => id);
+          const newUsers = userData.filter(
+            (newUser) => !exisitingUsersIds.includes(newUser.id)
+          );
+          return [...exisitingUsers, ...newUsers];
+        });
+      });
+    },
+    [getAuthors, setQueriedAuthors]
+  );
+
+  useEffect(() => {
+    queryAuthorsBySearch();
+  }, [queryAuthorsBySearch]);
 
   useEffect(() => {
     fetchStories({
@@ -87,6 +111,7 @@ function MyStories() {
       sortDirection: sort.direction,
       sortOption: sort.value,
       status: filter.value,
+      author: author.filterId,
     });
   }, [
     fetchStories,
@@ -95,6 +120,7 @@ function MyStories() {
     search.keyword,
     sort.direction,
     sort.value,
+    author.filterId,
   ]);
 
   const orderedStories = useMemo(() => {
@@ -113,7 +139,8 @@ function MyStories() {
         stories={orderedStories}
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
-        wpListURL={wpListURL}
+        author={author}
+        queryAuthorsBySearch={queryAuthorsBySearch}
       />
 
       <Content

@@ -48,7 +48,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
       sizes,
     },
     web_stories_media_source: mediaSource,
-    is_muted: isMuted,
+    web_stories_is_muted: isMuted,
     trim_data: trimData,
   } = mediaPickerEl;
 

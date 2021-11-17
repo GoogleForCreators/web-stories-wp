@@ -71,7 +71,7 @@ export const MenuItem = ({
   const handleClick = useCallback(
     (ev) => {
       onClick(ev);
-      onDismiss();
+      onDismiss(ev);
     },
     [onClick, onDismiss]
   );

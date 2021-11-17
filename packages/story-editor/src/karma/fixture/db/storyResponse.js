@@ -25,7 +25,6 @@ const storyTags = [
     name: 'pizza',
     slug: 'pizza',
     taxonomy: 'web_story_tag',
-    _links: {},
   },
   {
     id: 2,
@@ -33,7 +32,6 @@ const storyTags = [
     name: 'burger',
     slug: 'burger',
     taxonomy: 'web_story_tag',
-    _links: {},
   },
   {
     id: 3,
@@ -41,7 +39,6 @@ const storyTags = [
     name: 'frenchFry',
     slug: 'frenchFry',
     taxonomy: 'web_story_tag',
-    _links: {},
   },
 ];
 const storyVerticals = [];
@@ -54,7 +51,6 @@ const storyCategories = [
     slug: 'booger',
     taxonomy: 'web_story_category',
     parent: 0,
-    _links: {},
   },
   {
     id: 2,
@@ -63,7 +59,6 @@ const storyCategories = [
     slug: 'multiple-words',
     taxonomy: 'web_story_category',
     parent: 0,
-    _links: {},
   },
   {
     id: 3,
@@ -72,7 +67,6 @@ const storyCategories = [
     slug: 'gold',
     taxonomy: 'web_story_category',
     parent: 0,
-    _links: {},
   },
 ];
 

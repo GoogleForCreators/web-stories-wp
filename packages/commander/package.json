@@ -3,14 +3,14 @@
   "private": true,
   "engines": {
     "node": ">= 16",
-    "npm": "~7"
+    "npm": ">= 7.3"
   },
   "type": "module",
   "bin": {
     "commander": "./src/index.js"
   },
   "dependencies": {
-    "commander": "^8.2.0",
+    "commander": "^8.3.0",
     "semver": "^7.3.5"
   }
 }

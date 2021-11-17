@@ -49,6 +49,7 @@ describe('Get Started Story', () => {
   });
 
   describe('Author User', () => {
+    // eslint-disable-next-line jest/require-hook
     withUser('author', 'password');
 
     it('should pre-fill post title and post content', async () => {

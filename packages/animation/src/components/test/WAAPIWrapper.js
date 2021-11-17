@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-jest.mock('flagged');
 import { render } from '@testing-library/react';
 import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
@@ -29,8 +28,12 @@ import * as useStoryAnimationContext from '../useStoryAnimationContext';
 import Provider from '../provider';
 import WAAPIWrapper from '../WAAPIWrapper';
 
+jest.mock('flagged');
+
 describe('StoryAnimation.WAAPIWrapper', () => {
-  useFeature.mockImplementation(() => true);
+  beforeAll(() => {
+    useFeature.mockImplementation(() => true);
+  });
 
   it('renders composed animations top down', () => {
     const useStoryAnimationContextMock = jest.spyOn(

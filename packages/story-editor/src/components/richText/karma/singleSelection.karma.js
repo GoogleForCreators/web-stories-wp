@@ -49,24 +49,30 @@ describe('Styling single text field', () => {
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
-    // TODO #6955
-    // When fixing this, ensure that uppercase is also handled here.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should apply inline formatting correctly for single-style text field', async () => {
-      const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+    it('should apply inline formatting correctly for single-style text field', async () => {
+      const {
+        bold,
+        italic,
+        underline,
+        uppercase,
+        fontWeight,
+        letterSpacing,
+        fontColor,
+      } = data.fixture.editor.inspector.designPanel.textStyle;
 
       // Check all styles are default
       expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
       expect(underline.checked).toBe(false);
+      expect(uppercase.checked).toBe(false);
       expect(fontWeight.value).toBe('Regular');
       expect(letterSpacing.value).toBe('0%');
       expect(fontColor.hex.value).toBe('000000');
 
-      // Toggle italic and underline
+      // Toggle italic, underline, and uppercase
       await data.fixture.events.click(italic.button);
       await data.fixture.events.click(underline.button, { clickCount: 1 });
+      await data.fixture.events.click(uppercase.button, { clickCount: 1 });
       // Set font weight (should also toggle bold, as "Black" is >700)
       await data.fixture.events.click(fontWeight.select);
       await data.fixture.events.sleep(300);
@@ -90,6 +96,7 @@ describe('Styling single text field', () => {
       expect(bold.checked).toBe(true);
       expect(italic.checked).toBe(true);
       expect(underline.checked).toBe(true);
+      expect(uppercase.checked).toBe(true);
       expect(fontWeight.value).toBe('Black');
       expect(letterSpacing.value).toBe('50%');
       expect(fontColor.hex.value).toBe('AA4400');
@@ -102,6 +109,7 @@ describe('Styling single text field', () => {
         'text-decoration: underline',
         'color: #a40',
         'letter-spacing: 0.5em',
+        'text-transform: uppercase',
       ].join('; ');
       const expected = `<span style="${css}">Fill in some text</span>`;
       expect(actual).toBe(expected);

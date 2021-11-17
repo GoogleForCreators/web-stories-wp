@@ -63,7 +63,7 @@ export const SelectableTitle = styled(Text).attrs({
   tabIndex: 0,
   isBold: true,
 })`
-  color: ${({ theme }) => theme.colors.fg.linkNormal};
+  color: ${({ theme }) => theme.colors.blue[70]};
   cursor: pointer;
 
   ${({ theme }) =>

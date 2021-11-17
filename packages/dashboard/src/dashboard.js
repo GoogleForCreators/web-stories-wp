@@ -26,6 +26,7 @@ import {
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -38,31 +39,33 @@ import { GlobalStyle } from './theme';
 import { KeyboardOnlyOutline } from './utils';
 
 function Dashboard({ config, children }) {
-  const { isRTL } = config;
+  const { isRTL, flags } = config;
   const activeTheme = {
     ...externalDesignSystemTheme,
     colors: lightMode,
   };
   return (
-    <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
-      <ThemeProvider theme={activeTheme}>
-        <ThemeGlobals.Styles />
-        <ModalGlobalStyle />
-        <ConfigProvider config={config}>
-          <ApiProvider>
-            <NavProvider>
-              <RouterProvider>
-                <SnackbarProvider>
-                  <GlobalStyle />
-                  <KeyboardOnlyOutline />
-                  {children}
-                </SnackbarProvider>
-              </RouterProvider>
-            </NavProvider>
-          </ApiProvider>
-        </ConfigProvider>
-      </ThemeProvider>
-    </StyleSheetManager>
+    <FlagsProvider features={flags}>
+      <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
+        <ThemeProvider theme={activeTheme}>
+          <ThemeGlobals.Styles />
+          <ModalGlobalStyle />
+          <ConfigProvider config={config}>
+            <ApiProvider>
+              <NavProvider>
+                <RouterProvider>
+                  <SnackbarProvider>
+                    <GlobalStyle />
+                    <KeyboardOnlyOutline />
+                    {children}
+                  </SnackbarProvider>
+                </RouterProvider>
+              </NavProvider>
+            </ApiProvider>
+          </ConfigProvider>
+        </ThemeProvider>
+      </StyleSheetManager>
+    </FlagsProvider>
   );
 }
 

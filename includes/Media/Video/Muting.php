@@ -55,7 +55,7 @@ class Muting extends Service_Base {
 	 *
 	 * @var string
 	 */
-	const IS_MUTED_KEY = 'is_muted';
+	const IS_MUTED_REST_API_KEY = 'web_stories_is_muted';
 
 	/**
 	 * Register.
@@ -116,7 +116,7 @@ class Muting extends Service_Base {
 	public function rest_api_init() {
 		register_rest_field(
 			'attachment',
-			self::IS_MUTED_KEY,
+			self::IS_MUTED_REST_API_KEY,
 			[
 				'get_callback'    => [ $this, 'get_callback_is_muted' ],
 				'schema'          => [
@@ -147,7 +147,7 @@ class Muting extends Service_Base {
 			return $response;
 		}
 		if ( 'video' === $response['type'] ) {
-			$response[ self::IS_MUTED_KEY ] = $this->get_callback_is_muted( $response );
+			$response[ self::IS_MUTED_REST_API_KEY ] = $this->get_callback_is_muted( $response );
 		}
 
 		return $response;
@@ -185,11 +185,10 @@ class Muting extends Service_Base {
 	 */
 	public function update_callback_is_muted( $value, $object ) {
 		$object_id = $object->ID;
-		$name      = self::IS_MUTED_KEY;
+		$name      = self::IS_MUTED_REST_API_KEY;
 		$meta_key  = self::IS_MUTED_POST_META_KEY;
-		$meta_type = 'post';
 
-		if ( ! current_user_can( "edit_{$meta_type}_meta", $object_id, $meta_key ) ) {
+		if ( ! current_user_can( 'edit_post_meta', $object_id, $meta_key ) ) {
 			return new WP_Error(
 				'rest_cannot_update',
 				/* translators: %s: Custom field key.**/
@@ -201,6 +200,8 @@ class Muting extends Service_Base {
 			);
 		}
 
-		return (bool) update_metadata( $meta_type, $object_id, $meta_key, (int) $value );
+		update_post_meta( $object_id, $meta_key, $value );
+
+		return true;
 	}
 }

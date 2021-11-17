@@ -3,7 +3,7 @@
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Settings;
-use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
 use WP_REST_Server;
 
@@ -14,7 +14,7 @@ use WP_REST_Server;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Publisher_Logos_Controller
  */
-class Publisher_Logos_Controller extends Test_REST_TestCase {
+class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @var WP_REST_Server
 	 */
@@ -90,7 +90,7 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->controller = new \Google\Web_Stories\REST_API\Publisher_Logos_Controller( new Settings() );
+		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Publisher_Logos_Controller::class );
 	}
 
 	public function tear_down() {
@@ -313,6 +313,92 @@ class Publisher_Logos_Controller extends Test_REST_TestCase {
 		);
 		$this->assertEqualSets( [ self::$attachment_id_1, self::$attachment_id_2 ], $publisher_logos );
 		$this->assertSame( self::$attachment_id_1, $active_publisher_logo_id );
+	}
+
+	/**
+	 * @covers ::permissions_check
+	 * @covers ::create_item
+	 */
+	public function test_create_item_multiple() {
+		$this->controller->register();
+
+		wp_set_current_user( self::$admin );
+
+		$request = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/publisher-logos' );
+		$request->set_body_params(
+			[
+				'id' => [ self::$attachment_id_1, self::$attachment_id_2 ],
+			]
+		);
+		$response = rest_get_server()->dispatch( $request );
+
+		$publisher_logos          = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+		$active_publisher_logo_id = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+
+		$data = $response->get_data();
+		$this->assertEqualSetsWithIndex(
+			[
+				[
+					'id'     => self::$attachment_id_1,
+					'title'  => get_the_title( self::$attachment_id_1 ),
+					'url'    => wp_get_attachment_url( self::$attachment_id_1 ),
+					'active' => true,
+					'_links' => [
+						'self'       => [
+							[
+								'href' => rest_url( 'web-stories/v1/publisher-logos/' . self::$attachment_id_1 ),
+							],
+						],
+						'collection' => [
+							[
+								'href' => rest_url( 'web-stories/v1/publisher-logos' ),
+							],
+						],
+					],
+				],
+				[
+					'id'     => self::$attachment_id_2,
+					'title'  => get_the_title( self::$attachment_id_2 ),
+					'url'    => wp_get_attachment_url( self::$attachment_id_2 ),
+					'active' => false,
+					'_links' => [
+						'self'       => [
+							[
+								'href' => rest_url( 'web-stories/v1/publisher-logos/' . self::$attachment_id_2 ),
+							],
+						],
+						'collection' => [
+							[
+								'href' => rest_url( 'web-stories/v1/publisher-logos' ),
+							],
+						],
+					],
+				],
+			],
+			$data
+		);
+		$this->assertEqualSets( [ self::$attachment_id_1, self::$attachment_id_2 ], $publisher_logos );
+		$this->assertSame( self::$attachment_id_1, $active_publisher_logo_id );
+	}
+
+	/**
+	 * @covers ::permissions_check
+	 * @covers ::create_item
+	 */
+	public function test_create_item_empty_array() {
+		$this->controller->register();
+
+		wp_set_current_user( self::$admin );
+
+		$request = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/publisher-logos' );
+		$request->set_body_params(
+			[
+				'id' => [],
+			]
+		);
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertErrorResponse( 'rest_invalid_id', $response );
 	}
 
 	/**

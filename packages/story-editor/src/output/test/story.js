@@ -27,12 +27,14 @@ import { renderToStaticMarkup } from '@web-stories-wp/react';
 import StoryOutput from '../story';
 
 describe('Story output', () => {
-  useFeature.mockImplementation((feature) => {
-    const config = {
-      enableAnimation: true,
-    };
+  beforeAll(() => {
+    useFeature.mockImplementation((feature) => {
+      const config = {
+        enableAnimation: true,
+      };
 
-    return config[feature];
+      return config[feature];
+    });
   });
 
   it('should include Google Fonts stylesheet', () => {

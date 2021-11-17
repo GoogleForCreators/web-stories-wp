@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
-import { v4 as uuidv4 } from 'uuid';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
@@ -28,9 +27,8 @@ import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
  */
 import { useStory } from '../story';
 import { LAYER_DIRECTIONS } from '../../constants';
-import { getPastedCoordinates } from '../../utils/copyPaste';
 import getKeyboardMovement from '../../utils/getKeyboardMovement';
-import { getDefinitionForType } from '../../elements';
+import { getDefinitionForType, duplicateElement } from '../../elements';
 import { useTransform } from '../../components/transform';
 import useAddPastedElements from './useAddPastedElements';
 import { useCanvas } from '.';
@@ -236,30 +234,29 @@ function useCanvasKeys(ref) {
     if (selectedElements.length === 0) {
       return;
     }
-    const elementIdTransferMap = {};
-    const clonedElements = selectedElements
+    const { elements, animations } = selectedElements
       // Filter out the background element (never makes sense to clone that)
       .filter(({ isBackground }) => !isBackground)
-      .map(({ id, x, y, ...rest }) => {
-        elementIdTransferMap[id] = uuidv4();
-        return {
-          ...getPastedCoordinates(x, y),
-          id: elementIdTransferMap[id],
-          basedOn: id,
-          ...rest,
-        };
-      });
-    const clonedAnimations = selectedElementAnimations
-      .map((animation) => ({
-        ...animation,
-        id: uuidv4(),
-        targets: animation.targets
-          .map((id) => elementIdTransferMap[id])
-          .filter((v) => v),
-      }))
-      .filter((animation) => animation.targets.length > 0);
+      .reduce(
+        ({ elements, animations }, selectedElement) => {
+          const { element, elementAnimations } = duplicateElement({
+            element: selectedElement,
+            animations: selectedElementAnimations,
+            existingElements: selectedElements,
+          });
 
-    addPastedElements(clonedElements, clonedAnimations);
+          return {
+            elements: [...elements, element],
+            animations: [...animations, ...elementAnimations],
+          };
+        },
+        {
+          elements: [],
+          animations: [],
+        }
+      );
+
+    addPastedElements(elements, animations);
   }, [addPastedElements, selectedElements, selectedElementAnimations]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);

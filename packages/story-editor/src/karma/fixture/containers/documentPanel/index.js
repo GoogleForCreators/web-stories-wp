@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { Container } from '../container';
-import { CategoriesAndTags } from './categoriesAndTags';
+import { Taxonomies } from './taxonomies';
 
 export class DocumentPanel extends Container {
   constructor(node, path) {
@@ -35,11 +35,11 @@ export class DocumentPanel extends Container {
     });
   }
 
-  get categoriesAndTags() {
+  get taxonomies() {
     return this._get(
-      this.getByRole('region', { name: /Categories and Tags/ }),
-      'categoriesAndTags',
-      CategoriesAndTags
+      this.getByRole('region', { name: /Taxonomies/ }),
+      'taxonomies',
+      Taxonomies
     );
   }
 

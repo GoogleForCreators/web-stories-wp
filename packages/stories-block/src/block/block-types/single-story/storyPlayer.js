@@ -34,13 +34,18 @@ function StoryPlayer({ url, title, poster, width, height }, ref) {
       }}
       data-testid="amp-story-player"
     >
-      <a
-        href={url}
-        style={{
-          ['--story-player-poster']: poster ? `url('${poster}')` : undefined,
-        }}
-      >
-        {title}
+      <a href={url}>
+        {poster ? (
+          <img
+            alt={title}
+            src={poster}
+            width={width}
+            height={height}
+            data-amp-story-player-poster-img
+          />
+        ) : (
+          title
+        )}
       </a>
     </amp-story-player>
   );

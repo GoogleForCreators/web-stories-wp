@@ -57,6 +57,7 @@ describe('Inserting Media from Dialog', () => {
   });
 
   describe('Contributor User', () => {
+    // eslint-disable-next-line jest/require-hook
     withUser('contributor', 'password');
 
     it('should display permission error dialog', async () => {

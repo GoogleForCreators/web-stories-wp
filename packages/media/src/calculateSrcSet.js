@@ -46,7 +46,9 @@ function calculateSrcSet(resource) {
         []
       )
       .filter((s) => s && s.source_url && s.width)
-      .map((s) => `${encodeURI(s.source_url)} ${s.width}w`)
+      .map(
+        (s) => `${encodeURI(s.source_url).replaceAll(',', '%2C')} ${s.width}w`
+      )
       .join(',')
   );
 }

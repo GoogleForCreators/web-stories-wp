@@ -32,6 +32,10 @@ import { useGridViewKeys } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import {
+  DEFAULT_GRID_IMG_HEIGHT,
+  DEFAULT_GRID_IMG_WIDTH,
+} from '../../constants';
+import {
   GalleryContainer,
   ThumbnailButton,
   Thumbnails,
@@ -117,7 +121,12 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
             <picture>
               <source srcSet={poster.webp} type="image/webp" />
               <source srcSet={poster.png} type="image/png" />
-              <img src={poster.png} alt={getPosterAltCopy(pageNumber)} />
+              <img
+                src={poster.png}
+                alt={getPosterAltCopy(pageNumber)}
+                width={DEFAULT_GRID_IMG_WIDTH}
+                height={DEFAULT_GRID_IMG_HEIGHT}
+              />
             </picture>
           </ThumbnailButton>
         </div>
@@ -160,6 +169,8 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
             <img
               src={galleryPosters[selectedGridItemIndex].png}
               alt={getPosterAltCopy(selectedGridItemIndex + 1)}
+              width={DEFAULT_GRID_IMG_WIDTH}
+              height={DEFAULT_GRID_IMG_HEIGHT}
             />
           </picture>
         )}

@@ -22,7 +22,7 @@ import { renderWithProviders } from '@web-stories-wp/design-system/src/testUtils
 /**
  * Internal dependencies
  */
-import Hierarchical from '..';
+import Hierarchical, { makeFlatOptionTree } from '..';
 import { noop } from '../../../../utils/noop';
 
 const OPTIONS = [
@@ -39,67 +39,16 @@ const OPTIONS = [
   { id: 5, label: 'zebra fish', checked: true },
 ];
 
-const OPTIONS_WITH_NO_CHILDREN = OPTIONS.filter((option) => !option.parent);
-
 describe('Hierarchical', () => {
-  it('typing in the list should filter the first level options', () => {
-    renderWithProviders(
-      <Hierarchical
-        label="Categories"
-        options={OPTIONS_WITH_NO_CHILDREN}
-        onChange={noop}
-        noOptionsText="no options found"
-      />
-    );
-    const input = screen.getByRole('searchbox');
-
-    fireEvent.change(input, { target: { value: 'p' } });
-
-    const options = screen.getAllByRole('checkbox');
-
-    expect(options).toHaveLength(3);
-    expect(screen.getByRole('checkbox', { name: 'apple' })).toBeInTheDocument();
-    expect(
-      screen.getByRole('checkbox', { name: 'cantaloupe' })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('checkbox', { name: 'papaya' })
-    ).toBeInTheDocument();
-  });
-
-  it('typing in the list should filter nested options', () => {
-    renderWithProviders(
-      <Hierarchical
-        label="Categories"
-        options={OPTIONS}
-        onChange={noop}
-        noOptionsText="no options found"
-      />
-    );
-    const input = screen.getByRole('searchbox');
-
-    fireEvent.change(input, { target: { value: 'orgi' } });
-
-    const options = screen.getAllByRole('checkbox');
-
-    expect(options).toHaveLength(6);
-    expect(screen.getByRole('checkbox', { name: 'apple' })).toBeInTheDocument();
-    expect(screen.getByRole('checkbox', { name: 'corgi' })).toBeInTheDocument();
-    expect(screen.getByRole('checkbox', { name: 'morgi' })).toBeInTheDocument();
-    expect(
-      screen.getByRole('checkbox', { name: 'papaya' })
-    ).toBeInTheDocument();
-    expect(screen.getByRole('checkbox', { name: 'trees' })).toBeInTheDocument();
-    expect(screen.getByRole('checkbox', { name: 'porgi' })).toBeInTheDocument();
-  });
-
   it('clicking a checkbox should call onChange with the path and new value', () => {
     const onChange = jest.fn();
 
     renderWithProviders(
       <Hierarchical
+        inputValue=""
+        onInputChange={noop}
         label="Categories"
-        options={OPTIONS}
+        options={makeFlatOptionTree(OPTIONS)}
         onChange={onChange}
         noOptionsText="no options found"
       />
@@ -150,16 +99,14 @@ describe('Hierarchical', () => {
 
     renderWithProviders(
       <Hierarchical
+        inputValue="orgi"
+        onInputChange={noop}
         label="Categories"
-        options={OPTIONS}
+        options={makeFlatOptionTree(OPTIONS, 'orgi')}
         onChange={onChange}
         noOptionsText="no options found"
       />
     );
-
-    const input = screen.getByRole('searchbox');
-
-    fireEvent.change(input, { target: { value: 'orgi' } });
 
     const initialCheckboxLength = screen.getAllByRole('checkbox').length;
 

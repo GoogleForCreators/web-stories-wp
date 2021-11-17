@@ -56,11 +56,6 @@ const arrangePage =
   ({ pageId, position }) =>
     dispatch({ type: types.ARRANGE_PAGE, payload: { pageId, position } });
 
-const replaceCurrentPage =
-  (dispatch) =>
-  ({ page }) =>
-    dispatch({ type: types.REPLACE_CURRENT_PAGE, payload: { page } });
-
 const setCurrentPage =
   (dispatch) =>
   ({ pageId }) =>
@@ -122,6 +117,14 @@ const updateElementById =
     dispatch({
       type: types.UPDATE_ELEMENTS,
       payload: { elementIds: [elementId], properties },
+    });
+
+const duplicateElementById =
+  (dispatch) =>
+  ({ elementId }) =>
+    dispatch({
+      type: types.DUPLICATE_ELEMENT_BY_ID,
+      payload: { elementId },
     });
 
 const updateSelectedElements =
@@ -216,7 +219,6 @@ export const exposedActions = {
   updatePageProperties,
   updateCurrentPageProperties,
   arrangePage,
-  replaceCurrentPage,
   setCurrentPage,
   addElements,
   addElement,
@@ -227,6 +229,7 @@ export const exposedActions = {
   updateElementsByResourceId,
   deleteElementsByResourceId,
   updateElementById,
+  duplicateElementById,
   updateSelectedElements,
   combineElements,
   setBackgroundElement,

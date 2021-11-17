@@ -23,7 +23,7 @@
       "web_stories_is_poster": false,
       "web_stories_poster_id": 0
     },
-    "is_muted": false,
+    "web_stories_is_muted": false,
     "permalink_template": "http://localhost:8899/?attachment_id=775",
     "generated_slug": "brochure",
     "featured_media_src": "",
@@ -69,39 +69,7 @@
     },
     "post": null,
     "source_url": "http://localhost:8899/wp-content/uploads/2020/04/brochure.pdf",
-    "missing_image_sizes": [],
-    "_links": {
-      "self": [
-        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/775" }
-      ],
-      "collection": [
-        { "href": "http://localhost:8899/wp-json/web-stories/v1/media" }
-      ],
-      "about": [
-        { "href": "http://localhost:8899/wp-json/wp/v2/types/attachment" }
-      ],
-      "author": [
-        {
-          "embeddable": true,
-          "href": "http://localhost:8899/wp-json/wp/v2/users/1"
-        }
-      ],
-      "replies": [
-        {
-          "embeddable": true,
-          "href": "http://localhost:8899/wp-json/wp/v2/comments?post=775"
-        }
-      ],
-      "wp:action-unfiltered-html": [
-        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/775" }
-      ],
-      "wp:action-assign-author": [
-        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/775" }
-      ],
-      "curies": [
-        { "name": "wp", "href": "https://api.w.org/{rel}", "templated": true }
-      ]
-    }
+    "missing_image_sizes": []
   },
   {
     "id": 768,
@@ -127,7 +95,7 @@
       "web_stories_is_poster": false,
       "web_stories_poster_id": 0
     },
-    "is_muted": false,
+    "web_stories_is_muted": false,
     "permalink_template": "http://localhost:8899/?attachment_id=768",
     "generated_slug": "testImage",
     "featured_media_src": "",
@@ -211,38 +179,6 @@
     },
     "post": null,
     "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg",
-    "missing_image_sizes": [],
-    "_links": {
-      "self": [
-        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/768" }
-      ],
-      "collection": [
-        { "href": "http://localhost:8899/wp-json/web-stories/v1/media" }
-      ],
-      "about": [
-        { "href": "http://localhost:8899/wp-json/wp/v2/types/attachment" }
-      ],
-      "author": [
-        {
-          "embeddable": true,
-          "href": "http://localhost:8899/wp-json/wp/v2/users/1"
-        }
-      ],
-      "replies": [
-        {
-          "embeddable": true,
-          "href": "http://localhost:8899/wp-json/wp/v2/comments?post=768"
-        }
-      ],
-      "wp:action-unfiltered-html": [
-        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/768" }
-      ],
-      "wp:action-assign-author": [
-        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/768" }
-      ],
-      "curies": [
-        { "name": "wp", "href": "https://api.w.org/{rel}", "templated": true }
-      ]
-    }
+    "missing_image_sizes": []
   }
 ]

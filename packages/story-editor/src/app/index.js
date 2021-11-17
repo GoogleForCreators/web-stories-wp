@@ -37,6 +37,7 @@ import { useLayout } from './layout';
 import { useCurrentUser } from './currentUser';
 import { useHelpCenter } from './helpCenter';
 import { useUserOnboarding } from './userOnboarding';
+import useRightClickMenu from './rightClickMenu/useRightClickMenu';
 
 export {
   useHistory,
@@ -57,4 +58,5 @@ export {
   useCurrentUser,
   useHelpCenter,
   useUserOnboarding,
+  useRightClickMenu,
 };

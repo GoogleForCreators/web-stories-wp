@@ -19,7 +19,6 @@ export { default as addPage } from './addPage';
 export { default as deletePage } from './deletePage';
 export { default as updatePage } from './updatePage';
 export { default as arrangePage } from './arrangePage';
-export { default as replaceCurrentPage } from './replaceCurrentPage';
 
 // Manipulate elements on a page.
 export { default as addElements } from './addElements';
@@ -30,6 +29,7 @@ export { default as deleteElementsByResourceId } from './deleteElementsByResourc
 export { default as setBackgroundElement } from './setBackgroundElement';
 export { default as arrangeElement } from './arrangeElement';
 export { default as combineElements } from './combineElements';
+export { default as duplicateElementById } from './duplicateElementById';
 
 // Manipulate current page.
 export { default as setCurrentPage } from './setCurrentPage';

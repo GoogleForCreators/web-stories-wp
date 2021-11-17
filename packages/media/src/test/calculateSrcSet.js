@@ -304,4 +304,39 @@ describe('calculateSrcSet', () => {
       'image.jpg 1000w,image-768x1024.jpg 768w,image-225x300.jpg 225w,image-150x200.jpg 150w'
     );
   });
+
+  it('should not break image URLs with commas in them', () => {
+    const resource = {
+      src: 'image.jpg',
+      width: 640,
+      height: 853,
+      sizes: {
+        thumbnail: {
+          width: 150,
+          height: 200,
+          source_url:
+            'https://example.com/images/w_150,h_200,c_scale/image.jpg?_i=AA',
+        },
+        medium: {
+          width: 225,
+          height: 300,
+          source_url:
+            'https://example.com/images/w_225,h_300,c_scale/image.jpg?_i=AA',
+        },
+        full: {
+          width: 640,
+          height: 853,
+          source_url:
+            'https://example.com/images/w_640,h_853,c_scale/image.jpg?_i=AA',
+        },
+      },
+    };
+
+    const srcSet = calculateSrcSet(resource);
+    expect(srcSet).toBe(
+      'https://example.com/images/w_640%2Ch_853%2Cc_scale/image.jpg?_i=AA 640w,' +
+        'https://example.com/images/w_225%2Ch_300%2Cc_scale/image.jpg?_i=AA 225w,' +
+        'https://example.com/images/w_150%2Ch_200%2Cc_scale/image.jpg?_i=AA 150w'
+    );
+  });
 });

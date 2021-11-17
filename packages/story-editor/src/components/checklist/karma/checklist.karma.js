@@ -47,10 +47,12 @@ describe('Checklist integration', () => {
     let clickCount = 1;
     while (clickCount <= count) {
       // eslint-disable-next-line no-await-in-loop
-      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+      await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
-        expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
+        expect(fixture.editor.footer.carousel.pages.length).toBe(
+          clickCount + 1
+        );
       });
       clickCount++;
     }
@@ -425,10 +427,12 @@ describe('Checklist integration - Card visibility', () => {
     let clickCount = 1;
     while (clickCount <= count) {
       // eslint-disable-next-line no-await-in-loop
-      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+      await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
-        expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
+        expect(fixture.editor.footer.carousel.pages.length).toBe(
+          clickCount + 1
+        );
       });
       clickCount++;
     }
@@ -439,23 +443,6 @@ describe('Checklist integration - Card visibility', () => {
     await fixture.events.click(toggleButton);
     // wait for animation
     await fixture.events.sleep(500);
-  };
-
-  /**
-   * Add poster image to story that has
-   * - width less than the minimum allowed poster image width
-   * - height less than the minimum allowed poster image height
-   *
-   * This will trigger an a11y issue in the checklist.
-   */
-  const addPosterImageWithIssues = async () => {
-    // open the document panel
-    await fixture.events.click(fixture.editor.inspector.documentTab);
-
-    // open the menu - mock will add picture automatically
-    await fixture.events.click(
-      fixture.editor.inspector.documentPanel.posterMenuButton
-    );
   };
 
   /**
@@ -530,56 +517,6 @@ describe('Checklist integration - Card visibility', () => {
     );
   };
 
-  describe('hasUploadMediaAction=true', () => {
-    beforeEach(async () => {
-      fixture = new Fixture();
-      fixture.setFlags({ enableChecklistCompanion: true });
-
-      fixture.setConfig({ capabilities: { hasUploadMediaAction: true } });
-      await fixture.render();
-    });
-
-    afterEach(() => {
-      fixture.restore();
-    });
-
-    /**
-     * Check if a card is visible in the application.
-     *
-     * @param {string} title Title of the card
-     */
-    const checkIfCardExists = async (title) => {
-      const card = await fixture.screen.queryByText(title);
-
-      expect(card).not.toBeNull();
-    };
-
-    it(`should show cards that require the \`hasUploadMediaAction\` permission`, async () => {
-      // add issues to checklist that need to be resolved by uploading media
-      await addImageWithIssues();
-      await addVideoWithIssues();
-
-      // show all checkpoints
-      await addPages(4);
-      await openChecklist();
-
-      priorityIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
-
-      // add poster image to see new problems
-      await addPosterImageWithIssues();
-      posterIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
-
-      // open design tab
-      await fixture.events.click(fixture.editor.checklist.designTab);
-
-      designIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
-
-      accessibilityIssuesRequiringMediaUploadPermissions.forEach(
-        checkIfCardExists
-      );
-    });
-  });
-
   describe('hasUploadMediaAction=false', () => {
     beforeEach(async () => {
       fixture = new Fixture({
@@ -604,41 +541,6 @@ describe('Checklist integration - Card visibility', () => {
               permalink_template: 'http://stories3.local/stories/%pagename%/',
               style_presets: { textStyles: [], colors: [] },
               password: '',
-              _embedded: {
-                author: [{ id: 1, name: 'John Doe' }],
-                'wp:featuredmedia': [
-                  {
-                    id: 2,
-                    source_url: 'http://localhost:9876/__static__/earth.jpg',
-                    height: 200,
-                    width: 200,
-                  },
-                ],
-                'wp:publisherlogo': [
-                  {
-                    id: 0,
-                    source_url: 'http://localhost:9876/__static__/earth.jpg',
-                  },
-                ],
-              },
-              _links: {
-                'wp:action-assign-author': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:action-delete': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:action-publish': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:action-unfiltered-html': {
-                  href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
-                },
-                'wp:featuredmedia': {
-                  embeddable: true,
-                  href: 'http://stories.local/wp-json/web-stories/v1/media/2',
-                },
-              },
             }),
         },
       });

@@ -26,10 +26,12 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasRequirements;
+
 /**
  * Class AdSense
  */
-class AdSense extends Service_Base {
+class AdSense extends Service_Base implements HasRequirements {
 	/**
 	 * Settings instance.
 	 *
@@ -59,6 +61,19 @@ class AdSense extends Service_Base {
 	 */
 	public function register() {
 		add_action( 'web_stories_print_analytics', [ $this, 'print_adsense_tag' ] );
+	}
+
+	/**
+	 * Get the list of service IDs required for this service to be registered.
+	 *
+	 * Needed because settings needs to be registered first.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
+	 */
+	public static function get_requirements(): array {
+		return [ 'settings' ];
 	}
 
 	/**

@@ -33,6 +33,7 @@ import {
 } from '../../../../../../app/media/utils';
 import { useConfig } from '../../../../../../app/config';
 import { useAPI } from '../../../../../../app/api';
+import useCORSProxy from '../../../../../../utils/useCORSProxy';
 
 function getErrorMessage(code, description) {
   switch (code) {
@@ -66,9 +67,10 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   } = useAPI();
 
   const { uploadVideoPoster } = useUploadVideoFrame({});
+  const { getProxiedUrl } = useCORSProxy();
 
   const insertMedia = useCallback(
-    async (hotlinkData) => {
+    async (hotlinkData, needsProxy) => {
       const {
         ext,
         type,
@@ -77,21 +79,36 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       } = hotlinkData;
 
       try {
-        const resource = await getResourceFromUrl(link, type);
-        resource.mimeType = mimeType;
+        const proxiedUrl = needsProxy
+          ? getProxiedUrl({ needsProxy }, link)
+          : link;
+
+        // Passing the potentially proxied URL here just so that things like
+        // getting image dimensions and video audio information works.
+        // Afterwards, overriding `src` again to ensure we store the original URL.
+        const resource = await getResourceFromUrl({
+          src: proxiedUrl,
+          mimeType,
+          needsProxy,
+          alt: originalFileName,
+        });
+        resource.src = link;
+
+        // We still want to auto-generate video posters, even for hotlinked videos.
         if ('video' === type && hasUploadMediaAction) {
-          // Remove the extension from the filename for poster.
           const fileName = getPosterName(
             originalFileName.replace(`.${ext}`, '')
           );
-          const posterFile = await getFirstFrameOfVideo(link);
+          const posterFile = await getFirstFrameOfVideo(proxiedUrl);
           const posterData = await uploadVideoPoster(0, fileName, posterFile);
           resource.poster = posterData.poster;
           resource.posterId = posterData.posterId;
         }
+
         insertElement(type, {
           resource,
         });
+
         setErrorMsg(null);
         setLink('');
         onClose();
@@ -107,10 +124,35 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       setErrorMsg,
       setLink,
       uploadVideoPoster,
+      getProxiedUrl,
     ]
   );
 
-  const onInsert = useCallback(() => {
+  /**
+   * Check if the resource can be accessed directly.
+   *
+   * Makes a HEAD request, which in turn triggers a CORS preflight request
+   * in the browser.
+   *
+   * If the request passes, we don't need to do anything.
+   * If it doesn't, it means we need to run the resource through our CORS proxy at all times.
+   *
+   * @type {function(): boolean}
+   */
+  const checkResourceAccess = useCallback(async () => {
+    let shouldProxy = false;
+    try {
+      await fetch(link, {
+        method: 'HEAD',
+      });
+    } catch (err) {
+      shouldProxy = true;
+    }
+
+    return shouldProxy;
+  }, [link]);
+
+  return useCallback(async () => {
     if (!link) {
       return;
     }
@@ -118,27 +160,34 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       setErrorMsg(__('Invalid link.', 'web-stories'));
       return;
     }
-    getHotlinkInfo(link)
-      .then((hotlinkInfo) => {
-        insertMedia(hotlinkInfo);
-      })
-      .catch(({ code }) => {
-        let description = __(
-          'No file types are currently supported.',
-          'web-stories'
-        );
-        if (allowedFileTypes.length) {
-          description = sprintf(
-            /* translators: %s is a list of allowed file extensions. */
-            __('You can insert %s.', 'web-stories'),
-            translateToExclusiveList(allowedFileTypes)
-          );
-        }
-        setErrorMsg(getErrorMessage(code, description));
-      });
-  }, [allowedFileTypes, link, getHotlinkInfo, setErrorMsg, insertMedia]);
 
-  return onInsert;
+    try {
+      const hotlinkInfo = await getHotlinkInfo(link);
+      const shouldProxy = await checkResourceAccess();
+
+      await insertMedia(hotlinkInfo, shouldProxy);
+    } catch (err) {
+      let description = __(
+        'No file types are currently supported.',
+        'web-stories'
+      );
+      if (allowedFileTypes.length) {
+        description = sprintf(
+          /* translators: %s is a list of allowed file extensions. */
+          __('You can insert %s.', 'web-stories'),
+          translateToExclusiveList(allowedFileTypes)
+        );
+      }
+      setErrorMsg(getErrorMessage(err.code, description));
+    }
+  }, [
+    allowedFileTypes,
+    link,
+    getHotlinkInfo,
+    setErrorMsg,
+    insertMedia,
+    checkResourceAccess,
+  ]);
 }
 
 export default useInsert;

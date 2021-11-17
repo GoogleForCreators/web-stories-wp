@@ -50,6 +50,7 @@ describe('panels/SizePosition', () => {
       height: 80,
       rotationAngle: 0,
       lockAspectRatio: true,
+      opacity: 100,
     };
     unlockAspectRatioElement = {
       id: '1',
@@ -94,11 +95,61 @@ describe('panels/SizePosition', () => {
 
   it('should render <SizePosition /> panel', () => {
     renderSizePosition([defaultElement]);
-    const element = screen.getByRole('button', { name: 'Size & Position' });
+    const element = screen.getByRole('button', { name: 'Selection' });
     expect(element).toBeInTheDocument();
   });
 
   describe('single selection', () => {
+    describe('opacity', () => {
+      it('should set opacity to 100 if not set', () => {
+        renderSizePosition([defaultElement]);
+        const input = screen.getByRole('textbox', {
+          name: 'Opacity in percent',
+        });
+        expect(input).toHaveValue('100%');
+      });
+
+      it('should set opacity to 0 if set to 0', () => {
+        renderSizePosition([{ ...defaultElement, opacity: 0 }]);
+        const input = screen.getByRole('textbox', {
+          name: 'Opacity in percent',
+        });
+        expect(input).toHaveValue('0%');
+      });
+
+      it('should set opacity to 49 if set to 49', () => {
+        renderSizePosition([{ ...defaultElement, opacity: 49 }]);
+        const input = screen.getByRole('textbox', {
+          name: 'Opacity in percent',
+        });
+        expect(input).toHaveValue('49%');
+      });
+
+      it('should update opacity value on change', () => {
+        const { pushUpdate } = renderSizePosition([
+          { ...defaultElement, opacity: 49 },
+        ]);
+        const input = screen.getByRole('textbox', {
+          name: 'Opacity in percent',
+        });
+        fireEvent.change(input, { target: { value: '23' } });
+        fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+        expect(pushUpdate).toHaveBeenCalledWith({ opacity: 23 }, true);
+      });
+
+      it('should display mixed in case of multi-selection with different values', () => {
+        renderSizePosition([
+          { ...defaultElement, opacity: 50 },
+          { id: 2, opacity: 80 },
+        ]);
+        const input = screen.getByRole('textbox', {
+          name: 'Opacity in percent',
+        });
+        expect(input.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+        expect(input).toHaveValue('');
+      });
+    });
+
     it('should not render flip controls when not allowed', () => {
       renderSizePosition([defaultText]);
       const horiz = screen.queryByTitle('Flip horizontally');

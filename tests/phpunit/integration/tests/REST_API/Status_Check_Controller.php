@@ -17,8 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
+use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 use WP_REST_Request;
-use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
 
 /**
  * Class Status_Check_Controller
@@ -27,11 +27,7 @@ use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Status_Check_Controller
  */
-class Status_Check_Controller extends Test_REST_TestCase {
-	/**
-	 * @var \WP_REST_Server
-	 */
-	protected $server;
+class Status_Check_Controller extends DependencyInjectedRestTestCase {
 
 	protected static $editor;
 	protected static $subscriber;
@@ -60,7 +56,7 @@ class Status_Check_Controller extends Test_REST_TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$this->controller = new \Google\Web_Stories\REST_API\Status_Check_Controller();
+		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Status_Check_Controller::class );
 	}
 
 	/**

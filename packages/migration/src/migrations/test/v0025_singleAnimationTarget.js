@@ -26,7 +26,9 @@ import singleAnimationTarget from '../v0025_singleAnimationTarget';
 const MOCK_ID = 'newUuid';
 
 describe('singleAnimationTarget', () => {
-  v4.mockImplementation(() => MOCK_ID);
+  beforeAll(() => {
+    v4.mockImplementation(() => MOCK_ID);
+  });
 
   it('should migrate old animations with multiple targets to separate animations with a single target', () => {
     expect(

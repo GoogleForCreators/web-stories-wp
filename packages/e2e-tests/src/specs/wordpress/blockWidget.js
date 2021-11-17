@@ -30,6 +30,7 @@ import {
 import percySnapshot from '@percy/puppeteer';
 
 describe('Web Stories Widget Block', () => {
+  // eslint-disable-next-line jest/require-hook
   minWPVersionRequired('5.8');
 
   afterEach(async () => {

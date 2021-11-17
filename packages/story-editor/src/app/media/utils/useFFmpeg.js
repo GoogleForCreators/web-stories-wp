@@ -60,7 +60,7 @@ const FFMPEG_CONFIG = {
     // See https://trac.ffmpeg.org/wiki/Scaling
     // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
     '-vf',
-    `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
+    `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
   ],
   FPS: [
     // Reduce to 24fps as recommended by Storytime.

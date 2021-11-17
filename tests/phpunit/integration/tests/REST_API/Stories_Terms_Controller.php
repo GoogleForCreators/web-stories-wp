@@ -2,7 +2,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Tests\Integration\Test_REST_TestCase;
+use Google\Web_Stories\Tests\Integration\RestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -13,7 +13,7 @@ use WP_REST_Server;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Terms_Controller
  */
-class Stories_Terms_Controller extends Test_REST_TestCase {
+class Stories_Terms_Controller extends RestTestCase {
 	protected static $taxonomy_object;
 
 	public static function wpSetUpBeforeClass( $factory ) {

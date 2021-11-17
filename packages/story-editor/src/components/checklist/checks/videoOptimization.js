@@ -74,9 +74,10 @@ export function videoElementsNotOptimized(element = {}) {
 
   const videoArea = height * width;
   const isLargeVideo =
-    videoArea >=
+    videoArea >
     MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
       MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT;
+
   return isLargeVideo;
 }
 

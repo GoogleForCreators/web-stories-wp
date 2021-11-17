@@ -34,3 +34,8 @@ export const SEARCH_PAGES_FIELDS = ['id', 'title'];
 export const GET_PAGE_FIELDS = ['title', 'link'];
 
 export const STORY_EMBED = 'wp:lock,wp:lockuser,author,wp:featuredmedia';
+
+export const REST_LINKS = {
+  EDIT: 'wp:action-edit',
+  DELETE: 'wp:action-delete',
+};

@@ -84,7 +84,7 @@ function getVideoResourceFromAttachment(attachment) {
       height: posterHeight,
       generated: posterGenerated,
     },
-    is_muted: isMuted,
+    web_stories_is_muted: isMuted,
     alt_text: alt,
     source_url: src,
     web_stories_media_source: mediaSource,

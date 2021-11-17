@@ -17,15 +17,15 @@
 
 namespace Google\Web_Stories\Tests\Integration\Widgets;
 
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use WP_Widget;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Class Stories
  *
  * @coversDefaultClass \Google\Web_Stories\Widgets\Stories
  */
-class Stories extends TestCase {
+class Stories extends DependencyInjectedTestCase {
 	/**
 	 * Test instance.
 	 *
@@ -41,8 +41,7 @@ class Stories extends TestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$assets         = new \Google\Web_Stories\Assets();
-		$this->instance = new \Google\Web_Stories\Widgets\Stories( $assets );
+		$this->instance = $this->injector->make( \Google\Web_Stories\Widgets\Stories::class );
 	}
 
 	/**

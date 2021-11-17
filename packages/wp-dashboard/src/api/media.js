@@ -18,16 +18,20 @@
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+/**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './utils';
 
 /**
  * Upload media
  * Used on settings page for upload button.
  *
+ * @param {string} apiPath API path.
  * @param {Object} files Uploaded files.
- * @param {string} apiPath String.
  * @return {Promise} Request promise.
  */
-export function uploadMedia(files, apiPath) {
+export function uploadMedia(apiPath, files) {
   return Promise.all(
     Object.values(files).map((file) => {
       const data = new window.FormData();
@@ -38,7 +42,7 @@ export function uploadMedia(files, apiPath) {
         path: apiPath,
         body: data,
         method: 'POST',
-      });
+      }).then(snakeToCamelCaseObjectKeys);
     })
   );
 }

@@ -27,6 +27,10 @@ const Thumb = styled.button`
   padding: 0;
 `;
 
+function getPageX(evt) {
+  return evt.pageX || evt.clientX;
+}
+
 function Slider({
   railWidth,
   min,
@@ -52,7 +56,7 @@ function Slider({
       onPointerDown?.();
 
       const handlePointerMove = function (event) {
-        const deltaX = event.pageX - downEvent.pageX;
+        const deltaX = getPageX(event) - getPageX(downEvent);
         const deltaRatio = deltaX / railWidth;
         const deltaValue = deltaRatio * (max - min);
         const newValue = value + deltaValue;

@@ -102,6 +102,9 @@ addDecorator((story, context) => {
         <DashboardConfigProvider
           config={{
             api: { stories: 'stories' },
+            apiCallbacks: {
+              getUser: () => Promise.resolve({ id: 1 }),
+            },
             editStoryURL: 'editStory',
             isRTL,
           }}

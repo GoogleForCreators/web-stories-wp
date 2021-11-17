@@ -24,14 +24,14 @@ class Page_Template_Post_Type extends DependencyInjectedTestCase {
 	use Capabilities_Setup;
 
 	/**
-	 * @var \Google\Web_Stories\Story_Post_Type
+	 * @var \Google\Web_Stories\Page_Template_Post_Type
 	 */
 	private $instance;
 
 	public function set_up() {
 		parent::set_up();
 
-		$this->instance = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$this->instance = $this->injector->make( \Google\Web_Stories\Page_Template_Post_Type::class );
 	}
 
 	/**

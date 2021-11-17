@@ -43,6 +43,7 @@ namespace PHPSTORM_META {
 			'meta_boxes'                   => \Google\Web_Stories\Admin\Meta_Boxes::class,
 			'settings'                     => \Google\Web_Stories\Settings::class,
 			'site_health'                  => \Google\Web_Stories\Admin\Site_Health::class,
+			'story_archive'                => \Google\Web_Stories\Story_Archive::class,
 			'story_post_type'              => \Google\Web_Stories\Story_Post_Type::class,
 			'story_shortcode'              => \Google\Web_Stories\Shortcode\Stories_Shortcode::class,
 			'svg'                          => \Google\Web_Stories\Media\SVG::class,

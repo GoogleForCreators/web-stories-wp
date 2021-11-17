@@ -44,7 +44,7 @@ const Transparent = styled.div`
   ${themeHelpers.transparentBg}
 `;
 
-const SwatchButton = styled.button.attrs({ type: 'button' })`
+const SwatchButton = styled.button`
   cursor: pointer;
   background-color: transparent;
   border-color: transparent;
@@ -61,12 +61,16 @@ const SwatchButton = styled.button.attrs({ type: 'button' })`
     css`
       opacity: 0.4;
       cursor: default;
+      /* pointer-events none here fixes an edge case in Safari when swatch is within a tooltip #9188 */
+      pointer-events: none;
     `}
   ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
   ::after {
     content: '';
     position: absolute;
+    /* pointer-events none here fixes an edge case in Safari when swatch is within a tooltip #9188 */
+    pointer-events: none;
     left: 0;
     top: 0;
     width: 100%;
@@ -151,11 +155,7 @@ function Swatch({
       {...props}
     >
       {swatchHasTransparency && <Transparent />}
-      <SwatchItem
-        $pattern={pattern}
-        disabled={isDisabled}
-        displaySplit={displaySplit}
-      >
+      <SwatchItem $pattern={pattern} displaySplit={displaySplit}>
         {displaySplit && (
           <OpaqueColorWrapper isSmall={isSmall}>
             <OpaqueColor isSmall={isSmall} pattern={opaquePattern} />

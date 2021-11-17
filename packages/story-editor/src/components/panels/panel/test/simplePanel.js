@@ -60,7 +60,7 @@ describe('Panels/Panel/SimplePanel', () => {
   });
 
   describe('should render <PanelTitle>', () => {
-    const titleName = 'Size & Position';
+    const titleName = 'Selection';
     const contentText = 'Panel Content';
 
     beforeEach(() => {

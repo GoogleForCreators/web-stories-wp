@@ -27,6 +27,7 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('AMP plugin integration', () => {
+  // eslint-disable-next-line jest/require-hook
   withPlugin('amp');
 
   it('should be able to directly preview a story without amp-analytics being stripped', async () => {

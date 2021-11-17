@@ -129,7 +129,7 @@ const darkTheme = {
   fg: {
     primary: brand.gray[5],
     secondary: brand.gray[20],
-    tertiary: brand.gray[40],
+    tertiary: brand.gray[30],
     disable: brand.gray[50],
     linkNormal: brand.blue[30],
     linkHover: brand.blue[40],
@@ -144,6 +144,7 @@ const darkTheme = {
     positive: brand.green[90],
     negative: brand.red[90],
     storyPreview: '#202125',
+    accent: accent.primary,
   },
   interactiveFg: {
     active: brand.gray[5],
@@ -230,6 +231,7 @@ const lightTheme = {
     positive: brand.green[10],
     negative: brand.red[10],
     storyPreview: '#202125',
+    accent: accent.primary,
   },
   interactiveFg: {
     active: brand.gray[90],

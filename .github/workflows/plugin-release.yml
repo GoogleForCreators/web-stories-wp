@@ -207,7 +207,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       # For release candidates, generate changelog since last tag (stable release or previous RC)
@@ -304,7 +303,6 @@ jobs:
         run: |
           npm ci
         env:
-          CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Install PHP dependencies
@@ -512,7 +510,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       # If we're releasing 1.6.0, bump version on main to 1.7.0-alpha.0.

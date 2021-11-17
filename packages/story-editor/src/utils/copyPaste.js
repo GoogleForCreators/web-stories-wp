@@ -17,14 +17,15 @@
 /**
  * External dependencies
  */
-import { v4 as uuidv4 } from 'uuid';
 import { renderToStaticMarkup } from '@web-stories-wp/react';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
-
 /**
  * Internal dependencies
  */
-import { getDefinitionForType } from '../elements';
+import {
+  duplicateElement,
+  getDefinitionForType,
+  getOffsetCoordinates,
+} from '../elements';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
@@ -52,36 +53,19 @@ export function processPastedElements(content, currentPage) {
     }
 
     const processedPayload = payload.items.reduce(
-      (accum, { x, y, basedOn, ...rest }) => {
-        const elementId = uuidv4();
-        const elementAnimations = payload.animations
-          .filter((animation) => animation.targets.includes(basedOn))
-          .map((animation) => ({
-            ...animation,
-            targets: [elementId],
-            id: uuidv4(),
-          }));
-
-        currentPage.elements.forEach((element) => {
-          if (element.id === basedOn || element.basedOn === basedOn) {
-            const pastedXY = getPastedCoordinates(x, y);
-            x = pastedXY.x;
-            y = pastedXY.y;
-          }
+      ({ elements, animations }, payloadElement) => {
+        const { element, elementAnimations } = duplicateElement({
+          element: {
+            ...payloadElement,
+            id: payloadElement.basedOn,
+          },
+          animations: payload.animations,
+          existingElements: currentPage.elements,
         });
 
         return {
-          elements: [
-            ...accum.elements,
-            {
-              ...rest,
-              basedOn,
-              id: elementId,
-              x,
-              y,
-            },
-          ],
-          animations: [...accum.animations, ...elementAnimations],
+          elements: [...elements, element],
+          animations: [...animations, ...elementAnimations],
         };
       },
       { animations: [], elements: [] }
@@ -166,20 +150,4 @@ export function addElementsToClipboard(page, elements, animations, evt) {
   );
 }
 
-/**
- * Gets x, y values for cloned/pasted element, ensuring it's not added out of the page.
- *
- * @param {number} originX Original X.
- * @param {number} originY Original Y.
- * @return {{x: (number), y: (number)}} Coordinates.
- */
-export function getPastedCoordinates(originX, originY) {
-  const placementDiff = 30;
-  const allowedBorderDistance = 20;
-  const x = originX + placementDiff;
-  const y = originY + placementDiff;
-  return {
-    x: PAGE_WIDTH - x > allowedBorderDistance ? x : placementDiff,
-    y: PAGE_HEIGHT - y > allowedBorderDistance ? y : placementDiff,
-  };
-}
+export { getOffsetCoordinates as getPastedCoordinates };

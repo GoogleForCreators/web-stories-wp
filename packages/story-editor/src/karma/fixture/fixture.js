@@ -20,7 +20,6 @@
 import * as React from 'react';
 const { useCallback, useState, useMemo, forwardRef } = React;
 
-import { FlagsProvider } from 'flagged';
 import {
   configure,
   render,
@@ -44,13 +43,14 @@ import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import formattedTemplatesArray from '../../dataUtils/formattedTemplatesArray';
-import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
+import { PRESET_TYPES } from '../../constants';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
 import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
+import DocumentPane from './components/documentPane';
 
 if ('true' === process.env.CI) {
   configure({
@@ -67,7 +67,7 @@ export const MEDIA_PER_PAGE = 20;
 
 function MediaUpload({ render: _render, onSelect }) {
   const open = () => {
-    const image = { src: 'media1' };
+    const image = { type: 'image', src: 'https://www.example.com/media1' };
     onSelect(image);
   };
 
@@ -108,7 +108,6 @@ const DEFAULT_CONFIG = {
   capabilities: {
     hasUploadMediaAction: true,
   },
-  dashboardLink: 'https://www.example.com/dashboard',
   postLock: {
     interval: 150,
     showLockedDialog: true,
@@ -124,6 +123,7 @@ const DEFAULT_CONFIG = {
     timezone: 'America/New_York',
     weekStartsOn: 0,
   },
+  flags: {},
   MediaUpload,
 };
 
@@ -200,14 +200,12 @@ export class Fixture {
 
     const panels = [
       'animation',
-      'borderRadius',
       'borderStyle',
       'captions',
       'globalStoryStyles',
       'colorPresets',
       'filter',
       'imageAccessibility',
-      'layerStyle',
       'link',
       'pageAttachment',
       'pageBackground',
@@ -224,7 +222,6 @@ export class Fixture {
       'publishing',
       'status',
       `stylepreset-${PRESET_TYPES.STYLE}`,
-      `stylepreset-${PRESET_TYPES.COLOR}`,
     ];
     // Open all panels by default.
     panels.forEach((panel) => {
@@ -306,7 +303,8 @@ export class Fixture {
    * @param {Object} flags Flags.
    */
   setFlags(flags) {
-    this._flags = { ...flags };
+    this._flags = { ...this._config.flags, ...flags };
+    this._config.flags = this._flags;
   }
 
   setConfig(config) {
@@ -334,11 +332,17 @@ export class Fixture {
     setAppElement(root);
 
     const { container, getByRole } = render(
-      <FlagsProvider features={this._flags}>
-        <StoryEditor key={Math.random()} config={this._config}>
-          <Layout header={<HeaderLayout />} />
-        </StoryEditor>
-      </FlagsProvider>,
+      <StoryEditor key={Math.random()} config={this._config}>
+        <Layout
+          header={<HeaderLayout />}
+          inspectorTabs={{
+            document: {
+              title: 'Document',
+              Pane: DocumentPane,
+            },
+          }}
+        />
+      </StoryEditor>,
       {
         container: root,
       }
@@ -813,7 +817,10 @@ class APIProviderFixture {
         []
       );
 
-      const getPublisherLogos = useCallback(() => asyncResponse([]), []);
+      const getProxyUrl = useCallback(
+        () => 'http://localhost:9876/__static__/saturn.jpg',
+        []
+      );
 
       const getAllStatuses = useCallback(
         () => jasmine.createSpy('getAllStatuses'),
@@ -893,7 +900,6 @@ class APIProviderFixture {
                     slug: 'related-slug-1',
                     taxonomy: 'web_story_tag',
                     meta: [],
-                    _links: {},
                   },
                   {
                     id: this._termAutoIncrementId++,
@@ -904,7 +910,6 @@ class APIProviderFixture {
                     slug: 'related-slug-2',
                     taxonomy: 'web_story_tag',
                     meta: [],
-                    _links: {},
                   },
                 ]
               : []
@@ -926,7 +931,6 @@ class APIProviderFixture {
             taxonomy: 'web_story_category',
             parent: 0,
             meta: [],
-            _links: {},
             ...data,
           }),
         []
@@ -945,7 +949,7 @@ class APIProviderFixture {
           getMedia,
           getLinkMetadata,
           getHotlinkInfo,
-          getPublisherLogos,
+          getProxyUrl,
           saveStoryById,
           getAllStatuses,
           getAuthors,

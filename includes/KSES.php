@@ -27,7 +27,6 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
-use Google\Web_Stories\Traits\Post_Type;
 
 /**
  * KSES class.
@@ -36,8 +35,7 @@ use Google\Web_Stories\Traits\Post_Type;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class KSES extends Service_Base {
-	use Post_Type;
+class KSES extends Service_Base implements HasRequirements {
 
 	/**
 	 * Story_Post_Type instance.
@@ -69,14 +67,16 @@ class KSES extends Service_Base {
 	}
 
 	/**
-	 * Get the action priority to use for registering the service.
+	 * Get the list of service IDs required for this service to be registered.
 	 *
-	 * @since 1.6.0
+	 * Needed because the story post type needs to be registered first.
 	 *
-	 * @return int Registration action priority to use.
+	 * @since 1.13.0
+	 *
+	 * @return string[] List of required services.
 	 */
-	public static function get_registration_action_priority(): int {
-		return 11;
+	public static function get_requirements(): array {
+		return [ 'story_post_type' ];
 	}
 
 	/**
@@ -102,17 +102,17 @@ class KSES extends Service_Base {
 		}
 
 		if (
-			( $this->story_post_type::POST_TYPE_SLUG !== $data['post_type'] ) && !
+			( $this->story_post_type->get_slug() !== $data['post_type'] ) && !
 			(
 				'revision' === $data['post_type'] &&
 				! empty( $data['post_parent'] ) &&
-				get_post_type( $data['post_parent'] ) === $this->story_post_type::POST_TYPE_SLUG
+				get_post_type( $data['post_parent'] ) === $this->story_post_type->get_slug()
 			)
 		) {
 			return $data;
 		}
 
-		if ( ! $this->get_post_type_cap( $this->story_post_type::POST_TYPE_SLUG, 'edit_posts' ) ) {
+		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return $data;
 		}
 

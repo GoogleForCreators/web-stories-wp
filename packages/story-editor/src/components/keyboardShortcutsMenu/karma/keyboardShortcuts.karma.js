@@ -44,7 +44,7 @@ describe('Keyboard Shortcuts Menu', () => {
 
   describe('CUJ: User can interact with menu using mouse: Click toggle button to open, click close button to close menu', () => {
     it('should be able to open menu by clicking on keyboard shortcut button', async () => {
-      const { keyboardShortcutsToggle } = fixture.editor.carousel;
+      const { keyboardShortcutsToggle } = fixture.editor.footer;
 
       // Menu should be closed
       await expect(
@@ -63,7 +63,7 @@ describe('Keyboard Shortcuts Menu', () => {
 
     describe('when menu is open', () => {
       beforeEach(async () => {
-        const { keyboardShortcutsToggle } = fixture.editor.carousel;
+        const { keyboardShortcutsToggle } = fixture.editor.footer;
 
         await fixture.events.click(keyboardShortcutsToggle);
       });
@@ -125,7 +125,7 @@ describe('Keyboard Shortcuts Menu', () => {
       // Menu should be closed
       expect(keyboardShortcutsMenu).toBeNull();
 
-      const { keyboardShortcutsToggle } = fixture.editor.carousel;
+      const { keyboardShortcutsToggle } = fixture.editor.footer;
 
       await fixture.events.focus(keyboardShortcutsToggle);
       await fixture.events.keyboard.press('Enter');
@@ -138,7 +138,7 @@ describe('Keyboard Shortcuts Menu', () => {
 
     describe('when menu is open', () => {
       beforeEach(async () => {
-        const { keyboardShortcutsToggle } = fixture.editor.carousel;
+        const { keyboardShortcutsToggle } = fixture.editor.footer;
 
         await fixture.events.focus(keyboardShortcutsToggle);
         // Tab back and forth to trigger app to think we're a keyboard user
@@ -196,7 +196,7 @@ describe('Keyboard Shortcuts Menu', () => {
 
   describe('Keyboard Shortcuts Menu should have no aXe accessibility violations', () => {
     it('should pass accessibility tests with an open menu', async () => {
-      const { keyboardShortcutsToggle } = fixture.editor.carousel;
+      const { keyboardShortcutsToggle } = fixture.editor.footer;
 
       await fixture.events.click(keyboardShortcutsToggle);
       await fixture.events.sleep(openDelay);

@@ -23,11 +23,18 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import styled from 'styled-components';
 import { Row, TextArea } from '../../../form';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { useHighlights, states, styles } from '../../../../app/highlights';
+
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  margin-bottom: 10px;
+`;
 
 const DEFAULT_RESOURCE = { alt: null };
 const MIN_MAX = {
@@ -60,6 +67,9 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
       title={__('Accessibility', 'web-stories')}
       isPersistable={!highlight}
     >
+      <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {__('Add a brief description of the image.', 'web-stories')}
+      </StyledText>
       <Row>
         <TextArea
           ref={(node) => {
@@ -68,14 +78,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
               node.focus();
             }
           }}
-          placeholder={
-            alt === MULTIPLE_VALUE
-              ? MULTIPLE_DISPLAY_VALUE
-              : __(
-                  'Add assistive text for visually impaired users',
-                  'web-stories'
-                )
-          }
+          placeholder={alt === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''}
           value={alt || ''}
           onChange={(evt) =>
             pushUpdate({ alt: evt?.target?.value?.trim() || null }, true)

@@ -61,7 +61,7 @@ const mockResource = {
     web_stories_poster_id: 0,
     web_stories_trim_data: {},
   },
-  is_muted: false,
+  web_stories_is_muted: false,
 };
 
 const mockUploadFile = jest
