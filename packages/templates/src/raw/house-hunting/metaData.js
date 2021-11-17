@@ -34,13 +34,23 @@ export default {
     {
       label: _x('Pastel Toffee Pink', 'color', 'web-stories'),
       color: '#eec2bc',
+      family: _x('Pink', 'color family', 'web-stories'),
     },
-    { label: _x('Black Violet', 'color', 'web-stories'), color: '#2d2a35' },
+    {
+      label: _x('Black Violet', 'color', 'web-stories'),
+      color: '#2d2a35',
+      family: _x('Purple', 'color family', 'web-stories'),
+    },
     {
       label: _x('Marshmallow Yellow', 'color', 'web-stories'),
       color: '#fff0d8',
+      family: _x('Yellow', 'color family', 'web-stories'),
     },
-    { label: _x('Grape Purple', 'color', 'web-stories'), color: '#464152' },
+    {
+      label: _x('Grape Purple', 'color', 'web-stories'),
+      color: '#464152',
+      family: _x('Purple', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'With its earthly colors and charming typography, this template will let you create guides and tutorials with a pinch of old-fashioned elegence. Present fresh new ideas for topics like home renovation, interior, architecture, gardening and more.',

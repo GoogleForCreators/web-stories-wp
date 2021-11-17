@@ -31,10 +31,26 @@ export default {
     _x('Black', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Lime Green', 'color', 'web-stories'), color: '#e0ff8c' },
-    { label: _x('Slime Green', 'color', 'web-stories'), color: '#d6fd56' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000000' },
-    { label: _x('Whitesmoke', 'color', 'web-stories'), color: '#f9f9f9' },
+    {
+      label: _x('Lime Green', 'color', 'web-stories'),
+      color: '#e0ff8c',
+      family: _x('Green', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Slime Green', 'color', 'web-stories'),
+      color: '#d6fd56',
+      family: _x('Green', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000000',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Whitesmoke', 'color', 'web-stories'),
+      color: '#f9f9f9',
+      family: _x('White', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'Flat design, bright colors, and bold typography. This template will let you keep text to a minimum and clearly demonstrate your workout routine with videos.',

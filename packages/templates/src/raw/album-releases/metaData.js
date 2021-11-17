@@ -31,10 +31,26 @@ export default {
     _x('Blue', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Hot Orange', 'color', 'web-stories'), color: '#f7722f' },
-    { label: _x('Peach Bisque', 'color', 'web-stories'), color: '#fee2c6' },
-    { label: _x('Champagne Yellow', 'color', 'web-stories'), color: '#f4e6b0' },
-    { label: _x('Cola Brown', 'color', 'web-stories'), color: '#3d3225' },
+    {
+      label: _x('Hot Orange', 'color', 'web-stories'),
+      color: '#f7722f',
+      family: _x('Orange', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Peach Bisque', 'color', 'web-stories'),
+      color: '#fee2c6',
+      family: _x('Red', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Champagne Yellow', 'color', 'web-stories'),
+      color: '#f4e6b0',
+      family: _x('Yellow', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Cola Brown', 'color', 'web-stories'),
+      color: '#3d3225',
+      family: _x('Brown', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'With its raw typography and mesmerizing visual elements, the Album Releases template will let you create listicles that engage. Switch the colors and make it your own.',

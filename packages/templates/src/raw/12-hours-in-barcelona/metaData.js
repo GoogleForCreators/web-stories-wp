@@ -30,13 +30,26 @@ export default {
     _x('Blue', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Winter Blue', 'color', 'web-stories'), color: '#a4deff' },
+    {
+      label: _x('Winter Blue', 'color', 'web-stories'),
+      color: '#a4deff',
+      family: _x('Blue', 'color family', 'web-stories'),
+    },
     {
       label: _x('Blackcurrant Blue', 'color', 'web-stories'),
       color: '#160236',
+      family: _x('Blue', 'color family', 'web-stories'),
     },
-    { label: _x('Sunset Yellow', 'color', 'web-stories'), color: '#ffc700' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+    {
+      label: _x('Sunset Yellow', 'color', 'web-stories'),
+      color: '#ffc700',
+      family: _x('Yellow', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     '12 Hours in Barcelona’s classic magazine aesthetic will let you create engaging travel itineraries, bucket lists, and visual articles that will enthuse and motivate your audience.',

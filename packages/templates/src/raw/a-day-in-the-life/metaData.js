@@ -31,9 +31,21 @@ export default {
     _x('Blue', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Waterworld Blue', 'color', 'web-stories'), color: '#061b38' },
-    { label: _x('Arctic White', 'color', 'web-stories'), color: '#fcfcfc' },
-    { label: _x('Honey Pot Yellow', 'color', 'web-stories'), color: '#ffc864' },
+    {
+      label: _x('Waterworld Blue', 'color', 'web-stories'),
+      color: '#061b38',
+      family: _x('Blue', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Arctic White', 'color', 'web-stories'),
+      color: '#fcfcfc',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Honey Pot Yellow', 'color', 'web-stories'),
+      color: '#ffc864',
+      family: _x('Yellow', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'This simple and minimalist template will let you create long format video stories that are highly engaging. Create day-in-the-life videos, workout routines, makeup tutorials and much more.',

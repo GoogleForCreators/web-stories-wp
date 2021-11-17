@@ -31,9 +31,21 @@ export default {
     _x('Bold', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Black', 'color', 'web-stories'), color: '#1a1a1a' },
-    { label: _x('Red', 'color', 'web-stories'), color: '#cf1323' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#1a1a1a',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Red', 'color', 'web-stories'),
+      color: '#cf1323',
+      family: _x('Red', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'This modern, bold theme lends itself well for workout routines, fitness gear shopping lists, but also tech, internet and gadget news, reviews, recommendations and coverage, due to its timeless, simple look.',

@@ -31,13 +31,26 @@ export default {
     _x('White', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('Faded Rose Red', 'color', 'web-stories'), color: '#c16351' },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Faded Rose Red', 'color', 'web-stories'),
+      color: '#c16351',
+      family: _x('Red', 'color family', 'web-stories'),
+    },
     {
       label: _x('Winter Mist White', 'color', 'web-stories'),
       color: '#f2f2f2',
+      family: _x('White', 'color family', 'web-stories'),
     },
-    { label: _x('Prairie Gold', 'color', 'web-stories'), color: '#b18c54' },
+    {
+      label: _x('Prairie Gold', 'color', 'web-stories'),
+      color: '#b18c54',
+      family: _x('Yellow', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'With its clean, classy look and full-screen photos, this template will let you effectively present fashion and outfit ideas. You can use large-scale close up shots to showcase products, along with individual purchase pages and a short description.',

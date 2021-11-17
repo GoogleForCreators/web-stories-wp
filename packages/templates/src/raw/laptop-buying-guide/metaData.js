@@ -31,10 +31,26 @@ export default {
     _x('Blue', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Brilliant Blue', 'color', 'web-stories'), color: '#0057ff' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Gentle Gray', 'color', 'web-stories'), color: '#c4c4c4' },
-    { label: _x('Mineshaft Black', 'color', 'web-stories'), color: '#3d3d3d' },
+    {
+      label: _x('Brilliant Blue', 'color', 'web-stories'),
+      color: '#0057ff',
+      family: _x('Blue', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Gentle Gray', 'color', 'web-stories'),
+      color: '#c4c4c4',
+      family: _x('Gray', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Mineshaft Black', 'color', 'web-stories'),
+      color: '#3d3d3d',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'This template’s clean design and structure will let you create uncomplicated long-form product reviews, comparisons and more. Adapt it to your style by changing the colors.',

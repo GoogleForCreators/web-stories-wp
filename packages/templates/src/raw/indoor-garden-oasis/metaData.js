@@ -31,14 +31,31 @@ export default {
     _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Everglades Green', 'color', 'web-stories'), color: '#235524' },
-    { label: _x('Mint Green', 'color', 'web-stories'), color: '#c2e3c3' },
+    {
+      label: _x('Everglades Green', 'color', 'web-stories'),
+      color: '#235524',
+      family: _x('Green', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Mint Green', 'color', 'web-stories'),
+      color: '#c2e3c3',
+      family: _x('Green', 'color family', 'web-stories'),
+    },
     {
       label: _x('Banana Cream Yellow', 'color', 'web-stories'),
       color: '#fcefab',
+      family: _x('Yellow', 'color family', 'web-stories'),
     },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Mineral Green', 'color', 'web-stories'), color: '#65a867' },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Mineral Green', 'color', 'web-stories'),
+      color: '#65a867',
+      family: _x('Green', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'This template has a perfect balance of green, earthly colors and simple but playful typography. Create stories about gardening, nature crafts, cooking recipes, and more.',

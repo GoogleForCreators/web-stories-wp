@@ -31,9 +31,21 @@ export default {
     _x('White', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Berry Red', 'color', 'web-stories'), color: '#e0193e' },
-    { label: _x('Havana White', 'color', 'web-stories'), color: '#f7ece3' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+    {
+      label: _x('Berry Red', 'color', 'web-stories'),
+      color: '#e0193e',
+      family: _x('Red', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Havana White', 'color', 'web-stories'),
+      color: '#f7ece3',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'With its combination of 3 beautiful fonts, curved sections and bright colors, this template is equipped with the liveliness of an elegant travel magazine. Create one-day itineraries, sight-seeing guides and other stories for urban travel. Change the colors to suit your style.',

@@ -31,13 +31,26 @@ export default {
     _x('Yellow', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Space Blue', 'color', 'web-stories'), color: '#222b49' },
+    {
+      label: _x('Space Blue', 'color', 'web-stories'),
+      color: '#222b49',
+      family: _x('Blue', 'color family', 'web-stories'),
+    },
     {
       label: _x('Watermelon Yellow', 'color', 'web-stories'),
       color: '#f1ff51',
+      family: _x('Yellow', 'color family', 'web-stories'),
     },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Pastel Blue', 'color', 'web-stories'), color: '#e0edf8' },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Pastel Blue', 'color', 'web-stories'),
+      color: '#e0edf8',
+      family: _x('Blue', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'With its bright neon colors and modern design, this template is perfect for talking about what’s hot. Create vivid and energetic tech reviews, DIY tutorials, fitness guides and more.',

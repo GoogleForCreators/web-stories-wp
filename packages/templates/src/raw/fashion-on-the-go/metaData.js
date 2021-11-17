@@ -28,11 +28,31 @@ export default {
     _x('Sparkle', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Cream', 'color', 'web-stories'), color: '#ffece3' },
-    { label: _x('Orange', 'color', 'web-stories'), color: '#ff3000' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#212121' },
-    { label: _x('Gray', 'color', 'web-stories'), color: '#858280' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+    {
+      label: _x('Cream', 'color', 'web-stories'),
+      color: '#ffece3',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Orange', 'color', 'web-stories'),
+      color: '#ff3000',
+      family: _x('Orange', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#212121',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Gray', 'color', 'web-stories'),
+      color: '#858280',
+      family: _x('Gray', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'The elegant serif Fashion template works well for New York Fashion Week highlights, high fashion shopping guides and accessory trends.',

@@ -31,11 +31,31 @@ export default {
     _x('White', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Neon Aqua Blue', 'color', 'web-stories'), color: '#00f0ff' },
-    { label: _x('Catalina Blue', 'color', 'web-stories'), color: '#002e73' },
-    { label: _x('Light Aqua Blue', 'color', 'web-stories'), color: '#a2f6fc' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Celestial Blue', 'color', 'web-stories'), color: '#152132' },
+    {
+      label: _x('Neon Aqua Blue', 'color', 'web-stories'),
+      color: '#00f0ff',
+      family: _x('Blue', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Catalina Blue', 'color', 'web-stories'),
+      color: '#002e73',
+      family: _x('Blue', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Light Aqua Blue', 'color', 'web-stories'),
+      color: '#a2f6fc',
+      family: _x('Blue', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Celestial Blue', 'color', 'web-stories'),
+      color: '#152132',
+      family: _x('Blue', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'Explain technical topics and talk about the latest in science and technology with this clean and futuristic template. Use the blue stickers to draw attention to objects of importance and clearly illustrate your point.',

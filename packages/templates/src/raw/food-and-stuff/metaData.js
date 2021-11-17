@@ -29,11 +29,31 @@ export default {
     _x('Cooking', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Yellow', 'color', 'web-stories'), color: '#fff933' },
-    { label: _x('Orange', 'color', 'web-stories'), color: '#ff922e' },
-    { label: _x('Gray', 'color', 'web-stories'), color: '#676461' },
-    { label: _x('Blue', 'color', 'web-stories'), color: '#3a566e' },
-    { label: _x('Cream', 'color', 'web-stories'), color: '#fff9ee' },
+    {
+      label: _x('Yellow', 'color', 'web-stories'),
+      color: '#fff933',
+      family: _x('Yellow', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Orange', 'color', 'web-stories'),
+      color: '#ff922e',
+      family: _x('Orange', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Gray', 'color', 'web-stories'),
+      color: '#676461',
+      family: _x('Gray', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Blue', 'color', 'web-stories'),
+      color: '#3a566e',
+      family: _x('Blue', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Cream', 'color', 'web-stories'),
+      color: '#fff9ee',
+      family: _x('White', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'Make your audience salivate by using the Cooking template to create web stories about ingredients, food recipes, how-to’s, restaurant guides and kitchen inspiration.',

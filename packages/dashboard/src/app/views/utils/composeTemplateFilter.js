@@ -40,7 +40,7 @@ function composeTemplateFilter(filters) {
 
           case TEMPLATE_META_DATA_TYPES.COLOR:
             return template.colors
-              .map((color) => color.label.toLowerCase())
+              .map((color) => color?.family && color.family.toLowerCase())
               .includes(filter.value.toLowerCase());
 
           case TEMPLATE_META_DATA_TYPES.VERTICAL:

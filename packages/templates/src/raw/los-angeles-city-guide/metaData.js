@@ -31,8 +31,16 @@ export default {
     _x('Black', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Dusk Black', 'color', 'web-stories'), color: '#212426' },
-    { label: _x('Alpine Green', 'color', 'web-stories'), color: '#c2cda3' },
+    {
+      label: _x('Dusk Black', 'color', 'web-stories'),
+      color: '#212426',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Alpine Green', 'color', 'web-stories'),
+      color: '#c2cda3',
+      family: _x('Green', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'With its serene black-and-green color palette, this template will let you create city guides, travelogues and other travel stories that are moody and atmospheric.',

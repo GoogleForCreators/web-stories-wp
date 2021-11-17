@@ -29,11 +29,31 @@ export default {
     _x('Joy', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Pink', 'color', 'web-stories'), color: '#f3d9e1' },
-    { label: _x('Green', 'color', 'web-stories'), color: '#d8ddcc' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#28292b' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Brown', 'color', 'web-stories'), color: '#eadfd6' },
+    {
+      label: _x('Pink', 'color', 'web-stories'),
+      color: '#f3d9e1',
+      family: _x('Pink', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Green', 'color', 'web-stories'),
+      color: '#d8ddcc',
+      family: _x('Green', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#28292b',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Brown', 'color', 'web-stories'),
+      color: '#eadfd6',
+      family: _x('Brown', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'The modern and bright Beauty template lends itself well as a foundation for stories covering makeup, beauty products, shopping guides, instructions & tutorials and more.',

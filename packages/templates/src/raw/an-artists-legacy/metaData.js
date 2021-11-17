@@ -31,10 +31,26 @@ export default {
     _x('Gray', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Lavender Gray', 'color', 'web-stories'), color: '#eaeef4' },
-    { label: _x('Baby Beluga Gray', 'color', 'web-stories'), color: '#4d4c48' },
-    { label: _x('Pale Orange', 'color', 'web-stories'), color: '#ffdcc0' },
-    { label: _x('Meringue White', 'color', 'web-stories'), color: '#fbf5f1' },
+    {
+      label: _x('Lavender Gray', 'color', 'web-stories'),
+      color: '#eaeef4',
+      family: _x('Gray', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Baby Beluga Gray', 'color', 'web-stories'),
+      color: '#4d4c48',
+      family: _x('Gray', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Pale Orange', 'color', 'web-stories'),
+      color: '#ffdcc0',
+      family: _x('Orange', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Meringue White', 'color', 'web-stories'),
+      color: '#fbf5f1',
+      family: _x('White', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'With its artistic brush strokes, white background, and art gallery-like arrangement of photos, this template will let you create beautiful stories around painting, sculpting and other arts and crafts.',

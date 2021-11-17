@@ -29,11 +29,31 @@ export default {
     _x('Start', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Black', 'color', 'web-stories'), color: '#211f1e' },
-    { label: _x('Orange', 'color', 'web-stories'), color: '#ff630b' },
-    { label: _x('Cream', 'color', 'web-stories'), color: '#faf4ea' },
-    { label: _x('Light Grey', 'color', 'web-stories'), color: '#858280' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#211f1e',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Orange', 'color', 'web-stories'),
+      color: '#ff630b',
+      family: _x('Orange', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Cream', 'color', 'web-stories'),
+      color: '#faf4ea',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Light Grey', 'color', 'web-stories'),
+      color: '#858280',
+      family: _x('Gray', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'Motivate your audience to get out there and make something with the bold DIY template. Use it for DIY, crafting, 3D printing, woodworking or any other content targeting makers.',

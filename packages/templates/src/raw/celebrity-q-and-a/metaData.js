@@ -31,9 +31,21 @@ export default {
     _x('Black', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Black Bean', 'color', 'web-stories'), color: '#131313' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Bright Coral Red', 'color', 'web-stories'), color: '#fe3131' },
+    {
+      label: _x('Black Bean', 'color', 'web-stories'),
+      color: '#131313',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Bright Coral Red', 'color', 'web-stories'),
+      color: '#fe3131',
+      family: _x('Red', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'This template’s magazine look and stylish modern design will let you present video interviews and Q&A’s in a way that is fun, engaging, and entertaining.',
