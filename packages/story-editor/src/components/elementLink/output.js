@@ -33,7 +33,6 @@ function WithLink({ element, children, ...rest }) {
     return children;
   }
   rel.push('noreferrer');
-  const relOutput = rel.join(' ').trim();
   const urlWithProtocol = withProtocol(url);
   return (
     // False positive.
@@ -43,7 +42,7 @@ function WithLink({ element, children, ...rest }) {
       data-tooltip-icon={icon}
       data-tooltip-text={desc}
       target="_blank"
-      rel={relOutput}
+      rel={rel.join(' ')}
       {...rest}
     >
       {children}
