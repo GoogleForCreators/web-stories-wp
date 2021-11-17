@@ -120,7 +120,7 @@ export function initHelpers(data) {
     await repeatPress('ArrowRight', endOffset - startOffset);
     await data.fixture.events.keyboard.up('shift');
     await data.fixture.snapshot('End of selection');
-    await data.fixture.events.keyboard.shortcut('mod+a');
+    await data.fixture.events.click(textEditor, { clickCount: 3 });
     await data.fixture.snapshot('All selected');
   }
 
