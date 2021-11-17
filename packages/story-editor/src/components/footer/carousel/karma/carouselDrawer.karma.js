@@ -19,7 +19,7 @@
  */
 import { Fixture } from '../../../../karma';
 
-describe('Carousel', () => {
+describe('Carousel Drawer', () => {
   let fixture;
 
   beforeEach(async () => {
