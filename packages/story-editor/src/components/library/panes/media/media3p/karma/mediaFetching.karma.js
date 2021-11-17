@@ -193,7 +193,7 @@ const categories = [
   },
 ];
 
-describe('TESTING', () => {
+describe('Media3pPane fetching', () => {
   let fixture;
   let listMediaSpy;
   let listCategoriesSpy;
@@ -202,8 +202,6 @@ describe('TESTING', () => {
     localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
 
     fixture = new Fixture();
-
-    // jasmine.clock().install();
 
     await fixture.render();
 
@@ -215,7 +213,6 @@ describe('TESTING', () => {
   });
 
   afterEach(() => {
-    // jasmine.clock().uninstall();
     fixture.restore();
   });
 
