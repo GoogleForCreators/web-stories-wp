@@ -170,7 +170,7 @@ class Meta_Boxes extends Service_Base {
 		foreach ( self::LOCATIONS as $context ) {
 			$meta_boxes_per_location[ $context ] = [];
 
-			if ( ! is_array( $_wp_meta_boxes[ $screen->id ] ) || ! isset( $_wp_meta_boxes[ $screen->id ][ $context ] ) ) {
+			if ( ! isset( $_wp_meta_boxes[ $screen->id ][ $context ] ) ) {
 				continue;
 			}
 
