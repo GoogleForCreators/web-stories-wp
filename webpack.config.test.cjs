@@ -38,6 +38,7 @@ function getConfig(group, { coverage = false } = {}) {
       // Karma watches the test entry points, so we don't need to specify
       // them here. Webpack watches dependencies.
       entry: undefined,
+      output: undefined,
       mode: 'development',
       devtool: 'inline-source-map',
       plugins: [
