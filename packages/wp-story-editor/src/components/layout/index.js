@@ -25,11 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { default as Header } from '../header';
 import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
 import DocumentPane from '../documentPane';
-
-// @todo To be removed.
-const Priority = () => null;
-const Design = () => null;
-const Accessibility = () => null;
+import { Priority, Design, Accessibility } from '../checkList';
 
 function Layout() {
   return (
