@@ -24,7 +24,6 @@ import { __ } from '@web-stories-wp/i18n';
 import { ISSUE_TYPES } from '../constants';
 import { ChecklistCategoryProvider } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
-import VideoOptimizationToggle from '../videoOptimizationCheckbox';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
 function AccessibilityPanel({
@@ -69,10 +68,7 @@ AccessibilityPanel.propTypes = {
 export function AccessibilityChecks(props) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
-      <AccessibilityPanel {...props}>
-        {props.children}
-        <VideoOptimizationToggle />
-      </AccessibilityPanel>
+      <AccessibilityPanel {...props}>{props.children}</AccessibilityPanel>
     </ChecklistCategoryProvider>
   );
 }

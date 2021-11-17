@@ -26,6 +26,7 @@ import {
   TextElementFontSizeTooSmall,
   VideoElementMissingCaptions,
   VideoElementMissingDescription,
+  VideoOptimizationCheckbox,
 } from '@web-stories-wp/story-editor';
 
 function Accessibility() {
@@ -41,6 +42,7 @@ function Accessibility() {
       <ElementLinkTappableRegionTooSmall />
       <ElementLinkTappableRegionTooBig />
       <ImageElementMissingAlt />
+      <VideoOptimizationCheckbox />
     </>
   );
 }
