@@ -26,6 +26,7 @@ import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 import { DESIGN_SPACE_MARGIN } from '../../constants';
 import {
   useStory,
@@ -91,13 +92,15 @@ function FramesLayer() {
     [setScrollOffset]
   );
 
+  useKeyDownEffect(framesLayerRef, 'mod+alt+shift+m', onOpenMenu);
+
   return (
     <Layer
       ref={framesLayerRef}
       data-testid="FramesLayer"
       pointerEvents="initial"
       // Use `-1` to ensure that there's a default target to focus if
-      // there's no selection, but it's not reacheable by keyboard
+      // there's no selection, but it's not reachable by keyboard
       // otherwise.
       tabIndex="-1"
       aria-label={__('Frames layer', 'web-stories')}
