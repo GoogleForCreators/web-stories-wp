@@ -31,6 +31,7 @@ export * from './components/form';
 export * from './components/panels/panel';
 export * from './components/panels/shared';
 export * from './components/checklist';
+export * from './components/checklistCard';
 export * from './app/currentUser';
 export * from './output';
 

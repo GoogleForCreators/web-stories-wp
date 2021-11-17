@@ -27,11 +27,15 @@ import {
   StoryTitleLength,
   VideoElementMissingPoster,
   VideoOptimization,
-  StoryMissingPublisherName,
   StoryAmpValidationErrors,
   PublisherLogoMissing,
   useFFmpeg,
 } from '@web-stories-wp/story-editor';
+
+/**
+ * Internal dependencies
+ */
+import StoryMissingPublisherName from './storyMissingPublisherName';
 
 function Priority() {
   const { canManageSettings, hasUploadMediaAction } = useConfig(
@@ -41,6 +45,7 @@ function Priority() {
     })
   );
   const { isTranscodingEnabled } = useFFmpeg();
+
   return (
     <>
       <StoryMissingTitle />

@@ -26,7 +26,6 @@ export { default as PublisherLogoMissing } from './publisherLogoMissing';
 export { default as PublisherLogoSize } from './publisherLogoSize';
 export { default as StoryAmpValidationErrors } from './storyAmpValidationErrors';
 export { default as StoryMissingExcerpt } from './storyMissingExcerpt';
-export { default as StoryMissingPublisherName } from './storyMissingPublisherName';
 export { default as StoryMissingTitle } from './storyMissingTitle';
 export { default as StoryPagesCount } from './storyPagesCount';
 export { StoryPosterAttached } from './storyPosterAttached';
