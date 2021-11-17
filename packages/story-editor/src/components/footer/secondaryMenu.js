@@ -170,9 +170,11 @@ function SecondaryMenu({ menu }) {
       <MenuItems>
         <HelpCenter />
         <Space />
-        <ChecklistCountProvider>
-          <Checklist items={menu?.checkList} />
-        </ChecklistCountProvider>
+        {menu?.checkList && (
+          <ChecklistCountProvider>
+            <Checklist items={menu.checkList} />
+          </ChecklistCountProvider>
+        )}
         <Space />
         <KeyboardShortcutsMenu />
       </MenuItems>
