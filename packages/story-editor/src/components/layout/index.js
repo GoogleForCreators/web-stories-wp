@@ -73,7 +73,7 @@ const Area = styled.div`
   z-index: 2;
 `;
 
-function Layout({ header, footer, inspectorTabs, children }) {
+function Layout({ header, footer = {}, inspectorTabs, children }) {
   const snackbarState = useSnackbar(
     ({ removeSnack, currentSnacks, placement }) => ({
       onRemove: removeSnack,

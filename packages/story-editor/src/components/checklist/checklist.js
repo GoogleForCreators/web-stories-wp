@@ -117,7 +117,7 @@ ThroughputPopup.propTypes = {
   children: PropTypes.arrayOf(PropTypes.node).isRequired,
 };
 
-export function Checklist({ items }) {
+export function Checklist({ items = {} }) {
   const { close, openPanel, toggle, isOpen, isChecklistMounted, setOpenPanel } =
     useChecklist(
       ({
