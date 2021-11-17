@@ -56,6 +56,10 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
     fit('should apply inline formats correctly for both single style and multiple styles', async () => {
+      let storyContext = await data.fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElements[0].content).toBe(
+        'Fill in some text'
+      );
       const {
         bold,
         italic,
@@ -183,7 +187,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       await data.fixture.snapshot('Before exiting');
 
       // Assume text content to match expectation
-      const storyContext = await data.fixture.renderHook(() => useStory());
+      storyContext = await data.fixture.renderHook(() => useStory());
       const actual = storyContext.state.selectedElements[0].content;
       const firstCSS = [
         'font-weight: 900',
