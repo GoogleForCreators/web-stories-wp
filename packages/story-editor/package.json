@@ -41,7 +41,7 @@
     "prop-types": "^15.7.2",
     "react-calendar": "^3.5.0",
     "react-color": "^2.19.3",
-    "react-moveable": "^0.28.3",
+    "react-moveable": "^0.30.0",
     "react-photo-gallery": "^8.0.0",
     "react-transition-group": "^4.4.2",
     "react-virtual": "^2.8.2",
