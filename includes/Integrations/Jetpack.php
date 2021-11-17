@@ -224,7 +224,7 @@ class Jetpack extends Service_Base {
 
 		$metadata = wp_get_attachment_metadata( $attachment->ID );
 
-		if ( $metadata && isset( $metadata['videopress']['duration'] ) ) {
+		if ( $metadata && isset( $metadata['videopress']['duration'], $data['media_details'] ) && is_array( $data['media_details'] ) ) {
 			$data['media_details']['length_formatted'] = $this->format_milliseconds( $metadata['videopress']['duration'] );
 			$data['media_details']['length']           = (int) floor( $metadata['videopress']['duration'] / 1000 );
 		}
