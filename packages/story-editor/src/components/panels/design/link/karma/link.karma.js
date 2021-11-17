@@ -78,7 +78,8 @@ describe('Link Panel', () => {
 
   describe('CUJ: Creator Can Add A Link: Apply a link to any element', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       linkPanel = fixture.editor.inspector.designPanel.link;
     });
@@ -120,9 +121,7 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    // TODO(#8738): Fix flaky test.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should display the link tooltip correctly', async () => {
+    it('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       // make sure address input exists
       await waitFor(() => linkPanel.address);
@@ -132,9 +131,8 @@ describe('Link Panel', () => {
 
       // Debounce time for populating meta-data.
       await fixture.events.keyboard.press('tab');
-      await fixture.events.sleep(1200);
       // make sure description input exists
-      await waitFor(() => linkPanel.description);
+      await waitFor(() => linkPanel.description, { timeout: 1500 });
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
       await fixture.events.keyboard.type(linkDescription);
       await fixture.events.keyboard.press('tab');
@@ -149,8 +147,10 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       await fixture.events.mouse.moveRel(frame, 10, 10);
 
-      // TODO(#8738): This line appears to be flaky.
-      expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
+      await waitFor(() => {
+        const tooltip = fixture.screen.getByText(linkDescription);
+        expect(tooltip.textContent).toBe(linkDescription);
+      });
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is visible'
       );
@@ -166,7 +166,7 @@ describe('Link Panel', () => {
 
       // Verify that the description is not displayed when hovering without url.
       await fixture.events.mouse.click(left - 5, top - 5);
-      await fixture.events.mouse.moveRel(frame, 10, 10);
+      await fixture.events.mouse.moveRel(frame, 50, 10);
       const removedDescription = fixture.screen.queryByText(linkDescription);
       expect(removedDescription).toBeNull();
       await fixture.snapshot(
