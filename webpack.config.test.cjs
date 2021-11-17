@@ -40,10 +40,6 @@ function getConfig(group, { coverage = false } = {}) {
       entry: undefined,
       mode: 'development',
       devtool: 'inline-source-map',
-      output: {
-        ...webpackConfig.output,
-        path: path.resolve(process.cwd(), 'assets', 'testjs'),
-      },
       plugins: [
         // DependencyExtractionWebpackPlugin and HtmlWebpackPlugin are not needed for tests and
         // otherwise has some failures.
