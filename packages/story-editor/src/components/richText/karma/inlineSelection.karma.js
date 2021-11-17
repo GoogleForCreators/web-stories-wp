@@ -180,6 +180,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       expect(fontColor.hex.value).toBe('EEEEEE');
 
       // Exit edit-mode
+      await data.fixture.events.keyboard.press('Esc');
       const bg = data.fixture.editor.canvas.framesLayer.frames[0].node;
       const { x, y } = bg.getBoundingClientRect();
       await data.fixture.events.mouse.click(x + 20, y + 20);
