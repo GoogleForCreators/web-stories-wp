@@ -113,7 +113,6 @@ function PaginatedMediaGallery({
     async function loadNextPageIfNeededAfterGalleryRendering() {
       // Wait for <Gallery> to finish its render layout cycles first.
       await sleep(200);
-
       loadNextPageIfNeeded();
     }
     loadNextPageIfNeededAfterGalleryRendering();
