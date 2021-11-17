@@ -180,6 +180,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       const { x, y } = bg.getBoundingClientRect();
       await data.fixture.events.mouse.click(x + 30, y + 30);
       await data.fixture.events.sleep(100);
+      await data.fixture.snapshot('Before exiting');
 
       // Assume text content to match expectation
       const storyContext = await data.fixture.renderHook(() => useStory());
