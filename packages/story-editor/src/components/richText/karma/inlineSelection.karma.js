@@ -175,14 +175,11 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       expect(letterSpacing.value).toBe('100%');
       expect(fontColor.hex.value).toBe('EEEEEE');
 
-      await data.fixture.snapshot('Applied values after');
       // Exit edit-mode
       const bg = data.fixture.editor.canvas.framesLayer.frames[0].node;
       const { x, y } = bg.getBoundingClientRect();
       await data.fixture.events.mouse.click(x + 30, y + 30);
       await data.fixture.events.sleep(100);
-
-      await data.fixture.snapshot('Applied values after exiting edit mode');
 
       // Assume text content to match expectation
       const storyContext = await data.fixture.renderHook(() => useStory());
@@ -204,7 +201,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
         'text-transform: uppercase',
       ].join('; ');
       const expected = `Fill <span style="${firstCSS}">i</span><span style="${secondCSS}">n</span><span style="${secondCSS}"> s</span>ome text`;
-      // expect(actual).toBe(expected);
+      expect(actual).toBe(expected);
     });
   });
 
