@@ -266,7 +266,7 @@ const templateParameters = (compilation, assets, assetTags, options) => ({
     files: assets,
     options,
   },
-  chunkNames: compilation.chunks.map(({ name }) => name),
+  chunkNames: compilation.chunks.map(({ name }) => name).filter(Boolean),
 });
 
 const editorAndDashboard = {
