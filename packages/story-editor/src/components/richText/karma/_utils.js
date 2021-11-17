@@ -115,9 +115,11 @@ export function initHelpers(data) {
     await repeatPress('ArrowUp', 10);
     // Move to start of selection and hold shift while selecting
     await repeatPress('ArrowRight', startOffset);
+    await data.fixture.snapshot('Start of selection');
     await data.fixture.events.keyboard.down('shift');
     await repeatPress('ArrowRight', endOffset - startOffset);
     await data.fixture.events.keyboard.up('shift');
+    await data.fixture.snapshot('End of selection');
   }
 
   return {
