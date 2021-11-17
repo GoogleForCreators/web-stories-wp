@@ -25,6 +25,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../karma';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { initHelpers } from './_utils';
+import {useStory} from "../../../app";
 
 fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
   const data = {};
@@ -146,7 +147,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       expect(letterSpacing.value).toBe('');
       expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(fontColor.output).toBe('');
-      await data.fixture.snapshot('Applied values before');
+
       // Now toggle all toggles, and set new color and letter spacing
       await data.fixture.events.click(italic.button);
       await data.fixture.events.click(underline.button);
@@ -164,10 +165,9 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       await data.fixture.events.keyboard.type('100');
       await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.press('Escape');
-      await data.fixture.snapshot('Applied values after');
 
       // Verify all styles again
-      /*expect(bold.checked).toBe(true);
+      expect(bold.checked).toBe(true);
       expect(italic.checked).toBe(true);
       expect(underline.checked).toBe(true);
       // Note that entire selection is made black, because some part was black, when bold was pressed
@@ -175,14 +175,18 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       expect(letterSpacing.value).toBe('100%');
       expect(fontColor.hex.value).toBe('EEEEEE');
 
+      await data.fixture.snapshot('Applied values after');
       // Exit edit-mode
       const bg = data.fixture.editor.canvas.framesLayer.frames[0].node;
       const { x, y } = bg.getBoundingClientRect();
       await data.fixture.events.mouse.click(x + 30, y + 30);
       await data.fixture.events.sleep(100);
 
+      await data.fixture.snapshot('Applied values after exiting edit mode');
+
       // Assume text content to match expectation
-      const actual = getTextContent();
+      const storyContext = await data.fixture.renderHook(() => useStory());
+      const actual = storyContext.state.selectedElements[0].content;
       const firstCSS = [
         'font-weight: 900',
         'font-style: italic',
@@ -200,7 +204,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
         'text-transform: uppercase',
       ].join('; ');
       const expected = `Fill <span style="${firstCSS}">i</span><span style="${secondCSS}">n</span><span style="${secondCSS}"> s</span>ome text`;
-      expect(actual).toBe(expected);*/
+      // expect(actual).toBe(expected);
     });
   });
 
