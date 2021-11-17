@@ -182,7 +182,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       // Exit edit-mode
       const safezone = data.fixture.querySelector('[data-testid="safezone"]');
       await data.fixture.events.click(safezone);
-      await data.fixture.snapshot('After exiting');
+      await data.fixture.snapshot('With inline style applied');
 
       // Assume text content to match expectation
       storyContext = await data.fixture.renderHook(() => useStory());
