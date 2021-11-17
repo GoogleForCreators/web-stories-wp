@@ -27,7 +27,7 @@ import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { useStory } from '../../../app';
 import { initHelpers } from './_utils';
 
-fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
+describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
   const data = {};
 
   const {
@@ -55,7 +55,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
-    fit('should apply inline formats correctly for both single style and multiple styles', async () => {
+    it('should apply inline formats correctly for both single style and multiple styles', async () => {
       let storyContext = await data.fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElements[0].content).toBe(
         'Fill in some text'
