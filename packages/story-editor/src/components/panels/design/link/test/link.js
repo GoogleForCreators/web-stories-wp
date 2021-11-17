@@ -136,33 +136,6 @@ describe('Panels/Link', () => {
     expect(screen.getByText('Invalid web address.')).toBeInTheDocument();
   });
 
-  it('should display rel options for valid url', () => {
-    arrange([
-      {
-        ...DEFAULT_ELEMENT,
-        link: {
-          url: 'http://www.google.com',
-        },
-      },
-    ]);
-    expect(screen.getByText('Qualify outbound links')).toBeInTheDocument();
-  });
-
-  it('should check rel options for valid url', () => {
-    arrange([
-      {
-        ...DEFAULT_ELEMENT,
-        link: {
-          url: 'http://www.google.com',
-          rel: ['nofollow'],
-        },
-      },
-    ]);
-    expect(screen.getByText('Qualify outbound links')).toBeInTheDocument();
-    const optionA = screen.getByRole('checkbox', { name: 'Nofollow' });
-    expect(optionA).toBeChecked();
-  });
-
   it('should not display metadata fields if URL is invalid', () => {
     arrange([
       {

@@ -27,7 +27,6 @@ import { __ } from '@web-stories-wp/i18n';
 import {
   Checkbox,
   Input,
-  Link,
   Text,
   THEME_CONSTANTS,
   ThemeGlobals,
@@ -44,7 +43,7 @@ import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { OUTLINK_THEME } from '../../../../constants';
-import { LinkTypes, relHelpLink, relHelpText, relTitle } from '../constants';
+import { LinkRelations } from '../../shared';
 
 const Label = styled.label`
   margin-left: 12px;
@@ -64,16 +63,6 @@ const StyledRow = styled(Row)`
 
 const Space = styled.div`
   width: 20px;
-`;
-
-const StyledText = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-  padding: 8px 0;
-`;
-
-const CheckboxWrapper = styled.div`
-  display: flex;
-  padding: 9px 0;
 `;
 
 function PageAttachmentPanel() {
@@ -307,39 +296,7 @@ function PageAttachmentPanel() {
               {__('Link icon', 'web-stories')}
             </Text>
           </StyledRow>
-          <Row>
-            <div>
-              <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-                {relTitle}
-              </StyledText>
-              {LinkTypes.map(({ key, title }) => (
-                <CheckboxWrapper key={key}>
-                  <Checkbox
-                    id={key}
-                    name={key}
-                    checked={rel?.includes(key)}
-                    onChange={() => onChangeRel(key)}
-                  />
-                  <Label htmlFor={key}>
-                    <Text
-                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                      as="span"
-                    >
-                      {title}
-                    </Text>
-                  </Label>
-                </CheckboxWrapper>
-              ))}
-              <Link
-                rel="noopener noreferrer"
-                target="_blank"
-                href={relHelpLink}
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >
-                {relHelpText}
-              </Link>
-            </div>
-          </Row>
+          <LinkRelations onChangeRel={onChangeRel} rel={rel} />
         </>
       )}
     </SimplePanel>

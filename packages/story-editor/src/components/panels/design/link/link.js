@@ -28,13 +28,7 @@ import {
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import {
-  Input,
-  Text,
-  Checkbox,
-  THEME_CONSTANTS,
-  Link,
-} from '@web-stories-wp/design-system';
+import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -49,10 +43,10 @@ import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
 import {
   inputContainerStyleOverride,
+  LinkRelations,
   useCommonObjectValue,
 } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
-import { LinkTypes, relHelpLink, relHelpText, relTitle } from '../constants';
 
 const IconInfo = styled.div`
   display: flex;
@@ -68,20 +62,6 @@ const Error = styled.span`
   font-size: 12px;
   line-height: 16px;
   color: ${({ theme }) => theme.colors.fg.negative};
-`;
-
-const CheckboxWrapper = styled.div`
-  display: flex;
-  padding: 9px 0;
-`;
-
-const Label = styled.label`
-  margin-left: 12px;
-`;
-
-const StyledText = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-  padding: 8px 0;
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
@@ -313,41 +293,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             </IconInfo>
           </Row>
           {!isMultipleRel && (
-            <Row>
-              <div>
-                <StyledText
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                >
-                  {relTitle}
-                </StyledText>
-                {LinkTypes.map(({ key, title }) => (
-                  <CheckboxWrapper key={key}>
-                    <Checkbox
-                      id={key}
-                      name={key}
-                      checked={link?.rel?.includes(key)}
-                      onChange={() => onChangeRel(key)}
-                    />
-                    <Label htmlFor={key}>
-                      <Text
-                        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                        as="span"
-                      >
-                        {title}
-                      </Text>
-                    </Label>
-                  </CheckboxWrapper>
-                ))}
-                <Link
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  href={relHelpLink}
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                >
-                  {relHelpText}
-                </Link>
-              </div>
-            </Row>
+            <LinkRelations onChangeRel={onChangeRel} rel={link?.rel || []} />
           )}
         </>
       )}
