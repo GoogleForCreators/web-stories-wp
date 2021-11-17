@@ -22,7 +22,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 export default {
   slug: 'simple-tech-tutorial',
   creationDate: '2021-08-09T00:00:00.000Z',
-  title: _x('Simple Tech Tutorial ', 'template name', 'web-stories'),
+  title: _x('Simple Tech Tutorial', 'template name', 'web-stories'),
   tags: [
     _x('Technology', 'template keyword', 'web-stories'),
     _x('Network', 'template keyword', 'web-stories'),

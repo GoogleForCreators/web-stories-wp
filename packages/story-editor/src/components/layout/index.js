@@ -81,6 +81,7 @@ function Layout({ header, footer, inspectorTabs, children }) {
       placement,
     })
   );
+
   return (
     <>
       <LayoutProvider>

@@ -72,6 +72,18 @@ function getPatternAsString(pattern) {
   return styles.backgroundColor || styles.backgroundImage;
 }
 
+function ConditionalTooltip({ tooltip, children }) {
+  if (!tooltip) {
+    return children;
+  }
+  return <Tooltip title={tooltip}>{children}</Tooltip>;
+}
+
+ConditionalTooltip.propTypes = {
+  tooltip: PropTypes.string,
+  children: PropTypes.node.isRequired,
+};
+
 function BasicColorList({
   color,
   colors,
@@ -136,7 +148,7 @@ function BasicColorList({
               tabIndex = -1;
             }
             return (
-              <Tooltip key={patternAsBackground} title={tooltip}>
+              <ConditionalTooltip key={patternAsBackground} tooltip={tooltip}>
                 <StyledSwatch
                   onClick={() => handleClick(pattern, isLocal)}
                   pattern={pattern}
@@ -147,7 +159,7 @@ function BasicColorList({
                 >
                   {isEditMode && <Icons.Cross />}
                 </StyledSwatch>
-              </Tooltip>
+              </ConditionalTooltip>
             );
           })}
           {(isLocal || isGlobal) && (

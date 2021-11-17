@@ -16,14 +16,15 @@
 /**
  * External dependencies
  */
+import styled, { StyleSheetManager } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { ContextMenu } from '@web-stories-wp/design-system';
 import { createPortal, useRef, useEffect } from '@web-stories-wp/react';
-import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import { useRightClickMenu } from '../../app';
+import { useRightClickMenu, useConfig } from '../../app';
 import DirectionAware from '../directionAware';
 
 const RightClickMenuContainer = styled.div`
@@ -34,6 +35,7 @@ const RightClickMenuContainer = styled.div`
 `;
 
 const RightClickMenu = () => {
+  const { isRTL } = useConfig();
   const {
     isMenuOpen,
     menuItems: rightClickMenuItems,
@@ -42,7 +44,12 @@ const RightClickMenu = () => {
     maskRef,
   } = useRightClickMenu();
   const ref = useRef();
-  // If ContextMenu is already rendered prevent browser's context menu when right clicking on ContextMenu
+
+  /**
+   * Prevent browser's context menu when right clicking on custom ContextMenu
+   *
+   * @param {Object} evt Triggering event
+   */
   const preventAdditionalContext = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
@@ -58,23 +65,25 @@ const RightClickMenu = () => {
   }, [ref]);
 
   return createPortal(
-    <DirectionAware>
+    <StyleSheetManager stylisPlugins={[]}>
       <RightClickMenuContainer position={menuPosition} ref={ref}>
-        <ContextMenu
-          animate
-          data-testid="right-click-context-menu"
-          isOpen={isMenuOpen}
-          onDismiss={onCloseMenu}
-          items={rightClickMenuItems}
-          groupLabel={__(
-            'Context Menu for the selected element',
-            'web-stories'
-          )}
-          maskRef={maskRef}
-          onMouseDown={(evt) => evt.stopPropagation()}
-        />
+        <DirectionAware>
+          <ContextMenu
+            data-testid="right-click-context-menu"
+            isOpen={isMenuOpen}
+            onDismiss={onCloseMenu}
+            items={rightClickMenuItems}
+            groupLabel={__(
+              'Context Menu for the selected element',
+              'web-stories'
+            )}
+            maskRef={maskRef}
+            onMouseDown={(evt) => evt.stopPropagation()}
+            isRTL={isRTL}
+          />
+        </DirectionAware>
       </RightClickMenuContainer>
-    </DirectionAware>,
+    </StyleSheetManager>,
     document.body
   );
 };

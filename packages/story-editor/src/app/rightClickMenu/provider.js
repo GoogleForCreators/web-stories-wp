@@ -189,12 +189,20 @@ function RightClickMenuProvider({ children }) {
       evt.preventDefault();
       evt.stopPropagation();
 
+      let x = evt?.clientX;
+      let y = evt?.clientY;
+
+      // Context menus opened through a shortcut will not have clientX and clientY
+      // Instead determine the position of the menu off of the element
+      if (!x && !y) {
+        const dims = evt.target.getBoundingClientRect();
+        x = dims.x;
+        y = dims.y;
+      }
+
       dispatch({
         type: ACTION_TYPES.OPEN_MENU,
-        payload: {
-          x: evt?.clientX,
-          y: evt?.clientY,
-        },
+        payload: { x, y },
       });
 
       trackEvent('context_menu_action', {
