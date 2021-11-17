@@ -18,4 +18,7 @@
 export const VERY_WIDE_WORKSPACE_LIMIT = 1000;
 export const VERY_WIDE_MARGIN = 8;
 
+export const FOOTER_TOP_MARGIN = 16;
+export const FOOTER_BOTTOM_MARGIN = 16;
+
 export const MENU_GUTTER = 167;

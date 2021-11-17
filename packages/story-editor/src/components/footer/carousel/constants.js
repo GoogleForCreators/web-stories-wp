@@ -28,7 +28,7 @@ export const NAVIGATION_BUTTON_GUTTER =
 // Drawer button
 export const DRAWER_BUTTON_HEIGHT = 32;
 export const DRAWER_BUTTON_GAP_EXPANDED = 8;
-export const DRAWER_BUTTON_GAP_COLLAPSED = 3;
+export const DRAWER_BUTTON_GAP_COLLAPSED = 2;
 
 // Thumbnail size varies with available carousel size - over or under this limit
 export const WIDE_CAROUSEL_LIMIT = 400;
