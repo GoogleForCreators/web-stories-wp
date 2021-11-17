@@ -115,15 +115,13 @@ export function initHelpers(data) {
     await repeatPress('ArrowUp', 10);
     // Move to start of selection and hold shift while selecting
     await repeatPress('ArrowRight', startOffset);
-    await data.fixture.snapshot('Start of selection');
     await data.fixture.events.keyboard.down('shift');
     await repeatPress('ArrowRight', endOffset - startOffset);
     await data.fixture.events.keyboard.up('shift');
     await data.fixture.snapshot('End of selection');
-    await data.fixture.events.click(textEditor, { clickCount: 3 });
-    await data.fixture.snapshot('All selected');
     await data.fixture.events.keyboard.press('Del');
-    await data.fixture.snapshot('Text removed');
+    await data.fixture.snapshot('Text selection removed');
+
   }
 
   return {
