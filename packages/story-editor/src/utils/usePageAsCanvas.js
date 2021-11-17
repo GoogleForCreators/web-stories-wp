@@ -27,7 +27,7 @@ import { ZOOM_SETTING } from '../constants';
 import { getAccessibleTextColorsFromPixels } from './contrastUtils';
 import { calculateTextHeight } from './textMeasurements';
 
-function usePageAsCanvas() {
+function usePageAsCanvas(element) {
   const {
     pageCanvasData,
     setPageCanvasData,
@@ -98,6 +98,8 @@ function usePageAsCanvas() {
               const promise = htmlToImage.toCanvas(fullbleedContainer, {
                 fontEmbedCss: '',
                 pixelRatio: 1,
+                // exclude selected element from generated image to prevent interfereing with contrast calculation
+                filter: (node) => !node.dataset?.elementId === element.id,
               });
               setPageCanvasPromise(promise);
               promise.then(onCompletion).catch(onFail);
@@ -124,6 +126,7 @@ function usePageAsCanvas() {
       zoomSetting,
       hasPageHashChanged,
       pageHash,
+      element,
     ]
   );
 
