@@ -122,6 +122,8 @@ export function initHelpers(data) {
     await data.fixture.snapshot('End of selection');
     await data.fixture.events.click(textEditor, { clickCount: 3 });
     await data.fixture.snapshot('All selected');
+    await data.fixture.events.keyboard.press('Del');
+    await data.fixture.snapshot('Text removed');
   }
 
   return {
