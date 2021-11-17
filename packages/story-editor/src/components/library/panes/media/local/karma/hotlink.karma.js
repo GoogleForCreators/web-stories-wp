@@ -73,10 +73,9 @@ describe('Embedding hotlinked media', () => {
 
     await fixture.events.sleep(500);
     dialog = screen.getByRole('dialog');
-    await waitFor(
-      () => expect(dialog.textContent).toContain('Invalid link'),
-      { timeout: 1500 }
-    );
+    await waitFor(() => expect(dialog.textContent).toContain('Invalid link'), {
+      timeout: 1500,
+    });
   });
 
   it('should insert a new media element from valid url', async () => {
