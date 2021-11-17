@@ -24,8 +24,8 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../karma';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
+import { useStory } from '../../../app';
 import { initHelpers } from './_utils';
-import {useStory} from "../../../app";
 
 fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
   const data = {};
@@ -183,7 +183,8 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       const bg = data.fixture.editor.canvas.framesLayer.frames[0].node;
       const { x, y } = bg.getBoundingClientRect();
       await data.fixture.events.mouse.click(x + 30, y + 30);
-      await data.fixture.events.sleep(100);
+      await data.fixture.events.mouse.click(x + 30, y + 30);
+      await data.fixture.events.sleep(500);
       await data.fixture.snapshot('Before exiting');
 
       // Assume text content to match expectation
