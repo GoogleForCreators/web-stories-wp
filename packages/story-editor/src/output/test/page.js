@@ -627,10 +627,13 @@ describe('Page output', () => {
 
       const { container } = render(<PageOutput {...props} />);
       const pageOutlink = container.querySelector('amp-story-page-outlink');
+      await expect(pageOutlink).toBeInTheDocument();
       await expect(pageOutlink).toHaveTextContent('Click me!');
       await expect(pageOutlink).not.toHaveAttribute('cta-image');
-      await expect(pageOutlink).toHaveAttribute('rel', 'nofollow');
-      await expect(pageOutlink).toBeInTheDocument();
+
+      const pageOutATag = pageOutlink.querySelector('a');
+      await expect(pageOutATag).toBeInTheDocument();
+      await expect(pageOutATag).toHaveAttribute('rel', 'nofollow');
     });
 
     it('should not output a link in page attachment area', () => {
