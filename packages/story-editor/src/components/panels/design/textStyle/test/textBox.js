@@ -35,9 +35,7 @@ import { StoryContext } from '../../../../../app/story';
 
 let mockControls;
 jest.mock('../../../../form/color/color', () => {
-  // eslint-disable-next-line no-undef
   const React = require('@web-stories-wp/react');
-  // eslint-disable-next-line no-undef
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
     mockControls[props['data-testid']] = props;
