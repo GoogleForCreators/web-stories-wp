@@ -39,7 +39,7 @@ export default {
     {
       label: _x('Peach Bisque', 'color', 'web-stories'),
       color: '#fee2c6',
-      family: _x('Red', 'color', 'web-stories'),
+      family: _x('Orange', 'color', 'web-stories'),
     },
     {
       label: _x('Champagne Yellow', 'color', 'web-stories'),
