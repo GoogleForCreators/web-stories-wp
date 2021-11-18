@@ -21,13 +21,14 @@ import {
   createBlob,
   getTypeFromMime,
   getResourceSize,
-  getFirstFrameOfVideo,
   createResource,
   getFileName,
   getImageDimensions,
   createFileReader,
   getVideoLength,
   hasVideoGotAudio,
+  getImageFromVideo,
+  seekVideo,
 } from '@web-stories-wp/media';
 
 /**
@@ -90,7 +91,8 @@ const getVideoResource = async (file) => {
     lengthFormatted = videoLength.lengthFormatted;
   }
   const hasAudio = hasVideoGotAudio(videoEl);
-  const posterFile = await getFirstFrameOfVideo(src);
+  await seekVideo(videoEl);
+  const posterFile = await getImageFromVideo(videoEl);
   const poster = createBlob(posterFile);
   const { width, height } = await getImageDimensions(poster);
 
