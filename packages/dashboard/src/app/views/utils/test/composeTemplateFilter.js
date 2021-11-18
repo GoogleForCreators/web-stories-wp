@@ -22,7 +22,7 @@ import { TEMPLATE_META_DATA_TYPES } from '../../constants';
 describe('composeTemplateFilter', () => {
   it('filters a template properly given a set of meta data entries', () => {
     const filter = composeTemplateFilter([
-      { family: 'red', value: 'red', type: TEMPLATE_META_DATA_TYPES.COLOR },
+      { label: 'red', value: 'red', type: TEMPLATE_META_DATA_TYPES.COLOR },
       { label: 'red', value: 'red', type: TEMPLATE_META_DATA_TYPES.TAG },
       {
         label: 'Travel',
@@ -35,7 +35,7 @@ describe('composeTemplateFilter', () => {
     expect(
       filter({
         tags: ['red'],
-        colors: [{ family: 'green' }],
+        colors: [{ label: 'green' }],
         vertical: 'Books',
       })
     ).toBeTruthy();
@@ -44,7 +44,7 @@ describe('composeTemplateFilter', () => {
     expect(
       filter({
         tags: ['blue'],
-        colors: [{ family: 'red' }],
+        colors: [{ label: 'red' }],
         vertical: 'Books',
       })
     ).toBeTruthy();
@@ -53,7 +53,7 @@ describe('composeTemplateFilter', () => {
     expect(
       filter({
         tags: ['blue'],
-        colors: [{ family: 'blue' }],
+        colors: [{ label: 'blue' }],
         vertical: 'Travel',
       })
     ).toBeTruthy();
@@ -62,7 +62,7 @@ describe('composeTemplateFilter', () => {
     expect(
       filter({
         tags: ['blue'],
-        colors: [{ family: 'blue' }],
+        colors: [{ label: 'blue' }],
         vertical: 'Books',
       })
     ).not.toBeTruthy();
