@@ -109,7 +109,9 @@ function HotlinkModal({ isOpen, onClose }) {
     [isDisabled, onInsert]
   );
 
-  const primaryText = isInserting ? __('Inserting…', 'web-stories') : __('Insert', 'web-stories');
+  const primaryText = isInserting
+    ? __('Inserting…', 'web-stories')
+    : __('Insert', 'web-stories');
 
   return (
     <Dialog
