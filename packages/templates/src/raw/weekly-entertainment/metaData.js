@@ -29,10 +29,26 @@ export default {
     _x('Hip', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Pink', 'color', 'web-stories'), color: '#ff00d6' },
-    { label: _x('Gray', 'color', 'web-stories'), color: '#525252' },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Pink', 'color', 'web-stories'),
+      color: '#ff00d6',
+      family: _x('Pink', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Gray', 'color', 'web-stories'),
+      color: '#525252',
+      family: _x('Gray', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'Cover the world of entertainment with this template that comes with an edgy, interesting look. Works well as foundation for celebrity, movie, TV and music coverage, insights and inspiration.',

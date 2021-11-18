@@ -35,9 +35,21 @@ export default {
     _x('Yellow', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Dry Yellow', 'color', 'web-stories'), color: '#ece7bd' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Banff Green', 'color', 'web-stories'), color: '#3f4f3e' },
+    {
+      label: _x('Dry Yellow', 'color', 'web-stories'),
+      color: '#ece7bd',
+      family: _x('Yellow', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Banff Green', 'color', 'web-stories'),
+      color: '#3f4f3e',
+      family: _x('Green', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'With its nature-inspired banners and stickers, this template will let you create lively and playful stories for topics involving nature. Announce events and retreats, give out travel tips and recommendations, share recipes and so much more.',

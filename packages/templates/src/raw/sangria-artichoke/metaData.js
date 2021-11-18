@@ -33,10 +33,26 @@ export default {
     _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Jewel Green', 'color', 'web-stories'), color: '#0e662a' },
-    { label: _x('Tabasco Red', 'color', 'web-stories'), color: '#9f240f' },
-    { label: _x('Yukon Sky Gray', 'color', 'web-stories'), color: '#dfe3e4' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+    {
+      label: _x('Jewel Green', 'color', 'web-stories'),
+      color: '#0e662a',
+      family: _x('Green', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Tabasco Red', 'color', 'web-stories'),
+      color: '#9f240f',
+      family: _x('Red', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Yukon Sky Gray', 'color', 'web-stories'),
+      color: '#dfe3e4',
+      family: _x('Gray', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'From veggies, with love. This template’s natural green color palette and lively typography will inspire your audience to cook a healthy meal today.',

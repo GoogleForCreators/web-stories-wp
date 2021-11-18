@@ -31,9 +31,21 @@ export default {
     _x('White', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Rose White', 'color', 'web-stories'), color: '#fff8f2' },
-    { label: _x('Coal Black', 'color', 'web-stories'), color: '#060607' },
-    { label: _x('Ember Orange', 'color', 'web-stories'), color: '#de7032' },
+    {
+      label: _x('Rose White', 'color', 'web-stories'),
+      color: '#fff8f2',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Coal Black', 'color', 'web-stories'),
+      color: '#060607',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Ember Orange', 'color', 'web-stories'),
+      color: '#de7032',
+      family: _x('Orange', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'With its ultra-modern typography, minimalistic layout and fresh, contrasty color palette, this template will let you create product guides that are clear, attractive and effective.',

@@ -31,14 +31,31 @@ export default {
     _x('Pink', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Sunset Pink', 'color', 'web-stories'), color: '#FFC6DA' },
-    { label: _x('Sunset Blue', 'color', 'web-stories'), color: '#9BB0F0' },
-    { label: _x('Pearl Yellow', 'color', 'web-stories'), color: '#FFF7CE' },
+    {
+      label: _x('Sunset Pink', 'color', 'web-stories'),
+      color: '#FFC6DA',
+      family: _x('Pink', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Sunset Blue', 'color', 'web-stories'),
+      color: '#9BB0F0',
+      family: _x('Blue', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Pearl Yellow', 'color', 'web-stories'),
+      color: '#FFF7CE',
+      family: _x('Yellow', 'color family', 'web-stories'),
+    },
     {
       label: _x('Rubber Ducky Yellow', 'color', 'web-stories'),
       color: '#FFE55C',
+      family: _x('Yellow', 'color family', 'web-stories'),
     },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'Show the latest styles and outfits with this template’s social media-inspired layout. The vibrant colors and popping font will let you create cool and trendy fashion stories, and you can add purchase links to showcased products.',

@@ -31,9 +31,21 @@ export default {
     _x('White', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Cod Black', 'color', 'web-stories'), color: '#444849' },
-    { label: _x('Cosmonaut Gray', 'color', 'web-stories'), color: '#dedede' },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Cod Black', 'color', 'web-stories'),
+      color: '#444849',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Cosmonaut Gray', 'color', 'web-stories'),
+      color: '#dedede',
+      family: _x('Gray', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'With its smooth gray shades and corner frame accents, this template is like your very own professional tech review studio. Use photos and videos and create informative, sleek-looking product reviews, comparisons and buying guides for your audience.',

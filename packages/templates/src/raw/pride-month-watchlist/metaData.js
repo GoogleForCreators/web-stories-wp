@@ -31,15 +31,36 @@ export default {
     _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Emerald Green', 'color', 'web-stories'), color: '#006110' },
-    { label: _x('Venice Red', 'color', 'web-stories'), color: '#b50021' },
+    {
+      label: _x('Emerald Green', 'color', 'web-stories'),
+      color: '#006110',
+      family: _x('Green', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Venice Red', 'color', 'web-stories'),
+      color: '#b50021',
+      family: _x('Red', 'color family', 'web-stories'),
+    },
     {
       label: _x('Dark Raspberry Pink', 'color', 'web-stories'),
       color: '#9e005f',
+      family: _x('Pink', 'color family', 'web-stories'),
     },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('Daring Violet', 'color', 'web-stories'), color: '#5c0094' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Daring Violet', 'color', 'web-stories'),
+      color: '#5c0094',
+      family: _x('Purple', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'Sassy and bold with no distractions, this template will let you create watchlists, summaries, synopses and more with personality and character.',

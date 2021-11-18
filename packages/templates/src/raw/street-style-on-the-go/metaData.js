@@ -31,9 +31,21 @@ export default {
     _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Voguish Green', 'color', 'web-stories'), color: '#74e3a3' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000000' },
-    { label: _x('White', 'color', 'web-stories'), color: '#ffffff' },
+    {
+      label: _x('Voguish Green', 'color', 'web-stories'),
+      color: '#74e3a3',
+      family: _x('Green', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000000',
+      family: _x('Black', 'color family', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#ffffff',
+      family: _x('White', 'color family', 'web-stories'),
+    },
   ],
   description: __(
     'Beautiful bright colors, full-scale photos, and an elegant font. Street Style On The Go will let you create stories that look chic and stylish.',

@@ -69,4 +69,20 @@ describe('getTemplate', () => {
       });
     });
   });
+
+  it('should have keys for color, label, and family for each template color', async () => {
+    const templates = await getTemplates('example.com/');
+
+    templates.forEach((template) => {
+      template.colors.forEach((color) => {
+        expect(color).toStrictEqual(
+          expect.objectContaining({
+            label: expect.toBeString(),
+            color: expect.stringContaining('#'),
+            family: expect.toBeString(),
+          })
+        );
+      });
+    });
+  });
 });
