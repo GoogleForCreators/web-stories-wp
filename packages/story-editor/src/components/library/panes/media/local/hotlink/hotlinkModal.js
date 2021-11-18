@@ -67,7 +67,7 @@ function HotlinkModal({ isOpen, onClose }) {
   }
   const [link, setLink] = useState('');
 
-  const { onInsert, isInserting } = useInsert({
+  const { onInsert, isInserting, setIsInserting } = useInsert({
     link,
     setLink,
     errorMsg,
@@ -119,6 +119,7 @@ function HotlinkModal({ isOpen, onClose }) {
         onClose();
         setLink('');
         setErrorMsg(false);
+        setIsInserting(false);
       }}
       isOpen={isOpen}
       title={__('Insert external image or video', 'web-stories')}

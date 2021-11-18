@@ -249,6 +249,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   return {
     onInsert,
     isInserting,
+    setIsInserting,
   };
 }
 
