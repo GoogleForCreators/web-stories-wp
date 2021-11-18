@@ -16,6 +16,7 @@
 
 export default [
   {
+    baseColor: '#ffffff',
     type: 'image',
     id: 1,
     src: 'http://localhost:9876/__static__/blue-marble.jpg',
@@ -53,6 +54,7 @@ export default [
     isExternal: false,
   },
   {
+    baseColor: '#ffffff',
     type: 'image',
     id: 2,
     guid: {
@@ -101,6 +103,7 @@ export default [
     isExternal: false,
   },
   {
+    baseColor: '#ffffff',
     type: 'image',
     id: 3,
     guid: {
@@ -149,6 +152,7 @@ export default [
     isExternal: false,
   },
   {
+    baseColor: '#ffffff',
     type: 'image',
     id: 4,
     guid: {
@@ -202,6 +206,7 @@ export default [
     isExternal: false,
   },
   {
+    baseColor: '#ffffff',
     type: 'image',
     id: 5,
     guid: {
@@ -249,6 +254,7 @@ export default [
     isExternal: false,
   },
   {
+    baseColor: '#000fff',
     type: 'video',
     id: 6,
     guid: {
@@ -274,6 +280,7 @@ export default [
     },
   },
   {
+    baseColor: '#000000',
     type: 'video',
     id: 7,
     src: 'http://localhost:9876/__static__/asteroid.ogg',
@@ -296,6 +303,7 @@ export default [
     },
   },
   {
+    baseColor: '#ffffff',
     type: 'image',
     id: 8,
     guid: {
