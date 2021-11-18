@@ -154,6 +154,7 @@ function InnerElement({
     ...commonProps,
     onLoad: makeMediaVisible,
     loading: 'lazy',
+    decoding: 'async',
     draggable: false,
   };
 

@@ -76,6 +76,7 @@ function ImageDisplay({ element, box, previewMode }) {
   );
 
   imgProps.crossOrigin = 'anonymous';
+  imgProps.decoding = 'async';
 
   useEffect(() => {
     let timeout;
