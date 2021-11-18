@@ -243,7 +243,7 @@
   "lint-staged": {
     "*.js": [
       "eslint --fix",
-      "stylelint --fix --allow-empty-input --syntax \"css-in-js\""
+      "stylelint --fix --allow-empty-input"
     ],
     "*.json": [
       "prettier --write"
