@@ -102,14 +102,12 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
           alt: originalFileName,
         };
 
-        let video;
-
         // We need to gather some metadata for videos, but efficiently.
         // Thus only loading it once to speed up insertion.
         if (isVideo) {
           // preloadVideoMetadata would suffice, except for audio detection
           // which requires loading more than just metadata.
-          video = await preloadVideo(proxiedUrl);
+          const video = await preloadVideo(proxiedUrl);
           await seekVideo(video);
 
           resourceLike.width = video.videoWidth;
