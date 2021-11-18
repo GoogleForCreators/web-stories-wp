@@ -81,7 +81,7 @@ describe('Video Accessibility Panel', () => {
       const originalPoster = vaPanel.posterImage.src;
 
       // Ensure focus right before the menu button.
-      await vaPanel.panelTitle.scrollIntoView();
+      vaPanel.panelTitle.scrollIntoView();
       await focusOnTitle();
 
       // Expect menu button to exist
