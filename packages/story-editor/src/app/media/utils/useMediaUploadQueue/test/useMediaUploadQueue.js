@@ -57,11 +57,11 @@ const mockResource = {
   },
   featuredMediaSrc: {},
   meta: {
-    web_stories_is_poster: false,
-    web_stories_poster_id: 0,
-    web_stories_trim_data: {},
+    webStoriesIsPoster: false,
+    webStoriesPosterId: 0,
+    webStoriesTrimData: {},
   },
-  web_stories_is_muted: false,
+  webStoriesIsMuted: false,
 };
 
 const mockUploadFile = jest
