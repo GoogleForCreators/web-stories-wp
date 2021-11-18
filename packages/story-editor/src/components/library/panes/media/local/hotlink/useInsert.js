@@ -164,6 +164,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
         setLink('');
         onClose();
       } catch (e) {
+        setIsInserting(false);
         setErrorMsg(getErrorMessage());
       }
     },
