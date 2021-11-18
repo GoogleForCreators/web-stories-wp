@@ -109,6 +109,8 @@ function HotlinkModal({ isOpen, onClose }) {
     [isDisabled, onInsert]
   );
 
+  const primaryText = isInserting ? __('Inserting…', 'web-stories') : __('Insert', 'web-stories');
+
   return (
     <Dialog
       onClose={() => {
@@ -119,7 +121,7 @@ function HotlinkModal({ isOpen, onClose }) {
       isOpen={isOpen}
       title={__('Insert external image or video', 'web-stories')}
       onPrimary={() => onInsert()}
-      primaryText={__('Insert', 'web-stories')}
+      primaryText={primaryText}
       secondaryText={__('Cancel', 'web-stories')}
       primaryRest={{ disabled: isDisabled }}
     >
