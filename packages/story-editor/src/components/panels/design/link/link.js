@@ -91,7 +91,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const defaultLink = useMemo(() => createLink({ icon: null, desc: null }), []);
 
-  const link = useCommonObjectValue(selectedElements, 'link', defaultLink);
+  const linkRaw = useCommonObjectValue(selectedElements, 'link', defaultLink);
+  const link = createLink(linkRaw);
+  const { url = '', desc = '', icon, rel = [] } = link;
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
   const [isLinkFocused, setIsLinkFocused] = useState(false);
@@ -101,15 +103,15 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   } = useAPI();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
-    ({ url, title, icon }) =>
+    ({ newUrl, newTitle, newIcon }) =>
       pushUpdateForObject(
         'link',
         () =>
-          url
+          newUrl
             ? createLink({
-                url,
-                desc: title ? title : '',
-                icon: icon ? toAbsoluteUrl(url, icon) : '',
+                url: newUrl,
+                desc: newTitle ? newTitle : '',
+                icon: newIcon ? toAbsoluteUrl(newUrl, newIcon) : '',
               })
             : null,
         defaultLink,
@@ -119,14 +121,14 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   );
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
-    !isValidUrl(withProtocol(link.url || ''))
+    !isValidUrl(withProtocol(url))
   );
 
-  const populateMetadata = useDebouncedCallback((url) => {
+  const populateMetadata = useDebouncedCallback((newUrl) => {
     setFetchingMetadata(true);
-    getLinkMetadata(url)
-      .then(({ title, image }) => {
-        updateLinkFromMetadataApi({ url, title, icon: image });
+    getLinkMetadata(newUrl)
+      .then(({ title: newTitle, image: newIcon }) => {
+        updateLinkFromMetadataApi({ newUrl, newTitle, newIcon });
       })
       .catch(() => {
         setIsInvalidUrl(true);
@@ -179,7 +181,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [handleChange]
   );
 
-  const hasLinkSet = Boolean(link.url?.length);
+  const hasLinkSet = Boolean(url?.length);
   const displayMetaFields = hasLinkSet && !isInvalidUrl;
 
   // If we're focusing on the link input and any of the relevant values changes,
@@ -187,7 +189,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   useEffect(() => {
     if (isLinkFocused) {
       // Display the guidelines if there's no link / if it's multiple value.
-      const hasLink = hasLinkSet && link.url !== MULTIPLE_VALUE;
+      const hasLink = hasLinkSet && url !== MULTIPLE_VALUE;
       setDisplayLinkGuidelines(hasElementsInAttachmentArea && !hasLink);
     }
   }, [
@@ -196,22 +198,22 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     hasElementsInAttachmentArea,
     hasLinkSet,
     setDisplayLinkGuidelines,
-    link.url,
+    url,
   ]);
 
   const onChangeRel = useCallback(
     (value) => {
-      const rel = link?.rel?.includes(value)
-        ? link?.rel?.filter((el) => el !== value)
-        : [...link?.rel, value];
-      handleChange({ rel }, true);
+      const newRel = rel.includes(value)
+        ? rel.filter((el) => el !== value)
+        : [...rel, value];
+      handleChange({ rel: newRel }, true);
     },
-    [handleChange, link]
+    [handleChange]
   );
 
-  const isMultipleUrl = MULTIPLE_VALUE === link.url;
-  const isMultipleDesc = MULTIPLE_VALUE === link.desc;
-  const isMultipleRel = MULTIPLE_VALUE === link.rel;
+  const isMultipleUrl = MULTIPLE_VALUE === url;
+  const isMultipleDesc = MULTIPLE_VALUE === desc;
+  const isMultipleRel = MULTIPLE_VALUE === rel;
 
   return (
     <SimplePanel
@@ -239,7 +241,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         onFocus={() => {
           setIsLinkFocused(true);
         }}
-        value={link.url || ''}
+        value={url}
         placeholder={
           isMultipleUrl
             ? MULTIPLE_DISPLAY_VALUE
@@ -272,7 +274,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               onChange={({ target }) =>
                 handleChange({ desc: target.value }, !target.value /* submit */)
               }
-              value={link.desc || ''}
+              value={desc}
               aria-label={__('Link description', 'web-stories')}
               isIndeterminate={isMultipleDesc}
               disabled={fetchingMetadata}
@@ -282,7 +284,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           <Row spaceBetween={false}>
             <LinkIcon
               handleChange={handleChangeIcon}
-              icon={link.icon}
+              icon={icon}
               isLoading={fetchingMetadata}
               disabled={fetchingMetadata}
             />
@@ -293,7 +295,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             </IconInfo>
           </Row>
           {!isMultipleRel && (
-            <LinkRelations onChangeRel={onChangeRel} rel={link?.rel || []} />
+            <LinkRelations onChangeRel={onChangeRel} rel={rel} />
           )}
         </>
       )}
