@@ -206,7 +206,6 @@ export default [
     isExternal: false,
   },
   {
-    baseColor: '#734727',
     type: 'image',
     id: 5,
     guid: {
