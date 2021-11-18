@@ -30,6 +30,16 @@ export function initHelpers(data) {
     return storyContext.state.currentPage.elements;
   }
 
+  async function setFontSize(size) {
+    const fontSize =
+      data.fixture.editor.inspector.designPanel.textStyle.fontSize;
+    await data.fixture.events.click(fontSize, { clickCount: 3 });
+    await data.fixture.events.keyboard.type(size);
+    await data.fixture.events.keyboard.press('tab');
+    // Give time for the font size to be applied.
+    await data.fixture.events.sleep(100);
+  }
+
   async function addInitialText(addExtra = false) {
     await data.fixture.events.click(data.fixture.editor.library.textAdd);
     await waitFor(() => data.fixture.editor.canvas.framesLayer.frames[1].node);
@@ -99,7 +109,7 @@ export function initHelpers(data) {
   async function setSelection(startOffset, endOffset) {
     // Assume text is in edit-mode - click inside editable text field
     // and then press "up" a number of times to ensure cursor is at start
-    const textEditor = data.fixture.editor.canvas.editLayer.text;
+    const textEditor = data.fixture.querySelector('[data-testid="textEditor"]');
     const { height } = textEditor.getBoundingClientRect();
     await data.fixture.events.mouse.clickOn(textEditor, 30, height / 2);
     await repeatPress('ArrowUp', 10);
@@ -118,5 +128,6 @@ export function initHelpers(data) {
     richTextHasFocus,
     selectTextField,
     selectBothTextFields,
+    setFontSize,
   };
 }
