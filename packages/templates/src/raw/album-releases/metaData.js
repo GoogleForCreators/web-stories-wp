@@ -34,22 +34,22 @@ export default {
     {
       label: _x('Hot Orange', 'color', 'web-stories'),
       color: '#f7722f',
-      family: _x('Orange', 'color family', 'web-stories'),
+      family: _x('Orange', 'color', 'web-stories'),
     },
     {
       label: _x('Peach Bisque', 'color', 'web-stories'),
       color: '#fee2c6',
-      family: _x('Red', 'color family', 'web-stories'),
+      family: _x('Red', 'color', 'web-stories'),
     },
     {
       label: _x('Champagne Yellow', 'color', 'web-stories'),
       color: '#f4e6b0',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('Cola Brown', 'color', 'web-stories'),
       color: '#3d3225',
-      family: _x('Brown', 'color family', 'web-stories'),
+      family: _x('Brown', 'color', 'web-stories'),
     },
   ],
   description: __(

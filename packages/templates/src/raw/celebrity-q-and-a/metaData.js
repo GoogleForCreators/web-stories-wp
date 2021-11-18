@@ -34,17 +34,17 @@ export default {
     {
       label: _x('Black Bean', 'color', 'web-stories'),
       color: '#131313',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Bright Coral Red', 'color', 'web-stories'),
       color: '#fe3131',
-      family: _x('Red', 'color family', 'web-stories'),
+      family: _x('Red', 'color', 'web-stories'),
     },
   ],
   description: __(

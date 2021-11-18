@@ -32,22 +32,22 @@ export default {
     {
       label: _x('Courtyard Green', 'color', 'web-stories'),
       color: '#397165',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Pink Wash', 'color', 'web-stories'),
       color: '#f8dfdc',
-      family: _x('Pink', 'color family', 'web-stories'),
+      family: _x('Pink', 'color', 'web-stories'),
     },
     {
       label: _x('Aquatic Green', 'color', 'web-stories'),
       color: '#aec2bf',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
   ],
   description: __(

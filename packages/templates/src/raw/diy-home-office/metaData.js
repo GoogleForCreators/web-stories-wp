@@ -34,27 +34,27 @@ export default {
     {
       label: _x('Black Pepper', 'color', 'web-stories'),
       color: '#3d3730',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
     {
       label: _x('Cannon Black', 'color', 'web-stories'),
       color: '#373737',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
     {
       label: _x('Pastel Orange', 'color', 'web-stories'),
       color: '#ffb555',
-      family: _x('Orange', 'color family', 'web-stories'),
+      family: _x('Orange', 'color', 'web-stories'),
     },
     {
       label: _x('White Linen', 'color', 'web-stories'),
       color: '#f6f2ed',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Gray Beige', 'color', 'web-stories'),
       color: '#c7bbaf',
-      family: _x('Gray', 'color family', 'web-stories'),
+      family: _x('Gray', 'color', 'web-stories'),
     },
   ],
   description: __(

@@ -34,12 +34,12 @@ export default {
     {
       label: _x('Phantom Black', 'color', 'web-stories'),
       color: '#020202',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
     {
       label: _x('Gecko Green', 'color', 'web-stories'),
       color: '#80FF44',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
   ],
   description: __(

@@ -34,22 +34,22 @@ export default {
     {
       label: _x('Space Blue', 'color', 'web-stories'),
       color: '#222b49',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Watermelon Yellow', 'color', 'web-stories'),
       color: '#f1ff51',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Pastel Blue', 'color', 'web-stories'),
       color: '#e0edf8',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
   ],
   description: __(

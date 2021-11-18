@@ -34,22 +34,22 @@ export default {
     {
       label: _x('Lavender Gray', 'color', 'web-stories'),
       color: '#eaeef4',
-      family: _x('Gray', 'color family', 'web-stories'),
+      family: _x('Gray', 'color', 'web-stories'),
     },
     {
       label: _x('Baby Beluga Gray', 'color', 'web-stories'),
       color: '#4d4c48',
-      family: _x('Gray', 'color family', 'web-stories'),
+      family: _x('Gray', 'color', 'web-stories'),
     },
     {
       label: _x('Pale Orange', 'color', 'web-stories'),
       color: '#ffdcc0',
-      family: _x('Orange', 'color family', 'web-stories'),
+      family: _x('Orange', 'color', 'web-stories'),
     },
     {
       label: _x('Meringue White', 'color', 'web-stories'),
       color: '#fbf5f1',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
   ],
   description: __(

@@ -36,22 +36,22 @@ export default {
     {
       label: _x('Jewel Green', 'color', 'web-stories'),
       color: '#0e662a',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
     {
       label: _x('Tabasco Red', 'color', 'web-stories'),
       color: '#9f240f',
-      family: _x('Red', 'color family', 'web-stories'),
+      family: _x('Red', 'color', 'web-stories'),
     },
     {
       label: _x('Yukon Sky Gray', 'color', 'web-stories'),
       color: '#dfe3e4',
-      family: _x('Gray', 'color family', 'web-stories'),
+      family: _x('Gray', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
   ],
   description: __(

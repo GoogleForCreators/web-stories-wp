@@ -34,27 +34,27 @@ export default {
     {
       label: _x('Neon Aqua Blue', 'color', 'web-stories'),
       color: '#00f0ff',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Catalina Blue', 'color', 'web-stories'),
       color: '#002e73',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Light Aqua Blue', 'color', 'web-stories'),
       color: '#a2f6fc',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Celestial Blue', 'color', 'web-stories'),
       color: '#152132',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
   ],
   description: __(

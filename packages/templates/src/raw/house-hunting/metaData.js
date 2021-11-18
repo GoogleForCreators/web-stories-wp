@@ -34,22 +34,22 @@ export default {
     {
       label: _x('Pastel Toffee Pink', 'color', 'web-stories'),
       color: '#eec2bc',
-      family: _x('Pink', 'color family', 'web-stories'),
+      family: _x('Pink', 'color', 'web-stories'),
     },
     {
       label: _x('Black Violet', 'color', 'web-stories'),
       color: '#2d2a35',
-      family: _x('Purple', 'color family', 'web-stories'),
+      family: _x('Purple', 'color', 'web-stories'),
     },
     {
       label: _x('Marshmallow Yellow', 'color', 'web-stories'),
       color: '#fff0d8',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('Grape Purple', 'color', 'web-stories'),
       color: '#464152',
-      family: _x('Purple', 'color family', 'web-stories'),
+      family: _x('Purple', 'color', 'web-stories'),
     },
   ],
   description: __(

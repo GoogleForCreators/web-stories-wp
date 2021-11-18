@@ -34,27 +34,27 @@ export default {
     {
       label: _x('Everglades Green', 'color', 'web-stories'),
       color: '#235524',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
     {
       label: _x('Mint Green', 'color', 'web-stories'),
       color: '#c2e3c3',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
     {
       label: _x('Banana Cream Yellow', 'color', 'web-stories'),
       color: '#fcefab',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Mineral Green', 'color', 'web-stories'),
       color: '#65a867',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
   ],
   description: __(

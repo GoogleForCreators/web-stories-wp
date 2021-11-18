@@ -31,27 +31,27 @@ export default {
     {
       label: _x('Cream', 'color', 'web-stories'),
       color: '#ffece3',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Orange', 'color', 'web-stories'),
       color: '#ff3000',
-      family: _x('Orange', 'color family', 'web-stories'),
+      family: _x('Orange', 'color', 'web-stories'),
     },
     {
       label: _x('Black', 'color', 'web-stories'),
       color: '#212121',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
     {
       label: _x('Gray', 'color', 'web-stories'),
       color: '#858280',
-      family: _x('Gray', 'color family', 'web-stories'),
+      family: _x('Gray', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
   ],
   description: __(

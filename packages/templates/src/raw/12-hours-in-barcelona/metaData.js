@@ -33,22 +33,22 @@ export default {
     {
       label: _x('Winter Blue', 'color', 'web-stories'),
       color: '#a4deff',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Blackcurrant Blue', 'color', 'web-stories'),
       color: '#160236',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Sunset Yellow', 'color', 'web-stories'),
       color: '#ffc700',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
   ],
   description: __(

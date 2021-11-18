@@ -35,27 +35,27 @@ export default {
     {
       label: _x('Swamp Green', 'color', 'web-stories'),
       color: '#a7b27e',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
     {
       label: _x('Saffron Yellow', 'color', 'web-stories'),
       color: '#f5b435',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('Dark Moss Green', 'color', 'web-stories'),
       color: '#51611c',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
     {
       label: _x('Rose Bud Pink', 'color', 'web-stories'),
       color: '#ffa797',
-      family: _x('Pink', 'color family', 'web-stories'),
+      family: _x('Pink', 'color', 'web-stories'),
     },
     {
       label: _x('Dark Coral', 'color', 'web-stories'),
       color: '#a35445',
-      family: _x('Red', 'color family', 'web-stories'),
+      family: _x('Red', 'color', 'web-stories'),
     },
   ],
   description: __(

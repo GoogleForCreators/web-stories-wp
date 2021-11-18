@@ -34,17 +34,17 @@ export default {
     {
       label: _x('Berry Red', 'color', 'web-stories'),
       color: '#e0193e',
-      family: _x('Red', 'color family', 'web-stories'),
+      family: _x('Red', 'color', 'web-stories'),
     },
     {
       label: _x('Havana White', 'color', 'web-stories'),
       color: '#f7ece3',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
   ],
   description: __(

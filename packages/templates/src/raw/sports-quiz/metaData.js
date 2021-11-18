@@ -34,17 +34,17 @@ export default {
     {
       label: _x('Amethyst Violet', 'color', 'web-stories'),
       color: '#442383',
-      family: _x('Purple', 'color family', 'web-stories'),
+      family: _x('Purple', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Mango', 'color', 'web-stories'),
       color: '#ffcd48',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
   ],
   description: __(

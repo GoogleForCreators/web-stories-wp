@@ -33,32 +33,32 @@ export default {
     {
       label: _x('Blue', 'color', 'web-stories'),
       color: '#1f2a2e',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Green', 'color', 'web-stories'),
       color: '#4b5c54',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
     {
       label: _x('Yellow', 'color', 'web-stories'),
       color: '#FDF5DC',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('Gray', 'color', 'web-stories'),
       color: '#858280',
-      family: _x('Gray', 'color family', 'web-stories'),
+      family: _x('Gray', 'color', 'web-stories'),
     },
     {
       label: _x('Light Gray', 'color', 'web-stories'),
       color: '#d8d8d8',
-      family: _x('Gray', 'color family', 'web-stories'),
+      family: _x('Gray', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
   ],
   description: __(

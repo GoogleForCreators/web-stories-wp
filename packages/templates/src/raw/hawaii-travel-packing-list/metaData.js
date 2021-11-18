@@ -34,12 +34,12 @@ export default {
     {
       label: _x('Cool Teal', 'color', 'web-stories'),
       color: '#EFFAF6',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Black', 'color', 'web-stories'),
       color: '#000',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
   ],
   description: __(

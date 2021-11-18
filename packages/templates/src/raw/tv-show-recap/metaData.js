@@ -34,22 +34,22 @@ export default {
     {
       label: _x('Black Walnut', 'color', 'web-stories'),
       color: '#2f2f2b',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Mimosa Yellow', 'color', 'web-stories'),
       color: '#fff172',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('Clear Sky Blue', 'color', 'web-stories'),
       color: '#72aaff',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
   ],
   description: __(

@@ -34,22 +34,22 @@ export default {
     {
       label: _x('Black', 'color', 'web-stories'),
       color: '#000',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
     {
       label: _x('Faded Rose Red', 'color', 'web-stories'),
       color: '#c16351',
-      family: _x('Red', 'color family', 'web-stories'),
+      family: _x('Red', 'color', 'web-stories'),
     },
     {
       label: _x('Winter Mist White', 'color', 'web-stories'),
       color: '#f2f2f2',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Prairie Gold', 'color', 'web-stories'),
       color: '#b18c54',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
   ],
   description: __(

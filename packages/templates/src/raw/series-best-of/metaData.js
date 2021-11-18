@@ -34,17 +34,17 @@ export default {
     {
       label: _x('Zinc Yellow', 'color', 'web-stories'),
       color: '#ffe145',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('Black', 'color', 'web-stories'),
       color: '#000',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
     {
       label: _x('Mercury Gray', 'color', 'web-stories'),
       color: '#e3e3e3',
-      family: _x('Gray', 'color family', 'web-stories'),
+      family: _x('Gray', 'color', 'web-stories'),
     },
   ],
   description: __(

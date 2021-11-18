@@ -34,22 +34,22 @@ export default {
     {
       label: _x('Tomato Sauce Red', 'color', 'web-stories'),
       color: '#B51006',
-      family: _x('Red', 'color family', 'web-stories'),
+      family: _x('Red', 'color', 'web-stories'),
     },
     {
       label: _x('White Smoke', 'color', 'web-stories'),
       color: '#f1f1f1',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Graphite Gray', 'color', 'web-stories'),
       color: '#2e2e2e',
-      family: _x('Gray', 'color family', 'web-stories'),
+      family: _x('Gray', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
   ],
   description: __(

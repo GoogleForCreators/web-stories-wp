@@ -34,17 +34,17 @@ export default {
     {
       label: _x('Waterworld Blue', 'color', 'web-stories'),
       color: '#061b38',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Arctic White', 'color', 'web-stories'),
       color: '#fcfcfc',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Honey Pot Yellow', 'color', 'web-stories'),
       color: '#ffc864',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
   ],
   description: __(

@@ -38,17 +38,17 @@ export default {
     {
       label: _x('Dry Yellow', 'color', 'web-stories'),
       color: '#ece7bd',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Banff Green', 'color', 'web-stories'),
       color: '#3f4f3e',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
   ],
   description: __(

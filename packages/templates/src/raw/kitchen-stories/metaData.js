@@ -34,12 +34,12 @@ export default {
     {
       label: _x('Mariner Blue', 'color', 'web-stories'),
       color: '#d4e3fc',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Hawkes Blue', 'color', 'web-stories'),
       color: '#215fce',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
   ],
   description: __(

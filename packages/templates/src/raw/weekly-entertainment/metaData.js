@@ -32,22 +32,22 @@ export default {
     {
       label: _x('Black', 'color', 'web-stories'),
       color: '#000',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Pink', 'color', 'web-stories'),
       color: '#ff00d6',
-      family: _x('Pink', 'color family', 'web-stories'),
+      family: _x('Pink', 'color', 'web-stories'),
     },
     {
       label: _x('Gray', 'color', 'web-stories'),
       color: '#525252',
-      family: _x('Gray', 'color family', 'web-stories'),
+      family: _x('Gray', 'color', 'web-stories'),
     },
   ],
   description: __(

@@ -34,27 +34,27 @@ export default {
     {
       label: _x('Sunset Pink', 'color', 'web-stories'),
       color: '#FFC6DA',
-      family: _x('Pink', 'color family', 'web-stories'),
+      family: _x('Pink', 'color', 'web-stories'),
     },
     {
       label: _x('Sunset Blue', 'color', 'web-stories'),
       color: '#9BB0F0',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Pearl Yellow', 'color', 'web-stories'),
       color: '#FFF7CE',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('Rubber Ducky Yellow', 'color', 'web-stories'),
       color: '#FFE55C',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('Black', 'color', 'web-stories'),
       color: '#000',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
   ],
   description: __(

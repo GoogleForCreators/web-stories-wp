@@ -34,17 +34,17 @@ export default {
     {
       label: _x('International Klein Blue', 'color', 'web-stories'),
       color: '#002fa7',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Inkwell Blue', 'color', 'web-stories'),
       color: '#252a3a',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('White', 'color', 'web-stories'),
       color: '#fff',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
   ],
   description: __(

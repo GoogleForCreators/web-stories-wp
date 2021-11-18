@@ -34,17 +34,17 @@ export default {
     {
       label: _x('Snowfall White', 'color', 'web-stories'),
       color: '#f3f2f0',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
     {
       label: _x('Dark Metal Green', 'color', 'web-stories'),
       color: '#313831',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
     {
       label: _x('Platinum Blue', 'color', 'web-stories'),
       color: '#dbe2e7',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
   ],
   description: __(

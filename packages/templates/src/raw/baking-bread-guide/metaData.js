@@ -36,17 +36,17 @@ export default {
     {
       label: _x('Hawaii Blue', 'color', 'web-stories'),
       color: '#bcebee',
-      family: _x('Blue', 'color family', 'web-stories'),
+      family: _x('Blue', 'color', 'web-stories'),
     },
     {
       label: _x('Earth Violet', 'color', 'web-stories'),
       color: '#2d2a35',
-      family: _x('Purple', 'color family', 'web-stories'),
+      family: _x('Purple', 'color', 'web-stories'),
     },
     {
       label: _x('Papaya Orange', 'color', 'web-stories'),
       color: '#fff0d8',
-      family: _x('Orange', 'color family', 'web-stories'),
+      family: _x('Orange', 'color', 'web-stories'),
     },
   ],
   description: __(

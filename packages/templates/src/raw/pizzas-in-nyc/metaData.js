@@ -34,22 +34,22 @@ export default {
     {
       label: _x('Canyon Orange', 'color', 'web-stories'),
       color: '#a36431',
-      family: _x('Orange', 'color family', 'web-stories'),
+      family: _x('Orange', 'color', 'web-stories'),
     },
     {
       label: _x('Warm Yellow', 'color', 'web-stories'),
       color: '#f8bc63',
-      family: _x('Yellow', 'color family', 'web-stories'),
+      family: _x('Yellow', 'color', 'web-stories'),
     },
     {
       label: _x('Raisin Black', 'color', 'web-stories'),
       color: '#262626',
-      family: _x('Black', 'color family', 'web-stories'),
+      family: _x('Black', 'color', 'web-stories'),
     },
     {
       label: _x('Magnolia White', 'color', 'web-stories'),
       color: '#fef9f1',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
   ],
   description: __(

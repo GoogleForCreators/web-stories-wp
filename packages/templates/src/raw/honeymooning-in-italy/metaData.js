@@ -34,17 +34,17 @@ export default {
     {
       label: _x('Night Green', 'color', 'web-stories'),
       color: '#232c27',
-      family: _x('Green', 'color family', 'web-stories'),
+      family: _x('Green', 'color', 'web-stories'),
     },
     {
       label: _x('Light Brownish Pink', 'color', 'web-stories'),
       color: '#f2e5d6',
-      family: _x('Pink', 'color family', 'web-stories'),
+      family: _x('Pink', 'color', 'web-stories'),
     },
     {
       label: _x('Parchment White', 'color', 'web-stories'),
       color: '#fef6df',
-      family: _x('White', 'color family', 'web-stories'),
+      family: _x('White', 'color', 'web-stories'),
     },
   ],
   description: __(
