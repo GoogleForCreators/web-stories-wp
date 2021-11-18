@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -335,9 +335,9 @@ describe('Right Click Menu integration', () => {
         }
       );
       expect(
-        fixture.screen.queryByTestId(
-          'right-click-context-menu[aria-expanded="true"]'
-        )
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
       ).toBeNull();
     });
 
@@ -352,6 +352,33 @@ describe('Right Click Menu integration', () => {
       );
 
       expect(rightClickMenu()).not.toBeNull();
+    });
+
+    it('should open and close the context menu using keyboard shortcuts', async () => {
+      // add an element to the page
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+
+      // only possible if element in canvas is focused
+      await fixture.events.focus(frame1);
+
+      // open right click menu
+      await fixture.events.keyboard.shortcut('mod+alt+shift+m');
+
+      expect(
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
+      ).not.toBeNull();
+
+      // close right click menu
+      await fixture.events.keyboard.press('esc');
+      expect(
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
+      ).toBeNull();
     });
   });
 

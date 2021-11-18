@@ -87,14 +87,22 @@ describe('TextEdit integration', () => {
         await fixture.snapshot();
       });
 
-      // Broken test, see: https://github.com/google/web-stories-wp/issues/7211
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should handle a command, exit and save', async () => {
+      it('should handle a command, exit and save', async () => {
+        // Increase the font size for ensuring the clicks to be in correct places.
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.textStyle.fontSize,
+          { clickCount: 3 }
+        );
+        await fixture.events.keyboard.type('30');
+        await fixture.events.keyboard.press('tab');
+        // Give time for the font size to be applied.
+        await fixture.events.sleep(100);
+
         // Select all.
-        await fixture.events.keyboard.press('Enter');
+        await fixture.events.mouse.clickOn(frame, 30, 5);
         await repeatPress('ArrowUp', 10);
         await fixture.events.keyboard.down('shift');
-        await repeatPress('ArrowRight', 15);
+        await repeatPress('ArrowRight', 20);
         await fixture.events.keyboard.up('shift');
 
         expect(boldToggle.checked).toEqual(false);
@@ -130,19 +138,27 @@ describe('TextEdit integration', () => {
     });
 
     describe('shortcuts', () => {
-      // TODO(#9547): Fix flaky test.
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should enter/exit edit mode using the keyboard', async () => {
+      it('should enter/exit edit mode using the keyboard', async () => {
         // Enter edit mode using the Enter key
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
         await fixture.events.keyboard.press('Enter');
         expect(
           fixture.querySelector('[data-testid="textEditor"]')
         ).toBeDefined();
+        await fixture.events.sleep(300);
+        await fixture.events.keyboard.type('This is some test text.');
 
         // Exit edit mode using the Esc key
         await fixture.events.keyboard.press('Esc');
-        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+        await fixture.events.sleep(100);
+        await waitFor(() =>
+          expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull()
+        );
+        // The element is still selected and updated.
+        const storyContext = await fixture.renderHook(() => useStory());
+        expect(storyContext.state.selectedElements[0].content).toEqual(
+          'This is some test text.'
+        );
       });
     });
   });

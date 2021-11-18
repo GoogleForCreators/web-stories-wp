@@ -21,7 +21,7 @@ import { useMemo } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { Popover, Shadow } from './styled';
+import { SmartPopover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
 import AnimationContainer from './animationContainer';
 import Mask from './mask';
@@ -30,11 +30,12 @@ const ContextMenu = ({
   animate,
   isAlwaysVisible,
   items,
+  isRTL,
   isInline = false,
   ...props
 }) => {
   const Wrapper = useMemo(
-    () => (animate ? AnimationContainer : Popover),
+    () => (animate ? AnimationContainer : SmartPopover),
     [animate]
   );
 
@@ -44,6 +45,7 @@ const ContextMenu = ({
         isInline={isInline}
         role={isAlwaysVisible ? null : 'dialog'}
         isOpen={isAlwaysVisible || props.isOpen}
+        isRTL={isRTL}
       >
         <Menu aria-expanded={props.isOpen} items={items} {...props} />
         {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
@@ -58,6 +60,7 @@ ContextMenu.propTypes = {
   animate: PropTypes.bool,
   isOpen: PropTypes.bool,
   isAlwaysVisible: PropTypes.bool,
+  isRTL: PropTypes.bool,
 };
 
 export default ContextMenu;
