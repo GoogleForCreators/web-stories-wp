@@ -201,14 +201,14 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     url,
   ]);
 
+  const isMultipleUrl = MULTIPLE_VALUE === url;
+  const isMultipleDesc = MULTIPLE_VALUE === desc;
+  const isMultipleRel = MULTIPLE_VALUE === rel;
+
   const onChangeRel = useCallback(
     (newRel) => handleChange({ rel: newRel }, true),
     [handleChange]
   );
-
-  const isMultipleUrl = MULTIPLE_VALUE === url;
-  const isMultipleDesc = MULTIPLE_VALUE === desc;
-  const isMultipleRel = MULTIPLE_VALUE === rel;
 
   return (
     <SimplePanel
