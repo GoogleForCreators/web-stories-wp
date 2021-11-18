@@ -166,6 +166,24 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       );
     });
 
+    it('should not have accessibility card when font size is normal', async () => {
+      const insertNormalFont = () =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          fontSize: 20,
+          content: 'Lorem ipsum.',
+          x: 100,
+          y: 40,
+          width: 250,
+        });
+
+      await fixture.act(insertNormalFont);
+
+      await openChecklist();
+
+      expect(fixture.editor.checklist.accessibilityTab).toBeNull();
+    });
+
     it('should select link elements when they are too small to tap', async () => {
       const tooSmallLinkElement = await fixture.act(() =>
         insertElement('text', {
