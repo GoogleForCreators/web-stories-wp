@@ -315,7 +315,7 @@ function useMediaUploadQueue() {
           startUploading({ id });
 
           trackEvent('upload_media', {
-            fileSize: newFile.size,
+            file_size: newFile.size,
             file_type: newFile.type,
           });
 
