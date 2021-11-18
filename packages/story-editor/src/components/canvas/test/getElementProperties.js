@@ -75,7 +75,7 @@ const VIDEO_RESOURCE = {
   sizes: {},
   local: false,
   isOptimized: false,
-  baseColor: '#ff00ff',
+  baseColor: '#734727',
 };
 
 describe('getElementProperties', () => {

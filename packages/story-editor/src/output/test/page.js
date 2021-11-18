@@ -775,7 +775,7 @@ describe('Page output', () => {
         poster: 'https://example.com/poster.png',
         height: 1,
         width: 1,
-        baseColor: '#ff00ff',
+        baseColor: '#00379b',
       },
     };
 
@@ -783,7 +783,7 @@ describe('Page output', () => {
       const props = {
         id: '123',
         page: {
-          backgroundColor: { color: '#ff00ff' },
+          backgroundColor: { color: '#00379b' },
           id: '123',
           elements: [BACKGROUND_ELEMENT],
         },
@@ -792,7 +792,7 @@ describe('Page output', () => {
       };
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
-      expect(content).toContain('background-color:#ff00ff');
+      expect(content).toContain('background-color:#00379b');
     });
 
     it('should output the page background color in case of default background element', () => {

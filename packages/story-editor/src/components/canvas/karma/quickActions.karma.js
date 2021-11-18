@@ -861,7 +861,7 @@ describe('Quick Actions integration', () => {
           sizes: {},
           local: false,
           isOptimized: false,
-          baseColor: '#ff00ff',
+          baseColor: '#734727',
         },
         controls: false,
         loop: false,
