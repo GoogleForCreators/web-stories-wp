@@ -27,7 +27,7 @@ import { ZOOM_SETTING } from '../constants';
 import { getAccessibleTextColorsFromPixels } from './contrastUtils';
 import { calculateTextHeight } from './textMeasurements';
 
-function usePageAsCanvas(element) {
+function usePageAsCanvas() {
   const {
     pageCanvasData,
     setPageCanvasData,
@@ -41,11 +41,14 @@ function usePageAsCanvas(element) {
     setPageCanvasPromise: state.actions.setPageCanvasPromise,
     fullbleedContainer: state.state.fullbleedContainer,
   }));
-  const { currentPage } = useStory(({ state }) => {
+
+  const { currentPage, selectedElementIds } = useStory(({ state }) => {
     return {
       currentPage: state.currentPage,
+      selectedElementIds: state.selectedElementIds,
     };
   });
+
   const { zoomSetting, setZoomSetting } = useLayout(
     ({ state: { zoomSetting }, actions: { setZoomSetting } }) => ({
       zoomSetting,
@@ -95,14 +98,15 @@ function usePageAsCanvas(element) {
         if (!pageCanvasPromise && fullbleedContainer) {
           import(/* webpackChunkName: "chunk-html-to-image" */ 'html-to-image')
             .then((htmlToImage) => {
+              const filter = (node) => {
+                // exclude selected element from generated image to prevent interfereing with contrast calculation. true includes and false excludes
+                return node?.dataset?.elementId !== selectedElementIds[0];
+              };
+
               const promise = htmlToImage.toCanvas(fullbleedContainer, {
                 fontEmbedCss: '',
                 pixelRatio: 1,
-                // exclude selected element from generated image to prevent interfereing with contrast calculation. true includes and false excludes
-                filter: (node) =>
-                  !node.dataset ||
-                  !node.dataset.elementId ||
-                  node.dataset.elementId !== element.id,
+                filter: selectedElementIds[0] && filter,
               });
               setPageCanvasPromise(promise);
               promise.then(onCompletion).catch(onFail);
@@ -129,7 +133,7 @@ function usePageAsCanvas(element) {
       zoomSetting,
       hasPageHashChanged,
       pageHash,
-      element,
+      selectedElementIds,
     ]
   );
 

@@ -25,7 +25,7 @@ import usePageAsCanvas from './usePageAsCanvas';
 function useApplyTextAutoStyle(element, updater) {
   const htmlFormatters = getHTMLFormatters();
   const { setColor } = htmlFormatters;
-  const { calculateAccessibleTextColors } = usePageAsCanvas(element);
+  const { calculateAccessibleTextColors } = usePageAsCanvas();
 
   const applyTextAutoStyle = async () => {
     const autoColor = await calculateAccessibleTextColors(element);
