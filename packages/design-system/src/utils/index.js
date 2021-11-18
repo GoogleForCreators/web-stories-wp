@@ -21,5 +21,5 @@ export { default as labelAccessibilityValidator } from './labelAccessibilityVali
 export { default as useLiveRegion } from './useLiveRegion';
 export * from './constants';
 export * from './directions';
-export { default as usePointerDownOutsideRef } from './usePointerDownOutsideRef';
+export { default as useMouseDownOutsideRef } from './useMouseDownOutsideRef';
 export { default as useComposeRefs } from './useComposeRefs';

@@ -22,7 +22,7 @@ import { useRef, useCallback } from '@web-stories-wp/react';
  */
 import { noop } from './noop';
 
-function usePointerDownOutsideRef(onPointerDownOutside = noop) {
+function useMouseDownOutsideRef(onPointerDownOutside = noop) {
   const targetRef = useRef(null);
   // store handler outside of useCallback so we have the
   // proper references when removing listeners
@@ -60,4 +60,4 @@ function usePointerDownOutsideRef(onPointerDownOutside = noop) {
   }, []);
 }
 
-export default usePointerDownOutsideRef;
+export default useMouseDownOutsideRef;
