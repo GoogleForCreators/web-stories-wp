@@ -83,6 +83,10 @@ function MyStories() {
   const { setQueriedAuthors } = author;
   const queryAuthorsBySearch = useCallback(
     (authorSearchTerm) => {
+      if (!getAuthors) {
+        return null;
+      }
+
       return getAuthors(authorSearchTerm).then((data) => {
         const userData = data.map(({ id, name }) => ({
           id,
@@ -129,6 +133,8 @@ function MyStories() {
     });
   }, [stories, storiesOrderById]);
 
+  const showAuthorDropdown = typeof getAuthors === 'function';
+
   return (
     <Layout.Provider>
       <Header
@@ -141,6 +147,7 @@ function MyStories() {
         view={view}
         author={author}
         queryAuthorsBySearch={queryAuthorsBySearch}
+        showAuthorDropdown={showAuthorDropdown}
       />
 
       <Content
