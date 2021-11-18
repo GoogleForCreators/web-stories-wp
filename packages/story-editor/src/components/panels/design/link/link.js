@@ -202,12 +202,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   ]);
 
   const onChangeRel = useCallback(
-    (value) => {
-      const newRel = rel.includes(value)
-        ? rel.filter((el) => el !== value)
-        : [...rel, value];
-      handleChange({ rel: newRel }, true);
-    },
+    (newRel) => handleChange({ rel: newRel }, true),
     [handleChange]
   );
 

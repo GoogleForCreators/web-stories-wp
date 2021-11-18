@@ -188,13 +188,8 @@ function PageAttachmentPanel() {
   );
 
   const onChangeRel = useCallback(
-    (value) => {
-      const newRel = rel.includes(value)
-        ? rel.filter((el) => el !== value)
-        : [...rel, value];
-      updatePageAttachment({ rel: newRel }, true);
-    },
-    [updatePageAttachment, rel]
+    (newRel) => updatePageAttachment({ rel: newRel }, true),
+    [updatePageAttachment]
   );
 
   const handleBlur = useCallback(

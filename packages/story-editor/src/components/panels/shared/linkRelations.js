@@ -24,6 +24,7 @@ import {
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 
 /**
@@ -56,6 +57,17 @@ function LinkRelations({ rel, onChangeRel }) {
     'https://developers.google.com/search/docs/advanced/guidelines/qualify-outbound-links?hl=en',
     'web-stories'
   );
+
+  const onChange = useCallback(
+    (value) => {
+      const newRel = rel.includes(value)
+        ? rel.filter((el) => el !== value)
+        : [...rel, value];
+      onChangeRel(newRel);
+    },
+    [onChangeRel, rel]
+  );
+
   return (
     <Row>
       <div>
@@ -68,7 +80,7 @@ function LinkRelations({ rel, onChangeRel }) {
               id={key}
               name={key}
               checked={rel?.includes(key)}
-              onChange={() => onChangeRel(key)}
+              onChange={() => onChange(key)}
             />
             <Label htmlFor={key}>
               <Text
