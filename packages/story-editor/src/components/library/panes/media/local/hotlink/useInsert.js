@@ -159,13 +159,13 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
           resource,
         });
 
-        setIsInserting(false);
         setErrorMsg(null);
         setLink('');
         onClose();
       } catch (e) {
-        setIsInserting(false);
         setErrorMsg(getErrorMessage());
+      } finally {
+        setIsInserting(false);
       }
     },
     [
