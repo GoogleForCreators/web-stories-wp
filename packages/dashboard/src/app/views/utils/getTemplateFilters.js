@@ -34,7 +34,7 @@ function getTemplateFilters(templates) {
     .flatMap((t) => t.colors)
     .map((c) => ({
       label: c.family,
-      value: c.label,
+      value: c.family,
       type: TEMPLATE_META_DATA_TYPES.COLOR,
     }));
 
