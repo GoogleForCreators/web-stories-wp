@@ -18,9 +18,11 @@
  */
 import {
   addQueryArgs,
+  snakeToCamelCase,
   snakeToCamelCaseObjectKeys,
 } from '@web-stories-wp/design-system';
 import { DATA_VERSION } from '@web-stories-wp/migration';
+
 /**
  * WordPress dependencies
  */
@@ -76,7 +78,12 @@ const transformGetStoryResponse = (post) => {
   post.taxonomies = links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [];
   post.terms = embedded?.['wp:term'] || [];
 
-  return snakeToCamelCaseObjectKeys(post);
+  // Camel casing of story_data is/will be covered in migration.
+  return Object.entries(post).reduce((obj, [key, value]) => {
+    obj[snakeToCamelCase(key)] =
+      'story_data' === key ? value : snakeToCamelCaseObjectKeys(value);
+    return obj;
+  }, {});
 };
 
 export function getStoryById(config, storyId, isDemo = false) {
