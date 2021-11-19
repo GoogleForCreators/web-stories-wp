@@ -28,6 +28,7 @@ describe('Snapping integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     await fixture.events.click(fixture.editor.library.media.item(0));
 

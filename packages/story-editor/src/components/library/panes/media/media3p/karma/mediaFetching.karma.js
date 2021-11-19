@@ -204,6 +204,7 @@ describe('Media3pPane fetching', () => {
     fixture = new Fixture();
 
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     listMediaSpy = spyOn(apiFetcher, 'listMedia');
     listCategoriesSpy = spyOn(apiFetcher, 'listCategories');

@@ -36,6 +36,7 @@ describe('Right Click Menu integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     insertElement = await fixture.renderHook(() => useInsertElement());
   });

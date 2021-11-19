@@ -39,6 +39,7 @@ describe('Styling multiple text fields', () => {
   beforeEach(async () => {
     data.fixture = new Fixture();
     await data.fixture.render();
+    await data.fixture.collapseHelpCenter();
 
     // Add text box + extra
     await addInitialText(true);
