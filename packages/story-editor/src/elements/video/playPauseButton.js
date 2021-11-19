@@ -28,7 +28,7 @@ import {
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@web-stories-wp/i18n';
 import { rgba } from 'polished';
-import { Icons, useKeyDownEffect } from '@web-stories-wp/design-system';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -149,7 +149,6 @@ function PlayPauseButton({
   elementRef,
   element,
   videoRef = null,
-  allowKeyboardSupport = false,
 }) {
   const { isRTL } = useConfig();
   const hasVideoSrc = Boolean(element.resource.src);
@@ -239,36 +238,6 @@ function PlayPauseButton({
     };
   }, [checkMouseInBBox]);
 
-  const handleKeyDown = useCallback(
-    ({ key }) => {
-      if (allowKeyboardSupport && key === ' ') {
-        const videoNode = getVideoNode();
-        if (videoNode) {
-          if (videoNode.paused) {
-            videoNode
-              .play()
-              .then(() => setIsPlaying(true))
-              .catch(() => {});
-            setIsPlaying(true);
-          } else {
-            videoNode.pause();
-            videoNode.currentTime = 0;
-            setIsPlaying(false);
-          }
-        }
-      }
-    },
-    [getVideoNode, allowKeyboardSupport]
-  );
-  useKeyDownEffect(
-    elementRef,
-    {
-      key: ['space'],
-    },
-    handleKeyDown,
-    [handleKeyDown]
-  );
-
   if (!isActive) {
     return null;
   }
@@ -341,7 +310,6 @@ PlayPauseButton.propTypes = {
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,
   videoRef: PropTypes.object,
-  allowKeyboardSupport: PropTypes.bool,
 };
 
 export default PlayPauseButton;
