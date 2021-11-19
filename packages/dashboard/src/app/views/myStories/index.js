@@ -27,6 +27,7 @@ import { ScrollToTop, Layout } from '../../../components';
 import { STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import useApi from '../../api/useApi';
+import { useConfig } from '../../config';
 import Content from './content';
 import Header from './header';
 
@@ -73,6 +74,7 @@ function MyStories() {
       getAuthors,
     })
   );
+  const { apiCallbacks } = useConfig();
 
   const { filter, page, search, sort, view, showStoriesWhileLoading, author } =
     useStoryView({
@@ -110,14 +112,16 @@ function MyStories() {
   }, [queryAuthorsBySearch]);
 
   useEffect(() => {
-    fetchStories({
-      page: page.value,
-      searchTerm: search.keyword,
-      sortDirection: sort.direction,
-      sortOption: sort.value,
-      status: filter.value,
-      author: author.filterId,
-    });
+    if (apiCallbacks?.fetchStories) {
+      fetchStories({
+        page: page.value,
+        searchTerm: search.keyword,
+        sortDirection: sort.direction,
+        sortOption: sort.value,
+        status: filter.value,
+        author: author.filterId,
+      });
+    }
   }, [
     fetchStories,
     filter.value,
@@ -126,6 +130,7 @@ function MyStories() {
     sort.direction,
     sort.value,
     author.filterId,
+    apiCallbacks,
   ]);
 
   const orderedStories = useMemo(() => {
