@@ -53,6 +53,7 @@ import pageOutlinkTheme from './migrations/v0032_pageOutlinkTheme';
 import removeTitleFromResources from './migrations/v0033_removeTitleFromResources';
 import removeUnusedBackgroundProps from './migrations/v0034_removeUnusedBackgroundProps';
 import markVideoAsExternal from './migrations/v0035_markVideoAsExternal';
+import camelCaseResourceSizes from './migrations/v0036_camelCaseResourceSizes';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -90,6 +91,7 @@ const MIGRATIONS = {
   33: [removeTitleFromResources],
   34: [removeUnusedBackgroundProps],
   35: [markVideoAsExternal],
+  36: [camelCaseResourceSizes],
 };
 
 export const DATA_VERSION = Math.max.apply(
