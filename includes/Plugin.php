@@ -93,6 +93,7 @@ class Plugin extends ServiceBasedPlugin {
 		'page_template_post_type'      => Page_Template_Post_Type::class,
 		'plugin_row_meta'              => Admin\PluginRowMeta::class,
 		'plugin_action_links'          => Admin\PluginActionLinks::class,
+		'media.base_color'             => Media\Base_Color::class,
 		'media.image_sizes'            => Media\Image_Sizes::class,
 		'media.media_source'           => Media\Media_Source_Taxonomy::class,
 		'media.video.captions'         => Media\Video\Captions::class,

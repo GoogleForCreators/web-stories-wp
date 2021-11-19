@@ -23,7 +23,7 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../app';
+import { useAPI } from '../app/api';
 
 function useCORSProxy() {
   const {

@@ -33,6 +33,7 @@ describe('Layer Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
     layerPanel = fixture.editor.inspector.designPanel.layerPanel;
 
     insertElement = await fixture.renderHook(() => useInsertElement());
@@ -124,7 +125,7 @@ describe('Layer Panel', () => {
     expect(section.clientHeight).toBe(initialHeight - 30);
 
     // change page
-    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
 
     // verify panel height did not change
     section = layerPanel.resizeHandle.closest('section');
@@ -142,7 +143,7 @@ describe('Layer Panel', () => {
     );
 
     // change page
-    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
 
     // verify panel remains closed
     expect(layerPanel.panelCollapseButton.getAttribute('aria-expanded')).toBe(

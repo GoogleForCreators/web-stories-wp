@@ -51,7 +51,13 @@ class Page_Template_Controller extends Stories_Base_Controller {
 		}
 
 		if ( $request['_web_stories_envelope'] ) {
-			$embed    = isset( $request['_embed'] ) ? rest_parse_embed_param( $request['_embed'] ) : false;
+			/**
+			 * Embed directive.
+			 *
+			 * @var string|array $embed
+			 */
+			$embed    = $request['_embed'] ?? false;
+			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
 			$response = rest_get_server()->envelope_response( $response, $embed );
 		}
 		return $response;

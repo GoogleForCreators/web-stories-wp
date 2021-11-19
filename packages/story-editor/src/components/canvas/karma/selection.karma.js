@@ -32,6 +32,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     fullbleed = fixture.container.querySelector('[data-testid="fullbleed"]');
   });
@@ -142,7 +143,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   });
 
   it('should show the selection on top of page navigation arrows', async () => {
-    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
 
     await fixture.events.click(fixture.editor.library.textAdd);
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);

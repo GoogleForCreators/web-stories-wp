@@ -55,13 +55,8 @@ function OutputPage({
   // If the background element has base color set, it's media, use that.
   const baseColor = backgroundElement?.resource?.baseColor;
   const backgroundStyles = baseColor
-    ? {
-        backgroundColor: `rgb(${baseColor[0]},${baseColor[1]},${baseColor[2]})`,
-      }
-    : {
-        backgroundColor: 'white',
-        ...generatePatternStyles(backgroundColor),
-      };
+    ? { backgroundColor: baseColor }
+    : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
 
   const animationDuration = getTotalDuration({ animations }) / 1000;
   // If the page doesn't have media, take either the animations time or the configured default duration time.

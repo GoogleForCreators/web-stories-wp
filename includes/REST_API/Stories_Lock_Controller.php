@@ -140,7 +140,14 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 * @return WP_REST_Response|WP_Error Response object on success.
 	 */
 	public function get_item( $request ) {
-		$lock = $this->get_lock( $request['id'] );
+		/**
+		 * Post ID.
+		 *
+		 * @var int $post_id
+		 */
+		$post_id = $request['id'];
+
+		$lock = $this->get_lock( $post_id );
 
 		return $this->prepare_item_for_response( $lock, $request );
 	}
@@ -158,8 +165,15 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 			require_once ABSPATH . 'wp-admin/includes/post.php';
 		}
 
-		wp_set_post_lock( $request['id'] );
-		$lock = $this->get_lock( $request['id'] );
+		/**
+		 * Post ID.
+		 *
+		 * @var int $post_id
+		 */
+		$post_id = $request['id'];
+
+		wp_set_post_lock( $post_id );
+		$lock = $this->get_lock( $post_id );
 
 		return $this->prepare_item_for_response( $lock, $request );
 	}
@@ -173,9 +187,16 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 * @return WP_REST_Response Response object on success.
 	 */
 	public function delete_item( $request ): WP_REST_Response {
-		$lock     = $this->get_lock( $request['id'] );
+		/**
+		 * Post ID.
+		 *
+		 * @var int $post_id
+		 */
+		$post_id = $request['id'];
+
+		$lock     = $this->get_lock( $post_id );
 		$previous = $this->prepare_item_for_response( $lock, $request );
-		$result   = delete_post_meta( $request['id'], '_edit_lock' );
+		$result   = delete_post_meta( $post_id, '_edit_lock' );
 		$data     = [];
 		if ( ! is_wp_error( $previous ) ) {
 			$data = $previous->get_data();
@@ -195,19 +216,24 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 * Get the lock, if the ID is valid.
 	 *
 	 * @param int $post_id Supplied ID.
-	 * @return array|false Lock as string or default to false.
+	 * @return array|false Lock data or false.
 	 */
 	protected function get_lock( int $post_id ) {
+		/**
+		 * Lock data.
+		 *
+		 * @var string|false $lock
+		 */
 		$lock = get_post_meta( $post_id, '_edit_lock', true );
 
-		if ( $lock ) {
+		if ( ! empty( $lock ) ) {
 			list ( $time, $user ) = explode( ':', $lock );
 			if ( $time && $user ) {
-				$lock = compact( 'time', 'user' );
+				return compact( 'time', 'user' );
 			}
 		}
 
-		return $lock;
+		return false;
 	}
 
 	/**
@@ -242,7 +268,14 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 			return $result;
 		}
 
-		$lock = $this->get_lock( $request['id'] );
+		/**
+		 * Post ID.
+		 *
+		 * @var int $post_id
+		 */
+		$post_id = $request['id'];
+
+		$lock = $this->get_lock( $post_id );
 		if ( is_array( $lock ) && isset( $lock['user'] ) && get_current_user_id() !== (int) $lock['user'] ) {
 			return new WP_Error(
 				'rest_cannot_delete_others_lock',
@@ -298,14 +331,26 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 			}
 		}
 
-		// Wrap the data in a response object.
+		/**
+		 * Request context.
+		 *
+		 * @var string $context
+		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
 
 		$response = rest_ensure_response( $data );
+
 		if ( ! is_wp_error( $response ) ) {
-			$response->add_links( $this->prepare_links( $lock, $request['id'] ) );
+			/**
+			 * Post ID.
+			 *
+			 * @var int $post_id
+			 */
+			$post_id = $request['id'];
+
+			$response->add_links( $this->prepare_links( $lock, $post_id ) );
 		}
 
 		$post_type = $this->story_post_type->get_slug();
