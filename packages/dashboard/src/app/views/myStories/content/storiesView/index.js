@@ -51,6 +51,7 @@ import {
 } from '../../../../../constants';
 import ListView from '../listView';
 import StoryGridView from '../storyGridView';
+import { useConfig } from '../../../../config';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
@@ -70,6 +71,9 @@ function StoriesView({
   const [returnStoryFocusId, setReturnStoryFocusId] = useState(null);
 
   const { showSnackbar } = useSnackbar();
+  const {
+    apiCallbacks: { duplicateStory, trashStory, updateStory },
+  } = useConfig();
 
   const isActiveDeleteStoryDialog =
     activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
@@ -174,12 +178,29 @@ function StoriesView({
       menuItemActions: {
         default: () => setContextMenuId(-1),
         [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: handleCopyStoryLink,
-        [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,
-        [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: handleDuplicateStory,
+        ...(trashStory && {
+          [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,
+        }),
+        ...(duplicateStory && {
+          [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: handleDuplicateStory,
+        }),
         [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: handleOpenStoryInEditor,
-        [STORY_CONTEXT_MENU_ACTIONS.RENAME]: handleRenameStory,
+        ...(updateStory && {
+          [STORY_CONTEXT_MENU_ACTIONS.RENAME]: handleRenameStory,
+        }),
       },
-      menuItems: STORY_CONTEXT_MENU_ITEMS,
+      menuItems: STORY_CONTEXT_MENU_ITEMS.filter((menu) => {
+        switch (menu.value) {
+          case STORY_CONTEXT_MENU_ACTIONS.DELETE:
+            return typeof trashStory === 'function';
+          case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
+            return typeof duplicateStory === 'function';
+          case STORY_CONTEXT_MENU_ACTIONS.RENAME:
+            return typeof updateStory === 'function';
+          default:
+            return true;
+        }
+      }),
     };
   }, [
     contextMenuId,
@@ -189,6 +210,9 @@ function StoriesView({
     handleOpenStoryInEditor,
     handleRenameStory,
     setContextMenuId,
+    trashStory,
+    duplicateStory,
+    updateStory,
   ]);
 
   const renameStory = useMemo(() => {
