@@ -51,7 +51,6 @@ import {
 } from '../../shared';
 import Tooltip from '../../../tooltip';
 import useStory from '../../../../app/story/useStory';
-import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
 import usePresubmitHandlers from './usePresubmitHandlers';
@@ -215,30 +214,10 @@ function SizePositionPanel(props) {
   usePresubmitHandlers(lockAspectRatio, height, width);
 
   const handleSetBackground = useCallback(() => {
-    const setBackground = (baseColor) => {
-      if (!baseColor) {
-        combineElements({
-          firstElement: selectedElements[0],
-          secondId: currentBackgroundId,
-        });
-      } else {
-        combineElements({
-          firstElement: {
-            ...selectedElements[0],
-            resource: {
-              ...selectedElements[0].resource,
-              baseColor,
-            },
-          },
-          secondId: currentBackgroundId,
-        });
-      }
-    };
-    if (selectedElements[0].resource.baseColor) {
-      setBackground();
-    } else {
-      getMediaBaseColor(selectedElements[0].resource, setBackground);
-    }
+    combineElements({
+      firstElement: selectedElements[0],
+      secondId: currentBackgroundId,
+    });
   }, [selectedElements, combineElements, currentBackgroundId]);
 
   const disableHeight = !lockAspectRatio && hasText;

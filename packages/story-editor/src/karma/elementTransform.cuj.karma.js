@@ -54,6 +54,7 @@ describe('Element transform', () => {
     beforeEach(async () => {
       fixture = new Fixture();
       await fixture.render();
+      await fixture.collapseHelpCenter();
 
       // Switch to 100% zoom to make sure all full pixels are valid coordinates
       const { zoomSelector } = fixture.editor.footer;
