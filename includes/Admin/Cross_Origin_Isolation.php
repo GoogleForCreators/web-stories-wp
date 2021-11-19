@@ -133,9 +133,14 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 			return false;
 		}
 
-		return rest_sanitize_boolean(
-			$this->preferences->get_preference( $user_id, $this->preferences::MEDIA_OPTIMIZATION_META_KEY )
-		);
+		/**
+		 * Whether the user has opted in to video optimization.
+		 *
+		 * @var string|bool $preference
+		 */
+		$preference = $this->preferences->get_preference( $user_id, $this->preferences::MEDIA_OPTIMIZATION_META_KEY );
+
+		return rest_sanitize_boolean( $preference );
 	}
 
 	/**
@@ -192,6 +197,11 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 
 		if ( preg_match_all( '#<(?P<tag>' . $tags . ')[^<]*?(?:>[\s\S]*?</(?P=tag)>|\s*/>)#', $html, $matches ) ) {
 
+			/**
+			 * Single match.
+			 *
+			 * @var string $match
+			 */
 			foreach ( $matches[0] as $index => $match ) {
 				$tag = $matches['tag'][ $index ];
 
@@ -221,6 +231,11 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 						$html = str_replace( $match, str_replace( '<' . $tag, '<' . $tag . ' crossorigin="anonymous"', $match ), $html );
 					}
 				} else {
+					/**
+					 * Modified HTML.
+					 *
+					 * @var string $html
+					 */
 					$html = $this->add_attribute( $html, $attribute, $value );
 				}
 			}
@@ -293,7 +308,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 * @return string|mixed
 	 */
 	protected function add_attribute( $html, string $attribute, $url ) {
-		if ( ! $url ) {
+		if ( ! $url || ! is_string( $html ) ) {
 			return $html;
 		}
 
@@ -308,8 +323,17 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 			return $html;
 		}
 
-		$new_html = (string) str_replace( $attribute . '="' . $url . '"', 'crossorigin="anonymous" ' . $attribute . '="' . $url . '"', $html );
-		$new_html = (string) str_replace( "{$attribute}='{$url}'", "crossorigin='anonymous' {$attribute}='{$url}'", $new_html );
+		$new_html = str_replace(
+			[
+				$attribute . '="' . $url . '"',
+				"{$attribute}='{$url}'",
+			],
+			[
+				'crossorigin="anonymous" ' . $attribute . '="' . $url . '"',
+				"crossorigin='anonymous' {$attribute}='{$url}'",
+			],
+			$html 
+		);
 
 		return $new_html;
 	}

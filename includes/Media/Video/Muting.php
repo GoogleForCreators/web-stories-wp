@@ -164,9 +164,20 @@ class Muting extends Service_Base implements HasMeta {
 	 * @return bool|null
 	 */
 	public function get_callback_is_muted( $prepared ) {
+		/**
+		 * Attachment ID.
+		 *
+		 * @var int $id
+		 */
 		$id = $prepared['id'];
 
+		/**
+		 * Muted value.
+		 *
+		 * @var bool|null $value
+		 */
 		$value = get_metadata_raw( 'post', $id, self::IS_MUTED_POST_META_KEY, true );
+
 		if ( null === $value ) {
 			return $value;
 		}

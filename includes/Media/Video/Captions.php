@@ -52,6 +52,10 @@ class Captions extends Service_Base {
 	 * @return string|mixed List of allowed file types.
 	 */
 	public function filter_list_of_allowed_filetypes( $value ) {
+		if ( ! is_string( $value ) ) {
+			return $value;
+		}
+
 		$filetypes = explode( ' ', $value );
 		if ( ! in_array( 'vtt', $filetypes, true ) ) {
 			$filetypes[] = 'vtt';

@@ -220,8 +220,16 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	public function create_item( $request ) {
 		$publisher_logos = $this->filter_publisher_logos( (array) $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] ) );
 
-		// Could be a single attachment ID or an array of attachment IDs.
-		$posts = (array) $request['id'];
+		/**
+		 * Publisher logo ID(s).
+		 *
+		 * Could be a single attachment ID or an array of attachment IDs.
+		 *
+		 * @var int|int[] $logo_id
+		 */
+		$logo_id = $request['id'];
+
+		$posts = (array) $logo_id;
 
 		if ( empty( $posts ) ) {
 			return new WP_Error(
@@ -292,7 +300,14 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function delete_item( $request ) {
-		$post = $this->get_publisher_logo( $request['id'] );
+		/**
+		 * Publisher logo ID.
+		 *
+		 * @var int $logo_id
+		 */
+		$logo_id = $request['id'];
+
+		$post = $this->get_publisher_logo( $logo_id );
 
 		if ( is_wp_error( $post ) ) {
 			return $post;
@@ -331,7 +346,14 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function update_item( $request ) {
-		$post = $this->get_publisher_logo( $request['id'] );
+		/**
+		 * Publisher logo ID.
+		 *
+		 * @var int $logo_id
+		 */
+		$logo_id = $request['id'];
+
+		$post = $this->get_publisher_logo( $logo_id );
 
 		if ( is_wp_error( $post ) ) {
 			return $post;
