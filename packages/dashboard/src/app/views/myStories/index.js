@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useMemo, useCallback } from '@web-stories-wp/react';
+import { noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -81,12 +82,8 @@ function MyStories() {
     });
 
   const { setQueriedAuthors } = author;
-  const queryAuthorsBySearch = useCallback(
+  let queryAuthorsBySearch = useCallback(
     (authorSearchTerm) => {
-      if (!getAuthors) {
-        return null;
-      }
-
       return getAuthors(authorSearchTerm).then((data) => {
         const userData = data.map(({ id, name }) => ({
           id,
@@ -103,6 +100,10 @@ function MyStories() {
     },
     [getAuthors, setQueriedAuthors]
   );
+
+  if (!getAuthors) {
+    queryAuthorsBySearch = noop;
+  }
 
   useEffect(() => {
     queryAuthorsBySearch();

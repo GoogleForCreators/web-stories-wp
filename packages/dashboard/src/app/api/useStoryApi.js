@@ -24,6 +24,7 @@ import {
   useRef,
 } from '@web-stories-wp/react';
 import { getTimeTracker } from '@web-stories-wp/tracking';
+import { noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -154,7 +155,7 @@ const useStoryApi = () => {
     [trashStoryCallback]
   );
 
-  const createStoryFromTemplate = useCallback(
+  let createStoryFromTemplate = useCallback(
     async (template) => {
       dispatch({
         type: STORY_ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE,
@@ -186,6 +187,10 @@ const useStoryApi = () => {
     },
     [createStoryFromTemplateCallback]
   );
+
+  if (!createStoryFromTemplateCallback) {
+    createStoryFromTemplate = noop;
+  }
 
   const duplicateStory = useCallback(
     async (story) => {

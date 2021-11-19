@@ -33,6 +33,7 @@ import {
 import { Layout } from '../../../../components';
 import { APP_ROUTES, ROUTE_TITLES } from '../../../../constants';
 import { parentRoute } from '../../../router/route';
+import { useConfig } from '../../../config';
 
 const Nav = styled.nav`
   justify-content: space-between;
@@ -46,6 +47,10 @@ const HiddenHeading = styled.h2`
   ${themeHelpers.visuallyHidden};
 `;
 function Header({ onHandleCtaClick, templateTitle }) {
+  const {
+    apiCallbacks: { createStoryFromTemplate },
+  } = useConfig();
+
   return (
     <Layout.Fixed>
       <Nav>
@@ -70,18 +75,20 @@ function Header({ onHandleCtaClick, templateTitle }) {
         >
           <Icons.CrossLarge />
         </Button>
-        <Button
-          onClick={onHandleCtaClick}
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
-          aria-label={sprintf(
-            /* translators: %s: template title */
-            __('Use %s template to create new story', 'web-stories'),
-            templateTitle
-          )}
-        >
-          {__('Use template', 'web-stories')}
-        </Button>
+        {createStoryFromTemplate && (
+          <Button
+            onClick={onHandleCtaClick}
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.SMALL}
+            aria-label={sprintf(
+              /* translators: %s: template title */
+              __('Use %s template to create new story', 'web-stories'),
+              templateTitle
+            )}
+          >
+            {__('Use template', 'web-stories')}
+          </Button>
+        )}
       </Nav>
     </Layout.Fixed>
   );

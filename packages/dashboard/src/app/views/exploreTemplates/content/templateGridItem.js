@@ -37,6 +37,7 @@ import {
 } from '../../../../constants';
 import { CardGridItem } from '../../../../components';
 import { Container, Gradient, Scrim } from '../../shared/grid/components';
+import { useConfig } from '../../../config';
 import {
   TemplateDisplayContent,
   CardWrapper,
@@ -68,6 +69,9 @@ const TemplateGridItem = forwardRef(
       __('First page of %s template', 'web-stories'),
       title
     );
+    const {
+      apiCallbacks: { createStoryFromTemplate },
+    } = useConfig();
     return (
       <CardGridItem
         ref={ref}
@@ -113,20 +117,22 @@ const TemplateGridItem = forwardRef(
                   {TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[status]}
                 </Button>
 
-                <Button
-                  size={BUTTON_SIZES.SMALL}
-                  type={BUTTON_TYPES.PRIMARY}
-                  onClick={onCreateStory}
-                  disabled={!onCreateStory}
-                  tabIndex={tabIndex}
-                  ariaLabel={sprintf(
-                    /* translators: %s: template title.*/
-                    __('Create new story from %s', 'web-stories'),
-                    title
-                  )}
-                >
-                  {__('Use template', 'web-stories')}
-                </Button>
+                {createStoryFromTemplate && (
+                  <Button
+                    size={BUTTON_SIZES.SMALL}
+                    type={BUTTON_TYPES.PRIMARY}
+                    onClick={onCreateStory}
+                    disabled={!onCreateStory}
+                    tabIndex={tabIndex}
+                    ariaLabel={sprintf(
+                      /* translators: %s: template title.*/
+                      __('Create new story from %s', 'web-stories'),
+                      title
+                    )}
+                  >
+                    {__('Use template', 'web-stories')}
+                  </Button>
+                )}
               </TemplateDisplayContent>
             </Scrim>
           </CardWrapper>
