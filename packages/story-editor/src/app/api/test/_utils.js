@@ -45,6 +45,7 @@ export const GET_MEDIA_RESPONSE_BODY = [
     id: 274,
     type: 'image',
     mimeType: 'image/jpeg',
+    baseColor: '#ffffff',
     output: undefined,
     creationDate: '2020-09-01T05:33:54',
     src: 'http://wp.local/wp-content/uploads/2020/09/IMAGE.jpg',

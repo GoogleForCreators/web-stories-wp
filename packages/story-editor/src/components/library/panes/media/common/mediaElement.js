@@ -151,8 +151,8 @@ function Element({
     return resetHoverTime;
   }, [isMenuOpen, active, type, src, hoverTimer, setHoverTimer, activeRef]);
 
-  const onClick = (thumbnailUrl, baseColor) => () => {
-    onInsert({ ...resource, baseColor }, thumbnailUrl);
+  const onClick = (thumbnailUrl) => () => {
+    onInsert(resource, thumbnailUrl);
   };
 
   const attribution = active &&

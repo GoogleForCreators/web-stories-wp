@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Trimming
+ * Class Image_Size
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -24,36 +24,29 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Media\Video;
+namespace Google\Web_Stories\Media;
 
-use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Infrastructure\HasMeta;
 
 /**
- * Class Trimming
+ * Class Base_Color
  *
- * @package Google\Web_Stories\Media\Video
+ * @package Google\Web_Stories\Media
  */
-class Trimming extends Service_Base implements HasMeta {
+class Base_Color extends Service_Base implements HasMeta {
 
 	/**
-	 * The trim video post meta key.
+	 * The base color meta key.
 	 *
 	 * @var string
 	 */
-	const TRIM_POST_META_KEY = 'web_stories_trim_data';
+	const BASE_COLOR_POST_META_KEY = 'web_stories_base_color';
 
 	/**
-	 * Is trim.
+	 * Init.
 	 *
-	 * @var string
-	 */
-	const TRIM_DATA_KEY = 'trim_data';
-
-	/**
-	 * Register.
-	 *
-	 * @since 1.12.0
+	 * @since 1.15.0
 	 *
 	 * @return void
 	 */
@@ -64,39 +57,24 @@ class Trimming extends Service_Base implements HasMeta {
 	}
 
 	/**
-	 * Register meta for attachment post type.
+	 * Register meta
 	 *
-	 * @since 1.12.0
+	 * @since 1.15.0
 	 *
 	 * @return void
 	 */
 	public function register_meta() {
 		register_meta(
 			'post',
-			self::TRIM_POST_META_KEY,
+			self::BASE_COLOR_POST_META_KEY,
 			[
-				'type'           => 'object',
-				'description'    => __( 'Video trim data.', 'web-stories' ),
+				'type'           => 'string',
+				'description'    => __( 'Attachment base color', 'web-stories' ),
 				'show_in_rest'   => [
 					'schema' => [
-						'properties' => [
-							'original' => [
-								'description' => __( 'Original attachment id', 'web-stories' ),
-								'type'        => 'integer',
-							],
-							'start'    => [
-								'description' => __( 'Start time.', 'web-stories' ),
-								'type'        => 'string',
-							],
-							'end'      => [
-								'description' => __( 'End time.', 'web-stories' ),
-								'type'        => 'string',
-							],
-						],
+						'type'   => 'string',
+						'format' => 'hex-color',
 					],
-				],
-				'default'        => [
-					'original' => 0,
 				],
 				'single'         => true,
 				'object_subtype' => 'attachment',
@@ -107,7 +85,7 @@ class Trimming extends Service_Base implements HasMeta {
 	/**
 	 * Filters the attachment data prepared for JavaScript.
 	 *
-	 * @since 1.12.0
+	 * @since 1.15.0
 	 *
 	 * @param array|mixed $response   Array of prepared attachment data.
 	 *
@@ -117,9 +95,8 @@ class Trimming extends Service_Base implements HasMeta {
 		if ( ! is_array( $response ) ) {
 			return $response;
 		}
-		if ( 'video' === $response['type'] ) {
-			$response[ self::TRIM_DATA_KEY ] = get_post_meta( $response['id'], self::TRIM_POST_META_KEY, true );
-		}
+
+		$response[ self::BASE_COLOR_POST_META_KEY ] = get_post_meta( $response['id'], self::BASE_COLOR_POST_META_KEY, true );
 
 		return $response;
 	}

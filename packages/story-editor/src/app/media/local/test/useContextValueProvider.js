@@ -47,6 +47,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
     height: 2220,
     poster: undefined,
     posterId: undefined,
+    baseColor: '#ffffff',
     id: 274,
     length: undefined,
     lengthFormatted: undefined,
