@@ -85,7 +85,7 @@ const defaultConfig = {
     stories: '/web-stories/v1/web-story',
   },
   flags: {},
-  apiCallback: {
+  apiCallbacks: {
     trashStory: noop,
     duplicateStory: noop,
     updateStory: noop,
