@@ -41,6 +41,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
   beforeEach(async () => {
     data.fixture = new Fixture();
     await data.fixture.render();
+    await data.fixture.collapseHelpCenter();
 
     // Add a text box
     await addInitialText();

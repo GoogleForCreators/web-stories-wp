@@ -32,6 +32,7 @@ describe('TextEdit integration', () => {
     fixture = new Fixture();
 
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
