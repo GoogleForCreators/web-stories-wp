@@ -30,6 +30,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
 } from '@web-stories-wp/design-system';
+import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
@@ -115,7 +116,16 @@ function PageTemplatesPane(props) {
     setIsLoading(true);
     getCustomPageTemplates(nextTemplatesToFetch)
       .then(({ templates, hasMore }) => {
-        setSavedTemplates([...(savedTemplates || []), ...templates]);
+        const updatedTemplates = [...(savedTemplates || []), ...templates].map(
+          (template) => {
+            return {
+              version: DATA_VERSION,
+              ...migrate(template, template.version),
+            };
+          }
+        );
+        setSavedTemplates(updatedTemplates);
+
         if (!hasMore) {
           setNextTemplatesToFetch(false);
         } else {
