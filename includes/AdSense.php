@@ -84,7 +84,13 @@ class AdSense extends Service_Base implements HasRequirements {
 	 * @return string Publisher ID.
 	 */
 	private function get_publisher_id(): string {
-		return (string) $this->settings->get_setting( $this->settings::SETTING_NAME_ADSENSE_PUBLISHER_ID );
+		/**
+		 * Publisher ID.
+		 *
+		 * @var string $publisher_id
+		 */
+		$publisher_id = $this->settings->get_setting( $this->settings::SETTING_NAME_ADSENSE_PUBLISHER_ID );
+		return $publisher_id;
 	}
 
 	/**
@@ -95,7 +101,13 @@ class AdSense extends Service_Base implements HasRequirements {
 	 * @return string Slot ID.
 	 */
 	private function get_slot_id(): string {
-		return (string) $this->settings->get_setting( $this->settings::SETTING_NAME_ADSENSE_SLOT_ID );
+		/**
+		 * Slot ID.
+		 *
+		 * @var string
+		 */
+		$slot_id = $this->settings->get_setting( $this->settings::SETTING_NAME_ADSENSE_SLOT_ID );
+		return $slot_id;
 	}
 
 	/**
@@ -106,7 +118,7 @@ class AdSense extends Service_Base implements HasRequirements {
 	 * @return bool
 	 */
 	private function is_enabled(): bool {
-		return ( 'adsense' === (string) $this->settings->get_setting( $this->settings::SETTING_NAME_AD_NETWORK, 'none' ) );
+		return ( 'adsense' === $this->settings->get_setting( $this->settings::SETTING_NAME_AD_NETWORK, 'none' ) );
 	}
 
 	/**
