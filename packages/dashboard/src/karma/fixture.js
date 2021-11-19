@@ -25,7 +25,7 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { setAppElement } from '@web-stories-wp/design-system';
+import { setAppElement, noop } from '@web-stories-wp/design-system';
 import {
   FixtureEvents,
   ComponentStub,
@@ -85,6 +85,14 @@ const defaultConfig = {
     stories: '/web-stories/v1/web-story',
   },
   flags: {},
+  apiCallback: {
+    trashStory: noop,
+    duplicateStory: noop,
+    updateStory: noop,
+    getAuthors: noop,
+    fetchStories: noop,
+    createStoryFromTemplate: noop,
+  },
 };
 
 export default class Fixture {
