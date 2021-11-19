@@ -27,6 +27,7 @@ function seekVideo(video, offset = 0.99) {
   }
 
   return new Promise((resolve, reject) => {
+    video.addEventListener('suspend', reject);
     video.addEventListener('error', reject);
     video.addEventListener('canplay', () => resolve(video), { once: true });
 
