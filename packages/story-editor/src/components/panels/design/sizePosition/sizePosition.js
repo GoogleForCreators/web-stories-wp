@@ -34,6 +34,7 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
+  Tooltip,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -49,7 +50,6 @@ import {
   inputContainerStyleOverride,
   useCommonObjectValue,
 } from '../../shared';
-import Tooltip from '../../../tooltip';
 import useStory from '../../../../app/story/useStory';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
