@@ -22,7 +22,7 @@ import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
   getImageFromVideo,
   seekVideo,
-  getVideoLengthDisplay,
+  getVideoLength,
   preloadVideo,
   hasVideoGotAudio,
 } from '@web-stories-wp/media';
@@ -113,10 +113,10 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
           resourceLike.width = video.videoWidth;
           resourceLike.height = video.videoHeight;
 
-          resourceLike.length = Math.round(video.duration);
-          resourceLike.lengthFormatted = getVideoLengthDisplay(
-            resourceLike.length
-          );
+          const videoLength = getVideoLength(video);
+
+          resourceLike.length = videoLength.length;
+          resourceLike.lengthFormatted = videoLength.lengthFormatted;
 
           resourceLike.isMuted = !hasVideoGotAudio(video);
 

@@ -15,10 +15,10 @@
  */
 
 /**
- * Preload video using a promise.
+ * Preload video metadata.
  *
  * @param {string} src Video source.
- * @return {Promise} Video object.
+ * @return {Promise<HTMLVideoElement>} Video element.
  */
 const preloadVideoMetadata = (src) => {
   const video = document.createElement('video');

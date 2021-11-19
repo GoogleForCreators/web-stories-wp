@@ -23,7 +23,7 @@ import {
   getTypeFromMime,
   preloadVideo,
   seekVideo,
-  getVideoLengthDisplay,
+  getVideoLength,
   hasVideoGotAudio,
 } from '@web-stories-wp/media';
 
@@ -79,10 +79,10 @@ async function getResourceFromUrl(resourceLike) {
     additionalData.width = video.videoWidth;
     additionalData.height = video.videoHeight;
 
-    additionalData.length = Math.round(video.duration);
-    additionalData.lengthFormatted = getVideoLengthDisplay(
-      additionalData.length
-    );
+    const videoLength = getVideoLength(video);
+
+    additionalData.length = videoLength.length;
+    additionalData.lengthFormatted = videoLength.lengthFormatted;
 
     additionalData.isMuted = !hasVideoGotAudio(video);
   }
