@@ -24,6 +24,7 @@ import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
+import { elementWithFlip } from '../../elements/shared';
 import Slider from './slider';
 import { RAIL_HEIGHT, RAIL_PADDING } from './constants';
 
@@ -49,6 +50,7 @@ export const Rail = styled.div`
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.colors.standard.white};
   background-color: ${({ theme }) => theme.colors.standard.white};
+  ${elementWithFlip}
 `;
 
 export function Duration({ children }) {
