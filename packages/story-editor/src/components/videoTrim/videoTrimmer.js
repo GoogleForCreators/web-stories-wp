@@ -36,7 +36,6 @@ import { getVideoLengthDisplay } from '@web-stories-wp/media';
  */
 import useLayout from '../../app/layout/useLayout';
 import useFocusTrapping from '../../utils/useFocusTrapping';
-import getTransformFlip from '../../elements/shared/getTransformFlip';
 import useVideoTrim from './useVideoTrim';
 import useRailBackground from './useRailBackground';
 import {
@@ -96,10 +95,6 @@ function VideoTrimmer() {
       videoData,
     })
   );
-
-  const { element } = videoData;
-  const { flip } = element;
-
   const { workspaceWidth, pageWidth } = useLayout(
     ({ state: { workspaceWidth, pageWidth } }) => ({
       workspaceWidth,
@@ -129,8 +124,6 @@ function VideoTrimmer() {
   const isReady = pageWidth && maxOffset && videoData;
 
   const railBackgroundImage = useRailBackground(isReady, videoData, railWidth);
-
-  const railTransformFlip = getTransformFlip(flip);
 
   const menuProps = {
     ref: menu,
@@ -173,7 +166,6 @@ function VideoTrimmer() {
         <Rail
           width={railWidth}
           style={{ backgroundImage: `url(${railBackgroundImage})` }}
-          transformFlip={railTransformFlip}
         >
           <Scrim isLeftAligned width={(startOffset / maxOffset) * railWidth} />
           <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />

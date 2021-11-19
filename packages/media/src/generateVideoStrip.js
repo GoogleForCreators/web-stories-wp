@@ -58,6 +58,7 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
     scale,
     focalX,
     focalY,
+    flip,
   } = element;
 
   const { src, length } = resource;
@@ -112,6 +113,23 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
     // Seek to the next offset
     await seekVideo(video, timeOffset);
 
+    const dx = frame * actualStripFrameWidth;
+
+    if (flip.vertical || flip.horizontal) {
+      // translate context to center of canvas
+      ctx.translate(
+        dx + actualStripFrameWidth / 2,
+        0 + actualStripFrameWidth / 2
+      );
+      // flip context
+      ctx.scale(flip.horizontal ? -1 : 1, flip.vertical ? -1 : 1);
+      // translate context back to orgin
+      ctx.translate(
+        -(dx + actualStripFrameWidth / 2),
+        -(0 + actualStripFrameWidth / 2)
+      );
+    }
+
     // Now copy the correct part of the video to the correct part of the context
     ctx.drawImage(
       video,
@@ -122,12 +140,15 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
       actualFrameWidth,
       frameHeight,
       // Destination position
-      frame * actualStripFrameWidth,
+      dx,
       0,
       // Destination dimension
       actualStripFrameWidth,
       stripFrameHeight
     );
+
+    // restore default matrix instead of calling ctx.restore
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     // If there are no more frames, return resolved promise
     frame += 1;
