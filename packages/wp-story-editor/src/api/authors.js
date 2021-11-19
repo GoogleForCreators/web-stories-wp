@@ -21,12 +21,10 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
-
-/**
- * Internal dependencies
- */
-import { snakeToCamelCaseObjectKeys } from './utils';
+import {
+  addQueryArgs,
+  snakeToCamelCaseObjectKeys,
+} from '@web-stories-wp/design-system';
 
 export function getAuthors(config, search) {
   return apiFetch({

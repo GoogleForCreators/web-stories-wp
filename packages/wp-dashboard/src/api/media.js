@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/design-system';
 
 /**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
-/**
- * Internal dependencies
- */
-import { snakeToCamelCaseObjectKeys } from './utils';
 
 /**
  * Upload media

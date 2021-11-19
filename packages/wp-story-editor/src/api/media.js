@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import {
+  addQueryArgs,
+  snakeToCamelCaseObjectKeys,
+} from '@web-stories-wp/design-system';
 
 /**
  * WordPress dependencies
@@ -26,11 +29,7 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import {
-  flattenFormData,
-  getResourceFromAttachment,
-  snakeToCamelCaseObjectKeys,
-} from './utils';
+import { flattenFormData, getResourceFromAttachment } from './utils';
 import { MEDIA_FIELDS } from './constants';
 
 // Important: Keep in sync with REST API preloading definition.

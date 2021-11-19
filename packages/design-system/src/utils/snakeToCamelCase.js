@@ -26,3 +26,26 @@ export function snakeToCamelCase(string = '') {
         group1 + group2.toUpperCase().replace('_', '').replace('-', '')
     );
 }
+
+/**
+ * Transform a given object keys from snake case to camel case recursively.
+ *
+ * @param {Object} obj Object to be transformed.
+ * @return {any} Transformed object.
+ */
+export function snakeToCamelCaseObjectKeys(obj) {
+  const isObject = (val) =>
+    val && 'object' === typeof val && !Array.isArray(val);
+
+  if (!isObject(obj)) {
+    return obj;
+  }
+
+  return Object.entries(obj).reduce((transformedObject, [key, value]) => {
+    const camelCaseKey = snakeToCamelCase(key);
+    transformedObject[camelCaseKey] = isObject(value)
+      ? snakeToCamelCaseObjectKeys(value)
+      : value;
+    return transformedObject;
+  }, {});
+}

@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/design-system';
+
+/**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
-
-/**
- * Internal dependencies
- */
-import { snakeToCamelCaseObjectKeys } from './utils';
 
 export function getCurrentUser(config) {
   return apiFetch({
