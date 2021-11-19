@@ -212,12 +212,12 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 
 			$meta_fields = [ '_wp_attachment_image_alt', Base_Color::BASE_COLOR_POST_META_KEY ];
 			foreach ( $meta_fields as $meta_field ) {
-       /**
-			  * Meta value.
-			  *
-			  * @var string $value
-			  */
-				$value = (string) get_post_meta( $original_id, $meta_field, true );
+				/**
+				 * Meta value.
+				 *
+				 * @var string $value
+				 */
+				$value = get_post_meta( $original_id, $meta_field, true );
 
 				if ( ! empty( $value ) ) {
 					// update_post_meta() expects slashed.
