@@ -40,15 +40,7 @@ const useStoryApi = () => {
   const isInitialFetch = useRef(true);
   const initialFetchListeners = useMemo(() => new Map(), []);
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
-  const {
-    apiCallbacks: {
-      duplicateStory: duplicateStoryCallback,
-      fetchStories: fetchStoriesCallback,
-      trashStory: trashStoryCallback,
-      updateStory: updateStoryCallback,
-      createStoryFromTemplate: createStoryFromTemplateCallback,
-    },
-  } = useConfig();
+  const { apiCallbacks } = useConfig();
 
   const fetchStories = useCallback(
     async (queryParams) => {
@@ -64,7 +56,7 @@ const useStoryApi = () => {
         // However the order of ids get changed if we try to create that array here
         // which may ( or may not ) cause some regression. @todo Reflect on fetchedStoryIds again in next phase.
         const { stories, fetchedStoryIds, totalPages, totalStoriesByStatus } =
-          await fetchStoriesCallback(queryParams);
+          await apiCallbacks.fetchStories(queryParams);
 
         // Hook into first fetch of story statuses.
         if (isInitialFetch.current) {
@@ -101,7 +93,7 @@ const useStoryApi = () => {
         trackTiming();
       }
     },
-    [fetchStoriesCallback, initialFetchListeners]
+    [apiCallbacks, initialFetchListeners]
   );
 
   const updateStory = useCallback(
@@ -109,7 +101,7 @@ const useStoryApi = () => {
       const trackTiming = getTimeTracker('load_update_story');
 
       try {
-        const response = await updateStoryCallback(story);
+        const response = await apiCallbacks.updateStory(story);
 
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
@@ -127,7 +119,7 @@ const useStoryApi = () => {
         trackTiming();
       }
     },
-    [updateStoryCallback]
+    [apiCallbacks]
   );
 
   const trashStory = useCallback(
@@ -135,7 +127,7 @@ const useStoryApi = () => {
       const trackTiming = getTimeTracker('load_trash_story');
 
       try {
-        await trashStoryCallback(story.id);
+        await apiCallbacks.trashStory(story.id);
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY,
           payload: { id: story.id, storyStatus: story.status },
@@ -152,7 +144,7 @@ const useStoryApi = () => {
         trackTiming();
       }
     },
-    [trashStoryCallback]
+    [apiCallbacks]
   );
 
   let createStoryFromTemplate = useCallback(
@@ -163,7 +155,7 @@ const useStoryApi = () => {
       });
 
       try {
-        const response = await createStoryFromTemplateCallback(template);
+        const response = await apiCallbacks.createStoryFromTemplate(template);
 
         dispatch({
           type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS,
@@ -185,10 +177,10 @@ const useStoryApi = () => {
         });
       }
     },
-    [createStoryFromTemplateCallback]
+    [apiCallbacks]
   );
 
-  if (!createStoryFromTemplateCallback) {
+  if (!apiCallbacks.createStoryFromTemplate) {
     createStoryFromTemplate = noop;
   }
 
@@ -197,7 +189,7 @@ const useStoryApi = () => {
       const trackTiming = getTimeTracker('load_duplicate_story');
 
       try {
-        const response = await duplicateStoryCallback(story);
+        const response = await apiCallbacks.duplicateStory(story);
 
         dispatch({
           type: STORY_ACTION_TYPES.DUPLICATE_STORY,
@@ -215,7 +207,7 @@ const useStoryApi = () => {
         trackTiming();
       }
     },
-    [duplicateStoryCallback]
+    [apiCallbacks]
   );
 
   const addInitialFetchListener = useCallback(
