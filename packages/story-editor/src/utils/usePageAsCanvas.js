@@ -27,7 +27,7 @@ import { ZOOM_SETTING } from '../constants';
 import { getAccessibleTextColorsFromPixels } from './contrastUtils';
 import { calculateTextHeight } from './textMeasurements';
 
-function usePageAsCanvas() {
+function usePageAsCanvas(skipSelectedElement) {
   const {
     pageCanvasData,
     setPageCanvasData,
@@ -98,6 +98,9 @@ function usePageAsCanvas() {
         if (!pageCanvasPromise && fullbleedContainer) {
           import(/* webpackChunkName: "chunk-html-to-image" */ 'html-to-image')
             .then((htmlToImage) => {
+              const hasSingleSelection = selectedElementIds.length === 1;
+              const filterSelectedElement =
+                skipSelectedElement && hasSingleSelection;
               const filter = (node) => {
                 // exclude selected element from generated image to prevent interfereing with contrast calculation. true includes and false excludes
                 return node?.dataset?.elementId !== selectedElementIds[0];
@@ -106,7 +109,7 @@ function usePageAsCanvas() {
               const promise = htmlToImage.toCanvas(fullbleedContainer, {
                 fontEmbedCss: '',
                 pixelRatio: 1,
-                filter: selectedElementIds[0] && filter,
+                filter: filterSelectedElement && filter,
               });
               setPageCanvasPromise(promise);
               promise.then(onCompletion).catch(onFail);
@@ -134,6 +137,7 @@ function usePageAsCanvas() {
       hasPageHashChanged,
       pageHash,
       selectedElementIds,
+      skipSelectedElement,
     ]
   );
 
