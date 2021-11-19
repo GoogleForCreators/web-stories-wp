@@ -86,9 +86,7 @@ const getVideoResource = async (file) => {
   const videoEl = await preloadVideo(src);
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
 
-  const videoLength = getVideoLength(videoEl);
-  const length = videoLength.length;
-  const lengthFormatted = videoLength.lengthFormatted;
+  const { length, lengthFormatted } = getVideoLength(videoEl);
 
   await seekVideo(videoEl);
   const hasAudio = hasVideoGotAudio(videoEl);
