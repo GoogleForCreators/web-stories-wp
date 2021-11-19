@@ -15,26 +15,25 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Integration\Media\Video;
+namespace Google\Web_Stories\Tests\Integration\Media;
 
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Media\Video\Trimming
+ * @coversDefaultClass \Google\Web_Stories\Media\Base_Color
  */
-class Trimming extends TestCase {
-
+class Base_Color extends TestCase {
 	/**
 	 * Test instance.
 	 *
-	 * @var \Google\Web_Stories\Media\Video\Trimming
+	 * @var \Google\Web_Stories\Media\Base_Color
 	 */
 	protected $instance;
 
 	public function set_up() {
 		parent::set_up();
 
-		$this->instance = new \Google\Web_Stories\Media\Video\Trimming();
+		$this->instance = new \Google\Web_Stories\Media\Base_Color();
 	}
 
 	/**
@@ -52,23 +51,14 @@ class Trimming extends TestCase {
 	public function test_register_meta() {
 		$this->instance->register_meta();
 
-		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::TRIM_POST_META_KEY, 'attachment' ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::BASE_COLOR_POST_META_KEY, 'attachment' ) );
 	}
 
 	/**
 	 * @covers ::wp_prepare_attachment_for_js
 	 */
 	public function test_wp_prepare_attachment_for_js() {
-		$video_attachment_id = self::factory()->attachment->create_object(
-			[
-				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
-				'post_parent'    => 0,
-				'post_mime_type' => 'video/mp4',
-				'post_title'     => 'Test Video',
-			]
-		);
-
-		$poster_attachment_id = self::factory()->attachment->create_object(
+		$attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
@@ -77,24 +67,20 @@ class Trimming extends TestCase {
 			]
 		);
 
-		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
+		$color = '#000000';
+
+		update_post_meta( $attachment_id, $this->instance::BASE_COLOR_POST_META_KEY, $color );
 
 		$image = $this->instance->wp_prepare_attachment_for_js(
 			[
-				'id'   => $poster_attachment_id,
+				'id'   => $attachment_id,
 				'type' => 'image',
-				'url'  => wp_get_attachment_url( $poster_attachment_id ),
-			]
-		);
-		$video = $this->instance->wp_prepare_attachment_for_js(
-			[
-				'id'   => $video_attachment_id,
-				'type' => 'video',
-				'url'  => wp_get_attachment_url( $video_attachment_id ),
+				'url'  => wp_get_attachment_url( $attachment_id ),
 			]
 		);
 
-		$this->assertArrayNotHasKey( $this->instance::TRIM_DATA_KEY, $image );
-		$this->assertArrayHasKey( $this->instance::TRIM_DATA_KEY, $video );
+
+		$this->assertArrayHasKey( $this->instance::BASE_COLOR_POST_META_KEY, $image );
+		$this->assertSame( $color, $image[ $this->instance::BASE_COLOR_POST_META_KEY ] );
 	}
 }

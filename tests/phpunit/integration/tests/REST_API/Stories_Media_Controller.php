@@ -229,6 +229,8 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		);
 
 		update_post_meta( $original_attachment_id, '_wp_attachment_image_alt', 'Test alt' );
+		$color = '#0f0f0f';
+		update_post_meta( $original_attachment_id, \Google\Web_Stories\Media\Base_Color::BASE_COLOR_POST_META_KEY, $color );
 
 		wp_set_current_user( self::$user_id );
 
@@ -252,6 +254,10 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		$this->assertSame( 'Test content', $attachment->post_content );
 		$this->assertSame( 'Test alt', $data['alt_text'] );
 		$this->assertSame( 'Test alt', get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ) );
+
+		$this->assertArrayHasKey( 'meta', $data );
+		$this->assertArrayHasKey( 'web_stories_base_color', $data['meta'] );
+		$this->assertSame( $color, $data['meta']['web_stories_base_color'] );
 	}
 
 	/**

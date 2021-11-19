@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use WP_Post;
 
@@ -35,7 +36,7 @@ use WP_Post;
  *
  * @package Google\Web_Stories\Media\Video
  */
-class Poster extends Service_Base {
+class Poster extends Service_Base implements HasMeta {
 	/**
 	 * The poster post meta key.
 	 *
@@ -89,7 +90,7 @@ class Poster extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function register_meta() {
+	public function register_meta() {
 		register_meta(
 			'post',
 			self::POSTER_ID_POST_META_KEY,
