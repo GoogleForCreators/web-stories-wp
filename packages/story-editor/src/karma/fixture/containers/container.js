@@ -19,6 +19,7 @@
  */
 import {
   getByTestId,
+  getAllByTestId,
   getByRole,
   getAllByRole,
   queryByRole,
@@ -83,6 +84,17 @@ export class Container {
    */
   getByTestId(text, options) {
     return getByTestId(this._node, text, options);
+  }
+
+  /**
+   * See https://testing-library.com/docs/queries/bytestid
+   *
+   * @param {Matcher} text test id.
+   * @param {ByRoleOptions} options Options.
+   * @return {HTMLElement} The found element.
+   */
+  getAllByTestId(text, options) {
+    return getAllByTestId(this._node, text, options);
   }
 
   /**

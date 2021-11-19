@@ -95,7 +95,7 @@ class Site_Kit extends Service_Base {
 	 */
 	protected function is_adsense_module_active(): bool {
 		$adsense_module_active       = in_array( 'adsense', $this->get_site_kit_active_modules_option(), true );
-		$adsense_options             = get_option( 'googlesitekit_adsense_settings' );
+		$adsense_options             = (array) get_option( 'googlesitekit_adsense_settings' );
 		$adsense_options_client_id   = ! empty( $adsense_options['clientID'] );
 		$adsense_options_use_snippet = ! empty( $adsense_options['useSnippet'] );
 		$adsense_web_stories_ad_unit = ! empty( $adsense_options['webStoriesAdUnit'] );
@@ -112,7 +112,7 @@ class Site_Kit extends Service_Base {
 	 */
 	protected function is_analytics_module_active(): bool {
 		$analytics_module_active = in_array( 'analytics', $this->get_site_kit_active_modules_option(), true );
-		$analytics_options       = get_option( 'googlesitekit_analytics_settings' );
+		$analytics_options       = (array) get_option( 'googlesitekit_analytics_settings' );
 		$analytics_use_snippet   = ! empty( $analytics_options['useSnippet'] );
 
 		return $analytics_module_active && $analytics_use_snippet;
@@ -128,7 +128,11 @@ class Site_Kit extends Service_Base {
 	 * @return array|mixed Modified configuration options.
 	 */
 	public function filter_site_kit_gtag_opt( $gtag_opt ) {
-		if ( ! $this->context->is_web_story() ) {
+		if (
+			! is_array( $gtag_opt ) ||
+			! isset( $gtag_opt['vars']['gtag_id'] ) ||
+			! $this->context->is_web_story()
+		) {
 			return $gtag_opt;
 		}
 

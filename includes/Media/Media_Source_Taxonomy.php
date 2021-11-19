@@ -191,7 +191,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param mixed   $value Value to update.
+	 * @param string  $value  Value to update.
 	 * @param WP_Post $object Object to update on.
 	 *
 	 * @return true|\WP_Error

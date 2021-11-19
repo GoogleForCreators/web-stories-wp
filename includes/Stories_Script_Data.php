@@ -132,9 +132,9 @@ class Stories_Script_Data {
 	 *
 	 * @since 1.14.0
 	 *
-	 * @return mixed|void
+	 * @return array
 	 */
-	public function get_layouts() {
+	public function get_layouts(): array {
 		return [
 			'carousel' => __( 'Box Carousel', 'web-stories' ),
 			'circles'  => __( 'Circle Carousel', 'web-stories' ),

@@ -152,6 +152,8 @@ class Meta_Boxes extends Service_Base {
 			return [];
 		}
 
+		$_wp_meta_boxes = $wp_meta_boxes ?? [];
+
 		/**
 		 * Filters meta box data before making it available to the editor.
 		 *
@@ -162,7 +164,7 @@ class Meta_Boxes extends Service_Base {
 		 *
 		 * @param array $wp_meta_boxes Global meta box state.
 		 */
-		$_wp_meta_boxes = apply_filters( 'web_stories_editor_meta_boxes', $wp_meta_boxes );
+		$_wp_meta_boxes = apply_filters( 'web_stories_editor_meta_boxes', $_wp_meta_boxes );
 
 		$meta_boxes_per_location = [];
 		foreach ( self::LOCATIONS as $context ) {
