@@ -71,9 +71,7 @@ function StoriesView({
   const [returnStoryFocusId, setReturnStoryFocusId] = useState(null);
 
   const { showSnackbar } = useSnackbar();
-  const {
-    apiCallbacks: { duplicateStory, trashStory, updateStory },
-  } = useConfig();
+  const { apiCallbacks } = useConfig();
 
   const isActiveDeleteStoryDialog =
     activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
@@ -178,25 +176,25 @@ function StoriesView({
       menuItemActions: {
         default: () => setContextMenuId(-1),
         [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: handleCopyStoryLink,
-        ...(trashStory && {
+        ...(apiCallbacks?.trashStory && {
           [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,
         }),
-        ...(duplicateStory && {
+        ...(apiCallbacks?.duplicateStory && {
           [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: handleDuplicateStory,
         }),
         [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: handleOpenStoryInEditor,
-        ...(updateStory && {
+        ...(apiCallbacks?.updateStory && {
           [STORY_CONTEXT_MENU_ACTIONS.RENAME]: handleRenameStory,
         }),
       },
       menuItems: STORY_CONTEXT_MENU_ITEMS.filter((menu) => {
         switch (menu.value) {
           case STORY_CONTEXT_MENU_ACTIONS.DELETE:
-            return typeof trashStory === 'function';
+            return typeof apiCallbacks?.trashStory === 'function';
           case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
-            return typeof duplicateStory === 'function';
+            return typeof apiCallbacks?.duplicateStory === 'function';
           case STORY_CONTEXT_MENU_ACTIONS.RENAME:
-            return typeof updateStory === 'function';
+            return typeof apiCallbacks?.updateStory === 'function';
           default:
             return true;
         }
@@ -210,9 +208,7 @@ function StoriesView({
     handleOpenStoryInEditor,
     handleRenameStory,
     setContextMenuId,
-    trashStory,
-    duplicateStory,
-    updateStory,
+    apiCallbacks,
   ]);
 
   const renameStory = useMemo(() => {

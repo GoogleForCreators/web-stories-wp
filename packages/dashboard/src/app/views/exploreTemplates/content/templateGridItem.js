@@ -69,9 +69,7 @@ const TemplateGridItem = forwardRef(
       __('First page of %s template', 'web-stories'),
       title
     );
-    const {
-      apiCallbacks: { createStoryFromTemplate },
-    } = useConfig();
+    const { apiCallbacks } = useConfig();
     return (
       <CardGridItem
         ref={ref}
@@ -117,7 +115,7 @@ const TemplateGridItem = forwardRef(
                   {TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[status]}
                 </Button>
 
-                {createStoryFromTemplate && (
+                {apiCallbacks?.createStoryFromTemplate && (
                   <Button
                     size={BUTTON_SIZES.SMALL}
                     type={BUTTON_TYPES.PRIMARY}

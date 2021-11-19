@@ -47,9 +47,7 @@ const HiddenHeading = styled.h2`
   ${themeHelpers.visuallyHidden};
 `;
 function Header({ onHandleCtaClick, templateTitle }) {
-  const {
-    apiCallbacks: { createStoryFromTemplate },
-  } = useConfig();
+  const { apiCallbacks } = useConfig();
 
   return (
     <Layout.Fixed>
@@ -75,7 +73,7 @@ function Header({ onHandleCtaClick, templateTitle }) {
         >
           <Icons.CrossLarge />
         </Button>
-        {createStoryFromTemplate && (
+        {apiCallbacks?.createStoryFromTemplate && (
           <Button
             onClick={onHandleCtaClick}
             type={BUTTON_TYPES.PRIMARY}
