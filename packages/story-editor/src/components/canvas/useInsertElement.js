@@ -47,7 +47,7 @@ function useInsertElement() {
   const {
     actions: { registerUsage },
   } = useMedia3pApi();
-  const { getProxiedUrl } = useCORSProxy();
+  const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
     setZoomSetting,
@@ -71,7 +71,8 @@ function useInsertElement() {
       }
 
       try {
-        const imageSrcProxied = getProxiedUrl(resource, imageSrc);
+        const needsProxy = await checkResourceAccess(imageSrc);
+        const imageSrcProxied = getProxiedUrl({ needsProxy }, imageSrc);
         const baseColor = await getMediaBaseColor(imageSrcProxied);
         updateElementById({
           elementId: id,
