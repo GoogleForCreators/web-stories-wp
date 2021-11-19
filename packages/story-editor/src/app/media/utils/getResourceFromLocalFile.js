@@ -90,8 +90,8 @@ const getVideoResource = async (file) => {
     length = videoLength.length;
     lengthFormatted = videoLength.lengthFormatted;
   }
-  const hasAudio = hasVideoGotAudio(videoEl);
   await seekVideo(videoEl);
+  const hasAudio = hasVideoGotAudio(videoEl);
   const posterFile = await getImageFromVideo(videoEl);
   const poster = createBlob(posterFile);
   const { width, height } = await getImageDimensions(poster);
