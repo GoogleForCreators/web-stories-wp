@@ -32,7 +32,6 @@ describe('MediaPane fetching', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -49,7 +48,14 @@ describe('MediaPane fetching', () => {
 
     const initialElements =
       within(mediaGallery).queryAllByTestId(/^mediaElement-/);
-    expect(initialElements.length).toBe(LOCAL_MEDIA_PER_PAGE);
+
+    await waitFor(() => {
+      // ensure fixture.screen has loaded before calling expect to prevent immediate failure
+      if (initialElements.length !== LOCAL_MEDIA_PER_PAGE) {
+        throw new Error('wait');
+      }
+      expect(initialElements.length).toBe(LOCAL_MEDIA_PER_PAGE);
+    });
 
     await mediaGallery.scrollTo(
       0,
