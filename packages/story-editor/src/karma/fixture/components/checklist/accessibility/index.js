@@ -24,7 +24,6 @@ import {
   TextElementFontSizeTooSmall,
   VideoElementMissingCaptions,
   VideoElementMissingDescription,
-  VideoOptimizationCheckbox,
 } from '../../../../../components/checklist';
 import { useConfig } from '../../../../../app/config';
 
@@ -41,7 +40,6 @@ function Accessibility() {
       <ElementLinkTappableRegionTooSmall />
       <ElementLinkTappableRegionTooBig />
       <ImageElementMissingAlt />
-      <VideoOptimizationCheckbox />
     </>
   );
 }
