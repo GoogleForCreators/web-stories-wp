@@ -235,6 +235,11 @@ class Poster extends Service_Base {
 	 * @return void
 	 */
 	public function delete_video_poster( int $attachment_id ) {
+		/**
+		 * Post ID.
+		 *
+		 * @var int|string $post_id
+		 */
 		$post_id = get_post_meta( $attachment_id, self::POSTER_ID_POST_META_KEY, true );
 
 		if ( empty( $post_id ) ) {
@@ -242,9 +247,9 @@ class Poster extends Service_Base {
 		}
 
 		// Used in favor of slow meta queries.
-		$is_poster = $this->is_poster( $post_id );
+		$is_poster = $this->is_poster( (int) $post_id );
 		if ( $is_poster ) {
-			wp_delete_attachment( $post_id, true );
+			wp_delete_attachment( (int) $post_id, true );
 		}
 	}
 
