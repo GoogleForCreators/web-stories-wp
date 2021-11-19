@@ -277,7 +277,7 @@ class HTML {
 		 *
 		 * @param array[] $share_providers List of sharing providers.
 		 */
-		$share_providers = (array) apply_filters( 'web_stories_share_providers', $share_providers );
+		$share_providers = apply_filters( 'web_stories_share_providers', $share_providers );
 
 		if ( empty( $share_providers ) ) {
 			return $content;

@@ -15,29 +15,26 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { Fixture } from '../../../karma';
+import { useReduction } from '@web-stories-wp/react';
 
-describe('Footer menu', () => {
-  let fixture;
+const imageCacheReducer = {
+  setCachedImage: (cachedImages, { payload: { pageId, cachedImage } }) => ({
+    ...cachedImages,
+    [pageId]: cachedImage,
+  }),
+};
 
-  beforeEach(async () => {
-    fixture = new Fixture();
-    await fixture.render();
-    await fixture.collapseHelpCenter();
-  });
+function useCarouselCache() {
+  const [cachedImages, { setCachedImage }] = useReduction(
+    {},
+    imageCacheReducer
+  );
+  return {
+    cachedImages,
+    setCachedImage,
+  };
+}
 
-  afterEach(() => {
-    fixture.restore();
-  });
-
-  it('should show correct tooltip on hover', async () => {
-    const { gridViewToggle } = fixture.editor.footer;
-    await fixture.events.mouse.moveRel(gridViewToggle, '50%', '50%', {
-      steps: 2,
-    });
-
-    await fixture.snapshot('Grid view tooltip visible');
-  });
-});
+export default useCarouselCache;

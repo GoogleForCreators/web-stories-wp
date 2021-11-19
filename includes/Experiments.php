@@ -459,6 +459,11 @@ class Experiments extends Service_Base implements HasRequirements {
 			return (bool) $experiment['default'];
 		}
 
+		/**
+		 * List of enabled experiments.
+		 *
+		 * @var array<string, array> $experiments
+		 */
 		$experiments = $this->settings->get_setting( $this->settings::SETTING_NAME_EXPERIMENTS, [] );
 		return ! empty( $experiments[ $name ] );
 	}

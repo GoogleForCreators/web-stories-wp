@@ -32,6 +32,7 @@ describe('TextEdit integration', () => {
     fixture = new Fixture();
 
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -87,14 +88,22 @@ describe('TextEdit integration', () => {
         await fixture.snapshot();
       });
 
-      // Broken test, see: https://github.com/google/web-stories-wp/issues/7211
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should handle a command, exit and save', async () => {
+      it('should handle a command, exit and save', async () => {
+        // Increase the font size for ensuring the clicks to be in correct places.
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.textStyle.fontSize,
+          { clickCount: 3 }
+        );
+        await fixture.events.keyboard.type('30');
+        await fixture.events.keyboard.press('tab');
+        // Give time for the font size to be applied.
+        await fixture.events.sleep(100);
+
         // Select all.
-        await fixture.events.keyboard.press('Enter');
+        await fixture.events.mouse.clickOn(frame, 30, 5);
         await repeatPress('ArrowUp', 10);
         await fixture.events.keyboard.down('shift');
-        await repeatPress('ArrowRight', 15);
+        await repeatPress('ArrowRight', 20);
         await fixture.events.keyboard.up('shift');
 
         expect(boldToggle.checked).toEqual(false);
