@@ -142,7 +142,7 @@ function ExploreTemplates() {
         isLoading={isLoading && !totalTemplates}
         filter={filter}
         sort={sort}
-        totalTemplates={totalTemplates}
+        totalTemplates={totalVisibleTemplates}
         search={search}
         searchOptions={searchOptions}
         view={view}
