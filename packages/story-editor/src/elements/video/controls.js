@@ -33,7 +33,6 @@ function VideoControls({
   isTransforming,
   elementRef,
   element,
-  videoRef,
 }) {
   const isActive =
     isSelected && !isTransforming && isSingleElement && !isEditing;
@@ -45,7 +44,7 @@ function VideoControls({
       isTransforming={isTransforming}
       elementRef={elementRef}
       element={element}
-      videoRef={videoRef}
+      allowKeyboardSupport
     />
   );
 }
@@ -58,7 +57,6 @@ VideoControls.propTypes = {
   isTransforming: PropTypes.bool.isRequired,
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,
-  videoRef: PropTypes.object,
 };
 
 export default VideoControls;
