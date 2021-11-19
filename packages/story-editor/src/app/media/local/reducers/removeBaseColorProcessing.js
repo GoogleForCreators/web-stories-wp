@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { INITIAL_STATE as COMMON_INITIAL_STATE } from '../pagination/constants';
+function removeBaseColorProcessing(state, { id }) {
+  if (!id || !state.baseColorProcessing.includes(id)) {
+    return state;
+  }
+  const currentProcessing = [...state.baseColorProcessing];
+  const baseColorProcessing = currentProcessing.filter((e) => e !== id);
 
-export const INITIAL_STATE = {
-  ...COMMON_INITIAL_STATE,
-  audioProcessing: [],
-  audioProcessed: [],
-  baseColorProcessed: [],
-  baseColorProcessing: [],
-  posterProcessing: [],
-  posterProcessed: [],
-  mediaType: '',
-  searchTerm: '',
-};
+  return {
+    ...state,
+    baseColorProcessing,
+    baseColorProcessed: [...state.baseColorProcessed, id],
+  };
+}
+export default removeBaseColorProcessing;

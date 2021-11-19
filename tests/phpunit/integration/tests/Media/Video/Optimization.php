@@ -24,12 +24,24 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  */
 class Optimization extends TestCase {
 	/**
+	 * Test instance.
+	 *
+	 * @var \Google\Web_Stories\Media\Video\Optimization
+	 */
+	protected $instance;
+
+	public function set_up() {
+		parent::set_up();
+
+		$this->instance = new \Google\Web_Stories\Media\Video\Optimization();
+	}
+
+	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$media = new \Google\Web_Stories\Media\Video\Optimization();
-		$media->register();
+		$this->instance->register();
 
-		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Video\Optimization::OPTIMIZED_ID_POST_META_KEY, 'attachment' ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::OPTIMIZED_ID_POST_META_KEY, 'attachment' ) );
 	}
 }

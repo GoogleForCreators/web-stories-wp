@@ -13,19 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { INITIAL_STATE as COMMON_INITIAL_STATE } from '../pagination/constants';
+function getHexFromSolidArray(dims) {
+  const color = dims
+    .map((n) => n.toString(16))
+    .map((s) => s.padStart(2, '0'))
+    .join('');
+  return `#${color}`;
+}
 
-export const INITIAL_STATE = {
-  ...COMMON_INITIAL_STATE,
-  audioProcessing: [],
-  audioProcessed: [],
-  baseColorProcessed: [],
-  baseColorProcessing: [],
-  posterProcessing: [],
-  posterProcessed: [],
-  mediaType: '',
-  searchTerm: '',
-};
+export default getHexFromSolidArray;
