@@ -31,11 +31,20 @@ export default {
     _x('Black', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Black Timber', 'color', 'web-stories'), color: '#2f2f37' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+    {
+      label: _x('Black Timber', 'color', 'web-stories'),
+      color: '#2f2f37',
+      family: _x('Black', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
     {
       label: _x('Whole Wheat Brown', 'color', 'web-stories'),
       color: '#ddc69e',
+      family: _x('Brown', 'color', 'web-stories'),
     },
   ],
   description: __(
