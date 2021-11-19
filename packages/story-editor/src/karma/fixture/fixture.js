@@ -64,6 +64,7 @@ if ('true' === process.env.CI) {
 }
 
 export const MEDIA_PER_PAGE = 20;
+export const LOCAL_MEDIA_PER_PAGE = 50;
 
 function MediaUpload({ render: _render, onSelect }) {
   const open = () => {
@@ -776,14 +777,17 @@ class APIProviderFixture {
         const filterBySearchTerm = searchTerm
           ? ({ alt_text }) => alt_text.includes(searchTerm)
           : () => true;
-        // Generate 7*6=42 items, 3 pages
-        const clonedMedia = Array(6)
+        // Generate 8*13=104 items, 3 pages
+        const clonedMedia = Array(13)
           .fill(getMediaResponse)
           .flat()
           .map((media, i) => ({ ...media, id: i + 1 }));
         return asyncResponse({
           data: clonedMedia
-            .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
+            .slice(
+              (pagingNum - 1) * LOCAL_MEDIA_PER_PAGE,
+              pagingNum * LOCAL_MEDIA_PER_PAGE
+            )
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
           headers: { totalPages: 3 },
