@@ -249,7 +249,6 @@ function PlayPauseButton({
               .play()
               .then(() => setIsPlaying(true))
               .catch(() => {});
-            setIsPlaying(true);
           } else {
             videoNode.pause();
             videoNode.currentTime = 0;
