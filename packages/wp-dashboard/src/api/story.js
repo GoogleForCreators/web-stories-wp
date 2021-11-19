@@ -16,10 +16,7 @@
 /**
  * External dependencies
  */
-import {
-  addQueryArgs,
-  snakeToCamelCaseObjectKeys,
-} from '@web-stories-wp/design-system';
+import { addQueryArgs } from '@web-stories-wp/design-system';
 import {
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
@@ -37,7 +34,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_FIELDS, STORY_EMBED } from './constants';
-import { reshapeStoryObject } from './utils';
+import { reshapeStoryObject, snakeToCamelCaseObjectKeys } from './utils';
 
 /**
  * Fetch stories ( When dashboard link is clicked. )

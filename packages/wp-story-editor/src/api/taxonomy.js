@@ -17,16 +17,17 @@
 /**
  * External dependencies
  */
-import {
-  addQueryArgs,
-  snakeToCamelCase,
-  snakeToCamelCaseObjectKeys,
-} from '@web-stories-wp/design-system';
+import { addQueryArgs, snakeToCamelCase } from '@web-stories-wp/design-system';
 
 /**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './utils';
 
 /**
  * Get all taxonomies.

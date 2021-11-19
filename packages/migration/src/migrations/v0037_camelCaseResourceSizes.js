@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/design-system';
 
 function camelCaseResourceSizes({ pages, ...rest }) {
   return {
@@ -30,6 +26,30 @@ function reducePage({ elements, ...rest }) {
     elements: elements.map(updateElement),
     ...rest,
   };
+}
+
+export function snakeToCamelCase(string = '') {
+  if (!string.includes('_') && !string.includes('-')) {
+    return string;
+  }
+
+  return string
+    .toLowerCase()
+    .replace(
+      /([a-z])([_|-][a-z])/g,
+      (_match, group1, group2) =>
+        group1 + group2.toUpperCase().replace('_', '').replace('-', '')
+    );
+}
+
+function snakeToCamelCaseObjectKeys(obj) {
+  return Object.entries(obj).reduce((_obj, [key, value]) => {
+    _obj[snakeToCamelCase(key)] =
+      value instanceof Object && !Array.isArray(value)
+        ? snakeToCamelCaseObjectKeys(value)
+        : value;
+    return _obj;
+  }, {});
 }
 
 function updateElement(element) {

@@ -16,11 +16,7 @@
 /**
  * External dependencies
  */
-import {
-  addQueryArgs,
-  snakeToCamelCase,
-  snakeToCamelCaseObjectKeys,
-} from '@web-stories-wp/design-system';
+import { addQueryArgs, snakeToCamelCase } from '@web-stories-wp/design-system';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
@@ -32,7 +28,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_EMBED, STORY_FIELDS } from './constants';
-import { base64Encode } from './utils';
+import { base64Encode, snakeToCamelCaseObjectKeys } from './utils';
 
 // Add custom fields and prepare story response.
 const transformGetStoryResponse = (post) => {

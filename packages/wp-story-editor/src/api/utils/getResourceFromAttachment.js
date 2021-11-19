@@ -22,7 +22,11 @@ import {
   getTypeFromMime,
   getResourceSize,
 } from '@web-stories-wp/media';
-import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './snakeToCamelCase';
 
 /**
  * MediaDetails object.
