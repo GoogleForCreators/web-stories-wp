@@ -24,13 +24,19 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../karma';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
+import { useStory } from '../../../app';
 import { initHelpers } from './_utils';
 
 describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
   const data = {};
 
-  const { getTextContent, addInitialText, setSelection, richTextHasFocus } =
-    initHelpers(data);
+  const {
+    getTextContent,
+    addInitialText,
+    setSelection,
+    richTextHasFocus,
+    setFontSize,
+  } = initHelpers(data);
 
   beforeEach(async () => {
     data.fixture = new Fixture();
@@ -49,15 +55,28 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
-    // Broken test, see: https://github.com/google/web-stories-wp/issues/7211
-    // When fixing this test, ensure that uppercase is handled here, too.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should apply inline formats correctly for both single style and multiple styles', async () => {
-      const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+    it('should apply inline formats correctly for both single style and multiple styles', async () => {
+      let storyContext = await data.fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElements[0].content).toBe(
+        'Fill in some text'
+      );
+      const {
+        bold,
+        italic,
+        underline,
+        fontWeight,
+        letterSpacing,
+        fontColor,
+        uppercase,
+      } = data.fixture.editor.inspector.designPanel.textStyle;
 
       // Enter edit-mode
       await data.fixture.events.keyboard.press('Enter');
+      await waitFor(() =>
+        data.fixture.querySelector('[data-testid="textEditor"]')
+      );
+
+      await setFontSize('30');
 
       // Select character 5 and 6 (the word "in" in "Fill in some text")
       await setSelection(5, 7);
@@ -66,16 +85,18 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
       expect(underline.checked).toBe(false);
+      expect(uppercase.checked).toBe(false);
       expect(fontWeight.value).toBe('Regular');
       expect(letterSpacing.value).toBe('0%');
       expect(fontColor.hex.value).toBe('000000');
 
-      // Toggle italic and underline - wait for autofocus to return
+      // Toggle italic and underline and uppercase - wait for autofocus to return
       await data.fixture.events.click(italic.button);
       await richTextHasFocus();
       await data.fixture.events.click(underline.button);
       await richTextHasFocus();
-
+      await data.fixture.events.click(uppercase.button);
+      await richTextHasFocus();
       // Set font weight (should also toggle bold, as "Black" is >700)
       // - wait for autofocus to return
       await data.fixture.events.click(fontWeight.select);
@@ -110,6 +131,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(bold.checked).toBe(true);
       expect(italic.checked).toBe(true);
       expect(underline.checked).toBe(true);
+      expect(uppercase.checked).toBe(true);
       expect(fontWeight.value).toBe('Black');
       expect(letterSpacing.value).toBe('50%');
       expect(fontColor.hex.value).toBe('FF6600');
@@ -122,6 +144,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
       expect(underline.checked).toBe(false);
+      expect(uppercase.checked).toBe(false);
 
       // Expect font weight, letter spacing and font color to be "multiple"
       expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
@@ -133,12 +156,12 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       await data.fixture.events.click(italic.button);
       await data.fixture.events.click(underline.button);
       await data.fixture.events.click(bold.button);
+      await data.fixture.events.click(uppercase.button);
 
       // We have to open the color picker, as there's no direct hex input when "multiple"
       await data.fixture.events.click(fontColor.button);
-      waitFor(() => fontColor.picker);
-      await data.fixture.events.click(fontColor.picker.hexButton);
-      await data.fixture.events.keyboard.type('00FF00');
+      await waitFor(() => fontColor.picker);
+      await data.fixture.events.click(fontColor.picker.applySavedColor('#eee'));
       // Wait for debounce in color picker (100ms)
       await data.fixture.events.sleep(100);
 
@@ -151,28 +174,34 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(bold.checked).toBe(true);
       expect(italic.checked).toBe(true);
       expect(underline.checked).toBe(true);
-      // Note that entire selection is made black, because some part was black, when bold was pressedexpect(fontWeight.value).toBe('Black');
+      // Note that entire selection is made black, because some part was black, when bold was pressed
+      expect(fontWeight.value).toBe('Black');
       expect(letterSpacing.value).toBe('100%');
-      expect(fontColor.hex.value).toBe('00FF00');
+      expect(fontColor.hex.value).toBe('EEEEEE');
 
       // Exit edit-mode
-      await data.fixture.events.keyboard.press('Escape');
+      const safezone = data.fixture.querySelector('[data-testid="safezone"]');
+      await data.fixture.events.click(safezone);
+      await data.fixture.snapshot('With inline style applied');
 
       // Assume text content to match expectation
-      const actual = getTextContent();
+      storyContext = await data.fixture.renderHook(() => useStory());
+      const actual = storyContext.state.selectedElements[0].content;
       const firstCSS = [
         'font-weight: 900',
         'font-style: italic',
         'text-decoration: underline',
         'color: #f60',
         'letter-spacing: 0.5em',
+        'text-transform: uppercase',
       ].join('; ');
       const secondCSS = [
         'font-weight: 900',
         'font-style: italic',
         'text-decoration: underline',
-        'color: #0f0',
+        'color: #eee',
         'letter-spacing: 1em',
+        'text-transform: uppercase',
       ].join('; ');
       const expected = `Fill <span style="${firstCSS}">i</span><span style="${secondCSS}">n</span><span style="${secondCSS}"> s</span>ome text`;
       expect(actual).toBe(expected);
