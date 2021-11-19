@@ -22,13 +22,21 @@ import { useRef, useCallback } from '@web-stories-wp/react';
  */
 import { noop } from './noop';
 
-function useMouseDownOutsideRef(onPointerDownOutside = noop) {
+/**
+ * Takes a handler for mouseDownOutside event and returns a ref
+ * to attach to the desired element you want to detect outside
+ * mouse down events
+ *
+ * @param {Function} onMouseDownOutside handler for mousedown outside
+ * @return {Object} ref to pass to desired element
+ */
+function useMouseDownOutsideRef(onMouseDownOutside = noop) {
   const targetRef = useRef(null);
   // store handler outside of useCallback so we have the
   // proper references when removing listeners
   const handleDocumentClickCaptureRef = useRef(noop);
-  const onPointerDownOutsideRef = useRef(onPointerDownOutside);
-  onPointerDownOutsideRef.current = onPointerDownOutside;
+  const onMouseDownOutsideRef = useRef(onMouseDownOutside);
+  onMouseDownOutsideRef.current = onMouseDownOutside;
 
   return useCallback((node) => {
     // clean up listeners associated with the previous node
@@ -46,7 +54,7 @@ function useMouseDownOutsideRef(onPointerDownOutside = noop) {
         if (node === evt.target || node.contains(evt.target)) {
           return;
         }
-        onPointerDownOutsideRef.current?.(evt);
+        onMouseDownOutsideRef.current?.(evt);
       };
 
       document.addEventListener(
