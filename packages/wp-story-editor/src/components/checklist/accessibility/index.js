@@ -26,8 +26,12 @@ import {
   TextElementFontSizeTooSmall,
   VideoElementMissingCaptions,
   VideoElementMissingDescription,
-  VideoOptimizationCheckbox,
 } from '@web-stories-wp/story-editor';
+
+/**
+ * Internal dependencies
+ */
+import VideoOptimizationCheckbox from './videoOptimizationCheckbox';
 
 function Accessibility() {
   const { hasUploadMediaAction } = useConfig(({ capabilities }) => ({

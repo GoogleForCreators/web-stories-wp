@@ -25,18 +25,17 @@ import {
 import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
-/**
- * Internal dependencies
- */
-import { useConfig, useCurrentUser } from '../../../app';
-import { CARD_WIDTH } from '../../secondaryPopup';
-import { useIsChecklistMounted } from '../popupMountedContext';
+import {
+  useConfig,
+  useCurrentUser,
+  useIsChecklistMounted,
+} from '@web-stories-wp/story-editor';
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: ${CARD_WIDTH}px;
+  width: 272px;
   margin: 16px 0;
   padding: 16px;
   background-color: ${({ theme }) => theme.colors.bg.secondary};

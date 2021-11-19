@@ -18,12 +18,16 @@
  */
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
+import {
+  GlobalStyle as theme,
+  useConfig,
+  useCurrentUser,
+} from '@web-stories-wp/story-editor';
+
 /**
  * Internal dependencies
  */
 import VideoOptimizationCheckbox from '..';
-import theme from '../../../../theme';
-import { useConfig, useCurrentUser } from '../../../../app';
 
 jest.mock('../../../../app', () => ({
   useConfig: jest.fn(),
