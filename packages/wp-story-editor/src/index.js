@@ -55,10 +55,9 @@ window.webStories.domReady = domReady;
  * Initializes the web stories editor.
  *
  * @param {string} id       ID of the root element to render the screen in.
- * @param {Object} settings Story editor settings.
+ * @param {Object} config   Story editor settings.
  */
-window.webStories.initializeStoryEditor = (id, settings) => {
-  const { config } = settings;
+window.webStories.initializeStoryEditor = (id, config) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/

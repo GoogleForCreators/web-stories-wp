@@ -287,8 +287,10 @@ class Editor extends Service_Base implements HasRequirements {
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
-			'webStoriesEditorSettings',
-			$this->get_editor_settings()
+			'webStories',
+			[
+				'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
+			]
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
@@ -351,65 +353,61 @@ class Editor extends Service_Base implements HasRequirements {
 		$story->load_from_post( $post );
 
 		$settings = [
-			'id'         => 'web-stories-editor',
-			'config'     => [
-				'autoSaveInterval'             => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
-				'isRTL'                        => is_rtl(),
-				'locale'                       => $this->locale->get_locale_settings(),
-				'allowedFileTypes'             => $this->types->get_allowed_file_types(),
-				'allowedTranscodableMimeTypes' => $this->types->get_allowed_transcodable_mime_types(),
-				'allowedImageFileTypes'        => $this->types->get_file_type_exts( $image_mime_types ),
-				'allowedImageMimeTypes'        => $image_mime_types,
-				'allowedAudioFileTypes'        => $this->types->get_file_type_exts( $audio_mime_types ),
-				'allowedAudioMimeTypes'        => $audio_mime_types,
-				'allowedMimeTypes'             => $mime_types,
-				'postType'                     => $this->story_post_type->get_slug(),
-				'storyId'                      => $story_id,
-				'dashboardLink'                => $dashboard_url,
-				'dashboardSettingsLink'        => $dashboard_settings_url,
-				'generalSettingsLink'          => $general_settings_url,
-				'cdnURL'                       => trailingslashit( WEBSTORIES_CDN_URL ),
-				'maxUpload'                    => $max_upload_size,
-				'isDemo'                       => $is_demo,
-				'capabilities'                 => [
-					'hasUploadMediaAction' => current_user_can( 'upload_files' ),
-					'canManageSettings'    => current_user_can( 'manage_options' ),
-				],
-				'api'                          => [
-					'users'          => '/web-stories/v1/users/',
-					'currentUser'    => '/web-stories/v1/users/me/',
-					'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
-					'pageTemplates'  => trailingslashit( $this->page_template_post_type->get_rest_url() ),
-					'media'          => '/web-stories/v1/media/',
-					'hotlink'        => '/web-stories/v1/hotlink/validate/',
-					'publisherLogos' => '/web-stories/v1/publisher-logos/',
-					'proxy'          => rest_url( '/web-stories/v1/hotlink/proxy/' ),
-					'link'           => '/web-stories/v1/link/',
-					'statusCheck'    => '/web-stories/v1/status-check/',
-					'taxonomies'     => '/web-stories/v1/taxonomies/',
-					'metaBoxes'      => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
-					'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
-				],
-				'metadata'                     => [
-					'publisher' => $story->get_publisher_name(),
-				],
-				'postLock'                     => [
-					'interval'         => $time_window,
-					'showLockedDialog' => $show_locked_dialog,
-				],
-				'version'                      => WEBSTORIES_VERSION,
-				'nonce'                        => $nonce,
-				'showMedia3p'                  => true,
-				'encodeMarkup'                 => $this->decoder->supports_decoding(),
-				'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
-				'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
-				'localeData'                   => $this->assets->get_translations( self::SCRIPT_HANDLE ),
-				'flags'                        => array_merge(
-					$this->experiments->get_experiment_statuses( 'general' ),
-					$this->experiments->get_experiment_statuses( 'editor' )
-				),
+			'autoSaveInterval'             => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
+			'isRTL'                        => is_rtl(),
+			'locale'                       => $this->locale->get_locale_settings(),
+			'allowedFileTypes'             => $this->types->get_allowed_file_types(),
+			'allowedTranscodableMimeTypes' => $this->types->get_allowed_transcodable_mime_types(),
+			'allowedImageFileTypes'        => $this->types->get_file_type_exts( $image_mime_types ),
+			'allowedImageMimeTypes'        => $image_mime_types,
+			'allowedAudioFileTypes'        => $this->types->get_file_type_exts( $audio_mime_types ),
+			'allowedAudioMimeTypes'        => $audio_mime_types,
+			'allowedMimeTypes'             => $mime_types,
+			'postType'                     => $this->story_post_type->get_slug(),
+			'storyId'                      => $story_id,
+			'dashboardLink'                => $dashboard_url,
+			'dashboardSettingsLink'        => $dashboard_settings_url,
+			'generalSettingsLink'          => $general_settings_url,
+			'cdnURL'                       => trailingslashit( WEBSTORIES_CDN_URL ),
+			'maxUpload'                    => $max_upload_size,
+			'isDemo'                       => $is_demo,
+			'capabilities'                 => [
+				'hasUploadMediaAction' => current_user_can( 'upload_files' ),
+				'canManageSettings'    => current_user_can( 'manage_options' ),
 			],
-			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
+			'api'                          => [
+				'users'          => '/web-stories/v1/users/',
+				'currentUser'    => '/web-stories/v1/users/me/',
+				'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
+				'pageTemplates'  => trailingslashit( $this->page_template_post_type->get_rest_url() ),
+				'media'          => '/web-stories/v1/media/',
+				'hotlink'        => '/web-stories/v1/hotlink/validate/',
+				'publisherLogos' => '/web-stories/v1/publisher-logos/',
+				'proxy'          => rest_url( '/web-stories/v1/hotlink/proxy/' ),
+				'link'           => '/web-stories/v1/link/',
+				'statusCheck'    => '/web-stories/v1/status-check/',
+				'taxonomies'     => '/web-stories/v1/taxonomies/',
+				'metaBoxes'      => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+				'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
+			],
+			'metadata'                     => [
+				'publisher' => $story->get_publisher_name(),
+			],
+			'postLock'                     => [
+				'interval'         => $time_window,
+				'showLockedDialog' => $show_locked_dialog,
+			],
+			'version'                      => WEBSTORIES_VERSION,
+			'nonce'                        => $nonce,
+			'showMedia3p'                  => true,
+			'encodeMarkup'                 => $this->decoder->supports_decoding(),
+			'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
+			'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
+			'localeData'                   => $this->assets->get_translations( self::SCRIPT_HANDLE ),
+			'flags'                        => array_merge(
+				$this->experiments->get_experiment_statuses( 'general' ),
+				$this->experiments->get_experiment_statuses( 'editor' )
+			),
 		];
 
 		/**
