@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { canTranscodeResource } from '@web-stories-wp/media';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
@@ -88,11 +87,23 @@ const HelperText = styled(Text).attrs({
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const { isTranscodingEnabled } = useFFmpeg();
-  const { muteExistingVideo } = useLocalMedia((state) => ({
-    muteExistingVideo: state.actions.muteExistingVideo,
-  }));
+  const {
+    muteExistingVideo,
+    isResourceTrimming,
+    isResourceMuting,
+    isResourceProcessing,
+  } = useLocalMedia((state) => {
+    return {
+      isResourceProcessing: state.state.isResourceProcessing,
+      isResourceMuting: state.state.isResourceMuting,
+      isResourceTrimming: state.state.isResourceTrimming,
+      muteExistingVideo: state.actions.muteExistingVideo,
+    };
+  });
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuting, isMuted, isTrimming } = resource;
+  const { isMuted, id: resourceId = 0 } = resource;
+  const isTrimming = isResourceTrimming(resourceId);
+  const isMuting = isResourceMuting(resourceId);
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
@@ -100,12 +111,12 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
-  const shouldDisableVideoActions = !canTranscodeResource(resource);
+  const shouldDisableVideoActions = isResourceProcessing(resourceId);
 
   const shouldDisplayMuteButton =
     isTranscodingEnabled &&
     isSingleElement &&
-    ((!isMuted && canTranscodeResource(resource)) || isMuting);
+    ((!isMuted && !isResourceProcessing(resourceId)) || isMuting);
   const muteButtonText = isMuting
     ? __('Removing audio…', 'web-stories')
     : __('Remove audio', 'web-stories');

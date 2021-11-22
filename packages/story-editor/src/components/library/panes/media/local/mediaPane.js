@@ -27,7 +27,7 @@ import {
   translateToExclusiveList,
 } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList, canTranscodeResource } from '@web-stories-wp/media';
+import { resourceList } from '@web-stories-wp/media';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -116,6 +116,7 @@ function MediaPane(props) {
     totalItems,
     optimizeVideo,
     optimizeGif,
+    isResourceProcessing,
   } = useLocalMedia(
     ({
       state: {
@@ -126,6 +127,7 @@ function MediaPane(props) {
         mediaType,
         searchTerm,
         totalItems,
+        isResourceProcessing,
       },
       actions: {
         setNextPage,
@@ -152,6 +154,7 @@ function MediaPane(props) {
         postProcessingResource,
         optimizeVideo,
         optimizeGif,
+        isResourceProcessing,
       };
     }
   );
@@ -209,7 +212,7 @@ function MediaPane(props) {
    */
   const onSelect = (resource) => {
     try {
-      if (isTranscodingEnabled && canTranscodeResource(resource)) {
+      if (isTranscodingEnabled && !isResourceProcessing(resource.id)) {
         if (transcodableMimeTypes.includes(resource.mimeType)) {
           optimizeVideo({ resource });
         }

@@ -127,9 +127,12 @@ export const BulkVideoOptimization = () => {
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
 
-  const { optimizeVideo } = useLocalMedia(({ actions }) => ({
-    optimizeVideo: actions.optimizeVideo,
-  }));
+  const { optimizeVideo, isResourceTranscoding } = useLocalMedia(
+    ({ actions, state: mediaState }) => ({
+      optimizeVideo: actions.optimizeVideo,
+      isResourceTranscoding: mediaState.isResourceTranscoding,
+    })
+  );
 
   const processVideoElement = useCallback(
     async (element) => {
@@ -153,7 +156,7 @@ export const BulkVideoOptimization = () => {
   const sequencedVideoOptimization = useCallback(() => {
     // only attempt to optimize videos that are not currently being transcoded
     const optimizingResources = unoptimizedVideos.filter(
-      ({ resource }) => !resource?.isTranscoding
+      ({ resource }) => !isResourceTranscoding(resource?.id)
     );
     return new Promise((resolve) => {
       optimizingResources
@@ -163,7 +166,7 @@ export const BulkVideoOptimization = () => {
         .reduce((p, fn) => p.then(fn), Promise.resolve())
         .then(resolve);
     });
-  }, [processVideoElement, unoptimizedVideos]);
+  }, [isResourceTranscoding, processVideoElement, unoptimizedVideos]);
 
   const handleUpdateVideos = useCallback(async () => {
     await sequencedVideoOptimization();

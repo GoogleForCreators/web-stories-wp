@@ -65,6 +65,13 @@ function useUploadMedia({
       progress,
       uploaded,
       failures,
+      isResourceProcessing,
+      isResourceTranscoding,
+      isResourceMuting,
+      isResourceTrimming,
+      isResourceTranscodingById,
+      isResourceMutingById,
+      isResourceTrimmingById,
     },
     actions: { addItem, removeItem },
   } = useMediaUploadQueue();
@@ -280,6 +287,13 @@ function useUploadMedia({
     uploadMedia,
     isUploading,
     isTranscoding,
+    isResourceProcessing,
+    isResourceTranscoding,
+    isResourceMuting,
+    isResourceTrimming,
+    isResourceTranscodingById,
+    isResourceMutingById,
+    isResourceTrimmingById,
   };
 }
 

@@ -386,6 +386,52 @@ function useMediaUploadQueue() {
         isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),
         isMuting: state.queue.some((item) => item.state === 'MUTING'),
         isTrimming: state.queue.some((item) => item.state === 'TRIMMING'),
+        isResourceProcessing: (resourceId) => {
+          return state.queue.some(
+            (item) =>
+              [
+                'UPLOADED',
+                'CANCELLED',
+                'PENDING',
+                'TRANSCODING',
+                'MUTING',
+                'TRIMMING',
+              ].includes(item.state) &&
+              item.resource.originalResourceId === resourceId
+          );
+        },
+        isResourceTranscodingById: (resourceId) =>
+          state.queue.some(
+            (item) =>
+              item.state === 'TRANSCODING' && item.resource.id === resourceId
+          ),
+        isResourceMutingById: (resourceId) =>
+          state.queue.some(
+            (item) => item.state === 'MUTING' && item.resource.id === resourceId
+          ),
+        isResourceTrimmingById: (resourceId) =>
+          state.queue.some(
+            (item) =>
+              item.state === 'TRIMMING' && item.resource.id === resourceId
+          ),
+        isResourceTranscoding: (resourceId) =>
+          state.queue.some(
+            (item) =>
+              item.state === 'TRANSCODING' &&
+              item.resource.originalResourceId === resourceId
+          ),
+        isResourceMuting: (resourceId) =>
+          state.queue.some(
+            (item) =>
+              item.state === 'MUTING' &&
+              item.resource.originalResourceId === resourceId
+          ),
+        isResourceTrimming: (resourceId) =>
+          state.queue.some(
+            (item) =>
+              item.state === 'TRIMMING' &&
+              item.resource.originalResourceId === resourceId
+          ),
       },
       actions: {
         addItem: actions.addItem,

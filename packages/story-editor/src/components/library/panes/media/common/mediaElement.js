@@ -35,7 +35,7 @@ import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-import { ContentType } from '../../../../../app/media';
+import { ContentType, useLocalMedia } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
@@ -83,10 +83,23 @@ function Element({
     local,
     alt,
     isMuted,
-    isTranscoding,
-    isMuting,
-    isTrimming,
   } = resource;
+
+  const {
+    isResourceTrimmingById,
+    isResourceMutingById,
+    isResourceTranscodingById,
+  } = useLocalMedia((state) => {
+    return {
+      isResourceTranscodingById: state.state.isResourceTranscodingById,
+      isResourceMutingById: state.state.isResourceMutingById,
+      isResourceTrimmingById: state.state.isResourceTrimmingById,
+    };
+  });
+
+  const isTranscoding = isResourceTrimmingById(resourceId);
+  const isMuting = isResourceMutingById(resourceId);
+  const isTrimming = isResourceTranscodingById(resourceId);
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -261,11 +274,26 @@ Element.propTypes = {
  * @return {null|*} Element or null if does not map to video/image.
  */
 function MediaElement(props) {
-  const { isTranscoding } = props.resource;
+  const {
+    isResourceTrimmingById,
+    isResourceMutingById,
+    isResourceTranscodingById,
+  } = useLocalMedia((state) => {
+    return {
+      isResourceMutingById: state.state.isResourceMutingById,
+      isResourceTrimmingById: state.state.isResourceTrimmingById,
+      isResourceTranscodingById: state.state.isResourceTranscodingById,
+    };
+  });
+  const { id } = props.resource;
 
-  if (isTranscoding) {
+  if (
+    isResourceTrimmingById(id) ||
+    isResourceMutingById(id) ||
+    isResourceTranscodingById(id)
+  ) {
     return (
-      <Tooltip title={__('Video optimization in progress', 'web-stories')}>
+      <Tooltip title={__('Video is currently progressing', 'web-stories')}>
         <Element {...props} />
       </Tooltip>
     );

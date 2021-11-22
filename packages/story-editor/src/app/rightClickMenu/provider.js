@@ -23,7 +23,6 @@ import {
 } from '@web-stories-wp/design-system';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { canTranscodeResource } from '@web-stories-wp/media';
 import PropTypes from 'prop-types';
 import {
   useCallback,
@@ -38,7 +37,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { useStory } from '..';
+import { useLocalMedia, useStory } from '..';
 import { createPage, duplicatePage, ELEMENT_TYPES } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
 import useAddPreset from '../../utils/useAddPreset';
@@ -148,6 +147,14 @@ function RightClickMenuProvider({ children }) {
       setBackgroundElement,
       updateElementsById,
     })
+  );
+
+  const { isResourceProcessing } = useLocalMedia(
+    ({ state: { isResourceProcessing } }) => {
+      return {
+        isResourceProcessing,
+      };
+    }
   );
 
   const { hasTrimMode, toggleTrimMode } = useVideoTrim(
@@ -837,7 +844,7 @@ function RightClickMenuProvider({ children }) {
             {
               label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
               onClick: toggleTrimMode,
-              disabled: !canTranscodeResource(selectedElement?.resource),
+              disabled: isResourceProcessing(selectedElement?.resource.id),
               ...menuItemProps,
             },
           ]
@@ -856,6 +863,7 @@ function RightClickMenuProvider({ children }) {
     handleOpenScaleAndCrop,
     handleRemoveMediaFromBackground,
     hasTrimMode,
+    isResourceProcessing,
     menuItemProps,
     pageManipulationItems,
     selectedElement,
@@ -935,7 +943,7 @@ function RightClickMenuProvider({ children }) {
             {
               label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
               onClick: toggleTrimMode,
-              disabled: !canTranscodeResource(selectedElement?.resource),
+              disabled: isResourceProcessing(selectedElement?.resource?.id),
               ...menuItemProps,
             },
           ]
@@ -961,13 +969,14 @@ function RightClickMenuProvider({ children }) {
       },
     ];
   }, [
-    copiedElement,
+    copiedElement.type,
     handleClearElementStyles,
     handleCopyStyles,
     handleOpenScaleAndCrop,
     handlePasteStyles,
     handleSetPageBackground,
     hasTrimMode,
+    isResourceProcessing,
     layerItems,
     menuItemProps,
     selectedElement,

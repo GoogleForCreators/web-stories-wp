@@ -113,7 +113,18 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [fetchMediaError, fetchMediaStart, getMedia]
   );
 
-  const { uploadMedia, isUploading, isTranscoding } = useUploadMedia({
+  const {
+    uploadMedia,
+    isUploading,
+    isTranscoding,
+    isResourceProcessing,
+    isResourceTranscoding,
+    isResourceMuting,
+    isResourceTrimming,
+    isResourceTranscodingById,
+    isResourceMutingById,
+    isResourceTrimmingById,
+  } = useUploadMedia({
     media,
     prependMedia,
     updateMediaElement,
@@ -272,6 +283,13 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       ...reducerState,
       isUploading: isUploading || isGeneratingPosterImages,
       isTranscoding,
+      isResourceProcessing,
+      isResourceTranscoding,
+      isResourceMuting,
+      isResourceTrimming,
+      isResourceTranscodingById,
+      isResourceMutingById,
+      isResourceTrimmingById,
     },
     actions: {
       setNextPage,
