@@ -92,7 +92,7 @@ function loadStory(storyId, post, restore, clearHistory) {
 
   // Set story-global variables.
   const story = {
-    storyId,
+    storyId: storyId,
     title,
     status: statusFormat,
     author,
