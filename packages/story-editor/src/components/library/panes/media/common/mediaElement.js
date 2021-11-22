@@ -261,11 +261,11 @@ Element.propTypes = {
  * @return {null|*} Element or null if does not map to video/image.
  */
 function MediaElement(props) {
-  const { isTranscoding } = props.resource;
+  const { isTranscoding, isMuting, isTrimming } = props.resource;
 
-  if (isTranscoding) {
+  if (isTranscoding || isMuting || isTrimming) {
     return (
-      <Tooltip title={__('Video optimization in progress', 'web-stories')}>
+      <Tooltip title={__('Video is being processed', 'web-stories')}>
         <Element {...props} />
       </Tooltip>
     );
