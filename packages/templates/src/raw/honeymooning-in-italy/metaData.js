@@ -31,12 +31,21 @@ export default {
     _x('Brown', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Night Green', 'color', 'web-stories'), color: '#232c27' },
+    {
+      label: _x('Night Green', 'color', 'web-stories'),
+      color: '#232c27',
+      family: _x('Green', 'color', 'web-stories'),
+    },
     {
       label: _x('Light Brownish Pink', 'color', 'web-stories'),
       color: '#f2e5d6',
+      family: _x('Pink', 'color', 'web-stories'),
     },
-    { label: _x('Parchment White', 'color', 'web-stories'), color: '#fef6df' },
+    {
+      label: _x('Parchment White', 'color', 'web-stories'),
+      color: '#fef6df',
+      family: _x('White', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'With its elegant typography, charming colors and exquisite floral design pattern, this template will let you create lush travel guides, itineraries, bucket lists, travelogues and more.',

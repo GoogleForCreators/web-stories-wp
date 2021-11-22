@@ -31,8 +31,16 @@ export default {
     _x('Black', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000',
+      family: _x('Black', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'This template’s large black and white banners and full-screen visuals will let you create simple yet attractive stories in the entertainment niche. Create buzzy listicles, announce events and show times, give out info about music festivals and more. Use the social share buttons to reach a wider audience.',
