@@ -27,12 +27,12 @@ import * as hues from '@ap.cx/hues';
  * @return {number} Luminance
  */
 export function calculateLuminanceFromRGB(rgb) {
-  const { r, g, b, a } = rgb;
+  const { r, g, b, a = 1.0 } = rgb;
   const luminance = hues.relativeLuminance({
     r: r / 255.0,
     g: g / 255.0,
     b: b / 255.0,
-    a: a === undefined ? 1.0 : a,
+    a,
   });
   return luminance;
 }

@@ -44,6 +44,7 @@ import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { OUTLINK_THEME } from '../../../../constants';
 import useCORSProxy from '../../../../utils/useCORSProxy';
+import { LinkRelations } from '../../shared';
 
 const Label = styled.label`
   margin-left: 12px;
@@ -79,7 +80,7 @@ function PageAttachmentPanel() {
 
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
-  const { url, ctaText = defaultCTA, icon, theme } = pageAttachment;
+  const { url, ctaText = defaultCTA, icon, theme, rel = [] } = pageAttachment;
   const [_ctaText, _setCtaText] = useState(ctaText);
   const [_url, _setUrl] = useState(url);
   const [displayWarning, setDisplayWarning] = useState(false);
@@ -190,6 +191,11 @@ function PageAttachmentPanel() {
     [updatePageAttachment]
   );
 
+  const onChangeRel = useCallback(
+    (newRel) => updatePageAttachment({ rel: newRel }, true),
+    [updatePageAttachment]
+  );
+
   const handleBlur = useCallback(
     ({ target }) => {
       if (!target.value) {
@@ -291,6 +297,7 @@ function PageAttachmentPanel() {
               {__('Link icon', 'web-stories')}
             </Text>
           </StyledRow>
+          <LinkRelations onChangeRel={onChangeRel} rel={rel} />
         </>
       )}
     </SimplePanel>

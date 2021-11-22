@@ -43,6 +43,7 @@ import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
 import {
   inputContainerStyleOverride,
+  LinkRelations,
   useCommonObjectValue,
 } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
@@ -91,7 +92,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const defaultLink = useMemo(() => createLink({ icon: null, desc: null }), []);
 
-  const link = useCommonObjectValue(selectedElements, 'link', defaultLink);
+  const linkRaw = useCommonObjectValue(selectedElements, 'link', defaultLink);
+  const link = createLink(linkRaw);
+  const { url = '', desc = '', icon, rel = [] } = link;
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
   const [isLinkFocused, setIsLinkFocused] = useState(false);
@@ -103,16 +106,16 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
-    ({ url, title, icon, needsProxy }) =>
+    ({ newUrl, newTitle, newIcon, needsProxy }) =>
       pushUpdateForObject(
         'link',
         () =>
-          url
+          newUrl
             ? createLink({
-                url,
+                url: newUrl,
                 needsProxy,
-                desc: title ? title : '',
-                icon: icon ? toAbsoluteUrl(url, icon) : '',
+                desc: newTitle ? newTitle : '',
+                icon: newIcon ? toAbsoluteUrl(newUrl, newIcon) : '',
               })
             : null,
         defaultLink,
@@ -122,19 +125,19 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   );
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
-    !isValidUrl(withProtocol(link.url || ''))
+    !isValidUrl(withProtocol(url))
   );
 
   const populateMetadata = useDebouncedCallback(async (url) => {
     setFetchingMetadata(true);
     try {
-      const { title, image } = await getLinkMetadata(url);
+      const { title: newTitle, image: newIcon } = await getLinkMetadata(url);
       const needsProxy = await checkResourceAccess(image);
 
       updateLinkFromMetadataApi({
-        url,
-        title,
-        icon: image,
+        newUrl, 
+        newTitle, 
+        newIcon,
         needsProxy,
       });
     } catch (e) {
@@ -187,7 +190,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [handleChange]
   );
 
-  const hasLinkSet = Boolean(link.url?.length);
+  const hasLinkSet = Boolean(url?.length);
   const displayMetaFields = hasLinkSet && !isInvalidUrl;
 
   // If we're focusing on the link input and any of the relevant values changes,
@@ -195,7 +198,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   useEffect(() => {
     if (isLinkFocused) {
       // Display the guidelines if there's no link / if it's multiple value.
-      const hasLink = hasLinkSet && link.url !== MULTIPLE_VALUE;
+      const hasLink = hasLinkSet && url !== MULTIPLE_VALUE;
       setDisplayLinkGuidelines(hasElementsInAttachmentArea && !hasLink);
     }
   }, [
@@ -204,13 +207,20 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     hasElementsInAttachmentArea,
     hasLinkSet,
     setDisplayLinkGuidelines,
-    link.url,
+    url,
   ]);
 
   const linkIcon = getProxiedUrl(link, encodeURI(link.icon));
 
-  const isMultipleUrl = MULTIPLE_VALUE === link.url;
-  const isMultipleDesc = MULTIPLE_VALUE === link.desc;
+  const isMultipleUrl = MULTIPLE_VALUE === url;
+  const isMultipleDesc = MULTIPLE_VALUE === desc;
+  const isMultipleRel = MULTIPLE_VALUE === rel;
+
+  const onChangeRel = useCallback(
+    (newRel) => handleChange({ rel: newRel }, true),
+    [handleChange]
+  );
+
   return (
     <SimplePanel
       name="link"
@@ -237,7 +247,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         onFocus={() => {
           setIsLinkFocused(true);
         }}
-        value={link.url || ''}
+        value={url}
         placeholder={
           isMultipleUrl
             ? MULTIPLE_DISPLAY_VALUE
@@ -270,7 +280,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               onChange={({ target }) =>
                 handleChange({ desc: target.value }, !target.value /* submit */)
               }
-              value={link.desc || ''}
+              value={desc}
               aria-label={__('Link description', 'web-stories')}
               isIndeterminate={isMultipleDesc}
               disabled={fetchingMetadata}
@@ -290,6 +300,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               </IconText>
             </IconInfo>
           </Row>
+          {!isMultipleRel && (
+            <LinkRelations onChangeRel={onChangeRel} rel={rel} />
+          )}
         </>
       )}
     </SimplePanel>

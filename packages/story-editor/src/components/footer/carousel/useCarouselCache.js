@@ -14,15 +14,27 @@
  * limitations under the License.
  */
 
-export function getLinkFromElement(element) {
-  return element.link || null;
-}
+/**
+ * External dependencies
+ */
+import { useReduction } from '@web-stories-wp/react';
 
-export function createLink({ url = '', needsProxy = false, rel = [], ...rest } = {}) {
+const imageCacheReducer = {
+  setCachedImage: (cachedImages, { payload: { pageId, cachedImage } }) => ({
+    ...cachedImages,
+    [pageId]: cachedImage,
+  }),
+};
+
+function useCarouselCache() {
+  const [cachedImages, { setCachedImage }] = useReduction(
+    {},
+    imageCacheReducer
+  );
   return {
-    needsProxy,
-    url,
-    rel,
-    ...rest,
+    cachedImages,
+    setCachedImage,
   };
 }
+
+export default useCarouselCache;
