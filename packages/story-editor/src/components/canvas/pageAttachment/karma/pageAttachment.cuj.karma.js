@@ -38,6 +38,8 @@ describe('Page Attachment', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
+
     // Select Page by default.
     safezone = fixture.querySelector('[data-testid="safezone"]');
     await clickOnTarget(safezone);

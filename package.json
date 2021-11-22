@@ -52,6 +52,7 @@
     "@storybook/client-api": "^6.3.6",
     "@storybook/client-logger": "^6.3.6",
     "@storybook/react": "^6.3.6",
+    "@stylelint/postcss-css-in-js": "^0.37.2",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/dom": "^8.10.1",
     "@testing-library/jest-dom": "^5.14.1",
@@ -69,7 +70,7 @@
     "@web-stories-wp/story-editor": "*",
     "@wordpress/babel-plugin-import-jsx-pragma": "^3.1.0",
     "@wordpress/dependency-extraction-webpack-plugin": "^3.2.1",
-    "@wordpress/eslint-plugin": "^9.2.0",
+    "@wordpress/eslint-plugin": "^9.3.0",
     "babel-jest": "^27.3.1",
     "babel-loader": "^8.2.3",
     "babel-plugin-inline-json-import": "^0.3.2",
@@ -126,6 +127,8 @@
     "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
     "patch-package": "^6.4.7",
+    "postcss-jsx": "^0.36.4",
+    "postcss-syntax": "^0.36.2",
     "prettier": "^2.4.1",
     "puppeteer": "^10.4.0",
     "react": "^17.0.2",
@@ -135,9 +138,9 @@
     "source-map-loader": "^1.1.3",
     "storybook-rtl-addon": "^0.3.3",
     "styled-components": "^5.3.3",
-    "stylelint": "^13.12.0",
+    "stylelint": "^14.0.1",
     "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-recommended": "^5.0.0",
+    "stylelint-config-recommended": "^6.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-prettier": "^1.2.0",
     "stylelint-processor-styled-components": "^1.10.0",
@@ -169,10 +172,10 @@
     "format:yml": "prettier --write '**/*.yml'",
     "lint": "npm-run-all --parallel lint:*",
     "lint:css": "npm-run-all --parallel --continue-on-error lint:css:*",
-    "lint:css:js": "stylelint \"**/*.js\" --syntax \"css-in-js\"",
-    "lint:css:js:fix": "stylelint \"**/*.js\" --syntax \"css-in-js\" --fix",
-    "lint:css:css": "stylelint \"**/*.css\" --syntax \"css\"",
-    "lint:css:css:fix": "stylelint \"**/*.css\" --syntax \"css\" --fix",
+    "lint:css:js": "stylelint \"**/*.js\"",
+    "lint:css:js:fix": "stylelint \"**/*.js\" --fix",
+    "lint:css:css": "stylelint \"**/*.css\"",
+    "lint:css:css:fix": "stylelint \"**/*.css\" --fix",
     "lint:js": "eslint .",
     "lint:js:fix": "eslint --fix .",
     "lint:js:report": "eslint --output-file build/lint-js-report.json --format json .",
@@ -240,12 +243,12 @@
   "lint-staged": {
     "*.js": [
       "eslint --fix",
-      "stylelint --fix --allow-empty-input --syntax \"css-in-js\""
+      "stylelint --fix --allow-empty-input"
     ],
     "*.json": [
       "prettier --write"
     ],
-    "*.css": "stylelint --fix --allow-empty-input --syntax \"css\"",
+    "*.css": "stylelint --fix --allow-empty-input",
     "*.md": [
       "eslint --fix",
       "markdownlint -f"

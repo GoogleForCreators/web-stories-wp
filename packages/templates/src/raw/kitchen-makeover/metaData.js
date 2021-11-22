@@ -31,11 +31,31 @@ export default {
     _x('Brown', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Crater Brown', 'color', 'web-stories'), color: '#44272b' },
-    { label: _x('Flour White', 'color', 'web-stories'), color: '#f3f3f1' },
-    { label: _x('Frost Gray', 'color', 'web-stories'), color: '#eeece5' },
-    { label: _x('Quill Gray', 'color', 'web-stories'), color: '#d7d6d2' },
-    { label: _x('White', 'color', 'web-stories'), color: '#ffffff' },
+    {
+      label: _x('Crater Brown', 'color', 'web-stories'),
+      color: '#44272b',
+      family: _x('Brown', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Flour White', 'color', 'web-stories'),
+      color: '#f3f3f1',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Frost Gray', 'color', 'web-stories'),
+      color: '#eeece5',
+      family: _x('Gray', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Quill Gray', 'color', 'web-stories'),
+      color: '#d7d6d2',
+      family: _x('Gray', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#ffffff',
+      family: _x('White', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'This template’s gray color palette is the perfect neutral that goes well with everything. Use photos and videos to create contemporary as well as old-school interior design and home inspiration stories.',

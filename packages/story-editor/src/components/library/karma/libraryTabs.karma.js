@@ -35,6 +35,7 @@ describe('LibraryTabs integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
     libraryLayout = fixture.container.querySelector(
       '[data-testid="libraryLayout"]'
     );

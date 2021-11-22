@@ -28,6 +28,7 @@ describe('Image Editor', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     // Add first image to canvas
     await fixture.events.click(fixture.editor.library.media.item(0));

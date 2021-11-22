@@ -26,6 +26,7 @@ describe('Background Copy Paste integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     await addNewPage();
   });
