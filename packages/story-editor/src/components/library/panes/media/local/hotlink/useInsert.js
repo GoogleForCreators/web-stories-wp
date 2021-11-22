@@ -76,7 +76,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const [isInserting, setIsInserting] = useState(false);
 
   const { uploadVideoPoster } = useUploadVideoFrame({});
-  const { getProxiedUrl } = useCORSProxy();
+  const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
   const insertMedia = useCallback(
     async (hotlinkData, needsProxy) => {
@@ -178,30 +178,6 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     ]
   );
 
-  /**
-   * Check if the resource can be accessed directly.
-   *
-   * Makes a HEAD request, which in turn triggers a CORS preflight request
-   * in the browser.
-   *
-   * If the request passes, we don't need to do anything.
-   * If it doesn't, it means we need to run the resource through our CORS proxy at all times.
-   *
-   * @type {function(): boolean}
-   */
-  const checkResourceAccess = useCallback(async () => {
-    let shouldProxy = false;
-    try {
-      await fetch(link, {
-        method: 'HEAD',
-      });
-    } catch (err) {
-      shouldProxy = true;
-    }
-
-    return shouldProxy;
-  }, [link]);
-
   const onInsert = useCallback(async () => {
     if (!link) {
       return;
@@ -216,7 +192,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
 
     try {
       const hotlinkInfo = await getHotlinkInfo(link);
-      const shouldProxy = await checkResourceAccess();
+      const shouldProxy = await checkResourceAccess(link);
 
       await insertMedia(hotlinkInfo, shouldProxy);
     } catch (err) {
