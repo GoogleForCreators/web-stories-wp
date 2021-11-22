@@ -24,7 +24,12 @@ import {
   resourceList,
   ResourcePropTypes,
 } from '@web-stories-wp/media';
-import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import {
+  Icons,
+  Text,
+  THEME_CONSTANTS,
+  noop,
+} from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -97,6 +102,7 @@ function InnerElement({
   width,
   height,
   onClick,
+  onLoad = noop,
   showVideoDetail,
   mediaElement,
   active,
@@ -120,6 +126,7 @@ function InnerElement({
     if (mediaElement.current) {
       mediaElement.current.style.opacity = 1;
     }
+    onLoad();
   };
 
   let media;
@@ -252,6 +259,7 @@ InnerElement.propTypes = {
   height: PropTypes.number,
   isMuted: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+  onLoad: PropTypes.func,
   showVideoDetail: PropTypes.bool,
   mediaElement: PropTypes.object,
   active: PropTypes.bool.isRequired,
