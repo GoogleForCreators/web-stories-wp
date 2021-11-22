@@ -89,14 +89,15 @@ function TrackRenderer({ videoId, track }) {
       setVideoTime(videoRef.current.currentTime);
     });
 
-    track.addEventListener('cuechange', () => {
-      updateCues();
-    });
+    track.addEventListener('cuechange', updateCues);
+    track.addEventListener('play', updateCues);
 
-    track.addEventListener('play', () => {
-      updateCues();
-    });
-    //eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to add the event listeners once.
+    // eslint-disable-next-line consistent-return
+    return () => {
+      track.removeEventListener('cuechange', updateCues);
+      track.removeEventListener('play', updateCues);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to add the event listeners once.
   }, []);
 
   if (!cues || !track) {
@@ -125,6 +126,7 @@ TrackRenderer.propTypes = {
   track: PropTypes.shape({
     activeCues: PropTypes.array,
     addEventListener: PropTypes.func,
+    removeEventListener: PropTypes.func,
   }).isRequired,
 };
 
