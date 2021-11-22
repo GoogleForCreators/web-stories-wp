@@ -142,6 +142,8 @@ $preload_data = array_reduce(
 // Restore the global $post as it was before API preloading.
 $post = $backup_global_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
+$edit_story = \Google\Web_Stories\get_editor_settings();
+
 wp_add_inline_script(
 	'wp-api-fetch',
 	sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),

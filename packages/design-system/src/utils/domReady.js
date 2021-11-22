@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-export { default as isNullOrUndefinedOrEmptyString } from './isNullOrUndefinedOrEmptyString';
-export { noop } from './noop';
-export { default as addQueryArgs } from './addQueryArgs';
-export { default as labelAccessibilityValidator } from './labelAccessibilityValidator';
-export { default as useLiveRegion } from './useLiveRegion';
-export { default as domReady } from './domReady';
-export * from './constants';
-export * from './directions';
+/**
+ * Fires when dom is ready.
+ *
+ * @param {Function} callback Callback function.
+ */
+function domReady(callback) {
+  if ('loading' === document.readyState) {
+    document.addEventListener('DOMContentLoaded', callback);
+  } else {
+    callback();
+  }
+}
+
+export default domReady;

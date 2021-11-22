@@ -31,7 +31,7 @@ import './setLocaleData';
  * External dependencies
  */
 import StoryEditor from '@web-stories-wp/story-editor';
-import { setAppElement } from '@web-stories-wp/design-system';
+import { setAppElement, domReady } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
 import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
@@ -48,13 +48,15 @@ import {
 } from './components';
 import getApiCallbacks from './api/utils/getApiCallbacks';
 
+window.webStories = window.webStories || { domReady };
+
 /**
  * Initializes the web stories editor.
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
  */
-const initialize = (id, config) => {
+window.webStories.initializeStoryEditor = (id, config) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
@@ -82,14 +84,3 @@ const initialize = (id, config) => {
     appElement
   );
 };
-
-const initializeWithConfig = () => {
-  const { id, config } = window.webStoriesEditorSettings;
-  initialize(id, config);
-};
-
-if ('loading' === document.readyState) {
-  document.addEventListener('DOMContentLoaded', initializeWithConfig);
-} else {
-  initializeWithConfig();
-}
