@@ -174,7 +174,6 @@ export const MediaPicker = ({ render, ...props }) => {
       }
     },
     [
-      allowedVideoMimeTypes,
       insertMediaElement,
       isTranscodingEnabled,
       optimizeGif,
