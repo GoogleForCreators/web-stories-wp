@@ -115,7 +115,9 @@ function Cue({ cue, videoTime, height }) {
 }
 
 Cue.propTypes = {
-  cue: PropTypes.instanceOf(VTTCue),
+  cue: PropTypes.shape({
+    getCueAsHTML: PropTypes.func,
+  }).isRequired,
   videoTime: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 };
@@ -200,7 +202,10 @@ function TrackRenderer({ videoId, track }) {
 
 TrackRenderer.propTypes = {
   videoId: PropTypes.string.isRequired,
-  track: PropTypes.instanceOf(TextTrack).isRequired,
+  track: PropTypes.shape({
+    activeCues: PropTypes.array,
+    addEventListener: PropTypes.func,
+  }).isRequired,
 };
 
 export default TrackRenderer;
