@@ -71,7 +71,10 @@ function useInsertElement() {
       }
 
       try {
-        const needsProxy = await checkResourceAccess(imageSrc);
+        const needsProxy =
+          type === 'image'
+            ? resource?.needsProxy
+            : await checkResourceAccess(imageSrc);
         const imageSrcProxied = getProxiedUrl({ needsProxy }, imageSrc);
         const baseColor = await getMediaBaseColor(imageSrcProxied);
         updateElementById({
@@ -87,7 +90,7 @@ function useInsertElement() {
         // Do nothing for now.
       }
     },
-    [getProxiedUrl, updateElementById]
+    [getProxiedUrl, checkResourceAccess, updateElementById]
   );
 
   /**
