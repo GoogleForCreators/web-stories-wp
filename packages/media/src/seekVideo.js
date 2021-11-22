@@ -15,24 +15,24 @@
  */
 
 /**
- * Internal dependencies
- */
-import getVideoLengthDisplay from './getVideoLengthDisplay';
-
-/**
- * Get video length from a video.
+ * Seek video element to a given offset.
  *
  * @param {HTMLVideoElement} video Video element.
- * @return {Object<{length: number, lengthFormatted: string}>} Video length information.
+ * @param {number} [offset=0.99] Optional. Desired offset. Defaults to roughly the first frame.
+ * @return {Promise<void>}
  */
-function getVideoLength(video) {
-  const duration = !isNaN(video.duration) ? video.duration : 0;
-  const length = Math.round(duration);
-  const lengthFormatted = getVideoLengthDisplay(length);
-  return {
-    length,
-    lengthFormatted,
-  };
+function seekVideo(video, offset = 0.99) {
+  if (video.currentTime === offset) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve, reject) => {
+    video.addEventListener('suspend', reject);
+    video.addEventListener('error', reject);
+    video.addEventListener('canplay', () => resolve(video), { once: true });
+
+    video.currentTime = offset;
+  });
 }
 
-export default getVideoLength;
+export default seekVideo;

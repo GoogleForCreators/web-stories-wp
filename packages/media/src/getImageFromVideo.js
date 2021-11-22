@@ -15,24 +15,27 @@
  */
 
 /**
- * Internal dependencies
- */
-import getVideoLengthDisplay from './getVideoLengthDisplay';
-
-/**
- * Get video length from a video.
+ * Returns a still image from a given video element.
  *
  * @param {HTMLVideoElement} video Video element.
- * @return {Object<{length: number, lengthFormatted: string}>} Video length information.
+ * @return {Promise<Blob>} JPEG image blob.
  */
-function getVideoLength(video) {
-  const duration = !isNaN(video.duration) ? video.duration : 0;
-  const length = Math.round(duration);
-  const lengthFormatted = getVideoLengthDisplay(length);
-  return {
-    length,
-    lengthFormatted,
-  };
+function getImageFromVideo(video) {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext('2d');
+    try {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    } catch (err) {
+      // Browser probably doesn't support the video codec.
+      reject(err);
+    }
+
+    canvas.toBlob(resolve, 'image/jpeg');
+  });
 }
 
-export default getVideoLength;
+export default getImageFromVideo;
