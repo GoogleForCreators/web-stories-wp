@@ -132,6 +132,9 @@ const ALLOWED_ERROR_MESSAGES_FIREFOX = [
 
   // Firefox warning about scroll-linked effects, see https://firefox-source-docs.mozilla.org/performance/scroll-linked_effects.html.
   'This site appears to use a scroll-linked positioning effect. This may not work well with asynchronous panning',
+
+  // Some bug in Firefox?
+  'Sending message that cannot be cloned. Are you trying to send an XPCOM object?',
 ];
 
 /**
