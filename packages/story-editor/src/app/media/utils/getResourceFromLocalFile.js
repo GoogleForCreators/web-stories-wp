@@ -21,13 +21,15 @@ import {
   createBlob,
   getTypeFromMime,
   getResourceSize,
-  getFirstFrameOfVideo,
   createResource,
   getFileName,
   getImageDimensions,
   createFileReader,
   getVideoLength,
   hasVideoGotAudio,
+  getImageFromVideo,
+  seekVideo,
+  preloadVideo,
 } from '@web-stories-wp/media';
 
 /**
@@ -74,23 +76,21 @@ const getVideoResource = async (file) => {
   const alt = getFileName(file);
   const mimeType = file.type;
 
-  let length = 0;
-  let lengthFormatted = '';
-
   const reader = await createFileReader(file);
 
   const src = createBlob(new Blob([reader.result], { type: mimeType }));
 
-  const videoEl = document.createElement('video');
+  // Here we are potentially dealing with an unsupported file type (e.g. MOV)
+  // that cannot be *played* by the browser, but could still be used for generating a poster.
+
+  const videoEl = await preloadVideo(src);
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
-  if (canPlayVideo) {
-    videoEl.src = src;
-    const videoLength = await getVideoLength(src);
-    length = videoLength.length;
-    lengthFormatted = videoLength.lengthFormatted;
-  }
-  const posterFile = await getFirstFrameOfVideo(src);
-  const hasAudio = await hasVideoGotAudio(src);
+
+  const { length, lengthFormatted } = getVideoLength(videoEl);
+
+  await seekVideo(videoEl);
+  const hasAudio = hasVideoGotAudio(videoEl);
+  const posterFile = await getImageFromVideo(videoEl);
   const poster = createBlob(posterFile);
   const { width, height } = await getImageDimensions(poster);
 
@@ -152,6 +152,7 @@ const getResourceFromLocalFile = async (file) => {
     }
   } catch {
     // Not interested in the error here.
+    // We simply fall back to the placeholder resource.
   }
 
   return { resource, posterFile };

@@ -17,22 +17,18 @@
 /**
  * Internal dependencies
  */
-import getVideoLengthDisplay from './getVideoLengthDisplay';
+import { isValidUrlForHotlinking } from '../utils';
 
-/**
- * Get video length from a video.
- *
- * @param {HTMLVideoElement} video Video element.
- * @return {Object<{length: number, lengthFormatted: string}>} Video length information.
- */
-function getVideoLength(video) {
-  const duration = !isNaN(video.duration) ? video.duration : 0;
-  const length = Math.round(duration);
-  const lengthFormatted = getVideoLengthDisplay(length);
-  return {
-    length,
-    lengthFormatted,
-  };
-}
+describe('isValidUrlForHotlinking', () => {
+  it('should accept proper-looking media URL', () => {
+    expect(isValidUrlForHotlinking('https://foo/image.jpeg')).toBeTrue();
+  });
 
-export default getVideoLength;
+  it('should reject URL without protocol', () => {
+    expect(isValidUrlForHotlinking('foo/image.jpeg')).toBeFalse();
+  });
+
+  it('should reject URL without pathname', () => {
+    expect(isValidUrlForHotlinking('https://foo/')).toBeFalse();
+  });
+});
