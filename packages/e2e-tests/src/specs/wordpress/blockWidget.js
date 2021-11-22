@@ -38,6 +38,7 @@ describe('Web Stories Widget Block', () => {
   });
 
   describe('Regular Block', () => {
+    // eslint-disable-next-line jest/require-hook
     minWPVersionRequired('5.8');
 
     it('should insert a new Web Stories block', async () => {
@@ -88,6 +89,7 @@ describe('Web Stories Widget Block', () => {
     // eslint-disable-next-line jest/require-hook
     skipSuiteOnFirefox();
 
+    // eslint-disable-next-line jest/require-hook
     minWPVersionRequired('5.8');
 
     // TODO(#7748): Investigate flakey test.

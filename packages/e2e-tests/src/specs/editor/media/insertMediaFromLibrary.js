@@ -29,7 +29,7 @@ describe('Inserting Media from Media Library', () => {
   // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
 
-  let uploadedFiles = [];
+  let uploadedFiles;
 
   beforeEach(() => (uploadedFiles = []));
 

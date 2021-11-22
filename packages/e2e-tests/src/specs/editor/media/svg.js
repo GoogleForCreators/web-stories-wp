@@ -55,7 +55,7 @@ describe('SVG', () => {
     // eslint-disable-next-line jest/require-hook
     skipSuiteOnFirefox();
 
-    let uploadedFiles = [];
+    let uploadedFiles;
 
     beforeEach(() => (uploadedFiles = []));
 
