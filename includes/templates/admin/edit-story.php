@@ -142,13 +142,23 @@ $preload_data = array_reduce(
 // Restore the global $post as it was before API preloading.
 $post = $backup_global_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
-$edit_story = \Google\Web_Stories\get_editor_settings();
+$editor_settings = \Google\Web_Stories\Services::get( 'editor' )->get_editor_settings();
 
 wp_add_inline_script(
 	'wp-api-fetch',
 	sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
 	'after'
 );
+
+$init_script = <<<JS
+	webStories.domReady( function() {
+	  webStories.initializeStoryEditor( 'web-stories-editor', %s );
+	} );
+JS;
+
+$script = sprintf( $init_script, wp_json_encode( $editor_settings ) );
+
+wp_add_inline_script( \Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE, $script );
 
 // In order to duplicate classic meta box behaviour, we need to run the classic meta box actions.
 require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';

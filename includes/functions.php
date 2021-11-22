@@ -72,21 +72,3 @@ function render_theme_stories() {
 	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $customizer->render_stories();
 }
-
-/**
- * Get editor settings
- *
- * @since 1.15.0
- *
- * @return array Editor settings
- */
-function get_editor_settings(): array {
-	$injector = Services::get_injector();
-	if ( ! method_exists( $injector, 'get' ) ) {
-		return [];
-	}
-
-	$editor = $injector->get( Admin\Editor::class );
-
-	return $editor->get_editor_settings();
-}

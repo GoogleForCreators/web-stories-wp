@@ -214,6 +214,10 @@ class Editor extends Service_Base implements HasRequirements {
 	public function replace_editor( $replace, $post ) {
 		if ( $this->story_post_type->get_slug() === get_post_type( $post ) ) {
 
+			$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
+
+			$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies, false );
+
 			// Since the 'replace_editor' filter can be run multiple times, only load the
 			// custom editor after the 'current_screen' action and when we can be certain the
 			// $post_type, $post_type_object, $post globals are all set by WordPress.
@@ -279,9 +283,6 @@ class Editor extends Service_Base implements HasRequirements {
 			true
 		);
 
-		$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
-
-		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies, false );
 		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $this->google_fonts::SCRIPT_HANDLE ] );
 
 		wp_localize_script(

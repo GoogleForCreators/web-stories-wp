@@ -48,15 +48,17 @@ import {
 } from './components';
 import getApiCallbacks from './api/utils/getApiCallbacks';
 
-window.webStories = window.webStories || { domReady };
+window.webStories = window.webStories || {};
+window.webStories.domReady = domReady;
 
 /**
  * Initializes the web stories editor.
  *
  * @param {string} id       ID of the root element to render the screen in.
- * @param {Object} config   Story editor settings.
+ * @param {Object} settings Story editor settings.
  */
-window.webStories.initializeStoryEditor = (id, config) => {
+window.webStories.initializeStoryEditor = (id, settings) => {
+  const { config } = settings;
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
