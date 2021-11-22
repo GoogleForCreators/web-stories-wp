@@ -33,44 +33,11 @@ global $post_type, $post_type_object, $post;
 
 $stories_rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 $demo              = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ) ? 'true' : 'false'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$initial_edits     = [ 'story' => null ];
 
 // Preload common data.
 // Important: keep in sync with usage & definition in React app.
 $preload_paths = [
-	"/web-stories/v1/$stories_rest_base/{$post->ID}/?" . build_query(
-		[
-			'_embed'           => rawurlencode(
-				implode(
-					',',
-					[ 'wp:featuredmedia', 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
-				)
-			),
-			'context'          => 'edit',
-			'web_stories_demo' => $demo,
-			'_fields'          => rawurlencode(
-				implode(
-					',',
-					[
-						'id',
-						'title',
-						'status',
-						'slug',
-						'date',
-						'modified',
-						'excerpt',
-						'link',
-						'story_data',
-						'preview_link',
-						'edit_link',
-						'embed_post_link',
-						'permalink_template',
-						'style_presets',
-						'password',
-					]
-				)
-			),
-		]
-	),
 	'/web-stories/v1/media/?' . build_query(
 		[
 			'context'               => 'edit',
@@ -116,6 +83,47 @@ $preload_paths = [
 	),
 ];
 
+$story_path = "/web-stories/v1/$stories_rest_base/{$post->ID}/?" . build_query(
+	[
+		'_embed'           => rawurlencode(
+			implode(
+				',',
+				[ 'wp:featuredmedia', 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
+			)
+		),
+		'context'          => 'edit',
+		'web_stories_demo' => $demo,
+		'_fields'          => rawurlencode(
+			implode(
+				',',
+				[
+					'id',
+					'title',
+					'status',
+					'slug',
+					'date',
+					'modified',
+					'excerpt',
+					'link',
+					'story_data',
+					'preview_link',
+					'edit_link',
+					'embed_post_link',
+					'permalink_template',
+					'style_presets',
+					'password',
+				]
+			)
+		),
+	]
+);
+
+if ( 'false' === $demo ) {
+	$preload_paths[] = $story_path;
+} else {
+	$initial_edits['story'] = \Google\Web_Stories\get_api_preload_response_body( $story_path );
+}
+
 /**
  * Preload common data by specifying an array of REST API paths that will be preloaded.
  *
@@ -152,11 +160,11 @@ wp_add_inline_script(
 
 $init_script = <<<JS
 	webStories.domReady( function() {
-	  webStories.initializeStoryEditor( 'web-stories-editor', %s );
+	  webStories.initializeStoryEditor( 'web-stories-editor', %s, %s );
 	} );
 JS;
 
-$script = sprintf( $init_script, wp_json_encode( $editor_settings ) );
+$script = sprintf( $init_script, wp_json_encode( $editor_settings ), wp_json_encode( $initial_edits ) );
 
 wp_add_inline_script( \Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE, $script );
 

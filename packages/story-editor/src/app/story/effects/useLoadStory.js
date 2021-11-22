@@ -28,10 +28,114 @@ import { useHistory } from '../../history';
 import { createPage } from '../../../elements';
 import getUniquePresets from '../../../utils/getUniquePresets';
 
-// When ID is set, load story from API.
-function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
+function loadStory(storyId, post, restore, clearHistory) {
   const {
-    actions: { getStoryById, getDemoStoryById },
+    title: { raw: title },
+    status,
+    slug,
+    date,
+    modified,
+    excerpt: { raw: excerpt },
+    link,
+    story_data: storyDataRaw,
+    permalink_template: permalinkTemplate,
+    style_presets: globalStoryStyles,
+    password,
+    preview_link: previewLink,
+    edit_link: editLink,
+    embed_post_link: embedPostLink,
+    author,
+    capabilities = {
+      publish: false,
+      'assign-author': false,
+    },
+    lock_user: lockUser,
+    featured_media: featuredMedia,
+    publisher_logo: publisherLogo,
+    taxonomies,
+    terms,
+  } = post;
+
+  const [prefix, suffix] = permalinkTemplate.split(/%(?:postname|pagename)%/);
+  // If either of these is undefined, the placeholder was not found in settings.
+  const foundSettings = prefix !== undefined && suffix !== undefined;
+  const permalinkConfig = foundSettings
+    ? {
+        prefix,
+        suffix,
+      }
+    : null;
+  const statusFormat = status === 'auto-draft' ? 'draft' : status;
+
+  // First clear history completely.
+  clearHistory();
+
+  // If there are no pages, create empty page.
+  const storyData =
+    storyDataRaw && migrate(storyDataRaw, storyDataRaw.version || 0);
+  const pages = storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
+
+  // Initialize color/style presets, if missing.
+  // Otherwise ensure the saved presets are unique.
+  if (!globalStoryStyles.colors) {
+    globalStoryStyles.colors = [];
+  } else {
+    globalStoryStyles.colors = getUniquePresets(globalStoryStyles.colors);
+  }
+  if (!globalStoryStyles.textStyles) {
+    globalStoryStyles.textStyles = [];
+  } else {
+    globalStoryStyles.textStyles = getUniquePresets(
+      globalStoryStyles.textStyles
+    );
+  }
+
+  // Set story-global variables.
+  const story = {
+    storyId,
+    title,
+    status: statusFormat,
+    author,
+    date,
+    modified,
+    excerpt,
+    slug,
+    link,
+    lockUser,
+    featuredMedia,
+    permalinkConfig,
+    publisherLogo,
+    password,
+    previewLink,
+    editLink,
+    embedPostLink,
+    currentStoryStyles: {
+      colors: storyData?.currentStoryStyles?.colors
+        ? getUniquePresets(storyData.currentStoryStyles.colors)
+        : [],
+    },
+    globalStoryStyles,
+    autoAdvance: storyData?.autoAdvance,
+    defaultPageDuration: storyData?.defaultPageDuration,
+    backgroundAudio: storyData?.backgroundAudio,
+    taxonomies,
+    terms,
+  };
+
+  // TODO read current page and selection from deeplink?
+  restore({
+    pages,
+    story,
+    selection: [],
+    current: null, // will be set to first page by `restore`
+    capabilities,
+  });
+}
+
+// When ID is set, load story from API.
+function useLoadStory({ storyId, story, shouldLoad, restore }) {
+  const {
+    actions: { getStoryById },
   } = useAPI();
   const {
     actions: { clearHistory },
@@ -39,123 +143,15 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
 
   useEffect(() => {
     if (storyId && shouldLoad) {
-      const callback = isDemo ? getDemoStoryById : getStoryById;
-      callback(storyId).then((post) => {
-        const {
-          title: { raw: title },
-          status,
-          slug,
-          date,
-          modified,
-          excerpt: { raw: excerpt },
-          link,
-          story_data: storyDataRaw,
-          permalink_template: permalinkTemplate,
-          style_presets: globalStoryStyles,
-          password,
-          preview_link: previewLink,
-          edit_link: editLink,
-          embed_post_link: embedPostLink,
-          author,
-          capabilities = {
-            publish: false,
-            'assign-author': false,
-          },
-          lock_user: lockUser,
-          featured_media: featuredMedia,
-          publisher_logo: publisherLogo,
-          taxonomies,
-          terms,
-        } = post;
-
-        const [prefix, suffix] = permalinkTemplate.split(
-          /%(?:postname|pagename)%/
-        );
-        // If either of these is undefined, the placeholder was not found in settings.
-        const foundSettings = prefix !== undefined && suffix !== undefined;
-        const permalinkConfig = foundSettings
-          ? {
-              prefix,
-              suffix,
-            }
-          : null;
-        const statusFormat = status === 'auto-draft' ? 'draft' : status;
-
-        // First clear history completely.
-        clearHistory();
-
-        // If there are no pages, create empty page.
-        const storyData =
-          storyDataRaw && migrate(storyDataRaw, storyDataRaw.version || 0);
-        const pages =
-          storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
-
-        // Initialize color/style presets, if missing.
-        // Otherwise ensure the saved presets are unique.
-        if (!globalStoryStyles.colors) {
-          globalStoryStyles.colors = [];
-        } else {
-          globalStoryStyles.colors = getUniquePresets(globalStoryStyles.colors);
-        }
-        if (!globalStoryStyles.textStyles) {
-          globalStoryStyles.textStyles = [];
-        } else {
-          globalStoryStyles.textStyles = getUniquePresets(
-            globalStoryStyles.textStyles
-          );
-        }
-
-        // Set story-global variables.
-        const story = {
-          storyId,
-          title,
-          status: statusFormat,
-          author,
-          date,
-          modified,
-          excerpt,
-          slug,
-          link,
-          lockUser,
-          featuredMedia,
-          permalinkConfig,
-          publisherLogo,
-          password,
-          previewLink,
-          editLink,
-          embedPostLink,
-          currentStoryStyles: {
-            colors: storyData?.currentStoryStyles?.colors
-              ? getUniquePresets(storyData.currentStoryStyles.colors)
-              : [],
-          },
-          globalStoryStyles,
-          autoAdvance: storyData?.autoAdvance,
-          defaultPageDuration: storyData?.defaultPageDuration,
-          backgroundAudio: storyData?.backgroundAudio,
-          taxonomies,
-          terms,
-        };
-
-        // TODO read current page and selection from deeplink?
-        restore({
-          pages,
-          story,
-          selection: [],
-          current: null, // will be set to first page by `restore`
-          capabilities,
+      if (story) {
+        loadStory(storyId, story, clearHistory, restore);
+      } else {
+        getStoryById(storyId).then((post) => {
+          loadStory(storyId, post, clearHistory, restore);
         });
-      });
+      }
     }
-  }, [
-    storyId,
-    shouldLoad,
-    restore,
-    isDemo,
-    getStoryById,
-    getDemoStoryById,
-    clearHistory,
-  ]);
+  }, [storyId, story, shouldLoad, restore, getStoryById, clearHistory]);
 }
 
 export default useLoadStory;

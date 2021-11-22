@@ -23,7 +23,6 @@ import { useMemo, useEffect } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import useConfig from '../config/useConfig';
 import Context from './context';
 
 import useLoadStory from './effects/useLoadStory';
@@ -42,8 +41,7 @@ import { StoryTriggersProvider } from './storyTriggers';
  */
 const EMPTY_ARRAY = [];
 
-function StoryProvider({ storyId, children }) {
-  const { isDemo } = useConfig();
+function StoryProvider({ storyId, initialEdits, children }) {
   const [hashPageId, setHashPageId] = useHashState('page', null);
   const {
     state: reducerState,
@@ -118,7 +116,7 @@ function StoryProvider({ storyId, children }) {
 
   // This effect loads and initialises the story on first load (when there's no pages).
   const shouldLoad = pages.length === 0;
-  useLoadStory({ restore, shouldLoad, storyId, isDemo });
+  useLoadStory({ restore, shouldLoad, storyId, story: initialEdits.story });
 
   // These effects send updates to and restores state from history.
   useHistoryEntry({ pages, current, selection, story, capabilities });
@@ -203,6 +201,7 @@ function StoryProvider({ storyId, children }) {
 StoryProvider.propTypes = {
   children: PropTypes.node,
   storyId: PropTypes.number,
+  initialEdits: PropTypes.object,
 };
 
 export default StoryProvider;
