@@ -168,7 +168,6 @@ const ALLOWED_ERROR_MESSAGES = [
   // WordPress still bundles jQuery Migrate, which logs to the console.
   'JQMIGRATE',
 
-
   ...('chrome' === PUPPETEER_PRODUCT
     ? ALLOWED_ERROR_MESSAGES_CHROME
     : ALLOWED_ERROR_MESSAGES_FIREFOX),

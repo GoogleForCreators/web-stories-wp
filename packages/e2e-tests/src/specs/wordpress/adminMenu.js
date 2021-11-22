@@ -24,6 +24,7 @@ import {
 
 describe('Admin Menu', () => {
   // Firefox has troubles triggering the sub-menu on hover.
+  // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
 
   it('should contain links to Dashboard sub-pages', async () => {

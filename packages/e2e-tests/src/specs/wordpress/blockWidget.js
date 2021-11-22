@@ -85,6 +85,7 @@ describe('Web Stories Widget Block', () => {
   describe('Legacy Widget', () => {
     // The block toolbar is not reliably appearing on Firefox,
     // so conversion from legacy widget block to Web Stories block isn't working.
+    // eslint-disable-next-line jest/require-hook
     skipSuiteOnFirefox();
 
     minWPVersionRequired('5.8');

@@ -61,6 +61,7 @@ describe('Inserting 3P Media', () => {
 
   describe('Coverr', () => {
     // Firefox has issues playing media (MP4 videos).
+    // eslint-disable-next-line jest/require-hook
     skipSuiteOnFirefox();
 
     // Skipped for https://github.com/google/web-stories-wp/issues/7481
@@ -88,6 +89,7 @@ describe('Inserting 3P Media', () => {
 
   describe('Tenor', () => {
     // Firefox has issues playing media (MP4 videos).
+    // eslint-disable-next-line jest/require-hook
     skipSuiteOnFirefox();
 
     // Skipped for https://github.com/google/web-stories-wp/issues/7481

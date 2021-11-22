@@ -26,6 +26,7 @@ import {
 describe('Stories Dashboard with disabled JavaScript', () => {
   // Disabling JS like this is not yet supported in Firefox.
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=1549437.
+  // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
 
   it('should display error message', async () => {

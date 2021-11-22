@@ -52,6 +52,7 @@ describe('Story Editor', () => {
     describe('Enabled', () => {
       // Firefox+Puppeteer has issues with cross-origin isolation resulting in unexpected timeouts.
       // See https://github.com/google/web-stories-wp/pull/7748.
+      // eslint-disable-next-line jest/require-hook
       skipSuiteOnFirefox();
 
       beforeEach(async () => {

@@ -29,6 +29,7 @@ describe('Custom Meta Boxes', () => {
   // The browser window size for Firefox is different from the Chrome one during tests,
   // causing the Meta Boxes button to be off-screen, so Firefox can't "see" it,
   // making the test fail.
+  // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
 
   describe('Unavailable', () => {

@@ -22,6 +22,7 @@ import {
   uploadPublisherLogo,
   withExperimentalFeatures,
   deleteMedia,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
 const SETTINGS_SELECTOR = '[data-testid="editor-settings"]';
