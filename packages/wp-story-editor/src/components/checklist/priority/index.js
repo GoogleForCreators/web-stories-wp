@@ -29,7 +29,6 @@ import {
   VideoOptimization,
   StoryAmpValidationErrors,
   PublisherLogoMissing,
-  useFFmpeg,
 } from '@web-stories-wp/story-editor';
 
 /**
@@ -44,7 +43,6 @@ function Priority() {
       hasUploadMediaAction: capabilities.hasUploadMediaAction,
     })
   );
-  const { isTranscodingEnabled } = useFFmpeg();
 
   return (
     <>
@@ -57,8 +55,7 @@ function Priority() {
       {hasUploadMediaAction && <PublisherLogoMissing />}
       {hasUploadMediaAction && <PublisherLogoSize />}
       {hasUploadMediaAction && <VideoElementMissingPoster />}
-      {/* `isTranscodingEnabled` already checks for `hasUploadMediaAction` */}
-      {isTranscodingEnabled && <VideoOptimization />}
+      <VideoOptimization />
       <StoryAmpValidationErrors />
     </>
   );

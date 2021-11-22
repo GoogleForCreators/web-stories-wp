@@ -54,7 +54,6 @@ export {
   useHighlights,
 } from './app/highlights';
 export { ConfigProvider as EditorConfigProvider } from './app/config';
-export { default as useFFmpeg } from './app/media/utils/useFFmpeg';
 
 export { Dialog };
 export default StoryEditor;
