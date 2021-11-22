@@ -102,7 +102,7 @@ function usePageAsCanvas(skipSelectedElement) {
               const filterSelectedElement =
                 skipSelectedElement && hasSingleSelection;
               const filter = (node) => {
-                // exclude selected element from generated image to prevent interfereing with contrast calculation. true includes and false excludes
+                // Exclude selected element from generated image to prevent interfering with contrast calculation: `true` includes and `false` excludes.
                 return node?.dataset?.elementId !== selectedElementIds[0];
               };
 
