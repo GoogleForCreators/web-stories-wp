@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -37,7 +37,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [23, 131, 181],
+            "baseColor": "#1783b5",
             "isExternal": true
           },
           "x": 0,
@@ -616,7 +616,7 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224],
+            "baseColor": "#e5e3e0",
             "isExternal": true
           },
           "tracks": []
@@ -675,7 +675,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [252, 252, 252],
+            "baseColor": "#fcfcfc",
             "isExternal": true
           }
         },
@@ -882,7 +882,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [24, 36, 36],
+            "baseColor": "#182424",
             "isExternal": true
           },
           "x": 75,
@@ -949,7 +949,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [252, 252, 252],
+            "baseColor": "#fcfcfc",
             "isExternal": true
           }
         },
@@ -1226,7 +1226,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [65, 61, 60],
+            "baseColor": "#413d3c",
             "isExternal": true
           },
           "x": 47,
@@ -1501,7 +1501,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [24, 28, 28],
+            "baseColor": "#181c1c",
             "isExternal": true
           },
           "width": 318,
@@ -2124,7 +2124,7 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224],
+            "baseColor": "#e5e3e0",
             "isExternal": true
           },
           "tracks": []
@@ -2393,7 +2393,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [248, 232, 224],
+            "baseColor": "#f8e8e0",
             "isExternal": true
           }
         },
@@ -3172,7 +3172,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [248, 232, 224],
+            "baseColor": "#f8e8e0",
             "isExternal": true
           }
         },
@@ -4352,7 +4352,7 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224],
+            "baseColor": "#e5e3e0",
             "isExternal": true
           },
           "tracks": [],
