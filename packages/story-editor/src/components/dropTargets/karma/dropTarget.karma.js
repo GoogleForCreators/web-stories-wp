@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -26,6 +31,7 @@ describe('Drop-Target integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -38,9 +44,7 @@ describe('Drop-Target integration', () => {
   };
 
   describe('when there is nothing on the canvas', () => {
-    // TODO(#9381): Fix flaky test.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should by default have transparent background', async () => {
+    it('should by default have transparent background', async () => {
       const backgroundId = (await getElements(fixture))[0].id;
       const bgElement =
         fixture.editor.canvas.displayLayer.display(backgroundId).element;
@@ -100,7 +104,60 @@ describe('Drop-Target integration', () => {
       expect(rep2).toBeEmpty();
 
       // Verify the background base color is handled as expected.
-      expect(bgElement.resource.baseColor).toEqual([201, 201, 219]);
+      expect(bgElement.resource.baseColor).toEqual('#734727');
+    });
+
+    it('should correctly handle image dragged from library straight to edge (no cached base color)', async () => {
+      const backgroundId = (await getElements(fixture))[0].id;
+
+      // Verify that bg replacement is empty
+      let rep1 =
+        fixture.editor.canvas.displayLayer.display(backgroundId).replacement;
+      expect(rep1).toBeEmpty();
+
+      // Get library element reference
+      const libraryElement = fixture.editor.library.media.item(4);
+
+      // Drag the element to the background
+      await dragToDropTarget(fixture, libraryElement, backgroundId);
+
+      // Update to DOM mutations
+      rep1 =
+        fixture.editor.canvas.displayLayer.display(backgroundId).replacement;
+
+      // Verify that bg replacement is no longer empty
+      expect(rep1).not.toBeEmpty();
+
+      // Verify that replacement img has correct source
+      const replaceImg = rep1.querySelector('img');
+      const libraryImage = libraryElement.querySelector('img');
+      expect(replaceImg).toHaveProperty('src', libraryImage.src);
+
+      // Now drop the element
+      await fixture.events.mouse.up();
+
+      // And then wait a frame before invoking story hook
+      await fixture.events.sleep(100);
+
+      // Verify new background element has the correct image
+      const bgElement = (await getElements(fixture))[0];
+      expect(bgElement.type).toBe('image');
+      const bg = fixture.editor.canvas.displayLayer.display(
+        bgElement.id
+      ).element;
+      const bgImg = bg.querySelector('img');
+      expect(bgImg).toHaveProperty('src', libraryImage.src);
+
+      // And verify that we no longer have a replacement element
+      const rep2 = fixture.editor.canvas.displayLayer.display(
+        bgElement.id
+      ).replacement;
+      expect(rep2).toBeEmpty();
+
+      // Verify the background base color is handled as expected.
+      await waitFor(() => {
+        expect(bgElement.resource.baseColor).toEqual('#a38d7f');
+      });
     });
   });
 

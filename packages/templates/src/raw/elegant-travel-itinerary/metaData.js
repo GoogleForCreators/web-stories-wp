@@ -31,10 +31,26 @@ export default {
     _x('Blue', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Night Blue', 'color', 'web-stories'), color: '#151c23' },
-    { label: _x('Porcelain White', 'color', 'web-stories'), color: '#eef0f2' },
-    { label: _x('Aztec Gold', 'color', 'web-stories'), color: '#c89d4f' },
-    { label: _x('Bright Sky Blue', 'color', 'web-stories'), color: '#61a0ff' },
+    {
+      label: _x('Night Blue', 'color', 'web-stories'),
+      color: '#151c23',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Porcelain White', 'color', 'web-stories'),
+      color: '#eef0f2',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Aztec Gold', 'color', 'web-stories'),
+      color: '#c89d4f',
+      family: _x('Yellow', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Bright Sky Blue', 'color', 'web-stories'),
+      color: '#61a0ff',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'This template’s ornate shapes and design elements inspired by olden architecture will let you travel stories that are beautiful and elegant. Create reviews, tour guides and itineraries for cultural and heritage tourism, luxury travel and more.',

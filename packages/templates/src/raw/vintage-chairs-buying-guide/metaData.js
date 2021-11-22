@@ -31,9 +31,21 @@ export default {
     _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Snowfall White', 'color', 'web-stories'), color: '#f3f2f0' },
-    { label: _x('Dark Metal Green', 'color', 'web-stories'), color: '#313831' },
-    { label: _x('Platinum Blue', 'color', 'web-stories'), color: '#dbe2e7' },
+    {
+      label: _x('Snowfall White', 'color', 'web-stories'),
+      color: '#f3f2f0',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Dark Metal Green', 'color', 'web-stories'),
+      color: '#313831',
+      family: _x('Green', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Platinum Blue', 'color', 'web-stories'),
+      color: '#dbe2e7',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'Present fresh and innovative ideas about home decor and renovation with this clean and modern-looking template. Create furniture buying guides, stories about interior design, garden inspiration and more.',

@@ -31,10 +31,26 @@ export default {
     _x('Black', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Mercury Gray', 'color', 'web-stories'), color: '#e3e3e3' },
-    { label: _x('Festive Orange', 'color', 'web-stories'), color: '#f8754c' },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000',
+      family: _x('Black', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Mercury Gray', 'color', 'web-stories'),
+      color: '#e3e3e3',
+      family: _x('Gray', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Festive Orange', 'color', 'web-stories'),
+      color: '#f8754c',
+      family: _x('Orange', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'With its powerful headlines and tantalizing visuals, this template is great for creating energetic stories about rock concerts, music festivals, concert tours and more.',

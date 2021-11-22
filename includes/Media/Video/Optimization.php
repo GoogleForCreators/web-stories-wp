@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Media\Video;
 
+use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Service_Base;
 
 /**
@@ -33,7 +34,7 @@ use Google\Web_Stories\Service_Base;
  *
  * @package Google\Web_Stories\Media\Video
  */
-class Optimization extends Service_Base {
+class Optimization extends Service_Base implements HasMeta {
 
 	/**
 	 * The optimized video id post meta key.
@@ -50,6 +51,17 @@ class Optimization extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
+		$this->register_meta();
+	}
+
+	/**
+	 * Register meta
+	 *
+	 * @since 1.15.0
+	 *
+	 * @return void
+	 */
+	public function register_meta() {
 		register_meta(
 			'post',
 			self::OPTIMIZED_ID_POST_META_KEY,
@@ -64,6 +76,4 @@ class Optimization extends Service_Base {
 			]
 		);
 	}
-
-
 }

@@ -382,12 +382,26 @@ class Assets {
 	 * @return array Script translations.
 	 */
 	public function get_translations( string $script_handle ): array {
+		/**
+		 * List of script chunks.
+		 *
+		 * @var false|string[]
+		 */
 		$chunks = wp_scripts()->get_data( $script_handle, 'chunks' );
+
+		if ( ! is_array( $chunks ) ) {
+			return [];
+		}
 
 		$translations = [
 			(string) load_script_textdomain( $script_handle, 'web-stories' ),
 		];
 
+		/**
+		 * Dynamic chunk name.
+		 *
+		 * @var string $dynamic_chunk
+		 */
 		foreach ( $chunks as $dynamic_chunk ) {
 			$translations[] = (string) load_script_textdomain( $dynamic_chunk, 'web-stories' );
 		}

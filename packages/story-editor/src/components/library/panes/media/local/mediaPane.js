@@ -112,8 +112,7 @@ function MediaPane(props) {
     resetWithFetch,
     setMediaType,
     setSearchTerm,
-    uploadVideoPoster,
-    updateVideoIsMuted,
+    postProcessingResource,
     totalItems,
     optimizeVideo,
     optimizeGif,
@@ -133,8 +132,7 @@ function MediaPane(props) {
         resetWithFetch,
         setMediaType,
         setSearchTerm,
-        uploadVideoPoster,
-        updateVideoIsMuted,
+        postProcessingResource,
         optimizeVideo,
         optimizeGif,
       },
@@ -151,8 +149,7 @@ function MediaPane(props) {
         resetWithFetch,
         setMediaType,
         setSearchTerm,
-        uploadVideoPoster,
-        updateVideoIsMuted,
+        postProcessingResource,
         optimizeVideo,
         optimizeGif,
       };
@@ -227,24 +224,7 @@ function MediaPane(props) {
         resource.sizes?.medium?.source_url || resource.src
       );
 
-      if (
-        !resource.posterId &&
-        !resource.local &&
-        (allowedVideoMimeTypes.includes(resource.mimeType) ||
-          resource.type === 'gif')
-      ) {
-        // Upload video poster and update media element afterwards, so that the
-        // poster will correctly show up in places like the Accessibility panel.
-        uploadVideoPoster(resource.id, resource.src);
-      }
-
-      if (
-        !resource.local &&
-        allowedVideoMimeTypes.includes(resource.mimeType) &&
-        resource.isMuted === null
-      ) {
-        updateVideoIsMuted(resource.id, resource.src);
-      }
+      postProcessingResource(resource);
     } catch (e) {
       showSnackbar({
         message: e.message,

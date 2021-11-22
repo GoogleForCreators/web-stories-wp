@@ -32,6 +32,7 @@ describe('Autoplay video', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
     mediaPane = fixture.container.querySelector('#library-pane-media');
   });
 
