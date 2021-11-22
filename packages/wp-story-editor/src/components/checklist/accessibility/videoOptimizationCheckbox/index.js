@@ -29,22 +29,11 @@ import {
   useConfig,
   useCurrentUser,
   useIsChecklistMounted,
+  ChecklistCard,
 } from '@web-stories-wp/story-editor';
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 272px;
-  margin: 16px 0;
-  padding: 16px;
-  background-color: ${({ theme }) => theme.colors.bg.secondary};
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-`;
 
 const CheckboxContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: flex-start;
 `;
 
@@ -78,45 +67,45 @@ function VideoOptimizationCheckbox() {
   const showCheckbox = !checked && hasUploadMediaAction;
 
   return showCheckbox && isChecklistMounted ? (
-    <Container>
-      <DescriptionText>
-        {__(
-          'Optimize all videos in the Story to ensure smooth playback.',
-          'web-stories'
-        )}
-      </DescriptionText>
-      <CheckboxContainer>
-        <Checkbox
-          id="automatic-video-optimization-toggle"
-          checked={currentUser?.meta?.web_stories_media_optimization}
-          onChange={toggleWebStoriesMediaOptimization}
-        />
-        <CheckboxLabel
-          forwardedAs="label"
-          htmlFor="automatic-video-optimization-toggle"
-        >
-          <TranslateWithMarkup
-            mapping={{
-              a: (
-                <Link
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  onClick={(evt) =>
-                    trackClick(evt, 'click_video_optimization_settings')
-                  }
-                  href={dashboardSettingsLink}
-                  isBold
-                />
-              ),
-            }}
+    <ChecklistCard
+      title={__(
+        'Optimize all videos in the Story to ensure smooth playback.',
+        'web-stories'
+      )}
+      footer={
+        <CheckboxContainer>
+          <Checkbox
+            id="automatic-video-optimization-toggle"
+            checked={currentUser?.meta?.web_stories_media_optimization}
+            onChange={toggleWebStoriesMediaOptimization}
+          />
+          <CheckboxLabel
+            forwardedAs="label"
+            htmlFor="automatic-video-optimization-toggle"
           >
-            {__(
-              'Enable automatic optimization. Change this any time in <a>Settings</a>.',
-              'web-stories'
-            )}
-          </TranslateWithMarkup>
-        </CheckboxLabel>
-      </CheckboxContainer>
-    </Container>
+            <TranslateWithMarkup
+              mapping={{
+                a: (
+                  <Link
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    onClick={(evt) =>
+                      trackClick(evt, 'click_video_optimization_settings')
+                    }
+                    href={dashboardSettingsLink}
+                    isBold
+                  />
+                ),
+              }}
+            >
+              {__(
+                'Enable automatic optimization. Change this any time in <a>Settings</a>.',
+                'web-stories'
+              )}
+            </TranslateWithMarkup>
+          </CheckboxLabel>
+        </CheckboxContainer>
+      }
+    />
   ) : null;
 }
 
