@@ -34,6 +34,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
     await fixture.editor.library.textTab.click();
   });
 

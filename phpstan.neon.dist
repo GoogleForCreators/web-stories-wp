@@ -23,9 +23,13 @@ services:
     class: PHPStan\WordPress\ServicesDynamicReturnTypeExtension
     tags:
       - phpstan.broker.dynamicStaticMethodReturnTypeExtension
+  -
+    class: PHPStan\WordPress\ApplyFiltersDynamicFunctionReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicFunctionReturnTypeExtension
 
 parameters:
-  level: 8
+  level: 9
   inferPrivatePropertyTypeFromConstructor: true
   checkGenericClassInNonGenericObjectType: false
   checkMissingIterableValueType: false

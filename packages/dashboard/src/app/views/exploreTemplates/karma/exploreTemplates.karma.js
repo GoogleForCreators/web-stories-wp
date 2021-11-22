@@ -175,7 +175,7 @@ describe('Grid view', () => {
       )?.id;
     }
 
-    it('should filter stories using the search input', async () => {
+    it('should filter templates using the search input', async () => {
       // Get original 8 templates
       const originalTemplates =
         fixture.screen.getAllByTestId(/^template-grid-item-/);

@@ -3655,46 +3655,6 @@
     }
   },
   {
-    "family": "Be Vietnam",
-    "fallbacks": ["sans-serif"],
-    "weights": [100, 300, 400, 500, 600, 700, 800],
-    "styles": ["italic", "regular"],
-    "variants": [
-      [0, 100],
-      [1, 100],
-      [0, 300],
-      [1, 300],
-      [0, 400],
-      [1, 400],
-      [0, 500],
-      [1, 500],
-      [0, 600],
-      [1, 600],
-      [0, 700],
-      [1, 700],
-      [0, 800],
-      [1, 800]
-    ],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 1000,
-      "asc": 1196,
-      "des": -265,
-      "tAsc": 1196,
-      "tDes": -265,
-      "tLGap": 0,
-      "wAsc": 1196,
-      "wDes": 265,
-      "xH": 527,
-      "capH": 700,
-      "yMin": -265,
-      "yMax": 1196,
-      "hAsc": 1196,
-      "hDes": -265,
-      "lGap": 0
-    }
-  },
-  {
     "family": "Be Vietnam Pro",
     "fallbacks": ["sans-serif"],
     "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
@@ -7762,38 +7722,6 @@
       "hAsc": 918,
       "hDes": -220,
       "lGap": 0
-    }
-  },
-  {
-    "family": "Crimson Text",
-    "fallbacks": ["serif"],
-    "weights": [400, 600, 700],
-    "styles": ["regular", "italic"],
-    "variants": [
-      [0, 400],
-      [1, 400],
-      [0, 600],
-      [1, 600],
-      [0, 700],
-      [1, 700]
-    ],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 1024,
-      "asc": 1026,
-      "des": -297,
-      "tAsc": 717,
-      "tDes": -307,
-      "tLGap": 307,
-      "wAsc": 1026,
-      "wDes": 297,
-      "xH": 125,
-      "capH": 613,
-      "yMin": -297,
-      "yMax": 1026,
-      "hAsc": 1026,
-      "hDes": -297,
-      "lGap": 92
     }
   },
   {
@@ -21359,23 +21287,26 @@
   },
   {
     "family": "Nokora",
-    "fallbacks": ["serif"],
-    "weights": [400, 700],
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 300, 400, 700, 900],
     "styles": ["regular"],
     "variants": [
+      [0, 100],
+      [0, 300],
       [0, 400],
-      [0, 700]
+      [0, 700],
+      [0, 900]
     ],
     "service": "fonts.google.com",
     "metrics": {
       "upm": 2048,
       "asc": 1907,
       "des": -800,
-      "tAsc": 1567,
-      "tDes": -492,
-      "tLGap": 132,
-      "wAsc": 1907,
-      "wDes": 800,
+      "tAsc": 1907,
+      "tDes": -800,
+      "tLGap": 0,
+      "wAsc": 1940,
+      "wDes": 810,
       "xH": 1098,
       "capH": 1462,
       "yMin": -800,
@@ -32372,34 +32303,6 @@
       "yMax": 930,
       "hAsc": 955,
       "hDes": -289,
-      "lGap": 0
-    }
-  },
-  {
-    "family": "Scheherazade",
-    "fallbacks": ["serif"],
-    "weights": [400, 700],
-    "styles": ["regular"],
-    "variants": [
-      [0, 400],
-      [0, 700]
-    ],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 2048,
-      "asc": 2071,
-      "des": -1386,
-      "tAsc": 2071,
-      "tDes": -1386,
-      "tLGap": 0,
-      "wAsc": 2071,
-      "wDes": 1386,
-      "xH": 684,
-      "capH": 1034,
-      "yMin": -1041,
-      "yMax": 1858,
-      "hAsc": 2071,
-      "hDes": -1386,
       "lGap": 0
     }
   },

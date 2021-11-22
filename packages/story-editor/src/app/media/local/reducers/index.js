@@ -20,6 +20,8 @@ export { default as setSearchTerm } from './setSearchTerm';
 export { default as resetFilters } from './resetFilters';
 export { default as setMedia } from './setMedia';
 export { default as prependMedia } from './prependMedia';
+export { default as addBaseColorProcessing } from './addBaseColorProcessing';
+export { default as removeBaseColorProcessing } from './removeBaseColorProcessing';
 export { default as addPosterProcessing } from './addPosterProcessing';
 export { default as removePosterProcessing } from './removePosterProcessing';
 export { default as addAudioProcessing } from './addAudioProcessing';

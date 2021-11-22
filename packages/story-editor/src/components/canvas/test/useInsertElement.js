@@ -40,6 +40,7 @@ const PROPS_LOCAL = {
   resource: {
     type: 'image',
     mimeType: 'image/jpeg',
+    baseColor: '#ffffff',
     creationDate: '2020-08-10T03:42:08',
     src: 'http://local_url/wp-content/uploads/2020/08/local_image.jpg',
     width: 1920,
@@ -69,6 +70,7 @@ const PROPS_M3P_WITH_ATTRIBUTION = {
   resource: {
     type: 'image',
     mimeType: 'image/jpeg',
+    baseColor: '#ffffff',
     creationDate: '2020-08-14T19:43:09Z',
     src: 'https://images.url.com/photo-fake-url',
     width: 2400,
@@ -114,7 +116,7 @@ describe('useInsertElement', () => {
     });
 
     useLocalMedia.mockReturnValue({
-      uploadVideoPoster: jest.fn(),
+      postProcessingResource: jest.fn(),
     });
 
     useLayout.mockReturnValue({

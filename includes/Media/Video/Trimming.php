@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Media\Video;
 
+use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Service_Base;
 
 /**
@@ -33,7 +34,7 @@ use Google\Web_Stories\Service_Base;
  *
  * @package Google\Web_Stories\Media\Video
  */
-class Trimming extends Service_Base {
+class Trimming extends Service_Base implements HasMeta {
 
 	/**
 	 * The trim video post meta key.
@@ -69,7 +70,7 @@ class Trimming extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function register_meta() {
+	public function register_meta() {
 		register_meta(
 			'post',
 			self::TRIM_POST_META_KEY,

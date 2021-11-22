@@ -35,6 +35,7 @@ describe('Styling single text field', () => {
   beforeEach(async () => {
     data.fixture = new Fixture();
     await data.fixture.render();
+    await data.fixture.collapseHelpCenter();
 
     // Add a text box
     await addInitialText();

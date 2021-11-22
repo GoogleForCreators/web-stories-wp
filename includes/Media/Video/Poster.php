@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use WP_Post;
 
@@ -35,7 +36,7 @@ use WP_Post;
  *
  * @package Google\Web_Stories\Media\Video
  */
-class Poster extends Service_Base {
+class Poster extends Service_Base implements HasMeta {
 	/**
 	 * The poster post meta key.
 	 *
@@ -89,7 +90,7 @@ class Poster extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function register_meta() {
+	public function register_meta() {
 		register_meta(
 			'post',
 			self::POSTER_ID_POST_META_KEY,
@@ -235,6 +236,11 @@ class Poster extends Service_Base {
 	 * @return void
 	 */
 	public function delete_video_poster( int $attachment_id ) {
+		/**
+		 * Post ID.
+		 *
+		 * @var int|string $post_id
+		 */
 		$post_id = get_post_meta( $attachment_id, self::POSTER_ID_POST_META_KEY, true );
 
 		if ( empty( $post_id ) ) {
@@ -242,9 +248,9 @@ class Poster extends Service_Base {
 		}
 
 		// Used in favor of slow meta queries.
-		$is_poster = $this->is_poster( $post_id );
+		$is_poster = $this->is_poster( (int) $post_id );
 		if ( $is_poster ) {
-			wp_delete_attachment( $post_id, true );
+			wp_delete_attachment( (int) $post_id, true );
 		}
 	}
 

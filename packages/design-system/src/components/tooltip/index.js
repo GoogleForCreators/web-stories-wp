@@ -128,23 +128,58 @@ function Tooltip({
     }),
     [placement]
   );
+  // We can sometimes render a tooltip too far to the left, ie. in RTL mode.
+  // when that is the case, we can switch to placement-start and the tooltip will no longer get cutoff.
+  const updatePlacement = useCallback(() => {
+    const currentPlacement = placementRef.current;
+    switch (currentPlacement) {
+      case PLACEMENT.BOTTOM_START:
+      case PLACEMENT.TOP_START:
+      case PLACEMENT.RIGHT_START:
+        // {placement}-START shouldn't ever appear in overflow so do nothing
+        break;
+      case PLACEMENT.BOTTOM_END:
+      case PLACEMENT.TOP_END:
+      case PLACEMENT.RIGHT_END:
+        setDynamicPlacement(currentPlacement.replace('-end', '-start'));
+        break;
+      case PLACEMENT.LEFT_END:
+        setDynamicPlacement(PLACEMENT.RIGHT_END);
+        break;
+      case PLACEMENT.LEFT_START:
+        setDynamicPlacement(PLACEMENT.RIGHT_START);
+        break;
+      case PLACEMENT.LEFT:
+        setDynamicPlacement(PLACEMENT.RIGHT);
+        break;
+      default:
+        setDynamicPlacement(`${currentPlacement}-start`);
+        break;
+    }
+  }, []);
 
-  // When near the bottom of the viewport and the tooltip is placed on the bottom we want to force the tooltip to the top as to not
+  // When near the edge of the viewport we want to force the tooltip to a new placement as to not
   // cutoff the contents of the tooltip.
   const positionPlacement = useCallback(
     ({ offset }) => {
-      // check to see if there's an overlap with the window edge
+      // check to see if there's an overlap with the window's bottom edge
       const neededVerticalSpace = offset.bottom;
-      // if the tooltip was assigned as bottom we want to always check it
-      if (
-        offset &&
+      const shouldMoveToTop =
         dynamicPlacement.startsWith('bottom') &&
-        neededVerticalSpace >= window.innerHeight
-      ) {
+        neededVerticalSpace >= window.innerHeight;
+      // check that the tooltip isn't cutoff on the left edge of the screen.
+      // right-cutoff is already taken care of with `getOffset`
+      const isOverFlowingLeft = offset.popupLeft < 0;
+
+      if (shouldMoveToTop && !isOverFlowingLeft) {
         setDynamicPlacement(PLACEMENT.TOP);
+      } else if (shouldMoveToTop && isOverFlowingLeft) {
+        setDynamicPlacement(PLACEMENT.TOP_START);
+      } else if (!shouldMoveToTop && isOverFlowingLeft) {
+        updatePlacement();
       }
     },
-    [dynamicPlacement]
+    [dynamicPlacement, updatePlacement]
   );
 
   const positionArrow = useCallback(
