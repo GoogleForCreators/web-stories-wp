@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -33,7 +33,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [217, 196, 188],
+            "baseColor": "#d9c4bc",
             "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.1 } }
