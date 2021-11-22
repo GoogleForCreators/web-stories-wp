@@ -31,10 +31,26 @@ export default {
     _x('Pink', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Petal Pink', 'color', 'web-stories'), color: '#da9bb2' },
-    { label: _x('Milano Red', 'color', 'web-stories'), color: '#c01e00' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Voodoo Purple', 'color', 'web-stories'), color: '#412c47' },
+    {
+      label: _x('Petal Pink', 'color', 'web-stories'),
+      color: '#da9bb2',
+      family: _x('Pink', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Milano Red', 'color', 'web-stories'),
+      color: '#c01e00',
+      family: _x('Red', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Voodoo Purple', 'color', 'web-stories'),
+      color: '#412c47',
+      family: _x('Purple', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'With its serene, comforting colors and beautiful illustrations, this template is great for creating stories about books and literature. Review books, talk about the newest releases in fiction, create reading lists and more.',

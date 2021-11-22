@@ -32,38 +32,61 @@ import { DEFAULT_MASK } from '../../masks/constants';
 import { ZOOM_SETTING } from '../../constants';
 import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
 import getInsertedElementSize from '../../utils/getInsertedElementSize';
+import { getMediaBaseColor } from '../../utils/getMediaBaseColor';
+import useCORSProxy from '../../utils/useCORSProxy';
 import useFocusCanvas from './useFocusCanvas';
 
 function useInsertElement() {
-  const { addElement } = useStory((state) => ({
+  const { addElement, updateElementById } = useStory((state) => ({
     addElement: state.actions.addElement,
+    updateElementById: state.actions.updateElementById,
   }));
-  const { uploadVideoPoster } = useLocalMedia((state) => ({
-    uploadVideoPoster: state.actions.uploadVideoPoster,
+  const { postProcessingResource } = useLocalMedia((state) => ({
+    postProcessingResource: state.actions.postProcessingResource,
   }));
   const {
     actions: { registerUsage },
   } = useMedia3pApi();
+  const { getProxiedUrl } = useCORSProxy();
 
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
     setZoomSetting,
   }));
 
-  /**
-   * @param {Object} resource The resource to verify/update.
-   * @param {string} elementId The element's id to be updated once resource
-   * is complete.
-   */
-  const backfillResource = useCallback(
-    (resource) => {
-      const { type, src, id, posterId, local } = resource;
+  const generateBaseColor = useCallback(
+    async (element) => {
+      const { id, resource } = element;
+      const {
+        isExternal,
+        local,
+        baseColor: currentBaseColor,
+        src,
+        poster,
+        type,
+      } = resource;
 
-      // Generate video poster if one not set.
-      if (['video', 'gif'].includes(type) && id && !posterId && !local) {
-        uploadVideoPoster(id, src);
+      const imageSrc = type === 'image' ? src : poster;
+      if (local || !imageSrc || currentBaseColor || !isExternal) {
+        return;
+      }
+
+      try {
+        const imageSrcProxied = getProxiedUrl(resource, imageSrc);
+        const baseColor = await getMediaBaseColor(imageSrcProxied);
+        updateElementById({
+          elementId: id,
+          properties: {
+            resource: {
+              ...resource,
+              baseColor,
+            },
+          },
+        });
+      } catch (error) {
+        // Do nothing for now.
       }
     },
-    [uploadVideoPoster]
+    [getProxiedUrl, updateElementById]
   );
 
   /**
@@ -96,8 +119,9 @@ function useInsertElement() {
       const { id, resource } = element;
       addElement({ element });
       if (resource) {
-        backfillResource(resource);
+        postProcessingResource(resource);
         handleRegisterUsage(resource);
+        generateBaseColor(element);
       }
       // Auto-play on insert.
       if (type === 'video' && resource?.src && !resource.isPlaceholder) {
@@ -113,7 +137,8 @@ function useInsertElement() {
     },
     [
       addElement,
-      backfillResource,
+      postProcessingResource,
+      generateBaseColor,
       focusCanvas,
       handleRegisterUsage,
       setZoomSetting,

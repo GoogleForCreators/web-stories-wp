@@ -30,6 +30,7 @@ describe('Video Accessibility Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -80,7 +81,7 @@ describe('Video Accessibility Panel', () => {
       const originalPoster = vaPanel.posterImage.src;
 
       // Ensure focus right before the menu button.
-      await vaPanel.panelTitle.scrollIntoView();
+      vaPanel.panelTitle.scrollIntoView();
       await focusOnTitle();
 
       // Expect menu button to exist

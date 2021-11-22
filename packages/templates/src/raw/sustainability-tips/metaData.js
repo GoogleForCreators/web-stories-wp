@@ -31,11 +31,20 @@ export default {
     _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Eco Green', 'color', 'web-stories'), color: '#134f3c' },
-    { label: _x('Acorn Orange', 'color', 'web-stories'), color: '#bb7c48' },
+    {
+      label: _x('Eco Green', 'color', 'web-stories'),
+      color: '#134f3c',
+      family: _x('Green', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Acorn Orange', 'color', 'web-stories'),
+      color: '#bb7c48',
+      family: _x('Orange', 'color', 'web-stories'),
+    },
     {
       label: _x('Light Dutch White', 'color', 'web-stories'),
       color: '#fdf0d6',
+      family: _x('White', 'color', 'web-stories'),
     },
   ],
   description: __(

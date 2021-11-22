@@ -37,6 +37,7 @@ describe('Quick Actions integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -861,7 +862,7 @@ describe('Quick Actions integration', () => {
           sizes: {},
           local: false,
           isOptimized: false,
-          baseColor: [115, 71, 39],
+          baseColor: '#734727',
         },
         controls: false,
         loop: false,

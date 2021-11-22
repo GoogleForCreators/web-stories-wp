@@ -36,6 +36,7 @@ describe('Keyboard Shortcuts Menu', () => {
     fixture = new Fixture();
 
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {

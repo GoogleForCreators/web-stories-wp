@@ -31,10 +31,26 @@ export default {
     _x('Orange', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Canyon Orange', 'color', 'web-stories'), color: '#a36431' },
-    { label: _x('Warm Yellow', 'color', 'web-stories'), color: '#f8bc63' },
-    { label: _x('Raisin Black', 'color', 'web-stories'), color: '#262626' },
-    { label: _x('Magnolia White', 'color', 'web-stories'), color: '#fef9f1' },
+    {
+      label: _x('Canyon Orange', 'color', 'web-stories'),
+      color: '#a36431',
+      family: _x('Orange', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Warm Yellow', 'color', 'web-stories'),
+      color: '#f8bc63',
+      family: _x('Yellow', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Raisin Black', 'color', 'web-stories'),
+      color: '#262626',
+      family: _x('Black', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Magnolia White', 'color', 'web-stories'),
+      color: '#fef9f1',
+      family: _x('White', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'Use the neutral typography, layout, and brush strokes of this template to your advantage and turn it into your own beautiful travel story, tutorial, or even a cooking recipe. Mix, match and reuse the pages, and change the colors to fit your style.',
