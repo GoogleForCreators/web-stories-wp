@@ -24,7 +24,12 @@ import {
   resourceList,
   ResourcePropTypes,
 } from '@web-stories-wp/media';
-import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import {
+  Icons,
+  Text,
+  THEME_CONSTANTS,
+  noop,
+} from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -97,7 +102,7 @@ function InnerElement({
   width,
   height,
   onClick,
-  onLoad,
+  onLoad = noop,
   showVideoDetail,
   mediaElement,
   active,
