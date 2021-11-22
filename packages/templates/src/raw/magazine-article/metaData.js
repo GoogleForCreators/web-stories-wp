@@ -34,10 +34,23 @@ export default {
     {
       label: _x('School Bus Yellow', 'color', 'web-stories'),
       color: '#ffdb00',
+      family: _x('Yellow', 'color', 'web-stories'),
     },
-    { label: _x('Gentle Gray', 'color', 'web-stories'), color: '#c4c4c4' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+    {
+      label: _x('Gentle Gray', 'color', 'web-stories'),
+      color: '#c4c4c4',
+      family: _x('Gray', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000',
+      family: _x('Black', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'With its rounded font, boxy images and yellow accents, this template is just like your good old tech magazine, but in a visual story format. Share the latest news, write opinionated pieces, explainers, product reviews and much more.',

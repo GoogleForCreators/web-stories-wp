@@ -28,9 +28,9 @@ import { LockToggle, Icons } from '@web-stories-wp/design-system';
  */
 import { StackableGroup, StackableInput } from '../../../form/stackable';
 import { canMaskHaveBorder } from '../../../../masks';
-import Tooltip from '../../../tooltip';
 import { useCommonObjectValue, focusStyle } from '../../shared';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import Tooltip from '../../../tooltip';
 
 const DEFAULT_BORDER_RADIUS = {
   topLeft: 0,
@@ -207,7 +207,12 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
       </StackableGroup>
 
       <LockContainer>
-        <Tooltip title={__('Toggle consistent corner radius', 'web-stories')}>
+        <Tooltip
+          title={__('Toggle consistent corner radius', 'web-stories')}
+          // Key is needed to remount the component when `borderRadius.locked` changes. Otherwise when toggle is open,
+          // tooltip may cover content.
+          key={borderRadius.locked.toString()}
+        >
           <StyledLockToggle
             isLocked={borderRadius.locked}
             onClick={() => handleLockChange(!borderRadius.locked)}

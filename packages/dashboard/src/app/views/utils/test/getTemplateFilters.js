@@ -23,12 +23,16 @@ describe('getTemplateFilters', () => {
   it('returns unique meta data entries', () => {
     const templates = [
       {
-        colors: [{ label: 'blue' }, { label: 'green' }, { label: 'red' }],
+        colors: [
+          { family: 'blue', label: 'blue' },
+          { family: 'green', label: 'green' },
+          { family: 'red', label: 'red' },
+        ],
         tags: ['Greece', 'Italy', 'Spain'],
         vertical: 'Travel',
       },
       {
-        colors: [{ label: 'red' }],
+        colors: [{ family: 'red', label: 'red' }],
         tags: ['Reading', 'I might like tv better', 'red'],
         vertical: 'Books',
       },
