@@ -96,7 +96,7 @@ export const ACCESSIBILITY_COPY = {
   linkTappableRegionTooBig: {
     title: __('Reduce link size', 'web-stories'),
     footer: __(
-      'Links cannot cover a large majority of the page. Use smaller elements for links.',
+      'Elements with links must not cover most of the page. Decrease the size of elements with links.',
       'web-stories'
     ),
   },

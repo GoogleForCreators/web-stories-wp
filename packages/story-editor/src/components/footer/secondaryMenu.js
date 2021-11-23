@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -58,7 +59,7 @@ const POPUPS = {
   KEYBOARD_SHORTCUTS: 'keyboard_shortcuts',
 };
 
-function SecondaryMenu() {
+function SecondaryMenu({ menu }) {
   const expandedPopupRef = useRef('');
 
   const { close: closeHelpCenter, isHelpCenterOpen } = useHelpCenter(
@@ -166,13 +167,21 @@ function SecondaryMenu() {
     <Wrapper>
       <MenuItems>
         <HelpCenter />
-        <ChecklistCountProvider>
-          <Checklist />
-        </ChecklistCountProvider>
+        {menu?.checklist && (
+          <ChecklistCountProvider>
+            <Checklist items={menu.checklist} />
+          </ChecklistCountProvider>
+        )}
         <KeyboardShortcutsMenu />
       </MenuItems>
     </Wrapper>
   );
 }
+
+SecondaryMenu.propTypes = {
+  menu: PropTypes.shape({
+    checklist: PropTypes.object,
+  }),
+};
 
 export default SecondaryMenu;
