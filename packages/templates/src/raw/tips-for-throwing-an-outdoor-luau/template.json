@@ -415,6 +415,7 @@
             "isPlaceholder": false,
             "isOptimized": true,
             "isMuted": true,
+            "baseColor": "#776064",
             "isExternal": true
           },
           "tracks": [],
@@ -674,6 +675,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#777479",
             "isExternal": true
           },
           "overlay": null
@@ -898,6 +900,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#766b4e",
             "isExternal": true
           },
           "overlay": {
@@ -1085,6 +1088,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#9a9797",
             "isExternal": true
           }
         },
@@ -1324,6 +1328,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#8e8a88",
             "isExternal": true
           }
         },
@@ -1574,6 +1579,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#6d5f53",
             "isExternal": true
           }
         },
@@ -1824,6 +1830,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#6a6842",
             "isExternal": true
           }
         },
@@ -2069,6 +2076,7 @@
             "isPlaceholder": false,
             "isOptimized": true,
             "isMuted": true,
+            "baseColor": "#776064",
             "isExternal": true
           },
           "tracks": [],
@@ -2181,6 +2189,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#42584e",
             "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.3 } }
@@ -2603,6 +2612,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#b2b9ac",
             "isExternal": true
           }
         },
@@ -2636,6 +2646,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#4d4033",
             "isExternal": true
           }
         },

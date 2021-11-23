@@ -94,6 +94,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#3f4040",
             "isExternal": true
           },
           "type": "image",
