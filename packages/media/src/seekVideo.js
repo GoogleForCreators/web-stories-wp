@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+const THREE_SECONDS = 3000;
+
 /**
  * Seek video element to a given offset.
  *
@@ -27,7 +29,17 @@ function seekVideo(video, offset = 0.99) {
   }
 
   return new Promise((resolve, reject) => {
-    video.addEventListener('suspend', reject);
+    // The "suspend" event can be fired multiple times, even before the browser
+    // has started seeking in the first place. Because of that, it's not
+    // desired to reject on "suspend" straight away.
+    // Instead, delay rejection in the hopes that the "canplay" event fires
+    // in the meantime.
+    video.addEventListener('suspend', (evt) => {
+      const wait = setTimeout(() => {
+        clearTimeout(wait);
+        reject(evt);
+      }, THREE_SECONDS);
+    });
     video.addEventListener('error', reject);
     video.addEventListener('canplay', () => resolve(video), { once: true });
 

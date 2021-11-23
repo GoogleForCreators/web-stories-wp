@@ -47,6 +47,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const IconInfo = styled.div`
   display: flex;
@@ -102,14 +103,17 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     actions: { getLinkMetadata },
   } = useAPI();
 
+  const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
+
   const updateLinkFromMetadataApi = useBatchingCallback(
-    ({ newUrl, newTitle, newIcon }) =>
+    ({ newUrl, newTitle, newIcon, needsProxy }) =>
       pushUpdateForObject(
         'link',
         () =>
           newUrl
             ? createLink({
                 url: newUrl,
+                needsProxy,
                 desc: newTitle ? newTitle : '',
                 icon: newIcon ? toAbsoluteUrl(newUrl, newIcon) : '',
               })
@@ -124,18 +128,23 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     !isValidUrl(withProtocol(url))
   );
 
-  const populateMetadata = useDebouncedCallback((newUrl) => {
+  const populateMetadata = useDebouncedCallback(async (newUrl) => {
     setFetchingMetadata(true);
-    getLinkMetadata(newUrl)
-      .then(({ title: newTitle, image: newIcon }) => {
-        updateLinkFromMetadataApi({ newUrl, newTitle, newIcon });
-      })
-      .catch(() => {
-        setIsInvalidUrl(true);
-      })
-      .finally(() => {
-        setFetchingMetadata(false);
+    try {
+      const { title: newTitle, image: newIcon } = await getLinkMetadata(newUrl);
+      const needsProxy = newIcon ? await checkResourceAccess(newIcon) : false;
+
+      updateLinkFromMetadataApi({
+        newUrl,
+        newTitle,
+        newIcon,
+        needsProxy,
       });
+    } catch (e) {
+      setIsInvalidUrl(true);
+    } finally {
+      setFetchingMetadata(false);
+    }
   }, 1200);
 
   const handleChange = useCallback(
@@ -200,6 +209,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     setDisplayLinkGuidelines,
     url,
   ]);
+
+  const linkIcon = icon ? getProxiedUrl(link, icon) : null;
 
   const isMultipleUrl = MULTIPLE_VALUE === url;
   const isMultipleDesc = MULTIPLE_VALUE === desc;
@@ -279,7 +290,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           <Row spaceBetween={false}>
             <LinkIcon
               handleChange={handleChangeIcon}
-              icon={icon}
+              icon={linkIcon}
               isLoading={fetchingMetadata}
               disabled={fetchingMetadata}
             />
