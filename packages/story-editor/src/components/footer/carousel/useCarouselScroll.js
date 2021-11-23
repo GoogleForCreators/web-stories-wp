@@ -112,10 +112,10 @@ function useCarouselScroll({
 
   // If the carousel drawer is collapsed, reset first scroll to true
   useEffect(() => {
-    if (carouselState == CAROUSEL_STATE.CLOSED) {
+    if (carouselState === CAROUSEL_STATE.CLOSED) {
       firstScroll.current = true;
     }
-  });
+  }, [carouselState]);
 
   // This effect makes sure, that whenever the current page changes, it'll be in focus
   // Note that it doesn't run just because the current page is updated (some element
