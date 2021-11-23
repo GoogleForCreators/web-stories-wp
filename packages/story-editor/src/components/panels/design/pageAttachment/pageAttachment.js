@@ -133,7 +133,7 @@ function PageAttachmentPanel() {
     try {
       const { image } = await getLinkMetadata(value);
       const iconUrl = image ? toAbsoluteUrl(value, image) : '';
-      const needsProxy = await checkResourceAccess(iconUrl);
+      const needsProxy = iconUrl ? await checkResourceAccess(iconUrl) : false;
 
       updatePageAttachment({
         url: value,
@@ -213,7 +213,7 @@ function PageAttachmentPanel() {
 
   const checkboxId = `cb-${uuidv4()}`;
 
-  const iconUrl = getProxiedUrl(pageAttachment, encodeURI(icon));
+  const iconUrl = icon ? getProxiedUrl(pageAttachment, icon) : null;
 
   let hint;
   const hasError = displayWarning || isInvalidUrl;

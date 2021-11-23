@@ -132,7 +132,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     setFetchingMetadata(true);
     try {
       const { title: newTitle, image: newIcon } = await getLinkMetadata(newUrl);
-      const needsProxy = await checkResourceAccess(newIcon);
+      const needsProxy = newIcon ? await checkResourceAccess(newIcon) : false;
 
       updateLinkFromMetadataApi({
         newUrl,
@@ -210,7 +210,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     url,
   ]);
 
-  const linkIcon = getProxiedUrl(link, encodeURI(icon));
+  const linkIcon = icon ? getProxiedUrl(link, icon) : null;
 
   const isMultipleUrl = MULTIPLE_VALUE === url;
   const isMultipleDesc = MULTIPLE_VALUE === desc;
