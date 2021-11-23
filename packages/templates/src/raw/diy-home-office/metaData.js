@@ -31,14 +31,31 @@ export default {
     _x('White', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Black Pepper', 'color', 'web-stories'), color: '#3d3730' },
+    {
+      label: _x('Black Pepper', 'color', 'web-stories'),
+      color: '#3d3730',
+      family: _x('Black', 'color', 'web-stories'),
+    },
     {
       label: _x('Cannon Black', 'color', 'web-stories'),
       color: '#373737',
+      family: _x('Black', 'color', 'web-stories'),
     },
-    { label: _x('Pastel Orange', 'color', 'web-stories'), color: '#ffb555' },
-    { label: _x('White Linen', 'color', 'web-stories'), color: '#f6f2ed' },
-    { label: _x('Gray Beige', 'color', 'web-stories'), color: '#c7bbaf' },
+    {
+      label: _x('Pastel Orange', 'color', 'web-stories'),
+      color: '#ffb555',
+      family: _x('Orange', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White Linen', 'color', 'web-stories'),
+      color: '#f6f2ed',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Gray Beige', 'color', 'web-stories'),
+      color: '#c7bbaf',
+      family: _x('Gray', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'This template’s balanced layout and warm, pastel color palette will let you create stories about home decor, arts and crafts, and other DIY guides that are detailed and inspiring.',

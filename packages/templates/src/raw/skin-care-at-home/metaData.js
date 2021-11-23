@@ -31,17 +31,35 @@ export default {
     _x('Pink', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Playful Purple', 'color', 'web-stories'), color: '#380e63' },
-    { label: _x('Rose Pink', 'color', 'web-stories'), color: '#f3cce5' },
+    {
+      label: _x('Playful Purple', 'color', 'web-stories'),
+      color: '#380e63',
+      family: _x('Purple', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Rose Pink', 'color', 'web-stories'),
+      color: '#f3cce5',
+      family: _x('Pink', 'color', 'web-stories'),
+    },
     {
       label: _x('Lavender Potpourri', 'color', 'web-stories'),
       color: '#cdccf3',
+      family: _x('Purple', 'color', 'web-stories'),
     },
-    { label: _x('Light Blue Denim', 'color', 'web-stories'), color: '#cce0f3' },
-    { label: _x('Light Green Teal', 'color', 'web-stories'), color: '#ccf3df' },
+    {
+      label: _x('Light Blue Denim', 'color', 'web-stories'),
+      color: '#cce0f3',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Light Green Teal', 'color', 'web-stories'),
+      color: '#ccf3df',
+      family: _x('Green', 'color', 'web-stories'),
+    },
     {
       label: _x('Cream Fizz Yellow', 'color', 'web-stories'),
       color: '#f3e5cc',
+      family: _x('Yellow', 'color', 'web-stories'),
     },
   ],
   description: __(

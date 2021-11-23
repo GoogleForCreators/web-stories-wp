@@ -96,8 +96,14 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 * @return true|WP_Error True if the request has read access for the item, otherwise WP_Error object.
 	 */
 	public function get_item_permissions_check( $request ) {
+		/**
+		 * User ID.
+		 *
+		 * @var int $user_id
+		 */
+		$user_id = $request['id'];
 
-		$user = $this->get_user( $request['id'] );
+		$user = $this->get_user( $user_id );
 		if ( is_wp_error( $user ) ) {
 			return $user;
 		}
@@ -143,6 +149,11 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 		$cache_key   = "count_user_{$post_type}_{$userid}";
 		$cache_group = 'user_posts_count';
 
+		/**
+		 * Post count.
+		 *
+		 * @var string|false $count
+		 */
 		$count = wp_cache_get( $cache_key, $cache_group );
 		if ( false === $count ) {
 			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.count_user_posts_count_user_posts

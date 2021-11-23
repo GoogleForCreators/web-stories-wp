@@ -18,9 +18,18 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { addTextElement, createNewStory } from '@web-stories-wp/e2e-test-utils';
+import {
+  addTextElement,
+  clearLocalStorage,
+  createNewStory,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Page Templates', () => {
+  beforeAll(async () => {
+    // force to load default templates in the page template pane.
+    await clearLocalStorage();
+  });
+
   it('should be able to load an create custom page templates', async () => {
     await createNewStory();
 

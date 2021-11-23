@@ -18,24 +18,8 @@
  * Internal dependencies
  */
 import preloadVideo from './preloadVideo';
-
-function getImageFromVideo(video) {
-  return new Promise((resolve, reject) => {
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    const ctx = canvas.getContext('2d');
-    try {
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    } catch (err) {
-      // Browser probably doesn't support the video codec.
-      reject(err);
-    }
-
-    canvas.toBlob(resolve, 'image/jpeg');
-  });
-}
+import getImageFromVideo from './getImageFromVideo';
+import seekVideo from './seekVideo';
 
 /**
  * Returns an image of the first frame of a given video.
@@ -46,6 +30,7 @@ function getImageFromVideo(video) {
  */
 async function getFirstFrameOfVideo(src) {
   const video = await preloadVideo(src);
+  await seekVideo(video);
   return getImageFromVideo(video);
 }
 

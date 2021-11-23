@@ -33,7 +33,7 @@
     "@ampproject/toolbox-optimizer": "^2.8.3",
     "@axe-core/puppeteer": "^4.3.0",
     "@babel/core": "^7.15.8",
-    "@babel/eslint-parser": "^7.16.0",
+    "@babel/eslint-parser": "^7.16.3",
     "@babel/eslint-plugin": "^7.14.5",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
     "@babel/plugin-proposal-private-methods": "^7.16.0",
@@ -142,7 +142,7 @@
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recommended": "^6.0.0",
     "stylelint-config-styled-components": "^0.1.1",
-    "stylelint-prettier": "^1.2.0",
+    "stylelint-prettier": "^2.0.0",
     "stylelint-processor-styled-components": "^1.10.0",
     "stylis-plugin-rtl": "^1.0.0",
     "terser-webpack-plugin": "^4.2.3",
@@ -243,7 +243,7 @@
   "lint-staged": {
     "*.js": [
       "eslint --fix",
-      "stylelint --fix --allow-empty-input --syntax \"css-in-js\""
+      "stylelint --fix --allow-empty-input"
     ],
     "*.json": [
       "prettier --write"

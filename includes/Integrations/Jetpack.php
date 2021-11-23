@@ -224,7 +224,7 @@ class Jetpack extends Service_Base {
 
 		$metadata = wp_get_attachment_metadata( $attachment->ID );
 
-		if ( $metadata && isset( $metadata['videopress']['duration'] ) ) {
+		if ( $metadata && isset( $metadata['videopress']['duration'], $data['media_details'] ) && is_array( $data['media_details'] ) ) {
 			$data['media_details']['length_formatted'] = $this->format_milliseconds( $metadata['videopress']['duration'] );
 			$data['media_details']['length']           = (int) floor( $metadata['videopress']['duration'] / 1000 );
 		}
@@ -264,6 +264,11 @@ class Jetpack extends Service_Base {
 			return $response;
 		}
 
+		/**
+		 * Response data.
+		 *
+		 * @var array<string, string|array|bool> $data
+		 */
 		$data = $response->get_data();
 
 		// Reset mime type back to mp4, as this is the correct value.
@@ -274,7 +279,7 @@ class Jetpack extends Service_Base {
 
 		$metadata = wp_get_attachment_metadata( $post->ID );
 
-		if ( $metadata && isset( $metadata['videopress']['duration'] ) ) {
+		if ( $metadata && isset( $metadata['videopress']['duration'], $data['media_details'] ) && is_array( $data['media_details'] ) ) {
 			$data['media_details']['length_formatted'] = $this->format_milliseconds( $metadata['videopress']['duration'] );
 			$data['media_details']['length']           = (int) floor( $metadata['videopress']['duration'] / 1000 );
 		}

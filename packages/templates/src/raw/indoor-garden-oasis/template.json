@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -193,7 +193,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [37, 35, 19],
+            "baseColor": "#252313",
             "isExternal": true
           }
         }
@@ -449,7 +449,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 218, 217],
+            "baseColor": "#dadad9",
             "isExternal": true
           }
         },
@@ -812,7 +812,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [61, 54, 44],
+            "baseColor": "#3d362c",
             "isExternal": true
           }
         },
@@ -1088,7 +1088,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [186, 177, 159],
+            "baseColor": "#bab19f",
             "isExternal": true
           }
         },
@@ -1394,7 +1394,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [221, 222, 227],
+            "baseColor": "#dddee3",
             "isExternal": true
           }
         },
@@ -1987,7 +1987,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [212, 212, 199],
+            "baseColor": "#d4d4c7",
             "isExternal": true
           }
         },
@@ -2556,7 +2556,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [226, 232, 245],
+            "baseColor": "#e2e8f5",
             "isExternal": true
           }
         },
@@ -3134,7 +3134,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [222, 222, 228],
+            "baseColor": "#dedee4",
             "isExternal": true
           }
         },
@@ -3165,7 +3165,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [190, 177, 164],
+            "baseColor": "#beb1a4",
             "isExternal": true
           }
         },
@@ -3466,7 +3466,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [27, 68, 63],
+            "baseColor": "#1b443f",
             "isExternal": true
           }
         },
@@ -3585,7 +3585,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [94, 72, 51],
+            "baseColor": "#5e4833",
             "isExternal": true
           }
         },
@@ -3705,7 +3705,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [231, 230, 232],
+            "baseColor": "#e7e6e8",
             "isExternal": true
           }
         },

@@ -51,6 +51,7 @@ import singleSavedTemplate from './db/singleSavedTemplate';
 import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
 import DocumentPane from './components/documentPane';
+import { Accessibility, Design, Priority } from './components/checklist';
 
 if ('true' === process.env.CI) {
   configure({
@@ -64,6 +65,7 @@ if ('true' === process.env.CI) {
 }
 
 export const MEDIA_PER_PAGE = 20;
+export const LOCAL_MEDIA_PER_PAGE = 50;
 
 function MediaUpload({ render: _render, onSelect }) {
   const open = () => {
@@ -335,6 +337,15 @@ export class Fixture {
       <StoryEditor key={Math.random()} config={this._config}>
         <Layout
           header={<HeaderLayout />}
+          footer={{
+            secondaryMenu: {
+              checklist: {
+                Priority,
+                Design,
+                Accessibility,
+              },
+            },
+          }}
           inspectorTabs={{
             document: {
               title: 'Document',
@@ -391,23 +402,25 @@ export class Fixture {
       });
     });
 
-    await waitFor(
-      async () => {
-        // Set help center to closed right away.
-        // Because there's logic to pop open the help center on initial load
-        // This wait + click to close the button is more in line with
-        // testing the actual behavior rather than overriding the local storage.
-        await this.editor.helpCenter.toggleButton;
-        await this.events?.click(this.editor.helpCenter.toggleButton, {
-          clickCount: 1,
-        });
-        await this.events?.sleep(500);
-      },
-      { timeout: 3000 }
-    );
-
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
+  }
+
+  /**
+   * Tells the fixture to close the help center
+   * which will default to open the first time the fixture renders.
+   *
+   * @return {Promise<Object>} Resolves when help center toggle is clicked.
+   */
+  collapseHelpCenter() {
+    const { _editor, _events } = this;
+    if (!_editor || !_events) {
+      throw new Error('Not ready: Help Center unable to collapse');
+    }
+
+    const { toggleButton } = _editor.helpCenter;
+
+    return _events.click(toggleButton);
   }
 
   /**
@@ -774,14 +787,17 @@ class APIProviderFixture {
         const filterBySearchTerm = searchTerm
           ? ({ alt_text }) => alt_text.includes(searchTerm)
           : () => true;
-        // Generate 7*6=42 items, 3 pages
-        const clonedMedia = Array(6)
+        // Generate 8*13=104 items, 3 pages
+        const clonedMedia = Array(13)
           .fill(getMediaResponse)
           .flat()
           .map((media, i) => ({ ...media, id: i + 1 }));
         return asyncResponse({
           data: clonedMedia
-            .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
+            .slice(
+              (pagingNum - 1) * LOCAL_MEDIA_PER_PAGE,
+              pagingNum * LOCAL_MEDIA_PER_PAGE
+            )
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
           headers: { totalPages: 3 },
