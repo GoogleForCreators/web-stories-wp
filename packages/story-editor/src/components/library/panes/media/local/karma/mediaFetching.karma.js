@@ -35,6 +35,7 @@ xdescribe('MediaPane fetching', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
