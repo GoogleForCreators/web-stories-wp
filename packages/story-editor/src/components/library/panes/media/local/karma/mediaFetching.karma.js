@@ -53,11 +53,12 @@ xdescribe('MediaPane fetching', () => {
     const initialElements =
       within(mediaGallery).queryAllByTestId(/^mediaElement-/);
 
+    // ensure fixture.screen has loaded before calling expect to prevent immediate failure
+    if (initialElements.length !== LOCAL_MEDIA_PER_PAGE) {
+      await fixture.events.sleep(500);
+    }
+
     await waitFor(() => {
-      // ensure fixture.screen has loaded before calling expect to prevent immediate failure
-      if (initialElements.length !== LOCAL_MEDIA_PER_PAGE) {
-        throw new Error('wait');
-      }
       expect(initialElements.length).toBe(LOCAL_MEDIA_PER_PAGE);
     });
 
@@ -66,15 +67,15 @@ xdescribe('MediaPane fetching', () => {
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
 
-    await waitFor(() => {
-      // ensure fixture.screen has loaded before calling expect to prevent immediate failure
-      if (
-        fixture.screen.queryAllByTestId(/^mediaElement-/).length <
-        LOCAL_MEDIA_PER_PAGE * 2
-      ) {
-        throw new Error('wait');
-      }
+    // ensure fixture.screen has loaded before calling expect to prevent immediate failure
+    if (
+      fixture.screen.queryAllByTestId(/^mediaElement-/).length <
+      LOCAL_MEDIA_PER_PAGE * 2
+    ) {
+      await fixture.events.sleep(500);
+    }
 
+    await waitFor(() => {
       expect(
         fixture.screen.queryAllByTestId(/^mediaElement-/).length
       ).toBeGreaterThanOrEqual(LOCAL_MEDIA_PER_PAGE * 2);
