@@ -35,7 +35,7 @@ import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-import { ContentType, useLocalMedia } from '../../../../../app/media';
+import { ContentType } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
@@ -58,7 +58,8 @@ const InnerContainer = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.3)};
+  background-color: ${({ theme, $baseColor }) =>
+    $baseColor ? $baseColor : rgba(theme.colors.standard.black, 0.3)};
   body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
@@ -83,23 +84,11 @@ function Element({
     local,
     alt,
     isMuted,
+    isTranscoding,
+    isMuting,
+    isTrimming,
+    baseColor,
   } = resource;
-
-  const {
-    isResourceTrimmingById,
-    isResourceMutingById,
-    isResourceTranscodingById,
-  } = useLocalMedia((state) => {
-    return {
-      isResourceTranscodingById: state.state.isResourceTranscodingById,
-      isResourceMutingById: state.state.isResourceMutingById,
-      isResourceTrimmingById: state.state.isResourceTrimmingById,
-    };
-  });
-
-  const isTranscoding = isResourceTrimmingById(resourceId);
-  const isMuting = isResourceMutingById(resourceId);
-  const isTrimming = isResourceTranscodingById(resourceId);
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -110,6 +99,7 @@ function Element({
   const [showVideoDetail, setShowVideoDetail] = useState(true);
   const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoaded, setLoaded] = useState(false);
 
   const makeActive = useCallback(() => setActive(true), []);
   const makeInactive = useCallback(() => setActive(false), []);
@@ -181,6 +171,8 @@ function Element({
 
   useRovingTabIndex({ ref });
 
+  const onLoad = () => setLoaded(true);
+
   const handleKeyDown = useCallback(
     ({ key }) => {
       if (key === 'Enter') {
@@ -216,7 +208,7 @@ function Element({
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
     >
-      <InnerContainer>
+      <InnerContainer $baseColor={!isLoaded && baseColor}>
         <InnerElement
           type={type}
           src={src}
@@ -227,6 +219,7 @@ function Element({
           width={width}
           height={height}
           onClick={onClick}
+          onLoad={onLoad}
           showVideoDetail={showVideoDetail}
           active={active}
         />
@@ -274,26 +267,11 @@ Element.propTypes = {
  * @return {null|*} Element or null if does not map to video/image.
  */
 function MediaElement(props) {
-  const {
-    isResourceTrimmingById,
-    isResourceMutingById,
-    isResourceTranscodingById,
-  } = useLocalMedia((state) => {
-    return {
-      isResourceMutingById: state.state.isResourceMutingById,
-      isResourceTrimmingById: state.state.isResourceTrimmingById,
-      isResourceTranscodingById: state.state.isResourceTranscodingById,
-    };
-  });
-  const { id } = props.resource;
+  const { isTranscoding, isMuting, isTrimming } = props.resource;
 
-  if (
-    isResourceTrimmingById(id) ||
-    isResourceMutingById(id) ||
-    isResourceTranscodingById(id)
-  ) {
+  if (isTranscoding || isMuting || isTrimming) {
     return (
-      <Tooltip title={__('Video is currently progressing', 'web-stories')}>
+      <Tooltip title={__('Video is being processed', 'web-stories')}>
         <Element {...props} />
       </Tooltip>
     );

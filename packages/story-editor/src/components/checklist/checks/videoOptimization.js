@@ -45,6 +45,7 @@ import { useHighlights } from '../../../app/highlights';
 import { StyledVideoOptimizationIcon } from '../../checklistCard/styles';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import useFFmpeg from '../../../app/media/utils/useFFmpeg';
 
 const OptimizeButton = styled(Button)`
   margin-top: 4px;
@@ -110,7 +111,7 @@ function reducer(state, action) {
   }
 }
 
-export const BulkVideoOptimization = () => {
+const BulkVideoOptimization = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const [state, dispatch] = useReducer(reducer, initialState);
   const pages = useStory(({ state: storyState }) => storyState?.pages);
@@ -273,4 +274,13 @@ export const BulkVideoOptimization = () => {
   );
 };
 
-export default BulkVideoOptimization;
+const VideoOptimization = () => {
+  {
+    /* `isTranscodingEnabled` already checks for `hasUploadMediaAction` */
+  }
+  const { isTranscodingEnabled } = useFFmpeg();
+
+  return isTranscodingEnabled ? <BulkVideoOptimization /> : null;
+};
+
+export default VideoOptimization;

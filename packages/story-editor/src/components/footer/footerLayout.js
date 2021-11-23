@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -50,7 +51,7 @@ const Area = styled.div`
   flex-direction: column;
 `;
 
-function FooterLayout() {
+function FooterLayout({ footer }) {
   return (
     <Wrapper aria-label={__('Workspace Footer', 'web-stories')}>
       <Area area="carousel">
@@ -60,10 +61,14 @@ function FooterLayout() {
         <PrimaryMenu />
       </Area>
       <Area area="secondary">
-        <SecondaryMenu />
+        <SecondaryMenu menu={footer?.secondaryMenu} />
       </Area>
     </Wrapper>
   );
 }
+
+FooterLayout.propTypes = {
+  footer: PropTypes.object,
+};
 
 export default FooterLayout;

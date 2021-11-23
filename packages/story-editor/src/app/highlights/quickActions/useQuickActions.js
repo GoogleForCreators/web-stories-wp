@@ -27,7 +27,7 @@ import {
   Icons,
 } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media';
+import { canTranscodeResource, resourceList } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -82,31 +82,24 @@ export const MediaPicker = ({ render, ...props }) => {
       updateElementsById,
     })
   );
-  const {
-    resetWithFetch,
-    updateVideoIsMuted,
-    optimizeVideo,
-    optimizeGif,
-    isResourceProcessing,
-  } = useLocalMedia(
-    ({
-      state: { isResourceProcessing },
-      actions: {
-        resetWithFetch,
-        updateVideoIsMuted,
-        optimizeVideo,
-        optimizeGif,
-      },
-    }) => {
-      return {
-        isResourceProcessing,
-        resetWithFetch,
-        updateVideoIsMuted,
-        optimizeVideo,
-        optimizeGif,
-      };
-    }
-  );
+  const { resetWithFetch, postProcessingResource, optimizeVideo, optimizeGif } =
+    useLocalMedia(
+      ({
+        actions: {
+          resetWithFetch,
+          postProcessingResource,
+          optimizeVideo,
+          optimizeGif,
+        },
+      }) => {
+        return {
+          resetWithFetch,
+          postProcessingResource,
+          optimizeVideo,
+          optimizeGif,
+        };
+      }
+    );
 
   const { isTranscodingEnabled } = useFFmpeg();
   const { showSnackbar } = useSnackbar();
@@ -157,7 +150,7 @@ export const MediaPicker = ({ render, ...props }) => {
   const handleMediaSelect = useCallback(
     (resource) => {
       try {
-        if (isTranscodingEnabled && isResourceProcessing(resource.id)) {
+        if (isTranscodingEnabled && canTranscodeResource(resource)) {
           if (transcodableMimeTypes.includes(resource.mimeType)) {
             optimizeVideo({ resource });
           }
@@ -172,13 +165,7 @@ export const MediaPicker = ({ render, ...props }) => {
           resource.sizes?.medium?.source_url || resource.src
         );
 
-        if (
-          !resource.local &&
-          allowedVideoMimeTypes.includes(resource.mimeType) &&
-          resource.isMuted === null
-        ) {
-          updateVideoIsMuted(resource.id, resource.src);
-        }
+        postProcessingResource(resource);
       } catch (e) {
         showSnackbar({
           message: e.message,
@@ -187,15 +174,13 @@ export const MediaPicker = ({ render, ...props }) => {
       }
     },
     [
-      allowedVideoMimeTypes,
       insertMediaElement,
-      isResourceProcessing,
       isTranscodingEnabled,
       optimizeGif,
       optimizeVideo,
       showSnackbar,
       transcodableMimeTypes,
-      updateVideoIsMuted,
+      postProcessingResource,
     ]
   );
   return (
@@ -261,13 +246,6 @@ const useQuickActions = () => {
       selectedElements,
       updateElementsById,
     })
-  );
-  const { isResourceProcessing } = useLocalMedia(
-    ({ state: { isResourceProcessing } }) => {
-      return {
-        isResourceProcessing,
-      };
-    }
   );
   const { undo } = useHistory(({ actions: { undo } }) => ({
     undo,
@@ -678,7 +656,7 @@ const useQuickActions = () => {
     if (!resource) {
       return [];
     }
-    return !isResourceProcessing(resource.id) && hasTrimMode
+    return canTranscodeResource(resource) && hasTrimMode
       ? [
           {
             Icon: Scissors,
@@ -699,7 +677,6 @@ const useQuickActions = () => {
     hasTrimMode,
     selectedElement,
     toggleTrimMode,
-    isResourceProcessing,
     selectedElements,
   ]);
 

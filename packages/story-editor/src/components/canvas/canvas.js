@@ -24,12 +24,13 @@ import PropTypes from 'prop-types';
  */
 import CanvasLayout from './canvasLayout';
 
-function Canvas({ header }) {
-  return <CanvasLayout header={header} />;
+function Canvas({ header, footer }) {
+  return <CanvasLayout header={header} footer={footer} />;
 }
 
 Canvas.propTypes = {
   header: PropTypes.node,
+  footer: PropTypes.object,
 };
 
 export default Canvas;

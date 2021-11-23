@@ -81,6 +81,14 @@ const Page = styled.button`
         )};
       }
     `}
+
+      &:focus::after {
+        border-color: ${rgba(
+          theme.colors.border.selection,
+          isActive ? 1 : 0.7
+        )};
+      }
+    `}
 `;
 
 const PreviewWrapper = styled.div`
@@ -97,36 +105,51 @@ const Image = styled.img`
 `;
 
 // PagePreview is used in the editor's Carousel as well as in the Checklist and GridView
-function PagePreview({ page, label, ...props }) {
+function PagePreview({
+  page,
+  label,
+  isCacheable = false,
+  cachedImage = null,
+  setCachedImage = null,
+  ...props
+}) {
   const { backgroundColor } = page;
   const { width, height, isActive } = props;
 
-  const [imageBlob, setImageBlob] = useState();
   const [pageNode, setPageNode] = useState();
   const setPageRef = useCallback((node) => node && setPageNode(node), []);
   const pageAtGenerationTime = useRef();
-  const enableThumbnailCaching = useFeature('enableThumbnailCaching');
+  const enableThumbnailCaching =
+    useFeature('enableThumbnailCaching') && isCacheable;
 
   // Whenever the page is re-generated
   // remove the old (and now stale) image blob
   useEffect(() => {
-    if (pageAtGenerationTime.current !== page) {
-      setImageBlob(null);
+    if (
+      enableThumbnailCaching &&
+      isActive &&
+      pageAtGenerationTime.current !== page
+    ) {
+      setCachedImage({ pageId: page.id, cachedImage: null });
       pageAtGenerationTime.current = null;
     }
-  }, [page]);
+  }, [page, setCachedImage, isActive, enableThumbnailCaching]);
 
   useEffect(() => {
     // If this is not the active page, there is a page node, we
     // don't already have a snapshot and thumbnail caching is active
-    if (enableThumbnailCaching && !isActive && pageNode && !imageBlob) {
+    if (enableThumbnailCaching && !isActive && pageNode && !cachedImage) {
       // Schedule an idle callback to actually generate the image
       const id = requestIdleCallback(
         () => {
           import(
             /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
           ).then((htmlToImage) => {
-            htmlToImage.toJpeg(pageNode, { quality: 1 }).then(setImageBlob);
+            htmlToImage
+              .toJpeg(pageNode, { quality: 1 })
+              .then((image) =>
+                setCachedImage({ pageId: page.id, cachedImage: image })
+              );
             pageAtGenerationTime.current = page;
           });
         },
@@ -138,7 +161,14 @@ function PagePreview({ page, label, ...props }) {
     }
     // Required because of eslint: consistent-return
     return undefined;
-  }, [enableThumbnailCaching, isActive, pageNode, imageBlob, page]);
+  }, [
+    enableThumbnailCaching,
+    isActive,
+    pageNode,
+    cachedImage,
+    setCachedImage,
+    page,
+  ]);
 
   usePerformanceTracking({
     node: pageNode,
@@ -150,9 +180,9 @@ function PagePreview({ page, label, ...props }) {
       <TransformProvider>
         <Page ref={setPageRef} aria-label={label} {...props}>
           <PreviewWrapper background={backgroundColor}>
-            {imageBlob ? (
+            {cachedImage ? (
               <Image
-                src={imageBlob}
+                src={cachedImage}
                 width={width}
                 height={height}
                 alt={label}
@@ -177,6 +207,9 @@ function PagePreview({ page, label, ...props }) {
 PagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
   label: PropTypes.string,
+  isCacheable: PropTypes.bool,
+  cachedImage: PropTypes.object,
+  setCachedImage: PropTypes.func,
   pageImageData: PropTypes.string,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,

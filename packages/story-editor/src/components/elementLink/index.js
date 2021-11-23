@@ -18,9 +18,16 @@ export function getLinkFromElement(element) {
   return element.link || null;
 }
 
-export function createLink({ url = '', ...rest } = {}) {
+export function createLink({
+  url = '',
+  needsProxy = false,
+  rel = [],
+  ...rest
+} = {}) {
   return {
+    needsProxy,
     url,
+    rel,
     ...rest,
   };
 }

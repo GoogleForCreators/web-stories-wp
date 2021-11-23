@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 export { default as FlipControls } from './flipControls';
+export { default as LinkRelations } from './linkRelations';
 export { default as getCommonValue } from './getCommonValue';
 export { default as getCommonObjectValue } from './getCommonObjectValue';
 export { default as useCommonColorValue } from './useCommonColorValue';

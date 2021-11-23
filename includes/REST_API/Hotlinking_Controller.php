@@ -276,6 +276,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Parses a URL to return proxied file.
 	 *
+	 * @todo Forward the Range request header.
+	 *
 	 * @SuppressWarnings(PHPMD.ErrorControlOperator)
 	 *
 	 * @since 1.13.0
@@ -292,6 +294,16 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$url = $request['url'];
 		$url = untrailingslashit( $url );
 
+		// Remove any relevant headers already set by WP_REST_Server::serve_request() // wp_get_nocache_headers().
+		if ( ! headers_sent() ) {
+			header_remove( 'Cache-Control' );
+			header_remove( 'Content-Type' );
+			header_remove( 'Expires' );
+			header_remove( 'Last Modified' );
+		}
+
+		header( 'Cache-Control: max-age=3600' );
+
 		$args = [
 			'timeout'  => 60, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 			'blocking' => false,
@@ -306,9 +318,9 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			// Other than php://memory, php://temp will use a temporary file once the amount of data stored hits a predefined limit (the default is 2 MB).
 			// The location of this temporary file is determined in the same way as the {@see sys_get_temp_dir()} function.
 			if ( WP_DEBUG ) {
-				$stream_handle = fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
+				$stream_handle = fopen( 'php://memory', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
 			} else {
-				$stream_handle = @fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.PHP.NoSilencedErrors.Discouraged, Generic.PHP.NoSilencedErrors.Forbidden
+				$stream_handle = @fopen( 'php://memory', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.PHP.NoSilencedErrors.Discouraged, Generic.PHP.NoSilencedErrors.Forbidden
 			}
 
 			if ( $stream_handle ) {
@@ -339,17 +351,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 */
 	private function proxy_url_curl( $url, $args ) {
 		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
-		$response = wp_safe_remote_get( $url, $args );
+		wp_safe_remote_get( $url, $args );
 		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
-
-		$status = wp_remote_retrieve_response_code( $response );
-
-		if ( ! $status ) {
-			http_response_code( 404 );
-			return;
-		}
-
-		http_response_code( (int) $status );
 
 		rewind( $this->stream_handle );
 		while ( ! feof( $this->stream_handle ) ) {
