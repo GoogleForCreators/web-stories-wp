@@ -33,6 +33,7 @@ import {
 /**
  * Internal dependencies
  */
+import { useLocalMedia } from '../../../../../app';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
@@ -103,6 +104,10 @@ function DropDownMenu({
   const [showEditDialog, setShowEditDialog] = useState(false);
   const moreButtonRef = useRef();
 
+  const { isResourceUploadingById } = useLocalMedia((state) => ({
+    isResourceUploadingById: state.state.isResourceUploadingById,
+  }));
+
   const handleCurrentValue = (evt, value) => {
     onMenuSelected();
     switch (value) {
@@ -134,7 +139,7 @@ function DropDownMenu({
 
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
-    !resource.local && ( // Don't show menu if resource not uploaded to server yet.
+    !isResourceUploadingById(resource.id) && ( // Don't show menu if resource not uploaded to server yet.
       <MenuContainer>
         {(display || isMenuOpen) && (
           <>

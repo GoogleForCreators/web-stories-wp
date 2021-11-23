@@ -33,6 +33,7 @@ import {
  */
 import StoryPropTypes from '../../types';
 import useCORSProxy from '../../utils/useCORSProxy';
+import { useLocalMedia } from '../../app';
 import { mediaWithScale } from './util';
 import MediaDisplay from './display';
 
@@ -54,7 +55,14 @@ function ImageDisplay({ element, box, previewMode }) {
     initialSrc = resourceList.get(resource.id).url;
   }
 
-  if (resourceList.get(resource.id)?.type === 'fullsize' || resource.local) {
+  const { isResourceUploadingById } = useLocalMedia((state) => ({
+    isResourceUploadingById: state.state.isResourceUploadingById,
+  }));
+
+  if (
+    resourceList.get(resource.id)?.type === 'fullsize' ||
+    isResourceUploadingById(resource.id)
+  ) {
     initialSrcType = 'fullsize';
     initialSrc = resource.src;
   }

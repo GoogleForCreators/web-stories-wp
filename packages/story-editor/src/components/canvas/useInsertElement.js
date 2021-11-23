@@ -41,9 +41,12 @@ function useInsertElement() {
     addElement: state.actions.addElement,
     updateElementById: state.actions.updateElementById,
   }));
-  const { postProcessingResource } = useLocalMedia((state) => ({
-    postProcessingResource: state.actions.postProcessingResource,
-  }));
+  const { postProcessingResource, isResourceUploadingById } = useLocalMedia(
+    (state) => ({
+      postProcessingResource: state.actions.postProcessingResource,
+      isResourceUploadingById: state.state.isResourceUploadingById,
+    })
+  );
   const {
     actions: { registerUsage },
   } = useMedia3pApi();
@@ -100,13 +103,16 @@ function useInsertElement() {
    */
   const handleRegisterUsage = useCallback(
     (resource) => {
-      if (!resource.local && resource?.attribution?.registerUsageUrl) {
+      if (
+        !isResourceUploadingById(resource.id) &&
+        resource?.attribution?.registerUsageUrl
+      ) {
         registerUsage({
           registerUsageUrl: resource.attribution.registerUsageUrl,
         });
       }
     },
-    [registerUsage]
+    [isResourceUploadingById, registerUsage]
   );
 
   const focusCanvas = useFocusCanvas();

@@ -696,7 +696,7 @@ const useQuickActions = () => {
       : [];
   }, [
     selectedElements,
-    selectedElement.type,
+    selectedElement,
     isResourceProcessing,
     hasTrimMode,
     actionMenuProps,
