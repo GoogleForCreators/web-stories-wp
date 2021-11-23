@@ -215,7 +215,7 @@ function DropTargetsProvider({ children }) {
       draggingResource,
       isDropTargetingDisabled,
     },
-    // If the drop-targeting is disabled, all the related actions shouldn't be applied.
+    // If drop-targeting is disabled, all the related actions are ignored.
     actions: {
       registerDropTarget: isDropTargetingDisabled ? noop : registerDropTarget,
       unregisterDropTarget,
