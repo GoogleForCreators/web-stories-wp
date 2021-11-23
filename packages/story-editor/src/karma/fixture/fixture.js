@@ -791,7 +791,7 @@ class APIProviderFixture {
             )
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
-          headers: { totalPages: 3 },
+          headers: { totalPages: 4 },
         });
       }, []);
       const uploadMedia = useCallback(
