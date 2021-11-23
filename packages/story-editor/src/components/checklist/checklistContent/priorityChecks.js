@@ -23,24 +23,11 @@ import { useEffect } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import useFFmpeg from '../../../app/media/utils/useFFmpeg';
-import { useConfig } from '../../../app';
 import { PANEL_STATES } from '../../tablist';
 import { ISSUE_TYPES } from '../constants';
-import PublisherLogoSize from '../checks/publisherLogoSize';
-import StoryMissingExcerpt from '../checks/storyMissingExerpt';
-import StoryMissingTitle from '../checks/storyMissingTitle';
-import StoryPosterSize from '../checks/storyPosterSize';
-import { StoryPosterAttached } from '../checks/storyPosterAttached';
-import StoryTitleLength from '../checks/storyTitleLength';
-import VideoElementMissingPoster from '../checks/videoElementMissingPoster';
 import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
-import VideoOptimization from '../checks/videoOptimization';
-import StoryMissingPublisherName from '../checks/storyMissingPublisherName';
-import StoryAmpValidationErrors from '../checks/storyAmpValidationErrors';
-import PublisherLogoMissing from '../checks/publisherLogoMissing';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
 function PriorityPanel({
@@ -77,7 +64,10 @@ PriorityPanel.propTypes = {
   maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.arrayOf(PropTypes.node),
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
 };
 
 export function PriorityChecks(props) {
@@ -87,34 +77,14 @@ export function PriorityChecks(props) {
       updateHighPriorityCount,
     })
   );
-  const { canManageSettings, hasUploadMediaAction } = useConfig(
-    ({ capabilities }) => ({
-      canManageSettings: capabilities.canManageSettings,
-      hasUploadMediaAction: capabilities.hasUploadMediaAction,
-    })
-  );
 
   useEffect(() => {
     updateHighPriorityCount(count);
   }, [updateHighPriorityCount, count]);
 
-  const { isTranscodingEnabled } = useFFmpeg();
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
-      <PriorityPanel {...props}>
-        <StoryMissingTitle />
-        {canManageSettings && <StoryMissingPublisherName />}
-        <StoryTitleLength />
-        <StoryMissingExcerpt />
-        {hasUploadMediaAction && <StoryPosterAttached />}
-        {hasUploadMediaAction && <StoryPosterSize />}
-        {hasUploadMediaAction && <PublisherLogoMissing />}
-        {hasUploadMediaAction && <PublisherLogoSize />}
-        {hasUploadMediaAction && <VideoElementMissingPoster />}
-        {/* `isTranscodingEnabled` already checks for `hasUploadMediaAction` */}
-        {isTranscodingEnabled && <VideoOptimization />}
-        <StoryAmpValidationErrors />
-      </PriorityPanel>
+      <PriorityPanel {...props}>{props.children}</PriorityPanel>
     </ChecklistCategoryProvider>
   );
 }
@@ -125,4 +95,5 @@ PriorityChecks.propTypes = {
   maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  children: PropTypes.node,
 };

@@ -19,8 +19,6 @@
 import {
   PAGE_RATIO,
   FULLBLEED_RATIO,
-  dataToFontSizeY,
-  dataFontEm,
   getBox,
   getBoundRect,
 } from '@web-stories-wp/units';
@@ -48,16 +46,6 @@ import { getSpansFromContent } from '../../utils';
  * @property {number} g green value
  * @property {number} b blue value
  */
-
-/**
- *
- * @param {number} fontSize The text element's font size in editor pixels
- * @return {number} the true font size for measuring against accessibility standards
- */
-function getPtFromEditorFontSize(fontSize) {
-  // 1 point = 1.333333 px
-  return dataFontEm(dataToFontSizeY(fontSize, 100)) * 1.333333;
-}
 
 /**
  *
@@ -318,7 +306,7 @@ function getTextShapeBackgroundColor({ background }) {
  * @param {Object} arguments The arguments
  * @param {RGB} arguments.backgroundColor The r, g, b object representing a background color to compare to the text colors
  * @param {Array} arguments.textStyleColors The array of style colors of the text being checked
- * @param {number} arguments.fontSize The font size (in editor pixels) of the text being checked
+ * @param {number} arguments.fontSize The font size (in pixels) of the text being checked
  * @return {boolean} If true, there is a contrast issue with some text
  */
 function textBackgroundHasLowContrast({
@@ -340,7 +328,7 @@ function textBackgroundHasLowContrast({
     const contrastCheck = checkContrastFromLuminances(
       textLuminance,
       backgroundLuminance,
-      fontSize && getPtFromEditorFontSize(fontSize)
+      fontSize
     );
     return !contrastCheck.WCAG_AA;
   });

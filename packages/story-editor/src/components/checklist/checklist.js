@@ -117,7 +117,7 @@ ThroughputPopup.propTypes = {
   children: PropTypes.arrayOf(PropTypes.node).isRequired,
 };
 
-export function Checklist() {
+export function Checklist({ items = {} }) {
   const { close, openPanel, toggle, isOpen, isChecklistMounted, setOpenPanel } =
     useChecklist(
       ({
@@ -185,34 +185,56 @@ export function Checklist() {
     ).length
   );
 
+  const { Priority, Design, Accessibility } = items;
+
   return (
     <DirectionAware>
       <Wrapper role="region" aria-label={CHECKLIST_TITLE}>
         <ThroughputPopup ref={navRef} close={close} isOpen={isOpen}>
-          <PriorityChecks
-            badgeCount={priorityBadgeCount}
-            isOpen={isOpen && openPanel === ISSUE_TYPES.PRIORITY}
-            onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
-            maxHeight={maxPanelHeight}
-            title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
-          />
-          <DesignChecks
-            badgeCount={designBadgeCount}
-            isOpen={isOpen && openPanel === ISSUE_TYPES.DESIGN}
-            onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
-            maxHeight={maxPanelHeight}
-            title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
-          />
-          <AccessibilityChecks
-            badgeCount={accessibilityBadgeCount}
-            isOpen={isOpen && openPanel === ISSUE_TYPES.ACCESSIBILITY}
-            onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
-            maxHeight={maxPanelHeight}
-            title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
-          />
+          {Priority && (
+            <PriorityChecks
+              badgeCount={priorityBadgeCount}
+              isOpen={isOpen && openPanel === ISSUE_TYPES.PRIORITY}
+              onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
+              maxHeight={maxPanelHeight}
+              title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
+            >
+              <Priority />
+            </PriorityChecks>
+          )}
+          {Design && (
+            <DesignChecks
+              badgeCount={designBadgeCount}
+              isOpen={isOpen && openPanel === ISSUE_TYPES.DESIGN}
+              onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
+              maxHeight={maxPanelHeight}
+              title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
+            >
+              <Design />
+            </DesignChecks>
+          )}
+          {Accessibility && (
+            <AccessibilityChecks
+              badgeCount={accessibilityBadgeCount}
+              isOpen={isOpen && openPanel === ISSUE_TYPES.ACCESSIBILITY}
+              onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
+              maxHeight={maxPanelHeight}
+              title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
+            >
+              <Accessibility />
+            </AccessibilityChecks>
+          )}
         </ThroughputPopup>
         <Toggle isOpen={isOpen} onClick={toggle} popupId={POPUP_ID} />
       </Wrapper>
     </DirectionAware>
   );
 }
+
+Checklist.propTypes = {
+  items: PropTypes.shape({
+    Priority: PropTypes.elementType,
+    Design: PropTypes.elementType,
+    Accessibility: PropTypes.elementType,
+  }),
+};

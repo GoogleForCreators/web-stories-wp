@@ -89,6 +89,8 @@ function CarouselPage({ pageId, index }) {
     page,
     isCurrentPage,
     hasMultiplePages,
+    setCachedImage,
+    cachedImage,
   } = useCarousel(
     ({
       state: {
@@ -98,8 +100,9 @@ function CarouselPage({ pageId, index }) {
         numPages,
         pages,
         currentPageId,
+        cachedImages,
       },
-      actions: { clickPage, setPageRef },
+      actions: { clickPage, setPageRef, setCachedImage },
     }) => ({
       pageThumbWidth,
       pageThumbHeight,
@@ -109,6 +112,8 @@ function CarouselPage({ pageId, index }) {
       page: pages.find(({ id }) => id === pageId),
       isCurrentPage: pageId === currentPageId,
       hasMultiplePages: numPages > 1,
+      cachedImage: cachedImages[pageId] || null,
+      setCachedImage,
     })
   );
 
@@ -155,6 +160,9 @@ function CarouselPage({ pageId, index }) {
           width={pageThumbWidth}
           height={pageThumbHeight}
           isInteractive={hasMultiplePages}
+          isCacheable
+          cachedImage={cachedImage}
+          setCachedImage={setCachedImage}
         />
       </ReorderablePage>
       <PageSeparator

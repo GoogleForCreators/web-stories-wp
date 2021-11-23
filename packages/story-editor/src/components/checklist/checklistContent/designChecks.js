@@ -22,16 +22,9 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ISSUE_TYPES } from '../constants';
-import PageTooManyLinks from '../checks/pageTooManyLinks';
-import PageTooMuchText from '../checks/pageTooMuchText';
-import PageTooLittleText from '../checks/pageTooLittleText';
-import VideoElementResolution from '../checks/videoElementResolution';
-import ImageElementResolution from '../checks/imageElementResolution';
-import StoryPagesCount from '../checks/storyPagesCount';
 import { ChecklistCategoryProvider } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import { useConfig } from '../../../app';
 
 function DesignPanel({
   badgeCount = 0,
@@ -65,24 +58,16 @@ DesignPanel.propTypes = {
   maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.arrayOf(PropTypes.node),
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
 };
 
 export function DesignChecks(props) {
-  const { hasUploadMediaAction } = useConfig(({ capabilities }) => ({
-    hasUploadMediaAction: capabilities.hasUploadMediaAction,
-  }));
-
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
-      <DesignPanel {...props}>
-        <StoryPagesCount />
-        <PageTooMuchText />
-        <PageTooLittleText />
-        <PageTooManyLinks />
-        {hasUploadMediaAction && <VideoElementResolution />}
-        {hasUploadMediaAction && <ImageElementResolution />}
-      </DesignPanel>
+      <DesignPanel {...props}>{props.children}</DesignPanel>
     </ChecklistCategoryProvider>
   );
 }
@@ -92,4 +77,5 @@ DesignChecks.propTypes = {
   maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  children: PropTypes.node,
 };
