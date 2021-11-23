@@ -123,8 +123,6 @@ setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 1000 });
  * Set up browser.
  */
 async function setupBrowser() {
-  await clearLocalStorage();
-
   // Same as jest-puppeteer.config.cjs and percy.config.yml
   await setBrowserViewport({
     width: 1600,
@@ -251,12 +249,15 @@ beforeAll(async () => {
   await trashAllTerms('web_story_category');
   await trashAllTerms('web_story_tag');
   await deleteAllMedia();
+
+  await clearLocalStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
 afterEach(async () => {
   await runAxeTestsForStoriesEditor();
   await setupBrowser();
+  await clearLocalStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
