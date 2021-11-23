@@ -969,7 +969,7 @@ function RightClickMenuProvider({ children }) {
       },
     ];
   }, [
-    copiedElement.type,
+    copiedElement,
     handleClearElementStyles,
     handleCopyStyles,
     handleOpenScaleAndCrop,

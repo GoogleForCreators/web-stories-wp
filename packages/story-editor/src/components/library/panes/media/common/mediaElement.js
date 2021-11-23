@@ -35,7 +35,7 @@ import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-import { ContentType } from '../../../../../app/media';
+import { ContentType, useLocalMedia } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
@@ -84,11 +84,24 @@ function Element({
     local,
     alt,
     isMuted,
-    isTranscoding,
-    isMuting,
-    isTrimming,
     baseColor,
   } = resource;
+
+  const {
+    isResourceTrimmingById,
+    isResourceMutingById,
+    isResourceTranscodingById,
+  } = useLocalMedia((state) => {
+    return {
+      isResourceTranscodingById: state.state.isResourceTranscodingById,
+      isResourceMutingById: state.state.isResourceMutingById,
+      isResourceTrimmingById: state.state.isResourceTrimmingById,
+    };
+  });
+
+  const isTranscoding = isResourceTrimmingById(resourceId);
+  const isMuting = isResourceMutingById(resourceId);
+  const isTrimming = isResourceTranscodingById(resourceId);
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;

@@ -111,7 +111,8 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
-  const shouldDisableVideoActions = isResourceProcessing(resourceId);
+  const shouldDisableVideoActions =
+    isResourceProcessing(resourceId) || resource.isExternal;
 
   const shouldDisplayMuteButton =
     isTranscodingEnabled &&

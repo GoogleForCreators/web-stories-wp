@@ -27,7 +27,7 @@ import {
   Icons,
 } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { canTranscodeResource, resourceList } from '@web-stories-wp/media';
+import { resourceList } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -82,24 +82,31 @@ export const MediaPicker = ({ render, ...props }) => {
       updateElementsById,
     })
   );
-  const { resetWithFetch, postProcessingResource, optimizeVideo, optimizeGif } =
-    useLocalMedia(
-      ({
-        actions: {
-          resetWithFetch,
-          postProcessingResource,
-          optimizeVideo,
-          optimizeGif,
-        },
-      }) => {
-        return {
-          resetWithFetch,
-          postProcessingResource,
-          optimizeVideo,
-          optimizeGif,
-        };
-      }
-    );
+  const {
+    resetWithFetch,
+    postProcessingResource,
+    optimizeVideo,
+    optimizeGif,
+    isResourceProcessing,
+  } = useLocalMedia(
+    ({
+      state: { isResourceProcessing },
+      actions: {
+        resetWithFetch,
+        postProcessingResource,
+        optimizeVideo,
+        optimizeGif,
+      },
+    }) => {
+      return {
+        isResourceProcessing,
+        resetWithFetch,
+        postProcessingResource,
+        optimizeVideo,
+        optimizeGif,
+      };
+    }
+  );
 
   const { isTranscodingEnabled } = useFFmpeg();
   const { showSnackbar } = useSnackbar();
@@ -150,7 +157,11 @@ export const MediaPicker = ({ render, ...props }) => {
   const handleMediaSelect = useCallback(
     (resource) => {
       try {
-        if (isTranscodingEnabled && canTranscodeResource(resource)) {
+        if (
+          isTranscodingEnabled &&
+          !isResourceProcessing(resource.id) &&
+          !resource.isExternal
+        ) {
           if (transcodableMimeTypes.includes(resource.mimeType)) {
             optimizeVideo({ resource });
           }
@@ -259,6 +270,14 @@ const useQuickActions = () => {
       hasTrimMode,
       toggleTrimMode,
     })
+  );
+
+  const { isResourceProcessing } = useLocalMedia(
+    ({ state: { isResourceProcessing } }) => {
+      return {
+        isResourceProcessing,
+      };
+    }
   );
 
   const undoRef = useRef(undo);
@@ -656,7 +675,9 @@ const useQuickActions = () => {
     if (!resource) {
       return [];
     }
-    return canTranscodeResource(resource) && hasTrimMode
+    return !isResourceProcessing(resource.id) &&
+      !resource.isExternal &&
+      hasTrimMode
       ? [
           {
             Icon: Scissors,
@@ -673,11 +694,11 @@ const useQuickActions = () => {
         ]
       : [];
   }, [
-    actionMenuProps,
-    hasTrimMode,
-    selectedElement,
-    toggleTrimMode,
     selectedElements,
+    isResourceProcessing,
+    hasTrimMode,
+    actionMenuProps,
+    toggleTrimMode,
   ]);
 
   const videoActions = useMemo(() => {

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { sprintf, _n, __ } from '@web-stories-wp/i18n';
-import { canTranscodeResource } from '@web-stories-wp/media';
 import styled from 'styled-components';
 
 /**
@@ -51,24 +50,27 @@ const OptimizeButton = styled(Button)`
   margin-top: 4px;
 `;
 
-export function videoElementsNotOptimized(element = {}) {
-  if (!element.resource) {
+export function videoElementsNotOptimized(
+  element = {},
+  isResourceTranscoding,
+  isResourceProcessing
+) {
+  const { resource } = element;
+  if (!resource) {
     return false;
   }
-  const {
-    isTranscoding,
-    isOptimized,
-    height = 0,
-    width = 0,
-  } = element.resource;
-  if (isTranscoding) {
+  const { id } = resource;
+  if (isResourceTranscoding(id)) {
     return true;
   }
+
+  const { isOptimized, height = 0, width = 0, isExternal } = resource;
 
   if (
     element.type !== 'video' ||
     isOptimized ||
-    !canTranscodeResource(element.resource)
+    isExternal ||
+    isResourceProcessing(id)
   ) {
     return false;
   }
@@ -115,9 +117,27 @@ const BulkVideoOptimization = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const [state, dispatch] = useReducer(reducer, initialState);
   const pages = useStory(({ state: storyState }) => storyState?.pages);
+
+  const { optimizeVideo, isResourceTranscoding, isResourceProcessing } =
+    useLocalMedia(({ actions, state: mediaState }) => ({
+      optimizeVideo: actions.optimizeVideo,
+      isResourceTranscoding: mediaState.isResourceTranscoding,
+      isResourceProcessing: mediaState.isResourceProcessing,
+    }));
+
+  const videoElementsNotOptimizedCallback = useCallback(
+    (element = {}) =>
+      videoElementsNotOptimized(
+        element,
+        isResourceTranscoding,
+        isResourceProcessing
+      ),
+    [isResourceProcessing, isResourceTranscoding]
+  );
+
   const unoptimizedElements = useMemo(
-    () => filterStoryElements(pages, videoElementsNotOptimized),
-    [pages]
+    () => filterStoryElements(pages, videoElementsNotOptimizedCallback),
+    [pages, videoElementsNotOptimizedCallback]
   );
   const unoptimizedVideos = unoptimizedElements.filter(
     (element, index, array) =>
@@ -128,17 +148,10 @@ const BulkVideoOptimization = () => {
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
 
-  const { optimizeVideo, isResourceTranscoding } = useLocalMedia(
-    ({ actions, state: mediaState }) => ({
-      optimizeVideo: actions.optimizeVideo,
-      isResourceTranscoding: mediaState.isResourceTranscoding,
-    })
-  );
-
   const processVideoElement = useCallback(
     async (element) => {
       if (
-        canTranscodeResource(element.resource) &&
+        !isResourceProcessing(element.id) &&
         state[element.resource.id] !== actionTypes.uploading
       ) {
         dispatch({ type: actionTypes.uploading, element });
@@ -151,7 +164,7 @@ const BulkVideoOptimization = () => {
         dispatch({ type: actionTypes.uploaded, element });
       }
     },
-    [optimizeVideo, state]
+    [isResourceProcessing, optimizeVideo, state]
   );
 
   const sequencedVideoOptimization = useCallback(() => {
