@@ -116,15 +116,12 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
     const dx = frame * actualStripFrameWidth;
 
     if (flip.vertical || flip.horizontal) {
-      // translate context to center of canvas
-      ctx.translate(dx + actualStripFrameWidth / 2, 0 + stripFrameHeight / 2);
-      // flip context
+      // Translate context to center of canvas
+      ctx.translate(dx + actualStripFrameWidth / 2, stripFrameHeight / 2);
+      // Flip context
       ctx.scale(flip.horizontal ? -1 : 1, flip.vertical ? -1 : 1);
-      // translate context back to orgin
-      ctx.translate(
-        -(dx + actualStripFrameWidth / 2),
-        -(0 + stripFrameHeight / 2)
-      );
+      // Translate context back to origin
+      ctx.translate(-(dx + actualStripFrameWidth / 2), -(stripFrameHeight / 2));
     }
 
     // Now copy the correct part of the video to the correct part of the context
@@ -144,7 +141,7 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
       stripFrameHeight
     );
 
-    // restore default matrix instead of calling ctx.restore
+    // Restore default matrix instead of calling `ctx.restore`
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     // If there are no more frames, return resolved promise
