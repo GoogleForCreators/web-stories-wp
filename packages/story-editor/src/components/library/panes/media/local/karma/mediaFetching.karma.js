@@ -26,7 +26,10 @@ import { waitFor, within } from '@testing-library/react';
 import { Fixture, LOCAL_MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
-describe('MediaPane fetching', () => {
+// Disable reason: test is flakey
+// Fix in progress:   https://github.com/google/web-stories-wp/issues/9779
+// eslint-disable-next-line jasmine/no-disabled-tests
+xdescribe('MediaPane fetching', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -38,10 +41,7 @@ describe('MediaPane fetching', () => {
     fixture.restore();
   });
 
-  // Disable reason: test is flakey
-  // Fix in progress:   https://github.com/google/web-stories-wp/issues/9779
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should fetch 2nd page', async () => {
+  it('should fetch 2nd page', async () => {
     const localPane = await waitFor(() =>
       fixture.querySelector('#library-pane-media')
     );
