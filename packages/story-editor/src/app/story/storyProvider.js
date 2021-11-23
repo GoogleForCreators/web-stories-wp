@@ -116,7 +116,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
 
   // This effect loads and initialises the story on first load (when there's no pages).
   const shouldLoad = pages.length === 0;
-  useLoadStory({ restore, shouldLoad, storyId, story: initialEdits.story });
+  useLoadStory({ restore, shouldLoad, storyId, story: initialEdits?.story });
 
   // These effects send updates to and restores state from history.
   useHistoryEntry({ pages, current, selection, story, capabilities });
