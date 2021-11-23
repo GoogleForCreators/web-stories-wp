@@ -118,7 +118,7 @@ $story_path = "/web-stories/v1/$stories_rest_base/{$post->ID}/?" . build_query(
 	]
 );
 
-if ( 'false' === $demo ) {
+if ( ! wp_validate_boolean( $demo ) ) {
 	$preload_paths[] = $story_path;
 } else {
 	$initial_edits['story'] = \Google\Web_Stories\get_api_preload_response_body( $story_path );
