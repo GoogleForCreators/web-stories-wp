@@ -23,12 +23,9 @@ import { createSolid } from '@web-stories-wp/patterns';
  */
 import { Fixture } from '../../../../karma';
 import { useStory } from '../../../../app/story';
-import { useInsertElement } from '../../../canvas';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 describe('Carousel Navigation', () => {
   let fixture;
-  let element1;
 
   beforeEach(async () => {
     fixture = new Fixture();
@@ -39,17 +36,7 @@ describe('Carousel Navigation', () => {
       { id: 'page4', backgroundColor: createSolid(0, 0, 255) },
     ]);
     await fixture.render();
-
-    const insertElement = await fixture.renderHook(() => useInsertElement());
-    element1 = await fixture.act(() =>
-      insertElement('text', {
-        font: TEXT_ELEMENT_DEFAULT_FONT,
-        content: `Page 1`,
-        x: 40,
-        y: 40,
-        width: 250,
-      })
-    );
+    await fixture.events.click(fixture.editor.library.textAdd);
   });
 
   afterEach(() => {
@@ -61,9 +48,9 @@ describe('Carousel Navigation', () => {
     return storyContext.state.currentPageId;
   }
 
-  async function getSelection() {
+  async function getSelectionLength() {
     const storyContext = await fixture.renderHook(() => useStory());
-    return storyContext.state.selectedElementIds;
+    return storyContext.state.selectedElementIds.length;
   }
 
   async function getPageIds() {
@@ -82,14 +69,14 @@ describe('Carousel Navigation', () => {
 
   it('should select the current page', async () => {
     expect(await getCurrentPageId()).toEqual('page1');
-    expect(await getSelection()).toEqual([element1.id]);
+    expect(await getSelectionLength()).toBe(1);
   });
 
   // Since we're already on the first page, selection and current page id remains unchanged.
   it('should click into carousel on the first page', async () => {
     await clickOnThumbnail(0);
     expect(await getCurrentPageId()).toEqual('page1');
-    expect(await getSelection()).toEqual([element1.id]);
+    expect(await getSelectionLength()).toBe(1);
   });
 
   it('should exit the carousel on Esc', async () => {
@@ -105,7 +92,7 @@ describe('Carousel Navigation', () => {
   it('should click into carousel on the second page', async () => {
     await clickOnThumbnail(1);
     expect(await getCurrentPageId()).toEqual('page2');
-    expect(await getSelection()).toEqual([]);
+    expect(await getSelectionLength()).toBe(0);
   });
 
   it('should navigate the page with keys', async () => {

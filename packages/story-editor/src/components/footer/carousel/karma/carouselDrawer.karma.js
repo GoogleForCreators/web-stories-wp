@@ -19,6 +19,8 @@
  */
 import { Fixture } from '../../../../karma';
 
+const TOGGLE_DURATION = 400;
+
 describe('Carousel Drawer', () => {
   let fixture;
 
@@ -51,13 +53,13 @@ describe('Carousel Drawer', () => {
 
     it('should collapse and expand', async () => {
       await fixture.events.click(fixture.editor.footer.carousel.toggle);
-      await fixture.events.sleep(800);
+      await fixture.events.sleep(TOGGLE_DURATION);
 
       expect(fixture.editor.footer.carousel.pages.length).toBe(0);
       await fixture.snapshot('Collapsed');
 
       await fixture.events.click(fixture.editor.footer.carousel.toggle);
-      await fixture.events.sleep(800);
+      await fixture.events.sleep(TOGGLE_DURATION);
 
       expect(fixture.editor.footer.carousel.pages.length).toBe(1);
       await fixture.snapshot('Re-expanded');
@@ -108,13 +110,13 @@ describe('Carousel Drawer', () => {
 
     it('should collapse and expand', async () => {
       await fixture.events.click(fixture.editor.footer.carousel.toggle);
-      await fixture.events.sleep(800);
+      await fixture.events.sleep(TOGGLE_DURATION);
 
       expect(fixture.editor.footer.carousel.pages.length).toBe(0);
       await fixture.snapshot('Collapsed');
 
       await fixture.events.click(fixture.editor.footer.carousel.toggle);
-      await fixture.events.sleep(800);
+      await fixture.events.sleep(TOGGLE_DURATION);
 
       expect(fixture.editor.footer.carousel.pages.length).toBe(1 + EXTRA_PAGES);
       await fixture.snapshot('Re-expanded');
