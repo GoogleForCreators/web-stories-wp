@@ -84,6 +84,35 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
     opacity: 0;
     transition: opacity 100ms;
   }
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    `}
+  cursor: pointer;
+  pointer-events: initial;
+  width: ${PLAY_BUTTON_SIZE}px;
+  height: ${PLAY_BUTTON_SIZE}px;
+  overflow: hidden;
+
+  opacity: ${({ isAbove }) => (isAbove ? 1 : 0)};
+  &.button-enter {
+    opacity: 0;
+  }
+  &.button-enter-active,
+  &.button-enter-done {
+    opacity: 1;
+    transition: opacity 100ms;
+  }
+  &.button-exit {
+    opacity: 1;
+  }
+  &.button-exit-active,
+  &.button-exit-done {
+    opacity: 0;
+    transition: opacity 100ms;
+  }
 `;
 
 const iconCss = css`
@@ -120,7 +149,6 @@ function PlayPauseButton({
   elementRef,
   element,
   videoRef = null,
-  allowKeyboardSupport = false,
 }) {
   const { isRTL } = useConfig();
   const hasVideoSrc = Boolean(element.resource.src);
@@ -209,40 +237,6 @@ function PlayPauseButton({
       document.removeEventListener('pointermove', checkMouseInBBox);
     };
   }, [checkMouseInBBox]);
-
-  const handleKeyDown = useCallback(
-    ({ key }) => {
-      if (allowKeyboardSupport && key === ' ') {
-        const videoNode = getVideoNode();
-        if (videoNode) {
-          if (videoNode.paused) {
-            videoNode
-              .play()
-              .then(() => setIsPlaying(true))
-              .catch(() => {});
-          } else {
-            videoNode.pause();
-            videoNode.currentTime = 0;
-            setIsPlaying(false);
-          }
-        }
-      }
-    },
-    [getVideoNode, allowKeyboardSupport]
-  );
-  useKeyDownEffect(
-    elementRef,
-    {
-      key: ['space'],
-    },
-    handleKeyDown,
-    [handleKeyDown]
-  );
-
-  if (!isActive) {
-    return null;
-  }
-
   const handlePlayPause = (evt) => {
     evt.stopPropagation();
     const videoNode = getVideoNode();
@@ -261,6 +255,18 @@ function PlayPauseButton({
         .catch(() => {});
     }
   };
+  useKeyDownEffect(
+    elementRef,
+    {
+      key: ['space'],
+    },
+    handlePlayPause,
+    [handlePlayPause]
+  );
+
+  if (!isActive) {
+    return null;
+  }
 
   const buttonLabel = isPlaying
     ? __('Click to pause', 'web-stories')
@@ -311,7 +317,6 @@ PlayPauseButton.propTypes = {
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,
   videoRef: PropTypes.object,
-  allowKeyboardSupport: PropTypes.bool,
 };
 
 export default PlayPauseButton;

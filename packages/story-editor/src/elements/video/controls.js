@@ -44,7 +44,6 @@ function VideoControls({
       isTransforming={isTransforming}
       elementRef={elementRef}
       element={element}
-      allowKeyboardSupport
     />
   );
 }
