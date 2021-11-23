@@ -136,20 +136,31 @@ const PageAreaContainer = styled(Area).attrs({
         100% - ${hasHorizontalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
     `}
+
+      overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};
+      width: calc(
+        100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
+      );
+      height: calc(
+        100% - ${hasHorizontalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
+      );
+    `}
 `;
 
-function Layer({ children, ...rest }) {
+function LayerWithoutRef({ children, ...rest }, ref) {
   const footerHeight = useFooterHeight();
   return (
-    <LayerGrid footerHeight={footerHeight} {...rest}>
+    <LayerGrid ref={ref} footerHeight={footerHeight} {...rest}>
       {children}
     </LayerGrid>
   );
 }
 
-Layer.propTypes = {
+LayerWithoutRef.propTypes = {
   children: PropTypes.node,
 };
+
+const Layer = forwardRef(LayerWithoutRef);
 
 const PaddedPage = styled.div`
   padding: calc(0.5 * var(--page-padding-px));
@@ -161,6 +172,23 @@ const PageClip = styled.div`
   ${({ hasHorizontalOverflow, hasVerticalOverflow }) =>
     (hasHorizontalOverflow || hasVerticalOverflow) &&
     css`
+      overflow: hidden;
+      width: ${hasHorizontalOverflow
+        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
+      flex-basis: ${hasHorizontalOverflow
+        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
+      height: ${hasVerticalOverflow
+        ? 'calc(var(--fullbleed-height-px) + var(--page-padding-px))'
+        : `calc(var(--viewport-height-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
+      flex-shrink: 0;
+      flex-grow: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `}
+
       overflow: hidden;
       width: ${hasHorizontalOverflow
         ? 'calc(var(--page-width-px) + var(--page-padding-px))'
@@ -193,6 +221,25 @@ const FullbleedContainer = styled.div`
   ${({ isControlled }) =>
     isControlled &&
     css`
+      left: var(--scroll-left-px);
+      top: var(--scroll-top-px);
+    `};
+
+  ${({ isBackgroundSelected, theme }) =>
+    isBackgroundSelected &&
+    css`
+      &:before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border: ${theme.colors.border.selection} 1px solid;
+        border-radius: ${theme.borders.radius.medium};
+      }
+    `}
+
       left: var(--scroll-left-px);
       top: var(--scroll-top-px);
     `};
