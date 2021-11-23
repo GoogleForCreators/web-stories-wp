@@ -60,7 +60,7 @@ fdescribe('MediaPane fetching', () => {
       const mediaElements = fixture.screen.queryAllByTestId(/^mediaElement-/);
 
       if (mediaElements.length < initialElementsLength + LOCAL_MEDIA_PER_PAGE) {
-        throw new Error('Not loaded yet');
+        fixture.events.sleep(500);
       }
 
       expect(mediaElements.length).toBeGreaterThanOrEqual(
