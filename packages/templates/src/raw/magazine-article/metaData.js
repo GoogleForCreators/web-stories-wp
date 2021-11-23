@@ -28,7 +28,7 @@ export default {
     _x('Future', 'template keyword', 'web-stories'),
     _x('Presentation', 'template keyword', 'web-stories'),
     _x('Magazine', 'template keyword', 'web-stories'),
-    _x('Grey', 'template keyword', 'web-stories'),
+    _x('Gray', 'template keyword', 'web-stories'),
   ],
   colors: [
     {
