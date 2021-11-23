@@ -60,15 +60,16 @@ xdescribe('MediaPane fetching', () => {
 
     // ensure fixture.screen has loaded before calling expect to prevent immediate failure
     await waitFor(() => {
-      const mediaElements = fixture.screen.queryAllByTestId(/^mediaElement-/);
-
-      if (mediaElements.length < initialElementsLength + LOCAL_MEDIA_PER_PAGE) {
+      if (
+        fixture.screen.queryAllByTestId(/^mediaElement-/).length <
+        initialElementsLength + LOCAL_MEDIA_PER_PAGE
+      ) {
         throw new Error('Not loaded yet');
       }
 
-      expect(mediaElements.length).toBeGreaterThanOrEqual(
-        initialElementsLength + LOCAL_MEDIA_PER_PAGE
-      );
+      expect(
+        fixture.screen.queryAllByTestId(/^mediaElement-/).length
+      ).toBeGreaterThanOrEqual(initialElementsLength + LOCAL_MEDIA_PER_PAGE);
     });
   });
 });
