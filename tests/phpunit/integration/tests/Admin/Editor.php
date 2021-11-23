@@ -190,6 +190,8 @@ class Editor extends DependencyInjectedTestCase {
 		$this->assets->expects( $this->once() )->method( 'enqueue_script_asset' )->with(
 			\Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE
 		);
+
+		$this->instance->replace_editor( true, get_post( self::$story_id ) );
 	}
 
 	/**
