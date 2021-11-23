@@ -23,9 +23,10 @@ import { snakeToCamelCase } from '@web-stories-wp/design-system';
  * Transform a given object keys from snake case to camel case recursively.
  *
  * @param {Object} obj Object to be transformed.
+ * @param {Object} ignore Array of keys to be ignored for camelcase.
  * @return {any} Transformed object.
  */
-export function snakeToCamelCaseObjectKeys(obj) {
+export function snakeToCamelCaseObjectKeys(obj, ignore = []) {
   const isObject = (val) =>
     val && 'object' === typeof val && !Array.isArray(val);
 
@@ -35,9 +36,10 @@ export function snakeToCamelCaseObjectKeys(obj) {
 
   return Object.entries(obj).reduce((transformedObject, [key, value]) => {
     const camelCaseKey = snakeToCamelCase(key);
-    transformedObject[camelCaseKey] = isObject(value)
-      ? snakeToCamelCaseObjectKeys(value)
-      : value;
+    transformedObject[camelCaseKey] =
+      isObject(value) && !ignore.includes(key)
+        ? snakeToCamelCaseObjectKeys(value)
+        : value;
     return transformedObject;
   }, {});
 }

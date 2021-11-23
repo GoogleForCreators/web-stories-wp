@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs, snakeToCamelCase } from '@web-stories-wp/design-system';
+import { addQueryArgs } from '@web-stories-wp/design-system';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
@@ -75,11 +75,7 @@ const transformGetStoryResponse = (post) => {
   post.terms = embedded?.['wp:term'] || [];
 
   // Camel casing of story_data is/will be covered in migration.
-  return Object.entries(post).reduce((obj, [key, value]) => {
-    obj[snakeToCamelCase(key)] =
-      'story_data' === key ? value : snakeToCamelCaseObjectKeys(value);
-    return obj;
-  }, {});
+  return snakeToCamelCaseObjectKeys(post, ['story_data']);
 };
 
 export function getStoryById(config, storyId, isDemo = false) {
