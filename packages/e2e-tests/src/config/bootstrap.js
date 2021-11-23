@@ -26,6 +26,7 @@ import {
   trashAllPosts,
   deleteAllMedia,
   trashAllTerms,
+  clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
 // eslint-disable-next-line jest/require-hook
@@ -122,6 +123,8 @@ setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 1000 });
  * Set up browser.
  */
 async function setupBrowser() {
+  await clearLocalStorage();
+
   // Same as jest-puppeteer.config.cjs and percy.config.yml
   await setBrowserViewport({
     width: 1600,
