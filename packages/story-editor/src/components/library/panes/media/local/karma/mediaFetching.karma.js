@@ -25,12 +25,13 @@ import { waitFor, within } from '@testing-library/react';
 
 import { Fixture, LOCAL_MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 
-describe('MediaPane fetching', () => {
+fdescribe('MediaPane fetching', () => {
   let fixture;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
