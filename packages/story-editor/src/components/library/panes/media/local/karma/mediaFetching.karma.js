@@ -41,7 +41,7 @@ xdescribe('MediaPane fetching', () => {
     fixture.restore();
   });
 
-  it('should fetch 2nd page', async () => {
+  it('should fetch additional pages', async () => {
     const localPane = await waitFor(() =>
       fixture.querySelector('#library-pane-media')
     );
