@@ -117,16 +117,13 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
 
     if (flip.vertical || flip.horizontal) {
       // translate context to center of canvas
-      ctx.translate(
-        dx + actualStripFrameWidth / 2,
-        0 + actualStripFrameWidth / 2
-      );
+      ctx.translate(dx + actualStripFrameWidth / 2, 0 + stripFrameHeight / 2);
       // flip context
       ctx.scale(flip.horizontal ? -1 : 1, flip.vertical ? -1 : 1);
       // translate context back to orgin
       ctx.translate(
         -(dx + actualStripFrameWidth / 2),
-        -(0 + actualStripFrameWidth / 2)
+        -(0 + stripFrameHeight / 2)
       );
     }
 
