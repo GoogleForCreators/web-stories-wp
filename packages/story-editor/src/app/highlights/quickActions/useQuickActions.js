@@ -192,6 +192,7 @@ export const MediaPicker = ({ render, ...props }) => {
       showSnackbar,
       transcodableMimeTypes,
       postProcessingResource,
+      isResourceProcessing,
     ]
   );
   return (
@@ -695,6 +696,7 @@ const useQuickActions = () => {
       : [];
   }, [
     selectedElements,
+    selectedElement.type,
     isResourceProcessing,
     hasTrimMode,
     actionMenuProps,

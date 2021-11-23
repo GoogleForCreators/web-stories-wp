@@ -81,27 +81,19 @@ function Element({
     type,
     width: originalWidth,
     height: originalHeight,
-    local,
     alt,
     isMuted,
     baseColor,
   } = resource;
 
-  const {
-    isResourceTrimmingById,
-    isResourceMutingById,
-    isResourceTranscodingById,
-  } = useLocalMedia((state) => {
-    return {
-      isResourceTranscodingById: state.state.isResourceTranscodingById,
-      isResourceMutingById: state.state.isResourceMutingById,
-      isResourceTrimmingById: state.state.isResourceTrimmingById,
-    };
-  });
-
-  const isTranscoding = isResourceTrimmingById(resourceId);
-  const isMuting = isResourceMutingById(resourceId);
-  const isTrimming = isResourceTranscodingById(resourceId);
+  const { isResourceProcessing, isResourceProcessingById } = useLocalMedia(
+    (state) => {
+      return {
+        isResourceProcessing: state.state.isResourceProcessing,
+        isResourceProcessingById: state.state.isResourceProcessingById,
+      };
+    }
+  );
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -237,7 +229,8 @@ function Element({
           active={active}
         />
         {attribution}
-        {(local || isTranscoding || isMuting || isTrimming) && (
+        {(isResourceProcessing(resourceId) ||
+          isResourceProcessingById(resourceId)) && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (

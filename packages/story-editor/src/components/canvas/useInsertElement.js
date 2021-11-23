@@ -58,7 +58,6 @@ function useInsertElement() {
       const { id, resource } = element;
       const {
         isExternal,
-        local,
         baseColor: currentBaseColor,
         src,
         poster,
@@ -66,7 +65,7 @@ function useInsertElement() {
       } = resource;
 
       const imageSrc = type === 'image' ? src : poster;
-      if (local || !imageSrc || currentBaseColor || !isExternal) {
+      if (!imageSrc || currentBaseColor || !isExternal) {
         return;
       }
 
@@ -90,7 +89,7 @@ function useInsertElement() {
         // Do nothing for now.
       }
     },
-    [getProxiedUrl, checkResourceAccess, updateElementById]
+    [checkResourceAccess, getProxiedUrl, updateElementById]
   );
 
   /**

@@ -48,7 +48,6 @@ const PROPS_LOCAL = {
     posterId: 0,
     id: 211,
     alt: 'local_image',
-    local: false,
     sizes: {
       full: {
         file: 'local_image.jpg',
@@ -76,7 +75,6 @@ const PROPS_M3P_WITH_ATTRIBUTION = {
     width: 2400,
     height: 3620,
     alt: null,
-    local: false,
     sizes: {
       full: {
         file: 'media/provider:TZ2tVEJx2aA',

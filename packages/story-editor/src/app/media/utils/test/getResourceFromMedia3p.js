@@ -77,7 +77,7 @@ describe('getResourceFromMedia3p', () => {
       length: 121,
       lengthFormatted: '2:01',
       alt: 'NYC Postcard',
-      local: false,
+
       isPlaceholder: false,
       isMuted: true,
       isOptimized: true,
@@ -167,7 +167,7 @@ describe('getResourceFromMedia3p', () => {
       length: 121,
       lengthFormatted: '2:01',
       alt: 'Test title',
-      local: false,
+
       isPlaceholder: false,
       isMuted: true,
       isOptimized: true,
@@ -256,7 +256,7 @@ describe('getResourceFromMedia3p', () => {
       length: 121,
       lengthFormatted: '2:01',
       alt: 'media/coverr:g9re0sRUYA',
-      local: false,
+
       isPlaceholder: false,
       isMuted: true,
       isOptimized: true,
@@ -342,7 +342,7 @@ describe('getResourceFromMedia3p', () => {
       length: 121,
       lengthFormatted: '2:01',
       alt: 'NYC Postcard',
-      local: false,
+
       isPlaceholder: false,
       isMuted: true,
       isOptimized: true,
@@ -531,7 +531,7 @@ describe('getResourceFromMedia3p', () => {
       width: 498,
       height: 498,
       alt: 'media/tenor:3468838096637910112',
-      local: false,
+
       isPlaceholder: false,
       isMuted: false,
       isOptimized: true,

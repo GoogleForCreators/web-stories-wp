@@ -58,7 +58,7 @@ function setup({ canvas = {}, element = {}, extraElements = [] } = {}) {
           type: 'video',
           id: 'video123',
           ...element,
-          resource: { local: false, isExternal: false, ...element?.resource },
+          resource: { isExternal: false, ...element?.resource },
         },
         ...extraElements,
       ],
@@ -99,7 +99,7 @@ describe('useVideoTrimMode', () => {
   });
 
   it('should not allow trim mode for filesystem local video', () => {
-    const { result } = setup({ element: { resource: { local: true } } });
+    const { result } = setup({ element: { resource: {} } });
 
     expect(result.current.hasTrimMode).toBe(false);
   });

@@ -25,7 +25,7 @@ import { getMsFromHMS } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
-import { useCanvas, useStory, useAPI } from '../../app';
+import { useCanvas, useStory, useAPI, useLocalMedia } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
 function useVideoTrimMode() {
@@ -49,6 +49,10 @@ function useVideoTrimMode() {
     actions: { getMediaById },
   } = useAPI();
   const [videoData, setVideoData] = useState(null);
+
+  const { isResourceUploadingById } = useLocalMedia((state) => ({
+    isResourceUploadingById: state.state.isResourceUploadingById,
+  }));
 
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {
@@ -109,9 +113,19 @@ function useVideoTrimMode() {
     if (selectedElement?.type !== 'video' || !selectedElement?.resource) {
       return false;
     }
-    const { local, isExternal } = selectedElement.resource || {};
-    return isVideoTrimEnabled && isTranscodingEnabled && !isExternal && !local;
-  }, [selectedElement, isVideoTrimEnabled, isTranscodingEnabled]);
+    const { id, isExternal } = selectedElement.resource || {};
+    return (
+      isVideoTrimEnabled &&
+      isTranscodingEnabled &&
+      !isExternal &&
+      !(id && isResourceUploadingById(id))
+    );
+  }, [
+    selectedElement,
+    isVideoTrimEnabled,
+    isTranscodingEnabled,
+    isResourceUploadingById,
+  ]);
 
   return {
     isTrimMode: Boolean(isEditing && isTrimMode),

@@ -84,7 +84,6 @@ ResourcePropTypes.gifResource = PropTypes.shape({
   height: PropTypes.number.isRequired,
   title: PropTypes.string,
   alt: PropTypes.string,
-  local: PropTypes.bool,
   sizes: ResourcePropTypes.imageResourceSizes,
   output: PropTypes.shape({
     mimeType: PropTypes.string.isRequired,

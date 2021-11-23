@@ -148,7 +148,6 @@ describe('useMedia3pApi', () => {
           id: 'media/unsplash:1234',
           length: undefined,
           lengthFormatted: undefined,
-          local: false,
           isPlaceholder: false,
           isMuted: false,
           isOptimized: false,

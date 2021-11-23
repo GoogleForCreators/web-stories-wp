@@ -390,14 +390,31 @@ function useMediaUploadQueue() {
           return state.queue.some(
             (item) =>
               [
-                'UPLOADED',
-                'CANCELLED',
                 'PENDING',
+                'UPLOADING',
                 'TRANSCODING',
                 'MUTING',
                 'TRIMMING',
               ].includes(item.state) &&
               item.resource.originalResourceId === resourceId
+          );
+        },
+        isResourceProcessingById: (resourceId) => {
+          return state.queue.some(
+            (item) =>
+              [
+                'PENDING',
+                'UPLOADING',
+                'TRANSCODING',
+                'MUTING',
+                'TRIMMING',
+              ].includes(item.state) && item.resource.id === resourceId
+          );
+        },
+        isResourceUploadingById: (resourceId) => {
+          return state.queue.some(
+            (item) =>
+              item.state === 'UPLOADING' && item.resource.id === resourceId
           );
         },
         isResourceTranscodingById: (resourceId) =>

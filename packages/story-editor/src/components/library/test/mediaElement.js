@@ -35,7 +35,6 @@ const IMAGE_RESOURCE = {
   mimeType: 'image/png',
   width: 100,
   height: 100,
-  local: true, // Not yet uploaded
   alt: 'image :)',
 };
 
@@ -46,7 +45,6 @@ const VIDEO_RESOURCE = {
   mimeType: 'video/mp4',
   width: 100,
   height: 100,
-  local: true, // Not yet uploaded
   alt: 'video :)',
 };
 
@@ -57,7 +55,6 @@ const GIF_RESOURCE = {
   mimeType: 'image/gif',
   width: 100,
   height: 100,
-  local: true, // Not yet uploaded
   alt: 'gif :)',
   output: {
     src: 'http://gif-url.com',
@@ -125,7 +122,7 @@ describe('MediaElement', () => {
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       {
         ...IMAGE_RESOURCE,
-        local: false, // Already uploaded
+        // Already uploaded
       },
       'local'
     );
@@ -141,7 +138,7 @@ describe('MediaElement', () => {
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       {
         ...VIDEO_RESOURCE,
-        local: false, // Already uploaded
+        // Already uploaded
       },
       'local'
     );
@@ -157,7 +154,7 @@ describe('MediaElement', () => {
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       {
         ...GIF_RESOURCE,
-        local: false, // Already uploaded
+        // Already uploaded
       },
       'local'
     );
@@ -173,7 +170,7 @@ describe('MediaElement', () => {
     const { queryByAriaLabel } = renderMediaElement(
       {
         ...VIDEO_RESOURCE,
-        local: false, // Already uploaded
+        // Already uploaded
       },
       'local',
       false

@@ -321,7 +321,6 @@ const MockMediaPicker = ({ onSelect, onClose }) => (
       onClick={() =>
         onSelect({
           ...videoResource,
-          local: false,
           isMuted: null,
         })
       }
@@ -1033,7 +1032,6 @@ describe('MediaPicker', () => {
 
     expect(mockPostProcessingResource).toHaveBeenCalledWith({
       ...videoResource,
-      local: false,
       mimeType: 'videoMimeType',
       isMuted: null,
     });
@@ -1043,7 +1041,6 @@ describe('MediaPicker', () => {
         type: videoResource.id,
         resource: {
           ...videoResource,
-          local: false,
           isMuted: null,
         },
       },

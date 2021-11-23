@@ -74,7 +74,6 @@ const uploadMedia = (
   const resource = {
     src: 'http://www.google.com/foo.gif',
     id: 2,
-    local: false,
     type: 'gif',
   };
   if (onUploadSuccess) {
@@ -116,10 +115,10 @@ function setup() {
   const updateVideoIsMuted = jest.fn();
 
   const postProcessingResource = (resource) => {
-    const { local, isExternal, type, isMuted, baseColor, src, id, posterId } =
+    const { isExternal, type, isMuted, baseColor, src, id, posterId } =
       resource;
 
-    if (local || isExternal) {
+    if (isExternal) {
       return;
     }
     if (id && src && ['video', 'gif'].includes(type) && !posterId) {
@@ -205,7 +204,7 @@ describe('useProcessMedia', () => {
         expect(updateBaseColor).toHaveBeenCalledWith({
           resource: {
             id: 2,
-            local: false,
+
             src: 'http://www.google.com/foo.gif',
             type: 'gif',
           },
@@ -242,7 +241,7 @@ describe('useProcessMedia', () => {
           resource: {
             baseColor: undefined,
             id: 2,
-            local: false,
+
             src: 'http://www.google.com/foo.gif',
             type: 'gif',
           },
@@ -338,7 +337,6 @@ describe('useProcessMedia', () => {
             src: 'http://www.google.com/foo.gif',
             id: 2,
             type: 'gif',
-            local: false,
           },
         });
         expect(updateMedia).toHaveBeenCalledWith(123, {
@@ -375,7 +373,7 @@ describe('useProcessMedia', () => {
           resource: {
             baseColor: undefined,
             id: 2,
-            local: false,
+
             src: 'http://www.google.com/foo.gif',
             type: 'gif',
           },
@@ -409,7 +407,7 @@ describe('useProcessMedia', () => {
         expect(updateBaseColor).toHaveBeenCalledWith({
           resource: {
             id: 2,
-            local: false,
+
             src: 'http://www.google.com/foo.gif',
             type: 'gif',
           },
@@ -474,7 +472,7 @@ describe('useProcessMedia', () => {
           resource: {
             src: 'http://www.google.com/foo.gif',
             id: 2,
-            local: false,
+
             type: 'gif',
           },
         });
@@ -510,7 +508,7 @@ describe('useProcessMedia', () => {
           resource: {
             baseColor: undefined,
             id: 2,
-            local: false,
+
             src: 'http://www.google.com/foo.gif',
             type: 'gif',
           },

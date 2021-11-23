@@ -118,9 +118,11 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     isUploading,
     isTranscoding,
     isResourceProcessing,
+    isResourceProcessingById,
     isResourceTranscoding,
     isResourceMuting,
     isResourceTrimming,
+    isResourceUploadingById,
     isResourceTranscodingById,
     isResourceMutingById,
     isResourceTrimmingById,
@@ -221,19 +223,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const postProcessingResource = useCallback(
     (resource) => {
-      const {
-        local,
-        type,
-        isMuted,
-        baseColor,
-        src,
-        id,
-        posterId,
-        mimeType,
-        poster,
-      } = resource;
+      const { type, isMuted, baseColor, src, id, posterId, mimeType, poster } =
+        resource;
 
-      if (local || !id) {
+      if (!id || isResourceUploadingById(id)) {
         return;
       }
       if (
@@ -253,6 +246,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       }
     },
     [
+      isResourceUploadingById,
       allowedVideoMimeTypes,
       processMediaBaseColor,
       processVideoAudio,
@@ -284,9 +278,11 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       isUploading: isUploading || isGeneratingPosterImages,
       isTranscoding,
       isResourceProcessing,
+      isResourceProcessingById,
       isResourceTranscoding,
       isResourceMuting,
       isResourceTrimming,
+      isResourceUploadingById,
       isResourceTranscodingById,
       isResourceMutingById,
       isResourceTrimmingById,

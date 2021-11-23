@@ -29,7 +29,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: false,
         height: 2160,
         width: 3840,
-        local: false,
       },
     };
 
@@ -45,7 +44,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: false,
         height: 2160,
         width: 3840,
-        local: false,
       },
     };
 
@@ -61,7 +59,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: true,
         height: 2160,
         width: 3840,
-        local: false,
       },
     };
 
@@ -77,7 +74,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: false,
         height: 300,
         width: 400,
-        local: false,
       },
     };
     const smallOptimizedVideo = {
@@ -87,7 +83,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: true,
         height: 300,
         width: 400,
-        local: false,
       },
     };
 
@@ -103,7 +98,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: false,
         height: 720,
         width: 1280,
-        local: false,
       },
     };
     const portraitVideo = {
@@ -113,7 +107,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: false,
         height: 1280,
         width: 720,
-        local: false,
       },
     };
 
