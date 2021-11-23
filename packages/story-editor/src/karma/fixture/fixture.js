@@ -51,6 +51,7 @@ import singleSavedTemplate from './db/singleSavedTemplate';
 import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
 import DocumentPane from './components/documentPane';
+import { Accessibility, Design, Priority } from './components/checklist';
 
 if ('true' === process.env.CI) {
   configure({
@@ -336,6 +337,15 @@ export class Fixture {
       <StoryEditor key={Math.random()} config={this._config}>
         <Layout
           header={<HeaderLayout />}
+          footer={{
+            secondaryMenu: {
+              checklist: {
+                Priority,
+                Design,
+                Accessibility,
+              },
+            },
+          }}
           inspectorTabs={{
             document: {
               title: 'Document',
