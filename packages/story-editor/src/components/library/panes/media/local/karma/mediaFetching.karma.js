@@ -58,24 +58,15 @@ fdescribe('MediaPane fetching', () => {
     // ensure fixture.screen has loaded before calling expect to prevent immediate failure
     let mediaElements = await fixture.screen.queryAllByTestId(/^mediaElement-/);
 
-    if (mediaElements.length < initialElementsLength + LOCAL_MEDIA_PER_PAGE) {
-      fixture.events.sleep(500);
-      mediaElements = await fixture.screen.queryAllByTestId(/^mediaElement-/);
-    }
+    await waitFor(async () => {
+      if (mediaElements.length < initialElementsLength + LOCAL_MEDIA_PER_PAGE) {
+        fixture.events.sleep(500);
+        mediaElements = await fixture.screen.queryAllByTestId(/^mediaElement-/);
+      }
+    });
 
     expect(mediaElements.length).toBeGreaterThanOrEqual(
       initialElementsLength + LOCAL_MEDIA_PER_PAGE
     );
-
-    // await waitFor(() => {
-
-    //   if (mediaElements.length < initialElementsLength + LOCAL_MEDIA_PER_PAGE) {
-    //     fixture.events.sleep(500);
-    //   }
-
-    //   expect(mediaElements.length).toBeGreaterThanOrEqual(
-    //     initialElementsLength + LOCAL_MEDIA_PER_PAGE
-    //   );
-    // });
   });
 });
