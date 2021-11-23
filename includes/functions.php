@@ -72,21 +72,3 @@ function render_theme_stories() {
 	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $customizer->render_stories();
 }
-
-/**
- * Extract and returns the response body from `rest_preload_api_request`.
- *
- * @since 1.15.0
- *
- * @param string $path REST API path to preload.
- * @return array
- */
-function get_api_preload_response_body( string $path ): array {
-	$response = rest_preload_api_request( [], $path );
-	$data     = array_pop( $response );
-
-	if ( is_array( $data ) && array_key_exists( 'body', $data ) ) {
-		return $data['body'];
-	}
-	return [];
-}

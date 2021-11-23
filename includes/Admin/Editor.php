@@ -289,7 +289,7 @@ class Editor extends Service_Base implements HasRequirements {
 			self::SCRIPT_HANDLE,
 			'webStories',
 			[
-				'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
+				'publicPath' => $this->assets->get_base_url( 'assets/js/' ), // Required before the editor script is enqueued.
 			]
 		);
 
