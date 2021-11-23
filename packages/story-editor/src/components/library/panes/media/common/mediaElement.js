@@ -273,9 +273,24 @@ Element.propTypes = {
  * @return {null|*} Element or null if does not map to video/image.
  */
 function MediaElement(props) {
-  const { isTranscoding, isMuting, isTrimming } = props.resource;
+  const {
+    isResourceTrimmingById,
+    isResourceMutingById,
+    isResourceTranscodingById,
+  } = useLocalMedia(({ state }) => {
+    return {
+      isResourceMutingById: state.isResourceMutingById,
+      isResourceTrimmingById: state.isResourceTrimmingById,
+      isResourceTranscodingById: state.isResourceTranscodingById,
+    };
+  });
+  const { id } = props.resource;
 
-  if (isTranscoding || isMuting || isTrimming) {
+  if (
+    isResourceTrimmingById(id) ||
+    isResourceMutingById(id) ||
+    isResourceTranscodingById(id)
+  ) {
     return (
       <Tooltip title={__('Video is being processed', 'web-stories')}>
         <Element {...props} />
