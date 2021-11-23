@@ -212,12 +212,12 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       setErrorMsg(getErrorMessage(err.code, description));
     }
   }, [
-    link,
-    setErrorMsg,
-    getHotlinkInfo,
-    checkResourceAccess,
-    insertMedia,
     allowedFileTypes,
+    link,
+    getHotlinkInfo,
+    setErrorMsg,
+    insertMedia,
+    checkResourceAccess,
   ]);
 
   return {
