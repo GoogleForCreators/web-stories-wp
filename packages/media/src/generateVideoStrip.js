@@ -88,8 +88,8 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
     actualFrameWidth,
     frameHeight,
     scale,
-    focalX,
-    focalY
+    flip?.horizontal ? 100 - focalX : focalX,
+    flip?.vertical ? 100 - focalY : focalY
   );
 
   // Calculate the offset between each frame to be grabbed
