@@ -24,7 +24,6 @@ import { waitFor, within } from '@testing-library/react';
  */
 
 import { Fixture, LOCAL_MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
-import { ROOT_MARGIN } from '../mediaPane';
 
 describe('MediaPane fetching', () => {
   let fixture;
@@ -42,39 +41,30 @@ describe('MediaPane fetching', () => {
     const localPane = await waitFor(() =>
       fixture.querySelector('#library-pane-media')
     );
-    const mediaGallery = await within(localPane).getByTestId(
+    const mediaGallery = await within(localPane).findByTestId(
       'media-gallery-container'
     );
 
-    const initialElements =
-      within(mediaGallery).queryAllByTestId(/^mediaElement-/);
+    // ensure fixture.screen has loaded before calling expect to prevent immediate failure
+    const initialElementsLength =
+      fixture.screen.queryAllByTestId(/^mediaElement-/).length;
+
+    expect(initialElementsLength).toBeGreaterThanOrEqual(LOCAL_MEDIA_PER_PAGE);
+
+    // Scroll all the way down.
+    await mediaGallery.scrollTo(0, 9999999999999999999);
 
     // ensure fixture.screen has loaded before calling expect to prevent immediate failure
-    if (initialElements.length !== LOCAL_MEDIA_PER_PAGE) {
-      await fixture.events.sleep(500);
-    }
-
     await waitFor(() => {
-      expect(initialElements.length).toBe(LOCAL_MEDIA_PER_PAGE);
-    });
+      const mediaElements = fixture.screen.queryAllByTestId(/^mediaElement-/);
 
-    await mediaGallery.scrollTo(
-      0,
-      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
-    );
+      if (mediaElements.length < initialElementsLength + LOCAL_MEDIA_PER_PAGE) {
+        throw new Error('Not loaded yet');
+      }
 
-    // ensure fixture.screen has loaded before calling expect to prevent immediate failure
-    if (
-      fixture.screen.queryAllByTestId(/^mediaElement-/).length <
-      LOCAL_MEDIA_PER_PAGE * 2
-    ) {
-      await fixture.events.sleep(500);
-    }
-
-    await waitFor(() => {
-      expect(
-        fixture.screen.queryAllByTestId(/^mediaElement-/).length
-      ).toBeGreaterThanOrEqual(LOCAL_MEDIA_PER_PAGE * 2);
+      expect(mediaElements.length).toBeGreaterThanOrEqual(
+        initialElementsLength + LOCAL_MEDIA_PER_PAGE
+      );
     });
   });
 });
