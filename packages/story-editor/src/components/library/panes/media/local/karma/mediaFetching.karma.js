@@ -38,7 +38,10 @@ describe('MediaPane fetching', () => {
     fixture.restore();
   });
 
-  it('should fetch 2nd page', async () => {
+  // Disable reason: test is flakey
+  // Fix in progress:   https://github.com/google/web-stories-wp/issues/9779
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should fetch 2nd page', async () => {
     const localPane = await waitFor(() =>
       fixture.querySelector('#library-pane-media')
     );
