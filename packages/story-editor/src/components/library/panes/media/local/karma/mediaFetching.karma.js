@@ -56,16 +56,26 @@ fdescribe('MediaPane fetching', () => {
     await mediaGallery.scrollTo(0, 9999999999999999999);
 
     // ensure fixture.screen has loaded before calling expect to prevent immediate failure
-    await waitFor(() => {
-      const mediaElements = fixture.screen.queryAllByTestId(/^mediaElement-/);
+    let mediaElements = await fixture.screen.queryAllByTestId(/^mediaElement-/);
 
-      if (mediaElements.length < initialElementsLength + LOCAL_MEDIA_PER_PAGE) {
-        fixture.events.sleep(500);
-      }
+    if (mediaElements.length < initialElementsLength + LOCAL_MEDIA_PER_PAGE) {
+      fixture.events.sleep(500);
+      mediaElements = await fixture.screen.queryAllByTestId(/^mediaElement-/);
+    }
 
-      expect(mediaElements.length).toBeGreaterThanOrEqual(
-        initialElementsLength + LOCAL_MEDIA_PER_PAGE
-      );
-    });
+    expect(mediaElements.length).toBeGreaterThanOrEqual(
+      initialElementsLength + LOCAL_MEDIA_PER_PAGE
+    );
+
+    // await waitFor(() => {
+
+    //   if (mediaElements.length < initialElementsLength + LOCAL_MEDIA_PER_PAGE) {
+    //     fixture.events.sleep(500);
+    //   }
+
+    //   expect(mediaElements.length).toBeGreaterThanOrEqual(
+    //     initialElementsLength + LOCAL_MEDIA_PER_PAGE
+    //   );
+    // });
   });
 });
