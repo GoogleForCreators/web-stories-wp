@@ -30,14 +30,16 @@ import Popup from '../secondaryPopup';
 import { ToggleButton } from '../toggleButton';
 import { Z_INDEX } from '../canvas/layout';
 import DirectionAware from '../directionAware';
+import { KEYBOARD_SHORTCUTS_PADDING } from '../footer/constants';
 import ShortcutMenu from './shortcutMenu';
 import { TOGGLE_SHORTCUTS_MENU } from './constants';
 import { useKeyboardShortcutsMenu } from './keyboardShortcutsMenuContext';
 
 const StyledToggleButton = styled(ToggleButton)`
-  padding-left: 3px;
-  padding-right: 3px;
+  padding-left: ${KEYBOARD_SHORTCUTS_PADDING}px;
+  padding-right: ${KEYBOARD_SHORTCUTS_PADDING}px;
   width: auto;
+  display: block;
 `;
 
 const Wrapper = styled.div`
