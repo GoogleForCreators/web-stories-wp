@@ -58,4 +58,5 @@ export {
   setBrowserViewport,
   insertBlock,
   createURL,
+  clearLocalStorage,
 } from '@wordpress/e2e-test-utils';

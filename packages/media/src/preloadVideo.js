@@ -13,24 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function preloadVideo(src) {
-  const video = document.createElement('video');
-  video.muted = true;
-  video.crossOrigin = 'anonymous';
-  video.preload = 'auto';
+
+/**
+ * Internal dependencies
+ */
+import preloadVideoMetadata from './preloadVideoMetadata';
+
+/**
+ * Preload a video.
+ *
+ * @param {string} src Video source.
+ * @return {Promise<HTMLVideoElement>} Video element.
+ */
+async function preloadVideo(src) {
+  const video = await preloadVideoMetadata(src);
 
   return new Promise((resolve, reject) => {
+    video.addEventListener('canplay', () => resolve(video), { once: true });
     video.addEventListener('error', reject);
-    video.addEventListener(
-      'canplay',
-      () => {
-        video.currentTime = 0.99;
-      },
-      { once: true } // Important because 'canplay' can be fired hundreds of times.
-    );
 
-    video.addEventListener('seeked', () => resolve(video), { once: true });
-    video.src = src;
+    video.preload = 'auto';
   });
 }
 

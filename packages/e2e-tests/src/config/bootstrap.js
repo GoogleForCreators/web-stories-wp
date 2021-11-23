@@ -28,6 +28,7 @@ import {
   deleteAllMedia,
   deleteWidgets,
   trashAllTerms,
+  clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
 // eslint-disable-next-line jest/require-hook
@@ -335,6 +336,8 @@ beforeAll(async () => {
   await deleteAllMedia();
   await deleteWidgets();
 
+  await clearLocalStorage();
+
   // Disable cross-origin isolation by default as it causes issues in Firefox.
   await toggleVideoOptimization(false);
 });
@@ -343,6 +346,7 @@ beforeAll(async () => {
 afterEach(async () => {
   await runAxeTestsForStoriesEditor();
   await setupBrowser();
+  await clearLocalStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
