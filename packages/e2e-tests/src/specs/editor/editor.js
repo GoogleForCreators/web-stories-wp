@@ -49,12 +49,12 @@ describe('Story Editor', () => {
   });
 
   describe('Cross-Origin Isolation', () => {
-    describe('Enabled', () => {
-      // Firefox+Puppeteer has issues with cross-origin isolation resulting in unexpected timeouts.
-      // See https://github.com/google/web-stories-wp/pull/7748.
-      // eslint-disable-next-line jest/require-hook
-      skipSuiteOnFirefox();
+    // Firefox+Puppeteer has issues with cross-origin isolation resulting in unexpected timeouts.
+    // See https://github.com/google/web-stories-wp/pull/7748.
+    // eslint-disable-next-line jest/require-hook
+    skipSuiteOnFirefox();
 
+    describe('Enabled', () => {
       beforeEach(async () => {
         await toggleVideoOptimization(true);
       });
