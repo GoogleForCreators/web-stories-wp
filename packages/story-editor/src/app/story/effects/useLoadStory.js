@@ -144,10 +144,10 @@ function useLoadStory({ storyId, story, shouldLoad, restore }) {
   useEffect(() => {
     if (storyId && shouldLoad) {
       if (story) {
-        loadStory(storyId, story, clearHistory, restore);
+        loadStory(storyId, story, restore, clearHistory);
       } else {
         getStoryById(storyId).then((post) => {
-          loadStory(storyId, post, clearHistory, restore);
+          loadStory(storyId, post, restore, clearHistory);
         });
       }
     }
