@@ -117,11 +117,15 @@ function PagePreview({
   // Whenever the page is re-generated
   // remove the old (and now stale) image blob
   useEffect(() => {
-    if (enableThumbnailCaching && pageAtGenerationTime.current !== page) {
+    if (
+      enableThumbnailCaching &&
+      isActive &&
+      pageAtGenerationTime.current !== page
+    ) {
       setCachedImage({ pageId: page.id, cachedImage: null });
       pageAtGenerationTime.current = null;
     }
-  }, [page, setCachedImage, enableThumbnailCaching]);
+  }, [page, setCachedImage, isActive, enableThumbnailCaching]);
 
   useEffect(() => {
     // If this is not the active page, there is a page node, we

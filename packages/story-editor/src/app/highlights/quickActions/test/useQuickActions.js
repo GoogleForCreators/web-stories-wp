@@ -305,7 +305,7 @@ const mockUseApplyTextAutoStyle = useApplyTextAutoStyle;
 const mockUseConfig = useConfig;
 const mockUseLocalMedia = useLocalMedia;
 const mockResetWithFetch = jest.fn();
-const mockUpdateVideoIsMuted = jest.fn();
+const mockPostProcessingResource = jest.fn();
 const mockOptimizeVideo = jest.fn();
 const mockOptimizeGif = jest.fn();
 const mockUseFFmpeg = useFFmpeg;
@@ -322,7 +322,6 @@ const MockMediaPicker = ({ onSelect, onClose }) => (
         onSelect({
           ...videoResource,
           local: false,
-          mimeType: 'muted',
           isMuted: null,
         })
       }
@@ -373,7 +372,7 @@ describe('useQuickActions', () => {
 
     mockUseLocalMedia.mockReturnValue({
       resetWithFetch: noop,
-      updateVideoIsMuted: noop,
+      postProcessingResource: noop,
       optimizeVideo: noop,
       optimizeGif: noop,
     });
@@ -979,7 +978,7 @@ describe('MediaPicker', () => {
 
     mockUseLocalMedia.mockReturnValue({
       resetWithFetch: mockResetWithFetch,
-      updateVideoIsMuted: mockUpdateVideoIsMuted,
+      postProcessingResource: mockPostProcessingResource,
       optimizeVideo: mockOptimizeVideo,
       optimizeGif: mockOptimizeGif,
     });
@@ -1027,15 +1026,17 @@ describe('MediaPicker', () => {
     });
   });
 
-  it('should call updateVideoIsMuted for a video that is muted', () => {
+  it('should call postProcessingResource for a video that is muted', () => {
     render(<MediaPicker render={noop} />);
 
     fireEvent.click(screen.getByText('onSelect muted video'));
 
-    expect(mockUpdateVideoIsMuted).toHaveBeenCalledWith(
-      videoResource.id,
-      videoResource.src
-    );
+    expect(mockPostProcessingResource).toHaveBeenCalledWith({
+      ...videoResource,
+      local: false,
+      mimeType: 'videoMimeType',
+      isMuted: null,
+    });
     expect(mockUpdateElementsById).toHaveBeenCalledWith({
       elementIds: [IMAGE_ELEMENT.id],
       properties: {
@@ -1043,7 +1044,6 @@ describe('MediaPicker', () => {
         resource: {
           ...videoResource,
           local: false,
-          mimeType: 'muted',
           isMuted: null,
         },
       },

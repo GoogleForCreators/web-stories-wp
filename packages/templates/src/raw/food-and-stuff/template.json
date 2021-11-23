@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -322,7 +322,7 @@
             "alt": "page3_image1",
             "local": false,
             "sizes": [],
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           }
         },

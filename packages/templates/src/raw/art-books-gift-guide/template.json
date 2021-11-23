@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -1892,7 +1892,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [200, 127, 97],
+            "baseColor": "#c87f61",
             "isExternal": true
           },
           "width": 235,
@@ -2169,7 +2169,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [73, 103, 51],
+            "baseColor": "#496733",
             "isExternal": true
           },
           "x": 104,
@@ -2824,7 +2824,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [41, 51, 59],
+            "baseColor": "#29333b",
             "isExternal": true
           },
           "x": 20,

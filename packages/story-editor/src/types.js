@@ -75,6 +75,7 @@ StoryPropTypes.link = PropTypes.shape({
   url: PropTypes.string.isRequired,
   desc: PropTypes.string,
   icon: PropTypes.string,
+  rel: PropTypes.arrayOf(PropTypes.string),
 });
 
 StoryPropTypes.size = PropTypes.exact({
