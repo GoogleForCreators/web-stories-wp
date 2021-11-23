@@ -19,6 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from '@web-stories-wp/react';
+import { noop, useGlobalIsKeyPressed } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -203,20 +205,25 @@ function DropTargetsProvider({ children }) {
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );
 
+  // ⌘ key disables drop-targeting.
+  const isDropTargetingDisabled = useGlobalIsKeyPressed('meta');
+
   const state = {
     state: {
       dropTargets,
       activeDropTargetId,
       draggingResource,
+      isDropTargetingDisabled,
     },
+    // If the drop-targeting is disabled, all the related actions shouldn't be applied.
     actions: {
-      registerDropTarget,
+      registerDropTarget: isDropTargetingDisabled ? noop : registerDropTarget,
       unregisterDropTarget,
-      isDropSource,
-      isDropTarget,
-      handleDrag,
-      handleDrop,
-      setDraggingResource,
+      isDropSource: isDropTargetingDisabled ? () => false : isDropSource,
+      isDropTarget: isDropTargetingDisabled ? () => false : isDropTarget,
+      handleDrag: isDropTargetingDisabled ? noop : handleDrag,
+      handleDrop: isDropTargetingDisabled ? noop : handleDrop,
+      setDraggingResource: isDropTargetingDisabled ? noop : setDraggingResource,
     },
   };
 
