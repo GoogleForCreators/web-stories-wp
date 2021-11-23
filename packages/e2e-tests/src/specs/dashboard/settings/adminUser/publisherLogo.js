@@ -57,257 +57,257 @@ async function focusOnPublisherLogos(page) {
     : Promise.reject(new Error('could not focus on publisher logos'));
 }
 
-describe('Publisher Logo without SVG option enabled', () => {
+describe('Publisher Logo', () => {
   // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
   // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
 
-  beforeAll(async () => {
-    await visitSettings();
-    await uploadPublisherLogo('yay-fox.gif');
-    await uploadPublisherLogo('its-a-walk-off.gif');
-  });
+  describe('without SVG support', () => {
+    beforeAll(async () => {
+      await visitSettings();
+      await uploadPublisherLogo('yay-fox.gif');
+      await uploadPublisherLogo('its-a-walk-off.gif');
+    });
 
-  beforeEach(async () => {
-    await visitSettings();
-  });
+    beforeEach(async () => {
+      await visitSettings();
+    });
 
-  it('should update the default a publisher logo on click and display snackbar confirmation', async () => {
-    const settingsView = await page.$(SETTINGS_SELECTOR);
-    const publisherLogosContainer = await settingsView.$(
-      PUBLISHER_LOGOS_CONTAINER_SELECTOR
-    );
-    const publisherLogos = await publisherLogosContainer.$$(
-      '[role="listitem"]'
-    );
-    const initialDefault = publisherLogos[0];
+    it('should update the default a publisher logo on click and display snackbar confirmation', async () => {
+      const settingsView = await page.$(SETTINGS_SELECTOR);
+      const publisherLogosContainer = await settingsView.$(
+        PUBLISHER_LOGOS_CONTAINER_SELECTOR
+      );
+      const publisherLogos = await publisherLogosContainer.$$(
+        '[role="listitem"]'
+      );
+      const initialDefault = publisherLogos[0];
 
-    expect(initialDefault).toBeTruthy();
-    expect(initialDefault).toMatchElement('p', { text: 'Default' });
+      expect(initialDefault).toBeTruthy();
+      expect(initialDefault).toMatchElement('p', { text: 'Default' });
 
-    const logoToMakeDefault = publisherLogos[1];
+      const logoToMakeDefault = publisherLogos[1];
 
-    expect(logoToMakeDefault).toBeTruthy();
-    expect(logoToMakeDefault).not.toMatchElement('p', { text: 'Default' });
+      expect(logoToMakeDefault).toBeTruthy();
+      expect(logoToMakeDefault).not.toMatchElement('p', { text: 'Default' });
 
-    await expect(page).toClick(CONTEXT_MENU_BUTTON_SELECTOR);
+      await expect(page).toClick(CONTEXT_MENU_BUTTON_SELECTOR);
 
-    await page.waitForTimeout(300);
+      await page.waitForTimeout(300);
 
-    await expect(logoToMakeDefault).toClick('span', { text: 'Set as Default' });
+      await expect(logoToMakeDefault).toClick('span', {
+        text: 'Set as Default',
+      });
 
-    await page.waitForTimeout(300);
-    await expect(page).toMatch('Setting saved.');
+      await page.waitForTimeout(300);
+      await expect(page).toMatch('Setting saved.');
 
-    expect(initialDefault).toBeTruthy();
-    expect(initialDefault).not.toMatchElement('p', { text: 'Default' });
+      expect(initialDefault).toBeTruthy();
+      expect(initialDefault).not.toMatchElement('p', { text: 'Default' });
 
-    expect(logoToMakeDefault).toBeTruthy();
-    expect(logoToMakeDefault).toMatchElement('p', { text: 'Default' });
-  });
+      expect(logoToMakeDefault).toBeTruthy();
+      expect(logoToMakeDefault).toMatchElement('p', { text: 'Default' });
+    });
 
-  it('should update the default logo on keydown and display snackbar confirmation', async () => {
-    const settingsView = await page.$(SETTINGS_SELECTOR);
-    const publisherLogosContainer = await settingsView.$(
-      PUBLISHER_LOGOS_CONTAINER_SELECTOR
-    );
-    const publisherLogos = await publisherLogosContainer.$$(
-      '[role="listitem"]'
-    );
-    const initialDefault = publisherLogos[0];
-    expect(initialDefault).toBeTruthy();
-    expect(initialDefault).toMatchElement('p', { text: 'Default' });
+    it('should update the default logo on keydown and display snackbar confirmation', async () => {
+      const settingsView = await page.$(SETTINGS_SELECTOR);
+      const publisherLogosContainer = await settingsView.$(
+        PUBLISHER_LOGOS_CONTAINER_SELECTOR
+      );
+      const publisherLogos = await publisherLogosContainer.$$(
+        '[role="listitem"]'
+      );
+      const initialDefault = publisherLogos[0];
+      expect(initialDefault).toBeTruthy();
+      expect(initialDefault).toMatchElement('p', { text: 'Default' });
 
-    await focusOnPublisherLogos(page);
-    await page.keyboard.press('ArrowRight');
-    await page.keyboard.press('ArrowRight');
+      await focusOnPublisherLogos(page);
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowRight');
 
-    await page.keyboard.press('Tab');
-    await page.keyboard.press('Enter');
-    await page.keyboard.press('Enter');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Enter');
+      await page.keyboard.press('Enter');
 
-    await page.waitForTimeout(300);
+      await page.waitForTimeout(300);
 
-    const updatedPublisherLogos = await publisherLogosContainer.$$(
-      '[role="listitem"]'
-    );
-    const currentDefault = updatedPublisherLogos[1];
-    expect(currentDefault).toBeTruthy();
-    expect(currentDefault).toMatchElement('p', { text: 'Default' });
+      const updatedPublisherLogos = await publisherLogosContainer.$$(
+        '[role="listitem"]'
+      );
+      const currentDefault = updatedPublisherLogos[1];
+      expect(currentDefault).toBeTruthy();
+      expect(currentDefault).toMatchElement('p', { text: 'Default' });
 
-    await expect(page).toMatch('Setting saved.');
-  });
+      await expect(page).toMatch('Setting saved.');
+    });
 
-  it('should remove a publisher logo on click and display snackbar confirmation', async () => {
-    const settingsView = await page.$(SETTINGS_SELECTOR);
+    it('should remove a publisher logo on click and display snackbar confirmation', async () => {
+      const settingsView = await page.$(SETTINGS_SELECTOR);
 
-    const publisherLogosContainer = await settingsView.$(
-      PUBLISHER_LOGOS_CONTAINER_SELECTOR
-    );
+      const publisherLogosContainer = await settingsView.$(
+        PUBLISHER_LOGOS_CONTAINER_SELECTOR
+      );
 
-    const publisherLogos = await publisherLogosContainer.$$(
-      '[role="listitem"]'
-    );
-    const logoToDelete = publisherLogos[1];
-    const initialPublisherLogosLength = publisherLogos.length;
+      const publisherLogos = await publisherLogosContainer.$$(
+        '[role="listitem"]'
+      );
+      const logoToDelete = publisherLogos[1];
+      const initialPublisherLogosLength = publisherLogos.length;
 
-    await expect(page).toClick(CONTEXT_MENU_BUTTON_SELECTOR);
+      await expect(page).toClick(CONTEXT_MENU_BUTTON_SELECTOR);
 
-    await page.waitForTimeout(300);
+      await page.waitForTimeout(300);
 
-    await expect(logoToDelete).toClick('span', { text: 'Delete' });
+      await expect(logoToDelete).toClick('span', { text: 'Delete' });
 
-    await page.waitForTimeout(300);
-    const updatedPublisherLogos = await publisherLogosContainer.$$(
-      '[role="listitem"]'
-    );
+      await page.waitForTimeout(300);
+      const updatedPublisherLogos = await publisherLogosContainer.$$(
+        '[role="listitem"]'
+      );
 
-    await expect(page).toMatch('Setting saved.');
+      await expect(page).toMatch('Setting saved.');
 
-    const updatedPublisherLogosLength = updatedPublisherLogos.length;
+      const updatedPublisherLogosLength = updatedPublisherLogos.length;
 
-    expect(updatedPublisherLogosLength).toBe(initialPublisherLogosLength - 1);
-    await uploadPublisherLogo('its-a-walk-off.gif');
-  });
+      expect(updatedPublisherLogosLength).toBe(initialPublisherLogosLength - 1);
+      await uploadPublisherLogo('its-a-walk-off.gif');
+    });
 
-  it('should remove a publisher logo on keydown enter and display snackbar confirmation', async () => {
-    const settingsView = await page.$(SETTINGS_SELECTOR);
+    it('should remove a publisher logo on keydown enter and display snackbar confirmation', async () => {
+      const settingsView = await page.$(SETTINGS_SELECTOR);
 
-    const publisherLogosContainer = await settingsView.$(
-      PUBLISHER_LOGOS_CONTAINER_SELECTOR
-    );
+      const publisherLogosContainer = await settingsView.$(
+        PUBLISHER_LOGOS_CONTAINER_SELECTOR
+      );
 
-    expect(publisherLogosContainer).toBeTruthy();
+      expect(publisherLogosContainer).toBeTruthy();
 
-    const publisherLogos = await publisherLogosContainer.$$(
-      '[role="listitem"]'
-    );
-    const initialPublisherLogosLength = publisherLogos.length;
+      const publisherLogos = await publisherLogosContainer.$$(
+        '[role="listitem"]'
+      );
+      const initialPublisherLogosLength = publisherLogos.length;
 
-    await focusOnPublisherLogos(page);
-    await page.keyboard.press('ArrowRight');
+      await focusOnPublisherLogos(page);
+      await page.keyboard.press('ArrowRight');
 
-    const dataId0 = await page.evaluate(() =>
-      document.activeElement.getAttribute('data-testid')
-    );
-    expect(dataId0).toBe('uploaded-publisher-logo-0');
+      const dataId0 = await page.evaluate(() =>
+        document.activeElement.getAttribute('data-testid')
+      );
+      expect(dataId0).toBe('uploaded-publisher-logo-0');
 
-    await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowRight');
 
-    const dataId1 = await page.evaluate(() =>
-      document.activeElement.getAttribute('data-testid')
-    );
-    expect(dataId1).toBe('uploaded-publisher-logo-1');
+      const dataId1 = await page.evaluate(() =>
+        document.activeElement.getAttribute('data-testid')
+      );
+      expect(dataId1).toBe('uploaded-publisher-logo-1');
 
-    await page.keyboard.press('Tab');
-    await page.keyboard.press('Enter');
-    await page.keyboard.press('ArrowDown');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Enter');
+      await page.keyboard.press('ArrowDown');
 
-    await page.keyboard.press('Enter');
+      await page.keyboard.press('Enter');
 
-    await page.waitForTimeout(300);
+      await page.waitForTimeout(300);
 
-    const updatedPublisherLogos = await publisherLogosContainer.$$(
-      '[role="listitem"]'
-    );
-    const updatedPublisherLogosLength = updatedPublisherLogos.length;
+      const updatedPublisherLogos = await publisherLogosContainer.$$(
+        '[role="listitem"]'
+      );
+      const updatedPublisherLogosLength = updatedPublisherLogos.length;
 
-    expect(updatedPublisherLogosLength).toBe(initialPublisherLogosLength - 1);
+      expect(updatedPublisherLogosLength).toBe(initialPublisherLogosLength - 1);
 
-    await page.waitForTimeout(300);
+      await page.waitForTimeout(300);
 
-    await expect(page).toMatch('Setting saved.');
-    await uploadPublisherLogo('its-a-walk-off.gif');
-  });
-});
-
-describe('Publisher logo with SVG option enabled', () => {
-  // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
-  // eslint-disable-next-line jest/require-hook
-  skipSuiteOnFirefox();
-
-  // eslint-disable-next-line jest/require-hook
-  withExperimentalFeatures(['enableSVG']);
-
-  let uploadedFiles;
-
-  beforeEach(() => (uploadedFiles = []));
-
-  afterEach(async () => {
-    for (const file of uploadedFiles) {
-      // eslint-disable-next-line no-await-in-loop
-      await deleteMedia(file);
-    }
-  });
-
-  it('should not upload a logo that is an invalid type with svg enabled', async () => {
-    await visitSettings();
-
-    // Upload publisher logo
-    await uploadPublisherLogo('video-play.svg', false);
-
-    // verify error message
-    await expect(page).toMatchElement('[role="alert"]', {
-      text: ERROR_TEXT,
+      await expect(page).toMatch('Setting saved.');
+      await uploadPublisherLogo('its-a-walk-off.gif');
     });
   });
 
-  it('should be able to upload multiple logos', async () => {
-    await visitSettings();
+  describe('with SVG support', () => {
+    // eslint-disable-next-line jest/require-hook
+    withExperimentalFeatures(['enableSVG']);
 
-    // Upload publisher logo
-    const logoOneName = await uploadPublisherLogo('yay-fox.gif');
-    // verify no error message
-    await expect(page).not.toMatchElement('[role="alert"]', {
-      text: ERROR_TEXT,
-    });
+    let uploadedFiles;
 
-    const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
-    // verify no error message
-    await expect(page).not.toMatchElement('[role="alert"]', {
-      text: ERROR_TEXT,
-    });
+    beforeEach(() => (uploadedFiles = []));
 
-    uploadedFiles.push(logoOneName);
-    uploadedFiles.push(logoTwoName);
-  });
-
-  // TODO(#9152): Fix flakey test.
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should be able to delete all except one logo', async () => {
-    await visitSettings();
-
-    // Upload publisher logo
-    const logoOneName = await uploadPublisherLogo('yay-fox.gif');
-    // verify no error message
-    await expect(page).not.toMatchElement('[role="alert"]', {
-      text: ERROR_TEXT,
-    });
-
-    const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
-    // verify no error message
-    await expect(page).not.toMatchElement('[role="alert"]', {
-      text: ERROR_TEXT,
-    });
-
-    // Delete the second logo
-    await expect(page).toClick(
-      `button[aria-label^="Publisher logo menu for ${logoTwoName}"`
-    );
-    await expect(page).toClick(
-      '[data-testid="publisher-logo-1"] [data-testid="context-menu-list"] button',
-      {
-        text: 'Delete',
+    afterEach(async () => {
+      for (const file of uploadedFiles) {
+        // eslint-disable-next-line no-await-in-loop
+        await deleteMedia(file);
       }
-    );
-    await expect(page).toClick('button', { text: 'Delete Logo' });
+    });
 
-    // should not find a button if its the last context menu
-    await expect(page).not.toMatchElement(
-      `button[aria-label^="Publisher logo menu for ${logoOneName}"`
-    );
+    it('should not upload a logo that is an invalid type with svg enabled', async () => {
+      await visitSettings();
 
-    uploadedFiles.push(logoOneName);
-    uploadedFiles.push(logoTwoName);
+      // Upload publisher logo
+      await uploadPublisherLogo('video-play.svg', false);
+
+      // verify error message
+      await expect(page).toMatchElement('[role="alert"]', {
+        text: ERROR_TEXT,
+      });
+    });
+
+    it('should be able to upload multiple logos', async () => {
+      await visitSettings();
+
+      // Upload publisher logo
+      const logoOneName = await uploadPublisherLogo('yay-fox.gif');
+      // verify no error message
+      await expect(page).not.toMatchElement('[role="alert"]', {
+        text: ERROR_TEXT,
+      });
+
+      const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
+      // verify no error message
+      await expect(page).not.toMatchElement('[role="alert"]', {
+        text: ERROR_TEXT,
+      });
+
+      uploadedFiles.push(logoOneName);
+      uploadedFiles.push(logoTwoName);
+    });
+
+    // TODO(#9152): Fix flakey test.
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should be able to delete all except one logo', async () => {
+      await visitSettings();
+
+      // Upload publisher logo
+      const logoOneName = await uploadPublisherLogo('yay-fox.gif');
+      // verify no error message
+      await expect(page).not.toMatchElement('[role="alert"]', {
+        text: ERROR_TEXT,
+      });
+
+      const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
+      // verify no error message
+      await expect(page).not.toMatchElement('[role="alert"]', {
+        text: ERROR_TEXT,
+      });
+
+      // Delete the second logo
+      await expect(page).toClick(
+        `button[aria-label^="Publisher logo menu for ${logoTwoName}"`
+      );
+      await expect(page).toClick(
+        '[data-testid="publisher-logo-1"] [data-testid="context-menu-list"] button',
+        {
+          text: 'Delete',
+        }
+      );
+      await expect(page).toClick('button', { text: 'Delete Logo' });
+
+      // should not find a button if its the last context menu
+      await expect(page).not.toMatchElement(
+        `button[aria-label^="Publisher logo menu for ${logoOneName}"`
+      );
+
+      uploadedFiles.push(logoOneName);
+      uploadedFiles.push(logoTwoName);
+    });
   });
 });
