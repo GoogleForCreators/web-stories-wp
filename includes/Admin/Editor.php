@@ -290,6 +290,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'webStories',
 			[
 				'publicPath' => $this->assets->get_base_url( 'assets/js/' ), // Required before the editor script is enqueued.
+				'localeData' => $this->assets->get_translations( self::SCRIPT_HANDLE ), // Required for i18n setLocaleData
 			]
 		);
 
@@ -403,7 +404,6 @@ class Editor extends Service_Base implements HasRequirements {
 			'encodeMarkup'                 => $this->decoder->supports_decoding(),
 			'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
 			'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
-			'localeData'                   => $this->assets->get_translations( self::SCRIPT_HANDLE ),
 			'flags'                        => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'editor' )
