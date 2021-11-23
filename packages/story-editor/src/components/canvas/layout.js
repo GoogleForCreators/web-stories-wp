@@ -36,6 +36,8 @@ import { THEME_CONSTANTS, themeHelpers } from '@web-stories-wp/design-system';
 import { HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import { useLayout } from '../../app';
+import useFooterHeight from '../footer/useFooterHeight';
+import { FOOTER_BOTTOM_MARGIN } from '../footer/constants';
 import usePinchToZoom from './usePinchToZoom';
 
 /**
@@ -50,15 +52,10 @@ export const Z_INDEX = {
 
 const HEADER_GAP = 16;
 // 8px extra is for the focus outline to display.
-const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE + 8;
-const MENU_GAP = 12;
-const FOOTER_HEIGHT = 100; // 32px button, 8px gap, 60px thumbnail
-const BOTTOM_MARGIN = 16;
-// 8px extra is for the focus outline to display.
 const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;
 const PAGE_NAV_GAP = 20;
 
-const Layer = styled.section`
+const LayerGrid = styled.section`
   ${pointerEventsCss}
 
   position: absolute;
@@ -89,11 +86,9 @@ const Layer = styled.section`
     'h h h h h h h' ${HEADER_HEIGHT}px
     '. . . . . . .' minmax(16px, 1fr)
     '. b . p . f .' var(--viewport-height-px)
-    '. . . . . . .' ${MENU_GAP}px
-    'm m m m m m m' ${MENU_HEIGHT}px
     '. . . . . . .' 1fr
-    'w w w w w w w' ${FOOTER_HEIGHT}px
-    '. . . . . . .' ${BOTTOM_MARGIN}px
+    'w w w w w w w' ${({ footerHeight }) => footerHeight}px
+    '. . . . . . .' ${FOOTER_BOTTOM_MARGIN}px
     /
     1fr
     var(--page-nav-width)
@@ -142,6 +137,19 @@ const PageAreaContainer = styled(Area).attrs({
       );
     `}
 `;
+
+function Layer({ children, ...rest }) {
+  const footerHeight = useFooterHeight();
+  return (
+    <LayerGrid footerHeight={footerHeight} {...rest}>
+      {children}
+    </LayerGrid>
+  );
+}
+
+Layer.propTypes = {
+  children: PropTypes.node,
+};
 
 const PaddedPage = styled.div`
   padding: calc(0.5 * var(--page-padding-px));
@@ -264,20 +272,25 @@ function useLayoutParams(containerRef) {
     })
   );
 
-  useResizeEffect(containerRef, ({ width, height }) => {
-    // See Layer's `grid` CSS above. Per the layout, the maximum available
-    // space for the page is:
-    const maxWidth = width;
-    const maxHeight =
-      height -
-      HEADER_HEIGHT -
-      HEADER_GAP -
-      MENU_HEIGHT -
-      MENU_GAP -
-      FOOTER_HEIGHT;
+  const footerHeight = useFooterHeight();
 
-    setWorkspaceSize({ width: maxWidth, height: maxHeight });
-  });
+  useResizeEffect(
+    containerRef,
+    ({ width, height }) => {
+      // See Layer's `grid` CSS above. Per the layout, the maximum available
+      // space for the page is:
+      const maxWidth = width;
+      const maxHeight =
+        height -
+        HEADER_HEIGHT -
+        HEADER_GAP -
+        footerHeight -
+        FOOTER_BOTTOM_MARGIN;
+
+      setWorkspaceSize({ width: maxWidth, height: maxHeight });
+    },
+    [setWorkspaceSize, footerHeight]
+  );
 }
 
 function useLayoutParamsCssVars() {

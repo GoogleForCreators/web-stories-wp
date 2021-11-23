@@ -167,9 +167,6 @@ function SecondaryMenu({ menu }) {
     <Wrapper>
       <MenuItems>
         <HelpCenter />
-        <ChecklistCountProvider>
-          <Checklist />
-        </ChecklistCountProvider>
         {menu?.checklist && (
           <ChecklistCountProvider>
             <Checklist items={menu.checklist} />
