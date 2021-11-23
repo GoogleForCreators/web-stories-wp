@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -271,7 +271,7 @@
             "id": 0,
             "alt": "page01_logo",
             "local": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -358,7 +358,7 @@
             "provider": "local",
             "isTranscoding": false,
             "isMuted": true,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "tracks": [
@@ -4584,7 +4584,7 @@
             "id": 0,
             "alt": "page14_bg",
             "local": false,
-            "baseColor": [37, 93, 203],
+            "baseColor": "#255dcb",
             "isExternal": true
           },
           "type": "image",
@@ -4949,7 +4949,7 @@
             "alt": "page14_profileimage",
             "sizes": [],
             "local": false,
-            "baseColor": [194, 194, 194],
+            "baseColor": "#c2c2c2",
             "isExternal": true
           }
         },

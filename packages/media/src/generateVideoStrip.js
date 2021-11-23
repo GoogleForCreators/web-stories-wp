@@ -18,29 +18,8 @@
  * Internal dependencies
  */
 import getMediaSizePositionProps from './getMediaSizePositionProps';
-
-function preloadVideo(src) {
-  const video = document.createElement('video');
-  video.muted = true;
-  video.crossOrigin = 'anonymous';
-  video.preload = 'auto';
-
-  return new Promise((resolve, reject) => {
-    video.addEventListener('error', reject);
-    video.addEventListener('canplay', () => resolve(video), { once: true });
-    video.src = src;
-  });
-}
-
-function seekVideo(video, offset) {
-  if (video.currentTime === offset) {
-    return Promise.resolve();
-  }
-  return new Promise((resolve) => {
-    video.addEventListener('seeked', resolve, { once: true });
-    video.currentTime = offset;
-  });
-}
+import preloadVideo from './preloadVideo';
+import seekVideo from './seekVideo';
 
 /**
  * Returns an image data URL with a video strip of the frames of the video.

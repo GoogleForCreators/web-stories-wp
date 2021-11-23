@@ -68,17 +68,19 @@ class NextGen_Gallery extends Service_Base {
 	 * @return bool|mixed Whether the output buffer should run.
 	 */
 	public function filter_run_ngg_resource_manager( $valid_request ) {
+		$request_uri_path = $this->get_request_uri_path();
+
 		if (
 			// Plain permalinks.
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			! empty( $_GET[ Story_Post_Type::POST_TYPE_SLUG ] ) ||
 			// Pretty permalinks.
 			(
-				isset( $_SERVER['REQUEST_URI'] ) &&
+				$request_uri_path &&
 				preg_match(
 					'#/' . preg_quote( Story_Post_Type::REWRITE_SLUG, '#' ) . '/.*?$#',
 					// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-					wp_parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH )
+					$request_uri_path
 				)
 			)
 		) {
@@ -86,5 +88,45 @@ class NextGen_Gallery extends Service_Base {
 		}
 
 		return $valid_request;
+	}
+
+	/**
+	 * Returns the current request path.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @return string|null Request URI path on success, null on failure.
+	 */
+	private function get_request_uri_path() {
+		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		if ( ! isset( $_SERVER['REQUEST_URI'] ) ) {
+			return null;
+		}
+
+		if ( ! is_string( $_SERVER['REQUEST_URI'] ) ) {
+			return null;
+		}
+
+		/**
+		 * Request URI.
+		 *
+		 * @var string $request_uri
+		 */
+		$request_uri = $_SERVER['REQUEST_URI'];
+
+		// phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+		/**
+		 * Request URI path.
+		 *
+		 * @var string|null|false $path
+		 */
+		$path = wp_parse_url( $request_uri, PHP_URL_PATH );
+
+		if ( ! $path ) {
+			return null;
+		}
+
+		return $path;
 	}
 }

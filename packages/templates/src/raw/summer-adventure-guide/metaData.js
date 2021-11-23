@@ -31,9 +31,21 @@ export default {
     _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Golden Yellow', 'color', 'web-stories'), color: '#fec85a' },
-    { label: _x('Dark Olive Green', 'color', 'web-stories'), color: '#556C28' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+    {
+      label: _x('Golden Yellow', 'color', 'web-stories'),
+      color: '#fec85a',
+      family: _x('Yellow', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Dark Olive Green', 'color', 'web-stories'),
+      color: '#556C28',
+      family: _x('Green', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'This template’s green-yellow color palette and map-like stickers will let you create fun and exciting stories for adventure travel, ecotourism, hiking, camping, wildlife and more.',

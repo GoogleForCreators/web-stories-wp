@@ -606,6 +606,36 @@ describe('Page output', () => {
       await expect(pageOutlink).toBeInTheDocument();
     });
 
+    it('should output rel', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+          pageAttachment: {
+            url: 'https://example.test',
+            ctaText: 'Click me!',
+            theme: 'dark',
+            icon: '',
+            rel: ['nofollow'],
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const pageOutlink = container.querySelector('amp-story-page-outlink');
+      await expect(pageOutlink).toBeInTheDocument();
+      await expect(pageOutlink).toHaveTextContent('Click me!');
+      await expect(pageOutlink).not.toHaveAttribute('cta-image');
+
+      const pageOutATag = pageOutlink.querySelector('a');
+      await expect(pageOutATag).toBeInTheDocument();
+      await expect(pageOutATag).toHaveAttribute('rel', 'nofollow');
+    });
+
     it('should not output a link in page attachment area', () => {
       const props = {
         id: '123',
@@ -775,7 +805,7 @@ describe('Page output', () => {
         poster: 'https://example.com/poster.png',
         height: 1,
         width: 1,
-        baseColor: [0, 55, 155],
+        baseColor: '#00379b',
       },
     };
 
@@ -783,7 +813,7 @@ describe('Page output', () => {
       const props = {
         id: '123',
         page: {
-          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          backgroundColor: { color: '#00379b' },
           id: '123',
           elements: [BACKGROUND_ELEMENT],
         },
@@ -792,7 +822,7 @@ describe('Page output', () => {
       };
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
-      expect(content).toContain('background-color:rgb(0,55,155)');
+      expect(content).toContain('background-color:#00379b');
     });
 
     it('should output the page background color in case of default background element', () => {

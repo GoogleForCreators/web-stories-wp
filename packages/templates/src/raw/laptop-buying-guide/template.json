@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -152,7 +152,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 4, 4],
+            "baseColor": "#040404",
             "isExternal": true
           },
           "type": "image",
@@ -408,7 +408,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [20, 20, 23],
+            "baseColor": "#141417",
             "isExternal": true
           },
           "x": 0,
@@ -610,7 +610,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [178, 140, 71],
+            "baseColor": "#b28c47",
             "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.6 } }
@@ -1002,7 +1002,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 4, 4],
+            "baseColor": "#040404",
             "isExternal": true
           },
           "type": "image",
@@ -1368,7 +1368,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [5, 5, 5],
+            "baseColor": "#050505",
             "isExternal": true
           },
           "type": "image",
@@ -1918,7 +1918,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 84, 252],
+            "baseColor": "#0454fc",
             "isExternal": true
           },
           "resizeWidth": 242.328,
@@ -2126,7 +2126,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 84, 252],
+            "baseColor": "#0454fc",
             "isExternal": true
           },
           "resizeWidth": 212.031,
@@ -2338,7 +2338,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 84, 252],
+            "baseColor": "#0454fc",
             "isExternal": true
           },
           "resizeWidth": 132.328,
@@ -2500,7 +2500,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [160, 113, 69],
+            "baseColor": "#a07145",
             "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.6 } }
@@ -2892,7 +2892,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [199, 199, 199],
+            "baseColor": "#c7c7c7",
             "isExternal": true
           },
           "type": "image",
@@ -4495,7 +4495,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [230, 211, 195],
+            "baseColor": "#e6d3c3",
             "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.6 } }
@@ -5639,7 +5639,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [4, 4, 4],
+            "baseColor": "#040404",
             "isExternal": true
           },
           "type": "image",
@@ -5917,7 +5917,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [216, 217, 218],
+            "baseColor": "#d8d9da",
             "isExternal": true
           },
           "type": "image",
@@ -6632,7 +6632,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [216, 219, 220],
+            "baseColor": "#d8dbdc",
             "isExternal": true
           },
           "x": 76,
@@ -6887,7 +6887,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [213, 207, 197],
+            "baseColor": "#d5cfc5",
             "isExternal": true
           }
         },

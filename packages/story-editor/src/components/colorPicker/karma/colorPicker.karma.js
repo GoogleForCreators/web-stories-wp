@@ -34,6 +34,7 @@ describe('ColorPicker', () => {
         fixture = new Fixture();
         fixture.setConfig({ isRTL: direction === 'RTL' });
         await fixture.render();
+        await fixture.collapseHelpCenter();
       });
 
       afterEach(() => {
@@ -71,6 +72,7 @@ describe('ColorPicker', () => {
     beforeEach(async () => {
       fixture = new Fixture();
       await fixture.render();
+      await fixture.collapseHelpCenter();
       localStorage.setItem(
         'web_stories_ui_panel_settings:shapeStyle',
         JSON.stringify({ isCollapsed: false })

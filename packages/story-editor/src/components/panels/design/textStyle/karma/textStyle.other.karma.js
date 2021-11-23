@@ -32,6 +32,7 @@ describe('Text Style Panel', () => {
     fixture = new Fixture();
     localStorage.clear();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {

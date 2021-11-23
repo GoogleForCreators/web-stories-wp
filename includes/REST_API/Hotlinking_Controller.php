@@ -177,7 +177,13 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function parse_url( $request ) {
-		$url = untrailingslashit( $request['url'] );
+		/**
+		 * Requested URL.
+		 *
+		 * @var string $url
+		 */
+		$url = $request['url'];
+		$url = untrailingslashit( $url );
 
 		/**
 		 * Filters the hotlinking data TTL value.
@@ -191,10 +197,18 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$cache_key = 'web_stories_url_data_' . md5( $url );
 
 		$data = get_transient( $cache_key );
-		if ( ! empty( $data ) ) {
-			$response = $this->prepare_item_for_response( json_decode( $data, true ), $request );
+		if ( is_string( $data ) && ! empty( $data ) ) {
+			/**
+			 * Decoded cached link data.
+			 *
+			 * @var array|null $link
+			 */
+			$link = json_decode( $data, true );
 
-			return rest_ensure_response( $response );
+			if ( $link ) {
+				$response = $this->prepare_item_for_response( $link, $request );
+				return rest_ensure_response( $response );
+			}
 		}
 
 		$response = wp_safe_remote_head(
@@ -216,7 +230,17 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$mime_type = $headers['content-type'];
 		$file_size = (int) $headers['content-length'];
 
-		$path      = wp_parse_url( $url, PHP_URL_PATH );
+		/**
+		 * The URL's path.
+		 *
+		 * @var string|false|null $path
+		 */
+		$path = wp_parse_url( $url, PHP_URL_PATH );
+
+		if ( ! is_string( $path ) ) {
+			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+		}
+
 		$file_name = basename( $path );
 
 		$exts = $this->types->get_file_type_exts( [ $mime_type ] );
@@ -252,6 +276,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Parses a URL to return proxied file.
 	 *
+	 * @todo Forward the Range request header.
+	 *
 	 * @SuppressWarnings(PHPMD.ErrorControlOperator)
 	 *
 	 * @since 1.13.0
@@ -260,7 +286,23 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @return void
 	 */
 	public function proxy_url( $request ) {
-		$url = untrailingslashit( $request['url'] );
+		/**
+		 * Requested URL.
+		 *
+		 * @var string $url
+		 */
+		$url = $request['url'];
+		$url = untrailingslashit( $url );
+
+		// Remove any relevant headers already set by WP_REST_Server::serve_request() // wp_get_nocache_headers().
+		if ( ! headers_sent() ) {
+			header_remove( 'Cache-Control' );
+			header_remove( 'Content-Type' );
+			header_remove( 'Expires' );
+			header_remove( 'Last Modified' );
+		}
+
+		header( 'Cache-Control: max-age=3600' );
 
 		$args = [
 			'timeout'  => 60, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
@@ -276,9 +318,9 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			// Other than php://memory, php://temp will use a temporary file once the amount of data stored hits a predefined limit (the default is 2 MB).
 			// The location of this temporary file is determined in the same way as the {@see sys_get_temp_dir()} function.
 			if ( WP_DEBUG ) {
-				$stream_handle = fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
+				$stream_handle = fopen( 'php://memory', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
 			} else {
-				$stream_handle = @fopen( 'php://temp', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.PHP.NoSilencedErrors.Discouraged, Generic.PHP.NoSilencedErrors.Forbidden
+				$stream_handle = @fopen( 'php://memory', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.PHP.NoSilencedErrors.Discouraged, Generic.PHP.NoSilencedErrors.Forbidden
 			}
 
 			if ( $stream_handle ) {
@@ -309,17 +351,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 */
 	private function proxy_url_curl( $url, $args ) {
 		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
-		$response = wp_safe_remote_get( $url, $args );
+		wp_safe_remote_get( $url, $args );
 		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
-
-		$status = wp_remote_retrieve_response_code( $response );
-
-		if ( ! $status ) {
-			http_response_code( 404 );
-			return;
-		}
-
-		http_response_code( (int) $status );
 
 		rewind( $this->stream_handle );
 		while ( ! feof( $this->stream_handle ) ) {
@@ -394,6 +427,11 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			return $error;
 		}
 
+		/**
+		 * Request context.
+		 *
+		 * @var string $context
+		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
@@ -479,7 +517,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.11.0
 	 *
-	 * @param mixed $value Value to be validated.
+	 * @param string $value Value to be validated.
 	 *
 	 * @return true|WP_Error
 	 */

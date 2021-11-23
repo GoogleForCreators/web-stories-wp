@@ -33,7 +33,7 @@ describe('Alignment Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-
+    await fixture.collapseHelpCenter();
     textA = (await getElements())[0].id;
   });
 

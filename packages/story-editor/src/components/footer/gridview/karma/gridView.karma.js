@@ -39,6 +39,7 @@ describe('GridView integration', () => {
     ]);
 
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     await fixture.events.click(fixture.editor.footer.gridViewToggle);
   });
