@@ -128,15 +128,15 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     !isValidUrl(withProtocol(url))
   );
 
-  const populateMetadata = useDebouncedCallback(async (url) => {
+  const populateMetadata = useDebouncedCallback(async (newUrl) => {
     setFetchingMetadata(true);
     try {
-      const { title: newTitle, image: newIcon } = await getLinkMetadata(url);
-      const needsProxy = await checkResourceAccess(image);
+      const { title: newTitle, image: newIcon } = await getLinkMetadata(newUrl);
+      const needsProxy = await checkResourceAccess(newIcon);
 
       updateLinkFromMetadataApi({
-        newUrl, 
-        newTitle, 
+        newUrl,
+        newTitle,
         newIcon,
         needsProxy,
       });
@@ -210,7 +210,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     url,
   ]);
 
-  const linkIcon = getProxiedUrl(link, encodeURI(link.icon));
+  const linkIcon = getProxiedUrl(link, encodeURI(icon));
 
   const isMultipleUrl = MULTIPLE_VALUE === url;
   const isMultipleDesc = MULTIPLE_VALUE === desc;
