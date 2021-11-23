@@ -15,24 +15,18 @@
  */
 
 /**
- * Internal dependencies
- */
-import getVideoLengthDisplay from './getVideoLengthDisplay';
-
-/**
- * Get video length from a video.
+ * Determine whether a URL is valid and acceptable for hotlinking.
  *
- * @param {HTMLVideoElement} video Video element.
- * @return {Object<{length: number, lengthFormatted: string}>} Video length information.
+ * Validates that a URL has a valid path segment.
+ *
+ * @param {string} url URL to validate.
+ * @return {boolean} Whether the URL is valid for hotlinking.
  */
-function getVideoLength(video) {
-  const duration = !isNaN(video.duration) ? video.duration : 0;
-  const length = Math.round(duration);
-  const lengthFormatted = getVideoLengthDisplay(length);
-  return {
-    length,
-    lengthFormatted,
-  };
+export function isValidUrlForHotlinking(url) {
+  try {
+    const urlObj = new URL(url);
+    return urlObj.pathname !== '/';
+  } catch {
+    return false;
+  }
 }
-
-export default getVideoLength;

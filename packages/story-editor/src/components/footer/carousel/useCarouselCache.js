@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,24 +15,26 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import getVideoLengthDisplay from './getVideoLengthDisplay';
+import { useReduction } from '@web-stories-wp/react';
 
-/**
- * Get video length from a video.
- *
- * @param {HTMLVideoElement} video Video element.
- * @return {Object<{length: number, lengthFormatted: string}>} Video length information.
- */
-function getVideoLength(video) {
-  const duration = !isNaN(video.duration) ? video.duration : 0;
-  const length = Math.round(duration);
-  const lengthFormatted = getVideoLengthDisplay(length);
+const imageCacheReducer = {
+  setCachedImage: (cachedImages, { payload: { pageId, cachedImage } }) => ({
+    ...cachedImages,
+    [pageId]: cachedImage,
+  }),
+};
+
+function useCarouselCache() {
+  const [cachedImages, { setCachedImage }] = useReduction(
+    {},
+    imageCacheReducer
+  );
   return {
-    length,
-    lengthFormatted,
+    cachedImages,
+    setCachedImage,
   };
 }
 
-export default getVideoLength;
+export default useCarouselCache;

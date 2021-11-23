@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -34,7 +34,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [34, 35, 37],
+            "baseColor": "#222325",
             "isExternal": true
           }
         },
@@ -404,7 +404,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [183, 173, 158],
+            "baseColor": "#b7ad9e",
             "isExternal": true
           },
           "overlay": {
@@ -542,7 +542,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [14, 14, 14],
+            "baseColor": "#0e0e0e",
             "isExternal": true
           }
         },
@@ -827,7 +827,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [23, 19, 14],
+            "baseColor": "#17130e",
             "isExternal": true
           },
           "overlay": {
@@ -1082,7 +1082,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [54, 35, 52],
+            "baseColor": "#362334",
             "isExternal": true
           },
           "overlay": {
@@ -1331,7 +1331,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [200, 122, 99],
+            "baseColor": "#c87a63",
             "isExternal": true
           },
           "overlay": {
@@ -1580,7 +1580,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [14, 14, 14],
+            "baseColor": "#0e0e0e",
             "isExternal": true
           },
           "overlay": {
@@ -1829,7 +1829,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [194, 194, 194],
+            "baseColor": "#c2c2c2",
             "isExternal": true
           }
         },
@@ -2114,7 +2114,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [209, 206, 205],
+            "baseColor": "#d1cecd",
             "isExternal": true
           },
           "overlay": {
@@ -2371,7 +2371,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [49, 52, 49],
+            "baseColor": "#313431",
             "isExternal": true
           },
           "overlay": {
@@ -2620,7 +2620,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [37, 37, 37],
+            "baseColor": "#252525",
             "isExternal": true
           },
           "overlay": {
@@ -2869,7 +2869,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [72, 58, 26],
+            "baseColor": "#483a1a",
             "isExternal": true
           },
           "overlay": {
@@ -3118,7 +3118,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [65, 52, 43],
+            "baseColor": "#41342b",
             "isExternal": true
           },
           "overlay": {
@@ -3635,7 +3635,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [50, 60, 62],
+            "baseColor": "#323c3e",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -3833,7 +3833,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [30, 25, 8],
+            "baseColor": "#1e1908",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
