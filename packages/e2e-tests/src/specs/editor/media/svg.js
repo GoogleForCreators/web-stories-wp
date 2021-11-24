@@ -34,7 +34,7 @@ describe('SVG', () => {
   it('should insert an existing SVG from media dialog', async () => {
     await createNewStory();
 
-    await expect(page).toClick('button', { text: 'Upload' });
+    await expect(page).toClick('button[aria-label="Upload"]');
     await expect(page).toMatch('Upload to Story');
     await expect(page).toClick('button', { text: 'Media Library' });
 
