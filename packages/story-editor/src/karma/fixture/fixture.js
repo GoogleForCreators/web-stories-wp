@@ -778,8 +778,8 @@ class APIProviderFixture {
         const filterBySearchTerm = searchTerm
           ? ({ alt_text }) => alt_text.includes(searchTerm)
           : () => true;
-        // Generate 8*20=160 items, 4 pages
-        const clonedMedia = Array(20)
+        // Generate 8*13=104 items, 3 pages
+        const clonedMedia = Array(13)
           .fill(getMediaResponse)
           .flat()
           .map((media, i) => ({ ...media, id: i + 1 }));
@@ -791,7 +791,7 @@ class APIProviderFixture {
             )
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
-          headers: { totalPages: 4 },
+          headers: { totalPages: 3 },
         });
       }, []);
       const uploadMedia = useCallback(

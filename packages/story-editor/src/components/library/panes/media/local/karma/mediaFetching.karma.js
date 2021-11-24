@@ -50,28 +50,23 @@ fdescribe('MediaPane fetching', () => {
     const initialElementsLength =
       fixture.screen.queryAllByTestId(/^mediaElement-/).length;
 
-    expect(initialElementsLength).toBeGreaterThanOrEqual(LOCAL_MEDIA_PER_PAGE);
+    expect(initialElementsLength).toEqual(LOCAL_MEDIA_PER_PAGE);
 
     // Scroll all the way down.
     await mediaGallery.scrollTo(0, 9999999999999999999);
 
     // ensure fixture.screen has loaded before calling expect to prevent immediate failure
-    await waitFor(
-      () => {
-        if (
-          fixture.screen.queryAllByTestId(/^mediaElement-/).length <
-          initialElementsLength + LOCAL_MEDIA_PER_PAGE
-        ) {
-          throw new Error('Not loaded yet');
-        }
-
-        expect(
-          fixture.screen.queryAllByTestId(/^mediaElement-/).length
-        ).toBeGreaterThanOrEqual(initialElementsLength + LOCAL_MEDIA_PER_PAGE);
-      },
-      {
-        timeout: 4000,
+    await waitFor(() => {
+      if (
+        fixture.screen.queryAllByTestId(/^mediaElement-/).length <
+        initialElementsLength + LOCAL_MEDIA_PER_PAGE
+      ) {
+        throw new Error('Not loaded yet');
       }
-    );
+
+      expect(
+        fixture.screen.queryAllByTestId(/^mediaElement-/).length
+      ).toBeGreaterThanOrEqual(initialElementsLength + LOCAL_MEDIA_PER_PAGE);
+    });
   });
 });

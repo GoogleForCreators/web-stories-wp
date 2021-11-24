@@ -73,6 +73,8 @@ function PaginatedMediaGallery({
       // This condition happens when the component is hidden, and causes the
       // calculation below to load a new page in error.
       node.clientHeight === 0 ||
+      // If scrollTop is zero, we know we do not need to fetch an additional page yet.
+      node.scrollTop === 0 ||
       !hasMore ||
       !isMediaLoaded ||
       isMediaLoading
