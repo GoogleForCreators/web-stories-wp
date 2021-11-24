@@ -36,6 +36,14 @@ export function generateParagraphTextStyle(
 ) {
   const { font, fontSize, lineHeight, padding, textAlign } = props;
   const { marginOffset } = calcFontMetrics(element);
+
+  const verticalPadding = padding?.vertical || 0;
+  const horizontalPadding = padding?.horizontal || 0;
+  const hasPadding = verticalPadding && horizontalPadding;
+  const paddingStyle = hasPadding
+    ? `${dataToStyleY(verticalPadding)} ${dataToStyleX(horizontalPadding)}`
+    : 0;
+
   return {
     dataToEditorY: dataToStyleY,
     whiteSpace: 'pre-wrap',
@@ -47,9 +55,7 @@ export function generateParagraphTextStyle(
     font,
     lineHeight,
     textAlign,
-    padding: `${dataToStyleY(padding?.vertical || 0)}px ${dataToStyleX(
-      padding?.horizontal || 0
-    )}px`,
+    padding: paddingStyle,
   };
 }
 
