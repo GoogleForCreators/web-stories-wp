@@ -83,7 +83,7 @@ function useCarouselKeys({ listElement, pageRefs }) {
         }
       }
     },
-    [currentPageId, isRTL, pageIds, setCurrentPage, pageRefs]
+    [currentPageId, isRTL, pageIds, setCurrentPage, pageRefs, listElement]
   );
 
   // Rearrange pages.

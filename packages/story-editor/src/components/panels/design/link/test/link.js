@@ -18,10 +18,12 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import APIContext from '../../../../../app/api/context';
 import ConfigContext from '../../../../../app/config/context';
 import StoryContext from '../../../../../app/story/context';
 import CanvasContext from '../../../../../app/canvas/context';
@@ -67,14 +69,31 @@ function arrange(selectedElements) {
     },
   };
 
+  const apiValue = {
+    actions: {
+      getProxyUrl: (src) => {
+        return 'http://proxy?url=' + src;
+      },
+      getLinkMetadata: jest.fn(),
+    },
+  };
+
   const wrapper = ({ children }) => (
-    <ConfigContext.Provider value={configValue}>
-      <StoryContext.Provider value={storyContextValue}>
-        <CanvasContext.Provider value={canvasContext}>
-          {children}
-        </CanvasContext.Provider>
-      </StoryContext.Provider>
-    </ConfigContext.Provider>
+    <FlagsProvider
+      features={{
+        enableCORSProxy: true,
+      }}
+    >
+      <APIContext.Provider value={apiValue}>
+        <ConfigContext.Provider value={configValue}>
+          <StoryContext.Provider value={storyContextValue}>
+            <CanvasContext.Provider value={canvasContext}>
+              {children}
+            </CanvasContext.Provider>
+          </StoryContext.Provider>
+        </ConfigContext.Provider>
+      </APIContext.Provider>
+    </FlagsProvider>
   );
 
   return renderPanel(LinkPanel, selectedElements, wrapper);
@@ -155,6 +174,28 @@ describe('Panels/Link', () => {
         name: 'Edit link icon',
       })
     ).not.toBeInTheDocument();
+  });
+
+  it('should display icon', () => {
+    arrange([
+      {
+        ...DEFAULT_ELEMENT,
+        link: {
+          url: 'http://example.com',
+          desc: 'Example',
+          icon: 'http://example.com/image.png',
+          needsProxy: true,
+        },
+      },
+    ]);
+
+    const descInput = screen.queryByRole('textbox', {
+      name: 'Link description',
+    });
+    expect(descInput).toHaveValue('Example');
+    const imgTags = screen.getByRole('img');
+    expect(screen.getByRole('img')).toBeInTheDocument();
+    expect(imgTags.src).toBe('http://proxy/?url=http://example.com/image.png');
   });
 
   it('should display Mixed placeholder in case of mixed values multi-selection', () => {

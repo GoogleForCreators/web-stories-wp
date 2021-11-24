@@ -24,6 +24,7 @@ import styled from 'styled-components';
  */
 import ZoomSelector from './zoomSelector';
 import { GridViewButton } from './gridview';
+import { FOOTER_MENU_GAP, FOOTER_MARGIN } from './constants';
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,8 +39,8 @@ const MenuItems = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 16px 16px;
-  gap: 8px;
+  margin-right: ${FOOTER_MARGIN}px;
+  gap: ${FOOTER_MENU_GAP}px;
 `;
 
 function PrimaryMenu() {

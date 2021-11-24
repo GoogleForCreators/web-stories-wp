@@ -26,6 +26,10 @@ import {
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+import {
+  localStore,
+  LOCAL_STORAGE_PREFIX,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -57,14 +61,17 @@ const DropDownWrapper = styled.div`
   margin: 28px 16px 17px;
 `;
 
-const DEFAULT = 'default';
-const SAVED = 'saved';
-const PAGE_TEMPLATE_PANE_WIDTH = 158;
-
 const ButtonWrapper = styled.div`
   padding: 0 1em;
   margin-top: 24px;
 `;
+
+const DEFAULT = 'default';
+const SAVED = 'saved';
+const PAGE_TEMPLATE_PANE_WIDTH = 158;
+const LOCAL_STORAGE_KEY =
+  LOCAL_STORAGE_PREFIX.DEFAULT_VIEW_PAGE_TEMPLATE_LAYOUT;
+const DEFAULT_TEMPLATE_VIEW = localStore.getItemByKey(LOCAL_STORAGE_KEY);
 
 function PageTemplatesPane(props) {
   const {
@@ -83,7 +90,9 @@ function PageTemplatesPane(props) {
     setNextTemplatesToFetch: state.actions.setNextTemplatesToFetch,
   }));
 
-  const [showDefaultTemplates, setShowDefaultTemplates] = useState(true);
+  const [showDefaultTemplates, setShowDefaultTemplates] = useState(
+    DEFAULT_TEMPLATE_VIEW === null ? true : DEFAULT_TEMPLATE_VIEW
+  );
   const [highlightedTemplate, setHighlightedTemplate] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -91,6 +100,7 @@ function PageTemplatesPane(props) {
     (page) => {
       setSavedTemplates([page, ...(savedTemplates || [])]);
       setHighlightedTemplate(page.id);
+      localStore.setItemByKey(LOCAL_STORAGE_KEY, false);
     },
     [setSavedTemplates, savedTemplates]
   );
@@ -126,6 +136,11 @@ function PageTemplatesPane(props) {
     savedTemplates,
     setNextTemplatesToFetch,
   ]);
+
+  const handleToggle = () => {
+    setShowDefaultTemplates(!showDefaultTemplates);
+    localStore.setItemByKey(LOCAL_STORAGE_KEY, !showDefaultTemplates);
+  };
 
   useEffect(() => {
     if (!savedTemplates && !showDefaultTemplates) {
@@ -175,9 +190,7 @@ function PageTemplatesPane(props) {
             <Select
               options={options}
               selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
-              onMenuItemClick={(evt, value) =>
-                setShowDefaultTemplates(value === DEFAULT)
-              }
+              onMenuItemClick={handleToggle}
               aria-label={__('Select templates type', 'web-stories')}
             />
           </DropDownWrapper>

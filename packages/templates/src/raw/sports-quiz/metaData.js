@@ -31,9 +31,21 @@ export default {
     _x('Violet', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Amethyst Violet', 'color', 'web-stories'), color: '#442383' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Mango', 'color', 'web-stories'), color: '#ffcd48' },
+    {
+      label: _x('Amethyst Violet', 'color', 'web-stories'),
+      color: '#442383',
+      family: _x('Purple', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Mango', 'color', 'web-stories'),
+      color: '#ffcd48',
+      family: _x('Yellow', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'Create interactive quizzes for sports and a variety of other topics with this bold and energetic template. Just change the photos and colors to suit your style.',

@@ -124,4 +124,51 @@ export class Media3P extends Container {
   constructor(node, path) {
     super(node, path);
   }
+
+  get tabs() {
+    return this.getAllByRole('tab');
+  }
+
+  get unsplashTab() {
+    return this.getByRole('tab', { name: /^Images$/ });
+  }
+
+  get coverrTab() {
+    return this.getByRole('tab', { name: /^Video$/ });
+  }
+
+  get tenorTab() {
+    return this.getByRole('tab', { name: /^GIFs$/ });
+  }
+
+  get coverrSection() {
+    return this.getByRole('tabpanel', { name: /^Video$/ });
+  }
+
+  get unsplashSection() {
+    return this.getByRole('tabpanel', { name: /^Images$/ });
+  }
+
+  get tenorSection() {
+    return this.getByRole('tabpanel', { name: /^GIFs$/ });
+  }
+
+  get filters() {
+    return this.getAllByRoleIn(
+      this.getByRole('listbox', { name: /List of filtering options/ }),
+      'option'
+    );
+  }
+
+  get expandFiltersButton() {
+    return this.getByRole('button', { name: /Expand/ });
+  }
+
+  get mediaGallery() {
+    return this.getByTestId('media-gallery-container');
+  }
+
+  get mediaElements() {
+    return this.getAllByTestId(/^mediaElement/);
+  }
 }

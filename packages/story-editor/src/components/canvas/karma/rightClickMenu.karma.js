@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -31,18 +31,14 @@ import useInsertElement from '../useInsertElement';
 
 describe('Right Click Menu integration', () => {
   let fixture;
-  let duplicatePageCarouselButton;
   let insertElement;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     insertElement = await fixture.renderHook(() => useInsertElement());
-
-    duplicatePageCarouselButton = fixture.screen.getByRole('button', {
-      name: /Duplicate Page/,
-    });
   });
 
   afterEach(async () => {
@@ -333,13 +329,16 @@ describe('Right Click Menu integration', () => {
     // after it is opened :grimacing:.
     it('right clicking away from the canvas should not open the custom right click menu', async () => {
       // right click outside canvas
-      await fixture.events.click(duplicatePageCarouselButton, {
-        button: 'right',
-      });
+      await fixture.events.click(
+        fixture.editor.canvas.pageActions.duplicatePage,
+        {
+          button: 'right',
+        }
+      );
       expect(
-        fixture.screen.queryByTestId(
-          'right-click-context-menu[aria-expanded="true"]'
-        )
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
       ).toBeNull();
     });
 
@@ -354,6 +353,33 @@ describe('Right Click Menu integration', () => {
       );
 
       expect(rightClickMenu()).not.toBeNull();
+    });
+
+    it('should open and close the context menu using keyboard shortcuts', async () => {
+      // add an element to the page
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+
+      // only possible if element in canvas is focused
+      await fixture.events.focus(frame1);
+
+      // open right click menu
+      await fixture.events.keyboard.shortcut('mod+alt+shift+m');
+
+      expect(
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
+      ).not.toBeNull();
+
+      // close right click menu
+      await fixture.events.keyboard.press('esc');
+      expect(
+        fixture.screen.queryByRole('group', {
+          name: 'Context Menu for the selected element',
+        })
+      ).toBeNull();
     });
   });
 

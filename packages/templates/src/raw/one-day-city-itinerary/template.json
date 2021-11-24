@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -32,7 +32,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [94, 78, 69],
+            "baseColor": "#5e4e45",
             "isExternal": true
           }
         },
@@ -270,7 +270,7 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [183, 177, 176],
+            "baseColor": "#b7b1b0",
             "isExternal": true
           },
           "tracks": []
@@ -479,7 +479,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [192, 160, 119],
+            "baseColor": "#c0a077",
             "isExternal": true
           }
         },
@@ -720,7 +720,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [177, 163, 156],
+            "baseColor": "#b1a39c",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -1128,7 +1128,7 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [183, 177, 176],
+            "baseColor": "#b7b1b0",
             "isExternal": true
           },
           "tracks": []
@@ -1363,7 +1363,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [71, 50, 34],
+            "baseColor": "#473222",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -1757,7 +1757,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [148, 162, 202],
+            "baseColor": "#94a2ca",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -2153,7 +2153,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [18, 29, 35],
+            "baseColor": "#121d23",
             "isExternal": true
           },
           "type": "image",
@@ -2450,7 +2450,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [15, 28, 31],
+            "baseColor": "#0f1c1f",
             "isExternal": true
           },
           "type": "image",
@@ -2841,7 +2841,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [46, 44, 44],
+            "baseColor": "#2e2c2c",
             "isExternal": true
           },
           "type": "image",
@@ -3520,7 +3520,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [145, 133, 123],
+            "baseColor": "#91857b",
             "isExternal": true
           },
           "x": 62,

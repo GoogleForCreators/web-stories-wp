@@ -20,7 +20,9 @@
 import { Fixture } from '../../../karma';
 import { initHelpers } from './_utils';
 
-describe('Inline style override', () => {
+// Disable reason: https://github.com/google/web-stories-wp/issues/9781
+// eslint-disable-next-line jasmine/no-disabled-tests
+xdescribe('Inline style override', () => {
   const data = {};
 
   const { getTextContent, addInitialText, setSelection, richTextHasFocus } =
@@ -29,6 +31,7 @@ describe('Inline style override', () => {
   beforeEach(async () => {
     data.fixture = new Fixture();
     await data.fixture.render();
+    await data.fixture.collapseHelpCenter();
 
     // Add a text box
     await addInitialText();

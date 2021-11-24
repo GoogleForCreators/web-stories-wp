@@ -31,9 +31,21 @@ export default {
     _x('Yellow', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Zinc Yellow', 'color', 'web-stories'), color: '#ffe145' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('Mercury Gray', 'color', 'web-stories'), color: '#e3e3e3' },
+    {
+      label: _x('Zinc Yellow', 'color', 'web-stories'),
+      color: '#ffe145',
+      family: _x('Yellow', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000',
+      family: _x('Black', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Mercury Gray', 'color', 'web-stories'),
+      color: '#e3e3e3',
+      family: _x('Gray', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'This template’s simple banners and classic font make it great for creating bite-sized informational stories. Easily change the colors and use it to create stories for a variety of different topics like technology, entertainment, arts and crafts and more.',

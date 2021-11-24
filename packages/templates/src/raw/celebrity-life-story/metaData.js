@@ -31,8 +31,16 @@ export default {
     _x('Black', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Phantom Black', 'color', 'web-stories'), color: '#020202' },
-    { label: _x('Gecko Green', 'color', 'web-stories'), color: '#80FF44' },
+    {
+      label: _x('Phantom Black', 'color', 'web-stories'),
+      color: '#020202',
+      family: _x('Black', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Gecko Green', 'color', 'web-stories'),
+      color: '#80FF44',
+      family: _x('Green', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'With an upbeat neon green color and a powerful headings font, this template is great for creating stories around pop culture, music and the show business.',

@@ -34,6 +34,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
     await fixture.editor.library.textTab.click();
   });
 
@@ -137,7 +138,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('Editorial text set positioning');
 
-    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Header')
     );
@@ -146,7 +147,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('List text set positioning');
 
-    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Steps')
     );

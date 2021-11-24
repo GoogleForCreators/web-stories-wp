@@ -49,7 +49,7 @@ const Background = styled.section.attrs({
   user-select: none;
 `;
 
-function CanvasLayout({ header }) {
+function CanvasLayout({ header, footer }) {
   const { setCanvasContainer } = useCanvas((state) => ({
     setCanvasContainer: state.actions.setCanvasContainer,
   }));
@@ -79,7 +79,7 @@ function CanvasLayout({ header }) {
             <SelectionCanvas>
               <DisplayLayer />
               <FramesLayer />
-              <NavLayer header={header} />
+              <NavLayer header={header} footer={footer} />
             </SelectionCanvas>
             <EditLayer />
             <EyedropperLayer />
@@ -92,6 +92,7 @@ function CanvasLayout({ header }) {
 
 CanvasLayout.propTypes = {
   header: PropTypes.node,
+  footer: PropTypes.object,
 };
 
 export default memo(CanvasLayout);

@@ -70,6 +70,7 @@ function sequencedForEach(htmlCollection, op) {
     beforeEach(async () => {
       fixture = new Fixture();
       await fixture.render();
+      await fixture.collapseHelpCenter();
 
       // Insert selected element to perform operations on.
       const insertElement = await fixture.renderHook(() => useInsertElement());
@@ -224,12 +225,11 @@ describe('Background Copy & Paste', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
-    // Create a new blank page to copy to.
-    const addNewPageButton = fixture.screen.getByRole('button', {
-      name: /Add New Page/,
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage, {
+      clickCount: 1,
     });
-    await fixture.events.click(addNewPageButton, { clickCount: 1 });
 
     // Navigate back to previous page and add Background image
     await goToPreviousPage();

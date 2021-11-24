@@ -31,13 +31,6 @@ describe('Help Center integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-
-    // We're closing the help center in local storage in the fixture.
-    // Here we want to restore the initial state of it, so expanding it before running tests.
-    await fixture.events.click(fixture.editor.helpCenter.toggleButton);
-    // we want to make sure the quick tips are visible before continuing.
-    // eslint-disable-next-line jasmine/no-expect-in-setup-teardown
-    waitFor(() => expect(fixture.editor.helpCenter.quickTips).toBeTruthy());
   });
 
   afterEach(() => {

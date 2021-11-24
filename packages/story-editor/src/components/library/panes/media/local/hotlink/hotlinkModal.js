@@ -32,10 +32,11 @@ import PropTypes from 'prop-types';
  */
 import { useConfig } from '../../../../../../app';
 import Dialog from '../../../../../dialog';
-import { isValidUrl, withProtocol } from '../../../../../../utils/url';
+import { withProtocol } from '../../../../../../utils/url';
 import useInsert from './useInsert';
+import { isValidUrlForHotlinking } from './utils';
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.form`
   margin: 16px 4px;
   width: 470px;
   height: 100px;
@@ -66,7 +67,7 @@ function HotlinkModal({ isOpen, onClose }) {
   }
   const [link, setLink] = useState('');
 
-  const onInsert = useInsert({
+  const { onInsert, isInserting, setIsInserting } = useInsert({
     link,
     setLink,
     errorMsg,
@@ -74,10 +75,13 @@ function HotlinkModal({ isOpen, onClose }) {
     onClose,
   });
 
+  const isDisabled = errorMsg || !link || isInserting;
+
   const onBlur = useCallback(() => {
     if (link?.length > 0) {
-      setLink(withProtocol(link));
-      if (!isValidUrl(link)) {
+      const newLink = withProtocol(link);
+      setLink(newLink);
+      if (!isValidUrlForHotlinking(newLink)) {
         setErrorMsg(__('Invalid link.', 'web-stories'));
       }
     }
@@ -94,21 +98,37 @@ function HotlinkModal({ isOpen, onClose }) {
     [setLink, errorMsg]
   );
 
+  const onSubmit = useCallback(
+    (evt) => {
+      evt.preventDefault();
+
+      if (!isDisabled) {
+        onInsert();
+      }
+    },
+    [isDisabled, onInsert]
+  );
+
+  const primaryText = isInserting
+    ? __('Inserting…', 'web-stories')
+    : __('Insert', 'web-stories');
+
   return (
     <Dialog
       onClose={() => {
         onClose();
         setLink('');
         setErrorMsg(false);
+        setIsInserting(false);
       }}
       isOpen={isOpen}
       title={__('Insert external image or video', 'web-stories')}
       onPrimary={() => onInsert()}
-      primaryText={__('Insert', 'web-stories')}
+      primaryText={primaryText}
       secondaryText={__('Cancel', 'web-stories')}
-      primaryRest={{ disabled: errorMsg || !link }}
+      primaryRest={{ disabled: isDisabled }}
     >
-      <InputWrapper>
+      <InputWrapper onSubmit={onSubmit}>
         <Input
           ref={inputRef}
           onChange={({ target: { value } }) => onChange(value)}

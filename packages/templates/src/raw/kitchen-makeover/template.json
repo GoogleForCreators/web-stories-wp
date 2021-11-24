@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -213,7 +213,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [229, 228, 227],
+            "baseColor": "#e5e4e3",
             "isExternal": true
           }
         },
@@ -247,7 +247,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [193, 186, 181],
+            "baseColor": "#c1bab5",
             "isExternal": true
           }
         }
@@ -363,7 +363,7 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [136, 122, 115],
+            "baseColor": "#887a73",
             "isExternal": true
           },
           "tracks": []
@@ -731,7 +731,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [204, 206, 205],
+            "baseColor": "#cccecd",
             "isExternal": true
           }
         },
@@ -766,7 +766,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [203, 205, 204],
+            "baseColor": "#cbcdcc",
             "isExternal": true
           }
         },
@@ -801,7 +801,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [190, 184, 178],
+            "baseColor": "#beb8b2",
             "isExternal": true
           }
         },
@@ -835,7 +835,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [220, 218, 217],
+            "baseColor": "#dcdad9",
             "isExternal": true
           }
         }
@@ -1061,7 +1061,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [207, 210, 214],
+            "baseColor": "#cfd2d6",
             "isExternal": true
           }
         },
@@ -1095,7 +1095,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [211, 203, 196],
+            "baseColor": "#d3cbc4",
             "isExternal": true
           }
         },
@@ -1129,7 +1129,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [202, 194, 188],
+            "baseColor": "#cac2bc",
             "isExternal": true
           }
         },
@@ -1164,7 +1164,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [209, 208, 206],
+            "baseColor": "#d1d0ce",
             "isExternal": true
           }
         }
@@ -1399,7 +1399,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [198, 197, 200],
+            "baseColor": "#c6c5c8",
             "isExternal": true
           }
         },
@@ -1433,7 +1433,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [192, 185, 180],
+            "baseColor": "#c0b9b4",
             "isExternal": true
           }
         },
@@ -1468,7 +1468,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [195, 195, 193],
+            "baseColor": "#c3c3c1",
             "isExternal": true
           }
         },
@@ -1502,7 +1502,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [208, 210, 210],
+            "baseColor": "#d0d2d2",
             "isExternal": true
           }
         }
@@ -1582,7 +1582,7 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [200, 187, 169],
+            "baseColor": "#c8bba9",
             "isExternal": true
           },
           "tracks": []
@@ -1734,7 +1734,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [178, 175, 172],
+            "baseColor": "#b2afac",
             "isExternal": true
           }
         }
@@ -1782,7 +1782,7 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [201, 197, 186],
+            "baseColor": "#c9c5ba",
             "isExternal": true
           },
           "tracks": []
@@ -1941,7 +1941,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [203, 201, 204],
+            "baseColor": "#cbc9cc",
             "isExternal": true
           }
         }
@@ -1995,7 +1995,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [195, 195, 193],
+            "baseColor": "#c3c3c1",
             "isExternal": true
           }
         },
@@ -2231,7 +2231,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [201, 195, 195],
+            "baseColor": "#c9c3c3",
             "isExternal": true
           }
         },
@@ -2574,7 +2574,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [214, 216, 216],
+            "baseColor": "#d6d8d8",
             "isExternal": true
           }
         },
@@ -2674,7 +2674,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [229, 228, 228],
+            "baseColor": "#e5e4e4",
             "isExternal": true
           }
         },
@@ -2765,7 +2765,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [222, 221, 220],
+            "baseColor": "#dedddc",
             "isExternal": true
           },
           "x": 58,

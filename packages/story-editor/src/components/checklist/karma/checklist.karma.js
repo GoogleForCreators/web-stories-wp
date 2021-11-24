@@ -31,6 +31,7 @@ describe('Checklist integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -47,7 +48,7 @@ describe('Checklist integration', () => {
     let clickCount = 1;
     while (clickCount <= count) {
       // eslint-disable-next-line no-await-in-loop
-      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+      await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
         expect(fixture.editor.footer.carousel.pages.length).toBe(
@@ -427,7 +428,7 @@ describe('Checklist integration - Card visibility', () => {
     let clickCount = 1;
     while (clickCount <= count) {
       // eslint-disable-next-line no-await-in-loop
-      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+      await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
         expect(fixture.editor.footer.carousel.pages.length).toBe(
@@ -501,7 +502,7 @@ describe('Checklist integration - Card visibility', () => {
           alt: 'small-video',
           local: false,
           isOptimized: false,
-          baseColor: [115, 71, 39],
+          baseColor: '#734727',
         },
         controls: false,
         loop: false,

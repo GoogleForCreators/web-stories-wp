@@ -30,6 +30,7 @@ export const LOCAL_STORAGE_PREFIX = {
     'web_stories_delete_color_preset_dialog_dismissed',
   DELETE_STYLE_PRESET_DIALOG_DISMISSED:
     'web_stories_delete_style_preset_dialog_dismissed',
+  DEFAULT_VIEW_PAGE_TEMPLATE_LAYOUT: 'web_stories_default_template_view',
 };
 
 function getItemByKey(key) {

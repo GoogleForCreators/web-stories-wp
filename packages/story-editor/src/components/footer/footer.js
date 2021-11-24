@@ -25,6 +25,7 @@ import {
   useState,
   useResizeEffect,
 } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -41,7 +42,7 @@ const Inner = styled(Outer)`
   margin-right: ${({ marginRight }) => marginRight}px;
 `;
 
-function Footer() {
+function Footer({ footer }) {
   const ref = useRef();
   const [workspaceWidth, setWorkspaceWidth] = useState(0);
 
@@ -56,13 +57,17 @@ function Footer() {
       <KeyboardShortcutsMenuProvider>
         <Outer ref={ref}>
           <Inner marginRight={margin}>
-            <FooterLayout />
+            <FooterLayout footer={footer} />
           </Inner>
         </Outer>
       </KeyboardShortcutsMenuProvider>
     </ChecklistProvider>
   );
 }
+
+Footer.propTypes = {
+  footer: PropTypes.object,
+};
 
 // Don't rerender the workspace footer needlessly e.g. on element selection change.
 export default memo(Footer);

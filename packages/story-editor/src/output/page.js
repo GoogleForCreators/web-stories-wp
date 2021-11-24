@@ -40,20 +40,23 @@ function OutputPage({
   defaultPageDuration = 7,
   args = {},
 }) {
-  const { id, animations, elements, backgroundColor, backgroundAudio } = page;
+  const {
+    id,
+    animations,
+    elements,
+    backgroundColor,
+    backgroundAudio,
+    pageAttachment,
+  } = page;
+  const { ctaText, url, icon, theme, rel = [] } = pageAttachment || {};
 
   const [backgroundElement, ...regularElements] = elements;
 
   // If the background element has base color set, it's media, use that.
   const baseColor = backgroundElement?.resource?.baseColor;
   const backgroundStyles = baseColor
-    ? {
-        backgroundColor: `rgb(${baseColor[0]},${baseColor[1]},${baseColor[2]})`,
-      }
-    : {
-        backgroundColor: 'white',
-        ...generatePatternStyles(backgroundColor),
-      };
+    ? { backgroundColor: baseColor }
+    : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
 
   const animationDuration = getTotalDuration({ animations }) / 1000;
   // If the page doesn't have media, take either the animations time or the configured default duration time.
@@ -71,11 +74,9 @@ function OutputPage({
     ? `el-${longestMediaElement?.id}-media`
     : `${nonMediaPageDuration}s`;
 
-  const hasPageAttachment = page.pageAttachment?.url?.length > 0;
-
   // Remove invalid links, @todo this should come from the pre-publish checklist in the future.
   const validElements = regularElements.map((element) =>
-    !hasPageAttachment || !isElementBelowLimit(element)
+    !url || !isElementBelowLimit(element)
       ? element
       : {
           ...element,
@@ -157,14 +158,14 @@ function OutputPage({
         </amp-story-grid-layer>
       )}
       {/* <amp-story-page-outlink> needs to be the last child element */}
-      {hasPageAttachment && (
+      {url && (
         <amp-story-page-outlink
           layout="nodisplay"
-          cta-image={page.pageAttachment.icon || undefined}
-          theme={page.pageAttachment.theme}
+          cta-image={icon || undefined}
+          theme={theme}
         >
-          <a href={page.pageAttachment.url}>
-            {page.pageAttachment.ctaText || __('Learn more', 'web-stories')}
+          <a href={url} rel={rel.join(' ')}>
+            {ctaText || __('Learn more', 'web-stories')}
           </a>
         </amp-story-page-outlink>
       )}

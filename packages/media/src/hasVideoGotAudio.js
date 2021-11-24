@@ -15,21 +15,17 @@
  */
 
 /**
- * Internal dependencies
+ * Determines whether a video element has audio tracks.
+ *
+ * @param {HTMLVideoElement} video Video element.
+ * @return {boolean} Whether the video has audio or not.
  */
-import preloadVideo from './preloadVideo';
-
-function hasAudio(video) {
+function hasVideoGotAudio(video) {
   return (
     video.mozHasAudio ||
     Boolean(video.webkitAudioDecodedByteCount) ||
     Boolean(video.audioTracks?.length)
   );
-}
-
-async function hasVideoGotAudio(src) {
-  const video = await preloadVideo(src);
-  return hasAudio(video);
 }
 
 export default hasVideoGotAudio;
