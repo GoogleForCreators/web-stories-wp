@@ -214,15 +214,15 @@ class Editor extends Service_Base implements HasRequirements {
 	public function replace_editor( $replace, $post ) {
 		if ( $this->story_post_type->get_slug() === get_post_type( $post ) ) {
 
+			$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
+
+			// Registering here because the script handle is required for wp_add_inline_script in edit-story.php.
+			$this->assets->register_script_asset( self::SCRIPT_HANDLE, $script_dependencies, false );
+
 			// Since the 'replace_editor' filter can be run multiple times, only load the
 			// custom editor after the 'current_screen' action and when we can be certain the
 			// $post_type, $post_type_object, $post globals are all set by WordPress.
 			if ( isset( $GLOBALS['post'] ) && $post === $GLOBALS['post'] && did_action( 'current_screen' ) ) {
-				$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
-
-				// Registering here because the script handle is required for wp_add_inline_script in edit-story.php.
-				$this->assets->register_script_asset( self::SCRIPT_HANDLE, $script_dependencies, false );
-
 				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
 			}
 
