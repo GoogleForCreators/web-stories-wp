@@ -52,7 +52,9 @@ const changeStoriesArchivesType = async (option) => {
   });
 };
 
-describe('Stories Archive', () => {
+// TODO(#9636): Fix flakey test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('Stories Archive', () => {
   // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['archivePageCustomization']);
 

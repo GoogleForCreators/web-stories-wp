@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 function checkVersion(a, b) {
   const x = a.split('.').map((e) => parseInt(e));
   const y = b.split('.').map((e) => parseInt(e));
@@ -22,10 +23,8 @@ function checkVersion(a, b) {
     y[i] = y[i] || 0;
     if (x[i] === y[i]) {
       continue;
-    } else if (x[i] > y[i]) {
-      return true;
     } else {
-      return false;
+      return x[i] > y[i];
     }
   }
   return !(y.length > x.length);
