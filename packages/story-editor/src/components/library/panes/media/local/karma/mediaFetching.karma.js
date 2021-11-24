@@ -25,10 +25,7 @@ import { waitFor, within } from '@testing-library/react';
 
 import { Fixture, LOCAL_MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 
-// Disable reason: test is flakey
-// Fix in progress:   https://github.com/google/web-stories-wp/issues/9779
-// eslint-disable-next-line jasmine/no-disabled-tests
-xdescribe('MediaPane fetching', () => {
+fdescribe('MediaPane fetching', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -41,7 +38,7 @@ xdescribe('MediaPane fetching', () => {
     fixture.restore();
   });
 
-  it('should fetch additional pages', async () => {
+  fit('should fetch additional pages', async () => {
     const localPane = await waitFor(() =>
       fixture.querySelector('#library-pane-media')
     );
@@ -59,17 +56,22 @@ xdescribe('MediaPane fetching', () => {
     await mediaGallery.scrollTo(0, 9999999999999999999);
 
     // ensure fixture.screen has loaded before calling expect to prevent immediate failure
-    await waitFor(() => {
-      if (
-        fixture.screen.queryAllByTestId(/^mediaElement-/).length <
-        initialElementsLength + LOCAL_MEDIA_PER_PAGE
-      ) {
-        throw new Error('Not loaded yet');
-      }
+    await waitFor(
+      () => {
+        if (
+          fixture.screen.queryAllByTestId(/^mediaElement-/).length <
+          initialElementsLength + LOCAL_MEDIA_PER_PAGE
+        ) {
+          throw new Error('Not loaded yet');
+        }
 
-      expect(
-        fixture.screen.queryAllByTestId(/^mediaElement-/).length
-      ).toBeGreaterThanOrEqual(initialElementsLength + LOCAL_MEDIA_PER_PAGE);
-    });
+        expect(
+          fixture.screen.queryAllByTestId(/^mediaElement-/).length
+        ).toBeGreaterThanOrEqual(initialElementsLength + LOCAL_MEDIA_PER_PAGE);
+      },
+      {
+        timeout: 4000,
+      }
+    );
   });
 });
