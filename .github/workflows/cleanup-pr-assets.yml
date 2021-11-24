@@ -45,4 +45,3 @@ jobs:
 
       - name: Prune PR files
         run: gsutil rm -rf gs://web-stories-wp-github-artifacts/refs/pull/${{ github.event.pull_request.number }}
-        working-directory: ${{ github.ref }}
