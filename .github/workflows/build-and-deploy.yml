@@ -249,8 +249,10 @@ jobs:
     name: Leave comment with links to plugin ZIPs
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # Only run this job if it's a PR. One way to check for that is if `github.head_ref` is not empty.
     # Only run if the PR was not authored by Dependabot and it is not a draft or not from a fork.
     if: >
+      github.head_ref &&
       github.event.pull_request.draft == false &&
       github.event.pull_request.head.repo.fork == false &&
       github.event.pull_request.user.login != 'dependabot[bot]'
