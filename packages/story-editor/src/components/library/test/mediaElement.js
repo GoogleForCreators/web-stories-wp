@@ -192,6 +192,14 @@ describe('MediaElement', () => {
   });
 
   it("should not render dropdown menu's more icon for not uploaded image", () => {
+    useLocalMedia.mockReturnValue({
+      isResourceTrimmingById: jest.fn(),
+      isResourceMutingById: jest.fn(),
+      isResourceTranscodingById: jest.fn(),
+      isResourceProcessing: jest.fn(),
+      isResourceProcessingById: () => true,
+      isResourceUploadingById: jest.fn(),
+    });
     const { queryByAriaLabel } = renderMediaElement(IMAGE_RESOURCE, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
@@ -202,6 +210,14 @@ describe('MediaElement', () => {
   });
 
   it("should not render dropdown menu's more icon for not uploaded video", () => {
+    useLocalMedia.mockReturnValue({
+      isResourceTrimmingById: jest.fn(),
+      isResourceMutingById: jest.fn(),
+      isResourceTranscodingById: jest.fn(),
+      isResourceProcessing: jest.fn(),
+      isResourceProcessingById: () => true,
+      isResourceUploadingById: jest.fn(),
+    });
     const { queryByAriaLabel } = renderMediaElement(VIDEO_RESOURCE, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
@@ -212,6 +228,14 @@ describe('MediaElement', () => {
   });
 
   it("should not render dropdown menu's more icon for not uploaded gif", () => {
+    useLocalMedia.mockReturnValue({
+      isResourceTrimmingById: jest.fn(),
+      isResourceMutingById: jest.fn(),
+      isResourceTranscodingById: jest.fn(),
+      isResourceProcessing: jest.fn(),
+      isResourceProcessingById: () => true,
+      isResourceUploadingById: jest.fn(),
+    });
     const { queryByAriaLabel } = renderMediaElement(GIF_RESOURCE, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 

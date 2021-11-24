@@ -37,7 +37,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { useStory } from '../story';
+import useStory from '../story/useStory';
 import { useLocalMedia } from '../media';
 import { createPage, duplicatePage, ELEMENT_TYPES } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
@@ -845,7 +845,7 @@ function RightClickMenuProvider({ children }) {
             {
               label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
               onClick: toggleTrimMode,
-              disabled: isResourceProcessing(selectedElement?.resource.id),
+              disabled: isResourceProcessing(selectedElement?.resource?.id),
               ...menuItemProps,
             },
           ]

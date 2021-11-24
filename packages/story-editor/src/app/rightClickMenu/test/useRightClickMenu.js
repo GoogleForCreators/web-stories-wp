@@ -24,7 +24,7 @@ import { isPlatformMacOS, useSnackbar } from '@web-stories-wp/design-system';
  */
 import { useRightClickMenu, RightClickMenuProvider } from '..';
 import { useCanvas } from '../../canvas';
-import { useStory } from '../../story';
+import useStory from '../../story/useStory';
 import { useLocalMedia } from '../../media';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 
@@ -33,10 +33,7 @@ jest.mock('../../canvas', () => ({
 }));
 
 jest.mock('../../media');
-jest.mock('../../story', () => ({
-  ...jest.requireActual('../../story'),
-  useStory: jest.fn(),
-}));
+jest.mock('../../story/useStory');
 
 const mockVideoTrim = jest.fn();
 jest.mock(
@@ -362,6 +359,9 @@ describe('useRightClickMenu', () => {
       });
 
       it('should contain enabled "trim video"', () => {
+        useLocalMedia.mockReturnValue({
+          isResourceProcessing: () => false,
+        });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
         });
@@ -392,6 +392,9 @@ describe('useRightClickMenu', () => {
         });
 
         it('should contain disabled "trim video"', () => {
+          useLocalMedia.mockReturnValue({
+            isResourceProcessing: () => true,
+          });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,
           });
@@ -534,6 +537,9 @@ describe('useRightClickMenu', () => {
       });
 
       it('should contain enabled "trim video"', () => {
+        useLocalMedia.mockReturnValue({
+          isResourceProcessing: () => false,
+        });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
         });
@@ -564,6 +570,9 @@ describe('useRightClickMenu', () => {
         });
 
         it('should contain disabled "trim video"', () => {
+          useLocalMedia.mockReturnValue({
+            isResourceProcessing: () => true,
+          });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,
           });
