@@ -92,7 +92,7 @@ describe('TextOutput', () => {
     expect(output).toHaveClass('fill text-wrapper', { exact: true });
     expect(output.style).toMatchObject({
       whiteSpace: 'pre-wrap',
-      padding: '0% 0%',
+      padding: '0px 0px',
       fontSize: '0.258900em',
       textAlign: 'left',
     });
@@ -130,6 +130,41 @@ describe('TextOutput', () => {
     expect(output).toHaveClass('fill text-wrapper', { exact: true });
     expect(output.style).toMatchObject({
       padding: '20% 20%',
+    });
+  });
+
+  it('should default to zero padding if not a number', () => {
+    const element = {
+      id: '123',
+      content: 'Content',
+      font: {
+        family: 'Roboto',
+      },
+      fontSize: 16,
+      textAlign: 'left',
+      type: 'text',
+      x: 10,
+      y: 10,
+      width: 50,
+      height: 100,
+      rotationAngle: 0,
+      padding: {
+        vertical: NaN,
+        horizontal: null,
+      },
+    };
+
+    const output = renderViaString(
+      <TextOutput
+        element={element}
+        box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
+      />
+    );
+    expect(output.tagName).toBe('P');
+    expect(output.innerHTML).toBe('<span>Content</span>');
+    expect(output).toHaveClass('fill text-wrapper', { exact: true });
+    expect(output.style).toMatchObject({
+      padding: '0px 0px',
     });
   });
 

@@ -79,8 +79,8 @@ export function TextOutputWithUnits({
     dataToPaddingY = dataToStyleY;
   }
   const paddingStyles = {
-    vertical: dataToPaddingY(padding.vertical),
-    horizontal: dataToPaddingX(padding.horizontal),
+    vertical: padding.vertical ? dataToPaddingY(padding.vertical) : 0,
+    horizontal: padding.horizontal ? dataToPaddingX(padding.horizontal) : 0,
   };
 
   const bgColor =
@@ -107,7 +107,7 @@ export function TextOutputWithUnits({
     overflowWrap: 'break-word',
   };
 
-  const unitlessPaddingVertical = parseFloat(dataToStyleY(padding.vertical));
+  const unitlessPaddingVertical = padding.vertical ? parseFloat(dataToStyleY(padding.vertical)) : 0;
   const unitlessFontSize = parseFloat(dataToStyleY(rest.fontSize));
 
   const lineHeight = getHighlightLineheight(
