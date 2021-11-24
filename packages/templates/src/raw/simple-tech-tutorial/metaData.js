@@ -22,7 +22,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 export default {
   slug: 'simple-tech-tutorial',
   creationDate: '2021-08-09T00:00:00.000Z',
-  title: _x('Simple Tech Tutorial ', 'template name', 'web-stories'),
+  title: _x('Simple Tech Tutorial', 'template name', 'web-stories'),
   tags: [
     _x('Technology', 'template keyword', 'web-stories'),
     _x('Network', 'template keyword', 'web-stories'),
@@ -31,10 +31,26 @@ export default {
     _x('Blue', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Boston Blue', 'color', 'web-stories'), color: '#4899bf' },
-    { label: _x('Liquid Blue', 'color', 'web-stories'), color: '#c1ddeb' },
-    { label: _x('Dark Teal', 'color', 'web-stories'), color: '#264156' },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Boston Blue', 'color', 'web-stories'),
+      color: '#4899bf',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Liquid Blue', 'color', 'web-stories'),
+      color: '#c1ddeb',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Dark Teal', 'color', 'web-stories'),
+      color: '#264156',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'This clean and simple template will let you create structured and easy to understand tech tutorials and how-to guides. Just add your own screenshots, text, and illustrations.',

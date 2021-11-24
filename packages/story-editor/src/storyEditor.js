@@ -24,6 +24,7 @@ import {
   SnackbarProvider,
   ModalGlobalStyle,
 } from '@web-stories-wp/design-system';
+import { useMemo } from '@web-stories-wp/react';
 import { FlagsProvider } from 'flagged';
 
 /**
@@ -50,15 +51,19 @@ import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
+import deepMerge from './utils/deepMerge';
+import defaultConfig from './defaultConfig';
 
 function StoryEditor({ config, children }) {
-  const { storyId, isRTL, flags } = config;
+  const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
+  const { storyId, isRTL, flags } = _config;
+
   return (
     <FlagsProvider features={flags}>
       <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
         <ThemeProvider theme={theme}>
           <ErrorBoundary>
-            <ConfigProvider config={config}>
+            <ConfigProvider config={_config}>
               <APIProvider>
                 <FileProvider>
                   <Media3pApiProvider>

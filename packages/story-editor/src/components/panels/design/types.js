@@ -17,8 +17,6 @@
 const ANIMATION = 'animation';
 const BORDER = 'borderStyle';
 const CAPTIONS = 'captions';
-const STYLE_PRESETS = 'stylePresets';
-const COLOR_PRESETS = 'colorPresets';
 const FILTER = 'filter';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LINK = 'link';
@@ -27,7 +25,6 @@ const PAGE_BACKGROUND = 'pageBackground';
 const PAGE_BACKGROUND_AUDIO = 'pageBackgroundAudio';
 const SIZE_POSITION = 'sizePosition';
 const SHAPE_STYLE = 'shapeStyle';
-const TEXT_BOX = 'textBox';
 const TEXT_STYLE = 'textStyle';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
@@ -39,10 +36,7 @@ const PanelTypes = {
   PAGE_ATTACHMENT,
   PAGE_BACKGROUND_AUDIO,
   SIZE_POSITION,
-  COLOR_PRESETS,
-  STYLE_PRESETS,
   TEXT_STYLE,
-  TEXT_BOX,
   FILTER,
   SHAPE_STYLE,
   BORDER,

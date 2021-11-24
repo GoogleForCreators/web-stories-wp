@@ -16,22 +16,12 @@
 
 export default [
   {
+    baseColor: '#734727',
     type: 'image',
     id: 1,
-    guid: {
-      rendered: 'http://localhost:9876/__static__/blue-marble.jpg',
-    },
     src: 'http://localhost:9876/__static__/blue-marble.jpg',
-    title: {
-      raw: 'blue-marble',
-    },
-    description: {
-      raw: '',
-    },
     alt: 'blue-marble',
     mimeType: 'image/jpeg',
-    featured_media_src: {},
-    featured_media: 0,
     width: 600,
     height: 600,
     sizes: {
@@ -57,11 +47,6 @@ export default [
         source_url: 'http://localhost:9876/__static__/blue-marble.jpg',
       },
     },
-    meta: {
-      web_stories_is_poster: false,
-      web_stories_poster_id: 0,
-      web_stories_trim_data: {},
-    },
     local: false,
     isPlaceholder: false,
     isOptimized: false,
@@ -69,6 +54,7 @@ export default [
     isExternal: false,
   },
   {
+    baseColor: '#734727',
     type: 'image',
     id: 2,
     guid: {
@@ -84,7 +70,7 @@ export default [
     alt: 'curiosity',
     mimeType: 'image/jpeg',
     featured_media_src: {},
-    featured_media: 0,
+    posterId: 0,
     width: 953,
     height: 1280,
     sizes: {
@@ -110,11 +96,6 @@ export default [
         source_url: 'http://localhost:9876/__static__/curiosity.jpg',
       },
     },
-    meta: {
-      web_stories_is_poster: false,
-      web_stories_poster_id: 0,
-      web_stories_trim_data: {},
-    },
     local: false,
     isPlaceholder: false,
     isOptimized: false,
@@ -122,6 +103,7 @@ export default [
     isExternal: false,
   },
   {
+    baseColor: '#734727',
     type: 'image',
     id: 3,
     guid: {
@@ -137,7 +119,7 @@ export default [
     alt: 'earth',
     mimeType: 'image/jpeg',
     featured_media_src: {},
-    featured_media: 0,
+    posterId: 0,
     width: 640,
     height: 529,
     sizes: {
@@ -163,11 +145,6 @@ export default [
         source_url: 'http://localhost:9876/__static__/earth.jpg',
       },
     },
-    meta: {
-      web_stories_is_poster: false,
-      web_stories_poster_id: 0,
-      web_stories_trim_data: {},
-    },
     local: false,
     isPlaceholder: false,
     isOptimized: false,
@@ -175,6 +152,7 @@ export default [
     isExternal: false,
   },
   {
+    baseColor: '#734727',
     type: 'image',
     id: 4,
     guid: {
@@ -190,7 +168,7 @@ export default [
     alt: 'saturn',
     mimeType: 'image/jpeg',
     featured_media_src: {},
-    featured_media: 0,
+    posterId: 0,
     width: 634,
     height: 640,
     sizes: {
@@ -234,44 +212,33 @@ export default [
       rendered: 'http://localhost:9876/__static__/mars.jpg',
     },
     src: 'http://localhost:9876/__static__/mars.jpg',
-    title: {
-      raw: 'mars',
-    },
-    description: {
-      raw: '',
-    },
     alt: 'mars',
     mimeType: 'image/jpeg',
     featured_media_src: {},
-    featured_media: 0,
+    posterId: 0,
     width: 540,
     height: 810,
-    posterId: 0,
     sizes: {
-      width: 540,
-      height: 810,
-      sizes: {
-        medium: {
-          file: 'mars.jpg',
-          width: 540,
-          height: 810,
-          mime_type: 'image/jpeg',
-          source_url: 'http://localhost:9876/__static__/mars.jpg',
-        },
-        thumbnail: {
-          file: 'mars.jpg',
-          width: 540,
-          height: 810,
-          mime_type: 'image/jpeg',
-          source_url: 'http://localhost:9876/__static__/mars.jpg',
-        },
-        web_stories_thumbnail: {
-          file: 'mars.jpg',
-          width: 540,
-          height: 810,
-          mime_type: 'image/jpeg',
-          source_url: 'http://localhost:9876/__static__/mars.jpg',
-        },
+      medium: {
+        file: 'mars.jpg',
+        width: 540,
+        height: 810,
+        mime_type: 'image/jpeg',
+        source_url: 'http://localhost:9876/__static__/mars.jpg',
+      },
+      thumbnail: {
+        file: 'mars.jpg',
+        width: 540,
+        height: 810,
+        mime_type: 'image/jpeg',
+        source_url: 'http://localhost:9876/__static__/mars.jpg',
+      },
+      web_stories_thumbnail: {
+        file: 'mars.jpg',
+        width: 540,
+        height: 810,
+        mime_type: 'image/jpeg',
+        source_url: 'http://localhost:9876/__static__/mars.jpg',
       },
     },
     meta: {
@@ -286,33 +253,22 @@ export default [
     isExternal: false,
   },
   {
+    baseColor: '#000fff',
     type: 'video',
     id: 6,
     guid: {
       rendered: 'http://localhost:9876/__static__/ranger9.ogg',
     },
     src: 'http://localhost:9876/__static__/ranger9.ogg',
-    title: {
-      raw: 'ranger9',
-    },
-    description: {
-      raw: '',
-    },
     alt: 'ranger9',
     poster: 'http://localhost:9876/__static__/ranger9.png',
     mimeType: 'video/ogg',
-    featured_media: 106,
-    mime_type: 'video/ogg',
+    posterId: 106,
     length: 6,
     lengthFormatted: '0:06',
     width: 640,
     height: 480,
     sizes: {},
-    meta: {
-      web_stories_is_poster: false,
-      web_stories_poster_id: 0,
-      web_stories_trim_data: {},
-    },
     local: false,
     isPlaceholder: false,
     isOptimized: false,
@@ -323,32 +279,19 @@ export default [
     },
   },
   {
+    baseColor: '#734727',
     type: 'video',
     id: 7,
-    guid: {
-      rendered: 'http://localhost:9876/__static__/asteroid.ogg',
-    },
-    source_url: 'http://localhost:9876/__static__/asteroid.ogg',
-    title: {
-      raw: 'asteroid',
-    },
-    description: {
-      raw: '',
-    },
+    src: 'http://localhost:9876/__static__/asteroid.ogg',
     alt: 'asteroid',
-    mime_type: 'video/ogg',
+    mimeType: 'video/ogg',
     poster: 'http://localhost:9876/__static__/asteroid.png',
-    featured_media: 106,
+    posterId: 106,
     length: 8,
     length_formatted: '0:08',
     width: 640,
     height: 360,
     sizes: {},
-    meta: {
-      web_stories_is_poster: false,
-      web_stories_poster_id: 0,
-      web_stories_trim_data: {},
-    },
     local: false,
     isPlaceholder: false,
     isOptimized: false,
@@ -359,22 +302,19 @@ export default [
     },
   },
   {
+    baseColor: '#ffffff',
     type: 'image',
     id: 8,
     guid: {
       rendered: 'http://localhost:9876/__static__/transparent.png',
     },
     src: 'http://localhost:9876/__static__/transparent.png',
-    title: {
-      raw: 'image with transparent background',
-    },
-    description: {
-      raw: '',
-    },
     alt: 'image with transparent background',
     mimeType: 'image/png',
     featured_media_src: {},
-    featured_media: 0,
+    posterId: 0,
+    width: 400,
+    height: 400,
     sizes: {
       medium: {
         file: 'transparent.png',
@@ -397,11 +337,6 @@ export default [
         mime_type: 'image/png',
         source_url: 'http://localhost:9876/__static__/transparent.png',
       },
-    },
-    meta: {
-      web_stories_is_poster: false,
-      web_stories_poster_id: 0,
-      web_stories_trim_data: {},
     },
     local: false,
     isPlaceholder: false,

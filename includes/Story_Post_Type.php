@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post;
@@ -33,7 +34,7 @@ use WP_Post;
 /**
  * Class Story_Post_Type.
  */
-class Story_Post_Type extends Post_Type_Base implements HasRequirements {
+class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta {
 
 	/**
 	 * The slug of the stories post type.
@@ -199,6 +200,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 			'exclude_from_search'   => true,
 			'show_ui'               => true,
 			'show_in_rest'          => true,
+			'rest_namespace'        => self::REST_NAMESPACE,
 			'rest_controller_class' => Stories_Controller::class,
 			'capability_type'       => [ 'web-story', 'web-stories' ],
 			'map_meta_cap'          => true,
@@ -212,7 +214,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	protected function register_meta() {
+	public function register_meta() {
 		$active_publisher_logo_id = absint( $this->settings->get_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0 ) );
 
 		register_post_meta(

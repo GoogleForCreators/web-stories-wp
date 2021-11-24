@@ -29,18 +29,18 @@ import { VideoTrimProvider } from '../videoTrim';
 import ErrorBoundary from '../errorBoundary';
 import { CanvasArea, InspectorArea } from './layout';
 
-function Workspace({ header }) {
+function Workspace({ header, footer, inspectorTabs }) {
   return (
     <VideoTrimProvider>
       <RichTextProvider>
         <CanvasArea>
           <ErrorBoundary>
-            <Canvas header={header} />
+            <Canvas header={header} footer={footer} />
           </ErrorBoundary>
         </CanvasArea>
         <InspectorArea>
           <ErrorBoundary>
-            <Inspector />
+            <Inspector inspectorTabs={inspectorTabs} />
           </ErrorBoundary>
         </InspectorArea>
       </RichTextProvider>
@@ -50,6 +50,8 @@ function Workspace({ header }) {
 
 Workspace.propTypes = {
   header: PropTypes.node,
+  footer: PropTypes.object,
+  inspectorTabs: PropTypes.object,
 };
 
 export default Workspace;

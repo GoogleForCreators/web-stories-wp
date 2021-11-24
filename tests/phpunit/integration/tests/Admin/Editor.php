@@ -88,9 +88,19 @@ class Editor extends DependencyInjectedTestCase {
 	private $page_template_post_type;
 
 	/**
+	 * @var \Google\Web_Stories\Media\Types
+	 */
+	private $types;
+
+	/**
 	 * @var \Google\Web_Stories\Admin\Editor
 	 */
 	private $instance;
+
+	/**
+	 * @var \Google\Web_Stories\Context
+	 */
+	private $context;
 
 	/**
 	 * @param \WP_UnitTest_Factory $factory
@@ -135,6 +145,8 @@ class Editor extends DependencyInjectedTestCase {
 		$this->assets                  = $this->createMock( \Google\Web_Stories\Assets::class );
 		$this->story_post_type         = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$this->page_template_post_type = $this->injector->make( \Google\Web_Stories\Page_Template_Post_Type::class );
+		$this->context                 = $this->injector->make( \Google\Web_Stories\Context::class );
+		$this->types                   = $this->injector->make( \Google\Web_Stories\Media\Types::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Editor(
 			$this->experiments,
@@ -144,7 +156,9 @@ class Editor extends DependencyInjectedTestCase {
 			$this->google_fonts,
 			$this->assets,
 			$this->story_post_type,
-			$this->page_template_post_type
+			$this->page_template_post_type,
+			$this->context,
+			$this->types
 		);
 
 		$this->add_caps_to_roles();

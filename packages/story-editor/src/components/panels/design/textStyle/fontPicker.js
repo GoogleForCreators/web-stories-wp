@@ -20,6 +20,7 @@
 import { forwardRef, useCallback, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import { Datalist } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -28,8 +29,6 @@ import objectPick from '../../../../utils/objectPick';
 import stripHTML from '../../../../utils/stripHTML';
 import { useFont } from '../../../../app/font';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
-import { AdvancedDropDown } from '../../../form';
-import { Option, Selected } from '../../../form/advancedDropDown/list/styled';
 import { getCommonValue } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 import getClosestFontWeight from './getClosestFontWeight';
@@ -132,7 +131,7 @@ const FontPicker = forwardRef(function FontPicker(
 
   const renderer = ({ option, ...rest }, _ref) => {
     return (
-      <Option
+      <Datalist.Option
         ref={_ref}
         {...rest}
         fontFamily={
@@ -142,15 +141,15 @@ const FontPicker = forwardRef(function FontPicker(
         }
       >
         {fontFamily === option.id && (
-          <Selected aria-label={__('Selected', 'web-stories')} />
+          <Datalist.Selected aria-label={__('Selected', 'web-stories')} />
         )}
         {option.name}
-      </Option>
+      </Datalist.Option>
     );
   };
 
   return (
-    <AdvancedDropDown
+    <Datalist.DropDown
       ref={ref}
       highlightStylesOverride={highlightStylesOverride}
       data-testid="font"

@@ -38,7 +38,6 @@ export const TaxonomyPropType = PropTypes.shape({
   slug: PropTypes.string.isRequired,
   types: PropTypes.arrayOf(PropTypes.string),
   visibility: PropTypes.object,
-  _links: PropTypes.object,
 });
 
 export const ContentHeading = styled(Headline).attrs({

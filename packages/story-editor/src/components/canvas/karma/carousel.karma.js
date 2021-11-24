@@ -39,6 +39,7 @@ describe('Carousel integration', () => {
       { id: 'page4', backgroundColor: createSolid(0, 0, 255) },
     ]);
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     const insertElement = await fixture.renderHook(() => useInsertElement());
     element1 = await fixture.act(() =>
@@ -74,8 +75,9 @@ describe('Carousel integration', () => {
   }
 
   async function clickOnThumbnail(index) {
-    await fixture.editor.carousel.waitReady();
-    const thumb = fixture.editor.carousel.pages[index];
+    await fixture.events.sleep(100);
+    await fixture.editor.footer.carousel.waitReady();
+    const thumb = fixture.editor.footer.carousel.pages[index];
     thumb.node.scrollIntoView();
     await fixture.events.mouse.clickOn(thumb.node, 5, 5);
   }
@@ -95,7 +97,7 @@ describe('Carousel integration', () => {
   it('should exit the carousel on Esc', async () => {
     // Enter.
     await clickOnThumbnail(0);
-    await fixture.editor.carousel.waitFocusedWithin();
+    await fixture.editor.footer.carousel.waitFocusedWithin();
 
     // Exit.
     await fixture.events.keyboard.press('Esc');

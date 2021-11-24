@@ -18,18 +18,8 @@
  * Internal dependencies
  */
 import preloadVideo from './preloadVideo';
-import getCanvasBlob from './getCanvasBlob';
-
-function getImageFromVideo(video) {
-  const canvas = document.createElement('canvas');
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-  return getCanvasBlob(canvas);
-}
+import getImageFromVideo from './getImageFromVideo';
+import seekVideo from './seekVideo';
 
 /**
  * Returns an image of the first frame of a given video.
@@ -40,6 +30,7 @@ function getImageFromVideo(video) {
  */
 async function getFirstFrameOfVideo(src) {
   const video = await preloadVideo(src);
+  await seekVideo(video);
   return getImageFromVideo(video);
 }
 

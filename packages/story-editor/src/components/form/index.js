@@ -23,7 +23,6 @@ export { default as Row } from './row';
 export { default as Switch } from './switch';
 export { default as TextArea } from './textArea';
 export { default as usePresubmitHandler } from './usePresubmitHandler';
-export { default as AdvancedDropDown } from './advancedDropDown';
 export { default as DateTime } from './dateTime';
 export { default as Required } from './required';
 export { default as RadioGroup } from './radioGroup';

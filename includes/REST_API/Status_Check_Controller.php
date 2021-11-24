@@ -138,6 +138,11 @@ class Status_Check_Controller extends REST_Controller implements HasRequirements
 			$data['success'] = rest_sanitize_value_from_schema( $status['success'], $schema['properties']['success'] );
 		}
 
+		/**
+		 * Request context.
+		 *
+		 * @var string $context
+		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );

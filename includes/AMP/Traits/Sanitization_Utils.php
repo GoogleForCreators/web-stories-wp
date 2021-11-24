@@ -62,8 +62,11 @@ trait Sanitization_Utils {
 	/**
 	 * Transform all hyperlinks to ensure they're always valid.
 	 *
-	 * Adds target and rel attributes.
-	 * Removes empty data-tooltip-icon and data-tooltip-text attributes.
+	 * Adds target="_blank" and rel="noreferrer" attributes.
+	 * Does not add rel="noreferrer" for same-origin links.
+	 *
+	 * Removes empty data-tooltip-icon and data-tooltip-text attributes
+	 * to prevent validation issues.
 	 *
 	 * @since 1.1.0
 	 *
@@ -71,28 +74,42 @@ trait Sanitization_Utils {
 	 * @return void
 	 */
 	private function transform_a_tags( &$document ) {
-		$hyperlinks = $document->getElementsByTagName( 'a' );
+		$links = $document->getElementsByTagName( 'a' );
 
 		/**
 		 * The <a> element
 		 *
-		 * @var DOMElement $hyperlink The <a> element
+		 * @var DOMElement $link The <a> element
 		 */
-		foreach ( $hyperlinks as $hyperlink ) {
-			if ( ! $hyperlink->getAttribute( 'target' ) ) {
-				$hyperlink->setAttribute( 'target', '_blank' );
+		foreach ( $links as $link ) {
+			if ( ! $link->getAttribute( 'target' ) ) {
+				$link->setAttribute( 'target', '_blank' );
 			}
 
-			if ( ! $hyperlink->getAttribute( 'rel' ) ) {
-				$hyperlink->setAttribute( 'rel', 'noreferrer' );
+			$is_link_to_same_origin = 0 === strpos( $link->getAttribute( 'href' ), home_url() );
+
+			$rel = $link->getAttribute( 'rel' );
+
+			// Links to the same site should not have "noreferrer".
+			// Other rel values should not be modified.
+			// See https://github.com/google/web-stories-wp/issues/9494.
+			$rel = str_replace( 'noreferrer', '', $rel );
+			if ( ! $is_link_to_same_origin ) {
+				$rel .= ' noreferrer';
 			}
 
-			if ( ! $hyperlink->getAttribute( 'data-tooltip-icon' ) ) {
-				$hyperlink->removeAttribute( 'data-tooltip-icon' );
+			if ( empty( $rel ) ) {
+				$link->removeAttribute( 'rel' );
+			} else {
+				$link->setAttribute( 'rel', trim( $rel ) );
 			}
 
-			if ( ! $hyperlink->getAttribute( 'data-tooltip-text' ) ) {
-				$hyperlink->removeAttribute( 'data-tooltip-text' );
+			if ( ! $link->getAttribute( 'data-tooltip-icon' ) ) {
+				$link->removeAttribute( 'data-tooltip-icon' );
+			}
+
+			if ( ! $link->getAttribute( 'data-tooltip-text' ) ) {
+				$link->removeAttribute( 'data-tooltip-text' );
 			}
 		}
 	}
@@ -425,6 +442,12 @@ trait Sanitization_Utils {
 	/**
 	 * Remove images referencing the grid-placeholder.png file which has since been removed.
 	 *
+	 * Prevents 404 errors for non-existent image files when creators forget to replace/remove
+	 * the placeholder image.
+	 *
+	 * The placeholder functionality was removed in v1.14.0, nevertheless older stories could still
+	 * reference the files.
+	 *
 	 * @link https://github.com/google/web-stories-wp/issues/9530
 	 *
 	 * @since 1.14.0
@@ -433,7 +456,10 @@ trait Sanitization_Utils {
 	 * @return void
 	 */
 	private function remove_page_template_placeholder_images( &$document ) {
-		$placeholder_img = 'assets/images/editor/grid-placeholder.png';
+		// Catches "assets/images/editor/grid-placeholder.png" as well as
+		// "web-stories/assets/images/adde98ae406d6b5c95d111a934487252.png" (v1.14.0)
+		// and potentially other variants.
+		$placeholder_img = 'plugins/web-stories/assets/images';
 
 		/**
 		 * List of <amp-img> elements.

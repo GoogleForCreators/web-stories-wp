@@ -48,7 +48,12 @@ async function previewStory(editorPage) {
   }
 
   const previewPage = openTabs[openTabs.length - 1];
-  await previewPage.waitForSelector('amp-story');
+
+  // Wait for the preview interstitial to end.
+  await previewPage.waitForFunction(
+    () => !document.title.includes('Generating the preview')
+  );
+
   return previewPage;
 }
 

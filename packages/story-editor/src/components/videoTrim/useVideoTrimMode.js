@@ -114,7 +114,7 @@ function useVideoTrimMode() {
   }, [selectedElement, isVideoTrimEnabled, isTranscodingEnabled]);
 
   return {
-    isTrimMode: isEditing && isTrimMode,
+    isTrimMode: Boolean(isEditing && isTrimMode),
     hasTrimMode,
     toggleTrimMode,
     videoData,

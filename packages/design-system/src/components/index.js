@@ -44,3 +44,4 @@ export { TextArea } from './textArea';
 export { Toggle } from './toggle';
 export { Display, Headline, Link, List, Text } from './typography';
 export { VisuallyHidden } from './visuallyHidden';
+export { default as Datalist } from './datalist';

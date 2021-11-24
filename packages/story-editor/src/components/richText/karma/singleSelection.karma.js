@@ -26,7 +26,9 @@ import { Fixture } from '../../../karma';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { initHelpers } from './_utils';
 
-describe('Styling single text field', () => {
+// Disable reason: https://github.com/google/web-stories-wp/issues/9781
+// eslint-disable-next-line jasmine/no-disabled-tests
+xdescribe('Styling single text field', () => {
   const data = {};
 
   const { getTextContent, addInitialText, setSelection, richTextHasFocus } =
@@ -35,6 +37,7 @@ describe('Styling single text field', () => {
   beforeEach(async () => {
     data.fixture = new Fixture();
     await data.fixture.render();
+    await data.fixture.collapseHelpCenter();
 
     // Add a text box
     await addInitialText();

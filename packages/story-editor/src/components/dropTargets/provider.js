@@ -26,7 +26,6 @@ import { useStory } from '../../app/story';
 import { useTransform } from '../transform';
 import { getElementProperties } from '../canvas/useInsertElement';
 import { getDefinitionForType } from '../../elements';
-import { getMediaBaseColor } from '../../utils/getMediaBaseColor';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'gif', 'video'];
@@ -176,39 +175,29 @@ function DropTargetsProvider({ children }) {
           resource,
         });
       }
-      const finalizeDrop = (baseColor = null) => {
-        if (baseColor) {
-          combineArgs.firstElement.resource.baseColor = baseColor;
-        }
-        combineElements(combineArgs);
 
-        // Reset styles on visible elements
-        elements
-          .filter(({ id }) => dropTargets[id] && id !== selfId)
-          .forEach((el) => {
-            pushTransform(el.id, {
-              dropTargets: {
-                active: false,
-                replacement: null,
-              },
-            });
-            pushTransform(el.id, null);
+      combineElements(combineArgs);
+
+      // Reset styles on visible elements
+      elements
+        .filter(({ id }) => dropTargets[id] && id !== selfId)
+        .forEach((el) => {
+          pushTransform(el.id, {
+            dropTargets: {
+              active: false,
+              replacement: null,
+            },
           });
+          pushTransform(el.id, null);
+        });
 
-        setActiveDropTargetId(null);
+      setActiveDropTargetId(null);
 
-        const { onDropHandler } = getDefinitionForType(resource.type);
-        // onDropHandler will play the video, but we don't want that for videos
-        // that don't have a src because they are still uploading.
-        if (onDropHandler && resource.src && !resource.isPlaceholder) {
-          onDropHandler(activeDropTargetId);
-        }
-      };
-      // Skip if we already have the color.
-      if (firstElement?.resource?.baseColor) {
-        finalizeDrop();
-      } else {
-        getMediaBaseColor(resource, finalizeDrop);
+      const { onDropHandler } = getDefinitionForType(resource.type);
+      // onDropHandler will play the video, but we don't want that for videos
+      // that don't have a src because they are still uploading.
+      if (onDropHandler && resource.src && !resource.isPlaceholder) {
+        onDropHandler(activeDropTargetId);
       }
     },
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]

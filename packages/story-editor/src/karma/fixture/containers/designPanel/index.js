@@ -33,11 +33,10 @@ import { Link } from './link';
 import { PageBackground } from './pageBackground';
 import { SizePosition } from './sizePosition';
 import { TextStyle } from './textStyle';
-import { TextStylePreset } from './textStylePreset';
 import { VideoPoster } from './videoPoster';
 import { Captions } from './captions';
-import { TextBox } from './textBox';
 import { ShapeStyle } from './shapeStyle';
+
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
@@ -52,14 +51,6 @@ export class DesignPanel extends Container {
       this.getByRole('region', { name: 'Text' }),
       'textStyle',
       TextStyle
-    );
-  }
-
-  get textBox() {
-    return this._get(
-      this.getByRole('region', { name: /Text box/ }),
-      'textBox',
-      TextBox
     );
   }
 
@@ -91,14 +82,6 @@ export class DesignPanel extends Container {
     );
   }
 
-  get textStylePreset() {
-    return this._get(
-      this.getByRole('region', { name: /Saved Styles/i }),
-      'textStylePreset',
-      TextStylePreset
-    );
-  }
-
   get colorPreset() {
     return this._get(
       this.getByRole('region', { name: /Saved Colors/i }),
@@ -114,7 +97,7 @@ export class DesignPanel extends Container {
 
   get shapeStyle() {
     return this._get(
-      this.getByRole('region', { name: /Style/i }),
+      this.getByRole('region', { name: /Shape style/i }),
       'shapeStyle',
       ShapeStyle
     );

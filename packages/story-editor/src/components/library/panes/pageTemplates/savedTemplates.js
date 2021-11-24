@@ -117,7 +117,7 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
               'Unable to delete the template. Please try again.',
               'web-stories'
             ),
-            dismissable: true,
+            dismissible: true,
           });
         }),
     [
@@ -195,7 +195,8 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
   }, [savedTemplates, generateMissingImages, hasUploadMediaAction]);
 
   return (
-    <Wrapper ref={ref}>
+    // tabIndex is required for FireFox bug when using keyboard to navigate from Chips to Template
+    <Wrapper ref={ref} tabIndex={-1}>
       {!isLoading && ref.current ? (
         <TemplateList
           parentRef={ref}

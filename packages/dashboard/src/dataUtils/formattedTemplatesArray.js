@@ -1266,15 +1266,16 @@ const formattedTemplatesArray = [
       },
     ],
     status: 'template',
-    tags: ['Delicious', 'Baker', 'Cook'],
+    tags: ['Delicious', 'Baker', 'Cook', 'Test Tag'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
-    title: 'Cooking',
+    vertical: 'Fitness',
+    title: 'Filterable By Tag',
     postersByPage: [
       {
         webp: 'https://placekitten.com/g/200/300',
@@ -1485,13 +1486,15 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
+      { label: 'Test Color', color: '#eadfd6', family: 'Test Color' },
     ],
-    title: 'DIY',
+    vertical: 'Fitness',
+    title: 'Filterable By Color',
     postersByPage: [
       {
         webp: 'https://placekitten.com/g/200/300',
@@ -1702,12 +1705,13 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
+    vertical: 'Entertainment',
     title: 'Entertainment',
     postersByPage: [
       {
@@ -1919,13 +1923,14 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
-    title: 'Fashion',
+    vertical: 'Test Vertical',
+    title: 'Filterable By Vertical',
     postersByPage: [
       {
         webp: 'https://placekitten.com/g/200/300',
@@ -2136,12 +2141,13 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
+    vertical: 'Fitness',
     title: 'Fitness',
     postersByPage: [
       {
@@ -2353,12 +2359,13 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
+    vertical: 'Travel',
     title: 'Travel',
     postersByPage: [
       {
@@ -2570,12 +2577,13 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
+    vertical: 'Wellbeing',
     title: 'Wellbeing',
     postersByPage: [
       {
@@ -2787,12 +2795,13 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
+    vertical: 'Beauty',
     title: 'Beauty',
     postersByPage: [
       {

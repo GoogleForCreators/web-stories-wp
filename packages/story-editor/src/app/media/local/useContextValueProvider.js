@@ -29,6 +29,7 @@ import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
 import useDetectVideoHasAudio from '../utils/useDetectVideoHasAudio';
+import useDetectBaseColor from '../utils/useDetectBaseColor';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -62,6 +63,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     removeAudioProcessing,
     setPosterProcessing,
     removePosterProcessing,
+    setBaseColorProcessing,
+    removeBaseColorProcessing,
     updateMediaElement,
     deleteMediaElement,
   } = reducerActions;
@@ -124,6 +127,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     updateMediaElement,
   });
 
+  const { updateBaseColor } = useDetectBaseColor({
+    updateMediaElement,
+  });
+
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
     capabilities: { hasUploadMediaAction },
@@ -151,7 +158,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     (id, src) => {
       const { posterProcessed, posterProcessing } = stateRef.current;
 
-      const process = async () => {
+      (async () => {
         // Simple way to prevent double-uploading.
         if (posterProcessed.includes(id) || posterProcessing.includes(id)) {
           return;
@@ -159,8 +166,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         setPosterProcessing({ id });
         await uploadVideoFrame(id, src);
         removePosterProcessing({ id });
-      };
-      process();
+      })();
     },
     [setPosterProcessing, uploadVideoFrame, removePosterProcessing]
   );
@@ -169,7 +175,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     (id, src) => {
       const { audioProcessed, audioProcessing } = stateRef.current;
 
-      const process = async () => {
+      (async () => {
         // Simple way to prevent double-uploading.
         if (audioProcessed.includes(id) || audioProcessing.includes(id)) {
           return;
@@ -177,67 +183,90 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         setAudioProcessing({ id });
         await updateVideoIsMuted(id, src);
         removeAudioProcessing({ id });
-      };
-      process();
+      })();
     },
     [setAudioProcessing, updateVideoIsMuted, removeAudioProcessing]
   );
 
+  const processMediaBaseColor = useCallback(
+    (resource) => {
+      const { baseColorProcessed, baseColorProcessing } = stateRef.current;
+      const { id } = resource;
+
+      (async () => {
+        // Simple way to prevent double-uploading.
+        if (
+          baseColorProcessed.includes(id) ||
+          baseColorProcessing.includes(id)
+        ) {
+          return;
+        }
+        setBaseColorProcessing({ id });
+        await updateBaseColor({ resource });
+        removeBaseColorProcessing({ id });
+      })();
+    },
+    [setBaseColorProcessing, removeBaseColorProcessing, updateBaseColor]
+  );
+
+  const postProcessingResource = useCallback(
+    (resource) => {
+      const {
+        local,
+        type,
+        isMuted,
+        baseColor,
+        src,
+        id,
+        posterId,
+        mimeType,
+        poster,
+      } = resource;
+
+      if (local || !id) {
+        return;
+      }
+
+      if (hasUploadMediaAction) {
+        if (
+          (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
+          !posterId
+        ) {
+          uploadVideoPoster(id, src);
+        }
+
+        if (allowedVideoMimeTypes.includes(mimeType) && isMuted === null) {
+          processVideoAudio(id, src);
+        }
+      }
+
+      const imageSrc = type === 'image' ? src : poster;
+      if (imageSrc && !baseColor) {
+        processMediaBaseColor(resource);
+      }
+    },
+    [
+      allowedVideoMimeTypes,
+      processMediaBaseColor,
+      processVideoAudio,
+      uploadVideoPoster,
+      hasUploadMediaAction,
+    ]
+  );
+
   const { optimizeVideo, optimizeGif, muteExistingVideo, trimExistingVideo } =
     useProcessMedia({
-      uploadVideoPoster,
-      updateVideoIsMuted,
+      postProcessingResource,
       uploadMedia,
       updateMedia,
       deleteMediaElement,
     });
 
-  const generateMissingPosters = useCallback(
-    ({ mimeType, posterId, id, src, local, type }) => {
-      if (
-        (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
-        !local &&
-        !posterId &&
-        id
-      ) {
-        uploadVideoPoster(id, src);
-      }
-    },
-    [allowedVideoMimeTypes, uploadVideoPoster]
-  );
-
-  const backfillHasAudio = useCallback(
-    ({ mimeType, isMuted, id, src, local }) => {
-      if (
-        allowedVideoMimeTypes.includes(mimeType) &&
-        !local &&
-        isMuted === null &&
-        id
-      ) {
-        processVideoAudio(id, src);
-      }
-    },
-    [allowedVideoMimeTypes, processVideoAudio]
-  );
-
   // Whenever media items in the library change,
-  // generate missing posters if needed.
+  // generate missing posters / has audio / base color if needed.
   useEffect(() => {
-    if (!hasUploadMediaAction) {
-      return;
-    }
-    media?.forEach((mediaElement) => generateMissingPosters(mediaElement));
-  }, [
-    media,
-    mediaType,
-    searchTerm,
-    generateMissingPosters,
-    hasUploadMediaAction,
-  ]);
-
-  useEffect(() => {
-    media?.forEach((mediaElement) => backfillHasAudio(mediaElement));
-  }, [media, mediaType, searchTerm, backfillHasAudio]);
+    media?.forEach((mediaElement) => postProcessingResource(mediaElement));
+  }, [media, mediaType, searchTerm, postProcessingResource]);
 
   const isGeneratingPosterImages = Boolean(
     stateRef.current?.posterProcessing?.length
@@ -257,7 +286,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       uploadMedia,
       resetWithFetch,
       uploadVideoPoster,
-      updateVideoIsMuted,
+      postProcessingResource,
       deleteMediaElement,
       updateMediaElement,
       optimizeVideo,

@@ -31,8 +31,9 @@ describe('Embedding hotlinked media', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableHotlinking: true });
+    fixture.setFlags({ enableHotlinking: true, enableCORSProxy: true });
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -68,17 +69,21 @@ describe('Embedding hotlinked media', () => {
     await waitFor(() => expect(dialog.textContent).toContain('You can insert'));
 
     await fixture.events.click(input);
-    await fixture.events.keyboard.type('https://example.jpg');
+    await fixture.events.keyboard.type('https://example.jpgef');
     await fixture.events.click(insertBtn);
 
     await fixture.events.sleep(500);
     dialog = screen.getByRole('dialog');
-    await waitFor(() =>
-      expect(dialog.textContent).toContain('Media failed to load')
-    );
+    await waitFor(() => expect(dialog.textContent).toContain('Invalid link'), {
+      timeout: 1500,
+    });
   });
 
   it('should insert a new media element from valid url', async () => {
+    spyOn(window, 'fetch').and.callFake(() => {
+      return true;
+    });
+
     // Get URL from existing library.
     const libraryElement = fixture.editor.library.media.item(0);
     const img = libraryElement.getElementsByTagName('img')[0];
@@ -97,5 +102,31 @@ describe('Embedding hotlinked media', () => {
 
     const elements = await getElements();
     expect(elements[1].resource.src).toBe(img.src);
+  });
+
+  it('should insert a new media element from valid url using proxy', async () => {
+    // Let's throw an error when checking for HEAD, forcing to use the CORS proxy.
+    spyOn(window, 'fetch').and.callFake(() => {
+      throw new Error();
+    });
+
+    const button = await fixture.screen.getByRole('button', {
+      name: 'Insert by link',
+    });
+    await fixture.events.click(button);
+    const input = await fixture.screen.getByRole('textbox', { name: 'URL' });
+    const insertBtn = await fixture.screen.getByRole('button', {
+      name: 'Insert',
+    });
+    await fixture.events.click(input);
+    await fixture.events.keyboard.type(
+      'http://localhost:9876/__static__/saturn.jpg'
+    );
+    await fixture.events.click(insertBtn);
+
+    const elements = await getElements();
+    expect(elements[1].resource.src).toBe(
+      'http://localhost:9876/__static__/saturn.jpg'
+    );
   });
 });

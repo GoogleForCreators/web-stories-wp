@@ -28,7 +28,7 @@ import {
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@web-stories-wp/i18n';
 import { rgba } from 'polished';
-import { Icons } from '@web-stories-wp/design-system';
+import { Icons, useKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -208,11 +208,6 @@ function PlayPauseButton({
       document.removeEventListener('pointermove', checkMouseInBBox);
     };
   }, [checkMouseInBBox]);
-
-  if (!isActive) {
-    return null;
-  }
-
   const handlePlayPause = (evt) => {
     evt.stopPropagation();
     const videoNode = getVideoNode();
@@ -231,6 +226,18 @@ function PlayPauseButton({
         .catch(() => {});
     }
   };
+  useKeyDownEffect(
+    elementRef,
+    {
+      key: ['space'],
+    },
+    handlePlayPause,
+    [handlePlayPause]
+  );
+
+  if (!isActive) {
+    return null;
+  }
 
   const buttonLabel = isPlaying
     ? __('Click to pause', 'web-stories')

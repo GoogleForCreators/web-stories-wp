@@ -34,6 +34,7 @@ const MainIcon = styled(Icons.QuestionMarkOutline)`
 const StyledToggleButton = styled(ToggleButton)`
   padding-left: 3px;
   padding-right: 3px;
+  display: block;
 `;
 
 function Toggle({

@@ -58,7 +58,8 @@ const InnerContainer = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.3)};
+  background-color: ${({ theme, $baseColor }) =>
+    $baseColor ? $baseColor : rgba(theme.colors.standard.black, 0.3)};
   body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
@@ -86,6 +87,7 @@ function Element({
     isTranscoding,
     isMuting,
     isTrimming,
+    baseColor,
   } = resource;
 
   const oRatio =
@@ -97,6 +99,7 @@ function Element({
   const [showVideoDetail, setShowVideoDetail] = useState(true);
   const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoaded, setLoaded] = useState(false);
 
   const makeActive = useCallback(() => setActive(true), []);
   const makeInactive = useCallback(() => setActive(false), []);
@@ -151,8 +154,8 @@ function Element({
     return resetHoverTime;
   }, [isMenuOpen, active, type, src, hoverTimer, setHoverTimer, activeRef]);
 
-  const onClick = (thumbnailUrl, baseColor) => () => {
-    onInsert({ ...resource, baseColor }, thumbnailUrl);
+  const onClick = (thumbnailUrl) => () => {
+    onInsert(resource, thumbnailUrl);
   };
 
   const attribution = active &&
@@ -167,6 +170,8 @@ function Element({
   const ref = useRef();
 
   useRovingTabIndex({ ref });
+
+  const onLoad = () => setLoaded(true);
 
   const handleKeyDown = useCallback(
     ({ key }) => {
@@ -203,7 +208,7 @@ function Element({
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
     >
-      <InnerContainer>
+      <InnerContainer $baseColor={!isLoaded && baseColor}>
         <InnerElement
           type={type}
           src={src}
@@ -214,6 +219,7 @@ function Element({
           width={width}
           height={height}
           onClick={onClick}
+          onLoad={onLoad}
           showVideoDetail={showVideoDetail}
           active={active}
         />
@@ -261,11 +267,11 @@ Element.propTypes = {
  * @return {null|*} Element or null if does not map to video/image.
  */
 function MediaElement(props) {
-  const { isTranscoding } = props.resource;
+  const { isTranscoding, isMuting, isTrimming } = props.resource;
 
-  if (isTranscoding) {
+  if (isTranscoding || isMuting || isTrimming) {
     return (
-      <Tooltip title={__('Video optimization in progress', 'web-stories')}>
+      <Tooltip title={__('Video is being processed', 'web-stories')}>
         <Element {...props} />
       </Tooltip>
     );

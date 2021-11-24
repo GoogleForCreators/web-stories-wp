@@ -29,10 +29,26 @@ export default {
     _x('Taste', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Green', 'color', 'web-stories'), color: '#094228' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Yellow', 'color', 'web-stories'), color: '#fec85a' },
-    { label: _x('Blue', 'color', 'web-stories'), color: '#0648ad' },
+    {
+      label: _x('Green', 'color', 'web-stories'),
+      color: '#094228',
+      family: _x('Green', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Yellow', 'color', 'web-stories'),
+      color: '#fec85a',
+      family: _x('Yellow', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Blue', 'color', 'web-stories'),
+      color: '#0648ad',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'Designed to instil a sense of wanderlust & wonder, the Travel template can be a great foundation for travel inspiration, travel itineraries, restaurant hopping guides, Best-of attraction listicles and other types of travel content.',

@@ -23,6 +23,10 @@
 import './publicPath';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
+// We need to load translations before any other imports happen.
+// That's why this is in its own dedicated module imported here at the very top.
+import './setLocaleData';
+
 /**
  * External dependencies
  */

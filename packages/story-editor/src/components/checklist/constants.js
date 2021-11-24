@@ -93,6 +93,13 @@ export const ACCESSIBILITY_COPY = {
       'web-stories'
     ),
   },
+  linkTappableRegionTooBig: {
+    title: __('Reduce link size', 'web-stories'),
+    footer: __(
+      'Elements with links must not cover most of the page. Decrease the size of elements with links.',
+      'web-stories'
+    ),
+  },
   linkTappableRegionTooSmall: {
     title: sprintf(
       /* translators: %s: minimum tappable region size width x minimum tappable region size height. */

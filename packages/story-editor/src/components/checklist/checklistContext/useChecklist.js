@@ -25,6 +25,5 @@ import { useContextSelector, identity } from '@web-stories-wp/react';
 import Context from './context';
 
 export function useChecklist(selector) {
-  const context = useContextSelector(Context, selector ?? identity);
-  return context;
+  return useContextSelector(Context, selector ?? identity);
 }

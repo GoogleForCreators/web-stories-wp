@@ -39,3 +39,8 @@ expect.extend({
   toBeValidAMPStoryElement,
   toBeValidAMPStoryPage,
 });
+
+// Retry flaky tests  on CI.
+if ('true' === process.env.CI) {
+  jest.retryTimes(2);
+}

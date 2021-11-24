@@ -23,11 +23,11 @@ import { waitFor, within } from '@testing-library/react';
  * Internal dependencies
  */
 
-import { Fixture, MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
+import { Fixture, LOCAL_MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
-// Disable reason: tests are out of date.
-// TODO: https://github.com/google/web-stories-wp/issues/7606
+// Disable reason: test is flakey
+// Fix in progress:   https://github.com/google/web-stories-wp/issues/9779
 // eslint-disable-next-line jasmine/no-disabled-tests
 xdescribe('MediaPane fetching', () => {
   let fixture;
@@ -35,6 +35,7 @@ xdescribe('MediaPane fetching', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -51,42 +52,32 @@ xdescribe('MediaPane fetching', () => {
 
     const initialElements =
       within(mediaGallery).queryAllByTestId(/^mediaElement-/);
-    expect(initialElements.length).toBe(MEDIA_PER_PAGE);
+
+    await waitFor(() => {
+      // ensure fixture.screen has loaded before calling expect to prevent immediate failure
+      if (initialElements.length !== LOCAL_MEDIA_PER_PAGE) {
+        throw new Error('wait');
+      }
+      expect(initialElements.length).toBe(LOCAL_MEDIA_PER_PAGE);
+    });
 
     await mediaGallery.scrollTo(
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
 
-    await waitFor(() =>
+    await waitFor(() => {
+      // ensure fixture.screen has loaded before calling expect to prevent immediate failure
+      if (
+        fixture.screen.queryAllByTestId(/^mediaElement-/).length <
+        LOCAL_MEDIA_PER_PAGE * 2
+      ) {
+        throw new Error('wait');
+      }
+
       expect(
         fixture.screen.queryAllByTestId(/^mediaElement-/).length
-      ).toBeGreaterThanOrEqual(MEDIA_PER_PAGE * 2)
-    );
-  });
-
-  it('should not load results on resize if tab is hidden', async () => {
-    const nonMediaTab = await waitFor(() =>
-      fixture.querySelector('#library-tab-shapes')
-    );
-
-    await waitFor(() =>
-      expect(fixture.screen.queryAllByTestId(/mediaElement/).length).toBe(
-        MEDIA_PER_PAGE
-      )
-    );
-
-    await fixture.events.click(nonMediaTab);
-
-    // Simulate a browser window resize, and complete the event debounce cycle.
-    window.dispatchEvent(new Event('resize'));
-    await fixture.events.sleep(500);
-
-    // Expect no additional results to be loaded.
-    await waitFor(() =>
-      expect(fixture.screen.queryAllByTestId(/mediaElement/).length).toBe(
-        MEDIA_PER_PAGE
-      )
-    );
+      ).toBeGreaterThanOrEqual(LOCAL_MEDIA_PER_PAGE * 2);
+    });
   });
 });

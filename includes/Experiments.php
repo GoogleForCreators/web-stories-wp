@@ -42,13 +42,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	const PAGE_NAME = 'web-stories-experiments';
 
 	/**
-	 * Admin page hook suffix.
-	 *
-	 * @var string|false The experiments page's hook_suffix, or false if the user does not have the capability required.
-	 */
-	private $hook_suffix;
-
-	/**
 	 * Settings instance.
 	 *
 	 * @var Settings Settings instance.
@@ -101,7 +94,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * @return void
 	 */
 	public function add_menu_page() {
-		$this->hook_suffix = add_submenu_page(
+		add_submenu_page(
 			'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG,
 			__( 'Experiments', 'web-stories' ),
 			__( 'Experiments', 'web-stories' ),
@@ -263,6 +256,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'enableInProgressTemplateActions',
 				'label'       => __( 'Template actions', 'web-stories' ),
 				'description' => __( 'Enable in-progress template actions', 'web-stories' ),
+				'group'       => 'dashboard',
+			],
+			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 9508
+			 * Creation date: 2021-11-05
+			 */
+			[
+				'name'        => 'enableExploreTemplatesSearch',
+				'label'       => __( 'Template search', 'web-stories' ),
+				'description' => __( 'Enable search for templates', 'web-stories' ),
 				'group'       => 'dashboard',
 			],
 			/**
@@ -455,6 +459,11 @@ class Experiments extends Service_Base implements HasRequirements {
 			return (bool) $experiment['default'];
 		}
 
+		/**
+		 * List of enabled experiments.
+		 *
+		 * @var array<string, array> $experiments
+		 */
 		$experiments = $this->settings->get_setting( $this->settings::SETTING_NAME_EXPERIMENTS, [] );
 		return ! empty( $experiments[ $name ] );
 	}

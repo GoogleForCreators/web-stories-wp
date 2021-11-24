@@ -23,17 +23,45 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../app';
+import { useAPI } from '../app/api';
 
 function useCORSProxy() {
   const {
     actions: { getProxyUrl },
   } = useAPI();
   const enableCORSProxy = useFeature('enableCORSProxy');
+
+  /**
+   * Check if the resource can be accessed directly.
+   *
+   * Makes a HEAD request, which in turn triggers a CORS preflight request
+   * in the browser.
+   *
+   * If the request passes, we don't need to do anything.
+   * If it doesn't, it means we need to run the resource through our CORS proxy at all times.
+   *
+   * @type {function(): boolean}
+   */
+  async function checkResourceAccess(link) {
+    let shouldProxy = false;
+    if (!link) {
+      return shouldProxy;
+    }
+    try {
+      await fetch(link, {
+        method: 'HEAD',
+      });
+    } catch (err) {
+      shouldProxy = true;
+    }
+
+    return shouldProxy;
+  }
+
   const getProxiedUrl = useCallback(
     (resource, src) => {
-      const { isExternal, id } = resource;
-      if (enableCORSProxy && !id && isExternal) {
+      const { needsProxy } = resource;
+      if (enableCORSProxy && needsProxy && src) {
         return getProxyUrl(src);
       }
       return src;
@@ -43,6 +71,7 @@ function useCORSProxy() {
 
   return {
     getProxiedUrl,
+    checkResourceAccess,
   };
 }
 export default useCORSProxy;

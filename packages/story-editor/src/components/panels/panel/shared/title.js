@@ -57,7 +57,6 @@ const Header = styled(Headline).attrs({
   justify-content: space-between;
   padding: ${({ isCollapsed }) =>
     isCollapsed ? '14px 20px' : '14px 20px 6px 20px'};
-  cursor: pointer;
 `;
 
 const Heading = styled.span`
@@ -183,6 +182,7 @@ function Title({
       height,
       resizable,
       showDragHandle,
+      showFocusStyles,
       panelContentId,
       panelTitleId,
       ariaHidden,
@@ -244,6 +244,7 @@ function Title({
           handleDoubleClick={resetHeight}
           tabIndex={ariaHidden ? -1 : 0}
           showDragHandle={showDragHandle}
+          showFocusStyles={showFocusStyles}
         />
       )}
       <Toggle

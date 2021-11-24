@@ -1,11 +1,6 @@
 # Overall settings for PR integration via codecov.io
 # See https://docs.codecov.io/docs/codecovyml-reference
 
-codecov:
-  notify:
-    # Wait for: Karma (Editopr & Dashboard), Jest, PHPUnit
-    after_n_builds: 4
-
 # Separate PR statuses for project-level and patch-level coverage
 # See https://docs.codecov.io/docs/commit-status
 coverage:
@@ -68,12 +63,7 @@ coverage:
 
 # Pull request comments
 # See https://docs.codecov.io/docs/pull-request-comments
-comment:
-  layout: 'reach, diff, flags, files'
-  behavior: default
-  require_changes: true
-  branches:
-    - 'main'
+comment: false
 
 # See https://docs.codecov.io/docs/ignoring-paths
 ignore:
@@ -86,8 +76,9 @@ ignore:
   - includes/polyfills
   - includes/templates
   - packages/migration/src/cli.js
-  - assets/src/karma-fixture
+  - packages/karma-fixture
   - packages/fonts/src/cli.js
+  - packages/templates/src/cli.js
   - includes/AMP/Integration/AMP_Story_Sanitizer.php
   - includes/REST_API/Stories_Settings_Controller.php
   - includes/REST_API/Stories_Users_Controller.php

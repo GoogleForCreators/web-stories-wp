@@ -129,7 +129,7 @@ const darkTheme = {
   fg: {
     primary: brand.gray[5],
     secondary: brand.gray[20],
-    tertiary: brand.gray[40],
+    tertiary: brand.gray[30],
     disable: brand.gray[50],
     linkNormal: brand.blue[30],
     linkHover: brand.blue[40],

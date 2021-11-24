@@ -22,7 +22,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 export default {
   slug: 'baking-bread-guide',
   creationDate: '2021-07-13T00:00:00.000Z',
-  title: _x('Baking Bread Guide ', 'template name', 'web-stories'),
+  title: _x('Baking Bread Guide', 'template name', 'web-stories'),
   tags: [
     _x('Food', 'template keyword', 'web-stories'),
     _x('Cooking', 'template keyword', 'web-stories'),
@@ -33,9 +33,21 @@ export default {
     _x('Guide', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Hawaii Blue', 'color', 'web-stories'), color: '#bcebee' },
-    { label: _x('Earth Violet', 'color', 'web-stories'), color: '#2d2a35' },
-    { label: _x('Papaya Orange', 'color', 'web-stories'), color: '#fff0d8' },
+    {
+      label: _x('Hawaii Blue', 'color', 'web-stories'),
+      color: '#bcebee',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Earth Violet', 'color', 'web-stories'),
+      color: '#2d2a35',
+      family: _x('Purple', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Papaya Orange', 'color', 'web-stories'),
+      color: '#fff0d8',
+      family: _x('Orange', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'With its earthy tones and vintage elegance, this template is perfect for creating instructionals that are calm and soothing. Use it for recipes, woodworking tutorials, meditation guides, or anything that could use some rustic charm.',

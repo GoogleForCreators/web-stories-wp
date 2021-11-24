@@ -27,9 +27,9 @@ import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
  * @param {Object} obj - An object with height/width params.
  * @param {number} obj.width Width.
  * @param {number} obj.height Height.
- * @param {boolean} obj.posterGenerated Whether a poster has been generated.
- * @param {number} obj.posterWidth Poster width.
- * @param {number} obj.posterHeight Poster height.karma-puppeteer-launcher/snapshot.cjs
+ * @param {boolean} [obj.posterGenerated] Whether a poster has been generated.
+ * @param {number} [obj.posterWidth] Poster width.
+ * @param {number} [obj.posterHeight] Poster height.
  * @return {Object} The resource's size (width and height).
  */
 function getResourceSize({

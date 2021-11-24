@@ -34,6 +34,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
     await fixture.editor.library.textTab.click();
   });
 
@@ -88,10 +89,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     expect((await getSelection()).length).toBeGreaterThan(1);
   });
 
-  // Disable reason: flakey tests.
-  // See https://github.com/google/web-stories-wp/pull/6162
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should allow user to drag and drop text set onto page', async () => {
+  it('should allow user to drag and drop text set onto page', async () => {
     await waitFor(
       () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
       { timeout: 2000 }
@@ -140,7 +138,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('Editorial text set positioning');
 
-    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Header')
     );
@@ -149,7 +147,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('List text set positioning');
 
-    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+    await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Steps')
     );
@@ -160,9 +158,9 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
   });
 
   describe('Easier/smarter text set color', () => {
-    // TODO(#9224): Fix flaky test.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should add text color based on background', async () => {
+    it('should add text color based on background', async () => {
+      fixture.editor.library.text.smartColorToggle.click();
+
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
@@ -175,8 +173,19 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
         { timeout: 2000 }
       );
       const textSets = fixture.editor.library.text.textSets;
+      // First hover text set to trigger image generation
+      await fixture.events.mouse.moveRel(textSets[1], 10, 10);
+
+      await fixture.events.sleep(800);
+      // Then click the text set
       await fixture.events.click(textSets[1]);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(
+        () =>
+          expect(
+            fixture.editor.canvas.framesLayer.frames[1].node
+          ).toBeDefined(),
+        { timeout: 5000 }
+      );
       const selection = await getSelection();
       // Text color should be changed to white, since it's placed on a dark background.
       expect(selection[1].content).toEqual(

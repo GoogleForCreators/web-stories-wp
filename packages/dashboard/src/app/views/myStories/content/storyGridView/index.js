@@ -187,7 +187,6 @@ const StoryGridView = ({
     <div ref={containerRef}>
       <StoryGrid
         pageSize={pageSize}
-        isPosterHeight
         ref={gridRef}
         role="list"
         ariaLabel={__('Viewing stories', 'web-stories')}

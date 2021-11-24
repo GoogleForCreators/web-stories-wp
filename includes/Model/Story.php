@@ -157,11 +157,21 @@ class Story {
 			$this->poster_portrait = (string) wp_get_attachment_image_url( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 		}
 
-		$publisher_logo_id = (int) get_post_meta( $this->id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
-		if ( 0 !== $publisher_logo_id ) {
-			list ( $src, $width, $height ) = wp_get_attachment_image_src( $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
-			$this->publisher_logo_size     = [ $width, $height ];
-			$this->publisher_logo          = $src;
+		/**
+		 * Publisher logo ID.
+		 *
+		 * @var string|int $publisher_logo_id
+		 */
+		$publisher_logo_id = get_post_meta( $this->id, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
+
+		if ( ! empty( $publisher_logo_id ) ) {
+			$img_src = wp_get_attachment_image_src( (int) $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
+
+			if ( $img_src ) {
+				list ( $src, $width, $height ) = $img_src;
+				$this->publisher_logo_size     = [ $width, $height ];
+				$this->publisher_logo          = $src;
+			}
 		}
 
 		return true;
@@ -272,9 +282,9 @@ class Story {
 	 *
 	 * @since 1.12.0
 	 *
-	 * @return string Publisher logo URL.
+	 * @return string|null Publisher logo URL or null if not set.
 	 */
-	public function get_publisher_logo_url(): string {
+	public function get_publisher_logo_url() {
 		/**
 		 * Filters the publisher logo URL.
 		 *
@@ -282,10 +292,10 @@ class Story {
 		 * @since 1.1.0 The second parameter was deprecated.
 		 * @since 1.12.0 The second parameter was repurposed to provide the current story ID.
 		 *
-		 * @param string|null  $url  Publisher logo URL.
+		 * @param string|null  $url  Publisher logo URL or null if not set.
 		 * @param int|null     $id   Story ID if available.
 		 */
-		return (string) apply_filters( 'web_stories_publisher_logo', $this->publisher_logo, $this->id );
+		return apply_filters( 'web_stories_publisher_logo', $this->publisher_logo, $this->id );
 	}
 
 	/**
@@ -318,6 +328,6 @@ class Story {
 		 * }
 		 * @param int|null $id   Story ID if available.
 		 */
-		return (array) apply_filters( 'web_stories_publisher_logo_size', $this->publisher_logo_size, $this->id );
+		return apply_filters( 'web_stories_publisher_logo_size', $this->publisher_logo_size, $this->id );
 	}
 }
