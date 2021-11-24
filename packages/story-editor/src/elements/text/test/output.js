@@ -90,9 +90,9 @@ describe('TextOutput', () => {
     expect(output.tagName).toBe('P');
     expect(output.innerHTML).toBe('<span>Content</span>');
     expect(output).toHaveClass('fill text-wrapper', { exact: true });
-    expect(output.style).toMatchObject({
+    expect(output).toHaveStyle({
       whiteSpace: 'pre-wrap',
-      padding: '0px 0px',
+      padding: '0px',
       fontSize: '0.258900em',
       textAlign: 'left',
     });
@@ -128,9 +128,7 @@ describe('TextOutput', () => {
     expect(output.tagName).toBe('P');
     expect(output.innerHTML).toBe('<span>Content</span>');
     expect(output).toHaveClass('fill text-wrapper', { exact: true });
-    expect(output.style).toMatchObject({
-      padding: '20% 20%',
-    });
+    expect(output).toHaveStyle('padding: 20% 20%');
   });
 
   it('should default to zero padding if not a number', () => {
@@ -163,9 +161,7 @@ describe('TextOutput', () => {
     expect(output.tagName).toBe('P');
     expect(output.innerHTML).toBe('<span>Content</span>');
     expect(output).toHaveClass('fill text-wrapper', { exact: true });
-    expect(output.style).toMatchObject({
-      padding: '0px 0px',
-    });
+    expect(output).toHaveStyle('padding: 0');
   });
 
   it('should wrap font-family into quotes', () => {
