@@ -83,6 +83,11 @@ export function TextOutputWithUnits({
     horizontal: padding.horizontal ? dataToPaddingX(padding.horizontal) : 0,
   };
 
+  const hasPadding = paddingStyles.vertical && paddingStyles.horizontal;
+  const paddingStyle = hasPadding
+    ? `${paddingStyles.vertical} ${paddingStyles.horizontal}`
+    : 0;
+
   const bgColor =
     backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
       ? generatePatternStyles(backgroundColor)
@@ -103,8 +108,8 @@ export function TextOutputWithUnits({
   const fillStyle = {
     ...styles,
     color: '#000000',
-    padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
-    overflowWrap: 'break-word',
+    // Overrides styles.padding.
+    padding: paddingStyle,
   };
 
   const unitlessPaddingVertical = padding.vertical
@@ -156,7 +161,7 @@ export function TextOutputWithUnits({
     WebkitBoxDecorationBreak: 'clone',
     boxDecorationBreak: 'clone',
     position: 'relative',
-    padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
+    padding: paddingStyle,
     textAlign: styles.textAlign,
     borderRadius: `${borderRadius?.topLeft || 0}px ${
       borderRadius?.topRight || 0
