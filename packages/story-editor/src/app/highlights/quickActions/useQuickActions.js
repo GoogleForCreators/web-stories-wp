@@ -88,9 +88,10 @@ export const MediaPicker = ({ render, ...props }) => {
     optimizeVideo,
     optimizeGif,
     isResourceProcessing,
+    isResourceProcessingById,
   } = useLocalMedia(
     ({
-      state: { isResourceProcessing },
+      state: { isResourceProcessing, isResourceProcessingById },
       actions: {
         resetWithFetch,
         postProcessingResource,
@@ -100,6 +101,7 @@ export const MediaPicker = ({ render, ...props }) => {
     }) => {
       return {
         isResourceProcessing,
+        isResourceProcessingById,
         resetWithFetch,
         postProcessingResource,
         optimizeVideo,
@@ -160,6 +162,7 @@ export const MediaPicker = ({ render, ...props }) => {
         if (
           isTranscodingEnabled &&
           !isResourceProcessing(resource.id) &&
+          !isResourceProcessingById(resource.id) &&
           !resource.isExternal
         ) {
           if (transcodableMimeTypes.includes(resource.mimeType)) {
@@ -185,14 +188,15 @@ export const MediaPicker = ({ render, ...props }) => {
       }
     },
     [
-      insertMediaElement,
       isTranscodingEnabled,
-      optimizeGif,
-      optimizeVideo,
-      showSnackbar,
-      transcodableMimeTypes,
-      postProcessingResource,
       isResourceProcessing,
+      isResourceProcessingById,
+      insertMediaElement,
+      postProcessingResource,
+      transcodableMimeTypes,
+      optimizeVideo,
+      optimizeGif,
+      showSnackbar,
     ]
   );
   return (
@@ -273,10 +277,11 @@ const useQuickActions = () => {
     })
   );
 
-  const { isResourceProcessing } = useLocalMedia(
-    ({ state: { isResourceProcessing } }) => {
+  const { isResourceProcessing, isResourceProcessingById } = useLocalMedia(
+    ({ state: { isResourceProcessing, isResourceProcessingById } }) => {
       return {
         isResourceProcessing,
+        isResourceProcessingById,
       };
     }
   );
@@ -677,6 +682,7 @@ const useQuickActions = () => {
       return [];
     }
     return !isResourceProcessing(resource.id) &&
+      !isResourceProcessingById(resource.id) &&
       !resource.isExternal &&
       hasTrimMode
       ? [

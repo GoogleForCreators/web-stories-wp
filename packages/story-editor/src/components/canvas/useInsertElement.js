@@ -65,10 +65,16 @@ function useInsertElement() {
         src,
         poster,
         type,
+        id: resourceId,
       } = resource;
 
       const imageSrc = type === 'image' ? src : poster;
-      if (!imageSrc || currentBaseColor || !isExternal) {
+      if (
+        isResourceUploadingById(resourceId) ||
+        !imageSrc ||
+        currentBaseColor ||
+        !isExternal
+      ) {
         return;
       }
 
@@ -92,7 +98,12 @@ function useInsertElement() {
         // Do nothing for now.
       }
     },
-    [checkResourceAccess, getProxiedUrl, updateElementById]
+    [
+      isResourceUploadingById,
+      checkResourceAccess,
+      getProxiedUrl,
+      updateElementById,
+    ]
   );
 
   /**
