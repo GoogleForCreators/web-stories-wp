@@ -107,7 +107,9 @@ export function TextOutputWithUnits({
     overflowWrap: 'break-word',
   };
 
-  const unitlessPaddingVertical = padding.vertical ? parseFloat(dataToStyleY(padding.vertical)) : 0;
+  const unitlessPaddingVertical = padding.vertical
+    ? parseFloat(dataToStyleY(padding.vertical))
+    : 0;
   const unitlessFontSize = parseFloat(dataToStyleY(rest.fontSize));
 
   const lineHeight = getHighlightLineheight(
