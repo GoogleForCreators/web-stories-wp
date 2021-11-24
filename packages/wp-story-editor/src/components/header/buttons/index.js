@@ -75,7 +75,8 @@ function Buttons() {
     })
   );
 
-  const isDraft = 'draft' === status || !status;
+  const isPending = 'pending' === status;
+  const isDraft = 'draft' === status || isPending || !status;
 
   const { hasMetaBoxes, isSavingMetaBoxes } = useMetaBoxes(
     ({ state: { hasMetaBoxes, isSavingMetaBoxes } }) => ({
@@ -101,20 +102,24 @@ function Buttons() {
           <PreviewButton forceIsSaving={isSavingMetaBoxes} />
           {isSaving && <Loading />}
         </IconWithSpinner>
-        {isDraft ? (
-          <UpdateButton
-            hasUpdates={hasMetaBoxes}
-            forceIsSaving={isSavingMetaBoxes}
-          />
-        ) : (
-          <SwitchToDraftButton forceIsSaving={isSavingMetaBoxes} />
+        {isPending && <SwitchToDraftButton forceIsSaving={isSavingMetaBoxes} />}
+        {isDraft && (
+          <>
+            <UpdateButton
+              hasUpdates={hasMetaBoxes}
+              forceIsSaving={isSavingMetaBoxes}
+            />
+            <PublishButton forceIsSaving={isSavingMetaBoxes} />
+          </>
         )}
-        {isDraft && <PublishButton forceIsSaving={isSavingMetaBoxes} />}
         {!isDraft && (
-          <UpdateButton
-            hasUpdates={hasMetaBoxes}
-            forceIsSaving={isSavingMetaBoxes}
-          />
+          <>
+            <SwitchToDraftButton forceIsSaving={isSavingMetaBoxes} />
+            <UpdateButton
+              hasUpdates={hasMetaBoxes}
+              forceIsSaving={isSavingMetaBoxes}
+            />
+          </>
         )}
       </List>
     </ButtonList>

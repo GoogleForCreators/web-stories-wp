@@ -79,7 +79,8 @@ function Buttons() {
     })
   );
 
-  const isDraft = 'draft' === status;
+  const isPending = 'pending' === status;
+  const isDraft = 'draft' === status || isPending || !status;
 
   return (
     <ButtonList>
@@ -90,9 +91,19 @@ function Buttons() {
           <PreviewButton />
           <Loading />
         </IconWithSpinner>
-        {isDraft ? <UpdateButton /> : <SwitchToDraftButton />}
-        {isDraft && <PublishButton />}
-        {!isDraft && <UpdateButton />}
+        {isPending && <SwitchToDraftButton />}
+        {isDraft && (
+          <>
+            <UpdateButton />
+            <PublishButton />
+          </>
+        )}
+        {!isDraft && (
+          <>
+            <SwitchToDraftButton />
+            <UpdateButton />
+          </>
+        )}
       </List>
     </ButtonList>
   );

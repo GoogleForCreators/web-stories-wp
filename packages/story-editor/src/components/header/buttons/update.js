@@ -40,14 +40,21 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
     isSaving: _isSaving,
     status,
     saveStory,
+    canPublish,
   } = useStory(
     ({
       state: {
         meta: { isSaving },
         story: { status },
+        capabilities,
       },
       actions: { saveStory },
-    }) => ({ isSaving, status, saveStory })
+    }) => ({
+      isSaving,
+      status,
+      saveStory,
+      canPublish: Boolean(capabilities?.publish),
+    })
   );
 
   const isSaving = _isSaving || forceIsSaving;
@@ -75,38 +82,53 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
   // then only if there are new changes or the story has meta-boxes – as these
   // can update without us knowing it.
   const isEnabled = !isSaving && !isUploading && (hasNewChanges || hasUpdates);
-  let text;
-  switch (status) {
-    case 'publish':
-    case 'private':
-      text = __('Update', 'web-stories');
-      break;
-    case 'future':
-      text = __('Schedule', 'web-stories');
-      break;
-    default:
-      text = __('Save draft', 'web-stories');
-      return (
-        <Tooltip title={text} hasTail>
-          <Button
-            variant={BUTTON_VARIANTS.SQUARE}
-            type={BUTTON_TYPES.QUATERNARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={() => saveStory({ status: 'draft' })}
-            disabled={!isEnabled}
-            aria-label={text}
-          >
-            <Icons.FloppyDisk />
-          </Button>
-        </Tooltip>
-      );
+
+  if ('pending' === status) {
+    return (
+      <Tooltip title={__('Save as pending', 'web-stories')} hasTail>
+        <Button
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.QUATERNARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={() => saveStory()}
+          disabled={!isEnabled}
+          aria-label={__('Save as pending', 'web-stories')}
+        >
+          <Icons.FloppyDisk />
+        </Button>
+      </Tooltip>
+    );
   }
+
+  if ('draft' === status) {
+    return (
+      <Tooltip title={__('Save draft', 'web-stories')} hasTail>
+        <Button
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.QUATERNARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={() => saveStory({ status: 'draft' })}
+          disabled={!isEnabled}
+          aria-label={__('Save draft', 'web-stories')}
+        >
+          <Icons.FloppyDisk />
+        </Button>
+      </Tooltip>
+    );
+  }
+
+  const text =
+    'future' === status
+      ? __('Schedule', 'web-stories')
+      : __('Update', 'web-stories');
 
   return (
     <ButtonWithChecklistWarning
       text={text}
       onClick={() => saveStory()}
       disabled={isSaving || isUploading}
+      isUploading={isUploading}
+      canPublish={canPublish}
     />
   );
 }
