@@ -5,12 +5,24 @@ on:
     # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
-      - '!.github/workflows/tests-e2e.yml'
       - '.storybook/**'
       - '.wordpress-org/**'
       - '__mocks__/**'
       - '__static__/**'
+      - 'tests/**'
+      - '**.md'
+      - '**.yml'
+      - '**.neon.dist'
+      - '**.xml.dist'
       - 'readme.txt'
+      - '.editorconfig'
+      - '.eslint*'
+      - '.markdownlint*'
+      - '.phpstorm.meta.php'
+      - '.prettier*'
+      - '.stylelint*'
+      - '.github/workflows/**'
+      - '!.github/workflows/tests-e2e.yml'
     branches:
       - main
       - release/*
@@ -18,12 +30,24 @@ on:
     # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
-      - '!.github/workflows/tests-e2e.yml'
       - '.storybook/**'
       - '.wordpress-org/**'
       - '__mocks__/**'
       - '__static__/**'
+      - 'tests/**'
+      - '**.md'
+      - '**.yml'
+      - '**.neon.dist'
+      - '**.xml.dist'
       - 'readme.txt'
+      - '.editorconfig'
+      - '.eslint*'
+      - '.markdownlint*'
+      - '.phpstorm.meta.php'
+      - '.prettier*'
+      - '.stylelint*'
+      - '.github/workflows/**'
+      - '!.github/workflows/tests-e2e.yml'
     types:
       - opened
       - reopened
