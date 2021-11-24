@@ -35,7 +35,6 @@ import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
 import EyedropperLayer from './eyedropperLayer';
-import { VideoCaptionsLayer } from './videoCaptions';
 
 // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
 // See https://github.com/google/web-stories-wp/issues/7745.
@@ -94,7 +93,6 @@ function CanvasLayout({ header, footer }) {
             </SelectionCanvas>
             <EditLayer />
             <EyedropperLayer />
-            {hasDimensions && <VideoCaptionsLayer />}
           </CanvasElementDropzone>
         </CanvasUploadDropTarget>
       </Background>
