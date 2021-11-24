@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useCanvas } from '../../app';
+import { useCanvas, useLayout } from '../../app';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -35,6 +35,7 @@ import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
 import EyedropperLayer from './eyedropperLayer';
+import { VideoCaptionsLayer } from './videoCaptions';
 
 // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
 // See https://github.com/google/web-stories-wp/issues/7745.
@@ -67,6 +68,16 @@ function CanvasLayout({ header, footer }) {
   useLayoutParams(backgroundRef);
   const layoutParamsCss = useLayoutParamsCssVars();
 
+  const { pageWidth, pageHeight } = useLayout(
+    ({ state: { pageWidth, pageHeight } }) => ({
+      pageWidth,
+      pageHeight,
+    })
+  );
+
+  // If we don't have proper canvas dimensions yet, don't bother rendering element layers.
+  const hasDimensions = pageWidth !== 0 && pageHeight !== 0;
+
   // Elsewhere we use stylisRTLPlugin in case of RTL, however, since we're
   // forcing the canvas to always be LTR due to problems that otherwise come up
   // with Moveable and left-right direction, for this subtree, we are not using any plugin.
@@ -77,12 +88,13 @@ function CanvasLayout({ header, footer }) {
         <CanvasUploadDropTarget>
           <CanvasElementDropzone>
             <SelectionCanvas>
-              <DisplayLayer />
-              <FramesLayer />
+              {hasDimensions && <DisplayLayer />}
+              {hasDimensions && <FramesLayer />}
               <NavLayer header={header} footer={footer} />
             </SelectionCanvas>
             <EditLayer />
             <EyedropperLayer />
+            {hasDimensions && <VideoCaptionsLayer />}
           </CanvasElementDropzone>
         </CanvasUploadDropTarget>
       </Background>
