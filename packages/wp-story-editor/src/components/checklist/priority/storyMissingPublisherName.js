@@ -17,15 +17,15 @@
  * External dependencies
  */
 import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
-/**
- * Internal dependencies
- */
+import {
+  useConfig,
+  ChecklistCard,
+  DefaultFooterText,
+  CHECKLIST_PRIORITY_COPY,
+  useRegisterCheck,
+  useIsChecklistMounted,
+} from '@web-stories-wp/story-editor';
 import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
-import { useConfig } from '../../../app';
-import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
-import { PRIORITY_COPY } from '../constants';
-import { useRegisterCheck } from '../countContext';
-import { useIsChecklistMounted } from '../popupMountedContext';
 
 const StoryMissingPublisherName = () => {
   const isChecklistMounted = useIsChecklistMounted();
@@ -37,7 +37,7 @@ const StoryMissingPublisherName = () => {
   );
   const hasPublisherName = publisherName?.trim().length > 0;
 
-  const { title } = PRIORITY_COPY.storyMissingPublisherName;
+  const { title } = CHECKLIST_PRIORITY_COPY.storyMissingPublisherName;
 
   useRegisterCheck('StoryMissingPublisherName', !hasPublisherName);
 

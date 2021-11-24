@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -421,7 +421,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [65, 58, 51],
+            "baseColor": "#413a33",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -609,7 +609,7 @@
             "isOptimized": false,
             "isMuted": false,
             "provider": "local",
-            "baseColor": [126, 149, 152],
+            "baseColor": "#7e9598",
             "isExternal": true
           },
           "overlay": {
@@ -776,7 +776,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [197, 193, 193],
+            "baseColor": "#c5c1c1",
             "isExternal": true
           },
           "overlay": {
@@ -1193,7 +1193,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [15, 21, 34],
+            "baseColor": "#0f1522",
             "isExternal": true
           },
           "overlay": {
@@ -1380,7 +1380,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [27, 27, 27],
+            "baseColor": "#1b1b1b",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -1708,7 +1708,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [63, 48, 46],
+            "baseColor": "#3f302e",
             "isExternal": true
           },
           "overlay": {
@@ -2150,7 +2150,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [195, 192, 195],
+            "baseColor": "#c3c0c3",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -2740,7 +2740,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [67, 51, 45],
+            "baseColor": "#43332d",
             "isExternal": true
           },
           "overlay": {
@@ -3205,7 +3205,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [52, 55, 55],
+            "baseColor": "#343737",
             "isExternal": true
           },
           "x": 63,
@@ -3391,7 +3391,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [201, 195, 190],
+            "baseColor": "#c9c3be",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -3588,7 +3588,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [169, 217, 216],
+            "baseColor": "#a9d9d8",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -3787,7 +3787,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [197, 183, 176],
+            "baseColor": "#c5b7b0",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },

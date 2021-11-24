@@ -24,16 +24,20 @@ import PropTypes from 'prop-types';
  */
 import Context from './context';
 import useZoomSetting from './useZoomSetting';
+import useCarouselDrawer from './useCarouselDrawer';
 
 function LayoutProvider({ children }) {
   const zoomValue = useZoomSetting();
+  const carouselDrawer = useCarouselDrawer();
 
   const value = {
     state: {
       ...zoomValue.state,
+      ...carouselDrawer.state,
     },
     actions: {
       ...zoomValue.actions,
+      ...carouselDrawer.actions,
     },
   };
 

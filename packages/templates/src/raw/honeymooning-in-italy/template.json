@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -199,7 +199,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [212, 213, 208],
+            "baseColor": "#d4d5d0",
             "isExternal": true
           },
           "x": 23,
@@ -353,7 +353,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [16, 17, 17],
+            "baseColor": "#101111",
             "isExternal": true
           }
         },
@@ -679,7 +679,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [168, 176, 182],
+            "baseColor": "#a8b0b6",
             "isExternal": true
           }
         },
@@ -904,7 +904,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [67, 69, 75],
+            "baseColor": "#43454b",
             "isExternal": true
           },
           "x": 68,
@@ -1541,7 +1541,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [35, 45, 47],
+            "baseColor": "#232d2f",
             "isExternal": true
           },
           "basedOn": "fc59ebdf-d016-4e0e-9089-8edbe91f5527",
@@ -1761,7 +1761,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [252, 227, 224],
+            "baseColor": "#fce3e0",
             "isExternal": true
           },
           "width": 77,
@@ -1929,7 +1929,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [47, 165, 210],
+            "baseColor": "#2fa5d2",
             "isExternal": true
           },
           "width": 77,
@@ -1971,7 +1971,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [5, 5, 5],
+            "baseColor": "#050505",
             "isExternal": true
           },
           "width": 77,

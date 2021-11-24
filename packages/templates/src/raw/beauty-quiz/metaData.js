@@ -29,10 +29,26 @@ export default {
     _x('Shapes', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Courtyard Green', 'color', 'web-stories'), color: '#397165' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Pink Wash', 'color', 'web-stories'), color: '#f8dfdc' },
-    { label: _x('Aquatic Green', 'color', 'web-stories'), color: '#aec2bf' },
+    {
+      label: _x('Courtyard Green', 'color', 'web-stories'),
+      color: '#397165',
+      family: _x('Green', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Pink Wash', 'color', 'web-stories'),
+      color: '#f8dfdc',
+      family: _x('Pink', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Aquatic Green', 'color', 'web-stories'),
+      color: '#aec2bf',
+      family: _x('Green', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'With its soft pink shade, lightweight typography and rounded shapes, this template is just right for creating stories in the beauty and personal care niche. Create questonnaires, skincare routines, product promotions and more that look pretty and feel pleasant.',

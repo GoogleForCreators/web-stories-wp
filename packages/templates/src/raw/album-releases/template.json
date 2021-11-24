@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -252,7 +252,7 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "overlay": null
@@ -381,7 +381,7 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -740,7 +740,7 @@
             "id": 0,
             "alt": "page04_image1",
             "local": false,
-            "baseColor": [26, 50, 67],
+            "baseColor": "#1a3243",
             "isExternal": true
           },
           "overlay": {
@@ -915,7 +915,7 @@
             "id": 0,
             "alt": "page05_image1",
             "local": false,
-            "baseColor": [46, 59, 75],
+            "baseColor": "#2e3b4b",
             "isExternal": true
           },
           "overlay": {
@@ -1188,7 +1188,7 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "width": 467,
@@ -1242,7 +1242,7 @@
             "alt": "page06_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [18, 19, 25],
+            "baseColor": "#121319",
             "isExternal": true
           }
         },
@@ -1547,7 +1547,7 @@
             "id": 0,
             "alt": "page07_image1",
             "local": false,
-            "baseColor": [47, 33, 37],
+            "baseColor": "#2f2125",
             "isExternal": true
           },
           "overlay": {
@@ -1722,7 +1722,7 @@
             "alt": "page08_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [174, 143, 125],
+            "baseColor": "#ae8f7d",
             "isExternal": true
           },
           "overlay": {
@@ -1995,7 +1995,7 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "width": 467,
@@ -2049,7 +2049,7 @@
             "alt": "page09_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [41, 37, 25],
+            "baseColor": "#292519",
             "isExternal": true
           }
         },
@@ -2354,7 +2354,7 @@
             "id": 0,
             "alt": "page10_image1",
             "local": false,
-            "baseColor": [142, 137, 129],
+            "baseColor": "#8e8981",
             "isExternal": true
           },
           "overlay": {
@@ -2528,7 +2528,7 @@
             "id": 0,
             "alt": "page11_image1",
             "local": false,
-            "baseColor": [107, 106, 104],
+            "baseColor": "#6b6a68",
             "isExternal": true
           },
           "overlay": {
@@ -2801,7 +2801,7 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "width": 467,
@@ -3109,7 +3109,7 @@
             "alt": "page15_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [102, 54, 54],
+            "baseColor": "#663636",
             "isExternal": true
           }
         }
@@ -3158,7 +3158,7 @@
             "id": 0,
             "alt": "page16_image1",
             "local": false,
-            "baseColor": [115, 112, 125],
+            "baseColor": "#73707d",
             "isExternal": true
           },
           "overlay": {
@@ -3189,7 +3189,7 @@
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -3333,7 +3333,7 @@
             "id": 0,
             "alt": "page17_image1",
             "local": false,
-            "baseColor": [106, 54, 78],
+            "baseColor": "#6a364e",
             "isExternal": true
           },
           "overlay": {

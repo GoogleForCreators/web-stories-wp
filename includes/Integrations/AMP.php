@@ -380,7 +380,7 @@ class AMP extends Service_Base implements HasRequirements {
 		}
 
 		$post = get_post( $post_id );
-		if ( ! ( $post instanceof WP_Post ) ) {
+		if ( ! $post instanceof WP_Post ) {
 			return null;
 		}
 
@@ -388,13 +388,31 @@ class AMP extends Service_Base implements HasRequirements {
 			return null;
 		}
 
+		/**
+		 * AMP queried object.
+		 *
+		 * @var array|string $queried_object
+		 */
 		$queried_object = get_post_meta( $post->ID, '_amp_queried_object', true );
+
+		if ( ! is_array( $queried_object ) ) {
+			return null;
+		}
+
 		if ( isset( $queried_object['id'], $queried_object['type'] ) && 'post' === $queried_object['type'] ) {
-			$post_type = get_post_type( $queried_object['id'] );
+			/**
+			 * Post ID.
+			 *
+			 * @var int|string $post_id
+			 */
+			$post_id = $queried_object['id'];
+
+			$post_type = get_post_type( (int) $post_id );
 			if ( $post_type ) {
 				return $post_type;
 			}
 		}
+
 		return null;
 	}
 }

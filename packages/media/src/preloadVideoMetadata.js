@@ -15,19 +15,22 @@
  */
 
 /**
- * Preload video using a promise.
+ * Preload video metadata.
  *
  * @param {string} src Video source.
- * @return {Promise} Video object.
+ * @return {Promise<HTMLVideoElement>} Video element.
  */
 const preloadVideoMetadata = (src) => {
+  const video = document.createElement('video');
+  video.muted = true;
+  video.crossOrigin = 'anonymous';
+  video.preload = 'metadata';
+
   return new Promise((resolve, reject) => {
-    const video = document.createElement('video');
-    video.onloadedmetadata = () => resolve(video);
-    video.onerror = reject;
-    video.crossOrigin = 'anonymous';
+    video.addEventListener('loadedmetadata', () => resolve(video));
+    video.addEventListener('error', reject);
+
     video.src = src;
-    video.muted = true;
   });
 };
 

@@ -27,7 +27,9 @@ import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { useStory } from '../../../app';
 import { initHelpers } from './_utils';
 
-describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
+// Disable reason: https://github.com/google/web-stories-wp/issues/9781
+// eslint-disable-next-line jasmine/no-disabled-tests
+xdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
   const data = {};
 
   const {
@@ -41,6 +43,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
   beforeEach(async () => {
     data.fixture = new Fixture();
     await data.fixture.render();
+    await data.fixture.collapseHelpCenter();
 
     // Add a text box
     await addInitialText();

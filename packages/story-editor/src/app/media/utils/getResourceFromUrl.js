@@ -20,10 +20,11 @@
 import {
   createResource,
   getImageDimensions,
-  getVideoDimensions,
+  getTypeFromMime,
+  preloadVideo,
+  seekVideo,
   getVideoLength,
   hasVideoGotAudio,
-  getTypeFromMime,
 } from '@web-stories-wp/media';
 
 /**
@@ -44,37 +45,67 @@ import {
  * @return {Promise<Resource>} Resource object.
  */
 async function getResourceFromUrl(resourceLike) {
-  const { src, mimeType, ...rest } = resourceLike;
+  const {
+    src,
+    mimeType,
+    width,
+    height,
+    isMuted,
+    length,
+    lengthFormatted,
+    ...rest
+  } = resourceLike;
   const type = getTypeFromMime(mimeType);
 
   if (!['image', 'video'].includes(type)) {
     throw new Error('Invalid media type.');
   }
 
-  const isVideo = type === 'video';
+  const hasDimensions = width && height;
+  const videoHasMissingMetadata =
+    !hasDimensions ||
+    isMuted === null ||
+    length === null ||
+    lengthFormatted === null;
 
-  const getMediaDimensions = isVideo ? getVideoDimensions : getImageDimensions;
-  const { width, height } = await getMediaDimensions(src);
+  const additionalData = {};
 
-  // Add necessary data for video.
-  const videoData = {};
-  if (isVideo) {
-    const hasAudio = await hasVideoGotAudio(src);
-    videoData.isMuted = !hasAudio;
-    const { length, formattedLength } = await getVideoLength(src);
-    videoData.length = length;
-    videoData.formattedLength = formattedLength;
+  // Only need to fetch metadata if not already provided.
+
+  if (type === 'video' && videoHasMissingMetadata) {
+    const video = await preloadVideo(src);
+    await seekVideo(video);
+
+    additionalData.width = video.videoWidth;
+    additionalData.height = video.videoHeight;
+
+    const videoLength = getVideoLength(video);
+
+    additionalData.length = videoLength.length;
+    additionalData.lengthFormatted = videoLength.lengthFormatted;
+
+    additionalData.isMuted = !hasVideoGotAudio(video);
+  }
+
+  if (type === 'image' && !hasDimensions) {
+    const dimensions = await getImageDimensions(src);
+    additionalData.width = dimensions.width;
+    additionalData.height = dimensions.height;
   }
 
   return createResource({
     type,
     width,
     height,
+    isMuted,
+    length,
+    lengthFormatted,
     src,
     local: false,
     isExternal: true,
+    mimeType,
     ...rest,
-    ...videoData,
+    ...additionalData,
   });
 }
 

@@ -81,7 +81,7 @@ class Types {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array List of allowed mime types.
+	 * @return array<string, array> List of allowed mime types.
 	 */
 	public function get_allowed_mime_types() : array {
 		$default_allowed_mime_types = [

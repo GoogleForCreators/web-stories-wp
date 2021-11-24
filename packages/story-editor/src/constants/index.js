@@ -35,6 +35,15 @@ export const ZOOM_SETTING = {
   FIXED: 'FIXED',
 };
 
+export const CAROUSEL_STATE = {
+  OPEN: 'OPEN',
+  OPENING: 'OPENING',
+  CLOSED: 'CLOSED',
+  CLOSING: 'CLOSING',
+};
+
+export const CAROUSEL_TRANSITION_DURATION = 300;
+
 export const PAGE_WIDTH_FACTOR = 12;
 
 export const DESIGN_SPACE_MARGIN = 48;

@@ -33,6 +33,7 @@ describe('Embedding hotlinked media', () => {
     fixture = new Fixture();
     fixture.setFlags({ enableHotlinking: true, enableCORSProxy: true });
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -73,10 +74,9 @@ describe('Embedding hotlinked media', () => {
 
     await fixture.events.sleep(500);
     dialog = screen.getByRole('dialog');
-    await waitFor(
-      () => expect(dialog.textContent).toContain('You can insert'),
-      { timeout: 1500 }
-    );
+    await waitFor(() => expect(dialog.textContent).toContain('Invalid link'), {
+      timeout: 1500,
+    });
   });
 
   it('should insert a new media element from valid url', async () => {

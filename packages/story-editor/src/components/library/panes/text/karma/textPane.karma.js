@@ -38,6 +38,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT_INTERVAL;
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
