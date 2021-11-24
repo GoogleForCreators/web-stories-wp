@@ -46,10 +46,10 @@ const Track = styled.div`
  *
  * @param {Object} props Component props.
  * @param {string} props.videoId Video element ID.
- * @param {TextTrack} props.track Video track element.
- * @return {ReactNode[]} Track component.
+ * @param {number} props.trackIndex Video track index in the tracklist.
+ * @return {*} Track component.
  */
-function TrackRenderer({ videoId, track }) {
+function TrackRenderer({ videoId, trackIndex }) {
   const { pageWidth, pageHeight } = useLayout(
     ({ state: { pageWidth, pageHeight } }) => ({
       pageWidth,
@@ -61,6 +61,7 @@ function TrackRenderer({ videoId, track }) {
   const fontSize = pageWidth * 0.04;
   const height = pageHeight * 0.2;
 
+  const [track, setTrack] = useState(null);
   const [videoTime, setVideoTime] = useState(0);
   const [cues, setCues] = useState([]);
 
@@ -70,37 +71,48 @@ function TrackRenderer({ videoId, track }) {
   const videoRef = useRef(null);
 
   const updateCues = useCallback(() => {
-    const activeCues = track.activeCues ? [...track.activeCues] : [];
+    const activeCues = track?.activeCues ? [...track.activeCues] : [];
     setCues(activeCues);
   }, [track]);
 
   useEffect(() => {
     updateCues();
+
     /**
      * @type {HTMLVideoElement}
      */
     videoRef.current = document.getElementById(`video-${videoId}`);
 
     if (!videoRef.current) {
-      return;
+      return undefined;
     }
+
+    const videoTrack = videoRef.current.textTracks?.[trackIndex];
+
+    if (!videoTrack) {
+      return undefined;
+    }
+
+    videoTrack.mode = 'hidden';
+
+    updateCues();
+
+    setTrack(videoTrack);
 
     videoRef.current.addEventListener('timeupdate', () => {
       setVideoTime(videoRef.current.currentTime);
     });
 
-    track.addEventListener('cuechange', updateCues);
-    track.addEventListener('play', updateCues);
+    videoTrack.addEventListener('cuechange', updateCues);
+    videoTrack.addEventListener('play', updateCues);
 
-    // eslint-disable-next-line consistent-return
     return () => {
-      track.removeEventListener('cuechange', updateCues);
-      track.removeEventListener('play', updateCues);
+      videoTrack.removeEventListener('cuechange', updateCues);
+      videoTrack.removeEventListener('play', updateCues);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to add the event listeners once.
-  }, []);
+  }, [trackIndex, updateCues, videoId, pageWidth, pageHeight]);
 
-  if (!cues || !track) {
+  if (!cues || !track || !videoRef.current?.isConnected) {
     return null;
   }
 
@@ -123,11 +135,7 @@ function TrackRenderer({ videoId, track }) {
 
 TrackRenderer.propTypes = {
   videoId: PropTypes.string.isRequired,
-  track: PropTypes.shape({
-    activeCues: PropTypes.array,
-    addEventListener: PropTypes.func,
-    removeEventListener: PropTypes.func,
-  }).isRequired,
+  trackIndex: PropTypes.number.isRequired,
 };
 
 export default TrackRenderer;

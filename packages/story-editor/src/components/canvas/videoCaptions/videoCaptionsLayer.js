@@ -17,14 +17,13 @@
 /**
  * External dependencies
  */
-import { useEffect, useCallback, useState } from '@web-stories-wp/react';
+import { useEffect, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app/story';
-import { useCanvas } from '../../../app';
+import { useStory, useCanvas } from '../../../app';
 import { Layer, PageArea } from '../layout';
 import TrackRenderer from './trackRenderer';
 
@@ -53,47 +52,32 @@ function VideoCaptionsLayer() {
     isEditing,
   }));
 
-  const videoElementIds = useStory(
-    ({ state }) =>
-      state.currentPage?.elements
-        ?.filter(({ type, tracks }) => type === 'video' && tracks?.length > 0)
-        ?.map(({ id }) => id) || []
+  const videoElement = useStory(({ state }) =>
+    (state.currentPage?.elements || [])
+      .filter(
+        ({ type, tracks, id }) =>
+          type === 'video' &&
+          tracks?.length > 0 &&
+          state.selectedElementIds.includes(id)
+      )
+      .map(({ id }) => id)
+      .pop()
   );
 
-  const [videoTracks, setVideoTracks] = useState([]);
-
-  const addTrack = useCallback(
-    (track) =>
-      setVideoTracks((tracks) => {
-        if (!tracks.some(({ track: _track }) => _track === track.track)) {
-          tracks.push(track);
-        }
-        return tracks;
-      }),
-    [setVideoTracks]
-  );
+  const [videoTrackCount, setVideoTrackCount] = useState(0);
 
   useEffect(() => {
-    setVideoTracks([]);
+    setVideoTrackCount(0);
 
-    for (const id of videoElementIds) {
-      /**
-       * @type {HTMLVideoElement}
-       */
-      const video = document.getElementById(`video-${id}`);
-      if (video) {
-        for (const track of video.textTracks) {
-          addTrack({ id, track });
-        }
-      }
+    if (isEditing || !videoElement) {
+      return;
     }
-  }, [videoElementIds, addTrack]);
 
-  if (isEditing) {
-    return null;
-  }
+    const video = document.getElementById(`video-${videoElement}`);
+    setVideoTrackCount(video.textTracks.length);
+  }, [videoElement, setVideoTrackCount, isEditing]);
 
-  if (!videoTracks.length) {
+  if (isEditing || !videoElement || !videoTrackCount) {
     return null;
   }
 
@@ -101,14 +85,14 @@ function VideoCaptionsLayer() {
     <CaptionsLayer>
       <CaptionsPageArea withSafezone={false} showOverflow>
         <CaptionsCanvas>
-          {videoTracks.map(({ id, track }, index) => (
+          {Array.from({ length: videoTrackCount }).map((_, index) => (
             <TrackRenderer
               key={
                 // eslint-disable-next-line react/no-array-index-key
-                `${id}-${index}`
+                index
               }
-              videoId={id}
-              track={track}
+              videoId={videoElement}
+              trackIndex={index}
             />
           ))}
         </CaptionsCanvas>
