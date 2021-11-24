@@ -25,6 +25,9 @@ import { useCanvas } from '../../../../../../app';
 import { renderWithTheme } from '../../../../../../testUtils';
 import Attribution from '../attribution';
 import MediaElement from '../mediaElement';
+import { useLocalMedia } from '../../../../../../app/media';
+
+jest.mock('../../../../../../app/media');
 
 jest.mock('../../../../../../app/canvas', () => ({
   useCanvas: jest.fn(),
@@ -72,6 +75,13 @@ describe('automated accessibility tests', () => {
 
   beforeEach(() => {
     mockUseCanvas.mockReturnValue(mockCanvasContext);
+    useLocalMedia.mockReturnValue({
+      isResourceTrimmingById: jest.fn(),
+      isResourceMutingById: jest.fn(),
+      isResourceTranscodingById: jest.fn(),
+      isResourceProcessingById: jest.fn(),
+      isResourceProcessing: jest.fn(),
+    });
   });
 
   it('should render MediaElement without accessibility violations', async () => {

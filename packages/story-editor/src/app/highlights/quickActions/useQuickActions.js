@@ -704,6 +704,7 @@ const useQuickActions = () => {
     selectedElements,
     selectedElement,
     isResourceProcessing,
+    isResourceProcessingById,
     hasTrimMode,
     actionMenuProps,
     toggleTrimMode,

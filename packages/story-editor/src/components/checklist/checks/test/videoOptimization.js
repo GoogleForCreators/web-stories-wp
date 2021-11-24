@@ -19,6 +19,9 @@
  */
 import { videoElementsNotOptimized } from '../videoOptimization';
 
+const isResourceTranscoding = jest.fn();
+const isResourceProcessing = jest.fn();
+
 describe('videoOptimization (pre-publish checklist card)', () => {
   it('should return true if the video element is currently being transcoded', () => {
     const largeUnoptimizedVideo = {
@@ -32,7 +35,11 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    const result = videoElementsNotOptimized(largeUnoptimizedVideo);
+    const result = videoElementsNotOptimized(
+      largeUnoptimizedVideo,
+      isResourceTranscoding,
+      isResourceProcessing
+    );
     expect(result).toBe(true);
   });
 
@@ -47,7 +54,11 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    const result = videoElementsNotOptimized(largeUnoptimizedVideo);
+    const result = videoElementsNotOptimized(
+      largeUnoptimizedVideo,
+      isResourceTranscoding,
+      isResourceProcessing
+    );
     expect(result).toBe(true);
   });
 
@@ -62,7 +73,11 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    const result = videoElementsNotOptimized(largeUnoptimizedVideo);
+    const result = videoElementsNotOptimized(
+      largeUnoptimizedVideo,
+      isResourceTranscoding,
+      isResourceProcessing
+    );
     expect(result).toBe(false);
   });
 
@@ -86,8 +101,20 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    expect(videoElementsNotOptimized(smallUnoptimizedVideo)).toBe(false);
-    expect(videoElementsNotOptimized(smallOptimizedVideo)).toBe(false);
+    expect(
+      videoElementsNotOptimized(
+        smallUnoptimizedVideo,
+        isResourceTranscoding,
+        isResourceProcessing
+      )
+    ).toBe(false);
+    expect(
+      videoElementsNotOptimized(
+        smallOptimizedVideo,
+        isResourceTranscoding,
+        isResourceProcessing
+      )
+    ).toBe(false);
   });
 
   it('should return false if the video element is exactly 1280x720', () => {
@@ -110,7 +137,19 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    expect(videoElementsNotOptimized(landscapeVideo)).toBe(false);
-    expect(videoElementsNotOptimized(portraitVideo)).toBe(false);
+    expect(
+      videoElementsNotOptimized(
+        landscapeVideo,
+        isResourceTranscoding,
+        isResourceProcessing
+      )
+    ).toBe(false);
+    expect(
+      videoElementsNotOptimized(
+        portraitVideo,
+        isResourceTranscoding,
+        isResourceProcessing
+      )
+    ).toBe(false);
   });
 });

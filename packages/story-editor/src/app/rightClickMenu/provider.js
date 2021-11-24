@@ -37,7 +37,8 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { useLocalMedia, useStory } from '..';
+import { useStory } from '../story';
+import { useLocalMedia } from '../media';
 import { createPage, duplicatePage, ELEMENT_TYPES } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
 import useAddPreset from '../../utils/useAddPreset';

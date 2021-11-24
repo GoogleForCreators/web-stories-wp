@@ -25,12 +25,14 @@ import { isPlatformMacOS, useSnackbar } from '@web-stories-wp/design-system';
 import { useRightClickMenu, RightClickMenuProvider } from '..';
 import { useCanvas } from '../../canvas';
 import { useStory } from '../../story';
+import { useLocalMedia } from '../../media';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 
 jest.mock('../../canvas', () => ({
   useCanvas: jest.fn(),
 }));
 
+jest.mock('../../media');
 jest.mock('../../story', () => ({
   ...jest.requireActual('../../story'),
   useStory: jest.fn(),
@@ -109,6 +111,9 @@ describe('useRightClickMenu', () => {
     mockUseSnackbar.mockReturnValue({ showSnackbar: mockShowSnackbar });
     mockIsPlatformMacOS.mockReturnValue(false);
     mockVideoTrim.mockImplementation((cb) => cb(defaultTrimContext));
+    useLocalMedia.mockReturnValue({
+      isResourceProcessing: jest.fn(),
+    });
   });
 
   describe('context menu manipulation', () => {

@@ -86,7 +86,6 @@ jest.mock('@web-stories-wp/tracking');
 
 jest.mock('@web-stories-wp/media', () => ({
   ...jest.requireActual('@web-stories-wp/media'),
-  canTranscodeResource: jest.fn(() => true),
   resourceList: {
     set: jest.fn(),
   },
@@ -374,6 +373,8 @@ describe('useQuickActions', () => {
       postProcessingResource: noop,
       optimizeVideo: noop,
       optimizeGif: noop,
+      isResourceProcessing: noop,
+      isResourceProcessingById: noop,
     });
   });
 
@@ -980,6 +981,8 @@ describe('MediaPicker', () => {
       postProcessingResource: mockPostProcessingResource,
       optimizeVideo: mockOptimizeVideo,
       optimizeGif: mockOptimizeGif,
+      isResourceProcessing: jest.fn(),
+      isResourceProcessingById: jest.fn(),
     });
 
     mockUseFFmpeg.mockReturnValue({ isTranscodingEnabled: true });

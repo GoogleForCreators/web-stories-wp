@@ -30,7 +30,8 @@ import {
   BUTTON_TYPES,
   Tooltip,
 } from '@web-stories-wp/design-system';
-import { useLocalMedia, useStory } from '../../../app';
+import { useStory } from '../../../app/story';
+import { useLocalMedia } from '../../../app/media';
 import { MEDIA_VIDEO_DIMENSIONS_THRESHOLD } from '../../../constants';
 import { PRIORITY_COPY } from '../constants';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';

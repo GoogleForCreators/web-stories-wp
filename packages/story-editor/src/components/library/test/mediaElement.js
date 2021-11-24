@@ -27,6 +27,8 @@ import MediaElement from '../panes/media/common/mediaElement';
 import { renderWithTheme } from '../../../testUtils';
 import CanvasContext from '../../../app/canvas/context';
 import StoryContext from '../../../app/story/context';
+import { useLocalMedia } from '../../../app/media';
+jest.mock('../../../app/media');
 
 const IMAGE_RESOURCE = {
   id: 789,
@@ -103,6 +105,16 @@ const renderMediaElement = (resource, providerType, canEditMedia = true) => {
 };
 
 describe('MediaElement', () => {
+  beforeEach(() => {
+    useLocalMedia.mockReturnValue({
+      isResourceTrimmingById: jest.fn(),
+      isResourceMutingById: jest.fn(),
+      isResourceTranscodingById: jest.fn(),
+      isResourceProcessing: jest.fn(),
+      isResourceProcessingById: jest.fn(),
+      isResourceUploadingById: jest.fn(),
+    });
+  });
   it.each`
     type       | resource
     ${'image'} | ${IMAGE_RESOURCE}

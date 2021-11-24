@@ -87,6 +87,18 @@ describe('useMediaUploadQueue', () => {
   it('sets initial state for upload queue', async () => {
     const { result, waitFor } = renderHook(() => useMediaUploadQueue());
 
+    const {
+      isResourceMuting,
+      isResourceMutingById,
+      isResourceProcessing,
+      isResourceProcessingById,
+      isResourceTranscoding,
+      isResourceTranscodingById,
+      isResourceTrimming,
+      isResourceTrimmingById,
+      isResourceUploadingById,
+    } = result.current.state;
+
     await waitFor(() =>
       expect(result.current.state).toStrictEqual({
         pending: [],
@@ -97,6 +109,15 @@ describe('useMediaUploadQueue', () => {
         isTranscoding: false,
         isMuting: false,
         isTrimming: false,
+        isResourceMuting,
+        isResourceMutingById,
+        isResourceProcessing,
+        isResourceProcessingById,
+        isResourceTranscoding,
+        isResourceTranscodingById,
+        isResourceTrimming,
+        isResourceTrimmingById,
+        isResourceUploadingById,
       })
     );
   });
@@ -151,6 +172,18 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
+    const {
+      isResourceMuting,
+      isResourceMutingById,
+      isResourceProcessing,
+      isResourceProcessingById,
+      isResourceTranscoding,
+      isResourceTranscodingById,
+      isResourceTrimming,
+      isResourceTrimmingById,
+      isResourceUploadingById,
+    } = result.current.state;
+
     await waitFor(() =>
       expect(result.current.state).toStrictEqual({
         pending: [],
@@ -161,6 +194,15 @@ describe('useMediaUploadQueue', () => {
         isTranscoding: false,
         isMuting: false,
         isTrimming: false,
+        isResourceMuting,
+        isResourceMutingById,
+        isResourceProcessing,
+        isResourceProcessingById,
+        isResourceTranscoding,
+        isResourceTranscodingById,
+        isResourceTrimming,
+        isResourceTrimmingById,
+        isResourceUploadingById,
       })
     );
   });
