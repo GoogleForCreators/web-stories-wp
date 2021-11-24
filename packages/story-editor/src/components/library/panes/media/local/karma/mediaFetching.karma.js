@@ -25,7 +25,7 @@ import { waitFor, within } from '@testing-library/react';
 
 import { Fixture, LOCAL_MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 
-fdescribe('MediaPane fetching', () => {
+describe('MediaPane fetching', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -38,7 +38,7 @@ fdescribe('MediaPane fetching', () => {
     fixture.restore();
   });
 
-  fit('should fetch additional pages', async () => {
+  it('should fetch additional pages', async () => {
     const localPane = await waitFor(() =>
       fixture.querySelector('#library-pane-media')
     );
