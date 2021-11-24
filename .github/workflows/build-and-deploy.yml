@@ -5,8 +5,6 @@ on:
     # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
-      - '!.github/workflows/**'
-      - '!.github/workflows/build-and-deploy.yml'
       - '.storybook/**'
       - '.wordpress-org/**'
       - '__mocks__/**'
@@ -26,6 +24,8 @@ on:
       - '.phpstorm.meta.php'
       - '.prettier*'
       - '.stylelint*'
+      - '.github/workflows/**'
+      - '!.github/workflows/build-and-deploy.yml'
     branches:
       - main
       - release/*
@@ -33,8 +33,6 @@ on:
     # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
-      - '!.github/workflows/**'
-      - '!.github/workflows/build-and-deploy.yml'
       - '.storybook/**'
       - '.wordpress-org/**'
       - '__mocks__/**'
@@ -54,6 +52,8 @@ on:
       - '.phpstorm.meta.php'
       - '.prettier*'
       - '.stylelint*'
+      - '.github/workflows/**'
+      - '!.github/workflows/build-and-deploy.yml'
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
@@ -186,6 +186,13 @@ jobs:
         with:
           path: ${{ github.ref }}
 
+      - name: ZIP artifacts
+        run: |
+          rm -rf web-stories.zip web-stories-dev.zip
+          (cd web-stories && zip -mrT web-stories.zip web-stories && mv web-stories.zip ../ )
+          (cd web-stories-dev && zip -mrT web-stories-dev.zip web-stories && mv web-stories-dev.zip ../ )
+        working-directory: ${{ github.ref }}
+
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.2.1
         with:
@@ -198,13 +205,6 @@ jobs:
 
       - name: Upload prod build to GCS
         run: gsutil cp -r web-stories.zip gs://web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip
-        working-directory: ${{ github.ref }}
-
-      - name: ZIP artifacts
-        run: |
-          rm -rf web-stories.zip web-stories-dev.zip
-          (cd web-stories && zip -mrT web-stories.zip web-stories && mv web-stories.zip ../ )
-          (cd web-stories-dev && zip -mrT web-stories-dev.zip web-stories && mv web-stories-dev.zip ../ )
         working-directory: ${{ github.ref }}
 
       - name: Commit updates

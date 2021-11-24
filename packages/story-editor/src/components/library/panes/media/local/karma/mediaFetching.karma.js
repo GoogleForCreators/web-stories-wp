@@ -26,12 +26,16 @@ import { waitFor, within } from '@testing-library/react';
 import { Fixture, LOCAL_MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
-describe('MediaPane fetching', () => {
+// Disable reason: test is flakey
+// Fix in progress:   https://github.com/google/web-stories-wp/issues/9779
+// eslint-disable-next-line jasmine/no-disabled-tests
+xdescribe('MediaPane fetching', () => {
   let fixture;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
