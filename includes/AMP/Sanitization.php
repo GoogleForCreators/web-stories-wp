@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\AMP;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Services;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories_Dependencies\AMP_Allowed_Tags_Generated;
@@ -436,12 +435,14 @@ class Sanitization {
 			$story = new Story();
 			$story->load_from_post( $post );
 
+			$poster_images = [
+				'poster-portrait-src' => esc_url_raw( $story->get_poster_portrait() ),
+			];
+
 			$sanitizers[ Story_Sanitizer::class ] = [
 				'publisher_logo' => $story->get_publisher_logo_url(),
 				'publisher'      => $story->get_publisher_name(),
-				'poster_images'  => [
-					'poster-portrait-src' => $story->get_poster_portrait(),
-				],
+				'poster_images'  => array_filter( $poster_images ),
 				'video_cache'    => $video_cache_enabled,
 			];
 		}
