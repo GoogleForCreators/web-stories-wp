@@ -56,12 +56,6 @@ function useVideoTrimMode() {
   } = useAPI();
   const [videoData, setVideoData] = useState(null);
 
-  useEffect(() => {
-    if (selectedElement) {
-      getVideoData();
-    }
-  }, [selectedElement, getVideoData]);
-
   const getVideoData = useCallback(() => {
     const { resource } = selectedElement;
     const { trimData } = resource;
@@ -95,6 +89,12 @@ function useVideoTrimMode() {
       setVideoData(defaultVideoData);
     }
   }, [getMediaById, selectedElement]);
+
+  useEffect(() => {
+    if (selectedElement?.resource?.trimData) {
+      getVideoData();
+    }
+  }, [selectedElement, getVideoData]);
 
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {
