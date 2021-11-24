@@ -104,8 +104,8 @@ function DropDownMenu({
   const [showEditDialog, setShowEditDialog] = useState(false);
   const moreButtonRef = useRef();
 
-  const { isResourceUploadingById } = useLocalMedia((state) => ({
-    isResourceUploadingById: state.state.isResourceUploadingById,
+  const { isResourceProcessingById } = useLocalMedia(({ state }) => ({
+    isResourceProcessingById: state.isResourceProcessingById,
   }));
 
   const handleCurrentValue = (evt, value) => {
@@ -139,7 +139,7 @@ function DropDownMenu({
 
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
-    !isResourceUploadingById(resource.id) && ( // Don't show menu if resource not uploaded to server yet.
+    !isResourceProcessingById(resource.id) && ( // Don't show menu if resource not uploaded to server yet.
       <MenuContainer>
         {(display || isMenuOpen) && (
           <>

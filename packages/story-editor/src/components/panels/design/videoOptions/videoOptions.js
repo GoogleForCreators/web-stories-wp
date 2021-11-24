@@ -93,15 +93,13 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     isResourceMuting,
     isResourceProcessing,
     isResourceProcessingById,
-  } = useLocalMedia((state) => {
-    return {
-      isResourceProcessing: state.state.isResourceProcessing,
-      isResourceProcessingById: state.state.isResourceProcessingById,
-      isResourceMuting: state.state.isResourceMuting,
-      isResourceTrimming: state.state.isResourceTrimming,
-      muteExistingVideo: state.actions.muteExistingVideo,
-    };
-  });
+  } = useLocalMedia(({ state, actions }) => ({
+    isResourceProcessing: state.isResourceProcessing,
+    isResourceProcessingById: state.isResourceProcessingById,
+    isResourceMuting: state.isResourceMuting,
+    isResourceTrimming: state.isResourceTrimming,
+    muteExistingVideo: actions.muteExistingVideo,
+  }));
   const resource = getCommonValue(selectedElements, 'resource');
   const { isMuted, id: resourceId = 0 } = resource;
   const isTrimming = isResourceTrimming(resourceId);

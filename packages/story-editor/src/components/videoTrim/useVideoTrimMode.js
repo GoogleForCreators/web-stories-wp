@@ -50,8 +50,8 @@ function useVideoTrimMode() {
   } = useAPI();
   const [videoData, setVideoData] = useState(null);
 
-  const { isResourceUploadingById } = useLocalMedia((state) => ({
-    isResourceUploadingById: state.state.isResourceUploadingById,
+  const { isResourceUploadingById } = useLocalMedia(({ state }) => ({
+    isResourceUploadingById: state.isResourceUploadingById,
   }));
 
   const toggleTrimMode = useCallback(() => {

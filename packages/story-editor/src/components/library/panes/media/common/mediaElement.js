@@ -86,14 +86,9 @@ function Element({
     baseColor,
   } = resource;
 
-  const { isResourceProcessing, isResourceProcessingById } = useLocalMedia(
-    (state) => {
-      return {
-        isResourceProcessing: state.state.isResourceProcessing,
-        isResourceProcessingById: state.state.isResourceProcessingById,
-      };
-    }
-  );
+  const { isResourceProcessingById } = useLocalMedia(({ state }) => ({
+    isResourceProcessingById: state.state.isResourceProcessingById,
+  }));
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -229,8 +224,7 @@ function Element({
           active={active}
         />
         {attribution}
-        {(isResourceProcessing(resourceId) ||
-          isResourceProcessingById(resourceId)) && (
+        {isResourceProcessingById(resourceId) && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (
@@ -277,13 +271,11 @@ function MediaElement(props) {
     isResourceTrimmingById,
     isResourceMutingById,
     isResourceTranscodingById,
-  } = useLocalMedia(({ state }) => {
-    return {
-      isResourceMutingById: state.isResourceMutingById,
-      isResourceTrimmingById: state.isResourceTrimmingById,
-      isResourceTranscodingById: state.isResourceTranscodingById,
-    };
-  });
+  } = useLocalMedia(({ state }) => ({
+    isResourceMutingById: state.isResourceMutingById,
+    isResourceTrimmingById: state.isResourceTrimmingById,
+    isResourceTranscodingById: state.isResourceTranscodingById,
+  }));
   const { id } = props.resource;
 
   if (
