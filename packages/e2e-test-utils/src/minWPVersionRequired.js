@@ -27,10 +27,9 @@ import checkVersion from './checkVersion';
 function minWPVersionRequired(minVersion) {
   const WPVersion = process.env?.WP_VERSION;
   if ('latest' !== WPVersion && !checkVersion(WPVersion, minVersion)) {
-    //eslint-disable-next-line jest/require-top-level-describe, jest/no-focused-tests
+    //eslint-disable-next-line jest/no-focused-tests
     test.only('minimum WordPress requirement not met', () => {});
   }
 }
 
-//eslint-disable-next-line jest/no-export
 export default minWPVersionRequired;
