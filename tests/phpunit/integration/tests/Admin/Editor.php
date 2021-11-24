@@ -187,7 +187,7 @@ class Editor extends DependencyInjectedTestCase {
 	 * @covers ::replace_editor
 	 */
 	public function test_replace_editor() {
-		$this->assets->expects( $this->once() )->method( 'enqueue_script_asset' )->with(
+		$this->assets->expects( $this->once() )->method( 'register_script_asset' )->with(
 			\Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE
 		);
 
