@@ -28,7 +28,7 @@ export class Carousel extends Container {
   }
 
   get pages() {
-    const pageList = this.getByRole('listbox', { name: 'Pages List' });
+    const pageList = this.queryByRole('listbox', { name: 'Pages List' });
     if (!pageList) {
       return [];
     }
@@ -44,6 +44,18 @@ export class Carousel extends Container {
     return this.pages.find(
       (page) => page.node.getAttribute('data-page-id') === pageId
     );
+  }
+
+  get previous() {
+    return this.queryByRole('button', { name: 'Scroll Back' });
+  }
+
+  get next() {
+    return this.queryByRole('button', { name: 'Scroll Forward' });
+  }
+
+  get toggle() {
+    return this.queryByRole('button', { name: 'Toggle page carousel' });
   }
 }
 

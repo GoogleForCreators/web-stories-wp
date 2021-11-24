@@ -34,6 +34,11 @@ import {
 const ZOOM_PADDING_LARGE = 72;
 const ZOOM_PADDING_NONE = 12;
 
+// This one is only used for Zoom=FIT when width is the limiting factor
+// there must be room for the page menu with 16px gap on either side
+// - times both sides of the canvas = 2 * (40 + 2 * 16)
+const ZOOM_PADDING_FIT = 144;
+
 const INITIAL_STATE = {
   zoomSetting: ZOOM_SETTING.FIT,
   zoomLevel: null,
@@ -96,13 +101,17 @@ function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
     case ZOOM_SETTING.FIT: {
       // See how much we can fit inside so all is visible
       // However, leave some extra space, as we don't want it to hug too tightly to the edges.
+      const maxWidth = workspaceSize.width - ZOOM_PADDING_FIT;
       if (workspaceRatio > FULLBLEED_RATIO) {
         // workspace is limited in the height, so use the (height - padding) converted
-        maxPageWidth =
-          (workspaceSize.height - ZOOM_PADDING_LARGE) * FULLBLEED_RATIO;
+        // However, it can never be wider than the max width calculated above
+        maxPageWidth = Math.min(
+          maxWidth,
+          (workspaceSize.height - ZOOM_PADDING_LARGE) * FULLBLEED_RATIO
+        );
       } else {
         // workspace is limited in the width, so use the width - padding
-        maxPageWidth = workspaceSize.width - ZOOM_PADDING_LARGE;
+        maxPageWidth = maxWidth;
       }
       break;
     }

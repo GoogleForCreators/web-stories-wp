@@ -34,6 +34,7 @@ import {
   useCheckpoint,
 } from '../checklist';
 import { useKeyboardShortcutsMenu } from '../keyboardShortcutsMenu/keyboardShortcutsMenuContext';
+import { FOOTER_MENU_GAP, FOOTER_MARGIN } from './constants';
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,11 +49,8 @@ const MenuItems = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 16px 16px;
-`;
-
-const Space = styled.span`
-  width: 8px;
+  margin-left: ${FOOTER_MARGIN}px;
+  gap: ${FOOTER_MENU_GAP}px;
 `;
 
 const POPUPS = {
@@ -169,13 +167,11 @@ function SecondaryMenu({ menu }) {
     <Wrapper>
       <MenuItems>
         <HelpCenter />
-        <Space />
         {menu?.checklist && (
           <ChecklistCountProvider>
             <Checklist items={menu.checklist} />
           </ChecklistCountProvider>
         )}
-        <Space />
         <KeyboardShortcutsMenu />
       </MenuItems>
     </Wrapper>
