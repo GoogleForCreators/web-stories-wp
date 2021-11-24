@@ -8,7 +8,7 @@ jobs:
   update-browserslist-db:
     name: Update browserslist db
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
 
     steps:
       - name: Checkout

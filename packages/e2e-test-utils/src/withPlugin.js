@@ -27,7 +27,6 @@ import deactivatePlugin from './deactivatePlugin';
  * @param {string} slug Plugin slug.
  */
 export default function withPlugin(slug) {
-  /* eslint-disable jest/require-top-level-describe */
   beforeAll(async () => {
     await activatePlugin(slug);
   });
@@ -35,5 +34,4 @@ export default function withPlugin(slug) {
   afterAll(async () => {
     await deactivatePlugin(slug);
   });
-  /* eslint-enable jest/require-top-level-describe */
 }
