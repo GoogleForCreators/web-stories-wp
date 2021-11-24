@@ -24,7 +24,7 @@ on:
       - '.phpstorm.meta.php'
       - '.prettier*'
       - '.stylelint*'
-      - '!.github/workflows/**'
+      - '.github/workflows/**'
       - '!.github/workflows/build-and-deploy.yml'
     branches:
       - main
@@ -52,7 +52,7 @@ on:
       - '.phpstorm.meta.php'
       - '.prettier*'
       - '.stylelint*'
-      - '!.github/workflows/**'
+      - '.github/workflows/**'
       - '!.github/workflows/build-and-deploy.yml'
 
 # Cancels all previous workflow runs for pull requests that have not completed.
