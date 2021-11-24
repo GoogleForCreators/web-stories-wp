@@ -122,7 +122,6 @@ describe('MediaElement', () => {
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       {
         ...IMAGE_RESOURCE,
-        // Already uploaded
       },
       'local'
     );
@@ -138,7 +137,6 @@ describe('MediaElement', () => {
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       {
         ...VIDEO_RESOURCE,
-        // Already uploaded
       },
       'local'
     );
@@ -154,7 +152,6 @@ describe('MediaElement', () => {
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       {
         ...GIF_RESOURCE,
-        // Already uploaded
       },
       'local'
     );
@@ -170,7 +167,6 @@ describe('MediaElement', () => {
     const { queryByAriaLabel } = renderMediaElement(
       {
         ...VIDEO_RESOURCE,
-        // Already uploaded
       },
       'local',
       false

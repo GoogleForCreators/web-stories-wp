@@ -204,7 +204,6 @@ describe('useProcessMedia', () => {
         expect(updateBaseColor).toHaveBeenCalledWith({
           resource: {
             id: 2,
-
             src: 'http://www.google.com/foo.gif',
             type: 'gif',
           },
@@ -241,7 +240,6 @@ describe('useProcessMedia', () => {
           resource: {
             baseColor: undefined,
             id: 2,
-
             src: 'http://www.google.com/foo.gif',
             type: 'gif',
           },
@@ -373,7 +371,6 @@ describe('useProcessMedia', () => {
           resource: {
             baseColor: undefined,
             id: 2,
-
             src: 'http://www.google.com/foo.gif',
             type: 'gif',
           },
@@ -407,7 +404,6 @@ describe('useProcessMedia', () => {
         expect(updateBaseColor).toHaveBeenCalledWith({
           resource: {
             id: 2,
-
             src: 'http://www.google.com/foo.gif',
             type: 'gif',
           },
@@ -472,7 +468,6 @@ describe('useProcessMedia', () => {
           resource: {
             src: 'http://www.google.com/foo.gif',
             id: 2,
-
             type: 'gif',
           },
         });
@@ -508,7 +503,6 @@ describe('useProcessMedia', () => {
           resource: {
             baseColor: undefined,
             id: 2,
-
             src: 'http://www.google.com/foo.gif',
             type: 'gif',
           },
