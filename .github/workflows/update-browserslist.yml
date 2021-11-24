@@ -30,7 +30,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
           commit-message: Update browserslist db
           title: Update browserslist db
           body: Updates `caniuse-lite` to use the latest browser’s versions and statistics.

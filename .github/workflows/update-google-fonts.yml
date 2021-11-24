@@ -37,7 +37,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
           commit-message: Update list of Google Fonts
           title: Update list of Google Fonts
           body: Fetched the currently available fonts on Google Fonts to update them in the project.

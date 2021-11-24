@@ -65,6 +65,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: gh-pages
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Download storybook files
         uses: actions/download-artifact@v2
