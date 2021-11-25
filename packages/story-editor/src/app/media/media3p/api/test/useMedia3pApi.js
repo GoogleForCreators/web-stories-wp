@@ -159,7 +159,7 @@ describe('useMedia3pApi', () => {
           poster: undefined,
           posterId: undefined,
           sizes: {
-            web_stories_thumbnail: {
+            'web-stories-thumbnail': {
               file: 'media/unsplash:1234',
               sourceUrl:
                 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=340&h=227&fit=max',

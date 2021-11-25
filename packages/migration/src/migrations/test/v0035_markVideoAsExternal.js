@@ -197,7 +197,7 @@ describe('markVideoAsExternal', () => {
                       width: 1651,
                       height: 1101,
                     },
-                    web_stories_thumbnail: {
+                    'web-stories-thumbnail': {
                       file: 'media/unsplash:m_wA8tFR128',
                       source_url:
                         'https://images.unsplash.com/photo-1628191139344-11bec156abdc?ixid=MnwxMzcxOTN8MXwxfGFsbHwxfHx8fHx8Mnx8MTYzMTU1MjQ1NA&ixlib=rb-1.2.1&fm=jpg&w=340&h=227&fit=max',
@@ -344,7 +344,7 @@ describe('markVideoAsExternal', () => {
                       width: 220,
                       height: 188,
                     },
-                    web_stories_thumbnail: {
+                    'web-stories-thumbnail': {
                       file: 'media/tenor:11865227026495928048',
                       source_url:
                         'https://c.tenor.com/pKnBHa2ndvAAAAAS/blackpink-jisoo.gif',
@@ -602,7 +602,7 @@ describe('markVideoAsExternal', () => {
                     width: 1651,
                     height: 1101,
                   },
-                  web_stories_thumbnail: {
+                  'web-stories-thumbnail': {
                     file: 'media/unsplash:m_wA8tFR128',
                     source_url:
                       'https://images.unsplash.com/photo-1628191139344-11bec156abdc?ixid=MnwxMzcxOTN8MXwxfGFsbHwxfHx8fHx8Mnx8MTYzMTU1MjQ1NA&ixlib=rb-1.2.1&fm=jpg&w=340&h=227&fit=max',
@@ -750,7 +750,7 @@ describe('markVideoAsExternal', () => {
                     width: 220,
                     height: 188,
                   },
-                  web_stories_thumbnail: {
+                  'web-stories-thumbnail': {
                     file: 'media/tenor:11865227026495928048',
                     source_url:
                       'https://c.tenor.com/pKnBHa2ndvAAAAAS/blackpink-jisoo.gif',

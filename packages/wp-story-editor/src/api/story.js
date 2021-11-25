@@ -31,15 +31,37 @@ import { STORY_EMBED, STORY_FIELDS } from './constants';
 import { base64Encode, snakeToCamelCaseObjectKeys } from './utils';
 
 // Add custom fields and prepare story response.
-const transformGetStoryResponse = (post) => {
-  const { _embedded: embedded = {}, _links: links = {} } = post;
+const transformStoryResponse = (post) => {
+  const { _embedded: embedded = {}, _links: links = {}, ...rest } = post;
 
-  post.author = {
-    id: embedded?.author?.[0].id || 0,
-    name: embedded?.author?.[0].name || '',
+  // TODO: Make author, lockUser, etc. null if absent, instead of these "empty" objects.
+  const story = {
+    ...snakeToCamelCaseObjectKeys(rest, ['story_data']),
+    author: {
+      id: embedded?.author?.[0].id || 0,
+      name: embedded?.author?.[0].name || '',
+    },
+    capabilities: {},
+    lockUser: {
+      id: embedded?.['wp:lockuser']?.[0].id || 0,
+      name: embedded?.['wp:lockuser']?.[0].name || '',
+      avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
+    },
+    featuredMedia: {
+      id: embedded?.['wp:featuredmedia']?.[0].id || 0,
+      height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
+      width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
+      url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+    },
+    publisherLogo: {
+      id: embedded?.['wp:publisherlogo']?.[0].id || 0,
+      height: embedded?.['wp:publisherlogo']?.[0]?.media_details?.height || 0,
+      width: embedded?.['wp:publisherlogo']?.[0]?.media_details?.width || 0,
+      url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
+    },
+    taxonomies: links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [],
+    terms: embedded?.['wp:term'] || [],
   };
-
-  post.capabilities = {};
 
   for (const link of Object.keys(links)) {
     if (!link.startsWith('wp:action-')) {
@@ -48,34 +70,10 @@ const transformGetStoryResponse = (post) => {
 
     // Turn 'wp:action-assign-author' into 'assign-author'
     const capability = link.replace('wp:action-', '');
-    post.capabilities[capability] = true;
+    story.capabilities[capability] = true;
   }
 
-  post.lock_user = {
-    id: embedded?.['wp:lockuser']?.[0].id || 0,
-    name: embedded?.['wp:lockuser']?.[0].name || '',
-    avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
-  };
-
-  post.featured_media = {
-    id: embedded?.['wp:featuredmedia']?.[0].id || 0,
-    height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
-    width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
-    url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-  };
-
-  post.publisher_logo = {
-    id: embedded?.['wp:publisherlogo']?.[0].id || 0,
-    height: embedded?.['wp:publisherlogo']?.[0]?.media_details?.height || 0,
-    width: embedded?.['wp:publisherlogo']?.[0]?.media_details?.width || 0,
-    url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
-  };
-
-  post.taxonomies = links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [];
-  post.terms = embedded?.['wp:term'] || [];
-
-  // Camel casing of story_data is/will be covered in migration.
-  return snakeToCamelCaseObjectKeys(post, ['story_data']);
+  return story;
 };
 
 export function getStoryById(config, storyId, isDemo = false) {
@@ -86,7 +84,7 @@ export function getStoryById(config, storyId, isDemo = false) {
     _fields: STORY_FIELDS,
   });
 
-  return apiFetch({ path }).then(transformGetStoryResponse);
+  return apiFetch({ path }).then(transformStoryResponse);
 }
 
 export function getDemoStoryById(config, storyId) {

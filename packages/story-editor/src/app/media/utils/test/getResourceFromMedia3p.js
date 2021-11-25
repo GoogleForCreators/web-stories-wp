@@ -558,7 +558,7 @@ describe('getResourceFromMedia3p', () => {
             'https://c.tenor.com/MCPJ3sVx3GAAAAAM/happy-national-cat-day-peace.gif',
           width: 220,
         },
-        web_stories_thumbnail: {
+        'web-stories-thumbnail': {
           file: 'media/tenor:3468838096637910112',
           height: 90,
           mimeType: 'image/gif',

@@ -39,7 +39,7 @@ export default [
         mimeType: 'image/jpeg',
         sourceUrl: 'http://localhost:9876/__static__/blue-marble.jpg',
       },
-      web_stories_thumbnail: {
+      'web-stories-thumbnail': {
         file: 'blue-marble.jpg',
         width: 600,
         height: 600,
@@ -88,7 +88,7 @@ export default [
         mimeType: 'image/jpeg',
         sourceUrl: 'http://localhost:9876/__static__/curiosity.jpg',
       },
-      web_stories_thumbnail: {
+      'web-stories-thumbnail': {
         file: 'curiosity.jpg',
         width: 953,
         height: 1280,
@@ -137,7 +137,7 @@ export default [
         mimeType: 'image/jpeg',
         sourceUrl: 'http://localhost:9876/__static__/earth.jpg',
       },
-      web_stories_thumbnail: {
+      'web-stories-thumbnail': {
         file: 'earth.jpg',
         width: 640,
         height: 529,
@@ -186,7 +186,7 @@ export default [
         mimeType: 'image/jpeg',
         sourceUrl: 'http://localhost:9876/__static__/saturn.jpg',
       },
-      web_stories_thumbnail: {
+      'web-stories-thumbnail': {
         file: 'saturn.jpg',
         width: 634,
         height: 640,
@@ -233,7 +233,7 @@ export default [
         mimeType: 'image/jpeg',
         sourceUrl: 'http://localhost:9876/__static__/mars.jpg',
       },
-      web_stories_thumbnail: {
+      'web-stories-thumbnail': {
         file: 'mars.jpg',
         width: 540,
         height: 810,
@@ -330,7 +330,7 @@ export default [
         mimeType: 'image/png',
         sourceUrl: 'http://localhost:9876/__static__/transparent.png',
       },
-      web_stories_thumbnail: {
+      'web-stories-thumbnail': {
         file: 'transparent.png',
         width: 400,
         height: 400,

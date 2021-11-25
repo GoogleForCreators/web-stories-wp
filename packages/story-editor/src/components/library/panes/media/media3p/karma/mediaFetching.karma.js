@@ -50,7 +50,7 @@ const RESOURCE_BUILDERS = {
         mimeType: 'image/png',
       },
       {
-        imageName: 'web_stories_thumbnail',
+        imageName: 'web-stories-thumbnail',
         url: 'http://localhost:9876/__static__/blue-marble.jpg',
         width: 200,
         height: 200,

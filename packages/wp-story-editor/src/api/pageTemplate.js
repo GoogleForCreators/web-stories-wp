@@ -27,6 +27,10 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import { snakeToCamelCaseObjectKeys } from './utils';
 
+function transformTemplateResponse(template) {
+  return { ...template['story_data'], templateId: template.id };
+}
+
 export function getCustomPageTemplates(config, page = 1) {
   const perPage = 100;
   const path = addQueryArgs(config.api.pageTemplates, {
@@ -37,12 +41,7 @@ export function getCustomPageTemplates(config, page = 1) {
   });
   return apiFetch({ path }).then(({ headers, body }) => {
     const totalPages = parseInt(headers['X-WP-TotalPages']);
-    const templates = body.map((template) => {
-      const storyData = template['story_data'];
-      storyData.elements = storyData.elements.map(snakeToCamelCaseObjectKeys);
-
-      return { ...storyData, templateId: template.id };
-    });
+    const templates = body.map(transformTemplateResponse);
 
     return {
       templates,
@@ -59,9 +58,7 @@ export function addPageTemplate(config, page) {
       status: 'publish',
     },
     method: 'POST',
-  }).then((response) => {
-    return { ...response['story_data'], templateId: response.id };
-  });
+  }).then(transformTemplateResponse);
 }
 
 export function deletePageTemplate(config, id) {
@@ -73,5 +70,7 @@ export function deletePageTemplate(config, id) {
     }),
     data: { force: true },
     method: 'POST',
-  }).then(snakeToCamelCaseObjectKeys);
+  }).then((result) => {
+    return snakeToCamelCaseObjectKeys(result.previous);
+  });
 }

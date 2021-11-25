@@ -64,7 +64,7 @@ describe('unifyGifResources', () => {
                       width: 220,
                       height: 160,
                     },
-                    web_stories_thumbnail: {
+                    'web-stories-thumbnail': {
                       file: 'media/tenor:3553009464796623885',
                       source_url:
                         'https://c.tenor.com/MU7TSJjNtA0AAAAS/flapjack-smile.gif',
@@ -192,7 +192,7 @@ describe('unifyGifResources', () => {
                     width: 220,
                     height: 160,
                   },
-                  web_stories_thumbnail: {
+                  'web-stories-thumbnail': {
                     file: 'media/tenor:3553009464796623885',
                     source_url:
                       'https://c.tenor.com/MU7TSJjNtA0AAAAS/flapjack-smile.gif',

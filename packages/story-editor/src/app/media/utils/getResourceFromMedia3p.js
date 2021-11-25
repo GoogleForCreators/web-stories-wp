@@ -90,7 +90,7 @@ function getImageUrls(m) {
   }
 
   // The rest of the application expects 3 named "sizes": "full", "large" and
-  // "web_stories_thumbnail". We use the biggest as "full", the next biggest
+  // "web-stories-thumbnail". We use the biggest as "full", the next biggest
   // as "large", and the smallest as "web_stories_thumbnail". The rest are
   // named according to their size.
   if (m.imageUrls?.length < 3) {
@@ -105,7 +105,7 @@ function getImageUrls(m) {
     ...sizesFromBiggest
       .slice(2, sizesFromBiggest.length - 1)
       .map((u) => [u.width + '_' + u.height, u]),
-    ['web_stories_thumbnail', sizesFromBiggest[sizesFromBiggest.length - 1]],
+    ['web-stories-thumbnail', sizesFromBiggest[sizesFromBiggest.length - 1]],
   ];
 
   return Object.fromEntries(new Map(namedSizes));
@@ -125,8 +125,8 @@ function getGifUrls(m) {
   }
 
   // The rest of the application expects 3 named "sizes": "full", "large" and
-  // "web_stories_thumbnail". We use the biggest as "full", the next biggest
-  // as "large", and the smallest as "web_stories_thumbnail". The rest are
+  // "web-stories-thumbnail". We use the biggest as "full", the next biggest
+  // as "large", and the smallest as "web-stories-thumbnail". The rest are
   // named according to their size.
   if (m.imageUrls?.length < 3) {
     throw new Error('Invalid number of urls for asset. Need at least 3: ' + m);
@@ -158,7 +158,7 @@ function getGifUrls(m) {
       .slice(2, imageSizesFromBiggest.length - 1)
       .map((u) => [u.width + '_' + u.height, u]),
     [
-      'web_stories_thumbnail',
+      'web-stories-thumbnail',
       imageSizesFromBiggest[imageSizesFromBiggest.length - 1],
     ],
   ];

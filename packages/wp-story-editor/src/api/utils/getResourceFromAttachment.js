@@ -56,12 +56,17 @@ function getImageResourceFromAttachment(attachment) {
   const {
     id,
     date_gmt,
-    media_details: { width, height, sizes },
+    media_details: { width, height, sizes: _sizes },
     mime_type: mimeType,
     alt_text: alt,
     source_url: src,
     meta: { web_stories_base_color: baseColor },
   } = attachment;
+
+  const sizes = {};
+  for (const [key, value] of Object.entries(_sizes)) {
+    sizes[key] = snakeToCamelCaseObjectKeys(value);
+  }
 
   return createResource({
     baseColor,
@@ -188,12 +193,9 @@ function getResourceFromAttachment(attachment) {
 
   const type = getTypeFromMime(mimeType);
 
-  const resource =
-    'image' === type
-      ? getImageResourceFromAttachment(attachment)
-      : getVideoResourceFromAttachment(attachment);
-
-  return snakeToCamelCaseObjectKeys(resource);
+  return 'image' === type
+    ? getImageResourceFromAttachment(attachment)
+    : getVideoResourceFromAttachment(attachment);
 }
 
 export default getResourceFromAttachment;

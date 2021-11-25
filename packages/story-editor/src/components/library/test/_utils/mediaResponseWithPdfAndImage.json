@@ -142,7 +142,7 @@
           "mimeType": "image/jpeg",
           "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage-696x928.jpg"
         },
-        "web_stories_thumbnail": {
+        "web-stories-thumbnail": {
           "file": "testImage-150x204.jpg",
           "width": 150,
           "height": 204,

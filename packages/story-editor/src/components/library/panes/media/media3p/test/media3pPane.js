@@ -74,7 +74,7 @@ const createMediaResource = (name, provider) => ({
       mimeType: 'image/png',
     },
     {
-      imageName: 'web_stories_thumbnail',
+      imageName: 'web-stories-thumbnail',
       url: 'http://www.img.com/3',
       width: 200,
       height: 100,
