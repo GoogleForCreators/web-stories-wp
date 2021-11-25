@@ -386,37 +386,40 @@ function useMediaUploadQueue() {
         isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),
         isMuting: state.queue.some((item) => item.state === 'MUTING'),
         isTrimming: state.queue.some((item) => item.state === 'TRIMMING'),
-        isResourceProcessing: (resourceId) => {
-          return state.queue.some(
+        isResourceProcessing: (resourceId) =>
+          state.queue.some(
             (item) =>
               [
                 'PENDING',
                 'UPLOADING',
+                'TRANSCODED',
                 'TRANSCODING',
                 'MUTING',
+                'MUTED',
                 'TRIMMING',
+                'TRIMMED',
               ].includes(item.state) &&
               item.resource.originalResourceId === resourceId
-          );
-        },
-        isResourceProcessingById: (resourceId) => {
-          return state.queue.some(
+          ),
+        isResourceProcessingById: (resourceId) =>
+          state.queue.some(
             (item) =>
               [
                 'PENDING',
                 'UPLOADING',
+                'TRANSCODED',
                 'TRANSCODING',
                 'MUTING',
+                'MUTED',
                 'TRIMMING',
+                'TRIMMED',
               ].includes(item.state) && item.resource.id === resourceId
-          );
-        },
-        isResourceUploadingById: (resourceId) => {
-          return state.queue.some(
+          ),
+        isResourceUploadingById: (resourceId) =>
+          state.queue.some(
             (item) =>
               item.state === 'UPLOADING' && item.resource.id === resourceId
-          );
-        },
+          ),
         isResourceTranscodingById: (resourceId) =>
           state.queue.some(
             (item) =>

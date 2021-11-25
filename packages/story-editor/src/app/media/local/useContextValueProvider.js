@@ -126,6 +126,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     isResourceTranscodingById,
     isResourceMutingById,
     isResourceTrimmingById,
+    uploaded,
   } = useUploadMedia({
     media,
     prependMedia,
@@ -223,10 +224,19 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const postProcessingResource = useCallback(
     (resource) => {
-      const { type, isMuted, baseColor, src, id, posterId, mimeType, poster } =
-        resource;
+      const {
+        type,
+        isMuted,
+        baseColor,
+        src,
+        id,
+        posterId,
+        mimeType,
+        poster,
+        isExternal,
+      } = resource;
 
-      if (!id || isResourceUploadingById(id)) {
+      if (!id || isResourceProcessingById(id) || isExternal) {
         return;
       }
       if (
@@ -246,7 +256,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       }
     },
     [
-      isResourceUploadingById,
+      isResourceProcessingById,
       allowedVideoMimeTypes,
       processMediaBaseColor,
       processVideoAudio,
@@ -266,7 +276,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   // generate missing posters / has audio / base color if needed.
   useEffect(() => {
     media?.forEach((mediaElement) => postProcessingResource(mediaElement));
-  }, [media, mediaType, searchTerm, postProcessingResource]);
+  }, [media, mediaType, searchTerm, postProcessingResource, uploaded]);
 
   const isGeneratingPosterImages = Boolean(
     stateRef.current?.posterProcessing?.length
