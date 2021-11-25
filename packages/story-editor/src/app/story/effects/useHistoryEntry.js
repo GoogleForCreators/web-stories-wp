@@ -24,6 +24,10 @@ import { useEffect, useRef } from '@web-stories-wp/react';
  */
 import { useHistory } from '../../history';
 
+const ELEMENT_PROPS_TO_IGNORE = [
+  'resource.baseColor',
+];
+
 // Record any change to core variables in history (history will know if it's a replay)
 function useHistoryEntry({ story, current, pages, selection, capabilities }) {
   const {
@@ -43,27 +47,43 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
     selectedElementIdsRef.current = selection;
   }, [current, selection]);
 
-  const deleteNestedKey = (object, key) => {
-    const keys = key.split(".");
+  const deleteNestedKey = (object, path) => {
+    const keys = path.split('.');
     const lastKey = keys.pop();
     const nextLastKey = keys.pop();
-    const nextLastObj = keys.reduce((a, key) => a[key], object);
-    delete nextLastObj[nextLastKey][lastKey];
+    const nextLastObj = keys.reduce((a, key) => a?.[key] || a, object);
+    if (nextLastObj?.[nextLastKey]?.[lastKey]) {
+      delete nextLastObj[nextLastKey][lastKey];
+    }
     return object;
   };
 
-  const obj = {"hello": {"data": {"a": "world", "b": "random"}}};
-  const result = deleteNestedKey(obj, 'hello.data.a');
-  console.log(result);
-
   useEffect(() => {
-    stateToHistory({
-      story,
-      current: currentPageIndexRef.current,
-      selection: selectedElementIdsRef.current,
-      pages,
-      capabilities,
+    let skipAddingEntry = false;
+    const adjustedPages = pages.map((page) => {
+      const { elements } = page;
+      return {
+        ...page,
+        elements: elements.map((element) =>
+          deleteNestedKey(element, 'resource.baseColor')
+        ),
+      };
     });
+    if (currentHistoryEntryRef.current && adjustedPages?.length) {
+      skipAddingEntry = Object.keys(adjustedPages).every(
+        (key) =>
+          adjustedPages[key] === currentHistoryEntryRef.current.pages[key]
+      );
+    }
+    if (!skipAddingEntry) {
+      stateToHistory({
+        story,
+        current: currentPageIndexRef.current,
+        selection: selectedElementIdsRef.current,
+        pages,
+        capabilities,
+      });
+    }
   }, [story, pages, stateToHistory, capabilities]);
 }
 
