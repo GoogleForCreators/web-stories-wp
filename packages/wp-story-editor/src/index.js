@@ -67,8 +67,6 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
 
   updateSettings(config.locale);
 
-  config.metaBoxes = window.webStories.metaBoxes;
-
   initializeTracking('Editor');
 
   initialEdits.story = initialEdits.story

@@ -151,6 +151,10 @@ $preload_data = array_reduce(
 // Restore the global $post as it was before API preloading.
 $post = $backup_global_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
+// In order to duplicate classic meta box behaviour, we need to run the classic meta box actions.
+require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
+register_and_do_post_meta_boxes( $post );
+
 $editor_settings = \Google\Web_Stories\Services::get( 'editor' )->get_editor_settings();
 
 wp_add_inline_script(
@@ -168,10 +172,6 @@ JS;
 $script = sprintf( $init_script, wp_json_encode( $editor_settings ), wp_json_encode( $initial_edits ) );
 
 wp_add_inline_script( \Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE, $script );
-
-// In order to duplicate classic meta box behaviour, we need to run the classic meta box actions.
-require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
-register_and_do_post_meta_boxes( $post );
 
 require_once ABSPATH . 'wp-admin/admin-header.php';
 

@@ -293,7 +293,6 @@ class Editor extends Service_Base implements HasRequirements {
 			[
 				'publicPath' => $this->assets->get_base_url( 'assets/js/' ), // Required before the editor script is enqueued.
 				'localeData' => $this->assets->get_translations( self::SCRIPT_HANDLE ), // Required for i18n setLocaleData.
-				'metaBoxes'  => $this->meta_boxes->get_meta_boxes_per_location(), // Because meta boxes are not available inside edit-story.php.
 			]
 		);
 
@@ -405,6 +404,7 @@ class Editor extends Service_Base implements HasRequirements {
 			'nonce'                        => $nonce,
 			'showMedia3p'                  => true,
 			'encodeMarkup'                 => $this->decoder->supports_decoding(),
+			'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
 			'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
 			'flags'                        => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
