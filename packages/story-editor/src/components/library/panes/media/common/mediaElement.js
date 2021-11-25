@@ -87,7 +87,7 @@ function Element({
   } = resource;
 
   const { isResourceProcessingById } = useLocalMedia(({ state }) => ({
-    isResourceProcessingById: state.state.isResourceProcessingById,
+    isResourceProcessingById: state.isResourceProcessingById,
   }));
 
   const oRatio =
