@@ -251,7 +251,6 @@ describe('useMediaUploadQueue', () => {
             file: {},
             resource: {
               foo: 'bar',
-              isMuting: true,
             },
             state: 'MUTING',
           },
@@ -271,7 +270,6 @@ describe('useMediaUploadQueue', () => {
             },
             resource: {
               foo: 'bar',
-              isMuting: true,
             },
             state: 'MUTING',
           },
@@ -296,7 +294,6 @@ describe('useMediaUploadQueue', () => {
             },
             resource: {
               foo: 'bar',
-              isMuting: false,
               isMuted: true,
             },
             state: 'MUTED',
@@ -334,7 +331,6 @@ describe('useMediaUploadQueue', () => {
             file: {},
             resource: {
               foo: 'bar',
-              isTrimming: true,
             },
             state: 'TRIMMING',
           },
@@ -354,7 +350,6 @@ describe('useMediaUploadQueue', () => {
             },
             resource: {
               foo: 'bar',
-              isTrimming: true,
             },
             state: 'TRIMMING',
           },
@@ -379,7 +374,6 @@ describe('useMediaUploadQueue', () => {
             },
             resource: {
               foo: 'bar',
-              isTrimming: false,
             },
             state: 'TRIMMED',
           },
@@ -416,7 +410,6 @@ describe('useMediaUploadQueue', () => {
             file: {},
             resource: {
               foo: 'bar',
-              isTranscoding: true,
             },
             state: 'TRANSCODING',
           },
@@ -436,7 +429,6 @@ describe('useMediaUploadQueue', () => {
             },
             resource: {
               foo: 'bar',
-              isTranscoding: true,
             },
             state: 'TRANSCODING',
           },
@@ -461,7 +453,6 @@ describe('useMediaUploadQueue', () => {
             },
             resource: {
               foo: 'bar',
-              isTranscoding: false,
               isOptimized: true,
             },
             state: 'TRANSCODED',

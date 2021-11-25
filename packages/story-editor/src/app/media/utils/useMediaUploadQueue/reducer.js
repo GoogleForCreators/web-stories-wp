@@ -125,6 +125,10 @@ export function finishUploading(state, { payload: { id, resource } }) {
     revokeBlob(queueItem.resource.poster);
   }
 
+  if ('originalResourceId' in resource) {
+    delete resource.originalResourceId;
+  }
+
   return {
     ...state,
     queue: state.queue.map((item) =>
@@ -180,10 +184,6 @@ export function startTranscoding(state, { payload: { id } }) {
         ? {
             ...item,
             state: 'TRANSCODING',
-            resource: {
-              ...item.resource,
-              isTranscoding: true,
-            },
           }
         : item
     ),
@@ -211,7 +211,6 @@ export function finishTranscoding(state, { payload: { id, file } }) {
             state: 'TRANSCODED',
             resource: {
               ...item.resource,
-              isTranscoding: false,
               isOptimized: true,
             },
           }
@@ -237,10 +236,6 @@ export function startMuting(state, { payload: { id } }) {
         ? {
             ...item,
             state: 'MUTING',
-            resource: {
-              ...item.resource,
-              isMuting: true,
-            },
           }
         : item
     ),
@@ -268,7 +263,6 @@ export function finishMuting(state, { payload: { id, file } }) {
             state: 'MUTED',
             resource: {
               ...item.resource,
-              isMuting: false,
               isMuted: true,
             },
           }
@@ -294,10 +288,6 @@ export function startTrimming(state, { payload: { id } }) {
         ? {
             ...item,
             state: 'TRIMMING',
-            resource: {
-              ...item.resource,
-              isTrimming: true,
-            },
           }
         : item
     ),
@@ -323,10 +313,6 @@ export function finishTrimming(state, { payload: { id, file } }) {
             ...item,
             file,
             state: 'TRIMMED',
-            resource: {
-              ...item.resource,
-              isTrimming: false,
-            },
           }
         : item
     ),
