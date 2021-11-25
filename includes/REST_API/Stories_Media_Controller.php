@@ -285,10 +285,10 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		 *
 		 * @since 1.10.0
 		 *
-		 * @link https://developer.wordpress.org/reference/classes/wp_query/
+		 * @see WP_Query
 		 *
-		 * @param array           $args    Array of arguments for WP_Query.
-		 * @param WP_REST_Request $request The REST API request.
+		 * @param array                $args    Array of arguments for WP_Query.
+		 * @param WP_REST_Request|null $request The REST API request.
 		 */
 		return apply_filters( 'web_stories_rest_attachment_query', $query_args, $request );
 	}

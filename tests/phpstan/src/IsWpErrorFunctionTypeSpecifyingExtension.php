@@ -1,13 +1,17 @@
 <?php
 /**
  * Copied from szepeviktor/phpstan-wordpress
+ *
+ * @copyright Viktor Szépe
+ * @license   MIT
+ * @link      https://github.com/szepeviktor/phpstan-wordpress
  */
 
 /**
  * Set specified type of is_wp_error().
  */
 
-namespace PHPStan\WordPress;
+namespace SzepeViktor\PHPStan\WordPress;
 
 use PhpParser\Node\Expr\FuncCall;
 use PHPStan\Analyser\Scope;

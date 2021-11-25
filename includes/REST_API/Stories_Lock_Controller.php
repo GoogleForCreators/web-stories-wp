@@ -309,7 +309,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 			'nonce'  => $nonce,
 		];
 
-		if ( $lock ) {
+		if ( ! empty( $lock ) ) {
 			/** This filter is documented in wp-admin/includes/ajax-actions.php */
 			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 
@@ -340,18 +340,21 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
 
+		/**
+		 * Response object.
+		 *
+		 * @var WP_REST_Response $response
+		 */
 		$response = rest_ensure_response( $data );
 
-		if ( ! is_wp_error( $response ) ) {
-			/**
-			 * Post ID.
-			 *
-			 * @var int $post_id
-			 */
-			$post_id = $request['id'];
+		/**
+		 * Post ID.
+		 *
+		 * @var int $post_id
+		 */
+		$post_id = $request['id'];
 
-			$response->add_links( $this->prepare_links( $lock, $post_id ) );
-		}
+		$response->add_links( $this->prepare_links( $lock, $post_id ) );
 
 		$post_type = $this->story_post_type->get_slug();
 
@@ -363,7 +366,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		 * @since 1.6.0
 		 *
 		 * @param WP_REST_Response $response The response object.
-		 * @param array            $lock     Lock array.
+		 * @param array|false      $lock     Lock array if available.
 		 * @param WP_REST_Request  $request  Request object.
 		 */
 		return apply_filters( "rest_prepare_{$post_type}_lock", $response, $lock, $request );
@@ -384,7 +387,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 			],
 		];
 
-		if ( $lock ) {
+		if ( ! empty( $lock ) ) {
 			/** This filter is documented in wp-admin/includes/ajax-actions.php */
 			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 
