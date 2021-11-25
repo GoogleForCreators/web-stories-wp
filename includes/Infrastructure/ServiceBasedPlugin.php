@@ -712,7 +712,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 * This can be used to turn objects that were added externally into
 			 * shared instances.
 			 *
-			 * @param array<string> $delegations Associative array of class =>
+			 * @param array<string, callable> $delegations Associative array of class =>
 			 *                                   callable mappings.
 			 */
 			$delegations = apply_filters(
