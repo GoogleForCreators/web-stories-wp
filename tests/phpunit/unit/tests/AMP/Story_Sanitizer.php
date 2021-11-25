@@ -469,4 +469,22 @@ class Story_Sanitizer extends TestCase {
 
 		$this->assertStringNotContainsString( 'amp-img', $actual );
 	}
+
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::remove_page_template_placeholder_images
+	 */
+	public function test_remove_page_template_placeholder_images_hash() {
+		$source = '<html><head></head><body><amp-img src="https://example.com/wp-content/plugins/web-stories/assets/images/adde98ae406d6b5c95d111a934487252.png" width="100" height="100"></amp-img></body></html>';
+
+		$args = [
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertStringNotContainsString( 'amp-img', $actual );
+	}
 }

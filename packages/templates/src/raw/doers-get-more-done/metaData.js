@@ -45,7 +45,7 @@ export default {
       family: _x('White', 'color', 'web-stories'),
     },
     {
-      label: _x('Light Grey', 'color', 'web-stories'),
+      label: _x('Light Gray', 'color', 'web-stories'),
       color: '#858280',
       family: _x('Gray', 'color', 'web-stories'),
     },

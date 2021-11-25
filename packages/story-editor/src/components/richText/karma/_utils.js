@@ -53,7 +53,7 @@ export function initHelpers(data) {
       );
     }
 
-    await data.fixture.editor.canvas.framesLayer.waitFocusedWithin();
+    await richTextHasFocus();
 
     const elements = await getElements();
     data.bgId = elements[0].id;
