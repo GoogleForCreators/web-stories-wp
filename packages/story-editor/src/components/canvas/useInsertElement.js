@@ -43,8 +43,8 @@ function useInsertElement() {
   }));
   const { postProcessingResource, isResourceUploadingById } = useLocalMedia(
     ({
-      state: { postProcessingResource },
-      actions: { isResourceUploadingById },
+      state: { isResourceUploadingById },
+      actions: { postProcessingResource },
     }) => ({
       postProcessingResource,
       isResourceUploadingById,
