@@ -31,7 +31,7 @@ import { getDefinitionForType } from '../../elements';
 import { useStory, useCanvas } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
-import { Layer, PageArea, MenuArea, Z_INDEX } from './layout';
+import { Layer, PageArea, FooterArea, Z_INDEX } from './layout';
 import useFocusCanvas from './useFocusCanvas';
 
 const LayerWithGrayout = styled(Layer)`
@@ -116,9 +116,9 @@ function EditLayerForElement({ element, showOverflow }) {
         <EditElement element={element} />
       </EditPageArea>
       {EditMenu && (
-        <MenuArea showOverflow>
+        <FooterArea showOverflow>
           <EditMenu />
-        </MenuArea>
+        </FooterArea>
       )}
     </LayerWithGrayout>
   );
