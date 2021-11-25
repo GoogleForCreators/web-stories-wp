@@ -1,10 +1,17 @@
 .github
 .storybook
+.wordpress-org
 __mocks__
 assets/css
 bin
 build
 docs
+micro-site
 node_modules
+patches
+public
+sitemap-generator
 tests
+third-party
 vendor
+web-stories-scraper

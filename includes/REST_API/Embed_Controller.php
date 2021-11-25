@@ -40,9 +40,11 @@ use WP_REST_Response;
 use WP_REST_Server;
 
 /**
+ * Embed controller class.
+ *
  * API endpoint to facilitate embedding web stories.
  *
- * Class Embed_Controller
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Embed_Controller extends REST_Controller implements HasRequirements {
 
@@ -119,7 +121,13 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_proxy_item( $request ) {
-		$url = urldecode( untrailingslashit( $request['url'] ) );
+		/**
+		 * Requested URL.
+		 *
+		 * @var string $url
+		 */
+		$url = $request['url'];
+		$url = urldecode( untrailingslashit( $url ) );
 
 		if ( empty( $url ) ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
@@ -137,15 +145,19 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		$cache_key = 'web_stories_embed_data_' . md5( $url );
 
 		$data = get_transient( $cache_key );
-		if ( ! empty( $data ) ) {
-			if ( 'rest_invalid_story' === $data ) {
-				return new WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
+
+		if ( is_string( $data ) && ! empty( $data ) ) {
+			/**
+			 * Decoded cached embed data.
+			 *
+			 * @var array|null $embed
+			 */
+			$embed = json_decode( $data, true );
+
+			if ( $embed ) {
+				$response = $this->prepare_item_for_response( $embed, $request );
+				return rest_ensure_response( $response );
 			}
-
-			$embed    = json_decode( $data, true );
-			$response = $this->prepare_item_for_response( $embed, $request );
-
-			return rest_ensure_response( $response );
 		}
 
 		$data = $this->get_data_from_post( $url );
@@ -223,6 +235,8 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * Checks are supposedly from the hosted site blog.
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 *
 	 * @see get_oembed_response_data_for_url
 	 * @see url_to_postid
@@ -237,8 +251,18 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		$switched_blog = false;
 
 		if ( is_multisite() ) {
+			/**
+			 * URL parts.
+			 *
+			 * @var array|false $url_parts
+			 */
+			$url_parts = wp_parse_url( $url );
+			if ( ! $url_parts ) {
+				$url_parts = [];
+			}
+
 			$url_parts = wp_parse_args(
-				wp_parse_url( $url ),
+				$url_parts,
 				[
 					'host' => '',
 					'path' => '/',
@@ -293,10 +317,27 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 			// url_to_postid() does not recognize plain permalinks like https://example.com/?web-story=my-story.
 			// Let's check for that ourselves.
 
-			$url_host      = str_replace( 'www.', '', wp_parse_url( $url, PHP_URL_HOST ) );
-			$home_url_host = str_replace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
+			/**
+			 * The URL's hostname.
+			 *
+			 * @var string|false|null $url_host
+			 */
+			$url_host = wp_parse_url( $url, PHP_URL_HOST );
+			if ( $url_host ) {
+				$url_host = str_replace( 'www.', '', $url_host );
+			}
 
-			if ( $url_host === $home_url_host ) {
+			/**
+			 * The home URL's hostname.
+			 *
+			 * @var string|false|null $home_url_host
+			 */
+			$home_url_host = wp_parse_url( home_url(), PHP_URL_HOST );
+			if ( $home_url_host ) {
+				$home_url_host = str_replace( 'www.', '', $home_url_host );
+			}
+
+			if ( $url_host && $home_url_host && $url_host === $home_url_host ) {
 				$values = [];
 				if (
 				preg_match(
@@ -413,6 +454,11 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 			}
 		}
 
+		/**
+		 * Request context.
+		 *
+		 * @var string $context
+		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );

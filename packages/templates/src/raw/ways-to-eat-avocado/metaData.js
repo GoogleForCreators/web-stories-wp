@@ -32,11 +32,31 @@ export default {
     _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Swamp Green', 'color', 'web-stories'), color: '#a7b27e' },
-    { label: _x('Saffron Yellow', 'color', 'web-stories'), color: '#f5b435' },
-    { label: _x('Dark Moss Green', 'color', 'web-stories'), color: '#51611c' },
-    { label: _x('Rose Bud Pink', 'color', 'web-stories'), color: '#ffa797' },
-    { label: _x('Dark Coral', 'color', 'web-stories'), color: '#a35445' },
+    {
+      label: _x('Swamp Green', 'color', 'web-stories'),
+      color: '#a7b27e',
+      family: _x('Green', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Saffron Yellow', 'color', 'web-stories'),
+      color: '#f5b435',
+      family: _x('Yellow', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Dark Moss Green', 'color', 'web-stories'),
+      color: '#51611c',
+      family: _x('Green', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Rose Bud Pink', 'color', 'web-stories'),
+      color: '#ffa797',
+      family: _x('Pink', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Dark Coral', 'color', 'web-stories'),
+      color: '#a35445',
+      family: _x('Red', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'This template is on a diet. With its to-the-point structure and neutral typography, it will let you keep things simple and focus on getting your recipe to your followers.',

@@ -299,9 +299,14 @@ class Settings extends Service_Base {
 	 *
 	 * @param string $key Setting key.
 	 * @param mixed  $default Optional. Default value to return if the option does not exist.
-	 * @return mixed Setting value.
+	 * @return string|array|bool Setting value.
 	 */
 	public function get_setting( $key, $default = false ) {
+		/**
+		 * Setting value.
+		 *
+		 * @var string|array|bool
+		 */
 		return get_option( $key, $default );
 	}
 

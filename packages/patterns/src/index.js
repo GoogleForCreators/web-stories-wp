@@ -22,6 +22,7 @@ export { default as createSolidFromString } from './createSolidFromString';
 export { default as generatePatternStyles } from './generatePatternStyles';
 export { default as getBrightnessFromPattern } from './getBrightnessFromPattern';
 export { default as getHexFromSolid } from './getHexFromSolid';
+export { default as getHexFromSolidArray } from './getHexFromSolidArray';
 export { default as getHexFromValue } from './getHexFromValue';
 export { default as getOpaquePattern } from './getOpaquePattern';
 export { default as getPreviewText } from './getPreviewText';

@@ -31,10 +31,26 @@ export default {
     _x('Blue', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Blazing Red', 'color', 'web-stories'), color: '#fe0002' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Tropical Blue', 'color', 'web-stories'), color: '#94e1de' },
-    { label: _x('Gunmetal Blue', 'color', 'web-stories'), color: '#252a3a' },
+    {
+      label: _x('Blazing Red', 'color', 'web-stories'),
+      color: '#fe0002',
+      family: _x('Red', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Tropical Blue', 'color', 'web-stories'),
+      color: '#94e1de',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Gunmetal Blue', 'color', 'web-stories'),
+      color: '#252a3a',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'With its readability-focused design, this template is great for breaking down concepts and easily explaining technical topics with the help of photos, videos, and text.',

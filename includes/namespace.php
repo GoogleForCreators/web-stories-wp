@@ -212,11 +212,11 @@ function rest_preload_api_request( $memo, $path ): array {
 	}
 
 	$path_parts = wp_parse_url( (string) $path );
-	if ( false === $path_parts ) {
+	if ( ! is_array( $path_parts ) ) {
 		return $memo;
 	}
 
-	$request = new WP_REST_Request( $method, untrailingslashit( $path_parts['path'] ) );
+	$request = new WP_REST_Request( $method, untrailingslashit( (string) $path_parts['path'] ) );
 	if ( ! empty( $path_parts['query'] ) ) {
 		$query_params = [];
 		parse_str( $path_parts['query'], $query_params );
@@ -226,8 +226,14 @@ function rest_preload_api_request( $memo, $path ): array {
 	$response = rest_do_request( $request );
 	if ( 200 === $response->status ) {
 		$server = rest_get_server();
-		$embed  = $request->has_param( '_embed' ) ? rest_parse_embed_param( $request['_embed'] ) : false;
-		$data   = $server->response_to_data( $response, $embed );
+		/**
+		 * Embed directive.
+		 *
+		 * @var string|array $embed
+		 */
+		$embed = $request['_embed'] ?? false;
+		$embed = $embed ? rest_parse_embed_param( $embed ) : false;
+		$data  = $server->response_to_data( $response, $embed );
 
 		if ( 'OPTIONS' === $method ) {
 			$response = rest_send_allow_header( $response, $server, $request );

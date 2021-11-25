@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -45,7 +45,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [174, 180, 187],
+            "baseColor": "#aeb4bb",
             "isExternal": true
           }
         },
@@ -77,7 +77,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [187, 179, 187],
+            "baseColor": "#bbb3bb",
             "isExternal": true
           }
         },
@@ -109,7 +109,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [67, 52, 41],
+            "baseColor": "#433429",
             "isExternal": true
           }
         },
@@ -393,7 +393,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [36, 28, 22],
+            "baseColor": "#241c16",
             "isExternal": true
           }
         }
@@ -440,7 +440,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [134, 134, 134],
+            "baseColor": "#868686",
             "isExternal": true
           },
           "x": 116,
@@ -481,7 +481,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [241, 240, 238],
+            "baseColor": "#f1f0ee",
             "isExternal": true
           }
         },
@@ -669,7 +669,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [95, 101, 101],
+            "baseColor": "#5f6565",
             "isExternal": true
           },
           "overlay": {
@@ -930,7 +930,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [165, 164, 159],
+            "baseColor": "#a5a49f",
             "isExternal": true
           },
           "overlay": {
@@ -1202,7 +1202,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [179, 178, 180],
+            "baseColor": "#b3b2b4",
             "isExternal": true
           }
         },
@@ -1234,7 +1234,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [100, 95, 90],
+            "baseColor": "#645f5a",
             "isExternal": true
           }
         },
@@ -1424,7 +1424,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [38, 41, 33],
+            "baseColor": "#262921",
             "isExternal": true
           },
           "overlay": {
@@ -1682,7 +1682,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [213, 200, 194],
+            "baseColor": "#d5c8c2",
             "isExternal": true
           },
           "overlay": {
@@ -1960,7 +1960,7 @@
             "isOptimized": true,
             "isMuted": true,
             "length": 20,
-            "baseColor": [201, 195, 193],
+            "baseColor": "#c9c3c1",
             "isExternal": true
           },
           "tracks": []
@@ -2098,7 +2098,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [80, 41, 27],
+            "baseColor": "#50291b",
             "isExternal": true
           }
         },
@@ -2130,7 +2130,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 189, 186],
+            "baseColor": "#c4bdba",
             "isExternal": true
           }
         },
@@ -2318,7 +2318,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [52, 38, 38],
+            "baseColor": "#342626",
             "isExternal": true
           },
           "overlay": {
@@ -2577,7 +2577,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [159, 152, 149],
+            "baseColor": "#9f9895",
             "isExternal": true
           },
           "overlay": {
@@ -2907,7 +2907,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [16, 27, 31],
+            "baseColor": "#101b1f",
             "isExternal": true
           }
         },
@@ -3070,7 +3070,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [39, 21, 16],
+            "baseColor": "#271510",
             "isExternal": true
           }
         },

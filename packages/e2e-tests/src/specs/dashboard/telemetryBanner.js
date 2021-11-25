@@ -21,15 +21,14 @@ import {
   disableCheckbox,
   visitDashboard,
   visitSettings,
+  clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Telemetry Banner', () => {
   beforeAll(async () => {
     await visitSettings();
     await disableCheckbox('[data-testid="telemetry-settings-checkbox"]');
-    await page.evaluate(() => {
-      localStorage.removeItem('web_stories_tracking_optin_banner_closed');
-    });
+    await clearLocalStorage();
   });
 
   beforeEach(async () => {
@@ -37,9 +36,7 @@ describe('Telemetry Banner', () => {
   });
 
   afterEach(async () => {
-    await page.evaluate(() => {
-      localStorage.removeItem('web_stories_tracking_optin_banner_closed');
-    });
+    await clearLocalStorage();
   });
 
   afterAll(async () => {

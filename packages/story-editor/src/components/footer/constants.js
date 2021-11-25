@@ -14,8 +14,32 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
+
 // If the workspace is wider than this limit, this margin will be applied to the right
 export const VERY_WIDE_WORKSPACE_LIMIT = 1000;
 export const VERY_WIDE_MARGIN = 8;
 
-export const MENU_GUTTER = 167;
+export const FOOTER_MARGIN = 16;
+export const FOOTER_TOP_MARGIN = FOOTER_MARGIN;
+export const FOOTER_BOTTOM_MARGIN = FOOTER_MARGIN;
+
+export const FOOTER_MENU_GAP = 8;
+
+export const KEYBOARD_SHORTCUTS_PADDING = 3;
+
+const BORDER_WIDTH = 1;
+const KEYBOARD_SHORTCUTS_WIDTH =
+  THEME_CONSTANTS.ICON_SIZE + 2 * KEYBOARD_SHORTCUTS_PADDING + 2 * BORDER_WIDTH;
+const LARGE_BUTTON_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 2 * BORDER_WIDTH;
+
+// What's the max space required for either menu? The widest possible menu is
+// the secondary one with two large buttons + shortcuts button + 2 gaps + right margin:
+export const MAX_MENU_WIDTH =
+  2 * LARGE_BUTTON_WIDTH +
+  KEYBOARD_SHORTCUTS_WIDTH +
+  2 * FOOTER_MENU_GAP +
+  FOOTER_MARGIN;

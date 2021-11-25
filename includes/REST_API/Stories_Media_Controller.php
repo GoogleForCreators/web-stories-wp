@@ -30,6 +30,7 @@ use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Media\Types;
+use Google\Web_Stories\Media\Base_Color;
 use WP_Post;
 use WP_Error;
 use WP_REST_Request;
@@ -109,7 +110,13 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		$response = parent::get_items( $request );
 
 		if ( $request['_web_stories_envelope'] && ! is_wp_error( $response ) ) {
-			$embed    = isset( $request['_embed'] ) ? rest_parse_embed_param( $request['_embed'] ) : false;
+			/**
+			 * Embed directive.
+			 *
+			 * @var string|array $embed
+			 */
+			$embed    = $request['_embed'] ?? false;
+			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
 			$response = rest_get_server()->envelope_response( $response, $embed );
 		}
 		return $response;
@@ -128,17 +135,43 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	public function create_item( $request ) {
 		// WP_REST_Attachments_Controller doesn't allow setting an attachment as the parent post.
 		// Hence we are working around this here.
-		$parent_post = ! empty( $request['post'] ) ? (int) $request['post'] : null;
-		$original_id = ! empty( $request['original_id'] ) ? (int) $request['original_id'] : null;
+
+		/**
+		 * Parent post.
+		 *
+		 * @var int $parent_post
+		 */
+		$parent_post = ! empty( $request['post'] ) ? $request['post'] : null;
+
+		/**
+		 * Original post ID.
+		 *
+		 * @var int $original_id
+		 */
+		$original_id = ! empty( $request['original_id'] ) ? $request['original_id'] : null;
+
 		unset( $request['post'] );
 
 		$response = parent::create_item( $request );
-		if ( is_wp_error( $response ) || ( ! $parent_post && ! $original_id ) ) {
+		if ( ( ! $parent_post && ! $original_id ) || is_wp_error( $response ) ) {
 			return $response;
 		}
 
-		$data       = $response->get_data();
-		$attachment = $this->process_post( $data['id'], $parent_post, $original_id );
+		/**
+		 * Response data.
+		 *
+		 * @var array $data
+		 */
+		$data = $response->get_data();
+
+		/**
+		 * Post ID.
+		 *
+		 * @var int $post_id
+		 */
+		$post_id = $data['id'];
+
+		$attachment = $this->process_post( $post_id, $parent_post, $original_id );
 		if ( is_wp_error( $attachment ) ) {
 			return $attachment;
 		}
@@ -177,12 +210,19 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 			$args['post_excerpt'] = $attachment_post->post_excerpt;
 			$args['post_title']   = $attachment_post->post_title;
 
-			// Copy the image alt text from the edited image.
-			$image_alt = (string) get_post_meta( $original_id, '_wp_attachment_image_alt', true );
+			$meta_fields = [ '_wp_attachment_image_alt', Base_Color::BASE_COLOR_POST_META_KEY ];
+			foreach ( $meta_fields as $meta_field ) {
+				/**
+				 * Meta value.
+				 *
+				 * @var string $value
+				 */
+				$value = get_post_meta( $original_id, $meta_field, true );
 
-			if ( ! empty( $image_alt ) ) {
-				// update_post_meta() expects slashed.
-				update_post_meta( $post_id, '_wp_attachment_image_alt', wp_slash( $image_alt ) );
+				if ( ! empty( $value ) ) {
+					// update_post_meta() expects slashed.
+					update_post_meta( $post_id, $meta_field, wp_slash( $value ) );
+				}
 			}
 		}
 
@@ -245,10 +285,10 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		 *
 		 * @since 1.10.0
 		 *
-		 * @link https://developer.wordpress.org/reference/classes/wp_query/
+		 * @see WP_Query
 		 *
-		 * @param array           $args    Array of arguments for WP_Query.
-		 * @param WP_REST_Request $request The REST API request.
+		 * @param array                $args    Array of arguments for WP_Query.
+		 * @param WP_REST_Request|null $request The REST API request.
 		 */
 		return apply_filters( 'web_stories_rest_attachment_query', $query_args, $request );
 	}

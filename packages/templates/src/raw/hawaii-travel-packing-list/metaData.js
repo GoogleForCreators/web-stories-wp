@@ -31,8 +31,16 @@ export default {
     _x('Teal', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Cool Teal', 'color', 'web-stories'), color: '#EFFAF6' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
+    {
+      label: _x('Cool Teal', 'color', 'web-stories'),
+      color: '#EFFAF6',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000',
+      family: _x('Black', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'This template’s beautiful blue-green palette will let you create helpful travel and backpacking stories such as tourist guides, packing lists, and more, with the ability to add product links.',

@@ -19,7 +19,7 @@
     "@web-stories-wp/react": "*",
     "@web-stories-wp/story-editor": "*",
     "@web-stories-wp/tracking": "*",
-    "@wordpress/api-fetch": "^5.2.4",
+    "@wordpress/api-fetch": "^5.2.6",
     "flagged": "^2.0.1",
     "polished": "^4.1.3",
     "react-calendar": "^3.5.0",

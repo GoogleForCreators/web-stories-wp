@@ -578,7 +578,7 @@ class Customizer extends Service_Base {
 	 * @return string
 	 */
 	public function render_stories(): string {
-		$options = $this->settings->get_setting( self::STORY_OPTION );
+		$options = (array) $this->settings->get_setting( self::STORY_OPTION );
 
 		if ( empty( $options['show_stories'] ) || true !== $options['show_stories'] ) {
 			return '';
@@ -647,6 +647,11 @@ class Customizer extends Service_Base {
 	 * @return array
 	 */
 	public function get_stories_theme_support() : array {
+		/**
+		 * Theme support configuration.
+		 *
+		 * @var array $support
+		 */
 		$support = get_theme_support( 'web-stories' );
 		$support = isset( $support[0] ) && is_array( $support[0] ) ? $support[0] : [];
 

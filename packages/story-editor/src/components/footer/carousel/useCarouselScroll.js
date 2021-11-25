@@ -17,12 +17,19 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useLayoutEffect } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useRef,
+  useState,
+  useEffect,
+  useLayoutEffect,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import { useConfig, useStory } from '../../../app';
+import { useConfig, useStory, useLayout } from '../../../app';
+import { CAROUSEL_STATE } from '../../../constants';
 
 function useCarouselScroll({
   listElement,
@@ -34,6 +41,9 @@ function useCarouselScroll({
 }) {
   const [ratio, setRatio] = useState(0);
   const { isRTL } = useConfig();
+  const { carouselState } = useLayout(({ state: { carouselState } }) => ({
+    carouselState,
+  }));
   const { currentPageIndex } = useStory(
     ({ state: { currentPageId, pages } }) => ({
       currentPageIndex: pages.findIndex(({ id }) => id === currentPageId),
@@ -97,9 +107,19 @@ function useCarouselScroll({
     [pageThumbWidth, pageThumbMargin]
   );
 
+  // Is this the first scroll (which will be instant rather than animated)?
+  const firstScroll = useRef(true);
+
+  // If the carousel drawer is collapsed, reset first scroll to true
+  useEffect(() => {
+    if (carouselState === CAROUSEL_STATE.CLOSED) {
+      firstScroll.current = true;
+    }
+  }, [carouselState]);
+
   // This effect makes sure, that whenever the current page changes, it'll be in focus
   // Note that it doesn't run just because the current page is updated (some element
-  // added or removed to page). Only when the actual for the current page is updated
+  // added or removed to page). Only when the actual index for the current page is updated
   // (because a page is added or deleted or user navigate to another page), this runs.
   useLayoutEffect(() => {
     if (!hasOverflow || !listElement) {
@@ -134,11 +154,16 @@ function useCarouselScroll({
       if (maxScroll < targetLeft) {
         return;
       }
+
+      // If this is the first scroll, jump instantly to the target offset
+      const scrollBehavior = firstScroll.current ? 'instant' : 'smooth';
+      firstScroll.current = false;
+
       // Otherwise, do scroll and cancel interval
       listElement.scrollTo({
         left: targetLeft,
         top: 0,
-        behavior: 'smooth',
+        behavior: scrollBehavior,
       });
       clearInterval(retry);
     };

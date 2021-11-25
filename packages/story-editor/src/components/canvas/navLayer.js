@@ -28,7 +28,7 @@ import DirectionAware from '../directionAware';
 import PageSideMenu from './pageSideMenu';
 import { FooterArea, HeadArea, Layer, PageMenuArea, Z_INDEX } from './layout';
 
-function NavLayer({ header }) {
+function NavLayer({ header, footer }) {
   return (
     <Layer
       pointerEvents="none"
@@ -42,7 +42,7 @@ function NavLayer({ header }) {
         </PageMenuArea>
       </DirectionAware>
       <FooterArea pointerEvents="initial">
-        <Footer />
+        <Footer footer={footer} />
       </FooterArea>
     </Layer>
   );
@@ -50,6 +50,7 @@ function NavLayer({ header }) {
 
 NavLayer.propTypes = {
   header: Proptypes.node,
+  footer: Proptypes.object,
 };
 
 export default memo(NavLayer);

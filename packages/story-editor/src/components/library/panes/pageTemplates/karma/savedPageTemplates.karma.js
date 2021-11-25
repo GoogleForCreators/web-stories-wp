@@ -34,6 +34,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
