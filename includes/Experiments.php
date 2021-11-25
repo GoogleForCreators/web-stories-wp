@@ -268,6 +268,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Template search', 'web-stories' ),
 				'description' => __( 'Enable search for templates', 'web-stories' ),
 				'group'       => 'dashboard',
+				'default'     => true,
 			],
 			/**
 			 * Author: @dmmulroy
