@@ -373,7 +373,7 @@ class Sanitization {
 		 *
 		 * @since 1.1.0
 		 *
-		 * @param bool Whether AMP dev mode is enabled.
+		 * @param bool $dev_mode_enabled Whether AMP dev mode is enabled.
 		 */
 		return apply_filters( 'web_stories_amp_dev_mode_enabled', $dev_mode_enabled );
 	}
