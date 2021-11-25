@@ -27,8 +27,14 @@ import { useHistory } from '../../history';
 // Record any change to core variables in history (history will know if it's a replay)
 function useHistoryEntry({ story, current, pages, selection, capabilities }) {
   const {
+    state: { currentEntry },
     actions: { stateToHistory },
   } = useHistory();
+
+  const currentHistoryEntryRef = useRef();
+  useEffect(() => {
+    currentHistoryEntryRef.current = currentEntry;
+  }, [currentEntry]);
 
   const currentPageIndexRef = useRef();
   const selectedElementIdsRef = useRef();
@@ -36,6 +42,19 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
     currentPageIndexRef.current = current;
     selectedElementIdsRef.current = selection;
   }, [current, selection]);
+
+  const deleteNestedKey = (object, key) => {
+    const keys = key.split(".");
+    const lastKey = keys.pop();
+    const nextLastKey = keys.pop();
+    const nextLastObj = keys.reduce((a, key) => a[key], object);
+    delete nextLastObj[nextLastKey][lastKey];
+    return object;
+  };
+
+  const obj = {"hello": {"data": {"a": "world", "b": "random"}}};
+  const result = deleteNestedKey(obj, 'hello.data.a');
+  console.log(result);
 
   useEffect(() => {
     stateToHistory({
