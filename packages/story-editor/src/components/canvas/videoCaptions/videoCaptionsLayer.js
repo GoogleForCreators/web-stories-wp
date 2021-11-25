@@ -60,7 +60,6 @@ function VideoCaptionsLayer() {
           tracks?.length > 0 &&
           state.selectedElementIds.includes(id)
       )
-      .map(({ id }) => id)
       .pop()
   );
 
@@ -73,7 +72,7 @@ function VideoCaptionsLayer() {
       return;
     }
 
-    const video = document.getElementById(`video-${videoElement}`);
+    const video = document.getElementById(`video-${videoElement.id}`);
     setVideoTrackCount(video.textTracks.length);
   }, [videoElement, setVideoTrackCount, isEditing]);
 
@@ -91,7 +90,7 @@ function VideoCaptionsLayer() {
                 // eslint-disable-next-line react/no-array-index-key
                 index
               }
-              videoId={videoElement}
+              videoElement={videoElement}
               trackIndex={index}
             />
           ))}

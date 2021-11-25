@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import {
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from '@web-stories-wp/react';
 import styled from 'styled-components';
@@ -29,6 +28,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import StoryPropTypes from '../../../types';
 import { useLayout } from '../../../app';
 import Cue from './cue';
 
@@ -43,13 +43,14 @@ const Track = styled.div`
 /** @typedef {import('react').ReactNode} ReactNode */
 
 /**
+ * Track renderer component.
  *
  * @param {Object} props Component props.
- * @param {string} props.videoId Video element ID.
+ * @param {Object} props.videoElement Video element
  * @param {number} props.trackIndex Video track index in the tracklist.
  * @return {*} Track component.
  */
-function TrackRenderer({ videoId, trackIndex }) {
+function TrackRenderer({ videoElement, trackIndex }) {
   const { pageWidth, pageHeight } = useLayout(
     ({ state: { pageWidth, pageHeight } }) => ({
       pageWidth,
@@ -65,11 +66,6 @@ function TrackRenderer({ videoId, trackIndex }) {
   const [videoTime, setVideoTime] = useState(0);
   const [cues, setCues] = useState([]);
 
-  /**
-   * @type {import('react').MutableRefObject<HTMLVideoElement>} video Video element.
-   */
-  const videoRef = useRef(null);
-
   const updateCues = useCallback(() => {
     const activeCues = track?.activeCues ? [...track.activeCues] : [];
     setCues(activeCues);
@@ -81,13 +77,13 @@ function TrackRenderer({ videoId, trackIndex }) {
     /**
      * @type {HTMLVideoElement}
      */
-    videoRef.current = document.getElementById(`video-${videoId}`);
+    const videoEl = document.getElementById(`video-${videoElement.id}`);
 
-    if (!videoRef.current) {
+    if (!videoEl) {
       return undefined;
     }
 
-    const videoTrack = videoRef.current.textTracks?.[trackIndex];
+    const videoTrack = videoEl.textTracks?.[trackIndex];
 
     if (!videoTrack) {
       return undefined;
@@ -99,20 +95,19 @@ function TrackRenderer({ videoId, trackIndex }) {
 
     setTrack(videoTrack);
 
-    videoRef.current.addEventListener('timeupdate', () => {
-      setVideoTime(videoRef.current.currentTime);
+    videoEl.addEventListener('timeupdate', () => {
+      setVideoTime(videoEl.currentTime);
     });
 
+    // TODO: Figure out why this doesn't work after moving the video on the canvas.
     videoTrack.addEventListener('cuechange', updateCues);
-    videoTrack.addEventListener('play', updateCues);
 
     return () => {
       videoTrack.removeEventListener('cuechange', updateCues);
-      videoTrack.removeEventListener('play', updateCues);
     };
-  }, [trackIndex, updateCues, videoId, pageWidth, pageHeight]);
+  }, [trackIndex, updateCues, videoElement, pageWidth, pageHeight]);
 
-  if (!cues || !track || !videoRef.current?.isConnected) {
+  if (!cues || !track) {
     return null;
   }
 
@@ -134,7 +129,7 @@ function TrackRenderer({ videoId, trackIndex }) {
 }
 
 TrackRenderer.propTypes = {
-  videoId: PropTypes.string.isRequired,
+  videoElement: StoryPropTypes.element.isRequired,
   trackIndex: PropTypes.number.isRequired,
 };
 
