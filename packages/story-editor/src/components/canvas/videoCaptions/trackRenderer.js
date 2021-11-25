@@ -73,6 +73,7 @@ function TrackRenderer({ videoElement, trackIndex }) {
 
   useEffect(() => {
     updateCues();
+    setVideoTime(0);
 
     /**
      * @type {HTMLVideoElement}
