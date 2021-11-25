@@ -18,19 +18,18 @@
  */
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
+import { theme } from '@web-stories-wp/design-system';
+import { useConfig, useCurrentUser } from '@web-stories-wp/story-editor';
+
 /**
  * Internal dependencies
  */
 import VideoOptimizationCheckbox from '..';
-import theme from '../../../../theme';
-import { useConfig, useCurrentUser } from '../../../../app';
 
-jest.mock('../../../../app', () => ({
+jest.mock('@web-stories-wp/story-editor', () => ({
+  ...jest.requireActual('@web-stories-wp/story-editor'),
   useConfig: jest.fn(),
   useCurrentUser: jest.fn(),
-}));
-
-jest.mock('../../popupMountedContext', () => ({
   useIsChecklistMounted: jest.fn(() => true),
 }));
 

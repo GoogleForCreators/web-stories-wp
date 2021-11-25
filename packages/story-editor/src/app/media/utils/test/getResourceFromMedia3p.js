@@ -22,7 +22,7 @@ import getResourceFromMedia3p from '../getResourceFromMedia3p';
 describe('getResourceFromMedia3p', () => {
   it('should return video resource', () => {
     const media3pResource = {
-      baseColor: '#00379b',
+      color: '#00379b',
       name: 'media/coverr:g9re0sRUYA',
       provider: 'COVERR',
       type: 'VIDEO',
@@ -112,7 +112,7 @@ describe('getResourceFromMedia3p', () => {
 
   it('should return video resource no description', () => {
     const media3pResource = {
-      baseColor: '#00379b',
+      color: '#00379b',
       name: 'media/coverr:g9re0sRUYA',
       provider: 'COVERR',
       type: 'VIDEO',
@@ -202,7 +202,7 @@ describe('getResourceFromMedia3p', () => {
 
   it('should return video resource no description or title', () => {
     const media3pResource = {
-      baseColor: '#00379b',
+      color: '#00379b',
       name: 'media/coverr:g9re0sRUYA',
       provider: 'COVERR',
       type: 'VIDEO',
@@ -291,7 +291,7 @@ describe('getResourceFromMedia3p', () => {
 
   it('should return video resource with calculated size', () => {
     const media3pResource = {
-      baseColor: '#00379b',
+      color: '#00379b',
       name: 'media/coverr:g9re0sRUYA',
       provider: 'COVERR',
       type: 'VIDEO',
@@ -432,7 +432,7 @@ describe('getResourceFromMedia3p', () => {
 
   it('should return image and video resources for tenor gifs', () => {
     const media3pResource = {
-      baseColor: '#00379b',
+      color: '#00379b',
       name: 'media/tenor:3468838096637910112',
       provider: 'TENOR',
       type: 'GIF',

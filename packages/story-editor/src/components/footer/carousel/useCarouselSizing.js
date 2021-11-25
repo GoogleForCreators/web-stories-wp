@@ -23,7 +23,7 @@ import { useMemo } from '@web-stories-wp/react';
  * Internal dependencies
  */
 import {
-  BUTTON_GUTTER,
+  NAVIGATION_BUTTON_GUTTER,
   WIDE_CAROUSEL_LIMIT,
   WIDE_THUMBNAIL_WIDTH,
   WIDE_THUMBNAIL_HEIGHT,
@@ -35,7 +35,7 @@ import {
 function useCarouselSizing({ availableSpace, numPages }) {
   return useMemo(() => {
     const isWideCarousel = availableSpace >= WIDE_CAROUSEL_LIMIT;
-    const spaceForCarousel = availableSpace - 2 * BUTTON_GUTTER;
+    const spaceForCarousel = availableSpace - 2 * NAVIGATION_BUTTON_GUTTER;
     const pageThumbWidth = isWideCarousel
       ? WIDE_THUMBNAIL_WIDTH
       : NARROW_THUMBNAIL_WIDTH;

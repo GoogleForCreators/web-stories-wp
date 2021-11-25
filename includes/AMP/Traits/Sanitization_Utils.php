@@ -442,6 +442,12 @@ trait Sanitization_Utils {
 	/**
 	 * Remove images referencing the grid-placeholder.png file which has since been removed.
 	 *
+	 * Prevents 404 errors for non-existent image files when creators forget to replace/remove
+	 * the placeholder image.
+	 *
+	 * The placeholder functionality was removed in v1.14.0, nevertheless older stories could still
+	 * reference the files.
+	 *
 	 * @link https://github.com/google/web-stories-wp/issues/9530
 	 *
 	 * @since 1.14.0
@@ -450,7 +456,10 @@ trait Sanitization_Utils {
 	 * @return void
 	 */
 	private function remove_page_template_placeholder_images( &$document ) {
-		$placeholder_img = 'assets/images/editor/grid-placeholder.png';
+		// Catches "assets/images/editor/grid-placeholder.png" as well as
+		// "web-stories/assets/images/adde98ae406d6b5c95d111a934487252.png" (v1.14.0)
+		// and potentially other variants.
+		$placeholder_img = 'plugins/web-stories/assets/images';
 
 		/**
 		 * List of <amp-img> elements.

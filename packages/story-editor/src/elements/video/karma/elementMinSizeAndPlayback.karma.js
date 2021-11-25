@@ -88,5 +88,22 @@ describe('Element min size and playback', () => {
       expect(video1isPlaying).toBe(true);
       expect(video2isPlaying).toBe(false);
     });
+
+    it('hit spacebar on the covered element', async () => {
+      // video1 is covered by video2
+      // select video1, press spacebar, verify video1 is playing
+      const video1bb = video1Frame.getBoundingClientRect();
+
+      await fixture.events.mouse.click(video1bb.x, video1bb.y);
+
+      await fixture.events.keyboard.press('Space');
+      const video1El = fixture.querySelector(`#video-${video1.id}`);
+      const video2El = fixture.querySelector(`#video-${video2.id}`);
+      const video1isPlaying = video1El.paused === false;
+      const video2isPlaying = video2El.paused === false;
+
+      expect(video1isPlaying).toBe(true);
+      expect(video2isPlaying).toBe(false);
+    });
   });
 });
