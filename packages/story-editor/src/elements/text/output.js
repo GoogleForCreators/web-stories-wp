@@ -83,7 +83,7 @@ export function TextOutputWithUnits({
     horizontal: padding.horizontal ? dataToPaddingX(padding.horizontal) : 0,
   };
 
-  const hasPadding = paddingStyles.vertical && paddingStyles.horizontal;
+  const hasPadding = paddingStyles.vertical || paddingStyles.horizontal;
   const paddingStyle = hasPadding
     ? `${paddingStyles.vertical} ${paddingStyles.horizontal}`
     : 0;

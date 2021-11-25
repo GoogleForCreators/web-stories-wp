@@ -173,7 +173,7 @@ describe('Text/util', () => {
       const dataToFontSizeY = (y) => `${dataToFontSize(y, 100)}em`;
       const dataToPaddingY = (y) => `${(y / width) * 100}%`;
       const actual = generateParagraphTextStyle(
-        TEXT_ELEMENT,
+        element,
         dataToStyleX,
         dataToStyleY,
         dataToFontSizeY,
@@ -192,6 +192,88 @@ describe('Text/util', () => {
         lineHeight,
         textAlign,
         padding: 0,
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it('should return valid styles for element with padding', () => {
+      const element = {
+        ...TEXT_ELEMENT,
+        padding: {
+          vertical: 10,
+          horizontal: 10,
+          locked: true,
+        },
+      };
+      const { width } = element;
+      const { font, lineHeight, textAlign } = element;
+
+      // Usage as in <TextOutput>
+      const dataToStyleX = (x) => `${dataToEditorX(x, 100)}%`;
+      const dataToStyleY = (y) => `${dataToEditorY(y, 100)}%`;
+      const dataToFontSizeY = (y) => `${dataToFontSize(y, 100)}em`;
+      const dataToPaddingY = (y) => `${(y / width) * 100}%`;
+      const actual = generateParagraphTextStyle(
+        element,
+        dataToStyleX,
+        dataToStyleY,
+        dataToFontSizeY,
+        element,
+        dataToPaddingY
+      );
+      const expected = {
+        dataToEditorY: dataToStyleY,
+        whiteSpace: 'pre-wrap',
+        overflowWrap: 'break-word',
+        wordBreak: 'break-word',
+        margin: '-1.4335558252427185% 0',
+        fontFamily: '"Roboto","Helvetica Neue","Helvetica",sans-serif',
+        fontSize: '0.291262em',
+        font,
+        lineHeight,
+        textAlign,
+        padding: '1.61812% 2.42718%',
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it('should return valid styles for element with one-sided padding', () => {
+      const element = {
+        ...TEXT_ELEMENT,
+        padding: {
+          vertical: 10,
+          horizontal: 0,
+          locked: true,
+        },
+      };
+      const { width } = element;
+      const { font, lineHeight, textAlign } = element;
+
+      // Usage as in <TextOutput>
+      const dataToStyleX = (x) => `${dataToEditorX(x, 100)}%`;
+      const dataToStyleY = (y) => `${dataToEditorY(y, 100)}%`;
+      const dataToFontSizeY = (y) => `${dataToFontSize(y, 100)}em`;
+      const dataToPaddingY = (y) => `${(y / width) * 100}%`;
+      const actual = generateParagraphTextStyle(
+        element,
+        dataToStyleX,
+        dataToStyleY,
+        dataToFontSizeY,
+        element,
+        dataToPaddingY
+      );
+      const expected = {
+        dataToEditorY: dataToStyleY,
+        whiteSpace: 'pre-wrap',
+        overflowWrap: 'break-word',
+        wordBreak: 'break-word',
+        margin: '-1.4335558252427185% 0',
+        fontFamily: '"Roboto","Helvetica Neue","Helvetica",sans-serif',
+        fontSize: '0.291262em',
+        font,
+        lineHeight,
+        textAlign,
+        padding: '1.61812% 0%',
       };
       expect(actual).toStrictEqual(expected);
     });
