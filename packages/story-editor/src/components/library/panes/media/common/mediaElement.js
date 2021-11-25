@@ -86,9 +86,11 @@ function Element({
     baseColor,
   } = resource;
 
-  const { isResourceProcessingById } = useLocalMedia(({ state }) => ({
-    isResourceProcessingById: state.isResourceProcessingById,
-  }));
+  const { isResourceProcessingById } = useLocalMedia(
+    ({ state: { isResourceProcessingById } }) => ({
+      isResourceProcessingById,
+    })
+  );
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -271,11 +273,19 @@ function MediaElement(props) {
     isResourceTrimmingById,
     isResourceMutingById,
     isResourceTranscodingById,
-  } = useLocalMedia(({ state }) => ({
-    isResourceMutingById: state.isResourceMutingById,
-    isResourceTrimmingById: state.isResourceTrimmingById,
-    isResourceTranscodingById: state.isResourceTranscodingById,
-  }));
+  } = useLocalMedia(
+    ({
+      state: {
+        isResourceMutingById,
+        isResourceTrimmingById,
+        isResourceTranscodingById,
+      },
+    }) => ({
+      isResourceMutingById,
+      isResourceTrimmingById,
+      isResourceTranscodingById,
+    })
+  );
   const { id } = props.resource;
 
   if (

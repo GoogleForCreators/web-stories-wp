@@ -151,11 +151,9 @@ function RightClickMenuProvider({ children }) {
   );
 
   const { isResourceProcessing } = useLocalMedia(
-    ({ state: { isResourceProcessing } }) => {
-      return {
-        isResourceProcessing,
-      };
-    }
+    ({ state: { isResourceProcessing } }) => ({
+      isResourceProcessing,
+    })
   );
 
   const { hasTrimMode, toggleTrimMode } = useVideoTrim(

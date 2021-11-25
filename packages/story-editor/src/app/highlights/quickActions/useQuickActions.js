@@ -98,16 +98,14 @@ export const MediaPicker = ({ render, ...props }) => {
         optimizeVideo,
         optimizeGif,
       },
-    }) => {
-      return {
-        isResourceProcessing,
-        isResourceProcessingById,
-        resetWithFetch,
-        postProcessingResource,
-        optimizeVideo,
-        optimizeGif,
-      };
-    }
+    }) => ({
+      isResourceProcessing,
+      isResourceProcessingById,
+      resetWithFetch,
+      postProcessingResource,
+      optimizeVideo,
+      optimizeGif,
+    })
   );
 
   const { isTranscodingEnabled } = useFFmpeg();
@@ -278,12 +276,10 @@ const useQuickActions = () => {
   );
 
   const { isResourceProcessing, isResourceProcessingById } = useLocalMedia(
-    ({ state: { isResourceProcessing, isResourceProcessingById } }) => {
-      return {
-        isResourceProcessing,
-        isResourceProcessingById,
-      };
-    }
+    ({ state: { isResourceProcessing, isResourceProcessingById } }) => ({
+      isResourceProcessing,
+      isResourceProcessingById,
+    })
   );
 
   const undoRef = useRef(undo);

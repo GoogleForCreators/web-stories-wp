@@ -42,9 +42,12 @@ function useInsertElement() {
     updateElementById: state.actions.updateElementById,
   }));
   const { postProcessingResource, isResourceUploadingById } = useLocalMedia(
-    (state) => ({
-      postProcessingResource: state.actions.postProcessingResource,
-      isResourceUploadingById: state.state.isResourceUploadingById,
+    ({
+      state: { postProcessingResource },
+      actions: { isResourceUploadingById },
+    }) => ({
+      postProcessingResource,
+      isResourceUploadingById,
     })
   );
   const {

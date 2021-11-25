@@ -51,8 +51,8 @@ function PublishButton({ forceIsSaving }) {
         canPublish: Boolean(capabilities?.publish),
       })
     );
-  const { isUploading } = useLocalMedia(({ state }) => ({
-    isUploading: state.isUploading,
+  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
+    isUploading,
   }));
 
   const { shouldReviewDialogBeSeen } = useCheckpoint(

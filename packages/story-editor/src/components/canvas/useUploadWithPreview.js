@@ -29,9 +29,9 @@ import useInsertElement from './useInsertElement';
 
 function useUploadWithPreview() {
   const { uploadMedia, postProcessingResource } = useLocalMedia(
-    ({ actions }) => ({
-      uploadMedia: actions.uploadMedia,
-      postProcessingResource: actions.postProcessingResource,
+    ({ actions: { uploadMedia, postProcessingResource } }) => ({
+      uploadMedia,
+      postProcessingResource,
     })
   );
   const insertElement = useInsertElement();

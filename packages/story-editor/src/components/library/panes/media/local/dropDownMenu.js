@@ -104,9 +104,11 @@ function DropDownMenu({
   const [showEditDialog, setShowEditDialog] = useState(false);
   const moreButtonRef = useRef();
 
-  const { isResourceProcessingById } = useLocalMedia(({ state }) => ({
-    isResourceProcessingById: state.isResourceProcessingById,
-  }));
+  const { isResourceProcessingById } = useLocalMedia(
+    ({ state: { isResourceProcessingById } }) => ({
+      isResourceProcessingById,
+    })
+  );
 
   const handleCurrentValue = (evt, value) => {
     onMenuSelected();

@@ -55,9 +55,11 @@ function ImageDisplay({ element, box, previewMode }) {
     initialSrc = resourceList.get(resource.id).url;
   }
 
-  const { isResourceUploadingById } = useLocalMedia(({ state }) => ({
-    isResourceUploadingById: state.isResourceUploadingById,
-  }));
+  const { isResourceUploadingById } = useLocalMedia(
+    ({ state: { isResourceUploadingById } }) => ({
+      isResourceUploadingById,
+    })
+  );
 
   if (
     resourceList.get(resource.id)?.type === 'fullsize' ||

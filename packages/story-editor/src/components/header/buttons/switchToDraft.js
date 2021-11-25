@@ -43,8 +43,8 @@ function SwitchToDraftButton({ forceIsSaving = false }) {
       actions: { saveStory },
     }) => ({ isSaving, saveStory })
   );
-  const { isUploading } = useLocalMedia(({ state }) => ({
-    isUploading: state.isUploading,
+  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
+    isUploading,
   }));
 
   const handleUnPublish = useCallback(() => {
