@@ -150,9 +150,10 @@ function RightClickMenuProvider({ children }) {
     })
   );
 
-  const { isResourceProcessing } = useLocalMedia(
-    ({ state: { isResourceProcessing } }) => ({
+  const { isResourceProcessing, isResourceProcessingById } = useLocalMedia(
+    ({ state: { isResourceProcessing, isResourceProcessingById } }) => ({
       isResourceProcessing,
+      isResourceProcessingById,
     })
   );
 
@@ -781,6 +782,17 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
+  const canTranscodeResource = useCallback(
+    ({ id, isExternal }) => {
+      return (
+        !isExternal &&
+        !isResourceProcessing(id) &&
+        !isResourceProcessingById(id)
+      );
+    },
+    [isResourceProcessing, isResourceProcessingById]
+  );
+
   const pageManipulationItems = useMemo(
     () => [
       {
@@ -843,7 +855,7 @@ function RightClickMenuProvider({ children }) {
             {
               label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
               onClick: toggleTrimMode,
-              disabled: isResourceProcessing(selectedElement?.resource?.id),
+              disabled: !canTranscodeResource(selectedElement?.resource),
               ...menuItemProps,
             },
           ]
@@ -858,11 +870,11 @@ function RightClickMenuProvider({ children }) {
       ...pageManipulationItems,
     ];
   }, [
+    canTranscodeResource,
     handleClearElementStyles,
     handleOpenScaleAndCrop,
     handleRemoveMediaFromBackground,
     hasTrimMode,
-    isResourceProcessing,
     menuItemProps,
     pageManipulationItems,
     selectedElement,
@@ -942,7 +954,7 @@ function RightClickMenuProvider({ children }) {
             {
               label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
               onClick: toggleTrimMode,
-              disabled: isResourceProcessing(selectedElement?.resource?.id),
+              disabled: !canTranscodeResource(selectedElement?.resource),
               ...menuItemProps,
             },
           ]
@@ -968,6 +980,7 @@ function RightClickMenuProvider({ children }) {
       },
     ];
   }, [
+    canTranscodeResource,
     copiedElement,
     handleClearElementStyles,
     handleCopyStyles,
@@ -975,7 +988,6 @@ function RightClickMenuProvider({ children }) {
     handlePasteStyles,
     handleSetPageBackground,
     hasTrimMode,
-    isResourceProcessing,
     layerItems,
     menuItemProps,
     selectedElement,
