@@ -152,7 +152,7 @@ const BulkVideoOptimization = () => {
   const processVideoElement = useCallback(
     async (element) => {
       if (
-        !isResourceProcessing(element.id) &&
+        !isResourceProcessing(element.resource.id) &&
         state[element.resource.id] !== actionTypes.uploading
       ) {
         dispatch({ type: actionTypes.uploading, element });
