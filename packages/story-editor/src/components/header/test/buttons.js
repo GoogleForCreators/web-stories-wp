@@ -35,7 +35,7 @@ import MediaContext from '../../../app/media/context';
 import HistoryContext from '../../../app/history/context';
 import { renderWithTheme } from '../../../testUtils';
 import { StoryTriggersProvider } from '../../../app/story/storyTriggers';
-import { CheckpointContext } from '../../checklist';
+import { CheckpointContext, PPC_CHECKPOINT_STATE } from '../../checklist';
 import { useStory } from '../../../app';
 import {
   PreviewButton,
@@ -145,6 +145,7 @@ function setupButtons({
   const prepublishChecklistContextValue = {
     state: {
       shouldReviewDialogBeSeen: false,
+      checkpoint: PPC_CHECKPOINT_STATE.ALL,
       ...extraChecklistProps,
     },
     actions: {

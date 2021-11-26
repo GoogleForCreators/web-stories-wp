@@ -49,7 +49,7 @@ const Button = styled(DefaultButton)`
 function InnerButton({
   text,
   checkpoint,
-  shouldReviewDialogBeSeen,
+  shouldReviewDialogBeSeen = false,
   ...buttonProps
 }) {
   return (
@@ -67,8 +67,8 @@ function InnerButton({
 
 InnerButton.propTypes = {
   text: PropTypes.node.isRequired,
-  checkpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)).isRequired,
-  shouldReviewDialogBeSeen: PropTypes.bool.isRequired,
+  checkpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
+  shouldReviewDialogBeSeen: PropTypes.bool,
 };
 
 function ButtonWithChecklistWarning({
