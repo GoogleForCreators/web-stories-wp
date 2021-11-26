@@ -93,6 +93,7 @@ return [
 					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-tag-and-attribute-sanitizer.php',
 					'vendor/ampproject/amp-wp/includes/sanitizers/trait-amp-noscript-fallback.php',
 					'vendor/ampproject/amp-wp/includes/templates/class-amp-content-sanitizer.php',
+					'vendor/ampproject/amp-wp/src/ValidationExemption.php',
 				]
 			)
 				->append( [ 'vendor/ampproject/amp-wp/composer.json' ] ),
