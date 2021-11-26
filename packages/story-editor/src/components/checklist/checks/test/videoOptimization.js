@@ -19,8 +19,8 @@
  */
 import { videoElementsNotOptimized } from '../videoOptimization';
 
-const isResourceTranscoding = jest.fn();
-const isResourceProcessing = jest.fn();
+const isResourceTranscoding = () => false;
+const isResourceProcessing = () => false;
 
 describe('videoOptimization (pre-publish checklist card)', () => {
   it('should return true if the video element is currently being transcoded', () => {
@@ -62,11 +62,69 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     expect(result).toBe(true);
   });
 
+  it('should return false if the video element is larger than 1080x1920 and is optimizing', () => {
+    const largeUnoptimizedVideo = {
+      id: 202,
+      type: 'video',
+      resource: {
+        isOptimized: false,
+        height: 2160,
+        width: 3840,
+      },
+    };
+
+    const result = videoElementsNotOptimized(
+      largeUnoptimizedVideo,
+      () => true,
+      isResourceProcessing
+    );
+    expect(result).toBe(true);
+  });
+
+  it('should return false if the video element is larger than 1080x1920 and is processing', () => {
+    const largeUnoptimizedVideo = {
+      id: 202,
+      type: 'video',
+      resource: {
+        isOptimized: false,
+        height: 2160,
+        width: 3840,
+      },
+    };
+
+    const result = videoElementsNotOptimized(
+      largeUnoptimizedVideo,
+      isResourceTranscoding,
+      () => true
+    );
+    expect(result).toBe(false);
+  });
+
   it('should return false if the video element is larger than 1080x1920 and Optimized', () => {
     const largeUnoptimizedVideo = {
       id: 202,
       type: 'video',
       resource: {
+        isOptimized: true,
+        height: 2160,
+        width: 3840,
+      },
+    };
+
+    const result = videoElementsNotOptimized(
+      largeUnoptimizedVideo,
+      isResourceTranscoding,
+      isResourceProcessing
+    );
+    expect(result).toBe(false);
+  });
+
+  it('should return false if the video element is larger than 1080x1920 and isExternal', () => {
+    const largeUnoptimizedVideo = {
+      id: 202,
+      type: 'video',
+      resource: {
+        isExternal: true,
         isOptimized: true,
         height: 2160,
         width: 3840,
