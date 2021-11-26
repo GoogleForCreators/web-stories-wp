@@ -63,7 +63,7 @@ function ImageDisplay({ element, box, previewMode }) {
 
   if (
     resourceList.get(resource.id)?.type === 'fullsize' ||
-    isResourceUploadingById(resource.id)
+    isResourceUploadingById(resource?.id)
   ) {
     initialSrcType = 'fullsize';
     initialSrc = resource.src;

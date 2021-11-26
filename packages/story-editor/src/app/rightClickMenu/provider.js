@@ -783,7 +783,8 @@ function RightClickMenuProvider({ children }) {
   );
 
   const canTranscodeResource = useCallback(
-    ({ id, isExternal }) => {
+    (resource) => {
+      const { id, isExternal } = resource || {};
       return (
         !isExternal &&
         !isResourceProcessing(id) &&

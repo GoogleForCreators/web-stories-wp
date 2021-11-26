@@ -118,7 +118,7 @@ function useInsertElement() {
   const handleRegisterUsage = useCallback(
     (resource) => {
       if (
-        !isResourceUploadingById(resource.id) &&
+        !isResourceUploadingById(resource?.id) &&
         resource?.attribution?.registerUsageUrl
       ) {
         registerUsage({
