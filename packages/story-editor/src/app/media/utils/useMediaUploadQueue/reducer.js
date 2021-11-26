@@ -62,7 +62,7 @@ export function addItem(
     state: 'PENDING',
     resource: {
       ...resource,
-      originalResourceId: resource?.id,
+      originalResourceId: resource.id,
       id,
     },
     onUploadStart,

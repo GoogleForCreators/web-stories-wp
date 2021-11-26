@@ -48,6 +48,7 @@ describe('useMediaUploadQueue', () => {
         payload: {
           file: {},
           resource: {
+            id: 456,
             foo: 'bar',
           },
         },
@@ -61,6 +62,7 @@ describe('useMediaUploadQueue', () => {
             file: {},
             resource: expect.objectContaining({
               id: expect.any(String),
+              originalResourceId: 456,
               foo: 'bar',
             }),
           }),
@@ -113,6 +115,7 @@ describe('useMediaUploadQueue', () => {
             file: {},
             resource: {
               src: 'foo',
+              originalResourceId: 456,
             },
             state: 'UPLOADING',
             posterFile: {},
@@ -125,6 +128,7 @@ describe('useMediaUploadQueue', () => {
           id: 123,
           resource: {
             src: 'bar',
+            originalResourceId: 456,
           },
         },
       });
@@ -172,6 +176,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'PENDING',
@@ -183,6 +188,7 @@ describe('useMediaUploadQueue', () => {
         payload: {
           id: 123,
           resource: {
+            id: 456,
             bar: 'baz',
           },
         },
@@ -231,6 +237,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'PENDING',
@@ -250,6 +257,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'MUTING',
@@ -269,6 +277,7 @@ describe('useMediaUploadQueue', () => {
               bar: 'baz',
             },
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'MUTING',
@@ -294,6 +303,7 @@ describe('useMediaUploadQueue', () => {
             },
             resource: {
               foo: 'bar',
+              id: 456,
               isMuted: true,
             },
             state: 'MUTED',
@@ -311,6 +321,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'PENDING',
@@ -330,6 +341,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'TRIMMING',
@@ -349,6 +361,7 @@ describe('useMediaUploadQueue', () => {
               bar: 'baz',
             },
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'TRIMMING',
@@ -373,6 +386,7 @@ describe('useMediaUploadQueue', () => {
               bar: 'foobar',
             },
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'TRIMMED',
@@ -390,6 +404,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'PENDING',
@@ -409,6 +424,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'TRANSCODING',
@@ -428,6 +444,7 @@ describe('useMediaUploadQueue', () => {
               bar: 'baz',
             },
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'TRANSCODING',
@@ -452,6 +469,7 @@ describe('useMediaUploadQueue', () => {
               bar: 'foobar',
             },
             resource: {
+              id: 456,
               foo: 'bar',
               isOptimized: true,
             },
@@ -470,6 +488,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
             state: 'UPLOADING',
@@ -481,6 +500,7 @@ describe('useMediaUploadQueue', () => {
         payload: {
           id: 456,
           resource: {
+            id: 456,
             foo: 'baz',
           },
         },
@@ -496,6 +516,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
               isPlaceholder: false,
             },
@@ -508,6 +529,7 @@ describe('useMediaUploadQueue', () => {
         payload: {
           id: 456,
           resource: {
+            id: 456,
             foo: 'baz',
           },
         },
