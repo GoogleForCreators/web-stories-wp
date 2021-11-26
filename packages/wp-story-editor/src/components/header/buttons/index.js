@@ -65,18 +65,21 @@ function Loading() {
 }
 
 function Buttons() {
-  const { status } = useStory(
+  const { status, canPublish } = useStory(
     ({
       state: {
         story: { status },
+        capabilities,
       },
     }) => ({
       status,
+      canPublish: Boolean(capabilities?.publish),
     })
   );
 
   const isPending = 'pending' === status;
-  const isDraft = 'draft' === status || isPending || !status;
+  const isDraft = 'draft' === status || !status;
+  const isDraftOrPending = isDraft || isPending;
 
   const { hasMetaBoxes, isSavingMetaBoxes } = useMetaBoxes(
     ({ state: { hasMetaBoxes, isSavingMetaBoxes } }) => ({
@@ -103,16 +106,16 @@ function Buttons() {
           {isSaving && <Loading />}
         </IconWithSpinner>
         {isPending && <SwitchToDraftButton forceIsSaving={isSavingMetaBoxes} />}
-        {isDraft && (
-          <>
-            <UpdateButton
-              hasUpdates={hasMetaBoxes}
-              forceIsSaving={isSavingMetaBoxes}
-            />
-            <PublishButton forceIsSaving={isSavingMetaBoxes} />
-          </>
+        {(isDraft || (isPending && canPublish)) && (
+          <UpdateButton
+            hasUpdates={hasMetaBoxes}
+            forceIsSaving={isSavingMetaBoxes}
+          />
         )}
-        {!isDraft && (
+        {isDraftOrPending && (
+          <PublishButton forceIsSaving={isSavingMetaBoxes} />
+        )}
+        {!isDraftOrPending && (
           <>
             <SwitchToDraftButton forceIsSaving={isSavingMetaBoxes} />
             <UpdateButton
