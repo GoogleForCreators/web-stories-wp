@@ -27,6 +27,7 @@ import {
   Icons,
 } from '@web-stories-wp/design-system';
 import PropTypes from 'prop-types';
+import { getOptions, isAfter, subMinutes, toDate } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
@@ -62,19 +63,21 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
   const {
     isSaving: _isSaving,
     status,
+    date,
     saveStory,
     canPublish,
   } = useStory(
     ({
       state: {
         meta: { isSaving },
-        story: { status },
+        story: { status, date },
         capabilities,
       },
       actions: { saveStory },
     }) => ({
       isSaving,
       status,
+      date,
       saveStory,
       canPublish: Boolean(capabilities?.publish),
     })
@@ -126,8 +129,14 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
     );
   }
 
+  // Offset the date by one minute to accommodate for network latency.
+  const hasFutureDate = isAfter(
+    subMinutes(toDate(date, getOptions()), 1),
+    toDate(new Date(), getOptions())
+  );
+
   const text =
-    'future' === status
+    hasFutureDate && !status === 'private'
       ? __('Schedule', 'web-stories')
       : __('Update', 'web-stories');
 

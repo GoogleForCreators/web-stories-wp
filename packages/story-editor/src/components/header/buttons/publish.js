@@ -102,9 +102,10 @@ function PublishButton({ forceIsSaving }) {
 
   const closeDialog = useCallback(() => setShowDialog(false), []);
 
-  const text = hasFutureDate
-    ? __('Schedule', 'web-stories')
-    : __('Publish', 'web-stories');
+  const text =
+    hasFutureDate && !status === 'private'
+      ? __('Schedule', 'web-stories')
+      : __('Publish', 'web-stories');
 
   return (
     <>
