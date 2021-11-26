@@ -27,8 +27,9 @@ import CarouselLayout from './carouselLayout';
 import CarouselProvider from './carouselProvider';
 
 const Wrapper = styled.div`
-  height: 100%;
+  height: auto;
   width: 100%;
+  align-self: flex-end;
 `;
 
 function CarouselContainer() {

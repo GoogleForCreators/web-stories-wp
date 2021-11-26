@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { storyMissingExcerpt } from '../storyMissingExerpt';
+import { storyMissingExcerpt } from '../storyMissingExcerpt';
 
 describe('storyMissingExcerpt', () => {
   it('should return true if story is missing excerpt', () => {

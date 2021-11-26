@@ -606,6 +606,36 @@ describe('Page output', () => {
       await expect(pageOutlink).toBeInTheDocument();
     });
 
+    it('should output rel', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+          pageAttachment: {
+            url: 'https://example.test',
+            ctaText: 'Click me!',
+            theme: 'dark',
+            icon: '',
+            rel: ['nofollow'],
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const pageOutlink = container.querySelector('amp-story-page-outlink');
+      await expect(pageOutlink).toBeInTheDocument();
+      await expect(pageOutlink).toHaveTextContent('Click me!');
+      await expect(pageOutlink).not.toHaveAttribute('cta-image');
+
+      const pageOutATag = pageOutlink.querySelector('a');
+      await expect(pageOutATag).toBeInTheDocument();
+      await expect(pageOutATag).toHaveAttribute('rel', 'nofollow');
+    });
+
     it('should not output a link in page attachment area', () => {
       const props = {
         id: '123',
