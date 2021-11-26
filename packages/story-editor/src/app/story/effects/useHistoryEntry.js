@@ -23,10 +23,10 @@ import { useEffect, useRef } from '@web-stories-wp/react';
  * Internal dependencies
  */
 import { useHistory } from '../../history';
+import deleteNestedKeys from '../utils/deleteNestedKeys';
 
-const ELEMENT_PROPS_TO_IGNORE = [
-  'resource.baseColor',
-];
+// @todo REMOVE ROTATION ANGLE! For testing only!
+const ELEMENT_PROPS_TO_IGNORE = ['resource.baseColor', 'rotationAngle'];
 
 // Record any change to core variables in history (history will know if it's a replay)
 function useHistoryEntry({ story, current, pages, selection, capabilities }) {
@@ -37,7 +37,9 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
 
   const currentHistoryEntryRef = useRef();
   useEffect(() => {
-    currentHistoryEntryRef.current = currentEntry;
+    if (currentEntry) {
+      currentHistoryEntryRef.current = JSON.parse(JSON.stringify(currentEntry));
+    }
   }, [currentEntry]);
 
   const currentPageIndexRef = useRef();
@@ -47,34 +49,48 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
     selectedElementIdsRef.current = selection;
   }, [current, selection]);
 
-  const deleteNestedKey = (object, path) => {
-    const keys = path.split('.');
-    const lastKey = keys.pop();
-    const nextLastKey = keys.pop();
-    const nextLastObj = keys.reduce((a, key) => a?.[key] || a, object);
-    if (nextLastObj?.[nextLastKey]?.[lastKey]) {
-      delete nextLastObj[nextLastKey][lastKey];
-    }
-    return object;
-  };
-
-  useEffect(() => {
-    let skipAddingEntry = false;
-    const adjustedPages = pages.map((page) => {
+  const deleteKeysFromPages = (list) => {
+    // Create a copy of the list not to influence the original.
+    return JSON.parse(JSON.stringify(list)).map((page) => {
       const { elements } = page;
       return {
         ...page,
         elements: elements.map((element) =>
-          deleteNestedKey(element, 'resource.baseColor')
+          deleteNestedKeys(element, ELEMENT_PROPS_TO_IGNORE)
         ),
       };
     });
-    if (currentHistoryEntryRef.current && adjustedPages?.length) {
-      skipAddingEntry = Object.keys(adjustedPages).every(
+  };
+
+  useEffect(() => {
+    // There are some element properties that should not influence history.
+    // Before adding a new history entry, let's check if the only properties that changed
+    // should not influence history. Then we skip adding an entry.
+    let skipAddingEntry = false;
+    if (currentHistoryEntryRef.current && pages?.length) {
+      // If story / capabilities change, we should always add a new entry.
+      const withoutPages = {
+        story,
+        capabilities,
+      };
+      const onlyPagesChanged = Object.keys(withoutPages).every(
         (key) =>
-          adjustedPages[key] === currentHistoryEntryRef.current.pages[key]
+          JSON.stringify(withoutPages[key]) ===
+          JSON.stringify(currentHistoryEntryRef.current[key])
       );
+      // If only pages have changed, check if relevant properties have changed.
+      if (onlyPagesChanged) {
+        const adjustedPages = deleteKeysFromPages(pages);
+        const adjustedEntryPages = deleteKeysFromPages(
+          currentHistoryEntryRef.current.pages
+        );
+        // Check if after removing properties that shouldn't influence history, nothing changed.
+        // Is so, let's skip adding a history entry.
+        skipAddingEntry =
+          JSON.stringify(adjustedPages) === JSON.stringify(adjustedEntryPages);
+      }
     }
+
     if (!skipAddingEntry) {
       stateToHistory({
         story,
