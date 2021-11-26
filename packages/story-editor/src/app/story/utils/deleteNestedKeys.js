@@ -18,11 +18,12 @@
  * Dynamically deletes nested keys from on object by the defined paths.
  * Each path has to be in the format of nested keys separated by a dot, e.g. `foo.bar.a`
  *
- * @param {Object} object The objec to remove keys from.
+ * @param {Object} object The object to remove keys from.
  * @param {Array} paths Array of paths of keys.
  * @return {Object} Changed object.
  */
 function deleteNestedKeys(object, paths) {
+  // @todo Add test for this util!
   paths.forEach((path) => {
     const keys = path.split('.');
     if (!keys.length) {
