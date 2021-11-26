@@ -98,6 +98,7 @@ const Grid = styled.div`
   row-gap: 16px;
   align-items: center;
   justify-items: start;
+  margin-bottom: 16px;
 `;
 
 const Area = styled.div`
