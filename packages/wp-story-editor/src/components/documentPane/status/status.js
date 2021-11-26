@@ -134,13 +134,7 @@ function StatusPanel() {
     refreshPostEditURL();
 
     saveStory(properties);
-  }, [
-    setHasPassword,
-    title.length,
-    refreshPostEditURL,
-    updateStory,
-    saveStory,
-  ]);
+  }, [setHasPassword, title.length, refreshPostEditURL, saveStory]);
 
   const isAlreadyPublished = ['publish', 'future', 'private'].includes(status);
 
