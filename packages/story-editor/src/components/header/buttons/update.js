@@ -35,6 +35,29 @@ import { useStory, useLocalMedia, useHistory } from '../../../app';
 import Tooltip from '../../tooltip';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
+function PlainButton({ text, onClick, disabled }) {
+  return (
+    <Tooltip title={text} hasTail>
+      <Button
+        variant={BUTTON_VARIANTS.SQUARE}
+        type={BUTTON_TYPES.QUATERNARY}
+        size={BUTTON_SIZES.SMALL}
+        onClick={onClick}
+        disabled={disabled}
+        aria-label={text}
+      >
+        <Icons.FloppyDisk />
+      </Button>
+    </Tooltip>
+  );
+}
+
+PlainButton.propTypes = {
+  text: PropTypes.string,
+  onClick: PropTypes.func,
+  disabled: PropTypes.bool,
+};
+
 function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
   const {
     isSaving: _isSaving,
@@ -85,35 +108,21 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
 
   if ('pending' === status) {
     return (
-      <Tooltip title={__('Save as pending', 'web-stories')} hasTail>
-        <Button
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.QUATERNARY}
-          size={BUTTON_SIZES.SMALL}
-          onClick={() => saveStory()}
-          disabled={!isEnabled}
-          aria-label={__('Save as pending', 'web-stories')}
-        >
-          <Icons.FloppyDisk />
-        </Button>
-      </Tooltip>
+      <PlainButton
+        text={__('Save as pending', 'web-stories')}
+        disabled={!isEnabled}
+        onClick={() => saveStory()}
+      />
     );
   }
 
   if ('draft' === status) {
     return (
-      <Tooltip title={__('Save draft', 'web-stories')} hasTail>
-        <Button
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.QUATERNARY}
-          size={BUTTON_SIZES.SMALL}
-          onClick={() => saveStory({ status: 'draft' })}
-          disabled={!isEnabled}
-          aria-label={__('Save draft', 'web-stories')}
-        >
-          <Icons.FloppyDisk />
-        </Button>
-      </Tooltip>
+      <PlainButton
+        text={__('Save draft', 'web-stories')}
+        disabled={!isEnabled}
+        onClick={() => saveStory({ status: 'draft' })}
+      />
     );
   }
 
