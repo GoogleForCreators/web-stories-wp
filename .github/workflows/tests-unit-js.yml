@@ -50,7 +50,7 @@ jobs:
           cache: npm
 
       - name: Setup Jest cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         id: cache-jest-cache
         with:
           path: .jest-cache
