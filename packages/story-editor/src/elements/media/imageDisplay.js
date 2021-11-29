@@ -44,15 +44,16 @@ const Img = styled.img`
 
 function ImageDisplay({ element, box, previewMode }) {
   const { resource, scale, focalX, focalY } = element;
+  const { id: resourceId, alt } = resource;
   const { width, height } = box;
   const ref = useRef();
 
   let initialSrcType = 'smallest';
   let initialSrc = getSmallestUrlForWidth(0, resource);
 
-  if (resourceList.get(resource.id)?.type === 'cached') {
+  if (resourceList.get(resourceId)?.type === 'cached') {
     initialSrcType = 'cached';
-    initialSrc = resourceList.get(resource.id).url;
+    initialSrc = resourceList.get(resourceId).url;
   }
 
   const { isCurrentResourceUploading } = useLocalMedia(
@@ -62,8 +63,8 @@ function ImageDisplay({ element, box, previewMode }) {
   );
 
   if (
-    resourceList.get(resource.id)?.type === 'fullsize' ||
-    isCurrentResourceUploading(resource?.id)
+    resourceList.get(resourceId)?.type === 'fullsize' ||
+    isCurrentResourceUploading(resourceId)
   ) {
     initialSrcType = 'fullsize';
     initialSrc = resource.src;
@@ -90,12 +91,12 @@ function ImageDisplay({ element, box, previewMode }) {
   useEffect(() => {
     let timeout;
     let mounted = true;
-    if (resourceList.get(resource.id)?.type !== 'fullsize' && resource.src) {
+    if (resourceList.get(resourceId)?.type !== 'fullsize' && resource.src) {
       timeout = setTimeout(async () => {
         const url = getProxiedUrl(resource, resource.src);
         const preloadedImg = await preloadImage(url, srcSet);
         if (mounted) {
-          resourceList.set(resource.id, {
+          resourceList.set(resourceId, {
             type: 'fullsize',
           });
           setSrc(preloadedImg.currentSrc);
@@ -124,7 +125,7 @@ function ImageDisplay({ element, box, previewMode }) {
         decoding="sync"
         src={src}
         srcSet={srcSet}
-        alt={resource.alt}
+        alt={alt}
         data-testid="imageElement"
         data-leaf-element="true"
         {...imgProps}
