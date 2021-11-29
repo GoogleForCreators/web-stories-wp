@@ -525,7 +525,7 @@ function useMediaUploadQueue() {
       return (
         !isExternal &&
         !isCurrentResourceProcessing(id) &&
-        isResourceProcessing(id)
+        !isResourceProcessing(id)
       );
     };
 

@@ -74,6 +74,7 @@ function useUploadMedia({
       isCurrentResourceTranscoding,
       isCurrentResourceMuting,
       isCurrentResourceTrimming,
+      canTranscodeResource,
     },
     actions: { addItem, removeItem },
   } = useMediaUploadQueue();
@@ -298,6 +299,7 @@ function useUploadMedia({
     isCurrentResourceTranscoding,
     isCurrentResourceMuting,
     isCurrentResourceTrimming,
+    canTranscodeResource,
   };
 }
 
