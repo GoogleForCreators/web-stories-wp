@@ -34,7 +34,9 @@ const ContextMenu = ({
   isInline = false,
   ...props
 }) => {
-  const ref = useMouseDownOutsideRef(props.onDismiss);
+  const ref = useMouseDownOutsideRef(() => {
+    props.isOpen && props.onDismiss();
+  });
   const Wrapper = useMemo(
     () => (animate ? AnimationContainer : SmartPopover),
     [animate]
