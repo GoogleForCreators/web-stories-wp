@@ -14,7 +14,7 @@
     "@wordpress/components": "^18.0.0",
     "@wordpress/compose": "^5.0.0",
     "@wordpress/data": "^6.1.2",
-    "@wordpress/element": "^4.0.0",
+    "@wordpress/element": "^4.0.4",
     "@wordpress/i18n": "^4.2.2",
     "prop-types": "^15.7.2"
   },
