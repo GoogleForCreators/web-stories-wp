@@ -27,6 +27,7 @@ import {
   hasVideoGotAudio,
 } from '@web-stories-wp/media';
 import { v4 as uuidv4 } from 'uuid';
+import { trackError, trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -194,9 +195,20 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       const hotlinkInfo = await getHotlinkInfo(link);
       const shouldProxy = await checkResourceAccess(link);
 
+      // After getting link metadata and before actual insertion
+      // is a great opportunity to measure usage in a reasonably accurate way.
+      trackEvent('hotlink_media', {
+        event_label: link,
+        file_size: hotlinkInfo.file_size,
+        file_type: hotlinkInfo.mime_type,
+        needs_proxy: shouldProxy,
+      });
+
       await insertMedia(hotlinkInfo, shouldProxy);
     } catch (err) {
       setIsInserting(false);
+
+      trackError('hotlink_media', err?.message);
 
       let description = __(
         'No file types are currently supported.',
