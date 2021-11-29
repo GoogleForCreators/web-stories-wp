@@ -1,7 +1,5 @@
 # This workflow removes any assets created for manual QA testing
-# from the GitHub Wiki repository once a pull request is closed.
-#
-# See https://github.com/google/web-stories-wp/issues/1398
+# from the GCP bucket once a pull request is closed.
 
 name: Clean up PR assets
 
@@ -15,28 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ github.repository }}.wiki
-          ref: master
-          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      - name: Prune PR files
-        run: |
-          rm -rf "refs/pull/${{ github.event.pull_request.number }}"
-          git add .
-          git status
-          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 0
-          git commit -m "Prune refs/pull/${{ github.event.pull_request.number }}"
-          git pull --rebase
-          git push origin master
-        env:
-          GIT_AUTHOR_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
-          GIT_AUTHOR_NAME: googleforcreators-bot
-          GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
-          GIT_COMMITTER_NAME: googleforcreators-bot
-
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.2.1
         with:
