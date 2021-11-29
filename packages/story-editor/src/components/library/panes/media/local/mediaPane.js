@@ -116,7 +116,7 @@ function MediaPane(props) {
     totalItems,
     optimizeVideo,
     optimizeGif,
-    isResourceProcessing,
+    canTranscodeResource,
   } = useLocalMedia(
     ({
       state: {
@@ -127,7 +127,7 @@ function MediaPane(props) {
         mediaType,
         searchTerm,
         totalItems,
-        isResourceProcessing,
+        canTranscodeResource,
       },
       actions: {
         setNextPage,
@@ -154,7 +154,7 @@ function MediaPane(props) {
         postProcessingResource,
         optimizeVideo,
         optimizeGif,
-        isResourceProcessing,
+        canTranscodeResource,
       };
     }
   );
@@ -212,11 +212,7 @@ function MediaPane(props) {
    */
   const onSelect = (resource) => {
     try {
-      if (
-        isTranscodingEnabled &&
-        !isResourceProcessing(resource.id) &&
-        !resource.isExternal
-      ) {
+      if (isTranscodingEnabled && canTranscodeResource(resource.id)) {
         if (transcodableMimeTypes.includes(resource.mimeType)) {
           optimizeVideo({ resource });
         }

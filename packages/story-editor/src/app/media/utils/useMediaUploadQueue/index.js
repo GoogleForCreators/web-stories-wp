@@ -520,6 +520,15 @@ function useMediaUploadQueue() {
           item.resource.originalResourceId === resourceId
       );
 
+    const canTranscodeResource = (resource) => {
+      const { isExternal, id } = resource || {};
+      return (
+        !isExternal &&
+        !isCurrentResourceProcessing(id) &&
+        isResourceProcessing(id)
+      );
+    };
+
     /**
      * Is a new resource trimming.
      *
@@ -552,6 +561,7 @@ function useMediaUploadQueue() {
         isResourceProcessing,
         isResourceTranscoding,
         isResourceTrimming,
+        canTranscodeResource,
       },
       actions: {
         addItem: actions.addItem,

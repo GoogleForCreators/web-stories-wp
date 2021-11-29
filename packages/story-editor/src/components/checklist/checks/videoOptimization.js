@@ -54,7 +54,7 @@ const OptimizeButton = styled(Button)`
 export function videoElementsNotOptimized(
   element = {},
   isResourceTranscoding,
-  isResourceProcessing
+  canTranscodeResource
 ) {
   const { resource } = element;
   if (!resource) {
@@ -65,13 +65,12 @@ export function videoElementsNotOptimized(
     return true;
   }
 
-  const { isOptimized, height = 0, width = 0, isExternal } = resource;
+  const { isOptimized, height = 0, width = 0 } = resource;
 
   if (
     element.type !== 'video' ||
     isOptimized ||
-    isExternal ||
-    isResourceProcessing(id)
+    !canTranscodeResource(element.resource)
   ) {
     return false;
   }
@@ -119,21 +118,26 @@ const BulkVideoOptimization = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const pages = useStory(({ state: storyState }) => storyState?.pages);
 
-  const { optimizeVideo, isResourceTranscoding, isResourceProcessing } =
-    useLocalMedia(({ actions, state: mediaState }) => ({
-      optimizeVideo: actions.optimizeVideo,
-      isResourceTranscoding: mediaState.isResourceTranscoding,
-      isResourceProcessing: mediaState.isResourceProcessing,
-    }));
+  const { optimizeVideo, isResourceTranscoding, canTranscodeResource } =
+    useLocalMedia(
+      ({
+        actions: { optimizeVideo },
+        state: { isResourceTranscoding, canTranscodeResource },
+      }) => ({
+        optimizeVideo,
+        isResourceTranscoding,
+        canTranscodeResource,
+      })
+    );
 
   const videoElementsNotOptimizedCallback = useCallback(
     (element = {}) =>
       videoElementsNotOptimized(
         element,
         isResourceTranscoding,
-        isResourceProcessing
+        canTranscodeResource
       ),
-    [isResourceProcessing, isResourceTranscoding]
+    [canTranscodeResource, isResourceTranscoding]
   );
 
   const unoptimizedElements = useMemo(
@@ -152,7 +156,7 @@ const BulkVideoOptimization = () => {
   const processVideoElement = useCallback(
     async (element) => {
       if (
-        !isResourceProcessing(element.resource.id) &&
+        canTranscodeResource(element.resource) &&
         state[element.resource.id] !== actionTypes.uploading
       ) {
         dispatch({ type: actionTypes.uploading, element });
@@ -165,7 +169,7 @@ const BulkVideoOptimization = () => {
         dispatch({ type: actionTypes.uploaded, element });
       }
     },
-    [isResourceProcessing, optimizeVideo, state]
+    [canTranscodeResource, optimizeVideo, state]
   );
 
   const sequencedVideoOptimization = useCallback(() => {

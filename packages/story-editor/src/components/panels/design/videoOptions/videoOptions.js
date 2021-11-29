@@ -91,20 +91,13 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo,
     isResourceTrimming,
     isResourceMuting,
-    isResourceProcessing,
-    isCurrentResourceProcessing,
+    canTranscodeResource,
   } = useLocalMedia(
     ({
-      state: {
-        isResourceProcessing,
-        isCurrentResourceProcessing,
-        isResourceMuting,
-        isResourceTrimming,
-      },
+      state: { canTranscodeResource, isResourceMuting, isResourceTrimming },
       actions: { muteExistingVideo },
     }) => ({
-      isResourceProcessing,
-      isCurrentResourceProcessing,
+      canTranscodeResource,
       isResourceMuting,
       isResourceTrimming,
       muteExistingVideo,
@@ -121,18 +114,12 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
-  const shouldDisableVideoActions =
-    isResourceProcessing(resourceId) ||
-    isCurrentResourceProcessing(resourceId) ||
-    resource.isExternal;
+  const shouldDisableVideoActions = !canTranscodeResource(resource);
 
   const shouldDisplayMuteButton =
     isTranscodingEnabled &&
     isSingleElement &&
-    ((!isMuted &&
-      !isResourceProcessing(resourceId) &&
-      !isCurrentResourceProcessing(resourceId)) ||
-      isMuting);
+    ((!isMuted && canTranscodeResource(resource)) || isMuting);
   const muteButtonText = isMuting
     ? __('Removing audio…', 'web-stories')
     : __('Remove audio', 'web-stories');

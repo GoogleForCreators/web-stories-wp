@@ -150,10 +150,9 @@ function RightClickMenuProvider({ children }) {
     })
   );
 
-  const { isResourceProcessing, isCurrentResourceProcessing } = useLocalMedia(
-    ({ state: { isResourceProcessing, isCurrentResourceProcessing } }) => ({
-      isResourceProcessing,
-      isCurrentResourceProcessing,
+  const { canTranscodeResource } = useLocalMedia(
+    ({ state: { canTranscodeResource } }) => ({
+      canTranscodeResource,
     })
   );
 
@@ -780,18 +779,6 @@ function RightClickMenuProvider({ children }) {
       canElementMoveForwards,
       handleBringToFront,
     ]
-  );
-
-  const canTranscodeResource = useCallback(
-    (resource) => {
-      const { id, isExternal } = resource || {};
-      return (
-        !isExternal &&
-        !isResourceProcessing(id) &&
-        !isCurrentResourceProcessing(id)
-      );
-    },
-    [isResourceProcessing, isCurrentResourceProcessing]
   );
 
   const pageManipulationItems = useMemo(

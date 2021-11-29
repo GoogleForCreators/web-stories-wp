@@ -87,11 +87,10 @@ export const MediaPicker = ({ render, ...props }) => {
     postProcessingResource,
     optimizeVideo,
     optimizeGif,
-    isResourceProcessing,
-    isCurrentResourceProcessing,
+    canTranscodeResource,
   } = useLocalMedia(
     ({
-      state: { isResourceProcessing, isCurrentResourceProcessing },
+      state: { canTranscodeResource },
       actions: {
         resetWithFetch,
         postProcessingResource,
@@ -99,8 +98,7 @@ export const MediaPicker = ({ render, ...props }) => {
         optimizeGif,
       },
     }) => ({
-      isResourceProcessing,
-      isCurrentResourceProcessing,
+      canTranscodeResource,
       resetWithFetch,
       postProcessingResource,
       optimizeVideo,
@@ -157,12 +155,7 @@ export const MediaPicker = ({ render, ...props }) => {
   const handleMediaSelect = useCallback(
     (resource) => {
       try {
-        if (
-          isTranscodingEnabled &&
-          !isResourceProcessing(resource.id) &&
-          !isCurrentResourceProcessing(resource.id) &&
-          !resource.isExternal
-        ) {
+        if (isTranscodingEnabled && canTranscodeResource(resource)) {
           if (transcodableMimeTypes.includes(resource.mimeType)) {
             optimizeVideo({ resource });
           }
@@ -187,8 +180,7 @@ export const MediaPicker = ({ render, ...props }) => {
     },
     [
       isTranscodingEnabled,
-      isResourceProcessing,
-      isCurrentResourceProcessing,
+      canTranscodeResource,
       insertMediaElement,
       postProcessingResource,
       transcodableMimeTypes,
@@ -275,10 +267,9 @@ const useQuickActions = () => {
     })
   );
 
-  const { isResourceProcessing, isCurrentResourceProcessing } = useLocalMedia(
-    ({ state: { isResourceProcessing, isCurrentResourceProcessing } }) => ({
-      isResourceProcessing,
-      isCurrentResourceProcessing,
+  const { canTranscodeResource } = useLocalMedia(
+    ({ state: { canTranscodeResource } }) => ({
+      canTranscodeResource,
     })
   );
 
@@ -677,10 +668,7 @@ const useQuickActions = () => {
     if (!resource) {
       return [];
     }
-    return !isResourceProcessing(resource.id) &&
-      !isCurrentResourceProcessing(resource.id) &&
-      !resource.isExternal &&
-      hasTrimMode
+    return canTranscodeResource(resource) && hasTrimMode
       ? [
           {
             Icon: Scissors,
@@ -699,8 +687,7 @@ const useQuickActions = () => {
   }, [
     selectedElements,
     selectedElement,
-    isResourceProcessing,
-    isCurrentResourceProcessing,
+    canTranscodeResource,
     hasTrimMode,
     actionMenuProps,
     toggleTrimMode,
