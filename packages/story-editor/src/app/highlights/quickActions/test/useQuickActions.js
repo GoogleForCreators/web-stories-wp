@@ -981,8 +981,8 @@ describe('MediaPicker', () => {
       postProcessingResource: mockPostProcessingResource,
       optimizeVideo: mockOptimizeVideo,
       optimizeGif: mockOptimizeGif,
-      isResourceProcessing: jest.fn(),
-      isCurrentResourceProcessing: jest.fn(),
+      isResourceProcessing: noop,
+      isCurrentResourceProcessing: noop,
     });
 
     mockUseFFmpeg.mockReturnValue({ isTranscodingEnabled: true });
