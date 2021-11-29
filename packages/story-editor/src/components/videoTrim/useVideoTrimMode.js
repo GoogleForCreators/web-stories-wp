@@ -115,7 +115,7 @@ function useVideoTrimMode() {
     if (selectedElement?.type !== 'video' || !selectedElement?.resource) {
       return false;
     }
-    const { id, isExternal } = selectedElement.resource || {};
+    const { id, isExternal } = selectedElement.resource;
     return (
       isVideoTrimEnabled &&
       isTranscodingEnabled &&
