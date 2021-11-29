@@ -65,8 +65,8 @@ function OutputElement({ element, args }) {
       style={{
         position: 'absolute',
         pointerEvents: 'none',
-        left: `${x}%`,
-        top: `${y}%`,
+        left: x ? `${x}%` : 0,
+        top: y ? `${y}%` : 0,
         width: `${width}%`,
         height: `${height}%`,
         ...(shouldDisplayBorder(element)
