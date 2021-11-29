@@ -31,6 +31,11 @@ jobs:
           git commit -m "Prune refs/pull/${{ github.event.pull_request.number }}"
           git pull --rebase
           git push origin master
+        env:
+          GIT_AUTHOR_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+          GIT_AUTHOR_NAME: googleforcreators-bot
+          GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+          GIT_COMMITTER_NAME: googleforcreators-bot
 
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.2.1
