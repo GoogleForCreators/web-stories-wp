@@ -112,16 +112,14 @@ function MyStories() {
   }, [queryAuthorsBySearch]);
 
   useEffect(() => {
-    if (apiCallbacks?.fetchStories) {
-      fetchStories({
-        page: page.value,
-        searchTerm: search.keyword,
-        sortDirection: sort.direction,
-        sortOption: sort.value,
-        status: filter.value,
-        author: author.filterId,
-      });
-    }
+    fetchStories({
+      page: page.value,
+      searchTerm: search.keyword,
+      sortDirection: sort.direction,
+      sortOption: sort.value,
+      status: filter.value,
+      author: author.filterId,
+    });
   }, [
     fetchStories,
     filter.value,
