@@ -76,6 +76,7 @@ const TemplateGridItem = forwardRef(
       __('First page of %s template', 'web-stories'),
       title
     );
+
     return (
       <CardGridItem
         ref={ref}
@@ -118,20 +119,21 @@ const TemplateGridItem = forwardRef(
                   {TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[status]}
                 </SeeDetailsButton>
 
-                <Button
-                  size={BUTTON_SIZES.SMALL}
-                  type={BUTTON_TYPES.PRIMARY}
-                  onClick={onCreateStory}
-                  disabled={!onCreateStory}
-                  tabIndex={tabIndex}
-                  ariaLabel={sprintf(
-                    /* translators: %s: template title.*/
-                    __('Create new story from %s', 'web-stories'),
-                    title
-                  )}
-                >
-                  {__('Use template', 'web-stories')}
-                </Button>
+                {onCreateStory && (
+                  <Button
+                    size={BUTTON_SIZES.SMALL}
+                    type={BUTTON_TYPES.PRIMARY}
+                    onClick={onCreateStory}
+                    tabIndex={tabIndex}
+                    ariaLabel={sprintf(
+                      /* translators: %s: template title.*/
+                      __('Create new story from %s', 'web-stories'),
+                      title
+                    )}
+                  >
+                    {__('Use template', 'web-stories')}
+                  </Button>
+                )}
               </TemplateDisplayContent>
             </Scrim>
           </CardWrapper>
