@@ -93,7 +93,6 @@ const expectedLayerActions = [
   RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
 ];
 
-
 describe('useRightClickMenu', () => {
   const mockUseCanvas = useCanvas;
   const mockUseStory = useStory;
@@ -502,7 +501,7 @@ describe('useRightClickMenu', () => {
             type: 'video',
             borderRadius: '4px',
             resource: {
-              isTranscoding: false,
+              isExternal: false,
             },
           },
         ],
@@ -563,7 +562,7 @@ describe('useRightClickMenu', () => {
                 type: 'video',
                 borderRadius: '4px',
                 resource: {
-                  isTranscoding: true,
+                  isExternal: true,
                 },
               },
             ],

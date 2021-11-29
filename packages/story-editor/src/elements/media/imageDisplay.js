@@ -108,7 +108,7 @@ function ImageDisplay({ element, box, previewMode }) {
       mounted = false;
       clearTimeout(timeout);
     };
-  }, [getProxiedUrl, resource, srcSet, srcType]);
+  }, [getProxiedUrl, resource, srcSet, srcType, resourceId]);
 
   const showPlaceholder = srcType !== 'fullsize';
 

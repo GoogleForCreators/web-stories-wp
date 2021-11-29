@@ -101,7 +101,7 @@ describe('automated accessibility tests', () => {
     const { container: container2 } = renderWithTheme(
       <MediaElement
         index={0}
-        resource={{ ...RESOURCE, isTranscoding: true }}
+        resource={RESOURCE}
         width={RESOURCE.width}
         height={RESOURCE.height}
       />

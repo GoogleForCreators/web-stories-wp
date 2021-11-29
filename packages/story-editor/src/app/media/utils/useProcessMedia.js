@@ -110,13 +110,8 @@ function useProcessMedia({
     ({ resource: oldResource }) => {
       const { id: resourceId, src: url, mimeType } = oldResource;
 
-      // TODO: Already covered by onUploadProgress?
-      const onUploadStart = () =>
-        updateExistingElements(resourceId, { isTranscoding: true });
-
       const onUploadError = () =>
         updateExistingElements(resourceId, {
-          isTranscoding: false,
           isOptimized: false,
         });
 
@@ -154,7 +149,6 @@ function useProcessMedia({
 
         await uploadMedia([file], {
           onUploadSuccess,
-          onUploadStart,
           onUploadError,
           onUploadProgress,
           additionalData: {
@@ -195,11 +189,12 @@ function useProcessMedia({
       const onUploadStart = () =>
         updateExistingElements(resourceId, {
           trimData,
-          isTrimming: true,
         });
 
       const onUploadError = () =>
-        updateExistingElements(resourceId, { isTrimming: false });
+        updateExistingElements(resourceId, {
+          trimData: oldResource?.trimData || {},
+        });
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
@@ -269,16 +264,8 @@ function useProcessMedia({
     ({ resource: oldResource }) => {
       const { id: resourceId, src: url, mimeType, poster } = oldResource;
 
-      // TODO: Already covered by onUploadProgress?
-      const onUploadStart = () => {
-        updateExistingElements(resourceId, {
-          isMuting: true,
-        });
-      };
-
       const onUploadError = () => {
         updateExistingElements(resourceId, {
-          isMuting: false,
           isMuted: false,
         });
       };
@@ -324,7 +311,6 @@ function useProcessMedia({
 
         await uploadMedia([file], {
           onUploadSuccess,
-          onUploadStart,
           onUploadError,
           onUploadProgress,
           additionalData: {

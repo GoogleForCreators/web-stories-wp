@@ -28,7 +28,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       id: 202,
       type: 'video',
       resource: {
-        isTranscoding: true,
         isOptimized: false,
         height: 2160,
         width: 3840,
