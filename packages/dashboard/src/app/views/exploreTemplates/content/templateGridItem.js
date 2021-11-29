@@ -26,6 +26,7 @@ import {
 } from '@web-stories-wp/design-system';
 import { forwardRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -44,6 +45,13 @@ import {
 } from './components';
 
 export const FOCUS_TEMPLATE_CLASS = 'focus_template';
+
+const SeeDetailsButton = styled(Button).attrs({
+  type: BUTTON_TYPES.TERTIARY,
+  size: BUTTON_SIZES.SMALL,
+})`
+  background-color: ${({ theme }) => theme.colors.standard.white};
+`;
 
 const TemplateGridItem = forwardRef(
   (
@@ -95,10 +103,7 @@ const TemplateGridItem = forwardRef(
               data-template-slug={slug}
             >
               <TemplateDisplayContent>
-                <Button
-                  size={BUTTON_SIZES.SMALL}
-                  type={BUTTON_TYPES.SECONDARY}
-                  as="a"
+                <SeeDetailsButton
                   ariaLabel={sprintf(
                     /* translators: %s: template title.*/
                     __('Go to detail view of %s', 'web-stories'),
@@ -111,7 +116,7 @@ const TemplateGridItem = forwardRef(
                   tabIndex={tabIndex}
                 >
                   {TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[status]}
-                </Button>
+                </SeeDetailsButton>
 
                 <Button
                   size={BUTTON_SIZES.SMALL}
