@@ -54,7 +54,7 @@ import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
 import deepMerge from './utils/deepMerge';
 import defaultConfig from './defaultConfig';
 
-function StoryEditor({ config, children }) {
+function StoryEditor({ config, initialEdits, children }) {
   const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
   const { storyId, isRTL, flags } = _config;
 
@@ -69,7 +69,10 @@ function StoryEditor({ config, children }) {
                   <Media3pApiProvider>
                     <HistoryProvider size={50}>
                       <SnackbarProvider>
-                        <StoryProvider storyId={storyId}>
+                        <StoryProvider
+                          storyId={storyId}
+                          initialEdits={initialEdits}
+                        >
                           <TaxonomyProvider>
                             <CurrentUserProvider>
                               <FontProvider>
@@ -109,6 +112,7 @@ function StoryEditor({ config, children }) {
 
 StoryEditor.propTypes = {
   config: PropTypes.object.isRequired,
+  initialEdits: PropTypes.object,
   children: PropTypes.node,
 };
 

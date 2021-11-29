@@ -29,10 +29,9 @@ import APIContext from '../../../api/context';
 import HistoryContext from '../../../history/context';
 
 const getStoryById = jest.fn();
-const getDemoStoryById = jest.fn();
 const clearHistory = jest.fn();
 
-const apiContextValue = { actions: { getStoryById, getDemoStoryById } };
+const apiContextValue = { actions: { getStoryById } };
 const historyContextValue = { actions: { clearHistory } };
 
 function ContextWrapper({ children }) {
@@ -52,7 +51,6 @@ ContextWrapper.propTypes = {
 describe('useLoadStory', () => {
   beforeEach(() => {
     getStoryById.mockReset();
-    getDemoStoryById.mockReset();
     clearHistory.mockReset();
   });
 
