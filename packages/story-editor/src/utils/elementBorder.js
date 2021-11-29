@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { canMaskHaveBorder } from '../masks';
+import { canMaskHaveBorder, singleBorderMask } from '../masks';
 
 function hasBorder({ border }) {
   if (!border) {
@@ -42,7 +42,11 @@ function hasBorder({ border }) {
  * @return {boolean} If should be displayed.
  */
 export function shouldDisplayBorder(element) {
-  return hasBorder(element) && canMaskHaveBorder(element);
+  return (
+    hasBorder(element) &&
+    canMaskHaveBorder(element) &&
+    !singleBorderMask(element)
+  );
 }
 
 /**

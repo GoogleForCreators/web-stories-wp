@@ -32,6 +32,11 @@ export function canMaskHaveBorder(element) {
   return !mask || mask.supportsBorder;
 }
 
+export function singleBorderMask(element) {
+  const mask = getElementMask(element);
+  return DEFAULT_MASK.type !== mask?.type;
+}
+
 export function getMaskByType(type) {
   return MASKS.find((mask) => mask.type === type) || DEFAULT_MASK;
 }
