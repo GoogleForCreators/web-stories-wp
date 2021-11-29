@@ -17,11 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  fireEvent,
-  screen,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import MockDate from 'mockdate';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StoryContext } from '@web-stories-wp/story-editor';

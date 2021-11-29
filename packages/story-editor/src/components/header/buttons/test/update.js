@@ -27,7 +27,6 @@ import StoryContext from '../../../../app/story/context';
 import MediaContext from '../../../../app/media/context';
 import HistoryContext from '../../../../app/history/context';
 import { renderWithTheme } from '../../../../testUtils';
-import { CheckpointContext } from '../../../checklist';
 import UpdateButton from '../update';
 
 function arrange({
@@ -37,10 +36,8 @@ function arrange({
   meta: extraMetaProps,
   media: extraMediaProps,
   history: extraHistoryProps,
-  checklist: extraChecklistProps,
 } = {}) {
   const saveStory = jest.fn();
-  const onReviewDialogRequest = jest.fn();
 
   const storyContextValue = {
     state: {
