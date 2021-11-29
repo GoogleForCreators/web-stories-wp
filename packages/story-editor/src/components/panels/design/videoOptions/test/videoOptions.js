@@ -63,8 +63,7 @@ describe('Panels/VideoOptions', () => {
     useLocalMedia.mockReturnValue({
       isResourceTrimming: jest.fn(),
       isResourceMuting: jest.fn(),
-      isResourceProcessing: jest.fn(),
-      isCurrentResourceProcessing: jest.fn(),
+      canTranscodeResource: jest.fn(),
     });
   });
 

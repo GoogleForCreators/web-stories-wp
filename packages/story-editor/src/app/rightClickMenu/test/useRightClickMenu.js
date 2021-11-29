@@ -93,10 +93,6 @@ const expectedLayerActions = [
   RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
 ];
 
-const mockedReturnValue = {
-  isResourceProcessing: jest.fn(),
-  isCurrentResourceProcessing: jest.fn(),
-};
 
 describe('useRightClickMenu', () => {
   const mockUseCanvas = useCanvas;
@@ -113,7 +109,9 @@ describe('useRightClickMenu', () => {
     mockUseSnackbar.mockReturnValue({ showSnackbar: mockShowSnackbar });
     mockIsPlatformMacOS.mockReturnValue(false);
     mockVideoTrim.mockImplementation((cb) => cb(defaultTrimContext));
-    useLocalMedia.mockReturnValue(mockedReturnValue);
+    useLocalMedia.mockReturnValue({
+      canTranscodeResource: jest.fn(),
+    });
   });
 
   describe('context menu manipulation', () => {
@@ -363,8 +361,7 @@ describe('useRightClickMenu', () => {
 
       it('should contain enabled "trim video"', () => {
         useLocalMedia.mockReturnValue({
-          ...mockedReturnValue,
-          isResourceProcessing: () => false,
+          canTranscodeResource: () => true,
         });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
@@ -388,7 +385,7 @@ describe('useRightClickMenu', () => {
                 type: 'video',
                 isBackground: true,
                 resource: {
-                  isTranscoding: true,
+                  isExternal: false,
                 },
               },
             ],
@@ -397,8 +394,7 @@ describe('useRightClickMenu', () => {
 
         it('should contain disabled "trim video"', () => {
           useLocalMedia.mockReturnValue({
-            ...mockedReturnValue,
-            isResourceProcessing: () => true,
+            canTranscodeResource: () => false,
           });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,
@@ -543,8 +539,7 @@ describe('useRightClickMenu', () => {
 
       it('should contain enabled "trim video"', () => {
         useLocalMedia.mockReturnValue({
-          ...mockedReturnValue,
-          isResourceProcessing: () => false,
+          canTranscodeResource: () => true,
         });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
@@ -577,8 +572,7 @@ describe('useRightClickMenu', () => {
 
         it('should contain disabled "trim video"', () => {
           useLocalMedia.mockReturnValue({
-            ...mockedReturnValue,
-            isResourceProcessing: () => true,
+            canTranscodeResource: () => false,
           });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,

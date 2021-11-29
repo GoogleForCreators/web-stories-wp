@@ -20,7 +20,7 @@
 import { videoElementsNotOptimized } from '../videoOptimization';
 
 const isResourceTranscoding = () => false;
-const isResourceProcessing = () => false;
+const canTranscodeResource = () => true;
 
 describe('videoOptimization (pre-publish checklist card)', () => {
   it('should return true if the video element is currently being transcoded', () => {
@@ -38,7 +38,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     const result = videoElementsNotOptimized(
       largeUnoptimizedVideo,
       isResourceTranscoding,
-      isResourceProcessing
+      canTranscodeResource
     );
     expect(result).toBe(true);
   });
@@ -57,7 +57,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     const result = videoElementsNotOptimized(
       largeUnoptimizedVideo,
       isResourceTranscoding,
-      isResourceProcessing
+      canTranscodeResource
     );
     expect(result).toBe(true);
   });
@@ -76,7 +76,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     const result = videoElementsNotOptimized(
       largeUnoptimizedVideo,
       () => true,
-      isResourceProcessing
+      canTranscodeResource
     );
     expect(result).toBe(true);
   });
@@ -95,7 +95,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     const result = videoElementsNotOptimized(
       largeUnoptimizedVideo,
       isResourceTranscoding,
-      () => true
+      () => false
     );
     expect(result).toBe(false);
   });
@@ -114,7 +114,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     const result = videoElementsNotOptimized(
       largeUnoptimizedVideo,
       isResourceTranscoding,
-      isResourceProcessing
+      canTranscodeResource
     );
     expect(result).toBe(false);
   });
@@ -134,7 +134,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     const result = videoElementsNotOptimized(
       largeUnoptimizedVideo,
       isResourceTranscoding,
-      isResourceProcessing
+      canTranscodeResource
     );
     expect(result).toBe(false);
   });
@@ -163,14 +163,14 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       videoElementsNotOptimized(
         smallUnoptimizedVideo,
         isResourceTranscoding,
-        isResourceProcessing
+        canTranscodeResource
       )
     ).toBe(false);
     expect(
       videoElementsNotOptimized(
         smallOptimizedVideo,
         isResourceTranscoding,
-        isResourceProcessing
+        canTranscodeResource
       )
     ).toBe(false);
   });
@@ -199,14 +199,14 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       videoElementsNotOptimized(
         landscapeVideo,
         isResourceTranscoding,
-        isResourceProcessing
+        canTranscodeResource
       )
     ).toBe(false);
     expect(
       videoElementsNotOptimized(
         portraitVideo,
         isResourceTranscoding,
-        isResourceProcessing
+        canTranscodeResource
       )
     ).toBe(false);
   });

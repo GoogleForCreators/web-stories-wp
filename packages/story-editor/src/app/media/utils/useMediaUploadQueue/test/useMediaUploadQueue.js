@@ -124,6 +124,7 @@ describe('useMediaUploadQueue', () => {
         isResourceTrimming: expect.any(Function),
         isCurrentResourceTrimming: expect.any(Function),
         isCurrentResourceUploading: expect.any(Function),
+        canTranscodeResource: expect.any(Function),
       })
     );
   });
@@ -273,10 +274,10 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('allows removing items from the queue', async () => {
-    const file = new File(['foo'], 'foo.jpg', {
+    const file = {
       type: 'image/jpeg',
       size: 1000,
-    });
+    };
 
     const { result, waitFor, waitForNextUpdate } = renderHook(() =>
       useMediaUploadQueue()
@@ -314,6 +315,7 @@ describe('useMediaUploadQueue', () => {
         isResourceTrimming: expect.any(Function),
         isCurrentResourceTrimming: expect.any(Function),
         isCurrentResourceUploading: expect.any(Function),
+        canTranscodeResource: expect.any(Function),
       })
     );
   });

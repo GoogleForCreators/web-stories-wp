@@ -373,8 +373,7 @@ describe('useQuickActions', () => {
       postProcessingResource: noop,
       optimizeVideo: noop,
       optimizeGif: noop,
-      isResourceProcessing: noop,
-      isCurrentResourceProcessing: noop,
+      canTranscodeResource: noop,
     });
   });
 
@@ -981,8 +980,7 @@ describe('MediaPicker', () => {
       postProcessingResource: mockPostProcessingResource,
       optimizeVideo: mockOptimizeVideo,
       optimizeGif: mockOptimizeGif,
-      isResourceProcessing: noop,
-      isCurrentResourceProcessing: noop,
+      canTranscodeResource: () => true,
     });
 
     mockUseFFmpeg.mockReturnValue({ isTranscodingEnabled: true });
