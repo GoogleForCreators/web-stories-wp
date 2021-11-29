@@ -115,13 +115,17 @@ describe('useMediaUploadQueue', () => {
       type: 'video/quicktime',
     });
 
+    const resource = {
+      id: 123,
+    };
+
     const { result, waitForNextUpdate } = renderHook(() =>
       useMediaUploadQueue()
     );
 
     expect(result.current.state.isUploading).toBeFalse();
 
-    act(() => result.current.actions.addItem({ file }));
+    act(() => result.current.actions.addItem({ file, resource }));
 
     expect(result.current.state.isUploading).toBeTrue();
 
@@ -143,11 +147,15 @@ describe('useMediaUploadQueue', () => {
       type: 'video/quicktime',
     });
 
+    const resource = {
+      id: 123,
+    };
+
     const { result, waitFor, waitForNextUpdate } = renderHook(() =>
       useMediaUploadQueue()
     );
 
-    act(() => result.current.actions.addItem({ file }));
+    act(() => result.current.actions.addItem({ file, resource }));
 
     await waitForNextUpdate();
 
