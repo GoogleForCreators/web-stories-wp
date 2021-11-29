@@ -93,6 +93,11 @@ const expectedLayerActions = [
   RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
 ];
 
+const mockedReturnValue = {
+  isResourceProcessing: jest.fn(),
+  isCurrentResourceProcessing: jest.fn(),
+};
+
 describe('useRightClickMenu', () => {
   const mockUseCanvas = useCanvas;
   const mockUseStory = useStory;
@@ -108,10 +113,7 @@ describe('useRightClickMenu', () => {
     mockUseSnackbar.mockReturnValue({ showSnackbar: mockShowSnackbar });
     mockIsPlatformMacOS.mockReturnValue(false);
     mockVideoTrim.mockImplementation((cb) => cb(defaultTrimContext));
-    useLocalMedia.mockReturnValue({
-      isResourceProcessing: jest.fn(),
-      isCurrentResourceProcessing: jest.fn(),
-    });
+    useLocalMedia.mockReturnValue(mockedReturnValue);
   });
 
   describe('context menu manipulation', () => {
@@ -361,8 +363,8 @@ describe('useRightClickMenu', () => {
 
       it('should contain enabled "trim video"', () => {
         useLocalMedia.mockReturnValue({
+          ...mockedReturnValue,
           isResourceProcessing: () => false,
-          isCurrentResourceProcessing: jest.fn(),
         });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
@@ -395,8 +397,8 @@ describe('useRightClickMenu', () => {
 
         it('should contain disabled "trim video"', () => {
           useLocalMedia.mockReturnValue({
+            ...mockedReturnValue,
             isResourceProcessing: () => true,
-            isCurrentResourceProcessing: jest.fn(),
           });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,
@@ -541,8 +543,8 @@ describe('useRightClickMenu', () => {
 
       it('should contain enabled "trim video"', () => {
         useLocalMedia.mockReturnValue({
+          ...mockedReturnValue,
           isResourceProcessing: () => false,
-          isCurrentResourceProcessing: jest.fn(),
         });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
@@ -575,8 +577,8 @@ describe('useRightClickMenu', () => {
 
         it('should contain disabled "trim video"', () => {
           useLocalMedia.mockReturnValue({
+            ...mockedReturnValue,
             isResourceProcessing: () => true,
-            isCurrentResourceProcessing: jest.fn(),
           });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,
