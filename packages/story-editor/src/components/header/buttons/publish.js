@@ -32,25 +32,34 @@ import { useCheckpoint, ReviewChecklistDialog } from '../../checklist';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function PublishButton({ forceIsSaving }) {
-  const { isSaving, date, storyId, saveStory, title, editLink, canPublish } =
-    useStory(
-      ({
-        state: {
-          meta: { isSaving },
-          story: { date, storyId, title, editLink },
-          capabilities,
-        },
-        actions: { saveStory },
-      }) => ({
-        isSaving,
-        date,
-        storyId,
-        saveStory,
-        title,
-        editLink,
-        canPublish: Boolean(capabilities?.publish),
-      })
-    );
+  const {
+    isSaving,
+    date,
+    storyId,
+    saveStory,
+    title,
+    editLink,
+    status,
+    canPublish,
+  } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+        story: { date, storyId, title, editLink, status },
+        capabilities,
+      },
+      actions: { saveStory },
+    }) => ({
+      isSaving,
+      date,
+      storyId,
+      saveStory,
+      title,
+      editLink,
+      status,
+      canPublish: Boolean(capabilities?.publish),
+    })
+  );
   const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
@@ -103,7 +112,7 @@ function PublishButton({ forceIsSaving }) {
   const closeDialog = useCallback(() => setShowDialog(false), []);
 
   const text =
-    hasFutureDate && !status === 'private'
+    hasFutureDate && status !== 'private'
       ? __('Schedule', 'web-stories')
       : __('Publish', 'web-stories');
 

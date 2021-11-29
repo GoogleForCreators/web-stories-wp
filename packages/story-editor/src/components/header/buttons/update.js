@@ -136,7 +136,7 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
   );
 
   const text =
-    hasFutureDate && !status === 'private'
+    hasFutureDate && status !== 'private'
       ? __('Schedule', 'web-stories')
       : __('Update', 'web-stories');
 
