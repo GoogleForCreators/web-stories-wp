@@ -119,7 +119,6 @@ const TemplateGridItem = forwardRef(
                     size={BUTTON_SIZES.SMALL}
                     type={BUTTON_TYPES.PRIMARY}
                     onClick={onCreateStory}
-                    disabled={!onCreateStory}
                     tabIndex={tabIndex}
                     ariaLabel={sprintf(
                       /* translators: %s: template title.*/
