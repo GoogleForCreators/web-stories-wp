@@ -21,6 +21,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { revokeBlob } from '@web-stories-wp/media';
 
 /**
+ * Internal dependencies
+ */
+import { ITEM_STATUS } from './constants';
+
+/**
  * Add an item to the upload queue.
  *
  * @param {Object} state Current state.
@@ -59,7 +64,7 @@ export function addItem(
   const newItem = {
     id,
     file,
-    state: 'PENDING',
+    state: ITEM_STATUS.PENDING,
     resource: {
       ...resource,
       originalResourceId: resource?.id,
@@ -97,7 +102,7 @@ export function startUploading(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           }
         : item
     ),
@@ -135,7 +140,7 @@ export function finishUploading(state, { payload: { id, resource } }) {
             ...item,
             resource,
             posterFile: null,
-            state: 'UPLOADED',
+            state: ITEM_STATUS.UPLOADED,
           }
         : item
     ),
@@ -158,7 +163,7 @@ export function cancelUploading(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'CANCELLED',
+            state: ITEM_STATUS.CANCELLED,
           }
         : item
     ),
@@ -181,7 +186,7 @@ export function startTranscoding(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'TRANSCODING',
+            state: ITEM_STATUS.TRANSCODING,
           }
         : item
     ),
@@ -206,7 +211,7 @@ export function finishTranscoding(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: 'TRANSCODED',
+            state: ITEM_STATUS.TRANSCODED,
             resource: {
               ...item.resource,
               isOptimized: true,
@@ -233,7 +238,7 @@ export function startMuting(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'MUTING',
+            state: ITEM_STATUS.MUTING,
           }
         : item
     ),
@@ -258,7 +263,7 @@ export function finishMuting(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: 'MUTED',
+            state: ITEM_STATUS.MUTED,
             resource: {
               ...item.resource,
               isMuted: true,
@@ -285,7 +290,7 @@ export function startTrimming(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'TRIMMING',
+            state: ITEM_STATUS.TRIMMING,
           }
         : item
     ),
@@ -310,7 +315,7 @@ export function finishTrimming(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: 'TRIMMED',
+            state: ITEM_STATUS.TRIMMED,
           }
         : item
     ),

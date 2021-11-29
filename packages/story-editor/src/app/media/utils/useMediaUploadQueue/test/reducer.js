@@ -34,6 +34,7 @@ import {
   startTrimming,
   startUploading,
 } from '../reducer';
+import { ITEM_STATUS } from '../constants';
 
 jest.mock('@web-stories-wp/media', () => ({
   revokeBlob: jest.fn(),
@@ -58,7 +59,7 @@ describe('useMediaUploadQueue', () => {
         queue: [
           expect.objectContaining({
             id: expect.any(String),
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
             file: {},
             resource: expect.objectContaining({
               id: expect.any(String),
@@ -79,7 +80,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
           },
         ],
       };
@@ -99,7 +100,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           },
         ],
       });
@@ -117,7 +118,7 @@ describe('useMediaUploadQueue', () => {
               src: 'foo',
               originalResourceId: 456,
             },
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
             posterFile: {},
           },
         ],
@@ -142,7 +143,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               src: 'bar',
             },
-            state: 'UPLOADED',
+            state: ITEM_STATUS.UPLOADED,
           },
         ],
       });
@@ -155,7 +156,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           },
         ],
       };
@@ -179,7 +180,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
           },
         ],
       };
@@ -205,7 +206,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           },
         ],
       };
@@ -222,7 +223,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: 'CANCELLED',
+            state: ITEM_STATUS.CANCELLED,
           },
         ],
       });
@@ -240,7 +241,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
           },
         ],
       };
@@ -260,7 +261,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'MUTING',
+            state: ITEM_STATUS.MUTING,
           },
         ],
       });
@@ -280,7 +281,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'MUTING',
+            state: ITEM_STATUS.MUTING,
           },
         ],
       };
@@ -306,7 +307,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               isMuted: true,
             },
-            state: 'MUTED',
+            state: ITEM_STATUS.MUTED,
           },
         ],
       });
@@ -324,7 +325,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
           },
         ],
       };
@@ -344,7 +345,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'TRIMMING',
+            state: ITEM_STATUS.TRIMMING,
           },
         ],
       });
@@ -364,7 +365,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'TRIMMING',
+            state: ITEM_STATUS.TRIMMING,
           },
         ],
       };
@@ -389,7 +390,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'TRIMMED',
+            state: ITEM_STATUS.TRIMMED,
           },
         ],
       });
@@ -407,7 +408,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
           },
         ],
       };
@@ -427,7 +428,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'TRANSCODING',
+            state: ITEM_STATUS.TRANSCODING,
           },
         ],
       });
@@ -447,7 +448,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'TRANSCODING',
+            state: ITEM_STATUS.TRANSCODING,
           },
         ],
       };
@@ -473,7 +474,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
               isOptimized: true,
             },
-            state: 'TRANSCODED',
+            state: ITEM_STATUS.TRANSCODED,
           },
         ],
       });
@@ -491,7 +492,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           },
         ],
       };
@@ -520,7 +521,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
               isPlaceholder: false,
             },
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           },
         ],
       };

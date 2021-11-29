@@ -44,6 +44,7 @@ import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
 import * as reducer from './reducer';
+import { ITEM_STATUS } from './constants';
 
 const initialState = {
   queue: [],
@@ -87,7 +88,7 @@ function useMediaUploadQueue() {
         state.queue.map(async (item) => {
           const { id, file, state: itemState, resource } = item;
           if (
-            itemState !== 'TRANSCODED' ||
+            itemState !== ITEM_STATUS.TRANSCODED ||
             !resource.isPlaceholder ||
             resource.poster
           ) {
@@ -120,7 +121,7 @@ function useMediaUploadQueue() {
       await Promise.all(
         state.queue.map(async (item) => {
           const { id, file, state: itemState, resource } = item;
-          if ('PENDING' !== itemState || !resource.isPlaceholder) {
+          if (ITEM_STATUS.PENDING !== itemState || !resource.isPlaceholder) {
             return;
           }
 
@@ -220,7 +221,7 @@ function useMediaUploadQueue() {
             muteVideo,
             trimData,
           } = item;
-          if ('PENDING' !== itemState) {
+          if (ITEM_STATUS.PENDING !== itemState) {
             return;
           }
 
@@ -375,29 +376,49 @@ function useMediaUploadQueue() {
     () => ({
       state: {
         progress: state.queue.filter(
-          (item) => !['UPLOADED', 'CANCELLED', 'PENDING'].includes(item.state)
+          (item) =>
+            ![
+              ITEM_STATUS.UPLOADED,
+              ITEM_STATUS.CANCELLED,
+              ITEM_STATUS.PENDING,
+            ].includes(item.state)
         ),
-        pending: state.queue.filter((item) => item.state === 'PENDING'),
-        uploaded: state.queue.filter((item) => item.state === 'UPLOADED'),
-        failures: state.queue.filter((item) => item.state === 'CANCELLED'),
+        pending: state.queue.filter(
+          (item) => item.state === ITEM_STATUS.PENDING
+        ),
+        uploaded: state.queue.filter(
+          (item) => item.state === ITEM_STATUS.UPLOADED
+        ),
+        failures: state.queue.filter(
+          (item) => item.state === ITEM_STATUS.CANCELLED
+        ),
         isUploading: state.queue.some(
-          (item) => !['UPLOADED', 'CANCELLED', 'PENDING'].includes(item.state)
+          (item) =>
+            ![
+              ITEM_STATUS.UPLOADED,
+              ITEM_STATUS.CANCELLED,
+              ITEM_STATUS.PENDING,
+            ].includes(item.state)
         ),
-        isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),
-        isMuting: state.queue.some((item) => item.state === 'MUTING'),
-        isTrimming: state.queue.some((item) => item.state === 'TRIMMING'),
+        isTranscoding: state.queue.some(
+          (item) => item.state === ITEM_STATUS.TRANSCODING
+        ),
+        isMuting: state.queue.some((item) => item.state === ITEM_STATUS.MUTING),
+        isTrimming: state.queue.some(
+          (item) => item.state === ITEM_STATUS.TRIMMING
+        ),
         isResourceProcessing: (resourceId) =>
           state.queue.some(
             (item) =>
               [
-                'PENDING',
-                'UPLOADING',
-                'TRANSCODED',
-                'TRANSCODING',
-                'MUTING',
-                'MUTED',
-                'TRIMMING',
-                'TRIMMED',
+                ITEM_STATUS.PENDING,
+                ITEM_STATUS.UPLOADING,
+                ITEM_STATUS.TRANSCODED,
+                ITEM_STATUS.TRANSCODING,
+                ITEM_STATUS.MUTING,
+                ITEM_STATUS.MUTED,
+                ITEM_STATUS.TRIMMING,
+                ITEM_STATUS.TRIMMED,
               ].includes(item.state) &&
               item.resource.originalResourceId === resourceId
           ),
@@ -405,51 +426,56 @@ function useMediaUploadQueue() {
           state.queue.some(
             (item) =>
               [
-                'PENDING',
-                'UPLOADING',
-                'TRANSCODED',
-                'TRANSCODING',
-                'MUTING',
-                'MUTED',
-                'TRIMMING',
-                'TRIMMED',
+                ITEM_STATUS.PENDING,
+                ITEM_STATUS.UPLOADING,
+                ITEM_STATUS.TRANSCODED,
+                ITEM_STATUS.TRANSCODING,
+                ITEM_STATUS.MUTING,
+                ITEM_STATUS.MUTED,
+                ITEM_STATUS.TRIMMING,
+                ITEM_STATUS.TRIMMED,
               ].includes(item.state) && item.resource.id === resourceId
           ),
         isResourceUploadingById: (resourceId) =>
           state.queue.some(
             (item) =>
-              item.state === 'UPLOADING' && item.resource.id === resourceId
+              item.state === ITEM_STATUS.UPLOADING &&
+              item.resource.id === resourceId
           ),
         isResourceTranscodingById: (resourceId) =>
           state.queue.some(
             (item) =>
-              item.state === 'TRANSCODING' && item.resource.id === resourceId
+              item.state === ITEM_STATUS.TRANSCODING &&
+              item.resource.id === resourceId
           ),
         isResourceMutingById: (resourceId) =>
           state.queue.some(
-            (item) => item.state === 'MUTING' && item.resource.id === resourceId
+            (item) =>
+              item.state === ITEM_STATUS.MUTING &&
+              item.resource.id === resourceId
           ),
         isResourceTrimmingById: (resourceId) =>
           state.queue.some(
             (item) =>
-              item.state === 'TRIMMING' && item.resource.id === resourceId
+              item.state === ITEM_STATUS.TRIMMING &&
+              item.resource.id === resourceId
           ),
         isResourceTranscoding: (resourceId) =>
           state.queue.some(
             (item) =>
-              item.state === 'TRANSCODING' &&
+              item.state === ITEM_STATUS.TRANSCODING &&
               item.resource.originalResourceId === resourceId
           ),
         isResourceMuting: (resourceId) =>
           state.queue.some(
             (item) =>
-              item.state === 'MUTING' &&
+              item.state === ITEM_STATUS.MUTING &&
               item.resource.originalResourceId === resourceId
           ),
         isResourceTrimming: (resourceId) =>
           state.queue.some(
             (item) =>
-              item.state === 'TRIMMING' &&
+              item.state === ITEM_STATUS.TRIMMING &&
               item.resource.originalResourceId === resourceId
           ),
       },
