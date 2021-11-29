@@ -37,7 +37,6 @@ import {
 } from '../../../../constants';
 import { CardGridItem } from '../../../../components';
 import { Container, Gradient, Scrim } from '../../shared/grid/components';
-import { useConfig } from '../../../config';
 import {
   TemplateDisplayContent,
   CardWrapper,
@@ -69,7 +68,7 @@ const TemplateGridItem = forwardRef(
       __('First page of %s template', 'web-stories'),
       title
     );
-    const { apiCallbacks } = useConfig();
+
     return (
       <CardGridItem
         ref={ref}
@@ -115,7 +114,7 @@ const TemplateGridItem = forwardRef(
                   {TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[status]}
                 </Button>
 
-                {apiCallbacks?.createStoryFromTemplate && (
+                {onCreateStory && (
                   <Button
                     size={BUTTON_SIZES.SMALL}
                     type={BUTTON_TYPES.PRIMARY}
