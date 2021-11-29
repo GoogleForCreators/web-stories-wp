@@ -33,7 +33,6 @@ import {
 import { Layout } from '../../../../components';
 import { APP_ROUTES, ROUTE_TITLES } from '../../../../constants';
 import { parentRoute } from '../../../router/route';
-import { useConfig } from '../../../config';
 
 const Nav = styled.nav`
   justify-content: space-between;
@@ -47,8 +46,6 @@ const HiddenHeading = styled.h2`
   ${themeHelpers.visuallyHidden};
 `;
 function Header({ onHandleCtaClick, templateTitle }) {
-  const { apiCallbacks } = useConfig();
-
   return (
     <Layout.Fixed>
       <Nav>
@@ -73,7 +70,7 @@ function Header({ onHandleCtaClick, templateTitle }) {
         >
           <Icons.CrossLarge />
         </Button>
-        {apiCallbacks?.createStoryFromTemplate && (
+        {onHandleCtaClick && (
           <Button
             onClick={onHandleCtaClick}
             type={BUTTON_TYPES.PRIMARY}
