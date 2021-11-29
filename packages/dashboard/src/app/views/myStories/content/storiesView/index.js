@@ -51,7 +51,6 @@ import {
 } from '../../../../../constants';
 import ListView from '../listView';
 import StoryGridView from '../storyGridView';
-import { useConfig } from '../../../../config';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
@@ -71,7 +70,6 @@ function StoriesView({
   const [returnStoryFocusId, setReturnStoryFocusId] = useState(null);
 
   const { showSnackbar } = useSnackbar();
-  const { apiCallbacks } = useConfig();
 
   const isActiveDeleteStoryDialog =
     activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
@@ -181,18 +179,7 @@ function StoriesView({
         [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: handleOpenStoryInEditor,
         [STORY_CONTEXT_MENU_ACTIONS.RENAME]: handleRenameStory,
       },
-      menuItems: STORY_CONTEXT_MENU_ITEMS.filter((menu) => {
-        switch (menu.value) {
-          case STORY_CONTEXT_MENU_ACTIONS.DELETE:
-            return typeof apiCallbacks?.trashStory === 'function';
-          case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
-            return typeof apiCallbacks?.duplicateStory === 'function';
-          case STORY_CONTEXT_MENU_ACTIONS.RENAME:
-            return typeof apiCallbacks?.updateStory === 'function';
-          default:
-            return true;
-        }
-      }),
+      menuItems: STORY_CONTEXT_MENU_ITEMS,
     };
   }, [
     contextMenuId,
@@ -202,7 +189,6 @@ function StoriesView({
     handleOpenStoryInEditor,
     handleRenameStory,
     setContextMenuId,
-    apiCallbacks,
   ]);
 
   const renameStory = useMemo(() => {
