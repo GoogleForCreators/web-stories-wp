@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
+import { isAnimatedGif } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -25,17 +26,31 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import useMediaUploadQueue from '..';
 import useFFmpeg from '../../useFFmpeg';
 
+const canTranscodeFile = (file) => {
+  return ['video/mp4'].includes(file.type);
+};
+
+const waitfor100 = async () => {
+  await new Promise((res) => setTimeout(res, 100));
+};
+
 jest.mock('../../useFFmpeg', () => ({
   __esModule: true,
   default: jest.fn(() => ({
     isTranscodingEnabled: true,
-    canTranscodeFile: jest.fn(),
+    canTranscodeFile,
     isFileTooLarge: jest.fn(),
-    transcodeVideo: jest.fn(),
-    stripAudioFromVideo: jest.fn(),
+    transcodeVideo: waitfor100,
+    stripAudioFromVideo: waitfor100,
+    trimVideo: waitfor100,
     getFirstFrameOfVideo: jest.fn(),
-    convertGifToVideo: jest.fn(),
+    convertGifToVideo: waitfor100,
   })),
+}));
+
+jest.mock('@web-stories-wp/media', () => ({
+  ...jest.requireActual('@web-stories-wp/media'),
+  isAnimatedGif: jest.fn(),
 }));
 
 // todo: update to be resource object.
@@ -80,6 +95,9 @@ jest.mock('../../../../uploader', () => ({
 }));
 
 describe('useMediaUploadQueue', () => {
+  beforeEach(() => {
+    isAnimatedGif.mockReturnValue(false);
+  });
   afterEach(() => {
     useFFmpeg.mockClear();
   });
@@ -111,13 +129,10 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('should set isUploading state when adding an item to the queue', async () => {
-    const file = new File(['foo'], 'foo.mov', {
-      type: 'video/quicktime',
+    const file = new File(['foo'], 'foo.jpg', {
+      type: 'image/jpeg',
+      size: 1000,
     });
-
-    const resource = {
-      id: 123,
-    };
 
     const { result, waitForNextUpdate } = renderHook(() =>
       useMediaUploadQueue()
@@ -125,9 +140,13 @@ describe('useMediaUploadQueue', () => {
 
     expect(result.current.state.isUploading).toBeFalse();
 
-    act(() => result.current.actions.addItem({ file, resource }));
+    act(() => result.current.actions.addItem({ file, resource: mockResource }));
 
     expect(result.current.state.isUploading).toBeTrue();
+
+    const { id: itemId } = result.current.state.progress[0];
+    expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
+    expect(result.current.state.isCurrentResourceUploading(itemId)).toBeTrue();
 
     await waitForNextUpdate();
 
@@ -142,20 +161,128 @@ describe('useMediaUploadQueue', () => {
     expect(result.current.state.uploaded).toHaveLength(0);
   });
 
-  it('allows removing items from the queue', async () => {
-    const file = new File(['foo'], 'foo.mov', {
-      type: 'video/quicktime',
-    });
+  it('should set isUploading state when adding a gif item to the queue', async () => {
+    isAnimatedGif.mockReturnValue(true);
+    const file = {
+      type: 'image/gif',
+      size: 1000,
+      arrayBuffer: () => true,
+    };
 
     const resource = {
       id: 123,
+      mimeType: 'image/gif',
     };
+
+    const { result, waitFor } = renderHook(() => useMediaUploadQueue());
+
+    expect(result.current.state.isUploading).toBeFalse();
+
+    act(() => result.current.actions.addItem({ file, resource }));
+
+    const { id: itemId } = result.current.state.pending[0];
+
+    await waitFor(() => expect(result.current.state.isTranscoding).toBeTrue());
+
+    expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
+    expect(
+      result.current.state.isCurrentResourceTranscoding(itemId)
+    ).toBeTrue();
+  });
+
+  it('should set isTrancoding state when adding an item to the queue', async () => {
+    const file = new File(['foo'], 'foo.mp4', {
+      type: 'video/mp4',
+      size: 5000,
+    });
+
+    const { result, waitFor } = renderHook(() => useMediaUploadQueue());
+
+    expect(result.current.state.isUploading).toBeFalse();
+
+    act(() => result.current.actions.addItem({ file, resource: mockResource }));
+
+    const { id: itemId } = result.current.state.progress[0];
+
+    await waitFor(() => expect(result.current.state.isTranscoding).toBeTrue());
+
+    expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
+    expect(
+      result.current.state.isCurrentResourceTranscoding(itemId)
+    ).toBeTrue();
+
+    expect(result.current.state.isResourceProcessing(123)).toBeTrue();
+    expect(result.current.state.isResourceTranscoding(123)).toBeTrue();
+  });
+
+  it('should set isMuting state when adding an item to the queue', async () => {
+    const file = new File(['foo'], 'foo.mp4', {
+      type: 'video/mp4',
+      size: 5000,
+    });
+
+    const { result, waitFor } = renderHook(() => useMediaUploadQueue());
+
+    expect(result.current.state.isUploading).toBeFalse();
+
+    act(() =>
+      result.current.actions.addItem({
+        file,
+        resource: mockResource,
+        muteVideo: true,
+      })
+    );
+
+    const { id: itemId } = result.current.state.progress[0];
+    await waitFor(() => expect(result.current.state.isMuting).toBeTrue());
+
+    expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
+    expect(result.current.state.isCurrentResourceMuting(itemId)).toBeTrue();
+
+    expect(result.current.state.isResourceProcessing(123)).toBeTrue();
+    expect(result.current.state.isResourceMuting(123)).toBeTrue();
+  });
+
+  it('should set isTrimming state when adding an item to the queue', async () => {
+    const file = new File(['foo'], 'foo.mp4', {
+      type: 'video/mp4',
+      size: 5000,
+    });
+
+    const { result, waitFor } = renderHook(() => useMediaUploadQueue());
+
+    expect(result.current.state.isUploading).toBeFalse();
+
+    act(() =>
+      result.current.actions.addItem({
+        file,
+        resource: mockResource,
+        trimData: { start: 100 },
+      })
+    );
+
+    const { id: itemId } = result.current.state.progress[0];
+
+    await waitFor(() => expect(result.current.state.isTrimming).toBeTrue());
+
+    expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
+    expect(result.current.state.isCurrentResourceTrimming(itemId)).toBeTrue();
+
+    expect(result.current.state.isResourceProcessing(123)).toBeTrue();
+    expect(result.current.state.isResourceTrimming(123)).toBeTrue();
+  });
+
+  it('allows removing items from the queue', async () => {
+    const file = new File(['foo'], 'foo.jpg', {
+      type: 'image/jpeg',
+      size: 1000,
+    });
 
     const { result, waitFor, waitForNextUpdate } = renderHook(() =>
       useMediaUploadQueue()
     );
 
-    act(() => result.current.actions.addItem({ file, resource }));
+    act(() => result.current.actions.addItem({ file, resource: mockResource }));
 
     await waitForNextUpdate();
 
