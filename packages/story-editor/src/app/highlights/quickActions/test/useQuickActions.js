@@ -374,7 +374,7 @@ describe('useQuickActions', () => {
       optimizeVideo: noop,
       optimizeGif: noop,
       isResourceProcessing: noop,
-      isResourceProcessingById: noop,
+      isCurrentResourceProcessing: noop,
     });
   });
 
@@ -982,7 +982,7 @@ describe('MediaPicker', () => {
       optimizeVideo: mockOptimizeVideo,
       optimizeGif: mockOptimizeGif,
       isResourceProcessing: jest.fn(),
-      isResourceProcessingById: jest.fn(),
+      isCurrentResourceProcessing: jest.fn(),
     });
 
     mockUseFFmpeg.mockReturnValue({ isTranscodingEnabled: true });

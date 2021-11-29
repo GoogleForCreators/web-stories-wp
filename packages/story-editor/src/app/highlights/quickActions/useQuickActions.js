@@ -88,10 +88,10 @@ export const MediaPicker = ({ render, ...props }) => {
     optimizeVideo,
     optimizeGif,
     isResourceProcessing,
-    isResourceProcessingById,
+    isCurrentResourceProcessing,
   } = useLocalMedia(
     ({
-      state: { isResourceProcessing, isResourceProcessingById },
+      state: { isResourceProcessing, isCurrentResourceProcessing },
       actions: {
         resetWithFetch,
         postProcessingResource,
@@ -100,7 +100,7 @@ export const MediaPicker = ({ render, ...props }) => {
       },
     }) => ({
       isResourceProcessing,
-      isResourceProcessingById,
+      isCurrentResourceProcessing,
       resetWithFetch,
       postProcessingResource,
       optimizeVideo,
@@ -160,7 +160,7 @@ export const MediaPicker = ({ render, ...props }) => {
         if (
           isTranscodingEnabled &&
           !isResourceProcessing(resource.id) &&
-          !isResourceProcessingById(resource.id) &&
+          !isCurrentResourceProcessing(resource.id) &&
           !resource.isExternal
         ) {
           if (transcodableMimeTypes.includes(resource.mimeType)) {
@@ -188,7 +188,7 @@ export const MediaPicker = ({ render, ...props }) => {
     [
       isTranscodingEnabled,
       isResourceProcessing,
-      isResourceProcessingById,
+      isCurrentResourceProcessing,
       insertMediaElement,
       postProcessingResource,
       transcodableMimeTypes,
@@ -275,10 +275,10 @@ const useQuickActions = () => {
     })
   );
 
-  const { isResourceProcessing, isResourceProcessingById } = useLocalMedia(
-    ({ state: { isResourceProcessing, isResourceProcessingById } }) => ({
+  const { isResourceProcessing, isCurrentResourceProcessing } = useLocalMedia(
+    ({ state: { isResourceProcessing, isCurrentResourceProcessing } }) => ({
       isResourceProcessing,
-      isResourceProcessingById,
+      isCurrentResourceProcessing,
     })
   );
 
@@ -678,7 +678,7 @@ const useQuickActions = () => {
       return [];
     }
     return !isResourceProcessing(resource.id) &&
-      !isResourceProcessingById(resource.id) &&
+      !isCurrentResourceProcessing(resource.id) &&
       !resource.isExternal &&
       hasTrimMode
       ? [
@@ -700,7 +700,7 @@ const useQuickActions = () => {
     selectedElements,
     selectedElement,
     isResourceProcessing,
-    isResourceProcessingById,
+    isCurrentResourceProcessing,
     hasTrimMode,
     actionMenuProps,
     toggleTrimMode,

@@ -150,10 +150,10 @@ function RightClickMenuProvider({ children }) {
     })
   );
 
-  const { isResourceProcessing, isResourceProcessingById } = useLocalMedia(
-    ({ state: { isResourceProcessing, isResourceProcessingById } }) => ({
+  const { isResourceProcessing, isCurrentResourceProcessing } = useLocalMedia(
+    ({ state: { isResourceProcessing, isCurrentResourceProcessing } }) => ({
       isResourceProcessing,
-      isResourceProcessingById,
+      isCurrentResourceProcessing,
     })
   );
 
@@ -788,10 +788,10 @@ function RightClickMenuProvider({ children }) {
       return (
         !isExternal &&
         !isResourceProcessing(id) &&
-        !isResourceProcessingById(id)
+        !isCurrentResourceProcessing(id)
       );
     },
-    [isResourceProcessing, isResourceProcessingById]
+    [isResourceProcessing, isCurrentResourceProcessing]
   );
 
   const pageManipulationItems = useMemo(

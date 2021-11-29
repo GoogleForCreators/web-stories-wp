@@ -110,7 +110,7 @@ describe('useRightClickMenu', () => {
     mockVideoTrim.mockImplementation((cb) => cb(defaultTrimContext));
     useLocalMedia.mockReturnValue({
       isResourceProcessing: jest.fn(),
-      isResourceProcessingById: jest.fn(),
+      isCurrentResourceProcessing: jest.fn(),
     });
   });
 
@@ -362,7 +362,7 @@ describe('useRightClickMenu', () => {
       it('should contain enabled "trim video"', () => {
         useLocalMedia.mockReturnValue({
           isResourceProcessing: () => false,
-          isResourceProcessingById: jest.fn(),
+          isCurrentResourceProcessing: jest.fn(),
         });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
@@ -396,7 +396,7 @@ describe('useRightClickMenu', () => {
         it('should contain disabled "trim video"', () => {
           useLocalMedia.mockReturnValue({
             isResourceProcessing: () => true,
-            isResourceProcessingById: jest.fn(),
+            isCurrentResourceProcessing: jest.fn(),
           });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,
@@ -542,7 +542,7 @@ describe('useRightClickMenu', () => {
       it('should contain enabled "trim video"', () => {
         useLocalMedia.mockReturnValue({
           isResourceProcessing: () => false,
-          isResourceProcessingById: jest.fn(),
+          isCurrentResourceProcessing: jest.fn(),
         });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
@@ -576,7 +576,7 @@ describe('useRightClickMenu', () => {
         it('should contain disabled "trim video"', () => {
           useLocalMedia.mockReturnValue({
             isResourceProcessing: () => true,
-            isResourceProcessingById: jest.fn(),
+            isCurrentResourceProcessing: jest.fn(),
           });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,

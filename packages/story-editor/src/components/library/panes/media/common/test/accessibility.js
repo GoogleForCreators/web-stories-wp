@@ -76,10 +76,10 @@ describe('automated accessibility tests', () => {
   beforeEach(() => {
     mockUseCanvas.mockReturnValue(mockCanvasContext);
     useLocalMedia.mockReturnValue({
-      isResourceTrimmingById: jest.fn(),
-      isResourceMutingById: jest.fn(),
-      isResourceTranscodingById: jest.fn(),
-      isResourceProcessingById: jest.fn(),
+      isCurrentResourceTrimming: jest.fn(),
+      isCurrentResourceMuting: jest.fn(),
+      isCurrentResourceTranscoding: jest.fn(),
+      isCurrentResourceProcessing: jest.fn(),
       isResourceProcessing: jest.fn(),
     });
   });

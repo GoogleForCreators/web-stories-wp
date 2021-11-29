@@ -92,7 +92,7 @@ describe('useVideoTrimMode', () => {
     jest.clearAllMocks();
 
     useLocalMedia.mockReturnValue({
-      isResourceUploadingById: jest.fn(),
+      isCurrentResourceUploading: jest.fn(),
     });
   });
   it('should allow trim mode for single video element', () => {
@@ -110,7 +110,7 @@ describe('useVideoTrimMode', () => {
 
   it('should not allow trim mode for filesystem local video', () => {
     useLocalMedia.mockReturnValue({
-      isResourceUploadingById: () => true,
+      isCurrentResourceUploading: () => true,
     });
     const { result } = setup({ element: { resource: { id: 123 } } });
 

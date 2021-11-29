@@ -86,9 +86,9 @@ function Element({
     baseColor,
   } = resource;
 
-  const { isResourceProcessingById } = useLocalMedia(
-    ({ state: { isResourceProcessingById } }) => ({
-      isResourceProcessingById,
+  const { isCurrentResourceProcessing } = useLocalMedia(
+    ({ state: { isCurrentResourceProcessing } }) => ({
+      isCurrentResourceProcessing,
     })
   );
 
@@ -226,7 +226,7 @@ function Element({
           active={active}
         />
         {attribution}
-        {isResourceProcessingById(resourceId) && (
+        {isCurrentResourceProcessing(resourceId) && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (
@@ -270,28 +270,28 @@ Element.propTypes = {
  */
 function MediaElement(props) {
   const {
-    isResourceTrimmingById,
-    isResourceMutingById,
-    isResourceTranscodingById,
+    isCurrentResourceTrimming,
+    isCurrentResourceMuting,
+    isCurrentResourceTranscoding,
   } = useLocalMedia(
     ({
       state: {
-        isResourceMutingById,
-        isResourceTrimmingById,
-        isResourceTranscodingById,
+        isCurrentResourceMuting,
+        isCurrentResourceTrimming,
+        isCurrentResourceTranscoding,
       },
     }) => ({
-      isResourceMutingById,
-      isResourceTrimmingById,
-      isResourceTranscodingById,
+      isCurrentResourceMuting,
+      isCurrentResourceTrimming,
+      isCurrentResourceTranscoding,
     })
   );
   const { id } = props.resource;
 
   if (
-    isResourceTrimmingById(id) ||
-    isResourceMutingById(id) ||
-    isResourceTranscodingById(id)
+    isCurrentResourceTrimming(id) ||
+    isCurrentResourceMuting(id) ||
+    isCurrentResourceTranscoding(id)
   ) {
     return (
       <Tooltip title={__('Video is being processed', 'web-stories')}>

@@ -115,7 +115,7 @@ describe('useInsertElement', () => {
 
     useLocalMedia.mockReturnValue({
       postProcessingResource: jest.fn(),
-      isResourceUploadingById: jest.fn(),
+      isCurrentResourceUploading: jest.fn(),
     });
 
     useLayout.mockReturnValue({

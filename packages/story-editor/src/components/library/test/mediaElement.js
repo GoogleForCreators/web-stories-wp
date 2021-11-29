@@ -107,12 +107,12 @@ const renderMediaElement = (resource, providerType, canEditMedia = true) => {
 describe('MediaElement', () => {
   beforeEach(() => {
     useLocalMedia.mockReturnValue({
-      isResourceTrimmingById: jest.fn(),
-      isResourceMutingById: jest.fn(),
-      isResourceTranscodingById: jest.fn(),
+      isCurrentResourceTrimming: jest.fn(),
+      isCurrentResourceMuting: jest.fn(),
+      isCurrentResourceTranscoding: jest.fn(),
       isResourceProcessing: jest.fn(),
-      isResourceProcessingById: jest.fn(),
-      isResourceUploadingById: jest.fn(),
+      isCurrentResourceProcessing: jest.fn(),
+      isCurrentResourceUploading: jest.fn(),
     });
   });
   it.each`
@@ -193,12 +193,12 @@ describe('MediaElement', () => {
 
   it("should not render dropdown menu's more icon for not uploaded image", () => {
     useLocalMedia.mockReturnValue({
-      isResourceTrimmingById: jest.fn(),
-      isResourceMutingById: jest.fn(),
-      isResourceTranscodingById: jest.fn(),
+      isCurrentResourceTrimming: jest.fn(),
+      isCurrentResourceMuting: jest.fn(),
+      isCurrentResourceTranscoding: jest.fn(),
       isResourceProcessing: jest.fn(),
-      isResourceProcessingById: () => true,
-      isResourceUploadingById: jest.fn(),
+      isCurrentResourceProcessing: () => true,
+      isCurrentResourceUploading: jest.fn(),
     });
     const { queryByAriaLabel } = renderMediaElement(IMAGE_RESOURCE, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
@@ -211,12 +211,12 @@ describe('MediaElement', () => {
 
   it("should not render dropdown menu's more icon for not uploaded video", () => {
     useLocalMedia.mockReturnValue({
-      isResourceTrimmingById: jest.fn(),
-      isResourceMutingById: jest.fn(),
-      isResourceTranscodingById: jest.fn(),
+      isCurrentResourceTrimming: jest.fn(),
+      isCurrentResourceMuting: jest.fn(),
+      isCurrentResourceTranscoding: jest.fn(),
       isResourceProcessing: jest.fn(),
-      isResourceProcessingById: () => true,
-      isResourceUploadingById: jest.fn(),
+      isCurrentResourceProcessing: () => true,
+      isCurrentResourceUploading: jest.fn(),
     });
     const { queryByAriaLabel } = renderMediaElement(VIDEO_RESOURCE, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
@@ -229,12 +229,12 @@ describe('MediaElement', () => {
 
   it("should not render dropdown menu's more icon for not uploaded gif", () => {
     useLocalMedia.mockReturnValue({
-      isResourceTrimmingById: jest.fn(),
-      isResourceMutingById: jest.fn(),
-      isResourceTranscodingById: jest.fn(),
+      isCurrentResourceTrimming: jest.fn(),
+      isCurrentResourceMuting: jest.fn(),
+      isCurrentResourceTranscoding: jest.fn(),
       isResourceProcessing: jest.fn(),
-      isResourceProcessingById: () => true,
-      isResourceUploadingById: jest.fn(),
+      isCurrentResourceProcessing: () => true,
+      isCurrentResourceUploading: jest.fn(),
     });
     const { queryByAriaLabel } = renderMediaElement(GIF_RESOURCE, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();

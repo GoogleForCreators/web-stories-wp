@@ -372,120 +372,193 @@ function useMediaUploadQueue() {
     finishTrimming,
   ]);
 
-  return useMemo(
-    () => ({
+  return useMemo(() => {
+    const progress = state.queue.filter(
+      (item) =>
+        ![
+          ITEM_STATUS.UPLOADED,
+          ITEM_STATUS.CANCELLED,
+          ITEM_STATUS.PENDING,
+        ].includes(item.state)
+    );
+    const pending = state.queue.filter(
+      (item) => item.state === ITEM_STATUS.PENDING
+    );
+    const uploaded = state.queue.filter(
+      (item) => item.state === ITEM_STATUS.UPLOADED
+    );
+    const failures = state.queue.filter(
+      (item) => item.state === ITEM_STATUS.CANCELLED
+    );
+    const isUploading = state.queue.some(
+      (item) =>
+        ![
+          ITEM_STATUS.UPLOADED,
+          ITEM_STATUS.CANCELLED,
+          ITEM_STATUS.PENDING,
+        ].includes(item.state)
+    );
+    const isTranscoding = state.queue.some(
+      (item) => item.state === ITEM_STATUS.TRANSCODING
+    );
+    const isMuting = state.queue.some(
+      (item) => item.state === ITEM_STATUS.MUTING
+    );
+    const isTrimming = state.queue.some(
+      (item) => item.state === ITEM_STATUS.TRIMMING
+    );
+    /**
+     * Is a new resource being processed.
+     *
+     * @param {number} resourceId Resource id.
+     * @return {boolean} if resource with id is found.
+     */
+    const isResourceProcessing = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          [
+            ITEM_STATUS.PENDING,
+            ITEM_STATUS.UPLOADING,
+            ITEM_STATUS.TRANSCODED,
+            ITEM_STATUS.TRANSCODING,
+            ITEM_STATUS.MUTING,
+            ITEM_STATUS.MUTED,
+            ITEM_STATUS.TRIMMING,
+            ITEM_STATUS.TRIMMED,
+          ].includes(item.state) &&
+          item.resource.originalResourceId === resourceId
+      );
+    /**
+     * Is the current resource being processed.
+     *
+     * @param {number} resourceId Resource id.
+     * @return {boolean} if resource with id is found.
+     */
+    const isCurrentResourceProcessing = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          [
+            ITEM_STATUS.PENDING,
+            ITEM_STATUS.UPLOADING,
+            ITEM_STATUS.TRANSCODED,
+            ITEM_STATUS.TRANSCODING,
+            ITEM_STATUS.MUTING,
+            ITEM_STATUS.MUTED,
+            ITEM_STATUS.TRIMMING,
+            ITEM_STATUS.TRIMMED,
+          ].includes(item.state) && item.resource.id === resourceId
+      );
+    /**
+     * Is the current resource uploading.
+     *
+     * @param {number} resourceId Resource id.
+     * @return {boolean} if resource with id is found.
+     */
+    const isCurrentResourceUploading = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.UPLOADING &&
+          item.resource.id === resourceId
+      );
+    /**
+     * Is the current resource transcoding.
+     *
+     * @param {number} resourceId Resource id.
+     * @return {boolean} if resource with id is found.
+     */
+    const isCurrentResourceTranscoding = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.TRANSCODING &&
+          item.resource.id === resourceId
+      );
+    /**
+     * Is the current resource muting.
+     *
+     * @param {number} resourceId Resource id.
+     * @return {boolean} if resource with id is found.
+     */
+    const isCurrentResourceMuting = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.MUTING && item.resource.id === resourceId
+      );
+    /**
+     * Is the current resource trimming.
+     *
+     * @param {number} resourceId Resource id.
+     * @return {boolean} if resource with id is found.
+     */
+    const isCurrentResourceTrimming = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.TRIMMING && item.resource.id === resourceId
+      );
+    /**
+     * Is the current resource transcoding.
+     *
+     * @param {number} resourceId Resource id.
+     * @return {boolean} if resource with id is found.
+     */
+    const isResourceTranscoding = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.TRANSCODING &&
+          item.resource.originalResourceId === resourceId
+      );
+
+    /**
+     * Is a new resource muting.
+     *
+     * @param {number} resourceId Resource id.
+     * @return {boolean} if resource with id is found.
+     */
+    const isResourceMuting = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.MUTING &&
+          item.resource.originalResourceId === resourceId
+      );
+
+    /**
+     * Is a new resource trimming.
+     *
+     * @param {number} resourceId Resource id.
+     * @return {boolean} if resource with id is found.
+     */
+    const isResourceTrimming = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.TRIMMING &&
+          item.resource.originalResourceId === resourceId
+      );
+
+    return {
       state: {
-        progress: state.queue.filter(
-          (item) =>
-            ![
-              ITEM_STATUS.UPLOADED,
-              ITEM_STATUS.CANCELLED,
-              ITEM_STATUS.PENDING,
-            ].includes(item.state)
-        ),
-        pending: state.queue.filter(
-          (item) => item.state === ITEM_STATUS.PENDING
-        ),
-        uploaded: state.queue.filter(
-          (item) => item.state === ITEM_STATUS.UPLOADED
-        ),
-        failures: state.queue.filter(
-          (item) => item.state === ITEM_STATUS.CANCELLED
-        ),
-        isUploading: state.queue.some(
-          (item) =>
-            ![
-              ITEM_STATUS.UPLOADED,
-              ITEM_STATUS.CANCELLED,
-              ITEM_STATUS.PENDING,
-            ].includes(item.state)
-        ),
-        isTranscoding: state.queue.some(
-          (item) => item.state === ITEM_STATUS.TRANSCODING
-        ),
-        isMuting: state.queue.some((item) => item.state === ITEM_STATUS.MUTING),
-        isTrimming: state.queue.some(
-          (item) => item.state === ITEM_STATUS.TRIMMING
-        ),
-        isResourceProcessing: (resourceId) =>
-          state.queue.some(
-            (item) =>
-              [
-                ITEM_STATUS.PENDING,
-                ITEM_STATUS.UPLOADING,
-                ITEM_STATUS.TRANSCODED,
-                ITEM_STATUS.TRANSCODING,
-                ITEM_STATUS.MUTING,
-                ITEM_STATUS.MUTED,
-                ITEM_STATUS.TRIMMING,
-                ITEM_STATUS.TRIMMED,
-              ].includes(item.state) &&
-              item.resource.originalResourceId === resourceId
-          ),
-        isResourceProcessingById: (resourceId) =>
-          state.queue.some(
-            (item) =>
-              [
-                ITEM_STATUS.PENDING,
-                ITEM_STATUS.UPLOADING,
-                ITEM_STATUS.TRANSCODED,
-                ITEM_STATUS.TRANSCODING,
-                ITEM_STATUS.MUTING,
-                ITEM_STATUS.MUTED,
-                ITEM_STATUS.TRIMMING,
-                ITEM_STATUS.TRIMMED,
-              ].includes(item.state) && item.resource.id === resourceId
-          ),
-        isResourceUploadingById: (resourceId) =>
-          state.queue.some(
-            (item) =>
-              item.state === ITEM_STATUS.UPLOADING &&
-              item.resource.id === resourceId
-          ),
-        isResourceTranscodingById: (resourceId) =>
-          state.queue.some(
-            (item) =>
-              item.state === ITEM_STATUS.TRANSCODING &&
-              item.resource.id === resourceId
-          ),
-        isResourceMutingById: (resourceId) =>
-          state.queue.some(
-            (item) =>
-              item.state === ITEM_STATUS.MUTING &&
-              item.resource.id === resourceId
-          ),
-        isResourceTrimmingById: (resourceId) =>
-          state.queue.some(
-            (item) =>
-              item.state === ITEM_STATUS.TRIMMING &&
-              item.resource.id === resourceId
-          ),
-        isResourceTranscoding: (resourceId) =>
-          state.queue.some(
-            (item) =>
-              item.state === ITEM_STATUS.TRANSCODING &&
-              item.resource.originalResourceId === resourceId
-          ),
-        isResourceMuting: (resourceId) =>
-          state.queue.some(
-            (item) =>
-              item.state === ITEM_STATUS.MUTING &&
-              item.resource.originalResourceId === resourceId
-          ),
-        isResourceTrimming: (resourceId) =>
-          state.queue.some(
-            (item) =>
-              item.state === ITEM_STATUS.TRIMMING &&
-              item.resource.originalResourceId === resourceId
-          ),
+        progress,
+        pending,
+        uploaded,
+        failures,
+        isUploading,
+        isTranscoding,
+        isMuting,
+        isTrimming,
+        isCurrentResourceMuting,
+        isCurrentResourceProcessing,
+        isCurrentResourceUploading,
+        isCurrentResourceTranscoding,
+        isCurrentResourceTrimming,
+        isResourceMuting,
+        isResourceProcessing,
+        isResourceTranscoding,
+        isResourceTrimming,
       },
       actions: {
         addItem: actions.addItem,
         removeItem: actions.removeItem,
       },
-    }),
-    [state, actions]
-  );
+    };
+  }, [state, actions]);
 }
 
 export default useMediaUploadQueue;

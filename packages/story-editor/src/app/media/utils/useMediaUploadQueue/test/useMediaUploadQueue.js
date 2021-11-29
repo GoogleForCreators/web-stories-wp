@@ -98,14 +98,14 @@ describe('useMediaUploadQueue', () => {
         isMuting: false,
         isTrimming: false,
         isResourceMuting: expect.any(Function),
-        isResourceMutingById: expect.any(Function),
+        isCurrentResourceMuting: expect.any(Function),
         isResourceProcessing: expect.any(Function),
-        isResourceProcessingById: expect.any(Function),
+        isCurrentResourceProcessing: expect.any(Function),
         isResourceTranscoding: expect.any(Function),
-        isResourceTranscodingById: expect.any(Function),
+        isCurrentResourceTranscoding: expect.any(Function),
         isResourceTrimming: expect.any(Function),
-        isResourceTrimmingById: expect.any(Function),
-        isResourceUploadingById: expect.any(Function),
+        isCurrentResourceTrimming: expect.any(Function),
+        isCurrentResourceUploading: expect.any(Function),
       })
     );
   });
@@ -171,14 +171,14 @@ describe('useMediaUploadQueue', () => {
         isMuting: false,
         isTrimming: false,
         isResourceMuting: expect.any(Function),
-        isResourceMutingById: expect.any(Function),
+        isCurrentResourceMuting: expect.any(Function),
         isResourceProcessing: expect.any(Function),
-        isResourceProcessingById: expect.any(Function),
+        isCurrentResourceProcessing: expect.any(Function),
         isResourceTranscoding: expect.any(Function),
-        isResourceTranscodingById: expect.any(Function),
+        isCurrentResourceTranscoding: expect.any(Function),
         isResourceTrimming: expect.any(Function),
-        isResourceTrimmingById: expect.any(Function),
-        isResourceUploadingById: expect.any(Function),
+        isCurrentResourceTrimming: expect.any(Function),
+        isCurrentResourceUploading: expect.any(Function),
       })
     );
   });

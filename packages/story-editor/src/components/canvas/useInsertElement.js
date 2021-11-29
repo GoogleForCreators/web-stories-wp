@@ -41,13 +41,13 @@ function useInsertElement() {
     addElement: state.actions.addElement,
     updateElementById: state.actions.updateElementById,
   }));
-  const { postProcessingResource, isResourceUploadingById } = useLocalMedia(
+  const { postProcessingResource, isCurrentResourceUploading } = useLocalMedia(
     ({
-      state: { isResourceUploadingById },
+      state: { isCurrentResourceUploading },
       actions: { postProcessingResource },
     }) => ({
       postProcessingResource,
-      isResourceUploadingById,
+      isCurrentResourceUploading,
     })
   );
   const {
@@ -73,7 +73,7 @@ function useInsertElement() {
 
       const imageSrc = type === 'image' ? src : poster;
       if (
-        isResourceUploadingById(resourceId) ||
+        isCurrentResourceUploading(resourceId) ||
         !imageSrc ||
         currentBaseColor ||
         !isExternal
@@ -102,7 +102,7 @@ function useInsertElement() {
       }
     },
     [
-      isResourceUploadingById,
+      isCurrentResourceUploading,
       checkResourceAccess,
       getProxiedUrl,
       updateElementById,
@@ -118,7 +118,7 @@ function useInsertElement() {
   const handleRegisterUsage = useCallback(
     (resource) => {
       if (
-        !isResourceUploadingById(resource?.id) &&
+        !isCurrentResourceUploading(resource?.id) &&
         resource?.attribution?.registerUsageUrl
       ) {
         registerUsage({
@@ -126,7 +126,7 @@ function useInsertElement() {
         });
       }
     },
-    [isResourceUploadingById, registerUsage]
+    [isCurrentResourceUploading, registerUsage]
   );
 
   const focusCanvas = useFocusCanvas();

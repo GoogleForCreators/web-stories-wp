@@ -118,14 +118,14 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     isUploading,
     isTranscoding,
     isResourceProcessing,
-    isResourceProcessingById,
+    isCurrentResourceProcessing,
     isResourceTranscoding,
     isResourceMuting,
     isResourceTrimming,
-    isResourceUploadingById,
-    isResourceTranscodingById,
-    isResourceMutingById,
-    isResourceTrimmingById,
+    isCurrentResourceUploading,
+    isCurrentResourceTranscoding,
+    isCurrentResourceMuting,
+    isCurrentResourceTrimming,
     uploaded,
   } = useUploadMedia({
     media,
@@ -236,7 +236,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         isExternal,
       } = resource;
 
-      if (!id || isResourceProcessingById(id) || isExternal) {
+      if (!id || isCurrentResourceProcessing(id) || isExternal) {
         return;
       }
       if (
@@ -256,7 +256,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       }
     },
     [
-      isResourceProcessingById,
+      isCurrentResourceProcessing,
       allowedVideoMimeTypes,
       processMediaBaseColor,
       processVideoAudio,
@@ -288,14 +288,14 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       isUploading: isUploading || isGeneratingPosterImages,
       isTranscoding,
       isResourceProcessing,
-      isResourceProcessingById,
+      isCurrentResourceProcessing,
       isResourceTranscoding,
       isResourceMuting,
       isResourceTrimming,
-      isResourceUploadingById,
-      isResourceTranscodingById,
-      isResourceMutingById,
-      isResourceTrimmingById,
+      isCurrentResourceUploading,
+      isCurrentResourceTranscoding,
+      isCurrentResourceMuting,
+      isCurrentResourceTrimming,
     },
     actions: {
       setNextPage,

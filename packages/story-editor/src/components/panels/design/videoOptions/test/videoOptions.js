@@ -64,7 +64,7 @@ describe('Panels/VideoOptions', () => {
       isResourceTrimming: jest.fn(),
       isResourceMuting: jest.fn(),
       isResourceProcessing: jest.fn(),
-      isResourceProcessingById: jest.fn(),
+      isCurrentResourceProcessing: jest.fn(),
     });
   });
 
