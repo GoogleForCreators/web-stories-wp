@@ -32,6 +32,7 @@ import {
 /**
  * Internal dependencies
  */
+import PropTypes from 'prop-types';
 import useMetaBoxes from '../../metaBoxes/useMetaBoxes';
 
 const ButtonList = styled.nav`
@@ -63,6 +64,52 @@ function Loading() {
     </Spinner>
   );
 }
+
+function DraftButtons({ forceIsSaving, hasUpdates }) {
+  return (
+    <>
+      <UpdateButton hasUpdates={hasUpdates} forceIsSaving={forceIsSaving} />
+      <PublishButton forceIsSaving={forceIsSaving} />
+    </>
+  );
+}
+
+DraftButtons.propTypes = {
+  forceIsSaving: PropTypes.bool.isRequired,
+  hasUpdates: PropTypes.bool.isRequired,
+};
+
+function PendingButtons({ forceIsSaving, hasUpdates, canPublish }) {
+  return (
+    <>
+      <SwitchToDraftButton forceIsSaving={forceIsSaving} />
+      {canPublish && (
+        <UpdateButton hasUpdates={hasUpdates} forceIsSaving={forceIsSaving} />
+      )}
+      <PublishButton forceIsSaving={forceIsSaving} />
+    </>
+  );
+}
+
+PendingButtons.propTypes = {
+  forceIsSaving: PropTypes.bool.isRequired,
+  hasUpdates: PropTypes.bool.isRequired,
+  canPublish: PropTypes.bool.isRequired,
+};
+
+function PublishedButtons({ forceIsSaving, hasUpdates }) {
+  return (
+    <>
+      <SwitchToDraftButton forceIsSaving={forceIsSaving} />
+      <UpdateButton hasUpdates={hasUpdates} forceIsSaving={forceIsSaving} />
+    </>
+  );
+}
+
+PublishedButtons.propTypes = {
+  forceIsSaving: PropTypes.bool.isRequired,
+  hasUpdates: PropTypes.bool.isRequired,
+};
 
 function Buttons() {
   const { status, canPublish } = useStory(
@@ -105,24 +152,24 @@ function Buttons() {
           <PreviewButton forceIsSaving={isSavingMetaBoxes} />
           {isSaving && <Loading />}
         </IconWithSpinner>
-        {isPending && <SwitchToDraftButton forceIsSaving={isSavingMetaBoxes} />}
-        {(isDraft || (isPending && canPublish)) && (
-          <UpdateButton
-            hasUpdates={hasMetaBoxes}
+        {isDraft && (
+          <DraftButtons
             forceIsSaving={isSavingMetaBoxes}
+            hasUpdates={hasMetaBoxes}
           />
         )}
-        {isDraftOrPending && (
-          <PublishButton forceIsSaving={isSavingMetaBoxes} />
+        {isPending && (
+          <PendingButtons
+            forceIsSaving={isSavingMetaBoxes}
+            hasUpdates={hasMetaBoxes}
+            canPublish={canPublish}
+          />
         )}
         {!isDraftOrPending && (
-          <>
-            <SwitchToDraftButton forceIsSaving={isSavingMetaBoxes} />
-            <UpdateButton
-              hasUpdates={hasMetaBoxes}
-              forceIsSaving={isSavingMetaBoxes}
-            />
-          </>
+          <PublishedButtons
+            forceIsSaving={isSavingMetaBoxes}
+            hasUpdates={hasMetaBoxes}
+          />
         )}
       </List>
     </ButtonList>
