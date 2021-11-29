@@ -125,9 +125,7 @@ export function finishUploading(state, { payload: { id, resource } }) {
     revokeBlob(queueItem.resource.poster);
   }
 
-  if ('originalResourceId' in resource) {
-    delete resource.originalResourceId;
-  }
+  delete resource.originalResourceId;
 
   return {
     ...state,

@@ -33,21 +33,10 @@ function updateElement(element) {
     return element;
   }
 
-  if ('local' in element.resource) {
-    delete element.resource.local;
-  }
-
-  if ('isTrimming' in element.resource) {
-    delete element.resource.isTrimming;
-  }
-
-  if ('isTranscoding' in element.resource) {
-    delete element.resource.isTranscoding;
-  }
-
-  if ('isMuting' in element.resource) {
-    delete element.resource.isMuting;
-  }
+  delete element.resource.local;
+  delete element.resource.isTrimming;
+  delete element.resource.isTranscoding;
+  delete element.resource.isMuting;
 
   return element;
 }
