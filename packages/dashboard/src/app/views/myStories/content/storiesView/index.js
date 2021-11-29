@@ -176,16 +176,10 @@ function StoriesView({
       menuItemActions: {
         default: () => setContextMenuId(-1),
         [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: handleCopyStoryLink,
-        ...(apiCallbacks?.trashStory && {
-          [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,
-        }),
-        ...(apiCallbacks?.duplicateStory && {
-          [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: handleDuplicateStory,
-        }),
+        [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,
+        [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: handleDuplicateStory,
         [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: handleOpenStoryInEditor,
-        ...(apiCallbacks?.updateStory && {
-          [STORY_CONTEXT_MENU_ACTIONS.RENAME]: handleRenameStory,
-        }),
+        [STORY_CONTEXT_MENU_ACTIONS.RENAME]: handleRenameStory,
       },
       menuItems: STORY_CONTEXT_MENU_ITEMS.filter((menu) => {
         switch (menu.value) {
