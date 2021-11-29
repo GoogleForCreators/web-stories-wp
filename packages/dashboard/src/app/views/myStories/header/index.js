@@ -64,7 +64,7 @@ const StyledPill = styled(Pill)`
 `;
 function Header({
   filter,
-  isLoading,
+  initialPageReady,
   search,
   sort,
   stories,
@@ -102,8 +102,8 @@ function Header({
 
   const HeaderToggleButtons = useMemo(() => {
     if (
-      totalStoriesByStatus &&
-      Object.keys(totalStoriesByStatus).length === 0
+      !initialPageReady ||
+      (totalStoriesByStatus && Object.keys(totalStoriesByStatus).length === 0)
     ) {
       return null;
     }
@@ -141,7 +141,7 @@ function Header({
         }).filter(Boolean)}
       </>
     );
-  }, [totalStoriesByStatus, filter.value, handleClick]);
+  }, [totalStoriesByStatus, filter.value, initialPageReady, handleClick]);
 
   const onSortChange = useCallback(
     (newSort) => {
@@ -168,7 +168,7 @@ function Header({
         searchPlaceholder={__('Search Stories', 'web-stories')}
         searchOptions={searchOptions}
         handleSearchChange={debouncedSearchChange}
-        showSearch
+        showSearch={initialPageReady}
         searchValue={search.keyword}
         clearSearch={clearSearch}
       >
@@ -181,7 +181,6 @@ function Header({
         showAuthorDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
-        isLoading={isLoading}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
@@ -199,7 +198,7 @@ function Header({
 
 Header.propTypes = {
   filter: FilterPropTypes.isRequired,
-  isLoading: PropTypes.bool,
+  initialPageReady: PropTypes.bool,
   search: SearchPropTypes.isRequired,
   sort: SortPropTypes.isRequired,
   stories: StoriesPropType,
