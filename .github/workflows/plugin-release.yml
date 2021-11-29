@@ -194,14 +194,10 @@ jobs:
         with:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
 
-      - name: Read .nvmrc
-        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
-        id: nvm
-
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Install dependencies
@@ -282,14 +278,10 @@ jobs:
           rm -rf assets_version.txt
         continue-on-error: true
 
-      - name: Read .nvmrc
-        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
-        id: nvm
-
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup PHP
@@ -497,14 +489,10 @@ jobs:
           ref: main
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
-      - name: Read .nvmrc
-        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
-        id: nvm
-
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Install dependencies
