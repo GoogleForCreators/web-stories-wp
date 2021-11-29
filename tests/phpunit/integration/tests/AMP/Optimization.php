@@ -22,6 +22,8 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Configuration;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplate;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplateErrorHandler;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimePreloads;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\MinifyHtml;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeViewport;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ReorderHead;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\GoogleFontsPreconnect;
 use Google\Web_Stories\Tests\Integration\TestCase;
@@ -101,6 +103,8 @@ class Optimization extends TestCase {
 			AmpRuntimePreloads::class,
 			AmpBoilerplateErrorHandler::class,
 			GoogleFontsPreconnect::class,
+			MinifyHtml::class,
+			OptimizeViewport::class,
 			ReorderHead::class,
 		];
 

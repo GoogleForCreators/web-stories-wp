@@ -195,6 +195,10 @@ class AMP extends Service_Base implements HasRequirements {
 		$story = new Story();
 		$story->load_from_post( $post );
 
+		$poster_images = [
+			'poster-portrait-src' => esc_url_raw( $story->get_poster_portrait() ),
+		];
+
 		if ( isset( $sanitizers['AMP_Style_Sanitizer'] ) ) {
 			if ( ! isset( $sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] ) ) {
 				$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] = [];
@@ -206,9 +210,7 @@ class AMP extends Service_Base implements HasRequirements {
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
 			'publisher_logo' => $story->get_publisher_logo_url(),
 			'publisher'      => $story->get_publisher_name(),
-			'poster_images'  => [
-				'poster-portrait-src' => $story->get_poster_portrait(),
-			],
+			'poster_images'  => array_filter( $poster_images ),
 			'video_cache'    => $video_cache_enabled,
 		];
 

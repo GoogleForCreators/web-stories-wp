@@ -26,9 +26,7 @@ import { Fixture } from '../../../karma';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { initHelpers } from './_utils';
 
-// Disable reason: https://github.com/google/web-stories-wp/issues/9781
-// eslint-disable-next-line jasmine/no-disabled-tests
-xdescribe('Styling multiple text fields', () => {
+describe('Styling multiple text fields', () => {
   const data = {};
 
   const {
