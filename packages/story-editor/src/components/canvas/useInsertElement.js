@@ -117,16 +117,13 @@ function useInsertElement() {
    */
   const handleRegisterUsage = useCallback(
     (resource) => {
-      if (
-        !isCurrentResourceUploading(resource?.id) &&
-        resource?.attribution?.registerUsageUrl
-      ) {
+      if (resource?.attribution?.registerUsageUrl) {
         registerUsage({
           registerUsageUrl: resource.attribution.registerUsageUrl,
         });
       }
     },
-    [isCurrentResourceUploading, registerUsage]
+    [registerUsage]
   );
 
   const focusCanvas = useFocusCanvas();
