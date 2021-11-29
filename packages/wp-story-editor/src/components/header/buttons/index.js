@@ -112,14 +112,16 @@ PublishedButtons.propTypes = {
 };
 
 function Buttons() {
-  const { status, canPublish } = useStory(
+  const { status, canPublish, isSaving } = useStory(
     ({
       state: {
         story: { status },
+        meta: { isSaving },
         capabilities,
       },
     }) => ({
       status,
+      isSaving,
       canPublish: Boolean(capabilities?.publish),
     })
   );
@@ -133,14 +135,6 @@ function Buttons() {
       hasMetaBoxes,
       isSavingMetaBoxes,
     })
-  );
-
-  const { isSaving } = useStory(
-    ({
-      state: {
-        meta: { isSaving },
-      },
-    }) => ({ isSaving })
   );
 
   return (

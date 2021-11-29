@@ -124,7 +124,7 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
       <PlainButton
         text={__('Save draft', 'web-stories')}
         disabled={!isEnabled}
-        onClick={() => saveStory({ status: 'draft' })}
+        onClick={() => saveStory()}
       />
     );
   }
