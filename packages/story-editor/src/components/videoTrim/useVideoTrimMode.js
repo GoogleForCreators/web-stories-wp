@@ -120,7 +120,7 @@ function useVideoTrimMode() {
       isVideoTrimEnabled &&
       isTranscodingEnabled &&
       !isExternal &&
-      !(id && isCurrentResourceUploading(id))
+      !isCurrentResourceUploading(id)
     );
   }, [
     selectedElement,
