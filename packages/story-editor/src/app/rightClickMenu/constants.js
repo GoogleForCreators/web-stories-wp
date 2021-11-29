@@ -50,6 +50,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
     'web-stories'
   ),
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
+  DUPLICATE_ELEMENTS: __('Duplicate Elements', 'web-stories'),
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE_SHAPE_STYLES: __('Paste Shape Styles', 'web-stories'),
   PASTE_VIDEO_STYLES: __('Paste Video Styles', 'web-stories'),
