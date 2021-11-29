@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-function removeMediaProperties({ pages, ...rest }) {
+function removeTransientMediaProperties({ pages, ...rest }) {
   return {
     pages: pages.map(reducePage),
     ...rest,
@@ -52,4 +52,4 @@ function updateElement(element) {
   return element;
 }
 
-export default removeMediaProperties;
+export default removeTransientMediaProperties;

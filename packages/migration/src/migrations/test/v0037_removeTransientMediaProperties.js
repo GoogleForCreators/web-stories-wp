@@ -16,12 +16,12 @@
 /**
  * Internal dependencies
  */
-import removeMediaProperties from '../v0037_removeMediaProperties';
+import removeTransientMediaProperties from '../v0037_removeTransientMediaProperties';
 
-describe('removeMediaProperties', () => {
+describe('removeTransientMediaProperties', () => {
   it('should remove properties', () => {
     expect(
-      removeMediaProperties({
+      removeTransientMediaProperties({
         _test: 'story',
         pages: [
           {
