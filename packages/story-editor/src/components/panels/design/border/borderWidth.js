@@ -26,7 +26,6 @@ import { LockToggle, Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { singleBorderMask } from '../../../../masks';
 import { StackableGroup, StackableInput } from '../../../form/stackable';
 import Tooltip from '../../../tooltip';
 import { focusStyle, useCommonObjectValue } from '../../shared';
@@ -76,13 +75,8 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
     DEFAULT_BORDER
   );
 
-  // some shapes - non-rectangular shapes only support a single border width value
-  const singleBorderSupport = selectedElements.some((el) =>
-    singleBorderMask(el)
-  );
-
   // Only if true for all selected elements.
-  const lockBorder = border.lockedWidth === true || singleBorderSupport;
+  const lockBorder = border.lockedWidth === true;
 
   const handleChange = useCallback(
     (name) => (evt, value) => {
@@ -160,31 +154,29 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
           </>
         )}
       </StackableGroup>
-      {!singleBorderSupport && (
-        <ToggleWrapper locked={lockBorder}>
-          <Tooltip title={__('Toggle consistent border', 'web-stories')}>
-            <StyledLockToggle
-              isLocked={lockBorder}
-              onClick={() => {
-                let args = {
-                  lockedWidth: !lockBorder,
+      <ToggleWrapper locked={lockBorder}>
+        <Tooltip title={__('Toggle consistent border', 'web-stories')}>
+          <StyledLockToggle
+            isLocked={lockBorder}
+            onClick={() => {
+              let args = {
+                lockedWidth: !lockBorder,
+              };
+              // If the border width wasn't locked before (and is now), unify all the values.
+              if (!lockBorder) {
+                args = {
+                  ...args,
+                  top: border.left,
+                  right: border.left,
+                  bottom: border.left,
                 };
-                // If the border width wasn't locked before (and is now), unify all the values.
-                if (!lockBorder) {
-                  args = {
-                    ...args,
-                    top: border.left,
-                    right: border.left,
-                    bottom: border.left,
-                  };
-                }
-                handleLockChange(args);
-              }}
-              aria-label={__('Toggle consistent border', 'web-stories')}
-            />
-          </Tooltip>
-        </ToggleWrapper>
-      )}
+              }
+              handleLockChange(args);
+            }}
+            aria-label={__('Toggle consistent border', 'web-stories')}
+          />
+        </Tooltip>
+      </ToggleWrapper>
     </BorderInputsFlexContainer>
   );
 }

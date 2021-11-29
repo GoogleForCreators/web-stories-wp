@@ -89,7 +89,7 @@ export function getBorderPositionCSS({
  */
 export function getBorderStyle(element) {
   // If there's no border, return the radius only.
-  if (!hasBorder(element)) {
+  if (!hasBorder(element) || singleBorderMask(element)) {
     return getBorderRadius(element);
   }
   const { border } = element;

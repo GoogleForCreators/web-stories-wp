@@ -51,6 +51,7 @@ function ShapeDisplay({ element, previewMode }) {
     backgroundColor,
     border,
     borderRadius,
+    mask,
     width: elementWidth,
     height: elementHeight,
   } = element;
@@ -95,6 +96,7 @@ function ShapeDisplay({ element, previewMode }) {
       width={elementWidth}
       height={elementHeight}
       border={getResponsiveBorder(border, previewMode, dataToEditorX)}
+      mask={mask}
     />
   );
 }

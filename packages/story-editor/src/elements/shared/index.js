@@ -67,12 +67,13 @@ export const elementWithHighlightBorderRadius = ({
   `;
 
 export const elementWithBorder = css`
-  ${({ border, borderRadius, width, height }) =>
+  ${({ border, borderRadius, width, height, mask }) =>
     getBorderStyle({
       border,
       borderRadius,
       width,
       height,
+      mask,
     })}
   background-clip: padding-box;
 `;
