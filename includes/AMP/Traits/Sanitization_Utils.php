@@ -230,8 +230,11 @@ trait Sanitization_Utils {
 			return;
 		}
 
+		// The story sanitizer only passes valid, non-empty URLs that are already escaped.
+		// That means we don't need to do any additional checks here or worry about accidentally overriding
+		// an existing poster-portrait-src attribute value with an empty one.
 		foreach ( $poster_images as $attr => $url ) {
-			$story_element->setAttribute( $attr, esc_url_raw( $url ) );
+			$story_element->setAttribute( $attr, $url );
 		}
 
 		if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
