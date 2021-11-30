@@ -376,6 +376,19 @@
           {
             "ignore": ["describe"]
           }
+        ],
+        "jest/require-hook": [
+          "error",
+          {
+            "allowedFunctionCalls": [
+              "minWPVersionRequired",
+              "withDisabledToolbarOnFrontend",
+              "withExperimentalFeatures",
+              "withPlugin",
+              "withRTL",
+              "withUser"
+            ]
+          }
         ]
       },
       "globals": {
@@ -398,6 +411,12 @@
       "files": ["packages/e2e-tests/src/specs/**/*.js"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": ["packages/e2e-tests/src/config/**/*.js"],
+      "rules": {
+        "jest/require-hook": "off"
       }
     },
     {
