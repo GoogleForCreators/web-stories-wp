@@ -204,7 +204,6 @@ describe('taxonomy', () => {
   });
 
   describe('Contributor', () => {
-    // eslint-disable-next-line jest/require-hook
     withUser('contributor', 'password');
 
     it('should be able to manage categories but not add new ones', async () => {
@@ -298,7 +297,6 @@ describe('taxonomy', () => {
   });
 
   describe('Custom Taxonomy', () => {
-    // eslint-disable-next-line jest/require-hook
     withPlugin('web-stories-test-plugin-taxonomies');
 
     describe('Administrator', () => {
@@ -316,7 +314,6 @@ describe('taxonomy', () => {
     });
 
     describe('Contributor', () => {
-      // eslint-disable-next-line jest/require-hook
       withUser('contributor', 'password');
 
       it('should see custom taxonomies', async () => {
