@@ -420,12 +420,9 @@ function useMediaUploadQueue() {
           [
             ITEM_STATUS.PENDING,
             ITEM_STATUS.UPLOADING,
-            ITEM_STATUS.TRANSCODED,
             ITEM_STATUS.TRANSCODING,
             ITEM_STATUS.MUTING,
-            ITEM_STATUS.MUTED,
             ITEM_STATUS.TRIMMING,
-            ITEM_STATUS.TRIMMED,
           ].includes(item.state) && item.originalResourceId === resourceId
       );
     /**
@@ -440,12 +437,9 @@ function useMediaUploadQueue() {
           [
             ITEM_STATUS.PENDING,
             ITEM_STATUS.UPLOADING,
-            ITEM_STATUS.TRANSCODED,
             ITEM_STATUS.TRANSCODING,
             ITEM_STATUS.MUTING,
-            ITEM_STATUS.MUTED,
             ITEM_STATUS.TRIMMING,
-            ITEM_STATUS.TRIMMED,
           ].includes(item.state) && item.resource.id === resourceId
       );
     /**
