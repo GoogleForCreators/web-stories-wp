@@ -1,6 +1,6 @@
 {
   "name": "@web-stories-wp/animation",
-  "private": true,
+  "private": false,
   "type": "module",
   "engines": {
     "node": ">= 16",

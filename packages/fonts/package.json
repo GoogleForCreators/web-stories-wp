@@ -1,6 +1,6 @@
 {
   "name": "@web-stories-wp/fonts",
-  "private": true,
+  "private": false,
   "type": "module",
   "engines": {
     "node": ">= 16",

@@ -1,6 +1,6 @@
 {
   "name": "@web-stories-wp/stickers",
-  "private": true,
+  "private": false,
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
