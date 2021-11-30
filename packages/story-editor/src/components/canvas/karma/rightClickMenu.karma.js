@@ -170,6 +170,12 @@ describe('Right Click Menu integration', () => {
     });
   }
 
+  function duplicateElements() {
+    return fixture.screen.getByRole('button', {
+      name: /^Duplicate Elements$/i,
+    });
+  }
+
   /**
    * Closes the browser right click menu by left clicking
    */
@@ -183,15 +189,32 @@ describe('Right Click Menu integration', () => {
   }
 
   /**
-   * Click on the target in the fixture.
+   * Right click on the target in the fixture.
    *
-   * @param {Object} target The element to be clicked
+   * @param {Object} target The element to be clicked.
    */
   async function rightClickOnTarget(target) {
     const { x, y, width, height } = target.getBoundingClientRect();
     await fixture.events.mouse.click(x + width / 2, y + height / 2, {
       button: 'right',
     });
+  }
+
+  /**
+   * Click on the target in the fixture.
+   *
+   * @param {Object} target The element to be clicked.
+   * @param {string} key The key to be held down while clicking
+   */
+  async function clickOnTarget(target, key = false) {
+    const { x, y, width, height } = target.getBoundingClientRect();
+    if (key) {
+      await fixture.events.keyboard.down(key);
+    }
+    await fixture.events.mouse.click(x + width / 2, y + height / 2);
+    if (key) {
+      await fixture.events.keyboard.up(key);
+    }
   }
 
   /**
@@ -315,6 +338,24 @@ describe('Right Click Menu integration', () => {
       expect(originalElement).toEqual(newElement);
     });
   };
+
+  /**
+   * Verifies that one element is a duplicate of the other
+   *
+   * @param {Object} element1 The original element
+   * @param {Object} element2 The duplicate element
+   */
+  function verifyElementDuplicated(element1, element2) {
+    for (const property in element1) {
+      if (!['x', 'y', 'id'].includes(property)) {
+        expect(element1[property]).toEqual(element2[property]);
+      } else {
+        expect(element1[property]).not.toEqual(element2[property]);
+      }
+    }
+
+    expect(element2.basedOn).toBe(element1.id);
+  }
 
   describe('menu visibility', () => {
     it('right clicking on the canvas should open the custom right click menu', async () => {
@@ -1015,6 +1056,81 @@ describe('Right Click Menu integration', () => {
           b: 103,
         },
       });
+    });
+  });
+
+  describe('right click menu: multiple elements selected', () => {
+    it('should duplicate all selected elements', async () => {
+      await addText({
+        y: 300,
+        fontSize: 40,
+        content: '<span style="color: #10ff01">Another Text Element</span>',
+      });
+      const image = await addEarthImage();
+      const shape = await addShape({
+        backgroundColor: {
+          color: {
+            r: 203,
+            g: 103,
+            b: 103,
+          },
+        },
+      });
+
+      const imageFrame = fixture.editor.canvas.framesLayer.frame(image.id).node;
+      const shapeFrame = fixture.editor.canvas.framesLayer.frame(shape.id).node;
+
+      // select multiple targets
+      await clickOnTarget(imageFrame);
+      await clickOnTarget(shapeFrame, 'Shift');
+
+      // multiple elements should be selected
+      const { initialElements, selectedElements } = await fixture.renderHook(
+        () =>
+          useStory(({ state }) => ({
+            selectedElements: state.selectedElements,
+            initialElements: state.currentPage.elements,
+          }))
+      );
+
+      expect(selectedElements.length).toBe(2);
+      expect(initialElements.length).toBe(4);
+
+      // open right click menu
+      await rightClickOnTarget(imageFrame);
+
+      // duplicate elements
+      await fixture.events.click(duplicateElements());
+
+      // verify elements were duplicated
+      const { finalElements } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          finalElements: state.currentPage.elements,
+        }))
+      );
+
+      expect(finalElements.length).toBe(
+        initialElements.length + selectedElements.length
+      );
+
+      // verify text element was not duplicated
+      expect(
+        finalElements.filter((element) => element.type === 'text').length
+      ).toBe(1);
+
+      // verify image duplication
+      const imageElements = finalElements.filter(
+        (element) => element.type === 'image'
+      );
+      expect(imageElements.length).toBe(2);
+      verifyElementDuplicated(imageElements[0], imageElements[1]);
+
+      // verify shape duplication
+      const shapeElements = finalElements.filter(
+        (element) => element.type === 'shape' && !element.isBackground
+      );
+      expect(shapeElements.length).toBe(2);
+      verifyElementDuplicated(shapeElements[0], shapeElements[1]);
     });
   });
 });
