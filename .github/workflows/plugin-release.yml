@@ -88,7 +88,7 @@ jobs:
   assets-version:
     name: Prepare static assets
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: [checks]
     steps:
       # TODO: Define behavior for patch releases.
@@ -184,7 +184,7 @@ jobs:
   changelog:
     name: Changelog
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: [checks]
     outputs:
       release_name: ${{ steps.changelog.outputs.release_name }}
@@ -254,7 +254,7 @@ jobs:
   build:
     name: Build new version
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: [assets-version]
     outputs:
       release_branch: ${{ steps.release_branch.outputs.release_branch }}
@@ -520,7 +520,7 @@ jobs:
   deploy:
     name: Deploy plugin to WordPress.org
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: [create-release]
     # This step requires additional review
     # See https://docs.github.com/en/actions/reference/environments
