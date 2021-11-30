@@ -41,7 +41,6 @@ describe('Plugin Activation', () => {
   });
 
   describe('RTL', () => {
-    // eslint-disable-next-line jest/require-hook
     withRTL();
 
     it('should display a custom message after plugin activation', async () => {
