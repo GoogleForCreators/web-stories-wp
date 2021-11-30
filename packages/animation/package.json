@@ -1,6 +1,7 @@
 {
   "name": "@web-stories-wp/animation",
   "private": false,
+  "version": "0.0.1-0",
   "type": "module",
   "engines": {
     "node": ">= 16",

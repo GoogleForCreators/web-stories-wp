@@ -1,6 +1,7 @@
 {
   "name": "@web-stories-wp/migration",
   "private": false,
+  "version": "0.0.1-0",
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
