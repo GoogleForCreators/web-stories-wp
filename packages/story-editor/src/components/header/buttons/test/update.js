@@ -94,6 +94,14 @@ describe('UpdateButton', () => {
     MockDate.reset();
   });
 
+  it('should display Save button if status is not yet available', () => {
+    const { saveStory } = arrange({
+      story: { status: undefined },
+    });
+
+    expect(screen.queryByRole('button', { name: 'Save draft' })).toBeInTheDocument();
+  });
+
   it('should not be able to save draft if there are no changes', () => {
     const { saveStory } = arrange();
 
