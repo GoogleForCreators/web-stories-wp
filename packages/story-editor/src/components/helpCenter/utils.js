@@ -21,3 +21,10 @@ import { FOCUSABLE_POPUP_CHILDREN_SELECTOR } from './constants';
 export function forceFocusCompanion() {
   document.querySelector(FOCUSABLE_POPUP_CHILDREN_SELECTOR)?.focus();
 }
+
+export function getTipsKeyMap(tips) {
+  return Object.keys(tips).reduce((keyMap, key) => {
+    keyMap[key] = true;
+    return keyMap;
+  }, {});
+}
