@@ -46,6 +46,31 @@ const Button = styled(DefaultButton)`
   }
 `;
 
+function InnerButton({
+  text,
+  checkpoint,
+  shouldReviewDialogBeSeen = false,
+  ...buttonProps
+}) {
+  return (
+    <Button
+      variant={BUTTON_VARIANTS.RECTANGLE}
+      type={BUTTON_TYPES.PRIMARY}
+      size={BUTTON_SIZES.SMALL}
+      {...buttonProps}
+    >
+      {text}
+      {shouldReviewDialogBeSeen && <ChecklistIcon checkpoint={checkpoint} />}
+    </Button>
+  );
+}
+
+InnerButton.propTypes = {
+  text: PropTypes.node.isRequired,
+  checkpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
+  shouldReviewDialogBeSeen: PropTypes.bool,
+};
+
 function ButtonWithChecklistWarning({
   text,
   isUploading,
@@ -57,18 +82,6 @@ function ButtonWithChecklistWarning({
       checkpoint,
       shouldReviewDialogBeSeen,
     })
-  );
-
-  const button = (
-    <Button
-      variant={BUTTON_VARIANTS.RECTANGLE}
-      type={BUTTON_TYPES.PRIMARY}
-      size={BUTTON_SIZES.SMALL}
-      {...buttonProps}
-    >
-      {text}
-      {shouldReviewDialogBeSeen && <ChecklistIcon checkpoint={checkpoint} />}
-    </Button>
   );
 
   const TOOLTIP_TEXT = {
@@ -103,7 +116,12 @@ function ButtonWithChecklistWarning({
 
   return (
     <Tooltip title={toolTip} hasTail>
-      {button}
+      <InnerButton
+        text={text}
+        {...buttonProps}
+        checkpoint={checkpoint}
+        shouldReviewDialogBeSeen={shouldReviewDialogBeSeen}
+      />
     </Tooltip>
   );
 }
@@ -111,7 +129,7 @@ function ButtonWithChecklistWarning({
 ButtonWithChecklistWarning.propTypes = {
   text: PropTypes.node.isRequired,
   isUploading: PropTypes.bool,
-  canPublish: PropTypes.bool,
+  canPublish: PropTypes.bool.isRequired,
 };
 
 export default ButtonWithChecklistWarning;

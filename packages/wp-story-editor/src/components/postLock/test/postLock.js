@@ -25,18 +25,19 @@ import {
   StoryContext,
   CurrentUserContext,
 } from '@web-stories-wp/story-editor';
-import { renderWithTheme } from '@web-stories-wp/story-editor/src/testUtils';
 
 /**
  * Internal dependencies
  */
-import PostLock from '../postLock';
-jest.mock('../../../api/storyLock');
+import { renderWithTheme } from '../../../testUtils';
 import {
   getStoryLockById,
   setStoryLockById,
   deleteStoryLockById,
 } from '../../../api/storyLock';
+import PostLock from '../postLock';
+
+jest.mock('../../../api/storyLock');
 
 function setup(_storyContextValue = {}) {
   const configValue = {

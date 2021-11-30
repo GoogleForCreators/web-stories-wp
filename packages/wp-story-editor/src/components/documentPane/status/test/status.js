@@ -33,6 +33,7 @@ function arrange(
   password = ''
 ) {
   const updateStory = jest.fn();
+  const saveStory = jest.fn();
 
   const storyContextValue = {
     state: {
@@ -45,7 +46,7 @@ function arrange(
       },
       capabilities,
     },
-    actions: { updateStory },
+    actions: { updateStory, saveStory },
   };
   const view = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
@@ -55,6 +56,7 @@ function arrange(
   return {
     ...view,
     updateStory,
+    saveStory,
   };
 }
 
@@ -114,14 +116,12 @@ describe('statusPanel', () => {
   });
 
   it('should update the status when marking a story private', () => {
-    const { updateStory } = arrange();
+    const { saveStory } = arrange();
     fireEvent.click(screen.getByLabelText('Private'));
     expect(windowConfirm).toHaveBeenCalledWith(expect.any(String));
-    expect(updateStory).toHaveBeenCalledWith({
-      properties: {
-        status: 'private',
-        password: '',
-      },
+    expect(saveStory).toHaveBeenCalledWith({
+      status: 'private',
+      password: '',
     });
   });
 
