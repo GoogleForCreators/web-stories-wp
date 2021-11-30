@@ -60,17 +60,6 @@ const ButtonText = styled.span`
         background-color: ${theme.colors.accent.primary};
       }
     `}
-
-      &::before {
-        content: ' ';
-        display: inline-block;
-        height: 10px;
-        width: 10px;
-        margin-right: 16px;
-        border-radius: ${theme.borders.radius.round};
-        background-color: ${theme.colors.accent.primary};
-      }
-    `}
 `;
 
 const ArrowWrap = styled.div`
