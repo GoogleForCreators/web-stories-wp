@@ -27,6 +27,7 @@ import {
   useRef,
 } from '@web-stories-wp/react';
 import { rgba } from 'polished';
+import { isBlobURL } from '@web-stories-wp/media';
 import { __ } from '@web-stories-wp/i18n';
 import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
@@ -226,7 +227,7 @@ function Element({
           active={active}
         />
         {attribution}
-        {isCurrentResourceProcessing(resourceId) && (
+        {(isBlobURL(src) || isCurrentResourceProcessing(resourceId)) && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (

@@ -26,6 +26,7 @@ import {
   getMediaSizePositionProps,
   calculateSrcSet,
   getSmallestUrlForWidth,
+  isBlobURL,
 } from '@web-stories-wp/media';
 
 /**
@@ -64,7 +65,8 @@ function ImageDisplay({ element, box, previewMode }) {
 
   if (
     resourceList.get(resourceId)?.type === 'fullsize' ||
-    isCurrentResourceUploading(resourceId)
+    isCurrentResourceUploading(resourceId) ||
+    isBlobURL(resource.src)
   ) {
     initialSrcType = 'fullsize';
     initialSrc = resource.src;

@@ -20,6 +20,7 @@
 import { useCallback } from '@web-stories-wp/react';
 import STICKERS from '@web-stories-wp/stickers';
 import { dataPixels } from '@web-stories-wp/units';
+import { isBlobURL } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -75,6 +76,7 @@ function useInsertElement() {
       if (
         isCurrentResourceUploading(resourceId) ||
         !imageSrc ||
+        isBlobURL(imageSrc) ||
         currentBaseColor ||
         !isExternal
       ) {

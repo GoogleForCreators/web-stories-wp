@@ -61,9 +61,9 @@ describe('useMediaUploadQueue', () => {
             id: expect.any(String),
             state: ITEM_STATUS.PENDING,
             file: {},
+            originalResourceId: 456,
             resource: expect.objectContaining({
               id: expect.any(String),
-              originalResourceId: 456,
               foo: 'bar',
             }),
           }),
@@ -127,9 +127,9 @@ describe('useMediaUploadQueue', () => {
       const result = finishUploading(initialState, {
         payload: {
           id: 123,
+          originalResourceId: 456,
           resource: {
             src: 'bar',
-            originalResourceId: 456,
           },
         },
       });
@@ -140,6 +140,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             posterFile: null,
+            originalResourceId: null,
             resource: {
               src: 'bar',
             },

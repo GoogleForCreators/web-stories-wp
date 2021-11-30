@@ -96,7 +96,16 @@ describe('automated accessibility tests', () => {
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
+  });
 
+  it('should render transcoding MediaElement without accessibility violations', async () => {
+    useLocalMedia.mockReturnValue({
+      isCurrentResourceTrimming: jest.fn(),
+      isCurrentResourceMuting: jest.fn(),
+      isCurrentResourceTranscoding: () => true,
+      isCurrentResourceProcessing: jest.fn(),
+      isResourceProcessing: jest.fn(),
+    });
     // transcoding
     const { container: container2 } = renderWithTheme(
       <MediaElement
