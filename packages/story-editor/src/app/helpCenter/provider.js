@@ -36,11 +36,7 @@ import {
  * Internal dependencies
  */
 import { useCurrentUser } from '../currentUser';
-import {
-  BASE_NAVIGATION_FLOW,
-  TIPS,
-} from '../../components/helpCenter/constants';
-import { getTipsKeyMap } from '../../components/helpCenter/utils';
+import { TIPS } from '../../components/helpCenter/constants';
 import { useConfig } from '../config';
 import Context from './context';
 import {
@@ -102,7 +98,10 @@ export const getInitialState = (additionalInitialState) => ({
   isOpen: false,
   isOpeningToTip: false,
   navigationIndex: -1,
-  navigationFlow: BASE_NAVIGATION_FLOW,
+  navigationFlow: Object.keys({
+    ...TIPS,
+    ...additionalInitialState.additionalTips,
+  }), // Is updated using createDynamicNavigationFlow effect.
   isLeftToRightTransition: true,
   hasBottomNavigation: false,
   isPrevDisabled: true,
@@ -113,10 +112,6 @@ export const getInitialState = (additionalInitialState) => ({
   isHydrated: false,
   tips: { ...TIPS, ...additionalInitialState.additionalTips },
   tipKeys: Object.keys({ ...TIPS, ...additionalInitialState.additionalTips }),
-  tipKeysMap: getTipsKeyMap({
-    ...TIPS,
-    ...additionalInitialState.additionalTips,
-  }),
 });
 
 export const getInitial = (additionalInitialState) => ({

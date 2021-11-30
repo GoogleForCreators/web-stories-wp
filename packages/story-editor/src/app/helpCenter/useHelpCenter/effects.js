@@ -16,19 +16,18 @@
 /**
  * Internal dependencies
  */
-import {
-  DONE_TIP_ENTRY,
-  BASE_NAVIGATION_FLOW,
-  TIP_KEYS_MAP,
-} from '../../../components/helpCenter/constants';
+import { DONE_TIP_ENTRY } from '../../../components/helpCenter/constants';
+import { getTipsKeyMap } from '../../../components/helpCenter/utils';
 
 const isMenuIndex = (previous, next) => next.navigationIndex < 0;
 
 const isComingFromMenu = (previous, next) =>
   previous.navigationIndex < 0 && next.navigationIndex >= 0;
 
-const navigationFlowTips = (previous, next) =>
-  (next.navigationFlow || []).filter((key) => TIP_KEYS_MAP[key]);
+const navigationFlowTips = (previous, next) => {
+  const tipKeysMap = getTipsKeyMap(next.tips);
+  return (next.navigationFlow || []).filter((key) => tipKeysMap[key]);
+};
 
 const isInitialHydrate = (previous, next) =>
   !previous.isHydrated && next.isHydrated;
@@ -77,14 +76,14 @@ export const createDynamicNavigationFlow = (previous, next) => {
   if (!isComingFromMenu(previous, next)) {
     return {};
   }
-  const appendedTips = BASE_NAVIGATION_FLOW
+  const appendedTips = next.navigationFlow
     // Tips before current index
     .slice(0, next.navigationIndex)
     // Filter out read tips
     .filter((tip) => !next.readTips[tip]);
   return {
     navigationFlow: [
-      ...BASE_NAVIGATION_FLOW,
+      ...next.navigationFlow,
       ...appendedTips,
       DONE_TIP_ENTRY[0],
     ],
@@ -92,10 +91,11 @@ export const createDynamicNavigationFlow = (previous, next) => {
 };
 
 export function deriveUnreadTipsCount(previous, next) {
+  const tipKeysMap = getTipsKeyMap(next.tips);
+
   return {
     unreadTipsCount:
-      Object.keys(TIP_KEYS_MAP).filter((tip) => !next.readTips[tip])?.length ||
-      0,
+      Object.keys(tipKeysMap).filter((tip) => !next.readTips[tip])?.length || 0,
   };
 }
 
