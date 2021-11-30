@@ -198,3 +198,25 @@ export function getResponsiveBorder(border, previewMode, converter) {
     bottom: converter(bottom),
   };
 }
+
+/**
+ * Gets style for the border svg wrapper.
+ *
+ * @param {string} maskId Clipping mask id.
+ * @param {number} borderWidth
+ * @return {Object} Border style.
+ */
+export function getBorderWrapperStyle(maskId, borderWidth) {
+  if (!maskId || !borderWidth) {
+    return {};
+  }
+
+  return {
+    clipPath: `url(#${maskId})`,
+    width: `calc(100% + ${borderWidth}px`,
+    height: `calc(100% + ${borderWidth}px`,
+    position: 'absolute',
+    top: `-${borderWidth / 2}px`,
+    left: `-${borderWidth / 2}px`,
+  };
+}
