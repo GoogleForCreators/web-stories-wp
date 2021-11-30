@@ -17,7 +17,6 @@
     "@web-stories-wp/design-system": "*",
     "@web-stories-wp/fonts": "*",
     "@web-stories-wp/i18n": "*",
-    "@web-stories-wp/karma-fixture": "*",
     "@web-stories-wp/media": "*",
     "@web-stories-wp/migration": "*",
     "@web-stories-wp/patterns": "*",
@@ -37,6 +36,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
+    "@web-stories-wp/karma-fixture": "*",
     "jest": "^27.3.1",
     "react": "^17.0.2",
     "stylis-plugin-rtl": "^1.0.0"
