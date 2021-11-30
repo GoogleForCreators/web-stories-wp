@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -134,24 +133,7 @@ export const Z_INDEX = {
   QUICK_TIP: 2,
 };
 
-export const BASE_NAVIGATION_FLOW = Object.keys(TIPS);
-
 export const POPUP_ID = 'help_center_companion';
 export const FOCUSABLE_POPUP_CHILDREN_SELECTOR = FOCUSABLE_SELECTORS.map(
   (selector) => `#${POPUP_ID} ${selector}`
 ).join(', ');
-
-export const ReadTipsType = PropTypes.shape({
-  ...Object.keys(TIPS).reduce(
-    (accum, tipKey) => ({
-      ...accum,
-      [tipKey]: PropTypes.bool,
-    }),
-    {}
-  ),
-});
-
-export const TIP_KEYS_MAP = Object.keys(TIPS).reduce((keyMap, key) => {
-  keyMap[key] = true;
-  return keyMap;
-}, {});

@@ -29,7 +29,7 @@ import {
  */
 import { useConfig } from '../../../app/config';
 import { forceFocusCompanion } from '../utils';
-import { ReadTipsType, TIPS } from '../constants';
+import { useHelpCenter } from '../../../app';
 
 const Panel = styled.div`
   padding: 24px 0;
@@ -50,6 +50,17 @@ const ButtonText = styled.span`
   ${({ unread, theme }) =>
     unread &&
     css`
+      &::before {
+        content: ' ';
+        display: inline-block;
+        height: 10px;
+        width: 10px;
+        margin-right: 16px;
+        border-radius: ${theme.borders.radius.round};
+        background-color: ${theme.colors.accent.primary};
+      }
+    `}
+
       &::before {
         content: ' ';
         display: inline-block;
@@ -90,8 +101,12 @@ Tip.propTypes = {
   unread: PropTypes.bool,
 };
 
-const TIPS_ITERABLE = Object.entries(TIPS);
 export function Tips({ onTipSelect = () => {}, readTips }) {
+  const {
+    state: { tips },
+  } = useHelpCenter();
+  const TIPS_ITERABLE = Object.entries(tips);
+
   return (
     <Panel>
       {TIPS_ITERABLE.map(([key, tip]) => (
@@ -110,6 +125,6 @@ export function Tips({ onTipSelect = () => {}, readTips }) {
   );
 }
 Tips.propTypes = {
-  readTips: ReadTipsType,
+  readTips: PropTypes.object,
   onTipSelect: PropTypes.func,
 };
