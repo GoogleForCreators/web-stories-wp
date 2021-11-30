@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useMemo, useCallback } from '@web-stories-wp/react';
+import { noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -26,6 +27,7 @@ import { ScrollToTop, Layout } from '../../../components';
 import { STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import useApi from '../../api/useApi';
+import { useConfig } from '../../config';
 import Content from './content';
 import Header from './header';
 
@@ -72,6 +74,7 @@ function MyStories() {
       getAuthors,
     })
   );
+  const { apiCallbacks } = useConfig();
 
   const { filter, page, search, sort, view, showStoriesWhileLoading, author } =
     useStoryView({
@@ -81,7 +84,7 @@ function MyStories() {
     });
 
   const { setQueriedAuthors } = author;
-  const queryAuthorsBySearch = useCallback(
+  let queryAuthorsBySearch = useCallback(
     (authorSearchTerm) => {
       return getAuthors(authorSearchTerm).then((data) => {
         const userData = data.map(({ id, name }) => ({
@@ -99,6 +102,10 @@ function MyStories() {
     },
     [getAuthors, setQueriedAuthors]
   );
+
+  if (!getAuthors) {
+    queryAuthorsBySearch = noop;
+  }
 
   useEffect(() => {
     queryAuthorsBySearch();
@@ -121,6 +128,7 @@ function MyStories() {
     sort.direction,
     sort.value,
     author.filterId,
+    apiCallbacks,
   ]);
 
   const orderedStories = useMemo(() => {
@@ -128,6 +136,8 @@ function MyStories() {
       return stories[storyId];
     });
   }, [stories, storiesOrderById]);
+
+  const showAuthorDropdown = typeof getAuthors === 'function';
 
   return (
     <Layout.Provider>
@@ -141,6 +151,7 @@ function MyStories() {
         view={view}
         author={author}
         queryAuthorsBySearch={queryAuthorsBySearch}
+        showAuthorDropdown={showAuthorDropdown}
       />
 
       <Content

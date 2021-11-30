@@ -176,14 +176,22 @@ class Editor extends DependencyInjectedTestCase {
 	 * @covers ::admin_enqueue_scripts
 	 */
 	public function test_admin_enqueue_scripts() {
-		$this->assets->expects( $this->once() )->method( 'enqueue_script_asset' )->with(
-			\Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE
-		);
 		$this->assets->expects( $this->once() )->method( 'remove_admin_style' )->with( [ 'forms' ] );
 
 		$GLOBALS['current_screen'] = convert_to_screen( $this->story_post_type->get_slug() );
 
 		$this->instance->admin_enqueue_scripts( 'post.php' );
+	}
+
+	/**
+	 * @covers ::replace_editor
+	 */
+	public function test_replace_editor() {
+		$this->assets->expects( $this->once() )->method( 'register_script_asset' )->with(
+			\Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE
+		);
+
+		$this->instance->replace_editor( true, get_post( self::$story_id ) );
 	}
 
 	/**
@@ -195,7 +203,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
 		$results = $this->instance->get_editor_settings();
-		$this->assertTrue( $results['config']['capabilities']['hasUploadMediaAction'] );
+		$this->assertTrue( $results['capabilities']['hasUploadMediaAction'] );
 	}
 
 	/**
@@ -207,7 +215,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
 		$results = $this->instance->get_editor_settings();
-		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
+		$this->assertFalse( $results['capabilities']['hasUploadMediaAction'] );
 	}
 
 	/**
