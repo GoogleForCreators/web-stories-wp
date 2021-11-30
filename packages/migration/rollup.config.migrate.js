@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,9 @@ import { resolve as resolvePath } from 'path';
 import resolve from '@rollup/plugin-node-resolve';
 
 export default {
-  input: resolvePath(__dirname, 'index.js'),
+  input: resolvePath(__dirname, 'src/index.js'),
   output: {
-    file: resolvePath(__dirname, 'module.js'),
+    file: resolvePath(__dirname, 'src/module.js'),
     format: 'es',
   },
   plugins: [resolve()],
