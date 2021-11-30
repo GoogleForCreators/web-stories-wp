@@ -95,7 +95,7 @@ describe('UpdateButton', () => {
   });
 
   it('should display Save button if status is not yet available', () => {
-    const { saveStory } = arrange({
+    arrange({
       story: { status: undefined },
     });
 
