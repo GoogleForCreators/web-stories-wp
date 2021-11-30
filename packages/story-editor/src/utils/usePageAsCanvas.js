@@ -27,7 +27,7 @@ import { ZOOM_SETTING } from '../constants';
 import { getAccessibleTextColorsFromPixels } from './contrastUtils';
 import { calculateTextHeight } from './textMeasurements';
 
-function usePageAsCanvas() {
+function usePageAsCanvas(skipSelectedElement) {
   const {
     pageCanvasData,
     setPageCanvasData,
@@ -41,11 +41,14 @@ function usePageAsCanvas() {
     setPageCanvasPromise: state.actions.setPageCanvasPromise,
     fullbleedContainer: state.state.fullbleedContainer,
   }));
-  const { currentPage } = useStory(({ state }) => {
+
+  const { currentPage, selectedElementIds } = useStory(({ state }) => {
     return {
       currentPage: state.currentPage,
+      selectedElementIds: state.selectedElementIds,
     };
   });
+
   const { zoomSetting, setZoomSetting } = useLayout(
     ({ state: { zoomSetting }, actions: { setZoomSetting } }) => ({
       zoomSetting,
@@ -95,9 +98,18 @@ function usePageAsCanvas() {
         if (!pageCanvasPromise && fullbleedContainer) {
           import(/* webpackChunkName: "chunk-html-to-image" */ 'html-to-image')
             .then((htmlToImage) => {
+              const hasSingleSelection = selectedElementIds.length === 1;
+              const filterSelectedElement =
+                skipSelectedElement && hasSingleSelection;
+              const filter = (node) => {
+                // Exclude selected element from generated image to prevent interfering with contrast calculation: `true` includes and `false` excludes.
+                return node?.dataset?.elementId !== selectedElementIds[0];
+              };
+
               const promise = htmlToImage.toCanvas(fullbleedContainer, {
                 fontEmbedCss: '',
                 pixelRatio: 1,
+                filter: filterSelectedElement && filter,
               });
               setPageCanvasPromise(promise);
               promise.then(onCompletion).catch(onFail);
@@ -124,6 +136,8 @@ function usePageAsCanvas() {
       zoomSetting,
       hasPageHashChanged,
       pageHash,
+      selectedElementIds,
+      skipSelectedElement,
     ]
   );
 

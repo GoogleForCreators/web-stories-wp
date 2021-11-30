@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,16 @@
  */
 
 /**
- * Internal dependencies
- */
-import { config } from './shared';
-import enableTracking from './enableTracking';
-
-/**
- * Determines whether tracking is enabled or not.
+ * Fires when dom is ready.
  *
- * @return {Promise<boolean>} Whether tracking is enabled
+ * @param {Function} callback Callback function.
  */
-async function isTrackingEnabled() {
-  await enableTracking();
-  return Boolean(config.trackingEnabled);
+function domReady(callback) {
+  if ('loading' === document.readyState) {
+    document.addEventListener('DOMContentLoaded', callback);
+  } else {
+    callback();
+  }
 }
 
-export default isTrackingEnabled;
+export default domReady;

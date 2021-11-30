@@ -42,6 +42,7 @@ import { getRelatedTemplatesIds } from './utils';
 function TemplateDetails() {
   const [template, setTemplate] = useState(null);
   const [relatedTemplates, setRelatedTemplates] = useState([]);
+  const { apiCallbacks } = useConfig();
 
   const {
     state: {
@@ -179,11 +180,13 @@ function TemplateDetails() {
     createStoryFromTemplate(template);
   }, [createStoryFromTemplate, template]);
 
+  const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
+
   return (
     <Layout.Provider>
       <Header
         templateTitle={template?.title}
-        onHandleCtaClick={handleCreateStoryFromTemplate}
+        onHandleCtaClick={canCreateStory ? handleCreateStoryFromTemplate : null}
       />
       <Content
         activeTemplateIndex={activeTemplateIndex}

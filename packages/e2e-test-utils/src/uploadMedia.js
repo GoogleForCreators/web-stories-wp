@@ -27,7 +27,7 @@ import uploadFile from './uploadFile';
  */
 async function uploadMedia(file, exit = true) {
   // Clicking will only act on the first element.
-  await expect(page).toClick('button', { text: 'Upload' });
+  await expect(page).toClick('button[aria-label="Upload"]');
 
   await page.waitForSelector('.media-modal', {
     visible: true,

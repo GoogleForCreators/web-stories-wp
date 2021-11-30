@@ -48,7 +48,7 @@ describe('Inserting Media from Dialog', () => {
       await createNewStory();
       await expect(page).toMatch('Howdy, contributor');
 
-      await expect(page).not.toMatchElement('button', { text: 'Upload' });
+      await expect(page).not.toMatchElement('button[aria-label="Upload"]');
     });
   });
 });

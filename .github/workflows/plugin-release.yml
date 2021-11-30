@@ -21,17 +21,17 @@ env:
   TAG_NAME: 'v${{ github.event.inputs.version }}'
   IS_RC: ${{ contains(github.event.inputs.version, 'rc') }}
   IS_PATCH_RELEASE: ${{ startsWith(github.ref, 'refs/heads/release/') }}
-  GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
-  GIT_AUTHOR_NAME: ${{ github.actor }}
-  GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
-  GIT_COMMITTER_NAME: ${{ github.actor }}
+  GIT_AUTHOR_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_AUTHOR_NAME: googleforcreators-bot
+  GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_COMMITTER_NAME: googleforcreators-bot
 
 jobs:
   # Perform some sanity checks at the beginning to avoid surprises.
   checks:
     name: Checks
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -88,7 +88,7 @@ jobs:
   assets-version:
     name: Prepare static assets
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
     needs: [checks]
     steps:
       # TODO: Define behavior for patch releases.
@@ -131,7 +131,7 @@ jobs:
           ref: static-site
           lfs: true
           # Needed so the below commits will trigger a website deployment.
-          token: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       # For release candidates of new major releases:
       #
@@ -184,7 +184,7 @@ jobs:
   changelog:
     name: Changelog
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
     needs: [checks]
     outputs:
       release_name: ${{ steps.changelog.outputs.release_name }}
@@ -194,14 +194,10 @@ jobs:
         with:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
 
-      - name: Read .nvmrc
-        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
-        id: nvm
-
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Install dependencies
@@ -247,7 +243,7 @@ jobs:
 
           echo "::set-output name=release_name::${RELEASE_NAME}"
         env:
-          GITHUB_AUTH: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
+          GITHUB_AUTH: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
@@ -258,7 +254,7 @@ jobs:
   build:
     name: Build new version
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
     needs: [assets-version]
     outputs:
       release_branch: ${{ steps.release_branch.outputs.release_branch }}
@@ -267,7 +263,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
-          token: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Download assets version
         uses: actions/download-artifact@v2
@@ -282,14 +278,10 @@ jobs:
           rm -rf assets_version.txt
         continue-on-error: true
 
-      - name: Read .nvmrc
-        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
-        id: nvm
-
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup PHP
@@ -414,7 +406,7 @@ jobs:
   create-release:
     name: Create Release
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
     needs: [build, changelog]
     steps:
       - name: Checkout
@@ -451,7 +443,7 @@ jobs:
           prerelease: ${{ env.IS_RC }}
           body_path: changelog/changelog.txt
         env:
-          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Upload regular bundle
         uses: actions/upload-release-asset@v1.0.2
@@ -461,7 +453,7 @@ jobs:
           asset_name: web-stories.zip
           asset_content_type: application/zip
         env:
-          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Upload development bundle
         uses: actions/upload-release-asset@v1.0.2
@@ -471,7 +463,7 @@ jobs:
           asset_name: web-stories-dev.zip
           asset_content_type: application/zip
         env:
-          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       # Done so that any triggers/webhooks will have access to the published release
       # including all the release assets.
@@ -480,7 +472,7 @@ jobs:
           curl \
             --request PATCH \
             --url https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }} \
-            --header 'Authorization: token ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}' \
+            --header 'Authorization: token ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}' \
             --header "Accept: application/vnd.github.v3+json" \
             --data-raw '{"draft":false}'
 
@@ -495,16 +487,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: main
-          token: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
-
-      - name: Read .nvmrc
-        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
-        id: nvm
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Install dependencies
@@ -532,7 +520,7 @@ jobs:
   deploy:
     name: Deploy plugin to WordPress.org
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
     needs: [create-release]
     # This step requires additional review
     # See https://docs.github.com/en/actions/reference/environments

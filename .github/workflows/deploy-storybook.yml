@@ -26,19 +26,15 @@ jobs:
   build-storybook:
     name: Build storybook
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Read .nvmrc
-        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
-        id: nvm
-
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Install dependencies
@@ -58,13 +54,14 @@ jobs:
   deploy-gh-pages:
     name: Deploy storybook
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
     needs: [build-storybook]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           ref: gh-pages
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Download storybook files
         uses: actions/download-artifact@v2
@@ -87,7 +84,7 @@ jobs:
           git pull --rebase --no-edit --quiet
           git push origin gh-pages
         env:
-          GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
-          GIT_AUTHOR_NAME: ${{ github.actor }}
-          GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
-          GIT_COMMITTER_NAME: ${{ github.actor }}
+          GIT_AUTHOR_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+          GIT_AUTHOR_NAME: googleforcreators-bot
+          GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+          GIT_COMMITTER_NAME: googleforcreators-bot

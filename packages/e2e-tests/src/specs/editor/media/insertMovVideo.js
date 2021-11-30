@@ -42,7 +42,7 @@ describe('Handling .mov files', () => {
   it.skip('should insert .mov', async () => {
     await createNewStory();
 
-    await expect(page).toClick('button', { text: 'Upload' });
+    await expect(page).toClick('button[aria-label="Upload"]');
 
     await page.waitForSelector('.media-modal', {
       visible: true,
@@ -78,7 +78,7 @@ describe('Handling .mov files', () => {
     // Uses the existence of the element's frame element as an indicator for successful insertion.
     it('should not list the .mov', async () => {
       await createNewStory();
-      await expect(page).toClick('button', { text: 'Upload' });
+      await expect(page).toClick('button[aria-label="Upload"]');
 
       await page.waitForSelector('.media-modal', {
         visible: true,

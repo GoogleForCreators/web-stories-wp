@@ -137,23 +137,17 @@ function OutputPage({
         <amp-story-grid-layer
           template="vertical"
           aspect-ratio={ASPECT_RATIO}
-          class="grid-layer"
+          class="grid-layer align-bottom"
         >
-          <div className="page-fullbleed-area">
-            <div className="page-safe-area">
-              <div className="captions-area">
-                <div className="captions-wrap">
-                  {videoCaptions.map((captionId) => (
-                    <amp-story-captions
-                      key={captionId}
-                      id={captionId}
-                      layout="fixed-height"
-                      height="100"
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
+          <div className="captions-area">
+            {videoCaptions.map((captionId) => (
+              <amp-story-captions
+                key={captionId}
+                id={captionId}
+                layout="fixed-height"
+                height="100"
+              />
+            ))}
           </div>
         </amp-story-grid-layer>
       )}
