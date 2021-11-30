@@ -212,7 +212,7 @@ function MediaPane(props) {
    */
   const onSelect = (resource) => {
     try {
-      if (isTranscodingEnabled && canTranscodeResource(resource.id)) {
+      if (isTranscodingEnabled && canTranscodeResource(resource)) {
         if (transcodableMimeTypes.includes(resource.mimeType)) {
           optimizeVideo({ resource });
         }
