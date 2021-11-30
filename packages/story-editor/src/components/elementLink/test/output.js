@@ -82,12 +82,25 @@ describe('WithLink', () => {
     });
   });
 
+  describe('a[data-tooltip-icon]', () => {
+    it('should not add data-tooltip-icon attribute if there is no icon', async () => {
+      render(withLink({ icon: '' }));
+      const a = screen.getByRole('link');
+      await expect(a).not.toHaveAttribute('data-tooltip-icon');
+    });
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
       await expect(withLink()).toBeValidAMPStoryElement();
     });
+
     it('should produce valid AMP output for link with rel', async () => {
       await expect(withLink({ rel: ['nofollow'] })).toBeValidAMPStoryElement();
+    });
+
+    it('should produce valid AMP output for link without icon', async () => {
+      await expect(withLink({ icon: '' })).toBeValidAMPStoryElement();
     });
   });
 });

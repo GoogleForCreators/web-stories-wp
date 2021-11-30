@@ -72,6 +72,7 @@ function Header({
   view,
   author,
   queryAuthorsBySearch,
+  showAuthorDropdown,
 }) {
   const {
     actions: { scrollToTop },
@@ -178,7 +179,7 @@ function Header({
       <BodyViewOptions
         showGridToggle
         showSortDropdown
-        showAuthorDropdown
+        showAuthorDropdown={showAuthorDropdown}
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         isLoading={isLoading}
@@ -207,6 +208,7 @@ Header.propTypes = {
   view: ViewPropTypes.isRequired,
   author: AuthorPropTypes,
   queryAuthorsBySearch: PropTypes.func,
+  showAuthorDropdown: PropTypes.bool,
 };
 
 export default memo(Header);

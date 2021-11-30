@@ -759,18 +759,6 @@ class APIProviderFixture {
         []
       );
 
-      const getDemoStoryById = useCallback(
-        () =>
-          asyncResponse({
-            ...storyResponse,
-            story_data: {
-              version: DATA_VERSION,
-              pages: this._pages,
-            },
-          }),
-        []
-      );
-
       const autoSaveById = useCallback(
         () => jasmine.createSpy('autoSaveById'),
         []
@@ -961,7 +949,6 @@ class APIProviderFixture {
         actions: {
           autoSaveById,
           getStoryById,
-          getDemoStoryById,
           getMedia,
           getLinkMetadata,
           getHotlinkInfo,

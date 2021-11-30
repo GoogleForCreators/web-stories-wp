@@ -77,14 +77,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Read .nvmrc
-        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
-        id: nvm
-
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Bundle size check
@@ -105,14 +101,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Read .nvmrc
-        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
-        id: nvm
-
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup PHP
@@ -174,13 +166,6 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     needs: build
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ github.repository }}.wiki
-          ref: master
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Download all artifacts
         uses: actions/download-artifact@v2
         with:
@@ -206,19 +191,6 @@ jobs:
       - name: Upload prod build to GCS
         run: gsutil cp -r web-stories.zip gs://web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip
         working-directory: ${{ github.ref }}
-
-      - name: Commit updates
-        run: |
-          git add .
-          git status
-          git commit -m "Build and publish ${{ github.ref }}"
-          git pull --rebase --no-edit --quiet
-          git push origin master
-        env:
-          GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
-          GIT_AUTHOR_NAME: ${{ github.actor }}
-          GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
-          GIT_COMMITTER_NAME: ${{ github.actor }}
 
   deploy-to-staging:
     name: Deploy to staging environment
@@ -276,7 +248,7 @@ jobs:
         run: |
           body="Plugin builds for ${{ github.event.pull_request.head.sha }} are ready :bellhop_bell:!
           - Download [development build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories-dev.zip?${{ github.sha }})
-          - Download [production build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/prod/web-stories.zip?${{ github.sha }})"
+          - Download [production build](https://storage.googleapis.com/web-stories-wp-github-artifacts/${{ github.ref }}/web-stories.zip?${{ github.sha }})"
           body="${body//$'\n'/'%0A'}"
           echo "::set-output name=body::$body"
 

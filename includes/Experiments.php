@@ -268,6 +268,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Template search', 'web-stories' ),
 				'description' => __( 'Enable search for templates', 'web-stories' ),
 				'group'       => 'dashboard',
+				'default'     => true,
 			],
 			/**
 			 * Author: @dmmulroy
@@ -346,6 +347,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Insert media from link', 'web-stories' ),
 				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 
 			/**
@@ -358,6 +360,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'CORS Proxy', 'web-stories' ),
 				'description' => __( 'Enable inserting media element without CORS headers', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 
 			/**

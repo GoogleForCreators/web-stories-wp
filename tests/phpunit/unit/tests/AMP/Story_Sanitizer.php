@@ -104,17 +104,48 @@ class Story_Sanitizer extends TestCase {
 
 	public function get_poster_image_data(): array {
 		return [
-			'poster_image_exists'  => [
+			'Poster image already exists' => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
+				[
+					'publisher_logo' => '',
+					'publisher'      => '',
+					'poster_images'  => [],
+					'video_cache'    => false,
+				],
 			],
-			'poster_image_missing' => [
+			'Poster image is missing'     => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png"></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src=""></amp-story></body></html>',
+				[
+					'publisher_logo' => '',
+					'publisher'      => '',
+					'poster_images'  => [],
+					'video_cache'    => false,
+				],
 			],
-			'poster_image_empty'   => [
+			'Poster image is empty'       => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src=""></amp-story>',
 				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src=""></amp-story></body></html>',
+				[
+					'publisher_logo' => '',
+					'publisher'      => '',
+					'poster_images'  => [],
+					'video_cache'    => false,
+				],
+			],
+			'Poster image is overridden'  => [
+				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/portrait.png" poster-landscape-src="https://example.com/landscape.png"></amp-story></body></html>',
+				[
+					'publisher_logo' => '',
+					'publisher'      => '',
+					'poster_images'  => [
+						'poster-portrait-src'  => 'https://example.com/portrait.png',
+						'poster-landscape-src' => 'https://example.com/landscape.png',
+					],
+					'video_cache'    => false,
+				],
 			],
 		];
 	}
@@ -124,17 +155,11 @@ class Story_Sanitizer extends TestCase {
 	 * @covers ::sanitize
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_poster_images
 	 *
-	 * @param string   $source   Source.
-	 * @param string   $expected Expected.
+	 * @param string $source   Source.
+	 * @param string $expected Expected.
+	 * @param array  $args     Args.
 	 */
-	public function test_sanitize_poster_image( $source, $expected ) {
-		$args = [
-			'publisher_logo' => '',
-			'publisher'      => '',
-			'poster_images'  => [],
-			'video_cache'    => false,
-		];
-
+	public function test_sanitize_poster_image( $source, $expected, $args ) {
 		$actual = $this->sanitize_and_get( $source, $args );
 
 		$this->assertEquals( $expected, $actual );

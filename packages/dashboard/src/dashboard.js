@@ -22,11 +22,13 @@ import {
   SnackbarProvider,
   theme as externalDesignSystemTheme,
   ThemeGlobals,
+  deepMerge,
 } from '@web-stories-wp/design-system';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
 import { FlagsProvider } from 'flagged';
+import { useMemo } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -37,9 +39,11 @@ import { NavProvider } from './components';
 import { RouterProvider } from './app/router';
 import { GlobalStyle } from './theme';
 import { KeyboardOnlyOutline } from './utils';
+import defaultConfig from './defaultConfig';
 
 function Dashboard({ config, children }) {
-  const { isRTL, flags } = config;
+  const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
+  const { isRTL, flags } = _config;
   const activeTheme = {
     ...externalDesignSystemTheme,
     colors: lightMode,
@@ -50,7 +54,7 @@ function Dashboard({ config, children }) {
         <ThemeProvider theme={activeTheme}>
           <ThemeGlobals.Styles />
           <ModalGlobalStyle />
-          <ConfigProvider config={config}>
+          <ConfigProvider config={_config}>
             <ApiProvider>
               <NavProvider>
                 <RouterProvider>
