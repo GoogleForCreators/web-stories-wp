@@ -30,8 +30,12 @@ const canTranscodeFile = (file) => {
   return ['video/mp4'].includes(file.type);
 };
 
-const waitfor100 = async () => {
-  await new Promise((res) => setTimeout(res, 100));
+const waitfor10 = async () => {
+  const file = new File(['foo'], 'foo.mp4', {
+    type: 'video/mp4',
+    size: 5000,
+  });
+  await new Promise((res) => setTimeout( () => res(file), 10));
 };
 
 jest.mock('../../useFFmpeg', () => ({
@@ -40,11 +44,11 @@ jest.mock('../../useFFmpeg', () => ({
     isTranscodingEnabled: true,
     canTranscodeFile,
     isFileTooLarge: jest.fn(),
-    transcodeVideo: waitfor100,
-    stripAudioFromVideo: waitfor100,
-    trimVideo: waitfor100,
+    transcodeVideo: waitfor10,
+    stripAudioFromVideo: waitfor10,
+    trimVideo: waitfor10,
     getFirstFrameOfVideo: jest.fn(),
-    convertGifToVideo: waitfor100,
+    convertGifToVideo: waitfor10,
   })),
 }));
 
@@ -275,7 +279,7 @@ describe('useMediaUploadQueue', () => {
 
   it('allows removing items from the queue', async () => {
     const file = {
-      type: 'image/jpeg',
+      type: 'image/jpg',
       size: 1000,
     };
 

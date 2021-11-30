@@ -316,8 +316,8 @@ function useMediaUploadQueue() {
           startUploading({ id });
 
           trackEvent('upload_media', {
-            file_size: newFile.size,
-            file_type: newFile.type,
+            file_size: newFile?.size,
+            file_type: newFile?.type,
           });
 
           const trackTiming = getTimeTracker('load_upload_media');
