@@ -7,6 +7,10 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
+  "files": [
+    "src/fonts.json",
+    "src/index.js"
+  ],
   "exports": {
     "default": "./src/index.js"
   },
