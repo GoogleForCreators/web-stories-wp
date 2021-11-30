@@ -41,8 +41,6 @@ const linkHrefTo = (title, name) => {
   return decodeURIComponent(url.href);
 };
 
-const storyEditorLink = linkHrefTo('Playground/Stories Editor', 'default');
-
 const fetchStories = () => {
   const response = {
     stories: {
@@ -84,13 +82,6 @@ const fetchStories = () => {
   return Promise.resolve(response);
 };
 
-const config = {
-  newStoryURL: storyEditorLink,
-  apiCallbacks: {
-    fetchStories,
-  },
-};
-
 /**
  * Clears url hash ( Required only for storybook )
  * Dashboard uses # for checking route path and story-editor uses #page,
@@ -108,6 +99,13 @@ const useClearHash = () => {
 
 export const _default = () => {
   useClearHash();
+
+  const config = {
+    newStoryURL: linkHrefTo('Playground/Stories Editor', 'default'),
+    apiCallbacks: {
+      fetchStories,
+    },
+  };
 
   return (
     <AppContainer>
