@@ -33,6 +33,8 @@ export function getStoryById(config, storyId) {
   const path = addQueryArgs(`${config.api.stories}${storyId}/`, {
     context: 'edit',
     _embed: STORY_EMBED,
+    // TODO(@swissspidy): Remove in decoupling.
+    web_stories_demo: false,
     _fields: STORY_FIELDS,
   });
 
