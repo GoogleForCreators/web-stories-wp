@@ -20,7 +20,7 @@
 import { useFeature } from 'flagged';
 import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { getMsFromHMS } from '@web-stories-wp/media';
+import { getMsFromHMS, isBlobURL } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -115,10 +115,11 @@ function useVideoTrimMode() {
     if (selectedElement?.type !== 'video' || !selectedElement?.resource) {
       return false;
     }
-    const { id, isExternal } = selectedElement.resource;
+    const { id, src, isExternal } = selectedElement.resource;
     return (
       isVideoTrimEnabled &&
       isTranscodingEnabled &&
+      !isBlobURL(src) &&
       !isExternal &&
       !isCurrentResourceUploading(id)
     );

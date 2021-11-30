@@ -67,7 +67,6 @@ export function addItem(
     state: ITEM_STATUS.PENDING,
     resource: {
       ...resource,
-      originalResourceId: resource.id,
       id,
     },
     onUploadStart,
@@ -78,6 +77,7 @@ export function addItem(
     posterFile,
     muteVideo,
     trimData,
+    originalResourceId: resource.id,
   };
 
   return {
@@ -130,8 +130,6 @@ export function finishUploading(state, { payload: { id, resource } }) {
     revokeBlob(queueItem.resource.poster);
   }
 
-  delete resource.originalResourceId;
-
   return {
     ...state,
     queue: state.queue.map((item) =>
@@ -140,6 +138,7 @@ export function finishUploading(state, { payload: { id, resource } }) {
             ...item,
             resource,
             posterFile: null,
+            originalResourceId: null,
             state: ITEM_STATUS.UPLOADED,
           }
         : item

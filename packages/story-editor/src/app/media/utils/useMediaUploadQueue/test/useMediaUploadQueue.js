@@ -35,7 +35,7 @@ const waitfor10 = async () => {
     type: 'video/mp4',
     size: 5000,
   });
-  await new Promise((res) => setTimeout( () => res(file), 10));
+  await new Promise((res) => setTimeout(() => res(file), 10));
 };
 
 jest.mock('../../useFFmpeg', () => ({

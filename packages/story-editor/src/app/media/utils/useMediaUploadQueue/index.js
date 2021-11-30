@@ -33,6 +33,7 @@ import {
   getFileName,
   getImageDimensions,
   isAnimatedGif,
+  isBlobURL,
 } from '@web-stories-wp/media';
 
 /**
@@ -425,8 +426,7 @@ function useMediaUploadQueue() {
             ITEM_STATUS.MUTED,
             ITEM_STATUS.TRIMMING,
             ITEM_STATUS.TRIMMED,
-          ].includes(item.state) &&
-          item.resource.originalResourceId === resourceId
+          ].includes(item.state) && item.originalResourceId === resourceId
       );
     /**
      * Is the current resource being processed.
@@ -504,7 +504,7 @@ function useMediaUploadQueue() {
       state.queue.some(
         (item) =>
           item.state === ITEM_STATUS.TRANSCODING &&
-          item.resource.originalResourceId === resourceId
+          item.originalResourceId === resourceId
       );
 
     /**
@@ -517,13 +517,14 @@ function useMediaUploadQueue() {
       state.queue.some(
         (item) =>
           item.state === ITEM_STATUS.MUTING &&
-          item.resource.originalResourceId === resourceId
+          item.originalResourceId === resourceId
       );
 
     const canTranscodeResource = (resource) => {
-      const { isExternal, id } = resource || {};
+      const { isExternal, id, src } = resource || {};
       return (
         !isExternal &&
+        !isBlobURL(src) &&
         !isCurrentResourceProcessing(id) &&
         !isResourceProcessing(id)
       );
@@ -539,7 +540,7 @@ function useMediaUploadQueue() {
       state.queue.some(
         (item) =>
           item.state === ITEM_STATUS.TRIMMING &&
-          item.resource.originalResourceId === resourceId
+          item.originalResourceId === resourceId
       );
 
     return {
