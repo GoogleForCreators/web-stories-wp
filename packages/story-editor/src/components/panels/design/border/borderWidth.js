@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { LockToggle, Icons } from '@web-stories-wp/design-system';
 
@@ -47,13 +47,9 @@ const ToggleWrapper = styled.div`
   padding-top: 2px;
   ${({ locked }) =>
     locked &&
-    css`
-      padding-left: 8px;
-    `};
-  align-self: stretch;
-
-      padding-left: 8px;
-    `};
+    `
+    padding-left: 8px;
+  `}
   align-self: stretch;
 `;
 

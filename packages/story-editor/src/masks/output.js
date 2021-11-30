@@ -29,8 +29,9 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
+import { getBorderColor, getBorderWrapperStyle } from '../utils/elementBorder';
 import { DEFAULT_MASK } from './constants';
-import { getElementMask } from '.';
+import { getElementMask, singleBorderMask } from '.';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -38,6 +39,17 @@ const FILL_STYLE = {
   left: 0,
   right: 0,
   bottom: 0,
+};
+
+const SVG_STYLE = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  height: '100%',
+  width: '100%',
+  pointerEvents: 'initial',
 };
 
 export default function WithMask({
@@ -50,7 +62,7 @@ export default function WithMask({
   ...rest
 }) {
   const mask = getElementMask(element);
-  const { flip, isBackground } = element;
+  const { flip, isBackground, border } = element;
 
   const transformFlip = getTransformFlip(flip);
   if (transformFlip) {
@@ -77,35 +89,66 @@ export default function WithMask({
     );
   }
 
+  const borderWidth = border?.left;
+  const showSingleBorder = Boolean(singleBorderMask(element) && borderWidth);
+  const borderColor = border?.color
+    ? getBorderColor({ color: border.color })
+    : 'none';
+
   // @todo: Chrome cannot do inline clip-path using data: URLs.
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
   const maskId = `mask-${mask.type}-${element.id}-output`;
 
+  const wrapperStyle = !showSingleBorder
+    ? null
+    : getBorderWrapperStyle(maskId, borderWidth * 2);
+
   return (
-    <div
-      style={{
-        ...(fill ? FILL_STYLE : {}),
-        ...style,
-        clipPath: `url(#${maskId})`,
-        // stylelint-disable-next-line
-        WebkitClipPath: `url(#${maskId})`,
-      }}
-      {...rest}
-    >
-      <svg width={0} height={0}>
-        <defs>
-          <clipPath
-            id={maskId}
-            transform={`scale(1 ${mask.ratio})`}
-            clipPathUnits="objectBoundingBox"
+    <>
+      {showSingleBorder && (
+        <div style={wrapperStyle}>
+          <svg
+            viewBox={`0 0 1 ${1 / mask.ratio}`}
+            width="100%"
+            height="100%"
+            preserveAspectRatio="none"
+            style={SVG_STYLE}
           >
-            <path d={mask.path} />
-          </clipPath>
-        </defs>
-      </svg>
-      {children}
-    </div>
+            <path
+              vectorEffect="non-scaling-stroke"
+              stroke={borderColor}
+              strokeWidth={borderWidth * 2}
+              fill="none"
+              d={mask?.path}
+            />
+          </svg>
+        </div>
+      )}
+      <div
+        style={{
+          ...(fill ? FILL_STYLE : {}),
+          ...style,
+          clipPath: `url(#${maskId})`,
+          // stylelint-disable-next-line
+          WebkitClipPath: `url(#${maskId})`,
+        }}
+        {...rest}
+      >
+        <svg width={0} height={0}>
+          <defs>
+            <clipPath
+              id={maskId}
+              transform={`scale(1 ${mask.ratio})`}
+              clipPathUnits="objectBoundingBox"
+            >
+              <path d={mask.path} />
+            </clipPath>
+          </defs>
+        </svg>
+        {children}
+      </div>
+    </>
   );
 }
 

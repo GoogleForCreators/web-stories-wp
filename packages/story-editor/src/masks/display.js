@@ -61,6 +61,7 @@ export default function WithMask({
   box,
   applyFlip = true,
   previewMode = false,
+  responsiveBorder,
   ...rest
 }) {
   // This component is used twice - random id appended to make sure
@@ -79,7 +80,7 @@ export default function WithMask({
     transform: actualTransform,
   };
 
-  const borderWidth = border?.left;
+  const borderWidth = !previewMode ? border?.left : responsiveBorder?.left;
   const showSingleBorder = Boolean(singleBorderMask(element) && borderWidth);
   const borderColor = border?.color
     ? getBorderColor({ color: border.color })
@@ -113,7 +114,7 @@ export default function WithMask({
   return (
     <>
       {showSingleBorder && (
-        <div style={wrapperStyle}>
+        <div style={{ ...style, ...wrapperStyle }}>
           <svg
             viewBox={`0 0 1 ${1 / mask.ratio}`}
             width="100%"
@@ -164,4 +165,5 @@ WithMask.propTypes = {
   children: PropTypes.node.isRequired,
   box: StoryPropTypes.box.isRequired,
   previewMode: PropTypes.bool,
+  responsiveBorder: PropTypes.object,
 };

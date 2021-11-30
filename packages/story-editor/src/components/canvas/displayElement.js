@@ -70,6 +70,10 @@ const Wrapper = styled.div.attrs(
       border-radius: ${theme.borders.radius.small};
       overflow: hidden;
     `}
+
+      border-radius: ${theme.borders.radius.small};
+      overflow: hidden;
+    `}
 `;
 
 const BackgroundOverlay = styled.div`
@@ -177,6 +181,12 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     resetOnNullTransform: false,
   });
 
+  const responsiveBorder = getResponsiveBorder(
+    border,
+    previewMode,
+    dataToEditorX
+  );
+
   return (
     <Wrapper
       ref={wrapperRef}
@@ -194,13 +204,14 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
             ...(shouldDisplayBorder(element)
               ? getBorderPositionCSS({
-                  ...getResponsiveBorder(border, previewMode, dataToEditorX),
+                  ...responsiveBorder,
                   width: `${box.width}px`,
                   height: `${box.height}px`,
                 })
               : null),
           }}
           previewMode={previewMode}
+          responsiveBorder={responsiveBorder}
         >
           <Display element={element} previewMode={previewMode} box={box} />
         </WithMask>
