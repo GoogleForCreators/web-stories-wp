@@ -32,7 +32,6 @@ describe('Stories Dashboard', () => {
   });
 
   describe('RTL', () => {
-    // eslint-disable-next-line jest/require-hook
     withRTL();
 
     it('should be able to open the dashboard', async () => {
