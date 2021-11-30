@@ -112,7 +112,7 @@ describe('useRightClickMenu', () => {
   });
 
   describe('context menu manipulation', () => {
-    it('should not open the menu if multiple elements are selected', () => {
+    it('should open the menu if multiple elements are selected', () => {
       mockUseStory.mockReturnValue({
         ...defaultStoryContext,
         selectedElements: [
@@ -143,7 +143,7 @@ describe('useRightClickMenu', () => {
         result.current.onOpenMenu(mockEvent);
       });
 
-      expect(result.current.isMenuOpen).toBe(false);
+      expect(result.current.isMenuOpen).toBe(true);
     });
 
     it('should open the menu at the specified position', () => {
@@ -673,6 +673,44 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([...expectedLayerActions]);
+    });
+  });
+
+  describe('Multiple elements right clicked', () => {
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '1',
+            type: 'text',
+            isDefaultBackground: false,
+          },
+
+          {
+            id: '2',
+            type: 'shape',
+            isDefaultBackground: false,
+          },
+
+          {
+            id: '3',
+            type: 'text',
+            isDefaultBackground: false,
+          },
+        ],
+      });
+    });
+
+    it('should return the correct menu items', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const labels = result.current.menuItems.map((item) => item.label);
+      expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS,
+      ]);
     });
   });
 });
