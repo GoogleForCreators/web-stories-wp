@@ -25,7 +25,6 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Quick Edit', () => {
-  // eslint-disable-next-line jest/require-hook
   withUser('author', 'password');
 
   it('should save story without breaking markup', async () => {

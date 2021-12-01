@@ -32,6 +32,7 @@ import {
 /**
  * Internal dependencies
  */
+import PropTypes from 'prop-types';
 import useMetaBoxes from '../../metaBoxes/useMetaBoxes';
 
 const ButtonList = styled.nav`
@@ -64,32 +65,76 @@ function Loading() {
   );
 }
 
+function DraftButtons({ forceIsSaving, hasUpdates }) {
+  return (
+    <>
+      <UpdateButton hasUpdates={hasUpdates} forceIsSaving={forceIsSaving} />
+      <PublishButton forceIsSaving={forceIsSaving} />
+    </>
+  );
+}
+
+DraftButtons.propTypes = {
+  forceIsSaving: PropTypes.bool.isRequired,
+  hasUpdates: PropTypes.bool.isRequired,
+};
+
+function PendingButtons({ forceIsSaving, hasUpdates, canPublish }) {
+  return (
+    <>
+      <SwitchToDraftButton forceIsSaving={forceIsSaving} />
+      {canPublish && (
+        <UpdateButton hasUpdates={hasUpdates} forceIsSaving={forceIsSaving} />
+      )}
+      <PublishButton forceIsSaving={forceIsSaving} />
+    </>
+  );
+}
+
+PendingButtons.propTypes = {
+  forceIsSaving: PropTypes.bool.isRequired,
+  hasUpdates: PropTypes.bool.isRequired,
+  canPublish: PropTypes.bool.isRequired,
+};
+
+function PublishedButtons({ forceIsSaving, hasUpdates }) {
+  return (
+    <>
+      <SwitchToDraftButton forceIsSaving={forceIsSaving} />
+      <UpdateButton hasUpdates={hasUpdates} forceIsSaving={forceIsSaving} />
+    </>
+  );
+}
+
+PublishedButtons.propTypes = {
+  forceIsSaving: PropTypes.bool.isRequired,
+  hasUpdates: PropTypes.bool.isRequired,
+};
+
 function Buttons() {
-  const { status } = useStory(
+  const { status, canPublish, isSaving } = useStory(
     ({
       state: {
         story: { status },
+        meta: { isSaving },
+        capabilities,
       },
     }) => ({
       status,
+      isSaving,
+      canPublish: Boolean(capabilities?.publish),
     })
   );
 
+  const isPending = 'pending' === status;
   const isDraft = 'draft' === status || !status;
+  const isDraftOrPending = isDraft || isPending;
 
   const { hasMetaBoxes, isSavingMetaBoxes } = useMetaBoxes(
     ({ state: { hasMetaBoxes, isSavingMetaBoxes } }) => ({
       hasMetaBoxes,
       isSavingMetaBoxes,
     })
-  );
-
-  const { isSaving } = useStory(
-    ({
-      state: {
-        meta: { isSaving },
-      },
-    }) => ({ isSaving })
   );
 
   return (
@@ -101,19 +146,23 @@ function Buttons() {
           <PreviewButton forceIsSaving={isSavingMetaBoxes} />
           {isSaving && <Loading />}
         </IconWithSpinner>
-        {isDraft ? (
-          <UpdateButton
-            hasUpdates={hasMetaBoxes}
+        {isDraft && (
+          <DraftButtons
             forceIsSaving={isSavingMetaBoxes}
+            hasUpdates={hasMetaBoxes}
           />
-        ) : (
-          <SwitchToDraftButton forceIsSaving={isSavingMetaBoxes} />
         )}
-        {isDraft && <PublishButton forceIsSaving={isSavingMetaBoxes} />}
-        {!isDraft && (
-          <UpdateButton
-            hasUpdates={hasMetaBoxes}
+        {isPending && (
+          <PendingButtons
             forceIsSaving={isSavingMetaBoxes}
+            hasUpdates={hasMetaBoxes}
+            canPublish={canPublish}
+          />
+        )}
+        {!isDraftOrPending && (
+          <PublishedButtons
+            forceIsSaving={isSavingMetaBoxes}
+            hasUpdates={hasMetaBoxes}
           />
         )}
       </List>

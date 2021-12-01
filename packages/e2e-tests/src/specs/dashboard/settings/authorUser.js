@@ -35,7 +35,6 @@ import {
 } from '../../../utils';
 
 describe('Author User', () => {
-  // eslint-disable-next-line jest/require-hook
   withUser('author', 'password');
 
   beforeEach(async () => {

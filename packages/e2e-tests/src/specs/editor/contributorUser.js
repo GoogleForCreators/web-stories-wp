@@ -24,7 +24,6 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Contributor User', () => {
-  // eslint-disable-next-line jest/require-hook
   withUser('contributor', 'password');
 
   it('should only be able to submit a story for review', async () => {
