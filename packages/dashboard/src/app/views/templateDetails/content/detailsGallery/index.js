@@ -98,6 +98,10 @@ function DetailsGallery({
   switchToTemplateByOffset,
   template,
 }) {
+  // if (!template) {
+  //   return;
+  // }
+
   const { postersByPage, title, description, tags, colors } = template;
 
   const galleryPosters = useMemo(

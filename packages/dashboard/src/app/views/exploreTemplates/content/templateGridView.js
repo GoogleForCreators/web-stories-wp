@@ -21,13 +21,13 @@ import {
   useCallback,
   useEffect,
   useRef,
-  useState,
   useFocusOut,
   useMemo,
 } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useGridViewKeys } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -39,18 +39,20 @@ import {
   TemplateActionsPropType,
 } from '../../../../types';
 import { useConfig } from '../../../config';
-import TemplateDetailsModal from '../../templateDetails/modal';
 import TemplateGridItem, { FOCUS_TEMPLATE_CLASS } from './templateGridItem';
 
-function TemplateGridView({ pageSize, templates, templateActions }) {
+function TemplateGridView({
+  pageSize,
+  templates: filteredTemplates,
+  templateActions,
+  handleDetailsToggle,
+  setActiveGridItemId,
+  activeGridItemId,
+}) {
   const { isRTL, apiCallbacks } = useConfig();
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
-  const [activeGridItemId, setActiveGridItemId] = useState(null);
-  const [isDetailsViewOpen, setIsDetailsViewOpen] = useState(false);
-  const [activeTemplate, setActiveTemplate] = useState(null);
-  const [activeTemplateIndex, setActiveTemplateIndex] = useState(0);
 
   const handleUseStory = useCallback(
     ({ id, title }) => {
@@ -63,52 +65,13 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
     [templateActions]
   );
 
-  const handleDetailsToggle = useCallback(
-    (id) => {
-      setIsDetailsViewOpen((prevIsOpen) => {
-        const newIsOpen = !prevIsOpen;
-        // should we add a tracking event like so?
-        trackEvent('details_view_toggled', {
-          status: newIsOpen ? 'open' : 'closed',
-        });
-
-        if (newIsOpen) {
-          setActiveGridItemId(id);
-          setActiveTemplate(
-            templates.find((templateItem) => templateItem.id === id)
-          );
-          setActiveTemplateIndex(
-            templates.findIndex((template) => template.id === id)
-          );
-        }
-
-        return newIsOpen;
-      });
-    },
-    [
-      setIsDetailsViewOpen,
-      setActiveGridItemId,
-      setActiveTemplate,
-      setActiveTemplateIndex,
-      templates,
-    ]
-  );
-
-  const switchToTemplateByOffset = useCallback(
-    (index) => {
-      setActiveTemplateIndex(index);
-      setActiveTemplate(templates[index]);
-    },
-    [setActiveTemplateIndex, setActiveTemplate, templates]
-  );
-
   useGridViewKeys({
     containerRef,
     gridRef,
     itemRefs,
     isRTL,
     currentItemId: activeGridItemId,
-    items: templates,
+    items: filteredTemplates,
   });
 
   // when keyboard focus changes and updated activeGridItemId
@@ -126,7 +89,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
 
   const memoizedTemplateItems = useMemo(
     () =>
-      templates.map(({ id, slug, status, title, postersByPage }) => {
+      filteredTemplates.map(({ id, slug, status, title, postersByPage }) => {
         const isActive = activeGridItemId === id;
         const posterSrc = postersByPage?.[0];
         const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
@@ -154,12 +117,13 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
         );
       }),
     [
-      templates,
+      filteredTemplates,
       activeGridItemId,
       pageSize.height,
       handleUseStory,
       apiCallbacks,
       handleDetailsToggle,
+      setActiveGridItemId,
     ]
   );
 
@@ -173,14 +137,6 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
       >
         {memoizedTemplateItems}
       </CardGrid>
-      <TemplateDetailsModal
-        activeTemplate={activeTemplate}
-        activeTemplateIndex={activeTemplateIndex}
-        handleDetailsToggle={handleDetailsToggle}
-        isDetailsViewOpen={isDetailsViewOpen}
-        switchToTemplateByOffset={switchToTemplateByOffset}
-        templates={templates}
-      />
     </div>
   );
 }
@@ -189,5 +145,8 @@ TemplateGridView.propTypes = {
   pageSize: PageSizePropType,
   templates: TemplatesPropType,
   templateActions: TemplateActionsPropType,
+  setActiveGridItemId: PropTypes.func,
+  handleDetailsToggle: PropTypes.func,
+  activeGridItemId: PropTypes.number,
 };
 export default TemplateGridView;

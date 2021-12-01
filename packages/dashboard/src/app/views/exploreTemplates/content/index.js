@@ -57,6 +57,9 @@ function Content({
   totalTemplates,
   search,
   templateActions,
+  handleDetailsToggle,
+  setActiveGridItemId,
+  activeGridItemId,
 }) {
   const { newStoryURL } = useConfig();
 
@@ -74,6 +77,9 @@ function Content({
           templates={templates}
           pageSize={view.pageSize}
           templateActions={templateActions}
+          handleDetailsToggle={handleDetailsToggle}
+          setActiveGridItemId={setActiveGridItemId}
+          activeGridItemId={activeGridItemId}
         />
         <InfiniteScroller
           canLoadMore={!allPagesFetched}
@@ -114,11 +120,14 @@ function Content({
       </EmptyContentMessage>
     );
   }, [
+    activeGridItemId,
     allPagesFetched,
+    handleDetailsToggle,
     isLoading,
     newStoryURL,
     page.requestNextPage,
     search?.keyword,
+    setActiveGridItemId,
     templateActions,
     templates,
     totalTemplates,
@@ -133,12 +142,15 @@ function Content({
 }
 
 Content.propTypes = {
+  activeGridItemId: PropTypes.number,
   allPagesFetched: PropTypes.bool,
+  handleDetailsToggle: PropTypes.func,
   isLoading: PropTypes.bool,
   page: PagePropTypes,
   templates: TemplatesPropType,
   totalTemplates: PropTypes.number,
   search: SearchPropTypes,
+  setActiveGridItemId: PropTypes.func,
   templateActions: TemplateActionsPropType,
   view: ViewPropTypes,
 };

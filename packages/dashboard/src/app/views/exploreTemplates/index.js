@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useMemo, useEffect, useCallback } from '@web-stories-wp/react';
+import {
+  useMemo,
+  useEffect,
+  useCallback,
+  useState,
+} from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
@@ -28,15 +33,24 @@ import { useTemplateView, uniqueEntriesByKey } from '../../../utils';
 
 import useApi from '../../api/useApi';
 import { getTemplateFilters, composeTemplateFilter } from '../utils';
+import { getRelatedTemplatesIds } from '../templateDetails/utils';
 import Content from './content';
 import Header from './header';
+import TemplateDetailsModal from './modal';
 
 function ExploreTemplates() {
+  const [activeGridItemId, setActiveGridItemId] = useState(null);
+  const [isDetailsViewOpen, setIsDetailsViewOpen] = useState(false);
+  const [activeTemplate, setActiveTemplate] = useState(null);
+  const [activeTemplateIndex, setActiveTemplateIndex] = useState(0);
+  const [relatedTemplates, setRelatedTemplates] = useState([]);
+
   const {
     allPagesFetched,
     isLoading,
     templates,
     templatesOrderById,
+    templatesByTag,
     totalPages,
     totalTemplates,
     createStoryFromTemplate,
@@ -49,6 +63,7 @@ function ExploreTemplates() {
           isLoading,
           templates,
           templatesOrderById,
+          templatesByTag,
           totalPages,
           totalTemplates,
         },
@@ -62,6 +77,7 @@ function ExploreTemplates() {
       isLoading,
       templates,
       templatesOrderById,
+      templatesByTag,
       totalPages,
       totalTemplates,
       createStoryFromTemplate,
@@ -136,6 +152,75 @@ function ExploreTemplates() {
     [handleCreateStoryFromTemplate]
   );
 
+  const getRelatedTemplates = useCallback(
+    (template) => {
+      if (!template) {
+        return;
+      }
+
+      const allRelatedTemplates = getRelatedTemplatesIds(
+        template,
+        templatesByTag
+      );
+
+      const randomRelatedTemplates = allRelatedTemplates
+        .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids;
+        .slice(0, 6); // Get first 6 templates
+
+      setRelatedTemplates(
+        randomRelatedTemplates.map((id) => ({
+          ...templates[id],
+        }))
+      );
+    },
+    [templates, templatesByTag]
+  );
+
+  useEffect(() => {
+    if (activeTemplate) {
+      getRelatedTemplates(activeTemplate);
+    }
+  }, [activeTemplate, getRelatedTemplates]);
+
+  const handleDetailsToggle = useCallback(
+    (id) => {
+      setIsDetailsViewOpen((prevIsOpen) => {
+        const newIsOpen = !prevIsOpen;
+        // should we add a tracking event like so?
+        trackEvent('details_view_toggled', {
+          status: newIsOpen ? 'open' : 'closed',
+        });
+
+        if (newIsOpen) {
+          setActiveGridItemId(id);
+          setActiveTemplate(
+            orderedTemplates.find((templateItem) => templateItem.id === id)
+          );
+          setActiveTemplateIndex(
+            orderedTemplates.findIndex((template) => template.id === id)
+          );
+        }
+
+        return newIsOpen;
+      });
+    },
+    [
+      setIsDetailsViewOpen,
+      setActiveGridItemId,
+      setActiveTemplate,
+      setActiveTemplateIndex,
+      orderedTemplates,
+    ]
+  );
+
+  const switchToTemplateByOffset = useCallback(
+    (offset) => {
+      setActiveTemplate(orderedTemplates[offset]);
+      setActiveTemplateIndex(offset);
+    },
+    [setActiveTemplateIndex, setActiveTemplate, orderedTemplates]
+  );
+
   return (
     <Layout.Provider>
       <Header
@@ -156,10 +241,24 @@ function ExploreTemplates() {
         search={search}
         view={view}
         templateActions={templateActions}
+        handleDetailsToggle={handleDetailsToggle}
+        setActiveGridItemId={setActiveGridItemId}
+        activeGridItemId={activeGridItemId}
       />
       <Layout.Fixed>
         <ScrollToTop />
       </Layout.Fixed>
+      <TemplateDetailsModal
+        activeTemplate={activeTemplate}
+        activeTemplateIndex={activeTemplateIndex}
+        handleDetailsToggle={handleDetailsToggle}
+        isDetailsViewOpen={isDetailsViewOpen}
+        switchToTemplateByOffset={switchToTemplateByOffset}
+        filteredTemplates={orderedTemplates}
+        pageSize={view.pageSize}
+        templateActions={templateActions}
+        relatedTemplates={relatedTemplates}
+      />
     </Layout.Provider>
   );
 }
