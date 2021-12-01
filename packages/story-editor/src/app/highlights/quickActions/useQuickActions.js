@@ -186,7 +186,7 @@ export const MediaPicker = ({ render, ...props }) => {
   return (
     <MediaUpload
       title={__('Replace media', 'web-stories')}
-      buttonInsertText={__('Insert media', 'web-stories')}
+      buttonInsertText={__('Replace media', 'web-stories')}
       onSelect={handleMediaSelect}
       onClose={resetWithFetch}
       type={allowedMimeTypes}
