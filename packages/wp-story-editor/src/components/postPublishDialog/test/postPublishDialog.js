@@ -24,11 +24,11 @@ import {
 } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StoryContext } from '@web-stories-wp/story-editor';
-import { renderWithTheme } from '@web-stories-wp/story-editor/src/testUtils';
 
 /**
  * Internal dependencies
  */
+import { renderWithTheme } from '../../../testUtils';
 import PostPublishDialog from '..';
 
 function setupButtons({ meta: extraMetaProps } = {}) {

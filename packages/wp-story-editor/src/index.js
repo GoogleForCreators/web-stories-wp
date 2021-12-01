@@ -31,7 +31,7 @@ import './setLocaleData';
  * External dependencies
  */
 import StoryEditor from '@web-stories-wp/story-editor';
-import { setAppElement } from '@web-stories-wp/design-system';
+import { setAppElement, domReady } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
 import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
@@ -47,14 +47,19 @@ import {
   MediaUpload,
 } from './components';
 import getApiCallbacks from './api/utils/getApiCallbacks';
+import { transformGetStoryResponse } from './api/utils';
+
+window.webStories = window.webStories || {};
+window.webStories.domReady = domReady;
 
 /**
  * Initializes the web stories editor.
  *
- * @param {string} id       ID of the root element to render the screen in.
- * @param {Object} config   Story editor settings.
+ * @param {string} id           ID of the root element to render the screen in.
+ * @param {Object} config       Story editor settings.
+ * @param {Object} initialEdits Initial edits.
  */
-const initialize = (id, config) => {
+window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
@@ -64,6 +69,10 @@ const initialize = (id, config) => {
 
   initializeTracking('Editor');
 
+  initialEdits.story = initialEdits.story
+    ? transformGetStoryResponse(initialEdits.story)
+    : null;
+
   const editorConfig = {
     ...config,
     apiCallbacks: getApiCallbacks(config),
@@ -72,7 +81,7 @@ const initialize = (id, config) => {
 
   render(
     <StrictMode>
-      <StoryEditor config={editorConfig}>
+      <StoryEditor config={editorConfig} initialEdits={initialEdits}>
         <Layout />
         <PostPublishDialog />
         <StatusCheck />
@@ -82,14 +91,3 @@ const initialize = (id, config) => {
     appElement
   );
 };
-
-const initializeWithConfig = () => {
-  const { id, config } = window.webStoriesEditorSettings;
-  initialize(id, config);
-};
-
-if ('loading' === document.readyState) {
-  document.addEventListener('DOMContentLoaded', initializeWithConfig);
-} else {
-  initializeWithConfig();
-}

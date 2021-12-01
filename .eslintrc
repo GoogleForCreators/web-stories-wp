@@ -250,7 +250,7 @@
       "PrimaryLink",
       "SecondaryLink",
       "ExternalLink",
-      "ScrimAnchor",
+      "ScrimAnchor"
     ],
     "testing-library/custom-renders": [
       "arrange",
@@ -376,6 +376,19 @@
           {
             "ignore": ["describe"]
           }
+        ],
+        "jest/require-hook": [
+          "error",
+          {
+            "allowedFunctionCalls": [
+              "minWPVersionRequired",
+              "withDisabledToolbarOnFrontend",
+              "withExperimentalFeatures",
+              "withPlugin",
+              "withRTL",
+              "withUser"
+            ]
+          }
         ]
       },
       "globals": {
@@ -389,13 +402,21 @@
         "packages/e2e-test-utils/**/*.js"
       ],
       "rules": {
-        "jest/expect-expect": "off"
+        "jest/expect-expect": "off",
+        "jest/no-export": "off",
+        "jest/require-top-level-describe": "off"
       }
     },
     {
       "files": ["packages/e2e-tests/src/specs/**/*.js"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": ["packages/e2e-tests/src/config/**/*.js"],
+      "rules": {
+        "jest/require-hook": "off"
       }
     },
     {
