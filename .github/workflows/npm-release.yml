@@ -64,10 +64,14 @@ jobs:
       # Dry-run releasing
       - name: Dry-run production release
         run: npm publish --workspaces --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
 
 #      # Do the actual publishing to npmjs.com.
 #      - name: Publish packages to production
 #        run: npm publish --workspaces
+#        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
 
       # Undo the version bumps in Git. We only needed them for publishing.
       - name: Clean up local changes
