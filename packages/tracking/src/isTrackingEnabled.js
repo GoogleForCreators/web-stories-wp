@@ -23,7 +23,7 @@ import enableTracking from './enableTracking';
 /**
  * Determines whether tracking is enabled or not.
  *
- * @return {boolean} Whether tracking is enabled
+ * @return {Promise<boolean>} Whether tracking is enabled
  */
 async function isTrackingEnabled() {
   await enableTracking();

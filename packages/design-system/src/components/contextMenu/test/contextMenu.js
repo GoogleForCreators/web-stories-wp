@@ -48,29 +48,35 @@ describe('ContextMenu', () => {
     expect(screen.getByText('this is a link')).toBeInTheDocument();
   });
 
-  it('clicking the context menu mask should call onDismiss', () => {
+  it('clicking outside the context menu should call onDismiss', () => {
     const onDismiss = jest.fn();
     renderWithProviders(
-      <ContextMenu items={items} isOpen onDismiss={onDismiss} />
+      <div>
+        <div data-testid="some-element" />
+        <ContextMenu items={items} isOpen onDismiss={onDismiss} />
+      </div>
     );
 
-    const mask = screen.getByTestId('context-menu-mask');
+    const elementOutsideContextMenu = screen.getByTestId('some-element');
     act(() => {
-      fireEvent.mouseDown(mask);
+      fireEvent.mouseDown(elementOutsideContextMenu);
     });
 
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 
-  it('right clicking the context menu mask should call onDismiss', () => {
+  it('right clicking outside the context menu should call onDismiss', () => {
     const onDismiss = jest.fn();
     renderWithProviders(
-      <ContextMenu items={items} isOpen onDismiss={onDismiss} />
+      <div>
+        <div data-testid="some-element" />
+        <ContextMenu items={items} isOpen onDismiss={onDismiss} />
+      </div>
     );
 
-    const mask = screen.getByTestId('context-menu-mask');
+    const elementOutsideContextMenu = screen.getByTestId('some-element');
     act(() => {
-      fireEvent.mouseDown(mask, { button: 'right' });
+      fireEvent.mouseDown(elementOutsideContextMenu, { button: 'right' });
     });
 
     expect(onDismiss).toHaveBeenCalledTimes(1);

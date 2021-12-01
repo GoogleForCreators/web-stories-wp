@@ -63,7 +63,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     (props) => {
       setIsSaving(true);
 
-      const isStoryAlreadyPublished = ['publish', 'future'].includes(
+      const isStoryAlreadyPublished = ['publish', 'future', 'private'].includes(
         story.status
       );
 
@@ -103,7 +103,9 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
 
           refreshPostEditURL();
 
-          const isStoryPublished = ['publish', 'future'].includes(data.status);
+          const isStoryPublished = ['publish', 'future', 'private'].includes(
+            data.status
+          );
           setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
         })
         .catch(() => {

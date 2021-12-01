@@ -27,9 +27,7 @@ import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { useStory } from '../../../app';
 import { initHelpers } from './_utils';
 
-// Disable reason: https://github.com/google/web-stories-wp/issues/9781
-// eslint-disable-next-line jasmine/no-disabled-tests
-xdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
+describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
   const data = {};
 
   const {

@@ -27,6 +27,7 @@ import {
   setPostContent,
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
+
 /**
  * Internal dependencies
  */
@@ -134,9 +135,7 @@ describe('Web Stories Block', () => {
   // Disable for https://github.com/google/web-stories-wp/issues/6237
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('AMP validation', () => {
-    // eslint-disable-next-line jest/require-hook
     withDisabledToolbarOnFrontend();
-    // eslint-disable-next-line jest/require-hook
     withPlugin('amp');
 
     it('should produce valid AMP when using the AMP plugin', async () => {

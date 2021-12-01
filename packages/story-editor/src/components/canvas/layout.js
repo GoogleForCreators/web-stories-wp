@@ -138,14 +138,14 @@ const PageAreaContainer = styled(Area).attrs({
     `}
 `;
 
-function Layer({ children, ...rest }) {
+const Layer = forwardRef(function Layer({ children, ...rest }, ref) {
   const footerHeight = useFooterHeight();
   return (
-    <LayerGrid footerHeight={footerHeight} {...rest}>
+    <LayerGrid ref={ref} footerHeight={footerHeight} {...rest}>
       {children}
     </LayerGrid>
   );
-}
+});
 
 Layer.propTypes = {
   children: PropTypes.node,

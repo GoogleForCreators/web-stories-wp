@@ -22,6 +22,7 @@ import { useFeature } from 'flagged';
 import { renderToStaticMarkup } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { StoryAnimation } from '@web-stories-wp/animation';
+
 /**
  * Internal dependencies
  */

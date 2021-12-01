@@ -337,7 +337,7 @@ const shortcuts = {
           ),
         },
         {
-          label: __('Disable snapping', 'web-stories'),
+          label: __('Disable snapping and drop targeting', 'web-stories'),
           shortcut: (
             <kbd>
               <TranslateWithMarkup

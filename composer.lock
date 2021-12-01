@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "480ddcc2bce3b5e794ae3fcbd83bc03a",
+    "content-hash": "0522f2700e9d46950513f24d493e33e2",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
-            "version": "v0.6.0",
+            "version": "0.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-toolbox-php.git",
-                "reference": "500012f27cc27f4d72525cf0f010602fb95e2f6f"
+                "reference": "fe72826d28724385de5f6a76256a1e6299ece95c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-toolbox-php/zipball/500012f27cc27f4d72525cf0f010602fb95e2f6f",
-                "reference": "500012f27cc27f4d72525cf0f010602fb95e2f6f",
+                "url": "https://api.github.com/repos/ampproject/amp-toolbox-php/zipball/fe72826d28724385de5f6a76256a1e6299ece95c",
+                "reference": "fe72826d28724385de5f6a76256a1e6299ece95c",
                 "shasum": ""
             },
             "require": {
@@ -36,7 +36,7 @@
                 "phpcompatibility/php-compatibility": "^9",
                 "phpunit/phpunit": "^5 || ^6 || ^7 || ^8 || ^9",
                 "roave/security-advisories": "dev-master",
-                "sirbrillig/phpcs-variable-analysis": "2.11.1",
+                "sirbrillig/phpcs-variable-analysis": "2.11.2",
                 "squizlabs/php_codesniffer": "^3",
                 "wp-coding-standards/wpcs": "^2.3",
                 "yoast/phpunit-polyfills": "^0.2.0 || ^1.0.0"
@@ -44,6 +44,7 @@
             "suggest": {
                 "ext-json": "Provides native implementation of json_encode()/json_decode().",
                 "ext-mbstring": "Used by Dom\\Document to convert encoding to UTF-8 if needed.",
+                "mck89/peast": "Needed to minify the AMP script.",
                 "nette/php-generator": "Needed to generate the validator spec PHP classes and interfaces."
             },
             "bin": [
@@ -71,26 +72,26 @@
             "description": "A collection of AMP tools making it easier to publish and host AMP pages with PHP.",
             "support": {
                 "issues": "https://github.com/ampproject/amp-toolbox-php/issues",
-                "source": "https://github.com/ampproject/amp-toolbox-php/tree/v0.6.0"
+                "source": "https://github.com/ampproject/amp-toolbox-php/tree/0.8.2"
             },
-            "time": "2021-06-30T15:16:48+00:00"
+            "time": "2021-10-27T12:32:13+00:00"
         },
         {
             "name": "ampproject/amp-wp",
-            "version": "2.1.4",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "5f577ecf4a7cae594fa0931d78fbc2b045ad5053"
+                "reference": "5405daa38e65f0ec16ffc920014d0110b03ee773"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/5f577ecf4a7cae594fa0931d78fbc2b045ad5053",
-                "reference": "5f577ecf4a7cae594fa0931d78fbc2b045ad5053",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/5405daa38e65f0ec16ffc920014d0110b03ee773",
+                "reference": "5405daa38e65f0ec16ffc920014d0110b03ee773",
                 "shasum": ""
             },
             "require": {
-                "ampproject/amp-toolbox": "0.6.0",
+                "ampproject/amp-toolbox": "0.8.2",
                 "cweagans/composer-patches": "~1.0",
                 "ext-curl": "*",
                 "ext-date": "*",
@@ -110,13 +111,13 @@
                 "civicrm/composer-downloads-plugin": "^3.0",
                 "dealerdirect/phpcodesniffer-composer-installer": "0.7.1",
                 "google/cloud-storage": "^1.22",
-                "mikey179/vfsstream": "1.6.8",
+                "mikey179/vfsstream": "1.6.9",
                 "mustache/mustache": "^2",
                 "php-stubs/wordpress-stubs": "^5.3.2",
                 "phpcompatibility/phpcompatibility-wp": "2.1.1",
                 "phpdocumentor/reflection": "~3.0",
                 "roave/security-advisories": "dev-latest",
-                "sirbrillig/phpcs-variable-analysis": "2.11.0",
+                "sirbrillig/phpcs-variable-analysis": "2.11.2",
                 "wp-cli/export-command": "^2.0",
                 "wp-cli/extension-command": "^2.0",
                 "wp-cli/wp-cli": "^2.4",
@@ -128,6 +129,7 @@
                 "ext-intl": "Enables use of idn_to_utf8() to convert punycode domains to UTF-8 for use with an AMP Cache.",
                 "ext-mbstring": "Used by PHP-CSS-Parser when working with stylesheets."
             },
+            "default-branch": true,
             "type": "wordpress-plugin",
             "extra": {
                 "downloads": {
@@ -188,7 +190,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2021-08-31T16:24:05+00:00"
+            "time": "2021-11-23T02:01:38+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -1803,22 +1805,22 @@
         },
         {
             "name": "phpmd/phpmd",
-            "version": "2.10.2",
+            "version": "2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmd/phpmd.git",
-                "reference": "1bc74db7cf834662d83abebae265be11bb2eec3a"
+                "reference": "3637949092e6471aeaeca66bc6c016f45e459e24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/1bc74db7cf834662d83abebae265be11bb2eec3a",
-                "reference": "1bc74db7cf834662d83abebae265be11bb2eec3a",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/3637949092e6471aeaeca66bc6c016f45e459e24",
+                "reference": "3637949092e6471aeaeca66bc6c016f45e459e24",
                 "shasum": ""
             },
             "require": {
                 "composer/xdebug-handler": "^1.0 || ^2.0",
                 "ext-xml": "*",
-                "pdepend/pdepend": "^2.10.0",
+                "pdepend/pdepend": "^2.10.2",
                 "php": ">=5.3.9"
             },
             "require-dev": {
@@ -1874,7 +1876,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/phpmd",
                 "issues": "https://github.com/phpmd/phpmd/issues",
-                "source": "https://github.com/phpmd/phpmd/tree/2.10.2"
+                "source": "https://github.com/phpmd/phpmd/tree/2.11.0"
             },
             "funding": [
                 {
@@ -1882,7 +1884,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-22T09:56:23+00:00"
+            "time": "2021-11-29T14:05:52+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -4225,6 +4227,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "ampproject/amp-wp": 20,
         "sabberworm/php-css-parser": 20,
         "roave/security-advisories": 20
     },

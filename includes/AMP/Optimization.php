@@ -118,7 +118,7 @@ class Optimization {
 	 * @since 1.1.0
 	 *
 	 * @see AmpWPConfiguration::apply_filters()
-	 * @link https://github.com/ampproject/amp-wp/blob/51266bf237184eae06e0d972cf423fa7bef61648/src/Optimizer/AmpWPConfiguration.php#L33-L99
+	 * @link https://github.com/ampproject/amp-wp/blob/5405daa38e65f0ec16ffc920014d0110b03ee773/src/Optimizer/AmpWPConfiguration.php#L43-L78
 	 *
 	 * @return Configuration Optimizer configuration to use.
 	 */

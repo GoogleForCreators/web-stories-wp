@@ -23,6 +23,7 @@ import {
   useMemo,
   useRef,
   useState,
+  forwardRef,
 } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -32,7 +33,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { BUTTON_TRANSITION_TIMING } from '../button/constants';
 import { useKeyDownEffect } from '../keyboard';
-import { KEYS, noop } from '../../utils';
+import { KEYS, noop, useComposeRefs } from '../../utils';
 import { MenuItem, MenuItemProps } from './menuItem';
 
 const FOCUSABLE_ELEMENTS = ['A', 'BUTTON'];
@@ -185,190 +186,197 @@ IdentityItemWrapper.propTypes = {
   render: PropTypes.func.isRequired,
 };
 
-const Menu = ({
-  items,
-  isIconMenu,
-  isOpen,
-  onDismiss,
-  groupLabel = __('Menu options', 'web-stories'),
-  disableControlledTabNavigation = false,
-  ...props
-}) => {
-  const [focusedIndex, setFocusedIndex] = useState(-1);
-  const wrapperRef = useRef(null);
-  const listRef = useRef(null);
-  const menuWasAlreadyOpen = useRef(false);
-  const ids = useMemo(() => items.map(() => uuidv4()), [items]);
-
-  // Need ref so that `items.length` changes do not trigger the effect
-  // that focuses an item in the menu when it is first opened.
-  const totalIndex = useRef(items.length - 1);
-  totalIndex.current = items.length - 1;
-
-  /**
-   * Focus event handler for each menu item. Sets the tracked
-   * `focusedIndex` and calls a `focusCallback` if provided.
-   *
-   * @param {Event} ev The triggering event.
-   * @param {number} itemIndex The index of the item.
-   * @param {Function} focusCallback An optional callback function.
-   */
-  const handleFocusItem = useCallback((ev, itemIndex, focusCallback) => {
-    setFocusedIndex(itemIndex);
-    focusCallback?.(ev);
-  }, []);
-
-  /**
-   * Allow navigation of the list using the UP and DOWN arrow keys.
-   * Close menu if ESCAPE is pressed.
-   *
-   * @param {Event} event The synthetic event
-   * @return {void} void
-   */
-  const handleKeyboardNav = useCallback(
-    (evt) => {
-      const { key, shiftKey } = evt;
-      if (key === 'Escape') {
-        onDismiss?.(evt);
-        return;
-      }
-
-      const isAscending =
-        [KEYS.UP, KEYS.LEFT].includes(key) || (key === KEYS.TAB && shiftKey);
-      let index = focusedIndex + (isAscending ? -1 : 1);
-      let terminate = isAscending ? index < 0 : index > totalIndex.current;
-
-      while (!terminate) {
-        const element = listRef.current?.children?.[index]?.children?.[0];
-
-        if (
-          FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
-          !element?.disabled
-        ) {
-          element?.focus();
-          setFocusedIndex(index);
-          return;
-        }
-
-        index = isAscending ? index - 1 : index + 1;
-        terminate = isAscending ? index < 0 : index > totalIndex.current;
-      }
-
-      // If we didn't find a focusable element or get to the start/end
-      // of the list then **tabbing should close the menu**
-      if (key === KEYS.TAB) {
-        onDismiss?.(evt);
-      }
+const Menu = forwardRef(
+  (
+    {
+      items,
+      isIconMenu,
+      isOpen,
+      onDismiss,
+      groupLabel = __('Menu options', 'web-stories'),
+      disableControlledTabNavigation = false,
+      ...props
     },
-    [focusedIndex, onDismiss]
-  );
+    ref
+  ) => {
+    const [focusedIndex, setFocusedIndex] = useState(-1);
+    const wrapperRef = useRef(null);
+    const listRef = useRef(null);
+    const menuWasAlreadyOpen = useRef(false);
+    const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
-  useEffect(() => {
-    // focus first 'focusable' element if menu is opened and no element is focused.
-    // close the menu if there's no focusable element
-    if (isOpen && !menuWasAlreadyOpen.current && listRef?.current) {
-      let index = 0;
+    const composedWrapperRef = useComposeRefs(wrapperRef, ref);
 
-      while (index <= totalIndex.current) {
-        const element = listRef.current?.children?.[index]?.children?.[0];
+    // Need ref so that `items.length` changes do not trigger the effect
+    // that focuses an item in the menu when it is first opened.
+    const totalIndex = useRef(items.length - 1);
+    totalIndex.current = items.length - 1;
 
-        if (
-          FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
-          !element?.disabled
-        ) {
-          element?.focus();
-          setFocusedIndex(index);
-          menuWasAlreadyOpen.current = true;
+    /**
+     * Focus event handler for each menu item. Sets the tracked
+     * `focusedIndex` and calls a `focusCallback` if provided.
+     *
+     * @param {Event} ev The triggering event.
+     * @param {number} itemIndex The index of the item.
+     * @param {Function} focusCallback An optional callback function.
+     */
+    const handleFocusItem = useCallback((ev, itemIndex, focusCallback) => {
+      setFocusedIndex(itemIndex);
+      focusCallback?.(ev);
+    }, []);
+
+    /**
+     * Allow navigation of the list using the UP and DOWN arrow keys.
+     * Close menu if ESCAPE is pressed.
+     *
+     * @param {Event} event The synthetic event
+     * @return {void} void
+     */
+    const handleKeyboardNav = useCallback(
+      (evt) => {
+        const { key, shiftKey } = evt;
+        if (key === 'Escape') {
+          onDismiss?.(evt);
           return;
         }
 
-        index++;
+        const isAscending =
+          [KEYS.UP, KEYS.LEFT].includes(key) || (key === KEYS.TAB && shiftKey);
+        let index = focusedIndex + (isAscending ? -1 : 1);
+        let terminate = isAscending ? index < 0 : index > totalIndex.current;
+
+        while (!terminate) {
+          const element = listRef.current?.children?.[index]?.children?.[0];
+
+          if (
+            FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
+            !element?.disabled
+          ) {
+            element?.focus();
+            setFocusedIndex(index);
+            return;
+          }
+
+          index = isAscending ? index - 1 : index + 1;
+          terminate = isAscending ? index < 0 : index > totalIndex.current;
+        }
+
+        // If we didn't find a focusable element or get to the start/end
+        // of the list then **tabbing should close the menu**
+        if (key === KEYS.TAB) {
+          onDismiss?.(evt);
+        }
+      },
+      [focusedIndex, onDismiss]
+    );
+
+    useEffect(() => {
+      // focus first 'focusable' element if menu is opened and no element is focused.
+      // close the menu if there's no focusable element
+      if (isOpen && !menuWasAlreadyOpen.current && listRef?.current) {
+        let index = 0;
+
+        while (index <= totalIndex.current) {
+          const element = listRef.current?.children?.[index]?.children?.[0];
+
+          if (
+            FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
+            !element?.disabled
+          ) {
+            element?.focus();
+            setFocusedIndex(index);
+            menuWasAlreadyOpen.current = true;
+            return;
+          }
+
+          index++;
+        }
+
+        menuWasAlreadyOpen.current = true;
       }
+      // reset state when menu is closed. This component does not unmount so
+      // we need to reset the state manually
+      else if (!isOpen) {
+        setFocusedIndex(-1);
+        menuWasAlreadyOpen.current = false;
+      }
+    }, [isOpen]); // only run this effect when `isOpen` changes
 
-      menuWasAlreadyOpen.current = true;
-    }
-    // reset state when menu is closed. This component does not unmount so
-    // we need to reset the state manually
-    else if (!isOpen) {
-      setFocusedIndex(-1);
-      menuWasAlreadyOpen.current = false;
-    }
-  }, [isOpen]); // only run this effect when `isOpen` changes
+    const keySpec = useMemo(
+      () =>
+        disableControlledTabNavigation
+          ? { key: ['esc', 'down', 'up', 'left', 'right'] }
+          : { key: ['esc', 'down', 'up', 'left', 'right', 'tab'], shift: true },
+      [disableControlledTabNavigation]
+    );
 
-  const keySpec = useMemo(
-    () =>
-      disableControlledTabNavigation
-        ? { key: ['esc', 'down', 'up', 'left', 'right'] }
-        : { key: ['esc', 'down', 'up', 'left', 'right', 'tab'], shift: true },
-    [disableControlledTabNavigation]
-  );
+    useKeyDownEffect(listRef, keySpec, handleKeyboardNav, [
+      handleKeyboardNav,
+      keySpec,
+    ]);
 
-  useKeyDownEffect(listRef, keySpec, handleKeyboardNav, [
-    handleKeyboardNav,
-    keySpec,
-  ]);
-
-  return (
-    <MenuWrapper
-      ref={wrapperRef}
-      isIconMenu={isIconMenu}
-      role="menu"
-      {...props}
-    >
-      <MenuList
-        data-testid="context-menu-list"
-        ref={listRef}
+    return (
+      <MenuWrapper
+        ref={composedWrapperRef}
         isIconMenu={isIconMenu}
-        aria-label={groupLabel}
-        role="group"
+        role="menu"
+        {...props}
       >
-        {items.map(
-          (
-            {
-              ItemWrapper = IdentityItemWrapper,
-              separator,
-              onFocus,
-              onClick,
-              ...itemProps
-            },
-            index
-          ) => (
-            <li
-              key={ids[index]}
-              role="menuitem"
-              className={
-                (separator === 'top' && SEPARATOR_TOP_CLASS) ||
-                (separator === 'bottom' && SEPARATOR_BOTTOM_CLASS) ||
-                ''
-              }
-            >
-              {/* Not standard - but necessary. `MediaUpload` component exposes an
+        <MenuList
+          data-testid="context-menu-list"
+          ref={listRef}
+          isIconMenu={isIconMenu}
+          aria-label={groupLabel}
+          role="group"
+        >
+          {items.map(
+            (
+              {
+                ItemWrapper = IdentityItemWrapper,
+                separator,
+                onFocus,
+                onClick,
+                ...itemProps
+              },
+              index
+            ) => (
+              <li
+                key={ids[index]}
+                role="menuitem"
+                className={
+                  (separator === 'top' && SEPARATOR_TOP_CLASS) ||
+                  (separator === 'bottom' && SEPARATOR_BOTTOM_CLASS) ||
+                  ''
+                }
+              >
+                {/* Not standard - but necessary. `MediaUpload` component exposes an
               event handler in a render prop. */}
-              <ItemWrapper
-                render={({
-                  onClick: wrapperOnClick = noop,
-                  ...wrapperProps
-                }) => (
-                  <MenuItem
-                    index={index}
-                    onFocus={(ev) => handleFocusItem(ev, index, onFocus)}
-                    onDismiss={onDismiss}
-                    onClick={(ev) => {
-                      wrapperOnClick(ev);
-                      onClick(ev);
-                    }}
-                    {...itemProps}
-                    {...wrapperProps}
-                  />
-                )}
-              />
-            </li>
-          )
-        )}
-      </MenuList>
-    </MenuWrapper>
-  );
-};
+                <ItemWrapper
+                  render={({
+                    onClick: wrapperOnClick = noop,
+                    ...wrapperProps
+                  }) => (
+                    <MenuItem
+                      index={index}
+                      onFocus={(ev) => handleFocusItem(ev, index, onFocus)}
+                      onDismiss={onDismiss}
+                      onClick={(ev) => {
+                        wrapperOnClick(ev);
+                        onClick(ev);
+                      }}
+                      {...itemProps}
+                      {...wrapperProps}
+                    />
+                  )}
+                />
+              </li>
+            )
+          )}
+        </MenuList>
+      </MenuWrapper>
+    );
+  }
+);
 
 export const MenuPropTypes = {
   groupLabel: PropTypes.string,
