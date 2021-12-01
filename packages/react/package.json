@@ -1,7 +1,15 @@
 {
   "name": "@googleforcreators/react",
+  "description": "A tiny wrapper package that re-exports React and provides additional utilities and custom hooks.",
   "private": false,
   "version": "0.0.1-0",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"

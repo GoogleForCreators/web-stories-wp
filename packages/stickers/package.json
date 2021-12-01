@@ -1,7 +1,15 @@
 {
   "name": "@googleforcreators/stickers",
+  "description": "A large set of stickers to be used by a collection of Web Stories templates.",
   "private": false,
   "version": "0.0.1-0",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"

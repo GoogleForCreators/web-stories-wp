@@ -1,7 +1,15 @@
 {
   "name": "@googleforcreators/dashboard",
+  "description": "The core Web Stories dashboard web application, which is platform-agnostic.",
   "private": false,
   "version": "0.0.1-0",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
