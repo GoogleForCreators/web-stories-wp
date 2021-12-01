@@ -40,10 +40,20 @@ const Container = styled.div`
 `;
 
 const ShapePreview = styled.div`
+  width: 100%;
+  height: 100%;
+  clip-path: ${({ maskId }) => `url(#${maskId})`};
   ${elementWithBackgroundColor}
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
 `;
+
+/* 
+clip-path isn't stable in Safari yet, so these 
+Shape Layer Icons are going to show up as various quadrilateral 
+until that stabilizes for inline SVGs as clip paths.
+More info here:  
+https://stackoverflow.com/questions/41860477/why-doesnt-css-clip-path-with-svg-work-in-safari
+https://caniuse.com/css-clip-path
+*/
 
 function ShapeLayerIcon({
   element: { id, mask, backgroundColor, isDefaultBackground },
@@ -55,12 +65,11 @@ function ShapeLayerIcon({
   if (isDefaultBackground) {
     backgroundColor = currentPage.backgroundColor;
   }
+
   return (
     <Container>
       <ShapePreview
-        style={{
-          clipPath: `url(#${maskId})`,
-        }}
+        maskId={maskId}
         width={PREVIEW_SIZE * maskDef.ratio}
         height={PREVIEW_SIZE}
         backgroundColor={backgroundColor}
@@ -69,7 +78,10 @@ function ShapeLayerIcon({
           <defs>
             <clipPath
               id={maskId}
-              transform={`scale(1 ${maskDef.ratio})`}
+              // Bring the path scale down a bit from 1
+              // so that we can make sure the entire SVG path is visible when the mask ratio is > 1
+              // this is important for Firefox's interpretation of clip paths
+              transform={`scale(0.9)`}
               clipPathUnits="objectBoundingBox"
             >
               <path d={maskDef.path} />
