@@ -210,7 +210,7 @@ export function finishTranscoding(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: ITEM_STATUS.TRANSCODED,
+            state: ITEM_STATUS.PENDING,
             resource: {
               ...item.resource,
               isOptimized: true,
@@ -262,7 +262,7 @@ export function finishMuting(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: ITEM_STATUS.MUTED,
+            state: ITEM_STATUS.PENDING,
             resource: {
               ...item.resource,
               isMuted: true,
@@ -314,7 +314,7 @@ export function finishTrimming(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: ITEM_STATUS.TRIMMED,
+            state: ITEM_STATUS.PENDING,
           }
         : item
     ),

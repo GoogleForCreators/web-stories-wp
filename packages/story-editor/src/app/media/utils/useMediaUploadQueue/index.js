@@ -87,12 +87,8 @@ function useMediaUploadQueue() {
     async function updateItems() {
       await Promise.all(
         state.queue.map(async (item) => {
-          const { id, file, state: itemState, resource } = item;
-          if (
-            itemState !== ITEM_STATUS.TRANSCODED ||
-            !resource.isPlaceholder ||
-            resource.poster
-          ) {
+          const { id, file, resource } = item;
+          if (!resource.isPlaceholder || resource.poster) {
             return;
           }
 

@@ -308,7 +308,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               isMuted: true,
             },
-            state: ITEM_STATUS.MUTED,
+            state: ITEM_STATUS.PENDING,
           },
         ],
       });
@@ -391,7 +391,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.TRIMMED,
+            state: ITEM_STATUS.PENDING,
           },
         ],
       });
@@ -475,7 +475,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
               isOptimized: true,
             },
-            state: ITEM_STATUS.TRANSCODED,
+            state: ITEM_STATUS.PENDING,
           },
         ],
       });
