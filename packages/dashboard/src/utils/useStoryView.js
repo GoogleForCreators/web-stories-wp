@@ -50,7 +50,7 @@ export default function useStoryView({
   const [authorFilterId, _setAuthorFilterId] = useState(null);
   const [queriedAuthors, setQueriedAuthors] = useState([]);
   const showStoriesWhileLoading = useRef(false);
-  const initialPageReady = useRef(false);
+  const [initialPageReady, setInitialPageReady] = useState(false);
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
@@ -144,10 +144,10 @@ export default function useStoryView({
 
   useEffect(() => {
     // give views a way to prevent early excess renders by waiting until data's ready
-    if (totalPages && !initialPageReady?.current) {
-      initialPageReady.current = true;
+    if (totalPages && !initialPageReady) {
+      setInitialPageReady(true);
     }
-  }, [totalPages]);
+  }, [totalPages, initialPageReady]);
 
   return useMemo(
     () => ({
@@ -181,7 +181,7 @@ export default function useStoryView({
         queriedAuthors,
         setQueriedAuthors,
       },
-      initialPageReady: initialPageReady?.current,
+      initialPageReady,
       showStoriesWhileLoading,
     }),
     [
@@ -193,6 +193,7 @@ export default function useStoryView({
       sortDirection,
       setSortDirection,
       filter,
+      initialPageReady,
       setFilter,
       page,
       requestNextPage,
