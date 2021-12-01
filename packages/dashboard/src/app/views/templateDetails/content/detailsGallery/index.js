@@ -66,6 +66,14 @@ const PaginationContainer = styled.div`
           right: 0;
           transform: translate(187.5%, -50%);
         `}
+
+          left: 0;
+          transform: translate(-187.5%, -50%);
+        `
+      : css`
+          right: 0;
+          transform: translate(187.5%, -50%);
+        `}
 `;
 
 const TemplateTag = styled(Chip)`
@@ -86,17 +94,19 @@ const MetadataContainer = styled.div`
 function DetailsGallery({
   activeTemplateIndex,
   isRTL,
-  orderedTemplatesLength,
+  filteredTemplatesLength,
   switchToTemplateByOffset,
   template,
 }) {
+  const { postersByPage, title, description, tags, colors } = template;
+
   const galleryPosters = useMemo(
     () =>
-      Object.values(template.postersByPage).map((poster, index) => ({
+      Object.values(postersByPage).map((poster, index) => ({
         id: index,
         ...poster,
       })),
-    [template.postersByPage]
+    [postersByPage]
   );
 
   const { NextButton, PrevButton } = useMemo(() => {
@@ -107,9 +117,9 @@ function DetailsGallery({
         variant={BUTTON_VARIANTS.CIRCLE}
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => {
-          switchToTemplateByOffset(-1);
+          switchToTemplateByOffset(activeTemplateIndex - 1);
         }}
-        disabled={!orderedTemplatesLength || activeTemplateIndex === 0}
+        disabled={!filteredTemplatesLength || activeTemplateIndex === 0}
       >
         <Icons.ArrowLeftLarge height={32} width={32} />
       </Button>
@@ -122,11 +132,11 @@ function DetailsGallery({
         variant={BUTTON_VARIANTS.CIRCLE}
         aria-label={__('View next template', 'web-stories')}
         onClick={() => {
-          switchToTemplateByOffset(1);
+          switchToTemplateByOffset(activeTemplateIndex + 1);
         }}
         disabled={
-          !orderedTemplatesLength ||
-          activeTemplateIndex === orderedTemplatesLength - 1
+          !filteredTemplatesLength ||
+          activeTemplateIndex === filteredTemplatesLength - 1
         }
       >
         <Icons.ArrowRightLarge height={32} width={32} />
@@ -143,7 +153,7 @@ function DetailsGallery({
           PrevButton: Previous,
         };
   }, [
-    orderedTemplatesLength,
+    filteredTemplatesLength,
     activeTemplateIndex,
     isRTL,
     switchToTemplateByOffset,
@@ -174,7 +184,7 @@ function DetailsGallery({
                 as="h3"
                 data-testid="template-details-title"
               >
-                {template.title}
+                {title}
               </Display>
               <ByLineText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
                 {byLine}
@@ -182,18 +192,18 @@ function DetailsGallery({
               <DescriptionText
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
               >
-                {template.description}
+                {description}
               </DescriptionText>
 
               <MetadataContainer>
-                {template.tags.map((tag) => (
+                {tags.map((tag) => (
                   <TemplateTag key={tag} disabled>
                     {tag}
                   </TemplateTag>
                 ))}
               </MetadataContainer>
               <MetadataContainer>
-                <ColorList colors={template.colors} size={32} />
+                <ColorList colors={colors} size={32} />
               </MetadataContainer>
             </DetailContainer>
           </TemplateDetails>
@@ -207,7 +217,7 @@ function DetailsGallery({
 DetailsGallery.propTypes = {
   activeTemplateIndex: PropTypes.number,
   isRTL: PropTypes.bool,
-  orderedTemplatesLength: PropTypes.number,
+  filteredTemplatesLength: PropTypes.number,
   switchToTemplateByOffset: PropTypes.func,
   template: TemplatePropType,
 };

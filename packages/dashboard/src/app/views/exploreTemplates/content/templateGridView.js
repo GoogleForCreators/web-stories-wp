@@ -27,19 +27,19 @@ import {
 } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useGridViewKeys } from '@web-stories-wp/design-system';
+import { Modal, useGridViewKeys } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { CardGrid, useLayoutContext } from '../../../../components';
+import { CardGrid } from '../../../../components';
 import {
   PageSizePropType,
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../../types';
 import { useConfig } from '../../../config';
-import { resolveRoute } from '../../../router';
+import DetailsGallery from '../../templateDetails/content/detailsGallery';
 import TemplateGridItem, { FOCUS_TEMPLATE_CLASS } from './templateGridItem';
 
 function TemplateGridView({ pageSize, templates, templateActions }) {
@@ -47,12 +47,10 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
-
-  const {
-    actions: { scrollToTop },
-  } = useLayoutContext();
-
   const [activeGridItemId, setActiveGridItemId] = useState(null);
+  const [isDetailsViewOpen, setIsDetailsViewOpen] = useState(false);
+  const [activeTemplate, setActiveTemplate] = useState(null);
+  const [activeTemplateIndex, setActiveTemplateIndex] = useState(0);
 
   const handleUseStory = useCallback(
     ({ id, title }) => {
@@ -63,6 +61,45 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
       templateActions.createStoryFromTemplate(id);
     },
     [templateActions]
+  );
+
+  const handleDetailsToggle = useCallback(
+    (id) => {
+      setIsDetailsViewOpen((prevIsOpen) => {
+        const newIsOpen = !prevIsOpen;
+        // should we add a tracking event like so?
+        trackEvent('details_view_toggled', {
+          status: newIsOpen ? 'open' : 'closed',
+        });
+
+        if (newIsOpen) {
+          setActiveGridItemId(id);
+          setActiveTemplate(
+            templates.find((templateItem) => templateItem.id === id)
+          );
+          setActiveTemplateIndex(
+            templates.findIndex((template) => template.id === id)
+          );
+        }
+
+        return newIsOpen;
+      });
+    },
+    [
+      setIsDetailsViewOpen,
+      setActiveGridItemId,
+      setActiveTemplate,
+      setActiveTemplateIndex,
+      templates,
+    ]
+  );
+
+  const switchToTemplateByOffset = useCallback(
+    (index) => {
+      setActiveTemplateIndex(index);
+      setActiveTemplate(templates[index]);
+    },
+    [setActiveTemplateIndex, setActiveTemplate, templates]
   );
 
   useGridViewKeys({
@@ -89,45 +126,43 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
 
   const memoizedTemplateItems = useMemo(
     () =>
-      templates.map(
-        ({ id, centerTargetAction, slug, status, title, postersByPage }) => {
-          const isActive = activeGridItemId === id;
-          const posterSrc = postersByPage?.[0];
-          const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
-          return (
-            <TemplateGridItem
-              detailLink={resolveRoute(centerTargetAction)}
-              onCreateStory={
-                canCreateStory ? () => handleUseStory({ id, title }) : null
-              }
-              onFocus={() => {
-                setActiveGridItemId(id);
-              }}
-              onSeeDetailsClick={scrollToTop}
-              height={pageSize.height}
-              id={id}
-              isActive={isActive}
-              key={slug}
-              posterSrc={posterSrc}
-              ref={(el) => {
-                itemRefs.current[id] = el;
-              }}
-              slug={slug}
-              status={status}
-              title={title}
-            />
-          );
-        }
-      ),
+      templates.map(({ id, slug, status, title, postersByPage }) => {
+        const isActive = activeGridItemId === id;
+        const posterSrc = postersByPage?.[0];
+        const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
+        return (
+          <TemplateGridItem
+            onCreateStory={
+              canCreateStory ? () => handleUseStory({ id, title }) : null
+            }
+            onFocus={() => {
+              setActiveGridItemId(id);
+            }}
+            onSeeDetailsClick={handleDetailsToggle}
+            height={pageSize.height}
+            id={id}
+            isActive={isActive}
+            key={slug}
+            posterSrc={posterSrc}
+            ref={(el) => {
+              itemRefs.current[id] = el;
+            }}
+            slug={slug}
+            status={status}
+            title={title}
+          />
+        );
+      }),
     [
       templates,
       activeGridItemId,
       pageSize.height,
       handleUseStory,
-      scrollToTop,
       apiCallbacks,
+      handleDetailsToggle,
     ]
   );
+
   return (
     <div ref={containerRef}>
       <CardGrid
@@ -138,6 +173,27 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
       >
         {memoizedTemplateItems}
       </CardGrid>
+      <Modal
+        isOpen={isDetailsViewOpen}
+        onClose={handleDetailsToggle}
+        contentLabel={__('Details View', 'web-stories')}
+        overlayStyles={{
+          alignItems: 'stretch',
+          backgroundColor: '#fff', // theme.colors.brand.gray[90]
+        }}
+        contentStyles={{
+          flex: 1,
+        }}
+        modalStyles={{ maxHeight: '70vh' }}
+      >
+        <DetailsGallery
+          activeTemplateIndex={activeTemplateIndex}
+          isRTL={isRTL}
+          filteredTemplatesLength={templates.length}
+          switchToTemplateByOffset={switchToTemplateByOffset}
+          template={activeTemplate}
+        />
+      </Modal>
     </div>
   );
 }
