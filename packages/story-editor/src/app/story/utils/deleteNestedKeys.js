@@ -25,6 +25,9 @@
  */
 function deleteNestedKeys(paths) {
   return (object) => {
+    if (!Array.isArray(paths)) {
+      return;
+    }
     paths.forEach((path) => {
       const keys = path.split('.');
       if (!keys.length) {

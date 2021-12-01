@@ -27,7 +27,12 @@ import { useHistory } from '../../history';
 import deleteNestedKeys from '../utils/deleteNestedKeys';
 
 // @todo REMOVE ROTATION ANGLE! For testing only!
-const ELEMENT_PROPS_TO_IGNORE = ['resource.baseColor', 'rotationAngle'];
+const ELEMENT_PROPS_TO_IGNORE = [
+  'resource.baseColor',
+  'resource.isMuted',
+  'resource.poster',
+  'resource.posterId',
+];
 
 // Record any change to core variables in history (history will know if it's a replay)
 function useHistoryEntry({ story, current, pages, selection, capabilities }) {
