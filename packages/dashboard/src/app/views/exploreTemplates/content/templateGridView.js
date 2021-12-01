@@ -27,7 +27,7 @@ import {
 } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { Modal, useGridViewKeys } from '@web-stories-wp/design-system';
+import { useGridViewKeys } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -39,7 +39,7 @@ import {
   TemplateActionsPropType,
 } from '../../../../types';
 import { useConfig } from '../../../config';
-import DetailsGallery from '../../templateDetails/content/detailsGallery';
+import TemplateDetailsModal from '../../templateDetails/modal';
 import TemplateGridItem, { FOCUS_TEMPLATE_CLASS } from './templateGridItem';
 
 function TemplateGridView({ pageSize, templates, templateActions }) {
@@ -173,27 +173,14 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
       >
         {memoizedTemplateItems}
       </CardGrid>
-      <Modal
-        isOpen={isDetailsViewOpen}
-        onClose={handleDetailsToggle}
-        contentLabel={__('Details View', 'web-stories')}
-        overlayStyles={{
-          alignItems: 'stretch',
-          backgroundColor: '#fff', // theme.colors.brand.gray[90]
-        }}
-        contentStyles={{
-          flex: 1,
-        }}
-        modalStyles={{ maxHeight: '70vh' }}
-      >
-        <DetailsGallery
-          activeTemplateIndex={activeTemplateIndex}
-          isRTL={isRTL}
-          filteredTemplatesLength={templates.length}
-          switchToTemplateByOffset={switchToTemplateByOffset}
-          template={activeTemplate}
-        />
-      </Modal>
+      <TemplateDetailsModal
+        activeTemplate={activeTemplate}
+        activeTemplateIndex={activeTemplateIndex}
+        handleDetailsToggle={handleDetailsToggle}
+        isDetailsViewOpen={isDetailsViewOpen}
+        switchToTemplateByOffset={switchToTemplateByOffset}
+        templates={templates}
+      />
     </div>
   );
 }
