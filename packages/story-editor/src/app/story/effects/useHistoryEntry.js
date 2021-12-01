@@ -26,7 +26,7 @@ import { useEffect, useRef } from '@web-stories-wp/react';
 import { useHistory } from '../../history';
 import deleteNestedKeys from '../utils/deleteNestedKeys';
 
-// @todo REMOVE ROTATION ANGLE! For testing only!
+// Changes to these properties of elements do not create a new history entry.
 const ELEMENT_PROPS_TO_IGNORE = [
   'resource.baseColor',
   'resource.isMuted',
