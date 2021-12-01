@@ -19,9 +19,6 @@
  */
 import { videoElementsNotOptimized } from '../videoOptimization';
 
-const isResourceTranscoding = () => false;
-const canTranscodeResource = () => true;
-
 describe('videoOptimization (pre-publish checklist card)', () => {
   it('should return true if the video element is currently being transcoded', () => {
     const largeUnoptimizedVideo = {
@@ -34,11 +31,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    const result = videoElementsNotOptimized(
-      largeUnoptimizedVideo,
-      isResourceTranscoding,
-      canTranscodeResource
-    );
+    const result = videoElementsNotOptimized(largeUnoptimizedVideo);
     expect(result).toBe(true);
   });
 
@@ -53,11 +46,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    const result = videoElementsNotOptimized(
-      largeUnoptimizedVideo,
-      isResourceTranscoding,
-      canTranscodeResource
-    );
+    const result = videoElementsNotOptimized(largeUnoptimizedVideo);
     expect(result).toBe(true);
   });
 
@@ -72,31 +61,8 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    const result = videoElementsNotOptimized(
-      largeUnoptimizedVideo,
-      () => true,
-      canTranscodeResource
-    );
+    const result = videoElementsNotOptimized(largeUnoptimizedVideo);
     expect(result).toBe(true);
-  });
-
-  it('should return false if the video element is larger than 1080x1920 and is processing', () => {
-    const largeUnoptimizedVideo = {
-      id: 202,
-      type: 'video',
-      resource: {
-        isOptimized: false,
-        height: 2160,
-        width: 3840,
-      },
-    };
-
-    const result = videoElementsNotOptimized(
-      largeUnoptimizedVideo,
-      isResourceTranscoding,
-      () => false
-    );
-    expect(result).toBe(false);
   });
 
   it('should return false if the video element is larger than 1080x1920 and Optimized', () => {
@@ -110,11 +76,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    const result = videoElementsNotOptimized(
-      largeUnoptimizedVideo,
-      isResourceTranscoding,
-      canTranscodeResource
-    );
+    const result = videoElementsNotOptimized(largeUnoptimizedVideo);
     expect(result).toBe(false);
   });
 
@@ -130,11 +92,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    const result = videoElementsNotOptimized(
-      largeUnoptimizedVideo,
-      isResourceTranscoding,
-      canTranscodeResource
-    );
+    const result = videoElementsNotOptimized(largeUnoptimizedVideo);
     expect(result).toBe(false);
   });
 
@@ -158,20 +116,8 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    expect(
-      videoElementsNotOptimized(
-        smallUnoptimizedVideo,
-        isResourceTranscoding,
-        canTranscodeResource
-      )
-    ).toBe(false);
-    expect(
-      videoElementsNotOptimized(
-        smallOptimizedVideo,
-        isResourceTranscoding,
-        canTranscodeResource
-      )
-    ).toBe(false);
+    expect(videoElementsNotOptimized(smallUnoptimizedVideo)).toBe(false);
+    expect(videoElementsNotOptimized(smallOptimizedVideo)).toBe(false);
   });
 
   it('should return false if the video element is exactly 1280x720', () => {
@@ -194,19 +140,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       },
     };
 
-    expect(
-      videoElementsNotOptimized(
-        landscapeVideo,
-        isResourceTranscoding,
-        canTranscodeResource
-      )
-    ).toBe(false);
-    expect(
-      videoElementsNotOptimized(
-        portraitVideo,
-        isResourceTranscoding,
-        canTranscodeResource
-      )
-    ).toBe(false);
+    expect(videoElementsNotOptimized(landscapeVideo)).toBe(false);
+    expect(videoElementsNotOptimized(portraitVideo)).toBe(false);
   });
 });

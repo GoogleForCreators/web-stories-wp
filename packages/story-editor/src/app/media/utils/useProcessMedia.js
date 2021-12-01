@@ -155,6 +155,7 @@ function useProcessMedia({
             original_id: oldResource.id,
             web_stories_is_muted: oldResource.isMuted,
           },
+          resource: oldResource,
         });
       })();
     },
@@ -382,6 +383,7 @@ function useProcessMedia({
           additionalData: {
             original_id: oldResource.id,
           },
+          resource: oldResource,
         });
       };
       return process();

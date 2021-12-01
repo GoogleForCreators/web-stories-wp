@@ -249,6 +249,7 @@ function useUploadMedia({
             return;
           }
 
+          const originalResourceId = resource?.id;
           // getResourceFromLocalFile() will work for most files, which allows us
           // to get the correct image/video dimensions right from the start.
           // This is important for UX as we can then display resources without
@@ -272,6 +273,7 @@ function useUploadMedia({
             posterFile,
             muteVideo,
             trimData,
+            originalResourceId,
           });
         })
       );

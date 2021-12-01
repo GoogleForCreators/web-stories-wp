@@ -51,27 +51,14 @@ const OptimizeButton = styled(Button)`
   margin-top: 4px;
 `;
 
-export function videoElementsNotOptimized(
-  element = {},
-  isResourceTranscoding,
-  canTranscodeResource
-) {
+export function videoElementsNotOptimized(element = {}) {
   const { resource } = element;
   if (!resource) {
     return false;
   }
-  const { id } = resource;
-  if (isResourceTranscoding(id)) {
-    return true;
-  }
 
   const { isOptimized, height = 0, width = 0 } = resource;
-
-  if (
-    element.type !== 'video' ||
-    isOptimized ||
-    !canTranscodeResource(element.resource)
-  ) {
+  if (element.type !== 'video' || isOptimized) {
     return false;
   }
 
@@ -118,31 +105,30 @@ const BulkVideoOptimization = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const pages = useStory(({ state: storyState }) => storyState?.pages);
 
-  const { optimizeVideo, isResourceTranscoding, canTranscodeResource } =
-    useLocalMedia(
-      ({
-        actions: { optimizeVideo },
-        state: { isResourceTranscoding, canTranscodeResource },
-      }) => ({
-        optimizeVideo,
+  const {
+    optimizeVideo,
+    isResourceTranscoding,
+    isCurrentResourceTranscoding,
+    canTranscodeResource,
+  } = useLocalMedia(
+    ({
+      actions: { optimizeVideo },
+      state: {
         isResourceTranscoding,
         canTranscodeResource,
-      })
-    );
-
-  const videoElementsNotOptimizedCallback = useCallback(
-    (element = {}) =>
-      videoElementsNotOptimized(
-        element,
-        isResourceTranscoding,
-        canTranscodeResource
-      ),
-    [canTranscodeResource, isResourceTranscoding]
+        isCurrentResourceTranscoding,
+      },
+    }) => ({
+      optimizeVideo,
+      isResourceTranscoding,
+      canTranscodeResource,
+      isCurrentResourceTranscoding,
+    })
   );
 
   const unoptimizedElements = useMemo(
-    () => filterStoryElements(pages, videoElementsNotOptimizedCallback),
-    [pages, videoElementsNotOptimizedCallback]
+    () => filterStoryElements(pages, videoElementsNotOptimized),
+    [pages]
   );
   const unoptimizedVideos = unoptimizedElements.filter(
     (element, index, array) =>
@@ -175,7 +161,9 @@ const BulkVideoOptimization = () => {
   const sequencedVideoOptimization = useCallback(() => {
     // only attempt to optimize videos that are not currently being transcoded
     const optimizingResources = unoptimizedVideos.filter(
-      ({ resource }) => !isResourceTranscoding(resource?.id)
+      ({ resource }) =>
+        !isResourceTranscoding(resource?.id) &&
+        !isCurrentResourceTranscoding(resource?.id)
     );
     return new Promise((resolve) => {
       optimizingResources
@@ -185,7 +173,12 @@ const BulkVideoOptimization = () => {
         .reduce((p, fn) => p.then(fn), Promise.resolve())
         .then(resolve);
     });
-  }, [isResourceTranscoding, processVideoElement, unoptimizedVideos]);
+  }, [
+    isResourceTranscoding,
+    isCurrentResourceTranscoding,
+    processVideoElement,
+    unoptimizedVideos,
+  ]);
 
   const handleUpdateVideos = useCallback(async () => {
     await sequencedVideoOptimization();
@@ -212,8 +205,17 @@ const BulkVideoOptimization = () => {
   const isTranscoding = useMemo(
     () =>
       currentlyUploading.length > 0 ||
-      unoptimizedVideos.some((video) => video.resource?.isTranscoding),
-    [currentlyUploading, unoptimizedVideos]
+      unoptimizedVideos.some(
+        (video) =>
+          isResourceTranscoding(video.resource.id) ||
+          isCurrentResourceTranscoding(video.resource.id)
+      ),
+    [
+      currentlyUploading,
+      unoptimizedVideos,
+      isResourceTranscoding,
+      isCurrentResourceTranscoding,
+    ]
   );
 
   const isRendered = unoptimizedVideos.length > 0;
@@ -227,7 +229,11 @@ const BulkVideoOptimization = () => {
   if (isTranscoding) {
     const numTranscoding =
       currentlyUploading.length +
-      unoptimizedVideos.filter((video) => video.resource?.isTranscoding).length;
+      unoptimizedVideos.filter(
+        (video) =>
+          isResourceTranscoding(video.resource.id) ||
+          isCurrentResourceTranscoding(video.resource.id)
+      ).length;
     optimizeButtonCopy = sprintf(
       /* translators: 1: number of videos currently transcoding. 2: total number of videos in list. */
       _n(
@@ -267,7 +273,10 @@ const BulkVideoOptimization = () => {
           <Thumbnail
             key={element.resource.id}
             onClick={handleClickThumbnail(element)}
-            isLoading={element.resource.isTranscoding}
+            isLoading={
+              isResourceTranscoding(element.resource.id) ||
+              isCurrentResourceTranscoding(element.resource.id)
+            }
             type={THUMBNAIL_TYPES.VIDEO}
             displayBackground={<LayerThumbnail page={element} />}
             aria-label={__('Go to offending video', 'web-stories')}
@@ -277,7 +286,8 @@ const BulkVideoOptimization = () => {
               <Tooltip
                 title={
                   state[element.resource.id] === actionTypes.uploading ||
-                  element.resource.isTranscoding
+                  isResourceTranscoding(element.resource.id) ||
+                  isCurrentResourceTranscoding(element.resource.id)
                     ? __('Video optimization in progress', 'web-stories')
                     : __('Optimize', 'web-stories')
                 }

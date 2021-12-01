@@ -52,6 +52,7 @@ describe('useMediaUploadQueue', () => {
             id: 456,
             foo: 'bar',
           },
+          originalResourceId: 789,
         },
       });
 
@@ -61,7 +62,7 @@ describe('useMediaUploadQueue', () => {
             id: expect.any(String),
             state: ITEM_STATUS.PENDING,
             file: {},
-            originalResourceId: 456,
+            originalResourceId: 789,
             resource: expect.objectContaining({
               id: expect.any(String),
               foo: 'bar',
@@ -308,7 +309,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               isMuted: true,
             },
-            state: ITEM_STATUS.PENDING,
+            state: ITEM_STATUS.MUTED,
           },
         ],
       });
@@ -391,7 +392,7 @@ describe('useMediaUploadQueue', () => {
               id: 456,
               foo: 'bar',
             },
-            state: ITEM_STATUS.PENDING,
+            state: ITEM_STATUS.TRIMMED,
           },
         ],
       });
@@ -475,7 +476,7 @@ describe('useMediaUploadQueue', () => {
               foo: 'bar',
               isOptimized: true,
             },
-            state: ITEM_STATUS.PENDING,
+            state: ITEM_STATUS.TRANSCODED,
           },
         ],
       });

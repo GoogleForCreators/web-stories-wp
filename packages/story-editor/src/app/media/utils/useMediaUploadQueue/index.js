@@ -514,6 +514,7 @@ function useMediaUploadQueue() {
       const { isExternal, id, src } = resource || {};
       return (
         !isExternal &&
+        src &&
         !isBlobURL(src) &&
         !isCurrentResourceProcessing(id) &&
         !isResourceProcessing(id)

@@ -227,7 +227,9 @@ function Element({
           active={active}
         />
         {attribution}
-        {(isBlobURL(src) || isCurrentResourceProcessing(resourceId)) && (
+        {(!src ||
+          isBlobURL(src) ||
+          isCurrentResourceProcessing(resourceId)) && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (

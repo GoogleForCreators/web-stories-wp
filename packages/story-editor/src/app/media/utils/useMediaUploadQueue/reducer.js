@@ -41,6 +41,7 @@ import { ITEM_STATUS } from './constants';
  * @param {File} action.payload.posterFile File object.
  * @param {boolean} action.payload.muteVideo Whether the video being uploaded should be muted.
  * @param {import('@web-stories-wp/media').TrimData} action.payload.trimData Trim data.
+ * @param {number} action.payload.originalResourceId Original resource id.
  * @return {Object} New state
  */
 export function addItem(
@@ -57,6 +58,7 @@ export function addItem(
       posterFile,
       muteVideo,
       trimData,
+      originalResourceId,
     },
   }
 ) {
@@ -77,7 +79,7 @@ export function addItem(
     posterFile,
     muteVideo,
     trimData,
-    originalResourceId: resource.id,
+    originalResourceId,
   };
 
   return {
@@ -210,7 +212,7 @@ export function finishTranscoding(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: ITEM_STATUS.PENDING,
+            state: ITEM_STATUS.TRANSCODED,
             resource: {
               ...item.resource,
               isOptimized: true,
@@ -262,7 +264,7 @@ export function finishMuting(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: ITEM_STATUS.PENDING,
+            state: ITEM_STATUS.MUTED,
             resource: {
               ...item.resource,
               isMuted: true,
@@ -314,7 +316,7 @@ export function finishTrimming(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: ITEM_STATUS.PENDING,
+            state: ITEM_STATUS.TRIMMED,
           }
         : item
     ),

@@ -216,8 +216,8 @@ describe('useMediaUploadQueue', () => {
       result.current.state.isCurrentResourceTranscoding(itemId)
     ).toBeTrue();
 
-    expect(result.current.state.isResourceProcessing(123)).toBeTrue();
-    expect(result.current.state.isResourceTranscoding(123)).toBeTrue();
+    expect(result.current.state.isResourceProcessing(123)).toBeFalse();
+    expect(result.current.state.isResourceTranscoding(123)).toBeFalse();
   });
 
   it('should set isMuting state when adding an item to the queue', async () => {
@@ -244,8 +244,8 @@ describe('useMediaUploadQueue', () => {
     expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
     expect(result.current.state.isCurrentResourceMuting(itemId)).toBeTrue();
 
-    expect(result.current.state.isResourceProcessing(123)).toBeTrue();
-    expect(result.current.state.isResourceMuting(123)).toBeTrue();
+    expect(result.current.state.isResourceProcessing(123)).toBeFalse();
+    expect(result.current.state.isResourceMuting(123)).toBeFalse();
   });
 
   it('should set isTrimming state when adding an item to the queue', async () => {
@@ -273,8 +273,8 @@ describe('useMediaUploadQueue', () => {
     expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
     expect(result.current.state.isCurrentResourceTrimming(itemId)).toBeTrue();
 
-    expect(result.current.state.isResourceProcessing(123)).toBeTrue();
-    expect(result.current.state.isResourceTrimming(123)).toBeTrue();
+    expect(result.current.state.isResourceProcessing(123)).toBeFalse();
+    expect(result.current.state.isResourceTrimming(123)).toBeFalse();
   });
 
   it('allows removing items from the queue', async () => {

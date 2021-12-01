@@ -61,7 +61,7 @@ function setup({ canvas = {}, element = {}, extraElements = [] } = {}) {
           type: 'video',
           id: 'video123',
           ...element,
-          resource: { isExternal: false, ...element?.resource },
+          resource: { isExternal: false, src: 'bar', ...element?.resource },
         },
         ...extraElements,
       ],

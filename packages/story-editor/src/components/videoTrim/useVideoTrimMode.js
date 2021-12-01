@@ -119,6 +119,7 @@ function useVideoTrimMode() {
     return (
       isVideoTrimEnabled &&
       isTranscodingEnabled &&
+      src &&
       !isBlobURL(src) &&
       !isExternal &&
       !isCurrentResourceUploading(id)
