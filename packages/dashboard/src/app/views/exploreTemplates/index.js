@@ -258,6 +258,7 @@ function ExploreTemplates() {
         pageSize={view.pageSize}
         templateActions={templateActions}
         relatedTemplates={relatedTemplates}
+        createStoryFromTemplate={createStoryFromTemplate}
       />
     </Layout.Provider>
   );

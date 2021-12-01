@@ -17,9 +17,11 @@
 /**
  * External dependencies
  */
+import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { Modal } from '@web-stories-wp/design-system';
 import PropTypes from 'prop-types';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -33,6 +35,7 @@ import {
 } from '../../../../types';
 import DetailsGallery from '../../templateDetails/content/detailsGallery';
 import RelatedGrid from '../../templateDetails/content/relatedGrid';
+import Header from '../../templateDetails/header';
 
 function TemplateDetailsModal({
   activeTemplateIndex,
@@ -44,8 +47,22 @@ function TemplateDetailsModal({
   relatedTemplates,
   switchToTemplateByOffset,
   templateActions,
+  createStoryFromTemplate,
 }) {
   const { isRTL } = useConfig();
+  const { apiCallbacks } = useConfig();
+
+  const handleCreateStoryFromTemplate = useCallback(() => {
+    if (activeTemplate) {
+      trackEvent('use_template', {
+        name: activeTemplate.title,
+        template_id: activeTemplate?.id,
+      });
+      createStoryFromTemplate(activeTemplate);
+    }
+  }, [createStoryFromTemplate, activeTemplate]);
+
+  const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
 
   return (
     <Modal
@@ -61,6 +78,10 @@ function TemplateDetailsModal({
       }}
       modalStyles={{ maxHeight: '70vh' }}
     >
+      <Header
+        templateTitle={activeTemplate?.title}
+        onHandleCtaClick={canCreateStory ? handleCreateStoryFromTemplate : null}
+      />
       <DetailsGallery
         activeTemplateIndex={activeTemplateIndex}
         isRTL={isRTL}
@@ -86,5 +107,6 @@ TemplateDetailsModal.propTypes = {
   relatedTemplates: TemplatesPropType,
   switchToTemplateByOffset: PropTypes.func,
   templateActions: TemplateActionsPropType,
+  createStoryFromTemplate: PropTypes.func,
 };
 export default TemplateDetailsModal;
