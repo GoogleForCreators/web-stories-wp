@@ -15,32 +15,32 @@
  */
 
 /**
- * Dynamically deletes nested keys from on object by the defined paths.
+ * Dynamically deletes nested keys from an object by the defined paths.
  * Each path has to be in the format of nested keys separated by a dot, e.g. `foo.bar.a`
  *
- * @param {Object} object The object to remove keys from.
  * @param {Array} paths Array of paths of keys.
  * @return {Object} Changed object.
  */
-function deleteNestedKeys(object, paths) {
-  // @todo Add test for this util!
-  paths.forEach((path) => {
-    const keys = path.split('.');
-    if (!keys.length) {
-      return;
-    }
-    if (keys.length === 1) {
-      delete object[keys[0]];
-      return;
-    }
-    const lastKey = keys.pop();
-    const nextLastKey = keys.pop();
-    const nextLastObj = keys.reduce((a, key) => a?.[key] || a, object);
-    if (nextLastObj?.[nextLastKey]?.[lastKey]) {
-      delete nextLastObj[nextLastKey][lastKey];
-    }
-  });
-  return object;
+function deleteNestedKeys(paths) {
+  return (object) => {
+    // @todo Add test for this util!
+    paths.forEach((path) => {
+      const keys = path.split('.');
+      if (!keys.length) {
+        return;
+      }
+      if (keys.length === 1) {
+        delete object[keys[0]];
+        return;
+      }
+      const lastKey = keys.pop();
+      const nextLastKey = keys.pop();
+      const nextLastObj = keys.reduce((a, key) => a?.[key] || a, object);
+      if (Object.prototype.hasOwnProperty.call(nextLastObj, nextLastKey)) {
+        delete nextLastObj[nextLastKey][lastKey];
+      }
+    });
+  };
 }
 
 export default deleteNestedKeys;

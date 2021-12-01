@@ -53,13 +53,8 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
   const deleteKeysFromPages = (list) => {
     // Create a copy of the list not to influence the original.
     return cloneDeep(list).map((page) => {
-      const { elements } = page;
-      return {
-        ...page,
-        elements: elements.map((element) =>
-          deleteNestedKeys(element, ELEMENT_PROPS_TO_IGNORE)
-        ),
-      };
+      page.elements.forEach(deleteNestedKeys(ELEMENT_PROPS_TO_IGNORE));
+      return page;
     });
   };
 
