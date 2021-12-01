@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import cloneDeep from 'clone-deep';
 import { useEffect, useRef } from '@web-stories-wp/react';
 
 /**
@@ -38,7 +39,7 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
   const currentHistoryEntryRef = useRef();
   useEffect(() => {
     if (currentEntry) {
-      currentHistoryEntryRef.current = JSON.parse(JSON.stringify(currentEntry));
+      currentHistoryEntryRef.current = cloneDeep(currentEntry);
     }
   }, [currentEntry]);
 
@@ -51,7 +52,7 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
 
   const deleteKeysFromPages = (list) => {
     // Create a copy of the list not to influence the original.
-    return JSON.parse(JSON.stringify(list)).map((page) => {
+    return cloneDeep(list).map((page) => {
       const { elements } = page;
       return {
         ...page,
