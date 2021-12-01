@@ -38,7 +38,7 @@ jobs:
 
       # For the time being, using incremental versions like v0.1.202111302140
       - name: Version bumps
-        run: npm version --workspaces --no-git-tag-version "0.1.$(date +%Y%m%d%H%M)"
+        run: npm version --workspaces --no-git-tag-version "0.1.$(date -u +%Y%m%d%H%M)"
 
       # Set up a local npm registry with Verdaccio.
       - name: Set up local registry
