@@ -49,9 +49,6 @@ const ByLineText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
   margin: 8px 0 24px;
 `;
-const DescriptionText = styled(Text)`
-  margin-bottom: 24px;
-`;
 
 const PaginationContainer = styled.div`
   position: absolute;
@@ -74,6 +71,9 @@ const PaginationContainer = styled.div`
           right: 0;
           transform: translate(187.5%, -50%);
         `}
+`;
+const DescriptionText = styled(Text)`
+  margin-bottom: 24px;
 `;
 
 const TemplateTag = styled(Chip)`
