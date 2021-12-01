@@ -1,0 +1,74 @@
+# npm packages release automation
+
+name: npm Release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * 1'
+  # TODO: Just for testing. Remove after testing.
+  pull_request:
+    branches:
+      - main
+
+env:
+  PRODUCTION_REGISTRY_URL: https://wombat-dressing-room.appspot.com
+  LOCAL_REGISTRY_URL: http://localhost:4873
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # This step requires additional review
+    # See https://docs.github.com/en/actions/reference/environments
+    environment: Production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # See go/npm-publish
+      - name: Setup Node
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+          registry-url: ${{ env.PRODUCTION_REGISTRY_URL }}
+          scope: '@googleforcreators'
+
+      # For the time being, using incremental versions like v0.1.202111302140
+      - name: Version bumps
+        run: npm version --workspaces --no-git-tag-version "0.1.$(date +%Y%m%d%H%M)"
+
+      # Set up a local npm registry with Verdaccio.
+      - name: Set up local registry
+        run: |
+          # Start local registry.
+          tmp_registry_log=`mktemp`
+          mkdir -p $HOME/.config/verdaccio
+          nohup verdaccio --config $HOME/.config/verdaccio/config.yaml &>$tmp_registry_log &
+
+          # Wait for `verdaccio` to boot
+          grep -q 'http address' <(tail -f $tmp_registry_log)
+
+          # Log in to Verdaccio so we can publish packages
+          npx npm-cli-login -u admin -p password -e test@example.com -r $LOCAL_REGISTRY_URL
+
+      # Using Verdaccio
+      - name: Publish packages locally
+        run: npm --registry=$LOCAL_REGISTRY_URL --workspaces publish
+
+      - name: Stop local registry
+        run: ps -ef | grep -i 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
+
+      # Dry-run releasing
+      - name: Dry-run production release
+        run: npm publish --workspaces --dry-run
+
+#      # Do the actual publishing to npmjs.com.
+#      - name: Publish packages to production
+#        run: npm publish --workspaces
+
+      # Undo the version bumps in Git. We only needed them for publishing.
+      - name: Clean up local changes
+        run: git checkout .

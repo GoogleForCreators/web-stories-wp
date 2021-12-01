@@ -2,7 +2,7 @@ name: Update browserslist db
 
 on:
   schedule:
-    - cron: '0 12 * * 1'
+    - cron: '0 0 * * 1'
 
 jobs:
   update-browserslist-db:
