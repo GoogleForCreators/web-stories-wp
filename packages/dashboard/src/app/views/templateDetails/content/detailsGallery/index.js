@@ -71,14 +71,6 @@ const PaginationContainer = styled.div`
           right: 0;
           transform: translate(187.5%, -50%);
         `}
-
-          left: 0;
-          transform: translate(-187.5%, -50%);
-        `
-      : css`
-          right: 0;
-          transform: translate(187.5%, -50%);
-        `}
 `;
 
 const TemplateTag = styled(Chip)`
