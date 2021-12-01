@@ -46,12 +46,9 @@ function EditLayer() {
     currentPage: state.state.currentPage,
   }));
 
-  const { editingElement: editingElementId, showOverflow = true } = useCanvas(
-    ({
-      state: { editingElement, editingElementState: { showOverflow } = {} },
-    }) => ({
+  const { editingElement: editingElementId } = useCanvas(
+    ({ state: { editingElement } }) => ({
       editingElement,
-      showOverflow,
     })
   );
 
@@ -64,12 +61,10 @@ function EditLayer() {
     return null;
   }
 
-  return (
-    <EditLayerForElement element={editingElement} showOverflow={showOverflow} />
-  );
+  return <EditLayerForElement element={editingElement} />;
 }
 
-function EditLayerForElement({ element, showOverflow }) {
+function EditLayerForElement({ element, showOverflow = false }) {
   const ref = useRef(null);
   const pageAreaRef = useRef(null);
   const { editModeGrayout, EditMenu } = getDefinitionForType(element.type);
@@ -109,7 +104,7 @@ function EditLayerForElement({ element, showOverflow }) {
           'Fullbleed area (Edit layer)',
           'web-stories'
         )}
-        isControlled
+        isScrollable
         showOverflow={showOverflow}
         overflow={showOverflow ? 'visible' : 'hidden'}
       >

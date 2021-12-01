@@ -30,7 +30,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useStory, useCanvas } from '../../app';
+import { useStory, useCanvas, useLayout } from '../../app';
 import StoryPropTypes from '../../types';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
@@ -131,6 +131,18 @@ function DisplayLayer() {
     }) => ({ editingElement, setPageContainer, setFullbleedContainer })
   );
 
+  const { setDisplayLayer } = useLayout(({ actions: { setDisplayLayer } }) => ({
+    setDisplayLayer,
+  }));
+
+  const setReference = useCallback(
+    (node) => {
+      setFullbleedContainer(node);
+      setDisplayLayer(node);
+    },
+    [setFullbleedContainer, setDisplayLayer]
+  );
+
   const isBackgroundSelected =
     selectedElements?.[0]?.id === currentPage?.elements?.[0]?.id;
 
@@ -161,7 +173,7 @@ function DisplayLayer() {
       >
         <DisplayPageArea
           ref={setPageContainer}
-          fullbleedRef={setFullbleedContainer}
+          fullbleedRef={setReference}
           background={currentPage?.backgroundColor}
           isBackgroundSelected={isBackgroundSelected}
           fullBleedContainerLabel={__(

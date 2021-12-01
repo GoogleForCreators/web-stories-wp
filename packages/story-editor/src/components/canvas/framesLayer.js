@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useRef, useCallback } from '@web-stories-wp/react';
+import { memo, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { PAGE_WIDTH } from '@web-stories-wp/units';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
@@ -31,7 +31,6 @@ import { DESIGN_SPACE_MARGIN } from '../../constants';
 import {
   useStory,
   useCanvas,
-  useLayout,
   useTransform,
   useRightClickMenu,
 } from '../../app';
@@ -65,8 +64,9 @@ function FramesLayer() {
       STORY_ANIMATION_STATE.SCRUBBING,
     ].includes(state.state.animationState),
   }));
-  const { setDesignSpaceGuideline } = useCanvas(
-    ({ actions: { setDesignSpaceGuideline } }) => ({
+  const { isEditing, setDesignSpaceGuideline } = useCanvas(
+    ({ state: { isEditing }, actions: { setDesignSpaceGuideline } }) => ({
+      isEditing,
       setDesignSpaceGuideline,
     })
   );
@@ -79,18 +79,6 @@ function FramesLayer() {
   useCanvasKeys(framesLayerRef);
 
   const { onOpenMenu } = useRightClickMenu();
-
-  const { setScrollOffset } = useLayout(({ actions: { setScrollOffset } }) => ({
-    setScrollOffset,
-  }));
-  const onScroll = useCallback(
-    (evt) =>
-      setScrollOffset({
-        left: evt.target.scrollLeft,
-        top: evt.target.scrollTop,
-      }),
-    [setScrollOffset]
-  );
 
   useKeyDownEffect(framesLayerRef, 'mod+alt+shift+m', onOpenMenu);
 
@@ -111,8 +99,9 @@ function FramesLayer() {
             'Fullbleed area (Frames layer)',
             'web-stories'
           )}
+          isScrollable
+          isControlled={isEditing}
           onContextMenu={onOpenMenu}
-          onScroll={onScroll}
         >
           {currentPage &&
             currentPage.elements.map((element) => {

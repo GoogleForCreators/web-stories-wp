@@ -23,7 +23,10 @@ import {
   forwardRef,
   createRef,
   useRef,
+  useState,
   useEffect,
+  useCallback,
+  useLayoutEffect,
   useResizeEffect,
 } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
@@ -136,6 +139,15 @@ const PageAreaContainer = styled(Area).attrs({
         100% - ${hasHorizontalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
     `}
+
+      overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};
+      width: calc(
+        100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
+      );
+      height: calc(
+        100% - ${hasHorizontalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
+      );
+    `}
 `;
 
 const Layer = forwardRef(function Layer({ children, ...rest }, ref) {
@@ -177,6 +189,23 @@ const PageClip = styled.div`
       justify-content: center;
       align-items: center;
     `}
+
+      overflow: hidden;
+      width: ${hasHorizontalOverflow
+        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
+      flex-basis: ${hasHorizontalOverflow
+        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
+      height: ${hasVerticalOverflow
+        ? 'calc(var(--fullbleed-height-px) + var(--page-padding-px))'
+        : `calc(var(--viewport-height-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
+      flex-shrink: 0;
+      flex-grow: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `}
 `;
 
 const FullbleedContainer = styled.div`
@@ -190,16 +219,21 @@ const FullbleedContainer = styled.div`
   align-items: center;
   border-radius: 5px;
 
-  ${({ isControlled }) =>
-    isControlled &&
-    css`
-      left: var(--scroll-left-px);
-      top: var(--scroll-top-px);
-    `};
-
   ${({ isBackgroundSelected, theme }) =>
     isBackgroundSelected &&
     css`
+      &:before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border: ${theme.colors.border.selection} 1px solid;
+        border-radius: ${theme.borders.radius.medium};
+      }
+    `}
+
       &:before {
         content: '';
         position: absolute;
@@ -357,6 +391,7 @@ const PageArea = forwardRef(function PageArea(
     overlay = [],
     background,
     isControlled = false,
+    isScrollable = false,
     className = '',
     showOverflow = false,
     isBackgroundSelected = false,
@@ -372,6 +407,8 @@ const PageArea = forwardRef(function PageArea(
     zoomSetting,
     scrollLeft,
     scrollTop,
+    setScrollOffset,
+    displayLayer,
   } = useLayout(
     ({
       state: {
@@ -380,26 +417,78 @@ const PageArea = forwardRef(function PageArea(
         zoomSetting,
         scrollLeft,
         scrollTop,
+        displayLayer,
       },
+      actions: { setScrollOffset },
     }) => ({
       hasVerticalOverflow,
       hasHorizontalOverflow,
       zoomSetting,
       scrollLeft,
       scrollTop,
+      setScrollOffset,
+      displayLayer,
     })
+  );
+
+  const [scrollableLayer, setRawScrollableLayer] = useState();
+
+  const lastScrollableLayer = useRef();
+  const lastOnScroll = useRef();
+  const setScrollableLayer = useCallback(
+    (node) => {
+      setRawScrollableLayer(node);
+      // Detach last listener if we had one
+      if (lastScrollableLayer.current && lastOnScroll.current) {
+        lastScrollableLayer.current.removeEventListener(
+          'scroll',
+          lastOnScroll.current
+        );
+        lastScrollableLayer.current = null;
+        lastOnScroll.current = null;
+      }
+      if (node) {
+        // Manually attach listener so we get the event early
+        const onScroll = (evt) => {
+          const { scrollLeft: left, scrollTop: top } = evt.target;
+          displayLayer.style.left = `-${left}px`;
+          displayLayer.style.top = `-${top}px`;
+          setScrollOffset({ left, top });
+        };
+        node.addEventListener('scroll', onScroll);
+        lastScrollableLayer.current = node;
+        lastOnScroll.current = onScroll;
+      }
+    },
+    [displayLayer, setScrollOffset]
   );
 
   // We need to ref scroll, because scroll changes should not update a non-controlled layer
   const scroll = useRef();
   scroll.current = { top: scrollTop, left: scrollLeft };
   // If zoom setting changes for a non-controlled layer, make sure to reset actual scroll inside container
-  useEffect(() => {
-    if (!isControlled) {
-      fullbleedRef.current.scrollTop = scroll.current.top;
-      fullbleedRef.current.scrollLeft = scroll.current.left;
+  // This also happens when a layer mounts, e.g. when the edit layer is displayed following edit-mode.
+  useLayoutEffect(() => {
+    if (scrollableLayer && !isControlled) {
+      scrollableLayer.scrollTop = scroll.current.top;
+      scrollableLayer.scrollLeft = scroll.current.left;
     }
-  }, [isControlled, zoomSetting, fullbleedRef]);
+  }, [isControlled, zoomSetting, scrollableLayer]);
+
+  // For controlled but scrollable layers, always update scroll
+  useEffect(() => {
+    if (scrollableLayer && isScrollable && isControlled) {
+      scrollableLayer.scrollTop = scrollTop;
+      scrollableLayer.scrollLeft = scrollLeft;
+    }
+  }, [
+    scrollableLayer,
+    isControlled,
+    isScrollable,
+    zoomSetting,
+    scrollTop,
+    scrollLeft,
+  ]);
 
   const paddedRef = useRef(null);
   usePinchToZoom({ containerRef: paddedRef });
@@ -411,6 +500,7 @@ const PageArea = forwardRef(function PageArea(
       hasHorizontalOverflow={hasHorizontalOverflow}
       hasVerticalOverflow={hasVerticalOverflow}
       className={className}
+      ref={setScrollableLayer}
       data-scroll-container
       {...rest}
     >
