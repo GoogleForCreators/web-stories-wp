@@ -60,6 +60,17 @@ const ButtonText = styled.span`
         background-color: ${theme.colors.accent.primary};
       }
     `}
+
+      &::before {
+        content: ' ';
+        display: inline-block;
+        height: 10px;
+        width: 10px;
+        margin-right: 16px;
+        border-radius: ${theme.borders.radius.round};
+        background-color: ${theme.colors.accent.primary};
+      }
+    `}
 `;
 
 const ArrowWrap = styled.div`
@@ -94,11 +105,11 @@ export function Tips({ onTipSelect = () => {}, readTips }) {
   const {
     state: { tips },
   } = useHelpCenter();
-  const TIPS_ITERABLE = Object.entries(tips);
+  const tipsIterable = Object.entries(tips);
 
   return (
     <Panel>
-      {TIPS_ITERABLE.map(([key, tip]) => (
+      {tipsIterable.map(([key, tip]) => (
         <Tip
           unread={!readTips[key]}
           key={key}
