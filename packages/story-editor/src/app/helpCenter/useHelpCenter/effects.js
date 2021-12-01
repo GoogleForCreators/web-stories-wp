@@ -76,17 +76,13 @@ export const createDynamicNavigationFlow = (previous, next) => {
   if (!isComingFromMenu(previous, next)) {
     return {};
   }
-  const appendedTips = next.navigationFlow
+  const appendedTips = next.tipKeys
     // Tips before current index
     .slice(0, next.navigationIndex)
     // Filter out read tips
     .filter((tip) => !next.readTips[tip]);
   return {
-    navigationFlow: [
-      ...next.navigationFlow,
-      ...appendedTips,
-      DONE_TIP_ENTRY[0],
-    ],
+    navigationFlow: [...next.tipKeys, ...appendedTips, DONE_TIP_ENTRY[0]],
   };
 };
 
