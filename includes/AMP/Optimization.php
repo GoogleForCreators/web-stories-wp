@@ -35,6 +35,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Error;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\ErrorCollection;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\LocalFallback;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\TransformationEngine;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\MinifyHtml;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimeCss;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeHeroImages;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeAmpBind;
@@ -148,6 +149,14 @@ class Optimization {
 				]
 			);
 		}
+
+		// Temporarily disable the MinifyHtml transformer, see https://github.com/google/web-stories-wp/issues/9861.
+		$transformers = array_diff(
+			$transformers,
+			[
+				MinifyHtml::class,
+			]
+		);
 
 		$configuration = [
 			Configuration::KEY_TRANSFORMERS => $transformers,
