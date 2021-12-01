@@ -26,8 +26,6 @@ import { getMaskByType } from '../../masks';
 import { elementWithBackgroundColor } from '../shared';
 import StoryPropTypes from '../../types';
 
-const PREVIEW_SIZE = 16;
-
 const Container = styled.div`
   display: flex;
   flex-direction: row;
@@ -68,12 +66,7 @@ function ShapeLayerIcon({
 
   return (
     <Container>
-      <ShapePreview
-        maskId={maskId}
-        width={PREVIEW_SIZE * maskDef.ratio}
-        height={PREVIEW_SIZE}
-        backgroundColor={backgroundColor}
-      >
+      <ShapePreview maskId={maskId} backgroundColor={backgroundColor}>
         <svg width={0} height={0}>
           <defs>
             <clipPath
@@ -81,7 +74,7 @@ function ShapeLayerIcon({
               // Bring the path scale down a bit from 1
               // so that we can make sure the entire SVG path is visible when the mask ratio is > 1
               // this is important for Firefox's interpretation of clip paths
-              transform={`scale(0.9)`}
+              transform={`scale(1 0.9)`}
               clipPathUnits="objectBoundingBox"
             >
               <path d={maskDef.path} />
