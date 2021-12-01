@@ -63,14 +63,9 @@ const Wrapper = styled.div.attrs(
   ${({ previewMode }) => !previewMode && elementWithRotation}
   contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
-
   ${({ isBackground, theme }) =>
     isBackground &&
     css`
-      border-radius: ${theme.borders.radius.small};
-      overflow: hidden;
-    `}
-
       border-radius: ${theme.borders.radius.small};
       overflow: hidden;
     `}
