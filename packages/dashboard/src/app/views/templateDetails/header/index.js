@@ -30,9 +30,7 @@ import {
 /**
  * Internal dependencies
  */
-import { Layout } from '../../../../components';
 import { APP_ROUTES, ROUTE_TITLES } from '../../../../constants';
-import { parentRoute } from '../../../router/route';
 
 const Nav = styled.nav`
   justify-content: space-between;
@@ -45,51 +43,53 @@ const Nav = styled.nav`
 const HiddenHeading = styled.h2`
   ${themeHelpers.visuallyHidden};
 `;
-function Header({ onHandleCtaClick, templateTitle }) {
+function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
   return (
-    <Layout.Fixed>
-      <Nav>
-        <HiddenHeading>
-          {sprintf(
+    // <Layout.Fixed>
+    <Nav>
+      <HiddenHeading>
+        {sprintf(
+          /* translators: %s: template title */
+          __('Template Details for %s', 'web-stories'),
+          templateTitle
+        )}
+      </HiddenHeading>
+      <Button
+        type={BUTTON_TYPES.TERTIARY}
+        variant={BUTTON_VARIANTS.CIRCLE}
+        size={BUTTON_SIZES.SMALL}
+        // as="a"
+        aria-label={sprintf(
+          /* translators: %s: page title of link */
+          __('Go to %s', 'web-stories'),
+          ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY]
+        )}
+        // href={parentRoute()}
+        onClick={handleDetailsToggle}
+      >
+        <Icons.CrossLarge />
+      </Button>
+      {onHandleCtaClick && (
+        <Button
+          onClick={onHandleCtaClick}
+          type={BUTTON_TYPES.PRIMARY}
+          size={BUTTON_SIZES.SMALL}
+          aria-label={sprintf(
             /* translators: %s: template title */
-            __('Template Details for %s', 'web-stories'),
+            __('Use %s template to create new story', 'web-stories'),
             templateTitle
           )}
-        </HiddenHeading>
-        <Button
-          type={BUTTON_TYPES.TERTIARY}
-          variant={BUTTON_VARIANTS.CIRCLE}
-          size={BUTTON_SIZES.SMALL}
-          as="a"
-          aria-label={sprintf(
-            /* translators: %s: page title of link */
-            __('Go to %s', 'web-stories'),
-            ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY]
-          )}
-          href={parentRoute()}
         >
-          <Icons.CrossLarge />
+          {__('Use template', 'web-stories')}
         </Button>
-        {onHandleCtaClick && (
-          <Button
-            onClick={onHandleCtaClick}
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            aria-label={sprintf(
-              /* translators: %s: template title */
-              __('Use %s template to create new story', 'web-stories'),
-              templateTitle
-            )}
-          >
-            {__('Use template', 'web-stories')}
-          </Button>
-        )}
-      </Nav>
-    </Layout.Fixed>
+      )}
+    </Nav>
+    // </Layout.Fixed>
   );
 }
 
 Header.propTypes = {
+  handleDetailsToggle: PropTypes.func,
   onHandleCtaClick: PropTypes.func,
   templateTitle: PropTypes.string,
 };

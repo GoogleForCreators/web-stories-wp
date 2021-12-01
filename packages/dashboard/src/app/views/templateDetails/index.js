@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,194 +14,203 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { useSnackbar } from '@web-stories-wp/design-system';
-/**
- * Internal dependencies
- */
-import { Layout } from '../../../components';
-import { usePagePreviewSize, clamp } from '../../../utils';
-import useApi from '../../api/useApi';
-import { useConfig } from '../../config';
-import { resolveRelatedTemplateRoute } from '../../router';
-import useRouteHistory from '../../router/useRouteHistory';
-import { ERRORS } from '../../textContent';
-import Header from './header';
-import Content from './content';
-import { getRelatedTemplatesIds } from './utils';
+// /**
+//  * External dependencies
+//  */
+// import {
+//   useCallback,
+//   useEffect,
+//   useMemo,
+//   useState,
+// } from '@web-stories-wp/react';
+// import { trackEvent } from '@web-stories-wp/tracking';
+// import { useSnackbar } from '@web-stories-wp/design-system';
+// import styled from 'styled-components';
+// /**
+//  * Internal dependencies
+//  */
+// import { Layout } from '../../../components';
+// import { usePagePreviewSize, clamp } from '../../../utils';
+// import useApi from '../../api/useApi';
+// import { useConfig } from '../../config';
+// import { resolveRelatedTemplateRoute } from '../../router';
+// import useRouteHistory from '../../router/useRouteHistory';
+// import { ERRORS } from '../../textContent';
+// import Header from './header';
+// import Content from './content';
+// import { getRelatedTemplatesIds } from './utils';
 
-function TemplateDetails() {
-  const [template, setTemplate] = useState(null);
-  const [relatedTemplates, setRelatedTemplates] = useState([]);
-  const { apiCallbacks } = useConfig();
+// const Wrapper = styled.div`
+//   outline: 1px solid red;
+// `;
 
-  const {
-    state: {
-      queryParams: { id: templateId, isLocal },
-    },
-    actions,
-  } = useRouteHistory();
+// function TemplateDetails() {
+//   const [template, setTemplate] = useState(null);
+//   const [relatedTemplates, setRelatedTemplates] = useState([]);
+//   const { apiCallbacks } = useConfig();
 
-  const { showSnackbar } = useSnackbar();
+//   const {
+//     state: {
+//       queryParams: { id: templateId, isLocal },
+//     },
+//     actions,
+//   } = useRouteHistory();
 
-  const {
-    isLoading,
-    templates,
-    templatesByTag,
-    templatesOrderById,
-    createStoryFromTemplate,
-    fetchExternalTemplates,
-    fetchExternalTemplateById,
-  } = useApi(
-    ({
-      state: {
-        templates: {
-          templates,
-          templatesByTag,
-          templatesOrderById,
-          totalPages,
-          isLoading,
-        },
-      },
-      actions: {
-        storyApi: { createStoryFromTemplate },
-        templateApi: { fetchExternalTemplates, fetchExternalTemplateById },
-      },
-    }) => ({
-      isLoading,
-      templates,
-      templatesByTag,
-      templatesOrderById,
-      totalPages,
-      createStoryFromTemplate,
-      fetchExternalTemplates,
-      fetchExternalTemplateById,
-    })
-  );
-  const { isRTL } = useConfig();
-  const { pageSize } = usePagePreviewSize({ isGrid: true });
+//   const { showSnackbar } = useSnackbar();
 
-  useEffect(() => {
-    if (!templateId) {
-      return;
-    }
+//   const {
+//     isLoading,
+//     templates,
+//     templatesByTag,
+//     templatesOrderById,
+//     createStoryFromTemplate,
+//     fetchExternalTemplates,
+//     fetchExternalTemplateById,
+//   } = useApi(
+//     ({
+//       state: {
+//         templates: {
+//           templates,
+//           templatesByTag,
+//           templatesOrderById,
+//           totalPages,
+//           isLoading,
+//         },
+//       },
+//       actions: {
+//         storyApi: { createStoryFromTemplate },
+//         templateApi: { fetchExternalTemplates, fetchExternalTemplateById },
+//       },
+//     }) => ({
+//       isLoading,
+//       templates,
+//       templatesByTag,
+//       templatesOrderById,
+//       totalPages,
+//       createStoryFromTemplate,
+//       fetchExternalTemplates,
+//       fetchExternalTemplateById,
+//     })
+//   );
+//   const { isRTL } = useConfig();
+//   const { pageSize } = usePagePreviewSize({ isGrid: true });
 
-    if ((!templates || Object.values(templates).length === 0) && !isLoading) {
-      fetchExternalTemplates();
-      return;
-    }
+//   useEffect(() => {
+//     if (!templateId) {
+//       return;
+//     }
 
-    if (isLoading) {
-      return;
-    }
+//     if ((!templates || Object.values(templates).length === 0) && !isLoading) {
+//       fetchExternalTemplates();
+//       return;
+//     }
 
-    const id = parseInt(templateId);
+//     if (isLoading) {
+//       return;
+//     }
 
-    fetchExternalTemplateById(id)
-      .then(setTemplate)
-      .catch(() => {
-        showSnackbar({
-          message: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
-          dismissible: true,
-        });
-      });
-  }, [
-    isLoading,
-    fetchExternalTemplates,
-    fetchExternalTemplateById,
-    isLocal,
-    templateId,
-    templates,
-    showSnackbar,
-  ]);
+//     const id = parseInt(templateId);
 
-  const templatedId = template?.id;
+//     fetchExternalTemplateById(id)
+//       .then(setTemplate)
+//       .catch(() => {
+//         showSnackbar({
+//           message: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
+//           dismissible: true,
+//         });
+//       });
+//   }, [
+//     isLoading,
+//     fetchExternalTemplates,
+//     fetchExternalTemplateById,
+//     isLocal,
+//     templateId,
+//     templates,
+//     showSnackbar,
+//   ]);
 
-  useEffect(() => {
-    if (!template || !templateId) {
-      return;
-    }
+//   const templatedId = template?.id;
 
-    const allRelatedTemplates = getRelatedTemplatesIds(
-      template,
-      templatesByTag
-    );
+//   useEffect(() => {
+//     if (!template || !templateId) {
+//       return;
+//     }
 
-    const randomRelatedTemplates = allRelatedTemplates
-      .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids;
-      .slice(0, 6); // Get first 6 templates
+//     const allRelatedTemplates = getRelatedTemplatesIds(
+//       template,
+//       templatesByTag
+//     );
 
-    setRelatedTemplates(
-      randomRelatedTemplates.map((id) => ({
-        ...templates[id],
-        centerTargetAction: resolveRelatedTemplateRoute(templates[id]),
-      }))
-    );
-  }, [template, templates, templatesByTag, templatesOrderById, templateId]);
+//     const randomRelatedTemplates = allRelatedTemplates
+//       .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids;
+//       .slice(0, 6); // Get first 6 templates
 
-  const activeTemplateIndex = useMemo(() => {
-    if (templatesOrderById.length <= 0) {
-      return 0;
-    }
+//     setRelatedTemplates(
+//       randomRelatedTemplates.map((id) => ({
+//         ...templates[id],
+//         centerTargetAction: resolveRelatedTemplateRoute(templates[id]),
+//       }))
+//     );
+//   }, [template, templates, templatesByTag, templatesOrderById, templateId]);
 
-    return templatesOrderById.findIndex((id) => id === templatedId);
-  }, [templatesOrderById, templatedId]);
+//   const activeTemplateIndex = useMemo(() => {
+//     if (templatesOrderById.length <= 0) {
+//       return 0;
+//     }
 
-  const switchToTemplateByOffset = useCallback(
-    (offset) => {
-      const index = clamp(activeTemplateIndex + offset, [
-        0,
-        templatesOrderById.length - 1,
-      ]);
-      const selectedTemplateId = templatesOrderById[index];
-      const selectedTemplate = templates[selectedTemplateId];
+//     return templatesOrderById.findIndex((id) => id === templatedId);
+//   }, [templatesOrderById, templatedId]);
 
-      actions.push(
-        `?id=${selectedTemplate.id}&isLocal=${selectedTemplate.isLocal}`
-      );
-    },
-    [activeTemplateIndex, templatesOrderById, actions, templates]
-  );
+//   const switchToTemplateByOffset = useCallback(
+//     (offset) => {
+//       const index = clamp(activeTemplateIndex + offset, [
+//         0,
+//         templatesOrderById.length - 1,
+//       ]);
+//       const selectedTemplateId = templatesOrderById[index];
+//       const selectedTemplate = templates[selectedTemplateId];
 
-  const handleCreateStoryFromTemplate = useCallback(() => {
-    trackEvent('use_template', {
-      name: template.title,
-      template_id: template.id,
-    });
-    createStoryFromTemplate(template);
-  }, [createStoryFromTemplate, template]);
+//       actions.push(
+//         `?id=${selectedTemplate.id}&isLocal=${selectedTemplate.isLocal}`
+//       );
+//     },
+//     [activeTemplateIndex, templatesOrderById, actions, templates]
+//   );
 
-  const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
+//   const handleCreateStoryFromTemplate = useCallback(() => {
+//     trackEvent('use_template', {
+//       name: template.title,
+//       template_id: template.id,
+//     });
+//     createStoryFromTemplate(template);
+//   }, [createStoryFromTemplate, template]);
 
-  return (
-    <Layout.Provider>
-      <Header
-        templateTitle={template?.title}
-        onHandleCtaClick={canCreateStory ? handleCreateStoryFromTemplate : null}
-      />
-      <Content
-        activeTemplateIndex={activeTemplateIndex}
-        isRTL={isRTL}
-        orderedTemplatesLength={templatesOrderById.length}
-        pageSize={pageSize}
-        switchToTemplateByOffset={switchToTemplateByOffset}
-        template={template}
-        relatedTemplates={relatedTemplates}
-        templateActions={{
-          createStoryFromTemplate,
-        }}
-      />
-    </Layout.Provider>
-  );
-}
+//   const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
 
-export default TemplateDetails;
+//   return (
+//     <Layout.Provider>
+//       <Wrapper>
+//         <Header
+//           templateTitle={template?.title}
+//           onHandleCtaClick={
+//             canCreateStory ? handleCreateStoryFromTemplate : null
+//           }
+//         />
+//         <Content
+//           activeTemplateIndex={activeTemplateIndex}
+//           isRTL={isRTL}
+//           orderedTemplatesLength={templatesOrderById.length}
+//           pageSize={pageSize}
+//           switchToTemplateByOffset={switchToTemplateByOffset}
+//           template={template}
+//           relatedTemplates={relatedTemplates}
+//           templateActions={{
+//             createStoryFromTemplate,
+//           }}
+//         />
+//       </Wrapper>
+//     </Layout.Provider>
+//   );
+// }
+
+// export default TemplateDetails;

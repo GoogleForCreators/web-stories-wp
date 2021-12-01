@@ -191,7 +191,7 @@ function ExploreTemplates() {
           status: newIsOpen ? 'open' : 'closed',
         });
 
-        if (newIsOpen) {
+        if (newIsOpen && id) {
           setActiveGridItemId(id);
           setActiveTemplate(
             orderedTemplates.find((templateItem) => templateItem.id === id)

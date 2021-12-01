@@ -70,15 +70,18 @@ function TemplateDetailsModal({
       onClose={handleDetailsToggle}
       contentLabel={__('Details View', 'web-stories')}
       overlayStyles={{
-        alignItems: 'stretch',
-        backgroundColor: '#fff', // theme.colors.brand.gray[90]
+        backgroundColor: '#00000047',
       }}
       contentStyles={{
-        flex: 1,
+        display: 'block',
+        maxHeight: '80vh',
+        maxWidth: '80vw',
+        backgroundColor: '#fff',
       }}
       modalStyles={{ maxHeight: '70vh' }}
     >
       <Header
+        handleDetailsToggle={handleDetailsToggle}
         templateTitle={activeTemplate?.title}
         onHandleCtaClick={canCreateStory ? handleCreateStoryFromTemplate : null}
       />

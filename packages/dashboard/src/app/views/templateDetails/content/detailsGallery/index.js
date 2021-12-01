@@ -45,9 +45,17 @@ import {
   Inner,
 } from '../../components';
 
+const StyledPanel = styled(Panel)`
+  padding: 0 0 12vh 0;
+`;
+
 const ByLineText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
   margin: 8px 0 24px;
+`;
+
+const DescriptionText = styled(Text)`
+  margin-bottom: 24px;
 `;
 
 const PaginationContainer = styled.div`
@@ -71,9 +79,6 @@ const PaginationContainer = styled.div`
           right: 0;
           transform: translate(187.5%, -50%);
         `}
-`;
-const DescriptionText = styled(Text)`
-  margin-bottom: 24px;
 `;
 
 const TemplateTag = styled(Chip)`
@@ -172,7 +177,7 @@ function DetailsGallery({
     : null;
 
   return (
-    <Panel>
+    <StyledPanel>
       <Container>
         <PaginationContainer alignLeft>{PrevButton}</PaginationContainer>
         <Inner>
@@ -214,7 +219,7 @@ function DetailsGallery({
         </Inner>
         <PaginationContainer>{NextButton}</PaginationContainer>
       </Container>
-    </Panel>
+    </StyledPanel>
   );
 }
 
