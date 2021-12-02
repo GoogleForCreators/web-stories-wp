@@ -27,14 +27,14 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { useConfig } from '../../../config';
-import { TemplatesPropType, TemplatePropType } from '../../../../types';
+import { TemplatePropType } from '../../../../types';
 import DetailsGallery from '../../templateDetails/content/detailsGallery';
 import Header from '../../templateDetails/header';
 
 function TemplateDetailsModal({
   activeTemplateIndex,
   activeTemplate,
-  filteredTemplates,
+  filteredTemplatesLength,
   handleDetailsToggle,
   isDetailsViewOpen,
   switchToTemplateByOffset,
@@ -65,11 +65,11 @@ function TemplateDetailsModal({
       }}
       contentStyles={{
         display: 'block',
-        maxHeight: '80vh',
-        maxWidth: '80vw',
+        height: '80vh',
+        width: '80vw',
         backgroundColor: '#fff',
       }}
-      modalStyles={{ maxHeight: '70vh' }}
+      modalStyles={{ height: '80vh' }}
     >
       <Header
         handleDetailsToggle={handleDetailsToggle}
@@ -79,7 +79,7 @@ function TemplateDetailsModal({
       <DetailsGallery
         activeTemplateIndex={activeTemplateIndex}
         isRTL={isRTL}
-        filteredTemplatesLength={filteredTemplates.length}
+        filteredTemplatesLength={filteredTemplatesLength}
         switchToTemplateByOffset={switchToTemplateByOffset}
         template={activeTemplate}
       />
@@ -89,7 +89,7 @@ function TemplateDetailsModal({
 TemplateDetailsModal.propTypes = {
   activeTemplateIndex: PropTypes.number,
   activeTemplate: TemplatePropType,
-  filteredTemplates: TemplatesPropType,
+  filteredTemplatesLength: PropTypes.number,
   handleDetailsToggle: PropTypes.func,
   isDetailsViewOpen: PropTypes.bool,
   switchToTemplateByOffset: PropTypes.func,

@@ -65,10 +65,6 @@ function TemplateGridView({
     [templateActions]
   );
 
-  // const handleChangeTemplateModal = useCallback((id) => {
-  //   setActiveGridItemId(id);
-  // }, []);
-
   useGridViewKeys({
     containerRef,
     gridRef,

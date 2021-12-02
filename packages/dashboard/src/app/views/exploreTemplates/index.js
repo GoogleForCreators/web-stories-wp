@@ -214,7 +214,7 @@ function ExploreTemplates() {
         handleDetailsToggle={handleDetailsToggle}
         isDetailsViewOpen={isDetailsViewOpen}
         switchToTemplateByOffset={switchToTemplateByOffset}
-        filteredTemplates={orderedTemplates}
+        filteredTemplatesLength={orderedTemplates.length}
         createStoryFromTemplate={createStoryFromTemplate}
       />
     </Layout.Provider>

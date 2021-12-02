@@ -31,11 +31,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import {
-  ExploreTemplatesView,
-  MyStoriesView,
-  // TemplateDetailsView,
-} from '../../app/views';
+import { ExploreTemplatesView, MyStoriesView } from '../../app/views';
 import {
   ADMIN_TITLE,
   APP_ROUTES,
