@@ -27,14 +27,8 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { useConfig } from '../../../config';
-import {
-  PageSizePropType,
-  TemplatesPropType,
-  TemplatePropType,
-  TemplateActionsPropType,
-} from '../../../../types';
+import { TemplatesPropType, TemplatePropType } from '../../../../types';
 import DetailsGallery from '../../templateDetails/content/detailsGallery';
-import RelatedGrid from '../../templateDetails/content/relatedGrid';
 import Header from '../../templateDetails/header';
 
 function TemplateDetailsModal({
@@ -43,10 +37,7 @@ function TemplateDetailsModal({
   filteredTemplates,
   handleDetailsToggle,
   isDetailsViewOpen,
-  pageSize,
-  relatedTemplates,
   switchToTemplateByOffset,
-  templateActions,
   createStoryFromTemplate,
 }) {
   const { isRTL } = useConfig();
@@ -92,12 +83,6 @@ function TemplateDetailsModal({
         switchToTemplateByOffset={switchToTemplateByOffset}
         template={activeTemplate}
       />
-      <RelatedGrid
-        pageSize={pageSize}
-        relatedTemplates={relatedTemplates}
-        templateActions={templateActions}
-        handleDetailsToggle={handleDetailsToggle}
-      />
     </Modal>
   );
 }
@@ -107,10 +92,7 @@ TemplateDetailsModal.propTypes = {
   filteredTemplates: TemplatesPropType,
   handleDetailsToggle: PropTypes.func,
   isDetailsViewOpen: PropTypes.bool,
-  pageSize: PageSizePropType,
-  relatedTemplates: TemplatesPropType,
   switchToTemplateByOffset: PropTypes.func,
-  templateActions: TemplateActionsPropType,
   createStoryFromTemplate: PropTypes.func,
 };
 export default TemplateDetailsModal;

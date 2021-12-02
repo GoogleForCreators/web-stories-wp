@@ -45,7 +45,6 @@ const HiddenHeading = styled.h2`
 `;
 function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
   return (
-    // <Layout.Fixed>
     <Nav>
       <HiddenHeading>
         {sprintf(
@@ -58,13 +57,11 @@ function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
         type={BUTTON_TYPES.TERTIARY}
         variant={BUTTON_VARIANTS.CIRCLE}
         size={BUTTON_SIZES.SMALL}
-        // as="a"
         aria-label={sprintf(
           /* translators: %s: page title of link */
           __('Go to %s', 'web-stories'),
           ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY]
         )}
-        // href={parentRoute()}
         onClick={handleDetailsToggle}
       >
         <Icons.CrossLarge />
@@ -84,7 +81,6 @@ function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
         </Button>
       )}
     </Nav>
-    // </Layout.Fixed>
   );
 }
 

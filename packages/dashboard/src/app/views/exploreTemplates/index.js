@@ -33,7 +33,6 @@ import { useTemplateView, uniqueEntriesByKey } from '../../../utils';
 
 import useApi from '../../api/useApi';
 import { getTemplateFilters, composeTemplateFilter } from '../utils';
-import { getRelatedTemplatesIds } from '../templateDetails/utils';
 import Content from './content';
 import Header from './header';
 import TemplateDetailsModal from './modal';
@@ -42,14 +41,12 @@ function ExploreTemplates() {
   const [isDetailsViewOpen, setIsDetailsViewOpen] = useState(false);
   const [activeTemplate, setActiveTemplate] = useState(null);
   const [activeTemplateIndex, setActiveTemplateIndex] = useState(0);
-  const [relatedTemplates, setRelatedTemplates] = useState([]);
 
   const {
     allPagesFetched,
     isLoading,
     templates,
     templatesOrderById,
-    templatesByTag,
     totalPages,
     totalTemplates,
     createStoryFromTemplate,
@@ -62,7 +59,6 @@ function ExploreTemplates() {
           isLoading,
           templates,
           templatesOrderById,
-          templatesByTag,
           totalPages,
           totalTemplates,
         },
@@ -76,7 +72,6 @@ function ExploreTemplates() {
       isLoading,
       templates,
       templatesOrderById,
-      templatesByTag,
       totalPages,
       totalTemplates,
       createStoryFromTemplate,
@@ -147,42 +142,8 @@ function ExploreTemplates() {
     [handleCreateStoryFromTemplate]
   );
 
-  const getRelatedTemplates = useCallback(
-    (template) => {
-      if (!template) {
-        return;
-      }
-
-      const allRelatedTemplates = getRelatedTemplatesIds(
-        template,
-        templatesByTag
-      );
-
-      const randomRelatedTemplates = allRelatedTemplates
-        .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids;
-        .slice(0, 6); // Get first 6 templates
-
-      setRelatedTemplates(
-        randomRelatedTemplates.map((id) => ({
-          ...templates[id],
-        }))
-      );
-    },
-    [templates, templatesByTag]
-  );
-
   const handleDetailsToggle = useCallback(
-    (id, updateTemplate) => {
-      if (updateTemplate) {
-        setActiveTemplate(
-          orderedTemplates.find((templateItem) => templateItem.id === id)
-        );
-        setActiveTemplateIndex(
-          orderedTemplates.findIndex((template) => template.id === id)
-        );
-        return;
-      }
-
+    (id) => {
       setIsDetailsViewOpen((prevIsOpen) => {
         const newIsOpen = !prevIsOpen;
         // should we add a tracking event like so?
@@ -222,12 +183,6 @@ function ExploreTemplates() {
     fetchExternalTemplates();
   }, [fetchExternalTemplates]);
 
-  useEffect(() => {
-    if (activeTemplate) {
-      getRelatedTemplates(activeTemplate);
-    }
-  }, [activeTemplate, getRelatedTemplates]);
-
   return (
     <Layout.Provider>
       <Header
@@ -260,9 +215,6 @@ function ExploreTemplates() {
         isDetailsViewOpen={isDetailsViewOpen}
         switchToTemplateByOffset={switchToTemplateByOffset}
         filteredTemplates={orderedTemplates}
-        pageSize={view.pageSize}
-        templateActions={templateActions}
-        relatedTemplates={relatedTemplates}
         createStoryFromTemplate={createStoryFromTemplate}
       />
     </Layout.Provider>
