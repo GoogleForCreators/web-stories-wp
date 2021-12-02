@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import { useMemo } from '@web-stories-wp/react';
 import { sprintf, __ } from '@web-stories-wp/i18n';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import {
   Button,
   BUTTON_SIZES,
@@ -63,19 +63,11 @@ const PaginationContainer = styled.div`
   top: ${470 / 2}px;
   ${({ alignLeft }) =>
     alignLeft
-      ? css`
+      ? `
           left: 0;
           transform: translate(-187.5%, -50%);
         `
-      : css`
-          right: 0;
-          transform: translate(187.5%, -50%);
-        `}
-
-          left: 0;
-          transform: translate(-187.5%, -50%);
-        `
-      : css`
+      : `
           right: 0;
           transform: translate(187.5%, -50%);
         `}
