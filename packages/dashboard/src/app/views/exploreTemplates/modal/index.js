@@ -96,6 +96,7 @@ function TemplateDetailsModal({
         pageSize={pageSize}
         relatedTemplates={relatedTemplates}
         templateActions={templateActions}
+        handleDetailsToggle={handleDetailsToggle}
       />
     </Modal>
   );

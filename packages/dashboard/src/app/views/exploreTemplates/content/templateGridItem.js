@@ -66,6 +66,7 @@ const TemplateGridItem = forwardRef(
       title,
       status,
       onSeeDetailsClick = noop,
+      changeTemplateModal = false,
     },
     ref
   ) => {
@@ -109,7 +110,7 @@ const TemplateGridItem = forwardRef(
                     __('Go to detail view of %s', 'web-stories'),
                     title
                   )}
-                  onClick={() => onSeeDetailsClick(id)}
+                  onClick={() => onSeeDetailsClick(id, changeTemplateModal)}
                   className={FOCUS_TEMPLATE_CLASS}
                   tabIndex={tabIndex}
                 >

@@ -47,6 +47,7 @@ function TemplateGridView({
   templates: filteredTemplates,
   templateActions,
   handleDetailsToggle,
+  changeTemplateModal = false,
 }) {
   const { isRTL, apiCallbacks } = useConfig();
   const containerRef = useRef();
@@ -64,6 +65,10 @@ function TemplateGridView({
     },
     [templateActions]
   );
+
+  // const handleChangeTemplateModal = useCallback((id) => {
+  //   setActiveGridItemId(id);
+  // }, []);
 
   useGridViewKeys({
     containerRef,
@@ -102,6 +107,10 @@ function TemplateGridView({
               setActiveGridItemId(id);
             }}
             onSeeDetailsClick={handleDetailsToggle}
+            // handleChangeTemplateModal={
+            //   changeTemplateModal ? handleChangeTemplateModal : null
+            // }
+            changeTemplateModal={changeTemplateModal}
             height={pageSize.height}
             id={id}
             isActive={isActive}
@@ -124,6 +133,8 @@ function TemplateGridView({
       apiCallbacks,
       handleDetailsToggle,
       setActiveGridItemId,
+      changeTemplateModal,
+      // handleChangeTemplateModal,
     ]
   );
 
@@ -146,5 +157,6 @@ TemplateGridView.propTypes = {
   templates: TemplatesPropType,
   templateActions: TemplateActionsPropType,
   handleDetailsToggle: PropTypes.func,
+  changeTemplateModal: PropTypes.bool,
 };
 export default TemplateGridView;

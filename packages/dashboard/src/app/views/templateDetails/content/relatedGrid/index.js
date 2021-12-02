@@ -20,6 +20,7 @@
 import { __ } from '@web-stories-wp/i18n';
 import { UnitsProvider } from '@web-stories-wp/units';
 import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -32,7 +33,12 @@ import {
 import TemplateGridView from '../../../exploreTemplates/content/templateGridView';
 import { RowContainer } from '../../components';
 
-function RelatedGrid({ pageSize, relatedTemplates, templateActions }) {
+function RelatedGrid({
+  pageSize,
+  relatedTemplates,
+  templateActions,
+  handleDetailsToggle,
+}) {
   if (relatedTemplates.length === 0) {
     return null;
   }
@@ -53,6 +59,8 @@ function RelatedGrid({ pageSize, relatedTemplates, templateActions }) {
           templates={relatedTemplates}
           pageSize={pageSize}
           templateActions={templateActions}
+          changeTemplateModal
+          handleDetailsToggle={handleDetailsToggle}
         />
       </UnitsProvider>
     </RowContainer>
@@ -63,6 +71,7 @@ RelatedGrid.propTypes = {
   pageSize: PageSizePropType,
   relatedTemplates: TemplatesPropType,
   templateActions: TemplateActionsPropType,
+  handleDetailsToggle: PropTypes.func,
 };
 
 export default RelatedGrid;

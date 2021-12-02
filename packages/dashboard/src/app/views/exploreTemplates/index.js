@@ -172,7 +172,17 @@ function ExploreTemplates() {
   );
 
   const handleDetailsToggle = useCallback(
-    (id) => {
+    (id, updateTemplate) => {
+      if (updateTemplate) {
+        setActiveTemplate(
+          orderedTemplates.find((templateItem) => templateItem.id === id)
+        );
+        setActiveTemplateIndex(
+          orderedTemplates.findIndex((template) => template.id === id)
+        );
+        return;
+      }
+
       setIsDetailsViewOpen((prevIsOpen) => {
         const newIsOpen = !prevIsOpen;
         // should we add a tracking event like so?
