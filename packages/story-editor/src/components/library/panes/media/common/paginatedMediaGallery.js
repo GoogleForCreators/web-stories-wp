@@ -65,6 +65,17 @@ function PaginatedMediaGallery({
   // State and callback ref necessary to load on scroll.
   const refContainer = useRef();
 
+  const isNextPageNeeded = () => {
+    if (
+      refContainer.current.clientHeight === refContainer.current.scrollHeight
+    ) {
+      return setNextPage;
+    }
+    return () => {};
+  };
+
+  const debouncedSetNextPage = useDebouncedCallback(isNextPageNeeded, 500);
+
   const loadNextPageIfNeeded = useCallback(() => {
     const node = refContainer.current;
     if (
@@ -80,9 +91,9 @@ function PaginatedMediaGallery({
       return;
     }
 
-    // If scrollTop is zero, we know we do not need to fetch an additional page yet.
-    if (node.scrollTop === 0) {
-      return;
+    // Load the next page if the page isn't full, ie. scrollbar is not visible.
+    if (node.clientHeight === node.scrollHeight) {
+      debouncedSetNextPage();
     }
 
     // Load the next page if we are "close" (by a length of ROOT_MARGIN) to the
@@ -93,7 +104,14 @@ function PaginatedMediaGallery({
       setNextPage();
       return;
     }
-  }, [resources, hasMore, isMediaLoaded, isMediaLoading, setNextPage]);
+  }, [
+    resources.length,
+    hasMore,
+    isMediaLoaded,
+    isMediaLoading,
+    debouncedSetNextPage,
+    setNextPage,
+  ]);
 
   // Scroll to the top when the searchTerm or selected category changes.
   useEffect(() => {
