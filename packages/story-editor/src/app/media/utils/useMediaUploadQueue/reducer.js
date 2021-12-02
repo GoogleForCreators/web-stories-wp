@@ -67,10 +67,7 @@ export function addItem(
     id,
     file,
     state: ITEM_STATUS.PENDING,
-    resource: {
-      ...resource,
-      id,
-    },
+    resource,
     onUploadStart,
     onUploadProgress,
     onUploadError,
