@@ -24,6 +24,7 @@ import { waitFor, within } from '@testing-library/react';
  */
 
 import { Fixture, LOCAL_MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
+import { ROOT_MARGIN } from '../mediaPane';
 
 describe('MediaPane fetching', () => {
   let fixture;
@@ -46,14 +47,22 @@ describe('MediaPane fetching', () => {
       'media-gallery-container'
     );
 
-    // ensure fixture.screen has loaded before calling expect to prevent immediate failure
     const initialElementsLength =
       fixture.screen.queryAllByTestId(/^mediaElement-/).length;
 
-    expect(initialElementsLength).toEqual(LOCAL_MEDIA_PER_PAGE);
+    // ensure fixture.screen has loaded before calling expect to prevent immediate failure
+    await waitFor(() => {
+      if (initialElementsLength !== LOCAL_MEDIA_PER_PAGE) {
+        throw new Error('wait for initial fetch');
+      }
+      expect(initialElementsLength).toEqual(LOCAL_MEDIA_PER_PAGE);
+    });
 
     // Scroll all the way down.
-    await mediaGallery.scrollTo(0, 9999999999999999999);
+    await mediaGallery.scrollTo(
+      0,
+      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
+    );
 
     // ensure fixture.screen has loaded before calling expect to prevent immediate failure
     await waitFor(() => {
