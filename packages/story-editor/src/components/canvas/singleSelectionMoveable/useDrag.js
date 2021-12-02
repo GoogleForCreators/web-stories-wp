@@ -33,9 +33,17 @@ function useSingleSelectionDrag({
   setTransformStyle,
   frame,
 }) {
-  const {
-    actions: { handleDrag, handleDrop, setDraggingResource, isDropSource },
-  } = useDropTargets();
+  const { isDropSource, handleDrag, handleDrop, setDraggingResource } =
+    useDropTargets(
+      ({
+        actions: { handleDrag, handleDrop, isDropSource, setDraggingResource },
+      }) => ({
+        handleDrag,
+        handleDrop,
+        setDraggingResource,
+        isDropSource
+      })
+    );
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
 

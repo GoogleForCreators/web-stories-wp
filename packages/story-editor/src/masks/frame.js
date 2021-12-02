@@ -92,9 +92,23 @@ function WithDropTarget({ element, children, hover }) {
   const pathRef = useRef(null);
 
   const {
-    state: { draggingResource, activeDropTargetId },
-    actions: { isDropSource, registerDropTarget, unregisterDropTarget },
-  } = useDropTargets();
+    draggingResource,
+    activeDropTargetId,
+    isDropSource,
+    registerDropTarget,
+    unregisterDropTarget,
+  } = useDropTargets(
+    ({
+      state: { draggingResource, activeDropTargetId },
+      actions: { isDropSource, registerDropTarget, unregisterDropTarget },
+    }) => ({
+      draggingResource,
+      activeDropTargetId,
+      isDropSource,
+      registerDropTarget,
+      unregisterDropTarget,
+    })
+  );
 
   const { id, resource, isBackground } = element;
   const mask = getElementMask(element);
