@@ -31,6 +31,10 @@ import {
   seekVideo,
   preloadVideo,
 } from '@web-stories-wp/media';
+/**
+ * Internal dependencies
+ */
+import { getMediaBaseColor } from '../../../utils/getMediaBaseColor';
 
 /**
  * Create a local resource object.
@@ -153,6 +157,14 @@ const getResourceFromLocalFile = async (file) => {
   } catch {
     // Not interested in the error here.
     // We simply fall back to the placeholder resource.
+  }
+  const { src, poster } = resource;
+  const imageSrc = type === 'image' ? src : poster;
+  try {
+    const color = await getMediaBaseColor(imageSrc);
+    resource.baseColor = color;
+  } catch {
+    // Do nothing for now
   }
 
   return { resource, posterFile };
