@@ -41,7 +41,7 @@ export function generateParagraphTextStyle(
   const horizontalPadding = padding?.horizontal || 0;
   const hasPadding = verticalPadding || horizontalPadding;
   const paddingStyle = hasPadding
-    ? `${dataToStyleY(verticalPadding)}px ${dataToStyleX(horizontalPadding)}px`
+    ? `${dataToStyleY(verticalPadding)} ${dataToStyleX(horizontalPadding)}`
     : 0;
 
   return {
