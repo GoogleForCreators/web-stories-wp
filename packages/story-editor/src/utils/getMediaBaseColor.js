@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { trackError } from '@web-stories-wp/tracking';
+import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import { getHexFromSolidArray } from '@web-stories-wp/patterns';
 
 const STYLES = {
@@ -52,6 +52,7 @@ export async function getMediaBaseColor(src) {
     return Promise.reject(new Error('No source to image'));
   }
   let color;
+  const trackTiming = getTimeTracker('load_get_base_color');
   try {
     color = await setOrCreateImage({
       src,
@@ -64,6 +65,8 @@ export async function getMediaBaseColor(src) {
       throw error;
     }
     color = '#ffffff';
+  } finally {
+    trackTiming();
   }
   return color;
 }
