@@ -31,6 +31,7 @@ import {
   seekVideo,
   preloadVideo,
 } from '@web-stories-wp/media';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Generates a image resource object from a local File object.
@@ -144,6 +145,8 @@ const getResourceFromLocalFile = async (file) => {
     // Not interested in the error here.
     // We simply fall back to the placeholder resource.
   }
+
+  resource.id = uuidv4();
 
   return { resource, posterFile };
 };
