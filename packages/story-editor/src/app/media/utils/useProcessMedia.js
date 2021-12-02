@@ -243,7 +243,7 @@ function useProcessMedia({
             ...oldResource,
             trimData,
           },
-          originalResourceId: oldResource.id,
+          originalResourceId: canvasResourceId,
           posterFile,
         });
       };
