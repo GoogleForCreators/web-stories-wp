@@ -109,6 +109,7 @@ const mockedReturnValue = {
   isCurrentResourceMuting: jest.fn(),
   isCurrentResourceTranscoding: jest.fn(),
   isResourceProcessing: jest.fn(),
+  canTranscodeResource: jest.fn(),
   isCurrentResourceProcessing: jest.fn(),
   isCurrentResourceUploading: jest.fn(),
 };
@@ -125,6 +126,10 @@ describe('MediaElement', () => {
   `(
     'should render MediaElement for a resource of type=`$type` without accessibility violations',
     async ({ resource }) => {
+      useLocalMedia.mockReturnValue({
+        ...mockedReturnValue,
+        canTranscodeResource: () => true,
+      });
       const { container } = renderMediaElement(resource, 'local');
 
       const results = await axe(container);
@@ -133,6 +138,10 @@ describe('MediaElement', () => {
   );
 
   it("should render dropdown menu's more icon for uploaded image", () => {
+    useLocalMedia.mockReturnValue({
+      ...mockedReturnValue,
+      canTranscodeResource: () => true,
+    });
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       {
         ...IMAGE_RESOURCE,
@@ -148,6 +157,10 @@ describe('MediaElement', () => {
   });
 
   it("should render dropdown menu's more icon for uploaded video", () => {
+    useLocalMedia.mockReturnValue({
+      ...mockedReturnValue,
+      canTranscodeResource: () => true,
+    });
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       {
         ...VIDEO_RESOURCE,
@@ -163,6 +176,10 @@ describe('MediaElement', () => {
   });
 
   it("should render dropdown menu's more icon for uploaded gif", () => {
+    useLocalMedia.mockReturnValue({
+      ...mockedReturnValue,
+      canTranscodeResource: () => true,
+    });
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       {
         ...GIF_RESOURCE,
@@ -178,6 +195,10 @@ describe('MediaElement', () => {
   });
 
   it("should render dropdown menu's more icon users without permission", () => {
+    useLocalMedia.mockReturnValue({
+      ...mockedReturnValue,
+      canTranscodeResource: () => true,
+    });
     const { queryByAriaLabel } = renderMediaElement(
       {
         ...VIDEO_RESOURCE,
@@ -196,7 +217,7 @@ describe('MediaElement', () => {
   it("should not render dropdown menu's more icon for not uploaded image", () => {
     useLocalMedia.mockReturnValue({
       ...mockedReturnValue,
-      isCurrentResourceProcessing: () => true,
+      canTranscodeResource: () => false,
     });
     const { queryByAriaLabel } = renderMediaElement(IMAGE_RESOURCE, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
@@ -210,7 +231,7 @@ describe('MediaElement', () => {
   it("should not render dropdown menu's more icon for not uploaded video", () => {
     useLocalMedia.mockReturnValue({
       ...mockedReturnValue,
-      isCurrentResourceProcessing: () => true,
+      canTranscodeResource: () => false,
     });
     const { queryByAriaLabel } = renderMediaElement(VIDEO_RESOURCE, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
@@ -224,7 +245,7 @@ describe('MediaElement', () => {
   it("should not render dropdown menu's more icon for not uploaded gif", () => {
     useLocalMedia.mockReturnValue({
       ...mockedReturnValue,
-      isCurrentResourceProcessing: () => true,
+      canTranscodeResource: () => false,
     });
     const { queryByAriaLabel } = renderMediaElement(GIF_RESOURCE, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();

@@ -87,8 +87,16 @@ function useMediaUploadQueue() {
     async function updateItems() {
       await Promise.all(
         state.queue.map(async (item) => {
-          const { id, file, resource } = item;
-          if (!resource.isPlaceholder || resource.poster) {
+          const { id, file, state: itemState, resource } = item;
+          if (
+            ![
+              ITEM_STATUS.TRIMMED,
+              ITEM_STATUS.MUTED,
+              ITEM_STATUS.TRANSCODED,
+            ].includes(itemState) ||
+            !resource.isPlaceholder ||
+            resource.poster
+          ) {
             return;
           }
 
@@ -334,7 +342,7 @@ function useMediaUploadQueue() {
             trackTiming();
           }
 
-          if (newResource?.id) {
+          if (newResource?.id && newPosterFile) {
             await processPoster({
               newResource,
               posterFileName,
@@ -342,7 +350,12 @@ function useMediaUploadQueue() {
               resource,
               id,
             });
+            return;
           }
+          finishUploading({
+            id,
+            resource: newResource,
+          });
         })
       );
     }
@@ -367,6 +380,7 @@ function useMediaUploadQueue() {
     trimVideo,
     startTrimming,
     finishTrimming,
+    finishUploading,
   ]);
 
   return useMemo(() => {

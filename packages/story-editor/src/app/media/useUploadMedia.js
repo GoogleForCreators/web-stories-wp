@@ -208,6 +208,7 @@ function useUploadMedia({
      * @param {import('@web-stories-wp/media').TrimData} args.trimData Trim data.
      * @param {import('@web-stories-wp/media').Resource} args.resource Resource object.
      * @param {Blob} args.posterFile Blob object of poster.
+     * @param {number} args.originalResourceId Original resource id.
      * @return {void}
      */
     async (
@@ -222,6 +223,7 @@ function useUploadMedia({
         trimData,
         resource,
         posterFile,
+        originalResourceId,
       } = {}
     ) => {
       // If there are no files passed, don't try to upload.
@@ -249,7 +251,6 @@ function useUploadMedia({
             return;
           }
 
-          const originalResourceId = resource?.id;
           // getResourceFromLocalFile() will work for most files, which allows us
           // to get the correct image/video dimensions right from the start.
           // This is important for UX as we can then display resources without

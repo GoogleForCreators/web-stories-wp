@@ -155,7 +155,7 @@ function useProcessMedia({
             original_id: oldResource.id,
             web_stories_is_muted: oldResource.isMuted,
           },
-          resource: oldResource,
+          originalResourceId: oldResource.id,
         });
       })();
     },
@@ -243,6 +243,7 @@ function useProcessMedia({
             ...oldResource,
             trimData,
           },
+          originalResourceId: oldResource.id,
           posterFile,
         });
       };
@@ -325,6 +326,7 @@ function useProcessMedia({
             ...oldResource,
             isMuted: true,
           },
+          originalResourceId: oldResource.id,
           posterFile,
         });
       })();
@@ -383,7 +385,7 @@ function useProcessMedia({
           additionalData: {
             original_id: oldResource.id,
           },
-          resource: oldResource,
+          originalResourceId: oldResource.id,
         });
       };
       return process();
