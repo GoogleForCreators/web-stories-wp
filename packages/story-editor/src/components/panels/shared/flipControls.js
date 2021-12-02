@@ -32,7 +32,7 @@ import {
  * Internal dependencies
  */
 import Tooltip from '../../tooltip';
-import { focusStyle } from './styles';
+import { focusStyle } from '.';
 
 const ControlsContainer = styled.div`
   display: flex;
