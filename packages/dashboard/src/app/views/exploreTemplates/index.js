@@ -39,7 +39,6 @@ import Header from './header';
 import TemplateDetailsModal from './modal';
 
 function ExploreTemplates() {
-  const [activeGridItemId, setActiveGridItemId] = useState(null);
   const [isDetailsViewOpen, setIsDetailsViewOpen] = useState(false);
   const [activeTemplate, setActiveTemplate] = useState(null);
   const [activeTemplateIndex, setActiveTemplateIndex] = useState(0);
@@ -88,10 +87,6 @@ function ExploreTemplates() {
   const { filter, page, search, sort, view } = useTemplateView({
     totalPages,
   });
-
-  useEffect(() => {
-    fetchExternalTemplates();
-  }, [fetchExternalTemplates]);
 
   // extract templateFilters from template meta data
   const templateFilters = useMemo(
@@ -176,12 +171,6 @@ function ExploreTemplates() {
     [templates, templatesByTag]
   );
 
-  useEffect(() => {
-    if (activeTemplate) {
-      getRelatedTemplates(activeTemplate);
-    }
-  }, [activeTemplate, getRelatedTemplates]);
-
   const handleDetailsToggle = useCallback(
     (id) => {
       setIsDetailsViewOpen((prevIsOpen) => {
@@ -192,7 +181,6 @@ function ExploreTemplates() {
         });
 
         if (newIsOpen && id) {
-          setActiveGridItemId(id);
           setActiveTemplate(
             orderedTemplates.find((templateItem) => templateItem.id === id)
           );
@@ -206,7 +194,6 @@ function ExploreTemplates() {
     },
     [
       setIsDetailsViewOpen,
-      setActiveGridItemId,
       setActiveTemplate,
       setActiveTemplateIndex,
       orderedTemplates,
@@ -220,6 +207,16 @@ function ExploreTemplates() {
     },
     [setActiveTemplateIndex, setActiveTemplate, orderedTemplates]
   );
+
+  useEffect(() => {
+    fetchExternalTemplates();
+  }, [fetchExternalTemplates]);
+
+  useEffect(() => {
+    if (activeTemplate) {
+      getRelatedTemplates(activeTemplate);
+    }
+  }, [activeTemplate, getRelatedTemplates]);
 
   return (
     <Layout.Provider>
@@ -242,8 +239,6 @@ function ExploreTemplates() {
         view={view}
         templateActions={templateActions}
         handleDetailsToggle={handleDetailsToggle}
-        setActiveGridItemId={setActiveGridItemId}
-        activeGridItemId={activeGridItemId}
       />
       <Layout.Fixed>
         <ScrollToTop />

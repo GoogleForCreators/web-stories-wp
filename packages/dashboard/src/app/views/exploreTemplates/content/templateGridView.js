@@ -23,6 +23,7 @@ import {
   useRef,
   useFocusOut,
   useMemo,
+  useState,
 } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
@@ -46,13 +47,12 @@ function TemplateGridView({
   templates: filteredTemplates,
   templateActions,
   handleDetailsToggle,
-  setActiveGridItemId,
-  activeGridItemId,
 }) {
   const { isRTL, apiCallbacks } = useConfig();
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
+  const [activeGridItemId, setActiveGridItemId] = useState(null);
 
   const handleUseStory = useCallback(
     ({ id, title }) => {
@@ -145,8 +145,6 @@ TemplateGridView.propTypes = {
   pageSize: PageSizePropType,
   templates: TemplatesPropType,
   templateActions: TemplateActionsPropType,
-  setActiveGridItemId: PropTypes.func,
   handleDetailsToggle: PropTypes.func,
-  activeGridItemId: PropTypes.number,
 };
 export default TemplateGridView;
