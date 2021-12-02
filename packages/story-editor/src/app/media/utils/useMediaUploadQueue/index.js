@@ -321,6 +321,10 @@ function useMediaUploadQueue() {
 
           const trackTiming = getTimeTracker('load_upload_media');
 
+          if (resource.type !== 'image' && resource.isMuted !== null) {
+            additionalData.web_stories_is_muted = resource.isMuted;
+          }
+
           try {
             // The newly uploaded file won't have a poster yet.
             // However, we'll likely still have one on file.
