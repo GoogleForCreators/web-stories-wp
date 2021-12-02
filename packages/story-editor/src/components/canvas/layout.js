@@ -163,15 +163,21 @@ const PageClip = styled.div`
     (hasHorizontalOverflow || hasVerticalOverflow) &&
     `
       overflow: hidden;
-      width: ${hasHorizontalOverflow
-        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
-      flex-basis: ${hasHorizontalOverflow
-        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
-      height: ${hasVerticalOverflow
-        ? 'calc(var(--fullbleed-height-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-height-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
+      width: ${
+        hasHorizontalOverflow
+          ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+          : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+      };
+      flex-basis: ${
+        hasHorizontalOverflow
+          ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+          : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+      };
+      height: ${
+        hasVerticalOverflow
+          ? 'calc(var(--fullbleed-height-px) + var(--page-padding-px))'
+          : `calc(var(--viewport-height-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+      };
       flex-shrink: 0;
       flex-grow: 0;
       display: flex;
