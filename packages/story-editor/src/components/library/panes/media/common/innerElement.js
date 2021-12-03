@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useEffect, useRef } from '@web-stories-wp/react';
+import { useEffect, useRef, memo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import {
   getSmallestUrlForWidth,
@@ -113,9 +113,10 @@ function InnerElement({
   // Track if we have already set the dragging resource.
   const hasSetResourceTracker = useRef(null);
 
-  const { handleDrag } = useDropTargets(
-    ({ actions: { handleDrag } }) => ({
+  const { handleDrag, handleDrop } = useDropTargets(
+    ({ actions: { handleDrag, handleDrop } }) => ({
       handleDrag,
+      handleDrop,
     }),
     () => {
       // If we're dragging this element, always update `handleDrag`.
@@ -131,9 +132,8 @@ function InnerElement({
     }
   );
 
-  const { handleDrop, setDraggingResource } = useDropTargets(
-    ({ actions: { handleDrop, setDraggingResource } }) => ({
-      handleDrop,
+  const { setDraggingResource } = useDropTargets(
+    ({ actions: { setDraggingResource } }) => ({
       setDraggingResource,
     })
   );
@@ -293,4 +293,4 @@ InnerElement.propTypes = {
   active: PropTypes.bool.isRequired,
 };
 
-export default InnerElement;
+export default memo(InnerElement);
