@@ -33,6 +33,7 @@ const Container = styled.div`
   align-items: center;
   height: 21px;
   width: 21px;
+  padding: 1px;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   background-color: ${({ theme }) => theme.colors.opacity.black10};
 `;
@@ -40,6 +41,7 @@ const Container = styled.div`
 const ShapePreview = styled.div`
   width: 100%;
   height: 100%;
+  margin: 1px;
   clip-path: ${({ maskId }) => `url(#${maskId})`};
   ${elementWithBackgroundColor}
 `;
@@ -74,7 +76,7 @@ function ShapeLayerIcon({
               // Bring the path scale down a bit from 1
               // so that we can make sure the entire SVG path is visible when the mask ratio is > 1
               // this is important for Firefox's interpretation of clip paths
-              transform={`scale(1 0.9)`}
+              transform="scale(1 0.9)"
               clipPathUnits="objectBoundingBox"
             >
               <path d={maskDef.path} />
