@@ -110,16 +110,14 @@ function InnerElement({
 }) {
   const newVideoPosterRef = useRef(null);
 
-  const { draggingResource, handleDrag, handleDrop, setDraggingResource } =
+  const { handleDrag, handleDrop, setDraggingResource } =
     useDropTargets(
       ({
-        state: { draggingResource },
         actions: { handleDrag, handleDrop, setDraggingResource },
       }) => ({
         handleDrag,
         handleDrop,
         setDraggingResource,
-        draggingResource,
       })
     );
 
@@ -217,6 +215,14 @@ function InnerElement({
     );
     cloneProps.src = poster;
   }
+
+  useEffect(() => {
+    console.log('handleDrag');
+  }, [handleDrag]);
+
+  // Track if we have already set the dragging resource.
+  const hasSetResourceTracker = useRef(false);
+
   if (!media) {
     throw new Error('Invalid media element type.');
   }
@@ -228,13 +234,14 @@ function InnerElement({
     ) {
       mediaElement.current?.pause();
     }
-    if (!draggingResource) {
+    if (!hasSetResourceTracker.current) {
       // Drop-targets handling.
       resourceList.set(resource.id, {
         url: thumbnailURL,
         type: 'cached',
       });
       setDraggingResource(resource);
+      hasSetResourceTracker.current = true;
     }
     handleDrag(resource, event.clientX, event.clientY);
   };
