@@ -30,6 +30,7 @@ import {
   THEME_CONSTANTS,
   noop,
 } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -109,10 +110,29 @@ function InnerElement({
   isMuted,
 }) {
   const newVideoPosterRef = useRef(null);
+  // Track if we have already set the dragging resource.
+  const hasSetResourceTracker = useRef(null);
 
-  const { handleDrag, handleDrop, setDraggingResource } = useDropTargets(
-    ({ actions: { handleDrag, handleDrop, setDraggingResource } }) => ({
+  const { handleDrag } = useDropTargets(
+    ({ actions: { handleDrag } }) => ({
       handleDrag,
+    }),
+    () => {
+      // If we're dragging this element, always update `handleDrag`.
+      if (hasSetResourceTracker.current) {
+        return false;
+        // If we're rendering the first time, init `handleDrag`.
+      } else if (hasSetResourceTracker.current === null) {
+        hasSetResourceTracker.current = false;
+        return false;
+      }
+      // Otherwise ignore the changes in `handleDrag`.
+      return true;
+    }
+  );
+
+  const { handleDrop, setDraggingResource } = useDropTargets(
+    ({ actions: { handleDrop, setDraggingResource } }) => ({
       handleDrop,
       setDraggingResource,
     })
@@ -213,13 +233,6 @@ function InnerElement({
     cloneProps.src = poster;
   }
 
-  useEffect(() => {
-    console.log('handleDrag');
-  }, [handleDrag]);
-
-  // Track if we have already set the dragging resource.
-  const hasSetResourceTracker = useRef(false);
-
   if (!media) {
     throw new Error('Invalid media element type.');
   }
@@ -251,7 +264,10 @@ function InnerElement({
       <LibraryMoveable
         active={active}
         handleDrag={dragHandler}
-        handleDragEnd={() => handleDrop(resource)}
+        handleDragEnd={() => {
+          handleDrop(resource);
+          hasSetResourceTracker.current = false;
+        }}
         type={resource.type}
         elementProps={{ resource }}
         onClick={onClick(imageURL)}
