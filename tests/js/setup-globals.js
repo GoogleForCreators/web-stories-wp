@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-global.webStoriesEditorSettings = {};
-global.webStoriesDashboardSettings = {};
+global.webStories = {};
 global.webStoriesBlockSettings = {
   config: {
     api: {},
