@@ -194,7 +194,7 @@ function useProcessMedia({
 
       const onUploadError = () =>
         updateExistingElements(resourceId, {
-          trimData: oldResource?.trimData || {},
+          trimData: oldResource.trimData || {},
         });
 
       const onUploadSuccess = ({ resource }) => {
