@@ -41,7 +41,7 @@ function useSingleSelectionDrag({
         handleDrag,
         handleDrop,
         setDraggingResource,
-        isDropSource
+        isDropSource,
       })
     );
 

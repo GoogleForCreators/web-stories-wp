@@ -113,21 +113,23 @@ function InnerElement({
   // Track if we have already set the dragging resource.
   const hasSetResourceTracker = useRef(null);
 
+  // Note: This `useDropTargets` is purposefully separated for the one below since it
+  // uses a custom function for checking for equality and is meant for `handleDrag` and `handleDrop` only.
   const { handleDrag, handleDrop } = useDropTargets(
     ({ actions: { handleDrag, handleDrop } }) => ({
       handleDrag,
       handleDrop,
     }),
     () => {
-      // If we're dragging this element, always update `handleDrag`.
+      // If we're dragging this element, always update the actions.
       if (hasSetResourceTracker.current) {
         return false;
-        // If we're rendering the first time, init `handleDrag`.
+        // If we're rendering the first time, init `handleDrag` and `handleDrop`.
       } else if (hasSetResourceTracker.current === null) {
         hasSetResourceTracker.current = false;
         return false;
       }
-      // Otherwise ignore the changes in `handleDrag`.
+      // Otherwise ignore the changes in the actions.
       return true;
     }
   );
