@@ -78,19 +78,9 @@ const story = {
 const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   let response;
 
-  const dummyMedia = getDummyMedia();
   switch (name) {
     case 'getCurrentUser':
       response = { id: 1 };
-      break;
-    case 'getMedia':
-      response = {
-        data: dummyMedia,
-        headers: {
-          totalItems: dummyMedia.length,
-          totalPages: 1,
-        },
-      };
       break;
     case 'getPublisherLogos':
       response = [{ url: '' }];
@@ -103,6 +93,28 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
     callbacks[name] = (_story) => {
       window.localStorage.setItem('preview_markup', _story?.content);
       return Promise.resolve(story);
+    };
+  } else if ('getMedia' === name) {
+    callbacks[name] = (params) => {
+      const dummyMedia = getDummyMedia();
+      const mediaResponse = {
+        data: dummyMedia,
+        headers: {
+          totalItems: dummyMedia.length,
+          totalPages: 1,
+        },
+      };
+
+      if (params.searchTerm) {
+        mediaResponse.data = dummyMedia.filter((media) => {
+          return media.alt
+            .toLowerCase()
+            .includes(params.searchTerm.toLowerCase());
+        });
+        mediaResponse.headers.totalItems = mediaResponse.data.length;
+      }
+
+      return Promise.resolve(mediaResponse);
     };
   } else {
     callbacks[name] = () => Promise.resolve(response);
