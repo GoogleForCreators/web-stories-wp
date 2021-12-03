@@ -79,6 +79,7 @@ export const Search = ({
   hint,
   label,
   onMenuItemClick,
+  onClear,
   options = [],
   placeholder = DEFAULT_PLACEHOLDER,
   placement = PLACEMENT.BOTTOM,
@@ -178,9 +179,9 @@ export const Search = ({
 
   const handleClearInput = useCallback(() => {
     inputState.set(undefined);
-    onMenuItemClick?.(null, { label: '', value: '' });
+    onClear();
     handleReturnToInput();
-  }, [handleReturnToInput, inputState, onMenuItemClick]);
+  }, [handleReturnToInput, inputState, onClear]);
 
   const handleTabClear = useCallback(() => {
     isOpen.set(false);
@@ -319,6 +320,7 @@ Search.propTypes = {
   label: PropTypes.string,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onMenuItemClick: PropTypes.func,
+  onClear: PropTypes.func,
   options: MENU_OPTIONS,
   placeholder: PropTypes.string,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
