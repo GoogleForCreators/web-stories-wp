@@ -125,7 +125,7 @@ function TemplateList({
       if (isGridFocused) {
         if (code === 'Enter') {
           handlePageClick(page);
-        } else if (code === 'Space') {
+        } else if (code === 'Backspace' || code === 'Delete') {
           handleDelete?.(page);
         }
       }

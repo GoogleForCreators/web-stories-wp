@@ -161,7 +161,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       // navigate to newly saved template and open delete dialog
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
-      await fixture.events.keyboard.press('Space');
+      await fixture.events.keyboard.press('Backspace');
 
       await fixture.events.sleep(200);
 
