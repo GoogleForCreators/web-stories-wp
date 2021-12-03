@@ -540,6 +540,12 @@ function useMediaUploadQueue() {
           item.originalResourceId === resourceId
       );
 
+    /**
+     * Whether a given resource can be transcoded.
+     *
+     * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+     * @return {boolean} Whether a given resource can be transcoded.
+     */
     const canTranscodeResource = (resource) => {
       const { isExternal, id, src } = resource || {};
       return (
