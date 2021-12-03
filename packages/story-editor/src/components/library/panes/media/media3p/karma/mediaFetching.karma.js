@@ -344,8 +344,13 @@ describe('Media3pPane fetching', () => {
     await fixture.events.click(fixture.editor.library.media3pTab);
 
     await fixture.events.click(fixture.editor.library.media3p.coverrTab);
+
+    await expectMediaElements(
+      fixture.editor.library.media3p.coverrSection,
+      MEDIA_PER_PAGE
+    );
     // Wait for the debounce
-    await fixture.events.sleep(1000);
+    await fixture.events.sleep(700);
     await expectMediaElements(
       fixture.editor.library.media3p.coverrSection,
       // In 1600:1000 the coverr section will fetch again due to screen height
@@ -384,7 +389,7 @@ describe('Media3pPane fetching', () => {
 
     await fixture.events.click(fixture.editor.library.media3p.coverrTab);
     // Wait for the debounce
-    await fixture.events.sleep(1000);
+    await fixture.events.sleep(700);
     await expectMediaElements(
       fixture.editor.library.media3p.coverrSection,
       // In 1600:1000 the coverr section will fetch again due to screen height

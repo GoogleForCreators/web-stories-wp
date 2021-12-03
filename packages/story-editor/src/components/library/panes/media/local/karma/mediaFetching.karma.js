@@ -51,9 +51,13 @@ describe('MediaPane fetching', () => {
       fixture.screen.queryAllByTestId(/^mediaElement-/).length;
 
     // ensure fixture.screen has loaded before calling expect to prevent immediate failure
+    // Wait for the debounce
+    await fixture.events.sleep(1000);
     await waitFor(() => {
       if (initialElementsLength !== LOCAL_MEDIA_PER_PAGE) {
-        throw new Error('wait for initial fetch');
+        throw new Error(
+          `wait for initial fetch ${initialElementsLength} != ${LOCAL_MEDIA_PER_PAGE}`
+        );
       }
       expect(initialElementsLength).toEqual(LOCAL_MEDIA_PER_PAGE);
     });

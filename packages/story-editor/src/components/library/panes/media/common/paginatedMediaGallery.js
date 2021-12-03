@@ -65,14 +65,15 @@ function PaginatedMediaGallery({
   // State and callback ref necessary to load on scroll.
   const refContainer = useRef();
 
-  const isNextPageNeeded = () => {
+  const isNextPageNeeded = useCallback(() => {
+    // Load the next page if the container still isn't full, ie. scrollbar is not visible.
     if (
       refContainer.current.clientHeight === refContainer.current.scrollHeight
     ) {
-      return setNextPage;
+      return setNextPage();
     }
     return () => {};
-  };
+  }, [setNextPage]);
 
   const debouncedSetNextPage = useDebouncedCallback(isNextPageNeeded, 500);
 
@@ -91,9 +92,13 @@ function PaginatedMediaGallery({
       return;
     }
 
-    // Load the next page if the page isn't full, ie. scrollbar is not visible.
+    // When the node.scrollHeight is first calculated it may not be accurate
+    // depending on if the elements have fully render on the page. If the container
+    // height and scroll height are the same, debounce the call to allow time
+    // for the elements to paint before making an additional setNextPage call.
     if (node.clientHeight === node.scrollHeight) {
       debouncedSetNextPage();
+      return;
     }
 
     // Load the next page if we are "close" (by a length of ROOT_MARGIN) to the
