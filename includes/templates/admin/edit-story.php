@@ -115,14 +115,14 @@ $story_query_params = [
 	),
 ];
 
-if ( ! empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$preload_paths[] = $story_initial_path . build_query( $story_query_params );
+} else {
 	$story_query_params['web_stories_demo'] = 'true';
 
 	$story_path             = $story_initial_path . build_query( $story_query_params );
 	$story_data             = \Google\Web_Stories\rest_preload_api_request( [], $story_path );
 	$initial_edits['story'] = ( ! empty( $story_data[ $story_path ]['body'] ) ) ? $story_data[ $story_path ]['body'] : [];
-} else {
-	$preload_paths[] = $story_initial_path . build_query( $story_query_params );
 }
 
 /**
