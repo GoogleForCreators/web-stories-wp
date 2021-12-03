@@ -740,6 +740,17 @@ function RightClickMenuProvider({ children }) {
     [handleMouseDown]
   );
 
+  const duplicateElementAction = useMemo(
+    () => ({
+      label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
+        selectedElements?.length
+      ),
+      onClick: handleDuplicateElements,
+      ...menuItemProps,
+    }),
+    [handleDuplicateElements, menuItemProps, selectedElements?.length]
+  );
+
   const layerItems = useMemo(
     () => [
       {
@@ -871,6 +882,7 @@ function RightClickMenuProvider({ children }) {
 
   const textItems = useMemo(
     () => [
+      { ...duplicateElementAction, separator: 'bottom' },
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
@@ -898,6 +910,7 @@ function RightClickMenuProvider({ children }) {
       },
     ],
     [
+      duplicateElementAction,
       layerItems,
       handleAddTextPreset,
       menuItemProps,
@@ -925,6 +938,7 @@ function RightClickMenuProvider({ children }) {
       : RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES;
 
     return [
+      { ...duplicateElementAction, separator: 'bottom' },
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
@@ -969,6 +983,7 @@ function RightClickMenuProvider({ children }) {
     ];
   }, [
     copiedElement,
+    duplicateElementAction,
     handleClearElementStyles,
     handleCopyStyles,
     handleOpenScaleAndCrop,
@@ -983,6 +998,7 @@ function RightClickMenuProvider({ children }) {
 
   const shapeItems = useMemo(
     () => [
+      { ...duplicateElementAction, separator: 'bottom' },
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
@@ -1011,6 +1027,7 @@ function RightClickMenuProvider({ children }) {
     ],
     [
       copiedElement?.type,
+      duplicateElementAction,
       handleAddColorPreset,
       handleClearElementStyles,
       handleCopyStyles,
@@ -1021,17 +1038,14 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
-  const stickerItems = useMemo(() => [...layerItems], [layerItems]);
+  const stickerItems = useMemo(
+    () => [{ ...duplicateElementAction, separator: 'bottom' }, ...layerItems],
+    [duplicateElementAction, layerItems]
+  );
 
   const multipleElementItems = useMemo(
-    () => [
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS,
-        onClick: handleDuplicateElements,
-        ...menuItemProps,
-      },
-    ],
-    [handleDuplicateElements, menuItemProps]
+    () => [duplicateElementAction],
+    [duplicateElementAction]
   );
 
   const menuItems = useMemo(() => {

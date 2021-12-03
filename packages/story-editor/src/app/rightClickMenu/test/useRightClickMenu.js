@@ -269,6 +269,7 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1),
         RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
         RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
         RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
@@ -423,6 +424,7 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1),
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
@@ -507,6 +509,7 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1),
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_VIDEO,
@@ -644,6 +647,7 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1),
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
         RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
@@ -672,7 +676,10 @@ describe('useRightClickMenu', () => {
       });
 
       const labels = result.current.menuItems.map((item) => item.label);
-      expect(labels).toStrictEqual([...expectedLayerActions]);
+      expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1),
+        ...expectedLayerActions,
+      ]);
     });
   });
 
@@ -709,7 +716,7 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
-        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS,
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2),
       ]);
     });
   });
