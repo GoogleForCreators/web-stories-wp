@@ -110,16 +110,13 @@ function InnerElement({
 }) {
   const newVideoPosterRef = useRef(null);
 
-  const { handleDrag, handleDrop, setDraggingResource } =
-    useDropTargets(
-      ({
-        actions: { handleDrag, handleDrop, setDraggingResource },
-      }) => ({
-        handleDrag,
-        handleDrop,
-        setDraggingResource,
-      })
-    );
+  const { handleDrag, handleDrop, setDraggingResource } = useDropTargets(
+    ({ actions: { handleDrag, handleDrop, setDraggingResource } }) => ({
+      handleDrag,
+      handleDrop,
+      setDraggingResource,
+    })
+  );
 
   useEffect(() => {
     // assign display poster for videos
