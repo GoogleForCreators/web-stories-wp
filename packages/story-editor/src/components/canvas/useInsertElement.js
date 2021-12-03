@@ -28,7 +28,6 @@ import { createNewElement } from '../../elements';
 import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
 import { ZOOM_SETTING } from '../../constants';
-import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
 import { getMediaBaseColor } from '../../utils/getMediaBaseColor';
 import useCORSProxy from '../../utils/useCORSProxy';
 import useFocusCanvas from './useFocusCanvas';
@@ -117,23 +116,6 @@ function useInsertElement() {
     ]
   );
 
-  /**
-   * If the resource has a register usage url then the fact that it's been
-   * inserted needs to be registered as per API provider policies.
-   *
-   * @param {Object} resource The resource to attempt to register usage.
-   */
-  const handleRegisterUsage = useCallback(
-    (resource) => {
-      if (resource?.attribution?.registerUsageUrl) {
-        registerUsage({
-          registerUsageUrl: resource.attribution.registerUsageUrl,
-        });
-      }
-    },
-    [registerUsage]
-  );
-
   const focusCanvas = useFocusCanvas();
 
   /**
@@ -148,7 +130,6 @@ function useInsertElement() {
       addElement({ element });
       if (resource) {
         postProcessingResource(resource);
-        handleRegisterUsage(resource);
         generateBaseColor(element);
       }
       // Auto-play on insert.
@@ -168,7 +149,6 @@ function useInsertElement() {
       postProcessingResource,
       generateBaseColor,
       focusCanvas,
-      handleRegisterUsage,
       setZoomSetting,
     ]
   );
