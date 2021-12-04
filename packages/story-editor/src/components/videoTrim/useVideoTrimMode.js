@@ -20,7 +20,7 @@
 import { useFeature } from 'flagged';
 import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { getMsFromHMS, isBlobURL } from '@web-stories-wp/media';
+import { getMsFromHMS } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -50,9 +50,9 @@ function useVideoTrimMode() {
   } = useAPI();
   const [videoData, setVideoData] = useState(null);
 
-  const { isCurrentResourceUploading } = useLocalMedia(
-    ({ state: { isCurrentResourceUploading } }) => ({
-      isCurrentResourceUploading,
+  const { canTranscodeResource } = useLocalMedia(
+    ({ state: { canTranscodeResource } }) => ({
+      canTranscodeResource,
     })
   );
 
@@ -115,20 +115,17 @@ function useVideoTrimMode() {
     if (selectedElement?.type !== 'video' || !selectedElement?.resource) {
       return false;
     }
-    const { id, src, isExternal } = selectedElement.resource;
+
     return (
       isVideoTrimEnabled &&
       isTranscodingEnabled &&
-      src &&
-      !isBlobURL(src) &&
-      !isExternal &&
-      !isCurrentResourceUploading(id)
+      canTranscodeResource(selectedElement.resource)
     );
   }, [
     selectedElement,
     isVideoTrimEnabled,
     isTranscodingEnabled,
-    isCurrentResourceUploading,
+    canTranscodeResource,
   ]);
 
   return {
