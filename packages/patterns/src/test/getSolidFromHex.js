@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,21 +17,16 @@
 /**
  * Internal dependencies
  */
-import createSolidFromString from './createSolidFromString';
-import createSolid from './createSolid';
+import getSolidFromHex from '../getSolidFromHex';
 
-function getSolidFromHex(hex) {
-  // We already have a nice parser for most of this, but we need to
-  // parse opacity as the last two hex digits as percent, not 1/256th
-
-  const {
-    color: { r, g, b },
-  } = createSolidFromString(`#${hex.slice(0, 6)}`);
-
-  const opacityDigits = hex.slice(6);
-  const opacity = opacityDigits ? parseInt(opacityDigits, 16) : 100;
-
-  return createSolid(r, g, b, opacity / 100);
-}
-
-export default getSolidFromHex;
+describe('getSolidFromHex', () => {
+  it.each([
+    ['aabbcc', { color: { r: 170, g: 187, b: 204 } }],
+    ['aabbcc00', { color: { r: 170, g: 187, b: 204, a: 0 } }],
+    ['aabbcc0f', { color: { r: 170, g: 187, b: 204, a: 0.15 } }],
+    ['aabbcc63', { color: { r: 170, g: 187, b: 204, a: 0.99 } }],
+    ['aabbcc64', { color: { r: 170, g: 187, b: 204 } }],
+  ])('should return valid pattern for %s hex string', (hex, expected) => {
+    expect(getSolidFromHex(hex)).toStrictEqual(expected);
+  });
+});
