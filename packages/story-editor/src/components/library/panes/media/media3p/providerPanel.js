@@ -96,7 +96,7 @@ function ProviderPanel({ providerType, isActive, searchTerm, ...rest }) {
   // Like useDetectBaseColor, but without updating the local media library.
   const updateBaseColor = useCallback(
     async (resource) => {
-      const { id, type, src, poster, baseColor } = resource;
+      const { id, type, src, poster } = resource;
       const imageSrc = type === 'image' ? src : poster;
       if (!imageSrc) {
         return;
