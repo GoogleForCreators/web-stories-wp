@@ -128,18 +128,30 @@ function useUploadMedia({
 
   // Update *existing* items in the media library and on canvas.
   useEffect(() => {
-    for (const { id, onUploadProgress, resource } of progress) {
+    for (const { onUploadProgress, resource, previousResourceId } of progress) {
+      const { id: resourceId } = resource;
+
       if (!resource) {
         continue;
       }
 
       updateMediaElement({
-        id,
+        id: resourceId,
         data: resource,
       });
 
+      if (previousResourceId) {
+        updateMediaElement({
+          id: previousResourceId,
+          data: resource,
+        });
+      }
+
       if (onUploadProgress) {
-        onUploadProgress({ id, resource: resource });
+        onUploadProgress({ id: resourceId, resource: resource });
+        if (previousResourceId) {
+          onUploadProgress({ id: previousResourceId, resource: resource });
+        }
       }
     }
   }, [progress, updateMediaElement]);
@@ -147,30 +159,45 @@ function useUploadMedia({
   // Handle *processed* items.
   // Update resources in media library and on canvas.
   useEffect(() => {
-    for (const { id, resource, onUploadSuccess } of uploaded) {
+    for (const {
+      id: itemId,
+      resource,
+      onUploadSuccess,
+      previousResourceId,
+    } of uploaded) {
+      const { id: resourceId } = resource;
       if (!resource) {
         continue;
       }
 
-      updateMediaElement({ id, data: resource });
-
-      if (onUploadSuccess) {
-        onUploadSuccess({ id, resource: resource });
+      updateMediaElement({ id: resourceId, data: resource });
+      if (previousResourceId) {
+        updateMediaElement({ id: previousResourceId, data: resource });
       }
 
-      removeItem({ id });
+      if (onUploadSuccess) {
+        onUploadSuccess({ id: resourceId, resource: resource });
+        if (previousResourceId) {
+          onUploadSuccess({ id: previousResourceId, resource: resource });
+        }
+      }
+
+      removeItem({ id: itemId });
     }
   }, [uploaded, updateMediaElement, removeItem]);
 
   // Handle *failed* items.
   // Remove resources from media library and canvas.
   useEffect(() => {
-    for (const { id, onUploadError, error, resource } of failures) {
+    for (const { id: itemId, onUploadError, error, resource } of failures) {
+      const { id: resourceId } = resource;
+
       if (onUploadError) {
-        onUploadError({ id });
+        onUploadError({ id: resourceId });
       }
-      deleteMediaElement({ id });
-      removeItem({ id });
+
+      deleteMediaElement({ id: resourceId });
+      removeItem({ id: itemId });
 
       const thumbnailSrc =
         resource && ['video', 'gif'].includes(resource.type)
@@ -263,6 +290,7 @@ function useUploadMedia({
             posterFile = newPosterFile;
             resource = newResource;
           }
+
           addItem({
             file,
             resource,
