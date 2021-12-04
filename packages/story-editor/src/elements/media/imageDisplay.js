@@ -57,15 +57,15 @@ function ImageDisplay({ element, box, previewMode }) {
     initialSrc = resourceList.get(resourceId).url;
   }
 
-  const { isCurrentResourceUploading } = useLocalMedia(
-    ({ state: { isCurrentResourceUploading } }) => ({
-      isCurrentResourceUploading,
+  const { isCurrentResourceProcessing } = useLocalMedia(
+    ({ state: { isCurrentResourceProcessing } }) => ({
+      isCurrentResourceProcessing,
     })
   );
 
   if (
     resourceList.get(resourceId)?.type === 'fullsize' ||
-    isCurrentResourceUploading(resourceId) ||
+    isCurrentResourceProcessing(resourceId) ||
     isBlobURL(resource.src)
   ) {
     initialSrcType = 'fullsize';
