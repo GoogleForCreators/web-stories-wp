@@ -64,7 +64,7 @@ export function addItem(
 ) {
   const id = uuidv4();
 
-  if(!resource.id) {
+  if (!resource.id) {
     resource.id = uuidv4();
   }
 
