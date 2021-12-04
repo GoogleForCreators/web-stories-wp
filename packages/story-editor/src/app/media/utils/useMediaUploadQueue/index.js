@@ -33,7 +33,6 @@ import {
   getFileName,
   getImageDimensions,
   isAnimatedGif,
-  isBlobURL,
 } from '@web-stories-wp/media';
 
 /**
@@ -400,6 +399,11 @@ function useMediaUploadQueue() {
   ]);
 
   return useMemo(() => {
+    /**
+     * A list of all in-progress items.
+     *
+     * @type {Array} In-progress items.
+     */
     const progress = state.queue.filter(
       (item) =>
         ![
@@ -408,15 +412,39 @@ function useMediaUploadQueue() {
           ITEM_STATUS.PENDING,
         ].includes(item.state)
     );
+
+    /**
+     * A list of all pending items that still have to be uploaded.
+     *
+     * @type {Array} Pending items.
+     */
     const pending = state.queue.filter(
       (item) => item.state === ITEM_STATUS.PENDING
     );
+
+    /**
+     * A list of all items that just finished uploading.
+     *
+     * @type {Array} Uploaded items.
+     */
     const uploaded = state.queue.filter(
       (item) => item.state === ITEM_STATUS.UPLOADED
     );
+
+    /**
+     * A list of all items that failed to upload.
+     *
+     * @type {Array} Failed items.
+     */
     const failures = state.queue.filter(
       (item) => item.state === ITEM_STATUS.CANCELLED
     );
+
+    /**
+     * Whether any upload is currently in progress.
+     *
+     * @type {boolean} Whether we're uploading.
+     */
     const isUploading = state.queue.some(
       (item) =>
         ![
@@ -425,66 +453,109 @@ function useMediaUploadQueue() {
           ITEM_STATUS.PENDING,
         ].includes(item.state)
     );
+
+    /**
+     * Whether any video transcoding is currently in progress.
+     *
+     * @type {boolean} Whether we're transcoding.
+     */
     const isTranscoding = state.queue.some(
       (item) => item.state === ITEM_STATUS.TRANSCODING
     );
+
+    /**
+     * Whether any video muting is currently in progress.
+     *
+     * @type {boolean} Whether we're muting.
+     */
     const isMuting = state.queue.some(
       (item) => item.state === ITEM_STATUS.MUTING
     );
+
+    /**
+     * Whether any video trimming is currently in progress.
+     *
+     * @type {boolean} Whether we're trimming.
+     */
     const isTrimming = state.queue.some(
       (item) => item.state === ITEM_STATUS.TRIMMING
     );
+
     /**
-     * Is a new resource being processed.
+     * Determine whether a resource is being processed.
      *
-     * @param {number} resourceId Resource id.
-     * @return {boolean} if resource with id is found.
+     * This is the case when an existing video in a story
+     * is being optimized/muted/trimmed, which will cause
+     * a new resource to be created and uploaded.
+     *
+     * As long as that resource's upload hasn't been cancelled,
+     * it is considered to be processing.
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is processing.
      */
     const isResourceProcessing = (resourceId) =>
       state.queue.some(
         (item) =>
-          [
-            ITEM_STATUS.PENDING,
-            ITEM_STATUS.UPLOADING,
-            ITEM_STATUS.TRANSCODING,
-            ITEM_STATUS.MUTING,
-            ITEM_STATUS.TRIMMING,
-          ].includes(item.state) && item.originalResourceId === resourceId
+          item.state !== ITEM_STATUS.CANCELLED &&
+          item.originalResourceId === resourceId
       );
+
     /**
-     * Is the current resource being processed.
+     * Determine whether the current resource is being processed.
      *
-     * @param {number} resourceId Resource id.
-     * @return {boolean} if resource with id is found.
+     * This is the case when uploading a new media item that first
+     * needs to be transcoded/muted/trimmed.
+     *
+     * As long as that resource's upload hasn't been cancelled,
+     * it is considered to be processing.
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is processing.
      */
     const isCurrentResourceProcessing = (resourceId) =>
       state.queue.some(
         (item) =>
-          [
-            ITEM_STATUS.PENDING,
-            ITEM_STATUS.UPLOADING,
-            ITEM_STATUS.TRANSCODING,
-            ITEM_STATUS.MUTING,
-            ITEM_STATUS.TRIMMING,
-          ].includes(item.state) && item.resource.id === resourceId
+          item.state !== ITEM_STATUS.CANCELLED &&
+          (item.resource.id === resourceId ||
+            item.previousResourceId === resourceId)
       );
+
     /**
-     * Is the current resource uploading.
+     * Determine whether the current resource is being uploaded.
      *
-     * @param {number} resourceId Resource id.
-     * @return {boolean} if resource with id is found.
+     * This is the case when uploading a new media item after any initial
+     * transcoding/muting/trimming has already happened.
+     *
+     * Checks for both `resource.id` as well as `previousResourceId`,
+     * since after upload to the backend, the resource's temporary uuid
+     * will be replaced by the permanent ID from the backend.
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is uploading.
      */
     const isCurrentResourceUploading = (resourceId) =>
       state.queue.some(
         (item) =>
-          item.state === ITEM_STATUS.UPLOADING &&
-          item.resource.id === resourceId
+          [
+            ITEM_STATUS.PENDING,
+            ITEM_STATUS.UPLOADING,
+            ITEM_STATUS.UPLOADED,
+          ].includes(item.state) &&
+          (item.resource.id === resourceId ||
+            item.previousResourceId === resourceId)
       );
+
     /**
-     * Is the current resource transcoding.
+     * Determine whether the current resource is being transcoded.
      *
-     * @param {number} resourceId Resource id.
-     * @return {boolean} if resource with id is found.
+     * This is the case when uploading a new media item that first
+     * needs to be transcoded.
+     * This is also the case when optimizing an existing video in the story,
+     * which will cause a new resource to be uploaded (the "current" one).
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is transcoding.
      */
     const isCurrentResourceTranscoding = (resourceId) =>
       state.queue.some(
@@ -492,33 +563,48 @@ function useMediaUploadQueue() {
           item.state === ITEM_STATUS.TRANSCODING &&
           item.resource.id === resourceId
       );
+
     /**
-     * Is the current resource muting.
+     * Determine whether the current resource is being muted.
      *
-     * @param {number} resourceId Resource id.
-     * @return {boolean} if resource with id is found.
+     * This is the case when uploading a new media item that first
+     * needs to be muted.
+     * This is also the case when muting an existing video in the story,
+     * which will cause a new resource to be uploaded (the "current" one).
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is muting.
      */
     const isCurrentResourceMuting = (resourceId) =>
       state.queue.some(
         (item) =>
           item.state === ITEM_STATUS.MUTING && item.resource.id === resourceId
       );
+
     /**
-     * Is the current resource trimming.
+     * Determine whether the current resource is being trimmed.
      *
-     * @param {number} resourceId Resource id.
-     * @return {boolean} if resource with id is found.
+     * This is the case when trimming an existing video in the story,
+     * which will cause a new resource to be uploaded (the "current" one).
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is trimming.
      */
     const isCurrentResourceTrimming = (resourceId) =>
       state.queue.some(
         (item) =>
           item.state === ITEM_STATUS.TRIMMING && item.resource.id === resourceId
       );
+
     /**
-     * Is the current resource transcoding.
+     * Determine whether a resource is being transcoded.
      *
-     * @param {number} resourceId Resource id.
-     * @return {boolean} if resource with id is found.
+     * When optimizing an existing video in the story,
+     * which will cause a new resource to be uploaded,
+     * this returns the state of this new resource.
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is transcoding.
      */
     const isResourceTranscoding = (resourceId) =>
       state.queue.some(
@@ -528,10 +614,14 @@ function useMediaUploadQueue() {
       );
 
     /**
-     * Is a new resource muting.
+     * Determine whether a resource is being muted.
      *
-     * @param {number} resourceId Resource id.
-     * @return {boolean} if resource with id is found.
+     * When muting an existing video in the story,
+     * which will cause a new resource to be uploaded,
+     * this returns the state of this new resource.
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is muting.
      */
     const isResourceMuting = (resourceId) =>
       state.queue.some(
@@ -543,15 +633,18 @@ function useMediaUploadQueue() {
     /**
      * Whether a given resource can be transcoded.
      *
+     * Checks whether the resource is not external and
+     * not already uploading.
+     *
      * @param {import('@web-stories-wp/media').Resource} resource Resource object.
      * @return {boolean} Whether a given resource can be transcoded.
      */
     const canTranscodeResource = (resource) => {
       const { isExternal, id, src } = resource || {};
+
       return (
         !isExternal &&
         src &&
-        !isBlobURL(src) &&
         !isCurrentResourceProcessing(id) &&
         !isResourceProcessing(id)
       );
@@ -560,7 +653,7 @@ function useMediaUploadQueue() {
     /**
      * Is a new resource trimming.
      *
-     * @param {number} resourceId Resource id.
+     * @param {number} resourceId Resource ID.
      * @return {boolean} if resource with id is found.
      */
     const isResourceTrimming = (resourceId) =>
