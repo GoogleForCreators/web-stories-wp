@@ -43,7 +43,7 @@ function updateElementsByResourceId(
   state,
   { id, properties: propertiesOrUpdater }
 ) {
-  if (id === null) {
+  if (!id) {
     return state;
   }
 
