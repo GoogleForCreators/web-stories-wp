@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import { isBlobURL } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -28,8 +27,6 @@ import { createNewElement } from '../../elements';
 import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
 import { ZOOM_SETTING } from '../../constants';
-import { getMediaBaseColor } from '../../utils/getMediaBaseColor';
-import useCORSProxy from '../../utils/useCORSProxy';
 import useFocusCanvas from './useFocusCanvas';
 import getElementProperties from './utils/getElementProperties';
 
@@ -43,9 +40,8 @@ function createElementForCanvas(type, props) {
 }
 
 function useInsertElement() {
-  const { addElement, updateElementById } = useStory((state) => ({
-    addElement: state.actions.addElement,
-    updateElementById: state.actions.updateElementById,
+  const { addElement } = useStory(({ actions }) => ({
+    addElement: actions.addElement,
   }));
   const { postProcessingResource, isCurrentResourceUploading } = useLocalMedia(
     ({
@@ -65,57 +61,6 @@ function useInsertElement() {
     setZoomSetting,
   }));
 
-  const generateBaseColor = useCallback(
-    async (element) => {
-      const { id, resource } = element;
-      const {
-        isExternal,
-        baseColor: currentBaseColor,
-        src,
-        poster,
-        type,
-        id: resourceId,
-      } = resource;
-
-      const imageSrc = type === 'image' ? src : poster;
-      if (
-        isCurrentResourceUploading(resourceId) ||
-        !imageSrc ||
-        isBlobURL(imageSrc) ||
-        currentBaseColor ||
-        !isExternal
-      ) {
-        return;
-      }
-
-      try {
-        const needsProxy =
-          type === 'image'
-            ? resource?.needsProxy
-            : await checkResourceAccess(imageSrc);
-        const imageSrcProxied = getProxiedUrl({ needsProxy }, imageSrc);
-        const baseColor = await getMediaBaseColor(imageSrcProxied);
-        updateElementById({
-          elementId: id,
-          properties: {
-            resource: {
-              ...resource,
-              baseColor,
-            },
-          },
-        });
-      } catch (error) {
-        // Do nothing for now.
-      }
-    },
-    [
-      isCurrentResourceUploading,
-      checkResourceAccess,
-      getProxiedUrl,
-      updateElementById,
-    ]
-  );
-
   const focusCanvas = useFocusCanvas();
 
   /**
@@ -130,7 +75,6 @@ function useInsertElement() {
       addElement({ element });
       if (resource) {
         postProcessingResource(resource);
-        generateBaseColor(element);
       }
       // Auto-play on insert.
       if (type === 'video' && resource?.src && !resource.isPlaceholder) {
@@ -147,7 +91,6 @@ function useInsertElement() {
     [
       addElement,
       postProcessingResource,
-      generateBaseColor,
       focusCanvas,
       setZoomSetting,
     ]
