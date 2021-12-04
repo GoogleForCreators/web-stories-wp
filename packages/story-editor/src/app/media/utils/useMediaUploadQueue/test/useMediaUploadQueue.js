@@ -149,9 +149,15 @@ describe('useMediaUploadQueue', () => {
 
     expect(result.current.state.isUploading).toBeTrue();
 
-    const { id: itemId } = result.current.state.progress[0];
-    expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
-    expect(result.current.state.isCurrentResourceUploading(itemId)).toBeTrue();
+    const {
+      resource: { id: resourceId },
+    } = result.current.state.progress[0];
+    expect(
+      result.current.state.isCurrentResourceProcessing(resourceId)
+    ).toBeTrue();
+    expect(
+      result.current.state.isCurrentResourceUploading(resourceId)
+    ).toBeTrue();
 
     await waitForNextUpdate();
 
@@ -185,13 +191,17 @@ describe('useMediaUploadQueue', () => {
 
     act(() => result.current.actions.addItem({ file, resource }));
 
-    const { id: itemId } = result.current.state.pending[0];
+    const {
+      resource: { id: resourceId },
+    } = result.current.state.pending[0];
 
     await waitFor(() => expect(result.current.state.isTranscoding).toBeTrue());
 
-    expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
     expect(
-      result.current.state.isCurrentResourceTranscoding(itemId)
+      result.current.state.isCurrentResourceProcessing(resourceId)
+    ).toBeTrue();
+    expect(
+      result.current.state.isCurrentResourceTranscoding(resourceId)
     ).toBeTrue();
   });
 
@@ -207,13 +217,17 @@ describe('useMediaUploadQueue', () => {
 
     act(() => result.current.actions.addItem({ file, resource: mockResource }));
 
-    const { id: itemId } = result.current.state.progress[0];
+    const {
+      resource: { id: resourceId },
+    } = result.current.state.progress[0];
 
     await waitFor(() => expect(result.current.state.isTranscoding).toBeTrue());
 
-    expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
     expect(
-      result.current.state.isCurrentResourceTranscoding(itemId)
+      result.current.state.isCurrentResourceProcessing(resourceId)
+    ).toBeTrue();
+    expect(
+      result.current.state.isCurrentResourceTranscoding(resourceId)
     ).toBeTrue();
 
     expect(result.current.state.isResourceProcessing(123)).toBeFalse();
@@ -238,11 +252,11 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
-    const { id: itemId } = result.current.state.progress[0];
+    const { resource: { id: resourceId }, } = result.current.state.progress[0];
     await waitFor(() => expect(result.current.state.isMuting).toBeTrue());
 
-    expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
-    expect(result.current.state.isCurrentResourceMuting(itemId)).toBeTrue();
+    expect(result.current.state.isCurrentResourceProcessing(resourceId)).toBeTrue();
+    expect(result.current.state.isCurrentResourceMuting(resourceId)).toBeTrue();
 
     expect(result.current.state.isResourceProcessing(123)).toBeFalse();
     expect(result.current.state.isResourceMuting(123)).toBeFalse();
@@ -266,12 +280,12 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
-    const { id: itemId } = result.current.state.progress[0];
+    const { resource: { id: resourceId }, } = result.current.state.progress[0];
 
     await waitFor(() => expect(result.current.state.isTrimming).toBeTrue());
 
-    expect(result.current.state.isCurrentResourceProcessing(itemId)).toBeTrue();
-    expect(result.current.state.isCurrentResourceTrimming(itemId)).toBeTrue();
+    expect(result.current.state.isCurrentResourceProcessing(resourceId)).toBeTrue();
+    expect(result.current.state.isCurrentResourceTrimming(resourceId)).toBeTrue();
 
     expect(result.current.state.isResourceProcessing(123)).toBeFalse();
     expect(result.current.state.isResourceTrimming(123)).toBeFalse();
