@@ -22,7 +22,6 @@ import { useCallback } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { useLocalMedia } from '../../app/media';
 import { createNewElement } from '../../elements';
 import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
@@ -43,19 +42,6 @@ function useInsertElement() {
   const { addElement } = useStory(({ actions }) => ({
     addElement: actions.addElement,
   }));
-  const { postProcessingResource, isCurrentResourceUploading } = useLocalMedia(
-    ({
-      state: { isCurrentResourceUploading },
-      actions: { postProcessingResource },
-    }) => ({
-      postProcessingResource,
-      isCurrentResourceUploading,
-    })
-  );
-  const {
-    actions: { registerUsage },
-  } = useMedia3pApi();
-  const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
     setZoomSetting,
@@ -73,9 +59,7 @@ function useInsertElement() {
       const element = createElementForCanvas(type, props);
       const { id, resource } = element;
       addElement({ element });
-      if (resource) {
-        postProcessingResource(resource);
-      }
+
       // Auto-play on insert.
       if (type === 'video' && resource?.src && !resource.isPlaceholder) {
         setTimeout(() => {
@@ -88,12 +72,7 @@ function useInsertElement() {
       focusCanvas();
       return element;
     },
-    [
-      addElement,
-      postProcessingResource,
-      focusCanvas,
-      setZoomSetting,
-    ]
+    [addElement, focusCanvas, setZoomSetting]
   );
 
   return insertElement;
