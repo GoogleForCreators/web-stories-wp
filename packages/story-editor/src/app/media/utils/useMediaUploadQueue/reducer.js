@@ -360,7 +360,9 @@ export function replacePlaceholderResource(
             ...item,
             resource: {
               ...resource,
-              id,
+              // Keep the existing resource's ID (which at this point is a random uuid)
+              // instead of overriding it with another random uuid.
+              id: item.resource.id,
               isPlaceholder: false,
             },
             posterFile,
