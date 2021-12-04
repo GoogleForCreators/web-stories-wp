@@ -63,6 +63,11 @@ export function addItem(
   }
 ) {
   const id = uuidv4();
+
+  if(!resource.id) {
+    resource.id = uuidv4();
+  }
+
   const newItem = {
     id,
     file,
