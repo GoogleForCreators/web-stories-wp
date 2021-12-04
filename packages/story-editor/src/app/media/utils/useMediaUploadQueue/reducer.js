@@ -141,6 +141,7 @@ export function finishUploading(state, { payload: { id, resource } }) {
         ? {
             ...item,
             resource,
+            previousResourceId: item.resource.id,
             posterFile: null,
             originalResourceId: null,
             state: ITEM_STATUS.UPLOADED,
