@@ -38,29 +38,23 @@ function useDetectBaseColor({ updateMediaElement }) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const { getProxiedUrl } = useCORSProxy();
-  const setProperties = useCallback(
-    (id, properties) => {
-      updateElementsByResourceId({ id, properties });
-    },
-    [updateElementsByResourceId]
-  );
 
   const saveBaseColor = useCallback(
     /**
      *
-     * @param {number} id Video ID.
+     * @param {number} id Resource ID.
      * @param {string} baseColor Base Color.
      * @return {Promise<void>}
      */
     async (id, baseColor) => {
       try {
-        const newState = ({ resource }) => ({
+        const properties = ({ resource }) => ({
           resource: {
             ...resource,
             baseColor,
           },
         });
-        setProperties(id, newState);
+        updateElementsByResourceId({ id, properties });
         updateMediaElement({
           id,
           data: { baseColor },
@@ -74,7 +68,12 @@ function useDetectBaseColor({ updateMediaElement }) {
         // Do nothing for now.
       }
     },
-    [setProperties, updateMedia, updateMediaElement, hasUploadMediaAction]
+    [
+      updateElementsByResourceId,
+      updateMedia,
+      updateMediaElement,
+      hasUploadMediaAction,
+    ]
   );
 
   const updateBaseColor = useCallback(
