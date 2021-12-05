@@ -56,19 +56,14 @@ function VideoCaptionsLayer() {
   }));
 
   const videoElement = useStory(({ state }) => {
-    const { currentPage, selectedElementIds } = state;
+    const { selectedElementIds } = state;
 
     if (selectedElementIds.length !== 1) {
       return null;
     }
 
-    return (currentPage?.elements || [])
-      .filter(
-        ({ type, tracks, id }) =>
-          type === 'video' &&
-          tracks?.length > 0 &&
-          state.selectedElementIds.includes(id)
-      )
+    return (selectedElementIds || [])
+      .filter(({ type, tracks }) => type === 'video' && tracks?.length > 0)
       .pop();
   });
 
