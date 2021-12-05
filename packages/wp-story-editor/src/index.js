@@ -48,6 +48,7 @@ import {
 } from './components';
 import getApiCallbacks from './api/utils/getApiCallbacks';
 import { transformGetStoryResponse } from './api/utils';
+import { TIPS } from './constants';
 
 window.webStories = window.webStories || {};
 window.webStories.domReady = domReady;
@@ -76,6 +77,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
   const editorConfig = {
     ...config,
     apiCallbacks: getApiCallbacks(config),
+    additionalTips: TIPS,
     MediaUpload,
   };
 

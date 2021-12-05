@@ -81,7 +81,7 @@ function CarouselScrollButton({ isNext = false }) {
       variant={BUTTON_VARIANTS.SQUARE}
       type={BUTTON_TYPES.PLAIN}
       size={BUTTON_SIZES.SMALL}
-      isDisabled={!canScroll}
+      disabled={!canScroll}
       onClick={onClick}
       aria-label={label}
     >

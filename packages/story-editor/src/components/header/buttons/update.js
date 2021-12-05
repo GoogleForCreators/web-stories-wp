@@ -109,7 +109,10 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
   // can update without us knowing it.
   const isEnabled = !isSaving && !isUploading && (hasNewChanges || hasUpdates);
 
-  if ('pending' === status) {
+  const isPending = 'pending' === status;
+  const isDraft = 'draft' === status || !status;
+
+  if (isPending) {
     return (
       <PlainButton
         text={__('Save as pending', 'web-stories')}
@@ -119,7 +122,7 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
     );
   }
 
-  if ('draft' === status) {
+  if (isDraft) {
     return (
       <PlainButton
         text={__('Save draft', 'web-stories')}
