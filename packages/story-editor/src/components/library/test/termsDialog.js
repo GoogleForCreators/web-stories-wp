@@ -69,9 +69,9 @@ describe('TermsDialog', () => {
     expect(localStore.getItemByKey).toHaveBeenCalledWith(
       LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P
     );
-    act(() => {
-      fireEvent.click(dismiss);
-    });
+
+    fireEvent.click(dismiss);
+
     await waitFor(() =>
       expect(localStore.setItemByKey).toHaveBeenCalledWith(
         LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P,

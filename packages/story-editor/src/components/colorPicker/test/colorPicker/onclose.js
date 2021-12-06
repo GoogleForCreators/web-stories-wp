@@ -22,7 +22,7 @@ import { waitFor, fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { arrange, getResolvingPromise } from './_utils';
+import { arrange } from './_utils';
 
 jest.mock(
   '../../../../app/story/useStory',
@@ -52,14 +52,12 @@ describe('<ColorPicker /> as it closes', () => {
     expect(document.body).not.toHaveFocus();
     const dialog = getDialog();
 
-    // press escape and wait for onClose to be invoked
+    fireEvent.keyDown(dialog, { key: 'Escape', which: 27 });
+
     await waitFor(() => {
-      const promise = getResolvingPromise(onClose);
-      fireEvent.keyDown(dialog, { key: 'Escape', which: 27 });
-      return promise;
+      expect(onClose).toHaveBeenCalledWith(expect.anything());
     });
 
-    expect(onClose).toHaveBeenCalledWith(expect.anything());
     await waitFor(() => expect(document.body).toHaveFocus());
   });
 
@@ -72,14 +70,12 @@ describe('<ColorPicker /> as it closes', () => {
     expect(document.body).not.toHaveFocus();
     const closeButton = getCloseButton();
 
-    // click close button and wait for onClose to be invoked
+    fireEvent.click(closeButton);
+
     await waitFor(() => {
-      const promise = getResolvingPromise(onClose);
-      fireEvent.click(closeButton);
-      return promise;
+      expect(onClose).toHaveBeenCalledWith(expect.anything());
     });
 
-    expect(onClose).toHaveBeenCalledWith(expect.anything());
     await waitFor(() => expect(document.body).toHaveFocus());
   });
 });

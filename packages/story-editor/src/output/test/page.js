@@ -411,7 +411,7 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      const video = queryById(container, 'el-baz-media');
+      const video = getById(container, 'el-baz-media');
       await expect(video).toBeInTheDocument();
       expect(video).toMatchInlineSnapshot(`
         <amp-video

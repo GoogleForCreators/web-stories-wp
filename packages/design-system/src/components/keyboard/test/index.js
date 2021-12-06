@@ -20,7 +20,7 @@
  * External dependencies
  */
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -47,15 +47,11 @@ const keys = {
 function testIsKeyPressed(result, node, { key, which }, shouldRegister = true) {
   expect(result.current).toBe(false);
 
-  act(() => {
-    fireEvent.keyDown(node, { key, which });
-  });
+  fireEvent.keyDown(node, { key, which });
 
   expect(result.current).toBe(shouldRegister);
 
-  act(() => {
-    fireEvent.keyUp(node, { key, which });
-  });
+  fireEvent.keyUp(node, { key, which });
 
   expect(result.current).toBe(false);
 }

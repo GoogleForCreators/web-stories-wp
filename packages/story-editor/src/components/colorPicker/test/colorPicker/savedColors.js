@@ -148,9 +148,7 @@ describe('<ColorPicker /> and saved colors', () => {
         color: TEAL_COLOR,
       });
 
-    act(() => {
-      fireEvent.click(getCustomButton());
-    });
+    fireEvent.click(getCustomButton());
 
     // Wait for the lazy-loaded module
     await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
@@ -182,9 +180,7 @@ describe('<ColorPicker /> and saved colors', () => {
         color: TEAL_COLOR,
       });
 
-    act(() => {
-      fireEvent.click(getCustomButton());
-    });
+    fireEvent.click(getCustomButton());
 
     // Wait for the lazy-loaded module
     await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());

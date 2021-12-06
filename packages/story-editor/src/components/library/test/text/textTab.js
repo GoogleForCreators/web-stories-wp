@@ -68,9 +68,7 @@ describe('TextTab', () => {
       </FontContext.Provider>
     );
 
-    act(() => {
-      fireEvent.click(screen.getByTitle('Add new text element'));
-    });
+    fireEvent.click(screen.getByTitle('Add new text element'));
 
     await waitFor(() => expect(insertElement).toHaveBeenCalledTimes(1));
     await waitFor(() =>

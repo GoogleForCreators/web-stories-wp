@@ -423,7 +423,9 @@ describe('useAlignment', () => {
       registerSubmitHandler = (handler) => {
         return handler;
       };
+    });
 
+    it('should update element x position to left corner of bound rect of elements selection', () => {
       render(
         <DesignPanel
           panelType={CustomPanel}
@@ -435,9 +437,7 @@ describe('useAlignment', () => {
       result = renderUseAlignement();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
-    });
 
-    it('should update element x position to left corner of bound rect of elements selection', () => {
       const { handleAlign } = result.current;
 
       const { pushUpdate } = lastProps;
@@ -456,6 +456,18 @@ describe('useAlignment', () => {
     });
 
     it('should update element x position to right corner of bound rect of elements selection', () => {
+      render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={selectedElements}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+      result = renderUseAlignement();
+      const { setUpdatedSelectedElementsWithFrame } = result.current;
+      act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
+
       const { handleAlign } = result.current;
 
       const { pushUpdate } = lastProps;
@@ -474,6 +486,18 @@ describe('useAlignment', () => {
     });
 
     it('should update element x position to center of the bound rect of elements selection', () => {
+      render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={selectedElements}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+      result = renderUseAlignement();
+      const { setUpdatedSelectedElementsWithFrame } = result.current;
+      act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
+
       const { handleAlignCenter } = result.current;
 
       const { pushUpdate } = lastProps;
@@ -492,6 +516,18 @@ describe('useAlignment', () => {
     });
 
     it('should update element y position to top corner of the bound rect of elements selection', () => {
+      render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={selectedElements}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+      result = renderUseAlignement();
+      const { setUpdatedSelectedElementsWithFrame } = result.current;
+      act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
+
       const { handleAlign } = result.current;
 
       const { pushUpdate } = lastProps;
@@ -510,6 +546,18 @@ describe('useAlignment', () => {
     });
 
     it('should update element y position to bottom corner of the bound rect of elements selection', () => {
+      render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={selectedElements}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+      result = renderUseAlignement();
+      const { setUpdatedSelectedElementsWithFrame } = result.current;
+      act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
+
       const { handleAlign } = result.current;
 
       const { pushUpdate } = lastProps;
@@ -528,6 +576,18 @@ describe('useAlignment', () => {
     });
 
     it('should update element y position to vertical center of the bound rect of elements selection', () => {
+      render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={selectedElements}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+      result = renderUseAlignement();
+      const { setUpdatedSelectedElementsWithFrame } = result.current;
+      act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
+
       const { handleAlignMiddle } = result.current;
 
       const { pushUpdate } = lastProps;
@@ -546,6 +606,18 @@ describe('useAlignment', () => {
     });
 
     it('should distribute elements horizontally', () => {
+      render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={selectedElements}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+      result = renderUseAlignement();
+      const { setUpdatedSelectedElementsWithFrame } = result.current;
+      act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
+
       const { handleHorizontalDistribution } = result.current;
 
       const { pushUpdate } = lastProps;
@@ -568,6 +640,18 @@ describe('useAlignment', () => {
     });
 
     it('should distribute elements vertically', () => {
+      render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={selectedElements}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+      result = renderUseAlignement();
+      const { setUpdatedSelectedElementsWithFrame } = result.current;
+      act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
+
       const { handleVerticalDistribution } = result.current;
 
       const { pushUpdate } = lastProps;
