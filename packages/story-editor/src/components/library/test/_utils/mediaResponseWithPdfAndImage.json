@@ -8,7 +8,7 @@
       "raw": "http://localhost:8899/wp-content/uploads/2020/04/brochure.pdf"
     },
     "modified": "2020-04-09T07:32:27",
-    "modified_gmt": "2020-04-09T07:32:27",
+    "modifiedGmt": "2020-04-09T07:32:27",
     "slug": "brochure",
     "status": "inherit",
     "type": "attachment",
@@ -80,7 +80,7 @@
       "raw": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg"
     },
     "modified": "2020-04-08T16:10:10",
-    "modified_gmt": "2020-04-08T16:10:10",
+    "modifiedGmt": "2020-04-08T16:10:10",
     "slug": "testImage",
     "status": "inherit",
     "type": "attachment",
