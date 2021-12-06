@@ -287,6 +287,7 @@ function useMediaUploadQueue() {
                 newFile = await trimVideo(file, trimData.start, trimData.end);
                 finishTrimming({ id, file: newFile });
                 additionalData.meta = {
+                  ...additionalData.meta,
                   web_stories_trim_data: trimData,
                 };
               } catch (error) {
