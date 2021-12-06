@@ -22,7 +22,7 @@
   "type": "module",
   "dependencies": {
     "@googleforcreators/i18n": "*",
-    "date-fns": "^2.25.0",
+    "date-fns": "^2.27.0",
     "date-fns-tz": "^1.1.6"
   },
   "devDependencies": {

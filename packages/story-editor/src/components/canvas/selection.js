@@ -26,7 +26,7 @@ import { useStory, useCanvas } from '../../app';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 import MultiSelectionMoveable from './multiSelectionMoveable';
 
-function Selection() {
+function Selection(props) {
   const { currentPage, selectedElements, isAnimating } = useStory((state) => ({
     currentPage: state.state.currentPage,
     selectedElements: state.state.selectedElements,
@@ -84,7 +84,9 @@ function Selection() {
   }
 
   // Multi-selection.
-  return <MultiSelectionMoveable selectedElements={selectedElements} />;
+  return (
+    <MultiSelectionMoveable {...props} selectedElements={selectedElements} />
+  );
 }
 
 export default Selection;

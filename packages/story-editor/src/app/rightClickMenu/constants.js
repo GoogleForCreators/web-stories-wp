@@ -22,7 +22,7 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
+import { __, _n } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 
 export const RIGHT_CLICK_MENU_LABELS = {
@@ -50,6 +50,8 @@ export const RIGHT_CLICK_MENU_LABELS = {
     'web-stories'
   ),
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
+  DUPLICATE_ELEMENTS: (numElements = 1) =>
+    _n('Duplicate Element', 'Duplicate Elements', numElements, 'web-stories'),
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE_SHAPE_STYLES: __('Paste Shape Styles', 'web-stories'),
   PASTE_VIDEO_STYLES: __('Paste Video Styles', 'web-stories'),

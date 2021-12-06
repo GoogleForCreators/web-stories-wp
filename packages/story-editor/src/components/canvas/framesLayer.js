@@ -130,7 +130,7 @@ function FramesLayer() {
       <NavNextArea>
         <PageNav />
       </NavNextArea>
-      <Selection />
+      <Selection onContextMenu={onOpenMenu} />
     </Layer>
   );
 }

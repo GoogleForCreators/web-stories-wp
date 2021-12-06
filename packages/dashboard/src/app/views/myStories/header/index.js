@@ -171,7 +171,7 @@ function Header({
         handleSearchChange={debouncedSearchChange}
         showSearch={initialPageReady}
         searchValue={search.keyword}
-        clearSearch={clearSearch}
+        onClear={clearSearch}
       >
         {HeaderToggleButtons}
       </PageHeading>

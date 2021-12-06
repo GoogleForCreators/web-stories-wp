@@ -112,7 +112,7 @@ describe('useRightClickMenu', () => {
   });
 
   describe('context menu manipulation', () => {
-    it('should not open the menu if multiple elements are selected', () => {
+    it('should open the menu if multiple elements are selected', () => {
       mockUseStory.mockReturnValue({
         ...defaultStoryContext,
         selectedElements: [
@@ -143,7 +143,7 @@ describe('useRightClickMenu', () => {
         result.current.onOpenMenu(mockEvent);
       });
 
-      expect(result.current.isMenuOpen).toBe(false);
+      expect(result.current.isMenuOpen).toBe(true);
     });
 
     it('should open the menu at the specified position', () => {
@@ -269,6 +269,7 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1),
         RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
         RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
         RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
@@ -423,6 +424,7 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1),
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
@@ -507,6 +509,7 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1),
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_VIDEO,
@@ -644,6 +647,7 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1),
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
         RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
@@ -672,7 +676,48 @@ describe('useRightClickMenu', () => {
       });
 
       const labels = result.current.menuItems.map((item) => item.label);
-      expect(labels).toStrictEqual([...expectedLayerActions]);
+      expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1),
+        ...expectedLayerActions,
+      ]);
+    });
+  });
+
+  describe('Multiple elements right clicked', () => {
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '1',
+            type: 'text',
+            isDefaultBackground: false,
+          },
+
+          {
+            id: '2',
+            type: 'shape',
+            isDefaultBackground: false,
+          },
+
+          {
+            id: '3',
+            type: 'text',
+            isDefaultBackground: false,
+          },
+        ],
+      });
+    });
+
+    it('should return the correct menu items', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const labels = result.current.menuItems.map((item) => item.label);
+      expect(labels).toStrictEqual([
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2),
+      ]);
     });
   });
 });
