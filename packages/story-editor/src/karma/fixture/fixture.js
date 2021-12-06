@@ -817,9 +817,9 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             ext: 'jpg',
-            mime_type: 'image/jpeg',
+            mimeType: 'image/jpeg',
             type: 'image',
-            file_name: 'example.jpg',
+            fileName: 'example.jpg',
           }),
         []
       );
