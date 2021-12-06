@@ -165,7 +165,7 @@ export function updateMedia(config, mediaId, data) {
     path: `${config.api.media}${mediaId}/`,
     data,
     method: 'POST',
-  });
+  }).then(getResourceFromAttachment);
 }
 
 /**

@@ -17,14 +17,20 @@
  * External dependencies
  */
 import { addQueryArgs } from '@web-stories-wp/design-system';
+
 /**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
 
+/**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './utils';
+
 export function getHotlinkInfo(config, url) {
   const path = addQueryArgs(config.api.hotlink, { url });
   return apiFetch({
     path,
-  });
+  }).then(snakeToCamelCaseObjectKeys);
 }

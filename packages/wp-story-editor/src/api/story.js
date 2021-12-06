@@ -27,7 +27,11 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_EMBED, STORY_FIELDS } from './constants';
-import { base64Encode, transformStoryResponse } from './utils';
+import {
+  base64Encode,
+  transformStoryResponse,
+  snakeToCamelCaseObjectKeys,
+} from './utils';
 
 export function getStoryById(config, storyId) {
   const path = addQueryArgs(`${config.api.stories}${storyId}/`, {
@@ -108,16 +112,17 @@ export function saveStoryById(config, story) {
     data: storySaveData,
     method: 'POST',
   }).then((data) => {
-    const { _embedded: embedded = {} } = data;
+    const { _embedded: embedded = {}, ...rest } = data;
 
-    data.featured_media = {
-      id: embedded?.['wp:featuredmedia']?.[0].id || 0,
-      height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
-      width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
-      url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+    return {
+      ...snakeToCamelCaseObjectKeys(rest),
+      featuredMedia: {
+        id: embedded?.['wp:featuredmedia']?.[0].id || 0,
+        height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
+        width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
+        url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+      },
     };
-
-    return data;
   });
 }
 
@@ -136,5 +141,5 @@ export function autoSaveById(config, story) {
     path: `${config.api.stories}${storyId}/autosaves/`,
     data: storySaveData,
     method: 'POST',
-  });
+  }).then((resp) => snakeToCamelCaseObjectKeys(resp, ['story_data']));
 }

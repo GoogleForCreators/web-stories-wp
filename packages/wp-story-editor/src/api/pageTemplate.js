@@ -22,6 +22,10 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  */
 import apiFetch from '@wordpress/api-fetch';
 
+function transformTemplateResponse(template) {
+  return { ...template['story_data'], templateId: template.id };
+}
+
 export function getCustomPageTemplates(config, page = 1) {
   const perPage = 100;
   const path = addQueryArgs(config.api.pageTemplates, {
@@ -32,9 +36,8 @@ export function getCustomPageTemplates(config, page = 1) {
   });
   return apiFetch({ path }).then(({ headers, body }) => {
     const totalPages = parseInt(headers['X-WP-TotalPages']);
-    const templates = body.map((template) => {
-      return { ...template['story_data'], templateId: template.id };
-    });
+    const templates = body.map(transformTemplateResponse);
+
     return {
       templates,
       hasMore: totalPages > page,
@@ -50,9 +53,7 @@ export function addPageTemplate(config, page) {
       status: 'publish',
     },
     method: 'POST',
-  }).then((response) => {
-    return { ...response['story_data'], templateId: response.id };
-  });
+  }).then(transformTemplateResponse);
 }
 
 export function deletePageTemplate(config, id) {
@@ -64,5 +65,5 @@ export function deletePageTemplate(config, id) {
     }),
     data: { force: true },
     method: 'POST',
-  });
+  }); // Response is not being used in core editor.
 }
