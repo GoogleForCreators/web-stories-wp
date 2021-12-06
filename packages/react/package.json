@@ -17,7 +17,7 @@
     "react-pure-render": "^1.0.2",
     "resize-observer-polyfill": "^1.5.1",
     "use-context-selector": "^1.2.11",
-    "use-debounce": "^7.0.0"
+    "use-debounce": "^7.0.1"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.2"
