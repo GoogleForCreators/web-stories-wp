@@ -24,6 +24,10 @@ import { fireEvent, screen } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../../../../testUtils';
+import useLibrary from '../../../../useLibrary';
+import useMedia from '../../../../../../app/media/useMedia';
+import useLocalMedia from '../../../../../../app/media/local/useLocalMedia';
+import useMedia3pApi from '../../../../../../app/media/media3p/api/useMedia3pApi';
 import Media3pPane from '../media3pPane';
 
 function ProviderAttribution({ index }) {
@@ -35,10 +39,13 @@ ProviderAttribution.propTypes = {
 };
 
 jest.mock('../../../../useLibrary');
-import useLibrary from '../../../../useLibrary';
-
 jest.mock('../../../../../../app/media/useMedia');
-import useMedia from '../../../../../../app/media/useMedia';
+jest.mock('../../../../../../app/media/local/useLocalMedia');
+jest.mock('../../../../../../app/media/media3p/api/useMedia3pApi');
+jest.mock('../../../shared/libraryMoveable', () => ({
+  __esModule: true,
+  default: jest.fn(() => null),
+}));
 
 jest.mock('../../../../../../app/media/media3p/providerConfiguration', () => ({
   PROVIDERS: {
@@ -52,6 +59,14 @@ jest.mock('../../../../../../app/media/media3p/providerConfiguration', () => ({
   },
 }));
 
+jest.mock('react-photo-gallery', () => ({
+  __esModule: true,
+  default: jest.fn(({ photos, renderImage }) => (
+    <>{photos.map((photo, index) => renderImage({ photo, index }))}</>
+  )),
+}));
+
+// TODO: Use createResource / getResourceFromMedia3p.
 const createMediaResource = (name, provider) => ({
   name,
   provider: provider,
@@ -82,9 +97,17 @@ const createMediaResource = (name, provider) => ({
     },
   ],
   description: 'A cat',
-  type: 'IMAGE',
+  type: 'image',
+  mimeType: 'image/png',
   createTime: '1234',
   updateTime: '5678',
+  attribution: {
+    author: {
+      displayName: 'Photographer Name',
+      url: 'https://author.url',
+    },
+    registerUsageUrl: 'https://registerUsageUrl.com/register',
+  },
 });
 
 const DEFAULT_PROVIDER_STATE = (index) => ({
@@ -130,7 +153,9 @@ const MEDIA = Array(10).fill(createMediaResource('img', 'PROVIDER_1'));
 
 describe('Media3pPane', () => {
   const insertElement = jest.fn();
+  const registerUsage = jest.fn();
   let useMediaResult;
+
   beforeAll(() => {
     useLibrary.mockImplementation((selector) =>
       selector({
@@ -140,6 +165,17 @@ describe('Media3pPane', () => {
       })
     );
     useMedia.mockImplementation(() => useMediaResult);
+    useLocalMedia.mockImplementation(() => ({
+      isCurrentResourceMuting: jest.fn(() => false),
+      isCurrentResourceTrimming: jest.fn(() => false),
+      isCurrentResourceTranscoding: jest.fn(() => false),
+      isCurrentResourceProcessing: jest.fn(() => false),
+    }));
+    useMedia3pApi.mockImplementation(() => ({
+      actions: {
+        registerUsage,
+      },
+    }));
 
     // https://stackoverflow.com/questions/53271193/typeerror-scrollintoview-is-not-a-function
     window.HTMLElement.prototype.scrollTo = () => {};
@@ -260,6 +296,22 @@ describe('Media3pPane', () => {
 
     expect(getComputedStyle(subHeading).display).not.toBe('none');
     expect(subHeading).toHaveTextContent('1 Dogs');
+  });
+
+  it('should register usage when inserting media3p resource', () => {
+    useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
+    useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
+    useMediaResult.searchTerm = '';
+    renderWithTheme(<Media3pPane isActive />);
+
+    fireEvent.keyDown(screen.queryAllByTestId(/^mediaElement-/)[0], {
+      key: 'Enter',
+      which: 13,
+    });
+
+    expect(registerUsage).toHaveBeenCalledWith({
+      registerUsageUrl: 'https://registerUsageUrl.com/register',
+    });
   });
 });
 
