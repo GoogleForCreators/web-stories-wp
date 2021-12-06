@@ -50,7 +50,8 @@ describe('Stories Dashboard', () => {
     await deleteMenuButton.click();
     const [deleteButton] = await page.$x("//button[text()='Delete']");
     await deleteButton.click();
-    await page.waitForTimeout(100);
-    await expect(page).not.toMatch('Delete this story');
+    await expect(page).not.toMatchElement('h3', {
+      text: 'Delete this story',
+    });
   });
 });

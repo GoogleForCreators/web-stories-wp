@@ -50,6 +50,8 @@ describe('Stories Dashboard', () => {
     await page.type('input[value="Rename a story"]', 'Renamed story');
     await page.keyboard.press('Enter');
     await page.waitForTimeout(100);
-    await expect(page).toMatch('Renamed story');
+    await expect(page).toMatchElement('h3', {
+      text: 'Renamed story',
+    });
   });
 });

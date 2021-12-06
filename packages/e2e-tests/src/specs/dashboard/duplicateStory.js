@@ -48,6 +48,8 @@ describe('Stories Dashboard', () => {
     );
     await page.waitForTimeout(100);
     await duplicateMenuButton.click();
-    await expect(page).not.toMatch('Duplicate story(Copy)');
+    await expect(page).toMatchElement('h3', {
+      text: 'Duplicate this story (Copy)',
+    });
   });
 });
