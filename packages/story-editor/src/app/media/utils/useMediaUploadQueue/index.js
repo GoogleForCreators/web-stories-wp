@@ -329,6 +329,13 @@ function useMediaUploadQueue() {
 
           const trackTiming = getTimeTracker('load_upload_media');
 
+          if (resource?.baseColor) {
+            additionalData.meta = {
+              ...additionalData.meta,
+              web_stories_base_color: resource.baseColor,
+            };
+          }
+
           try {
             // The newly uploaded file won't have a poster yet.
             // However, we'll likely still have one on file.

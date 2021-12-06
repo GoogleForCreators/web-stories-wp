@@ -772,9 +772,6 @@ describe('Page output', () => {
         },
         autoAdvance: true,
         defaultPageDuration: 11,
-        args: {
-          enableBetterCaptions: true,
-        },
       };
 
       const { container } = render(<PageOutput {...props} />);
@@ -1295,9 +1292,6 @@ describe('Page output', () => {
         },
         autoAdvance: true,
         defaultPageDuration: 7,
-        args: {
-          enableBetterCaptions: true,
-        },
       };
 
       const { container } = render(<PageOutput {...props} />);
