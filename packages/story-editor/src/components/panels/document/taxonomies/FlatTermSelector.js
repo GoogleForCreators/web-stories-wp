@@ -176,7 +176,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
           suggestedTermsLabel={taxonomy?.labels?.items_list}
         />
         <Tags.Description id={`${taxonomy.slug}-description`}>
-          {taxonomy.labels.separate_items_with_commas}
+          {taxonomy.labels.separateItemsWithCommas}
         </Tags.Description>
         {mostUsed.length > 0 && (
           <WordCloud.Wrapper data-testid={`${taxonomy.slug}-most-used`}>
