@@ -321,7 +321,7 @@ function useMediaUploadQueue() {
 
           const trackTiming = getTimeTracker('load_upload_media');
 
-          if (resource.type !== 'image' && resource.isMuted !== null) {
+          if (resource.type === 'video' && resource.isMuted !== null) {
             additionalData.web_stories_is_muted = resource.isMuted;
           }
 
