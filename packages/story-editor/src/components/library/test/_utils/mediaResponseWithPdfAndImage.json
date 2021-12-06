@@ -2,7 +2,7 @@
   {
     "id": 775,
     "date": "2020-04-09T07:32:27",
-    "date_gmt": "2020-04-09T07:32:27",
+    "dateGmt": "2020-04-09T07:32:27",
     "guid": {
       "rendered": "http://localhost:8899/wp-content/uploads/2020/04/brochure.pdf",
       "raw": "http://localhost:8899/wp-content/uploads/2020/04/brochure.pdf"
@@ -74,7 +74,7 @@
   {
     "id": 768,
     "date": "2020-04-08T16:10:10",
-    "date_gmt": "2020-04-08T16:10:10",
+    "dateGmt": "2020-04-08T16:10:10",
     "guid": {
       "rendered": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg",
       "raw": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg"
