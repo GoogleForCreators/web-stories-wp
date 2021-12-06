@@ -25,7 +25,7 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Stories Dashboard', () => {
-  it('should be delete story', async () => {
+  it('should delete story', async () => {
     //need to create new story as all stories are deleted before test runs.
     await createNewStory();
     await insertStoryTitle('Delete this story');
