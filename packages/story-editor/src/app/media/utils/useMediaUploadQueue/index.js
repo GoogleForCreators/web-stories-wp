@@ -289,6 +289,7 @@ function useMediaUploadQueue() {
               try {
                 newFile = await stripAudioFromVideo(file);
                 finishMuting({ id, file: newFile });
+                additionalData.web_stories_is_muted = true;
               } catch (error) {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });
