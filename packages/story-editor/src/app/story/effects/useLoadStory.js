@@ -42,7 +42,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     stylePresets: globalStoryStyles,
     password,
     previewLink,
-    edit_link: editLink,
+    editLink,
     embed_post_link: embedPostLink,
     author,
     capabilities = {
