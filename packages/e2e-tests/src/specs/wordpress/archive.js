@@ -26,7 +26,6 @@ import {
   visitAdminPage,
   visitBlockWidgetScreen,
   visitSettings,
-  withExperimentalFeatures,
   withPlugin,
   createURL,
   trashAllPosts,
@@ -55,8 +54,6 @@ const changeStoriesArchivesType = async (option) => {
 // TODO(#9636): Fix flakey test.
 // eslint-disable-next-line jest/no-disabled-tests
 describe.skip('Stories Archive', () => {
-  withExperimentalFeatures(['archivePageCustomization']);
-
   describe('Custom Page', () => {
     beforeAll(async () => {
       await createNewPost({
