@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { disableCheckbox, visitSettings } from '@web-stories-wp/e2e-test-utils';
+import { disableCheckbox, visitSettings } from '@googleforcreators/e2e-test-utils';
 
 describe('Telemetry Banner', () => {
   beforeEach(async () => {

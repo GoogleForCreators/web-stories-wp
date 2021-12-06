@@ -18,7 +18,7 @@
  * External dependencies
  */
 import SAT from 'sat';
-import { getCorners } from '@web-stories-wp/units';
+import { getCorners } from '@googleforcreators/units';
 
 export default function createPolygon(rotationAngle, x, y, width, height) {
   const { topLeftPoint, topRightPoint, bottomRightPoint, bottomLeftPoint } =

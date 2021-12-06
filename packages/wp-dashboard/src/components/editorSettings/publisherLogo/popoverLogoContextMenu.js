@@ -18,13 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { useCallback } from '@googleforcreators/react';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Icons,
   ContextMenu,
   MenuItemProps,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

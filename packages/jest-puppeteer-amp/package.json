@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/jest-puppeteer-amp",
+  "name": "@googleforcreators/jest-puppeteer-amp",
   "private": true,
   "engines": {
     "node": ">= 16",
@@ -11,6 +11,6 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@web-stories-wp/jest-amp": "*"
+    "@googleforcreators/jest-amp": "*"
   }
 }

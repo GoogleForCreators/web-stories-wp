@@ -18,7 +18,7 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { withRTL, visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import { withRTL, visitDashboard } from '@googleforcreators/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { visitAdminPage } from '@web-stories-wp/e2e-test-utils';
+import { visitAdminPage } from '@googleforcreators/e2e-test-utils';
 
 describe('Admin Menu', () => {
   it('should contain links to Dashboard sub-pages', async () => {

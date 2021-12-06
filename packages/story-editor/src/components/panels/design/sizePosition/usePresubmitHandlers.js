@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import {
   dataPixels,
   calcRotatedObjectPositionAndSize,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 /**
  * Internal dependencies
  */

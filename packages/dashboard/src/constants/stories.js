@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf, _n } from '@web-stories-wp/i18n';
+import { __, sprintf, _n } from '@googleforcreators/i18n';
 
 export const STORY_CONTEXT_MENU_ACTIONS = {
   OPEN_IN_EDITOR: 'open-in-editor-action',

@@ -22,7 +22,7 @@ import aspectRatiosApproximatelyMatch from './aspectRatiosApproximatelyMatch';
 /**
  * Returns a valid srcSet attribute value for the given media resource.
  *
- * @param {import('@web-stories-wp/media').Resource} resource The resource.
+ * @param {import('@googleforcreators/media').Resource} resource The resource.
  * @return {?string} The srcSet value, or null if the resource has no `sizes`
  * attribute.
  */

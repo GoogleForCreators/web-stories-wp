@@ -16,12 +16,12 @@
 /**
  * External dependencies
  */
-import { VisuallyHidden } from '@web-stories-wp/design-system';
-import { getRelativeDisplayDate } from '@web-stories-wp/date';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { VisuallyHidden } from '@googleforcreators/design-system';
+import { getRelativeDisplayDate } from '@googleforcreators/date';
+import { __, sprintf } from '@googleforcreators/i18n';
 import { useFeatures } from 'flagged';
 import PropTypes from 'prop-types';
-import { useMemo, forwardRef } from '@web-stories-wp/react';
+import { useMemo, forwardRef } from '@googleforcreators/react';
 import { css } from 'styled-components';
 /**
  * Internal dependencies

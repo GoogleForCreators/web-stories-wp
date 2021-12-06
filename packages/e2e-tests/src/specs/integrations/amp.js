@@ -24,7 +24,7 @@ import {
   insertStoryTitle,
   setAnalyticsCode,
   withPlugin,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 describe('AMP plugin integration', () => {
   withPlugin('amp');

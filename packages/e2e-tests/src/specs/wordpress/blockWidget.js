@@ -25,7 +25,7 @@ import {
   visitBlockWidgetScreen,
   insertWidget,
   minWPVersionRequired,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 describe('Web Stories Widget Block', () => {
   minWPVersionRequired('5.8');

@@ -23,7 +23,7 @@ import {
   createNewStory,
   uploadMedia,
   deleteMedia,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 const MODAL = '.media-modal';
 

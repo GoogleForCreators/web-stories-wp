@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useEffect } from '@web-stories-wp/react';
+import { useRef, useState, useEffect } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { DATA_VERSION } from '@web-stories-wp/migration';
+import { DATA_VERSION } from '@googleforcreators/migration';
 import {
   useGlobalKeyDownEffect,
   useSnackbar,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

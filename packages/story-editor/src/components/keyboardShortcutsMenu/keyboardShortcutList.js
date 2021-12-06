@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import { __, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
+import { __, TranslateWithMarkup, sprintf } from '@googleforcreators/i18n';
 import {
   isPlatformMacOS,
   prettifyShortcut,
   Shortcut,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const isMacOS = isPlatformMacOS();
 

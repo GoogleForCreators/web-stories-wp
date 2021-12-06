@@ -21,7 +21,7 @@ import {
   createNewStory,
   insertStoryTitle,
   previewStory,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 describe('Password protected stories', () => {
   it('should display password form on frontend', async () => {

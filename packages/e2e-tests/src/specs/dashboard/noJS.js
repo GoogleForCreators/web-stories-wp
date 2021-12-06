@@ -18,7 +18,7 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import { visitDashboard } from '@googleforcreators/e2e-test-utils';
 
 describe('Stories Dashboard with disabled JavaScript', () => {
   it('should display error message', async () => {

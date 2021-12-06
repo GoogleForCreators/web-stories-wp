@@ -22,8 +22,8 @@ import {
   useMemo,
   useState,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
-import { sprintf, _n, __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import { sprintf, _n, __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */

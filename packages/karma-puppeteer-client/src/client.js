@@ -21,7 +21,7 @@
 
   /**
    * Runs a function exposed by Puppeteer browser.
-   * See `@web-stories-wp/karma-puppeteer-launcher`.
+   * See `@googleforcreators/karma-puppeteer-launcher`.
    *
    * @param {string} methodName The name of the karmaPuppeteer method.
    * @return {*} Function result.

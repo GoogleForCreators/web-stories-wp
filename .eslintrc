@@ -526,7 +526,7 @@
             "paths": [
               {
                 "name": "@wordpress/i18n",
-                "message": "Use @web-stories-wp/i18n instead."
+                "message": "Use @googleforcreators/i18n instead."
               }
             ]
           }
@@ -545,7 +545,7 @@
           {
             "paths": [
               {
-                "name": "@web-stories-wp/i18n",
+                "name": "@googleforcreators/i18n",
                 "message": "Use @wordpress/i18n instead."
               },
               {
@@ -582,11 +582,11 @@
             "paths": [
               {
                 "name": "react",
-                "message": "Use @web-stories-wp/react instead."
+                "message": "Use @googleforcreators/react instead."
               },
               {
                 "name": "react-dom",
-                "message": "Use @web-stories-wp/react instead."
+                "message": "Use @googleforcreators/react instead."
               }
             ]
           }

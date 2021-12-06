@@ -18,7 +18,7 @@
  */
 import { TransitionGroup } from 'react-transition-group';
 import PropTypes from 'prop-types';
-import { memo } from '@web-stories-wp/react';
+import { memo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

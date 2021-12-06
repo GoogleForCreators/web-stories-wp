@@ -19,15 +19,15 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_TYPES,
   Icons,
   themeHelpers,
   Tooltip,
-} from '@web-stories-wp/design-system';
-import { useRef } from '@web-stories-wp/react';
+} from '@googleforcreators/design-system';
+import { useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

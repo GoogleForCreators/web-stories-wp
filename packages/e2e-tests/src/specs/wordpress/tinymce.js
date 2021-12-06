@@ -18,7 +18,7 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { withPlugin, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
+import { withPlugin, visitAdminPage } from '@googleforcreators/e2e-test-utils';
 
 describe('TinyMCE button', () => {
   withPlugin('classic-editor');

@@ -24,7 +24,7 @@ import {
   insertStoryTitle,
   withUser,
   publishStory,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 describe('Author User', () => {
   withUser('author', 'password');

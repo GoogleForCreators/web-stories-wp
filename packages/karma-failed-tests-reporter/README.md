@@ -11,7 +11,7 @@ This can be used to easily re-run only failed tests by providing the `--grep` op
 module.exports = function (config) {
   config.set({
     // reporters configuration
-    reporters: ['@web-stories-wp/karma-failed-tests-reporter'],
+    reporters: ['@googleforcreators/karma-failed-tests-reporter'],
   });
 };
 ```
@@ -34,7 +34,7 @@ Define the full path to the file to be written.
 module.exports = function (config) {
   config.set({
     // reporters configuration
-    reporters: ['@web-stories-wp/karma-failed-tests-reporter'],
+    reporters: ['@googleforcreators/karma-failed-tests-reporter'],
 
     failedTestsReporter: {
       outputFile: 'path/to/file.txt',

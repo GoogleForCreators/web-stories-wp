@@ -22,7 +22,7 @@ import {
   uploadMedia,
   deleteMedia,
   withUser,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 describe('Inserting Media from Dialog', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.

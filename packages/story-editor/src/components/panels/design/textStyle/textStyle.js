@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { useState } from '@web-stories-wp/react';
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { useState } from '@googleforcreators/react';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 

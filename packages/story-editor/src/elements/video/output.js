@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { isBlobURL } from '@web-stories-wp/media';
+import PropTypes from 'prop-types';
+import { isBlobURL } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

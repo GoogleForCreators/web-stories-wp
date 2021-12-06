@@ -23,7 +23,7 @@ import {
   insertStoryTitle,
   uploadMedia,
   deleteMedia,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 describe('Inserting WebM Video', () => {
   let uploadedFiles;

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { trackClick } from '@web-stories-wp/tracking';
+import { trackClick } from '@googleforcreators/tracking';
 
 /**
  * WordPress dependencies

@@ -23,7 +23,7 @@ import {
   toggleVideoOptimization,
   previewStory,
   withRTL,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 describe('Story Editor', () => {
   it('should be able to create a blank story', async () => {

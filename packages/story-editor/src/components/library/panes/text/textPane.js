@@ -23,16 +23,16 @@ import {
   useResizeEffect,
   useMemo,
   useCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS, Toggle } from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS, Toggle } from '@googleforcreators/design-system';
 import { SearchInput } from '../../common';
 import { Container as SectionContainer } from '../../common/section';
 import { Pane as SharedPane } from '../shared';

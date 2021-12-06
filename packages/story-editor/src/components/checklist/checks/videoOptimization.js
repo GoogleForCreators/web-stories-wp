@@ -17,20 +17,20 @@
 /**
  * External dependencies
  */
-import { sprintf, _n, __ } from '@web-stories-wp/i18n';
-import { canTranscodeResource } from '@web-stories-wp/media';
+import { sprintf, _n, __ } from '@googleforcreators/i18n';
+import { canTranscodeResource } from '@googleforcreators/media';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
+import { useCallback, useMemo, useReducer } from '@googleforcreators/react';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { useLocalMedia, useStory } from '../../../app';
 import { MEDIA_VIDEO_DIMENSIONS_THRESHOLD } from '../../../constants';
 import { PRIORITY_COPY } from '../constants';

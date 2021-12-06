@@ -18,16 +18,16 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useEffect, useMemo } from '@web-stories-wp/react';
+import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
   __,
   _n,
   sprintf,
   translateToExclusiveList,
-} from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList, canTranscodeResource } from '@web-stories-wp/media';
+} from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
+import { resourceList, canTranscodeResource } from '@googleforcreators/media';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -37,7 +37,7 @@ import {
   THEME_CONSTANTS,
   useSnackbar,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

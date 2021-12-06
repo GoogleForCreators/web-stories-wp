@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { createNewStory } from '@googleforcreators/e2e-test-utils';
 
 describe('Publish panel in document tab', () => {
   const openPublishPanel = async () => {

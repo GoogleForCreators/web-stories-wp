@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@web-stories-wp/react';
+import { useCallback, useState } from '@googleforcreators/react';
 import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import { createBlob, createFileReader } from '@web-stories-wp/media';
-import { ConfigProvider } from '@web-stories-wp/dashboard';
+import { createBlob, createFileReader } from '@googleforcreators/media';
+import { ConfigProvider } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies

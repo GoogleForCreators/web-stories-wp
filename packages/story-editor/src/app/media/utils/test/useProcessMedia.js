@@ -56,7 +56,7 @@ const fetchRemoteBlobMock = (url) => {
 
   return Promise.reject(new Error('Invalid file'));
 };
-jest.mock('@web-stories-wp/media', () => {
+jest.mock('@googleforcreators/media', () => {
   return {
     fetchRemoteFile: fetchRemoteFileMock,
     fetchRemoteBlob: fetchRemoteBlobMock,

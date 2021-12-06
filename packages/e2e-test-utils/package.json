@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/e2e-test-utils",
+  "name": "@googleforcreators/e2e-test-utils",
   "private": true,
   "engines": {
     "node": ">= 16",

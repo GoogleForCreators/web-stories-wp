@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { revokeBlob } from '@web-stories-wp/media';
+import { revokeBlob } from '@googleforcreators/media';
 
 /**
  * Add an item to the upload queue.
@@ -27,7 +27,7 @@ import { revokeBlob } from '@web-stories-wp/media';
  * @param {Object} action Action object.
  * @param {Object} action.payload Action payload.
  * @param {File} action.payload.file File object.
- * @param {import('@web-stories-wp/media').Resource} action.payload.resource Resource object.
+ * @param {import('@googleforcreators/media').Resource} action.payload.resource Resource object.
  * @param {Function} action.payload.onUploadStart Callback for when upload starts.
  * @param {Function} action.payload.onUploadProgress Callback for when upload progresses.
  * @param {Function} action.payload.onUploadError Callback for when upload errors.
@@ -35,7 +35,7 @@ import { revokeBlob } from '@web-stories-wp/media';
  * @param {Object}   action.payload.additionalData Additional Data object.
  * @param {File} action.payload.posterFile File object.
  * @param {boolean} action.payload.muteVideo Whether the video being uploaded should be muted.
- * @param {import('@web-stories-wp/media').TrimData} action.payload.trimData Trim data.
+ * @param {import('@googleforcreators/media').TrimData} action.payload.trimData Trim data.
  * @return {Object} New state
  */
 export function addItem(
@@ -110,7 +110,7 @@ export function startUploading(state, { payload: { id } }) {
  * @param {Object} action Action object.
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
- * @param {import('@web-stories-wp/media').Resource} action.payload.resource Resource object.
+ * @param {import('@googleforcreators/media').Resource} action.payload.resource Resource object.
  * @return {Object} New state
  */
 export function finishUploading(state, { payload: { id, resource } }) {
@@ -342,7 +342,7 @@ export function finishTrimming(state, { payload: { id, file } }) {
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
  * @param {File} action.payload.posterFile Poster file.
- * @param {import('@web-stories-wp/media').Resource} action.payload.resource Resource object.
+ * @param {import('@googleforcreators/media').Resource} action.payload.resource Resource object.
  * @return {Object} New state
  */
 export function replacePlaceholderResource(

@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/design-system",
+  "name": "@googleforcreators/design-system",
   "private": false,
   "version": "0.0.1-0",
   "engines": {
@@ -13,10 +13,10 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
-    "@web-stories-wp/patterns": "*",
-    "@web-stories-wp/react": "*",
-    "@web-stories-wp/tracking": "*",
+    "@googleforcreators/i18n": "*",
+    "@googleforcreators/patterns": "*",
+    "@googleforcreators/react": "*",
+    "@googleforcreators/tracking": "*",
     "big.js": "^6.1.1",
     "focus-visible": "^5.2.0",
     "mousetrap": "^1.6.5",

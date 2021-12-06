@@ -19,7 +19,7 @@
  */
 import { action } from '@storybook/addon-actions';
 import { object } from '@storybook/addon-knobs';
-import { SnackbarContext } from '@web-stories-wp/design-system';
+import { SnackbarContext } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

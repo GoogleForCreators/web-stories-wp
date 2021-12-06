@@ -21,8 +21,8 @@ import {
   FULLBLEED_RATIO,
   getBox,
   getBoundRect,
-} from '@web-stories-wp/units';
-import { getMediaSizePositionProps } from '@web-stories-wp/media';
+} from '@googleforcreators/units';
+import { getMediaSizePositionProps } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

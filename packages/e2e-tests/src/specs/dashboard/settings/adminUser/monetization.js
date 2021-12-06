@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { visitSettings } from '@web-stories-wp/e2e-test-utils';
+import { visitSettings } from '@googleforcreators/e2e-test-utils';
 
 /**
  * Internal dependencies

@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/media",
+  "name": "@googleforcreators/media",
   "private": false,
   "version": "0.0.1-0",
   "engines": {
@@ -13,9 +13,9 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@web-stories-wp/react": "*",
-    "@web-stories-wp/tracking": "*",
-    "@web-stories-wp/units": "*",
+    "@googleforcreators/react": "*",
+    "@googleforcreators/tracking": "*",
+    "@googleforcreators/units": "*",
     "mime": "^3.0.0",
     "prop-types": "^15.7.2"
   },

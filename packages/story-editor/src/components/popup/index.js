@@ -26,9 +26,9 @@ import {
   useRef,
   useResizeEffect,
   createPortal,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

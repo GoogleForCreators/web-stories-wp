@@ -18,9 +18,9 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { useCallback, useMemo } from '@web-stories-wp/react';
-import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
-import { getExtensionFromMimeType, getFileName } from '@web-stories-wp/media';
+import { useCallback, useMemo } from '@googleforcreators/react';
+import { getTimeTracker, trackError } from '@googleforcreators/tracking';
+import { getExtensionFromMimeType, getFileName } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

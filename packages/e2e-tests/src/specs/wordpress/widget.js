@@ -23,7 +23,7 @@ import {
   withPlugin,
   insertWidget,
   activatePlugin,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 describe('Web Stories Widget', () => {
   withPlugin('classic-widgets');

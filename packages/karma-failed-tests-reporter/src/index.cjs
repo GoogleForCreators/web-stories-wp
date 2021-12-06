@@ -46,5 +46,5 @@ const FailedTestsReporter = function (baseReporterDecorator, config) {
 FailedTestsReporter.$inject = ['baseReporterDecorator', 'config', 'helper'];
 
 module.exports = {
-  'reporter:@web-stories-wp/karma-failed-tests-reporter': ['type', FailedTestsReporter],
+  'reporter:@googleforcreators/karma-failed-tests-reporter': ['type', FailedTestsReporter],
 };

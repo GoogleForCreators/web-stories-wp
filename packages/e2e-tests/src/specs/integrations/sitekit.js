@@ -24,7 +24,7 @@ import {
   insertStoryTitle,
   withPlugin,
   visitSettings,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 describe('Site Kit plugin integration', () => {
   describe('Google Analytics', () => {

@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import STICKERS from '@web-stories-wp/stickers';
-import { dataPixels } from '@web-stories-wp/units';
+import { useCallback } from '@googleforcreators/react';
+import STICKERS from '@googleforcreators/stickers';
+import { dataPixels } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

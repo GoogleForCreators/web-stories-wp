@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/templates",
+  "name": "@googleforcreators/templates",
   "private": false,
   "version": "0.0.1-0",
   "engines": {
@@ -15,13 +15,13 @@
     "render-template-posters": "./src/cli.js"
   },
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
-    "@web-stories-wp/migration": "*",
-    "@web-stories-wp/tracking": "*"
+    "@googleforcreators/i18n": "*",
+    "@googleforcreators/migration": "*",
+    "@googleforcreators/tracking": "*"
   },
   "devDependencies": {
-    "@web-stories-wp/stickers": "*",
+    "@googleforcreators/stickers": "*",
     "puppeteer": "^10.4.0",
-    "@web-stories-wp/date": "*"
+    "@googleforcreators/date": "*"
   }
 }

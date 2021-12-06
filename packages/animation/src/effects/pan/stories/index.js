@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { getBox } from '@web-stories-wp/units';
+import { getBox } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */

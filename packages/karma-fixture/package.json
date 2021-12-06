@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/karma-fixture",
+  "name": "@googleforcreators/karma-fixture",
   "private": true,
   "engines": {
     "node": ">= 16",
@@ -8,7 +8,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/react": "*"
+    "@googleforcreators/react": "*"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.2"

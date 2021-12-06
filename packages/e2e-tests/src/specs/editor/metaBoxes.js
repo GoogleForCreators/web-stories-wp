@@ -22,7 +22,7 @@ import {
   createNewStory,
   publishStory,
   withPlugin,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 describe('Custom Meta Boxes', () => {
   describe('Unavailable', () => {

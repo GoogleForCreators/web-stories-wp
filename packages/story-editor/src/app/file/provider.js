@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**
@@ -29,7 +29,7 @@ function FileProvider({ children }) {
   const getFonts = useCallback(
     () =>
       import(
-        /* webpackChunkName: "chunk-fonts" */ '@web-stories-wp/fonts/src/fonts.json'
+        /* webpackChunkName: "chunk-fonts" */ '@googleforcreators/fonts/src/fonts.json'
       ).then((res) => res.default),
     []
   );

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { toDate } from '@web-stories-wp/date';
+import { toDate } from '@googleforcreators/date';
 
 /**
  * Internal dependencies

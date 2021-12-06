@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { useMemo } from '@web-stories-wp/react';
+import { __ } from '@googleforcreators/i18n';
+import { useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
 
 /**

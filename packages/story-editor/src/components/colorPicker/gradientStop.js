@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import { forwardRef } from '@web-stories-wp/react';
+import { forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { __, sprintf } from '@web-stories-wp/i18n';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { Icons, themeHelpers } from '@web-stories-wp/design-system';
+import { __, sprintf } from '@googleforcreators/i18n';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { Icons, themeHelpers } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

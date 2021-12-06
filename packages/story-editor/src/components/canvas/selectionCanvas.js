@@ -19,8 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useRef, useMemo, useCallback } from '@web-stories-wp/react';
-import { PAGE_RATIO, useUnits } from '@web-stories-wp/units';
+import { useEffect, useRef, useMemo, useCallback } from '@googleforcreators/react';
+import { PAGE_RATIO, useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

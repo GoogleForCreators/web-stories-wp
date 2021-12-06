@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { useMemo, useCallback, useRef, useEffect } from '@web-stories-wp/react';
-import { isPatternEqual } from '@web-stories-wp/patterns';
-import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
+import { useMemo, useCallback, useRef, useEffect } from '@googleforcreators/react';
+import { isPatternEqual } from '@googleforcreators/patterns';
+import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

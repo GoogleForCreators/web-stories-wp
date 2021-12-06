@@ -22,14 +22,14 @@ import {
   useMemo,
   useCallback,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+import { __ } from '@googleforcreators/i18n';
+import { FULLBLEED_RATIO, PAGE_RATIO } from '@googleforcreators/units';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

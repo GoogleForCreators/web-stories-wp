@@ -23,9 +23,9 @@ import {
   useCallback,
   forwardRef,
   useFocusOut,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -33,8 +33,8 @@ import {
   BUTTON_VARIANTS,
   themeHelpers,
   Icons,
-} from '@web-stories-wp/design-system';
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+} from '@googleforcreators/design-system';
+import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */

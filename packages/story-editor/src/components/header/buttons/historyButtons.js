@@ -23,9 +23,9 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '@web-stories-wp/design-system';
-import { useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/design-system';
+import { useCallback } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
 /**

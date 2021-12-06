@@ -26,10 +26,10 @@ import {
   useRef,
   useState,
   useCallback,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { PatternPropType, hasGradient } from '@web-stories-wp/patterns';
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { PatternPropType, hasGradient } from '@googleforcreators/patterns';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import Glider from '@web-stories-wp/glider';
+import Glider from '@googleforcreators/glider';
 
 /**
  * WordPress dependencies

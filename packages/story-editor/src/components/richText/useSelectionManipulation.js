@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useEffect, useMemo } from '@web-stories-wp/react';
+import { useCallback, useRef, useEffect, useMemo } from '@googleforcreators/react';
 import { EditorState } from 'draft-js';
 
 /**

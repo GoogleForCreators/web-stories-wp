@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useEffect } from '@web-stories-wp/react';
+import { useRef, useEffect } from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**

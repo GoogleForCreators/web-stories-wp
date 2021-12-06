@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import { visitDashboard } from '@googleforcreators/e2e-test-utils';
 
 describe('Document Title', () => {
   // Disable reason: broken by https://github.com/google/web-stories-wp/pull/7213, needs updating.

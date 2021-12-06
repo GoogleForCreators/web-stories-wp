@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useRef, useState, useResizeEffect } from '@web-stories-wp/react';
+import { memo, useRef, useState, useResizeEffect } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

@@ -24,14 +24,14 @@ import {
   useCallback,
   useRef,
   useLayoutEffect,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
   LoadingSpinner,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

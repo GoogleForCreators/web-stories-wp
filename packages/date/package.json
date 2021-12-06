@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/date",
+  "name": "@googleforcreators/date",
   "private": false,
   "version": "0.0.1-0",
   "engines": {
@@ -12,7 +12,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
+    "@googleforcreators/i18n": "*",
     "date-fns": "^2.25.0",
     "date-fns-tz": "^1.1.6"
   },

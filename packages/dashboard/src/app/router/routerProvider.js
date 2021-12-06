@@ -23,7 +23,7 @@ import {
   useEffect,
   useState,
   createContext,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { createHashHistory } from 'history';
 

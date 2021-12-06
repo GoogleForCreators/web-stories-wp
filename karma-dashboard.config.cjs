@@ -48,14 +48,14 @@ module.exports = function (config) {
       'karma-sourcemap-loader',
       'karma-webpack',
       'karma-coverage-istanbul-reporter',
-      require('@web-stories-wp/karma-puppeteer-launcher'),
-      require('@web-stories-wp/karma-puppeteer-client'),
-      require('@web-stories-wp/karma-failed-tests-reporter'),
+      require('@googleforcreators/karma-puppeteer-launcher'),
+      require('@googleforcreators/karma-puppeteer-client'),
+      require('@googleforcreators/karma-failed-tests-reporter'),
     ],
 
     // Frameworks to use.
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', '@web-stories-wp/karma-puppeteer-client'],
+    frameworks: ['jasmine', '@googleforcreators/karma-puppeteer-client'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -101,7 +101,7 @@ module.exports = function (config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: [
       'dots',
-      '@web-stories-wp/karma-failed-tests-reporter',
+      '@googleforcreators/karma-failed-tests-reporter',
       config.coverage && 'coverage-istanbul',
     ].filter(Boolean),
 
@@ -120,7 +120,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['karma-puppeteer-launcher'], // @web-stories-wp/karma-puppeteer-launcher package
+    browsers: ['karma-puppeteer-launcher'], // @googleforcreators/karma-puppeteer-launcher package
 
     puppeteerLauncher: {
       puppeteer: {

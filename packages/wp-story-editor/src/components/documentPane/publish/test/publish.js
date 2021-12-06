@@ -24,7 +24,7 @@ import {
   ConfigContext,
   StoryContext,
   InspectorContext,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies

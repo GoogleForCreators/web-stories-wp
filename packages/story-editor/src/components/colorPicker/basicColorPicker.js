@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { PatternPropType } from '@web-stories-wp/patterns';
+import { PatternPropType } from '@googleforcreators/patterns';
 import {
   THEME_CONSTANTS,
   Button,
@@ -30,9 +30,9 @@ import {
   BUTTON_VARIANTS,
   localStore,
   LOCAL_STORAGE_PREFIX,
-} from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
-import { useState } from '@web-stories-wp/react';
+} from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

@@ -18,9 +18,9 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useMemo, useState } from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { getMsFromHMS } from '@web-stories-wp/media';
+import { useCallback, useMemo, useState } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
+import { getMsFromHMS } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

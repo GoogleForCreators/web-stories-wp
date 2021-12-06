@@ -23,11 +23,11 @@ import {
   Link,
   Tooltip,
   Text,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { THUMBNAIL_BG } from '../../thumbnail/stories/demoThumbnails';
 import { CARD_TYPE } from '../../checklistCard/constants';

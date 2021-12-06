@@ -31,7 +31,7 @@ import {
   toBeValidAMP,
   toBeValidAMPStoryElement,
   toBeValidAMPStoryPage,
-} from '@web-stories-wp/jest-amp';
+} from '@googleforcreators/jest-amp';
 
 // eslint-disable-next-line jest/require-hook
 expect.extend({

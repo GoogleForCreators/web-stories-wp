@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useMemo, useEffect, useCallback } from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { useMemo, useEffect, useCallback } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

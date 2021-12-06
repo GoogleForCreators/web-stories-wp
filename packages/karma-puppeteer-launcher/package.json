@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/karma-puppeteer-launcher",
+  "name": "@googleforcreators/karma-puppeteer-launcher",
   "private": true,
   "engines": {
     "node": ">= 16",

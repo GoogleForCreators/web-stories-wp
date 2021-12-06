@@ -25,7 +25,7 @@ import {
   lightMode,
   SnackbarProvider,
   noop,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

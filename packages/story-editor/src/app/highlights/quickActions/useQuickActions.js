@@ -18,16 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { useCallback, useMemo, useRef } from '@googleforcreators/react';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   prettifyShortcut,
   useSnackbar,
   PLACEMENT,
   Icons,
-} from '@web-stories-wp/design-system';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { canTranscodeResource, resourceList } from '@web-stories-wp/media';
+} from '@googleforcreators/design-system';
+import { trackEvent } from '@googleforcreators/tracking';
+import { canTranscodeResource, resourceList } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -214,7 +214,7 @@ MediaPicker.propTypes = {
   ]),
 };
 
-/** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
+/** @typedef {import('@googleforcreators/design-system').MenuItemProps} MenuItemProps */
 
 /**
  * Determines the quick actions to display in the quick

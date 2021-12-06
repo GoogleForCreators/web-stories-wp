@@ -26,7 +26,7 @@ import {
   useRef,
   useState,
   createContext,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
 
 if (!('KeyframeEffect' in window)) {

@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/animation",
+  "name": "@googleforcreators/animation",
   "private": false,
   "version": "0.0.1-0",
   "type": "module",
@@ -12,10 +12,10 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
-    "@web-stories-wp/media": "*",
-    "@web-stories-wp/react": "*",
-    "@web-stories-wp/units": "*",
+    "@googleforcreators/i18n": "*",
+    "@googleforcreators/media": "*",
+    "@googleforcreators/react": "*",
+    "@googleforcreators/units": "*",
     "flagged": "^2.0.1",
     "prop-types": "^15.7.2",
     "styled-components": "^5.3.3",

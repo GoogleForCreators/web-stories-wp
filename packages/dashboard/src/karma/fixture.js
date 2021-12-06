@@ -25,12 +25,12 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { setAppElement, noop } from '@web-stories-wp/design-system';
+import { setAppElement, noop } from '@googleforcreators/design-system';
 import {
   FixtureEvents,
   ComponentStub,
   actPromise,
-} from '@web-stories-wp/karma-fixture';
+} from '@googleforcreators/karma-fixture';
 
 /**
  * Internal dependencies

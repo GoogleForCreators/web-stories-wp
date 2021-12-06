@@ -21,7 +21,7 @@ import {
   createNewStory,
   withPlugin,
   clearLocalStorage,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 const media3pSelector = '#library-tab-media3p';
 

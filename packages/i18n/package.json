@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/i18n",
+  "name": "@googleforcreators/i18n",
   "private": true,
   "version": "0.0.1-0",
   "engines": {
@@ -14,7 +14,7 @@
   "sideEffects": false,
   "dependencies": {
     "@tannin/sprintf": "^1.2.0",
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/react": "*",
     "prop-types": "^15.7.2",
     "tannin": "^1.2.0"
   }

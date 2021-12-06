@@ -18,7 +18,7 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import { visitDashboard } from '@googleforcreators/e2e-test-utils';
 
 describe('Template', () => {
   it('should be able to use existing template for new story', async () => {

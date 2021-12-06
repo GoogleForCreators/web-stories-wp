@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 export const DEFAULT_POPUP_FILL_WIDTH = 276;
 export const DEFAULT_PLACEHOLDER = __('Search', 'web-stories');

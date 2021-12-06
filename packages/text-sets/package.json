@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/text-sets",
+  "name": "@googleforcreators/text-sets",
   "private": false,
   "version": "0.0.1-0",
   "engines": {
@@ -15,7 +15,7 @@
     "render-text-sets": "./src/cli.js"
   },
   "dependencies": {
-    "@web-stories-wp/migration": "*"
+    "@googleforcreators/migration": "*"
   },
   "devDependencies": {
     "puppeteer": "*"

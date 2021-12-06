@@ -26,7 +26,7 @@ import {
   visitAdminPage,
   activatePlugin,
   deactivatePlugin,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;

@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/stickers",
+  "name": "@googleforcreators/stickers",
   "private": false,
   "version": "0.0.1-0",
   "engines": {
@@ -12,8 +12,8 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/i18n": "*",
+    "@googleforcreators/react": "*",
     "prop-types": "^15.7.2"
   }
 }

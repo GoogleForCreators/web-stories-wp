@@ -23,7 +23,7 @@ import {
   withRTL,
   activatePlugin,
   deactivatePlugin,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 const percyCSS = `.plugin-version-author-uri, .amp-plugin-notice, .update-message, .subsubsub { display: none; }`;
 

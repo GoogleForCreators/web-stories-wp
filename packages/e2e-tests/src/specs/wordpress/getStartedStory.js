@@ -18,7 +18,7 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { withUser, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
+import { withUser, visitAdminPage } from '@googleforcreators/e2e-test-utils';
 
 describe('Get Started Story', () => {
   describe('Admin User', () => {

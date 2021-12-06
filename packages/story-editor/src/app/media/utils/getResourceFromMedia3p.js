@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createResource } from '@web-stories-wp/media';
+import { createResource } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
@@ -337,7 +337,7 @@ function getGifResourceFromMedia3p(m) {
  * Generates a resource object from a Media3P object from the API.
  *
  * @param {Media3pMedia} m A Media3P Media object.
- * @return {import('@web-stories-wp/media').Resource} Resource object.
+ * @return {import('@googleforcreators/media').Resource} Resource object.
  */
 export default function getResourceFromMedia3p(m) {
   switch (m.type.toLowerCase()) {

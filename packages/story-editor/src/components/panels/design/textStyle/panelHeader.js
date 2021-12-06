@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -25,14 +25,14 @@ import {
   BUTTON_VARIANTS,
   Icons,
   themeHelpers,
-} from '@web-stories-wp/design-system';
-import { useContext } from '@web-stories-wp/react';
+} from '@googleforcreators/design-system';
+import { useContext } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
 import Tooltip from '../../../tooltip';

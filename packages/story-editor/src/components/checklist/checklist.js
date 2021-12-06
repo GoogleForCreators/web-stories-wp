@@ -16,14 +16,14 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   useEffect,
   useRef,
   useCallback,
   forwardRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 /**
  * Internal dependencies

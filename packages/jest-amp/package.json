@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/jest-amp",
+  "name": "@googleforcreators/jest-amp",
   "private": true,
   "engines": {
     "node": ">= 16",
@@ -12,7 +12,7 @@
   "main": "./src/index.js",
   "dependencies": {
     "@ampproject/toolbox-optimizer": "^2.8.3",
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/react": "*",
     "amphtml-validator": "1.0.35",
     "prop-types": "^15.7.2"
   }

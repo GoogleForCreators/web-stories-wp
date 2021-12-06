@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
-import { curatedFontNames } from '@web-stories-wp/fonts';
+import { curatedFontNames } from '@googleforcreators/fonts';
 
 /**
  * Internal dependencies

@@ -22,18 +22,18 @@ import {
   useCallback,
   useMemo,
   useReduction,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import {
   trackError,
   trackEvent,
   getTimeTracker,
-} from '@web-stories-wp/tracking';
+} from '@googleforcreators/tracking';
 import {
   createBlob,
   getFileName,
   getImageDimensions,
   isAnimatedGif,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies

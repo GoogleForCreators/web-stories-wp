@@ -23,7 +23,7 @@ import {
   publishStory,
   insertStoryTitle,
   withPlugin,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 async function goToAndExpandTaxonomyPanel() {
   await expect(page).toClick('li[role="tab"]', { text: 'Document' });

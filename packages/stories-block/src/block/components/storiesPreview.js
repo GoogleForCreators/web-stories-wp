@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Glider from '@web-stories-wp/glider';
+import Glider from '@googleforcreators/glider';
 
 /**
  * WordPress dependencies

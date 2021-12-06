@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, withUser } from '@googleforcreators/e2e-test-utils';
 
 describe('Pre-Publish Checklist : Contributor User', () => {
   withUser('contributor', 'password');

@@ -18,10 +18,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useMemo, useState } from '@web-stories-wp/react';
+import { useEffect, useRef, useMemo, useState } from '@googleforcreators/react';
 import { useFeatures } from 'flagged';
-import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
-import { loadTextSets } from '@web-stories-wp/text-sets';
+import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
+import { loadTextSets } from '@googleforcreators/text-sets';
 
 /**
  * Internal dependencies

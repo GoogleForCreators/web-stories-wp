@@ -25,8 +25,8 @@ import {
   useState,
   useRef,
   useEffect,
-} from '@web-stories-wp/react';
-import { _x, __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import { _x, __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies

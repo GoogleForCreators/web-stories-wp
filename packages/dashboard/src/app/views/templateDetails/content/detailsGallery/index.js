@@ -17,8 +17,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from '@web-stories-wp/react';
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { useMemo } from '@googleforcreators/react';
+import { sprintf, __ } from '@googleforcreators/i18n';
 import styled, { css } from 'styled-components';
 import {
   Button,
@@ -30,7 +30,7 @@ import {
   Icons,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

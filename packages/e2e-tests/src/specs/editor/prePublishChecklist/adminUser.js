@@ -22,7 +22,7 @@ import {
   publishStory,
   triggerHighPriorityChecklistSection,
   uploadPublisherLogoEditor,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
 describe('Pre-Publish Checklist : Admin User', () => {

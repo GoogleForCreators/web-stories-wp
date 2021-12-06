@@ -30,11 +30,11 @@ import './setLocaleData';
 /**
  * External dependencies
  */
-import Dashboard from '@web-stories-wp/dashboard';
-import { setAppElement } from '@web-stories-wp/design-system';
-import { StrictMode, render } from '@web-stories-wp/react';
-import { updateSettings } from '@web-stories-wp/date';
-import { initializeTracking } from '@web-stories-wp/tracking';
+import Dashboard from '@googleforcreators/dashboard';
+import { setAppElement } from '@googleforcreators/design-system';
+import { StrictMode, render } from '@googleforcreators/react';
+import { updateSettings } from '@googleforcreators/date';
+import { initializeTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

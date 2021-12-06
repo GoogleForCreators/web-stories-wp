@@ -24,10 +24,10 @@ import {
   useState,
   useFocusOut,
   useMemo,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { useGridViewKeys } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
+import { useGridViewKeys } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

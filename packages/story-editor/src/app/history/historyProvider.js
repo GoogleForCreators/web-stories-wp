@@ -23,8 +23,8 @@ import {
   useEffect,
   useState,
   useRef,
-} from '@web-stories-wp/react';
-import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

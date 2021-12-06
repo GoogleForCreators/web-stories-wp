@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { toUTCDate } from '@web-stories-wp/date';
+import { toUTCDate } from '@googleforcreators/date';
 
 const formattedTemplatesArray = [
   {

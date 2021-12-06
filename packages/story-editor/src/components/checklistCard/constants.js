@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 export const CARD_TYPE = {
   SINGLE_ISSUE: 'single_issue',

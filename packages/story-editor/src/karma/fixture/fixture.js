@@ -27,9 +27,9 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { setAppElement } from '@web-stories-wp/design-system';
-import { FixtureEvents } from '@web-stories-wp/karma-fixture';
-import { DATA_VERSION } from '@web-stories-wp/migration';
+import { setAppElement } from '@googleforcreators/design-system';
+import { FixtureEvents } from '@googleforcreators/karma-fixture';
+import { DATA_VERSION } from '@googleforcreators/migration';
 
 /**
  * Internal dependencies

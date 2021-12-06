@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { setDefaultOptions } from 'expect-puppeteer';
-import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
+import { toBeValidAMP } from '@googleforcreators/jest-puppeteer-amp';
 import {
   enablePageDialogAccept,
   setBrowserViewport,
@@ -27,7 +27,7 @@ import {
   deleteAllMedia,
   trashAllTerms,
   clearLocalStorage,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 expect.extend({
   toBeValidAMP,

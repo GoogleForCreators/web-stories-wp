@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/stories-block",
+  "name": "@googleforcreators/stories-block",
   "private": true,
   "engines": {
     "node": ">= 16",
@@ -15,8 +15,8 @@
     "*.css"
   ],
   "dependencies": {
-    "@web-stories-wp/glider": "*",
-    "@web-stories-wp/tracking": "*",
+    "@googleforcreators/glider": "*",
+    "@googleforcreators/tracking": "*",
     "@wordpress/api-fetch": "^5.2.6",
     "@wordpress/block-editor": "^8.0.1",
     "@wordpress/blocks": "^11.0.0",

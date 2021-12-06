@@ -19,10 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useEffect, useRef, useMemo } from '@web-stories-wp/react';
+import { useCallback, useEffect, useRef, useMemo } from '@googleforcreators/react';
 import { useFeature, useFeatures } from 'flagged';
-import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect, useRef, useState } from '@web-stories-wp/react';
+import { useEffect, useRef, useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import {
   preloadImage,
@@ -26,7 +26,7 @@ import {
   getMediaSizePositionProps,
   calculateSrcSet,
   getSmallestUrlForWidth,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies

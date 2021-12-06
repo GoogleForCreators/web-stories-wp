@@ -30,5 +30,5 @@ function initEvents(files) {
 initEvents.$inject = ['config.files'];
 
 module.exports = {
-  'framework:@web-stories-wp/karma-puppeteer-client': ['factory', initEvents],
+  'framework:@googleforcreators/karma-puppeteer-client': ['factory', initEvents],
 };

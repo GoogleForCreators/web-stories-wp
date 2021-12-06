@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { CircularProgress, useStory } from '@web-stories-wp/story-editor';
+import { CircularProgress, useStory } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies

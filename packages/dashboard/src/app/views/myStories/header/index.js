@@ -22,12 +22,12 @@ import {
   memo,
   useCallback,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { __, sprintf } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
-import { Pill } from '@web-stories-wp/design-system';
+import { Pill } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

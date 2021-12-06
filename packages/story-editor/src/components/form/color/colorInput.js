@@ -25,20 +25,20 @@ import {
   useState,
   useRef,
   useUnmount,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import {
   getPreviewText,
   getOpaquePattern,
   PatternPropType,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 import {
   HexInput,
   Text,
   THEME_CONSTANTS,
   Swatch,
   PLACEMENT,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

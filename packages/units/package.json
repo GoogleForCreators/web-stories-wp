@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/units",
+  "name": "@googleforcreators/units",
   "private": false,
   "version": "0.0.1-0",
   "engines": {
@@ -13,7 +13,7 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/react": "*",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {}

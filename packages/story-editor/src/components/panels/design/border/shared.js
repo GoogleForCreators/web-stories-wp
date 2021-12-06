@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createSolid } from '@web-stories-wp/patterns';
+import { createSolid } from '@googleforcreators/patterns';
 
 export const DEFAULT_BORDER = {
   left: 0,

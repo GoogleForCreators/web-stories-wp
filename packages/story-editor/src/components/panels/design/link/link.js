@@ -24,11 +24,11 @@ import {
   useState,
   useDebouncedCallback,
   useBatchingCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { Input, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -182,7 +182,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     /**
      * Handle link icon change.
      *
-     * @param {import('@web-stories-wp/media').Resource} resource The new image.
+     * @param {import('@googleforcreators/media').Resource} resource The new image.
      */
     (resource) => {
       handleChange({ icon: resource?.src }, true);

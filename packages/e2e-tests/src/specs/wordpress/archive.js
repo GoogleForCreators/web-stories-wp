@@ -30,7 +30,7 @@ import {
   createURL,
   trashAllPosts,
   setPostContent,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 const pageTitle = 'Web Stories Archive';
 const pageContent = 'Web Stories archive content';

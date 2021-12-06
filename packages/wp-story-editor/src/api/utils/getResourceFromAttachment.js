@@ -21,7 +21,7 @@ import {
   createResource,
   getTypeFromMime,
   getResourceSize,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 
 /**
  * MediaDetails object.

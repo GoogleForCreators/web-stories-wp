@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { UnitsProvider } from '@web-stories-wp/units';
-import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { UnitsProvider } from '@googleforcreators/units';
+import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

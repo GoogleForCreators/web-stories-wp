@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/tinymce-button",
+  "name": "@googleforcreators/tinymce-button",
   "private": true,
   "engines": {
     "node": ">= 16",

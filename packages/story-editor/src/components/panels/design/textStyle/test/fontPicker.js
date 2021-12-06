@@ -18,8 +18,8 @@
  * External dependencies
  */
 import { act, fireEvent, waitFor, screen } from '@testing-library/react';
-import { curatedFontNames } from '@web-stories-wp/fonts';
-import { Datalist } from '@web-stories-wp/design-system';
+import { curatedFontNames } from '@googleforcreators/fonts';
+import { Datalist } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -31,8 +31,8 @@ import FontContext from '../../../../../app/font/context';
 import { renderWithTheme } from '../../../../../testUtils';
 import fontsListResponse from './fontsResponse';
 
-jest.mock('@web-stories-wp/design-system', () => ({
-  ...jest.requireActual('@web-stories-wp/design-system'),
+jest.mock('@googleforcreators/design-system', () => ({
+  ...jest.requireActual('@googleforcreators/design-system'),
   Popup: ({ children, isOpen }) => (isOpen ? children : null),
 }));
 

@@ -22,7 +22,7 @@ import {
   DANGER_ZONE_HEIGHT,
   dataToEditorY,
   getBox,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 
 /**
  * Internal dependencies

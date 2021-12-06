@@ -22,18 +22,18 @@ import {
   useMemo,
   useCallback,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import {
   _n,
   sprintf,
   __,
   _x,
   translateToInclusiveList,
-} from '@web-stories-wp/i18n';
+} from '@googleforcreators/i18n';
 import {
   THEME_CONSTANTS,
   LOCAL_STORAGE_PREFIX,
@@ -42,7 +42,7 @@ import {
   Headline,
   useLiveRegion,
   localStore,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

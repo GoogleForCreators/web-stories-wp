@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/widget",
+  "name": "@googleforcreators/widget",
   "private": true,
   "engines": {
     "node": ">= 16",

@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/activation-notice",
+  "name": "@googleforcreators/activation-notice",
   "private": true,
   "engines": {
     "node": ">= 16",
@@ -11,7 +11,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/tracking": "*",
+    "@googleforcreators/tracking": "*",
     "@wordpress/element": "^4.0.0",
     "@wordpress/i18n": "^4.2.2",
     "flagged": "^2.0.1",

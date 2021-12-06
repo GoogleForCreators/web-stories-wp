@@ -19,8 +19,8 @@
  */
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
-import { curatedFontNames } from '@web-stories-wp/fonts';
-import { PAGE_RATIO, UnitsProvider } from '@web-stories-wp/units';
+import { curatedFontNames } from '@googleforcreators/fonts';
+import { PAGE_RATIO, UnitsProvider } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

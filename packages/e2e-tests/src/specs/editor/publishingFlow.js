@@ -25,7 +25,7 @@ import {
   withPlugin,
   publishStory,
   getEditedPostContent,
-} from '@web-stories-wp/e2e-test-utils';
+} from '@googleforcreators/e2e-test-utils';
 
 // Disable for https://github.com/google/web-stories-wp/issues/6238
 // eslint-disable-next-line jest/no-disabled-tests

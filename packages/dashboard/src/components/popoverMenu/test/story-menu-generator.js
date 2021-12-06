@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { noop } from '@web-stories-wp/design-system';
+import { noop } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

@@ -18,8 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { canTranscodeResource } from '@web-stories-wp/media';
-import { __ } from '@web-stories-wp/i18n';
+import { canTranscodeResource } from '@googleforcreators/media';
+import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import {
@@ -32,8 +32,8 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   useLiveRegion,
-} from '@web-stories-wp/design-system';
-import { useCallback, useEffect } from '@web-stories-wp/react';
+} from '@googleforcreators/design-system';
+import { useCallback, useEffect } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

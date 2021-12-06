@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { getAMPValidationErrors } from '@web-stories-wp/jest-amp';
+import { getAMPValidationErrors } from '@googleforcreators/jest-amp';
 
 /** @typedef {import('puppeteer').Page} Page */
 /** @typedef {import('jest').CustomMatcherResult} CustomMatcherResult */

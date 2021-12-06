@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -29,14 +29,14 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
   useLiveRegion,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';

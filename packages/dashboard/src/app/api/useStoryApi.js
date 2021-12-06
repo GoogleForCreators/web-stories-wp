@@ -22,8 +22,8 @@ import {
   useMemo,
   useReducer,
   useRef,
-} from '@web-stories-wp/react';
-import { getTimeTracker } from '@web-stories-wp/tracking';
+} from '@googleforcreators/react';
+import { getTimeTracker } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
