@@ -295,10 +295,10 @@ function HierarchicalTermSelector({
                 onChange={handleChangeNewCategoryName}
                 hasFocus={hasFocus}
               />
-              <Label htmlFor={dropdownId}>{taxonomy.labels.parent_item}</Label>
+              <Label htmlFor={dropdownId}>{taxonomy.labels.parentItem}</Label>
               <DropDown
                 id={dropdownId}
-                ariaLabel={taxonomy.labels.parent_item}
+                ariaLabel={taxonomy.labels.parentItem}
                 options={dropdownCategories}
                 selectedValue={selectedParent}
                 onMenuItemClick={handleParentSelect}
