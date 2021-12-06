@@ -100,7 +100,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-styled-components-a11y": "^0.0.34",
-    "eslint-plugin-testing-library": "^4.12.4",
+    "eslint-plugin-testing-library": "^5.0.1",
     "expose-loader": "^1.0.3",
     "file-loader": "^6.2.0",
     "glob": "^7.2.0",
