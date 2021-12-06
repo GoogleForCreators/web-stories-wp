@@ -131,9 +131,6 @@ describe('Video output', () => {
           },
         ],
       },
-      args: {
-        enableBetterCaptions: true,
-      },
     };
 
     const output = <VideoOutput {...props} />;
