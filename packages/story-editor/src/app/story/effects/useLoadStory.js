@@ -41,7 +41,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     permalinkTemplate,
     stylePresets: globalStoryStyles,
     password,
-    preview_link: previewLink,
+    previewLink,
     edit_link: editLink,
     embed_post_link: embedPostLink,
     author,
