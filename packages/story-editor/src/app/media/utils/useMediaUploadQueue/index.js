@@ -281,7 +281,6 @@ function useMediaUploadQueue() {
               try {
                 newFile = await stripAudioFromVideo(file);
                 finishMuting({ id, file: newFile });
-                additionalData.web_stories_is_muted = true;
               } catch (error) {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });
@@ -321,7 +320,11 @@ function useMediaUploadQueue() {
 
           const trackTiming = getTimeTracker('load_upload_media');
 
-          if (resource.type === 'video' && resource.isMuted !== null) {
+          if (
+            resource.type === 'video' &&
+            resource.isMuted !== null &&
+            additionalData?.web_stories_is_muted === undefined
+          ) {
             additionalData.web_stories_is_muted = resource.isMuted;
           }
 
