@@ -44,7 +44,7 @@ const mockResource = {
   guid: {
     rendered: 'guid-123',
   },
-  media_details: {
+  mediaDetails: {
     width: 1080,
     height: 720,
   },
