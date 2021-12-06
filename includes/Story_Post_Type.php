@@ -72,13 +72,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	private $settings;
 
 	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
