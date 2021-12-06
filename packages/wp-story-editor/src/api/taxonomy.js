@@ -26,7 +26,7 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import { snakeToCamelCase } from './utils';
+import { snakeToCamelCaseObjectKeys } from './utils';
 
 /**
  * Get all taxonomies.
@@ -46,14 +46,7 @@ export async function getTaxonomies(config) {
     taxonomy.restPath = taxonomy['_links']?.['wp:items']?.[0]?.href;
     delete taxonomy['_links'];
 
-    const entries = Object.entries(taxonomy);
-
-    const formattedEntries = entries.map((entry) => [
-      snakeToCamelCase(entry[0]),
-      entry[1],
-    ]);
-
-    return Object.fromEntries(formattedEntries);
+    return snakeToCamelCaseObjectKeys(taxonomy, ['capabilities', 'visibility']);
   });
 }
 
