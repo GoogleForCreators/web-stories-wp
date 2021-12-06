@@ -269,7 +269,7 @@ function HierarchicalTermSelector({
       <HierarchicalInput
         inputValue={searchText}
         onInputChange={handleInputChange}
-        label={taxonomy.labels.search_items}
+        label={taxonomy.labels.searchItems}
         options={orderedCategories}
         onChange={handleClickCategory}
         noOptionsText={taxonomy.labels?.not_found}

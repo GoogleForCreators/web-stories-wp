@@ -128,7 +128,7 @@ describe('TaxonomiesPanel', () => {
           restBase: 'web_story_category',
           name: 'Categories',
           labels: {
-            search_items: 'Story Categories',
+            searchItems: 'Story Categories',
             add_new_item: 'Add New',
             not_found: '',
           },
