@@ -150,14 +150,6 @@ class Optimization {
 			);
 		}
 
-		// Temporarily disable the MinifyHtml transformer, see https://github.com/google/web-stories-wp/issues/9861.
-		$transformers = array_diff(
-			$transformers,
-			[
-				MinifyHtml::class,
-			]
-		);
-
 		$configuration = [
 			Configuration::KEY_TRANSFORMERS => $transformers,
 		];

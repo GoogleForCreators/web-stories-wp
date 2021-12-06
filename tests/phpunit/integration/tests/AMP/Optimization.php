@@ -83,14 +83,6 @@ class Optimization extends TestCase {
 
 		$transformers = Configuration::DEFAULT_TRANSFORMERS;
 
-		// Temporarily disable the MinifyHtml transformer, see https://github.com/google/web-stories-wp/issues/9861.
-		$transformers = array_diff(
-			$transformers,
-			[
-				MinifyHtml::class,
-			]
-		);
-
 		$this->assertCount( 1, $config_array );
 		$this->assertArrayHasKey( 'transformers', $config_array );
 		$this->assertEqualSets( $transformers, $config_array['transformers'] );
@@ -111,6 +103,7 @@ class Optimization extends TestCase {
 			AmpRuntimePreloads::class,
 			AmpBoilerplateErrorHandler::class,
 			GoogleFontsPreconnect::class,
+			MinifyHtml::class,
 			OptimizeViewport::class,
 			ReorderHead::class,
 		];
