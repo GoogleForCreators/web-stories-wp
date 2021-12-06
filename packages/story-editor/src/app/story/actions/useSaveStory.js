@@ -83,7 +83,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             previewLink,
             editLink: newEditLink,
             embedPostLink,
-            featured_media: featuredMedia,
+            featuredMedia,
           } = data;
 
           const properties = {

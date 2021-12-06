@@ -50,7 +50,7 @@ function loadStory(storyId, post, restore, clearHistory) {
       'assign-author': false,
     },
     lock_user: lockUser,
-    featured_media: featuredMedia,
+    featuredMedia,
     publisher_logo: publisherLogo,
     taxonomies,
     terms,
