@@ -288,7 +288,7 @@ export default [
     poster: 'http://localhost:9876/__static__/asteroid.png',
     posterId: 106,
     length: 8,
-    length_formatted: '0:08',
+    lengthFormatted: '0:08',
     width: 640,
     height: 360,
     sizes: {},
