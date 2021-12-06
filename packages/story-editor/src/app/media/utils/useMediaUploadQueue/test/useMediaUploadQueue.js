@@ -55,7 +55,7 @@ const mockResource = {
   description: {
     raw: 'Description',
   },
-  featured_media_src: {},
+  featuredMediaSrc: {},
   meta: {
     web_stories_is_poster: false,
     web_stories_poster_id: 0,
