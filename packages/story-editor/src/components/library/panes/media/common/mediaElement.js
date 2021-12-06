@@ -29,6 +29,7 @@ import {
 import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
 import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
+import { Blurhash } from 'react-blurhash';
 /**
  * Internal dependencies
  */
@@ -65,6 +66,12 @@ const InnerContainer = styled.div`
   }
 `;
 
+const BlurHastContainer = styled(Blurhash)`
+  position: absolute !important;
+  top: 0;
+  left: 0;
+`;
+
 function Element({
   index,
   resource,
@@ -88,7 +95,9 @@ function Element({
     isMuting,
     isTrimming,
     baseColor,
+    blurHash,
   } = resource;
+  console.log(blurHash);
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -224,6 +233,14 @@ function Element({
           active={active}
         />
         {attribution}
+        {blurHash && (
+          <BlurHastContainer
+            hash={blurHash}
+            width={width}
+            height={height}
+            punch={1}
+          />
+        )}
         {(local || isTranscoding || isMuting || isTrimming) && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}

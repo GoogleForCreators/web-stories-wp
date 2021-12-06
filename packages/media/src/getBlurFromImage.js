@@ -38,6 +38,6 @@ const encodeImageToBlurhash = async (src) => {
   const imageData = getImageData(image);
   const { data, width, height } = imageData;
   // todo workout why 1 and 1 the only options that are not painfully slow.
-  return encode(data, width, height, 1, 1);
+  return encode(data, width, height, 4, 4);
 };
 export default encodeImageToBlurhash;
