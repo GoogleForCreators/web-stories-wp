@@ -255,11 +255,9 @@ describe('PublishPanel', () => {
 
     const element = screen.getByRole('button', { name: 'Story publish time' });
 
-    act(() => {
-      fireEvent.keyDown(element, {
-        key: 'Enter',
-        which: 13,
-      });
+    fireEvent.keyDown(element, {
+      key: 'Enter',
+      which: 13,
     });
 
     await waitFor(() => {

@@ -31,7 +31,7 @@
 /**
  * External dependencies
  */
-import { waitFor, fireEvent, act, screen } from '@testing-library/react';
+import { waitFor, fireEvent, screen } from '@testing-library/react';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
