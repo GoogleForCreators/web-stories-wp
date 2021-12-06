@@ -49,7 +49,7 @@ function loadStory(storyId, post, restore, clearHistory) {
       publish: false,
       'assign-author': false,
     },
-    lock_user: lockUser,
+    lockUser,
     featuredMedia,
     publisherLogo,
     taxonomies,

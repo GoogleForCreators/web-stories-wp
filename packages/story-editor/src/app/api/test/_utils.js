@@ -27,7 +27,7 @@ export function createStory(properties = {}) {
     author: { id: 1, name: 'John Doe' },
     featuredMedia: { height: 0, id: 0, url: '', width: 0 },
     publisherLogo: { height: 0, id: 0, url: '', width: 0 },
-    lock_user: {
+    lockUser: {
       id: 0,
       name: '',
       avatar: '',
