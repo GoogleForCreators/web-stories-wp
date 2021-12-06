@@ -73,7 +73,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 
 
 	/**
-	 * Analytics constructor.
+	 * Story post type constructor.
 	 *
 	 * @since 1.12.0
 	 *
