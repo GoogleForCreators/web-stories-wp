@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function transformGetStoryResponse(post) {
+function transformStoryResponse(post) {
   const { _embedded: embedded = {}, _links: links = {} } = post;
 
   post.author = {
@@ -59,4 +59,4 @@ function transformGetStoryResponse(post) {
   return post;
 }
 
-export default transformGetStoryResponse;
+export default transformStoryResponse;

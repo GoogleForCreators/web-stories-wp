@@ -27,7 +27,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_EMBED, STORY_FIELDS } from './constants';
-import { base64Encode, transformGetStoryResponse } from './utils';
+import { base64Encode, transformStoryResponse } from './utils';
 
 export function getStoryById(config, storyId) {
   const path = addQueryArgs(`${config.api.stories}${storyId}/`, {
@@ -38,7 +38,7 @@ export function getStoryById(config, storyId) {
     _fields: STORY_FIELDS,
   });
 
-  return apiFetch({ path }).then(transformGetStoryResponse);
+  return apiFetch({ path }).then(transformStoryResponse);
 }
 
 const getStorySaveData = (
