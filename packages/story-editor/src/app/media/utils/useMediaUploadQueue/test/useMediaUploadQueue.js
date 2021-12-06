@@ -252,10 +252,14 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
-    const { resource: { id: resourceId }, } = result.current.state.progress[0];
+    const {
+      resource: { id: resourceId },
+    } = result.current.state.progress[0];
     await waitFor(() => expect(result.current.state.isMuting).toBeTrue());
 
-    expect(result.current.state.isCurrentResourceProcessing(resourceId)).toBeTrue();
+    expect(
+      result.current.state.isCurrentResourceProcessing(resourceId)
+    ).toBeTrue();
     expect(result.current.state.isCurrentResourceMuting(resourceId)).toBeTrue();
 
     expect(result.current.state.isResourceProcessing(123)).toBeFalse();
@@ -280,12 +284,18 @@ describe('useMediaUploadQueue', () => {
       })
     );
 
-    const { resource: { id: resourceId }, } = result.current.state.progress[0];
+    const {
+      resource: { id: resourceId },
+    } = result.current.state.progress[0];
 
     await waitFor(() => expect(result.current.state.isTrimming).toBeTrue());
 
-    expect(result.current.state.isCurrentResourceProcessing(resourceId)).toBeTrue();
-    expect(result.current.state.isCurrentResourceTrimming(resourceId)).toBeTrue();
+    expect(
+      result.current.state.isCurrentResourceProcessing(resourceId)
+    ).toBeTrue();
+    expect(
+      result.current.state.isCurrentResourceTrimming(resourceId)
+    ).toBeTrue();
 
     expect(result.current.state.isResourceProcessing(123)).toBeFalse();
     expect(result.current.state.isResourceTrimming(123)).toBeFalse();

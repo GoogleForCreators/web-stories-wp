@@ -87,10 +87,9 @@ function Element({
     baseColor,
   } = resource;
 
-  const { isCurrentResourceProcessing } =
-    useLocalMedia(({ state }) => ({
-      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
-    }));
+  const { isCurrentResourceProcessing } = useLocalMedia(({ state }) => ({
+    isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+  }));
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -226,8 +225,7 @@ function Element({
           active={active}
         />
         {attribution}
-        {(!src ||
-          isCurrentResourceProcessing(resourceId)) && (
+        {(!src || isCurrentResourceProcessing(resourceId)) && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (
