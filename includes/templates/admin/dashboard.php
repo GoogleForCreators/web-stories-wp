@@ -29,6 +29,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+$dashboard_settings = \Google\Web_Stories\Services::get( 'dashboard' )->get_dashboard_settings();
+
+$init_script = <<<JS
+	webStories.domReady( function() {
+	  webStories.initializeStoryDashboard( 'web-stories-dashboard', %s );
+	} );
+JS;
+
+$script = sprintf( $init_script, wp_json_encode( $dashboard_settings ) );
+
+wp_add_inline_script( \Google\Web_Stories\Admin\Dashboard::SCRIPT_HANDLE, $script );
+
 ?>
 
 <div class="web-stories-wp">

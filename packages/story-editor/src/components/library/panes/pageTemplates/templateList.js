@@ -59,11 +59,12 @@ function TemplateList({
   const pageIds = useMemo(() => pages?.map((page) => page.id) || [], [pages]);
 
   const handlePageClick = useCallback(
-    (page) => {
+    ({ templateId, version, title, ...page }) => {
+      // Just using destructuring above so we don't pass unnecessary props to addPage().
       const duplicatedPage = duplicatePage(page);
       addPage({ page: duplicatedPage });
       trackEvent('insert_page_template', {
-        name: page.title,
+        name: title || 'custom', // Custom page templates don't have titles (yet).
       });
       showSnackbar({
         message: __('Page Template added.', 'web-stories'),

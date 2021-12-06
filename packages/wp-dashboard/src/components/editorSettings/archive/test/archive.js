@@ -43,7 +43,7 @@ describe('Editor Settings: Archive page settings <ArchiveSetting />', function (
   it('should render archive dropdown button and helper text for default', function () {
     const link = 'http://www.example.com/web-stories';
     renderWithProviders(
-      <FlagsProvider features={{ archivePageCustomization: true }}>
+      <FlagsProvider>
         <ArchiveSetting
           archive={archive}
           updateSettings={mockUpdate}
@@ -73,7 +73,7 @@ describe('Editor Settings: Archive page settings <ArchiveSetting />', function (
   it('should render archive dropdown button and helper text for disabled', function () {
     const link = 'http://www.example.com/web-stories';
     renderWithProviders(
-      <FlagsProvider features={{ archivePageCustomization: true }}>
+      <FlagsProvider>
         <ArchiveSetting
           archive={ARCHIVE_TYPE.DISABLED}
           updateSettings={mockUpdate}

@@ -109,6 +109,7 @@ function RightClickMenuProvider({ children }) {
     currentPage,
     currentPageIndex,
     deleteCurrentPage,
+    duplicateElementById,
     pages,
     setBackgroundElement,
     selectedElements,
@@ -130,6 +131,7 @@ function RightClickMenuProvider({ children }) {
         arrangeElement,
         clearBackgroundElement,
         deleteCurrentPage,
+        duplicateElementById,
         setBackgroundElement,
         updateElementsById,
       },
@@ -142,6 +144,7 @@ function RightClickMenuProvider({ children }) {
       currentPage,
       currentPageIndex,
       deleteCurrentPage,
+      duplicateElementById,
       pages,
       selectedElementAnimations,
       selectedElements,
@@ -186,37 +189,30 @@ function RightClickMenuProvider({ children }) {
    *
    * @param {Event} evt The triggering event
    */
-  const handleOpenMenu = useCallback(
-    (evt) => {
-      if (selectedElements.length > 1) {
-        return;
-      }
+  const handleOpenMenu = useCallback((evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
 
-      evt.preventDefault();
-      evt.stopPropagation();
+    let x = evt?.clientX;
+    let y = evt?.clientY;
 
-      let x = evt?.clientX;
-      let y = evt?.clientY;
+    // Context menus opened through a shortcut will not have clientX and clientY
+    // Instead determine the position of the menu off of the element
+    if (!x && !y) {
+      const dims = evt.target.getBoundingClientRect();
+      x = dims.x;
+      y = dims.y;
+    }
 
-      // Context menus opened through a shortcut will not have clientX and clientY
-      // Instead determine the position of the menu off of the element
-      if (!x && !y) {
-        const dims = evt.target.getBoundingClientRect();
-        x = dims.x;
-        y = dims.y;
-      }
+    dispatch({
+      type: ACTION_TYPES.OPEN_MENU,
+      payload: { x, y },
+    });
 
-      dispatch({
-        type: ACTION_TYPES.OPEN_MENU,
-        payload: { x, y },
-      });
-
-      trackEvent('context_menu_action', {
-        name: 'context_menu_opened',
-      });
-    },
-    [selectedElements]
-  );
+    trackEvent('context_menu_action', {
+      name: 'context_menu_opened',
+    });
+  }, []);
 
   /**
    * Close the menu and reset the tracked position.
@@ -235,6 +231,17 @@ function RightClickMenuProvider({ children }) {
   const handleMouseDown = useCallback((evt) => {
     evt.stopPropagation();
   }, []);
+
+  /**
+   * Duplicate all selected elements.
+   */
+  const handleDuplicateElements = useCallback(() => {
+    if (!selectedElements.length) {
+      return;
+    }
+
+    selectedElements.map(({ id }) => duplicateElementById({ elementId: id }));
+  }, [duplicateElementById, selectedElements]);
 
   /**
    * Duplicate the current page.
@@ -739,6 +746,17 @@ function RightClickMenuProvider({ children }) {
     [handleMouseDown]
   );
 
+  const duplicateElementAction = useMemo(
+    () => ({
+      label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
+        selectedElements?.length
+      ),
+      onClick: handleDuplicateElements,
+      ...menuItemProps,
+    }),
+    [handleDuplicateElements, menuItemProps, selectedElements?.length]
+  );
+
   const layerItems = useMemo(
     () => [
       {
@@ -871,6 +889,7 @@ function RightClickMenuProvider({ children }) {
 
   const textItems = useMemo(
     () => [
+      { ...duplicateElementAction, separator: 'bottom' },
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
@@ -898,6 +917,7 @@ function RightClickMenuProvider({ children }) {
       },
     ],
     [
+      duplicateElementAction,
       layerItems,
       handleAddTextPreset,
       menuItemProps,
@@ -925,6 +945,7 @@ function RightClickMenuProvider({ children }) {
       : RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES;
 
     return [
+      { ...duplicateElementAction, separator: 'bottom' },
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
@@ -970,6 +991,7 @@ function RightClickMenuProvider({ children }) {
   }, [
     canTranscodeResource,
     copiedElement,
+    duplicateElementAction,
     handleClearElementStyles,
     handleCopyStyles,
     handleOpenScaleAndCrop,
@@ -984,6 +1006,7 @@ function RightClickMenuProvider({ children }) {
 
   const shapeItems = useMemo(
     () => [
+      { ...duplicateElementAction, separator: 'bottom' },
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
@@ -1012,6 +1035,7 @@ function RightClickMenuProvider({ children }) {
     ],
     [
       copiedElement?.type,
+      duplicateElementAction,
       handleAddColorPreset,
       handleClearElementStyles,
       handleCopyStyles,
@@ -1022,9 +1046,21 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
-  const stickerItems = useMemo(() => [...layerItems], [layerItems]);
+  const stickerItems = useMemo(
+    () => [{ ...duplicateElementAction, separator: 'bottom' }, ...layerItems],
+    [duplicateElementAction, layerItems]
+  );
+
+  const multipleElementItems = useMemo(
+    () => [duplicateElementAction],
+    [duplicateElementAction]
+  );
 
   const menuItems = useMemo(() => {
+    if (selectedElements.length > 1) {
+      return multipleElementItems;
+    }
+
     if (selectedElement?.isDefaultBackground) {
       return pageItems;
     }
@@ -1045,8 +1081,10 @@ function RightClickMenuProvider({ children }) {
     }
   }, [
     foregroundMediaItems,
+    multipleElementItems,
     pageItems,
     selectedElement,
+    selectedElements.length,
     shapeItems,
     stickerItems,
     textItems,

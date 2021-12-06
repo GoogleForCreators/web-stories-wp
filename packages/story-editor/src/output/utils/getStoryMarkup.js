@@ -30,15 +30,14 @@ import OutputStory from '../story';
  * @param {import('../../../types').Story} story Story object.
  * @param {Array<Object>} pages List of pages.
  * @param {Object} metadata Metadata.
- * @param {Object} args Custom args to tweak output.
  * @return {string} Story markup.
  */
-export default function getStoryMarkup(story, pages, metadata, args = {}) {
+export default function getStoryMarkup(story, pages, metadata) {
   // Note that react-dom/server will warn about useLayoutEffect usage here.
   // Not because of any wrongdoing in our code, but mostly because
   // of its own profiler.
   // See https://github.com/facebook/react/issues/14927
   return renderToStaticMarkup(
-    <OutputStory story={story} pages={pages} metadata={metadata} args={args} />
+    <OutputStory story={story} pages={pages} metadata={metadata} />
   );
 }
