@@ -76,12 +76,20 @@ function MyStories() {
   );
   const { apiCallbacks } = useConfig();
 
-  const { filter, page, search, sort, view, showStoriesWhileLoading, author } =
-    useStoryView({
-      filters: STORY_STATUSES,
-      isLoading,
-      totalPages,
-    });
+  const {
+    filter,
+    page,
+    search,
+    sort,
+    view,
+    showStoriesWhileLoading,
+    initialPageReady,
+    author,
+  } = useStoryView({
+    filters: STORY_STATUSES,
+    isLoading,
+    totalPages,
+  });
 
   const { setQueriedAuthors } = author;
   let queryAuthorsBySearch = useCallback(
@@ -142,7 +150,7 @@ function MyStories() {
   return (
     <Layout.Provider>
       <Header
-        isLoading={isLoading && !orderedStories.length}
+        initialPageReady={initialPageReady}
         filter={filter}
         search={search}
         sort={sort}
@@ -157,7 +165,7 @@ function MyStories() {
       <Content
         allPagesFetched={allPagesFetched}
         filter={filter}
-        isLoading={isLoading}
+        loading={{ isLoading, showStoriesWhileLoading }}
         page={page}
         search={search}
         sort={sort}
@@ -168,7 +176,6 @@ function MyStories() {
           updateStory,
         }}
         view={view}
-        showStoriesWhileLoading={showStoriesWhileLoading}
       />
 
       <Layout.Fixed>
