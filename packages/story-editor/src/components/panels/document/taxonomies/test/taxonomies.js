@@ -98,7 +98,7 @@ describe('TaxonomiesPanel', () => {
           slug: 'web_story_category',
           restBase: 'web_story_category',
           name: 'Categories',
-          labels: { not_found: '' },
+          labels: { notFound: '' },
           hierarchical: false,
         },
       ],
@@ -130,7 +130,7 @@ describe('TaxonomiesPanel', () => {
           labels: {
             searchItems: 'Story Categories',
             addNewItem: 'Add New',
-            not_found: '',
+            notFound: '',
           },
           hierarchical: true,
           visibility: {

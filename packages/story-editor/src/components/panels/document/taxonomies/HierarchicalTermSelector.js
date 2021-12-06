@@ -272,7 +272,7 @@ function HierarchicalTermSelector({
         label={taxonomy.labels.searchItems}
         options={orderedCategories}
         onChange={handleClickCategory}
-        noOptionsText={taxonomy.labels?.not_found}
+        noOptionsText={taxonomy.labels?.notFound}
       />
       {canCreateTerms ? (
         <>
