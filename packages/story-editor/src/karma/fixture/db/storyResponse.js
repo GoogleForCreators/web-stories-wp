@@ -84,7 +84,7 @@ export default {
     version: DATA_VERSION,
     pages: [],
   },
-  permalink_template: 'http://stories3.local/stories/%pagename%/',
+  permalinkTemplate: 'http://stories3.local/stories/%pagename%/',
   style_presets: { textStyles: [], colors: [] },
   password: '',
   author: { id: 1, name: 'John Doe' },

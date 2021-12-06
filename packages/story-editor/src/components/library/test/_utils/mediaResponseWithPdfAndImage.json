@@ -24,7 +24,7 @@
       "web_stories_poster_id": 0
     },
     "web_stories_is_muted": false,
-    "permalink_template": "http://localhost:8899/?attachment_id=775",
+    "permalinkTemplate": "http://localhost:8899/?attachment_id=775",
     "generated_slug": "brochure",
     "featured_media_src": "",
     "description": {
@@ -96,7 +96,7 @@
       "web_stories_poster_id": 0
     },
     "web_stories_is_muted": false,
-    "permalink_template": "http://localhost:8899/?attachment_id=768",
+    "permalinkTemplate": "http://localhost:8899/?attachment_id=768",
     "generated_slug": "testImage",
     "featured_media_src": "",
     "description": {

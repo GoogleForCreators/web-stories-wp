@@ -38,7 +38,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     excerpt: { raw: excerpt },
     link,
     story_data: storyDataRaw,
-    permalink_template: permalinkTemplate,
+    permalinkTemplate,
     style_presets: globalStoryStyles,
     password,
     preview_link: previewLink,
