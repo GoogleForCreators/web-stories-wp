@@ -43,7 +43,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     password,
     previewLink,
     editLink,
-    embed_post_link: embedPostLink,
+    embedPostLink,
     author,
     capabilities = {
       publish: false,
