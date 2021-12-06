@@ -282,15 +282,15 @@ function HierarchicalTermSelector({
               aria-expanded={false}
               onClick={handleToggleNewCategory}
             >
-              {taxonomy.labels.add_new_item}
+              {taxonomy.labels.addNewItem}
             </LinkButton>
           )}
           {showAddNewCategory ? (
             <AddNewCategoryForm ref={formRef} onSubmit={handleSubmit}>
               <Input
                 autoFocus
-                name={taxonomy.labels.new_item_name}
-                label={taxonomy.labels.new_item_name}
+                name={taxonomy.labels.newItemName}
+                label={taxonomy.labels.newItemName}
                 value={newCategoryName}
                 onChange={handleChangeNewCategoryName}
                 hasFocus={hasFocus}
@@ -308,7 +308,7 @@ function HierarchicalTermSelector({
                   disabled={!newCategoryName.length}
                   type="submit"
                 >
-                  {taxonomy.labels.add_new_item}
+                  {taxonomy.labels.addNewItem}
                 </AddNewCategoryButton>
                 <AddNewCategoryButton
                   aria-expanded

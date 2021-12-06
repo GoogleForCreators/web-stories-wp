@@ -129,7 +129,7 @@ describe('TaxonomiesPanel', () => {
           name: 'Categories',
           labels: {
             searchItems: 'Story Categories',
-            add_new_item: 'Add New',
+            addNewItem: 'Add New',
             not_found: '',
           },
           hierarchical: true,

@@ -161,7 +161,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       <ContentHeading>{taxonomy.labels.name}</ContentHeading>
       <div key={taxonomy.slug}>
         <Tags.Label htmlFor={`${taxonomy.slug}-input`}>
-          {taxonomy.labels.add_new_item}
+          {taxonomy.labels.addNewItem}
         </Tags.Label>
         <Tags.Input
           id={`${taxonomy.slug}-input`}
