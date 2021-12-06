@@ -16,7 +16,7 @@ snapshot:
     .story-media-display-element {
       background-color: transparent !important;
     }
-    
+
     video::-webkit-media-controls {
       display: none;
     }
