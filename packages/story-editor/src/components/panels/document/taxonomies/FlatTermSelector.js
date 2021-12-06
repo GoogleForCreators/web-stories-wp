@@ -173,7 +173,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
           tokens={tokens}
           onUndo={undo}
           suggestedTerms={searchResults}
-          suggestedTermsLabel={taxonomy?.labels?.items_list}
+          suggestedTermsLabel={taxonomy?.labels?.itemsList}
         />
         <Tags.Description id={`${taxonomy.slug}-description`}>
           {taxonomy.labels.separateItemsWithCommas}
