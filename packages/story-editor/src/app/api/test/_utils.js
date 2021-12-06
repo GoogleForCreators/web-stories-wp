@@ -23,7 +23,7 @@ export function createStory(properties = {}) {
     title: { raw: 'title' },
     excerpt: { raw: 'excerpt' },
     permalinkTemplate: 'http://localhost:8899/web-stories/%pagename%',
-    style_presets: { colors: [TEST_COLOR] },
+    stylePresets: { colors: [TEST_COLOR] },
     author: { id: 1, name: 'John Doe' },
     featured_media: { height: 0, id: 0, url: '', width: 0 },
     publisher_logo: { height: 0, id: 0, url: '', width: 0 },

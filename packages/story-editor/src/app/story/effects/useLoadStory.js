@@ -39,7 +39,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     link,
     storyData: storyDataRaw,
     permalinkTemplate,
-    style_presets: globalStoryStyles,
+    stylePresets: globalStoryStyles,
     password,
     preview_link: previewLink,
     edit_link: editLink,

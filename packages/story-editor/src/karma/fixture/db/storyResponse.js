@@ -85,7 +85,7 @@ export default {
     pages: [],
   },
   permalinkTemplate: 'http://stories3.local/stories/%pagename%/',
-  style_presets: { textStyles: [], colors: [] },
+  stylePresets: { textStyles: [], colors: [] },
   password: '',
   author: { id: 1, name: 'John Doe' },
   capabilities: {
