@@ -51,7 +51,7 @@ function loadStory(storyId, post, restore, clearHistory) {
     },
     lock_user: lockUser,
     featuredMedia,
-    publisher_logo: publisherLogo,
+    publisherLogo,
     taxonomies,
     terms,
   } = post;
