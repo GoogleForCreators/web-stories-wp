@@ -36,7 +36,8 @@ import {
  * Internal dependencies
  */
 import { useCurrentUser } from '../currentUser';
-import { BASE_NAVIGATION_FLOW } from '../../components/helpCenter/constants';
+import { TIPS } from '../../components/helpCenter/constants';
+import { useConfig } from '../config';
 import Context from './context';
 import {
   composeEffects,
@@ -93,11 +94,14 @@ const deriveInitialState = composeEffects([
 
 const persisted = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER);
 
-export const initialState = {
+export const getInitialState = (additionalInitialState) => ({
   isOpen: false,
   isOpeningToTip: false,
   navigationIndex: -1,
-  navigationFlow: BASE_NAVIGATION_FLOW,
+  navigationFlow: Object.keys({
+    ...TIPS,
+    ...additionalInitialState.additionalTips,
+  }), // Is updated using createDynamicNavigationFlow effect.
   isLeftToRightTransition: true,
   hasBottomNavigation: false,
   isPrevDisabled: true,
@@ -106,10 +110,12 @@ export const initialState = {
   readError: false,
   unreadTipsCount: persisted?.unreadTipsCount ?? 0,
   isHydrated: false,
-};
+  tips: { ...TIPS, ...additionalInitialState.additionalTips },
+  tipKeys: Object.keys({ ...TIPS, ...additionalInitialState.additionalTips }),
+});
 
-export const initial = {
-  state: deriveInitialState(persisted, initialState),
+export const getInitial = (additionalInitialState) => ({
+  state: deriveInitialState(persisted, getInitialState(additionalInitialState)),
   // All actions are in the form: externalArgs -> state -> newStatePartial
   //
   // Actions should only update the part of state they directly effect.
@@ -177,7 +183,7 @@ export const initial = {
       readError: true,
     }),
   },
-};
+});
 
 /**
  * Turns a boolean map into a string key
@@ -206,7 +212,8 @@ const createBooleanMapFromKey = (key) =>
     );
 
 function HelpCenterProvider({ children }) {
-  const [store, dispatch] = useReducer(reducer, initial);
+  const { additionalTips = {} } = useConfig();
+  const [store, dispatch] = useReducer(reducer, getInitial({ additionalTips }));
   const { currentUser, updateCurrentUser } = useCurrentUser(
     ({ state, actions }) => ({
       currentUser: state.currentUser,

@@ -38,14 +38,14 @@ describe('Help Center integration', () => {
   });
 
   describe('Help Center default navigation', () => {
-    it('should show Help Center by default for a new user with 8 unread tips', async () => {
+    it('should show Help Center by default for a new user with 7 unread tips', async () => {
       const { quickTips, toggleButton } = await fixture.editor.helpCenter;
       expect(quickTips).toBeDefined();
 
-      expect(toggleButton).toHaveTextContent('8');
+      expect(toggleButton).toHaveTextContent('7');
     });
 
-    it('should navigate to the second tip on click and update unread count to 7', async () => {
+    it('should navigate to the second tip on click and update unread count to 6', async () => {
       const { quickTips, toggleButton } = await fixture.editor.helpCenter;
       const { getByRole, getByText } = within(quickTips);
 
@@ -58,7 +58,7 @@ describe('Help Center integration', () => {
       );
       expect(exposedCropTip).toBeDefined();
 
-      waitFor(() => expect(toggleButton).toHaveTextContent('7'));
+      waitFor(() => expect(toggleButton).toHaveTextContent('6'));
     });
   });
 
@@ -88,7 +88,7 @@ describe('Help Center integration', () => {
 
     it('should update remaining unread tips as they are clicked through', async () => {
       const { quickTips, toggleButton } = fixture.editor.helpCenter;
-      expect(toggleButton).toHaveTextContent('8');
+      expect(toggleButton).toHaveTextContent('7');
 
       const { getByLabelText } = within(quickTips);
 
@@ -110,7 +110,7 @@ describe('Help Center integration', () => {
         // eslint-disable-next-line no-loop-func
         waitFor(() => {
           expect(toggleButton).toHaveTextContent(
-            `${8 - clickCount <= 0 ? '' : 8 - clickCount}`
+            `${7 - clickCount <= 0 ? '' : 7 - clickCount}`
           );
         });
         // eslint-disable-next-line no-await-in-loop
@@ -165,8 +165,8 @@ describe('Help Center integration', () => {
       const { queryAllByRole } = within(mainMenu);
 
       const tips = queryAllByRole('button');
-      // confirm that there are 8 buttons present in this section
-      expect(tips.length).toBe(8);
+      // confirm that there are 7 buttons present in this section
+      expect(tips.length).toBe(7);
 
       await fixture.events.focus(tips[0]);
       // confirm our starting spot is accurate
@@ -182,7 +182,7 @@ describe('Help Center integration', () => {
         TIPS[KEYS.CROP_ELEMENTS_WITH_SHAPES].description
       );
       expect(exposedCropTip).toBeDefined();
-      expect(toggleButton).toHaveTextContent('7');
+      expect(toggleButton).toHaveTextContent('6');
     });
   });
 });
