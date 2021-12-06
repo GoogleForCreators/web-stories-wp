@@ -26,7 +26,7 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import { snakeCaseToCamelCase } from './utils';
+import { snakeToCamelCase } from './utils';
 
 /**
  * Get all taxonomies.
@@ -49,7 +49,7 @@ export async function getTaxonomies(config) {
     const entries = Object.entries(taxonomy);
 
     const formattedEntries = entries.map((entry) => [
-      snakeCaseToCamelCase(entry[0]),
+      snakeToCamelCase(entry[0]),
       entry[1],
     ]);
 
