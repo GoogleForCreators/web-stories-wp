@@ -69,6 +69,11 @@ export const _default = () => {
     setInputValue(value);
   }, []);
 
+  const handleOnClear = useCallback(() => {
+    setInputValue('');
+    setSelectedValue(null);
+  }, []);
+
   return (
     <DarkThemeProvider>
       <Container>
@@ -82,10 +87,7 @@ export const _default = () => {
           hint={text('hint', 'default hint text')}
           label={text('label', 'Find an image')}
           isRTL={boolean('isRTL')}
-          onMenuItemClick={(event, newValue) => {
-            action('onMenuItemClick', event);
-            setSelectedValue(newValue);
-          }}
+          onClear={handleOnClear}
           options={options}
           placeholder={text('placeholder', 'search')}
           placement={select('placement', Object.values(PLACEMENT))}
@@ -125,6 +127,11 @@ export const LightTheme = () => {
     setInputValue(value);
   }, []);
 
+  const handleOnClear = useCallback(() => {
+    setInputValue('');
+    setSelectedValue(null);
+  }, []);
+
   return (
     <Container>
       <Search
@@ -137,10 +144,7 @@ export const LightTheme = () => {
         hint={text('hint', 'default hint text')}
         label={text('label', 'Search For Stories')}
         isRTL={boolean('isRTL')}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick', event);
-          setSelectedValue(newValue);
-        }}
+        onClear={handleOnClear}
         options={options}
         placeholder={text('placeholder', 'search')}
         placement={select('placement', Object.values(PLACEMENT))}
