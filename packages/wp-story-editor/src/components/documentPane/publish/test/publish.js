@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor, screen, act } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 import MockDate from 'mockdate';
 import {
   APIContext,
