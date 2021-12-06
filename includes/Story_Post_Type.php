@@ -71,19 +71,18 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 */
 	private $settings;
 
+
 	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Settings    $settings     Settings instance.
-	 * @param Experiments $experiments  Experiments instance.
+	 * @param Settings $settings Settings instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Settings $settings, Experiments $experiments ) {
-		$this->settings    = $settings;
-		$this->experiments = $experiments;
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
 	}
 
 	/**
