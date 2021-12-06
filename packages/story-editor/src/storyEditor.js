@@ -45,6 +45,7 @@ import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
+import { PageBlobsProvider } from './app/pageBlobs';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
@@ -73,14 +74,16 @@ function StoryEditor({ config, children }) {
                                   <TransformProvider>
                                     <DropTargetsProvider>
                                       <HelpCenterProvider>
-                                        <GlobalStyle />
-                                        <DevTools />
-                                        <DefaultMoveableGlobalStyle />
-                                        <CropMoveableGlobalStyle />
-                                        <ModalGlobalStyle />
-                                        <CalendarStyle />
-                                        <KeyboardOnlyOutlines />
-                                        {children}
+                                        <PageBlobsProvider>
+                                          <GlobalStyle />
+                                          <DevTools />
+                                          <DefaultMoveableGlobalStyle />
+                                          <CropMoveableGlobalStyle />
+                                          <ModalGlobalStyle />
+                                          <CalendarStyle />
+                                          <KeyboardOnlyOutlines />
+                                          {children}
+                                        </PageBlobsProvider>
                                       </HelpCenterProvider>
                                     </DropTargetsProvider>
                                   </TransformProvider>

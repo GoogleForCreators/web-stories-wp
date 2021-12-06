@@ -40,7 +40,7 @@ import styled from 'styled-components';
 import { useConfig } from '../../../../app';
 import { useAPI } from '../../../../app/api';
 import { useUploader } from '../../../../app/uploader';
-// import storyPageToBlob from '../../../../utils/storyPageToBlob';
+import storyPageToBlob from '../../../../utils/storyPageToBlob';
 import Dialog from '../../../dialog';
 import useLibrary from '../../useLibrary';
 import { LoadingContainer } from '../shared';
@@ -153,8 +153,7 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
 
       imageBackFillState.current.processing.push(pageTemplate.id);
 
-      const imageBlob = null;
-      // const imageBlob = await storyPageToBlob(pageTemplate);
+      const imageBlob = await storyPageToBlob(pageTemplate);
 
       try {
         const resource = await uploadFile(imageBlob, {
