@@ -25,7 +25,6 @@ import {
   useState,
 } from '@web-stories-wp/react';
 import { __, _x, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
-import { useFeature } from 'flagged';
 import {
   DropDown,
   Search,
@@ -152,13 +151,6 @@ export default function ArchiveSettings({
     });
     setSearchOptions(await searchPages(value));
   }, TEXT_INPUT_DEBOUNCE);
-
-  const isFeatureEnabled = useFeature('archivePageCustomization');
-
-  if (!isFeatureEnabled) {
-    return null;
-  }
-
   return (
     <SettingForm>
       <div>

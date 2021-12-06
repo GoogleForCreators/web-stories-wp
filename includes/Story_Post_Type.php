@@ -71,26 +71,18 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 */
 	private $settings;
 
-	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
 
 	/**
-	 * Analytics constructor.
+	 * Story post type constructor.
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Settings    $settings     Settings instance.
-	 * @param Experiments $experiments  Experiments instance.
+	 * @param Settings $settings Settings instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Settings $settings, Experiments $experiments ) {
-		$this->settings    = $settings;
-		$this->experiments = $experiments;
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
 	}
 
 	/**
@@ -345,9 +337,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @return bool|string Whether the post type should have an archive, or archive slug.
 	 */
 	public function get_has_archive() {
-		if ( ! $this->experiments->is_experiment_enabled( 'archivePageCustomization' ) ) {
-			return true;
-		}
 
 		$archive_page_option    = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
 		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
