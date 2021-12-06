@@ -30,6 +30,7 @@ import {
 import {
   Input,
   Text,
+  TextArea,
   THEME_CONSTANTS,
   useSnackbar,
 } from '@web-stories-wp/design-system';
@@ -42,6 +43,10 @@ import { useLocalMedia } from '../../../../../app/media';
 import Dialog from '../../../../dialog';
 
 const THUMBNAIL_WIDTH = 152;
+
+const styledDialogBox = css`
+  max-width: 100%;
+`;
 
 const styledMediaThumbnail = css`
   display: flex;
@@ -74,6 +79,10 @@ const DateText = styled(Text)`
 `;
 
 const AssistiveTextInput = styled(Input)`
+  margin: 20px 0 4px;
+`;
+
+const AssistiveTextArea = styled(TextArea)`
   margin: 20px 0 4px;
 `;
 
@@ -141,6 +150,7 @@ function MediaEditDialog({ resource, onClose }) {
       secondaryText={__('Cancel', 'web-stories')}
       onPrimary={updateMediaItem}
       primaryText={__('Save', 'web-stories')}
+      dialogBoxStyleOverride={altText.length >= 21 ? styledDialogBox : null}
     >
       <DialogBody>
         {type === 'image' ? (
@@ -182,13 +192,24 @@ function MediaEditDialog({ resource, onClose }) {
               height
             )}
           </Text>
-          <AssistiveTextInput
-            value={altText}
-            aria-label={isImage ? imageInputTitle : videoInputTitle}
-            type="text"
-            placeholder={isImage ? imageInputTitle : videoInputTitle}
-            onChange={handleAltTextChange}
-          />
+
+          {isImage ? (
+            <AssistiveTextInput
+              value={altText}
+              aria-label={imageInputTitle}
+              type="text"
+              placeholder={imageInputTitle}
+              onChange={handleAltTextChange}
+            />
+          ) : (
+            <AssistiveTextArea
+              value={altText}
+              aria-label={videoInputTitle}
+              type="text"
+              placeholder={videoInputTitle}
+              onChange={handleAltTextChange}
+            />
+          )}
           <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {isImage ? imageDialogDescription : videoDialogDescription}
           </Text>
