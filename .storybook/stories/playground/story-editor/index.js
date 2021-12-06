@@ -17,7 +17,9 @@
 /**
  * External dependencies
  */
-import StoryEditor, { InterfaceSkeleton } from '@googleforcreators/story-editor';
+import StoryEditor, {
+  InterfaceSkeleton,
+} from '@googleforcreators/story-editor';
 import styled from 'styled-components';
 
 /**

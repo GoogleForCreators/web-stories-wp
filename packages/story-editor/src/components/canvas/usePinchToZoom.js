@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect, useDebouncedCallback } from '@googleforcreators/react';
+import {
+  useLayoutEffect,
+  useDebouncedCallback,
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

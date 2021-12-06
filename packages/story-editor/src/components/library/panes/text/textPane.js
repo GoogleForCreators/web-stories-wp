@@ -32,7 +32,11 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS, Toggle } from '@googleforcreators/design-system';
+import {
+  Text,
+  THEME_CONSTANTS,
+  Toggle,
+} from '@googleforcreators/design-system';
 import { SearchInput } from '../../common';
 import { Container as SectionContainer } from '../../common/section';
 import { Pane as SharedPane } from '../shared';

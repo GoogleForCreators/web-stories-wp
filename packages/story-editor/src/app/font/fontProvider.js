@@ -18,7 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef, useState } from '@googleforcreators/react';
+import {
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from '@googleforcreators/react';
 import { curatedFontNames } from '@googleforcreators/fonts';
 
 /**

@@ -18,7 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useCallback, useEffect, useMemo } from '@googleforcreators/react';
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@googleforcreators/i18n';
 import {

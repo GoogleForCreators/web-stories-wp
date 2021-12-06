@@ -18,7 +18,10 @@
  * External dependencies
  */
 import { useMemo } from '@googleforcreators/react';
-import { convertToCSS, generatePatternStyles } from '@googleforcreators/patterns';
+import {
+  convertToCSS,
+  generatePatternStyles,
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

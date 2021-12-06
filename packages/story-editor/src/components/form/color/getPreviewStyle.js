@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { createSolid, generatePatternStyles } from '@googleforcreators/patterns';
+import {
+  createSolid,
+  generatePatternStyles,
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

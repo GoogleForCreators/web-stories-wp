@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { isBlobURL } from '@googleforcreators/media';
 
 /**

@@ -19,7 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo } from '@googleforcreators/react';
-import { createSolid, generatePatternStyles } from '@googleforcreators/patterns';
+import {
+  createSolid,
+  generatePatternStyles,
+} from '@googleforcreators/patterns';
 import {
   dataToEditorX,
   dataToEditorY,

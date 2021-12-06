@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { useMemo, useReduction } from '@googleforcreators/react';
-import { PAGE_WIDTH, PAGE_RATIO, FULLBLEED_RATIO } from '@googleforcreators/units';
+import {
+  PAGE_WIDTH,
+  PAGE_RATIO,
+  FULLBLEED_RATIO,
+} from '@googleforcreators/units';
 import { themeHelpers } from '@googleforcreators/design-system';
 
 /**

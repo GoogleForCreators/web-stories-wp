@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { generatePatternStyles, convertToCSS } from '@googleforcreators/patterns';
+import {
+  generatePatternStyles,
+  convertToCSS,
+} from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */

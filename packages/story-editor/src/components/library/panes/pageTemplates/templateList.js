@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef, useEffect } from '@googleforcreators/react';
+import {
+  useCallback,
+  useMemo,
+  useRef,
+  useEffect,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
 import { __ } from '@googleforcreators/i18n';

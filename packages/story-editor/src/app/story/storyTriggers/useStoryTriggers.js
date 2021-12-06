@@ -16,7 +16,11 @@
 /**
  * External dependencies
  */
-import { useEffect, identity, useContextSelector } from '@googleforcreators/react';
+import {
+  useEffect,
+  identity,
+  useContextSelector,
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

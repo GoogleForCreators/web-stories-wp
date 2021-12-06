@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useEffect, useMemo } from '@googleforcreators/react';
+import {
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+} from '@googleforcreators/react';
 import { EditorState } from 'draft-js';
 
 /**

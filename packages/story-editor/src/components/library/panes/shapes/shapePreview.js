@@ -18,7 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createRef, useCallback, useMemo, useRef } from '@googleforcreators/react';
+import {
+  createRef,
+  useCallback,
+  useMemo,
+  useRef,
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 import { trackEvent } from '@googleforcreators/tracking';
 import { createSolidFromString } from '@googleforcreators/patterns';

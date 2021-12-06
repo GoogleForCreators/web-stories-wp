@@ -29,7 +29,10 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { FULLBLEED_RATIO } from '@googleforcreators/units';
-import { THEME_CONSTANTS, themeHelpers } from '@googleforcreators/design-system';
+import {
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

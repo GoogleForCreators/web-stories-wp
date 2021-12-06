@@ -20,7 +20,10 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { getTimeTracker, trackError } from '@googleforcreators/tracking';
-import { getExtensionFromMimeType, getFileName } from '@googleforcreators/media';
+import {
+  getExtensionFromMimeType,
+  getFileName,
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies

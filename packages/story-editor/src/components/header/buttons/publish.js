@@ -18,7 +18,12 @@
  * External dependencies
  */
 import { useCallback, useState } from '@googleforcreators/react';
-import { toDate, isAfter, subMinutes, getOptions } from '@googleforcreators/date';
+import {
+  toDate,
+  isAfter,
+  subMinutes,
+  getOptions,
+} from '@googleforcreators/date';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import PropTypes from 'prop-types';
