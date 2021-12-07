@@ -45,7 +45,7 @@ jobs:
       - name: Publish packages locally
         run: npm --registry=$LOCAL_REGISTRY_URL --workspaces publish
         env:
-          - NPM_CONFIG_REGISTRY: $${{ env.LOCAL_REGISTRY_URL }}
+          NPM_CONFIG_REGISTRY: $${{ env.LOCAL_REGISTRY_URL }}
 
       - name: Stop local registry
         run: bash bin/stop-local-npm-registry.sh
@@ -56,11 +56,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
 
-#      # Do the actual publishing to npmjs.com.
-#      - name: Publish packages to production
-#        run: npm publish --workspaces
-#        env:
-#          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
+      #      # Do the actual publishing to npmjs.com.
+      #      - name: Publish packages to production
+      #        run: npm publish --workspaces
+      #        env:
+      #          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
 
       # Undo the version bumps in Git. We only needed them for publishing.
       - name: Clean up local changes
