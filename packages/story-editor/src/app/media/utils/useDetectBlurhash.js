@@ -18,7 +18,10 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import { getBlurFromImage } from '@web-stories-wp/media';
+import {
+  getBlurFromImage,
+  getSmallestUrlForWidth,
+} from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
@@ -79,8 +82,9 @@ function useDetectBlurHash({ updateMediaElement }) {
 
   const updateBlurHash = useCallback(
     async ({ resource }) => {
-      const { type, src, poster } = resource;
-      const imageSrc = type === 'image' ? src : poster;
+      const { type, poster } = resource;
+      const imageSrc =
+        type === 'image' ? getSmallestUrlForWidth(0, resource) : poster;
       if (!imageSrc) {
         return;
       }

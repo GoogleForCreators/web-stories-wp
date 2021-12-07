@@ -31,6 +31,7 @@ import useUploadMedia from '../useUploadMedia';
 import useDetectVideoHasAudio from '../utils/useDetectVideoHasAudio';
 import useDetectBaseColor from '../utils/useDetectBaseColor';
 import useDetectBlurHash from '../utils/useDetectBlurhash';
+import getSmallestUrlForWidth from '../../../../../media/src/getSmallestUrlForWidth';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -216,21 +217,18 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   );
 
   const processMediaBlurhash = useCallback(
-    (resource) => {
+    async (resource) => {
       const { blurHashProcessed, blurHashProcessing } = stateRef.current;
       const { id } = resource;
-
-      (async () => {
-        // Simple way to prevent double-uploading.
-        if (blurHashProcessed.includes(id) || blurHashProcessing.includes(id)) {
-          return;
-        }
-        setBlurhashProcessing({ id });
-        await updateBlurHash({ resource });
-        removeBlurhashProcessing({ id });
-      })();
+      // Simple way to prevent double-uploading.
+      if (blurHashProcessed.includes(id) || blurHashProcessing.length > 0) {
+        return;
+      }
+      setBlurhashProcessing({ id });
+      await updateBlurHash({ resource });
+      removeBlurhashProcessing({ id });
     },
-    [setBlurhashProcessing, updateBlurHash, removeBlurhashProcessing]
+    [stateRef, setBlurhashProcessing, updateBlurHash, removeBlurhashProcessing]
   );
 
   const postProcessingResource = useCallback(
@@ -245,7 +243,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         posterId,
         mimeType,
         poster,
-        blurHash,
       } = resource;
 
       if (local || !id) {
@@ -266,10 +263,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       if (imageSrc && !baseColor) {
         processMediaBaseColor(resource);
       }
-
-      if (imageSrc && !blurHash) {
-        processMediaBlurhash(resource);
-      }
     },
     [
       allowedVideoMimeTypes,
@@ -278,6 +271,28 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       processVideoAudio,
       uploadVideoPoster,
     ]
+  );
+
+  const postProcessingBlurHashResource = useCallback(
+    async (resource) => {
+      const { local, type, id, poster, blurHash } = resource;
+
+      if (local || !id) {
+        return;
+      }
+
+      let imageSrc;
+      if (type === 'image') {
+        imageSrc = getSmallestUrlForWidth(300, resource);
+      } else {
+        imageSrc = poster;
+      }
+
+      if (imageSrc && !blurHash) {
+        await processMediaBlurhash(resource);
+      }
+    },
+    [processMediaBlurhash]
   );
 
   const { optimizeVideo, optimizeGif, muteExistingVideo, trimExistingVideo } =
@@ -293,6 +308,15 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   useEffect(() => {
     media?.forEach((mediaElement) => postProcessingResource(mediaElement));
   }, [media, mediaType, searchTerm, postProcessingResource]);
+
+  useEffect(() => {
+    (async () => {
+      for (const mediaElement of media) {
+        // eslint-disable-next-line no-await-in-loop
+        await postProcessingBlurHashResource(mediaElement);
+      }
+    })();
+  }, [media, mediaType, searchTerm, postProcessingBlurHashResource, stateRef]);
 
   const isGeneratingPosterImages = Boolean(
     stateRef.current?.posterProcessing?.length

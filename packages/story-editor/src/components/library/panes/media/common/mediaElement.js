@@ -97,7 +97,6 @@ function Element({
     baseColor,
     blurHash,
   } = resource;
-  console.log(blurHash);
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -233,7 +232,7 @@ function Element({
           active={active}
         />
         {attribution}
-        {blurHash && (
+        {!isLoaded && blurHash && (
           <BlurHastContainer
             hash={blurHash}
             width={width}
