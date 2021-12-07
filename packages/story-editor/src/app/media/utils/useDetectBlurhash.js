@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
+import { getTimeTracker } from '@web-stories-wp/tracking';
 import {
   getBlurFromImage,
   getSmallestUrlForWidth,
@@ -89,8 +90,10 @@ function useDetectBlurHash({ updateMediaElement }) {
         return;
       }
       const imageSrcProxied = getProxiedUrl(resource, imageSrc);
+      const trackTiming = getTimeTracker('load_get_base_color');
       try {
         const blurHash = await getBlurFromImage(imageSrcProxied);
+        trackTiming();
         await saveBlurHash(resource.id, blurHash);
       } catch (error) {
         // Do nothing for now.
