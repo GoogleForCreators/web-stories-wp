@@ -27,10 +27,6 @@ import {
   Icons,
   themeHelpers,
 } from '@web-stories-wp/design-system';
-/**
- * Internal dependencies
- */
-import { APP_ROUTES, ROUTE_TITLES } from '../../../../constants';
 
 const Nav = styled.nav`
   justify-content: space-between;
@@ -66,11 +62,7 @@ function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
         type={BUTTON_TYPES.TERTIARY}
         variant={BUTTON_VARIANTS.SQUARE}
         size={BUTTON_SIZES.SMALL}
-        aria-label={sprintf(
-          /* translators: %s: page title of link */
-          __('Go to %s', 'web-stories'),
-          ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY]
-        )}
+        aria-label={__('Close', 'web-stories')}
         onClick={handleDetailsToggle}
       >
         <Icons.CrossLarge />

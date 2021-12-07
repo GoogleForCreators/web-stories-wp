@@ -158,8 +158,8 @@ describe('Grid view', () => {
 
       await fixture.events.click(view);
 
-      const closeBtn = fixture.screen.getByRole('link', {
-        name: /^Go to Explore Templates$/,
+      const closeBtn = fixture.screen.getByRole('button', {
+        name: /^Close$/,
       });
 
       expect(closeBtn).toBeTruthy();

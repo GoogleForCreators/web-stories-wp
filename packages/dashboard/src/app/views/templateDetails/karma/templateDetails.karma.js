@@ -91,17 +91,6 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
   }
 
   describe('Action: See pre-built template details page', () => {
-    it('should navigate to "Explore Templates" when "Go to Explore Templates" is clicked', async () => {
-      const closeLink = fixture.screen.getByRole('link', {
-        name: /^Go to Explore Templates$/,
-      });
-
-      await fixture.events.click(closeLink);
-
-      const viewTemplates = fixture.screen.queryByText('Viewing all templates');
-      expect(viewTemplates).toBeTruthy();
-    });
-
     it('should update the "Active Preview Page" when clicking on a "Thumbnail Preview Page"', async () => {
       const firstPage = fixture.screen.getByRole('button', { name: /Page 1/ });
 
