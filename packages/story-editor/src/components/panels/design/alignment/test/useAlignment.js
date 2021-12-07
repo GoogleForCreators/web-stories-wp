@@ -36,16 +36,30 @@ function renderUseAlignement() {
   return result;
 }
 
-describe('useAlignment', () => {
-  describe('single element', () => {
-    let oElement1;
-    let uElement1;
-    let selectedElements, updatedElementList, boundRect;
-    let presubmitHandler1, presubmitHandler2;
-    let registerSubmitHandler;
-    let onSetProperties;
-    let lastProps;
+let oElement1;
+let uElement1;
+let selectedElements;
+let updatedElementList;
+let boundRect;
 
+let lastProps;
+
+const presubmitHandler1 = jest.fn();
+const presubmitHandler2 = jest.fn();
+const registerSubmitHandler = jest.fn();
+
+const onSetProperties = jest.fn();
+
+describe('useAlignment', () => {
+  beforeEach(() => {
+    updatedElementList = [];
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  describe('single element', () => {
     function CustomPanel(props) {
       lastProps = { ...props };
       usePresubmitHandler(presubmitHandler1, []);
@@ -85,12 +99,11 @@ describe('useAlignment', () => {
           width: DEFAULT_EDITOR_PAGE_WIDTH,
           height: DEFAULT_EDITOR_PAGE_HEIGHT,
         };
-        onSetProperties = jest.fn();
-        presubmitHandler1 = jest.fn(({ x }) => ({ x: x + 1 }));
-        presubmitHandler2 = jest.fn(({ y }) => ({ y: y + 1 }));
-        registerSubmitHandler = (handler) => {
+        presubmitHandler1.mockImplementation(({ x }) => ({ x: x + 1 }));
+        presubmitHandler2.mockImplementation(({ y }) => ({ y: y + 1 }));
+        registerSubmitHandler.mockImplementation((handler) => {
           return handler;
-        };
+        });
       });
 
       it('should update element x position to left corner of the page on alignleft button click', () => {
@@ -172,13 +185,14 @@ describe('useAlignment', () => {
         render(
           <DesignPanel
             panelType={CustomPanel}
-            selectedElements={selectedElements}
+            selectedElements={[oElement1]}
             onSetProperties={onSetProperties}
             registerSubmitHandler={registerSubmitHandler}
           />
         );
         const result = renderUseAlignement();
-
+        const { setUpdatedSelectedElementsWithFrame } = result.current;
+        act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
         const { handleAlign } = result.current;
 
         const { pushUpdate } = lastProps;
@@ -202,7 +216,8 @@ describe('useAlignment', () => {
           />
         );
         const result = renderUseAlignement();
-
+        const { setUpdatedSelectedElementsWithFrame } = result.current;
+        act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
         const { handleAlign } = result.current;
 
         const { pushUpdate } = lastProps;
@@ -273,12 +288,11 @@ describe('useAlignment', () => {
           width: DEFAULT_EDITOR_PAGE_WIDTH,
           height: DEFAULT_EDITOR_PAGE_HEIGHT,
         };
-        onSetProperties = jest.fn();
-        presubmitHandler1 = jest.fn(({ x }) => ({ x: x + 1 }));
-        presubmitHandler2 = jest.fn(({ y }) => ({ y: y + 1 }));
-        registerSubmitHandler = (handler) => {
+        presubmitHandler1.mockImplementation(({ x }) => ({ x: x + 1 }));
+        presubmitHandler2.mockImplementation(({ y }) => ({ y: y + 1 }));
+        registerSubmitHandler.mockImplementation((handler) => {
           return handler;
-        };
+        });
       });
 
       it('should update element x position to left corner of the page', () => {
@@ -440,14 +454,8 @@ describe('useAlignment', () => {
   });
 
   describe('multi elements', () => {
-    let result;
-    let oElement1, oElement2, oElement3;
-    let uElement1, uElement2, uElement3;
-    let selectedElements, updatedElementList, boundRect;
-    let presubmitHandler1, presubmitHandler2;
-    let registerSubmitHandler;
-    let onSetProperties;
-    let lastProps;
+    let oElement2, oElement3;
+    let uElement2, uElement3;
 
     function CustomPanel(props) {
       lastProps = { ...props };
@@ -527,12 +535,11 @@ describe('useAlignment', () => {
         startX: 25,
         startY: 62,
       };
-      onSetProperties = jest.fn();
-      presubmitHandler1 = jest.fn(({ x }) => ({ x: x + 1 }));
-      presubmitHandler2 = jest.fn(({ y }) => ({ y: y + 1 }));
-      registerSubmitHandler = (handler) => {
+      presubmitHandler1.mockImplementation(({ x }) => ({ x: x + 1 }));
+      presubmitHandler2.mockImplementation(({ y }) => ({ y: y + 1 }));
+      registerSubmitHandler.mockImplementation((handler) => {
         return handler;
-      };
+      });
     });
 
     it('should update element x position to left corner of bound rect of elements selection', () => {
@@ -544,7 +551,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      result = renderUseAlignement();
+      const result = renderUseAlignement();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -574,7 +581,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      result = renderUseAlignement();
+      const result = renderUseAlignement();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -604,7 +611,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      result = renderUseAlignement();
+      const result = renderUseAlignement();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -634,7 +641,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      result = renderUseAlignement();
+      const result = renderUseAlignement();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -664,7 +671,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      result = renderUseAlignement();
+      const result = renderUseAlignement();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -694,7 +701,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      result = renderUseAlignement();
+      const result = renderUseAlignement();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -724,7 +731,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      result = renderUseAlignement();
+      const result = renderUseAlignement();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -758,7 +765,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      result = renderUseAlignement();
+      const result = renderUseAlignement();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
