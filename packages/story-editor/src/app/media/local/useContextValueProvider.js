@@ -215,7 +215,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
           return;
         }
         setBaseColorProcessing({ id });
-        await updateBaseColor({ resource });
+        await updateBaseColor(resource);
         removeBaseColorProcessing({ id });
       })();
     },

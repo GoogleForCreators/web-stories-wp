@@ -42,11 +42,11 @@ function useDetectBaseColor({ updateMediaElement }) {
   const saveBaseColor = useCallback(
     /**
      *
-     * @param {number} id Resource ID.
+     * @param {Object} resource Resource object.
      * @param {string} baseColor Base Color.
      * @return {Promise<void>}
      */
-    async (id, baseColor) => {
+    async ({ id, isExternal }, baseColor) => {
       try {
         const properties = ({ resource }) => ({
           resource: {
@@ -55,14 +55,17 @@ function useDetectBaseColor({ updateMediaElement }) {
           },
         });
         updateElementsByResourceId({ id, properties });
-        updateMediaElement({
-          id,
-          data: { baseColor },
-        });
-        if (hasUploadMediaAction) {
-          await updateMedia(id, {
-            meta: { web_stories_base_color: baseColor },
+
+        if (!isExternal) {
+          updateMediaElement({
+            id,
+            data: { baseColor },
           });
+          if (hasUploadMediaAction) {
+            await updateMedia(id, {
+              meta: { web_stories_base_color: baseColor },
+            });
+          }
         }
       } catch (error) {
         // Do nothing for now.
@@ -86,7 +89,7 @@ function useDetectBaseColor({ updateMediaElement }) {
       const imageSrcProxied = getProxiedUrl(resource, imageSrc);
       try {
         const color = await getMediaBaseColor(imageSrcProxied);
-        await saveBaseColor(resource.id, color);
+        await saveBaseColor(resource, color);
       } catch (error) {
         // Do nothing for now.
       }

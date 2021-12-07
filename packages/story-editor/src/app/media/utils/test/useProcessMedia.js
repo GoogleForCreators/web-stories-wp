@@ -129,7 +129,7 @@ function setup() {
     }
 
     if (!baseColor) {
-      updateBaseColor({ resource });
+      updateBaseColor(resource);
     }
   };
 
