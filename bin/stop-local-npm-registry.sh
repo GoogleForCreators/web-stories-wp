@@ -16,4 +16,4 @@
 # limitations under the License.
 #
 
-ps -ef | grep -i 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
+lsof -nti:4873 | xargs kill -9

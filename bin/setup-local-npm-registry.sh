@@ -22,6 +22,8 @@ echo "Starting up local npm registry..."
 
 # Start local registry.
 tmp_registry_log=`mktemp`
+
+echo "Registry output file: $tmp_registry_log"
 mkdir -p $HOME/.config/verdaccio
 (nohup npx verdaccio --config $HOME/.config/verdaccio/config.yaml &>$tmp_registry_log &)
 
