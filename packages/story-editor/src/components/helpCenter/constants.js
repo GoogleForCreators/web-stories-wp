@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -32,7 +31,6 @@ export const KEYS = {
   PREVIEW_STORY: 'previewStory',
   ADD_LINKS: 'addLinks',
   ENABLE_SWIPE: 'enableSwipe',
-  EMBED_WEB_STORIES: 'embedWebStories',
   DONE: 'done',
 };
 
@@ -111,21 +109,6 @@ export const TIPS = {
       ),
     ],
   },
-  [KEYS.EMBED_WEB_STORIES]: {
-    title: __('Embed Web Stories', 'web-stories'),
-    /* TODO #7212 `figureSrcImg` and `figureAlt` are temporary until
-    we get an animation. Once we have the animation then these
-    attributes should be removed. */
-    figureSrcImg: 'images/help-center/story_embed_module_1',
-    figureAlt: __('Graphic showing embed functionality', 'web-stories'),
-    description: [
-      __(
-        'When you create a new post in WordPress, you can embed any of your Stories. <a>Learn more</a>',
-        'web-stories'
-      ),
-    ],
-    href: __('https://wp.stories.google/docs/', 'web-stories'),
-  },
 };
 
 export const DONE_TIP_ENTRY = [
@@ -150,24 +133,7 @@ export const Z_INDEX = {
   QUICK_TIP: 2,
 };
 
-export const BASE_NAVIGATION_FLOW = Object.keys(TIPS);
-
 export const POPUP_ID = 'help_center_companion';
 export const FOCUSABLE_POPUP_CHILDREN_SELECTOR = FOCUSABLE_SELECTORS.map(
   (selector) => `#${POPUP_ID} ${selector}`
 ).join(', ');
-
-export const ReadTipsType = PropTypes.shape({
-  ...Object.keys(TIPS).reduce(
-    (accum, tipKey) => ({
-      ...accum,
-      [tipKey]: PropTypes.bool,
-    }),
-    {}
-  ),
-});
-
-export const TIP_KEYS_MAP = Object.keys(TIPS).reduce((keyMap, key) => {
-  keyMap[key] = true;
-  return keyMap;
-}, {});

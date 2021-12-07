@@ -16,12 +16,10 @@
 /**
  * Internal dependencies
  */
-import { initialState } from '../../provider';
+import { getInitialState } from '../../provider';
 import {
-  BASE_NAVIGATION_FLOW,
   DONE_TIP_ENTRY,
   TIPS,
-  TIP_KEYS_MAP,
 } from '../../../../components/helpCenter/constants';
 import {
   composeEffects,
@@ -36,6 +34,13 @@ import {
   resetNavigationIndexOnOpen,
   resetIsOpeningToTip,
 } from '../effects';
+
+const BASE_NAVIGATION_FLOW = Object.keys(TIPS);
+const TIP_KEYS_MAP = Object.keys(TIPS).reduce((keyMap, key) => {
+  keyMap[key] = true;
+  return keyMap;
+}, {});
+const initialState = getInitialState({ additionalTips: {} });
 
 const mockState = (overrides = {}) => ({
   ...initialState,

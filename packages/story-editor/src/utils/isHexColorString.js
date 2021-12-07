@@ -14,11 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { setLocaleData } from '@web-stories-wp/i18n';
-
-for (const localeData of window?.webStories?.localeData || []) {
-  setLocaleData(localeData);
+function isHexColorString(s) {
+  return /^#(?:[a-f0-9]{3}){1,2}$/i.test(s);
 }
+
+export default isHexColorString;

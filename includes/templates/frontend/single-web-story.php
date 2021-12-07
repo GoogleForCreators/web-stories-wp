@@ -37,3 +37,9 @@ if ( $current_post instanceof WP_Post ) {
 	$renderer = new HTML( $story );
 	echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
+
+// Some themes like the Sage theme override the WordPress template hierarchy in an unusual way,
+// which the Single Renderer tries to work around with filters.
+// However, that means this template potentially gets loaded twice when using such a theme, causing duplicate markup.
+// Exiting here avoids that, while still guaranteeing the output buffer to function properly.
+exit;

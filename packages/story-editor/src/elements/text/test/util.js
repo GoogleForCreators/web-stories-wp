@@ -277,5 +277,28 @@ describe('Text/util', () => {
       };
       expect(actual).toStrictEqual(expected);
     });
+
+    it('should allow using pixels as padding units', () => {
+      const element = {
+        ...TEXT_ELEMENT,
+        padding: {
+          vertical: 10,
+          horizontal: 0,
+          locked: true,
+        },
+      };
+
+      // Usage with pixels
+      const dataToStyleX = (x) => `${dataToEditorX(x, 100)}px`;
+      const dataToStyleY = (y) => `${dataToEditorY(y, 100)}px`;
+      const { padding } = generateParagraphTextStyle(
+        element,
+        dataToStyleX,
+        dataToStyleY,
+        undefined,
+        element
+      );
+      expect(padding).toBe('1.61812px 0px');
+    });
   });
 });

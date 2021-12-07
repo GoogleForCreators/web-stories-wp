@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-__webpack_public_path__ = window.webStoriesDashboardSettings.publicPath;
+__webpack_public_path__ = window.webStories.publicPath;
