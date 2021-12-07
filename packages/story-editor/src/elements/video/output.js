@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { isBlobURL } from '@web-stories-wp/media';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -30,7 +29,7 @@ function defaultForUndefined(value, def) {
   return value === undefined ? def : value;
 }
 
-function VideoOutput({ element, box, args = {} }) {
+function VideoOutput({ element, box }) {
   const { resource, loop, tracks } = element;
   const { isMuted, mimeType, src } = resource;
 
@@ -60,9 +59,7 @@ function VideoOutput({ element, box, args = {} }) {
         id={`el-${element.id}-media`}
         // Actual <amp-story-captions> output happens in OutputPage.
         captions-id={
-          args.enableBetterCaptions && tracks?.length > 0
-            ? `el-${element.id}-captions`
-            : undefined
+          tracks?.length > 0 ? `el-${element.id}-captions` : undefined
         }
       >
         <source {...sourceProps} />
@@ -85,9 +82,6 @@ function VideoOutput({ element, box, args = {} }) {
 VideoOutput.propTypes = {
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
-  args: PropTypes.shape({
-    enableBetterCaptions: PropTypes.bool,
-  }),
 };
 
 export default VideoOutput;

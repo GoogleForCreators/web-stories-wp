@@ -186,7 +186,7 @@ function delete_terms() {
 	$taxonomies = [];
 
 	$settings  = new Settings();
-	$post_type = new Story_Post_Type( $settings, new Experiments( $settings ) );
+	$post_type = new Story_Post_Type( $settings );
 
 	$taxonomies[] = ( new Media_Source_Taxonomy( new Context( $post_type ) ) )->get_taxonomy_slug();
 	$taxonomies[] = ( new Category_Taxonomy( $post_type ) )->get_taxonomy_slug();

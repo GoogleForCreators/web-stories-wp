@@ -81,7 +81,7 @@ function Header({
         searchOptions={searchOptions}
         searchValue={search.keyword}
         handleSearchChange={debouncedSearchChange}
-        clearSearch={clearSearch}
+        onClear={clearSearch}
       />
       <BodyViewOptions
         resultsLabel={resultsLabel}

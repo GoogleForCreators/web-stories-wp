@@ -34,7 +34,7 @@ export default {
 
 export const _default = () => {
   return (
-    <FlagsProvider features={{ archivePageCustomization: true }}>
+    <FlagsProvider>
       <ArchiveSettings
         archive={select('archive', Object.values(ARCHIVE_TYPE))}
         archiveURL={'http://www.example.com/web-stories'}

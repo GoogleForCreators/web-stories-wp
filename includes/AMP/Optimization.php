@@ -35,6 +35,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Error;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\ErrorCollection;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\LocalFallback;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\TransformationEngine;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\MinifyHtml;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimeCss;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeHeroImages;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeAmpBind;
