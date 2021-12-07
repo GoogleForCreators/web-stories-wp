@@ -28,6 +28,7 @@ import {
   Text,
   useSnackbar,
 } from '@web-stories-wp/design-system';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
@@ -115,7 +116,12 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       if (isDisabled) {
         return;
       }
-      addPageTemplate({ ...currentPage, id: uuidv4(), title: null })
+      addPageTemplate({
+        ...currentPage,
+        id: uuidv4(),
+        version: DATA_VERSION,
+        title: null,
+      })
         .then((addedTemplate) => {
           updateList?.(addedTemplate);
           showSnackbar({
