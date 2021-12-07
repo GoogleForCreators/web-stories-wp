@@ -56,6 +56,7 @@ const StylesWrapper = styled.div``;
 const SubHeading = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin: 6px 0;
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
 `;
 
 const StyledButton = styled(Button)`
