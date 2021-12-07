@@ -42,10 +42,16 @@ class Blurhash extends TestCase {
 	public function test_register() {
 		$this->instance->register();
 
-		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [
-			$this->instance,
-			'wp_prepare_attachment_for_js'
-		] ) );
+		$this->assertSame(
+			10,
+			has_filter(
+				'wp_prepare_attachment_for_js',
+				[
+					$this->instance,
+					'wp_prepare_attachment_for_js',
+				] 
+			) 
+		);
 	}
 
 	/**
