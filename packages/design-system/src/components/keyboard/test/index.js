@@ -19,7 +19,7 @@
 /**
  * External dependencies
  */
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
 /**
@@ -61,30 +61,22 @@ describe('keyboard/index.js', () => {
 
   describe('useIsKeyPressed', () => {
     it('should initialise and then register key up and down events', () => {
-      const { container } = render(<div />);
+      const container = document.createElement('div');
 
       const { result } = renderHook(() => useIsKeyPressed(container, 'a'));
       testIsKeyPressed(result, container, keys.a);
     });
 
     it('should not register when other keys are pressed', () => {
-      const { container } = render(<div />);
+      const container = document.createElement('div');
       const { result } = renderHook(() => useIsKeyPressed(container, 'a'));
       testIsKeyPressed(result, container, keys.b, false);
     });
 
-    it('should not register key presses on other elements', async () => {
-      render(
-        <div>
-          <div>{'ElemWithHook'}</div>
-          <div>{'ElemWhereKeyPressIsFired'}</div>
-        </div>
-      );
+    it('should not register key presses on other elements', () => {
+      const elemWithHook = document.createElement('div');
+      const elemWhereKeyPressIsFired = document.createElement('div');
 
-      const elemWithHook = await screen.findByText('ElemWithHook');
-      const elemWhereKeyPressIsFired = await screen.findByText(
-        'ElemWhereKeyPressIsFired'
-      );
       const { result } = renderHook(() => useIsKeyPressed(elemWithHook, 'a'));
 
       testIsKeyPressed(result, elemWhereKeyPressIsFired, keys.a, false);
@@ -103,15 +95,11 @@ describe('keyboard/index.js', () => {
     });
 
     it('should register key presses on any part of the document', () => {
-      const { container } = render(
-        <div>
-          <div>{'elem1'}</div>
-          <div>{'elem2'}</div>
-          <div>{'elem3'}</div>
-        </div>
-      );
-
-      const elements = container.childNodes;
+      const elements = [
+        document.createElement('div'),
+        document.createElement('div'),
+        document.createElement('div'),
+      ];
 
       const { result } = renderHook(() => useGlobalIsKeyPressed('a'));
 

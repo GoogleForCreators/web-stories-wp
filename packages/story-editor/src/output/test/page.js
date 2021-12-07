@@ -30,6 +30,7 @@ import {
   queryByAutoAdvanceAfter,
   getByAutoAdvanceAfter,
   queryById,
+  getById,
 } from '../../testUtils';
 import { MaskTypes } from '../../masks/constants';
 
@@ -411,7 +412,7 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      const video = screen.getById(container, 'el-baz-media');
+      const video = getById(container, 'el-baz-media');
       await expect(video).toBeInTheDocument();
       expect(video).toMatchInlineSnapshot(`
         <amp-video
