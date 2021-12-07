@@ -170,6 +170,7 @@ describe('Media3pPane', () => {
       isCurrentResourceTrimming: jest.fn(() => false),
       isCurrentResourceTranscoding: jest.fn(() => false),
       isCurrentResourceProcessing: jest.fn(() => false),
+      isCurrentResourceUploading: jest.fn(() => false),
     }));
     useMedia3pApi.mockImplementation(() => ({
       actions: {

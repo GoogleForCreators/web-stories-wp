@@ -202,11 +202,9 @@ describe('useProcessMedia', () => {
         );
 
         expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            id: 2,
-            src: 'http://www.google.com/foo.gif',
-            type: 'gif',
-          },
+          id: 2,
+          src: 'http://www.google.com/foo.gif',
+          type: 'gif',
         });
         expect(updateMedia).toHaveBeenCalledWith(123, {
           web_stories_media_source: 'source-video',
@@ -237,12 +235,10 @@ describe('useProcessMedia', () => {
         );
 
         expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            baseColor: undefined,
-            id: 2,
-            src: 'http://www.google.com/foo.gif',
-            type: 'gif',
-          },
+          baseColor: undefined,
+          id: 2,
+          src: 'http://www.google.com/foo.gif',
+          type: 'gif',
         });
         expect(updateMedia).toHaveBeenCalledWith(123, {
           web_stories_media_source: 'source-video',
@@ -331,11 +327,9 @@ describe('useProcessMedia', () => {
           'http://www.google.com/foo.gif'
         );
         expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            src: 'http://www.google.com/foo.gif',
-            id: 2,
-            type: 'gif',
-          },
+          src: 'http://www.google.com/foo.gif',
+          id: 2,
+          type: 'gif',
         });
         expect(updateMedia).toHaveBeenCalledWith(123, {
           meta: {
@@ -368,12 +362,10 @@ describe('useProcessMedia', () => {
           'http://www.google.com/foo.gif'
         );
         expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            baseColor: undefined,
-            id: 2,
-            src: 'http://www.google.com/foo.gif',
-            type: 'gif',
-          },
+          baseColor: undefined,
+          id: 2,
+          src: 'http://www.google.com/foo.gif',
+          type: 'gif',
         });
         expect(updateMedia).toHaveBeenCalledWith(123, {
           meta: {
@@ -465,11 +457,9 @@ describe('useProcessMedia', () => {
           'http://www.google.com/foo.gif'
         );
         expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            src: 'http://www.google.com/foo.gif',
-            id: 2,
-            type: 'gif',
-          },
+          src: 'http://www.google.com/foo.gif',
+          id: 2,
+          type: 'gif',
         });
 
         expect(updateMedia).toHaveBeenCalledWith(123, {
@@ -500,12 +490,10 @@ describe('useProcessMedia', () => {
           'http://www.google.com/foo.gif'
         );
         expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            baseColor: undefined,
-            id: 2,
-            src: 'http://www.google.com/foo.gif',
-            type: 'gif',
-          },
+          baseColor: undefined,
+          id: 2,
+          src: 'http://www.google.com/foo.gif',
+          type: 'gif',
         });
 
         expect(updateMedia).toHaveBeenCalledWith(123, {
