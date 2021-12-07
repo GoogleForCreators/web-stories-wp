@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor, screen, act } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 import MockDate from 'mockdate';
 import {
   APIContext,
@@ -255,11 +255,9 @@ describe('PublishPanel', () => {
 
     const element = screen.getByRole('button', { name: 'Story publish time' });
 
-    act(() => {
-      fireEvent.keyDown(element, {
-        key: 'Enter',
-        which: 13,
-      });
+    fireEvent.keyDown(element, {
+      key: 'Enter',
+      which: 13,
     });
 
     await waitFor(() => {

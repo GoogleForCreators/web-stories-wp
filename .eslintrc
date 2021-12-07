@@ -296,7 +296,7 @@
         ],
         "jsdoc/require-jsdoc": "off",
         "testing-library/no-await-sync-events": "error",
-        "testing-library/no-debug": "error",
+        "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error"
       }
     },
@@ -326,7 +326,7 @@
         "jasmine": true
       },
       "rules": {
-        "testing-library/no-debug": "error",
+        "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
         "jasmine/no-disabled-tests": "error",

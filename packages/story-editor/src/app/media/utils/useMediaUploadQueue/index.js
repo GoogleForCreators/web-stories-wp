@@ -230,6 +230,21 @@ function useMediaUploadQueue() {
           let newFile = file;
           let newPosterFile = posterFile;
 
+          if (
+            resource.type === 'video' &&
+            resource.isMuted !== null &&
+            additionalData?.web_stories_is_muted === undefined
+          ) {
+            additionalData.web_stories_is_muted = resource.isMuted;
+          }
+
+          if (resource?.baseColor) {
+            additionalData.meta = {
+              ...additionalData.meta,
+              web_stories_base_color: resource.baseColor,
+            };
+          }
+
           // Convert animated GIFs to videos if possible.
           if (
             isTranscodingEnabled &&
@@ -320,13 +335,6 @@ function useMediaUploadQueue() {
           });
 
           const trackTiming = getTimeTracker('load_upload_media');
-
-          if (resource?.baseColor) {
-            additionalData.meta = {
-              ...additionalData.meta,
-              web_stories_base_color: resource.baseColor,
-            };
-          }
 
           try {
             // The newly uploaded file won't have a poster yet.

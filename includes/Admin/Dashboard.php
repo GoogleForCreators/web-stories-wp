@@ -375,8 +375,11 @@ class Dashboard extends Service_Base {
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
-			'webStoriesDashboardSettings',
-			$this->get_dashboard_settings()
+			'webStories',
+			[
+				'publicPath' => $this->assets->get_base_url( 'assets/js/' ), // Required before the editor script is enqueued.
+				'localeData' => $this->assets->get_translations( self::SCRIPT_HANDLE ), // Required for i18n setLocaleData.
+			]
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
@@ -407,40 +410,35 @@ class Dashboard extends Service_Base {
 		}
 
 		$settings = [
-			'id'         => 'web-stories-dashboard',
-			'config'     => [
-				'isRTL'                 => is_rtl(),
-				'userId'                => get_current_user_id(),
-				'locale'                => $this->locale->get_locale_settings(),
-				'newStoryURL'           => $new_story_url,
-				'archiveURL'            => $this->story_post_type->get_archive_link(),
-				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
-				'allowedImageMimeTypes' => $this->types->get_allowed_image_mime_types(),
-				'version'               => WEBSTORIES_VERSION,
-				'encodeMarkup'          => $this->decoder->supports_decoding(),
-				'api'                   => [
-					'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
-					'media'          => '/web-stories/v1/media/',
-					'currentUser'    => '/web-stories/v1/users/me/',
-					'users'          => '/web-stories/v1/users/',
-					'settings'       => '/web-stories/v1/settings/',
-					'pages'          => '/wp/v2/pages/',
-					'publisherLogos' => '/web-stories/v1/publisher-logos/',
-				],
-				'maxUpload'             => $max_upload_size,
-				'maxUploadFormatted'    => size_format( $max_upload_size ),
-				'capabilities'          => [
-					'canManageSettings' => current_user_can( 'manage_options' ),
-					'canUploadFiles'    => current_user_can( 'upload_files' ),
-				],
-				'siteKitStatus'         => $this->site_kit->get_plugin_status(),
-				'localeData'            => $this->assets->get_translations( self::SCRIPT_HANDLE ),
-				'flags'                 => array_merge(
-					$this->experiments->get_experiment_statuses( 'general' ),
-					$this->experiments->get_experiment_statuses( 'dashboard' )
-				),
+			'isRTL'                 => is_rtl(),
+			'userId'                => get_current_user_id(),
+			'locale'                => $this->locale->get_locale_settings(),
+			'newStoryURL'           => $new_story_url,
+			'archiveURL'            => $this->story_post_type->get_archive_link(),
+			'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
+			'allowedImageMimeTypes' => $this->types->get_allowed_image_mime_types(),
+			'version'               => WEBSTORIES_VERSION,
+			'encodeMarkup'          => $this->decoder->supports_decoding(),
+			'api'                   => [
+				'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
+				'media'          => '/web-stories/v1/media/',
+				'currentUser'    => '/web-stories/v1/users/me/',
+				'users'          => '/web-stories/v1/users/',
+				'settings'       => '/web-stories/v1/settings/',
+				'pages'          => '/wp/v2/pages/',
+				'publisherLogos' => '/web-stories/v1/publisher-logos/',
 			],
-			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
+			'maxUpload'             => $max_upload_size,
+			'maxUploadFormatted'    => size_format( $max_upload_size ),
+			'capabilities'          => [
+				'canManageSettings' => current_user_can( 'manage_options' ),
+				'canUploadFiles'    => current_user_can( 'upload_files' ),
+			],
+			'siteKitStatus'         => $this->site_kit->get_plugin_status(),
+			'flags'                 => array_merge(
+				$this->experiments->get_experiment_statuses( 'general' ),
+				$this->experiments->get_experiment_statuses( 'dashboard' )
+			),
 		];
 
 		/**

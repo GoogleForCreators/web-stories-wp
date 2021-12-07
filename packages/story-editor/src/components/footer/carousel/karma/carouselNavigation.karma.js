@@ -95,7 +95,9 @@ describe('Carousel Navigation', () => {
     expect(await getSelectionLength()).toBe(0);
   });
 
-  it('should navigate the page with keys', async () => {
+  // TODO https://github.com/google/web-stories-wp/issues/9845
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should navigate the page with keys', async () => {
     await clickOnThumbnail(1);
     expect(await getCurrentPageId()).toEqual('page2');
 
@@ -169,7 +171,9 @@ describe('Carousel Navigation', () => {
     expect(await getPageIds()).toEqual(['page1', 'page3', 'page4', 'page2']);
   });
 
-  it('should delete the first page', async () => {
+  // TODO https://github.com/google/web-stories-wp/issues/9845
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should delete the first page', async () => {
     await clickOnThumbnail(0);
     await fixture.events.keyboard.down('del');
     await fixture.events.keyboard.up('del');

@@ -31,7 +31,7 @@ import './setLocaleData';
  * External dependencies
  */
 import Dashboard from '@googleforcreators/dashboard';
-import { setAppElement } from '@googleforcreators/design-system';
+import { domReady, setAppElement } from '@googleforcreators/design-system';
 import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
@@ -44,13 +44,16 @@ import { GlobalStyle } from './theme';
 import { LEFT_RAIL_SECONDARY_NAVIGATION } from './constants';
 import { Layout } from './components';
 
+window.webStories = window.webStories || {};
+window.webStories.domReady = domReady;
+
 /**
  * Initializes the Web Stories dashboard screen.
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
  */
-const initialize = async (id, config) => {
+window.webStories.initializeStoryDashboard = (id, config) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
@@ -59,7 +62,7 @@ const initialize = async (id, config) => {
   updateSettings(config.locale);
 
   // Already tracking screen views in AppContent, no need to send page views as well.
-  await initializeTracking('Dashboard', false);
+  initializeTracking('Dashboard', false);
 
   const dashboardConfig = {
     ...config,
@@ -77,14 +80,3 @@ const initialize = async (id, config) => {
     appElement
   );
 };
-
-const initializeWithConfig = () => {
-  const { id, config } = window.webStoriesDashboardSettings;
-  initialize(id, config);
-};
-
-if ('loading' === document.readyState) {
-  document.addEventListener('DOMContentLoaded', initializeWithConfig);
-} else {
-  initializeWithConfig();
-}

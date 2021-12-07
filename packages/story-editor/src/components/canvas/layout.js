@@ -449,11 +449,11 @@ const PageArea = forwardRef(function PageArea(
               ) : (
                 children
               )}
+              {overlay}
             </PageAreaWithoutOverflow>
           </FullbleedContainer>
         </PaddedPage>
       </PageClip>
-      {overlay}
     </PageAreaContainer>
   );
 });

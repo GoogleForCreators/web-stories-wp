@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent, waitFor, screen } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 import { curatedFontNames } from '@googleforcreators/fonts';
 import { Datalist } from '@googleforcreators/design-system';
 
@@ -135,22 +135,16 @@ describe('DropDown: Font Picker', () => {
     expect(fontsList).toBeInTheDocument();
 
     // focus first element in list
-    act(() => {
-      fireEvent.keyDown(fontsList, {
-        key: 'ArrowDown',
-      });
+    fireEvent.keyDown(fontsList, {
+      key: 'ArrowDown',
     });
 
     // focus second element in list
-    act(() => {
-      fireEvent.keyDown(fontsList, {
-        key: 'ArrowDown',
-      });
+    fireEvent.keyDown(fontsList, {
+      key: 'ArrowDown',
     });
 
-    act(() => {
-      fireEvent.keyDown(fontsList, { key: 'Enter' });
-    });
+    fireEvent.keyDown(fontsList, { key: 'Enter' });
 
     // The second font in the list.
     expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1]);
@@ -166,10 +160,8 @@ describe('DropDown: Font Picker', () => {
     const fontsList = screen.getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
-    act(() => {
-      fireEvent.keyDown(fontsList, {
-        key: 'Escape',
-      });
+    fireEvent.keyDown(fontsList, {
+      key: 'Escape',
     });
 
     await waitFor(() => expect(fontsList).not.toBeInTheDocument());
@@ -186,33 +178,25 @@ describe('DropDown: Font Picker', () => {
     expect(fontsList).toBeInTheDocument();
 
     // Move to first element in list
-    act(() => {
-      fireEvent.keyDown(fontsList, {
-        key: 'ArrowDown',
-      });
+    fireEvent.keyDown(fontsList, {
+      key: 'ArrowDown',
     });
+
     // Move to second element in list
-    act(() => {
-      fireEvent.keyDown(fontsList, {
-        key: 'ArrowDown',
-      });
+    fireEvent.keyDown(fontsList, {
+      key: 'ArrowDown',
     });
+
     // Move to third element in list
-    act(() => {
-      fireEvent.keyDown(fontsList, {
-        key: 'ArrowDown',
-      });
+    fireEvent.keyDown(fontsList, {
+      key: 'ArrowDown',
     });
 
-    act(() => {
-      fireEvent.keyDown(fontsList, {
-        key: 'ArrowUp',
-      });
+    fireEvent.keyDown(fontsList, {
+      key: 'ArrowUp',
     });
 
-    act(() => {
-      fireEvent.keyDown(fontsList, { key: 'Enter' });
-    });
+    fireEvent.keyDown(fontsList, { key: 'Enter' });
 
     // Moving down by 2 and back 1 up should end up with the second font: Roboto Condensed.
     expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1]);
@@ -230,10 +214,8 @@ describe('DropDown: Font Picker', () => {
 
     // Search for "Ab" which is the prefix of 3 fonts, but the substring of 5 fonts
     // only the 3 with prefix should match
-    act(() => {
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'Ab' },
-      });
+    fireEvent.change(screen.getByRole('combobox'), {
+      target: { value: 'Ab' },
     });
 
     await waitFor(
@@ -254,10 +236,8 @@ describe('DropDown: Font Picker', () => {
       availableCuratedFonts.length
     );
 
-    act(() => {
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'Not a font!' },
-      });
+    fireEvent.change(screen.getByRole('combobox'), {
+      target: { value: 'Not a font!' },
     });
 
     await waitFor(

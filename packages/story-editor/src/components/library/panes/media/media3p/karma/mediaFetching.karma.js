@@ -430,7 +430,9 @@ describe('Media3pPane fetching', () => {
       expect(document.activeElement).toBe(mediaElements[1]);
     });
 
-    it('should handle pressing right when at the end of a row', async () => {
+    // TODO: https://github.com/google/web-stories-wp/issues/9928
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should handle pressing right when at the end of a row', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
 
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
@@ -468,7 +470,9 @@ describe('Media3pPane fetching', () => {
       );
     });
 
-    it('should handle pressing left when focused', async () => {
+    // TODO: https://github.com/google/web-stories-wp/issues/9928
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should handle pressing left when focused', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
 
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
@@ -524,7 +528,9 @@ describe('Media3pPane fetching', () => {
       expect(document.activeElement).toBe(mediaElements[3]);
     });
 
-    it('should handle pressing up', async () => {
+    // TODO: https://github.com/google/web-stories-wp/issues/9928
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should handle pressing up', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
 
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
@@ -538,7 +544,9 @@ describe('Media3pPane fetching', () => {
       expect(document.activeElement).toBe(mediaElements[1]);
     });
 
-    it('should handle pressing Home', async () => {
+    // TODO: https://github.com/google/web-stories-wp/issues/9928
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should handle pressing Home', async () => {
       mockListMedia();
       await fixture.events.click(fixture.editor.library.media3pTab);
 

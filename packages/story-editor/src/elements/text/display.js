@@ -189,10 +189,11 @@ function TextDisplay({
       : { backgroundColor }),
     ...generateParagraphTextStyle(
       rest,
-      dataToEditorX,
+      (x) => `${dataToEditorX(x)}px`,
+      (y) => `${dataToEditorY(y)}px`,
       dataToEditorY,
-      undefined,
-      element
+      element,
+      dataToEditorY
     ),
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
     verticalPadding: dataToEditorX(rest.padding?.vertical || 0),

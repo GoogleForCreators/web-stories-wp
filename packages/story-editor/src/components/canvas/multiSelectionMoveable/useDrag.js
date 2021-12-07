@@ -35,9 +35,11 @@ function useMultiSelectionDrag({
   isDragging,
   setIsDragging,
 }) {
-  const {
-    state: { draggingResource },
-  } = useDropTargets();
+  const { draggingResource } = useDropTargets(
+    ({ state: { draggingResource } }) => ({
+      draggingResource,
+    })
+  );
   const { nodesById, handleSelectElement } = useCanvas(
     ({ state: { nodesById }, actions: { handleSelectElement } }) => ({
       nodesById,

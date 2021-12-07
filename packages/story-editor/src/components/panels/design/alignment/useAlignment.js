@@ -29,10 +29,17 @@ function useAlignment() {
   const handleAlign = (direction, boundRect, pushUpdate) => {
     pushUpdate((properties) => {
       const { id } = properties;
-      let offset = 0;
-      const { width, height, frameWidth, frameHeight } =
-        updatedSelectedElementsWithFrame.find((item) => item.id === id);
-      offset =
+
+      const element = updatedSelectedElementsWithFrame.find(
+        (item) => item.id === id
+      );
+      const {
+        width = 0,
+        height = 0,
+        frameWidth = 0,
+        frameHeight = 0,
+      } = element || {};
+      const offset =
         direction === 'left' || direction === 'right'
           ? (frameWidth - width) / 2
           : (frameHeight - height) / 2;

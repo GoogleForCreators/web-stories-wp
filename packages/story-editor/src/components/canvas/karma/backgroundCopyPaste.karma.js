@@ -72,7 +72,9 @@ describe('Background Copy Paste integration', () => {
     expect(await getNumElements()).toBe(1);
   });
 
-  it('should correctly copy pattern background to page with image', async () => {
+  // TODO #9910
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should correctly copy pattern background to page with image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -112,7 +114,9 @@ describe('Background Copy Paste integration', () => {
     expect(await getNumElements()).toBe(1);
   });
 
-  it('should correctly copy image to page without image', async () => {
+  // TODO #9910
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should correctly copy image to page without image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -157,7 +161,9 @@ describe('Background Copy Paste integration', () => {
     expect(await getCanvasBackgroundElement()).toBeEmpty();
   });
 
-  it('should correctly copy image to page with existing image', async () => {
+  // TODO #9910
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should correctly copy image to page with existing image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');

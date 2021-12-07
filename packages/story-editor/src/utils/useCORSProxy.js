@@ -42,7 +42,7 @@ function useCORSProxy() {
    *
    * @type {function(): boolean}
    */
-  async function checkResourceAccess(link) {
+  const checkResourceAccess = useCallback(async (link) => {
     let shouldProxy = false;
     if (!link) {
       return shouldProxy;
@@ -56,7 +56,7 @@ function useCORSProxy() {
     }
 
     return shouldProxy;
-  }
+  }, []);
 
   const getProxiedUrl = useCallback(
     (resource, src) => {

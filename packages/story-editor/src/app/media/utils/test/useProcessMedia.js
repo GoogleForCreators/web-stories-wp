@@ -176,12 +176,14 @@ describe('useProcessMedia', () => {
           },
         });
       });
+
       await waitFor(() => {
         expect(getOptimizedMediaById).toHaveBeenCalledWith(123);
-        expect(uploadVideoPoster).not.toHaveBeenCalled();
-        expect(updateBaseColor).not.toHaveBeenCalled();
-        expect(updateMedia).not.toHaveBeenCalled();
       });
+
+      expect(uploadVideoPoster).not.toHaveBeenCalled();
+      expect(updateBaseColor).not.toHaveBeenCalled();
+      expect(updateMedia).not.toHaveBeenCalled();
     });
 
     it('should process video file', async () => {
@@ -196,26 +198,27 @@ describe('useProcessMedia', () => {
           },
         });
       });
+
       await waitFor(() => {
         expect(uploadVideoPoster).toHaveBeenCalledWith(
           2,
           'http://www.google.com/foo.gif'
         );
+      });
 
-        expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            id: 2,
-            local: false,
-            src: 'http://www.google.com/foo.gif',
-            type: 'gif',
-          },
-        });
-        expect(updateMedia).toHaveBeenCalledWith(123, {
-          web_stories_media_source: 'source-video',
-          meta: {
-            web_stories_optimized_id: 2,
-          },
-        });
+      expect(updateBaseColor).toHaveBeenCalledWith({
+        resource: {
+          id: 2,
+          local: false,
+          src: 'http://www.google.com/foo.gif',
+          type: 'gif',
+        },
+      });
+      expect(updateMedia).toHaveBeenCalledWith(123, {
+        web_stories_media_source: 'source-video',
+        meta: {
+          web_stories_optimized_id: 2,
+        },
       });
     });
 
@@ -232,27 +235,28 @@ describe('useProcessMedia', () => {
           },
         });
       });
+
       await waitFor(() => {
         expect(uploadVideoPoster).toHaveBeenCalledWith(
           2,
           'http://www.google.com/foo.gif'
         );
+      });
 
-        expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            baseColor: undefined,
-            id: 2,
-            local: false,
-            src: 'http://www.google.com/foo.gif',
-            type: 'gif',
-          },
-        });
-        expect(updateMedia).toHaveBeenCalledWith(123, {
-          web_stories_media_source: 'source-video',
-          meta: {
-            web_stories_optimized_id: 2,
-          },
-        });
+      expect(updateBaseColor).toHaveBeenCalledWith({
+        resource: {
+          baseColor: undefined,
+          id: 2,
+          local: false,
+          src: 'http://www.google.com/foo.gif',
+          type: 'gif',
+        },
+      });
+      expect(updateMedia).toHaveBeenCalledWith(123, {
+        web_stories_media_source: 'source-video',
+        meta: {
+          web_stories_optimized_id: 2,
+        },
       });
     });
 
@@ -273,12 +277,14 @@ describe('useProcessMedia', () => {
           },
         });
       });
+
       await waitFor(() => {
         expect(uploadVideoPoster).not.toHaveBeenCalled();
-        expect(updateBaseColor).not.toHaveBeenCalled();
-        expect(updateMedia).not.toHaveBeenCalled();
-        expect(deleteMediaElement).not.toHaveBeenCalled();
       });
+
+      expect(updateBaseColor).not.toHaveBeenCalled();
+      expect(updateMedia).not.toHaveBeenCalled();
+      expect(deleteMediaElement).not.toHaveBeenCalled();
     });
   });
 
@@ -306,10 +312,11 @@ describe('useProcessMedia', () => {
       });
       await waitFor(() => {
         expect(getMutedMediaById).toHaveBeenCalledWith(123);
-        expect(uploadVideoPoster).not.toHaveBeenCalled();
-        expect(updateBaseColor).not.toHaveBeenCalled();
-        expect(updateMedia).not.toHaveBeenCalled();
       });
+
+      expect(uploadVideoPoster).not.toHaveBeenCalled();
+      expect(updateBaseColor).not.toHaveBeenCalled();
+      expect(updateMedia).not.toHaveBeenCalled();
     });
 
     it('should mute video file', async () => {
@@ -328,24 +335,26 @@ describe('useProcessMedia', () => {
           },
         });
       });
+
       await waitFor(() => {
         expect(uploadVideoPoster).toHaveBeenCalledWith(
           2,
           'http://www.google.com/foo.gif'
         );
-        expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            src: 'http://www.google.com/foo.gif',
-            id: 2,
-            type: 'gif',
-            local: false,
-          },
-        });
-        expect(updateMedia).toHaveBeenCalledWith(123, {
-          meta: {
-            web_stories_muted_id: 2,
-          },
-        });
+      });
+
+      expect(updateBaseColor).toHaveBeenCalledWith({
+        resource: {
+          src: 'http://www.google.com/foo.gif',
+          id: 2,
+          type: 'gif',
+          local: false,
+        },
+      });
+      expect(updateMedia).toHaveBeenCalledWith(123, {
+        meta: {
+          web_stories_muted_id: 2,
+        },
       });
     });
 
@@ -371,20 +380,21 @@ describe('useProcessMedia', () => {
           2,
           'http://www.google.com/foo.gif'
         );
-        expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            baseColor: undefined,
-            id: 2,
-            local: false,
-            src: 'http://www.google.com/foo.gif',
-            type: 'gif',
-          },
-        });
-        expect(updateMedia).toHaveBeenCalledWith(123, {
-          meta: {
-            web_stories_muted_id: 2,
-          },
-        });
+      });
+
+      expect(updateBaseColor).toHaveBeenCalledWith({
+        resource: {
+          baseColor: undefined,
+          id: 2,
+          local: false,
+          src: 'http://www.google.com/foo.gif',
+          type: 'gif',
+        },
+      });
+      expect(updateMedia).toHaveBeenCalledWith(123, {
+        meta: {
+          web_stories_muted_id: 2,
+        },
       });
     });
 
@@ -405,6 +415,7 @@ describe('useProcessMedia', () => {
           },
         });
       });
+
       await waitFor(() => {
         expect(updateBaseColor).toHaveBeenCalledWith({
           resource: {
@@ -414,15 +425,16 @@ describe('useProcessMedia', () => {
             type: 'gif',
           },
         });
-        expect(uploadVideoPoster).toHaveBeenCalledWith(
-          2,
-          'http://www.google.com/foo.gif'
-        );
-        expect(updateMedia).toHaveBeenCalledWith(123, {
-          meta: {
-            web_stories_muted_id: 2,
-          },
-        });
+      });
+
+      expect(uploadVideoPoster).toHaveBeenCalledWith(
+        2,
+        'http://www.google.com/foo.gif'
+      );
+      expect(updateMedia).toHaveBeenCalledWith(123, {
+        meta: {
+          web_stories_muted_id: 2,
+        },
       });
     });
 
@@ -445,10 +457,11 @@ describe('useProcessMedia', () => {
       });
       await waitFor(() => {
         expect(uploadVideoPoster).not.toHaveBeenCalled();
-        expect(updateBaseColor).not.toHaveBeenCalled();
-        expect(updateMedia).not.toHaveBeenCalled();
-        expect(deleteMediaElement).not.toHaveBeenCalled();
       });
+
+      expect(updateBaseColor).not.toHaveBeenCalled();
+      expect(updateMedia).not.toHaveBeenCalled();
+      expect(deleteMediaElement).not.toHaveBeenCalled();
     });
   });
 
@@ -465,26 +478,28 @@ describe('useProcessMedia', () => {
           },
         });
       });
+
       await waitFor(() => {
         expect(uploadVideoPoster).toHaveBeenCalledWith(
           2,
           'http://www.google.com/foo.gif'
         );
-        expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            src: 'http://www.google.com/foo.gif',
-            id: 2,
-            local: false,
-            type: 'gif',
-          },
-        });
+      });
 
-        expect(updateMedia).toHaveBeenCalledWith(123, {
-          web_stories_media_source: 'source-image',
-          meta: {
-            web_stories_optimized_id: 2,
-          },
-        });
+      expect(updateBaseColor).toHaveBeenCalledWith({
+        resource: {
+          src: 'http://www.google.com/foo.gif',
+          id: 2,
+          local: false,
+          type: 'gif',
+        },
+      });
+
+      expect(updateMedia).toHaveBeenCalledWith(123, {
+        web_stories_media_source: 'source-image',
+        meta: {
+          web_stories_optimized_id: 2,
+        },
       });
     });
 
@@ -506,22 +521,23 @@ describe('useProcessMedia', () => {
           2,
           'http://www.google.com/foo.gif'
         );
-        expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            baseColor: undefined,
-            id: 2,
-            local: false,
-            src: 'http://www.google.com/foo.gif',
-            type: 'gif',
-          },
-        });
+      });
 
-        expect(updateMedia).toHaveBeenCalledWith(123, {
-          web_stories_media_source: 'source-image',
-          meta: {
-            web_stories_optimized_id: 2,
-          },
-        });
+      expect(updateBaseColor).toHaveBeenCalledWith({
+        resource: {
+          baseColor: undefined,
+          id: 2,
+          local: false,
+          src: 'http://www.google.com/foo.gif',
+          type: 'gif',
+        },
+      });
+
+      expect(updateMedia).toHaveBeenCalledWith(123, {
+        web_stories_media_source: 'source-image',
+        meta: {
+          web_stories_optimized_id: 2,
+        },
       });
     });
 
@@ -542,12 +558,14 @@ describe('useProcessMedia', () => {
           },
         });
       });
+
       await waitFor(() => {
         expect(uploadVideoPoster).not.toHaveBeenCalled();
-        expect(updateBaseColor).not.toHaveBeenCalled();
-        expect(updateMedia).not.toHaveBeenCalled();
-        expect(deleteMediaElement).not.toHaveBeenCalled();
       });
+
+      expect(updateBaseColor).not.toHaveBeenCalled();
+      expect(updateMedia).not.toHaveBeenCalled();
+      expect(deleteMediaElement).not.toHaveBeenCalled();
     });
   });
 });
