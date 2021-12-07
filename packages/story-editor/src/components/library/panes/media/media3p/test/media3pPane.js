@@ -153,7 +153,7 @@ describe('Media3pPane', () => {
     renderWithTheme(<Media3pPane isActive />);
 
     expect(
-      screen.queryByText(
+      screen.getByText(
         /Your use of stock content is subject to third party terms/
       )
     ).toBeInTheDocument();
@@ -181,7 +181,7 @@ describe('Media3pPane', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoading = false;
     renderWithTheme(<Media3pPane isActive />);
 
-    expect(screen.queryByText('No media found.')).toBeInTheDocument();
+    expect(screen.getByText('No media found.')).toBeInTheDocument();
     expect(getComputedStyle(screen.queryByText('Trending')).display).toBe(
       'none'
     );

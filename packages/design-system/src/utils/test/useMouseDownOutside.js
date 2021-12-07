@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { render, act, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -50,9 +50,8 @@ describe('useMouseDownOutsideRef', () => {
     );
 
     const elementOutsideContextMenu = screen.getByTestId('some-element');
-    act(() => {
-      fireEvent.mouseDown(elementOutsideContextMenu);
-    });
+
+    fireEvent.mouseDown(elementOutsideContextMenu);
 
     expect(handleMouseDownOutside).toHaveBeenCalledTimes(1);
   });
@@ -71,9 +70,8 @@ describe('useMouseDownOutsideRef', () => {
     );
 
     const containerNode = screen.getByTestId(containerTestId);
-    act(() => {
-      fireEvent.mouseDown(containerNode);
-    });
+
+    fireEvent.mouseDown(containerNode);
 
     expect(handleMouseDownOutside).toHaveBeenCalledTimes(0);
   });
@@ -92,9 +90,8 @@ describe('useMouseDownOutsideRef', () => {
     );
 
     const childNode = screen.getByTestId(childTestId);
-    act(() => {
-      fireEvent.mouseDown(childNode);
-    });
+
+    fireEvent.mouseDown(childNode);
 
     expect(handleMouseDownOutside).toHaveBeenCalledTimes(0);
   });
