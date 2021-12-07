@@ -66,7 +66,7 @@ const InnerContainer = styled.div`
   }
 `;
 
-const BlurHastContainer = styled(Blurhash)`
+const BlurhashContainer = styled(Blurhash)`
   position: absolute !important;
   top: 0;
   left: 0;
@@ -233,7 +233,7 @@ function Element({
         />
         {attribution}
         {!isLoaded && blurHash && (
-          <BlurHastContainer
+          <BlurhashContainer
             hash={blurHash}
             width={width}
             height={height}

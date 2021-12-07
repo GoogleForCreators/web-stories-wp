@@ -267,7 +267,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [
       allowedVideoMimeTypes,
       processMediaBaseColor,
-      processMediaBlurhash,
       processVideoAudio,
       uploadVideoPoster,
     ]
