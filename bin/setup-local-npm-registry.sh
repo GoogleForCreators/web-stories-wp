@@ -23,7 +23,7 @@ echo "Starting up local npm registry..."
 # Start local registry.
 tmp_registry_log=`mktemp`
 mkdir -p $HOME/.config/verdaccio
-nohup verdaccio --config $HOME/.config/verdaccio/config.yaml &>$tmp_registry_log &
+(nohup npx verdaccio --config $HOME/.config/verdaccio/config.yaml &>$tmp_registry_log &)
 
 # Wait for `verdaccio` to boot
 grep -q 'http address' <(tail -f $tmp_registry_log)
