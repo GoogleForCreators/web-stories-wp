@@ -54,6 +54,8 @@ const Wrapper = styled.div.attrs(
       width: `${width}px`,
       height: `${height}px`,
       transform: `rotate(${rotationAngle}deg)`,
+      // Fix for safari overflow bug truncating shapes in page preview
+      overflow: '-webkit-paged-x',
     };
     return previewMode ? { style } : {};
   }
@@ -67,6 +69,10 @@ const Wrapper = styled.div.attrs(
   ${({ isBackground, theme }) =>
     isBackground &&
     css`
+      border-radius: ${theme.borders.radius.small};
+      overflow: hidden;
+    `}
+
       border-radius: ${theme.borders.radius.small};
       overflow: hidden;
     `}
