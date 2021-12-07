@@ -19,8 +19,8 @@
 /**
  * External dependencies
  */
-import { cleanup, fireEvent } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { fireEvent } from '@testing-library/react';
+import { renderHook, cleanup, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -47,11 +47,17 @@ const keys = {
 function testIsKeyPressed(result, node, { key, which }, shouldRegister = true) {
   expect(result.current).toBe(false);
 
-  fireEvent.keyDown(node, { key, which });
+  // eslint-disable-next-line testing-library/no-unnecessary-act
+  act(() => {
+    fireEvent.keyDown(node, { key, which });
+  });
 
   expect(result.current).toBe(shouldRegister);
 
-  fireEvent.keyUp(node, { key, which });
+  // eslint-disable-next-line testing-library/no-unnecessary-act
+  act(() => {
+    fireEvent.keyUp(node, { key, which });
+  });
 
   expect(result.current).toBe(false);
 }
@@ -100,6 +106,8 @@ describe('keyboard/index.js', () => {
         document.createElement('div'),
         document.createElement('div'),
       ];
+
+      document.body.append(...elements);
 
       const { result } = renderHook(() => useGlobalIsKeyPressed('a'));
 
