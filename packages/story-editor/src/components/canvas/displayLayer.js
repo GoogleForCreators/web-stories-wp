@@ -35,6 +35,7 @@ import StoryPropTypes from '../../types';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 import PageAttachment from './pageAttachment';
+import { VideoCaptionsLayer } from './videoCaptions';
 
 const DisplayPageArea = styled(PageArea)`
   position: absolute;
@@ -182,6 +183,7 @@ function DisplayLayer() {
             resetAnimationState={resetAnimationState}
           />
         </DisplayPageArea>
+        <VideoCaptionsLayer />
       </Layer>
     </StoryAnimation.Provider>
   );
