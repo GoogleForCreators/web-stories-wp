@@ -39,24 +39,14 @@ jobs:
 
       # Set up a local npm registry with Verdaccio.
       - name: Set up local registry
-        run: |
-          # Start local registry.
-          tmp_registry_log=`mktemp`
-          mkdir -p $HOME/.config/verdaccio
-          nohup verdaccio --config $HOME/.config/verdaccio/config.yaml &>$tmp_registry_log &
-
-          # Wait for `verdaccio` to boot
-          grep -q 'http address' <(tail -f $tmp_registry_log)
-
-          # Log in to Verdaccio so we can publish packages
-          npx npm-cli-login -u admin -p password -e test@example.com -r $LOCAL_REGISTRY_URL
+        run: bash bin/setup-local-npm-registry.sh
 
       # Using Verdaccio
       - name: Publish packages locally
         run: npm --registry=$LOCAL_REGISTRY_URL --workspaces publish
 
       - name: Stop local registry
-        run: ps -ef | grep -i 'verdaccio' | grep -v grep | awk '{print $2}' | xargs kill -9
+        run: bash bin/stop-local-npm-registry.sh
 
       # Dry-run releasing
       - name: Dry-run production release
