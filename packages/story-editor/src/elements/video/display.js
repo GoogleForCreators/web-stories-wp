@@ -21,6 +21,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from '@web-stories-wp/react';
 import { getMediaSizePositionProps } from '@web-stories-wp/media';
+import { useFeature } from 'flagged';
+
 /**
  * Internal dependencies
  */
@@ -60,6 +62,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
   } = element;
   const ref = useRef();
   const { getProxiedUrl } = useCORSProxy();
+  const hasCustomCaptions = useFeature('customVideoCaptionsInEditor');
 
   let style = {};
   if (isBackground) {
@@ -124,7 +127,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
                 label={label}
                 // Hides the track from the user.
                 // Displaying happens in VideoCaptionsLayer instead.
-                kind="metadata"
+                kind={hasCustomCaptions ? 'metadata' : 'captions'}
                 src={src}
                 key={key}
                 default={i === 0}
