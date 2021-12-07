@@ -109,7 +109,7 @@ function DetailsGallery({
   const { NextButton, PrevButton } = useMemo(() => {
     const Previous = (
       <Button
-        type={BUTTON_TYPES.SECONDARY}
+        type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.SQUARE}
         aria-label={__('View previous template', 'web-stories')}
@@ -124,7 +124,7 @@ function DetailsGallery({
 
     const Next = (
       <Button
-        type={BUTTON_TYPES.SECONDARY}
+        type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.SQUARE}
         aria-label={__('View next template', 'web-stories')}

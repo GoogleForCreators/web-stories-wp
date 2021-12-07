@@ -40,7 +40,7 @@ describe('Template', () => {
       '[data-testid="template-grid-item-1"]'
     );
 
-    await expect(firstTemplate).toClick('a', { text: 'See details' });
+    await expect(firstTemplate).toClick('button', { text: 'See details' });
     // Get count of template colors to compare to 'saved colors' in the editor.
     const templateDetailsColors = await page.evaluate(() => {
       const elements = document.querySelectorAll(
@@ -54,7 +54,10 @@ describe('Template', () => {
       return colors;
     });
 
-    await expect(page).toClick('button', { text: 'Use template' });
+    await expect(page).toClick(
+      'button[aria-label="Use Fresh & Bright template to create new story"]'
+    );
+
     await page.waitForNavigation();
 
     // Wait for title input to load before continuing.
