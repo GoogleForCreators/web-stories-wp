@@ -23,23 +23,41 @@ import {
   render,
   unmountComponentAtNode,
 } from '@web-stories-wp/react';
-import {
-  FULLBLEED_RATIO,
-  PAGE_RATIO,
-  UnitsProvider,
-} from '@web-stories-wp/units';
-import { ThemeProvider } from 'styled-components';
+import { PAGE_RATIO, UnitsProvider } from '@web-stories-wp/units';
+import styled, { ThemeProvider } from 'styled-components';
+import { generatePatternStyles } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
 import { FileProvider } from '../app/file';
 import { FontProvider } from '../app/font';
-import { PreviewErrorBoundary, PreviewPage } from '../components/previewPage';
+import DisplayElement from '../components/canvas/displayElement';
 import { TransformProvider } from '../components/transform';
 
+const Page = styled.div`
+  display: block;
+  position: relative;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  height: ${({ height }) => height}px;
+  width: ${({ width }) => width}px;
+  flex: none;
+  outline: 0;
+`;
+
+const PreviewWrapper = styled.div`
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 4px;
+  ${({ background }) => generatePatternStyles(background)}
+`;
+
 const PageWithDependencies = forwardRef(function PageWithDependencies(
-  { page, width },
+  { page, width, height },
   ref
 ) {
   return (
@@ -49,21 +67,21 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
           <TransformProvider>
             <UnitsProvider
               pageSize={{
-                width: width,
-                height: width * (1 / PAGE_RATIO),
+                width,
+                height,
               }}
             >
-              <PreviewErrorBoundary>
-                <PreviewPage
-                  ref={ref}
-                  page={page}
-                  pageSize={{
-                    width: width,
-                    height: width * (1 / PAGE_RATIO),
-                    containerHeight: width * (1 / FULLBLEED_RATIO),
-                  }}
-                />
-              </PreviewErrorBoundary>
+              <Page ref={ref} height={height} width={width}>
+                <PreviewWrapper background={page.backgroundColor}>
+                  {page.elements.map((element) => (
+                    <DisplayElement
+                      key={element.id}
+                      previewMode
+                      element={element}
+                    />
+                  ))}
+                </PreviewWrapper>
+              </Page>
             </UnitsProvider>
           </TransformProvider>
         </FontProvider>
@@ -89,7 +107,21 @@ async function storyPageToDataUrl(page, { width = 400, ...options }) {
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
   );
 
+  const height = width * (1 / PAGE_RATIO);
+
   const bufferRoot = document.createElement('div');
+  bufferRoot.style.cssText = `
+    contain: strict;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: ${width}px;
+    height: ${height}px;
+    opacity: 0;
+    transform: translate(-100%, -100%);
+    pointer-events: none;
+  `;
+
   const node = await new Promise((resolve) => {
     const resolverRef = (htmlNode) => {
       if (!htmlNode) {
@@ -99,18 +131,28 @@ async function storyPageToDataUrl(page, { width = 400, ...options }) {
     };
 
     render(
-      <PageWithDependencies ref={resolverRef} page={page} width={width} />,
+      <PageWithDependencies
+        ref={resolverRef}
+        page={page}
+        width={width}
+        height={height}
+      />,
       bufferRoot
     );
   });
+
+  document.body.appendChild(bufferRoot);
 
   const dataUrl = await htmlToImage.toJpeg(node, {
     ...options,
     width,
     height: width * (1 / PAGE_RATIO),
+    canvasHeight: width * (1 / PAGE_RATIO),
+    canvasWidth: width,
   });
 
   unmountComponentAtNode(bufferRoot);
+  document.body.removeChild(bufferRoot);
 
   return dataUrl;
 }

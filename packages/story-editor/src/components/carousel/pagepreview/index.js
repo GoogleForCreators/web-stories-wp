@@ -156,7 +156,6 @@ function PagePreview({ page, label, ...props }) {
                   key={element.id}
                   previewMode
                   element={element}
-                  page={page}
                 />
               ))
             )}
