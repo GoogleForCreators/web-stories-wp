@@ -54,7 +54,6 @@ const Dialog = ({
   secondaryRest,
   actions,
   children,
-  dialogBoxStyleOverride,
   ...rest
 }) => {
   const _PrimaryButton = useMemo(
@@ -86,11 +85,11 @@ const Dialog = ({
       ),
     [secondaryText, secondaryRest, onSecondary, onClose]
   );
+
   return (
     <ThemeProvider theme={{ ...theme, colors: lightMode }}>
       <StyledDialog
         onClose={onClose}
-        dialogBoxStyleOverride={dialogBoxStyleOverride}
         {...rest}
         actions={
           actions || (
@@ -117,7 +116,6 @@ Dialog.propTypes = {
   secondaryRest: PropTypes.object,
   actions: PropTypes.object,
   children: PropTypes.node,
-  dialogBoxStyleOverride: PropTypes.array,
 };
 
 export default Dialog;

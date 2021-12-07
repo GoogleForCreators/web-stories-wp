@@ -44,10 +44,6 @@ import Dialog from '../../../../dialog';
 
 const THUMBNAIL_WIDTH = 152;
 
-const styledDialogBox = css`
-  max-width: 100%;
-`;
-
 const styledMediaThumbnail = css`
   display: flex;
   width: ${THUMBNAIL_WIDTH}px;
@@ -150,7 +146,6 @@ function MediaEditDialog({ resource, onClose }) {
       secondaryText={__('Cancel', 'web-stories')}
       onPrimary={updateMediaItem}
       primaryText={__('Save', 'web-stories')}
-      dialogBoxStyleOverride={altText.length >= 21 ? styledDialogBox : null}
     >
       <DialogBody>
         {type === 'image' ? (

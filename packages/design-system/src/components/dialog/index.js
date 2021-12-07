@@ -39,8 +39,6 @@ const DialogBox = styled.div`
   padding: 12px 16px;
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
-
-  ${({ $dialogBoxStyleOverride }) => $dialogBoxStyleOverride};
 `;
 
 const DialogContent = styled.div`
@@ -76,7 +74,6 @@ export function Dialog({
   isOpen = false,
   onClose,
   contentLabel,
-  dialogBoxStyleOverride,
   ...rest
 }) {
   return (
@@ -86,7 +83,7 @@ export function Dialog({
       contentLabel={contentLabel || title}
       {...rest}
     >
-      <DialogBox $dialogBoxStyleOverride={dialogBoxStyleOverride}>
+      <DialogBox>
         {Boolean(title) && (
           <Headline
             as="h2"
@@ -112,7 +109,6 @@ Dialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
   contentLabel: PropTypes.string,
-  dialogBoxStyleOverride: PropTypes.array,
 };
 
 Dialog.defaultProps = {
