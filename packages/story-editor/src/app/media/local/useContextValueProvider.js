@@ -280,12 +280,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         return;
       }
 
-      let imageSrc;
-      if (type === 'image') {
-        imageSrc = getSmallestUrlForWidth(300, resource);
-      } else {
-        imageSrc = poster;
-      }
+      const imageSrc =
+        type === 'image' ? getSmallestUrlForWidth(0, resource) : poster;
 
       if (imageSrc && !blurHash) {
         await processMediaBlurhash(resource);
