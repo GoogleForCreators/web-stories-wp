@@ -60,6 +60,11 @@ const StyledFileInput = styled(Input)(
         color: ${theme.colors.fg.primary};
       }
     `};
+  
+      * > input:disabled {
+        color: ${theme.colors.fg.primary};
+      }
+    `};
   `
 );
 
@@ -151,7 +156,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   const captionText = __('Upload a file', 'web-stories');
 
   const renderUploadButton = useCallback(
-    (open) => (
+    (open, { ...rest }) => (
       <UploadButton
         css={highlight?.showEffect && styles.OUTLINE}
         onAnimationEnd={() => resetHighlight()}
@@ -164,6 +169,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
         type={BUTTON_TYPES.SECONDARY}
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.RECTANGLE}
+        {...rest}
       >
         {captionText}
       </UploadButton>

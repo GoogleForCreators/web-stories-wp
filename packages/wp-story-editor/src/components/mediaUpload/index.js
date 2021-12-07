@@ -25,8 +25,10 @@ import { useMediaPicker } from './mediaPicker';
 
 function MediaUpload({ render, ...rest }) {
   const open = useMediaPicker(rest);
-
-  return render(open);
+  const attributes = {
+    'data-bs-toggle': 'bs-toggle',
+  };
+  return render(open, attributes);
 }
 
 MediaUpload.propTypes = {

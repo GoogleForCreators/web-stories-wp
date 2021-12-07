@@ -80,12 +80,13 @@ function BackgroundAudioPanelContent({
   );
 
   const renderUploadButton = useCallback(
-    (open) => (
+    (open, { ...rest }) => (
       <UploadButton
         onClick={open}
         type={BUTTON_TYPES.SECONDARY}
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.RECTANGLE}
+        {...rest}
       >
         {__('Upload an audio file', 'web-stories')}
       </UploadButton>

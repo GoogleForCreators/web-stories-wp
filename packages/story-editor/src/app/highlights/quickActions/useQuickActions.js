@@ -193,7 +193,7 @@ export const MediaPicker = ({ render, ...props }) => {
       onSelectErrorMessage={onSelectErrorMessage}
       // Only way to access the open function is to dive
       // into the MediaUpload component in the render prop.
-      render={(open) => render({ onClick: open })}
+      render={(open, { ...rest }) => render({ onClick: open, ...rest })}
       {...props}
     />
   );
