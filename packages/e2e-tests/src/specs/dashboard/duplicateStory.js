@@ -38,10 +38,11 @@ describe('Stories Dashboard', () => {
       'document.querySelector("div[data-testid^=story-grid-item]").getAttribute("data-testid")'
     );
     //need to get story id to click on the context menu of the story
-    const storyId = story.split('-');
-    //storyId= ['story', 'grid', 'item', 'storyId']
+    const contextMenuId = story.split('-');
+    const storyId = contextMenuId[3];
+    //contextMenuId= ['story', 'grid', 'item', 'storyId']
     await expect(page).toClick(
-      `button[data-testid="story-context-button-${storyId[3]}"]`
+      `button[data-testid="story-context-button-${storyId}"]`
     );
     const [duplicateMenuButton] = await page.$x(
       "//button[contains(.,'Duplicate')]"
