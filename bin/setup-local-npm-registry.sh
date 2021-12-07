@@ -16,7 +16,10 @@
 # limitations under the License.
 #
 
-LOCAL_REGISTRY_URL=http://localhost:4873
+# Echo every command being executed
+set -ex
+
+registry_url=http://localhost:4873
 
 echo "Starting up local npm registry..."
 
@@ -24,15 +27,19 @@ echo "Starting up local npm registry..."
 tmp_registry_log=`mktemp`
 
 echo "Registry output file: $tmp_registry_log"
-mkdir -p $HOME/.config/verdaccio
-(nohup npx verdaccio --config $HOME/.config/verdaccio/config.yaml &>$tmp_registry_log &)
 
-# Wait for `verdaccio` to boot
+curdir=$(dirname "$(realpath $0)")
+
+(cd && nohup npx verdaccio --config "$curdir/verdaccio-config.yml" &>$tmp_registry_log &)
+
+npm i --global verdaccio-memory
+
+# Wait for Verdaccio to boot.
 grep -q 'http address' <(tail -f $tmp_registry_log)
 
-echo "Local registry up and running! ${LOCAL_REGISTRY_URL}"
+echo "Local registry up and running! ${registry_url}"
 
 echo "Logging in..."
 
 # Log in to Verdaccio so we can publish packages
-npx npm-cli-login -u admin -p password -e test@example.com -r $LOCAL_REGISTRY_URL
+npx npm-cli-login -u admin -p password -e test@example.com -r $registry_url
