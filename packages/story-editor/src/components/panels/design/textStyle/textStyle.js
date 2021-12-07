@@ -47,6 +47,7 @@ const SubSection = styled.section`
 const SubHeading = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin: 14px 0;
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
 `;
 
 function StylePanel(props) {
