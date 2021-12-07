@@ -88,7 +88,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
       // If video ID is not set, skip relating media.
       if (id) {
         await updateMedia(id, {
-          featuredMedia: posterId,
+          featured_media: posterId,
           meta: {
             web_stories_poster_id: posterId,
           },
