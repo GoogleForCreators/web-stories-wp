@@ -49,6 +49,32 @@ const initialState = {
   queue: [],
 };
 
+const addAdditionalData = (additionalData, resource) => {
+  if (
+    resource.type === 'video' &&
+    resource.isMuted !== null &&
+    additionalData?.web_stories_is_muted === undefined
+  ) {
+    additionalData.web_stories_is_muted = resource.isMuted;
+  }
+
+  if (resource?.baseColor) {
+    additionalData.meta = {
+      ...additionalData.meta,
+      web_stories_base_color: resource.baseColor,
+    };
+  }
+
+  if (resource?.blurHash && !resource?.trimData) {
+    additionalData.meta = {
+      ...additionalData.meta,
+      web_stories_blurhash: resource.blurHash,
+    };
+  }
+
+  return additionalData;
+};
+
 function useMediaUploadQueue() {
   const {
     actions: { uploadFile },
@@ -215,7 +241,7 @@ function useMediaUploadQueue() {
             file,
             state: itemState,
             resource,
-            additionalData = {},
+            additionalData: _additionalData = {},
             posterFile,
             muteVideo,
             trimData,
@@ -230,27 +256,7 @@ function useMediaUploadQueue() {
           let newFile = file;
           let newPosterFile = posterFile;
 
-          if (
-            resource.type === 'video' &&
-            resource.isMuted !== null &&
-            additionalData?.web_stories_is_muted === undefined
-          ) {
-            additionalData.web_stories_is_muted = resource.isMuted;
-          }
-
-          if (resource?.baseColor) {
-            additionalData.meta = {
-              ...additionalData.meta,
-              web_stories_base_color: resource.baseColor,
-            };
-          }
-
-          if (resource?.blurHash && !trimData) {
-            additionalData.meta = {
-              ...additionalData.meta,
-              web_stories_blurhash: resource.blurHash,
-            };
-          }
+          const additionalData = addAdditionalData(_additionalData, resource);
 
           // Convert animated GIFs to videos if possible.
           if (
@@ -288,6 +294,7 @@ function useMediaUploadQueue() {
                 newFile = await trimVideo(file, trimData.start, trimData.end);
                 finishTrimming({ id, file: newFile });
                 additionalData.meta = {
+                  ...additionalData.meta,
                   web_stories_trim_data: trimData,
                 };
               } catch (error) {
