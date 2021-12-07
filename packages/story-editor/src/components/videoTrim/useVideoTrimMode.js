@@ -50,9 +50,9 @@ function useVideoTrimMode() {
   } = useAPI();
   const [videoData, setVideoData] = useState(null);
 
-  const { canTranscodeResource } = useLocalMedia(
-    ({ state: { canTranscodeResource } }) => ({
-      canTranscodeResource,
+  const { isCurrentResourceUploading } = useLocalMedia(
+    ({ state: { isCurrentResourceUploading } }) => ({
+      isCurrentResourceUploading,
     })
   );
 
@@ -119,13 +119,14 @@ function useVideoTrimMode() {
     return (
       isVideoTrimEnabled &&
       isTranscodingEnabled &&
-      canTranscodeResource(selectedElement.resource)
+      !selectedElement.resource.isExternal &&
+      !isCurrentResourceUploading(selectedElement.resource.id)
     );
   }, [
     selectedElement,
     isVideoTrimEnabled,
     isTranscodingEnabled,
-    canTranscodeResource,
+    isCurrentResourceUploading,
   ]);
 
   return {

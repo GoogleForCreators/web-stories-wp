@@ -26,7 +26,6 @@ import {
   getMediaSizePositionProps,
   calculateSrcSet,
   getSmallestUrlForWidth,
-  isBlobURL,
 } from '@web-stories-wp/media';
 
 /**
@@ -57,16 +56,16 @@ function ImageDisplay({ element, box, previewMode }) {
     initialSrc = resourceList.get(resourceId).url;
   }
 
-  const { isCurrentResourceProcessing } = useLocalMedia(
-    ({ state: { isCurrentResourceProcessing } }) => ({
-      isCurrentResourceProcessing,
-    })
-  );
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => ({
+      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+      isCurrentResourceUploading: state.isCurrentResourceUploading,
+    }));
 
   if (
     resourceList.get(resourceId)?.type === 'fullsize' ||
     isCurrentResourceProcessing(resourceId) ||
-    isBlobURL(resource.src)
+    isCurrentResourceUploading(resourceId)
   ) {
     initialSrcType = 'fullsize';
     initialSrc = resource.src;

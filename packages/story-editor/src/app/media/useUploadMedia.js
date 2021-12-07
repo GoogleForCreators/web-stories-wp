@@ -65,10 +65,11 @@ function useUploadMedia({
       progress,
       uploaded,
       failures,
-      isResourceProcessing,
+      finished,
+      isNewResourceProcessing,
       isCurrentResourceProcessing,
-      isResourceTranscoding,
-      isResourceMuting,
+      isNewResourceTranscoding,
+      isNewResourceMuting,
       isResourceTrimming,
       isCurrentResourceUploading,
       isCurrentResourceTranscoding,
@@ -76,7 +77,7 @@ function useUploadMedia({
       isCurrentResourceTrimming,
       canTranscodeResource,
     },
-    actions: { addItem, removeItem },
+    actions: { addItem, removeItem, finishItem },
   } = useMediaUploadQueue();
   const { isTranscodingEnabled, canTranscodeFile, isFileTooLarge } =
     useFFmpeg();
@@ -182,9 +183,19 @@ function useUploadMedia({
         }
       }
 
-      removeItem({ id: itemId });
+      finishItem({ id: itemId });
     }
-  }, [uploaded, updateMediaElement, removeItem]);
+  }, [uploaded, updateMediaElement, finishItem]);
+
+  // Handle *finished* items.
+  // At this point, uploaded resources have been updated and rendered everywhere,
+  // and no further action is required.
+  // It is safe to remove them from the queue now.
+  useEffect(() => {
+    for (const { id } of finished) {
+      removeItem({ id });
+    }
+  }, [finished, removeItem]);
 
   // Handle *failed* items.
   // Remove resources from media library and canvas.
@@ -321,10 +332,10 @@ function useUploadMedia({
     uploadMedia,
     isUploading,
     isTranscoding,
-    isResourceProcessing,
+    isNewResourceProcessing,
     isCurrentResourceProcessing,
-    isResourceTranscoding,
-    isResourceMuting,
+    isNewResourceTranscoding,
+    isNewResourceMuting,
     isResourceTrimming,
     isCurrentResourceUploading,
     isCurrentResourceTranscoding,

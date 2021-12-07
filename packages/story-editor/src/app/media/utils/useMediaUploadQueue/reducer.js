@@ -374,6 +374,29 @@ export function replacePlaceholderResource(
 }
 
 /**
+ * Mark an item upload as fully finished.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @return {Object} New state
+ */
+export function finishItem(state, { payload: { id } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            state: ITEM_STATUS.FINISHED,
+          }
+        : item
+    ),
+  };
+}
+
+/**
  * Removes an item from the queue.
  *
  * @param {Object} state Current state.

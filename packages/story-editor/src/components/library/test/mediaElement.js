@@ -108,7 +108,7 @@ const mockedReturnValue = {
   isCurrentResourceTrimming: jest.fn(),
   isCurrentResourceMuting: jest.fn(),
   isCurrentResourceTranscoding: jest.fn(),
-  isResourceProcessing: jest.fn(),
+  isNewResourceProcessing: jest.fn(),
   canTranscodeResource: jest.fn(),
   isCurrentResourceProcessing: jest.fn(),
   isCurrentResourceUploading: jest.fn(),

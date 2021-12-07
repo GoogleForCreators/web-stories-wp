@@ -119,11 +119,11 @@ describe('useMediaUploadQueue', () => {
         isTranscoding: false,
         isMuting: false,
         isTrimming: false,
-        isResourceMuting: expect.any(Function),
+        isNewResourceMuting: expect.any(Function),
         isCurrentResourceMuting: expect.any(Function),
-        isResourceProcessing: expect.any(Function),
+        isNewResourceProcessing: expect.any(Function),
         isCurrentResourceProcessing: expect.any(Function),
-        isResourceTranscoding: expect.any(Function),
+        isNewResourceTranscoding: expect.any(Function),
         isCurrentResourceTranscoding: expect.any(Function),
         isResourceTrimming: expect.any(Function),
         isCurrentResourceTrimming: expect.any(Function),
@@ -230,8 +230,8 @@ describe('useMediaUploadQueue', () => {
       result.current.state.isCurrentResourceTranscoding(resourceId)
     ).toBeTrue();
 
-    expect(result.current.state.isResourceProcessing(123)).toBeFalse();
-    expect(result.current.state.isResourceTranscoding(123)).toBeFalse();
+    expect(result.current.state.isNewResourceProcessing(123)).toBeFalse();
+    expect(result.current.state.isNewResourceTranscoding(123)).toBeFalse();
   });
 
   it('should set isMuting state when adding an item to the queue', async () => {
@@ -262,8 +262,8 @@ describe('useMediaUploadQueue', () => {
     ).toBeTrue();
     expect(result.current.state.isCurrentResourceMuting(resourceId)).toBeTrue();
 
-    expect(result.current.state.isResourceProcessing(123)).toBeFalse();
-    expect(result.current.state.isResourceMuting(123)).toBeFalse();
+    expect(result.current.state.isNewResourceProcessing(123)).toBeFalse();
+    expect(result.current.state.isNewResourceMuting(123)).toBeFalse();
   });
 
   it('should set isTrimming state when adding an item to the queue', async () => {
@@ -297,7 +297,7 @@ describe('useMediaUploadQueue', () => {
       result.current.state.isCurrentResourceTrimming(resourceId)
     ).toBeTrue();
 
-    expect(result.current.state.isResourceProcessing(123)).toBeFalse();
+    expect(result.current.state.isNewResourceProcessing(123)).toBeFalse();
     expect(result.current.state.isResourceTrimming(123)).toBeFalse();
   });
 
@@ -334,11 +334,11 @@ describe('useMediaUploadQueue', () => {
         isTranscoding: false,
         isMuting: false,
         isTrimming: false,
-        isResourceMuting: expect.any(Function),
+        isNewResourceMuting: expect.any(Function),
         isCurrentResourceMuting: expect.any(Function),
-        isResourceProcessing: expect.any(Function),
+        isNewResourceProcessing: expect.any(Function),
         isCurrentResourceProcessing: expect.any(Function),
-        isResourceTranscoding: expect.any(Function),
+        isNewResourceTranscoding: expect.any(Function),
         isCurrentResourceTranscoding: expect.any(Function),
         isResourceTrimming: expect.any(Function),
         isCurrentResourceTrimming: expect.any(Function),

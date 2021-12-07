@@ -18,12 +18,14 @@
  * External dependencies
  */
 import { revokeBlob } from '@web-stories-wp/media';
+
 /**
  * Internal dependencies
  */
 import {
   addItem,
   cancelUploading,
+  finishItem,
   finishMuting,
   finishTranscoding,
   finishTrimming,
@@ -200,6 +202,69 @@ describe('useMediaUploadQueue', () => {
         },
       });
       expect(revokeBlob).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('finishItem', () => {
+    it('changes state of finished item', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              id: 456,
+              src: 'foo',
+            },
+            originalResourceId: 111,
+            state: ITEM_STATUS.UPLOADED,
+            posterFile: {},
+          },
+        ],
+      };
+
+      const result = finishItem(initialState, {
+        payload: {
+          id: 123,
+        },
+      });
+
+      expect(result).toStrictEqual({
+        queue: [
+          {
+            id: 123,
+            file: {},
+            posterFile: {},
+            resource: {
+              id: 456,
+              src: 'foo',
+            },
+            originalResourceId: 111,
+            state: ITEM_STATUS.FINISHED,
+          },
+        ],
+      });
+    });
+
+    it('leaves state unchanged if item is not in queue', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {},
+            state: ITEM_STATUS.UPLOADED,
+          },
+        ],
+      };
+
+      const result = finishItem(initialState, {
+        payload: {
+          id: 456,
+        },
+      });
+
+      expect(result).toStrictEqual(initialState);
     });
   });
 
