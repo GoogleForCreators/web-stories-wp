@@ -69,6 +69,8 @@ const UNDO_HELP_TEXT = sprintf(
   prettifyShortcut('mod+z')
 );
 
+const CLEARABLE_ELEMENT_TYPES = ['image', 'video', 'gif', 'shape'];
+
 /**
  * Determines the items displayed in the right click menu
  * based off of the right-clicked element.
@@ -566,28 +568,55 @@ function RightClickMenuProvider({ children }) {
   ]);
 
   /**
-   * Revert some element styles to their defaults.
+   * Reset styles for one element to their defaults. Return the styles that were reset
+   * or null if there are not styles to reset.
+   *
+   * @param {Object} element The element to reset.
+   * @return {Object|null} The new styles or null.
+   */
+  const clearElementStyles = useCallback(
+    (element) => {
+      const resetProperties = getDefaultPropertiesForType(element.type);
+
+      if (resetProperties) {
+        updateElementsById({
+          elementIds: [element.id],
+          properties: (currentProperties) =>
+            updateProperties(
+              currentProperties,
+              resetProperties,
+              /* commitValues */ true
+            ),
+        });
+      }
+
+      return resetProperties;
+    },
+    [updateElementsById]
+  );
+
+  /**
+   * Revert element styles to their defaults. Show a snackbar with a button
+   * that can 'undo' the change.
    *
    * Each element type has a different set of defaults.
    */
   const handleClearElementStyles = useCallback(() => {
-    if (!selectedElement?.id) {
+    if (!selectedElements.length) {
       return;
     }
 
-    const resetProperties = getDefaultPropertiesForType(selectedElement.type);
+    const stylesReset = selectedElements
+      .map(
+        (element) =>
+          // only clear element styles for certain element types
+          CLEARABLE_ELEMENT_TYPES.includes(element.type) &&
+          clearElementStyles(element)
+      )
+      .some((styles) => Boolean(styles));
 
-    if (resetProperties) {
-      updateElementsById({
-        elementIds: [selectedElement.id],
-        properties: (currentProperties) =>
-          updateProperties(
-            currentProperties,
-            resetProperties,
-            /* commitValues */ true
-          ),
-      });
-
+    // only show snackbar if any elements had styles reset
+    if (stylesReset) {
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
         dismissible: false,
@@ -599,8 +628,10 @@ function RightClickMenuProvider({ children }) {
 
           trackEvent('context_menu_action', {
             name: 'undo_clear_styles',
-            element: selectedElementType,
-            isBackground: selectedElement?.isBackground,
+            elements: [selectedElements.map((element) => element.type)],
+            hasBackgroundElement: selectedElements.some(
+              (element) => element.isBackground
+            ),
           });
         },
         actionHelpText: UNDO_HELP_TEXT,
@@ -608,11 +639,13 @@ function RightClickMenuProvider({ children }) {
 
       trackEvent('context_menu_action', {
         name: 'clear_styles',
-        element: selectedElementType,
-        isBackground: selectedElement?.isBackground,
+        elements: [selectedElements.map((element) => element.type)],
+        hasBackgroundElement: selectedElements.some(
+          (element) => element.isBackground
+        ),
       });
     }
-  }, [selectedElement, selectedElementType, showSnackbar, updateElementsById]);
+  }, [clearElementStyles, selectedElements, showSnackbar]);
 
   /**
    * Set currently selected element as the page's background.
@@ -740,17 +773,6 @@ function RightClickMenuProvider({ children }) {
     [handleMouseDown]
   );
 
-  const duplicateElementAction = useMemo(
-    () => ({
-      label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
-        selectedElements?.length
-      ),
-      onClick: handleDuplicateElements,
-      ...menuItemProps,
-    }),
-    [handleDuplicateElements, menuItemProps, selectedElements?.length]
-  );
-
   const layerItems = useMemo(
     () => [
       {
@@ -861,7 +883,7 @@ function RightClickMenuProvider({ children }) {
           ]
         : []),
       {
-        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
+        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(selectedElements.length),
         onClick: handleClearElementStyles,
         disabled: disableBackgroundMediaActions,
         separator: 'bottom',
@@ -877,12 +899,20 @@ function RightClickMenuProvider({ children }) {
     menuItemProps,
     pageManipulationItems,
     selectedElement,
+    selectedElements.length,
     toggleTrimMode,
   ]);
 
   const textItems = useMemo(
     () => [
-      { ...duplicateElementAction, separator: 'bottom' },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
+          selectedElements.length
+        ),
+        onClick: handleDuplicateElements,
+        separator: 'bottom',
+        ...menuItemProps,
+      },
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
@@ -910,15 +940,16 @@ function RightClickMenuProvider({ children }) {
       },
     ],
     [
-      duplicateElementAction,
       layerItems,
       handleAddTextPreset,
+      handleDuplicateElements,
       menuItemProps,
       handleAddColorPreset,
       handleCopyStyles,
       handlePasteStyles,
       copiedElement,
       selectedElement,
+      selectedElements.length,
     ]
   );
 
@@ -938,7 +969,14 @@ function RightClickMenuProvider({ children }) {
       : RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES;
 
     return [
-      { ...duplicateElementAction, separator: 'bottom' },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
+          selectedElements.length
+        ),
+        onClick: handleDuplicateElements,
+        separator: 'bottom',
+        ...menuItemProps,
+      },
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
@@ -983,9 +1021,9 @@ function RightClickMenuProvider({ children }) {
     ];
   }, [
     copiedElement,
-    duplicateElementAction,
     handleClearElementStyles,
     handleCopyStyles,
+    handleDuplicateElements,
     handleOpenScaleAndCrop,
     handlePasteStyles,
     handleSetPageBackground,
@@ -993,12 +1031,20 @@ function RightClickMenuProvider({ children }) {
     layerItems,
     menuItemProps,
     selectedElement,
+    selectedElements.length,
     toggleTrimMode,
   ]);
 
   const shapeItems = useMemo(
     () => [
-      { ...duplicateElementAction, separator: 'bottom' },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
+          selectedElements.length
+        ),
+        onClick: handleDuplicateElements,
+        separator: 'bottom',
+        ...menuItemProps,
+      },
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
@@ -1027,25 +1073,59 @@ function RightClickMenuProvider({ children }) {
     ],
     [
       copiedElement?.type,
-      duplicateElementAction,
       handleAddColorPreset,
       handleClearElementStyles,
       handleCopyStyles,
+      handleDuplicateElements,
       handlePasteStyles,
       layerItems,
       menuItemProps,
       selectedElement?.type,
+      selectedElements.length,
     ]
   );
 
   const stickerItems = useMemo(
-    () => [{ ...duplicateElementAction, separator: 'bottom' }, ...layerItems],
-    [duplicateElementAction, layerItems]
+    () => [
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
+          selectedElements.length
+        ),
+        onClick: handleDuplicateElements,
+        separator: 'bottom',
+        ...menuItemProps,
+      },
+      ...layerItems,
+    ],
+    [
+      handleDuplicateElements,
+      layerItems,
+      menuItemProps,
+      selectedElements.length,
+    ]
   );
 
   const multipleElementItems = useMemo(
-    () => [duplicateElementAction],
-    [duplicateElementAction]
+    () => [
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
+          selectedElements.length
+        ),
+        onClick: handleDuplicateElements,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(selectedElements.length),
+        onClick: handleClearElementStyles,
+        ...menuItemProps,
+      },
+    ],
+    [
+      handleClearElementStyles,
+      handleDuplicateElements,
+      menuItemProps,
+      selectedElements.length,
+    ]
   );
 
   const menuItems = useMemo(() => {
