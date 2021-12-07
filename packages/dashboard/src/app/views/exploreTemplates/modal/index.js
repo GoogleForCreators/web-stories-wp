@@ -69,7 +69,6 @@ function TemplateDetailsModal({
         width: '80vw',
         backgroundColor: '#fff',
       }}
-      modalStyles={{ height: '80vh' }}
     >
       <Header
         handleDetailsToggle={handleDetailsToggle}

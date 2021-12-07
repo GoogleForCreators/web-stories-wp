@@ -46,7 +46,7 @@ import {
 } from '../../components';
 
 const StyledPanel = styled(Panel)`
-  padding: 0 0 12vh 0;
+  padding: 0 0 48px 0;
 `;
 
 const ByLineText = styled(Text)`
@@ -109,9 +109,9 @@ function DetailsGallery({
   const { NextButton, PrevButton } = useMemo(() => {
     const Previous = (
       <Button
-        type={BUTTON_TYPES.TERTIARY}
+        type={BUTTON_TYPES.SECONDARY}
         size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.CIRCLE}
+        variant={BUTTON_VARIANTS.SQUARE}
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => {
           switchToTemplateByOffset(activeTemplateIndex - 1);
@@ -124,9 +124,9 @@ function DetailsGallery({
 
     const Next = (
       <Button
-        type={BUTTON_TYPES.TERTIARY}
+        type={BUTTON_TYPES.SECONDARY}
         size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.CIRCLE}
+        variant={BUTTON_VARIANTS.SQUARE}
         aria-label={__('View next template', 'web-stories')}
         onClick={() => {
           switchToTemplateByOffset(activeTemplateIndex + 1);
@@ -177,7 +177,7 @@ function DetailsGallery({
           <TemplateDetails>
             <DetailContainer>
               <Display
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 as="h3"
                 data-testid="template-details-title"
               >

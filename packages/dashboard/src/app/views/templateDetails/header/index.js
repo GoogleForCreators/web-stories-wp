@@ -36,12 +36,21 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   display: flex;
-  margin: 48px 0 84px;
-  padding: 0 88px;
+  margin: 48px auto;
+  /* line the close and cta buttons up with navigation arrow*/
+  width: calc(76% + 121px);
 `;
 
 const HiddenHeading = styled.h2`
   ${themeHelpers.visuallyHidden};
+`;
+
+const CTAButton = styled(Button).attrs({
+  type: BUTTON_TYPES.PRIMARY,
+  size: BUTTON_SIZES.SMALL,
+})`
+  /* Use Template button should be same height as Close button.*/
+  padding: 10px 16px;
 `;
 function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
   return (
@@ -55,7 +64,7 @@ function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
       </HiddenHeading>
       <Button
         type={BUTTON_TYPES.TERTIARY}
-        variant={BUTTON_VARIANTS.CIRCLE}
+        variant={BUTTON_VARIANTS.SQUARE}
         size={BUTTON_SIZES.SMALL}
         aria-label={sprintf(
           /* translators: %s: page title of link */
@@ -67,10 +76,8 @@ function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
         <Icons.CrossLarge />
       </Button>
       {onHandleCtaClick && (
-        <Button
+        <CTAButton
           onClick={onHandleCtaClick}
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
           aria-label={sprintf(
             /* translators: %s: template title */
             __('Use %s template to create new story', 'web-stories'),
@@ -78,7 +85,7 @@ function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
           )}
         >
           {__('Use template', 'web-stories')}
-        </Button>
+        </CTAButton>
       )}
     </Nav>
   );
