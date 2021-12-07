@@ -220,8 +220,12 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     async (resource) => {
       const { blurHashProcessed, blurHashProcessing } = stateRef.current;
       const { id } = resource;
-      // Simple way to prevent double-uploading.
-      if (blurHashProcessed.includes(id) || blurHashProcessing.length > 0) {
+      // Don't process more than one item at a time and do not process items already processed/processing.
+      if (
+        blurHashProcessed.includes(id) ||
+        blurHashProcessing.includes(id) ||
+        blurHashProcessing.length > 0
+      ) {
         return;
       }
       setBlurhashProcessing({ id });
