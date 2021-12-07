@@ -23,6 +23,7 @@ import {
   useCallback,
   forwardRef,
   useFocusOut,
+  useEffect,
 } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
@@ -41,6 +42,10 @@ import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { focusStyle } from '../../../panels/shared';
+import { usePageBlobs } from '../../../../app/pageBlobs';
+import { useAPI } from '../../../../app/api';
+import { useUploader } from '../../../../app/uploader';
+import { useConfig } from '../../../../app/config';
 
 const PageTemplateWrapper = styled.div`
   position: absolute;
@@ -107,6 +112,19 @@ function PageTemplate(
   { page, pageSize, translateY, translateX, isActive, handleDelete, ...rest },
   ref
 ) {
+  const queuePageBlobGeneration = usePageBlobs(
+    ({ actions }) => actions.queuePageBlobGeneration
+  );
+  const pageBlob = usePageBlobs(({ state: { blobs } }) => blobs[page.id]);
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
+  const {
+    actions: { updatePageTemplate },
+  } = useAPI();
+  const {
+    actions: { uploadFile },
+  } = useUploader();
   const [isHover, setIsHover] = useState(false);
   const isActivePage = isHover || isActive;
 
@@ -119,6 +137,47 @@ function PageTemplate(
   const handleSetHoverFalse = useCallback(() => {
     setIsHover(false);
   }, []);
+
+  const imageUrl = page.image?.url ? page.image.url : pageBlob;
+
+  useEffect(() => {
+    if (!pageBlob || page.image?.url) {
+      return;
+    }
+
+    if (!hasUploadMediaAction) {
+      return;
+    }
+
+    (async () => {
+      try {
+        const resource = await uploadFile(pageBlob, {
+          web_stories_media_source: 'page-template',
+        });
+
+        updatePageTemplate(page.id, {
+          featured_media: resource.id,
+        });
+      } catch (err) {
+        // Catch upload errors, e.g. if the file is too large,
+        // so that the page template can still be added, albeit without an image.
+      }
+    })();
+  }, [
+    pageBlob,
+    uploadFile,
+    updatePageTemplate,
+    page.id,
+    page.image?.url,
+    hasUploadMediaAction,
+  ]);
+
+  useEffect(() => {
+    if (imageUrl) {
+      return;
+    }
+    queuePageBlobGeneration(page);
+  }, [imageUrl, queuePageBlobGeneration, page]);
 
   return (
     <PageTemplateWrapper
@@ -137,17 +196,21 @@ function PageTemplate(
       {...rest}
     >
       <PreviewPageWrapper pageSize={pageSize}>
-        <PreviewErrorBoundary>
-          <PreviewPage
-            pageSize={pageSize}
-            page={page}
-            animationState={
-              isActivePage
-                ? STORY_ANIMATION_STATE.PLAYING
-                : STORY_ANIMATION_STATE.RESET
-            }
-          />
-        </PreviewErrorBoundary>
+        {imageUrl ? (
+          <img alt={page.title} src={imageUrl} style={{ width: '100%' }} />
+        ) : (
+          <PreviewErrorBoundary>
+            <PreviewPage
+              pageSize={pageSize}
+              page={page}
+              animationState={
+                isActivePage
+                  ? STORY_ANIMATION_STATE.PLAYING
+                  : STORY_ANIMATION_STATE.RESET
+              }
+            />
+          </PreviewErrorBoundary>
+        )}
         {isActivePage && handleDelete && (
           <ButtonWrapper>
             <Button

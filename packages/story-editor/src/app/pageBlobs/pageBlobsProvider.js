@@ -34,7 +34,7 @@ import Context from './context';
  */
 
 function PageBlobsProvider({ children }) {
-  const blobs = useState({});
+  const [blobs, setBlobs] = useState({});
   const blobTaskQueue = useRef([]);
   const isBlobTaskQueueRunning = useRef(false);
   const currentTask = useRef([null, null]);
@@ -104,8 +104,11 @@ function PageBlobsProvider({ children }) {
       blobTaskQueue.current.push([
         storyPage.id,
         async () => {
-          const blob = await storyPageToBlob(storyPage);
-          return blob;
+          const blob = await storyPageToBlob(storyPage, {});
+          setBlobs((state) => ({
+            ...state,
+            [storyPage.id]: blob,
+          }));
         },
       ]);
 

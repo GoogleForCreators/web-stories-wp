@@ -95,7 +95,7 @@ async function storyPageToBlob(page, { width = 400, ...options }) {
       if (!htmlNode) {
         return;
       }
-      resolve(htmlNode);
+      resolve(bufferRoot);
     };
 
     render(

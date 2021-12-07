@@ -16,15 +16,15 @@
 /**
  * External dependencies
  */
-import { useContext, identity } from '@web-stories-wp/react';
+import { useContextSelector, identity } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import Context from './context';
 
-function usePageBlobs(selector = identity) {
-  return useContext(Context, selector);
+function usePageBlobs(selector) {
+  return useContextSelector(Context, selector ?? identity);
 }
 
 export default usePageBlobs;

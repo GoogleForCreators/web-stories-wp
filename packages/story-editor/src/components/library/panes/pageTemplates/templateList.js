@@ -168,7 +168,6 @@ function TemplateList({
 
               // TODO: Display images if available.
               // Don't forget width & height attributes of course.
-
               return (
                 <PageTemplate
                   key={pageIndex}
@@ -199,6 +198,9 @@ TemplateList.propTypes = {
   pages: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
+      image: PropTypes.shape({
+        url: PropTypes.string,
+      }),
     })
   ),
   pageSize: PropTypes.object.isRequired,
