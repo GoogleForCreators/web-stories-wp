@@ -42,12 +42,6 @@ function useDetectBlurHash({ updateMediaElement }) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const { getProxiedUrl } = useCORSProxy();
-  const setProperties = useCallback(
-    (id, properties) => {
-      updateElementsByResourceId({ id, properties });
-    },
-    [updateElementsByResourceId]
-  );
 
   const saveBlurHash = useCallback(
     /**
@@ -58,13 +52,13 @@ function useDetectBlurHash({ updateMediaElement }) {
      */
     async (id, blurHash) => {
       try {
-        const newState = ({ resource }) => ({
+        const properties = ({ resource }) => ({
           resource: {
             ...resource,
             blurHash,
           },
         });
-        setProperties(id, newState);
+        updateElementsByResourceId({ id, properties });
         updateMediaElement({
           id,
           data: { blurHash },
@@ -78,7 +72,12 @@ function useDetectBlurHash({ updateMediaElement }) {
         // Do nothing for now.
       }
     },
-    [setProperties, updateMedia, updateMediaElement, hasUploadMediaAction]
+    [
+      updateElementsByResourceId,
+      updateMediaElement,
+      hasUploadMediaAction,
+      updateMedia,
+    ]
   );
 
   const updateBlurHash = useCallback(
