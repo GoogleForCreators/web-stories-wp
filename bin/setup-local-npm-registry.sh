@@ -39,6 +39,9 @@ grep -q 'http address' <(tail -f $tmp_registry_log)
 
 echo "Local registry up and running! ${registry_url}"
 
+# Set registry to local registry
+export NPM_CONFIG_REGISTRY="$registry_url"
+
 echo "Logging in..."
 
 # Log in to Verdaccio so we can publish packages

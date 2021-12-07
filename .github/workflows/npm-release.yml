@@ -44,6 +44,8 @@ jobs:
       # Using Verdaccio
       - name: Publish packages locally
         run: npm --registry=$LOCAL_REGISTRY_URL --workspaces publish
+        env:
+          - NPM_CONFIG_REGISTRY: $${{ env.LOCAL_REGISTRY_URL }}
 
       - name: Stop local registry
         run: bash bin/stop-local-npm-registry.sh
