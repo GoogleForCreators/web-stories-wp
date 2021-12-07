@@ -16,10 +16,10 @@ env:
   LOCAL_REGISTRY_URL: http://localhost:4873
 
 jobs:
-  release:
-    name: Release
+  dry-run:
+    name: Dry-run release
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -30,8 +30,6 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: npm
-          registry-url: ${{ env.PRODUCTION_REGISTRY_URL }}
-          scope: '@googleforcreators'
 
       # For the time being, using incremental versions like v0.1.202111302140
       - name: Version bumps
@@ -49,6 +47,32 @@ jobs:
 
       - name: Stop local registry
         run: bash bin/stop-local-npm-registry.sh
+
+      # Undo the version bumps in Git. We only needed them for testing.
+      - name: Clean up local changes
+        run: git checkout .
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [dry-run]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # See go/npm-publish
+      - name: Setup Node
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+          registry-url: ${{ env.PRODUCTION_REGISTRY_URL }}
+          scope: '@googleforcreators'
+
+      # For the time being, using incremental versions like v0.1.202111302140
+      - name: Version bumps
+        run: npm version --workspaces --no-git-tag-version "0.1.$(date -u +%Y%m%d%H%M)"
 
       # Dry-run releasing
       - name: Dry-run production release
