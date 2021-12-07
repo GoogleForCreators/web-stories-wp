@@ -109,6 +109,14 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.15.1 =
+
+**Release Date:** December 7, 2021.
+
+* Fixes a rare issue with crashing and failing to load particular stories.
+* Fixes an issue with mangled Unicode characters.
+* Fixes an issue with styling differences between the editor and the preview.
+
 = 1.15.0 =
 
 **Release Date:** November 30, 2021.
@@ -130,19 +138,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Fixes an issue with embeds not appearing on the frontend.
 * Bug fixes and performance improvements.
 
-= 1.13.0 =
-
-**Release Date:** October 12, 2021.
-
-* New feature: tags and categories management in the editor.
-* Performance improvements for page thumbnails in the editor.
-* Improves AMP compatibility of the Web Stories embed block.
-* Fixes an AMP validation issue related to link icons.
-* Fixes an issue with setting link icons in the editor.
-* Fixes an issue with custom page templates that caused the editor to crash.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.15.1 =
+
+Several bug fixes to address the editor crashing and styling differences between editor and preview.
 
 = 1.15.0 =
 
@@ -151,7 +151,3 @@ Media hotlinking, templates search, link qualification, and several bug fixes an
 = 1.14.0 =
 
 Archive page customization, improved video captions appearance, layer panel improvements, and several bug fixes.
-
-= 1.13.0 =
-
-Categories and tags support, improved performance in the editor, and several bug fixes.

@@ -38,10 +38,10 @@ use Google\Web_Stories_Dependencies\AMP_Script_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Amp;
-use Google\Web_Stories_Dependencies\AmpProject\Attribute;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Extension;
-use Google\Web_Stories_Dependencies\AmpProject\Tag;
+use Google\Web_Stories_Dependencies\AmpProject\Html\Attribute;
+use Google\Web_Stories_Dependencies\AmpProject\Html\Tag;
 use DOMElement;
 
 /**
