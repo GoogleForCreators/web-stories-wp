@@ -94,7 +94,7 @@ export function addPageTemplate(config, data) {
  */
 export function updatePageTemplate(config, id, data) {
   return apiFetch({
-    path: `${config.api.pageTemplates}/${id}/`,
+    path: `${config.api.pageTemplates}${id}/`,
     data: {
       ...data,
     },

@@ -77,14 +77,14 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
  */
 
 /**
- * Async method to generate a blob from a story page.
+ * Async method to generate a dataUrl from a story page.
  *
  * @param {Page} page Page object.
  * @param {Object} options options to pass to htmlToImage.toJpeg
  * @param {number} options.width desired width of image. Dictates height and container height
- * @return {string} jpeg blob
+ * @return {string} jpeg dataUrl
  */
-async function storyPageToBlob(page, { width = 400, ...options }) {
+async function storyPageToDataUrl(page, { width = 400, ...options }) {
   const htmlToImage = await import(
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
   );
@@ -95,7 +95,7 @@ async function storyPageToBlob(page, { width = 400, ...options }) {
       if (!htmlNode) {
         return;
       }
-      resolve(bufferRoot);
+      resolve(htmlNode);
     };
 
     render(
@@ -104,7 +104,7 @@ async function storyPageToBlob(page, { width = 400, ...options }) {
     );
   });
 
-  const blob = await htmlToImage.toJpeg(node, {
+  const dataUrl = await htmlToImage.toJpeg(node, {
     ...options,
     width,
     height: width * (1 / PAGE_RATIO),
@@ -112,7 +112,7 @@ async function storyPageToBlob(page, { width = 400, ...options }) {
 
   unmountComponentAtNode(bufferRoot);
 
-  return blob;
+  return dataUrl;
 }
 
-export default storyPageToBlob;
+export default storyPageToDataUrl;

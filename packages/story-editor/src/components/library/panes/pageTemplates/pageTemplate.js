@@ -17,35 +17,38 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import {
-  useState,
-  useCallback,
-  forwardRef,
-  useFocusOut,
-  useEffect,
-} from '@web-stories-wp/react';
-import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  themeHelpers,
   Icons,
+  themeHelpers,
 } from '@web-stories-wp/design-system';
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { __ } from '@web-stories-wp/i18n';
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useFocusOut,
+  useState,
+} from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import { PageSizePropType } from '../../../../types';
-import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
-import { focusStyle } from '../../../panels/shared';
-import { usePageBlobs } from '../../../../app/pageBlobs';
 import { useAPI } from '../../../../app/api';
-import { useUploader } from '../../../../app/uploader';
 import { useConfig } from '../../../../app/config';
+import { usePageDataUrls } from '../../../../app/pageDataUrls';
+import { useUploader } from '../../../../app/uploader';
+import { PageSizePropType } from '../../../../types';
+import blobToFile from '../../../../utils/blobToFile';
+import dataUrlToBlob from '../../../../utils/dataUrlToBlob';
+import { focusStyle } from '../../../panels/shared';
+import { PreviewErrorBoundary, PreviewPage } from '../../../previewPage';
 
 const PageTemplateWrapper = styled.div`
   position: absolute;
@@ -112,10 +115,12 @@ function PageTemplate(
   { page, pageSize, translateY, translateX, isActive, handleDelete, ...rest },
   ref
 ) {
-  const queuePageBlobGeneration = usePageBlobs(
-    ({ actions }) => actions.queuePageBlobGeneration
+  const queuePageImageGeneration = usePageDataUrls(
+    ({ actions }) => actions.queuePageImageGeneration
   );
-  const pageBlob = usePageBlobs(({ state: { blobs } }) => blobs[page.id]);
+  const pageDataUrl = usePageDataUrls(
+    ({ state: { dataUrls } }) => dataUrls[page.id]
+  );
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -138,24 +143,23 @@ function PageTemplate(
     setIsHover(false);
   }, []);
 
-  const imageUrl = page.image?.url ? page.image.url : pageBlob;
-
+  const imageUrl = page.image?.url ? page.image.url : pageDataUrl;
+  const shouldPostBlob =
+    hasUploadMediaAction && pageDataUrl && !page.image?.url;
   useEffect(() => {
-    if (!pageBlob || page.image?.url) {
-      return;
-    }
-
-    if (!hasUploadMediaAction) {
+    if (!shouldPostBlob) {
       return;
     }
 
     (async () => {
       try {
-        const resource = await uploadFile(pageBlob, {
+        const blob = await dataUrlToBlob(pageDataUrl);
+        const file = blobToFile(blob, `${page.templateId}.jpg`, 'image/jpeg');
+        const resource = await uploadFile(file, {
           web_stories_media_source: 'page-template',
         });
 
-        updatePageTemplate(page.id, {
+        updatePageTemplate(page.templateId, {
           featured_media: resource.id,
         });
       } catch (err) {
@@ -164,20 +168,22 @@ function PageTemplate(
       }
     })();
   }, [
-    pageBlob,
+    pageDataUrl,
     uploadFile,
     updatePageTemplate,
-    page.id,
-    page.image?.url,
-    hasUploadMediaAction,
+    page.templateId,
+    shouldPostBlob,
   ]);
 
   useEffect(() => {
-    if (imageUrl) {
+    // We don't want to go through the work of generating a blob if the user
+    // can't upload it because their machine will have to regenerate it everytime
+    // the page refreshes.
+    if (imageUrl || !hasUploadMediaAction) {
       return;
     }
-    queuePageBlobGeneration(page);
-  }, [imageUrl, queuePageBlobGeneration, page]);
+    queuePageImageGeneration(page);
+  }, [imageUrl, queuePageImageGeneration, page, hasUploadMediaAction]);
 
   return (
     <PageTemplateWrapper

@@ -13,18 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { useContextSelector, identity } from '@web-stories-wp/react';
-
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function usePageBlobs(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default usePageBlobs;
+export { default as usePageDataUrls } from './usePageDataUrls';
+export { default as PageDataUrlProvider } from './pageDataUrlsProvider';

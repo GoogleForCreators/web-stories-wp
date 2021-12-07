@@ -45,7 +45,7 @@ import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
-import { PageBlobsProvider } from './app/pageBlobs';
+import { PageDataUrlProvider } from './app/pageDataUrls';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
@@ -74,7 +74,7 @@ function StoryEditor({ config, children }) {
                                   <TransformProvider>
                                     <DropTargetsProvider>
                                       <HelpCenterProvider>
-                                        <PageBlobsProvider>
+                                        <PageDataUrlProvider>
                                           <GlobalStyle />
                                           <DevTools />
                                           <DefaultMoveableGlobalStyle />
@@ -83,7 +83,7 @@ function StoryEditor({ config, children }) {
                                           <CalendarStyle />
                                           <KeyboardOnlyOutlines />
                                           {children}
-                                        </PageBlobsProvider>
+                                        </PageDataUrlProvider>
                                       </HelpCenterProvider>
                                     </DropTargetsProvider>
                                   </TransformProvider>

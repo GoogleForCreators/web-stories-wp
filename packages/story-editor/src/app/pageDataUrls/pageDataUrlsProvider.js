@@ -26,38 +26,38 @@ import {
   requestIdleCallback,
   cancelIdleCallback,
 } from '../../utils/idleCallback';
-import storyPageToBlob from '../../utils/storyPageToBlob';
+import storyPageToDataUrl from '../../utils/storyPageToDataUrl';
 import Context from './context';
 
 /**
  * @typedef {import('../../types.js').Page} Page
  */
 
-function PageBlobsProvider({ children }) {
-  const [blobs, setBlobs] = useState({});
-  const blobTaskQueue = useRef([]);
-  const isBlobTaskQueueRunning = useRef(false);
+function PageDataUrlProvider({ children }) {
+  const [dataUrls, setDataUrls] = useState({});
+  const taskQueue = useRef([]);
+  const isTaskQueueRunning = useRef(false);
   const currentTask = useRef([null, null]);
 
   /**
-   * Recursively runs the blob task queue sequentially
-   * until all queued blobs are generated.
+   * Recursively runs the image generation task queue sequentially
+   * until all queued dataUrls are generated.
    *
    * @return {void}
    */
-  const runBlobTaskQueue = useCallback(() => {
-    isBlobTaskQueueRunning.current = true;
+  const runTaskQueue = useCallback(() => {
+    isTaskQueueRunning.current = true;
 
-    if (!blobTaskQueue.current.length) {
-      isBlobTaskQueueRunning.current = false;
+    if (!taskQueue.current.length) {
+      isTaskQueueRunning.current = false;
       return;
     }
 
-    const [pageId, generationTask] = blobTaskQueue.current.shift();
+    const [pageId, generationTask] = taskQueue.current.shift();
     const idleCallbackId = requestIdleCallback(async () => {
       await generationTask();
       currentTask.current = [null, null];
-      runBlobTaskQueue();
+      runTaskQueue();
     });
     currentTask.current = [pageId, idleCallbackId];
   }, []);
@@ -72,7 +72,7 @@ function PageBlobsProvider({ children }) {
   const clearQueueOfPageTask = useCallback(
     (id) => {
       // Remove any queued tasks associated with this page Id
-      blobTaskQueue.current = blobTaskQueue.current.filter(
+      taskQueue.current = taskQueue.current.filter(
         ([storyPageId]) => storyPageId !== id
       );
 
@@ -82,65 +82,65 @@ function PageBlobsProvider({ children }) {
       if (id === pageId) {
         cancelIdleCallback(idleCallbackId);
         currentTask.current = [null, null];
-        runBlobTaskQueue();
+        runTaskQueue();
       }
     },
-    [runBlobTaskQueue]
+    [runTaskQueue]
   );
 
   /**
-   * Add page blob generation task to a background task
+   * Add page image generation task to a background task
    * queue.
    *
    * @param {Page} storyPage Page object.
-   * @return {Function} function to cancel blob generation request
+   * @return {Function} function to cancel image generation request
    */
-  const queuePageBlobGeneration = useCallback(
+  const queuePageImageGeneration = useCallback(
     (storyPage) => {
-      // Clear queue of any stale requests to generate the page blob
+      // Clear queue of any stale requests to generate the page image
       clearQueueOfPageTask(storyPage.id);
 
-      // Add request to generate page blob to queue
-      blobTaskQueue.current.push([
+      // Add request to generate page image generation queue
+      taskQueue.current.push([
         storyPage.id,
         async () => {
-          const blob = await storyPageToBlob(storyPage, {});
-          setBlobs((state) => ({
+          const dataUrl = await storyPageToDataUrl(storyPage, {});
+          setDataUrls((state) => ({
             ...state,
-            [storyPage.id]: blob,
+            [storyPage.id]: dataUrl,
           }));
         },
       ]);
 
       // If the queue has stopped processing because
       // it ran out of entries, restart it
-      if (!isBlobTaskQueueRunning.current) {
-        runBlobTaskQueue();
+      if (!isTaskQueueRunning.current) {
+        runTaskQueue();
       }
 
       return () => {
         clearQueueOfPageTask(storyPage.id);
       };
     },
-    [runBlobTaskQueue, clearQueueOfPageTask]
+    [runTaskQueue, clearQueueOfPageTask]
   );
 
   const value = useMemo(
     () => ({
       state: {
-        blobs,
+        dataUrls,
       },
       actions: {
-        queuePageBlobGeneration,
+        queuePageImageGeneration,
       },
     }),
-    [queuePageBlobGeneration, blobs]
+    [queuePageImageGeneration, dataUrls]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
-PageBlobsProvider.propTypes = {
+PageDataUrlProvider.propTypes = {
   children: PropTypes.node,
 };
 
-export default PageBlobsProvider;
+export default PageDataUrlProvider;
