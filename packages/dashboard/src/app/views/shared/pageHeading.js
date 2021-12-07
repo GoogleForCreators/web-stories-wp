@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
@@ -72,18 +71,8 @@ const PageHeading = ({
   showSearch,
   handleSearchChange,
   searchValue = '',
-  clearSearch = noop,
+  onClear = noop,
 }) => {
-  const handleClearSearch = useCallback(
-    (evt) => {
-      // evt is null when user presses the clear button
-      if (evt === null) {
-        clearSearch();
-      }
-    },
-    [clearSearch]
-  );
-
   return (
     <HeadingContainer>
       <StyledHeadline
@@ -101,7 +90,7 @@ const PageHeading = ({
             selectedValue={{ label: searchValue, value: searchValue }}
             options={searchOptions}
             handleSearchValueChange={handleSearchChange}
-            onMenuItemClick={handleClearSearch}
+            onClear={onClear}
             emptyText={__('No options available', 'web-stories')}
           />
         </HeaderSearch>
@@ -115,13 +104,13 @@ PageHeading.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  heading: PropTypes.string.isRequired,
-  searchPlaceholder: PropTypes.string,
-  searchOptions: PropTypes.arrayOf(PropTypes.object),
-  showSearch: PropTypes.bool,
   handleSearchChange: PropTypes.func,
-  clearSearch: PropTypes.func,
+  heading: PropTypes.string.isRequired,
+  onClear: PropTypes.func,
+  searchOptions: PropTypes.arrayOf(PropTypes.object),
+  searchPlaceholder: PropTypes.string,
   searchValue: PropTypes.string,
+  showSearch: PropTypes.bool,
 };
 
 export default PageHeading;

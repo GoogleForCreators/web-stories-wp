@@ -77,7 +77,7 @@ describe('DeleteDialog', () => {
     const { container } = setup();
     setAppElement(container);
 
-    expect(screen.queryByText('Delete Image?')).toBeInTheDocument();
+    expect(screen.getByText('Delete Image?')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /delete/i })).toBeInTheDocument();
   });
