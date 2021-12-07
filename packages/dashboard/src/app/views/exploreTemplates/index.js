@@ -23,7 +23,7 @@ import {
   useCallback,
   useState,
 } from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackScreenView } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -143,13 +143,10 @@ function ExploreTemplates() {
   );
 
   const handleDetailsToggle = useCallback(
-    (id) => {
+    (id, title) => {
       setIsDetailsViewOpen((prevIsOpen) => {
         const newIsOpen = !prevIsOpen;
-        // should we add a tracking event like so?
-        trackEvent('details_view_toggled', {
-          status: newIsOpen ? 'open' : 'closed',
-        });
+        title && trackScreenView(title);
 
         if (newIsOpen && id) {
           setActiveTemplate(
