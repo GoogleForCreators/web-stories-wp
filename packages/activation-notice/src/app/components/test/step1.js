@@ -43,6 +43,6 @@ describe('Step 1', () => {
   it('should render', () => {
     render();
 
-    expect(screen.queryByText(/Get Started story/i)).toBeInTheDocument();
+    expect(screen.getByText(/Get Started story/i)).toBeInTheDocument();
   });
 });

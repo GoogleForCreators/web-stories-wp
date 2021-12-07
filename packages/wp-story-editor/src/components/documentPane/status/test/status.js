@@ -132,7 +132,7 @@ describe('statusPanel', () => {
       },
       'test'
     );
-    expect(screen.queryByLabelText('Password')).toBeInTheDocument();
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
   });
 
   it('should hide password field when changing visibility', () => {
