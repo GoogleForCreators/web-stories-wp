@@ -113,7 +113,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 **Release Date:** December 7, 2021.
 
-* Fixes an issue with the editor crashing due to an unexpected data format.
+* Fixes a rare issue with crashing and failing to load particular stories.
 * Fixes an issue with mangled Unicode characters.
 * Fixes an issue with styling differences between the editor and the preview.
 
