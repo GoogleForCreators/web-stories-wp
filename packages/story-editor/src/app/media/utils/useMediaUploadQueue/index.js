@@ -245,6 +245,13 @@ function useMediaUploadQueue() {
             };
           }
 
+          if (resource?.blurHash && !trimData) {
+            additionalData.meta = {
+              ...additionalData.meta,
+              web_stories_blurhash: resource.blurHash,
+            };
+          }
+
           // Convert animated GIFs to videos if possible.
           if (
             isTranscodingEnabled &&
