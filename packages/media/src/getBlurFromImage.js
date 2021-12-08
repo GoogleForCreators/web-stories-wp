@@ -33,11 +33,11 @@ const getImageData = (image) => {
   return ctx.getImageData(0, 0, width, height);
 };
 
-const encodeImageToBlurhash = async (src) => {
+const getBlurHashFromImage = async (src) => {
   const image = await preloadImage(src);
   const imageData = getImageData(image);
   const { data, width, height } = imageData;
   // todo workout why 1 and 1 the only options that are not painfully slow.
   return encode(data, width, height, 4, 4);
 };
-export default encodeImageToBlurhash;
+export default getBlurHashFromImage;
