@@ -23,8 +23,8 @@ import { identity, useContextSelector } from '@web-stories-wp/react';
  */
 import Context from './context';
 
-function useDropTargets(selector) {
-  return useContextSelector(Context, selector ?? identity);
+function useDropTargets(selector, equalityFn) {
+  return useContextSelector(Context, selector ?? identity, equalityFn);
 }
 
 export default useDropTargets;

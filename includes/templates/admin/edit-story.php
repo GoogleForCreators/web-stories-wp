@@ -32,7 +32,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $post_type, $post_type_object, $post;
 
 $stories_rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-$demo              = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ) ? 'true' : 'false'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $initial_edits     = [ 'story' => null ];
 
 // Preload common data.
@@ -83,44 +82,45 @@ $preload_paths = [
 	),
 ];
 
-$story_path = "/web-stories/v1/$stories_rest_base/{$post->ID}/?" . build_query(
-	[
-		'_embed'           => rawurlencode(
-			implode(
-				',',
-				[ 'wp:featuredmedia', 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
-			)
-		),
-		'context'          => 'edit',
-		'web_stories_demo' => $demo,
-		'_fields'          => rawurlencode(
-			implode(
-				',',
-				[
-					'id',
-					'title',
-					'status',
-					'slug',
-					'date',
-					'modified',
-					'excerpt',
-					'link',
-					'story_data',
-					'preview_link',
-					'edit_link',
-					'embed_post_link',
-					'permalink_template',
-					'style_presets',
-					'password',
-				]
-			)
-		),
-	]
-);
+$story_initial_path = "/web-stories/v1/$stories_rest_base/{$post->ID}/?";
+$story_query_params = [
+	'_embed'  => rawurlencode(
+		implode(
+			',',
+			[ 'wp:featuredmedia', 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
+		)
+	),
+	'context' => 'edit',
+	'_fields' => rawurlencode(
+		implode(
+			',',
+			[
+				'id',
+				'title',
+				'status',
+				'slug',
+				'date',
+				'modified',
+				'excerpt',
+				'link',
+				'story_data',
+				'preview_link',
+				'edit_link',
+				'embed_post_link',
+				'permalink_template',
+				'style_presets',
+				'password',
+			]
+		)
+	),
+];
 
-if ( ! wp_validate_boolean( $demo ) ) {
-	$preload_paths[] = $story_path;
+if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$preload_paths[] = $story_initial_path . build_query( $story_query_params );
 } else {
+	$story_query_params['web_stories_demo'] = 'true';
+
+	$story_path             = $story_initial_path . build_query( $story_query_params );
 	$story_data             = \Google\Web_Stories\rest_preload_api_request( [], $story_path );
 	$initial_edits['story'] = ( ! empty( $story_data[ $story_path ]['body'] ) ) ? $story_data[ $story_path ]['body'] : [];
 }

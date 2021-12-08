@@ -80,7 +80,7 @@ describe('buttons', () => {
     fireEvent.click(dismissButton);
 
     await waitForElementToBeRemoved(() =>
-      screen.getByRole('button', { name: 'Dismiss' })
+      screen.queryByRole('button', { name: 'Dismiss' })
     );
   });
 });

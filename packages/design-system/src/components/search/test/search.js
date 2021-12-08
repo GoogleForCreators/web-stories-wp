@@ -85,9 +85,7 @@ describe('Search <Search />', () => {
 
     const input = screen.getByPlaceholderText('select a value');
 
-    act(() => {
-      fireEvent.change(input, { target: { value: 'bruce wayne' } });
-    });
+    fireEvent.change(input, { target: { value: 'bruce wayne' } });
 
     await waitFor(() => {
       expect(screen.getByDisplayValue('bruce wayne')).toBeInTheDocument();
@@ -107,10 +105,11 @@ describe('Search <Search />', () => {
 
     const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
-    act(() => {
-      fireEvent.click(input);
-      fireEvent.change(input, { target: { value: 'bruce' } });
 
+    fireEvent.click(input);
+    fireEvent.change(input, { target: { value: 'bruce' } });
+
+    act(() => {
       // wait for debounced callback to allow a select click handler to process
       jest.runOnlyPendingTimers();
     });
@@ -133,9 +132,9 @@ describe('Search <Search />', () => {
     const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
 
-    act(() => {
-      fireEvent.click(input);
+    fireEvent.click(input);
 
+    act(() => {
       // wait for debounced callback to allow a select click handler to process
       jest.runOnlyPendingTimers();
     });
@@ -159,9 +158,9 @@ describe('Search <Search />', () => {
     const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
 
-    act(() => {
-      fireEvent.click(input);
+    fireEvent.click(input);
 
+    act(() => {
       // wait for debounced callback to allow a select click handler to process
       jest.runOnlyPendingTimers();
     });
@@ -183,9 +182,9 @@ describe('Search <Search />', () => {
     const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
 
-    act(() => {
-      fireEvent.click(input);
+    fireEvent.click(input);
 
+    act(() => {
       // wait for debounced callback to allow a select click handler to process
       jest.runOnlyPendingTimers();
     });
@@ -208,15 +207,16 @@ describe('Search <Search />', () => {
 
     // Fire click event
     const input = screen.getByRole('combobox');
+
+    fireEvent.focus(input);
+    fireEvent.change(input, { target: { value: '' } });
+
     act(() => {
-      fireEvent.focus(input);
-      fireEvent.change(input, { target: { value: '' } });
       // wait for debounced callback to allow a select click handler to process
       jest.runOnlyPendingTimers();
     });
-    act(() => {
-      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
-    });
+
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
 
     expect(onClickMock).toHaveBeenCalledTimes(0);
   });
@@ -234,15 +234,16 @@ describe('Search <Search />', () => {
 
     // Fire click event
     const input = screen.getByRole('combobox');
+
+    fireEvent.focus(input);
+    fireEvent.change(input, { target: { value: 'tapir' } });
+
     act(() => {
-      fireEvent.focus(input);
-      fireEvent.change(input, { target: { value: 'tapir' } });
       // wait for debounced callback to allow a select click handler to process
       jest.runOnlyPendingTimers();
     });
-    act(() => {
-      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
-    });
+
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
 
     // first prop we get back is the event
     expect(onClickMock).toHaveBeenCalledWith(expect.anything(), {
@@ -267,10 +268,10 @@ describe('Search <Search />', () => {
     // Fire click event
     const input = screen.getByRole('combobox');
 
-    act(() => {
-      fireEvent.focus(input);
-      fireEvent.change(input, { target: { value: 'capybara' } });
+    fireEvent.focus(input);
+    fireEvent.change(input, { target: { value: 'capybara' } });
 
+    act(() => {
       // wait for debounced callback to allow a select click handler to process
       jest.runOnlyPendingTimers();
     });

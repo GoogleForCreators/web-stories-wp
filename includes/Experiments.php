@@ -259,18 +259,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'dashboard',
 			],
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 9508
-			 * Creation date: 2021-11-05
-			 */
-			[
-				'name'        => 'enableExploreTemplatesSearch',
-				'label'       => __( 'Template search', 'web-stories' ),
-				'description' => __( 'Enable search for templates', 'web-stories' ),
-				'group'       => 'dashboard',
-				'default'     => true,
-			],
-			/**
 			 * Author: @dmmulroy
 			 * Issue: #2098
 			 * Creation date: 2020-06-04
@@ -326,18 +314,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @spacedmonkey
-			 * Issue: #8811
-			 * Creation date: 2021-09-06
-			 */
-			[
-				'name'        => 'archivePageCustomization',
-				'label'       => __( 'Archive Page', 'web-stories' ),
-				'description' => __( 'Allow Web Stories archive page customization', 'web-stories' ),
-				'group'       => 'general',
-				'default'     => true,
-			],
-			/**
 			 * Author: @miina
 			 * Issue #471
 			 * Creation date: 2021-08-10
@@ -389,17 +365,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'default'     => true,
 			],
 
+
 			/**
 			 * Author: @swissspidy
-			 * Issue: #5315
-			 * Creation date: 2021-09-23
+			 * Issue: #9344
+			 * Creation date: 2021-11-26
 			 */
 			[
-				'name'        => 'enableBetterCaptions',
+				'name'        => 'customVideoCaptionsInEditor',
 				'label'       => __( 'Video Captions', 'web-stories' ),
-				'description' => __( 'Improve video captions appearance when viewing stories', 'web-stories' ),
-				'group'       => 'general',
-				'default'     => true,
+				'description' => __( 'Improve video captions appearance in the editor', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}
