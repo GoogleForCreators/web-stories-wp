@@ -23,7 +23,7 @@ import { generatePatternStyles } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { calcFontMetrics, generateFontFamily } from '../text/util';
+import { generateFontFamily } from '../text/util';
 import { getBorderStyle, getBorderRadius } from '../../utils/elementBorder';
 
 export const elementFillContent = css`
