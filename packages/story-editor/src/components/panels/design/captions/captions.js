@@ -60,11 +60,6 @@ const StyledFileInput = styled(Input)(
         color: ${theme.colors.fg.primary};
       }
     `};
-  
-      * > input:disabled {
-        color: ${theme.colors.fg.primary};
-      }
-    `};
   `
 );
 
