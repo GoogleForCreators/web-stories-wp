@@ -89,7 +89,7 @@ function useDetectBlurHash({ updateMediaElement }) {
         return;
       }
       const imageSrcProxied = getProxiedUrl(resource, imageSrc);
-      const trackTiming = getTimeTracker('load_get_base_color');
+      const trackTiming = getTimeTracker('load_get_blurhash');
       try {
         const blurHash = await getBlurFromImage(imageSrcProxied);
         trackTiming();
