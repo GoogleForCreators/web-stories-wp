@@ -49,32 +49,6 @@ const initialState = {
   queue: [],
 };
 
-const addAdditionalData = (additionalData, resource) => {
-  if (
-    resource.type === 'video' &&
-    resource.isMuted !== null &&
-    additionalData?.web_stories_is_muted === undefined
-  ) {
-    additionalData.web_stories_is_muted = resource.isMuted;
-  }
-
-  if (resource?.baseColor) {
-    additionalData.meta = {
-      ...additionalData.meta,
-      web_stories_base_color: resource.baseColor,
-    };
-  }
-
-  if (resource?.blurHash && !resource?.trimData) {
-    additionalData.meta = {
-      ...additionalData.meta,
-      web_stories_blurhash: resource.blurHash,
-    };
-  }
-
-  return additionalData;
-};
-
 function useMediaUploadQueue() {
   const {
     actions: { uploadFile },
@@ -235,13 +209,14 @@ function useMediaUploadQueue() {
          * @param {File} item.file File object.
          * @return {Promise<void>}
          */
+        // eslint-disable-next-line complexity
         state.queue.map(async (item) => {
           const {
             id,
             file,
             state: itemState,
             resource,
-            additionalData: _additionalData = {},
+            additionalData = {},
             posterFile,
             muteVideo,
             trimData,
@@ -256,7 +231,27 @@ function useMediaUploadQueue() {
           let newFile = file;
           let newPosterFile = posterFile;
 
-          const additionalData = addAdditionalData(_additionalData, resource);
+          if (
+            resource.type === 'video' &&
+            resource.isMuted !== null &&
+            additionalData?.web_stories_is_muted === undefined
+          ) {
+            additionalData.web_stories_is_muted = resource.isMuted;
+          }
+
+          if (resource?.baseColor) {
+            additionalData.meta = {
+              ...additionalData.meta,
+              web_stories_base_color: resource.baseColor,
+            };
+          }
+
+          if (resource?.blurHash && !resource?.trimData) {
+            additionalData.meta = {
+              ...additionalData.meta,
+              web_stories_blurhash: resource.blurHash,
+            };
+          }
 
           // Convert animated GIFs to videos if possible.
           if (
