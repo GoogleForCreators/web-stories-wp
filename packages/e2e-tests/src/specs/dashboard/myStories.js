@@ -25,71 +25,60 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Stories Dashboard', () => {
-  it('should delete story', async () => {
-    //need to create new story as all stories are deleted before test runs.
+  const storyName = 'Test Story';
+  beforeEach(async () => {
     await createNewStory();
-    await insertStoryTitle('Delete this story');
+    await insertStoryTitle(storyName);
     await publishStory();
     await visitDashboard();
-
+  });
+  it('should delete story', async () => {
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
     await page.hover(
-      '[role="listitem"][aria-label="Details about Delete this story"]'
+      `[role="listitem"][aria-label="Details about ${storyName}"]`
     );
     await expect(page).toClick(
-      'button[aria-label="Context menu for Delete this story"]'
+      `button[aria-label="Context menu for ${storyName}"]`
     );
     await expect(page).toClick('button', { text: 'Delete Story' });
     await expect(page).toClick(
-      `button[aria-label='Confirm deleting story "Delete this story"']`
+      `button[aria-label='Confirm deleting story "${storyName}"']`
     );
     await page.waitForTimeout(100);
     await expect(page).not.toMatchElement('h3', {
-      text: 'Delete this story',
+      text: storyName,
     });
   });
   it('should duplicate story', async () => {
-    //need to create new story as all stories are deleted before test runs.
-    await createNewStory();
-    await insertStoryTitle('Duplicate this story');
-    await publishStory();
-    await visitDashboard();
-
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
     await page.hover(
-      '[role="listitem"][aria-label="Details about Duplicate this story"]'
+      `[role="listitem"][aria-label="Details about ${storyName}"]`
     );
     await expect(page).toClick(
-      'button[aria-label="Context menu for Duplicate this story"]'
+      `button[aria-label="Context menu for ${storyName}"]`
     );
     await expect(page).toClick('button', { text: 'Duplicate' });
     await page.waitForTimeout(100);
     await expect(page).toMatchElement('h3', {
-      text: 'Duplicate this story (Copy)',
+      text: `${storyName} (Copy)`,
     });
   });
   it('should rename story', async () => {
-    //need to create new story as all stories are deleted before test runs.
-    await createNewStory();
-    await insertStoryTitle('Rename this story');
-    await publishStory();
-    await visitDashboard();
-
+    const storyToBeNamed = 'Renamed story';
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
-    await page.hover('div[data-testid^=story-grid-item]');
     await page.hover(
-      '[role="listitem"][aria-label="Details about Rename this story"]'
+      `[role="listitem"][aria-label="Details about ${storyName}"]`
     );
     await expect(page).toClick(
-      'button[aria-label="Context menu for Rename this story"]'
+      `button[aria-label="Context menu for ${storyName}"]`
     );
     await expect(page).toClick('button', { text: 'Rename' });
-    await expect(page).toMatchElement('input[value="Rename this story"]');
-    await page.type('input[value="Rename this story"]', 'Renamed story');
+    await expect(page).toMatchElement(`input[value="${storyName}"]`);
+    await page.type(`input[value="${storyName}"]`, storyToBeNamed);
     await page.keyboard.press('Enter');
     await page.waitForTimeout(100);
     await expect(page).toMatchElement('h3', {
-      text: 'Renamed story',
+      text: storyToBeNamed,
     });
   });
 });
