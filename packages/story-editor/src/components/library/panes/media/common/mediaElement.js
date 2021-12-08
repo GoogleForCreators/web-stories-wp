@@ -29,6 +29,8 @@ import {
 import { rgba } from 'polished';
 import { __ } from '@googleforcreators/i18n';
 import { LoadingBar, useKeyDownEffect } from '@googleforcreators/design-system';
+import { Blurhash } from 'react-blurhash';
+
 /**
  * Internal dependencies
  */
@@ -65,6 +67,12 @@ const InnerContainer = styled.div`
   }
 `;
 
+const BlurhashContainer = styled(Blurhash)`
+  position: absolute !important;
+  top: 0;
+  left: 0;
+`;
+
 function Element({
   index,
   resource,
@@ -88,6 +96,7 @@ function Element({
     isMuting,
     isTrimming,
     baseColor,
+    blurHash,
   } = resource;
 
   const oRatio =
@@ -227,6 +236,14 @@ function Element({
           active={active}
         />
         {attribution}
+        {!isLoaded && blurHash && (
+          <BlurhashContainer
+            hash={blurHash}
+            width={width}
+            height={height}
+            punch={1}
+          />
+        )}
         {(local || isTranscoding || isMuting || isTrimming) && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}

@@ -264,6 +264,7 @@ function getImageResourceFromMedia3p(m) {
   return createResource({
     id: m.name,
     baseColor: m.color,
+    blurHash: m.blurHash,
     type: m.type.toLowerCase(),
     mimeType: imageUrls.full.mime_type,
     creationDate: m.createTime,

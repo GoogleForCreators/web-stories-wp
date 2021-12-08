@@ -127,6 +127,12 @@ function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
       maxPageWidth = zoomLevel * PAGE_WIDTH;
       break;
   }
+
+  // Since workspaceSize.width & workspaceSize.height are initially null,
+  // maxPageWidth can end up being negative.
+  // Set it to 0 in that case.
+  maxPageWidth = Math.max(0, maxPageWidth);
+
   // Floor page width to nearest multiple of PAGE_WIDTH_FACTOR
   const pageWidth =
     PAGE_WIDTH_FACTOR * Math.floor(maxPageWidth / PAGE_WIDTH_FACTOR);
