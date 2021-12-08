@@ -78,6 +78,11 @@ function WithLink({ element, active, children, anchorRef }) {
         <LinkDesc>{link.desc || link.url}</LinkDesc>
       </>
     ) : null;
+
+  if (!tooltipContent) {
+    return children;
+  }
+
   return (
     <StyledTooltip
       forceAnchorRef={anchorRef}
