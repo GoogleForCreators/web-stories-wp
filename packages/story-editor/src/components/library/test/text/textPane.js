@@ -19,7 +19,6 @@
  */
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
-import { curatedFontNames } from '@web-stories-wp/fonts';
 import { PAGE_RATIO, UnitsProvider } from '@web-stories-wp/units';
 
 /**
@@ -33,7 +32,7 @@ import TextPane from '../../panes/text/textPane';
 import { PRESETS } from '../../panes/text/textPresets';
 import useLibrary from '../../useLibrary';
 import useInsertPreset from '../../panes/text/useInsertPreset';
-import { TEXT_SET_SIZE } from '../../../../constants';
+import { CURATED_FONT_NAMES, TEXT_SET_SIZE } from '../../../../constants';
 import CanvasContext from '../../../../app/canvas/context';
 
 jest.mock('../../useLibrary');
@@ -71,7 +70,7 @@ describe('TextPane', () => {
 
   it('should insert text with preset text style when clicking Enter', async () => {
     const availableCuratedFonts = fontsListResponse.filter(
-      (font) => curatedFontNames.indexOf(font.name) > 0
+      (font) => CURATED_FONT_NAMES.indexOf(font.name) > 0
     );
 
     const fontContextValues = {

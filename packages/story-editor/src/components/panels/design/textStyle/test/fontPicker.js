@@ -18,17 +18,14 @@
  * External dependencies
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
-import { curatedFontNames } from '@web-stories-wp/fonts';
 import { Datalist } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
 import FontContext from '../../../../../app/font/context';
 import { renderWithTheme } from '../../../../../testUtils';
+import { CURATED_FONT_NAMES } from '../../../../../constants';
 import fontsListResponse from './fontsResponse';
 
 jest.mock('@web-stories-wp/design-system', () => ({
@@ -40,7 +37,7 @@ const fonts = fontsListResponse.map((font) => {
   return { ...font, id: font.name };
 });
 const availableCuratedFonts = fonts.filter(
-  (font) => curatedFontNames.indexOf(font.name) > 0
+  (font) => CURATED_FONT_NAMES.indexOf(font.name) > 0
 );
 
 function arrange(options) {

@@ -19,13 +19,12 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef, useState } from '@web-stories-wp/react';
-import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
  */
 import loadStylesheet from '../../utils/loadStylesheet';
-import { FONT_WEIGHT_NAMES } from '../../constants';
+import { CURATED_FONT_NAMES, FONT_WEIGHT_NAMES } from '../../constants';
 import Context from './context';
 import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
@@ -122,7 +121,7 @@ function FontProvider({ children }) {
   const maybeEnqueueFontStyle = useLoadFontFiles();
 
   const curatedFonts = useMemo(
-    () => fonts.filter((font) => curatedFontNames.includes(font.name)),
+    () => fonts.filter((font) => CURATED_FONT_NAMES.includes(font.name)),
     [fonts]
   );
 

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
@@ -29,6 +28,7 @@ import fontsListResponse from '../../../panels/design/textStyle/test/fontsRespon
 import TextIcon from '../../panes/text/textIcon';
 import { DEFAULT_PRESET } from '../../panes/text/textPresets';
 import useLibrary from '../../useLibrary';
+import { CURATED_FONT_NAMES } from '../../../../constants';
 
 jest.mock('../../useLibrary');
 
@@ -48,7 +48,7 @@ describe('TextTab', () => {
 
   it('should insert text with default text style on shortcut click', async () => {
     const availableCuratedFonts = fontsListResponse.filter(
-      (font) => curatedFontNames.indexOf(font.name) > 0
+      (font) => CURATED_FONT_NAMES.indexOf(font.name) > 0
     );
 
     const fontContextValues = {
