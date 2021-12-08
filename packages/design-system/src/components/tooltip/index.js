@@ -141,9 +141,6 @@ function Tooltip({
   // We can sometimes render a tooltip too far to the left, ie. in RTL mode.
   // when that is the case, we can switch to placement-start and the tooltip will no longer get cutoff.
   const updatePlacement = useCallback(() => {
-    if (!isMounted.current) {
-      console.log('updatePlacement not mounted');
-    }
     const currentPlacement = placementRef.current;
     switch (currentPlacement) {
       case PLACEMENT.BOTTOM_START:
@@ -175,10 +172,6 @@ function Tooltip({
   // cutoff the contents of the tooltip.
   const positionPlacement = useCallback(
     ({ offset }) => {
-      if (!isMounted.current) {
-        console.log('positionPlacement not mounted');
-      }
-
       // check to see if there's an overlap with the window's bottom edge
       const neededVerticalSpace = offset.bottom;
       const shouldMoveToTop =
@@ -201,10 +194,6 @@ function Tooltip({
 
   const positionArrow = useCallback(
     (popupDimensions) => {
-      if (!isMounted.current) {
-        console.log('positionArrow not mounted');
-      }
-
       const anchorElBoundingBox = anchorRef.current?.getBoundingClientRect();
       const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
       if (!tooltipElBoundingBox || !anchorElBoundingBox) {
@@ -222,9 +211,6 @@ function Tooltip({
   );
 
   const resetPlacement = useDebouncedCallback(() => {
-    if (!isMounted.current) {
-      console.log('resetPlacement not mounted');
-    }
     setDynamicPlacement(placementRef.current);
   }, 100);
 
