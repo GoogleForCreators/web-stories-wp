@@ -31,10 +31,9 @@ import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import useMedia from '../../../../../app/media/useMedia';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import useMedia3pApi from '../../../../../app/media/media3p/api/useMedia3pApi';
-import { useStory } from '../../../../../app/story';
+import useDetectBaseColor from '../../../../../app/media/utils/useDetectBaseColor';
 import useLibrary from '../../../useLibrary';
 import { ChipGroup } from '../../shared';
-import { getMediaBaseColor } from '../../../../../utils/getMediaBaseColor';
 
 const MediaSubheading = styled(Headline).attrs(() => ({
   as: 'h2',
@@ -63,10 +62,6 @@ const ProviderWrapper = styled.div`
 `;
 
 function ProviderPanel({ providerType, isActive, searchTerm, ...rest }) {
-  const { updateElementsByResourceId } = useStory(({ actions }) => ({
-    updateElementsByResourceId: actions.updateElementsByResourceId,
-  }));
-
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -74,6 +69,8 @@ function ProviderPanel({ providerType, isActive, searchTerm, ...rest }) {
   const {
     actions: { registerUsage },
   } = useMedia3pApi();
+
+  const { updateBaseColor } = useDetectBaseColor({});
 
   /**
    * If the resource has a register usage url then the fact that it's been
@@ -90,31 +87,6 @@ function ProviderPanel({ providerType, isActive, searchTerm, ...rest }) {
       }
     },
     [registerUsage]
-  );
-
-  // Update the base color for an existing media3p resource on the page.
-  // Like useDetectBaseColor, but without updating the local media library.
-  const updateBaseColor = useCallback(
-    async (resource) => {
-      const { id, type, src, poster } = resource;
-      const imageSrc = type === 'image' ? src : poster;
-      if (!imageSrc) {
-        return;
-      }
-      try {
-        const color = await getMediaBaseColor(imageSrc);
-        const properties = ({ resource: prevResource }) => ({
-          resource: {
-            ...prevResource,
-            baseColor: color,
-          },
-        });
-        updateElementsByResourceId({ id, properties });
-      } catch (error) {
-        // Do nothing for now.
-      }
-    },
-    [updateElementsByResourceId]
   );
 
   /**
