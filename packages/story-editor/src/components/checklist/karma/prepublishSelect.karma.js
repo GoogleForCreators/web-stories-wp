@@ -259,11 +259,14 @@ describe('Pre-publish checklist select offending elements onClick', () => {
           width: 640 / 2,
           height: 529 / 2,
           resource: {
-            width: 640,
-            height: 529,
+            id: 10,
             type: 'image',
             mimeType: 'image/jpg',
             src: 'http://localhost:9876/__static__/earth.jpg',
+            alt: 'earth',
+            width: 640,
+            height: 529,
+            baseColor: '#734727',
           },
         });
       });
@@ -303,7 +306,9 @@ describe('Pre-publish checklist select offending elements onClick', () => {
             width: 640,
             height: 529,
             type: 'video',
+            mimeType: 'video/mp4',
             src: 'http://localhost:9876/__static__/earth.mp4',
+            alt: 'Planet Earth',
           },
         });
       });
@@ -345,6 +350,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
             width: 640,
             height: 529,
             type: 'video',
+            mimeType: 'video/mp4',
             src: 'http://localhost:9876/__static__/earth.mp4',
             alt: 'Planet Earth',
           },
