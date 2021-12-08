@@ -22,6 +22,7 @@ import {
   useCallback,
   useMemo,
   useReduction,
+  useRef,
 } from '@web-stories-wp/react';
 import {
   trackError,
@@ -82,6 +83,9 @@ function useMediaUploadQueue() {
   const { uploadVideoPoster } = useUploadVideoFrame({
     updateMediaElement: noop,
   });
+
+  const isMounted = useRef(false);
+
   const {
     startUploading,
     finishUploading,
@@ -116,6 +120,10 @@ function useMediaUploadQueue() {
           try {
             const { resource: newResource, posterFile } =
               await getResourceFromLocalFile(file);
+
+            if (!isMounted.current) {
+              return;
+            }
 
             replacePlaceholderResource({
               id,
@@ -157,6 +165,11 @@ function useMediaUploadQueue() {
               width,
               height,
             };
+
+            if (!isMounted.current) {
+              return;
+            }
+
             replacePlaceholderResource({
               id,
               resource: newResource,
@@ -186,6 +199,10 @@ function useMediaUploadQueue() {
           posterFileName,
           newPosterFile
         );
+
+        if (!isMounted.current) {
+          return;
+        }
 
         let newResourceWithPoster = {
           ...newResource,
@@ -275,6 +292,11 @@ function useMediaUploadQueue() {
 
             try {
               newFile = await convertGifToVideo(file);
+
+              if (!isMounted.current) {
+                return;
+              }
+
               finishTranscoding({ id, file: newFile });
               additionalData.web_stories_media_source = 'gif-conversion';
               additionalData.web_stories_is_muted = true;
@@ -289,6 +311,10 @@ function useMediaUploadQueue() {
 
             try {
               newPosterFile = await getFirstFrameOfVideo(newFile);
+
+              if (!isMounted.current) {
+                return;
+              }
             } catch (error) {
               // Do nothing here.
             }
@@ -299,6 +325,11 @@ function useMediaUploadQueue() {
               startTrimming({ id });
               try {
                 newFile = await trimVideo(file, trimData.start, trimData.end);
+
+                if (!isMounted.current) {
+                  return;
+                }
+
                 finishTrimming({ id, file: newFile });
                 additionalData.meta = {
                   ...additionalData.meta,
@@ -316,6 +347,11 @@ function useMediaUploadQueue() {
               startMuting({ id });
               try {
                 newFile = await stripAudioFromVideo(file);
+
+                if (!isMounted.current) {
+                  return;
+                }
+
                 finishMuting({ id, file: newFile });
                 additionalData.web_stories_is_muted = true;
               } catch (error) {
@@ -335,6 +371,11 @@ function useMediaUploadQueue() {
 
               try {
                 newFile = await transcodeVideo(file);
+
+                if (!isMounted.current) {
+                  return;
+                }
+
                 finishTranscoding({ id, file: newFile });
                 additionalData.web_stories_media_source = 'video-optimization';
               } catch (error) {
@@ -355,6 +396,7 @@ function useMediaUploadQueue() {
             file_type: newFile?.type,
           });
 
+          //eslint-disable-next-line @wordpress/no-unused-vars-before-return
           const trackTiming = getTimeTracker('load_upload_media');
 
           try {
@@ -363,6 +405,10 @@ function useMediaUploadQueue() {
             // Add it back so we're never without one.
             // The final poster will be uploaded later by uploadVideoPoster().
             newResource = await uploadFile(newFile, additionalData);
+
+            if (!isMounted.current) {
+              return;
+            }
           } catch (error) {
             // Cancel uploading if there were any errors.
             cancelUploading({ id, error });
@@ -412,6 +458,14 @@ function useMediaUploadQueue() {
     finishTrimming,
     finishUploading,
   ]);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   return useMemo(() => {
     /**
