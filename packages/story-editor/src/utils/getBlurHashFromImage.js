@@ -17,10 +17,7 @@
  * External dependencies
  */
 import { encode } from 'blurhash';
-/**
- * Internal dependencies
- */
-import preloadImage from './preloadImage';
+import { preloadImage } from '@web-stories-wp/media';
 
 const getImageData = (image) => {
   const { width, height } = image;

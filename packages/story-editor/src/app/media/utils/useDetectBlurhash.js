@@ -19,10 +19,7 @@
  */
 import { useCallback } from '@web-stories-wp/react';
 import { getTimeTracker } from '@web-stories-wp/tracking';
-import {
-  getBlurFromImage,
-  getSmallestUrlForWidth,
-} from '@web-stories-wp/media';
+import { getSmallestUrlForWidth } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
@@ -30,6 +27,7 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import useCORSProxy from '../../../utils/useCORSProxy';
+import getBlurHashFromImage from '../../../utils/getBlurHashFromImage';
 
 function useDetectBlurHash({ updateMediaElement }) {
   const {
@@ -91,7 +89,7 @@ function useDetectBlurHash({ updateMediaElement }) {
       const imageSrcProxied = getProxiedUrl(resource, imageSrc);
       const trackTiming = getTimeTracker('load_get_blurhash');
       try {
-        const blurHash = await getBlurFromImage(imageSrcProxied);
+        const blurHash = await getBlurHashFromImage(imageSrcProxied);
         trackTiming();
         await saveBlurHash(resource.id, blurHash);
       } catch (error) {

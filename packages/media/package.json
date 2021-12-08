@@ -15,7 +15,6 @@
     "@web-stories-wp/react": "*",
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",
-    "blurhash": "^1.1.4",
     "mime": "^3.0.0",
     "prop-types": "^15.7.2"
   },
