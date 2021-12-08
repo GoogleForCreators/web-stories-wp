@@ -78,13 +78,21 @@ function Popup({
   onPositionUpdate = noop,
 }) {
   const [popupState, setPopupState] = useState(null);
-  const [mounted, setMounted] = useState(false);
+  const isMounted = useRef(false);
   const popup = useRef(null);
   const { isRTL } = useConfig();
 
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   const positionPopup = useCallback(
     (evt) => {
-      if (!mounted) {
+      if (!isMounted.current) {
         return;
       }
 
@@ -99,7 +107,7 @@ function Popup({
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [anchor, dock, placement, spacing, mounted, isRTL]
+    [anchor, dock, placement, spacing, isRTL]
   );
 
   useEffect(() => {
@@ -113,10 +121,10 @@ function Popup({
   }, [popupState?.height, positionPopup]);
 
   useLayoutEffect(() => {
-    setMounted(true);
     if (!isOpen) {
       return undefined;
     }
+    isMounted.current = true;
     positionPopup();
 
     // Adjust the position when scrolling.
@@ -124,7 +132,13 @@ function Popup({
     return () => document.removeEventListener('scroll', positionPopup, true);
   }, [isOpen, positionPopup]);
 
-  useLayoutEffect(onPositionUpdate, [popupState, onPositionUpdate]);
+  useLayoutEffect(() => {
+    if (!isMounted.current) {
+      return;
+    }
+
+    onPositionUpdate();
+  }, [popupState, onPositionUpdate]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
 
