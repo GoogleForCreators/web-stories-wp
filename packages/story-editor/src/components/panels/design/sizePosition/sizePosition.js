@@ -93,7 +93,7 @@ const gridWithFlip = css`
 const Grid = styled.div`
   display: grid;
   ${({ canFlip }) => (canFlip ? gridWithFlip : gridWithoutFlip)}
-  grid-template-columns: 1fr 4px 8px 4px 1fr 4px 32px;
+  grid-template-columns: 1fr 4px 8px 4px 1fr 8px 32px;
   grid-template-rows: repeat(4, 36px);
   row-gap: 16px;
   align-items: center;
