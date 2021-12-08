@@ -394,11 +394,9 @@ describe('useProcessMedia', () => {
       });
       await waitFor(() => {
         expect(updateBaseColor).toHaveBeenCalledWith({
-          resource: {
-            id: 2,
-            src: 'http://www.google.com/foo.gif',
-            type: 'gif',
-          },
+          id: 2,
+          src: 'http://www.google.com/foo.gif',
+          type: 'gif',
         });
         expect(uploadVideoPoster).toHaveBeenCalledWith(
           2,

@@ -102,6 +102,7 @@ describe('useMediaUploadQueue', () => {
   beforeEach(() => {
     isAnimatedGif.mockReturnValue(false);
   });
+
   afterEach(() => {
     useFFmpeg.mockClear();
   });
@@ -114,6 +115,7 @@ describe('useMediaUploadQueue', () => {
         pending: [],
         failures: [],
         uploaded: [],
+        finished: [],
         progress: [],
         isUploading: false,
         isTranscoding: false,
@@ -154,7 +156,7 @@ describe('useMediaUploadQueue', () => {
     } = result.current.state.progress[0];
     expect(
       result.current.state.isCurrentResourceProcessing(resourceId)
-    ).toBeTrue();
+    ).toBeFalse();
     expect(
       result.current.state.isCurrentResourceUploading(resourceId)
     ).toBeTrue();
@@ -319,8 +321,16 @@ describe('useMediaUploadQueue', () => {
     expect(result.current.state.uploaded).toHaveLength(1);
 
     act(() =>
-      result.current.actions.removeItem({
+      result.current.actions.finishItem({
         id: result.current.state.uploaded[0].id,
+      })
+    );
+
+    expect(result.current.state.finished).toHaveLength(1);
+
+    act(() =>
+      result.current.actions.removeItem({
+        id: result.current.state.finished[0].id,
       })
     );
 
@@ -328,6 +338,7 @@ describe('useMediaUploadQueue', () => {
       expect(result.current.state).toStrictEqual({
         pending: [],
         failures: [],
+        finished: [],
         uploaded: [],
         progress: [],
         isUploading: false,
