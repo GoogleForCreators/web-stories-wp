@@ -99,7 +99,7 @@ function MediaInput(
   const { MediaUpload } = useConfig();
 
   const renderMediaIcon = useCallback(
-    (open, props = {}) => {
+    (open, attributes = {}) => {
       // Options available for the media input menu.
       const availableMenuOptions = [
         { label: __('Edit', 'web-stories'), value: 'edit' },
@@ -124,7 +124,7 @@ function MediaInput(
           forwardedRef={forwardedRef}
           value={value}
           {...rest}
-          {...props}
+          {...attributes}
         />
       );
     },
