@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import {
   Button,
   BUTTON_SIZES,
@@ -36,6 +35,7 @@ import {
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { generatePatternStyles } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
@@ -48,12 +48,17 @@ import { PageSizePropType } from '../../../../types';
 import blobToFile from '../../../../utils/blobToFile';
 import dataUrlToBlob from '../../../../utils/dataUrlToBlob';
 import { focusStyle } from '../../../panels/shared';
-import { PreviewErrorBoundary, PreviewPage } from '../../../previewPage';
+import DisplayElement from '../../../canvas/displayElement';
+
+const TemplateImage = styled.img`
+  width: 100%;
+  height: auto;
+`;
 
 const PageTemplateWrapper = styled.div`
   position: absolute;
   top: 0;
-  height: ${({ pageSize }) => pageSize.containerHeight}px;
+  height: ${({ pageSize }) => pageSize.height}px;
   width: ${({ pageSize }) => pageSize.width}px;
   display: flex;
   flex-direction: column;
@@ -72,12 +77,14 @@ PageTemplateWrapper.propTypes = {
 };
 
 const PreviewPageWrapper = styled.div`
-  height: ${({ pageSize }) => pageSize.containerHeight}px;
+  position: relative;
+  height: ${({ pageSize }) => pageSize.height}px;
   width: ${({ pageSize }) => pageSize.width}px;
   z-index: -1;
   background-color: ${({ theme }) => theme.colors.interactiveBg.secondary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
+  ${({ background }) => generatePatternStyles(background)}
 `;
 PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
@@ -201,21 +208,19 @@ function PageTemplate(
       isHighlighted={page.id === highlightedTemplate}
       {...rest}
     >
-      <PreviewPageWrapper pageSize={pageSize}>
+      <PreviewPageWrapper pageSize={pageSize} background={page.backgroundColor}>
         {imageUrl ? (
-          <img alt={page.title} src={imageUrl} style={{ width: '100%' }} />
+          <TemplateImage
+            alt={page.image?.alt || page.title}
+            src={imageUrl}
+            height={page.image?.height}
+            width={page.image?.height}
+            draggable={false}
+          />
         ) : (
-          <PreviewErrorBoundary>
-            <PreviewPage
-              pageSize={pageSize}
-              page={page}
-              animationState={
-                isActivePage
-                  ? STORY_ANIMATION_STATE.PLAYING
-                  : STORY_ANIMATION_STATE.RESET
-              }
-            />
-          </PreviewErrorBoundary>
+          page.elements.map((element) => (
+            <DisplayElement key={element.id} previewMode element={element} />
+          ))
         )}
         {isActivePage && handleDelete && (
           <ButtonWrapper>

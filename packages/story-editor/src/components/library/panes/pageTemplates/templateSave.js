@@ -120,8 +120,9 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       let imageId;
 
       try {
+        const { templateId, ...page } = currentPage;
         const addedTemplate = await addPageTemplate({
-          story_data: { ...currentPage, id: uuidv4() },
+          story_data: { ...page, id: uuidv4() },
           featured_media: imageId,
         });
         updateList?.(addedTemplate);

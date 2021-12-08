@@ -23,7 +23,11 @@ import {
   render,
   unmountComponentAtNode,
 } from '@web-stories-wp/react';
-import { PAGE_RATIO, UnitsProvider } from '@web-stories-wp/units';
+import {
+  PAGE_RATIO,
+  FULLBLEED_RATIO,
+  UnitsProvider,
+} from '@web-stories-wp/units';
 import styled, { ThemeProvider } from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 
@@ -108,6 +112,7 @@ async function storyPageToDataUrl(page, { width = 400, ...options }) {
   );
 
   const height = width * (1 / PAGE_RATIO);
+  const containerHeight = width * (1 / FULLBLEED_RATIO);
 
   const bufferRoot = document.createElement('div');
   bufferRoot.style.cssText = `
@@ -116,7 +121,7 @@ async function storyPageToDataUrl(page, { width = 400, ...options }) {
     top: 0;
     left: 0;
     width: ${width}px;
-    height: ${height}px;
+    height: ${containerHeight}px;
     opacity: 0;
     transform: translate(-100%, -100%);
     pointer-events: none;
@@ -136,6 +141,7 @@ async function storyPageToDataUrl(page, { width = 400, ...options }) {
         page={page}
         width={width}
         height={height}
+        containerHeight={containerHeight}
       />,
       bufferRoot
     );

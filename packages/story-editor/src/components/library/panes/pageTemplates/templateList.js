@@ -80,8 +80,8 @@ function TemplateList({
     size: rowsTotal,
     parentRef,
     estimateSize: useCallback(
-      () => pageSize.containerHeight + PANEL_GRID_ROW_GAP,
-      [pageSize.containerHeight]
+      () => pageSize.height + PANEL_GRID_ROW_GAP,
+      [pageSize.height]
     ),
     overscan: 4,
   });
@@ -146,7 +146,7 @@ function TemplateList({
           height={rowVirtualizer.totalSize}
           ref={containerRef}
           columnWidth={pageSize.width}
-          rowHeight={pageSize.containerHeight}
+          rowHeight={pageSize.height}
           paneLeft={PANE_PADDING}
           onFocus={handleGridFocus}
           role="list"
@@ -166,8 +166,6 @@ function TemplateList({
               }
               const isActive = activeGridItemId === page.id && isGridFocused;
 
-              // TODO: Display images if available.
-              // Don't forget width & height attributes of course.
               return (
                 <PageTemplate
                   key={pageIndex}
