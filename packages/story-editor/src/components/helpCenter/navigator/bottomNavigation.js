@@ -59,8 +59,8 @@ const BottomNavButtons = styled.div`
 const ArrowWrap = styled.div`
   ${secondaryTextStyle}
   margin: -5px -16px;
-  ${({ isRTL }) =>
-    isRTL &&
+  ${({ $isRTL }) =>
+    $isRTL &&
     css`
       transform: rotate(180deg);
     `}
@@ -118,7 +118,7 @@ export function BottomNavigation({
           size={BUTTON_SIZES.SMALL}
           disabled={!hasBottomNavigation}
         >
-          <ArrowWrap isRTL={isRTL}>
+          <ArrowWrap $isRTL={isRTL}>
             <Icons.ArrowLeft />
           </ArrowWrap>
           <span css={secondaryTextStyle}>{__('All Tips', 'web-stories')}</span>
