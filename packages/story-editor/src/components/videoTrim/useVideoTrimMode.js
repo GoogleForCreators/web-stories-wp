@@ -116,11 +116,13 @@ function useVideoTrimMode() {
       return false;
     }
 
+    const { id, isExternal } = selectedElement.resource;
+
     return (
       isVideoTrimEnabled &&
       isTranscodingEnabled &&
-      !selectedElement.resource.isExternal &&
-      !isCurrentResourceUploading(selectedElement.resource.id)
+      !isExternal &&
+      !isCurrentResourceUploading(id)
     );
   }, [
     selectedElement,
