@@ -80,7 +80,7 @@ function useDetectBaseColor({ updateMediaElement }) {
   );
 
   const updateBaseColor = useCallback(
-    async ({ resource }) => {
+    async (resource) => {
       const { type, src, poster } = resource;
       const imageSrc = type === 'image' ? src : poster;
       if (!imageSrc) {
