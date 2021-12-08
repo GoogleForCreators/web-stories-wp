@@ -85,10 +85,13 @@ function getDesignPanelsForSelection(elements) {
       });
       // In case of default background without media:
     } else {
-      panels.unshift({
-        type: PanelTypes.PAGE_BACKGROUND,
-        Panel: PageBackgroundPanel,
-      });
+      // Avoids adding the pageBackground panel twice.
+      if (!isBackgroundMedia) {
+        panels.unshift({
+          type: PanelTypes.PAGE_BACKGROUND,
+          Panel: PageBackgroundPanel,
+        });
+      }
     }
 
     panels.push({
