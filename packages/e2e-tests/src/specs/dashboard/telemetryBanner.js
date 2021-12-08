@@ -21,15 +21,14 @@ import {
   disableCheckbox,
   visitDashboard,
   visitSettings,
+  clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Telemetry Banner', () => {
   beforeAll(async () => {
     await visitSettings();
     await disableCheckbox('[data-testid="telemetry-settings-checkbox"]');
-    await page.evaluate(() => {
-      localStorage.removeItem('web_stories_tracking_optin_banner_closed');
-    });
+    await clearLocalStorage();
   });
 
   beforeEach(async () => {
@@ -37,9 +36,7 @@ describe('Telemetry Banner', () => {
   });
 
   afterEach(async () => {
-    await page.evaluate(() => {
-      localStorage.removeItem('web_stories_tracking_optin_banner_closed');
-    });
+    await clearLocalStorage();
   });
 
   afterAll(async () => {
@@ -67,11 +64,14 @@ describe('Telemetry Banner', () => {
     await expect(page).not.toMatch('Help improve the editor!');
   });
 
-  it('should keep focus on the checkbox when checking/unchecking via keyboard', async () => {
+  // Skipped for https://github.com/google/web-stories-wp/issues/9619
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should keep focus on the checkbox when checking/unchecking via keyboard', async () => {
     await page.waitForTimeout(300); // Because dashboard takes some time before banner appears.
-    const checkbox = await page.$('#telemetry-banner-opt-in');
 
-    await checkbox.focus();
+    const checkbox = await page.$('#telemetry-banner-opt-in');
+    await checkbox?.focus();
+
     await page.keyboard.press('Space');
     const optedIn = await page.evaluate(() => {
       const ele = document.getElementById('telemetry-banner-opt-in');

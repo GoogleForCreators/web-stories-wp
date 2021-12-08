@@ -69,7 +69,13 @@ class Analytics extends Service_Base {
 	 * @return string Tracking ID.
 	 */
 	public function get_tracking_id(): string {
-		return (string) $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID );
+		/**
+		 * Tracking ID.
+		 *
+		 * @var string $tracking_id
+		 */
+		$tracking_id = $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID );
+		return $tracking_id;
 	}
 
 	/**
@@ -82,7 +88,7 @@ class Analytics extends Service_Base {
 	 * @see https://github.com/ampproject/amphtml/blob/master/spec/amp-var-substitutions.md
 	 *
 	 * @param string $tracking_id Tracking ID.
-	 * @return array <amp-analytics> configuration.
+	 * @return array<string, array> <amp-analytics> configuration.
 	 */
 	public function get_default_configuration( $tracking_id ): array {
 		$config = [
@@ -212,7 +218,14 @@ class Analytics extends Service_Base {
 			],
 		];
 
-		return (array) apply_filters( 'web_stories_analytics_configuration', $config );
+		/**
+		 * Filters the Web Stories Google Analytics configuration.
+		 *
+		 * Only used when not using <amp-story-auto-analytics>, which is the default.
+		 *
+		 * @param array $config Analytics configuration.
+		 */
+		return apply_filters( 'web_stories_analytics_configuration', $config );
 	}
 
 	/**

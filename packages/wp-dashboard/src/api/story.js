@@ -51,6 +51,7 @@ export function fetchStories(config, queryParams) {
     searchTerm,
     page = 1,
     perPage = STORIES_PER_REQUEST,
+    author,
   } = queryParams;
 
   // Important: Keep in sync with REST API preloading definition.
@@ -65,6 +66,7 @@ export function fetchStories(config, queryParams) {
     order: sortDirection || ORDER_BY_SORT[sortOption],
     status,
     _fields: STORY_FIELDS,
+    author,
   };
 
   return apiFetch({

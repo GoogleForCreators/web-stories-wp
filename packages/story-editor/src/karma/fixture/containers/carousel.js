@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import { Container } from './container';
-import { Select } from './common';
 
 /**
  * The page carousel.
@@ -29,7 +28,7 @@ export class Carousel extends Container {
   }
 
   get pages() {
-    const pageList = this.getByRole('listbox', { name: 'Pages List' });
+    const pageList = this.queryByRole('listbox', { name: 'Pages List' });
     if (!pageList) {
       return [];
     }
@@ -47,28 +46,16 @@ export class Carousel extends Container {
     );
   }
 
-  get gridViewToggle() {
-    return this.getByRole('button', { name: 'Grid View' });
+  get previous() {
+    return this.queryByRole('button', { name: 'Scroll Back' });
   }
 
-  get helpCenterToggle() {
-    return this.getByRole('button', { name: /^Help Center/ });
+  get next() {
+    return this.queryByRole('button', { name: 'Scroll Forward' });
   }
 
-  get checklistToggle() {
-    return this.getByRole('button', { name: /^Checklist/ });
-  }
-
-  get keyboardShortcutsToggle() {
-    return this.getByRole('button', { name: /^Keyboard Shortcuts$/ });
-  }
-
-  get zoomSelector() {
-    return this._get(
-      this.getByRole('button', { name: 'Zoom Level' }),
-      'zoomSelector',
-      Select
-    );
+  get toggle() {
+    return this.queryByRole('button', { name: 'Toggle page carousel' });
   }
 }
 

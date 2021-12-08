@@ -5,7 +5,6 @@
 .wordpress-org
 __mocks__
 __static__
-assets/src
 assets/testjs
 bin
 build
@@ -48,7 +47,7 @@ codecov.yml
 composer.lock
 CONTRIBUTING.md
 jest-puppeteer.config.cjs
-karma-edit-story.config.cjs
+karma-story-editor.config.cjs
 karma-dashboard.config.cjs
 package.json
 package-lock.json

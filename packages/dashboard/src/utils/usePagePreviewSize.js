@@ -24,7 +24,7 @@ import {
   useDebouncedCallback,
   useResizeEffect,
 } from '@web-stories-wp/react';
-import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+import { PAGE_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -40,26 +40,13 @@ import {
 } from '../constants';
 
 /**
- * Here we need to calculate three heights for every pagePreview in use.
- * 1. fullbleedHeight - The height that is 9:16 aspect ratio, this is the default FULLBLEED_RATIO
- * This height is used anywhere we need the height of the container holding a pagePreview.
- * It is the true boundary for overflow.
- * It is the 'fullBleedHeight'
- * 2. storyHeight - The height for the actual story (in the dashboard the only actual stories rendered are the templates), used in our shared components with edit-story
- * This means things like the unitsProvider and displayElements that we import to the Dashboard from the editor
- * It's maintaining a 2:3 aspect ratio.
- * When fullbleed is visible (as it is for templates) we use the 2:3 aspect ratio w/ overflow to allow the fullBleed height to be visible
- * 3. posterHeight - This is a height based on 3:4 ratio which is what poster images need, this is used on 'Dashboard' view.
+ * Here we need to calculate height for every pagePreview in use.
+ * The height in 2:3 ratio which is consistent with poster sizes that serve as cover images
  *
  * @param {number} width  width of page to base ratios on
  * @return {Object}       heights to use in pagePreviews { fullBleedHeight: Number, storyHeight: Number}
  */
-export const getPagePreviewHeights = (width) => {
-  const fullBleedHeight = Math.round((width / FULLBLEED_RATIO) * 100) / 100;
-  const storyHeight = Math.round((width / PAGE_RATIO) * 100) / 100;
-  const posterHeight = Math.round(((width / (3 / 4)) * 100) / 100);
-  return { fullBleedHeight, storyHeight, posterHeight };
-};
+export const getPosterHeight = (width) => Math.round(width / PAGE_RATIO);
 
 const getCurrentBp = (availableContainerSpace) =>
   availableContainerSpace <= MIN_DASHBOARD_WIDTH
@@ -74,19 +61,16 @@ const getCurrentBp = (availableContainerSpace) =>
 // subtract those values from the availableContainer space to get remaining space
 // divide the remaining space by the itemsInRow
 // attach that extra space to the width
-// get heights for page and container in getPagePreviewHeights
+// get heights for page and container in getPosterHeight
 const sizeFromWidth = (
   width,
   { bp, respectSetWidth, availableContainerSpace }
 ) => {
   if (respectSetWidth) {
-    const { fullBleedHeight, storyHeight, posterHeight } =
-      getPagePreviewHeights(width);
+    const height = getPosterHeight(width);
     return {
       width,
-      height: storyHeight,
-      containerHeight: fullBleedHeight,
-      posterHeight,
+      height,
     };
   }
 
@@ -102,14 +86,11 @@ const sizeFromWidth = (
   const addToWidthValue = remainingSpace / itemsInRow;
 
   const trueWidth = width + addToWidthValue;
-  const { fullBleedHeight, storyHeight, posterHeight } =
-    getPagePreviewHeights(trueWidth);
+  const height = getPosterHeight(trueWidth);
 
   return {
     width: trueWidth,
-    height: storyHeight,
-    containerHeight: fullBleedHeight,
-    posterHeight,
+    height,
   };
 };
 

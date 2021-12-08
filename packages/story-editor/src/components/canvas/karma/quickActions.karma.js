@@ -20,11 +20,10 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { useHelpCenter, useStory } from '../../../app';
+import { useStory } from '../../../app';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { ACTIONS } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
-import { KEYS } from '../../helpCenter/constants';
 import useInsertElement from '../useInsertElement';
 
 describe('Quick Actions integration', () => {
@@ -38,6 +37,7 @@ describe('Quick Actions integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -46,7 +46,7 @@ describe('Quick Actions integration', () => {
 
   describe('menu visibility', () => {
     it('quick menu should not be visible if the canvas is overflowing', async () => {
-      const { zoomSelector } = fixture.editor.carousel;
+      const { zoomSelector } = fixture.editor.footer;
 
       await fixture.events.click(zoomSelector.select);
       await fixture.events.sleep(300);
@@ -146,22 +146,37 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`clicking the \`${ACTIONS.REPLACE_MEDIA.text}\` button should select the media tab and focus the media tab`, async () => {
-      // hide 3p modal before we click the quick action
-      await fixture.events.click(fixture.editor.library.media3pTab);
-      // tab to dismiss button and press enter
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('Enter');
+    it(`should replace the media using the \`${ACTIONS.REPLACE_MEDIA.text}\` quick action`, async () => {
+      // track initial media
+      const { initialCurrentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          initialCurrentPage: state.currentPage,
+        }))
+      );
 
-      // click quick menu button
+      const { resource: initialResource, ...initialElement } =
+        initialCurrentPage.elements.find((element) => !element.isBackground);
+
+      // click replace media button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.replaceMediaButton
       );
 
-      expect(fixture.editor.library.media).not.toBeNull();
+      // fixture replaces media automatically
+      // verify that media was replaced
+      const { currentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          currentPage: state.currentPage,
+        }))
+      );
 
-      expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
+      const { resource: finalResource, ...finalElement } =
+        currentPage.elements.find((element) => !element.isBackground);
+
+      // everything should be the same except the resource
+      expect(initialElement).toEqual(finalElement);
+      expect(initialResource).not.toEqual(finalResource);
+      expect(finalElement.type).toEqual(finalResource.type);
     });
 
     it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
@@ -266,13 +281,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations and styles match original animation
@@ -335,10 +351,10 @@ describe('Quick Actions integration', () => {
       );
 
       expect(
-        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor
+        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.hex
       ).not.toBeNull();
       expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor
+        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.hex
       );
     });
 
@@ -449,13 +465,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations match original animation
@@ -498,30 +515,36 @@ describe('Quick Actions integration', () => {
       await fixture.events.click(canvasElementWrapperId);
     });
 
-    it(`clicking the \`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` button should select the media tab and focus the media tab`, async () => {
-      // The "Replace background media" quick action also triggers a help center tip which steals focus.
-      // Open the tip now to avoid the focus stealing after the quick menu button is clicked.
-      const { actions } = await fixture.renderHook(() => useHelpCenter());
-      actions.openToUnreadTip(KEYS.ADD_BACKGROUND_MEDIA);
+    it(`should replace the background media when clicking the \`${ACTIONS.REPLACE_BACKGROUND_MEDIA.text}\` action`, async () => {
+      // track initial media
+      const { initialCurrentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          initialCurrentPage: state.currentPage,
+        }))
+      );
 
-      // change tab to make sure tab isn't selected before quick action
-      // hide 3p modal before we click the quick action
-      await fixture.events.click(fixture.editor.library.mediaTab);
-      // tab to dismiss button and press enter
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('Enter');
-
-      const bgMediaButton =
-        fixture.editor.canvas.quickActionMenu.replaceBackgroundMediaButton;
-      expect(bgMediaButton).toBeDefined();
+      const { resource: initialResource, ...initialElement } =
+        initialCurrentPage.elements.find((element) => element.isBackground);
 
       // click quick menu button
-      await fixture.events.click(bgMediaButton);
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.replaceBackgroundMediaButton
+      );
 
-      expect(fixture.editor.library.media).not.toBeNull();
+      // verify that media was replaced
+      const { currentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          currentPage: state.currentPage,
+        }))
+      );
 
-      expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
+      const { resource: finalResource, ...finalElement } =
+        currentPage.elements.find((element) => element.isBackground);
+
+      // everything should be the same except the resource
+      expect(initialElement).toEqual(finalElement);
+      expect(initialResource).not.toEqual(finalResource);
+      expect(finalElement.type).toEqual(finalResource.type);
     });
 
     it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
@@ -613,13 +636,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations match original animation
@@ -794,13 +818,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations match original animation
@@ -837,7 +862,7 @@ describe('Quick Actions integration', () => {
           sizes: {},
           local: false,
           isOptimized: false,
-          baseColor: [115, 71, 39],
+          baseColor: '#734727',
         },
         controls: false,
         loop: false,
@@ -860,22 +885,45 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should click the \`${ACTIONS.REPLACE_MEDIA.text}\` button and open the media panel`, async () => {
-      // hide 3p modal before we click the quick action
-      await fixture.events.click(fixture.editor.library.media3pTab);
-      // tab to dismiss button and press enter
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('Enter');
+    it(`should replace the media using the \`${ACTIONS.REPLACE_MEDIA.text}\` quick action`, async () => {
+      // track initial media
+      const { initialCurrentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          initialCurrentPage: state.currentPage,
+        }))
+      );
+
+      const {
+        resource: initialResource,
+        type: initialType,
+        ...initialElement
+      } = initialCurrentPage.elements.find((element) => !element.isBackground);
 
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.replaceMediaButton
       );
 
-      expect(fixture.editor.library.media).not.toBeNull();
+      // verify that media was replaced
+      const { currentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          currentPage: state.currentPage,
+        }))
+      );
 
-      expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
+      const {
+        resource: finalResource,
+        type: finalType,
+        ...finalElement
+      } = currentPage.elements.find((element) => !element.isBackground);
+
+      // everything should be the same except the resource
+      expect(initialElement).toEqual(finalElement);
+      expect(initialResource).not.toEqual(finalResource);
+
+      // MediaUpload fixture injects an image. New media should not have the same type
+      expect(initialType).not.toEqual(finalType);
+      expect(finalType).toEqual(finalResource.type);
     });
 
     it(`should click the \`${ACTIONS.ADD_ANIMATION.text}\` button and open the animation panel and focus the animation dropdown`, async () => {
@@ -989,13 +1037,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations and styles match original animation
@@ -1152,13 +1201,14 @@ describe('Quick Actions integration', () => {
 
       // wait for the undo button to appear
       await waitFor(
-        () => fixture.screen.getByRole('button', { name: /^Undo$/ }),
+        () =>
+          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
         { timeout: 4000 }
       );
 
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
       );
 
       // Verify that new animations and styles match original animation

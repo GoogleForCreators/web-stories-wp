@@ -71,6 +71,11 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @return WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $post, $request ) {
+		/**
+		 * Request context.
+		 *
+		 * @var string $context
+		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 
 		if ( 'auto-draft' === $post->post_status && wp_validate_boolean( $request['web_stories_demo'] ) ) {
@@ -84,7 +89,13 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
-		$data     = $response->get_data();
+
+		/**
+		 * Response data.
+		 *
+		 * @var array $data
+		 */
+		$data = $response->get_data();
 
 		if ( rest_is_field_included( 'style_presets', $fields ) ) {
 			$style_presets         = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
@@ -242,8 +253,14 @@ class Stories_Controller extends Stories_Base_Controller {
 			return $clauses;
 		}
 
+		/**
+		 * Order value.
+		 *
+		 * @var string $order
+		 */
+		$order = $query->get( 'order' );
+
 		// phpcs:disable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
-		$order              = $query->get( 'order' );
 		$clauses['join']   .= " LEFT JOIN {$wpdb->users} ON {$wpdb->posts}.post_author={$wpdb->users}.ID";
 		$clauses['orderby'] = "{$wpdb->users}.display_name $order, " . $clauses['orderby'];
 		// phpcs:enable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
@@ -294,7 +311,13 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		if ( $request['_web_stories_envelope'] ) {
-			$embed    = isset( $request['_embed'] ) ? rest_parse_embed_param( $request['_embed'] ) : false;
+			/**
+			 * Embed directive.
+			 *
+			 * @var string|array $embed
+			 */
+			$embed    = $request['_embed'];
+			$embed    = $embed ? rest_parse_embed_param( $embed ) : false;
 			$response = rest_get_server()->envelope_response( $response, $embed );
 		}
 
@@ -329,8 +352,19 @@ class Stories_Controller extends Stories_Base_Controller {
 		foreach ( $taxonomies as $taxonomy ) {
 			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 
-			$tax_include = $request[ $base ];
-			$tax_exclude = $request[ $base . '_exclude' ];
+			/**
+			 * List of term IDs to include.
+			 *
+			 * @var array $tax_include
+			 */
+			$tax_include = $request[ $base ] ?? [];
+
+			/**
+			 * List of term IDs to exclude.
+			 *
+			 * @var array $tax_exclude
+			 */
+			$tax_exclude = $request[ $base . '_exclude' ] ?? [];
 
 			if ( $tax_include ) {
 				$terms            = [];
@@ -543,9 +577,14 @@ class Stories_Controller extends Stories_Base_Controller {
 			'embeddable' => true,
 		];
 
+		/**
+		 * Lock data.
+		 *
+		 * @var string|false $lock
+		 */
 		$lock = get_post_meta( $post->ID, '_edit_lock', true );
 
-		if ( $lock ) {
+		if ( ! empty( $lock ) ) {
 			list ( $time, $user ) = explode( ':', $lock );
 
 			/** This filter is documented in wp-admin/includes/ajax-actions.php */
@@ -573,6 +612,11 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @return array Modified list of links.
 	 */
 	private function add_publisher_logo_link( array $links, WP_Post $post ): array {
+		/**
+		 * Publisher logo ID.
+		 *
+		 * @var string|int $publisher_logo_id
+		 */
 		$publisher_logo_id = get_post_meta( $post->ID, Story_Post_Type::PUBLISHER_LOGO_META_KEY, true );
 
 		if ( $publisher_logo_id ) {

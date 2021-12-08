@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -511,7 +511,7 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [28, 17, 29],
+            "baseColor": "#1c111d",
             "isExternal": true
           },
           "tracks": [],
@@ -1442,7 +1442,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           }
         },

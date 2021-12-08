@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Media\Base_Color;
 use Google\Web_Stories\Taxonomy\Category_Taxonomy;
 use Google\Web_Stories\Taxonomy\Tag_Taxonomy;
 use Google\Web_Stories\User\Preferences;
@@ -124,6 +125,7 @@ function delete_site_options() {
  * @return void
  */
 function delete_stories_post_meta() {
+	delete_post_meta_by_key( Base_Color::BASE_COLOR_POST_META_KEY );
 	delete_post_meta_by_key( Poster::POSTER_POST_META_KEY );
 	delete_post_meta_by_key( Poster::POSTER_ID_POST_META_KEY );
 	delete_post_meta_by_key( Optimization::OPTIMIZED_ID_POST_META_KEY );
@@ -184,7 +186,7 @@ function delete_terms() {
 	$settings  = new Settings();
 	$post_type = new Story_Post_Type( $settings, new Experiments( $settings ) );
 
-	$taxonomies[] = ( new Media_Source_Taxonomy() )->get_taxonomy_slug();
+	$taxonomies[] = ( new Media_Source_Taxonomy( new Context( $post_type ) ) )->get_taxonomy_slug();
 	$taxonomies[] = ( new Category_Taxonomy( $post_type ) )->get_taxonomy_slug();
 	$taxonomies[] = ( new Tag_Taxonomy( $post_type ) )->get_taxonomy_slug();
 

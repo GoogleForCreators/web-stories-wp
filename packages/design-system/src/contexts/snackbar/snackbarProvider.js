@@ -42,7 +42,7 @@ function SnackbarProvider({ children, placement = 'bottom' }) {
 
   const create = useCallback((notification) => {
     const newNotification = {
-      key: uuidv4(),
+      id: uuidv4(),
       ...notification,
     };
     // React may batch state updates, so use the setter that receives the

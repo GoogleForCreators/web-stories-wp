@@ -29,7 +29,7 @@ describe('combineElements', () => {
     // Combine nothing into 789
     const result = combineElements({ secondId: '789' });
 
-    expect(result).toStrictEqual(initial);
+    expect(result).toBe(initial);
   });
 
   it('should do nothing if second element is missing', () => {
@@ -43,7 +43,7 @@ describe('combineElements', () => {
       firstElement: state.pages[0].elements[1],
     });
 
-    expect(result).toStrictEqual(initial);
+    expect(result).toBe(initial);
   });
 
   it('should do nothing if second element does not exist', () => {
@@ -58,7 +58,7 @@ describe('combineElements', () => {
       secondId: 'abc',
     });
 
-    expect(result).toStrictEqual(initial);
+    expect(result).toBe(initial);
   });
 
   it('should do nothing if first element does not have a resource', () => {
@@ -73,7 +73,7 @@ describe('combineElements', () => {
       secondId: '456',
     });
 
-    expect(result).toStrictEqual(initial);
+    expect(result).toBe(initial);
   });
 
   it('should combine elements when the origin does not exist as an element', () => {

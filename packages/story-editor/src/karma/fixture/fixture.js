@@ -43,13 +43,15 @@ import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import formattedTemplatesArray from '../../dataUtils/formattedTemplatesArray';
-import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
+import { PRESET_TYPES } from '../../constants';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
 import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
+import DocumentPane from './components/documentPane';
+import { Accessibility, Design, Priority } from './components/checklist';
 
 if ('true' === process.env.CI) {
   configure({
@@ -63,10 +65,11 @@ if ('true' === process.env.CI) {
 }
 
 export const MEDIA_PER_PAGE = 20;
+export const LOCAL_MEDIA_PER_PAGE = 50;
 
 function MediaUpload({ render: _render, onSelect }) {
   const open = () => {
-    const image = { src: 'media1' };
+    const image = { type: 'image', src: 'https://www.example.com/media1' };
     onSelect(image);
   };
 
@@ -107,7 +110,6 @@ const DEFAULT_CONFIG = {
   capabilities: {
     hasUploadMediaAction: true,
   },
-  dashboardLink: 'https://www.example.com/dashboard',
   postLock: {
     interval: 150,
     showLockedDialog: true,
@@ -222,7 +224,6 @@ export class Fixture {
       'publishing',
       'status',
       `stylepreset-${PRESET_TYPES.STYLE}`,
-      `stylepreset-${PRESET_TYPES.COLOR}`,
     ];
     // Open all panels by default.
     panels.forEach((panel) => {
@@ -334,7 +335,24 @@ export class Fixture {
 
     const { container, getByRole } = render(
       <StoryEditor key={Math.random()} config={this._config}>
-        <Layout header={<HeaderLayout />} />
+        <Layout
+          header={<HeaderLayout />}
+          footer={{
+            secondaryMenu: {
+              checklist: {
+                Priority,
+                Design,
+                Accessibility,
+              },
+            },
+          }}
+          inspectorTabs={{
+            document: {
+              title: 'Document',
+              Pane: DocumentPane,
+            },
+          }}
+        />
       </StoryEditor>,
       {
         container: root,
@@ -384,23 +402,25 @@ export class Fixture {
       });
     });
 
-    await waitFor(
-      async () => {
-        // Set help center to closed right away.
-        // Because there's logic to pop open the help center on initial load
-        // This wait + click to close the button is more in line with
-        // testing the actual behavior rather than overriding the local storage.
-        await this.editor.helpCenter.toggleButton;
-        await this.events?.click(this.editor.helpCenter.toggleButton, {
-          clickCount: 1,
-        });
-        await this.events?.sleep(500);
-      },
-      { timeout: 3000 }
-    );
-
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
+  }
+
+  /**
+   * Tells the fixture to close the help center
+   * which will default to open the first time the fixture renders.
+   *
+   * @return {Promise<Object>} Resolves when help center toggle is clicked.
+   */
+  collapseHelpCenter() {
+    const { _editor, _events } = this;
+    if (!_editor || !_events) {
+      throw new Error('Not ready: Help Center unable to collapse');
+    }
+
+    const { toggleButton } = _editor.helpCenter;
+
+    return _events.click(toggleButton);
   }
 
   /**
@@ -767,14 +787,17 @@ class APIProviderFixture {
         const filterBySearchTerm = searchTerm
           ? ({ alt_text }) => alt_text.includes(searchTerm)
           : () => true;
-        // Generate 7*6=42 items, 3 pages
-        const clonedMedia = Array(6)
+        // Generate 8*13=104 items, 3 pages
+        const clonedMedia = Array(13)
           .fill(getMediaResponse)
           .flat()
           .map((media, i) => ({ ...media, id: i + 1 }));
         return asyncResponse({
           data: clonedMedia
-            .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
+            .slice(
+              (pagingNum - 1) * LOCAL_MEDIA_PER_PAGE,
+              pagingNum * LOCAL_MEDIA_PER_PAGE
+            )
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
           headers: { totalPages: 3 },
@@ -810,7 +833,10 @@ class APIProviderFixture {
         []
       );
 
-      const getPublisherLogos = useCallback(() => asyncResponse([]), []);
+      const getProxyUrl = useCallback(
+        () => 'http://localhost:9876/__static__/saturn.jpg',
+        []
+      );
 
       const getAllStatuses = useCallback(
         () => jasmine.createSpy('getAllStatuses'),
@@ -890,7 +916,6 @@ class APIProviderFixture {
                     slug: 'related-slug-1',
                     taxonomy: 'web_story_tag',
                     meta: [],
-                    _links: {},
                   },
                   {
                     id: this._termAutoIncrementId++,
@@ -901,7 +926,6 @@ class APIProviderFixture {
                     slug: 'related-slug-2',
                     taxonomy: 'web_story_tag',
                     meta: [],
-                    _links: {},
                   },
                 ]
               : []
@@ -923,7 +947,6 @@ class APIProviderFixture {
             taxonomy: 'web_story_category',
             parent: 0,
             meta: [],
-            _links: {},
             ...data,
           }),
         []
@@ -942,7 +965,7 @@ class APIProviderFixture {
           getMedia,
           getLinkMetadata,
           getHotlinkInfo,
-          getPublisherLogos,
+          getProxyUrl,
           saveStoryById,
           getAllStatuses,
           getAuthors,

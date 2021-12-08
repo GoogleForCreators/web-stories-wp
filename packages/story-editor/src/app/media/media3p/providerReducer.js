@@ -17,9 +17,8 @@
 /**
  * Internal dependencies
  */
-import paginationReducer, {
-  INITIAL_STATE as COMMON_INITIAL_STATE,
-} from '../pagination/reducer';
+import { INITIAL_STATE as COMMON_INITIAL_STATE } from '../pagination/constants';
+import paginationReducer from '../pagination/reducer';
 
 import categoriesReducer, {
   INITIAL_STATE as CATEGORIES_INITIAL_STATE,

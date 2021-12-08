@@ -139,7 +139,7 @@ describe('setBackgroundElement', () => {
     // 123 is already bg
     const result = setBackgroundElement({ elementId: '123' });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should do nothing if given unknown element', () => {
@@ -164,7 +164,7 @@ describe('setBackgroundElement', () => {
     // 000 doesn't exist - nothing happens
     const result = setBackgroundElement({ elementId: '000' });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
   });
 
   it('should save default background element for later', () => {

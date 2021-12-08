@@ -94,10 +94,10 @@ function useInsertTextSet(shouldUseSmartColor = false) {
         const allColorsEqual = textElementsContrasts.every(
           (contrast) =>
             contrast === null ||
-            (contrast.color.r === firstValidColor.color.r &&
-              contrast.color.g === firstValidColor.color.g &&
-              contrast.color.b === firstValidColor.color.b &&
-              contrast.color.a === firstValidColor.color.a)
+            (contrast.color?.r === firstValidColor.color?.r &&
+              contrast.color?.g === firstValidColor.color?.g &&
+              contrast.color?.b === firstValidColor.color?.b &&
+              contrast.color?.a === firstValidColor.color?.a)
         );
         scrimsCount = textElementsContrasts.reduce(
           (acc, contrast) => (contrast?.backgroundColor ? acc + 1 : acc),
@@ -156,10 +156,11 @@ function useInsertTextSet(shouldUseSmartColor = false) {
             ? { color: scrimContrastingTextColor }
             : textElementsContrasts[index];
 
-          if (element.type === 'text') {
+          // Only apply the colors if a better color was detected.
+          if (element.type === 'text' && autoColor.color) {
             toInsert.content = setColor(toInsert.content, autoColor);
           }
-          if (element.type === 'shape') {
+          if (element.type === 'shape' && firstValidColor.color) {
             // So far we only use borders (no fill) or shapes with fill (no borders).
             if (element.border) {
               toInsert.border.color = firstValidColor;

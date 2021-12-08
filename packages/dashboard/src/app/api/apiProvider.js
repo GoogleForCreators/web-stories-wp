@@ -25,10 +25,12 @@ import { createContext } from '@web-stories-wp/react';
  */
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
+import useUsersApi from './useUsersApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
+  const { api: usersApi } = useUsersApi();
   const { templates, api: templateApi } = useTemplateApi();
   const { stories, api: storyApi } = useStoryApi();
 
@@ -40,6 +42,7 @@ export default function ApiProvider({ children }) {
     actions: {
       storyApi,
       templateApi,
+      usersApi,
     },
   };
 

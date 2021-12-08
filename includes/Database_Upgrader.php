@@ -142,6 +142,11 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 * @return void
 	 */
 	public function run_upgrades() {
+		/**
+		 * Current database version.
+		 *
+		 * @var string $version
+		 */
 		$version = get_option( self::OPTION, '0.0.0' );
 
 		if ( version_compare( WEBSTORIES_DB_VERSION, $version, '=' ) ) {

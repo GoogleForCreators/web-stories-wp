@@ -40,7 +40,7 @@ import PagePreviewElements from './previewPageElements';
  * to allow for fullBleed overflow.
  * So, you'll notice that containerHeight is getting used to wrap the PreviewSafeZone height
  * to make sure that the overflow has the proper size.
- * Reference edit-story/components/canvas/layout for more details
+ * Reference story-editor/components/canvas/layout for more details
  *
  */
 

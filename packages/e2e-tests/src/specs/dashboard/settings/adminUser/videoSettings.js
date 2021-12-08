@@ -45,7 +45,7 @@ describe('Admin User', () => {
     await disableCheckbox(videoCacheCheckboxSelector);
   });
 
-  it('should let me see and update all settings', async () => {
+  it('should let me see and update video settings', async () => {
     // verify that the video optimization checkbox can be changed
     await expect(page).toMatchElement(
       `${videoOptimizationCheckboxSelector}:checked`

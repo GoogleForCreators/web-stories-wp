@@ -22,17 +22,9 @@ import PropTypes from 'prop-types';
  */
 import { __ } from '@web-stories-wp/i18n';
 import { ISSUE_TYPES } from '../constants';
-import ElementLinkTappableRegionTooSmall from '../checks/elementLinkTappableRegionTooSmall';
-import ImageElementMissingAlt from '../checks/imageElementMissingAlt';
-import { PageBackgroundTextLowContrast } from '../checks/pageBackgroundLowTextContrast';
-import TextElementFontSizeTooSmall from '../checks/textElementFontSizeTooSmall';
-import VideoElementMissingCaptions from '../checks/videoElementMissingCaptions';
-import VideoElementMissingDescription from '../checks/videoElementMissingDescription';
-import { ChecklistCategoryProvider } from '../countContext/checkCountContext';
+import { ChecklistCategoryProvider } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
-import VideoOptimizationToggle from '../videoOptimizationCheckbox';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import { useConfig } from '../../../app';
 
 function AccessibilityPanel({
   children,
@@ -67,25 +59,16 @@ AccessibilityPanel.propTypes = {
   maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.arrayOf(PropTypes.node),
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
 };
 
 export function AccessibilityChecks(props) {
-  const { hasUploadMediaAction } = useConfig(({ capabilities }) => ({
-    hasUploadMediaAction: capabilities.hasUploadMediaAction,
-  }));
-
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
-      <AccessibilityPanel {...props}>
-        <VideoOptimizationToggle />
-        <PageBackgroundTextLowContrast />
-        <TextElementFontSizeTooSmall />
-        <VideoElementMissingDescription />
-        {hasUploadMediaAction && <VideoElementMissingCaptions />}
-        <ElementLinkTappableRegionTooSmall />
-        <ImageElementMissingAlt />
-      </AccessibilityPanel>
+      <AccessibilityPanel {...props}>{props.children}</AccessibilityPanel>
     </ChecklistCategoryProvider>
   );
 }
@@ -95,4 +78,5 @@ AccessibilityChecks.propTypes = {
   maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  children: PropTypes.node,
 };

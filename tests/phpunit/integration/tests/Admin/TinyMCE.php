@@ -93,14 +93,4 @@ class TinyMCE extends DependencyInjectedTestCase {
 
 		$this->assertSame( '', $result );
 	}
-
-	/**
-	 * @covers ::is_block_editor
-	 * @covers \Google\Web_Stories\Traits\Screen::is_block_editor
-	 */
-	public function test_is_block_editor() {
-		$result = $this->call_private_method( $this->instance, 'is_block_editor' );
-
-		$this->assertFalse( $result );
-	}
 }

@@ -56,7 +56,7 @@ export const Container = styled.div`
 export const Poster = styled.div`
   height: 100%;
   width: 100%;
-  object-fit: fill;
+  object-fit: cover;
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   background: ${({ theme }) => theme.colors.gradient.placeholder};
 `;

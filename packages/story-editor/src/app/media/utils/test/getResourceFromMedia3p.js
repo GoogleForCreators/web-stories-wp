@@ -22,7 +22,7 @@ import getResourceFromMedia3p from '../getResourceFromMedia3p';
 describe('getResourceFromMedia3p', () => {
   it('should return video resource', () => {
     const media3pResource = {
-      baseColor: [0, 55, 155],
+      color: '#00379b',
       name: 'media/coverr:g9re0sRUYA',
       provider: 'COVERR',
       type: 'VIDEO',
@@ -63,7 +63,7 @@ describe('getResourceFromMedia3p', () => {
       },
     };
     const expectedStoryEditorResource = {
-      baseColor: [0, 55, 155],
+      baseColor: '#00379b',
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -82,6 +82,7 @@ describe('getResourceFromMedia3p', () => {
       isMuted: true,
       isOptimized: true,
       isExternal: true,
+      needsProxy: false,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -111,7 +112,7 @@ describe('getResourceFromMedia3p', () => {
 
   it('should return video resource no description', () => {
     const media3pResource = {
-      baseColor: [0, 55, 155],
+      color: '#00379b',
       name: 'media/coverr:g9re0sRUYA',
       provider: 'COVERR',
       type: 'VIDEO',
@@ -152,7 +153,7 @@ describe('getResourceFromMedia3p', () => {
       },
     };
     const expectedStoryEditorResource = {
-      baseColor: [0, 55, 155],
+      baseColor: '#00379b',
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -171,6 +172,7 @@ describe('getResourceFromMedia3p', () => {
       isMuted: true,
       isOptimized: true,
       isExternal: true,
+      needsProxy: false,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -200,7 +202,7 @@ describe('getResourceFromMedia3p', () => {
 
   it('should return video resource no description or title', () => {
     const media3pResource = {
-      baseColor: [0, 55, 155],
+      color: '#00379b',
       name: 'media/coverr:g9re0sRUYA',
       provider: 'COVERR',
       type: 'VIDEO',
@@ -240,7 +242,7 @@ describe('getResourceFromMedia3p', () => {
       },
     };
     const expectedStoryEditorResource = {
-      baseColor: [0, 55, 155],
+      baseColor: '#00379b',
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -259,6 +261,7 @@ describe('getResourceFromMedia3p', () => {
       isMuted: true,
       isOptimized: true,
       isExternal: true,
+      needsProxy: false,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -288,7 +291,7 @@ describe('getResourceFromMedia3p', () => {
 
   it('should return video resource with calculated size', () => {
     const media3pResource = {
-      baseColor: [0, 55, 155],
+      color: '#00379b',
       name: 'media/coverr:g9re0sRUYA',
       provider: 'COVERR',
       type: 'VIDEO',
@@ -325,7 +328,7 @@ describe('getResourceFromMedia3p', () => {
       },
     };
     const expectedStoryEditorResource = {
-      baseColor: [0, 55, 155],
+      baseColor: '#00379b',
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -344,6 +347,7 @@ describe('getResourceFromMedia3p', () => {
       isMuted: true,
       isOptimized: true,
       isExternal: true,
+      needsProxy: false,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -428,7 +432,7 @@ describe('getResourceFromMedia3p', () => {
 
   it('should return image and video resources for tenor gifs', () => {
     const media3pResource = {
-      baseColor: [0, 55, 155],
+      color: '#00379b',
       name: 'media/tenor:3468838096637910112',
       provider: 'TENOR',
       type: 'GIF',
@@ -516,7 +520,7 @@ describe('getResourceFromMedia3p', () => {
     };
 
     const expectedStoryEditorResource = {
-      baseColor: [0, 55, 155],
+      baseColor: '#00379b',
       id: 'media/tenor:3468838096637910112',
       length: undefined,
       lengthFormatted: undefined,
@@ -532,6 +536,7 @@ describe('getResourceFromMedia3p', () => {
       isMuted: false,
       isOptimized: true,
       isExternal: true,
+      needsProxy: false,
       trimData: undefined,
       poster:
         'https://c.tenor.com/MCPJ3sVx3GAAAAAe/happy-national-cat-day-peace.png',

@@ -78,8 +78,6 @@ const fakeStories = [
 const pageSize = {
   width: 200,
   height: 300,
-  containerHeight: 300,
-  posterHeight: 300,
 };
 
 describe('Dashboard <Content />', function () {

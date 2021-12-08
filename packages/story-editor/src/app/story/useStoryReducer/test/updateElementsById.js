@@ -101,23 +101,21 @@ describe('updateElementsById', () => {
     const { restore, updateElementsById } = setupReducer();
 
     // Set an initial state.
-    restore({
+    const initialState = restore({
       pages: [{ id: '111', elements: [{ id: '123' }, { id: '456' }] }],
       current: '111',
     });
 
     const result = updateElementsById({ elementIds: [], properties: { a: 1 } });
 
-    expect(result.pages).toStrictEqual([
-      { id: '111', elements: [{ id: '123' }, { id: '456' }] },
-    ]);
+    expect(result).toBe(initialState);
   });
 
   it('should do nothing if only unknown elements given', () => {
     const { restore, updateElementsById } = setupReducer();
 
     // Set an initial state.
-    restore({
+    const initialState = restore({
       pages: [{ id: '111', elements: [{ id: '123' }, { id: '456' }] }],
       current: '111',
     });
@@ -127,8 +125,6 @@ describe('updateElementsById', () => {
       properties: { a: 1 },
     });
 
-    expect(result.pages).toStrictEqual([
-      { id: '111', elements: [{ id: '123' }, { id: '456' }] },
-    ]);
+    expect(result).toBe(initialState);
   });
 });

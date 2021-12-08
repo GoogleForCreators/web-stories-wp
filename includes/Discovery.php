@@ -431,6 +431,10 @@ class Discovery extends Service_Base implements HasRequirements {
 		$poster_id = (int) get_post_thumbnail_id( $post );
 		$image     = wp_get_attachment_image_src( $poster_id, $size );
 
+		if ( ! $image ) {
+			return false;
+		}
+
 		list( $src, $width, $height ) = $image;
 
 		$poster = compact( 'src', 'width', 'height' );

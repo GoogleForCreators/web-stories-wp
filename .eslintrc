@@ -250,7 +250,7 @@
       "PrimaryLink",
       "SecondaryLink",
       "ExternalLink",
-      "ScrimAnchor",
+      "ScrimAnchor"
     ],
     "testing-library/custom-renders": [
       "arrange",
@@ -311,7 +311,6 @@
     {
       "files": [
         "**/karma/**/*.js",
-        "assets/src/karma-*/**/*.js",
         "packages/karma-*/**/*.js"
       ],
       "extends": [
@@ -390,7 +389,9 @@
         "packages/e2e-test-utils/**/*.js"
       ],
       "rules": {
-        "jest/expect-expect": "off"
+        "jest/expect-expect": "off",
+        "jest/no-export": "off",
+        "jest/require-top-level-describe": "off"
       }
     },
     {

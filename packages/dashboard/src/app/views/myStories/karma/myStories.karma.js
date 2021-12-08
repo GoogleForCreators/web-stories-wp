@@ -436,6 +436,43 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       const { storiesOrderById } = await getStoriesOrderById();
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
+
+    it('should filter by author', async () => {
+      const originalStoryAuthorsNames = fixture.screen
+        .getAllByTestId(/^story-grid-item/)
+        .map((storyThumb) => storyThumb.innerText);
+
+      // click the author toggle
+      const authorDropdown = fixture.screen.getByLabelText(
+        'Filter stories by author'
+      );
+      expect(authorDropdown).toBeTruthy();
+      await fixture.events.click(authorDropdown);
+
+      // find all author filters
+      const authorSelect = await fixture.screen.findByLabelText(
+        new RegExp(`^Option List Selector$`)
+      );
+      expect(authorSelect).toBeTruthy();
+
+      // click the first author
+      const firstAuthor = within(authorSelect).getAllByRole('option')?.[0];
+      expect(firstAuthor).toBeTruthy();
+      const firstAuthorName = firstAuthor.innerText;
+      await fixture.events.click(firstAuthor);
+
+      // Check that not all the stories were from the first author originally
+      expect(
+        originalStoryAuthorsNames.some((name) => name !== firstAuthorName)
+      ).toBeTruthy();
+
+      // see that all rendered stories are by the clicked author
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
+      for (const storyThumb of storyElements) {
+        const authorEl = within(storyThumb).getByText(firstAuthorName);
+        expect(authorEl).toBeDefined();
+      }
+    });
   });
 
   describe('Creator can navigate and use the Dashboard via keyboard', () => {
@@ -557,8 +594,9 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     });
 
     it('should retain focus on menu close', async () => {
-      const allItemGridLinks =
-        fixture.screen.getAllByTestId(/edit-story-grid-link/);
+      const allItemGridLinks = fixture.screen.getAllByTestId(
+        /story-editor-grid-link/
+      );
 
       const storyIndex = 1;
       const selectedStory = allItemGridLinks[storyIndex];
@@ -590,8 +628,9 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     });
 
     it('should exit the grid and re-focus the first item', async () => {
-      const allItemGridLinks =
-        fixture.screen.getAllByTestId(/edit-story-grid-link/);
+      const allItemGridLinks = fixture.screen.getAllByTestId(
+        /story-editor-grid-link/
+      );
 
       const firstStory = allItemGridLinks[0];
       const lastStory = allItemGridLinks[allItemGridLinks.length - 1];

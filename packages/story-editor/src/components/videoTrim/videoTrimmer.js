@@ -29,6 +29,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '@web-stories-wp/design-system';
+import { getVideoLengthDisplay } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -36,9 +37,12 @@ import {
 import useLayout from '../../app/layout/useLayout';
 import useFocusTrapping from '../../utils/useFocusTrapping';
 import useVideoTrim from './useVideoTrim';
+import useRailBackground from './useRailBackground';
 import {
   Menu,
-  Wrapper,
+  RailWrapper,
+  Rail,
+  Duration,
   Handle,
   CurrentTime,
   Scrim,
@@ -115,13 +119,22 @@ function VideoTrimmer() {
     }
   }, []);
 
-  if (!pageWidth || !maxOffset || !videoData) {
+  const railWidth = Math.min(pageWidth, workspaceWidth - 2 * BUTTON_SPACE);
+
+  const isReady = pageWidth && maxOffset && videoData;
+
+  const railBackgroundImage = useRailBackground(isReady, videoData, railWidth);
+
+  const menuProps = {
+    ref: menu,
+    'aria-label': __('Video trimmer', 'web-stories'),
+  };
+
+  if (!isReady) {
     // We still need a reffed element, or the focus trap will break,
     // so just return an empty element
-    return <Menu ref={menu} />;
+    return <Menu {...menuProps} />;
   }
-
-  const railWidth = Math.min(pageWidth, workspaceWidth - 2 * BUTTON_SPACE);
 
   const sliderProps = {
     min: 0,
@@ -137,7 +150,7 @@ function VideoTrimmer() {
   };
 
   return (
-    <Menu ref={menu}>
+    <Menu {...menuProps}>
       <ButtonWrapper isStart>
         <Button
           variant={BUTTON_VARIANTS.RECTANGLE}
@@ -149,31 +162,39 @@ function VideoTrimmer() {
           {__('Cancel', 'web-stories')}
         </Button>
       </ButtonWrapper>
-      <Wrapper pageWidth={railWidth}>
-        <Scrim isLeftAligned width={(startOffset / maxOffset) * railWidth} />
-        <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
-        <CurrentTime
-          railWidth={railWidth}
-          aria-label={__('Current time', 'web-stories')}
-          disabled
-          value={currentTime}
-          {...sliderProps}
-        />
-        <Handle
-          railWidth={railWidth}
-          value={startOffset}
-          aria-label={__('Start offset', 'web-stories')}
-          onChange={(val) => setStartOffset(val)}
-          {...sliderProps}
-        />
-        <Handle
-          railWidth={railWidth}
-          value={endOffset}
-          aria-label={__('End offset', 'web-stories')}
-          onChange={(val) => setEndOffset(val)}
-          {...sliderProps}
-        />
-      </Wrapper>
+      <RailWrapper>
+        <Rail
+          width={railWidth}
+          style={{ backgroundImage: `url(${railBackgroundImage})` }}
+        >
+          <Scrim isLeftAligned width={(startOffset / maxOffset) * railWidth} />
+          <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
+          <CurrentTime
+            railWidth={railWidth}
+            aria-label={__('Current time', 'web-stories')}
+            disabled
+            value={currentTime}
+            {...sliderProps}
+          />
+          <Handle
+            railWidth={railWidth}
+            value={startOffset}
+            aria-label={__('Start offset', 'web-stories')}
+            onChange={(val) => setStartOffset(val)}
+            {...sliderProps}
+          />
+          <Handle
+            railWidth={railWidth}
+            value={endOffset}
+            aria-label={__('End offset', 'web-stories')}
+            onChange={(val) => setEndOffset(val)}
+            {...sliderProps}
+          />
+        </Rail>
+        <Duration>
+          {getVideoLengthDisplay(Math.ceil((endOffset - startOffset) / 1000))}
+        </Duration>
+      </RailWrapper>
       <ButtonWrapper>
         <Button
           variant={BUTTON_VARIANTS.RECTANGLE}

@@ -32,12 +32,12 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
   const browser = await puppeteer.launch({
     defaultViewport: null,
     headless: true,
-    args: [`--window-size=1600,800`],
+    args: [`--window-size=1600,854`],
   });
   const page = await browser.newPage();
   await page.setViewport({
     width: 1600,
-    height: 800,
+    height: 854,
     deviceScaleFactor: 2,
   });
   await page.goto(
@@ -48,8 +48,8 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
   await page.click('#wp-submit');
   await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
-  await page.waitForSelector('aria/Explore Templates');
-  await page.click('aria/Explore Templates');
+  await page.waitForSelector('[aria-label^="Explore Templates"]');
+  await page.click('[aria-label^="Explore Templates"]');
 
   // Wait for templates to be rendered
   await page.waitForSelector('div.templateGridItem');
@@ -97,11 +97,12 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
     await page.waitForSelector('aria/Preview');
     await page.click('aria/Preview');
 
+    // the viewport height decides the size of the preview, we're aiming to maintain our recommended 853px height, we get the closest to this by setting the viewport height to 1145
     const pagePreview = await browser.newPage();
     await pagePreview.setViewport({
-      width: 1600,
-      height: 800,
-      deviceScaleFactor: 2,
+      width: 640,
+      height: 854, // 853 is a breakpoint and will shrink the preview to height of 630px
+      deviceScaleFactor: 1,
     });
     // set prefers-reduced-motion to get story without animations so screenshots are complete page views
     await pagePreview.emulateMediaFeatures([
@@ -119,7 +120,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
       return document.querySelectorAll('amp-story-page').length;
     });
 
-    for (let currentPage = 1; currentPage < totalPages; currentPage++) {
+    for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
       const templatePageSafeArea = await pagePreview.$(
         `amp-story-page:nth-child(${currentPage}) .page-safe-area`
       );
@@ -136,7 +137,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
         path: `${screenshotsPath}${templateName}/${currentPage}.webp`,
       });
 
-      if (currentPage !== totalPages - 1) {
+      if (currentPage < totalPages) {
         await pagePreview.click('aria/Next page');
       }
     }

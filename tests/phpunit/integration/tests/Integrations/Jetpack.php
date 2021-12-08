@@ -81,7 +81,6 @@ class Jetpack extends DependencyInjectedTestCase {
 
 	/**
 	 * @covers ::filter_rest_api_response
-	 * @covers ::add_extra_data
 	 */
 	public function test_filter_rest_api_response() {
 		$video_attachment_id = self::factory()->attachment->create_object(
@@ -98,6 +97,7 @@ class Jetpack extends DependencyInjectedTestCase {
 		$data = [
 			'source_url'         => self::ATTACHMENT_URL,
 			'featured_media_src' => [],
+			'media_details'      => [],
 		];
 
 		$response = rest_ensure_response( $data );
@@ -130,6 +130,8 @@ class Jetpack extends DependencyInjectedTestCase {
 	 * @covers ::add_term
 	 */
 	public function test_add_term() {
+		$this->instance->register();
+
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -151,7 +153,6 @@ class Jetpack extends DependencyInjectedTestCase {
 
 	/**
 	 * @covers ::filter_admin_ajax_response
-	 * @covers ::add_extra_data
 	 */
 	public function test_filter_admin_ajax_response() {
 		$video_attachment_id = self::factory()->attachment->create_object(
@@ -194,7 +195,8 @@ class Jetpack extends DependencyInjectedTestCase {
 	 * @covers ::filter_ajax_query_attachments_args
 	 */
 	public function test_filter_ajax_query_attachments_args() {
-		$allowed_mime_types   = $this->instance->get_allowed_mime_types();
+		$types                = $this->injector->make( \Google\Web_Stories\Media\Types::class );
+		$allowed_mime_types   = $types->get_allowed_mime_types();
 		$allowed_mime_types   = array_merge( ...array_values( $allowed_mime_types ) );
 		$allowed_mime_types[] = $this->instance::VIDEOPRESS_MIME_TYPE;
 		$args                 = [ 'post_mime_type' => $allowed_mime_types ];
@@ -212,7 +214,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @dataProvider get_sample_data
+	 * @dataProvider get_format_milliseconds_data
 	 *
 	 * @param string $milliseconds
 	 * @param string $string
@@ -224,11 +226,11 @@ class Jetpack extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @param $value
+	 * @param mixed $value
 	 * @param $object_id
 	 * @param $meta_key
 	 *
-	 * @return \array[][]
+	 * @return \array[][]|mixed
 	 */
 	public function filter_wp_get_attachment_metadata( $value, $object_id, $meta_key ) {
 		if ( '_wp_attachment_metadata' !== $meta_key ) {
@@ -262,7 +264,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	/**
 	 * @return array[]
 	 */
-	public function get_sample_data() {
+	public function get_format_milliseconds_data(): array {
 		return [
 			'5000'      => [
 				5000,

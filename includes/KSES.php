@@ -97,7 +97,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @return array|mixed Filtered post data.
 	 */
 	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
-		if ( current_user_can( 'unfiltered_html' ) ) {
+		if ( ! is_array( $data ) || current_user_can( 'unfiltered_html' ) ) {
 			return $data;
 		}
 

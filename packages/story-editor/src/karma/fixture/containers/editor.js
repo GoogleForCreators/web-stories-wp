@@ -20,7 +20,7 @@
 import { Container } from './container';
 import { Canvas } from './canvas';
 import { GridView } from './gridView';
-import { Carousel } from './carousel';
+import { Footer } from './footer';
 import { Library } from './library';
 import { Inspector } from './inspector';
 import { Header } from './header';
@@ -68,11 +68,11 @@ export class Editor extends Container {
     );
   }
 
-  get carousel() {
+  get footer() {
     return this._get(
-      this.getByRole('region', { name: 'Page Carousel' }),
-      'carousel',
-      Carousel
+      this.getByRole('region', { name: 'Workspace Footer' }),
+      'footer',
+      Footer
     );
   }
 
@@ -88,7 +88,7 @@ export class Editor extends Container {
 
   get helpCenter() {
     return this._get(
-      this.getByRole('region', { name: 'Page Carousel' }),
+      this.getByRole('region', { name: 'Workspace Footer' }),
       'helpCenter',
       HelpCenter
     );
@@ -104,7 +104,7 @@ export class Editor extends Container {
 
   get keyboardShortcuts() {
     return this._get(
-      this.getByRole('region', { name: 'Page Carousel' }),
+      this.getByRole('region', { name: 'Workspace Footer' }),
       'keyboardShortcuts',
       KeyboardShortcuts
     );

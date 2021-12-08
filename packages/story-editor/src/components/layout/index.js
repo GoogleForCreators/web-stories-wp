@@ -24,7 +24,7 @@ import {
   useSnackbar,
   themeHelpers,
 } from '@web-stories-wp/design-system';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -73,7 +73,7 @@ const Area = styled.div`
   z-index: 2;
 `;
 
-function Layout({ header, children }) {
+function Layout({ header, footer = {}, inspectorTabs, children }) {
   const snackbarState = useSnackbar(
     ({ removeSnack, currentSnacks, placement }) => ({
       onRemove: removeSnack,
@@ -81,6 +81,7 @@ function Layout({ header, children }) {
       placement,
     })
   );
+
   return (
     <>
       <LayoutProvider>
@@ -92,7 +93,11 @@ function Layout({ header, children }) {
                   <Area area="lib">
                     <Library />
                   </Area>
-                  <Workspace header={header} />
+                  <Workspace
+                    header={header}
+                    inspectorTabs={inspectorTabs}
+                    footer={footer}
+                  />
                   <RightClickMenu />
                 </RightClickMenuProvider>
               </CanvasProvider>
@@ -107,8 +112,10 @@ function Layout({ header, children }) {
 }
 
 Layout.propTypes = {
-  children: Proptypes.node,
-  header: Proptypes.node,
+  children: PropTypes.node,
+  header: PropTypes.node,
+  footer: PropTypes.object,
+  inspectorTabs: PropTypes.object,
 };
 
 export default Layout;

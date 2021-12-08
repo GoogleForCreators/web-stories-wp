@@ -20,7 +20,7 @@
     "@web-stories-wp/react": "*",
     "@web-stories-wp/story-editor": "*",
     "@web-stories-wp/tracking": "*",
-    "@wordpress/api-fetch": "^5.2.4",
+    "@wordpress/api-fetch": "^5.2.6",
     "flagged": "^2.0.1",
     "prop-types": "^15.7.2",
     "styled-components": "^5.3.3",

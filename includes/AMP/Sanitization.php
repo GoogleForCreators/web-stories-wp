@@ -108,7 +108,11 @@ class Sanitization {
 	 * @return void
 	 */
 	protected function ensure_required_markup( $document, array $scripts ) {
-		// Gather all links.
+		/**
+		 * Link elements.
+		 *
+		 * @var array{preconnect: \DOMElement[]|null,dns-prefetch: \DOMElement[]|null,preload: \DOMElement[]|null, prerender: \DOMElement[]|null, prefetch: \DOMElement[]|null }
+		 */
 		$links = [
 			Attribute::REL_PRECONNECT => [
 				// Include preconnect link for AMP CDN for browsers that don't support preload.
@@ -462,7 +466,7 @@ class Sanitization {
 			 * @since 1.3
 			 * @param string[] $element_xpaths XPath element queries. Context is the root element.
 			 */
-			$dev_mode_xpaths = (array) apply_filters( 'web_stories_amp_dev_mode_element_xpaths', [] );
+			$dev_mode_xpaths = apply_filters( 'web_stories_amp_dev_mode_element_xpaths', [] );
 
 			if ( is_admin_bar_showing() ) {
 				$dev_mode_xpaths[] = '//*[ @id = "wpadminbar" ]';
@@ -534,7 +538,7 @@ class Sanitization {
 		 * @since 1.1.0
 		 * @see AMP_Validation_Manager::is_sanitization_auto_accepted() Which controls whether an error is initially accepted or rejected for sanitization.
 		 *
-		 * @param null|bool $sanitized Whether sanitized; this is initially null, and changing it to bool causes the validation error to be forced.
+		 * @param bool $sanitized Whether the validation error should be sanitized.
 		 * @param array $error Validation error being sanitized.
 		 */
 		return apply_filters( 'web_stories_amp_validation_error_sanitized', true, $error );

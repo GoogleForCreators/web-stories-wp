@@ -140,7 +140,8 @@ function DefaultTemplates({ pageSize }) {
         selectItem={handleSelectPageTemplateType}
         deselectItem={() => handleSelectPageTemplateType(null)}
       />
-      <PageTemplatesParentContainer ref={pageTemplatesParentRef}>
+      {/* tabIndex is required for FireFox bug when using keyboard to navigate from Chips to Template */}
+      <PageTemplatesParentContainer ref={pageTemplatesParentRef} tabIndex={-1}>
         <ActionRow>
           <Headline
             as="h2"

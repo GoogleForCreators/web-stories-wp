@@ -4,6 +4,7 @@
     "stylelint-config-styled-components",
     "stylelint-prettier/recommended"
   ],
+  "customSyntax": "postcss-syntax",
   "rules": {
     "font-family-name-quotes": null,
     "font-family-no-missing-generic-family-keyword": null,

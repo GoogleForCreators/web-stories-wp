@@ -46,7 +46,12 @@ const Button = styled(DefaultButton)`
   }
 `;
 
-function ButtonWithChecklistWarning({ text, isUploading, ...buttonProps }) {
+function ButtonWithChecklistWarning({
+  text,
+  isUploading,
+  canPublish,
+  ...buttonProps
+}) {
   const { checkpoint, shouldReviewDialogBeSeen } = useCheckpoint(
     ({ state: { checkpoint, shouldReviewDialogBeSeen } }) => ({
       checkpoint,
@@ -85,11 +90,19 @@ function ButtonWithChecklistWarning({ text, isUploading, ...buttonProps }) {
     'web-stories'
   );
 
+  const TOOLTIP_TEXT_REVIEW = __(
+    'Submit your work for review, and an Editor will be able to approve it for you.',
+    'web-stories'
+  );
+
+  let toolTip = isUploading ? TOOLTIP_TEXT_UPLOADING : TOOLTIP_TEXT[checkpoint];
+
+  if (!canPublish) {
+    toolTip = TOOLTIP_TEXT_REVIEW;
+  }
+
   return (
-    <Tooltip
-      title={isUploading ? TOOLTIP_TEXT_UPLOADING : TOOLTIP_TEXT[checkpoint]}
-      hasTail
-    >
+    <Tooltip title={toolTip} hasTail>
       {button}
     </Tooltip>
   );
@@ -98,6 +111,7 @@ function ButtonWithChecklistWarning({ text, isUploading, ...buttonProps }) {
 ButtonWithChecklistWarning.propTypes = {
   text: PropTypes.node.isRequired,
   isUploading: PropTypes.bool,
+  canPublish: PropTypes.bool,
 };
 
 export default ButtonWithChecklistWarning;

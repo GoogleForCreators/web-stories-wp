@@ -35,12 +35,18 @@ export const ZOOM_SETTING = {
   FIXED: 'FIXED',
 };
 
+export const CAROUSEL_STATE = {
+  OPEN: 'OPEN',
+  OPENING: 'OPENING',
+  CLOSED: 'CLOSED',
+  CLOSING: 'CLOSING',
+};
+
+export const CAROUSEL_TRANSITION_DURATION = 300;
+
 export const PAGE_WIDTH_FACTOR = 12;
 
 export const DESIGN_SPACE_MARGIN = 48;
-
-export const COLOR_PRESETS_PER_ROW = 6;
-export const STYLE_PRESETS_PER_ROW = 2;
 
 export const TEXT_SET_SIZE = 150;
 
@@ -95,4 +101,9 @@ export const OUTLINK_THEME = {
   DARK: 'dark',
   LIGHT: 'light',
   CUSTOM: 'custom',
+};
+
+export const PRESET_TYPES = {
+  STYLE: 'style',
+  COLOR: 'colors',
 };

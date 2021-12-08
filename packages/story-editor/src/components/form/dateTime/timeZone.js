@@ -37,7 +37,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledText = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.tertiary};
+  color: ${({ theme }) => theme.colors.fg.disable};
   line-height: 30px;
 `;
 

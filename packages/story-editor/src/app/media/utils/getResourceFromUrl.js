@@ -20,39 +20,92 @@
 import {
   createResource,
   getImageDimensions,
-  getVideoDimensions,
+  getTypeFromMime,
+  preloadVideo,
+  seekVideo,
   getVideoLength,
   hasVideoGotAudio,
 } from '@web-stories-wp/media';
 
-async function getResourceFromUrl(value, type) {
-  const isVideo = type === 'video';
-  const isImage = type === 'image';
-  if (!isVideo && !isImage) {
+/**
+ * @typedef {Object} ResourceLike
+ * @property {string} src Resource URL.
+ * @property {string} mimeType Mime type.
+ * @property {boolean} needsProxy Whether the resource needs a CORS proxy.
+ */
+
+/**
+ * @typedef {import('@web-stories-wp/media').Resource} Resource
+ */
+
+/**
+ * Get a resource from a URL.
+ *
+ * @param {ResourceLike} resourceLike Resource-like object.
+ * @return {Promise<Resource>} Resource object.
+ */
+async function getResourceFromUrl(resourceLike) {
+  const {
+    src,
+    mimeType,
+    width,
+    height,
+    isMuted,
+    length,
+    lengthFormatted,
+    ...rest
+  } = resourceLike;
+  const type = getTypeFromMime(mimeType);
+
+  if (!['image', 'video'].includes(type)) {
     throw new Error('Invalid media type.');
   }
-  const getMediaDimensions = isVideo ? getVideoDimensions : getImageDimensions;
-  const { width, height } = await getMediaDimensions(value);
 
-  // Add necessary data for video.
-  const videoData = {};
-  if (isVideo) {
-    const hasAudio = await hasVideoGotAudio(value);
-    videoData.isMuted = !hasAudio;
-    const { length, formattedLength } = await getVideoLength(value);
-    videoData.length = length;
-    videoData.formattedLength = formattedLength;
-    videoData.isOptimized = true;
+  const hasDimensions = width && height;
+  const videoHasMissingMetadata =
+    !hasDimensions ||
+    isMuted === null ||
+    length === null ||
+    lengthFormatted === null;
+
+  const additionalData = {};
+
+  // Only need to fetch metadata if not already provided.
+
+  if (type === 'video' && videoHasMissingMetadata) {
+    const video = await preloadVideo(src);
+    await seekVideo(video);
+
+    additionalData.width = video.videoWidth;
+    additionalData.height = video.videoHeight;
+
+    const videoLength = getVideoLength(video);
+
+    additionalData.length = videoLength.length;
+    additionalData.lengthFormatted = videoLength.lengthFormatted;
+
+    additionalData.isMuted = !hasVideoGotAudio(video);
+  }
+
+  if (type === 'image' && !hasDimensions) {
+    const dimensions = await getImageDimensions(src);
+    additionalData.width = dimensions.width;
+    additionalData.height = dimensions.height;
   }
 
   return createResource({
     type,
     width,
     height,
-    src: value,
+    isMuted,
+    length,
+    lengthFormatted,
+    src,
     local: false,
     isExternal: true,
-    ...videoData,
+    mimeType,
+    ...rest,
+    ...additionalData,
   });
 }
 

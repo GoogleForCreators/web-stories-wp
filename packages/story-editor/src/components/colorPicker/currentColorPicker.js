@@ -56,9 +56,9 @@ import {
   BUTTON_TYPES,
 } from '@web-stories-wp/design-system';
 import CircularProgress from '../circularProgress';
+import useEyedropper from '../eyedropper';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
-import useEyedropper from './eyedropper';
 
 const CONTAINER_PADDING = 16;
 const HEADER_FOOTER_HEIGHT = 36;

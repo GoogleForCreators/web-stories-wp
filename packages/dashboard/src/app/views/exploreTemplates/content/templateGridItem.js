@@ -22,6 +22,7 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
+  noop,
 } from '@web-stories-wp/design-system';
 import { forwardRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
@@ -29,7 +30,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
+import {
+  DEFAULT_GRID_IMG_HEIGHT,
+  DEFAULT_GRID_IMG_WIDTH,
+  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
+} from '../../../../constants';
 import { CardGridItem } from '../../../../components';
 import { Container, Gradient, Scrim } from '../../shared/grid/components';
 import {
@@ -53,6 +58,7 @@ const TemplateGridItem = forwardRef(
       slug,
       title,
       status,
+      onSeeDetailsClick = noop,
     },
     ref
   ) => {
@@ -76,7 +82,12 @@ const TemplateGridItem = forwardRef(
             <PicturePoster>
               <source srcSet={posterSrc?.webp} type="image/webp" />
               <source srcSet={posterSrc?.png} type="image/png" />
-              <img src={posterSrc?.png} alt={posterAltText} />
+              <img
+                src={posterSrc?.png}
+                alt={posterAltText}
+                width={DEFAULT_GRID_IMG_WIDTH}
+                height={DEFAULT_GRID_IMG_HEIGHT}
+              />
             </PicturePoster>
             <Gradient />
             <Scrim
@@ -94,6 +105,7 @@ const TemplateGridItem = forwardRef(
                     title
                   )}
                   href={detailLink}
+                  onClick={onSeeDetailsClick}
                   disabled={!detailLink}
                   className={FOCUS_TEMPLATE_CLASS}
                   tabIndex={tabIndex}
@@ -130,6 +142,7 @@ TemplateGridItem.propTypes = {
   detailLink: PropTypes.string,
   onCreateStory: PropTypes.func,
   onFocus: PropTypes.func.isRequired,
+  onSeeDetailsClick: PropTypes.func,
   height: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
   isActive: PropTypes.bool,

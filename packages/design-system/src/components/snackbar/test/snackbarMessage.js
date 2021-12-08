@@ -41,7 +41,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
       />
     );
 
-    const alert = screen.getByRole('alert');
+    const alert = screen.getByRole('alert', { hidden: true });
 
     expect(alert).toBeInTheDocument();
   });

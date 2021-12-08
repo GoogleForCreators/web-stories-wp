@@ -36,6 +36,8 @@ import { THEME_CONSTANTS, themeHelpers } from '@web-stories-wp/design-system';
 import { HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import { useLayout } from '../../app';
+import useFooterHeight from '../footer/useFooterHeight';
+import { FOOTER_BOTTOM_MARGIN } from '../footer/constants';
 import usePinchToZoom from './usePinchToZoom';
 
 /**
@@ -50,14 +52,10 @@ export const Z_INDEX = {
 
 const HEADER_GAP = 16;
 // 8px extra is for the focus outline to display.
-const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE + 8;
-const MENU_GAP = 12;
-const CAROUSEL_HEIGHT = 104;
-// 8px extra is for the focus outline to display.
 const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;
 const PAGE_NAV_GAP = 20;
 
-const Layer = styled.section`
+const LayerGrid = styled.section`
   ${pointerEventsCss}
 
   position: absolute;
@@ -76,7 +74,7 @@ const Layer = styled.section`
     f = forward navigation
     p = canvas page
     m = page action menu
-    c = thumbnail carousel
+    w = workspace footer
 
     Also note that we need to specify all the widths and heights
     even though some of the elements could just use the size that
@@ -88,10 +86,9 @@ const Layer = styled.section`
     'h h h h h h h' ${HEADER_HEIGHT}px
     '. . . . . . .' minmax(16px, 1fr)
     '. b . p . f .' var(--viewport-height-px)
-    '. . . . . . .' ${MENU_GAP}px
-    'm m m m m m m' ${MENU_HEIGHT}px
     '. . . . . . .' 1fr
-    'c c c c c c c' ${CAROUSEL_HEIGHT}px
+    'w w w w w w w' ${({ footerHeight }) => footerHeight}px
+    '. . . . . . .' ${FOOTER_BOTTOM_MARGIN}px
     /
     1fr
     var(--page-nav-width)
@@ -140,6 +137,19 @@ const PageAreaContainer = styled(Area).attrs({
       );
     `}
 `;
+
+function Layer({ children, ...rest }) {
+  const footerHeight = useFooterHeight();
+  return (
+    <LayerGrid footerHeight={footerHeight} {...rest}>
+      {children}
+    </LayerGrid>
+  );
+}
+
+Layer.propTypes = {
+  children: PropTypes.node,
+};
 
 const PaddedPage = styled.div`
   padding: calc(0.5 * var(--page-padding-px));
@@ -239,16 +249,16 @@ const NavNextArea = styled(NavArea).attrs({
   area: 'f',
 })``;
 
-const QuickActionsArea = styled(PaddedPage)`
+const PageMenuArea = styled.div`
   grid-area: p;
   position: absolute;
   right: calc(-24px + var(--page-padding-px));
-  padding-left: 0;
-  padding-right: 0;
+  top: calc(0.5 * var(--page-padding-px));
+  min-height: calc(100% - var(--page-padding-px));
 `;
 
-const CarouselArea = styled(Area).attrs({
-  area: 'c',
+const FooterArea = styled(Area).attrs({
+  area: 'w',
   showOverflow: true,
 })``;
 
@@ -262,20 +272,25 @@ function useLayoutParams(containerRef) {
     })
   );
 
-  useResizeEffect(containerRef, ({ width, height }) => {
-    // See Layer's `grid` CSS above. Per the layout, the maximum available
-    // space for the page is:
-    const maxWidth = width;
-    const maxHeight =
-      height -
-      HEADER_HEIGHT -
-      HEADER_GAP -
-      MENU_HEIGHT -
-      MENU_GAP -
-      CAROUSEL_HEIGHT;
+  const footerHeight = useFooterHeight();
 
-    setWorkspaceSize({ width: maxWidth, height: maxHeight });
-  });
+  useResizeEffect(
+    containerRef,
+    ({ width, height }) => {
+      // See Layer's `grid` CSS above. Per the layout, the maximum available
+      // space for the page is:
+      const maxWidth = width;
+      const maxHeight =
+        height -
+        HEADER_HEIGHT -
+        HEADER_GAP -
+        footerHeight -
+        FOOTER_BOTTOM_MARGIN;
+
+      setWorkspaceSize({ width: maxWidth, height: maxHeight });
+    },
+    [setWorkspaceSize, footerHeight]
+  );
 }
 
 function useLayoutParamsCssVars() {
@@ -338,6 +353,7 @@ const PageArea = forwardRef(function PageArea(
   {
     children,
     fullbleedRef = createRef(),
+    fullBleedContainerLabel = __('Fullbleed area', 'web-stories'),
     overlay = [],
     background,
     isControlled = false,
@@ -404,7 +420,7 @@ const PageArea = forwardRef(function PageArea(
       >
         <PaddedPage ref={paddedRef}>
           <FullbleedContainer
-            aria-label={__('Fullbleed area', 'web-stories')}
+            aria-label={fullBleedContainerLabel}
             role="region"
             ref={fullbleedRef}
             data-testid="fullbleed"
@@ -441,6 +457,7 @@ PageArea.propTypes = {
   className: PropTypes.string,
   showOverflow: PropTypes.bool,
   isBackgroundSelected: PropTypes.bool,
+  fullBleedContainerLabel: PropTypes.string,
   pageAreaRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   withSafezone: PropTypes.bool,
 };
@@ -452,8 +469,8 @@ export {
   MenuArea,
   NavPrevArea,
   NavNextArea,
-  QuickActionsArea,
-  CarouselArea,
+  PageMenuArea,
+  FooterArea,
   useLayoutParams,
   useLayoutParamsCssVars,
 };

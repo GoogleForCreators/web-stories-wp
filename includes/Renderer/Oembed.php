@@ -84,6 +84,10 @@ class Oembed extends Service_Base {
 	 * @return string|mixed Filtered embed code.
 	 */
 	public function filter_embed_html( $output, $post, $width, $height ) {
+		if ( ! is_string( $output ) ) {
+			return $output;
+		}
+
 		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
 			return $output;
 		}

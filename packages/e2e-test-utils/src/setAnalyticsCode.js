@@ -13,21 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-import visitDashboard from './visitDashboard';
+import visitSettings from './visitSettings';
 
 async function setAnalyticsCode(code) {
-  await visitDashboard();
-
-  const dashboardNavigation = await expect(page).toMatchElement(
-    '[aria-label="Main dashboard navigation"]'
-  );
-
-  await expect(dashboardNavigation).toClick('a', {
-    text: 'Settings',
-  });
+  await visitSettings();
 
   const inputSelector =
     'input[placeholder^="Enter your Google Analytics Tracking ID"]';

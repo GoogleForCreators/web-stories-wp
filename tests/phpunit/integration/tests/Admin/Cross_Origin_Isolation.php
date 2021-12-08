@@ -199,28 +199,6 @@ class Cross_Origin_Isolation extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @covers ::is_edit_screen
-	 * @covers ::get_current_screen
-	 * @covers \Google\Web_Stories\Traits\Screen::is_edit_screen
-	 * @covers \Google\Web_Stories\Traits\Screen::get_current_screen
-	 */
-	public function test_is_edit_screen() {
-		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-
-		$result = $this->call_private_method( $this->instance, 'is_edit_screen' );
-		$this->assertTrue( $result );
-	}
-
-	/**
-	 * @covers ::get_current_screen
-	 * @covers \Google\Web_Stories\Traits\Screen::get_current_screen
-	 */
-	public function test_get_current_screen() {
-		$result = $this->call_private_method( $this->instance, 'get_current_screen' );
-		$this->assertFalse( $result );
-	}
-
-	/**
 	 * @covers ::replace_in_dom
 	 */
 	public function test_replace_in_dom() {
