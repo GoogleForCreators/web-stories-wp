@@ -25,6 +25,7 @@ import {
   useMemo,
   useCallback,
   useDebouncedCallback,
+  useEffect,
 } from '@web-stories-wp/react';
 
 /**
@@ -114,6 +115,15 @@ function Tooltip({
   const tooltipRef = useRef(null);
   const placementRef = useRef(placement);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const spacing = useMemo(
     () => ({
@@ -131,6 +141,9 @@ function Tooltip({
   // We can sometimes render a tooltip too far to the left, ie. in RTL mode.
   // when that is the case, we can switch to placement-start and the tooltip will no longer get cutoff.
   const updatePlacement = useCallback(() => {
+    if (!isMounted.current) {
+      console.log('updatePlacement not mounted');
+    }
     const currentPlacement = placementRef.current;
     switch (currentPlacement) {
       case PLACEMENT.BOTTOM_START:
@@ -162,6 +175,10 @@ function Tooltip({
   // cutoff the contents of the tooltip.
   const positionPlacement = useCallback(
     ({ offset }) => {
+      if (!isMounted.current) {
+        console.log('positionPlacement not mounted');
+      }
+
       // check to see if there's an overlap with the window's bottom edge
       const neededVerticalSpace = offset.bottom;
       const shouldMoveToTop =
@@ -184,6 +201,10 @@ function Tooltip({
 
   const positionArrow = useCallback(
     (popupDimensions) => {
+      if (!isMounted.current) {
+        console.log('positionArrow not mounted');
+      }
+
       const anchorElBoundingBox = anchorRef.current?.getBoundingClientRect();
       const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
       if (!tooltipElBoundingBox || !anchorElBoundingBox) {
@@ -201,6 +222,9 @@ function Tooltip({
   );
 
   const resetPlacement = useDebouncedCallback(() => {
+    if (!isMounted.current) {
+      console.log('resetPlacement not mounted');
+    }
     setDynamicPlacement(placementRef.current);
   }, 100);
 
@@ -208,9 +232,14 @@ function Tooltip({
   const onHover = useCallback(
     (evt) => {
       const handle = () => {
+        if (!isMounted.current) {
+          return;
+        }
+
         setShown(true);
         onPointerEnter(evt);
       };
+
       if (isDelayed) {
         const now = performance.now();
         if (now - lastVisibleDelayedTooltip < REPEAT_DELAYED_MS) {
@@ -306,7 +335,7 @@ const TooltipPropTypes = {
   onPointerEnter: PropTypes.func,
   onPointerLeave: PropTypes.func,
   shortcut: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.node,
   forceAnchorRef: PropTypes.object,
   tooltipProps: PropTypes.object,
   className: PropTypes.string,
