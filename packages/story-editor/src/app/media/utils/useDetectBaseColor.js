@@ -42,7 +42,7 @@ function useDetectBaseColor({ updateMediaElement }) {
   const saveBaseColor = useCallback(
     /**
      *
-     * @param {Object} resource Resource object.
+     * @param {import('@web-stories-wp/media').Resource} resource Resource object.
      * @param {string} baseColor Base Color.
      * @return {Promise<void>}
      */
