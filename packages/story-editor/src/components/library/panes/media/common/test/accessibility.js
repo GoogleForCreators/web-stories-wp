@@ -80,6 +80,7 @@ describe('automated accessibility tests', () => {
       isCurrentResourceMuting: jest.fn(),
       isCurrentResourceTranscoding: jest.fn(),
       isCurrentResourceProcessing: jest.fn(),
+      isCurrentResourceUploading: jest.fn(),
       isNewResourceProcessing: jest.fn(),
     });
   });
@@ -105,6 +106,7 @@ describe('automated accessibility tests', () => {
       isCurrentResourceTranscoding: () => true,
       isCurrentResourceProcessing: jest.fn(),
       isNewResourceProcessing: jest.fn(),
+      isCurrentResourceUploading: jest.fn(),
     });
     // transcoding
     const { container: container2 } = renderWithTheme(

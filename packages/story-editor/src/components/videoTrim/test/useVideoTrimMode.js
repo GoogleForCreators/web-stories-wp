@@ -93,6 +93,7 @@ describe('useVideoTrimMode', () => {
 
     useLocalMedia.mockReturnValue({
       canTranscodeResource: jest.fn(() => true),
+      isCurrentResourceUploading: jest.fn(() => false),
     });
   });
   it('should allow trim mode for single video element', () => {
@@ -108,9 +109,9 @@ describe('useVideoTrimMode', () => {
     expect(result.current.hasTrimMode).toBe(false);
   });
 
-  it('should not allow trim mode for filesystem local video', () => {
+  it('should not allow trim mode for resource that is currently being uploaded', () => {
     useLocalMedia.mockReturnValue({
-      canTranscodeResource: jest.fn(() => false),
+      isCurrentResourceUploading: jest.fn(() => true),
     });
     const { result } = setup({ element: { resource: { id: 123 } } });
 
@@ -119,7 +120,7 @@ describe('useVideoTrimMode', () => {
 
   it('should not allow trim mode for third-party video', () => {
     useLocalMedia.mockReturnValue({
-      canTranscodeResource: jest.fn(() => false),
+      canTranscodeResource: jest.fn(),
     });
 
     const { result } = setup({ element: { resource: { isExternal: true } } });
