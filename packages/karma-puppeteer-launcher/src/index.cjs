@@ -50,6 +50,9 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
         // See http://crbug.com/715363
         // We use this flag to work-around this issue.
         '--disable-dev-shm-usage',
+        // Try to prevent "Blocked attempt to create a WebMediaPlayer" warnings in Chrome.
+        // See crbug.com/1144736#c27
+        '--max-web-media-player-count=10000'
       ],
     };
     const puppeteerOptions = {
