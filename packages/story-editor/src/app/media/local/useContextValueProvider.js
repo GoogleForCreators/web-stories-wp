@@ -224,6 +224,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const postProcessingResource = useCallback(
     (resource) => {
+      if (!resource) {
+        return;
+      }
+
       const { type, isMuted, baseColor, src, id, posterId, mimeType, poster } =
         resource;
 
