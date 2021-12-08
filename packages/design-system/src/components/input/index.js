@@ -153,7 +153,7 @@ export const Input = forwardRef(
       hasFocus = false,
       suffix,
       unit = '',
-      value,
+      value = '',
       isIndeterminate = false,
       containerStyleOverride = '',
       ...props
@@ -245,7 +245,7 @@ export const InputPropTypes = {
   onFocus: PropTypes.func,
   suffix: PropTypes.node,
   unit: PropTypes.string,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   isIndeterminate: PropTypes.bool,
   containerStyleOverride: PropTypes.oneOfType([
     PropTypes.object,
