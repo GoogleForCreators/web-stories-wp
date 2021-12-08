@@ -22,10 +22,23 @@ import { useEffect } from '@web-stories-wp/react';
 function useUpdateSelectionRectangle(moveableRef, dependencies = []) {
   // If deps ever update, update rect now AND in a frame's time
   useEffect(() => {
-    const update = () => moveableRef.current?.updateRect?.();
+    let mounted = true;
+
+    const update = () => {
+      if (!mounted) {
+        return;
+      }
+      moveableRef.current?.updateRect?.();
+    };
+
     update();
+
     const timeout = setTimeout(update);
-    return () => clearTimeout(timeout);
+
+    return () => {
+      mounted = false;
+      clearTimeout(timeout);
+    };
     // Disable reason: ref is stable, deps are the only thing that matters
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);

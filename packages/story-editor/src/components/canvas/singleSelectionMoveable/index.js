@@ -50,6 +50,7 @@ function SingleSelectionMoveable({
   isEditMode,
   editMoveableRef,
 }) {
+  const isMounted = useRef(false);
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -79,6 +80,14 @@ function SingleSelectionMoveable({
   }));
 
   useWindowResizeHandler(moveable);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     latestEvent.current = pushEvent;
@@ -154,6 +163,10 @@ function SingleSelectionMoveable({
    */
   const resetMoveable = useBatchingCallback(
     (target) => {
+      if (!isMounted.current) {
+        return;
+      }
+
       frame.direction = [0, 0];
       frame.translate = [0, 0];
       frame.resize = [0, 0];
