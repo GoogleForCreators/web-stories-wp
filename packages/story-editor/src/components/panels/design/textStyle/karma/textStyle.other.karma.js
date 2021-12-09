@@ -132,7 +132,7 @@ describe('Text Style Panel', () => {
       await fixture.events.click(fixture.editor.library.textAdd);
     });
 
-    fit('should display padding and line-height correctly', async () => {
+    it('should display padding and line-height correctly', async () => {
       const { padding, lineHeight } =
         fixture.editor.inspector.designPanel.textStyle;
       await fixture.events.focus(padding);
@@ -145,12 +145,22 @@ describe('Text Style Panel', () => {
       await waitFor(() => {
         const texts = fixture.screen.getAllByText('Fill in some text');
         // Display layer.
-        expect(texts[0]).toHaveStyle('margin', '-10.0083px 0px');
-        expect(texts[0]).toHaveStyle('padding', '4.36893px');
+        const displayStyle = window.getComputedStyle(texts[0]);
+        // This verifies it includes correct units.
+        const splits = displayStyle.margin.split('px');
+        // Verify the top-bottom margin is negative.
+        expect(splits[0].trim()).toBeLessThan(0);
+        // Verify the left-right margin is 0.
+        expect(splits[1].trim()).toBe('0');
+        // Verify units are correctly added to padding.
+        expect(displayStyle.padding).toContain('px');
 
-        // Frame layer.
-        expect(texts[1]).toHaveStyle('margin', '-10.0083px 0px');
-        expect(texts[1]).toHaveStyle('padding', '4.36893px');
+        // Verify the same things for the frames layer.
+        const frameStyle = window.getComputedStyle(texts[1]);
+        const frameSplits = frameStyle.margin.split('px');
+        expect(frameSplits[0].trim()).toBeLessThan(0);
+        expect(frameSplits[1].trim()).toBe('0');
+        expect(frameStyle.padding).toContain('px');
       });
     });
   });
