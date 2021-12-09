@@ -25,7 +25,7 @@ import { useCallback } from '@web-stories-wp/react';
 import cleanForSlug from '../../../utils/cleanForSlug';
 import getGoogleFontURL from '../../../utils/getGoogleFontURL';
 import loadStylesheet from '../../../utils/loadStylesheet';
-import { ensureFontLoaded, loadInlineStylesheet, reflect } from '../utils';
+import { ensureFontLoaded, loadInlineStylesheet } from '../utils';
 
 function useLoadFontFiles() {
   const maybeLoadFont = useCallback(async (font) => {
@@ -53,32 +53,30 @@ function useLoadFontFiles() {
   }, []);
 
   /**
-   * Adds a <link> element to the <head> for a given font in case there is none yet.
+   * Enqueue a list of given fonts by adding <link> or <style> elements.
    *
    * Allows dynamically enqueuing font styles when needed.
    *
    * @param {Array} fonts An array of fonts properties to create a valid FontFaceSet to inject and preload a font-face
-   * @return {Promise} Returns fonts loaded promise
+   * @return {Promise<boolean>} Returns fonts loaded promise
    */
   const maybeEnqueueFontStyle = useCallback(
     (fonts) => {
-      return Promise.all(
-        fonts
-          .map(async ({ font, fontWeight, fontStyle, content }) => {
-            const { family, service } = font;
-            if (!family || service === 'system') {
-              return null;
-            }
+      return Promise.allSettled(
+        fonts.map(async ({ font, fontWeight, fontStyle, content }) => {
+          const { family, service } = font;
+          if (!family || service === 'system') {
+            return null;
+          }
 
-            const fontFaceSet = `
+          const fontFaceSet = `
               ${fontStyle || ''} ${fontWeight || ''} 0 '${family}'
             `.trim();
 
-            await maybeLoadFont(font);
+          await maybeLoadFont(font);
 
-            return ensureFontLoaded(fontFaceSet, content);
-          })
-          .map(reflect)
+          return ensureFontLoaded(fontFaceSet, content);
+        })
       );
     },
     [maybeLoadFont]

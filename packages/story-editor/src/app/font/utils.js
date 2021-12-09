@@ -20,18 +20,12 @@
 import getFontCSS from '../../utils/getFontCSS';
 
 /**
- * This is a utility ensure that Promise.all return ONLY when all promises are processed.
+ * Enqueue an inline stylesheet for a given font family and URL.
  *
- * @param {Promise} promise Promise to be processed
- * @return {Promise} Return a rejected or fulfilled Promise
+ * @param {string} id Element ID.
+ * @param {string} src Font URL.
+ * @param {string} name Font family.
  */
-export const reflect = (promise) => {
-  return promise.then(
-    (v) => ({ v, status: 'fulfilled' }),
-    (e) => ({ e, status: 'rejected' })
-  );
-};
-
 export function loadInlineStylesheet(id, src, name) {
   const css = getFontCSS(name, src);
 
@@ -44,9 +38,18 @@ export function loadInlineStylesheet(id, src, name) {
   document.head.appendChild(style);
 }
 
+/**
+ * Check whether a font has been loaded already.
+ *
+ * See https://developer.mozilla.org/en-US/docs/Web/API/FontFaceSet/check
+ *
+ * @param {string} fontFaceSet A font specification using the CSS value syntax, for example "italic bold 16px Roboto"
+ * @param {string} content Limit the font faces to those whose Unicode range contains at least one of the characters in text.
+ * @return {Promise<boolean>} True if the font is loaded.
+ */
 export function ensureFontLoaded(fontFaceSet, content) {
   if (!document?.fonts) {
-    return Promise.resolve();
+    return Promise.resolve(true);
   }
 
   return document.fonts
