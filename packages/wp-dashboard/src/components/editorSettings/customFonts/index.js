@@ -17,11 +17,15 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from '@web-stories-wp/react';
+import { useState, useCallback, useEffect } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import {
+  Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
@@ -32,6 +36,7 @@ import { isValidUrl } from '@web-stories-wp/story-editor/src/utils/url';
 /**
  * Internal dependencies
  */
+import Tooltip from '@web-stories-wp/story-editor/src/components/tooltip';
 import {
   InlineForm,
   SaveButton,
@@ -59,6 +64,11 @@ export const TEXT = {
   ),
   INPUT_ERROR: __('Invalid URL format', 'web-stories'),
   SUBMIT_BUTTON: __('Add Font', 'web-stories'),
+  FONTS_HEADING: __('Current Fonts', 'web-stories'),
+  FONTS_CONTEXT: __(
+    'Deleting fonts will delete them from your in-editor font list and all previous stories.',
+    'web-stories'
+  ),
 };
 
 const AddButton = styled(SaveButton)`
@@ -66,17 +76,54 @@ const AddButton = styled(SaveButton)`
   margin-top: 32px;
 `;
 
-const InputWrapper = styled.div`
+const InputsWrapper = styled.div`
   margin-top: 8px;
+`;
+
+const FontsWrapper = styled.div`
+  margin-top: 34px;
+`;
+
+const ListHeading = styled(Text)`
+  margin-bottom: 10px;
+  display: inline-block;
+`;
+
+const FontsList = styled.div`
+  padding: 12px;
+  border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
+`;
+
+const FontRow = styled.div`
+  display: flex;
+  height: 32px;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+const FontData = styled.div`
+  line-height: 32px;
 `;
 
 function CustomFontsSettings() {
   const [fontUrl, setFontUrl] = useState('');
   const [inputError, setInputError] = useState('');
-
-  // @todo This would come from the API instead.
-  const [addedFonts, setAddedFonts] = useState([]);
+  const [addedFonts, setAddedFonts] = useState(null);
   const canSave = !inputError;
+
+  const loadFonts = useCallback(() => {
+    // @todo Use API call.
+    setAddedFonts([
+      { name: 'Font 1', url: 'https://example.com/font1.otf' },
+      { name: 'Font 2', url: 'https://example.com/font2.woff' },
+    ]);
+  }, []);
+
+  useEffect(() => {
+    if (null === addedFonts) {
+      loadFonts();
+    }
+  }, [loadFonts, addedFonts]);
 
   const handleUpdateFontUrl = useCallback((event) => {
     const { value } = event.target;
@@ -107,7 +154,10 @@ function CustomFontsSettings() {
         if (!fontData.name) {
           setInputError(__('Something went wrong', 'web-stories'));
         } else {
-          setAddedFonts([{ name: fontData.name, url: fontUrl }, ...addedFonts]);
+          setAddedFonts([
+            { name: fontData.name, url: fontUrl },
+            ...(addedFonts || []),
+          ]);
           setFontUrl('');
         }
       } catch (err) {
@@ -142,7 +192,7 @@ function CustomFontsSettings() {
           {TEXT.REMOVAL}
         </SettingSubheading>
       </div>
-      <InputWrapper>
+      <InputsWrapper>
         <InlineForm>
           <SettingsTextInput
             id="insertFontUrl"
@@ -154,7 +204,7 @@ function CustomFontsSettings() {
             label={TEXT.LABEL}
           />
           <AddButton
-            type={BUTTON_TYPES.SECONDARY}
+            type={BUTTON_TYPES.PRIMARY}
             size={BUTTON_SIZES.SMALL}
             disabled={inputError}
             onClick={handleOnSave}
@@ -167,7 +217,35 @@ function CustomFontsSettings() {
         >
           {TEXT.INPUT_CONTEXT}
         </TextInputHelperText>
-      </InputWrapper>
+        {addedFonts?.length && (
+          <FontsWrapper>
+            <ListHeading forwardedAs="span">{TEXT.FONTS_HEADING}</ListHeading>
+            <FontsList>
+              {addedFonts.map(({ name, url }) => (
+                <FontRow key={name}>
+                  <FontData>{`${name}-${url}`}</FontData>
+                  <Tooltip hasTail title={__('Delete font', 'web-stories')}>
+                    <Button
+                      aria-label={__('Remove file', 'web-stories')}
+                      type={BUTTON_TYPES.TERTIARY}
+                      size={BUTTON_SIZES.SMALL}
+                      variant={BUTTON_VARIANTS.SQUARE}
+                      onClick={() => {}}
+                    >
+                      <Icons.Trash />
+                    </Button>
+                  </Tooltip>
+                </FontRow>
+              ))}
+            </FontsList>
+            <TextInputHelperText
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {TEXT.FONTS_CONTEXT}
+            </TextInputHelperText>
+          </FontsWrapper>
+        )}
+      </InputsWrapper>
     </SettingForm>
   );
 }
