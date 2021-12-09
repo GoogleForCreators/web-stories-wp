@@ -44,6 +44,8 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.16.0
 	 *
 	 * @see register_rest_route()
+	 *
+	 * @return void
 	 */
 	public function register_routes() {
 		register_rest_route(
@@ -62,7 +64,6 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					'permission_callback' => [ $this, 'create_item_permissions_check' ],
 					'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
 				],
-				'allow_batch' => $this->allow_batch,
 				'schema'      => [ $this, 'get_public_item_schema' ],
 			]
 		);
@@ -82,7 +83,6 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					'callback'            => [ $this, 'delete_item' ],
 					'permission_callback' => [ $this, 'delete_item_permissions_check' ],
 				],
-				'allow_batch' => $this->allow_batch,
 				'schema'      => [ $this, 'get_public_item_schema' ],
 			]
 		);
@@ -168,6 +168,11 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 		$posts = [];
 
+		/**
+		 * We're expecting a post object.
+		 *
+		 * @var WP_Post $post
+		 */
 		foreach ( $query_result as $post ) {
 			if ( ! $this->check_read_permission( $post ) ) {
 				continue;
@@ -210,6 +215,16 @@ class Font_Controller extends WP_REST_Posts_Controller {
 						array_filter(
 							$fonts,
 							static function( $font ) use ( $request ) {
+								/**
+								 * Font data.
+								 *
+								 * @var array{family: string} $font
+								 */
+								/**
+								 * Request data.
+								 *
+								 * @var array{search: string} $request
+								 */
 								return false !== stripos( $font['family'], $request['search'] );
 							}
 						)
@@ -227,6 +242,16 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					array_filter(
 						$fonts,
 						static function( $font ) use ( $request ) {
+							/**
+							 * Font data.
+							 *
+							 * @var array{family: string} $font
+							 */
+							/**
+							 * Request data.
+							 *
+							 * @var array{include: array<string>} $request
+							 */
 							return in_array( $font['family'], $request['include'], true );
 						}
 					)
@@ -280,11 +305,20 @@ class Font_Controller extends WP_REST_Posts_Controller {
 			$data = array_merge( $data, $font_data );
 		}
 
+		/**
+		 * Request context.
+		 *
+		 * @var string $context
+		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
 
-		// Wrap the data in a response object.
+		/**
+		 * Response object.
+		 *
+		 * @var WP_REST_Response $response
+		 */
 		$response = rest_ensure_response( $data );
 
 		$links = $this->prepare_links( $post );
