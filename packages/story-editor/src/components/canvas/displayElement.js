@@ -62,9 +62,10 @@ const Wrapper = styled.div.attrs(
 )`
   ${({ previewMode }) => !previewMode && elementWithPosition}
   ${({ previewMode }) => !previewMode && elementWithSize}
-   ${({ previewMode }) => !previewMode && elementWithRotation}
-   contain: layout;
+  ${({ previewMode }) => !previewMode && elementWithRotation}
+  contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
+
   ${({ isBackground, theme }) =>
     isBackground &&
     css`

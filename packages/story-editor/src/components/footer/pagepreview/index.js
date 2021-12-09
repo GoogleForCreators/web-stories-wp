@@ -54,6 +54,7 @@ const Page = styled.button`
   width: ${({ width }) => width}px;
   flex: none;
   outline: 0;
+
   &::after {
     content: '';
     display: block;
@@ -69,6 +70,7 @@ const Page = styled.button`
     border-color: ${({ isActive, theme }) =>
       isActive ? theme.colors.border.defaultActive : 'transparent'};
   }
+
   ${({ isInteractive, isActive, theme }) =>
     isInteractive &&
     css`
