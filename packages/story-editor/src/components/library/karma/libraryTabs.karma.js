@@ -60,6 +60,7 @@ describe('LibraryTabs integration', () => {
         `#library-pane-${paneId}`
       );
       expect(expandedPane).toEqual(expectedPane);
+      await expectAsync(expandedPane).toHaveNoViolations();
       await fixture.waitOnScreen(expectedPane);
     }
 

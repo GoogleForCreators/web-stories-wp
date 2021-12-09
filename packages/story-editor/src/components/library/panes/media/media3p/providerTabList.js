@@ -108,7 +108,7 @@ function ProviderTabList({ providers }) {
   useKeyDownEffect(ref, ['enter', 'space'], selectFocused, [selectFocused]);
 
   return (
-    <Section ref={ref}>
+    <Section ref={ref} role="tablist">
       {providers.map((providerType, index) => (
         <ProviderTab
           key={providerType}
