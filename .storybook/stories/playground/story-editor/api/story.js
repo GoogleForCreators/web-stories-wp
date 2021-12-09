@@ -13,7 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const saveStoryById = (story) => {
-  window.localStorage.setItem('preview_markup', story?.content);
+/**
+ * External dependencies
+ */
+import { DATA_VERSION } from '@web-stories-wp/migration';
+
+export const saveStoryById = ({
+  pages,
+  globalStoryStyles,
+  autoAdvance,
+  defaultPageDuration,
+  currentStoryStyles,
+  backgroundAudio,
+  content,
+  title,
+  excerpt,
+}) => {
+  const storySaveData = {
+    title: {
+      raw: title,
+    },
+    excerpt: {
+      raw: excerpt,
+    },
+    story_data: {
+      version: DATA_VERSION,
+      pages,
+      autoAdvance,
+      defaultPageDuration,
+      currentStoryStyles,
+      backgroundAudio,
+    },
+    author: {
+      id: 1,
+      name: '',
+    },
+    style_presets: globalStoryStyles,
+    permalink_template: 'https://example.org/web-stories/%pagename%/',
+  };
+
+  window.localStorage.setItem(
+    'web_stories_json_content',
+    JSON.stringify(storySaveData)
+  );
+  window.localStorage.setItem('web_stories_preview_markup', content);
+
   return Promise.resolve({});
 };
