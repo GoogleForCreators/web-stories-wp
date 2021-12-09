@@ -209,9 +209,6 @@ describe('useMediaUploadQueue', () => {
     await waitFor(() => expect(result.current.state.isTranscoding).toBeTrue());
 
     expect(
-      result.current.state.isCurrentResourceProcessing(resourceId)
-    ).toBeTrue();
-    expect(
       result.current.state.isCurrentResourceTranscoding(resourceId)
     ).toBeTrue();
   });
