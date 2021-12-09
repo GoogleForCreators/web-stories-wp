@@ -17,21 +17,21 @@
 /**
  * External dependencies
  */
-const path = require('path');
-const glob = require('glob');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const RtlCssPlugin = require('rtlcss-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const WebpackBar = require('webpackbar');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const path = require( 'path' );
+const glob = require( 'glob' );
+const webpack = require( 'webpack' );
+const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const OptimizeCSSAssetsPlugin = require( 'optimize-css-assets-webpack-plugin' );
+const RtlCssPlugin = require( 'rtlcss-webpack-plugin' );
+const TerserPlugin = require( 'terser-webpack-plugin' );
+const WebpackBar = require( 'webpackbar' );
+const { BundleAnalyzerPlugin } = require( 'webpack-bundle-analyzer' );
 
 /**
  * WordPress dependencies
  */
-const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
+const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
 
 /**
  * Prevents externalizing certain packages.
@@ -39,9 +39,9 @@ const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extract
  * @param {string} request Requested module
  * @return {(string|undefined|boolean)} Script global
  */
-function requestToExternal(request) {
-  const packages = ['react', 'react-dom', 'react-dom/server'];
-  if (packages.includes(request)) {
+function requestToExternal( request ) {
+  const packages = [ 'react', 'react-dom', 'react-dom/server' ];
+  if (packages.includes( request )) {
     return false;
   }
 
@@ -54,9 +54,9 @@ const mode = isProduction ? 'production' : 'development';
 
 const sharedConfig = {
   mode,
-  devtool: !isProduction ? 'source-map' : undefined,
+  devtool: ! isProduction ? 'source-map' : undefined,
   output: {
-    path: path.resolve(process.cwd(), 'assets', 'js'),
+    path: path.resolve( process.cwd(), 'assets', 'js' ),
     filename: '[name].js',
     chunkFilename: '[name].js?v=[chunkhash]',
     publicPath: '',
@@ -77,7 +77,7 @@ const sharedConfig = {
       // See https://github.com/google/web-stories-wp/pull/9001 for context.
       // TODO(#5792): Use `mangleExports` option in webpack v5 instead.
       {
-        test: require.resolve('@web-stories-wp/i18n'), // eslint-disable-line node/no-extraneous-require
+        test: require.resolve( '@web-stories-wp/i18n' ), // eslint-disable-line node/no-extraneous-require
         loader: 'expose-loader',
         options: {
           exposes: [
@@ -100,18 +100,22 @@ const sharedConfig = {
           ],
         },
       },
-      !isProduction && {
+      ! isProduction && {
         test: /\.js$/,
-        use: ['source-map-loader'],
+        use: [ 'source-map-loader' ],
         enforce: 'pre',
+      },
+      {
+        test: /\.worker\.js$/,
+        use: { loader: 'worker-loader' },
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
-          require.resolve('thread-loader'),
+          require.resolve( 'thread-loader' ),
           {
-            loader: require.resolve('babel-loader'),
+            loader: require.resolve( 'babel-loader' ),
             options: {
               // Babel uses a directory within local node_modules
               // by default. Use the environment variable option
@@ -146,7 +150,7 @@ const sharedConfig = {
           },
           'url-loader',
         ],
-        exclude: [/images\/.*\.svg$/],
+        exclude: [ /images\/.*\.svg$/ ],
       },
       {
         test: /\.svg$/,
@@ -173,11 +177,11 @@ const sharedConfig = {
           },
           'url-loader',
         ],
-        include: [/images\/.*\.svg$/],
+        include: [ /images\/.*\.svg$/ ],
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [ MiniCssExtractPlugin.loader, 'css-loader' ],
         sideEffects: true,
       },
       {
@@ -191,34 +195,34 @@ const sharedConfig = {
           },
         ],
       },
-    ].filter(Boolean),
+    ].filter( Boolean ),
   },
   plugins: [
     process.env.BUNDLE_ANALYZER &&
-      new BundleAnalyzerPlugin({
-        analyzerPort: 'auto',
-      }),
-    new MiniCssExtractPlugin({
+    new BundleAnalyzerPlugin( {
+      analyzerPort: 'auto',
+    } ),
+    new MiniCssExtractPlugin( {
       filename: '../css/[name].css',
-    }),
-    new RtlCssPlugin({
+    } ),
+    new RtlCssPlugin( {
       filename: `../css/[name]-rtl.css`,
-    }),
-    new webpack.EnvironmentPlugin({
+    } ),
+    new webpack.EnvironmentPlugin( {
       DISABLE_PREVENT: false,
       DISABLE_OPTIMIZED_RENDERING: false,
       DISABLE_ERROR_BOUNDARIES: false,
       DISABLE_QUICK_TIPS: false,
-    }),
+    } ),
     new DependencyExtractionWebpackPlugin(),
-  ].filter(Boolean),
+  ].filter( Boolean ),
   optimization: {
     sideEffects: true,
     splitChunks: {
       automaticNameDelimiter: '-',
     },
     minimizer: [
-      new TerserPlugin({
+      new TerserPlugin( {
         parallel: true,
         sourceMap: false,
         cache: true,
@@ -232,8 +236,8 @@ const sharedConfig = {
           },
         },
         extractComments: false,
-      }),
-      new OptimizeCSSAssetsPlugin({}),
+      } ),
+      new OptimizeCSSAssetsPlugin( {} ),
     ],
   },
 };
@@ -242,45 +246,45 @@ const EDITOR_CHUNK = 'wp-story-editor';
 const DASHBOARD_CHUNK = 'wp-dashboard';
 
 // Template for html-webpack-plugin to generate JS/CSS chunk manifests in PHP.
-const templateContent = ({ htmlWebpackPlugin, chunkNames }) => {
+const templateContent = ( { htmlWebpackPlugin, chunkNames } ) => {
   // Extract filename without extension from arrays of JS and CSS chunks.
   // E.g. "../css/some-chunk.css" -> "some-chunk"
-  const filenameOf = (pathname) =>
-    pathname.substr(pathname.lastIndexOf('/') + 1);
+  const filenameOf = ( pathname ) =>
+    pathname.substr( pathname.lastIndexOf( '/' ) + 1 );
 
   const chunkName = htmlWebpackPlugin.options.chunks[0];
-  const omitPrimaryChunk = (f) => f !== chunkName;
+  const omitPrimaryChunk = ( f ) => f !== chunkName;
 
   const js = htmlWebpackPlugin.files.js
-    .map((pathname) => {
-      const f = filenameOf(pathname);
-      return f.split('.js')[0];
-    })
-    .filter(omitPrimaryChunk);
+    .map( ( pathname ) => {
+      const f = filenameOf( pathname );
+      return f.split( '.js' )[0];
+    } )
+    .filter( omitPrimaryChunk );
 
   const css = htmlWebpackPlugin.files.css
-    .map((pathname) => {
-      const f = filenameOf(pathname);
-      return f.split('.css')[0];
-    })
-    .filter(omitPrimaryChunk);
+    .map( ( pathname ) => {
+      const f = filenameOf( pathname );
+      return f.split( '.css' )[0];
+    } )
+    .filter( omitPrimaryChunk );
 
   // We're only interested in chunks from dynamic imports;
   // ones that are not already in `js` and not primaries.
   const chunks = chunkNames.filter(
-    (chunk) =>
-      !js.includes(chunk) && ![DASHBOARD_CHUNK, EDITOR_CHUNK].includes(chunk)
+    ( chunk ) =>
+      ! js.includes( chunk ) && ! [ DASHBOARD_CHUNK, EDITOR_CHUNK ].includes( chunk ),
   );
 
   return `<?php
   return [
-    'css'    => ${JSON.stringify(css)},
-    'js'     => ${JSON.stringify(js)},
-    'chunks' => ${JSON.stringify(chunks)},
+    'css'    => ${ JSON.stringify( css ) },
+    'js'     => ${ JSON.stringify( js ) },
+    'chunks' => ${ JSON.stringify( chunks ) },
   ];`;
 };
 
-const templateParameters = (compilation, assets, assetTags, options) => ({
+const templateParameters = ( compilation, assets, assetTags, options ) => ( {
   compilation,
   webpackConfig: compilation.options,
   htmlWebpackPlugin: {
@@ -288,8 +292,8 @@ const templateParameters = (compilation, assets, assetTags, options) => ({
     files: assets,
     options,
   },
-  chunkNames: compilation.chunks.map(({ name }) => name),
-});
+  chunkNames: compilation.chunks.map( ( { name } ) => name ),
+} );
 
 const editorAndDashboard = {
   ...sharedConfig,
@@ -299,30 +303,30 @@ const editorAndDashboard = {
   },
   plugins: [
     ...sharedConfig.plugins.filter(
-      (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
+      ( plugin ) => ! ( plugin instanceof DependencyExtractionWebpackPlugin ),
     ),
-    new DependencyExtractionWebpackPlugin({
+    new DependencyExtractionWebpackPlugin( {
       requestToExternal,
-    }),
-    new WebpackBar({
+    } ),
+    new WebpackBar( {
       name: 'Editor & Dashboard',
-    }),
-    new HtmlWebpackPlugin({
-      filename: `${EDITOR_CHUNK}.chunks.php`,
+    } ),
+    new HtmlWebpackPlugin( {
+      filename: `${ EDITOR_CHUNK }.chunks.php`,
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
-      chunks: [EDITOR_CHUNK],
+      chunks: [ EDITOR_CHUNK ],
       templateContent,
       templateParameters,
-    }),
-    new HtmlWebpackPlugin({
-      filename: `${DASHBOARD_CHUNK}.chunks.php`,
+    } ),
+    new HtmlWebpackPlugin( {
+      filename: `${ DASHBOARD_CHUNK }.chunks.php`,
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
-      chunks: [DASHBOARD_CHUNK],
+      chunks: [ DASHBOARD_CHUNK ],
       templateContent,
       templateParameters,
-    }),
+    } ),
   ],
   optimization: {
     ...sharedConfig.optimization,
@@ -341,27 +345,27 @@ const webStoriesScripts = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new WebpackBar({
+    new WebpackBar( {
       name: 'WP Frontend Scripts',
       color: '#EEE070',
-    }),
-  ].filter(Boolean),
+    } ),
+  ].filter( Boolean ),
 };
 
 // Collect all core themes style sheet paths.
 const coreThemesBlockStylesPaths = glob.sync(
-  './packages/stories-block/src/css/core-themes/*.css'
+  './packages/stories-block/src/css/core-themes/*.css',
 );
 
 // Build entry object for the Core Themes Styles.
-const coreThemeBlockStyles = coreThemesBlockStylesPaths.reduce((acc, curr) => {
-  const fileName = path.parse(curr).name;
+const coreThemeBlockStyles = coreThemesBlockStylesPaths.reduce( ( acc, curr ) => {
+  const fileName = path.parse( curr ).name;
 
   return {
     ...acc,
-    [`web-stories-theme-style-${fileName}`]: curr,
+    [`web-stories-theme-style-${ fileName }`]: curr,
   };
-}, {});
+}, {} );
 
 const webStoriesBlock = {
   ...sharedConfig,
@@ -377,11 +381,11 @@ const webStoriesBlock = {
   plugins: [
     ...sharedConfig.plugins,
 
-    new WebpackBar({
+    new WebpackBar( {
       name: 'Web Stories Block',
       color: '#357BB5',
-    }),
-  ].filter(Boolean),
+    } ),
+  ].filter( Boolean ),
 };
 
 const activationNotice = {
@@ -392,11 +396,11 @@ const activationNotice = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new WebpackBar({
+    new WebpackBar( {
       name: 'Activation Notice',
       color: '#fcd8ba',
-    }),
-  ].filter(Boolean),
+    } ),
+  ].filter( Boolean ),
 };
 
 const widgetScript = {
@@ -406,11 +410,11 @@ const widgetScript = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new WebpackBar({
+    new WebpackBar( {
       name: 'WP Widget Script',
       color: '#F757A5',
-    }),
-  ].filter(Boolean),
+    } ),
+  ].filter( Boolean ),
 };
 
 const storiesMCEButton = {
@@ -420,11 +424,11 @@ const storiesMCEButton = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new WebpackBar({
+    new WebpackBar( {
       name: 'WP TinyMCE Button',
       color: '#4deaa2',
-    }),
-  ].filter(Boolean),
+    } ),
+  ].filter( Boolean ),
 };
 
 const storiesImgareaselect = {
@@ -434,11 +438,11 @@ const storiesImgareaselect = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new WebpackBar({
+    new WebpackBar( {
       name: 'WP ImgAreaSelect Patch',
       color: '#7D02F1',
-    }),
-  ].filter(Boolean),
+    } ),
+  ].filter( Boolean ),
 };
 
 module.exports = [

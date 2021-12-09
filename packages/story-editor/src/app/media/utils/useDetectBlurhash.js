@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import { getTimeTracker } from '@web-stories-wp/tracking';
 import { getSmallestUrlForWidth } from '@web-stories-wp/media';
 /**
  * Internal dependencies
@@ -82,15 +81,13 @@ function useDetectBlurHash({ updateMediaElement }) {
     async ({ resource }) => {
       const { type, poster } = resource;
       const imageSrc =
-        type === 'image' ? getSmallestUrlForWidth(0, resource) : poster;
+        type === 'image' ? getSmallestUrlForWidth(300, resource) : poster;
       if (!imageSrc) {
         return;
       }
       const imageSrcProxied = getProxiedUrl(resource, imageSrc);
-      const trackTiming = getTimeTracker('load_get_blurhash');
       try {
         const blurHash = await getBlurHashFromImage(imageSrcProxied);
-        trackTiming();
         await saveBlurHash(resource.id, blurHash);
       } catch (error) {
         // Do nothing for now.

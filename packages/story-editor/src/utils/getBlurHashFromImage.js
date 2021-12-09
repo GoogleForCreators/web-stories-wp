@@ -16,8 +16,14 @@
 /**
  * External dependencies
  */
-import { encode } from 'blurhash';
 import { preloadImage } from '@web-stories-wp/media';
+import { getTimeTracker } from '@web-stories-wp/tracking';
+
+/**
+ * Internal dependencies
+ */
+// eslint-disable-next-line import/default
+import Worker from './generateBlurhash.worker';
 
 const getImageData = (image) => {
   const { width, height } = image;
@@ -34,7 +40,25 @@ const getBlurHashFromImage = async (src) => {
   const image = await preloadImage(src);
   const imageData = getImageData(image);
   const { data, width, height } = imageData;
-  // todo workout why 1 and 1 the only options that are not painfully slow.
-  return encode(data, width, height, 4, 4);
+
+  const trackTiming = getTimeTracker('load_get_blurhash');
+  return new Promise((resolve, reject) => {
+    const worker = new Worker();
+    worker.postMessage({
+      image: data,
+      width,
+      height,
+      compontentX: 4,
+      compontentY: 4,
+    });
+    worker.onmessage = function (event) {
+      if (event.data.type === 'success') {
+        trackTiming();
+        resolve(event.data.blurHash);
+      } else {
+        reject(event.data.error);
+      }
+    };
+  });
 };
 export default getBlurHashFromImage;
