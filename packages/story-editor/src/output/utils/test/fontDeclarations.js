@@ -15,14 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
-import getFontDeclarations from '../getFontDeclarations';
+import FontDeclarations from '../fontDeclarations';
 
-describe('getFontDeclarations', () => {
+describe('FontDeclarations', () => {
   it('should ignore system fonts', () => {
     const pages = [
       {
+        id: 'abc123',
         elements: [
           {
             type: 'text',
@@ -42,13 +48,14 @@ describe('getFontDeclarations', () => {
       },
     ];
 
-    const result = getFontDeclarations(pages);
-    expect(result).toStrictEqual([]);
+    const { container } = render(<FontDeclarations pages={pages} />);
+    expect(container).toMatchInlineSnapshot();
   });
 
   it('should return one item for multiple Google fonts', () => {
     const pages = [
       {
+        id: 'abc123',
         elements: [
           {
             type: 'text',
@@ -94,16 +101,14 @@ describe('getFontDeclarations', () => {
       },
     ];
 
-    const result = getFontDeclarations(pages);
-    expect(result).toHaveLength(1);
-    expect(result).toContain(
-      'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Aital%401&family=Lato'
-    );
+    const { container } = render(<FontDeclarations pages={pages} />);
+    expect(container).toMatchInlineSnapshot();
   });
 
   it('should only include valid variants', () => {
     const pages = [
       {
+        id: 'abc123',
         elements: [
           {
             type: 'text',
@@ -118,16 +123,14 @@ describe('getFontDeclarations', () => {
       },
     ];
 
-    const result = getFontDeclarations(pages);
-    expect(result).toHaveLength(1);
-    expect(result).toContain(
-      'https://fonts.googleapis.com/css2?display=swap&family=Architects+Daughter'
-    );
+    const { container } = render(<FontDeclarations pages={pages} />);
+    expect(container).toMatchInlineSnapshot();
   });
 
   it('should fall back to closest variant', () => {
     const pages = [
       {
+        id: 'abc123',
         elements: [
           {
             type: 'text',
@@ -200,10 +203,69 @@ describe('getFontDeclarations', () => {
       },
     ];
 
-    const result = getFontDeclarations(pages);
-    expect(result).toHaveLength(1);
-    expect(result).toContain(
-      'https://fonts.googleapis.com/css2?display=swap&family=Mukta+Mahee%3Awght%40200%3B800&family=Molle%3Aital%401&family=Abel&family=Alef%3Awght%40700'
-    );
+    const { container } = render(<FontDeclarations pages={pages} />);
+    expect(container).toMatchInlineSnapshot();
+  });
+
+  it('should add inline stylesheets for custom fonts', () => {
+    const pages = [
+      {
+        id: 'abc123',
+        elements: [
+          {
+            type: 'text',
+            font: {
+              family: 'Roboto',
+              service: 'fonts.google.com',
+              variants: [
+                [0, 400],
+                [1, 400],
+              ],
+            },
+            content: '<span style="font-style: italic">Hello</span>',
+          },
+          {
+            type: 'text',
+            font: {
+              family: 'Roboto',
+              service: 'fonts.google.com',
+              variants: [
+                [0, 400],
+                [1, 400],
+              ],
+            },
+            content: '<span style="font-style: italic">Hello</span>',
+          },
+          {
+            type: 'text',
+            font: {
+              family: 'Lato',
+              service: 'fonts.google.com',
+            },
+            fontWeight: 400,
+          },
+          {
+            type: 'text',
+            font: {
+              family: 'Lato',
+              service: 'fonts.google.com',
+            },
+            fontWeight: 400,
+          },
+          {
+            type: 'text',
+            font: {
+              family: 'Vazir Regular',
+              service: 'custom',
+              url: 'https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir-Regular.ttf',
+            },
+            fontWeight: 400,
+          },
+        ],
+      },
+    ];
+
+    const { container } = render(<FontDeclarations pages={pages} />);
+    expect(container).toMatchInlineSnapshot();
   });
 });
