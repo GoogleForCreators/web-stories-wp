@@ -34,7 +34,7 @@ describe('RouterProvider', () => {
       </RouterProvider>
     );
 
-    expect(screen.queryByText('Home')).toBeInTheDocument();
+    expect(screen.getByText('Home')).toBeInTheDocument();
     expect(screen.queryByText('Second Route')).not.toBeInTheDocument();
   });
 
@@ -73,7 +73,7 @@ describe('RouterProvider', () => {
     const link = await screen.findByText('Visit Second Page');
     fireEvent.click(link);
     expect(screen.queryByText('Home')).not.toBeInTheDocument();
-    expect(screen.queryByText('Second Route')).toBeInTheDocument();
+    expect(screen.getByText('Second Route')).toBeInTheDocument();
   });
 
   it('should render the parent and sub-route when navigated to', async () => {
@@ -122,7 +122,7 @@ describe('RouterProvider', () => {
     const link = await screen.findByText('Visit Sub Entity on Second Page');
     fireEvent.click(link);
     expect(screen.queryByText('Home')).not.toBeInTheDocument();
-    expect(screen.queryByText('Second Route')).toBeInTheDocument();
-    expect(screen.queryByText('Sub Entity Route')).toBeInTheDocument();
+    expect(screen.getByText('Second Route')).toBeInTheDocument();
+    expect(screen.getByText('Sub Entity Route')).toBeInTheDocument();
   });
 });

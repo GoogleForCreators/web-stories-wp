@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent, screen, within } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -58,9 +58,8 @@ describe('ContextMenu', () => {
     );
 
     const elementOutsideContextMenu = screen.getByTestId('some-element');
-    act(() => {
-      fireEvent.mouseDown(elementOutsideContextMenu);
-    });
+
+    fireEvent.mouseDown(elementOutsideContextMenu);
 
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
@@ -75,9 +74,8 @@ describe('ContextMenu', () => {
     );
 
     const elementOutsideContextMenu = screen.getByTestId('some-element');
-    act(() => {
-      fireEvent.mouseDown(elementOutsideContextMenu, { button: 'right' });
-    });
+
+    fireEvent.mouseDown(elementOutsideContextMenu, { button: 'right' });
 
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });

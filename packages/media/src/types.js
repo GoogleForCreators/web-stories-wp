@@ -136,6 +136,8 @@ export { ResourcePropTypes };
  * Attachment object.
  *
  * @typedef {Attachment} Attachment
+ * @property {string|null} baseColor Attachment base color.
+ * @property {string|null} blurHash Attachment blur hash.
  * @property {string} [type] Attachment type, e.g. video or image.
  * @property {string} mimeType The MIME type.
  * @property {string|null} creationDate When the attachment was created.

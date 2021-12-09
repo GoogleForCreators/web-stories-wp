@@ -103,10 +103,12 @@ function LibraryMoveable({
     [designSpaceGuideline]
   );
 
-  const {
-    state: { activeDropTargetId },
-    actions: { setDraggingResource },
-  } = useDropTargets();
+  const { activeDropTargetId, setDraggingResource } = useDropTargets(
+    ({ state: { activeDropTargetId }, actions: { setDraggingResource } }) => ({
+      activeDropTargetId,
+      setDraggingResource,
+    })
+  );
 
   const frame = {
     translate: [0, 0],

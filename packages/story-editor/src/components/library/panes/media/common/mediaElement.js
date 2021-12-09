@@ -162,9 +162,12 @@ function Element({
     return resetHoverTime;
   }, [isMenuOpen, active, type, src, hoverTimer, setHoverTimer, activeRef]);
 
-  const onClick = (thumbnailUrl) => () => {
-    onInsert(resource, thumbnailUrl);
-  };
+  const onClick = useCallback(
+    (thumbnailUrl) => () => {
+      onInsert(resource, thumbnailUrl);
+    },
+    [onInsert, resource]
+  );
 
   const attribution = active &&
     resource.attribution?.author?.displayName &&
@@ -179,7 +182,7 @@ function Element({
 
   useRovingTabIndex({ ref });
 
-  const onLoad = () => setLoaded(true);
+  const onLoad = useCallback(() => setLoaded(true), []);
 
   const handleKeyDown = useCallback(
     ({ key }) => {
