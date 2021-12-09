@@ -35,7 +35,6 @@ import theme, { GlobalStyle } from './theme';
 import ErrorBoundary from './components/errorBoundary';
 import { ConfigProvider } from './app/config';
 import { APIProvider } from './app/api';
-import { FileProvider } from './app/file';
 import { Media3pApiProvider } from './app/media/media3p/api';
 import { HistoryProvider } from './app/history';
 import { StoryProvider } from './app/story';
@@ -65,42 +64,40 @@ function StoryEditor({ config, initialEdits, children }) {
           <ErrorBoundary>
             <ConfigProvider config={_config}>
               <APIProvider>
-                <FileProvider>
-                  <Media3pApiProvider>
-                    <HistoryProvider size={50}>
-                      <SnackbarProvider>
-                        <StoryProvider
-                          storyId={storyId}
-                          initialEdits={initialEdits}
-                        >
-                          <TaxonomyProvider>
-                            <CurrentUserProvider>
-                              <FontProvider>
-                                <MediaProvider>
-                                  <AutoSaveHandler />
-                                  <TransformProvider>
-                                    <DropTargetsProvider>
-                                      <HelpCenterProvider>
-                                        <GlobalStyle />
-                                        <DevTools />
-                                        <DefaultMoveableGlobalStyle />
-                                        <CropMoveableGlobalStyle />
-                                        <ModalGlobalStyle />
-                                        <CalendarStyle />
-                                        <KeyboardOnlyOutlines />
-                                        {children}
-                                      </HelpCenterProvider>
-                                    </DropTargetsProvider>
-                                  </TransformProvider>
-                                </MediaProvider>
-                              </FontProvider>
-                            </CurrentUserProvider>
-                          </TaxonomyProvider>
-                        </StoryProvider>
-                      </SnackbarProvider>
-                    </HistoryProvider>
-                  </Media3pApiProvider>
-                </FileProvider>
+                <Media3pApiProvider>
+                  <HistoryProvider size={50}>
+                    <SnackbarProvider>
+                      <StoryProvider
+                        storyId={storyId}
+                        initialEdits={initialEdits}
+                      >
+                        <TaxonomyProvider>
+                          <CurrentUserProvider>
+                            <FontProvider>
+                              <MediaProvider>
+                                <AutoSaveHandler />
+                                <TransformProvider>
+                                  <DropTargetsProvider>
+                                    <HelpCenterProvider>
+                                      <GlobalStyle />
+                                      <DevTools />
+                                      <DefaultMoveableGlobalStyle />
+                                      <CropMoveableGlobalStyle />
+                                      <ModalGlobalStyle />
+                                      <CalendarStyle />
+                                      <KeyboardOnlyOutlines />
+                                      {children}
+                                    </HelpCenterProvider>
+                                  </DropTargetsProvider>
+                                </TransformProvider>
+                              </MediaProvider>
+                            </FontProvider>
+                          </CurrentUserProvider>
+                        </TaxonomyProvider>
+                      </StoryProvider>
+                    </SnackbarProvider>
+                  </HistoryProvider>
+                </Media3pApiProvider>
               </APIProvider>
             </ConfigProvider>
           </ErrorBoundary>
