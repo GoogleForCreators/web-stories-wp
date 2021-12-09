@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\AMP;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Services;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories_Dependencies\AMP_Allowed_Tags_Generated;
@@ -39,10 +38,10 @@ use Google\Web_Stories_Dependencies\AMP_Script_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Amp;
-use Google\Web_Stories_Dependencies\AmpProject\Attribute;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Extension;
-use Google\Web_Stories_Dependencies\AmpProject\Tag;
+use Google\Web_Stories_Dependencies\AmpProject\Html\Attribute;
+use Google\Web_Stories_Dependencies\AmpProject\Html\Tag;
 use DOMElement;
 
 /**
@@ -374,7 +373,7 @@ class Sanitization {
 		 *
 		 * @since 1.1.0
 		 *
-		 * @param bool Whether AMP dev mode is enabled.
+		 * @param bool $dev_mode_enabled Whether AMP dev mode is enabled.
 		 */
 		return apply_filters( 'web_stories_amp_dev_mode_enabled', $dev_mode_enabled );
 	}
@@ -436,12 +435,14 @@ class Sanitization {
 			$story = new Story();
 			$story->load_from_post( $post );
 
+			$poster_images = [
+				'poster-portrait-src' => esc_url_raw( $story->get_poster_portrait() ),
+			];
+
 			$sanitizers[ Story_Sanitizer::class ] = [
 				'publisher_logo' => $story->get_publisher_logo_url(),
 				'publisher'      => $story->get_publisher_name(),
-				'poster_images'  => [
-					'poster-portrait-src' => $story->get_poster_portrait(),
-				],
+				'poster_images'  => array_filter( $poster_images ),
 				'video_cache'    => $video_cache_enabled,
 			];
 		}

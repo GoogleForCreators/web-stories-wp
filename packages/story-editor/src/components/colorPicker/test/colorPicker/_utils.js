@@ -27,14 +27,6 @@ import theme from '../../../../theme';
 import ColorPicker from '../..';
 import { renderWithTheme } from '../../../../testUtils';
 
-function getResolvingPromise(mock) {
-  return new Promise((resolve) => {
-    mock.mockImplementationOnce(() => {
-      resolve();
-    });
-  });
-}
-
 function arrange(customProps = {}) {
   const onChange = jest.fn();
   const onClose = jest.fn();
@@ -120,4 +112,4 @@ function arrange(customProps = {}) {
   };
 }
 
-export { getResolvingPromise, arrange };
+export { arrange };

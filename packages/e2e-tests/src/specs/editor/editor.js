@@ -36,7 +36,6 @@ describe('Story Editor', () => {
   });
 
   describe('RTL', () => {
-    // eslint-disable-next-line jest/require-hook
     withRTL();
 
     it('should be able to create a blank story on RTL', async () => {
@@ -51,7 +50,6 @@ describe('Story Editor', () => {
   describe('Cross-Origin Isolation', () => {
     // Firefox+Puppeteer has issues with cross-origin isolation resulting in unexpected timeouts.
     // See https://github.com/google/web-stories-wp/pull/7748.
-    // eslint-disable-next-line jest/require-hook
     skipSuiteOnFirefox();
 
     describe('Enabled', () => {

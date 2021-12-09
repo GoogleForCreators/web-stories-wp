@@ -19,7 +19,7 @@
  */
 import { useCallback } from '@web-stories-wp/react';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
-import { useGlobalIsKeyPressed } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -45,15 +45,17 @@ function useSnapping({
       pageHeight,
     })
   );
-  const { activeDropTargetId } = useDropTargets((state) => ({
-    activeDropTargetId: state.state.activeDropTargetId,
-  }));
+  const { activeDropTargetId, isDropTargetingDisabled } = useDropTargets(
+    (state) => ({
+      activeDropTargetId: state.state.activeDropTargetId,
+      isDropTargetingDisabled: state.state.isDropTargetingDisabled,
+    })
+  );
 
   const triggerOnboarding = useUserOnboarding(({ SAFE_ZONE }) => SAFE_ZONE);
 
-  // ⌘ key disables snapping
-  const snapDisabled = useGlobalIsKeyPressed('meta');
-  canSnap = canSnap && !snapDisabled && !activeDropTargetId;
+  // Drop-targeting is disabled with ⌘ key, we also disable snapping in this case.
+  canSnap = canSnap && !isDropTargetingDisabled && !activeDropTargetId;
 
   const handleSnap = useCallback(
     ({ elements }) => {

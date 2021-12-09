@@ -31,7 +31,6 @@ import {
   clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
-// eslint-disable-next-line jest/require-hook
 expect.extend({
   toBeValidAMP,
 });
@@ -201,7 +200,6 @@ if ('true' === process.env.CI) {
 }
 
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
-// eslint-disable-next-line jest/require-hook
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 1000 });
 
 /**

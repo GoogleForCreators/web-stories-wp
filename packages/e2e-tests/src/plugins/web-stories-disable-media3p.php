@@ -16,7 +16,7 @@ namespace Google\Web_Stories\E2E\Media3P;
 
 
 function change_get_editor_settings( array $settings ): array {
-	$settings['config']['showMedia3p'] = false;
+	$settings['showMedia3p'] = false;
 
 	return $settings;
 }

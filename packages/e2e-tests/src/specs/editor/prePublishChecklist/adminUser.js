@@ -44,7 +44,6 @@ const addPages = async (number) => {
 describe('Pre-Publish Checklist : Admin User', () => {
   // Thew window size for Firefox is actually smaller than the viewport,
   // causing the checklist button to be off-screen, thus failing the test.
-  // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
 
   beforeEach(async () => {

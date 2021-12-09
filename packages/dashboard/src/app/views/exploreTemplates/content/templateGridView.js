@@ -43,7 +43,7 @@ import { resolveRoute } from '../../../router';
 import TemplateGridItem, { FOCUS_TEMPLATE_CLASS } from './templateGridItem';
 
 function TemplateGridView({ pageSize, templates, templateActions }) {
-  const { isRTL } = useConfig();
+  const { isRTL, apiCallbacks } = useConfig();
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
@@ -93,10 +93,13 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
         ({ id, centerTargetAction, slug, status, title, postersByPage }) => {
           const isActive = activeGridItemId === id;
           const posterSrc = postersByPage?.[0];
+          const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
           return (
             <TemplateGridItem
               detailLink={resolveRoute(centerTargetAction)}
-              onCreateStory={() => handleUseStory({ id, title })}
+              onCreateStory={
+                canCreateStory ? () => handleUseStory({ id, title }) : null
+              }
               onFocus={() => {
                 setActiveGridItemId(id);
               }}
@@ -116,7 +119,14 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
           );
         }
       ),
-    [templates, activeGridItemId, pageSize.height, handleUseStory, scrollToTop]
+    [
+      templates,
+      activeGridItemId,
+      pageSize.height,
+      handleUseStory,
+      scrollToTop,
+      apiCallbacks,
+    ]
   );
   return (
     <div ref={containerRef}>

@@ -26,10 +26,8 @@ import {
 describe('Pre-Publish Checklist : Contributor User', () => {
   // Thew window size for Firefox is actually smaller than the viewport,
   // causing the checklist button to be off-screen, thus failing the test.
-  // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
 
-  // eslint-disable-next-line jest/require-hook
   withUser('contributor', 'password');
 
   it('should not show messages user does not have permission for anyway', async () => {

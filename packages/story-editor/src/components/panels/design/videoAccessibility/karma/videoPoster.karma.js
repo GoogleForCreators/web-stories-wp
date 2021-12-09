@@ -66,7 +66,7 @@ describe('Video Accessibility Panel', () => {
       await fixture.events.click(vaPanel.posterMenuEdit);
 
       // Expect poster image to have updated ( See MediaUpload component in fixture.js )
-      expect(vaPanel.posterImage.src).toMatch(/^http.+\/media1$/);
+      expect(vaPanel.posterImage.src).toMatch(/^http.+\/saturn.jpg$/);
 
       // Now open menu and click reset
       await fixture.events.click(vaPanel.posterMenuButton);
@@ -101,7 +101,7 @@ describe('Video Accessibility Panel', () => {
       await fixture.events.keyboard.press('Enter');
 
       // Expect poster image to have updated ( See MediaUpload component in fixture.js )
-      expect(vaPanel.posterImage.src).toMatch(/^http.+\/media1$/);
+      expect(vaPanel.posterImage.src).toMatch(/^http.+\/saturn.jpg$/);
 
       // Now open menu and click reset
       await focusOnTitle();

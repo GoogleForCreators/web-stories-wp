@@ -28,7 +28,6 @@ import {
 describe('Inserting Media from Dialog', () => {
   describe('Administrator', () => {
     // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
-    // eslint-disable-next-line jest/require-hook
     skipSuiteOnFirefox();
 
     let uploadedFiles;
@@ -58,14 +57,13 @@ describe('Inserting Media from Dialog', () => {
   });
 
   describe('Contributor User', () => {
-    // eslint-disable-next-line jest/require-hook
     withUser('contributor', 'password');
 
     it('should display permission error dialog', async () => {
       await createNewStory();
       await expect(page).toMatch('Howdy, contributor');
 
-      await expect(page).not.toMatchElement('button', { text: 'Upload' });
+      await expect(page).not.toMatchElement('button[aria-label="Upload"]');
     });
   });
 });

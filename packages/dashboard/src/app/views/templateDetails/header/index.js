@@ -70,18 +70,20 @@ function Header({ onHandleCtaClick, templateTitle }) {
         >
           <Icons.CrossLarge />
         </Button>
-        <Button
-          onClick={onHandleCtaClick}
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
-          aria-label={sprintf(
-            /* translators: %s: template title */
-            __('Use %s template to create new story', 'web-stories'),
-            templateTitle
-          )}
-        >
-          {__('Use template', 'web-stories')}
-        </Button>
+        {onHandleCtaClick && (
+          <Button
+            onClick={onHandleCtaClick}
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.SMALL}
+            aria-label={sprintf(
+              /* translators: %s: template title */
+              __('Use %s template to create new story', 'web-stories'),
+              templateTitle
+            )}
+          >
+            {__('Use template', 'web-stories')}
+          </Button>
+        )}
       </Nav>
     </Layout.Fixed>
   );

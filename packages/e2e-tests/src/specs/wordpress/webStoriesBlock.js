@@ -42,7 +42,6 @@ const EMBED_BLOCK_CONTENT = `
 describe('Web Stories Block', () => {
   // Firefox has issues playing media (MP4 videos) in the story being embedded here.
   // Consider using a different story for testing.
-  // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
 
   let removeErrorMessage;
@@ -118,9 +117,7 @@ describe('Web Stories Block', () => {
   // Disable for https://github.com/google/web-stories-wp/issues/6237
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('AMP validation', () => {
-    // eslint-disable-next-line jest/require-hook
     withDisabledToolbarOnFrontend();
-    // eslint-disable-next-line jest/require-hook
     withPlugin('amp');
 
     it('should produce valid AMP when using the AMP plugin', async () => {

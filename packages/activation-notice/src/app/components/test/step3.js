@@ -44,6 +44,6 @@ describe('Step 3', () => {
   it('should render', () => {
     render();
 
-    expect(screen.queryByText(/Jump into/i)).toBeInTheDocument();
+    expect(screen.getByText(/Jump into/i)).toBeInTheDocument();
   });
 });

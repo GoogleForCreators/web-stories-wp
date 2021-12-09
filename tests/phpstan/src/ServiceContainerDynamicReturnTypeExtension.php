@@ -1,11 +1,19 @@
 <?php
 /**
+ * Copied from szepeviktor/phpstan-wordpress
+ *
+ * @copyright Viktor Szépe
+ * @license   MIT
+ * @link      https://github.com/szepeviktor/phpstan-wordpress
+ */
+
+/**
  * Class ServicesDynamicReturnTypeExtension.
  *
  * @package Google\Web_Stories
  */
 
-namespace PHPStan\WordPress;
+namespace SzepeViktor\PHPStan\WordPress;
 
 use Google\Web_Stories\Plugin;
 use Google\Web_Stories\Infrastructure\Injector;

@@ -48,7 +48,6 @@ describe('Status Check', () => {
   });
 
   describe('Invalid JSON response', () => {
-    // eslint-disable-next-line jest/require-hook
     withPlugin('web-stories-test-plugin-status-check-200-invalid');
 
     it('should display error dialog', async () => {
@@ -58,7 +57,6 @@ describe('Status Check', () => {
   });
 
   describe('403 Forbidden (WAF)', () => {
-    // eslint-disable-next-line jest/require-hook
     withPlugin('web-stories-test-plugin-status-check-403');
 
     it('should display error dialog', async () => {
@@ -68,7 +66,6 @@ describe('Status Check', () => {
   });
 
   describe('500 Internal Server Error', () => {
-    // eslint-disable-next-line jest/require-hook
     withPlugin('web-stories-test-plugin-status-check-500');
 
     it('should display error dialog', async () => {

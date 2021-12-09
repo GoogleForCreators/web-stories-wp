@@ -59,7 +59,6 @@ async function focusOnPublisherLogos(page) {
 
 describe('Publisher Logo', () => {
   // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
-  // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
 
   describe('without SVG support', () => {
@@ -225,7 +224,6 @@ describe('Publisher Logo', () => {
   });
 
   describe('with SVG support', () => {
-    // eslint-disable-next-line jest/require-hook
     withExperimentalFeatures(['enableSVG']);
 
     let uploadedFiles;

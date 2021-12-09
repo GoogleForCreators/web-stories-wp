@@ -99,7 +99,6 @@ async function addTag(name) {
 
 describe('Taxonomies', () => {
   // TODO: Figure out how to scroll to the Taxonomies panel in Firefox so that the tests work.
-  // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
 
   describe('Interaction', () => {
@@ -196,8 +195,6 @@ describe('Taxonomies', () => {
         await page.reload();
         await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-        await goToAndExpandTaxonomyPanel();
-
         // See that added tags persist.
         const tokens2 = await page.evaluate(() =>
           Array.from(
@@ -213,7 +210,6 @@ describe('Taxonomies', () => {
     });
 
     describe('Contributor', () => {
-      // eslint-disable-next-line jest/require-hook
       withUser('contributor', 'password');
 
       it('should be able to manage categories but not add new ones', async () => {
@@ -309,7 +305,6 @@ describe('Taxonomies', () => {
     });
 
     describe('Custom Taxonomy', () => {
-      // eslint-disable-next-line jest/require-hook
       withPlugin('web-stories-test-plugin-taxonomies');
 
       describe('Administrator', () => {
@@ -327,7 +322,6 @@ describe('Taxonomies', () => {
       });
 
       describe('Contributor', () => {
-        // eslint-disable-next-line jest/require-hook
         withUser('contributor', 'password');
 
         it('should see custom taxonomies', async () => {

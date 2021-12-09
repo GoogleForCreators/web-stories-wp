@@ -28,7 +28,6 @@ import {
 
 describe('Handling .mov files', () => {
   // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
-  // eslint-disable-next-line jest/require-hook
   skipSuiteOnFirefox();
 
   let uploadedFiles;
@@ -56,7 +55,7 @@ describe('Handling .mov files', () => {
     it.skip('should insert .mov video from media dialog', async () => {
       await createNewStory();
 
-      await expect(page).toClick('button', { text: 'Upload' });
+      await expect(page).toClick('button[aria-label="Upload"]');
 
       await page.waitForSelector('.media-modal', {
         visible: true,
@@ -84,8 +83,7 @@ describe('Handling .mov files', () => {
   describe('Disabled', () => {
     it('should not list the .mov video in the media dialog', async () => {
       await createNewStory();
-
-      await expect(page).toClick('button', { text: 'Upload' });
+      await expect(page).toClick('button[aria-label="Upload"]');
 
       await page.waitForSelector('.media-modal', {
         visible: true,

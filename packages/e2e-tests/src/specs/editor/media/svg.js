@@ -29,13 +29,12 @@ import {
 const MODAL = '.media-modal';
 
 describe('SVG', () => {
-  // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enableSVG']);
 
   it('should insert an existing SVG from media dialog', async () => {
     await createNewStory();
 
-    await expect(page).toClick('button', { text: 'Upload' });
+    await expect(page).toClick('button[aria-label="Upload"]');
     await expect(page).toMatch('Upload to Story');
     await expect(page).toClick('button', { text: 'Media Library' });
 
@@ -52,7 +51,6 @@ describe('SVG', () => {
 
   describe('Upload', () => {
     // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
-    // eslint-disable-next-line jest/require-hook
     skipSuiteOnFirefox();
 
     let uploadedFiles;

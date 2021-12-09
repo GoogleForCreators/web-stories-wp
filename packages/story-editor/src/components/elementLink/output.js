@@ -39,7 +39,7 @@ function WithLink({ element, children, ...rest }) {
     // eslint-disable-next-line react/jsx-no-target-blank
     <a
       href={urlWithProtocol}
-      data-tooltip-icon={icon}
+      data-tooltip-icon={icon || undefined}
       data-tooltip-text={desc}
       target="_blank"
       rel={rel.join(' ')}
