@@ -28,7 +28,6 @@ import {
   ResourcePropTypes,
 } from '@web-stories-wp/media';
 import {
-  Input,
   Text,
   TextArea,
   THEME_CONSTANTS,
@@ -72,10 +71,6 @@ const MetadataTextContainer = styled.div`
 
 const DateText = styled(Text)`
   margin-bottom: 8px;
-`;
-
-const AssistiveTextInput = styled(Input)`
-  margin: 20px 0 4px;
 `;
 
 const AssistiveTextArea = styled(TextArea)`
@@ -187,24 +182,13 @@ function MediaEditDialog({ resource, onClose }) {
               height
             )}
           </Text>
-
-          {isImage ? (
-            <AssistiveTextInput
-              value={altText}
-              aria-label={imageInputTitle}
-              type="text"
-              placeholder={imageInputTitle}
-              onChange={handleAltTextChange}
-            />
-          ) : (
-            <AssistiveTextArea
-              value={altText}
-              aria-label={videoInputTitle}
-              type="text"
-              placeholder={videoInputTitle}
-              onChange={handleAltTextChange}
-            />
-          )}
+          <AssistiveTextArea
+            value={altText}
+            aria-label={isImage ? imageInputTitle : videoInputTitle}
+            type="text"
+            placeholder={isImage ? imageInputTitle : videoInputTitle}
+            onChange={handleAltTextChange}
+          />
           <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {isImage ? imageDialogDescription : videoDialogDescription}
           </Text>
