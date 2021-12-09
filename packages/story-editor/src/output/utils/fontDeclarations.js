@@ -112,7 +112,6 @@ function FontDeclarations({ pages }) {
               return (
                 <style
                   key={family}
-                  rel="stylesheet"
                   dangerouslySetInnerHTML={{
                     __html: inlineStyle,
                   }}

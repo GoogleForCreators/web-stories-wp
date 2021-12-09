@@ -49,7 +49,7 @@ describe('FontDeclarations', () => {
     ];
 
     const { container } = render(<FontDeclarations pages={pages} />);
-    expect(container).toMatchInlineSnapshot();
+    expect(container).toMatchInlineSnapshot(`<div />`);
   });
 
   it('should return one item for multiple Google fonts', () => {
@@ -102,7 +102,14 @@ describe('FontDeclarations', () => {
     ];
 
     const { container } = render(<FontDeclarations pages={pages} />);
-    expect(container).toMatchInlineSnapshot();
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <link
+          href="https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Aital%401&family=Lato"
+          rel="stylesheet"
+        />
+      </div>
+    `);
   });
 
   it('should only include valid variants', () => {
@@ -124,7 +131,14 @@ describe('FontDeclarations', () => {
     ];
 
     const { container } = render(<FontDeclarations pages={pages} />);
-    expect(container).toMatchInlineSnapshot();
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <link
+          href="https://fonts.googleapis.com/css2?display=swap&family=Architects+Daughter"
+          rel="stylesheet"
+        />
+      </div>
+    `);
   });
 
   it('should fall back to closest variant', () => {
@@ -204,7 +218,14 @@ describe('FontDeclarations', () => {
     ];
 
     const { container } = render(<FontDeclarations pages={pages} />);
-    expect(container).toMatchInlineSnapshot();
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <link
+          href="https://fonts.googleapis.com/css2?display=swap&family=Mukta+Mahee%3Awght%40200%3B800&family=Molle%3Aital%401&family=Abel&family=Alef%3Awght%40700"
+          rel="stylesheet"
+        />
+      </div>
+    `);
   });
 
   it('should add inline stylesheets for custom fonts', () => {
@@ -266,6 +287,23 @@ describe('FontDeclarations', () => {
     ];
 
     const { container } = render(<FontDeclarations pages={pages} />);
-    expect(container).toMatchInlineSnapshot();
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <link
+          href="https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Aital%401&family=Lato"
+          rel="stylesheet"
+        />
+        <style>
+          
+        @font-face {
+          font-family: "Vazir Regular";
+          src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir-Regular.ttf') format('truetype');
+          font-weight: normal;
+          font-display:swap;
+        }
+        
+        </style>
+      </div>
+    `);
   });
 });
