@@ -64,7 +64,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					'permission_callback' => [ $this, 'create_item_permissions_check' ],
 					'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
 				],
-				'schema'      => [ $this, 'get_public_item_schema' ],
+				'schema' => [ $this, 'get_public_item_schema' ],
 			]
 		);
 
@@ -72,7 +72,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 			$this->namespace,
 			'/' . $this->rest_base . '/(?P<id>[\d]+)',
 			[
-				'args'        => [
+				'args'   => [
 					'id' => [
 						'description' => __( 'Unique identifier for the font.', 'web-stories' ),
 						'type'        => 'integer',
@@ -83,7 +83,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					'callback'            => [ $this, 'delete_item' ],
 					'permission_callback' => [ $this, 'delete_item_permissions_check' ],
 				],
-				'schema'      => [ $this, 'get_public_item_schema' ],
+				'schema' => [ $this, 'get_public_item_schema' ],
 			]
 		);
 	}
