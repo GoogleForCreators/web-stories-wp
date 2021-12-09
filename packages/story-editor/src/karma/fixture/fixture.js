@@ -37,8 +37,6 @@ import { DATA_VERSION } from '@web-stories-wp/migration';
 import StoryEditor from '../../storyEditor';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
-import FileProvider from '../../app/file/provider';
-import FileContext from '../../app/file/context';
 import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
@@ -188,11 +186,6 @@ export class Fixture {
     this.apiProviderFixture_ = new APIProviderFixture({ mocks });
     this.stubComponent(APIProvider).callFake(
       this.apiProviderFixture_.Component
-    );
-
-    this.fileProviderFixture_ = new FileProviderFixture();
-    this.stubComponent(FileProvider).callFake(
-      this.fileProviderFixture_.Component
     );
 
     this._layoutStub = this.stubComponent(Layout);
