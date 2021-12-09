@@ -72,6 +72,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   const {
     actions: { getMedia, updateMedia },
   } = useAPI();
+  const { apiCallbacks } = useConfig();
 
   const fetchMedia = useCallback(
     (
@@ -83,9 +84,13 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       } = {},
       callback
     ) => {
+      if (!apiCallbacks?.getMedia) {
+        return null;
+      }
+
       fetchMediaStart({ pageToken: p });
       const trackTiming = getTimeTracker('load_media');
-      getMedia({
+      return getMedia({
         mediaType:
           currentMediaType === LOCAL_MEDIA_TYPE_ALL ? '' : currentMediaType,
         searchTerm: currentSearchTerm,
@@ -111,7 +116,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
           trackTiming();
         });
     },
-    [fetchMediaError, fetchMediaStart, getMedia]
+    [fetchMediaError, fetchMediaStart, getMedia, apiCallbacks]
   );
 
   const { uploadMedia, isUploading, isTranscoding } = useUploadMedia({
