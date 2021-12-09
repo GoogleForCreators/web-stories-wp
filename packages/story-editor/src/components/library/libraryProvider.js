@@ -45,7 +45,9 @@ const LIBRARY_TAB_IDS = new Set(
 
 function LibraryProvider({ children }) {
   const { showMedia3p } = useConfig();
-  const { actions: getMedia } = useAPI();
+  const {
+    actions: { getMedia },
+  } = useAPI();
   const showMedia = Boolean(getMedia); // Do not show media tab if getMedia api callback is not provided.
   const defaultCurrentTabId = showMedia ? MEDIA.id : MEDIA3P.id;
   const [tab, setTab] = useState(defaultCurrentTabId);
