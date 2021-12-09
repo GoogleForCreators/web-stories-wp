@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import { styles, useHighlights } from '../../app/highlights';
-import { useConfig } from '../../app';
+import { useAPI } from '../../app';
 import useLibrary from './useLibrary';
 import { Pane, getTabId } from './panes/shared';
 import {
@@ -41,8 +41,8 @@ function LibraryPanes() {
     tabs: state.data.tabs,
   }));
   const {
-    apiCallbacks: { getMedia },
-  } = useConfig();
+    actions: { getMedia },
+  } = useAPI();
   const showMediaPane = Boolean(getMedia);
 
   const highlighted = useHighlights(({ ...highlighted }) => highlighted);

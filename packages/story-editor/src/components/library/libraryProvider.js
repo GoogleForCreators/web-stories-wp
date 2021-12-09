@@ -28,7 +28,7 @@ import { loadTextSets } from '@web-stories-wp/text-sets';
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import { useHighlights } from '../../app/highlights';
-import { useConfig } from '../../app';
+import { useConfig, useAPI } from '../../app';
 import Context from './context';
 import {
   ELEMS,
@@ -44,10 +44,8 @@ const LIBRARY_TAB_IDS = new Set(
 );
 
 function LibraryProvider({ children }) {
-  const {
-    showMedia3p,
-    apiCallbacks: { getMedia },
-  } = useConfig();
+  const { showMedia3p } = useConfig();
+  const { actions: getMedia } = useAPI();
   const showMedia = Boolean(getMedia); // Do not show media tab if getMedia api callback is not provided.
   const defaultCurrentTabId = showMedia ? MEDIA.id : MEDIA3P.id;
   const [tab, setTab] = useState(defaultCurrentTabId);

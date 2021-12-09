@@ -72,7 +72,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   const {
     actions: { getMedia, updateMedia },
   } = useAPI();
-  const { apiCallbacks } = useConfig();
 
   const fetchMedia = useCallback(
     (
@@ -84,7 +83,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       } = {},
       callback
     ) => {
-      if (!apiCallbacks?.getMedia) {
+      if (!getMedia) {
         return null;
       }
 
@@ -116,7 +115,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
           trackTiming();
         });
     },
-    [fetchMediaError, fetchMediaStart, getMedia, apiCallbacks]
+    [fetchMediaError, fetchMediaStart, getMedia]
   );
 
   const { uploadMedia, isUploading, isTranscoding } = useUploadMedia({
