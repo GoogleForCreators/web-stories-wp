@@ -141,24 +141,17 @@ function useUploadMedia({
         data: resource,
       });
 
-      if (previousResourceId) {
-        updateMediaElement({
-          id: previousResourceId,
-          data: resource,
-        });
-      }
-
       if (onUploadProgress) {
         onUploadProgress({ id: resourceId, resource: resource });
-        if (previousResourceId) {
-          onUploadProgress({ id: previousResourceId, resource: resource });
-        }
       }
     }
   }, [progress, updateMediaElement]);
 
   // Handle *processed* items.
   // Update resources in media library and on canvas.
+  // Caters for both `resource.id` as well as `previousResourceId`,
+  // since after upload to the backend, the resource's temporary uuid
+  // will have been replaced with the permanent ID from the backend.
   useEffect(() => {
     for (const {
       id: itemId,

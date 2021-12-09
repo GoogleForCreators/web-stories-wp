@@ -476,9 +476,10 @@ function useMediaUploadQueue() {
     const progress = state.queue.filter(
       (item) =>
         ![
-          ITEM_STATUS.UPLOADED,
-          ITEM_STATUS.CANCELLED,
           ITEM_STATUS.PENDING,
+          ITEM_STATUS.CANCELLED,
+          ITEM_STATUS.UPLOADED,
+          ITEM_STATUS.FINISHED,
         ].includes(item.state)
     );
 
@@ -531,7 +532,7 @@ function useMediaUploadQueue() {
     const isUploading = state.queue.some(
       (item) =>
         ![
-          ITEM_STATUS.UPLOADED,
+          ITEM_STATUS.FINISHED,
           ITEM_STATUS.CANCELLED,
           ITEM_STATUS.PENDING,
         ].includes(item.state)
