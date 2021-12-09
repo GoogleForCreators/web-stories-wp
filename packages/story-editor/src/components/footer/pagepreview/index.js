@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
@@ -66,13 +66,27 @@ const Page = styled.button`
     border-style: solid;
     border-width: 1px;
     border-radius: 8px;
-    border-color: ${({ isInteractive, isActive, theme }) =>
-      isInteractive
-        ? `${rgba(theme.colors.border.selection, isActive ? 1 : 0.7)}`
-        : isActive
-        ? theme.colors.border.defaultActive
-        : 'transparent'};
+    border-color: ${({ isActive, theme }) =>
+      isActive ? theme.colors.border.defaultActive : 'transparent'};
   }
+  ${({ isInteractive, isActive, theme }) =>
+    isInteractive &&
+    css`
+      &:focus::after {
+        border-color: ${rgba(
+          theme.colors.border.selection,
+          isActive ? 1 : 0.7
+        )};
+      }
+    `}
+
+      &:focus::after {
+        border-color: ${rgba(
+          theme.colors.border.selection,
+          isActive ? 1 : 0.7
+        )};
+      }
+    `}
 `;
 
 const PreviewWrapper = styled.div`

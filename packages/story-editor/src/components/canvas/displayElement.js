@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { memo, useRef, useState } from '@web-stories-wp/react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { useUnits } from '@web-stories-wp/units';
 import { StoryAnimation } from '@web-stories-wp/animation';
@@ -67,9 +67,14 @@ const Wrapper = styled.div.attrs(
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
   ${({ isBackground, theme }) =>
     isBackground &&
-    `border-radius: ${theme.borders.radius.small};
-       overflow: hidden;
-     `}
+    css`
+      border-radius: ${theme.borders.radius.small};
+      overflow: hidden;
+    `}
+
+      border-radius: ${theme.borders.radius.small};
+      overflow: hidden;
+    `}
 `;
 
 const BackgroundOverlay = styled.div`
