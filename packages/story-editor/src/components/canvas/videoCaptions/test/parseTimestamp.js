@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,21 +17,20 @@
 /**
  * Internal dependencies
  */
-import createSolidFromString from './createSolidFromString';
-import createSolid from './createSolid';
+import parseTimestamp from '../parseTimestamp';
 
-function getSolidFromHex(hex) {
-  // We already have a nice parser for most of this, but we need to
-  // parse opacity as the last two hex digits as percent, not 1/256th
+describe('parseTimestamp', () => {
+  it.each([
+    ['00:00:14.330', 14.33],
+    ['00:10:53.220', 653.22],
+  ])(
+    'should parse valid timestamp %s and return %d',
+    (timeStampString, expected) => {
+      expect(parseTimestamp(timeStampString)).toBeCloseTo(expected, 2);
+    }
+  );
 
-  const {
-    color: { r, g, b },
-  } = createSolidFromString(`#${hex.slice(0, 6)}`);
-
-  const opacityDigits = hex.slice(6);
-  const opacity = opacityDigits ? parseInt(opacityDigits, 16) : 100;
-
-  return createSolid(r, g, b, opacity / 100);
-}
-
-export default getSolidFromHex;
+  it('should reject invalid timestamp', () => {
+    expect(parseTimestamp('')).toBeNull();
+  });
+});
