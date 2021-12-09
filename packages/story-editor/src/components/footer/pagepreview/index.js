@@ -44,55 +44,55 @@ import usePerformanceTracking from '../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 
 const Page = styled.button`
-   display: block;
-   position: relative;
-   cursor: ${({ isInteractive }) => (isInteractive ? 'pointer' : 'default')};
-   padding: 0;
-   border: 0;
-   background-color: transparent;
-   height: ${({ height }) => height}px;
-   width: ${({ width }) => width}px;
-   flex: none;
-   outline: 0;
-   &::after {
-     content: '';
-     display: block;
-     position: absolute;
-     left: -4px;
-     right: -4px;
-     top: -4px;
-     bottom: -4px;
-     pointer-events: none;
-     border-style: solid;
-     border-width: 1px;
-     border-radius: 8px;
-     border-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.border.defaultActive : 'transparent'};
-   }
-   ${({ isInteractive, isActive, theme }) =>
+  display: block;
+  position: relative;
+  cursor: ${({ isInteractive }) => (isInteractive ? 'pointer' : 'default')};
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  height: ${({ height }) => height}px;
+  width: ${({ width }) => width}px;
+  flex: none;
+  outline: 0;
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    top: -4px;
+    bottom: -4px;
+    pointer-events: none;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 8px;
+    border-color: ${({ isActive, theme }) =>
+      isActive ? theme.colors.border.defaultActive : 'transparent'};
+  }
+  ${({ isInteractive, isActive, theme }) =>
     isInteractive &&
     css`
-       &:focus::after {
-         border-color: ${rgba(
-      theme.colors.border.selection,
-      isActive ? 1 : 0.7
-    )};
-       }
-     `}
- `;
+      &:focus::after {
+        border-color: ${rgba(
+          theme.colors.border.selection,
+          isActive ? 1 : 0.7
+        )};
+      }
+    `}
+`;
 
 const PreviewWrapper = styled.div`
-   height: 100%;
-   position: relative;
-   overflow: hidden;
-   background-color: white;
-   border-radius: 4px;
-   ${({ background }) => generatePatternStyles(background)}
- `;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 4px;
+  ${({ background }) => generatePatternStyles(background)}
+`;
 
 const Image = styled.img`
-   width: 100%;
- `;
+  width: 100%;
+`;
 
 // PagePreview is used in the editor's Carousel as well as in the Checklist and GridView
 function PagePreview({
@@ -133,7 +133,7 @@ function PagePreview({
       const id = requestIdleCallback(
         () => {
           import(
-             /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
+            /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
           ).then((htmlToImage) => {
             htmlToImage
               .toJpeg(pageNode, { quality: 1 })

@@ -55,38 +55,38 @@ const Wrapper = styled.div.attrs(
       height: `${height}px`,
       transform: `rotate(${rotationAngle}deg)`,
       // Fix for safari overflow bug truncating shapes in page preview
-      overflow: '-webkit-paged-x'
+      overflow: '-webkit-paged-x',
     };
     return previewMode ? { style } : {};
   }
 )`
-   ${({ previewMode }) => !previewMode && elementWithPosition}
-   ${({ previewMode }) => !previewMode && elementWithSize}
+  ${({ previewMode }) => !previewMode && elementWithPosition}
+  ${({ previewMode }) => !previewMode && elementWithSize}
    ${({ previewMode }) => !previewMode && elementWithRotation}
    contain: layout;
-   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
-   ${({ isBackground, theme }) =>
+  transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
+  ${({ isBackground, theme }) =>
     isBackground &&
     css`
-       border-radius: ${theme.borders.radius.small};
-       overflow: hidden;
-     `}
- `;
+      border-radius: ${theme.borders.radius.small};
+      overflow: hidden;
+    `}
+`;
 
 const BackgroundOverlay = styled.div`
-   position: absolute;
-   width: 100%;
-   height: 100%;
-   top: 0;
-   left: 0;
- `;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+`;
 
 const ReplacementContainer = styled.div`
-   transition: opacity 0.25s cubic-bezier(0, 0, 0.54, 1);
-   pointer-events: none;
-   opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
-   height: 100%;
- `;
+  transition: opacity 0.25s cubic-bezier(0, 0, 0.54, 1);
+  pointer-events: none;
+  opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
+  height: 100%;
+`;
 
 function AnimationWrapper({ children, id, isAnimatable }) {
   return isAnimatable ? (
@@ -125,20 +125,20 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
 
   const replacementElement = hasReplacement
     ? {
-      ...element,
-      type: replacement.resource.type,
-      resource: replacement.resource,
-      scale: replacement.scale,
-      focalX: replacement.focalX,
-      focalY: replacement.focalY,
-      // Okay, this is a bit weird, but... the flip and overlay properties are taken from the dragged image
-      // if the drop-target is the background element, but from the original drop-target image
-      // itself if the drop-target is a regular element.
-      //
-      // @see compare with similar logic in `combineElements`
-      flip: isBackground ? replacement.flip : flip,
-      overlay: isBackground ? replacement.overlay : overlay,
-    }
+        ...element,
+        type: replacement.resource.type,
+        resource: replacement.resource,
+        scale: replacement.scale,
+        focalX: replacement.focalX,
+        focalY: replacement.focalY,
+        // Okay, this is a bit weird, but... the flip and overlay properties are taken from the dragged image
+        // if the drop-target is the background element, but from the original drop-target image
+        // itself if the drop-target is a regular element.
+        //
+        // @see compare with similar logic in `combineElements`
+        flip: isBackground ? replacement.flip : flip,
+        overlay: isBackground ? replacement.overlay : overlay,
+      }
     : null;
 
   const { Display } = getDefinitionForType(type);
@@ -195,10 +195,10 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
             ...(shouldDisplayBorder(element)
               ? getBorderPositionCSS({
-                ...getResponsiveBorder(border, previewMode, dataToEditorX),
-                width: `${box.width}px`,
-                height: `${box.height}px`,
-              })
+                  ...getResponsiveBorder(border, previewMode, dataToEditorX),
+                  width: `${box.width}px`,
+                  height: `${box.height}px`,
+                })
               : null),
           }}
           previewMode={previewMode}
