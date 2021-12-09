@@ -628,7 +628,7 @@ function RightClickMenuProvider({ children }) {
 
           trackEvent('context_menu_action', {
             name: 'undo_clear_styles',
-            elements: [selectedElements.map((element) => element.type)],
+            elements: selectedElements.map((element) => element.type),
             hasBackgroundElement: selectedElements.some(
               (element) => element.isBackground
             ),
@@ -639,7 +639,7 @@ function RightClickMenuProvider({ children }) {
 
       trackEvent('context_menu_action', {
         name: 'clear_styles',
-        elements: [selectedElements.map((element) => element.type)],
+        elements: selectedElements.map((element) => element.type),
         hasBackgroundElement: selectedElements.some(
           (element) => element.isBackground
         ),
