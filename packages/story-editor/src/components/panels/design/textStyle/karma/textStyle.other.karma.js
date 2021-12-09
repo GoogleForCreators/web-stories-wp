@@ -162,6 +162,8 @@ describe('Text Style Panel', () => {
         expect(frameSplits[1].trim()).toBe('0');
         expect(frameStyle.padding).toContain('px');
       });
+
+      await fixture.snapshot('Applied padding and line-height');
     });
   });
 
