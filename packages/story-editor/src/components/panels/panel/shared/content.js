@@ -27,7 +27,7 @@ import { useContext } from '@web-stories-wp/react';
 import panelContext from '../context';
 
 const Container = styled.div`
-  padding: ${({ padding }) => padding || '8px 16px 8px'};
+  padding: ${({ padding }) => padding || '8px 12px 8px'};
   overflow: auto;
   background-color: ${({ isSecondary, theme }) =>
     isSecondary ? theme.colors.interactiveBg.secondaryNormal : 'transparent'};
