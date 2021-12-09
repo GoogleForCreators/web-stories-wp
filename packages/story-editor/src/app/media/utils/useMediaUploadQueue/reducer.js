@@ -63,14 +63,16 @@ export function addItem(
   }
 ) {
   const id = uuidv4();
+
+  if (!resource.id) {
+    resource.id = uuidv4();
+  }
+
   const newItem = {
     id,
     file,
     state: ITEM_STATUS.PENDING,
-    resource: {
-      ...resource,
-      id,
-    },
+    resource,
     onUploadStart,
     onUploadProgress,
     onUploadError,
@@ -139,6 +141,7 @@ export function finishUploading(state, { payload: { id, resource } }) {
         ? {
             ...item,
             resource,
+            previousResourceId: item.resource.id,
             posterFile: null,
             originalResourceId: null,
             state: ITEM_STATUS.UPLOADED,
@@ -358,10 +361,35 @@ export function replacePlaceholderResource(
             ...item,
             resource: {
               ...resource,
-              id,
+              // Keep the existing resource's ID (which at this point is a random uuid)
+              // instead of overriding it with another random uuid.
+              id: item.resource.id,
               isPlaceholder: false,
             },
             posterFile,
+          }
+        : item
+    ),
+  };
+}
+
+/**
+ * Mark an item upload as fully finished.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @return {Object} New state
+ */
+export function finishItem(state, { payload: { id } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            state: ITEM_STATUS.FINISHED,
           }
         : item
     ),

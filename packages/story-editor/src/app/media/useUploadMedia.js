@@ -65,10 +65,11 @@ function useUploadMedia({
       progress,
       uploaded,
       failures,
-      isResourceProcessing,
+      finished,
+      isNewResourceProcessing,
       isCurrentResourceProcessing,
-      isResourceTranscoding,
-      isResourceMuting,
+      isNewResourceTranscoding,
+      isNewResourceMuting,
       isResourceTrimming,
       isCurrentResourceUploading,
       isCurrentResourceTranscoding,
@@ -76,7 +77,7 @@ function useUploadMedia({
       isCurrentResourceTrimming,
       canTranscodeResource,
     },
-    actions: { addItem, removeItem },
+    actions: { addItem, removeItem, finishItem },
   } = useMediaUploadQueue();
   const { isTranscodingEnabled, canTranscodeFile, isFileTooLarge } =
     useFFmpeg();
@@ -128,49 +129,79 @@ function useUploadMedia({
 
   // Update *existing* items in the media library and on canvas.
   useEffect(() => {
-    for (const { id, onUploadProgress, resource } of progress) {
+    for (const { onUploadProgress, resource } of progress) {
+      const { id: resourceId } = resource;
+
       if (!resource) {
         continue;
       }
 
       updateMediaElement({
-        id,
+        id: resourceId,
         data: resource,
       });
 
       if (onUploadProgress) {
-        onUploadProgress({ id, resource: resource });
+        onUploadProgress({ id: resourceId, resource: resource });
       }
     }
   }, [progress, updateMediaElement]);
 
   // Handle *processed* items.
   // Update resources in media library and on canvas.
+  // Caters for both `resource.id` as well as `previousResourceId`,
+  // since after upload to the backend, the resource's temporary uuid
+  // will have been replaced with the permanent ID from the backend.
   useEffect(() => {
-    for (const { id, resource, onUploadSuccess } of uploaded) {
+    for (const {
+      id: itemId,
+      resource,
+      onUploadSuccess,
+      previousResourceId,
+    } of uploaded) {
+      const { id: resourceId } = resource;
       if (!resource) {
         continue;
       }
 
-      updateMediaElement({ id, data: resource });
-
-      if (onUploadSuccess) {
-        onUploadSuccess({ id, resource: resource });
+      updateMediaElement({ id: resourceId, data: resource });
+      if (previousResourceId) {
+        updateMediaElement({ id: previousResourceId, data: resource });
       }
 
+      if (onUploadSuccess) {
+        onUploadSuccess({ id: resourceId, resource: resource });
+        if (previousResourceId) {
+          onUploadSuccess({ id: previousResourceId, resource: resource });
+        }
+      }
+
+      finishItem({ id: itemId });
+    }
+  }, [uploaded, updateMediaElement, finishItem]);
+
+  // Handle *finished* items.
+  // At this point, uploaded resources have been updated and rendered everywhere,
+  // and no further action is required.
+  // It is safe to remove them from the queue now.
+  useEffect(() => {
+    for (const { id } of finished) {
       removeItem({ id });
     }
-  }, [uploaded, updateMediaElement, removeItem]);
+  }, [finished, removeItem]);
 
   // Handle *failed* items.
   // Remove resources from media library and canvas.
   useEffect(() => {
-    for (const { id, onUploadError, error, resource } of failures) {
+    for (const { id: itemId, onUploadError, error, resource } of failures) {
+      const { id: resourceId } = resource;
+
       if (onUploadError) {
-        onUploadError({ id });
+        onUploadError({ id: resourceId });
       }
-      deleteMediaElement({ id });
-      removeItem({ id });
+
+      deleteMediaElement({ id: resourceId });
+      removeItem({ id: itemId });
 
       const thumbnailSrc =
         resource && ['video', 'gif'].includes(resource.type)
@@ -263,6 +294,7 @@ function useUploadMedia({
             posterFile = newPosterFile;
             resource = newResource;
           }
+
           addItem({
             file,
             resource,
@@ -293,10 +325,10 @@ function useUploadMedia({
     uploadMedia,
     isUploading,
     isTranscoding,
-    isResourceProcessing,
+    isNewResourceProcessing,
     isCurrentResourceProcessing,
-    isResourceTranscoding,
-    isResourceMuting,
+    isNewResourceTranscoding,
+    isNewResourceMuting,
     isResourceTrimming,
     isCurrentResourceUploading,
     isCurrentResourceTranscoding,

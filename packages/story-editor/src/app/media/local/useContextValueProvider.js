@@ -117,10 +117,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     uploadMedia,
     isUploading,
     isTranscoding,
-    isResourceProcessing,
+    isNewResourceProcessing,
     isCurrentResourceProcessing,
-    isResourceTranscoding,
-    isResourceMuting,
+    isNewResourceTranscoding,
+    isNewResourceMuting,
     isResourceTrimming,
     isCurrentResourceUploading,
     isCurrentResourceTranscoding,
@@ -215,7 +215,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
           return;
         }
         setBaseColorProcessing({ id });
-        await updateBaseColor({ resource });
+        await updateBaseColor(resource);
         removeBaseColorProcessing({ id });
       })();
     },
@@ -224,6 +224,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const postProcessingResource = useCallback(
     (resource) => {
+      if (!resource) {
+        return;
+      }
+
       const { type, isMuted, baseColor, src, id, posterId, mimeType, poster } =
         resource;
 
@@ -279,10 +283,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       ...reducerState,
       isUploading: isUploading || isGeneratingPosterImages,
       isTranscoding,
-      isResourceProcessing,
+      isNewResourceProcessing,
       isCurrentResourceProcessing,
-      isResourceTranscoding,
-      isResourceMuting,
+      isNewResourceTranscoding,
+      isNewResourceMuting,
       isResourceTrimming,
       isCurrentResourceUploading,
       isCurrentResourceTranscoding,

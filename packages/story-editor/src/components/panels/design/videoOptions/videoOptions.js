@@ -90,15 +90,15 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const {
     muteExistingVideo,
     isResourceTrimming,
-    isResourceMuting,
+    isNewResourceMuting,
     canTranscodeResource,
   } = useLocalMedia(
     ({
-      state: { canTranscodeResource, isResourceMuting, isResourceTrimming },
+      state: { canTranscodeResource, isNewResourceMuting, isResourceTrimming },
       actions: { muteExistingVideo },
     }) => ({
       canTranscodeResource,
-      isResourceMuting,
+      isNewResourceMuting,
       isResourceTrimming,
       muteExistingVideo,
     })
@@ -106,7 +106,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const resource = getCommonValue(selectedElements, 'resource');
   const { isMuted, id: resourceId = 0 } = resource;
   const isTrimming = isResourceTrimming(resourceId);
-  const isMuting = isResourceMuting(resourceId);
+  const isMuting = isNewResourceMuting(resourceId);
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 

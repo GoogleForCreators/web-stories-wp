@@ -107,20 +107,20 @@ const BulkVideoOptimization = () => {
 
   const {
     optimizeVideo,
-    isResourceTranscoding,
+    isNewResourceTranscoding,
     isCurrentResourceTranscoding,
     canTranscodeResource,
   } = useLocalMedia(
     ({
       actions: { optimizeVideo },
       state: {
-        isResourceTranscoding,
+        isNewResourceTranscoding,
         canTranscodeResource,
         isCurrentResourceTranscoding,
       },
     }) => ({
       optimizeVideo,
-      isResourceTranscoding,
+      isNewResourceTranscoding,
       canTranscodeResource,
       isCurrentResourceTranscoding,
     })
@@ -162,7 +162,7 @@ const BulkVideoOptimization = () => {
     // only attempt to optimize videos that are not currently being transcoded
     const optimizingResources = unoptimizedVideos.filter(
       ({ resource }) =>
-        !isResourceTranscoding(resource?.id) &&
+        !isNewResourceTranscoding(resource?.id) &&
         !isCurrentResourceTranscoding(resource?.id)
     );
     return new Promise((resolve) => {
@@ -174,7 +174,7 @@ const BulkVideoOptimization = () => {
         .then(resolve);
     });
   }, [
-    isResourceTranscoding,
+    isNewResourceTranscoding,
     isCurrentResourceTranscoding,
     processVideoElement,
     unoptimizedVideos,
@@ -207,13 +207,13 @@ const BulkVideoOptimization = () => {
       currentlyUploading.length > 0 ||
       unoptimizedVideos.some(
         (video) =>
-          isResourceTranscoding(video.resource.id) ||
+          isNewResourceTranscoding(video.resource.id) ||
           isCurrentResourceTranscoding(video.resource.id)
       ),
     [
       currentlyUploading,
       unoptimizedVideos,
-      isResourceTranscoding,
+      isNewResourceTranscoding,
       isCurrentResourceTranscoding,
     ]
   );
@@ -231,7 +231,7 @@ const BulkVideoOptimization = () => {
       currentlyUploading.length +
       unoptimizedVideos.filter(
         (video) =>
-          isResourceTranscoding(video.resource.id) ||
+          isNewResourceTranscoding(video.resource.id) ||
           isCurrentResourceTranscoding(video.resource.id)
       ).length;
     optimizeButtonCopy = sprintf(
@@ -274,7 +274,7 @@ const BulkVideoOptimization = () => {
             key={element.resource.id}
             onClick={handleClickThumbnail(element)}
             isLoading={
-              isResourceTranscoding(element.resource.id) ||
+              isNewResourceTranscoding(element.resource.id) ||
               isCurrentResourceTranscoding(element.resource.id)
             }
             type={THUMBNAIL_TYPES.VIDEO}
@@ -286,7 +286,7 @@ const BulkVideoOptimization = () => {
               <Tooltip
                 title={
                   state[element.resource.id] === actionTypes.uploading ||
-                  isResourceTranscoding(element.resource.id) ||
+                  isNewResourceTranscoding(element.resource.id) ||
                   isCurrentResourceTranscoding(element.resource.id)
                     ? __('Video optimization in progress', 'web-stories')
                     : __('Optimize', 'web-stories')

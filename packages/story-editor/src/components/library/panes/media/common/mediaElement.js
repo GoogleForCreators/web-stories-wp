@@ -27,9 +27,9 @@ import {
   useRef,
 } from '@web-stories-wp/react';
 import { rgba } from 'polished';
-import { isBlobURL } from '@web-stories-wp/media';
 import { __ } from '@web-stories-wp/i18n';
 import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -87,11 +87,11 @@ function Element({
     baseColor,
   } = resource;
 
-  const { isCurrentResourceProcessing } = useLocalMedia(
-    ({ state: { isCurrentResourceProcessing } }) => ({
-      isCurrentResourceProcessing,
-    })
-  );
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => ({
+      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+      isCurrentResourceUploading: state.isCurrentResourceUploading,
+    }));
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -228,8 +228,8 @@ function Element({
         />
         {attribution}
         {(!src ||
-          isBlobURL(src) ||
-          isCurrentResourceProcessing(resourceId)) && (
+          isCurrentResourceProcessing(resourceId) ||
+          isCurrentResourceUploading(resourceId)) && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (

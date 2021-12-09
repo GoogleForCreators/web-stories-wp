@@ -179,7 +179,8 @@ function useProcessMedia({
    */
   const trimExistingVideo = useCallback(
     ({ resource: oldResource, canvasResourceId, start, end }) => {
-      const { id: resourceId, src: url, mimeType, poster } = oldResource;
+      const { id: resourceId, ...oldResourceWithoutId } = oldResource;
+      const { src: url, mimeType, poster, isMuted, isOptimized } = oldResource;
 
       const trimData = {
         original: resourceId,
@@ -232,14 +233,15 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: oldResource.id,
-            web_stories_media_source: oldResource?.isOptimized
+            original_id: resourceId,
+            web_stories_is_muted: isMuted,
+            web_stories_media_source: isOptimized
               ? 'video-optimization'
               : 'editor',
           },
           trimData,
           resource: {
-            ...oldResource,
+            ...oldResourceWithoutId,
             trimData,
           },
           originalResourceId: canvasResourceId,
@@ -263,7 +265,8 @@ function useProcessMedia({
    */
   const muteExistingVideo = useCallback(
     ({ resource: oldResource }) => {
-      const { id: resourceId, src: url, mimeType, poster } = oldResource;
+      const { id: resourceId, ...oldResourceWithoutId } = oldResource;
+      const { src: url, mimeType, poster, isOptimized } = oldResource;
 
       const onUploadError = () => {
         updateExistingElements(resourceId, {
@@ -315,17 +318,17 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: oldResource.id,
-            web_stories_media_source: oldResource?.isOptimized
+            original_id: resourceId,
+            web_stories_media_source: isOptimized
               ? 'video-optimization'
               : 'editor',
           },
           muteVideo: true,
           resource: {
-            ...oldResource,
+            ...oldResourceWithoutId,
             isMuted: true,
           },
-          originalResourceId: oldResource.id,
+          originalResourceId: resourceId,
           posterFile,
         });
       })();
@@ -382,9 +385,9 @@ function useProcessMedia({
           onUploadSuccess,
           onUploadProgress,
           additionalData: {
-            original_id: oldResource.id,
+            original_id: resourceId,
           },
-          originalResourceId: oldResource.id,
+          originalResourceId: resourceId,
         });
       };
       return process();
