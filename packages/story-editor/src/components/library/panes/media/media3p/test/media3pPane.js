@@ -25,6 +25,7 @@ import { fireEvent, screen } from '@testing-library/react';
  */
 import { renderWithTheme } from '../../../../../../testUtils';
 import useLibrary from '../../../../useLibrary';
+import useConfig from '../../../../../../app/config/useConfig';
 import useMedia from '../../../../../../app/media/useMedia';
 import useLocalMedia from '../../../../../../app/media/local/useLocalMedia';
 import useMedia3pApi from '../../../../../../app/media/media3p/api/useMedia3pApi';
@@ -39,6 +40,7 @@ ProviderAttribution.propTypes = {
 };
 
 jest.mock('../../../../useLibrary');
+jest.mock('../../../../../../app/config/useConfig');
 jest.mock('../../../../../../app/media/useMedia');
 jest.mock('../../../../../../app/media/local/useLocalMedia');
 jest.mock('../../../../../../app/media/media3p/api/useMedia3pApi');
@@ -157,6 +159,11 @@ describe('Media3pPane', () => {
   let useMediaResult;
 
   beforeAll(() => {
+    useConfig.mockImplementation(() => ({
+      capabilities: {
+        hasUploadMediaAction: true,
+      },
+    }));
     useLibrary.mockImplementation((selector) =>
       selector({
         actions: {
