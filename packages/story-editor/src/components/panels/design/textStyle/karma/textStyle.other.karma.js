@@ -127,6 +127,34 @@ describe('Text Style Panel', () => {
     });
   });
 
+  describe('Line-height & Padding', () => {
+    beforeEach(async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+    });
+
+    fit('should display padding and line-height correctly', async () => {
+      const { padding, lineHeight } =
+        fixture.editor.inspector.designPanel.textStyle;
+      await fixture.events.focus(padding);
+      await fixture.events.keyboard.type('10');
+
+      await fixture.events.focus(lineHeight);
+      await fixture.events.keyboard.type('4');
+      await fixture.events.keyboard.press('tab');
+
+      await waitFor(() => {
+        const texts = fixture.screen.getAllByText('Fill in some text');
+        // Display layer.
+        expect(texts[0]).toHaveStyle('margin', '-10.0083px 0px');
+        expect(texts[0]).toHaveStyle('padding', '4.36893px');
+
+        // Frame layer.
+        expect(texts[1]).toHaveStyle('margin', '-10.0083px 0px');
+        expect(texts[1]).toHaveStyle('padding', '4.36893px');
+      });
+    });
+  });
+
   describe('Font controls', () => {
     beforeEach(async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
