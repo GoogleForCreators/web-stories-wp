@@ -24,9 +24,10 @@ import {
   BUTTON_TYPES,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
-// @todo Replace?
-import { isValidUrl } from '@web-stories-wp/story-editor/src/utils/url';
 import styled from 'styled-components';
+// @todo Replace.
+import { isValidUrl } from '@web-stories-wp/story-editor/src/utils/url';
+import getFontMetricsFromUrl from '@web-stories-wp/fonts/src/utils/getFontMetricsFromUrl';
 
 /**
  * Internal dependencies
@@ -87,11 +88,24 @@ function CustomFontsSettings() {
     setInputError(TEXT.INPUT_ERROR);
   }, []);
 
-  const handleOnSave = useCallback(() => {
+  const handleOnSave = useCallback(async () => {
     if (canSave) {
-      // @todo Head fetch + display message + add font metrics.
+      try {
+        await fetch(fontUrl, {
+          method: 'HEAD',
+        });
+      } catch (err) {
+        setInputError(
+          __('Please ensure correct CORS settings (TODO!)', 'web-stories')
+        );
+      }
+      try {
+        const fontMetrics = getFontMetricsFromUrl(fontUrl);
+      } catch (err) {
+        setInputError(__('Getting font data failed, please ensure the URL points to a font file', 'web-stories'));
+      }
     }
-  }, [canSave]);
+  }, [canSave, fontUrl]);
 
   const handleOnKeyDown = useCallback(
     (e) => {
