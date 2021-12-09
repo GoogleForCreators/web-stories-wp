@@ -41,6 +41,7 @@ import ArchiveSettings from './archive';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Wrapper, Main } from './components';
 import useEditorSettings from './useEditorSettings';
+import CustomFontsSettings from './customFonts';
 
 function EditorSettings() {
   const {
@@ -321,6 +322,7 @@ function EditorSettings() {
                 />
               </>
             )}
+            <CustomFontsSettings />
             <TelemetrySettings
               disabled={disableOptedIn}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}
