@@ -81,7 +81,7 @@ function useDetectBaseColor({ updateMediaElement }) {
   );
 
   const updateBaseColor = useCallback(
-    async ({ resource }) => {
+    async (resource) => {
       const { type, poster } = resource;
       const imageSrc =
         type === 'image' ? getSmallestUrlForWidth(0, resource) : poster;
