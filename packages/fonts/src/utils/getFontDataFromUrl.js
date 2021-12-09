@@ -42,29 +42,32 @@ import { load } from 'opentype.js';
  * Returns font metrics for a given public font URL.
  *
  * @param {string} fontURL Public font URL.
- * @return {Promise<FontMetrics>} Font metrics.
+ * @return {Object} Font data, including metrics, name.
  */
-async function getFontMetricsFromUrl(fontURL) {
+async function getFontDataFromUrl(fontURL) {
   const fontInfo = await load(fontURL);
   console.log(fontInfo);
 
   return {
-    upm: fontInfo.unitsPerEm,
-    asc: fontInfo.ascender,
-    des: fontInfo.descender,
-    tAsc: fontInfo.tables.os2.sTypoAscender,
-    tDes: fontInfo.tables.os2.sTypoDescender,
-    tLGap: fontInfo.tables.os2.sTypoLineGap,
-    wAsc: fontInfo.tables.os2.usWinAscent,
-    wDes: fontInfo.tables.os2.usWinDescent,
-    xH: fontInfo.tables.os2.sxHeight,
-    capH: fontInfo.tables.os2.sCapHeight,
-    yMin: fontInfo.tables.head.yMin,
-    yMax: fontInfo.tables.head.yMax,
-    hAsc: fontInfo.tables.hhea.ascender,
-    hDes: fontInfo.tables.hhea.descender,
-    lGap: fontInfo.tables.hhea.lineGap,
+    name: fontInfo.names.fullName,
+    metrics: {
+      upm: fontInfo.unitsPerEm,
+      asc: fontInfo.ascender,
+      des: fontInfo.descender,
+      tAsc: fontInfo.tables.os2.sTypoAscender,
+      tDes: fontInfo.tables.os2.sTypoDescender,
+      tLGap: fontInfo.tables.os2.sTypoLineGap,
+      wAsc: fontInfo.tables.os2.usWinAscent,
+      wDes: fontInfo.tables.os2.usWinDescent,
+      xH: fontInfo.tables.os2.sxHeight,
+      capH: fontInfo.tables.os2.sCapHeight,
+      yMin: fontInfo.tables.head.yMin,
+      yMax: fontInfo.tables.head.yMax,
+      hAsc: fontInfo.tables.hhea.ascender,
+      hDes: fontInfo.tables.hhea.descender,
+      lGap: fontInfo.tables.hhea.lineGap,
+    },
   };
 }
 
-export default getFontMetricsFromUrl;
+export default getFontDataFromUrl;

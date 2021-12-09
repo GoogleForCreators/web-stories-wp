@@ -25,9 +25,9 @@ import {
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
+import getFontDataFromUrl from '@web-stories-wp/fonts/src/utils/getFontDataFromUrl';
 // @todo Replace.
 import { isValidUrl } from '@web-stories-wp/story-editor/src/utils/url';
-import getFontMetricsFromUrl from '@web-stories-wp/fonts/src/utils/getFontMetricsFromUrl';
 
 /**
  * Internal dependencies
@@ -73,6 +73,9 @@ const InputWrapper = styled.div`
 function CustomFontsSettings() {
   const [fontUrl, setFontUrl] = useState('');
   const [inputError, setInputError] = useState('');
+
+  // @todo This would come from the API instead.
+  const [addedFonts, setAddedFonts] = useState([]);
   const canSave = !inputError;
 
   const handleUpdateFontUrl = useCallback((event) => {
@@ -100,12 +103,23 @@ function CustomFontsSettings() {
         );
       }
       try {
-        const fontMetrics = getFontMetricsFromUrl(fontUrl);
+        const fontData = getFontDataFromUrl(fontUrl);
+        if (!fontData.name) {
+          setInputError(__('Something went wrong', 'web-stories'));
+        } else {
+          setAddedFonts([{ name: fontData.name, url: fontUrl }, ...addedFonts]);
+          setFontUrl('');
+        }
       } catch (err) {
-        setInputError(__('Getting font data failed, please ensure the URL points to a font file', 'web-stories'));
+        setInputError(
+          __(
+            'Getting font data failed, please ensure the URL points to a font file',
+            'web-stories'
+          )
+        );
       }
     }
-  }, [canSave, fontUrl]);
+  }, [addedFonts, canSave, fontUrl]);
 
   const handleOnKeyDown = useCallback(
     (e) => {
