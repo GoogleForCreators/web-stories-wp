@@ -78,7 +78,7 @@ describe('paginatedMediaGallery', () => {
       />
     );
 
-    expect(screen.queryByText(/Powered by/)).toBeInTheDocument();
+    expect(screen.getByText(/Powered by/)).toBeInTheDocument();
     expect(screen.queryByTestId('loading-pill')).not.toBeInTheDocument();
   });
 
@@ -95,7 +95,7 @@ describe('paginatedMediaGallery', () => {
       />
     );
 
-    expect(screen.queryByText(/Powered by/)).toBeInTheDocument();
+    expect(screen.getByText(/Powered by/)).toBeInTheDocument();
     expect(screen.queryByTestId('loading-pill')).not.toBeInTheDocument();
 
     // The loading indicator only appears (and thus the attribution disappears)
@@ -103,11 +103,12 @@ describe('paginatedMediaGallery', () => {
     await waitFor(
       () => {
         expect(screen.queryByText(/Powered by/)).not.toBeInTheDocument();
-        expect(screen.queryByText(/Powered by/)).not.toBeInTheDocument();
       },
       {
         timeout: 1000,
       }
     );
+
+    expect(screen.queryByText(/Powered by/)).not.toBeInTheDocument();
   });
 });

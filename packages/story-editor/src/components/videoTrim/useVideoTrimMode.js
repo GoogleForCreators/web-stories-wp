@@ -18,7 +18,12 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useMemo,
+  useState,
+  useEffect,
+} from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { getMsFromHMS } from '@web-stories-wp/media';
 
@@ -45,16 +50,57 @@ function useVideoTrimMode() {
   const { selectedElement } = useStory(({ state: { selectedElements } }) => ({
     selectedElement: selectedElements.length === 1 ? selectedElements[0] : null,
   }));
+
   const {
     actions: { getMediaById },
   } = useAPI();
   const [videoData, setVideoData] = useState(null);
-
+  
   const { isCurrentResourceUploading } = useLocalMedia(
     ({ state: { isCurrentResourceUploading } }) => ({
       isCurrentResourceUploading,
     })
   );
+
+  const getVideoData = useCallback(() => {
+    const { resource } = selectedElement;
+    const { trimData } = resource;
+
+    const defaultVideoData = {
+      element: selectedElement,
+      resource,
+      start: 0,
+      end: null,
+    };
+
+    if (trimData?.original) {
+      // First clear any existing data
+      setVideoData(null);
+      // Load correct video resource
+      getMediaById(trimData.original)
+        .then(
+          // If exists, use as resource with offsets
+          (originalResource) => ({
+            element: selectedElement,
+            resource: originalResource,
+            start: getMsFromHMS(trimData.start),
+            end: getMsFromHMS(trimData.end),
+          }),
+          // If load fails, pretend there's no original
+          () => defaultVideoData
+        )
+        // Regardless, set resulting data as video data
+        .then((data) => setVideoData(data));
+    } else {
+      setVideoData(defaultVideoData);
+    }
+  }, [getMediaById, selectedElement]);
+
+  useEffect(() => {
+    if (selectedElement?.resource?.trimData) {
+      getVideoData();
+    }
+  }, [selectedElement, getVideoData]);
 
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {
@@ -66,37 +112,7 @@ function useVideoTrimMode() {
         showOverflow: false,
       });
 
-      const { resource } = selectedElement;
-      const { trimData } = resource;
-
-      const defaultVideoData = {
-        element: selectedElement,
-        resource,
-        start: 0,
-        end: null,
-      };
-
-      if (trimData?.original) {
-        // First clear any existing data
-        setVideoData(null);
-        // Load correct video resource
-        getMediaById(trimData.original)
-          .then(
-            // If exists, use as resource with offsets
-            (originalResource) => ({
-              element: selectedElement,
-              resource: originalResource,
-              start: getMsFromHMS(trimData.start),
-              end: getMsFromHMS(trimData.end),
-            }),
-            // If load fails, pretend there's no original
-            () => defaultVideoData
-          )
-          // Regardless, set resulting data as video data
-          .then((data) => setVideoData(data));
-      } else {
-        setVideoData(defaultVideoData);
-      }
+      getVideoData();
     }
     trackEvent('video_trim_mode_toggled', {
       status: isEditing ? 'closed' : 'open',
@@ -106,7 +122,7 @@ function useVideoTrimMode() {
     clearEditing,
     setEditingElementWithState,
     selectedElement,
-    getMediaById,
+    getVideoData,
   ]);
 
   const { isTranscodingEnabled } = useFFmpeg();

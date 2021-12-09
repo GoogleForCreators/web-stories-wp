@@ -28,6 +28,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  */
 function createResource({
   baseColor,
+  blurHash,
   type,
   mimeType,
   creationDate,
@@ -52,6 +53,7 @@ function createResource({
 }) {
   return {
     baseColor,
+    blurHash,
     type: type || getTypeFromMime(mimeType),
     mimeType,
     creationDate,

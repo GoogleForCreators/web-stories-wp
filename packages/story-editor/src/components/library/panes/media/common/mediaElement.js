@@ -29,7 +29,7 @@ import {
 import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
 import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
-
+import { Blurhash } from 'react-blurhash';
 /**
  * Internal dependencies
  */
@@ -66,6 +66,12 @@ const InnerContainer = styled.div`
   }
 `;
 
+const BlurhashContainer = styled(Blurhash)`
+  position: absolute !important;
+  top: 0;
+  left: 0;
+`;
+
 function Element({
   index,
   resource,
@@ -85,6 +91,7 @@ function Element({
     alt,
     isMuted,
     baseColor,
+    blurHash,
   } = resource;
 
   const { isCurrentResourceProcessing, isCurrentResourceUploading } =
@@ -157,9 +164,12 @@ function Element({
     return resetHoverTime;
   }, [isMenuOpen, active, type, src, hoverTimer, setHoverTimer, activeRef]);
 
-  const onClick = (thumbnailUrl) => () => {
-    onInsert(resource, thumbnailUrl);
-  };
+  const onClick = useCallback(
+    (thumbnailUrl) => () => {
+      onInsert(resource, thumbnailUrl);
+    },
+    [onInsert, resource]
+  );
 
   const attribution = active &&
     resource.attribution?.author?.displayName &&
@@ -174,7 +184,7 @@ function Element({
 
   useRovingTabIndex({ ref });
 
-  const onLoad = () => setLoaded(true);
+  const onLoad = useCallback(() => setLoaded(true), []);
 
   const handleKeyDown = useCallback(
     ({ key }) => {
@@ -227,6 +237,14 @@ function Element({
           active={active}
         />
         {attribution}
+        {!isLoaded && blurHash && (
+          <BlurhashContainer
+            hash={blurHash}
+            width={width}
+            height={height}
+            punch={1}
+          />
+        )}
         {(!src ||
           isCurrentResourceProcessing(resourceId) ||
           isCurrentResourceUploading(resourceId)) && (

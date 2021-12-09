@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useEffect, useRef } from '@web-stories-wp/react';
+import { useEffect, useRef, memo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import {
   getSmallestUrlForWidth,
@@ -30,6 +30,7 @@ import {
   THEME_CONSTANTS,
   noop,
 } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -109,11 +110,35 @@ function InnerElement({
   isMuted,
 }) {
   const newVideoPosterRef = useRef(null);
+  // Track if we have already set the dragging resource.
+  const hasSetResourceTracker = useRef(null);
 
-  const {
-    state: { draggingResource },
-    actions: { handleDrag, handleDrop, setDraggingResource },
-  } = useDropTargets();
+  // Note: This `useDropTargets` is purposefully separated from the one below since it
+  // uses a custom function for checking for equality and is meant for `handleDrag` and `handleDrop` only.
+  const { handleDrag, handleDrop } = useDropTargets(
+    ({ actions: { handleDrag, handleDrop } }) => ({
+      handleDrag,
+      handleDrop,
+    }),
+    () => {
+      // If we're dragging this element, always update the actions.
+      if (hasSetResourceTracker.current) {
+        return false;
+        // If we're rendering the first time, init `handleDrag` and `handleDrop`.
+      } else if (hasSetResourceTracker.current === null) {
+        hasSetResourceTracker.current = false;
+        return false;
+      }
+      // Otherwise ignore the changes in the actions.
+      return true;
+    }
+  );
+
+  const { setDraggingResource } = useDropTargets(
+    ({ actions: { setDraggingResource } }) => ({
+      setDraggingResource,
+    })
+  );
 
   useEffect(() => {
     // assign display poster for videos
@@ -209,6 +234,7 @@ function InnerElement({
     );
     cloneProps.src = poster;
   }
+
   if (!media) {
     throw new Error('Invalid media element type.');
   }
@@ -220,13 +246,14 @@ function InnerElement({
     ) {
       mediaElement.current?.pause();
     }
-    if (!draggingResource) {
+    if (!hasSetResourceTracker.current) {
       // Drop-targets handling.
       resourceList.set(resource.id, {
         url: thumbnailURL,
         type: 'cached',
       });
       setDraggingResource(resource);
+      hasSetResourceTracker.current = true;
     }
     handleDrag(resource, event.clientX, event.clientY);
   };
@@ -239,7 +266,10 @@ function InnerElement({
       <LibraryMoveable
         active={active}
         handleDrag={dragHandler}
-        handleDragEnd={() => handleDrop(resource)}
+        handleDragEnd={() => {
+          handleDrop(resource);
+          hasSetResourceTracker.current = false;
+        }}
         type={resource.type}
         elementProps={{ resource }}
         onClick={onClick(imageURL)}
@@ -265,4 +295,4 @@ InnerElement.propTypes = {
   active: PropTypes.bool.isRequired,
 };
 
-export default InnerElement;
+export default memo(InnerElement);

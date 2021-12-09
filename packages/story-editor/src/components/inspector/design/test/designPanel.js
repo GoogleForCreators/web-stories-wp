@@ -75,24 +75,16 @@ describe('DesignPanel', () => {
   }
 
   describe('single element', () => {
-    let selectedElements;
-    let form;
-
-    beforeEach(() => {
-      selectedElements = [element1];
-      const { container } = render(
+    it('should configure form context', () => {
+      render(
         <DesignPanel
           panelType={CustomPanel}
-          selectedElements={selectedElements}
+          selectedElements={[element1]}
           onSetProperties={onSetProperties}
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      // eslint-disable-next-line testing-library/no-node-access
-      form = container.firstElementChild;
-    });
 
-    it('should configure form context', () => {
       expect(formContext.isMultiple).toBe(false);
       expect(typeof formContext.registerPresubmitHandler === 'function').toBe(
         true
@@ -100,6 +92,15 @@ describe('DesignPanel', () => {
     });
 
     it('should push and accumulate updates', () => {
+      render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={[element1]}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+
       const { pushUpdate } = lastProps;
 
       // First update.
@@ -132,6 +133,15 @@ describe('DesignPanel', () => {
     });
 
     it('should submit updates and run presubmits', () => {
+      const { container } = render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={[element1]}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+
       const { pushUpdate } = lastProps;
 
       // First update.
@@ -145,8 +155,8 @@ describe('DesignPanel', () => {
         z: '',
       });
 
-      // Submit.
-      fireEvent.submit(form);
+      // eslint-disable-next-line testing-library/no-node-access
+      fireEvent.submit(container.firstElementChild);
 
       const any = expect.anything();
       expect(presubmitHandler1).toHaveBeenCalledWith(any, any, any);
@@ -172,6 +182,15 @@ describe('DesignPanel', () => {
     });
 
     it('should submit updates and run presubmits on exit', () => {
+      render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={[element1]}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+
       const { pushUpdate } = lastProps;
 
       // First update.
@@ -199,29 +218,29 @@ describe('DesignPanel', () => {
   });
 
   describe('multiple elements', () => {
-    let selectedElements;
-    let form;
-
-    beforeEach(() => {
-      selectedElements = [element1, element2];
-      const { container } = render(
+    it('should configure form context', () => {
+      render(
         <DesignPanel
           panelType={CustomPanel}
-          selectedElements={selectedElements}
+          selectedElements={[element1, element2]}
           onSetProperties={onSetProperties}
           registerSubmitHandler={registerSubmitHandler}
         />
       );
 
-      // eslint-disable-next-line testing-library/no-node-access
-      form = container.firstElementChild;
-    });
-
-    it('should configure form context', () => {
       expect(formContext.isMultiple).toBe(true);
     });
 
     it('should push updates to all elements', () => {
+      render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={[element1, element2]}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+
       const { pushUpdate } = lastProps;
 
       act(() => pushUpdate({ x: 12, y: MULTIPLE_VALUE }));
@@ -239,6 +258,15 @@ describe('DesignPanel', () => {
     });
 
     it('should submit updates and run presubmits', () => {
+      const { container } = render(
+        <DesignPanel
+          panelType={CustomPanel}
+          selectedElements={[element1, element2]}
+          onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
+        />
+      );
+
       const { pushUpdate } = lastProps;
 
       // First update.
@@ -251,8 +279,8 @@ describe('DesignPanel', () => {
         x: 12,
       });
 
-      // Submit.
-      fireEvent.submit(form);
+      // eslint-disable-next-line testing-library/no-node-access
+      fireEvent.submit(container.firstElementChild);
       expect(presubmitHandler1).toHaveBeenCalledTimes(2);
       expect(presubmitHandler2).toHaveBeenCalledTimes(2);
       expect(onSetProperties).toHaveBeenCalledTimes(1);

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
+import { getSmallestUrlForWidth } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
@@ -80,9 +81,10 @@ function useDetectBaseColor({ updateMediaElement }) {
   );
 
   const updateBaseColor = useCallback(
-    async (resource) => {
-      const { type, src, poster } = resource;
-      const imageSrc = type === 'image' ? src : poster;
+    async ({ resource }) => {
+      const { type, poster } = resource;
+      const imageSrc =
+        type === 'image' ? getSmallestUrlForWidth(0, resource) : poster;
       if (!imageSrc) {
         return;
       }

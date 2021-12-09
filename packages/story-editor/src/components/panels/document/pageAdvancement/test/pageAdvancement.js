@@ -110,8 +110,9 @@ describe('PageAdvancementPanel', () => {
           defaultPageDuration: 1,
         },
       });
-      expect(updateStory).toHaveBeenCalledTimes(1);
     });
+
+    expect(updateStory).toHaveBeenCalledTimes(1);
 
     fireEvent.change(input, {
       target: { value: '21' },

@@ -64,6 +64,7 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
+      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -153,6 +154,7 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
+      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -241,6 +243,7 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
+      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -326,6 +329,7 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
+      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -517,6 +521,7 @@ describe('getResourceFromMedia3p', () => {
 
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
+      blurHash: undefined,
       id: 'media/tenor:3468838096637910112',
       length: undefined,
       lengthFormatted: undefined,

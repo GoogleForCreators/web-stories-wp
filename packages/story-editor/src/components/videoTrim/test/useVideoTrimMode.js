@@ -37,7 +37,12 @@ jest.mock('../../../app/media/utils/useFFmpeg', () => () => ({
   isTranscodingEnabled: mockTranscodingEnabled(),
 }));
 
-function setup({ canvas = {}, element = {}, extraElements = [] } = {}) {
+function setup({
+  mockGetMediaById,
+  canvas = {},
+  element = {},
+  extraElements = [],
+} = {}) {
   const canvasCtx = {
     state: {
       isEditing: false,
@@ -51,7 +56,7 @@ function setup({ canvas = {}, element = {}, extraElements = [] } = {}) {
   };
   const apiCtx = {
     actions: {
-      getMediaById: jest.fn(),
+      getMediaById: mockGetMediaById ? mockGetMediaById : jest.fn(),
     },
   };
   const storyCtx = {
@@ -185,12 +190,16 @@ describe('useVideoTrimMode', () => {
   it('should enter edit mode for trimmed video with working original', async () => {
     const originalId = 'video456';
     const originalResource = { id: originalId };
+    const mockGetMediaById = jest
+      .fn()
+      .mockImplementation(() => Promise.resolve(originalResource));
     const {
       result,
       setEditingElementWithState,
       getMediaById,
       waitForNextUpdate,
     } = setup({
+      mockGetMediaById,
       element: {
         resource: {
           trimData: {
@@ -201,10 +210,6 @@ describe('useVideoTrimMode', () => {
         },
       },
     });
-
-    getMediaById.mockImplementationOnce(() =>
-      Promise.resolve(originalResource)
-    );
 
     act(() => result.current.toggleTrimMode());
 
@@ -223,16 +228,23 @@ describe('useVideoTrimMode', () => {
       start: 2000,
       end: 8000,
     });
+
+    mockGetMediaById.mockClear();
   });
 
   it('should enter edit mode for trimmed video with broken original', async () => {
     const originalId = 'video456';
+    const mockGetMediaById = jest
+      .fn()
+      .mockImplementation(() => Promise.reject(new Error('404')));
+
     const {
       result,
       setEditingElementWithState,
       getMediaById,
       waitForNextUpdate,
     } = setup({
+      mockGetMediaById,
       element: {
         resource: {
           trimData: {
@@ -243,8 +255,6 @@ describe('useVideoTrimMode', () => {
         },
       },
     });
-
-    getMediaById.mockImplementationOnce(() => Promise.reject(new Error('404')));
 
     act(() => result.current.toggleTrimMode());
 
@@ -263,5 +273,7 @@ describe('useVideoTrimMode', () => {
       start: 0,
       end: null,
     });
+
+    mockGetMediaById.mockClear();
   });
 });

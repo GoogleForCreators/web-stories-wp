@@ -28,7 +28,8 @@ function getSolidFromHex(hex) {
     color: { r, g, b },
   } = createSolidFromString(`#${hex.slice(0, 6)}`);
 
-  const opacity = parseInt(hex.slice(6), 16);
+  const opacityDigits = hex.slice(6);
+  const opacity = opacityDigits ? parseInt(opacityDigits, 16) : 100;
 
   return createSolid(r, g, b, opacity / 100);
 }

@@ -100,7 +100,7 @@ describe('UpdateButton', () => {
     });
 
     expect(
-      screen.queryByRole('button', { name: 'Save draft' })
+      screen.getByRole('button', { name: 'Save draft' })
     ).toBeInTheDocument();
   });
 

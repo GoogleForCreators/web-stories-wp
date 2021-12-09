@@ -135,6 +135,7 @@ describe('useMedia3pApi', () => {
       media: [
         {
           baseColor: undefined,
+          blurHash: undefined,
           alt: 'A cat',
           attribution: {
             author: {
