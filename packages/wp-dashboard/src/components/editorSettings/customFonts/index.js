@@ -103,6 +103,9 @@ const FontRow = styled.div`
 
 const FontData = styled.div`
   line-height: 32px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 function CustomFontsSettings() {
@@ -150,7 +153,7 @@ function CustomFontsSettings() {
         );
       }
       try {
-        const fontData = getFontDataFromUrl(fontUrl);
+        const fontData = await getFontDataFromUrl(fontUrl);
         if (!fontData.name) {
           setInputError(__('Something went wrong', 'web-stories'));
         } else {
@@ -223,7 +226,7 @@ function CustomFontsSettings() {
             <FontsList>
               {addedFonts.map(({ name, url }) => (
                 <FontRow key={name}>
-                  <FontData>{`${name}-${url}`}</FontData>
+                  <FontData>{`${name} - ${url}`}</FontData>
                   <Tooltip hasTail title={__('Delete font', 'web-stories')}>
                     <Button
                       aria-label={__('Remove file', 'web-stories')}

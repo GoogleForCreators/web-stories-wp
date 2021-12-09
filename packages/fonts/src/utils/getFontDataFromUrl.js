@@ -49,7 +49,7 @@ async function getFontDataFromUrl(fontURL) {
   console.log(fontInfo);
 
   return {
-    name: fontInfo.names.fullName,
+    name: fontInfo.names.fullName.en,
     metrics: {
       upm: fontInfo.unitsPerEm,
       asc: fontInfo.ascender,
