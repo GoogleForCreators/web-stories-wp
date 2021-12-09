@@ -24,6 +24,7 @@ import {
   useEffect,
   useState,
   useDebouncedCallback,
+  useRef,
 } from '@web-stories-wp/react';
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@web-stories-wp/i18n';
@@ -66,7 +67,34 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   width: ${PLAY_BUTTON_SIZE}px;
   height: ${PLAY_BUTTON_SIZE}px;
   overflow: hidden;
+  opacity: ${({ isAbove }) => (isAbove ? 1 : 0)};
+  &.button-enter {
+    opacity: 0;
+  }
+  &.button-enter-active,
+  &.button-enter-done {
+    opacity: 1;
+    transition: opacity 100ms;
+  }
+  &.button-exit {
+    opacity: 1;
+  }
+  &.button-exit-active,
+  &.button-exit-done {
+    opacity: 0;
+    transition: opacity 100ms;
+  }
 
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    `}
+  cursor: pointer;
+  pointer-events: initial;
+  width: ${PLAY_BUTTON_SIZE}px;
+  height: ${PLAY_BUTTON_SIZE}px;
+  overflow: hidden;
   opacity: ${({ isAbove }) => (isAbove ? 1 : 0)};
   &.button-enter {
     opacity: 0;
@@ -234,7 +262,7 @@ function PlayPauseButton({
     handlePlayPause,
     [handlePlayPause]
   );
-
+  const nodeRef = useRef();
   if (!isActive) {
     return null;
   }
@@ -262,10 +290,12 @@ function PlayPauseButton({
         <TransitionWrapper
           in={hovering}
           appear
+          nodeRef={nodeRef}
           classNames="button"
           timeout={100}
         >
           <ButtonWrapper
+            ref={nodeRef}
             aria-label={buttonLabel}
             aria-pressed={isPlaying}
             key="wrapper"
