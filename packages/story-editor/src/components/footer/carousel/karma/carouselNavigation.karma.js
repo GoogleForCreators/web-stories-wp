@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { createSolid } from '@web-stories-wp/patterns';
+import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
@@ -62,6 +63,11 @@ describe('Carousel Navigation', () => {
 
   async function clickOnThumbnail(index) {
     await fixture.editor.footer.carousel.waitReady();
+    await waitFor(() => {
+      if (fixture.editor.footer.carousel.pages.length === 0) {
+        throw new Error('Carousel pages not loaded yet');
+      }
+    });
     const thumb = fixture.editor.footer.carousel.pages[index];
     thumb.node.scrollIntoView();
     await fixture.events.mouse.clickOn(thumb.node, 5, 5);
@@ -95,9 +101,7 @@ describe('Carousel Navigation', () => {
     expect(await getSelectionLength()).toBe(0);
   });
 
-  // TODO https://github.com/google/web-stories-wp/issues/9845
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should navigate the page with keys', async () => {
+  it('should navigate the page with keys', async () => {
     await clickOnThumbnail(1);
     expect(await getCurrentPageId()).toEqual('page2');
 
@@ -171,9 +175,7 @@ describe('Carousel Navigation', () => {
     expect(await getPageIds()).toEqual(['page1', 'page3', 'page4', 'page2']);
   });
 
-  // TODO https://github.com/google/web-stories-wp/issues/9845
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should delete the first page', async () => {
+  it('should delete the first page', async () => {
     await clickOnThumbnail(0);
     await fixture.events.keyboard.down('del');
     await fixture.events.keyboard.up('del');
