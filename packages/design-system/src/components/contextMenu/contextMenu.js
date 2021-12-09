@@ -28,6 +28,7 @@ import AnimationContainer from './animationContainer';
 
 const ContextMenu = ({
   animate,
+  children,
   isAlwaysVisible,
   items,
   isRTL,
@@ -49,7 +50,9 @@ const ContextMenu = ({
       isOpen={isAlwaysVisible || props.isOpen}
       isRTL={isRTL}
     >
-      <Menu ref={ref} aria-expanded={props.isOpen} items={items} {...props} />
+      <Menu ref={ref} aria-expanded={props.isOpen} items={items} {...props}>
+        {children}
+      </Menu>
       {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
       {!animate && <Shadow />}
     </Wrapper>
@@ -58,6 +61,7 @@ const ContextMenu = ({
 ContextMenu.propTypes = {
   ...MenuPropTypes,
   animate: PropTypes.bool,
+  children: PropTypes.node,
   isOpen: PropTypes.bool,
   isAlwaysVisible: PropTypes.bool,
   isRTL: PropTypes.bool,

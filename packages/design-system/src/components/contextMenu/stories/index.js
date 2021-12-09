@@ -45,6 +45,8 @@ import {
   PictureSwap,
 } from '../../../icons';
 import { Text } from '../../typography';
+import * as MenuItems from '../menuItems';
+import ContextMenuSeparator from '../contextMenuSeparator';
 
 const items = [
   {
@@ -127,77 +129,108 @@ const Grid = styled.div`
 `;
 
 export const _default = () => {
-  const itemsWithEventHandlers = items.map((item) => ({
-    ...item,
-    onClick: action(`Clicked on \`${item.label}\``),
-  }));
-
   return (
     <Container>
-      <ContextMenu
-        items={itemsWithEventHandlers}
-        isOpen={boolean('isOpen', true)}
-      />
+      <ContextMenu isOpen={boolean('isOpen', true)}>
+        <MenuItems.Item onClick={action('Clicked on `one`')}>
+          {'one'}
+        </MenuItems.Item>
+        <MenuItems.Item onClick={action('Clicked on `two`')}>
+          {'two'}
+        </MenuItems.Item>
+        <MenuItems.Item onClick={action('Clicked on `disabled`')} disabled>
+          {'this is disabled'}
+        </MenuItems.Item>
+        <ContextMenuSeparator />
+        <MenuItems.Label>{'i am neither a button nor a link'}</MenuItems.Label>
+        <ContextMenuSeparator />
+        <MenuItems.Item onClick={action('Clicked on `i am a button`')}>
+          {'i am a button!'}
+          <MenuItems.Shortcut>{'⌥ ⌘ A'}</MenuItems.Shortcut>
+        </MenuItems.Item>
+        <MenuItems.Item
+          onClick={action(
+            'Clicked on `i am a very very very very very very very long label`'
+          )}
+        >
+          {'i am a very very very very very very very long label'}
+        </MenuItems.Item>
+        <MenuItems.Link href="https://www.google.com/">
+          {'i am a link!'}
+        </MenuItems.Link>
+        <MenuItems.Link href="https://www.google.com/" openNewTab>
+          {'i am a link that opens a new tab!'}
+        </MenuItems.Link>
+        <ContextMenuSeparator />
+        <MenuItems.Group label="The oh my section">
+          <MenuItems.Item onClick={action('Clicked on `lions`')}>
+            {'lions'}
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on `tigers`')}>
+            {'tigers'}
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on `bears`')}>
+            {'bears'}
+          </MenuItems.Item>
+        </MenuItems.Group>
+      </ContextMenu>
     </Container>
   );
 };
 
 export const DarkMode = () => {
-  const itemsWithEventHandlers = items.map((item) => ({
-    ...item,
-    onClick: action(`Clicked on \`${item.label}\``),
-  }));
-
   return (
     <DarkThemeProvider>
       <Container>
-        <ContextMenu
-          items={itemsWithEventHandlers}
-          isOpen={boolean('isOpen', true)}
-        />
+        <Container>
+          <ContextMenu isOpen={boolean('isOpen', true)}>
+            <MenuItems.Item onClick={action('Clicked on `one`')}>
+              {'one'}
+            </MenuItems.Item>
+            <MenuItems.Item onClick={action('Clicked on `two`')}>
+              {'two'}
+            </MenuItems.Item>
+            <MenuItems.Item onClick={action('Clicked on `disabled`')} disabled>
+              {'this is disabled'}
+            </MenuItems.Item>
+            <ContextMenuSeparator />
+            <MenuItems.Label>
+              {'i am neither a button nor a link'}
+            </MenuItems.Label>
+            <ContextMenuSeparator />
+            <MenuItems.Item onClick={action('Clicked on `i am a button`')}>
+              {'i am a button!'}
+              <MenuItems.Shortcut>{'⌥ ⌘ A'}</MenuItems.Shortcut>
+            </MenuItems.Item>
+            <MenuItems.Item
+              onClick={action(
+                'Clicked on `i am a very very very very very very very long label`'
+              )}
+            >
+              {'i am a very very very very very very very long label'}
+            </MenuItems.Item>
+            <MenuItems.Link href="https://www.google.com/">
+              {'i am a link!'}
+            </MenuItems.Link>
+            <MenuItems.Link href="https://www.google.com/" openNewTab>
+              {'i am a link that opens a new tab!'}
+            </MenuItems.Link>
+            <ContextMenuSeparator />
+            <MenuItems.Group label="The oh my section">
+              <MenuItems.Item onClick={action('Clicked on `lions`')}>
+                {'lions'}
+              </MenuItems.Item>
+              <MenuItems.Item onClick={action('Clicked on `tigers`')}>
+                {'tigers'}
+              </MenuItems.Item>
+              <MenuItems.Item onClick={action('Clicked on `bears`')}>
+                {'bears'}
+              </MenuItems.Item>
+            </MenuItems.Group>
+          </ContextMenu>
+        </Container>
       </Container>
     </DarkThemeProvider>
-  );
-};
-
-export const RandomItemsInMenu = () => {
-  const itemsWithEventHandlers = randomItems.map((item) => {
-    if (
-      item.href === undefined &&
-      item.label !== 'neither a button nor a link'
-    ) {
-      return { ...item, onClick: action(`Clicked on \`${item.label}\``) };
-    }
-
-    return item;
-  });
-
-  return (
-    <Container>
-      <ContextMenu
-        items={itemsWithEventHandlers}
-        isOpen={boolean('isOpen', true)}
-      />
-    </Container>
-  );
-};
-
-export const Animated = () => {
-  const itemsWithEventHandlers = items.map((item) => ({
-    ...item,
-    onClick: action(`Clicked on \`${item.label}\``),
-  }));
-
-  return (
-    <ViewportContainer>
-      <AnimatedContainerWrapper>
-        <ContextMenu
-          animate
-          items={itemsWithEventHandlers}
-          isOpen={boolean('isOpen', true)}
-        />
-      </AnimatedContainerWrapper>
-    </ViewportContainer>
   );
 };
 
@@ -259,6 +292,14 @@ export const QuickActionMenu = () => {
           isIconMenu
           isAlwaysVisible
         />
+        <ContextMenu isOpen={boolean('isOpen', true)}>
+          <MenuItems.Item onClick={action('Clicked on `one`')}>
+            {'one'}
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on `two`')}>
+            {'two'}
+          </MenuItems.Item>
+        </ContextMenu>
       </Container>
       <Container>
         <Text>{'Background Image selected'}</Text>
