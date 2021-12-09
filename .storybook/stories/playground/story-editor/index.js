@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { getDummyMedia } from './getDummyMedia';
+import { getMedia, saveStoryById } from './api';
 import { HeaderLayout } from './header';
 
 export default {
@@ -76,60 +76,29 @@ const story = {
 };
 
 const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
-  let response;
-
   switch (name) {
     case 'getCurrentUser':
-      response = { id: 1 };
+      callbacks[name] = () => Promise.resolve({ id: 1 });
       break;
     case 'getPublisherLogos':
-      response = [{ url: '' }];
+      callbacks[name] = () => Promise.resolve([{ url: '' }]);
+      break;
+    case 'saveStoryById':
+      callbacks[name] = saveStoryById;
+      break;
+    case 'getMedia':
+      callbacks[name] = getMedia;
       break;
     default:
-      response = {};
-  }
-
-  if ('saveStoryById' === name) {
-    callbacks[name] = (_story) => {
-      window.localStorage.setItem('preview_markup', _story?.content);
-      return Promise.resolve(story);
-    };
-  } else if ('getMedia' === name) {
-    callbacks[name] = (params) => {
-      const dummyMedia = getDummyMedia();
-      const mediaResponse = {
-        data: dummyMedia,
-        headers: {
-          totalItems: dummyMedia.length,
-          totalPages: 1,
-        },
-      };
-
-      if (params.searchTerm) {
-        mediaResponse.data = dummyMedia.filter((media) => {
-          return media.alt
-            .toLowerCase()
-            .includes(params.searchTerm.toLowerCase());
-        });
-        mediaResponse.headers.totalItems = mediaResponse.data.length;
-      }
-
-      return Promise.resolve(mediaResponse);
-    };
-  } else {
-    callbacks[name] = () => Promise.resolve(response);
+      callbacks[name] = Promise.resolve({});
   }
 
   return callbacks;
 }, {});
 
-const config = {
-  apiCallbacks,
-};
-
 export const _default = () => (
   <AppContainer>
-    <StoryEditor config={config} initialEdits={{ story }}>
+    <StoryEditor config={ { apiCallbacks } } initialEdits={{ story }}>
       <InterfaceSkeleton header={<HeaderLayout />} />
     </StoryEditor>
   </AppContainer>
