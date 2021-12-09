@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { waitFor } from '@testing-library/react';
 import { isAnimatedGif } from '@web-stories-wp/media';
 
 /**
@@ -142,7 +141,7 @@ describe('useMediaUploadQueue', () => {
       size: 1000,
     });
 
-    const { result, waitForNextUpdate } = renderHook(() =>
+    const { result, waitForNextUpdate, waitFor } = renderHook(() =>
       useMediaUploadQueue()
     );
 
