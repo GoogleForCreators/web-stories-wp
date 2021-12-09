@@ -55,7 +55,7 @@ function useVideoTrimMode() {
     actions: { getMediaById },
   } = useAPI();
   const [videoData, setVideoData] = useState(null);
-  
+
   const { isCurrentResourceUploading } = useLocalMedia(
     ({ state: { isCurrentResourceUploading } }) => ({
       isCurrentResourceUploading,
