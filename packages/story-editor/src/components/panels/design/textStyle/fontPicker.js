@@ -55,19 +55,16 @@ const FontPicker = forwardRef(function FontPicker(
     addRecentFont,
     maybeEnqueueFontStyle,
     ensureMenuFontsLoaded,
-  } = useFont(
-    ({
-      actions: { addRecentFont, ensureMenuFontsLoaded, maybeEnqueueFontStyle },
-      state: { fonts, recentFonts, curatedFonts },
-    }) => ({
-      addRecentFont,
-      ensureMenuFontsLoaded,
-      maybeEnqueueFontStyle,
-      recentFonts,
-      curatedFonts,
-      fonts,
-    })
-  );
+    getFontsBySearch,
+  } = useFont(({ actions, state }) => ({
+    getFontsBySearch: actions.getFontsBySearch,
+    addRecentFont: actions.addRecentFont,
+    ensureMenuFontsLoaded: actions.ensureMenuFontsLoaded,
+    maybeEnqueueFontStyle: actions.maybeEnqueueFontStyle,
+    recentFonts: state.recentFonts,
+    curatedFonts: state.curatedFonts,
+    fonts: state.fonts,
+  }));
 
   const handleFontPickerChange = useCallback(
     async ({ id }) => {
@@ -81,6 +78,7 @@ const FontPicker = forwardRef(function FontPicker(
           'styles',
           'variants',
           'metrics',
+          'url', // For custom fonts.
         ]),
       };
 
@@ -121,6 +119,7 @@ const FontPicker = forwardRef(function FontPicker(
     return map;
   }, [fonts]);
 
+  // TODO: Add support for custom fonts as well.
   const onObserve = (observedFonts) => {
     ensureMenuFontsLoaded(
       observedFonts.filter(
@@ -165,6 +164,7 @@ const FontPicker = forwardRef(function FontPicker(
         MULTIPLE_VALUE === fontFamily ? MULTIPLE_DISPLAY_VALUE : fontFamily
       }
       hasSearch
+      getOptionsByQuery={getFontsBySearch}
       onChange={handleFontPickerChange}
       onObserve={onObserve}
       renderer={forwardRef(renderer)}

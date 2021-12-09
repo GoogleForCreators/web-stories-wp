@@ -18,41 +18,88 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef, useState } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import loadStylesheet from '../../utils/loadStylesheet';
 import { CURATED_FONT_NAMES, FONT_WEIGHT_NAMES } from '../../constants';
+import { useAPI } from '../api';
 import Context from './context';
-import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
 
 export const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
 function FontProvider({ children }) {
+  const [queriedFonts, setQueriedFonts] = useState([]);
+  const [visibleOptions, setVisibleOptions] = useState([]);
   const [fonts, setFonts] = useState([]);
   const [recentFonts, setRecentFonts] = useState([]);
+  const {
+    actions: { getFonts },
+  } = useAPI();
 
-  useLoadFonts({ fonts, setFonts });
+  useEffect(() => {
+    let mounted = true;
 
-  const getFontBy = useCallback(
-    (key, value) => {
-      const foundFont = fonts.find((thisFont) => thisFont[key] === value);
-      if (!foundFont) {
-        return {};
-      }
-      return foundFont;
+    if (!visibleOptions.length) {
+      (async () => {
+        const newFonts = await getFonts({
+          include: CURATED_FONT_NAMES.join(','),
+        });
+
+        if (!mounted) {
+          return;
+        }
+
+        const formattedFonts = newFonts.map((font) => ({
+          id: font.family,
+          name: font.family,
+          value: font.family,
+          ...font,
+        }));
+
+        setVisibleOptions(formattedFonts);
+      })();
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, [visibleOptions, setFonts, getFonts]);
+
+  const maybeEnqueueFontStyle = useLoadFontFiles();
+
+  const getFontByName = useCallback(
+    (name) => {
+      const foundFont = fonts.find((font) => font.family === name);
+      return foundFont ? foundFont : {};
     },
     [fonts]
   );
 
-  const getFontByName = useCallback(
-    (name) => {
-      return getFontBy('family', name);
+  const getFontsBySearch = useCallback(
+    async (search) => {
+      const newFonts = await getFonts({
+        search,
+      });
+
+      const formattedFonts = newFonts.map((font) => ({
+        ...font,
+        id: font.family,
+        name: font.family,
+        value: font.family,
+      }));
+
+      setQueriedFonts(formattedFonts);
     },
-    [getFontBy]
+    [getFonts]
   );
 
   const getFontWeight = useCallback(
@@ -118,20 +165,14 @@ function FontProvider({ children }) {
     });
   }, []);
 
-  const maybeEnqueueFontStyle = useLoadFontFiles();
-
-  const curatedFonts = useMemo(
-    () => fonts.filter((font) => CURATED_FONT_NAMES.includes(font.name)),
-    [fonts]
-  );
-
   const state = {
     state: {
-      fonts,
-      curatedFonts,
+      fonts: queriedFonts.length > 0 ? queriedFonts : visibleOptions,
+      curatedFonts: visibleOptions,
       recentFonts,
     },
     actions: {
+      getFontsBySearch,
       getFontByName,
       maybeEnqueueFontStyle,
       getFontWeight,
