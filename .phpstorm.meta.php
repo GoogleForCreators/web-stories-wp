@@ -38,6 +38,7 @@ namespace PHPSTORM_META {
 			'media.video.optimization'     => \Google\Web_Stories\Media\Video\Optimization::class,
 			'media.video.poster'           => \Google\Web_Stories\Media\Video\Poster::class,
 			'media.video.trimming'         => \Google\Web_Stories\Media\Video\Trimming::class,
+			'font_post_type'               => \Google\Web_Stories\Font_Post_Type::class,
 			'page_template_post_type'      => \Google\Web_Stories\Page_Template_Post_Type::class,
 			'plugin_row_meta'              => \Google\Web_Stories\Admin\PluginRowMeta::class,
 			'plugin_action_links'          => \Google\Web_Stories\Admin\PluginActionLinks::class,

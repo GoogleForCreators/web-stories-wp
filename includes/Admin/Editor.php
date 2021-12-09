@@ -390,6 +390,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'link'           => '/web-stories/v1/link/',
 				'statusCheck'    => '/web-stories/v1/status-check/',
 				'taxonomies'     => '/web-stories/v1/taxonomies/',
+				'fonts'          => '/web-stories/v1/fonts/',
 				'metaBoxes'      => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
 				'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
 			],
