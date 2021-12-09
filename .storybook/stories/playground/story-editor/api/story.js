@@ -18,6 +18,14 @@
  */
 import { DATA_VERSION } from '@web-stories-wp/migration';
 
+/**
+ * Internal dependencies
+ */
+import {
+  LOCAL_STORAGE_CONTENT_KEY,
+  LOCAL_STORAGE_PREVIEW_MARKUP_KEY,
+} from '../constants';
+
 export const saveStoryById = ({
   pages,
   globalStoryStyles,
@@ -53,10 +61,10 @@ export const saveStoryById = ({
   };
 
   window.localStorage.setItem(
-    'web_stories_json_content',
+    LOCAL_STORAGE_CONTENT_KEY,
     JSON.stringify(storySaveData)
   );
-  window.localStorage.setItem('web_stories_preview_markup', content);
+  window.localStorage.setItem(LOCAL_STORAGE_PREVIEW_MARKUP_KEY, content);
 
   return Promise.resolve({});
 };

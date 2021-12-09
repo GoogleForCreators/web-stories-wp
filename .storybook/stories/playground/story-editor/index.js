@@ -25,6 +25,7 @@ import styled from 'styled-components';
  */
 import { getMedia, saveStoryById } from './api';
 import { HeaderLayout } from './header';
+import { LOCAL_STORAGE_CONTENT_KEY } from './constants';
 
 export default {
   title: 'Playground/Stories Editor',
@@ -63,18 +64,6 @@ const apiCallbacksNames = [
   'createTaxonomyTerm',
 ];
 
-// @todo Should still work with empty object.
-const story = {
-  title: { raw: '' },
-  excerpt: { raw: '' },
-  permalink_template: 'https://example.org/web-stories/%pagename%/',
-  style_presets: {
-    color: [],
-    textStyles: [],
-  },
-  date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
-};
-
 const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   switch (name) {
     case 'getCurrentUser':
@@ -96,9 +85,29 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   return callbacks;
 }, {});
 
+const getInitialStory = () => {
+  const defaultStory = {
+    title: { raw: '' },
+    excerpt: { raw: '' },
+    permalink_template: 'https://example.org/web-stories/%pagename%/',
+    style_presets: {
+      color: [],
+      textStyles: [],
+    },
+    date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
+  };
+
+  const content = window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY);
+
+  return content ? JSON.parse(content) : defaultStory;
+};
+
 export const _default = () => (
   <AppContainer>
-    <StoryEditor config={ { apiCallbacks } } initialEdits={{ story }}>
+    <StoryEditor
+      config={{ apiCallbacks }}
+      initialEdits={{ story: getInitialStory() }}
+    >
       <InterfaceSkeleton header={<HeaderLayout />} />
     </StoryEditor>
   </AppContainer>
