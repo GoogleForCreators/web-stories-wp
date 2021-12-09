@@ -202,11 +202,11 @@ function useProcessMedia({
         updateExistingElements(canvasResourceId, { isTrimming: false });
 
       const onUploadSuccess = ({ resource }) => {
-        const properOldResource = {
+        const oldCanvasResource = {
           alt: oldResource.alt,
           id: canvasResourceId,
         };
-        copyResourceData({ oldResource: properOldResource, resource });
+        copyResourceData({ oldResource: oldCanvasResource, resource });
         postProcessingResource(resource);
       };
 
