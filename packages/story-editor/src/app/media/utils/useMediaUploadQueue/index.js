@@ -737,9 +737,12 @@ function useMediaUploadQueue() {
       return (
         !isExternal &&
         src &&
-        !isCurrentResourceProcessing(id) &&
-        !isCurrentResourceUploading(id) &&
-        !isNewResourceProcessing(id)
+        !state.queue.some(
+          (item) =>
+            item.resource.id === id ||
+            item.previousResourceId === id ||
+            item.originalResourceId === id
+        )
       );
     };
 
