@@ -737,6 +737,7 @@ function useMediaUploadQueue() {
         !isExternal &&
         src &&
         !isCurrentResourceProcessing(id) &&
+        !isCurrentResourceUploading(id) &&
         !isNewResourceProcessing(id)
       );
     };
