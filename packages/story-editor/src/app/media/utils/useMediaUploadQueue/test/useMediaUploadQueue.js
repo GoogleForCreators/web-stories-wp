@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react';
 import { isAnimatedGif } from '@web-stories-wp/media';
 
 /**
@@ -163,15 +164,24 @@ describe('useMediaUploadQueue', () => {
 
     await waitForNextUpdate();
 
-    expect(result.current.state.isUploading).toBeFalse();
-    expect(result.current.state.uploaded).toHaveLength(1);
+    await waitFor(() => {
+      expect(result.current.state.uploaded).toHaveLength(1);
+    });
+
+    expect(result.current.state.isUploading).toBeTrue();
 
     const { id } = result.current.state.uploaded[0];
+
+    act(() => result.current.actions.finishItem({ id }));
+
+    expect(result.current.state.isUploading).toBeFalse();
+    expect(result.current.state.uploaded).toHaveLength(0);
+    expect(result.current.state.finished).toHaveLength(1);
 
     act(() => result.current.actions.removeItem({ id }));
 
     expect(result.current.state.isUploading).toBeFalse();
-    expect(result.current.state.uploaded).toHaveLength(0);
+    expect(result.current.state.finished).toHaveLength(0);
   });
 
   it('should set isUploading state when adding a gif item to the queue', async () => {
