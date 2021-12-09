@@ -354,7 +354,9 @@ describe('Media3pPane fetching', () => {
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
     // Wait for debounce
-    await fixture.events.sleep(700);
+    await waitFor(() => {
+      expect(listMediaSpy).toHaveBeenCalledTimes(2);
+    });
     await expectMediaElements(
       fixture.editor.library.media3p.unsplashSection,
       MEDIA_PER_PAGE * 2
@@ -368,7 +370,9 @@ describe('Media3pPane fetching', () => {
     await fixture.events.click(fixture.editor.library.media3p.coverrTab);
 
     // Wait for the debounce
-    await fixture.events.sleep(700);
+    await waitFor(() => {
+      expect(listMediaSpy).toHaveBeenCalledTimes(2);
+    });
     await expectMediaElements(
       fixture.editor.library.media3p.coverrSection,
       // In 1600:1000 the coverr section will fetch again due to screen height
@@ -410,7 +414,9 @@ describe('Media3pPane fetching', () => {
     await waitForInitialMediaLoad();
     await fixture.events.click(fixture.editor.library.media3p.coverrTab);
     // Wait for the debounce
-    await fixture.events.sleep(700);
+    await waitFor(() => {
+      expect(listMediaSpy).toHaveBeenCalledTimes(2);
+    });
 
     const firstMediaElement = fixture.editor.library.media3p.mediaElements[0];
 
