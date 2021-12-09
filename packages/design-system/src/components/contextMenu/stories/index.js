@@ -40,13 +40,14 @@ import {
   Eraser,
   LetterTLargeLetterTSmall,
   LetterTPlus,
-  Link,
+  Link as IconLink,
   Media,
   PictureSwap,
 } from '../../../icons';
 import { Text } from '../../typography';
 import * as MenuItems from '../menuItems';
 import ContextMenuSeparator from '../contextMenuSeparator';
+import { Tooltip, TOOLTIP_PLACEMENT } from '../../tooltip';
 
 const items = [
   {
@@ -234,112 +235,164 @@ export const DarkMode = () => {
   );
 };
 
-const blankPageItems = [
-  { label: 'Change background color', Icon: Bucket },
-  { label: 'Insert media', Icon: Media, separator: 'top' },
-  { label: 'Insert text', Icon: LetterTPlus },
-];
-
-const backgroundImageItems = [
-  { label: 'Replace background', Icon: PictureSwap },
-  { label: 'Add animation', Icon: CircleSpeed },
-  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
-];
-
-const foregroundImageItems = [
-  { label: 'Replace media', Icon: PictureSwap },
-  { label: 'Add animation', Icon: CircleSpeed },
-  { label: 'Add link', Icon: Link },
-  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
-];
-
-const videoItems = [
-  { label: 'Replace media', Icon: PictureSwap },
-  { label: 'Add animation', Icon: CircleSpeed },
-  { label: 'Add link', Icon: Link },
-  { label: 'Add captions', Icon: Captions },
-  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
-];
-
-const shapeItems = [
-  { label: 'Change color', Icon: Bucket },
-  { label: 'Add animation', Icon: CircleSpeed },
-  { label: 'Add link', Icon: Link },
-  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
-];
-
-const textItems = [
-  { label: 'Change color', Icon: Bucket },
-  { label: 'Edit text', Icon: LetterTLargeLetterTSmall },
-  { label: 'Add animation', Icon: CircleSpeed },
-  { label: 'Add link', Icon: Link },
-  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
-];
-
 export const QuickActionMenu = () => {
-  const generateMenuItemsWithEventHandler = (i) =>
-    i.map((item) => ({
-      ...item,
-      onClick: () => action(`Clicked on \`${item.label}\``)(),
-    }));
-
   return (
     <Grid>
       <Container>
         <Text>{'Blank page; no item selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(blankPageItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
-        <ContextMenu isOpen={boolean('isOpen', true)}>
-          <MenuItems.Item onClick={action('Clicked on `one`')}>
-            {'one'}
+        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+          <MenuItems.Item onClick={action('Clicked on the first action')}>
+            <MenuItems.Icon title="Change background color">
+              <Bucket />
+            </MenuItems.Icon>
           </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on `two`')}>
-            {'two'}
+          <ContextMenuSeparator />
+          <MenuItems.Item onClick={action('Clicked on the second action')}>
+            <MenuItems.Icon title="Insert media">
+              <Media />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the third action')}>
+            <MenuItems.Icon title="Insert text">
+              <LetterTPlus />
+            </MenuItems.Icon>
           </MenuItems.Item>
         </ContextMenu>
       </Container>
       <Container>
         <Text>{'Background Image selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(backgroundImageItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
+        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+          <MenuItems.Item onClick={action('Clicked on the first action')}>
+            <MenuItems.Icon title="Replace background">
+              <PictureSwap />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the second action')}>
+            <MenuItems.Icon title="Add animation">
+              <CircleSpeed />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <ContextMenuSeparator />
+          <MenuItems.Item onClick={action('Clicked on the third action')}>
+            <MenuItems.Icon title="Clear filters and animation">
+              <Eraser />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+        </ContextMenu>
       </Container>
       <Container>
         <Text>{'Foreground Image selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(foregroundImageItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
+        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+          <MenuItems.Item onClick={action('Clicked on the first action')}>
+            <MenuItems.Icon title="Replace media">
+              <PictureSwap />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the second action')}>
+            <MenuItems.Icon title="Add animation">
+              <CircleSpeed />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the third action')}>
+            <MenuItems.Icon title="Add link">
+              <IconLink />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <ContextMenuSeparator />
+          <MenuItems.Item onClick={action('Clicked on the fourth action')}>
+            <MenuItems.Icon title="Clear filters and animation">
+              <Eraser />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+        </ContextMenu>
       </Container>
       <Container>
         <Text>{'Video selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(videoItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
+        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+          <MenuItems.Item onClick={action('Clicked on the first action')}>
+            <MenuItems.Icon title="Replace media">
+              <PictureSwap />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the second action')}>
+            <MenuItems.Icon title="Add animation">
+              <CircleSpeed />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the third action')}>
+            <MenuItems.Icon title="Add link">
+              <IconLink />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the third action')}>
+            <MenuItems.Icon title="Add captions">
+              <Captions />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <ContextMenuSeparator />
+          <MenuItems.Item onClick={action('Clicked on the fourth action')}>
+            <MenuItems.Icon title="Clear filters and animation">
+              <Eraser />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+        </ContextMenu>
       </Container>
       <Container>
         <Text>{'Shape selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(shapeItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
+        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+          <MenuItems.Item onClick={action('Clicked on the first action')}>
+            <MenuItems.Icon title="Change color">
+              <Bucket />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the second action')}>
+            <MenuItems.Icon title="Add animation">
+              <CircleSpeed />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the third action')}>
+            <MenuItems.Icon title="Add link">
+              <IconLink />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <ContextMenuSeparator />
+          <MenuItems.Item onClick={action('Clicked on the fourth action')}>
+            <MenuItems.Icon title="Clear filters and animation">
+              <Eraser />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+        </ContextMenu>
       </Container>
       <Container>
         <Text>{'Text selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(textItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
+        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+          <MenuItems.Item onClick={action('Clicked on the first action')}>
+            <MenuItems.Icon title="Change color">
+              <Bucket />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the second action')}>
+            <MenuItems.Icon title="Edit text">
+              <LetterTLargeLetterTSmall />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the third action')}>
+            <MenuItems.Icon title="Add animation">
+              <CircleSpeed />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <MenuItems.Item onClick={action('Clicked on the third action')}>
+            <MenuItems.Icon title="Add link">
+              <IconLink />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+          <ContextMenuSeparator />
+          <MenuItems.Item onClick={action('Clicked on the fourth action')}>
+            <MenuItems.Icon title="Clear filters and animation">
+              <Eraser />
+            </MenuItems.Icon>
+          </MenuItems.Item>
+        </ContextMenu>
       </Container>
     </Grid>
   );

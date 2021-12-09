@@ -13,28 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useContextMenu } from './provider';
+import { Tooltip, TOOLTIP_PLACEMENT } from '../../tooltip';
 
-const Separator = styled.div`
-  display: block;
-  height: 1px;
-  background-color: ${({ theme }) => theme.colors.divider.primary};
-  margin: 8px auto;
-  width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 100)}%;
+const TooltipWrapper = styled.div`
+  margin: 0 auto;
 `;
 
-function ContextMenuSeparator() {
-  const isIconMenu = useContextMenu(({ state }) => state.isIconMenu);
+const IconWrapper = styled.div`
+  width: 32px;
+  height: 32px;
+`;
 
-  return <Separator $isIconMenu={isIconMenu} />;
+function Icon({
+  children,
+  placement = TOOLTIP_PLACEMENT.RIGHT,
+  title,
+  ...props
+}) {
+  return (
+    <TooltipWrapper>
+      <Tooltip placement={placement} title={title} {...props}>
+        <IconWrapper>{children}</IconWrapper>
+      </Tooltip>
+    </TooltipWrapper>
+  );
 }
+Icon.propTypes = {
+  children: PropTypes.node,
+  placement: PropTypes.oneOf(Object.values(TOOLTIP_PLACEMENT)),
+  title: PropTypes.string.isRequired,
+};
 
-export default ContextMenuSeparator;
+export default Icon;

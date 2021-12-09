@@ -14,13 +14,30 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+
+import PropTypes from 'prop-types';
+/**
  * Internal dependencies
  */
-import Group from './group';
-import Icon from './icon';
-import Item from './item';
-import Label from './label';
-import Link from './link';
-import Shortcut from './shortcut';
+import ContextMenuContext from './context';
 
-export { Group, Icon, Item, Label, Link, Shortcut };
+export default function ContextMenuProvider({ children, isIconMenu }) {
+  const value = {
+    state: {
+      isIconMenu,
+    },
+    actions: {},
+  };
+
+  return (
+    <ContextMenuContext.Provider value={value}>
+      {children}
+    </ContextMenuContext.Provider>
+  );
+}
+ContextMenuProvider.propTypes = {
+  children: PropTypes.children,
+  isIconMenu: PropTypes.bool,
+};

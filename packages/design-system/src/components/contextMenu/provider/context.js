@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import Group from './group';
-import Icon from './icon';
-import Item from './item';
-import Label from './label';
-import Link from './link';
-import Shortcut from './shortcut';
+import { createContext } from '@web-stories-wp/react';
 
-export { Group, Icon, Item, Label, Link, Shortcut };
+const ContextMenuContext = createContext();
+
+export default ContextMenuContext;

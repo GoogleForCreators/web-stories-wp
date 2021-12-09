@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@web-stories-wp/react';
+/**
  * Internal dependencies
  */
-import Group from './group';
-import Icon from './icon';
-import Item from './item';
-import Label from './label';
-import Link from './link';
-import Shortcut from './shortcut';
+import Context from './context';
 
-export { Group, Icon, Item, Label, Link, Shortcut };
+function useContextMenu(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useContextMenu;

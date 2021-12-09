@@ -25,6 +25,7 @@ import { useMouseDownOutsideRef } from '../../utils';
 import { SmartPopover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
 import AnimationContainer from './animationContainer';
+import { ContextMenuProvider } from './provider';
 
 const ContextMenu = ({
   animate,
@@ -32,6 +33,7 @@ const ContextMenu = ({
   isAlwaysVisible,
   items,
   isRTL,
+  isIconMenu,
   isInline = false,
   ...props
 }) => {
@@ -50,9 +52,11 @@ const ContextMenu = ({
       isOpen={isAlwaysVisible || props.isOpen}
       isRTL={isRTL}
     >
-      <Menu ref={ref} aria-expanded={props.isOpen} items={items} {...props}>
-        {children}
-      </Menu>
+      <ContextMenuProvider isIconMenu={isIconMenu}>
+        <Menu ref={ref} aria-expanded={props.isOpen} items={items} {...props}>
+          {children}
+        </Menu>
+      </ContextMenuProvider>
       {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
       {!animate && <Shadow />}
     </Wrapper>

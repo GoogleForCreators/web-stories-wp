@@ -13,14 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import Group from './group';
-import Icon from './icon';
-import Item from './item';
-import Label from './label';
-import Link from './link';
-import Shortcut from './shortcut';
-
-export { Group, Icon, Item, Label, Link, Shortcut };
+export { default as ContextMenuProvider } from './provider';
+export { default as useContextMenu } from './useContextMenu';

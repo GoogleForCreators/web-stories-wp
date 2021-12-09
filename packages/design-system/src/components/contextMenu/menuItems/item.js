@@ -22,13 +22,15 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { Button } from '../../button';
+import { useContextMenu } from '../provider';
 import { menuItemStyles } from './styles';
 
 const StyledButton = styled(Button)`
   ${menuItemStyles};
 
   width: 100%;
-  border-radius: 0;
+  padding: ${({ $isIconMenu }) => ($isIconMenu ? 0 : '2px 16px')};
+  border-radius: ${({ $isIconMenu }) => ($isIconMenu ? 4 : 0)}px;
   background-color: transparent;
 
   :disabled {
@@ -57,7 +59,9 @@ const StyledButton = styled(Button)`
  * @return {Node} The react node
  */
 function Item(props) {
-  return <StyledButton role="menuitem" {...props} />;
+  const isIconMenu = useContextMenu(({ state }) => state.isIconMenu);
+
+  return <StyledButton role="menuitem" $isIconMenu={isIconMenu} {...props} />;
 }
 
 Item.propTypes = {

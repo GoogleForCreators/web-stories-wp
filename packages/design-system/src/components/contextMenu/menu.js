@@ -23,14 +23,15 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { BUTTON_TRANSITION_TIMING } from '../button/constants';
+import { useContextMenu } from './provider';
 
 const MenuWrapper = styled.div(
   ({ theme }) => css`
-    padding: ${({ isIconMenu }) => (isIconMenu ? 0 : '8px 0')};
+    padding: ${({ $isIconMenu }) => ($isIconMenu ? '4px 3px' : '8px 0')};
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
-    width: ${({ isIconMenu }) => (isIconMenu ? '40px' : '210px')};
+    width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 210)}px;
   `
 );
 MenuWrapper.propTypes = {
@@ -155,12 +156,14 @@ MenuList.propTypes = {
   isIconMenu: PropTypes.bool,
 };
 
-const Menu = forwardRef(({ children, isIconMenu, ...props }, ref) => {
+const Menu = forwardRef(({ children, ...props }, ref) => {
+  const isIconMenu = useContextMenu(({ state }) => state.isIconMenu);
+
   return (
     <MenuWrapper
       data-testid="context-menu-list"
-      isIconMenu={isIconMenu}
       role="menu"
+      $isIconMenu={isIconMenu}
       {...props}
     >
       {children}
@@ -171,7 +174,6 @@ const Menu = forwardRef(({ children, isIconMenu, ...props }, ref) => {
 export const MenuPropTypes = {
   children: PropTypes.node,
   groupLabel: PropTypes.string,
-  isIconMenu: PropTypes.bool,
 };
 
 Menu.propTypes = MenuPropTypes;
