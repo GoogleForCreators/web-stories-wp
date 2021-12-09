@@ -129,7 +129,7 @@ function useUploadMedia({
 
   // Update *existing* items in the media library and on canvas.
   useEffect(() => {
-    for (const { onUploadProgress, resource, previousResourceId } of progress) {
+    for (const { onUploadProgress, resource } of progress) {
       const { id: resourceId } = resource;
 
       if (!resource) {
