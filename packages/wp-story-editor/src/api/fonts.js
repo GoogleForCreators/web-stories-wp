@@ -13,13 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './authors';
-export * from './story';
-export * from './media';
-export * from './metadata';
-export * from './pageTemplate';
-export * from './user';
-export * from './hotlinkInfo';
-export * from './proxy';
-export * from './taxonomy';
-export * from './fonts';
+
+/**
+ * External dependencies
+ */
+import { addQueryArgs } from '@web-stories-wp/design-system';
+
+/**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+
+export function getFonts(config, { include, search }) {
+  return apiFetch({
+    path: addQueryArgs(`${config.api.fonts}`, {
+      per_page: '100',
+      include,
+      search,
+    }),
+  });
+}
