@@ -20,7 +20,6 @@ export { default as convertToCSS } from './convertToCSS';
 export { default as createSolid } from './createSolid';
 export { default as createSolidFromString } from './createSolidFromString';
 export { default as generatePatternStyles } from './generatePatternStyles';
-export { default as getBrightnessFromPattern } from './getBrightnessFromPattern';
 export { default as getHexFromSolid } from './getHexFromSolid';
 export { default as getHexFromSolidArray } from './getHexFromSolidArray';
 export { default as getHexFromValue } from './getHexFromValue';

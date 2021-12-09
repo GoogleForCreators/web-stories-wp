@@ -52,6 +52,7 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Duplicate', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.DUPLICATE,
+    capability: 'hasEditAction',
   },
   {
     label: __('Delete Story', 'web-stories'),

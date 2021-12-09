@@ -123,7 +123,7 @@ describe('getUsedAmpExtensions', () => {
       },
     ];
 
-    const actual = getUsedAmpExtensions(pages, { enableBetterCaptions: true });
+    const actual = getUsedAmpExtensions(pages);
 
     expect(actual).toHaveLength(4);
     expect(actual).toStrictEqual(

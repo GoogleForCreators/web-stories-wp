@@ -85,6 +85,7 @@ const SearchCount = styled(Text).attrs({
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 `;
 
 const ButtonsWrapper = styled.div`

@@ -63,37 +63,24 @@ const apiCallbacksNames = [
   'createTaxonomyTerm',
 ];
 
+// @todo Should still work with empty object.
+const story = {
+  title: { raw: '' },
+  excerpt: { raw: '' },
+  permalink_template: 'https://example.org/web-stories/%pagename%/',
+  style_presets: {
+    color: [],
+    textStyles: [],
+  },
+  date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
+};
+
 const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   let response;
-
-  const dummyMedia = getDummyMedia();
-  const storyResponse = {
-    title: { raw: '' },
-    excerpt: { raw: '' },
-    permalink_template: 'https://example.org/web-stories/%pagename%/',
-    style_presets: {
-      color: [],
-      textStyles: [],
-    },
-    date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
-  };
 
   switch (name) {
     case 'getCurrentUser':
       response = { id: 1 };
-      break;
-    case 'getStoryById':
-    case 'getDemoStoryById': // @todo https://github.com/google/web-stories-wp/pull/9569#discussion_r739076535
-      response = storyResponse;
-      break;
-    case 'getMedia':
-      response = {
-        data: dummyMedia,
-        headers: {
-          totalItems: dummyMedia.length,
-          totalPages: 1,
-        },
-      };
       break;
     case 'getPublisherLogos':
       response = [{ url: '' }];
@@ -103,9 +90,31 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   }
 
   if ('saveStoryById' === name) {
-    callbacks[name] = (story) => {
-      window.localStorage.setItem('preview_markup', story?.content);
-      return Promise.resolve(storyResponse);
+    callbacks[name] = (_story) => {
+      window.localStorage.setItem('preview_markup', _story?.content);
+      return Promise.resolve(story);
+    };
+  } else if ('getMedia' === name) {
+    callbacks[name] = (params) => {
+      const dummyMedia = getDummyMedia();
+      const mediaResponse = {
+        data: dummyMedia,
+        headers: {
+          totalItems: dummyMedia.length,
+          totalPages: 1,
+        },
+      };
+
+      if (params.searchTerm) {
+        mediaResponse.data = dummyMedia.filter((media) => {
+          return media.alt
+            .toLowerCase()
+            .includes(params.searchTerm.toLowerCase());
+        });
+        mediaResponse.headers.totalItems = mediaResponse.data.length;
+      }
+
+      return Promise.resolve(mediaResponse);
     };
   } else {
     callbacks[name] = () => Promise.resolve(response);
@@ -120,7 +129,7 @@ const config = {
 
 export const _default = () => (
   <AppContainer>
-    <StoryEditor config={config}>
+    <StoryEditor config={config} initialEdits={{ story }}>
       <InterfaceSkeleton header={<HeaderLayout />} />
     </StoryEditor>
   </AppContainer>

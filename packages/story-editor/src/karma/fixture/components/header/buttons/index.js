@@ -69,17 +69,21 @@ function Loading() {
 }
 
 function Buttons() {
-  const { status } = useStory(
+  const { status, canPublish } = useStory(
     ({
       state: {
         story: { status },
+        capabilities,
       },
     }) => ({
       status,
+      canPublish: Boolean(capabilities?.publish),
     })
   );
 
-  const isDraft = 'draft' === status;
+  const isPending = 'pending' === status;
+  const isDraft = 'draft' === status || isPending || !status;
+  const isDraftOrPending = isDraft || isPending;
 
   return (
     <ButtonList>
@@ -90,9 +94,15 @@ function Buttons() {
           <PreviewButton />
           <Loading />
         </IconWithSpinner>
-        {isDraft ? <UpdateButton /> : <SwitchToDraftButton />}
-        {isDraft && <PublishButton />}
-        {!isDraft && <UpdateButton />}
+        {isPending && <SwitchToDraftButton />}
+        {(isDraft || (isPending && canPublish)) && <UpdateButton />}
+        {isDraftOrPending && <PublishButton />}
+        {!isDraftOrPending && (
+          <>
+            <SwitchToDraftButton />
+            <UpdateButton />
+          </>
+        )}
       </List>
     </ButtonList>
   );

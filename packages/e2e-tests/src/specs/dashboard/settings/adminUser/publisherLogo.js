@@ -217,7 +217,6 @@ describe('Publisher Logo without SVG option enabled', () => {
 });
 
 describe('Publisher logo with SVG option enabled', () => {
-  // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enableSVG']);
 
   let uploadedFiles;

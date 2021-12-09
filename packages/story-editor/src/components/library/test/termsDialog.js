@@ -31,7 +31,7 @@
 /**
  * External dependencies
  */
-import { waitFor, fireEvent, act, screen } from '@testing-library/react';
+import { waitFor, fireEvent, screen } from '@testing-library/react';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
@@ -69,9 +69,9 @@ describe('TermsDialog', () => {
     expect(localStore.getItemByKey).toHaveBeenCalledWith(
       LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P
     );
-    act(() => {
-      fireEvent.click(dismiss);
-    });
+
+    fireEvent.click(dismiss);
+
     await waitFor(() =>
       expect(localStore.setItemByKey).toHaveBeenCalledWith(
         LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P,
