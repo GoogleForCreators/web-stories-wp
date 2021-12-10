@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useReducer, useEffect, useState } from '@web-stories-wp/react';
+import { useReducer, useEffect, useState, useRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 
@@ -79,10 +79,11 @@ export function Interpreter({ state, children }) {
 }
 
 export function ScheduledTransition({ children, ...props }) {
+  const nodeRef = useRef();
   return (
-    <Transition {...props}>
+    <Transition nodeRef={nodeRef} {...props}>
       {(state) => (
-        <Interpreter state={state}>
+        <Interpreter ref={nodeRef} state={state}>
           {(scheduledState) => children(scheduledState)}
         </Interpreter>
       )}
