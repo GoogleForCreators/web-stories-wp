@@ -101,6 +101,7 @@ export const SnackbarContainer = ({
   onRemove = noop,
   placement = PLACEMENT.BOTTOM,
   max = 10,
+  'aria-label': ariaLabel,
 }) => {
   const speak = useLiveRegion('assertive');
   const announcedNotifications = useRef(new Set());
@@ -169,6 +170,7 @@ export const SnackbarContainer = ({
               <ChildContainer placement={placement}>
                 <Component
                   {...notificationProps}
+                  aria-label={ariaLabel}
                   aria-hidden
                   placement={placement}
                   onDismiss={handleDismiss(notification)}
@@ -195,4 +197,5 @@ SnackbarContainer.propTypes = {
   onRemove: PropTypes.func,
   placement: Placement,
   max: PropTypes.number,
+  'aria-label': PropTypes.string.isRequired,
 };

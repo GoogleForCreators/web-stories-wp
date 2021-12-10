@@ -170,6 +170,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
         </PageContent>
       </AppFrame>
       <Snackbar.Container
+        aria-label="Snackbar for dashboard"
         notifications={currentSnacks}
         onRemove={removeSnack}
         placement={placement}

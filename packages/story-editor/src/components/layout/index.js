@@ -106,7 +106,10 @@ function Layout({ header, footer = {}, inspectorTabs, children }) {
           </HighlightsProvider>
         </ChecklistCheckpointProvider>
       </LayoutProvider>
-      <Snackbar.Container {...snackbarState} />
+      <Snackbar.Container
+        {...snackbarState}
+        aria-label="Snackbar for story-editor"
+      />
     </>
   );
 }
