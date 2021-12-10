@@ -48,7 +48,6 @@ const apiCallbacksNames = [
   'getCustomPageTemplates',
   'addPageTemplate',
   'deletePageTemplate',
-  'getCurrentUser',
   'updateCurrentUser',
   'getProxyUrl',
   'getPublisherLogos',
@@ -74,9 +73,6 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   let response;
 
   switch (name) {
-    case 'getCurrentUser':
-      response = { id: 1 };
-      break;
     case 'getPublisherLogos':
       response = [{ url: '' }];
       break;

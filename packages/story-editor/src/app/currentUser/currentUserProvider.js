@@ -33,7 +33,7 @@ function CurrentUserProvider({ children }) {
   } = useAPI();
 
   useEffect(() => {
-    if (!Object.keys(currentUser).length) {
+    if (getCurrentUser && !Object.keys(currentUser).length) {
       getCurrentUser().then(setCurrentUser);
     }
   }, [currentUser, getCurrentUser]);
