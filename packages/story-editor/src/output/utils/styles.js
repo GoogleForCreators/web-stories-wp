@@ -22,11 +22,8 @@ import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
+import isHexColorString from '../../utils/isHexColorString';
 import theme from '../../theme';
-
-function isHexColorString(s) {
-  return /^#(?:[a-f0-9]{3}){1,2}$/i.test(s);
-}
 
 function CustomStyles() {
   const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;
@@ -137,18 +134,17 @@ function CustomStyles() {
                 }
               }
 
-              .captions-area {
-                width: 100%;
-                height: 100%;
-                display: grid;
+              .align-bottom {
                 align-content: end;
+                padding: 0;
               }
 
-              .captions-wrap {
-                margin: 0 32px 16px;
+              .captions-area {
+                padding: 0 32px 0;
               }
 
               amp-story-captions {
+                margin-bottom: 16px;
                 text-align: center;
               }
 

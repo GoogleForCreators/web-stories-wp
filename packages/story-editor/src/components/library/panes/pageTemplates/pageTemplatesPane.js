@@ -30,6 +30,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
 } from '@web-stories-wp/design-system';
+import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
@@ -117,10 +118,28 @@ function PageTemplatesPane(props) {
     setIsLoading(true);
     getCustomPageTemplates(nextTemplatesToFetch)
       .then(({ templates, hasMore }) => {
+        const updatedTemplates = templates.map(
+          ({ version, templateId, ...page }) => {
+            const template = {
+              pages: [page],
+            };
+
+            // Older page templates unfortunately don't have a version.
+            // This is just a reasonable fallback, as 25 was the data version
+            // when custom page templates were first introduced.
+            const migratedTemplate = migrate(template, version || 25);
+            return {
+              templateId,
+              version: DATA_VERSION,
+              ...migratedTemplate.pages[0],
+            };
+          }
+        );
         setSavedTemplates((_savedTemplates) => [
           ...(_savedTemplates || []),
-          ...templates,
+          ...updatedTemplates,
         ]);
+
         if (!hasMore) {
           setNextTemplatesToFetch(false);
         } else {

@@ -43,6 +43,6 @@ describe('Step 2', () => {
   it('should render', () => {
     render();
 
-    expect(screen.queryByText(/Dashboard/i)).toBeInTheDocument();
+    expect(screen.getByText(/Dashboard/i)).toBeInTheDocument();
   });
 });

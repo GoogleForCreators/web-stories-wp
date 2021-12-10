@@ -23,7 +23,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { noop } from '../../../utils/noop';
-import { GUTTER_WIDTH, ReadTipsType } from '../constants';
+import { GUTTER_WIDTH } from '../constants';
 import { Footer } from './footer';
 import { Header } from './header';
 import { Tips } from './tips';
@@ -51,6 +51,6 @@ export function Menu({ onTipSelect = noop, readTips, ...transitionProps }) {
   );
 }
 Menu.propTypes = {
-  readTips: ReadTipsType,
+  readTips: PropTypes.object,
   onTipSelect: PropTypes.func.isRequired,
 };

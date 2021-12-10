@@ -102,6 +102,14 @@ function ExploreTemplates() {
       .filter(composeTemplateFilter(selectFilters));
   }, [templatesOrderById, templates, selectFilters]);
 
+  const totalVisibleTemplates = useMemo(
+    () =>
+      totalTemplates !== orderedTemplates.length
+        ? orderedTemplates.length
+        : totalTemplates,
+    [orderedTemplates, totalTemplates]
+  );
+
   // Although we may want to filter templates based on
   // repeat meta data of differing types, we only want
   // the auto-complete to show unique labels
@@ -135,7 +143,7 @@ function ExploreTemplates() {
         isLoading={isLoading && !totalTemplates}
         filter={filter}
         sort={sort}
-        totalTemplates={totalTemplates}
+        totalTemplates={totalVisibleTemplates}
         search={search}
         searchOptions={searchOptions}
         view={view}
@@ -145,7 +153,7 @@ function ExploreTemplates() {
         allPagesFetched={allPagesFetched}
         page={page}
         templates={orderedTemplates}
-        totalTemplates={totalTemplates}
+        totalTemplates={totalVisibleTemplates}
         search={search}
         view={view}
         templateActions={templateActions}

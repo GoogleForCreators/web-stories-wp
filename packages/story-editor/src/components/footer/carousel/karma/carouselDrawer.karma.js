@@ -37,7 +37,9 @@ describe('Carousel Drawer', () => {
   });
 
   describe('with a single-page story', () => {
-    it('should show correctly', async () => {
+    // TODO #9909
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should show correctly', async () => {
       // 1 page
       expect(fixture.editor.footer.carousel.pages.length).toBe(1);
 

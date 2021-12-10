@@ -28,6 +28,7 @@ import {
   useSnackbar,
 } from '@web-stories-wp/design-system';
 import { v4 as uuidv4 } from 'uuid';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
@@ -122,8 +123,13 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       try {
         const { templateId, ...page } = currentPage;
         const addedTemplate = await addPageTemplate({
-          story_data: { ...page, id: uuidv4() },
+          story_data: {
+            ...page,
+            id: uuidv4(),
+            version: DATA_VERSION,
+          },
           featured_media: imageId,
+          title: null,
         });
         updateList?.(addedTemplate);
         showSnackbar({

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useCallback, useRef } from '@web-stories-wp/react';
+import { getSmallestUrlForWidth } from '@web-stories-wp/media';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
@@ -240,7 +241,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         }
       }
 
-      const imageSrc = type === 'image' ? src : poster;
+      const imageSrc =
+        type === 'image' ? getSmallestUrlForWidth(0, resource) : poster;
       if (imageSrc && !baseColor) {
         processMediaBaseColor(resource);
       }
