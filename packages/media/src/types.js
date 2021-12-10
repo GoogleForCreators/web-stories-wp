@@ -68,7 +68,7 @@ ResourcePropTypes.videoResource = PropTypes.shape({
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   poster: PropTypes.string,
-  posterId: PropTypes.number,
+  posterId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
   alt: PropTypes.string,
   title: PropTypes.string,
@@ -145,7 +145,7 @@ export { ResourcePropTypes };
  * @property {number} width The natural resource width.
  * @property {number} height The natural resource height.
  * @property {string|null} poster The poster URL for the "video" type.
- * @property {number|null} posterId The system poster ID.
+ * @property {number|string|null} posterId The system poster ID.
  * @property {number|null} id The system ID.
  * @property {number|null} length The length for the "video" type.
  * @property {string|null} lengthFormatted The formatted length for the "video" type.
@@ -184,7 +184,7 @@ export { ResourcePropTypes };
  * @property {number} width The natural resource width.
  * @property {number} height The natural resource height.
  * @property {string|null} poster The poster URL for the "video" type.
- * @property {number|null} posterId The system poster ID.
+ * @property {number|string|null} posterId The system poster ID.
  * @property {number|null} id The system ID.
  * @property {number|null} length The length for the "video" type.
  * @property {string|null} lengthFormatted The formatted length for the "video" type.

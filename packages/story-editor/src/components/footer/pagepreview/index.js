@@ -81,6 +81,14 @@ const Page = styled.button`
         )};
       }
     `}
+
+      &:focus::after {
+        border-color: ${rgba(
+          theme.colors.border.selection,
+          isActive ? 1 : 0.7
+        )};
+      }
+    `}
 `;
 
 const PreviewWrapper = styled.div`
@@ -113,7 +121,6 @@ function PagePreview({
   const pageAtGenerationTime = useRef();
   const enableThumbnailCaching =
     useFeature('enableThumbnailCaching') && isCacheable;
-
   // Whenever the page is re-generated
   // remove the old (and now stale) image blob
   useEffect(() => {
@@ -200,7 +207,7 @@ PagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
   label: PropTypes.string,
   isCacheable: PropTypes.bool,
-  cachedImage: PropTypes.object,
+  cachedImage: PropTypes.string,
   setCachedImage: PropTypes.func,
   pageImageData: PropTypes.string,
   width: PropTypes.number.isRequired,
