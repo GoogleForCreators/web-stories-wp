@@ -42,7 +42,6 @@ const apiCallbacksNames = [
   'getCustomPageTemplates',
   'addPageTemplate',
   'deletePageTemplate',
-  'getProxyUrl',
 ];
 
 // @todo Should still work with empty object.
