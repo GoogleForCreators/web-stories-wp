@@ -124,8 +124,13 @@ const Grid = styled.div`
   grid-template-columns: 1fr 1fr;
 
   ${Container} {
+    height: 400px;
     width: 300px;
     margin: 0 auto;
+  }
+
+  ${ContextMenu} {
+    --delta-y: 0;
   }
 `;
 

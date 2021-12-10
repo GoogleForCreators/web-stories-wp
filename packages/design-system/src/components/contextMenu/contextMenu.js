@@ -31,7 +31,6 @@ const ContextMenu = ({
   animate,
   children,
   isAlwaysVisible,
-  items,
   isRTL,
   isIconMenu,
   isInline = false,
@@ -46,20 +45,20 @@ const ContextMenu = ({
   );
 
   return (
-    <Wrapper
-      isInline={isInline}
-      role={isAlwaysVisible ? null : 'dialog'}
-      isOpen={isAlwaysVisible || props.isOpen}
-      isRTL={isRTL}
-    >
-      <ContextMenuProvider isIconMenu={isIconMenu}>
-        <Menu ref={ref} aria-expanded={props.isOpen} items={items} {...props}>
+    <ContextMenuProvider isIconMenu={isIconMenu}>
+      <Wrapper
+        isInline={isInline}
+        role={isAlwaysVisible ? null : 'dialog'}
+        isOpen={isAlwaysVisible || props.isOpen}
+        isRTL={isRTL}
+      >
+        <Menu ref={ref} aria-expanded={props.isOpen} {...props}>
           {children}
         </Menu>
-      </ContextMenuProvider>
-      {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
-      {!animate && <Shadow />}
-    </Wrapper>
+        {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
+        {!animate && <Shadow />}
+      </Wrapper>
+    </ContextMenuProvider>
   );
 };
 ContextMenu.propTypes = {
