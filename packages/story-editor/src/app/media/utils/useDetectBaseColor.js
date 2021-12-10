@@ -103,7 +103,7 @@ function useDetectBaseColor({ updateMediaElement }) {
         // Do nothing for now.
       }
     },
-    [getProxiedUrl, saveBaseColor]
+    [getProxiedUrl, getPosterMediaById, saveBaseColor]
   );
 
   return {
