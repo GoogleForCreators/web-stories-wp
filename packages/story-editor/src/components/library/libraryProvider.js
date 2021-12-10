@@ -55,6 +55,7 @@ function LibraryProvider({ children }) {
   const [textSets, setTextSets] = useState({});
   const [areTextSetsLoading, setAreTextSetsLoading] = useState({});
   const [savedTemplates, _setSavedTemplates] = useState(null);
+
   // The first page of templates to fetch is 1.
   const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(1);
   // If to use smart colors with text and text sets.
