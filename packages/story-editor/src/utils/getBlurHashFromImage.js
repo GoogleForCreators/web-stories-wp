@@ -51,14 +51,18 @@ const getBlurHashFromImage = async (src) => {
       compontentX: 4,
       compontentY: 4,
     });
-    worker.onmessage = function (event) {
+    worker.addEventListener('message', function (event) {
+      worker.terminate();
       if (event.data.type === 'success') {
         trackTiming();
         resolve(event.data.blurHash);
       } else {
         reject(event.data.error);
       }
-    };
+    });
+    worker.addEventListener('error', (e) => {
+      reject(e);
+    });
   });
 };
 export default getBlurHashFromImage;

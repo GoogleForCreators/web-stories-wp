@@ -18,7 +18,7 @@
  */
 import { encode } from 'blurhash';
 
-onmessage = function (event) {
+self.onmessage = function (event) {
   const { image, width, height, compontentX, compontentY } = event.data;
 
   try {

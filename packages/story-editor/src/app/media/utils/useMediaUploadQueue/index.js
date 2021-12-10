@@ -245,7 +245,7 @@ function useMediaUploadQueue() {
               web_stories_base_color: resource.baseColor,
             };
           }
-
+          // Do not copy over blurhash for new trimmed videos, poster might be different.
           if (resource?.blurHash && !resource?.trimData) {
             additionalData.meta = {
               ...additionalData.meta,
