@@ -38,12 +38,10 @@ const AppContainer = styled.div`
 const apiCallbacksNames = [
   'saveStoryById',
   'getMedia',
-  'getMutedMediaById',
   'getLinkMetadata',
   'getCustomPageTemplates',
   'addPageTemplate',
   'deletePageTemplate',
-  'updateCurrentUser',
   'getProxyUrl',
 ];
 
