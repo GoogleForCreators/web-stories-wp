@@ -39,7 +39,6 @@ const apiCallbacksNames = [
   'saveStoryById',
   'getMedia',
   'getMutedMediaById',
-  'getOptimizedMediaById',
   'getLinkMetadata',
   'getCustomPageTemplates',
   'addPageTemplate',
