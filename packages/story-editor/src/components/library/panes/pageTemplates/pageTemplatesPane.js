@@ -98,11 +98,13 @@ function PageTemplatesPane(props) {
 
   const updateTemplatesList = useCallback(
     (page) => {
-      setSavedTemplates([page, ...(savedTemplates || [])]);
+      setSavedTemplates((_savedTemplates) => {
+        return [page, ...(_savedTemplates || [])];
+      });
       setHighlightedTemplate(page.id);
       localStore.setItemByKey(LOCAL_STORAGE_KEY, false);
     },
-    [setSavedTemplates, savedTemplates]
+    [setSavedTemplates]
   );
 
   const loadTemplates = useCallback(() => {
@@ -115,7 +117,10 @@ function PageTemplatesPane(props) {
     setIsLoading(true);
     getCustomPageTemplates(nextTemplatesToFetch)
       .then(({ templates, hasMore }) => {
-        setSavedTemplates([...(savedTemplates || []), ...templates]);
+        setSavedTemplates((_savedTemplates) => [
+          ...(_savedTemplates || []),
+          ...templates,
+        ]);
         if (!hasMore) {
           setNextTemplatesToFetch(false);
         } else {
@@ -124,16 +129,13 @@ function PageTemplatesPane(props) {
       })
       .catch(() => {
         setNextTemplatesToFetch(false);
-        if (null === savedTemplates) {
-          setSavedTemplates([]);
-        }
+        setSavedTemplates((_savedTemplates) => _savedTemplates ?? []);
       })
       .finally(() => setIsLoading(false));
   }, [
     getCustomPageTemplates,
     nextTemplatesToFetch,
     setSavedTemplates,
-    savedTemplates,
     setNextTemplatesToFetch,
   ]);
 
