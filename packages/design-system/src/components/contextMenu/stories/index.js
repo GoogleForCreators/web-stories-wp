@@ -85,29 +85,29 @@ export const _default = () => {
   return (
     <Container>
       <ContextMenu isOpen={boolean('isOpen', true)}>
-        <MenuItems.Item onClick={action('Clicked on `one`')}>
+        <MenuItems.Button onClick={action('Clicked on `one`')}>
           {'one'}
-        </MenuItems.Item>
-        <MenuItems.Item onClick={action('Clicked on `two`')}>
+        </MenuItems.Button>
+        <MenuItems.Button onClick={action('Clicked on `two`')}>
           {'two'}
-        </MenuItems.Item>
-        <MenuItems.Item onClick={action('Clicked on `disabled`')} disabled>
+        </MenuItems.Button>
+        <MenuItems.Button onClick={action('Clicked on `disabled`')} disabled>
           {'this is disabled'}
-        </MenuItems.Item>
+        </MenuItems.Button>
         <ContextMenuSeparator />
         <MenuItems.Label>{'i am neither a button nor a link'}</MenuItems.Label>
         <ContextMenuSeparator />
-        <MenuItems.Item onClick={action('Clicked on `i am a button`')}>
+        <MenuItems.Button onClick={action('Clicked on `i am a button`')}>
           {'i am a button!'}
           <MenuItems.Shortcut>{'⌥ ⌘ A'}</MenuItems.Shortcut>
-        </MenuItems.Item>
-        <MenuItems.Item
+        </MenuItems.Button>
+        <MenuItems.Button
           onClick={action(
             'Clicked on `i am a very very very very very very very long label`'
           )}
         >
           {'i am a very very very very very very very long label'}
-        </MenuItems.Item>
+        </MenuItems.Button>
         <MenuItems.Link href="https://www.google.com/">
           {'i am a link!'}
         </MenuItems.Link>
@@ -116,15 +116,15 @@ export const _default = () => {
         </MenuItems.Link>
         <ContextMenuSeparator />
         <MenuItems.Group label="The oh my section">
-          <MenuItems.Item onClick={action('Clicked on `lions`')}>
+          <MenuItems.Button onClick={action('Clicked on `lions`')}>
             {'lions'}
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on `tigers`')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on `tigers`')}>
             {'tigers'}
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on `bears`')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on `bears`')}>
             {'bears'}
-          </MenuItems.Item>
+          </MenuItems.Button>
         </MenuItems.Group>
       </ContextMenu>
     </Container>
@@ -137,31 +137,34 @@ export const DarkMode = () => {
       <Container>
         <Container>
           <ContextMenu isOpen={boolean('isOpen', true)}>
-            <MenuItems.Item onClick={action('Clicked on `one`')}>
+            <MenuItems.Button onClick={action('Clicked on `one`')}>
               {'one'}
-            </MenuItems.Item>
-            <MenuItems.Item onClick={action('Clicked on `two`')}>
+            </MenuItems.Button>
+            <MenuItems.Button onClick={action('Clicked on `two`')}>
               {'two'}
-            </MenuItems.Item>
-            <MenuItems.Item onClick={action('Clicked on `disabled`')} disabled>
+            </MenuItems.Button>
+            <MenuItems.Button
+              onClick={action('Clicked on `disabled`')}
+              disabled
+            >
               {'this is disabled'}
-            </MenuItems.Item>
+            </MenuItems.Button>
             <ContextMenuSeparator />
             <MenuItems.Label>
               {'i am neither a button nor a link'}
             </MenuItems.Label>
             <ContextMenuSeparator />
-            <MenuItems.Item onClick={action('Clicked on `i am a button`')}>
+            <MenuItems.Button onClick={action('Clicked on `i am a button`')}>
               {'i am a button!'}
               <MenuItems.Shortcut>{'⌥ ⌘ A'}</MenuItems.Shortcut>
-            </MenuItems.Item>
-            <MenuItems.Item
+            </MenuItems.Button>
+            <MenuItems.Button
               onClick={action(
                 'Clicked on `i am a very very very very very very very long label`'
               )}
             >
               {'i am a very very very very very very very long label'}
-            </MenuItems.Item>
+            </MenuItems.Button>
             <MenuItems.Link href="https://www.google.com/">
               {'i am a link!'}
             </MenuItems.Link>
@@ -170,15 +173,15 @@ export const DarkMode = () => {
             </MenuItems.Link>
             <ContextMenuSeparator />
             <MenuItems.Group label="The oh my section">
-              <MenuItems.Item onClick={action('Clicked on `lions`')}>
+              <MenuItems.Button onClick={action('Clicked on `lions`')}>
                 {'lions'}
-              </MenuItems.Item>
-              <MenuItems.Item onClick={action('Clicked on `tigers`')}>
+              </MenuItems.Button>
+              <MenuItems.Button onClick={action('Clicked on `tigers`')}>
                 {'tigers'}
-              </MenuItems.Item>
-              <MenuItems.Item onClick={action('Clicked on `bears`')}>
+              </MenuItems.Button>
+              <MenuItems.Button onClick={action('Clicked on `bears`')}>
                 {'bears'}
-              </MenuItems.Item>
+              </MenuItems.Button>
             </MenuItems.Group>
           </ContextMenu>
         </Container>
@@ -193,157 +196,157 @@ export const QuickActionMenu = () => {
       <Container>
         <Text>{'Blank page; no item selected'}</Text>
         <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
-          <MenuItems.Item onClick={action('Clicked on the first action')}>
+          <MenuItems.Button onClick={action('Clicked on the first action')}>
             <MenuItems.Icon title="Change background color">
               <Bucket />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
           <ContextMenuSeparator />
-          <MenuItems.Item onClick={action('Clicked on the second action')}>
+          <MenuItems.Button onClick={action('Clicked on the second action')}>
             <MenuItems.Icon title="Insert media">
               <Media />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the third action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the third action')}>
             <MenuItems.Icon title="Insert text">
               <LetterTPlus />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
         </ContextMenu>
       </Container>
       <Container>
         <Text>{'Background Image selected'}</Text>
         <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
-          <MenuItems.Item onClick={action('Clicked on the first action')}>
+          <MenuItems.Button onClick={action('Clicked on the first action')}>
             <MenuItems.Icon title="Replace background">
               <PictureSwap />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the second action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the second action')}>
             <MenuItems.Icon title="Add animation">
               <CircleSpeed />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
           <ContextMenuSeparator />
-          <MenuItems.Item onClick={action('Clicked on the third action')}>
+          <MenuItems.Button onClick={action('Clicked on the third action')}>
             <MenuItems.Icon title="Clear filters and animation">
               <Eraser />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
         </ContextMenu>
       </Container>
       <Container>
         <Text>{'Foreground Image selected'}</Text>
         <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
-          <MenuItems.Item onClick={action('Clicked on the first action')}>
+          <MenuItems.Button onClick={action('Clicked on the first action')}>
             <MenuItems.Icon title="Replace media">
               <PictureSwap />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the second action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the second action')}>
             <MenuItems.Icon title="Add animation">
               <CircleSpeed />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the third action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the third action')}>
             <MenuItems.Icon title="Add link">
               <IconLink />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
           <ContextMenuSeparator />
-          <MenuItems.Item onClick={action('Clicked on the fourth action')}>
+          <MenuItems.Button onClick={action('Clicked on the fourth action')}>
             <MenuItems.Icon title="Clear filters and animation">
               <Eraser />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
         </ContextMenu>
       </Container>
       <Container>
         <Text>{'Video selected'}</Text>
         <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
-          <MenuItems.Item onClick={action('Clicked on the first action')}>
+          <MenuItems.Button onClick={action('Clicked on the first action')}>
             <MenuItems.Icon title="Replace media">
               <PictureSwap />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the second action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the second action')}>
             <MenuItems.Icon title="Add animation">
               <CircleSpeed />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the third action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the third action')}>
             <MenuItems.Icon title="Add link">
               <IconLink />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the third action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the third action')}>
             <MenuItems.Icon title="Add captions">
               <Captions />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
           <ContextMenuSeparator />
-          <MenuItems.Item onClick={action('Clicked on the fourth action')}>
+          <MenuItems.Button onClick={action('Clicked on the fourth action')}>
             <MenuItems.Icon title="Clear filters and animation">
               <Eraser />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
         </ContextMenu>
       </Container>
       <Container>
         <Text>{'Shape selected'}</Text>
         <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
-          <MenuItems.Item onClick={action('Clicked on the first action')}>
+          <MenuItems.Button onClick={action('Clicked on the first action')}>
             <MenuItems.Icon title="Change color">
               <Bucket />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the second action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the second action')}>
             <MenuItems.Icon title="Add animation">
               <CircleSpeed />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the third action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the third action')}>
             <MenuItems.Icon title="Add link">
               <IconLink />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
           <ContextMenuSeparator />
-          <MenuItems.Item onClick={action('Clicked on the fourth action')}>
+          <MenuItems.Button onClick={action('Clicked on the fourth action')}>
             <MenuItems.Icon title="Clear filters and animation">
               <Eraser />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
         </ContextMenu>
       </Container>
       <Container>
         <Text>{'Text selected'}</Text>
         <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
-          <MenuItems.Item onClick={action('Clicked on the first action')}>
+          <MenuItems.Button onClick={action('Clicked on the first action')}>
             <MenuItems.Icon title="Change color">
               <Bucket />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the second action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the second action')}>
             <MenuItems.Icon title="Edit text">
               <LetterTLargeLetterTSmall />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the third action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the third action')}>
             <MenuItems.Icon title="Add animation">
               <CircleSpeed />
             </MenuItems.Icon>
-          </MenuItems.Item>
-          <MenuItems.Item onClick={action('Clicked on the third action')}>
+          </MenuItems.Button>
+          <MenuItems.Button onClick={action('Clicked on the third action')}>
             <MenuItems.Icon title="Add link">
               <IconLink />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
           <ContextMenuSeparator />
-          <MenuItems.Item onClick={action('Clicked on the fourth action')}>
+          <MenuItems.Button onClick={action('Clicked on the fourth action')}>
             <MenuItems.Icon title="Clear filters and animation">
               <Eraser />
             </MenuItems.Icon>
-          </MenuItems.Item>
+          </MenuItems.Button>
         </ContextMenu>
       </Container>
     </Grid>
@@ -352,77 +355,77 @@ export const QuickActionMenu = () => {
 
 const rightClickMenuMainOptions = (
   <>
-    <MenuItems.Item onClick={action('Clicked on `Copy`')}>
+    <MenuItems.Button onClick={action('Clicked on `Copy`')}>
       {'Copy'}
       <MenuItems.Shortcut>{'⌘C'}</MenuItems.Shortcut>
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Paste`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Paste`')}>
       {'Paste'}
       <MenuItems.Shortcut>{'⌘V'}</MenuItems.Shortcut>
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Delete`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Delete`')}>
       {'Delete'}
       <MenuItems.Shortcut>{'DEL'}</MenuItems.Shortcut>
-    </MenuItems.Item>
+    </MenuItems.Button>
   </>
 );
 
 const rightClickMenuLayeringOptions = (
   <>
-    <MenuItems.Item onClick={action('Clicked on `Send to back`')}>
+    <MenuItems.Button onClick={action('Clicked on `Send to back`')}>
       {'Send to back'}
       <MenuItems.Shortcut>{'⌥⌘['}</MenuItems.Shortcut>
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Send backwards`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Send backwards`')}>
       {'Send backwards'}
       <MenuItems.Shortcut>{'⌘['}</MenuItems.Shortcut>
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Bring forward`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Bring forward`')}>
       {'Bring forward'}
       <MenuItems.Shortcut>{'⌘]'}</MenuItems.Shortcut>
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Bring to front`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Bring to front`')}>
       {'Bring to front'}
       <MenuItems.Shortcut>{'⌥⌘]'}</MenuItems.Shortcut>
-    </MenuItems.Item>
+    </MenuItems.Button>
   </>
 );
 
 const rightClickMenuPageAddOptions = (
   <>
-    <MenuItems.Item onClick={action('Clicked on `Add new page before`')}>
+    <MenuItems.Button onClick={action('Clicked on `Add new page before`')}>
       {'Add new page before'}
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Add new page after`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Add new page after`')}>
       {'Add new page after'}
-    </MenuItems.Item>
+    </MenuItems.Button>
   </>
 );
 
 const rightClickMenuPageDeleteOptions = (
   <>
-    <MenuItems.Item onClick={action('Clicked on `Duplicate page`')}>
+    <MenuItems.Button onClick={action('Clicked on `Duplicate page`')}>
       {'Duplicate page'}
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Delete page`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Delete page`')}>
       {'Delete page'}
-    </MenuItems.Item>
+    </MenuItems.Button>
   </>
 );
 
 const rightClickMenuStyleOptions = (
   <>
-    <MenuItems.Item onClick={action('Clicked on `Copy style`')}>
+    <MenuItems.Button onClick={action('Clicked on `Copy style`')}>
       {'Copy style'}
       <MenuItems.Shortcut>{'⌥⌘C'}</MenuItems.Shortcut>
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Paste style`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Paste style`')}>
       {'Paste style'}
       <MenuItems.Shortcut>{'⌥⌘V'}</MenuItems.Shortcut>
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Clear style`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Clear style`')}>
       {'Clear style'}
-    </MenuItems.Item>
+    </MenuItems.Button>
   </>
 );
 
@@ -442,11 +445,11 @@ const shapeMenu = (
     {rightClickMenuLayeringOptions}
     <ContextMenuSeparator />
     {rightClickMenuStyleOptions}
-    <MenuItems.Item
+    <MenuItems.Button
       onClick={action('Clicked on `Add color to "Saved colors"`')}
     >
       {'Add color to "Saved colors"'}
-    </MenuItems.Item>
+    </MenuItems.Button>
   </>
 );
 
@@ -456,12 +459,12 @@ const foregroundMediaMenu = (
     <ContextMenuSeparator />
     {rightClickMenuLayeringOptions}
     <ContextMenuSeparator />
-    <MenuItems.Item onClick={action('Clicked on `Set as page background`')}>
+    <MenuItems.Button onClick={action('Clicked on `Set as page background`')}>
       {'Set as page background'}
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Scale & crop image`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Scale & crop image`')}>
       {'Scale & crop image'}
-    </MenuItems.Item>
+    </MenuItems.Button>
     <ContextMenuSeparator />
     {rightClickMenuStyleOptions}
   </>
@@ -471,22 +474,22 @@ const backgroundMediaMenu = (
   <>
     {rightClickMenuMainOptions}
     <ContextMenuSeparator />
-    <MenuItems.Item
+    <MenuItems.Button
       onClick={action('Clicked on `Detach image from background`')}
     >
       {'Detach image from background'}
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Replace background image`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Replace background image`')}>
       {'Replace background image'}
-    </MenuItems.Item>
-    <MenuItems.Item
+    </MenuItems.Button>
+    <MenuItems.Button
       onClick={action('Clicked on `Scale & crop background image`')}
     >
       {'Scale & crop background image'}
-    </MenuItems.Item>
-    <MenuItems.Item onClick={action('Clicked on `Clear style`')}>
+    </MenuItems.Button>
+    <MenuItems.Button onClick={action('Clicked on `Clear style`')}>
       {'Clear style'}
-    </MenuItems.Item>
+    </MenuItems.Button>
     <ContextMenuSeparator />
     {rightClickMenuPageAddOptions}
     {rightClickMenuPageDeleteOptions}
@@ -500,16 +503,16 @@ const textMenu = (
     {rightClickMenuLayeringOptions}
     <ContextMenuSeparator />
     {rightClickMenuStyleOptions}
-    <MenuItems.Item
+    <MenuItems.Button
       onClick={action('Clicked on `Add style to "Saved styles"`')}
     >
       {'Add style to "Saved styles"'}
-    </MenuItems.Item>
-    <MenuItems.Item
+    </MenuItems.Button>
+    <MenuItems.Button
       onClick={action('Clicked on `Add color to "Saved colors"`')}
     >
       {'Add color to "Saved colors"'}
-    </MenuItems.Item>
+    </MenuItems.Button>
   </>
 );
 

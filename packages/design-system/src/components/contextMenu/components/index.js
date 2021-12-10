@@ -18,9 +18,9 @@
  */
 import Group from './group';
 import Icon from './icon';
-import Item from './item';
+import Button from './button';
 import Label from './label';
 import Link from './link';
 import Shortcut from './shortcut';
 
-export { Group, Icon, Item, Label, Link, Shortcut };
+export { Button, Group, Icon, Label, Link, Shortcut };

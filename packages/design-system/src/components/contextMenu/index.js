@@ -14,5 +14,6 @@
  * limitations under the License.
  */
 export { default as ContextMenu } from './contextMenu';
+export * as ContextMenuComponents from './components';
 export { MenuPropTypes } from './menu';
 export { MenuItemProps } from './menuItem';
