@@ -36,6 +36,7 @@ import {
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { fetchRemoteBlob } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -46,7 +47,6 @@ import { usePageDataUrls } from '../../../../app/pageDataUrls';
 import { useUploader } from '../../../../app/uploader';
 import { PageSizePropType } from '../../../../types';
 import blobToFile from '../../../../utils/blobToFile';
-import dataUrlToBlob from '../../../../utils/dataUrlToBlob';
 import { focusStyle } from '../../../panels/shared';
 import DisplayElement from '../../../canvas/displayElement';
 
@@ -160,7 +160,7 @@ function PageTemplate(
 
     (async () => {
       try {
-        const blob = await dataUrlToBlob(pageDataUrl);
+        const blob = await fetchRemoteBlob(pageDataUrl);
         const file = blobToFile(blob, `${page.templateId}.jpg`, 'image/jpeg');
         const resource = await uploadFile(file, {
           web_stories_media_source: 'page-template',
