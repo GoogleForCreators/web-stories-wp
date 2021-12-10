@@ -80,11 +80,4 @@ describe('Library Media Tab', () => {
       ).toBeDefined();
     });
   });
-
-  describe('library Media tab should have no aXe accessibility violations', () => {
-    it('should pass accessibility', async () => {
-      const mediaTab = fixture.container.querySelector(`#library-tab-media`);
-      await expectAsync(mediaTab).toHaveNoViolations();
-    });
-  });
 });

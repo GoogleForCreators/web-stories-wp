@@ -38,13 +38,13 @@ describe('Help Center integration', () => {
   });
 
   describe('Help Center aXe tests', () => {
-    it('should pass accessibility tests from default view', async () => {
+    it('should have no aXe violations from default view', async () => {
       await expectAsync(
         fixture.editor.helpCenter.quickTips
       ).toHaveNoViolations();
     });
 
-    it('should pass accessibility tests from tip view', async () => {
+    it('should have no aXe violations from tip view', async () => {
       const { quickTips } = await fixture.editor.helpCenter;
       const { getByRole } = within(quickTips);
 

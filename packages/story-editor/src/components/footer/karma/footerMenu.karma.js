@@ -32,7 +32,7 @@ describe('Footer menu', () => {
     fixture.restore();
   });
 
-  it('should pass accessibility tests', async () => {
+  it('should have no aXe violations', async () => {
     await expectAsync(fixture.editor.footer.node).toHaveNoViolations();
   });
 

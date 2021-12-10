@@ -41,7 +41,7 @@ describe('Inspector Tabs integration', () => {
   // TODO: https://github.com/google/web-stories-wp/issues/9943
   // eslint-disable-next-line jasmine/no-disabled-tests
   xdescribe('Inspector Tabs aXe tests', () => {
-    it('should pass accessibility tests', async () => {
+    it('should have no aXe violations', async () => {
       const { documentTab } = fixture.editor.inspector;
 
       // Click document tab

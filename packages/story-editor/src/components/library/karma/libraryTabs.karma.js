@@ -49,7 +49,7 @@ describe('LibraryTabs integration', () => {
     // Disable reason: aXe violations
     // TODO: https://github.com/google/web-stories-wp/issues/9954
     // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('Local Media Panel should pass accessibility', async () => {
+    xit('Local Media Panel should have no aXe violations', async () => {
       const { mediaTab } = fixture.editor.library;
       expect(mediaTab).toBeDefined();
       await fixture.events.click(mediaTab);
@@ -57,7 +57,7 @@ describe('LibraryTabs integration', () => {
       await expectAsync(fixture.editor.library.media).toHaveNoViolations();
     });
 
-    it('Media 3p Panel should pass accessibility', async () => {
+    it('Media 3p Panel should have no aXe violations', async () => {
       // Set local storage to have accepted third party media terms to avoid interruption with dialog
       localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
       const { media3pTab } = fixture.editor.library;
@@ -72,7 +72,7 @@ describe('LibraryTabs integration', () => {
       ).toHaveNoViolations();
     });
 
-    it('Text Panel should pass accessibility', async () => {
+    it('Text Panel should have no aXe violations', async () => {
       const { textTab } = fixture.editor.library;
       expect(textTab).toBeDefined();
       // navigate to text panel
@@ -84,7 +84,7 @@ describe('LibraryTabs integration', () => {
       await expectAsync(fixture.editor.library.text.node).toHaveNoViolations();
     });
 
-    it('Shapes Panel should pass accessibility', async () => {
+    it('Shapes Panel should have no aXe violations', async () => {
       const { shapesTab } = fixture.editor.library;
       expect(shapesTab).toBeDefined();
       // navigate to shapes panel
@@ -101,7 +101,7 @@ describe('LibraryTabs integration', () => {
       await expectAsync(shapesLibrary).toHaveNoViolations();
     });
 
-    it('Page Templates Panel should pass accessibility', async () => {
+    it('Page Templates Panel should have no aXe violations', async () => {
       const { pageTemplatesTab } = fixture.editor.library;
       expect(pageTemplatesTab).toBeDefined();
       // navigate to pageTemplates panel

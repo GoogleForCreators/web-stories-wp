@@ -82,7 +82,7 @@ describe('Carousel integration', () => {
     await fixture.events.mouse.clickOn(thumb.node, 5, 5);
   }
 
-  it('should pass accessibility tests', async () => {
+  it('should have no aXe violations', async () => {
     await expectAsync(fixture.editor.footer.carousel.node).toHaveNoViolations();
   });
 
