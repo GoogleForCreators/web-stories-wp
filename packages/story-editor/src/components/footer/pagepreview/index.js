@@ -81,14 +81,6 @@ const Page = styled.button`
         )};
       }
     `}
-
-      &:focus::after {
-        border-color: ${rgba(
-          theme.colors.border.selection,
-          isActive ? 1 : 0.7
-        )};
-      }
-    `}
 `;
 
 const PreviewWrapper = styled.div`
