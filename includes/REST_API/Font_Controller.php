@@ -159,8 +159,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		 * present in $registered will be set.
 		 */
 		$parameter_mappings = [
-			'include' => 'post__in',
-			'search'  => 's',
+			'search' => 's',
 		];
 
 		/*
@@ -172,6 +171,8 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				$args[ $wp_param ] = $request[ $api_param ];
 			}
 		}
+
+		// Force sarch to be case-insensitive.
 
 		// Force the post_type argument, since it's not a user input variable.
 		$args['post_type'] = $this->post_type;
@@ -300,7 +301,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 		if ( ! $post_type || ! current_user_can( $post_type->cap->edit_posts ) ) {
 			return new WP_Error(
-				'rest_forbidden_context',
+				'rest_forbidden',
 				__( 'Sorry, you are not allowed to list fonts.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
 			);
