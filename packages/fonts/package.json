@@ -7,9 +7,9 @@
     "npm": ">= 7.3"
   },
   "exports": {
-    "default": "./src/fonts.json"
+    "default": "./src/index.js"
   },
-  "main": "./src/font.json",
+  "main": "./src/index.js",
   "devDependencies": {
     "got": "^11.8.3",
     "opentype.js": "^1.3.4"

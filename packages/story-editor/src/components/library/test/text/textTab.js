@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
@@ -28,7 +29,6 @@ import fontsListResponse from '../../../panels/design/textStyle/test/fontsRespon
 import TextIcon from '../../panes/text/textIcon';
 import { DEFAULT_PRESET } from '../../panes/text/textPresets';
 import useLibrary from '../../useLibrary';
-import { CURATED_FONT_NAMES } from '../../../../constants';
 
 jest.mock('../../useLibrary');
 

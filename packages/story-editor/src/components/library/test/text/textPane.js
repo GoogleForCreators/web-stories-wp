@@ -20,6 +20,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
 import { PAGE_RATIO, UnitsProvider } from '@web-stories-wp/units';
+import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
@@ -32,7 +33,7 @@ import TextPane from '../../panes/text/textPane';
 import { PRESETS } from '../../panes/text/textPresets';
 import useLibrary from '../../useLibrary';
 import useInsertPreset from '../../panes/text/useInsertPreset';
-import { CURATED_FONT_NAMES, TEXT_SET_SIZE } from '../../../../constants';
+import { TEXT_SET_SIZE } from '../../../../constants';
 import CanvasContext from '../../../../app/canvas/context';
 
 jest.mock('../../useLibrary');

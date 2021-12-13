@@ -19,13 +19,13 @@
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
 import { Datalist } from '@web-stories-wp/design-system';
+import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
  */
 import FontContext from '../../../../../app/font/context';
 import { renderWithTheme } from '../../../../../testUtils';
-import { CURATED_FONT_NAMES } from '../../../../../constants';
 import fontsListResponse from './fontsResponse';
 
 jest.mock('@web-stories-wp/design-system', () => ({

@@ -24,12 +24,13 @@ import {
   useRef,
   useState,
 } from '@web-stories-wp/react';
+import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
  */
 import loadStylesheet from '../../utils/loadStylesheet';
-import { CURATED_FONT_NAMES, FONT_WEIGHT_NAMES } from '../../constants';
+import { FONT_WEIGHT_NAMES } from '../../constants';
 import { useAPI } from '../api';
 import Context from './context';
 import useLoadFontFiles from './actions/useLoadFontFiles';
