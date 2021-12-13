@@ -21,11 +21,11 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Button } from '../../button';
+import { Button as BaseButton } from '../../button';
 import { useContextMenu } from '../provider';
 import { menuItemStyles } from './styles';
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(BaseButton)`
   ${menuItemStyles};
 
   width: 100%;
@@ -58,14 +58,14 @@ const StyledButton = styled(Button)`
  * @param {Object} props Attributes to pass to the button.
  * @return {Node} The react node
  */
-function Item(props) {
+function Button(props) {
   const isIconMenu = useContextMenu(({ state }) => state.isIconMenu);
 
   return <StyledButton role="menuitem" $isIconMenu={isIconMenu} {...props} />;
 }
 
-Item.propTypes = {
+Button.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default Item;
+export default Button;
