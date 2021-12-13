@@ -50,6 +50,12 @@ async function getFontDataFromUrl(fontURL) {
 
   return {
     name: fontInfo.names.fullName.en,
+    family: fontInfo.names.fontFamily.en,
+    weights: [400],
+    styles: ['regular'],
+    variants: [[0, 400]],
+    service: 'custom',
+    fallbacks: ['sans-serif'],
     metrics: {
       upm: fontInfo.unitsPerEm,
       asc: fontInfo.ascender,
