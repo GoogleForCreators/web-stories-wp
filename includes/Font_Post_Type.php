@@ -135,8 +135,6 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 			],
 			'supports'              => [
 				'title',
-				'author',
-				'excerpt',
 			],
 			'capabilities'          => $capabilities,
 			'rewrite'               => false,
