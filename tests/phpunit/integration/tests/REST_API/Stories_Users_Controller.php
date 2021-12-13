@@ -74,6 +74,76 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	}
 
 	/**
+	 * @covers ::filter_user_query
+	 */
+	public function test_filter_user_query() {
+		$results = $this->controller->filter_user_query( [ 'who' => 'authors' ] );
+		$this->assertEqualSets(
+			[
+				'meta_query' => [
+					[
+						'key'     => 'wptests_user_level',
+						'value'   => 0,
+						'compare' => '!=',
+					],
+				],
+			],
+			$results
+		);
+	}
+
+	/**
+	 * @covers ::filter_user_query
+	 */
+	public function test_filter_user_query_meta_query() {
+		$results = $this->controller->filter_user_query(
+			[
+				'who'        => 'authors',
+				'meta_query' => [
+					[
+						'key'     => 'age',
+						'value'   => [ 20, 30 ],
+						'type'    => 'numeric',
+						'compare' => 'BETWEEN',
+					],
+				],
+			]
+		);
+
+		$this->assertEqualSets(
+			[
+				'meta_query' => [
+					'relation' => 'AND',
+					[
+						'key'     => 'age',
+						'value'   => [ 20, 30 ],
+						'type'    => 'numeric',
+						'compare' => 'BETWEEN',
+					],
+					[
+						'key'     => 'wptests_user_level',
+						'value'   => 0,
+						'compare' => '!=',
+					],
+				],
+			],
+			$results
+		);
+	}
+
+	/**
+	 * @covers ::filter_user_query
+	 */
+	public function test_filter_user_query_no_change() {
+		$args    = [
+			'orderby' => 'registered',
+			'order'   => 'ASC',
+		];
+		$results = $this->controller->filter_user_query( $args );
+		$this->assertEqualSets( $args, $results );
+	}
+
+	/**
 	 * @covers ::user_posts_count_public
 	 * @covers \Google\Web_Stories\Story_Post_Type::clear_user_posts_count
 	 */
@@ -139,7 +209,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 			[
 				-1,
 				$post_type->get_slug(),
-			] 
+			]
 		);
 		$this->assertEquals( 0, $result1 );
 

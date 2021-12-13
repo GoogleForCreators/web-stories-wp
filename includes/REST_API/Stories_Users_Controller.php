@@ -32,6 +32,8 @@ use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use WP_Error;
 use WP_REST_Request;
+use WP_REST_Response;
+use WP_Meta_Query;
 use WP_REST_Users_Controller;
 
 /**
@@ -81,6 +83,66 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 */
 	public static function get_registration_action_priority(): int {
 		return 100;
+	}
+	/**
+	 * Retrieves a collection of user
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 *
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function get_items( $request ) {
+		add_filter( 'rest_user_query', [ $this, 'filter_user_query' ], 10 );
+		$response = parent::get_items( $request );
+		remove_filter( 'rest_user_query', [ $this, 'filter_user_query' ], 10 );
+
+		return $response;
+	}
+
+	/**
+	 * Filter the WP_User_Query args, to remove who param.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param array $prepared_args
+	 *
+	 * @return array $prepared_args
+	 */
+	public function filter_user_query( $prepared_args ) {
+		global $wpdb;
+
+		$blog_id = get_current_blog_id();
+		if ( isset( $prepared_args['blog_id'] ) ) {
+			$blog_id = absint( $prepared_args['blog_id'] );
+		}
+
+		if ( isset( $prepared_args['who'] ) && 'authors' === $prepared_args['who'] && $blog_id ) {
+			$who_query = [
+				'key'     => $wpdb->get_blog_prefix( $blog_id ) . 'user_level',
+				'value'   => 0,
+				'compare' => '!=',
+			];
+
+			$meta_query = new WP_Meta_Query();
+			$meta_query->parse_query_vars( $prepared_args );
+
+			if ( empty( $meta_query->queries ) ) {
+				$meta_query->queries = [ $who_query ];
+			} else {
+				$new_meta_query      = [
+					'relation' => 'AND',
+					$who_query,
+				];
+				$meta_query->queries = array_merge( $meta_query->queries, $new_meta_query );
+			}
+
+			$prepared_args['meta_query'] = $meta_query->queries;
+			unset( $prepared_args['who'] );
+		}
+
+		return $prepared_args;
 	}
 
 	/**
