@@ -106,9 +106,9 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * @since 1.16.0
 	 *
-	 * @param array $prepared_args
+	 * @param array $prepared_args Array of arguments for WP_User_Query.
 	 *
-	 * @return array $prepared_args
+	 * @return array Filtered args.
 	 */
 	public function filter_user_query( $prepared_args ) {
 		global $wpdb;
@@ -138,7 +138,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 				$meta_query->queries = array_merge( $meta_query->queries, $new_meta_query );
 			}
 
-			$prepared_args['meta_query'] = $meta_query->queries;
+			$prepared_args['meta_query'] = $meta_query->queries; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			unset( $prepared_args['who'] );
 		}
 
