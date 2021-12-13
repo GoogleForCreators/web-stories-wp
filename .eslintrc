@@ -424,7 +424,7 @@
         "packages/commander/**/*.js",
         "packages/fonts/scripts/cli.js",
         "packages/migration/src/cli.js",
-        "packages/templates/src/cli.js",
+        "packages/templates/scripts/cli.js",
         "packages/text-sets/scripts/cli.js"
       ],
       "rules": {
@@ -452,7 +452,7 @@
         "packages/migration/src/**/*.js",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
-        "packages/templates/src/cli.js",
+        "packages/templates/scripts/cli.js",
         "packages/text-sets/scripts/cli.js"
       ],
       "extends": [
