@@ -97,12 +97,12 @@ describe('See template details modal', () => {
 
   describe('Action: Navigate template details modal', () => {
     it('should update current template', async () => {
-      const firstTemplate = await getTemplateTitle(0);
+      const firstTemplateTitle = await getTemplateTitle(0);
       const templateTitle = fixture.screen.getByTestId(
         `template-details-title`
       );
 
-      await expect(templateTitle).toHaveTextContent(firstTemplate);
+      await expect(templateTitle).toHaveTextContent(firstTemplateTitle);
 
       const previousArrow = fixture.screen.getByRole('button', {
         name: /View previous template/,
@@ -113,16 +113,23 @@ describe('See template details modal', () => {
 
       await nextArrow.click();
       await expect(templateTitle).toHaveTextContent(await getTemplateTitle(1));
-      await expect(templateTitle).not.toHaveTextContent(firstTemplate);
+      await expect(templateTitle).not.toHaveTextContent(firstTemplateTitle);
 
       await previousArrow.click();
-      await expect(templateTitle).toHaveTextContent(firstTemplate);
+      await expect(templateTitle).toHaveTextContent(firstTemplateTitle);
       await expect(templateTitle).not.toHaveTextContent(
         await getTemplateTitle(1)
       );
     });
 
     it('should update current template via keyboard', async () => {
+      const { templatesOrderById } = await getTemplatesState();
+      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+      const utils = within(firstTemplate);
+      const seeDetailsButton = utils.getByText(
+        new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+      );
+
       //close button should be in focus
       await fixture.events.keyboard.press('tab');
       const closeBtn = fixture.screen.getByRole('button', {
@@ -132,16 +139,16 @@ describe('See template details modal', () => {
 
       // enter should close modal
       await fixture.events.keyboard.press('Enter');
-      expect(closeBtn).not.toEqual(document.activeElement);
+      expect(seeDetailsButton).toEqual(document.activeElement);
 
       // open first template in modal
-      await navigateToFirstTemplate();
+      await fixture.events.keyboard.press('Enter');
       // escape should close modal
       await fixture.events.keyboard.press('Escape');
-      expect(closeBtn).not.toEqual(document.activeElement);
+      expect(seeDetailsButton).toEqual(document.activeElement);
 
       // open first template in modal
-      await navigateToFirstTemplate();
+      await fixture.events.keyboard.press('Enter');
       // navigate to 'Use Template' button
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('tab');
@@ -156,11 +163,10 @@ describe('See template details modal', () => {
       expect(page1).toEqual(document.activeElement);
 
       // Check current template
-      const firstTemplate = await getTemplateTitle(0);
-      const templateTitle = fixture.screen.getByTestId(
-        `template-details-title`
-      );
-      await expect(templateTitle).toHaveTextContent(firstTemplate);
+      const firstTemplateTitle = await getTemplateTitle(0);
+      await expect(
+        fixture.screen.getByTestId(`template-details-title`)
+      ).toHaveTextContent(firstTemplateTitle);
 
       //navigate to next template arrow
       await fixture.events.keyboard.press('tab');
@@ -171,8 +177,12 @@ describe('See template details modal', () => {
 
       // navigate to next template
       await fixture.events.keyboard.press('Enter');
-      await expect(templateTitle).not.toHaveTextContent(firstTemplate);
-      await expect(templateTitle).toHaveTextContent(await getTemplateTitle(1));
+      await expect(
+        fixture.screen.getByTestId(`template-details-title`)
+      ).not.toHaveTextContent(firstTemplateTitle);
+      await expect(
+        fixture.screen.getByTestId(`template-details-title`)
+      ).toHaveTextContent(await getTemplateTitle(1));
 
       //navigate back to previous template
       await fixture.events.keyboard.shortcut('shift+tab');
@@ -182,10 +192,12 @@ describe('See template details modal', () => {
       });
       expect(previousArrow).toEqual(document.activeElement);
       await fixture.events.keyboard.press('Enter');
-      await expect(templateTitle).toHaveTextContent(firstTemplate);
-      await expect(templateTitle).not.toHaveTextContent(
-        await getTemplateTitle(1)
-      );
+      await expect(
+        fixture.screen.getByTestId(`template-details-title`)
+      ).toHaveTextContent(firstTemplateTitle);
+      await expect(
+        fixture.screen.getByTestId(`template-details-title`)
+      ).not.toHaveTextContent(await getTemplateTitle(1));
     });
   });
 
